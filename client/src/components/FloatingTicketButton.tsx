@@ -75,7 +75,7 @@ export default function FloatingTicketButton() {
       className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-full"
     >
       <div
-        className="fixed bottom-6 right-6 md:bottom-24 md:right-8 z-50 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center pointer-events-none"
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-8 z-50 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center pointer-events-none"
       >
         {/* Interactive Container */}
         <motion.div
