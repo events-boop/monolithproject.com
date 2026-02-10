@@ -7,6 +7,15 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
+async function ensureNewsletterVisible(page: import("@playwright/test").Page) {
+  await page.goto("/");
+  await page.waitForLoadState("domcontentloaded");
+  // Newsletter is viewport-lazy; scroll first to trigger render.
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+  await page.locator("#newsletter").scrollIntoViewIfNeeded();
+}
+
 test("newsletter flow shows user-visible error then success", async ({ page }) => {
   await page.route("**/api/leads", async (route) => {
     await route.fulfill({
@@ -19,8 +28,7 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
     });
   });
 
-  await page.goto("/");
-  await page.locator("#newsletter").scrollIntoViewIfNeeded();
+  await ensureNewsletterVisible(page);
 
   await page.fill("#email", "test@example.com");
   await page.check('input[type="checkbox"]');
@@ -59,8 +67,7 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
 });
 
 test("scoped a11y checks pass for newsletter and tickets header", async ({ page }) => {
-  await page.goto("/");
-  await page.locator("#newsletter").scrollIntoViewIfNeeded();
+  await ensureNewsletterVisible(page);
   const newsletterA11y = await new AxeBuilder({ page }).include("#newsletter").analyze();
   expect(newsletterA11y.violations).toEqual([]);
 
