@@ -133,8 +133,8 @@ export default function NewsletterSection() {
                 </div>
 
                 {/* Right — form */}
-                <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border border-charcoal/15 bg-white/38 backdrop-blur-md p-6 md:p-7 shadow-[0_12px_30px_rgba(0,0,0,0.08)]" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
-                  <div>
+                <form onSubmit={handleSubmit} className="relative z-10 space-y-6 rounded-2xl border border-charcoal/15 bg-white/38 backdrop-blur-md p-6 md:p-7 shadow-[0_12px_30px_rgba(0,0,0,0.08)]" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
+                  <div className="relative">
                     <label htmlFor="email" className="ui-chip text-stone block mb-2">
                       Email Address *
                     </label>
