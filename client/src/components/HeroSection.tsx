@@ -1,195 +1,249 @@
-/*
-  DESIGN: S-Tier Premium - Cinematic Intro & Human Connection
-  - Staggered text reveal for "THE MONOLITH PROJECT"
-  - Glitch effect on hover
-  - Magnetic interactions
-  - Focused on "Togetherness" and human connection
-*/
+import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "wouter";
+import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { POSH_TICKET_URL } from "@/data/events";
+import GlitchText from "./GlitchText";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import VideoHeroSlider from "./VideoHeroSlider";
-import MagneticButton from "./MagneticButton";
-import { MonolithSlabWaves } from "./MonolithSlabWaves";
-import { useState } from "react";
-import Ticker from "./Ticker";
+// March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
+const TARGET_DATE = new Date("2026-03-06T19:00:00-06:00").getTime();
 
-const StaggeredText = ({ text, className = "", delay = 0 }: { text: string; className?: string; delay?: number }) => {
-  // Split text into words and then characters to preserve spacing
-  const words = text.split(" ");
+function useCountdown(target: number) {
+  const [now, setNow] = useState(Date.now());
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i: number = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: delay * i },
-    }),
-  };
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
-  const child = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 20,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
+  const diff = Math.max(0, target - now);
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
-  return (
-    <motion.div
-      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      variants={container as any}
-      initial="hidden"
-      animate="visible"
-      className={className}
-    >
-      {words.map((word: string, index: number) => (
-        <span key={index} style={{ display: "inline-block", marginRight: "0.25em", whiteSpace: "nowrap" }}>
-          {Array.from(word).map((character: string, charIndex: number) => (
-            <motion.span variants={child as any} key={charIndex} style={{ display: "inline-block" }}>
-              {character}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </motion.div>
-  );
-};
+  return { days, hours, minutes, seconds, isExpired: diff === 0 };
+}
+
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
 
 export default function HeroSection() {
-  const [isHovered, setIsHovered] = useState(false);
+  const { days, hours, minutes, seconds, isExpired } = useCountdown(TARGET_DATE);
+  const reduceMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => {
+    const id = window.setTimeout(() => setShouldLoadVideo(true), 500);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!isMuted);
     }
   };
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col overflow-hidden"
-    >
-      <div className="hidden" />
+    <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
 
-      {/* Video/Image Slider Background - Now with Human Focus */}
-      <VideoHeroSlider />
+      {/* Full-bleed video background */}
+      <div className="absolute inset-0 z-0">
+        {shouldLoadVideo ? (
+          <video
+            ref={videoRef}
+            src="/videos/hero-video-1.mp4"
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            preload="metadata"
+            poster="/images/hero-monolith.jpg"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src="/images/hero-monolith.jpg"
+            alt=""
+            decoding="async"
+            className="w-full h-full object-cover"
+          />
+        )}
+        {/* Balanced overlays: brighter center, protected edges for legibility */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(0,0,0,0.2),rgba(0,0,0,0.5)_78%,rgba(0,0,0,0.6)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(224,90,58,0.16),transparent_35%),radial-gradient(circle_at_85%_35%,rgba(139,92,246,0.14),transparent_38%)]" />
+        {/* Bottom fade into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
+      </div>
 
-      {/* Hero Background Gradient Contast - Top & Bottom */}
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/80 to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-background via-black/60 to-transparent z-10 pointer-events-none" />
+      {/* Editorial left-aligned content */}
+      <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40">
 
-
-      {/* Main Content */}
-      <div className="relative z-20 flex-1 flex items-center justify-center pt-32 md:pt-40 pb-24">
-        <div className="text-center px-6 max-w-5xl mx-auto">
-
-          {/* Animated Brand Mark - Monolith Slab Waves */}
+        {/* Upper zone — title + subtitle */}
+        <div className="mt-auto mb-auto pt-8 md:pt-10">
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            className="mb-8 flex flex-col items-center gap-2"
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.3 }}
+            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display"
           >
-            <MonolithSlabWaves
-              slabWidthPx={90}
-              slabHeightPx={280}
-              borderRadiusPx={10}
-              xGap={5}
-              yGap={6}
-              amplitude={6}
-              flowSpeed={0.005}
-              pointerRadius={300}
-              strokeColor="#D4A574" // Gold
-              interactive={true}
-              showPointerDot={false}
-            />
+            <div className="relative inline-block translate-y-2 md:translate-y-3">
+              <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
+            </div>
+            <span className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0">PROJECT</span>
           </motion.div>
 
-          {/* Main Title - Interactive & Staggered - Tighter Layout */}
-          <motion.div
-            style={{ y: useTransform(useScroll().scrollY, [0, 500], [0, 150]) }}
-            className="relative font-display tracking-tighter text-foreground mb-8 cursor-default"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.5 }}
+            className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
           >
-            <div className="flex flex-col items-center gap-4 md:gap-6">
-              <div className="text-6xl md:text-8xl lg:text-9xl leading-[0.85] drop-shadow-2xl">
-                <StaggeredText
-                  text="THE MONOLITH"
-                  className="justify-center"
-                  delay={0.2}
-                />
+            Built on music, community, and showing up for each other.
+          </motion.p>
+          <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
+        </div>
+
+        {/* Lower zone — event info + CTAs */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16">
+
+          {/* Left: metadata + CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7 }}
+            className="space-y-6"
+          >
+            {/* Event info */}
+            {!isExpired && (
+              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="group block">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 ui-meta text-white/90">
+                  <span className="accent-story font-bold">Untold Story S3·E2</span>
+                  <span className="text-white/35">—</span>
+                  <span className="text-primary font-bold">March 6, 2026</span>
+                  <span className="text-white/35">—</span>
+                  <span className="text-white/80">Alhambra Palace, Chicago</span>
+                  <span className="text-white/70 group-hover:text-primary transition-colors">→</span>
+                </div>
+              </a>
+            )}
+
+            {!isExpired && (
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/45 bg-primary/12 px-3 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
+                <span className="ui-chip text-primary">Limited Tickets On Sale</span>
               </div>
+            )}
 
-              {/* Added clearer separation */}
+            {isExpired && (
+              <Link href="/story">
+                <a className="group flex items-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                  <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
+                  <span className="font-mono text-xs tracking-widest uppercase text-primary group-hover:text-white transition-colors">
+                    Untold Story S3·E2 — View Recap →
+                  </span>
+                </a>
+              </Link>
+            )}
 
-              <motion.div
-                className="text-4xl md:text-6xl lg:text-7xl text-primary tracking-[0.2em] font-light text-silver-red-gradient drop-shadow-lg"
-                animate={isHovered ? { x: [0, -2, 2, -1, 0], filter: ["blur(0px)", "blur(2px)", "blur(0px)"] } : {}}
-                transition={{ duration: 0.2 }}
+            {/* Pill CTAs */}
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={POSH_TICKET_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               >
-                <StaggeredText
-                  text="PROJECT"
-                  className="justify-center"
-                  delay={0.6}
-                />
-              </motion.div>
+                {!reduceMotion && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
+                )}
+                <Ticket className="w-3.5 h-3.5" />
+                Get Tickets
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="#movement"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                Explore
+                <ArrowDown className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {/* Series links */}
+            <div className="flex items-center gap-4">
+              <Link href="/chasing-sunsets">
+                <a className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
+                  <Sun className="w-4.5 h-4.5 text-clay" />
+                  <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
+                    Chasing Sun(Sets)
+                  </span>
+                </a>
+              </Link>
+              <Link href="/story">
+                <a className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                  <UntoldButterflyLogo className="w-5 h-5 accent-story" />
+                  <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
+                    Untold
+                  </span>
+                </a>
+              </Link>
+            </div>
+
+            {/* Metadata */}
+            <div className="ui-meta bg-gradient-to-r from-white/70 via-white to-white/75 bg-clip-text text-transparent">
+              Chicago Events Collective · Est. 2025
             </div>
           </motion.div>
 
-          {/* Tagline - Human Centric - Defined Platform */}
-          <motion.div
-            style={{ y: useTransform(useScroll().scrollY, [0, 500], [0, 100]) }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
-            className="flex flex-col gap-6 items-center"
-          >
-            <h2 className="text-xl md:text-3xl text-foreground font-light tracking-wide max-w-3xl bg-gradient-to-r from-transparent via-background/40 to-transparent py-2 px-8 rounded-full border-y border-white/5 backdrop-blur-sm">
-              A global ritual of light, sound, and togetherness.
-            </h2>
-
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary/50 to-transparent my-2" />
-
-            <p className="text-xs md:text-sm text-muted-foreground tracking-mega uppercase font-medium opacity-80">
-              EST. 2026 • CHICAGO
-            </p>
-          </motion.div>
+          {/* Right: Countdown */}
+          {!isExpired && (
+            <motion.div
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
+              className="flex items-center gap-3 md:gap-4"
+            >
+              {[
+                { value: days, label: "DAYS", highlight: true },
+                { value: hours, label: "HRS", highlight: false },
+                { value: minutes, label: "MIN", highlight: false },
+                { value: seconds, label: "SEC", highlight: false },
+              ].map((unit) => (
+                <div key={unit.label} className="flex flex-col items-center">
+                  <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
+                    {pad(unit.value)}
+                  </span>
+                  <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
+                    {unit.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </div>
 
-      {/* Scroll Indicator - Clean Line */}
-      <motion.div
-        style={{ opacity: useTransform(useScroll().scrollY, [0, 200], [1, 0]) }}
-        className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-4"
+      {/* Mute toggle — bottom right */}
+      <button
+        onClick={toggleMute}
+        aria-label={isMuted ? "Unmute hero video" : "Mute hero video"}
+        className="absolute bottom-8 right-6 md:right-8 z-30 p-3 border border-white/10 rounded-full bg-black/20 backdrop-blur-sm text-white/40 hover:text-white hover:border-white/30 transition-all"
       >
-        <MagneticButton strength={0.3} onClick={() => scrollToSection("movement")}>
-          <div className="flex flex-col items-center gap-3 text-muted-foreground hover:text-primary transition-colors duration-500 cursor-pointer group">
-            <span className="text-[10px] tracking-[0.3em] uppercase opacity-70 group-hover:opacity-100 transition-opacity">Explore the Ritual</span>
-            <div className="h-12 w-[1px] bg-gradient-to-b from-primary/20 to-primary/80 group-hover:h-16 transition-all duration-500" />
-          </div>
-        </MagneticButton>
-      </motion.div>
-
-      {/* Ticker at Bottom of Hero */}
-      <div className="absolute bottom-0 left-0 right-0 z-30">
-        <Ticker />
-      </div>
-
+        {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+      </button>
     </section>
   );
 }

@@ -1,123 +1,118 @@
-/*
-  DESIGN: Cosmic Mysticism - Neo-Mystical Minimalism meets Cosmic Futurism
-  - Dark obsidian backgrounds with golden amber accents
-  - Sacred geometry and animated elements
-  - Keynote-inspired navigation with fixed CTA
-  - Bebas Neue headlines, Inter body text
-  - Persistent audio player
-  - Sticky CTA button
-  - Textured noise background (AD Night inspired)
-  - SoundCloud grid for mixes
-  - Past Events gallery section
-  - Season 2026 schedule
-  - Social media section
-*/
-
-import { useState, useEffect } from "react";
-import { motion, useScroll } from "framer-motion";
+import { lazy, Suspense, useEffect } from "react";
+import { POSH_TICKET_URL } from "@/data/events";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import RitualDashboard from "@/components/RitualDashboard"; // New S-Tier Component
-import DefinitionSection from "@/components/DefinitionSection";
 import MovementSection from "@/components/MovementSection";
-import RitualGrid from "@/components/RitualGrid";
 import ChaptersSection from "@/components/ChaptersSection";
-import RadioSection from "@/components/RadioSection";
 import ArtistsSection from "@/components/ArtistsSection";
-import PartnershipsSection from "@/components/PartnershipsSection";
-import ConnectSection from "@/components/ConnectSection";
-import NewsletterSection from "@/components/NewsletterSection";
+import ScheduleSection from "@/components/ScheduleSection";
+import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
-import ParticleField from "@/components/ParticleField";
+import SectionDivider from "@/components/SectionDivider";
+import ViewportLazy from "@/components/ViewportLazy";
 
-import StickyCTA from "@/components/StickyCTA";
-import SoundCloudSection from "@/components/SoundCloudSection";
-import PastEventsSection from "@/components/PastEventsSection";
-import ScheduleSection from "@/components/ScheduleSection"; // Keeping as full list for later
-import SocialSection from "@/components/SocialSection";
-
-import CustomCursor from "@/components/CustomCursor";
+const CinematicBreak = lazy(() => import("@/components/CinematicBreak"));
+const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
+const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
+const ConnectSection = lazy(() => import("@/components/ConnectSection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("hero");
-  const { scrollYProgress } = useScroll();
-
-  // Track active section based on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      // Added 'dashboard' to tracked sections
-      const sections = ["hero", "dashboard", "movement", "chapters", "schedule", "recaps", "listen", "radio", "artists", "partnerships", "connect"];
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden bg-noise selection:bg-primary/30">
-      <CustomCursor />
-      {/* Particle background */}
-      <ParticleField />
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      <Navigation />
 
-      {/* Navigation */}
-      <Navigation activeSection={activeSection} />
-
-      {/* Progress indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-50 origin-left"
-        style={{ scaleX: scrollYProgress }}
-      />
-
-      {/* Main content */}
-      <main className="pb-20">
+      <main>
+        {/* Hero — countdown + video + CTAs */}
         <HeroSection />
 
-        {/* S-TIER FIRST SCROLL EXPERIENCE */}
-        <RitualDashboard />
-
-        {/* THE MISSION */}
-        <DefinitionSection />
-
-        {/* THE MOVEMENT */}
+        {/* 01 — The Movement */}
+        <SectionDivider number="01" label="The Collective" />
         <MovementSection />
 
-        {/* THE ROSTER */}
+        {/* 02 — Two Series */}
+        <SectionDivider number="02" label="The Events" />
+        <ChaptersSection />
+
+        {/* 03 — Artists */}
+        <SectionDivider number="03" label="The Roster" />
         <ArtistsSection />
 
-        {/* UPCOMING RITUALS */}
+        {/* Cinematic break — full-bleed parallax with pull quote */}
+        <ViewportLazy minHeightClassName="min-h-[60vh]">
+          <Suspense fallback={null}>
+            <CinematicBreak
+              image="/images/hero-monolith.jpg"
+              videoSrc="/videos/hero-video-1.mp4"
+              quote="We believe music carries emotion. We believe gathering should feel shared. We believe in rhythm, story, and togetherness."
+              attribution="The Monolith Project"
+              ctaLabel="Get Tickets"
+              ctaUrl={POSH_TICKET_URL}
+              ctaExternal
+            />
+          </Suspense>
+        </ViewportLazy>
+
+        {/* 04 — Schedule */}
+        <SectionDivider number="04" label="Season 01" />
         <ScheduleSection />
 
-        {/* ARCHIVES & RADIO */}
-        <RadioSection />
-        <SoundCloudSection />
-        <PastEventsSection />
+        {/* 05 — Listen */}
+        <SectionDivider number="05" label="Mixes" />
+        <ViewportLazy minHeightClassName="min-h-[420px]">
+          <div className="bg-card">
+            <Suspense fallback={null}>
+              <SoundCloudSection />
+            </Suspense>
+          </div>
+        </ViewportLazy>
 
-        {/* COMMUNITY & PARTNERS */}
-        <PartnershipsSection />
-        <SocialSection />
-        <ConnectSection />
-        <NewsletterSection />
+        {/* 06 — Past Events */}
+        <SectionDivider number="06" label="Recaps" />
+        <ViewportLazy minHeightClassName="min-h-[420px]">
+          <Suspense fallback={null}>
+            <PastEventsSection />
+          </Suspense>
+        </ViewportLazy>
+
+        {/* Tickets banner */}
+        <Ticker />
+
+        {/* 07 — Get Involved */}
+        <SectionDivider number="07" label="Join Us" />
+        <ViewportLazy minHeightClassName="min-h-[360px]">
+          <Suspense fallback={null}>
+            <ConnectSection />
+          </Suspense>
+        </ViewportLazy>
+
+        {/* 08 — FAQ */}
+        <SectionDivider number="08" label="FAQ" />
+        <ViewportLazy minHeightClassName="min-h-[320px]">
+          <Suspense fallback={null}>
+            <FAQSection />
+          </Suspense>
+        </ViewportLazy>
+
+        {/* Newsletter */}
+        <ViewportLazy minHeightClassName="min-h-[320px]">
+          <Suspense fallback={null}>
+            <NewsletterSection />
+          </Suspense>
+        </ViewportLazy>
+
+        {/* Gradient bridge into footer */}
+        <div className="relative h-24 bg-background overflow-hidden" aria-hidden="true">
+          <div className="absolute inset-0 atmo-bridge" />
+        </div>
       </main>
 
       <Footer />
-
-      {/* Sticky CTA Button */}
-      <StickyCTA />
-
-      {/* Persistent Audio Player */}
-
-    </div >
+    </div>
   );
 }

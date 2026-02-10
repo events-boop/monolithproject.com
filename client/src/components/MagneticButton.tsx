@@ -1,5 +1,5 @@
 
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 interface MagneticButtonProps {
@@ -51,11 +51,10 @@ export default function MagneticButton({
             ref={ref}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onClick={onClick}
+            onClick={() => onClick?.()}
             style={{ x: springX, y: springY }}
             className={`cursor-pointer ${className}`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.97 }}
         >
             {children}
         </motion.div>

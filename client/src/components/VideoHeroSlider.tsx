@@ -1,39 +1,61 @@
-/*
-  DESIGN: Cosmic Mysticism - Video Background Hero Slider
-  - Full-screen video background
-  - Left/right navigation arrows
-  - Multiple slides (video + images)
-  - Smooth transitions
-*/
-
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Slide {
   type: "video" | "image";
   src: string;
   alt?: string;
+  credit?: string;
+  caption?: string;
 }
 
 const slides: Slide[] = [
-  { type: "video", src: "/videos/hero-video-1.mp4" },
-  { type: "image", src: "/images/hero-monolith.jpg", alt: "The Monolith" },
-  { type: "image", src: "/images/chasing-sunsets.jpg", alt: "Chasing Sun(Sets)" },
+  {
+    type: "video",
+    src: "/videos/hero-video-1.mp4",
+    caption: "THE MONOLITH PROJECT",
+  },
+  {
+    type: "image",
+    src: "/images/lazare-recap.png",
+    alt: "Lazare at Monolith Project",
+    credit: "JP Quindara",
+    caption: "LAZARE | MONOLITH PROJECT",
+  },
+  {
+    type: "image",
+    src: "/images/hero-monolith.jpg",
+    alt: "The Monolith",
+    caption: "CHICAGO, 2025",
+  },
+  {
+    type: "image",
+    src: "/images/chasing-sunsets.jpg",
+    alt: "Chasing Sun(Sets)",
+    caption: "CHASING SUN(SETS)",
+  },
+  {
+    type: "image",
+    src: "/images/autograf-recap.jpg",
+    alt: "Autograf live set",
+    credit: "TBA",
+    caption: "AUTOGRAF | LIVE SET",
+  },
 ];
 
 export default function VideoHeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  const goTo = useCallback((index: number) => {
+    setCurrentSlide(((index % slides.length) + slides.length) % slides.length);
+  }, []);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  const prev = useCallback(() => goTo(currentSlide - 1), [currentSlide, goTo]);
+  const next = useCallback(() => goTo(currentSlide + 1), [currentSlide, goTo]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -42,34 +64,45 @@ export default function VideoHeroSlider() {
     }
   };
 
-  // Auto-advance for images (not videos)
+  // Auto-advance for images
   useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
     const slide = slides[currentSlide];
     if (slide.type === "image") {
-      const timer = setTimeout(nextSlide, 5000);
-      return () => clearTimeout(timer);
+      timerRef.current = setTimeout(next, 6000);
     }
-  }, [currentSlide]);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [currentSlide, next]);
 
-  const currentSlideData = slides[currentSlide];
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [prev, next]);
+
+  const slide = slides[currentSlide];
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      {/* Slides */}
-      {/* Slides */}
       <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          {currentSlideData.type === "video" ? (
+          {slide.type === "video" ? (
             <video
               ref={videoRef}
-              src={currentSlideData.src}
+              src={slide.src}
               autoPlay
               loop
               muted={isMuted}
@@ -77,72 +110,68 @@ export default function VideoHeroSlider() {
               className="w-full h-full object-cover"
             />
           ) : (
-            <motion.div className="w-full h-full overflow-hidden">
-              <motion.img
-                src={currentSlideData.src}
-                alt={currentSlideData.alt || ""}
-                initial={{ scale: 1 }}
-                animate={{ scale: 1.15 }}
-                transition={{ duration: 10, ease: "linear" }}
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
+            <img
+              src={slide.src}
+              alt={slide.alt || ""}
+              className="w-full h-full object-cover"
+            />
           )}
         </motion.div>
       </AnimatePresence>
 
-      {/* Gradient overlays for text readability - Top and Bottom Focused */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-10" />
-      <div className="absolute inset-0 bg-black/20 z-10" /> {/* General dimming for contrast */}
+      {/* Brighter center, darker edges */}
+      <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_45%,rgba(0,0,0,0.14),rgba(0,0,0,0.4)_80%,rgba(0,0,0,0.5)_100%)]" />
 
-      {/* Navigation Arrows */}
-      <div className="absolute inset-y-0 left-0 flex items-center z-20">
-        <motion.button
-          onClick={prevSlide}
-          whileHover={{ scale: 1.1, x: 4 }}
-          whileTap={{ scale: 0.95 }}
-          className="ml-4 md:ml-8 p-3 bg-background/20 backdrop-blur-sm border border-white/10 text-white/80 hover:text-white hover:bg-background/40 transition-all rounded-full"
-        >
-          <ChevronLeft size={24} />
-        </motion.button>
-      </div>
+      {/* Left/Right arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
 
-      <div className="absolute inset-y-0 right-0 flex items-center z-20">
-        <motion.button
-          onClick={nextSlide}
-          whileHover={{ scale: 1.1, x: -4 }}
-          whileTap={{ scale: 0.95 }}
-          className="mr-4 md:mr-8 p-3 bg-background/20 backdrop-blur-sm border border-white/10 text-white/80 hover:text-white hover:bg-background/40 transition-all rounded-full"
-        >
-          <ChevronRight size={24} />
-        </motion.button>
-      </div>
-
-      {/* Slide Indicators - Clean Lines */}
-      <div className="absolute bottom-36 left-1/2 -translate-x-1/2 flex gap-4 z-20">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`h-[2px] rounded-full transition-all duration-300 ${index === currentSlide
-              ? "bg-primary w-12 shadow-[0_0_10px_rgba(212,165,116,0.5)]"
-              : "bg-white/20 w-8 hover:bg-white/40"
+      {/* Bottom bar: indicators + credit + mute */}
+      <div className="absolute bottom-36 left-0 right-0 z-20 px-6 md:px-8 flex items-end justify-between">
+        {/* Left: Slide indicators */}
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-[2px] transition-all duration-500 ${
+                index === currentSlide
+                  ? "bg-primary w-10"
+                  : "bg-white/20 w-5 hover:bg-white/40"
               }`}
-          />
-        ))}
-      </div>
+            />
+          ))}
+        </div>
 
-      {/* Mute/Unmute Button (only show when video is playing) */}
-      {currentSlideData.type === "video" && (
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={toggleMute}
-          className="absolute bottom-36 right-8 z-20 p-3 bg-background/20 backdrop-blur-sm border border-white/10 text-white/80 hover:text-white hover:bg-background/40 transition-all rounded-full"
-        >
-          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-        </motion.button>
-      )}
+        {/* Right: Credit + Mute */}
+        <div className="flex items-center gap-4">
+          {slide.credit && (
+            <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase hidden md:block">
+              Photo: {slide.credit}
+            </span>
+          )}
+          {slide.type === "video" && (
+            <button
+              onClick={toggleMute}
+              className="p-2 border border-white/10 text-white/40 hover:text-white hover:border-white/30 transition-all"
+            >
+              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

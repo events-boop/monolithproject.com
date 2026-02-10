@@ -1,144 +1,271 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, SkipBack, SkipForward, Disc, Globe, MapPin } from "lucide-react";
-import MagneticButton from "@/components/MagneticButton";
+import { Play, Pause, MapPin, Music, ArrowRight, Sun } from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
-
-// The "Foundation" Sets - Chapter 01
-const ARCHIVE_SETS = [
-    { id: 1, title: "The Awakening", location: "Johannesburg", coordinates: "26.20° S, 28.04° E", artist: "BLACK COFFEE", date: "2025.01.01", coverColor: "bg-[#D4A574]" },
-    { id: 2, title: "Solar Return", location: "Tulum", coordinates: "20.21° N, 87.46° W", artist: "KEINEMUSIK", date: "2025.01.15", coverColor: "bg-[#333]" },
-    { id: 3, title: "Urban Concrete", location: "Berlin", coordinates: "52.52° N, 13.40° E", artist: "BEN BOHMER", date: "2025.02.02", coverColor: "bg-[#555]" },
-    { id: 4, title: "Desert Mirage", location: "Dubai", coordinates: "25.20° N, 55.27° E", artist: "ADRIATIQUE", date: "2025.02.18", coverColor: "bg-[#D4A574]" },
-    { id: 5, title: "Pacific Drift", location: "Los Angeles", coordinates: "34.05° N, 118.24° W", artist: "LANE 8", date: "2025.03.01", coverColor: "bg-[#222]" },
-    { id: 6, title: "High Altitude", location: "Swiss Alps", coordinates: "46.81° N, 8.22° E", artist: "ARTBAT", date: "2025.03.15", coverColor: "bg-[#999]" },
-    { id: 7, title: "Island Echoes", location: "Ibiza", coordinates: "38.90° N, 1.41° E", artist: "SOLOMUN", date: "2025.04.01", coverColor: "bg-[#D4A574]" },
-    { id: 8, title: "Neon Nights", location: "Tokyo", coordinates: "35.67° N, 139.65° E", artist: "PEGGY GOU", date: "2025.04.20", coverColor: "bg-[#444]" },
-    { id: 9, title: "Deep Forest", location: "Bali", coordinates: "8.40° S, 115.18° E", artist: "RUFUS DU SOL", date: "2025.05.05", coverColor: "bg-[#666]" },
-    { id: 10, title: "Rooftop Haze", location: "New York", coordinates: "40.71° N, 74.00° W", artist: "THE BLESSED MADONNA", date: "2025.05.25", coverColor: "bg-[#D4A574]" },
-    { id: 11, title: "The Return", location: "Chicago", coordinates: "41.87° N, 87.62° W", artist: "HONEY DIJON", date: "2025.06.11", coverColor: "bg-[#000]" },
-];
-
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
+import StickyPlayer from "@/components/StickyPlayer";
 
-export default function Radio() {
-    return (
-        <div className="min-h-screen bg-[#050505] text-white selection:bg-[#D4A574] selection:text-black overflow-x-hidden">
-            {/* Global Navigation */}
-            <Navigation />
-
-            <div className="container max-w-7xl mx-auto px-6 pt-24 pb-40">
-
-                {/* HERO SECTION: Global Map & Live Data */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[70vh] mb-24">
-
-                    {/* Text / Data Column */}
-                    <div className="order-2 lg:order-1 relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <div className="flex items-center gap-3 mb-6">
-                                <span className="px-3 py-1 border border-white/20 rounded-full text-[10px] tracking-[0.2em] uppercase text-white/60">
-                                    Global Frequency
-                                </span>
-                                <span className="px-3 py-1 bg-[#D4A574]/10 border border-[#D4A574]/30 rounded-full text-[10px] tracking-[0.2em] uppercase text-[#D4A574]">
-                                    11,402 Listeners
-                                </span>
-                            </div>
-
-                            <h1 className="font-display text-8xl md:text-[8rem] lg:text-[10rem] leading-[0.85] mb-8 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20">
-                                GLOBAL<br />SYNC
-                            </h1>
-
-                            <p className="font-serif italic text-2xl text-white/50 max-w-lg mb-12">
-                                We are not listening alone. Across {new Date().getHours() > 12 ? 'Tokyo, Berlin, and Lagos' : 'New York, London, and Tulum'}, the ritual connects us.
-                            </p>
-
-                            {/* Now Playing Widget - Inline */}
-                            <div className="glass p-6 rounded-xl border-l-2 border-[#D4A574] max-w-md">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-16 h-16 rounded bg-black/50 flex items-center justify-center shrink-0">
-                                        <Disc className="w-8 h-8 text-white/20 animate-spin-slow" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[10px] uppercase tracking-widest text-[#D4A574] mb-1">Current Transmission</div>
-                                        <div className="font-display text-2xl leading-none mb-1">SET 004 // DESERT MIRAGE</div>
-                                        <div className="text-xs font-mono text-white/40">ADRIATIQUE • LIVE FROM DUBAI</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Globe Vis Column */}
-                    <div className="order-1 lg:order-2 h-[50vh] lg:h-[80vh] w-full relative">
-                        <div className="absolute inset-0 pointer-events-none">
-                            <GlobalListenerMap />
-                        </div>
-                        {/* Overlay Gradient to blend bottom */}
-                        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
-                    </div>
-                </div>
-
-
-                {/* THE ARCHIVE - CHAPTER 01 */}
-                <div className="mb-12 flex items-end justify-between border-b border-white/10 pb-6">
-                    <div>
-                        <h2 className="font-display text-4xl md:text-6xl text-white mb-2">CHAPTER 01</h2>
-                        <p className="font-mono text-sm text-[#D4A574] tracking-widest">THE FOUNDATION // 11 SETS</p>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 pb-48">
-                    {ARCHIVE_SETS.map((set) => (
-                        <motion.div
-                            key={set.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="group cursor-pointer"
-                        >
-                            {/* Card Image/Glyph Area */}
-                            <div className="relative aspect-[4/5] bg-[#111] border border-white/5 mb-4 overflow-hidden">
-                                <div className={`absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity ${set.coverColor}`} />
-                                <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                                    <div className="flex justify-between items-start">
-                                        <span className="font-mono text-xs text-white/30">NO. {String(set.id).padStart(2, '0')}</span>
-                                        <Globe className="w-4 h-4 text-white/20" />
-                                    </div>
-                                    <div className="flex justify-center items-center">
-                                        {/* Abstract Glyph Placeholder */}
-                                        <div className="w-20 h-20 border border-white/10 rounded-full flex items-center justify-center group-hover:border-[#D4A574]/50 group-hover:scale-110 transition-all duration-500">
-                                            <div className="w-12 h-12 border border-white/10 rotate-45 group-hover:rotate-90 transition-all duration-700" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-[10px] font-mono text-white/40 mb-1">{set.coordinates}</div>
-                                        <div className="text-xs font-bold uppercase tracking-widest text-white/60 group-hover:text-white">{set.location}</div>
-                                    </div>
-                                </div>
-
-                                {/* Hover Play Overlay */}
-                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                                    <MagneticButton>
-                                        <div className="w-16 h-16 rounded-full bg-[#D4A574] text-black flex items-center justify-center">
-                                            <Play className="w-6 h-6 ml-1" fill="currentColor" />
-                                        </div>
-                                    </MagneticButton>
-                                </div>
-                            </div>
-
-                            {/* Meta */}
-                            <h3 className="font-display text-2xl text-white mb-1 group-hover:text-[#D4A574] transition-colors">{set.title}</h3>
-                            <p className="text-sm font-mono text-white/50">{set.artist} <span className="opacity-30 mx-2">|</span> {set.date}</p>
-                        </motion.div>
-                    ))}
-                </div>
-
-            </div>
-        </div>
-    );
+interface Track {
+  title: string;
+  artist: string;
+  series: "sunsets" | "untold";
+  duration: string;
+  soundcloudUrl: string;
+  embedUrl: string;
 }
 
+const tracks: Track[] = [
+  {
+    title: "Spécial NYE",
+    artist: "BENCHEK",
+    series: "sunsets",
+    duration: "58:23",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "TERRANOVA x CHASING SUN(SETS)",
+    artist: "TERRANOVA",
+    series: "sunsets",
+    duration: "62:10",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Mix Vol.3",
+    artist: "EWERSEEN",
+    series: "sunsets",
+    duration: "55:48",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "RADIAN x UNTOLD STORY",
+    artist: "RADIAN",
+    series: "untold",
+    duration: "71:05",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Collab Mix Vol.2",
+    artist: "EWERSEEN",
+    series: "sunsets",
+    duration: "48:32",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Live from Marbella EP02",
+    artist: "BENCHEK",
+    series: "sunsets",
+    duration: "64:17",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+];
+
+type Filter = "all" | "sunsets" | "untold";
+
+export default function Radio() {
+  const [activeTrack, setActiveTrack] = useState<number | null>(null);
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const filtered = filter === "all" ? tracks : tracks.filter((t) => t.series === filter);
+
+  const handlePlay = (index: number) => {
+    // Find real index in full tracks array
+    const track = filtered[index];
+    const realIndex = tracks.indexOf(track);
+    setActiveTrack(activeTrack === realIndex ? null : realIndex);
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
+
+      {/* Hero */}
+      <section className="pt-40 pb-16 px-6">
+        <div className="container max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6">
+              Mix Series
+            </span>
+            <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] uppercase text-foreground mb-8">
+              RADIO
+            </h1>
+            <p className="max-w-lg text-muted-foreground text-lg leading-relaxed">
+              Curated sets and live recordings from our artists and guests.
+              The music doesn't stop when the show ends.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section className="px-6 pb-8">
+        <div className="container max-w-6xl mx-auto">
+          <div className="flex flex-wrap gap-3 pb-6 border-b border-border">
+            {([
+              { label: "ALL", value: "all" as Filter, icon: null },
+              { label: "SUN(SETS)", value: "sunsets" as Filter, icon: <Sun className="w-3.5 h-3.5" /> },
+              { label: "UNTOLD", value: "untold" as Filter, icon: <UntoldButterflyLogo className="w-4 h-4" /> },
+            ]).map((f) => (
+              <button
+                key={f.value}
+                onClick={() => setFilter(f.value)}
+                className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 border rounded-full ${filter === f.value
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                  }`}
+              >
+                {f.icon}
+                {f.label}
+              </button>
+            ))}
+            <span className="ml-auto font-mono text-xs text-muted-foreground self-center">
+              {filtered.length} SET{filtered.length !== 1 ? "S" : ""}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Track List */}
+      <section className="px-6 pb-16">
+        <div className="container max-w-6xl mx-auto">
+          <div className="border-t border-border/50">
+            {filtered.map((track, index) => {
+              const realIndex = tracks.indexOf(track);
+              const isActive = activeTrack === realIndex;
+              return (
+                <motion.div
+                  key={track.soundcloudUrl}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.03 }}
+                  className={`group flex items-center gap-4 md:gap-6 py-5 px-4 border-b border-border/50 transition-colors cursor-pointer ${isActive ? "bg-white/5" : "hover:bg-white/[0.03]"
+                    }`}
+                  onClick={() => handlePlay(index)}
+                >
+                  {/* Track number / play */}
+                  <div className="w-8 flex items-center justify-center shrink-0">
+                    <span className={`font-mono text-sm transition-opacity ${isActive ? "hidden" : "group-hover:hidden"}`}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={`${isActive ? "block" : "hidden group-hover:block"}`}>
+                      {isActive ? (
+                        <Pause className="w-4 h-4 text-primary" />
+                      ) : (
+                        <Play className="w-4 h-4 text-primary ml-0.5" />
+                      )}
+                    </span>
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <span className={`block text-sm font-medium truncate transition-colors ${isActive ? "text-primary" : "text-foreground"}`}>
+                      {track.title}
+                    </span>
+                    <span className="block text-xs text-muted-foreground font-mono tracking-wide">
+                      {track.artist}
+                    </span>
+                  </div>
+
+                  {/* Series tag */}
+                  <span className={`hidden md:block px-2 py-0.5 text-[10px] font-mono tracking-widest uppercase border ${track.series === "sunsets"
+                      ? "text-clay border-clay/30"
+                      : "text-primary border-primary/30"
+                    }`}>
+                    {track.series === "sunsets" ? "SUN(SETS)" : "UNTOLD"}
+                  </span>
+
+                  {/* Duration */}
+                  <span className="font-mono text-xs text-muted-foreground tabular-nums shrink-0">
+                    {track.duration}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* SoundCloud link */}
+          <div className="mt-6 flex items-center justify-between">
+            <a
+              href="https://soundcloud.com/chasing-sun-sets"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+            >
+              <span className="font-mono tracking-wide uppercase text-xs">All mixes on SoundCloud</span>
+              <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="px-6 py-20 bg-card border-t border-border">
+        <div className="container max-w-6xl mx-auto">
+          <div className="flex items-end justify-between mb-8 pb-4 border-b border-border">
+            <div>
+              <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-2">
+                Global Reach
+              </span>
+              <h2 className="font-display text-3xl md:text-4xl text-foreground">WHERE WE ARE</h2>
+            </div>
+            <span className="font-mono text-xs text-muted-foreground tracking-widest">
+              4 ARTISTS · 8 CITIES
+            </span>
+          </div>
+
+          <div className="border border-border bg-background p-6">
+            <div className="h-[300px] md:h-[400px]">
+              <GlobalListenerMap />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-6 border-t border-border">
+        <div className="container max-w-4xl mx-auto text-center">
+          <h2 className="font-display text-4xl md:text-6xl text-foreground mb-4">
+            HEAR IT LIVE
+          </h2>
+          <p className="text-muted-foreground max-w-md mx-auto mb-12">
+            Every set gets recorded and added to the archive.
+            Come to the show, hear it first.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/tickets">
+              <div className="px-10 py-4 bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer rounded-full">
+                GET TICKETS
+              </div>
+            </Link>
+            <Link href="/lineup">
+              <div className="px-10 py-4 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full">
+                VIEW LINEUP
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+
+      {/* Sticky player */}
+      <StickyPlayer
+        track={activeTrack !== null ? tracks[activeTrack] : null}
+        onClose={() => setActiveTrack(null)}
+      />
+    </div>
+  );
+}

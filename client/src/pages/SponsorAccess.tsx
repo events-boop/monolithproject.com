@@ -27,11 +27,6 @@ export default function SponsorAccess() {
         <div className="min-h-screen bg-background text-foreground relative overflow-hidden font-sans">
             <Navigation activeSection="partnerships" />
 
-            {/* Background Ambience */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px]" />
-                <div className="absolute inset-0 bg-noise opacity-30" />
-            </div>
 
             <div className="container relative z-10 min-h-screen flex flex-col items-center justify-center py-20">
 
@@ -44,9 +39,9 @@ export default function SponsorAccess() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
                             transition={{ duration: 0.5 }}
-                            className="max-w-md w-full bg-card/50 backdrop-blur-xl border border-white/10 p-12 rounded-sm text-center shadow-2xl"
+                            className="max-w-md w-full border border-border p-12 text-center"
                         >
-                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-primary/20">
+                            <div className="w-16 h-16 bg-primary/5 border border-primary/30 flex items-center justify-center mx-auto mb-8">
                                 <Lock className="w-6 h-6 text-primary" />
                             </div>
 
@@ -80,7 +75,7 @@ export default function SponsorAccess() {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase py-3 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 group"
+                                    className="w-full bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase py-3 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 group rounded-full"
                                 >
                                     <span>Unlock</span>
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -100,7 +95,7 @@ export default function SponsorAccess() {
                                 <span className="font-mono text-xs text-primary tracking-widest uppercase mb-4 block">
                                     Confidential
                                 </span>
-                                <h1 className="font-display text-5xl md:text-7xl text-silver-red-gradient mb-6">
+                                <h1 className="font-display text-5xl md:text-7xl text-foreground mb-6">
                                     CHASING SUN(SETS)
                                 </h1>
                                 <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
@@ -110,9 +105,9 @@ export default function SponsorAccess() {
 
                             <div className="grid md:grid-cols-2 gap-6">
                                 {/* Deck Download */}
-                                <div className="group relative p-8 border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-500 rounded-sm">
+                                <div className="group relative p-8 border border-border hover:border-primary/30 transition-all duration-500">
                                     <div className="h-full flex flex-col">
-                                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                                        <div className="w-12 h-12 bg-primary/5 border border-primary/30 flex items-center justify-center mb-6">
                                             <FileText className="w-6 h-6 text-primary" />
                                         </div>
                                         <h3 className="font-display text-2xl text-foreground mb-2">Sponsorship Deck</h3>
@@ -122,7 +117,7 @@ export default function SponsorAccess() {
                                         <a
                                             href="/documents/Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf"
                                             download
-                                            className="w-full py-4 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium"
+                                            className="w-full py-4 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium rounded-full"
                                         >
                                             <Download className="w-4 h-4" />
                                             Download PDF
@@ -131,9 +126,9 @@ export default function SponsorAccess() {
                                 </div>
 
                                 {/* Rate Card */}
-                                <div className="group relative p-8 border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-500 rounded-sm">
+                                <div className="group relative p-8 border border-border hover:border-primary/30 transition-all duration-500">
                                     <div className="h-full flex flex-col">
-                                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                                        <div className="w-12 h-12 bg-primary/5 border border-primary/30 flex items-center justify-center mb-6">
                                             <Lock className="w-6 h-6 text-primary" />
                                         </div>
                                         <h3 className="font-display text-2xl text-foreground mb-2">Rate Card</h3>
@@ -144,7 +139,7 @@ export default function SponsorAccess() {
                                             onClick={() => toast.info("Inventory Locked", {
                                                 description: "Rate card inventory is currently being revised for Q3 2026."
                                             })}
-                                            className="w-full py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium"
+                                            className="w-full py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium rounded-full"
                                         >
                                             <Download className="w-4 h-4" />
                                             View Inventory

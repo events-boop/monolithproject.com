@@ -1,12 +1,8 @@
-/*
-  DESIGN: Cosmic Mysticism - The Movement section
-  - Brand philosophy and story
-  - Asymmetric layout with geometric accents
-*/
-
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "wouter";
+import { ArrowRight } from "lucide-react";
 
 export default function MovementSection() {
   const ref = useRef(null);
@@ -16,84 +12,105 @@ export default function MovementSection() {
     <section
       id="movement"
       ref={ref}
-      className="relative section-padding bg-background"
+      className="relative section-padding bg-sand overflow-hidden"
     >
-      {/* Geometric accent line */}
-      <div className="absolute left-0 top-1/2 w-32 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
-
+      <div className="absolute inset-0 atmo-surface" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(34,211,238,0.08),transparent_34%),radial-gradient(circle_at_82%_78%,rgba(224,90,58,0.12),transparent_36%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute right-0 top-0 bottom-0 w-[52%] opacity-[0.06] blur-[1px]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to left, rgba(255,255,255,0.16), rgba(255,255,255,0.08) 22%, transparent 68%), url('/images/autograf-recap.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div
+          className="absolute left-0 bottom-0 h-[44%] w-[44%] opacity-[0.05] blur-[0.8px]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-recap.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      </div>
       <div className="container max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left Column - Title */}
+          {/* Left Column */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -80 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="font-mono text-xs text-primary tracking-widest uppercase mb-4 block">
-              01 — Programming & Curation
+            <span className="font-serif italic text-lg text-clay mb-4 block">
+              What we're building
             </span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-wide text-foreground mb-6">
-              MORE THAN EVENTS.
+            <h2 className="font-display text-section-title tracking-wide text-charcoal mb-6">
+              NOT JUST EVENTS.
               <br />
-              <span className="text-primary">A MOVEMENT.</span>
+              <span className="text-clay">A COLLECTIVE.</span>
             </h2>
 
-            {/* Decorative element */}
-            <div className="flex items-center gap-4 mt-8">
-              <div className="w-16 h-[1px] bg-primary" />
-              <svg
-                viewBox="0 0 40 40"
-                className="w-8 h-8 text-primary"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-              >
-                <circle cx="20" cy="20" r="18" />
-                <circle cx="20" cy="20" r="8" />
-                <line x1="20" y1="2" x2="20" y2="12" />
-                <line x1="20" y1="28" x2="20" y2="38" />
-                <line x1="2" y1="20" x2="12" y2="20" />
-                <line x1="28" y1="20" x2="38" y2="20" />
-              </svg>
+            <div className="flex flex-wrap items-center gap-4 mt-8">
+              <Link href="/#schedule">
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("schedule")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="btn-pill-dark"
+                >
+                  See Upcoming Events
+                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Link>
+              <Link href="/about">
+                <a className="group inline-flex items-center gap-2 text-xs text-stone hover:text-clay transition-colors font-bold tracking-widest uppercase cursor-pointer">
+                  Our Story
+                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Link>
             </div>
           </motion.div>
 
-          {/* Right Column - Content */}
+          {/* Right Column */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 80 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-6"
           >
-            <p className="text-lg text-foreground/90 leading-relaxed">
-              The Monolith Project exists to restore meaning to the spaces where we gather.
-              In a world of fleeting moments and fractured attention, we create experiences
-              that feel timeless, immersive, and emotionally resonant.
+            <p className="text-lg text-charcoal/90 leading-relaxed">
+              The Monolith Project is an events collective out of Chicago. We put on shows
+              where the music matters, the crowd is part of it, and you leave feeling like
+              you were actually there — not just watching through a screen.
             </p>
 
-            <p className="text-base text-muted-foreground leading-relaxed">
-              The Monolith is a metaphor — a portal, a frequency, a guide. Each chapter
-              is part of a collective mythology, designed to unify communities through
-              intentional sound, elevated design, and story-driven experiences.
+            <p className="text-base text-stone leading-relaxed">
+              Two event series run under the collective. Chasing Sun(Sets) brings sunset
+              rooftop energy with afro house and organic sounds. Untold Story goes deep —
+              late-night, intimate, 360-degree sound where the DJ tells the story.
             </p>
 
-            <div className="pt-6 border-t border-border">
-              <p className="text-sm text-muted-foreground italic">
+            <div className="pt-6 border-t border-charcoal/10 rounded-xl bg-white/25 backdrop-blur-[2px] px-4 pb-4">
+              <p className="font-serif italic text-lg text-charcoal/70 leading-relaxed">
                 "We believe music carries emotion. We believe gathering should feel shared.
                 We believe in rhythm, story, and togetherness."
               </p>
             </div>
 
-            {/* Values */}
             <div className="flex flex-wrap gap-4 pt-4">
-              {["Authenticity", "Togetherness", "Intention", "Artistry", "Timelessness"].map(
+              {["Community", "Music", "Togetherness", "Chicago", "Real Moments"].map(
                 (value, index) => (
                   <motion.span
                     key={value}
                     initial={{ opacity: 0, y: 10 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    className="px-4 py-2 text-xs tracking-widest uppercase border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                    className="px-4 py-2 text-xs tracking-widest uppercase border border-charcoal/20 text-stone hover:border-clay hover:text-clay transition-colors"
                   >
                     {value}
                   </motion.span>

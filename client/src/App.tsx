@@ -1,49 +1,115 @@
+import { lazy, Suspense, useState, useCallback } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-import Tickets from "./pages/Tickets";
-import About from "./pages/About";
-import ArtistProfile from "./pages/ArtistProfile";
+import Preloader from "./components/Preloader";
+import EventBanner from "./components/EventBanner";
+import FloatingTicketButton from "./components/FloatingTicketButton";
+import GridBackground from "./components/GridBackground";
 
-import SponsorAccess from "./pages/SponsorAccess";
-import ChasingSunsets from "./pages/ChasingSunsets";
-import Radio from "./pages/Radio";
-import UntoldStory from "./pages/UntoldStory";
-import Booking from "./pages/Booking";
+import { AnimatePresence, motion } from "framer-motion";
+import { useLocation } from "wouter";
+import SmoothScroll from "./components/SmoothScroll";
+
+const Home = lazy(() => import("./pages/Home"));
+const Tickets = lazy(() => import("./pages/Tickets"));
+const About = lazy(() => import("./pages/About"));
+const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
+const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
+const ChasingSunsets = lazy(() => import("./pages/ChasingSunsets"));
+const Radio = lazy(() => import("./pages/Radio"));
+const UntoldStory = lazy(() => import("./pages/UntoldStory"));
+const Booking = lazy(() => import("./pages/Booking"));
+const Partners = lazy(() => import("./pages/Partners"));
+const Lineup = lazy(() => import("./pages/Lineup"));
+const NotFoundLazy = lazy(() => import("./pages/NotFound"));
+
+const pageTransition = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 function Router() {
+  const [location] = useLocation();
+
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/tickets"} component={Tickets} />
-      <Route path={"/artists/:id"} component={ArtistProfile} />
-      <Route path={"/sponsors"} component={SponsorAccess} />
-      <Route path={"/about"} component={About} />
-      <Route path={"/chasing-sunsets"} component={ChasingSunsets} />
-      <Route path={"/radio"} component={Radio} />
-      <Route path={"/story"} component={UntoldStory} />
-      <Route path={"/booking"} component={Booking} />
-      <Route path={"/404"} component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <AnimatePresence mode="wait">
+      <Switch location={location} key={location}>
+        <Route path={"/"} component={HomeTransition} />
+        <Route path={"/tickets"} component={TicketsTransition} />
+        <Route path={"/artists/:id"} component={ArtistProfileTransition} />
+        <Route path={"/sponsors"} component={SponsorAccessTransition} />
+        <Route path={"/about"} component={AboutTransition} />
+        <Route path={"/chasing-sunsets"} component={ChasingSunsetsTransition} />
+        <Route path={"/radio"} component={RadioTransition} />
+        <Route path={"/story"} component={UntoldStoryTransition} />
+        <Route path={"/booking"} component={BookingTransition} />
+        <Route path={"/lineup"} component={LineupTransition} />
+        <Route path={"/partners"} component={PartnersTransition} />
+        <Route path={"/404"} component={NotFoundTransition} />
+        <Route component={NotFoundTransition} />
+      </Switch>
+    </AnimatePresence>
   );
 }
 
-import AudioPlayer from "@/components/AudioPlayer";
+const withTransition = (Component: React.ComponentType<any>) => {
+  return (props: any) => (
+    <motion.div
+      initial={pageTransition.initial}
+      animate={pageTransition.animate}
+      exit={pageTransition.exit}
+      transition={pageTransition.transition}
+      className="w-full"
+    >
+      <Component {...props} />
+    </motion.div>
+  );
+};
+
+const HomeTransition = withTransition(Home);
+const TicketsTransition = withTransition(Tickets);
+const ArtistProfileTransition = withTransition(ArtistProfile);
+const SponsorAccessTransition = withTransition(SponsorAccess);
+const AboutTransition = withTransition(About);
+const ChasingSunsetsTransition = withTransition(ChasingSunsets);
+const RadioTransition = withTransition(Radio);
+const UntoldStoryTransition = withTransition(UntoldStory);
+const BookingTransition = withTransition(Booking);
+const LineupTransition = withTransition(Lineup);
+const PartnersTransition = withTransition(Partners);
+const NotFoundTransition = withTransition(NotFoundLazy);
 
 function App() {
+  const [loaded, setLoaded] = useState(
+    () => !!sessionStorage.getItem("monolith-loaded")
+  );
+
+  const handlePreloaderComplete = useCallback(() => {
+    setLoaded(true);
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-
-          <Router />
-
+          {!loaded && <Preloader onComplete={handlePreloaderComplete} />}
+          {loaded && (
+            <>
+              <SmoothScroll />
+              <EventBanner />
+              <GridBackground />
+              <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+                <Router />
+              </Suspense>
+              <FloatingTicketButton />
+            </>
+          )}
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

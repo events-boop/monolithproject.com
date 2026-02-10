@@ -1,277 +1,407 @@
-/*
-  DESIGN: Cosmic Mysticism - About Page
-  - Brand story and founder's vision
-  - The mythology behind The Monolith
-  - Team/collective info
-  - Values and philosophy
-*/
-
-import { motion } from "framer-motion";
-import { ArrowLeft, Heart, Users, Music, Sparkles, Target } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { Sun, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
-import ParticleField from "@/components/ParticleField";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
+import RevealText from "@/components/RevealText";
+import SectionDivider from "@/components/SectionDivider";
 
 const values = [
   {
-    icon: Heart,
+    number: "01",
     title: "Authenticity",
-    description: "Every experience is rooted in genuine intention, not trends or algorithms."
+    text: "Rooted in genuine intention, not trends. We don't chase hype — we chase meaning.",
   },
   {
-    icon: Users,
+    number: "02",
     title: "Togetherness",
-    description: "We believe gathering should feel shared — a collective moment, not isolated consumption."
+    text: "A collective moment, not isolated consumption. The room moves as one.",
   },
   {
-    icon: Target,
+    number: "03",
     title: "Intention",
-    description: "Every detail is deliberate. From the sound to the setting, nothing is accidental."
+    text: "Every detail is deliberate. The sound, the light, the timing — nothing is accidental.",
   },
   {
-    icon: Music,
+    number: "04",
     title: "Artistry",
-    description: "We elevate DJing to storytelling. The selector is the narrator, the dancefloor is the audience."
+    text: "The selector is the narrator, the dancefloor is the audience. Music guides everything.",
   },
-  {
-    icon: Sparkles,
-    title: "Timelessness",
-    description: "We create moments that transcend the night — memories that stay with you."
-  }
 ];
 
-const chapters = [
-  {
-    name: "Chasing Sun(Sets)",
-    tagline: "Where Light Meets Sound",
-    description: "Seasonal sunset-aligned gatherings celebrating the golden hour. Rooftops, beaches, and elevated natural spaces become the stage for Afro house, organic rhythms, and global sounds. Each experience is a musical ceremony honoring light, change, and human connection.",
-    color: "text-amber-400"
-  },
-  {
-    name: "Untold Story",
-    tagline: "For the Energy Givers. The Storytellers.",
-    description: "A 360-degree sonic experience where the story is told through sound with deep meaning. The only unbroken story is the art of DJing — and the narrator is the DJ. Built on togetherness, this is where the monolith collective gathers to witness sound as narrative.",
-    color: "text-purple-400"
-  },
-  {
-    name: "Chasing Sun(Sets) Radio",
-    tagline: "The Frequency Continues",
-    description: "Beyond the gatherings, the sound lives on. Curated mixes and live sessions from our resident artists and global guests. Carry the golden hour with you, wherever you are.",
-    color: "text-primary"
-  }
+const stats = [
+  { value: "2024", label: "Founded" },
+  { value: "Chicago", label: "Home Base" },
+  { value: "2", label: "Event Series" },
+  { value: "10+", label: "Artists" },
 ];
 
 export default function About() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.5], ["0%", "15%"]);
+
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden bg-noise">
-      {/* Particle background */}
-      <ParticleField />
-      
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/">
-            <a className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-sm tracking-wider">Back to Home</span>
-            </a>
-          </Link>
-          <span className="font-display text-lg tracking-ultra-wide text-primary">
-            THE MONOLITH PROJECT
-          </span>
-        </div>
-      </header>
-      
-      <main className="relative z-10 pt-24 pb-20">
-        {/* Hero Section */}
-        <section className="container py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            {/* Monolith Symbol */}
+    <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
+
+      {/* Hero — full bleed with parallax */}
+      <section ref={heroRef} className="relative min-h-[80vh] flex items-end overflow-hidden">
+        <motion.div style={{ opacity: heroOpacity, y: heroY }} className="relative z-10 w-full pb-16 pt-48 px-6">
+          <div className="container max-w-6xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2 }}
-              className="mb-8"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <svg
-                viewBox="0 0 100 120"
-                className="w-20 h-24 mx-auto text-primary"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
+              <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6">
+                The Collective
+              </span>
+              <RevealText
+                as="h1"
+                className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] uppercase text-foreground mb-8 tracking-tight-display"
               >
-                <path d="M50 5 L85 115 L15 115 Z" />
-                <path d="M50 25 L70 100 L30 100 Z" />
-              </svg>
+                ABOUT
+              </RevealText>
+              <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-relaxed">
+                A Chicago events collective built on music, community,
+                and showing up for each other.
+              </p>
             </motion.div>
-            
-            <h1 className="font-display text-5xl md:text-7xl tracking-ultra-wide text-foreground mb-6">
-              ABOUT THE<br />
-              <span className="text-primary">MONOLITH</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground tracking-wide font-light">
-              Guided by Authentic Intention — the purest form of energy.
-            </p>
-          </motion.div>
-        </section>
 
-        {/* The Why Section */}
-        <section className="container py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto"
-          >
-            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-8 text-center">
-              WHY WE <span className="text-primary">EXIST</span>
-            </h2>
-            
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-              <p>
-                Nightlife has become transactional. Disconnected. Focused on short attention spans and content creation rather than genuine human connection. We've traded presence for performance, community for clout.
-              </p>
-              
-              <p>
-                <span className="text-foreground font-medium">The Monolith Project exists to restore meaning to the spaces where we gather.</span>
-              </p>
-              
-              <p>
-                We create experiences where music guides people back into presence. Where sound carries emotion. Where gathering feels shared — rooted in rhythm, story, and togetherness.
-              </p>
-              
-              <blockquote className="border-l-2 border-primary pl-6 py-4 my-8 italic text-foreground">
-                "We believe music carries emotion. We believe gathering should feel shared. We believe in rhythm, story, and togetherness."
-              </blockquote>
-              
-              <p>
-                The Monolith is a metaphor — a portal, a frequency, a guide. Each chapter is part of a collective mythology, designed to unify communities through intentional sound, elevated design, and story-driven experiences.
-              </p>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Values Section */}
-        <section className="container py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-              OUR <span className="text-primary">VALUES</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              The principles that guide every decision, every experience, every moment.
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card/30 border border-border rounded-lg p-6 text-center hover:border-primary/30 transition-colors"
-              >
-                <value.icon className="w-8 h-8 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-lg text-foreground mb-2">{value.title}</h3>
-                <p className="text-sm text-muted-foreground">{value.description}</p>
-              </motion.div>
-            ))}
+            {/* Stats row */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-wrap gap-8 md:gap-16 mt-12 pt-8 border-t border-border"
+            >
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <span className="block font-display text-2xl md:text-3xl text-foreground">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] text-muted-foreground tracking-[0.2em] uppercase">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
           </div>
-        </section>
+        </motion.div>
+      </section>
 
-        {/* Chapters Section */}
-        <section className="container py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-              THE <span className="text-primary">CHAPTERS</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Each sub-brand is a chapter in our collective mythology.
-            </p>
-          </motion.div>
-          
-          <div className="space-y-8 max-w-3xl mx-auto">
-            {chapters.map((chapter, index) => (
-              <motion.div
-                key={chapter.name}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-card/30 border border-border rounded-lg p-8 hover:border-primary/30 transition-colors"
-              >
-                <h3 className={`font-display text-2xl ${chapter.color} mb-2`}>
-                  {chapter.name}
-                </h3>
-                <p className="text-sm text-muted-foreground tracking-wider uppercase mb-4">
-                  {chapter.tagline}
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  {chapter.description}
-                </p>
-              </motion.div>
-            ))}
+      <SectionDivider number="01" label="Origin" />
+
+      {/* The Problem — editorial two-column */}
+      <section className="py-24 px-6">
+        <div className="container max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-20">
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-2"
+            >
+              <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-4">
+                Why We Exist
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl text-foreground leading-[0.9] tracking-tight-display">
+                THE
+                <br />
+                PROBLEM
+              </h2>
+              <div className="w-12 h-[1px] bg-primary mt-6" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-3 space-y-6"
+            >
+              <p className="text-foreground text-xl md:text-2xl leading-relaxed font-light">
+                Nightlife has become transactional. Disconnected. Focused on
+                content creation rather than genuine human connection.
+              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                We've traded presence for performance. The phone is up before the
+                first drop. The VIP rope says more about who you know than what you
+                feel. And somewhere along the way, the dancefloor stopped being a
+                shared experience.
+              </p>
+              <p className="text-foreground/90 text-lg leading-relaxed">
+                The Monolith Project exists to restore meaning to the spaces where
+                we come together — where sound carries emotion and the night feels
+                shared.
+              </p>
+            </motion.div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Core Message */}
-        <section className="container py-16 md:py-24">
+      {/* Cinematic break — pull quote */}
+      <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden bg-card">
+        <div className="absolute inset-0 flex items-center justify-center px-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
+            transition={{ duration: 1.2 }}
+            className="max-w-4xl text-center"
           >
-            <div className="bg-gradient-to-br from-primary/10 via-transparent to-purple-500/10 border border-primary/20 rounded-2xl p-12 md:p-16">
-              <p className="font-display text-3xl md:text-5xl tracking-ultra-wide text-foreground leading-tight">
-                TOGETHERNESS IS THE FREQUENCY.
-                <br />
-                <span className="text-primary">MUSIC IS THE GUIDE.</span>
-              </p>
-            </div>
+            <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-white/90 leading-relaxed italic">
+              "We believe music carries emotion. We believe gathering should feel
+              shared. We believe in rhythm, story, and togetherness."
+            </p>
+            <span className="block mt-8 font-mono text-xs text-primary tracking-[0.3em] uppercase">
+              — The Monolith Project
+            </span>
           </motion.div>
-        </section>
+        </div>
+      </div>
 
-        {/* CTA */}
-        <section className="container py-16">
+      <SectionDivider number="02" label="Principles" />
+
+      {/* Values — numbered editorial grid */}
+      <section className="py-24 px-6">
+        <div className="container max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center"
+            transition={{ duration: 0.8 }}
+            className="mb-16"
           >
-            <Link href="/">
-              <a className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-display text-lg tracking-widest hover:bg-primary/90 transition-colors">
-                <span>ENTER THE PORTAL</span>
-              </a>
-            </Link>
+            <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-4">
+              What Drives Us
+            </span>
+            <RevealText
+              as="h2"
+              className="font-display text-5xl md:text-7xl text-foreground tracking-tight-display"
+            >
+              VALUES
+            </RevealText>
           </motion.div>
-        </section>
-      </main>
-      
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-border py-8">
-        <div className="container text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2026 The Monolith Project. All rights reserved.
-          </p>
+
+          <div className="grid md:grid-cols-2 gap-px bg-border border border-border">
+            {values.map((v, i) => (
+              <motion.div
+                key={v.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-background p-10 md:p-12 group"
+              >
+                <span className="font-display text-5xl md:text-6xl text-white/[0.04] block mb-4 select-none">
+                  {v.number}
+                </span>
+                <h3 className="font-display text-xl md:text-2xl text-foreground mb-3 uppercase tracking-wide">
+                  {v.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{v.text}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </footer>
+      </section>
+
+      <SectionDivider number="03" label="The Events" />
+
+      {/* Two Series — dramatic cards */}
+      <section className="py-24 px-6 bg-card">
+        <div className="container max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-16"
+          >
+            <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-4">
+              Two Series, One Collective
+            </span>
+            <RevealText
+              as="h2"
+              className="font-display text-5xl md:text-7xl text-foreground tracking-tight-display"
+            >
+              THE EVENTS
+            </RevealText>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Chasing Sun(Sets) */}
+            <Link href="/chasing-sunsets">
+              <motion.div
+                initial={{ opacity: 0, y: 60, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative border border-border hover:border-[#C2703E]/50 transition-all duration-500 cursor-pointer overflow-hidden"
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  style={{ background: "linear-gradient(135deg, rgba(194,112,62,0.08), transparent)" }}
+                />
+                <div className="relative p-10 md:p-12">
+                  <Sun className="w-6 h-6 text-[#C2703E] mb-6 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <span className="font-mono text-[10px] text-[#C2703E]/60 tracking-[0.3em] uppercase block mb-2">
+                    Series 01
+                  </span>
+                  <h3 className="font-display text-3xl md:text-4xl text-[#C2703E] mb-4 tracking-wide">
+                    CHASING SUN(SETS)
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    Rooftop and outdoor shows timed to sunset. Afro house, organic
+                    beats, and the kind of crowd that actually dances. Every set starts
+                    in daylight and ends under the stars.
+                  </p>
+                  <div className="flex items-center gap-2 text-[#C2703E] text-xs font-bold tracking-widest uppercase group-hover:gap-3 transition-all">
+                    <span>Explore</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+
+            {/* Untold Story */}
+            <Link href="/story">
+              <motion.div
+                initial={{ opacity: 0, y: 60, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative border border-border hover:border-[#8B5CF6]/50 transition-all duration-500 cursor-pointer overflow-hidden"
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  style={{ background: "linear-gradient(135deg, rgba(139,92,246,0.08), transparent)" }}
+                />
+                <div className="relative p-10 md:p-12">
+                  <UntoldButterflyLogo className="w-7 h-7 text-[#8B5CF6] mb-6 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <span className="font-mono text-[10px] text-[#8B5CF6]/60 tracking-[0.3em] uppercase block mb-2">
+                    Series 02
+                  </span>
+                  <h3 className="font-display text-3xl md:text-4xl text-[#8B5CF6] mb-4 tracking-wide">
+                    UNTOLD STORY
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    Late-night, intimate, 360-degree sound. Techno, deep house,
+                    experimental. The DJ is the narrator, the crowd is the story. No
+                    phones, no VIP rope — just the room and the sound system.
+                  </p>
+                  <div className="flex items-center gap-2 text-[#8B5CF6] text-xs font-bold tracking-widest uppercase group-hover:gap-3 transition-all">
+                    <span>Explore</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <SectionDivider number="04" label="The People" />
+
+      {/* The Team / Who We Are */}
+      <section className="py-24 px-6">
+        <div className="container max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-20">
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-2"
+            >
+              <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-4">
+                Behind the Sound
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl text-foreground leading-[0.9] tracking-tight-display">
+                WHO
+                <br />
+                WE ARE
+              </h2>
+              <div className="w-12 h-[1px] bg-primary mt-6" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-3 space-y-6"
+            >
+              <p className="text-foreground text-xl md:text-2xl leading-relaxed font-light">
+                We're a group of music lovers, DJs, and creative minds from Chicago
+                who wanted something different.
+              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Not bigger. Not louder. Just more real. The Monolith Project started
+                as a conversation between friends about what nightlife could feel like
+                if you stripped away everything that doesn't matter.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                No bottle service. No influencer tables. No algorithms deciding the
+                vibe. Just a room, a sound system, and people who came because they
+                love music.
+              </p>
+
+              <div className="pt-8">
+                <Link href="/lineup">
+                  <div className="group inline-flex items-center gap-3 text-foreground hover:text-primary transition-colors cursor-pointer">
+                    <span className="font-bold tracking-widest uppercase text-xs">Meet the Artists</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-32 px-6 border-t border-border bg-card">
+        <div className="container max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <RevealText
+              as="h2"
+              className="font-display text-5xl md:text-7xl lg:text-8xl text-foreground mb-4 tracking-tight-display"
+            >
+              MUSIC IS THE GUIDE.
+            </RevealText>
+            <p className="text-muted-foreground text-lg mb-12 max-w-lg mx-auto">
+              Same collective. Same community. Different time of night.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/tickets">
+                <div className="px-10 py-4 bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer rounded-full">
+                  GET TICKETS
+                </div>
+              </Link>
+              <Link href="/booking">
+                <div className="px-10 py-4 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full">
+                  CONTACT US
+                </div>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }

@@ -1,61 +1,42 @@
-/*
-  DESIGN: Cosmic Mysticism - Scrolling Ticker/Marquee
-  - Continuous scrolling text using pure CSS keyframes
-  - Fixed "triple layer" stacking bug by enforcing flex row layout
-  - Clean single-line rendering
-*/
+import { Ticket } from "lucide-react";
+import { POSH_TICKET_URL } from "@/data/events";
 
-import { useEffect, useRef } from "react";
-
-interface TickerProps {
-  items?: string[];
-}
-
-const defaultItems = [
-  "EVENT IS LIVE",
-  "LATEST TRANSMISSION: MONOLITH 001",
-  "CHASING SUN(SETS) RADIO: NOW STREAMING",
-  "UNTOLD STORY: COMING SOON",
-  "TOGETHERNESS IS THE FREQUENCY",
-  "MUSIC IS THE GUIDE",
-];
-
-export default function Ticker({ items = defaultItems }: TickerProps) {
-  // We duplicate content to ensure seamless loop
-  const tickerContent = [...items, ...items, ...items, ...items];
+export default function Ticker() {
+  const items = Array.from({ length: 12 });
 
   return (
-    <>
-      <div className="w-full overflow-hidden bg-black border-b border-white/5 py-2.5 relative z-[100] select-none pointer-events-auto h-[40px] flex items-center">
-        {/* CSS Mask for fade edges */}
-        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
-
-        {/* The Track */}
-        <div className="flex select-none overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {tickerContent.map((item, index) => (
-              <div key={index} className="flex items-center shrink-0">
-                <span className="text-[10px] md:text-xs tracking-[0.3em] font-mono font-medium uppercase text-white/70 px-8 whitespace-nowrap">
-                  {item}
-                </span>
-                <span className="text-[#D4A574] text-[10px] tracking-widest opacity-80 mr-8">+++</span>
-              </div>
-            ))}
-          </div>
-          <div className="flex animate-marquee aria-hidden:true whitespace-nowrap">
-            {tickerContent.map((item, index) => (
-              <div key={`clone-${index}`} className="flex items-center shrink-0">
-                <span className="text-[10px] md:text-xs tracking-[0.3em] font-mono font-medium uppercase text-white/70 px-8 whitespace-nowrap">
-                  {item}
-                </span>
-                <span className="text-[#D4A574] text-[10px] tracking-widest opacity-80 mr-8">+++</span>
-              </div>
-            ))}
-          </div>
+    <a
+      href={POSH_TICKET_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Get tickets"
+      className="block w-full overflow-hidden select-none h-[56px] flex items-center relative z-[100] cursor-pointer border-y border-primary/35 shadow-[0_10px_30px_rgba(224,90,58,0.2)]"
+      style={{ background: "linear-gradient(100deg, #3b1812 0%, #8f3a24 30%, #e05a3a 65%, #f39c6b 100%)" }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_50%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_82%_50%,rgba(255,220,180,0.3),transparent_35%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/10" />
+      <div className="flex overflow-hidden">
+        <div className="flex animate-marquee whitespace-nowrap min-w-full shrink-0">
+          {items.map((_, i) => (
+            <div key={i} className="flex items-center gap-3 shrink-0 px-12 group">
+              <Ticket className="w-4.5 h-4.5 text-white/90 transition-colors relative z-10" />
+              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/95 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] relative z-10">
+                GET TICKETS
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="flex animate-marquee whitespace-nowrap min-w-full shrink-0" aria-hidden="true">
+          {items.map((_, i) => (
+            <div key={`clone-${i}`} className="flex items-center gap-3 shrink-0 px-12">
+              <Ticket className="w-4.5 h-4.5 text-white/90" />
+              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/95 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
+                GET TICKETS
+              </span>
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </a>
   );
 }
-
