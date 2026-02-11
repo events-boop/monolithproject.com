@@ -10,7 +10,7 @@ import { z } from "zod";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-type LeadProvider = "mailchimp" | "beehiiv" | "convertkit";
+type LeadProvider = "mailchimp" | "beehiiv" | "convertkit" | "hubspot";
 
 const leadSchema = z.object({
   email: z.string().email(),
@@ -18,6 +18,13 @@ const leadSchema = z.object({
   lastName: z.string().trim().max(80).optional(),
   consent: z.literal(true),
   source: z.string().trim().max(120).optional(),
+  eventInterest: z.string().trim().max(120).optional(),
+  utmSource: z.string().trim().max(120).optional(),
+  utmMedium: z.string().trim().max(120).optional(),
+  utmCampaign: z.string().trim().max(140).optional(),
+  utmTerm: z.string().trim().max(140).optional(),
+  utmContent: z.string().trim().max(140).optional(),
+  pageUrl: z.string().url().max(500).optional(),
 });
 
 const ticketIntentSchema = z.object({
@@ -42,10 +49,10 @@ function logEvent(event: string, payload: Record<string, unknown>) {
 
 function readProvider(): LeadProvider {
   const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
-  if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit") {
+  if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit" || provider === "hubspot") {
     return provider;
   }
-  throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, or convertkit.");
+  throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, convertkit, or hubspot.");
 }
 
 function scrubEmail(email: string) {
@@ -154,9 +161,44 @@ async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
   throw new Error(data.message || "ConvertKit subscription failed");
 }
 
+async function subscribeHubSpot(lead: z.infer<typeof leadSchema>) {
+  const portalId = process.env.HUBSPOT_PORTAL_ID;
+  const formId = process.env.HUBSPOT_FORM_ID;
+  if (!portalId || !formId) {
+    throw new Error("HUBSPOT_PORTAL_ID and HUBSPOT_FORM_ID are required");
+  }
+
+  const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+  const fields = [
+    { name: "email", value: scrubEmail(lead.email) },
+    ...(lead.firstName ? [{ name: "firstname", value: lead.firstName }] : []),
+    ...(lead.lastName ? [{ name: "lastname", value: lead.lastName }] : []),
+  ];
+
+  const contextUrl = lead.pageUrl || "https://themonolithproject.com";
+  const context = {
+    pageUri: contextUrl,
+    pageName: lead.source || "website",
+  };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fields, context }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.inlineMessage || data.message || "HubSpot submission failed");
+  }
+}
+
 async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof leadSchema>) {
   if (provider === "mailchimp") return subscribeMailchimp(lead);
   if (provider === "beehiiv") return subscribeBeehiiv(lead);
+  if (provider === "hubspot") return subscribeHubSpot(lead);
   return subscribeConvertKit(lead);
 }
 
@@ -234,6 +276,10 @@ async function startServer() {
           requestId,
           provider,
           source: parsed.data.source || "website",
+          eventInterest: parsed.data.eventInterest || null,
+          utmSource: parsed.data.utmSource || null,
+          utmMedium: parsed.data.utmMedium || null,
+          utmCampaign: parsed.data.utmCampaign || null,
           emailHash: createHash("sha256").update(email).digest("hex").slice(0, 12),
         });
 

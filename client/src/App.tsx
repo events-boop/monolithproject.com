@@ -43,6 +43,7 @@ function Router() {
         <Route path={"/artists/:id"} component={ArtistProfileTransition} />
         <Route path={"/sponsors"} component={SponsorAccessTransition} />
         <Route path={"/about"} component={AboutTransition} />
+        <Route path={"/togetherness"} component={AboutTransition} />
         <Route path={"/chasing-sunsets"} component={ChasingSunsetsTransition} />
         <Route path={"/radio"} component={RadioTransition} />
         <Route path={"/story"} component={UntoldStoryTransition} />

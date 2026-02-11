@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 
-const CinematicBreak = lazy(() => import("@/components/CinematicBreak"));
+const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
 const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
 const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
 const ConnectSection = lazy(() => import("@/components/ConnectSection"));

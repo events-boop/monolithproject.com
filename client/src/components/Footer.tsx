@@ -42,6 +42,7 @@ const links = [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
       { name: "Radio", href: "/radio" },
+      { name: "About", href: "/about" },
       { name: "FAQ", href: "/#faq" },
     ]
   },
