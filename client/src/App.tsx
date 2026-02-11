@@ -1,10 +1,9 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Preloader from "./components/Preloader";
 import EventBanner from "./components/EventBanner";
 import FloatingTicketButton from "./components/FloatingTicketButton";
 import GridBackground from "./components/GridBackground";
@@ -47,6 +46,7 @@ function Router() {
         <Route path={"/chasing-sunsets"} component={ChasingSunsetsTransition} />
         <Route path={"/radio"} component={RadioTransition} />
         <Route path={"/story"} component={UntoldStoryTransition} />
+        <Route path={"/untold-story-deron-juany-bravo"} component={UntoldStoryTransition} />
         <Route path={"/booking"} component={BookingTransition} />
         <Route path={"/lineup"} component={LineupTransition} />
         <Route path={"/partners"} component={PartnersTransition} />
@@ -85,31 +85,20 @@ const PartnersTransition = withTransition(Partners);
 const NotFoundTransition = withTransition(NotFoundLazy);
 
 function App() {
-  const [loaded, setLoaded] = useState(
-    () => !!sessionStorage.getItem("monolith-loaded")
-  );
-
-  const handlePreloaderComplete = useCallback(() => {
-    setLoaded(true);
-  }, []);
-
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          {!loaded && <Preloader onComplete={handlePreloaderComplete} />}
-          {loaded && (
-            <>
-              <SmoothScroll />
-              <EventBanner />
-              <GridBackground />
-              <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
-                <Router />
-              </Suspense>
-              <FloatingTicketButton />
-            </>
-          )}
+          <>
+            <SmoothScroll />
+            <EventBanner />
+            <GridBackground />
+            <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+              <Router />
+            </Suspense>
+            <FloatingTicketButton />
+          </>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

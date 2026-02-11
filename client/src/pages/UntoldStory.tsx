@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowUpRight, Calendar, MapPin, Clock, Users, Shirt } from "lucide-react";
+import { ArrowUpRight, Calendar, MapPin, Clock, Users, Shirt, ChevronLeft, ChevronRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 
@@ -13,9 +15,9 @@ const deepBg = "#06060F";
 const cardBg = "#0C0C1A";
 
 const eventVisuals = {
-  poster: "/images/untold-juany-deron-poster.jpg",
-  deron: "/images/untold-deron-single.jpg",
-  juany: "/images/untold-juany-single.jpg",
+  poster: "/images/untold-story-juany-deron-v2.jpg",
+  deron: "/images/artist-joezi.png",
+  juany: "/images/lazare-recap.png",
 };
 
 const lineupVisuals = [
@@ -28,6 +30,12 @@ const lineupVisuals = [
 ];
 
 export default function UntoldStory() {
+  const heroSlides = [
+    "/images/untold-story-juany-deron-v2.jpg",
+  ];
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+  const [heroSlideDirection, setHeroSlideDirection] = useState<1 | -1>(1);
+
   const faqs = [
     ["Are tickets refundable?", "All sales are final. No refunds or exchanges."],
     ["What time should I arrive?", "Doors open at 7:00 PM. Peak experience begins around 9:00 PM. Early arrival is recommended for the full journey."],
@@ -41,36 +49,188 @@ export default function UntoldStory() {
     ["What if the event is sold out?", "Limited door tickets may be available on the night of the event, but advance purchase is strongly recommended."],
   ];
 
+  const goToNextHeroSlide = () => {
+    setHeroSlideDirection(1);
+    setHeroSlideIndex((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const goToPrevHeroSlide = () => {
+    setHeroSlideDirection(-1);
+    setHeroSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  useEffect(() => {
+    const eventSchemaId = "schema-untold-event";
+    const faqSchemaId = "schema-untold-faq";
+
+    const eventSchema = {
+      "@context": "https://schema.org",
+      "@type": "MusicEvent",
+      name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
+      description:
+        "A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360 dancefloor experience.",
+      startDate: "2026-03-06T19:00:00-06:00",
+      endDate: "2026-03-07T02:00:00-06:00",
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      image: [
+        "https://monolithproject.com/images/untold-juany-deron-poster.jpg",
+        "https://monolithproject.com/images/untold-deron-single.jpg",
+        "https://monolithproject.com/images/untold-juany-single.jpg",
+      ],
+      location: {
+        "@type": "Place",
+        name: "Alhambra Palace",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "1240 W Randolph St",
+          addressLocality: "Chicago",
+          addressRegion: "IL",
+          postalCode: "60607",
+          addressCountry: "US",
+        },
+      },
+      performer: [
+        { "@type": "MusicGroup", name: "Juany Bravo" },
+        { "@type": "MusicGroup", name: "Deron" },
+        { "@type": "MusicGroup", name: "Hashtom" },
+        { "@type": "MusicGroup", name: "Rose" },
+        { "@type": "MusicGroup", name: "Avo" },
+        { "@type": "MusicGroup", name: "Jerome b2b Kenbo" },
+      ],
+      organizer: {
+        "@type": "Organization",
+        name: "The Monolith Project",
+        url: "https://monolithproject.com",
+      },
+      offers: {
+        "@type": "Offer",
+        url: POSH_TICKET_URL,
+        availability: "https://schema.org/InStock",
+        validFrom: "2026-02-01T00:00:00-06:00",
+        priceCurrency: "USD",
+        price: "45",
+      },
+      url: "https://monolithproject.com/untold-story-deron-juany-bravo",
+    };
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map(([question, answer]) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: answer,
+        },
+      })),
+    };
+
+    const upsertSchema = (id: string, payload: object) => {
+      const existing = document.getElementById(id);
+      if (existing) existing.remove();
+      const script = document.createElement("script");
+      script.id = id;
+      script.type = "application/ld+json";
+      script.text = JSON.stringify(payload);
+      document.head.appendChild(script);
+    };
+
+    upsertSchema(eventSchemaId, eventSchema);
+    upsertSchema(faqSchemaId, faqSchema);
+
+    return () => {
+      document.getElementById(eventSchemaId)?.remove();
+      document.getElementById(faqSchemaId)?.remove();
+    };
+  }, [faqs]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      goToNextHeroSlide();
+    }, 10000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white" style={{ background: deepBg }}>
       <Navigation />
 
       {/* Hero — heavy, dark, confrontational */}
-      <section className="relative pt-48 pb-32 px-6">
-        {/* Subtle purple glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-20 blur-[120px] pointer-events-none" style={{ background: `radial-gradient(circle, ${violet}, transparent)` }} />
+      {/* Hero — heavy, dark, confrontational */}
+      <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+        {/* Full Screen Background Rotator */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={heroSlideIndex}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <img
+                src={heroSlides[heroSlideIndex]}
+                alt="Untold Story Atmosphere"
+                className="w-full h-full object-cover opacity-60"
+              />
+            </motion.div>
+          </AnimatePresence>
 
-        <div className="container max-w-6xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
-            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6" style={{ color: cyan }}>
-              Series 02
-            </span>
-            <h1 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display">
-              UNTOLD
-              <br />
-              STORY
-            </h1>
-            <p className="max-w-lg text-white/50 text-lg leading-relaxed">
-              Late night. Intimate rooms. 360 sound. The story is told
-              through the music — no narrative, no script, just what happens
-              when the lights go down.
-            </p>
-          </motion.div>
+          {/* Gradients for readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#06060F] via-[#06060F]/40 to-black/60 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#06060F] via-[#06060F]/60 to-transparent z-10" />
+        </div>
+
+        {/* Subtle purple glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full opacity-20 blur-[150px] pointer-events-none z-10" style={{ background: `radial-gradient(circle, ${violet}, transparent)` }} />
+
+        <div className="container max-w-7xl mx-auto relative z-20">
+          <div className="grid lg:grid-cols-12 gap-12 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-8"
+            >
+              <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
+              <div className="flex items-center gap-4 mb-6">
+                <span className="font-mono text-xs tracking-[0.3em] uppercase" style={{ color: cyan }}>
+                  Series 02
+                </span>
+                <div className="h-px w-12 bg-white/20" />
+                <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">
+                  Chicago
+                </span>
+              </div>
+
+              <h1 className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display mix-blend-overlay opacity-90">
+                UNTOLD
+                <br />
+                STORY
+              </h1>
+
+              <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-lg">
+                <span className="text-white font-medium">Late night. Intimate rooms. 360 sound.</span> The story is told
+                through the music — no narrative, no script, just what happens
+                when the lights go down.
+              </p>
+
+              {/* Slide Indicators inside content area since visual is now bg */}
+              <div className="flex gap-2">
+                {heroSlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setHeroSlideIndex(idx)}
+                    className={`h-1 transition-all duration-500 rounded-full ${idx === heroSlideIndex ? "w-12 bg-white" : "w-4 bg-white/20 hover:bg-white/40"}`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -350,6 +510,7 @@ export default function UntoldStory() {
         </div>
       </section>
 
+      <SlimSubscribeStrip title="UNLOCK UNTOLD UPDATES" source="untold_story_strip" />
       <Footer />
     </div>
   );

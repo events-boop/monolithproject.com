@@ -47,7 +47,7 @@ export default function Home() {
         <ViewportLazy minHeightClassName="min-h-[60vh]">
           <Suspense fallback={null}>
             <CinematicBreak
-              image="/images/hero-monolith.jpg"
+              image="/images/untold-story-juany-deron-v2.jpg"
               videoSrc="/videos/hero-video-1.mp4"
               quote="We believe music carries emotion. We believe gathering should feel shared. We believe in rhythm, story, and togetherness."
               attribution="The Monolith Project"

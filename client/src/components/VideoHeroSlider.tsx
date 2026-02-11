@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
 
-interface Slide {
+export interface Slide {
   type: "video" | "image";
   src: string;
   alt?: string;
@@ -10,49 +10,22 @@ interface Slide {
   caption?: string;
 }
 
-const slides: Slide[] = [
-  {
-    type: "video",
-    src: "/videos/hero-video-1.mp4",
-    caption: "THE MONOLITH PROJECT",
-  },
-  {
-    type: "image",
-    src: "/images/lazare-recap.png",
-    alt: "Lazare at Monolith Project",
-    credit: "JP Quindara",
-    caption: "LAZARE | MONOLITH PROJECT",
-  },
-  {
-    type: "image",
-    src: "/images/hero-monolith.jpg",
-    alt: "The Monolith",
-    caption: "CHICAGO, 2025",
-  },
-  {
-    type: "image",
-    src: "/images/chasing-sunsets.jpg",
-    alt: "Chasing Sun(Sets)",
-    caption: "CHASING SUN(SETS)",
-  },
-  {
-    type: "image",
-    src: "/images/autograf-recap.jpg",
-    alt: "Autograf live set",
-    credit: "TBA",
-    caption: "AUTOGRAF | LIVE SET",
-  },
-];
+interface VideoHeroSliderProps {
+  slides: Slide[];
+}
 
-export default function VideoHeroSlider() {
+
+
+export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const goTo = useCallback((index: number) => {
+    if (!slides || slides.length === 0) return;
     setCurrentSlide(((index % slides.length) + slides.length) % slides.length);
-  }, []);
+  }, [slides]);
 
   const prev = useCallback(() => goTo(currentSlide - 1), [currentSlide, goTo]);
   const next = useCallback(() => goTo(currentSlide + 1), [currentSlide, goTo]);
@@ -85,6 +58,8 @@ export default function VideoHeroSlider() {
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [prev, next]);
+
+  if (!slides || slides.length === 0) return null;
 
   const slide = slides[currentSlide];
 
@@ -146,11 +121,10 @@ export default function VideoHeroSlider() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-[2px] transition-all duration-500 ${
-                index === currentSlide
-                  ? "bg-primary w-10"
-                  : "bg-white/20 w-5 hover:bg-white/40"
-              }`}
+              className={`h-[2px] transition-all duration-500 ${index === currentSlide
+                ? "bg-primary w-10"
+                : "bg-white/20 w-5 hover:bg-white/40"
+                }`}
             />
           ))}
         </div>

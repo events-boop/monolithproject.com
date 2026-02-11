@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { MapPin, Music, Sun, Headphones } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
 
@@ -312,6 +313,7 @@ export default function Lineup() {
         </div>
       </section>
 
+      <SlimSubscribeStrip title="GET LINEUP DROPS FIRST" source="lineup_strip" />
       <Footer />
     </div>
   );

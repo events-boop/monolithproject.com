@@ -2,12 +2,48 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 
 // March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
+
 const TARGET_DATE = new Date("2026-03-06T19:00:00-06:00").getTime();
+
+const HERO_SLIDES: Slide[] = [
+  {
+    type: "image",
+    src: "/images/untold-story-juany-deron-v2.jpg",
+    alt: "Juany Bravo x Deron",
+    caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
+  },
+  {
+    type: "video",
+    src: "/videos/hero-video-1.mp4",
+    caption: "THE MONOLITH PROJECT",
+  },
+  {
+    type: "image",
+    src: "/images/lazare-recap.png",
+    alt: "Lazare at Monolith Project",
+    credit: "JP Quindara",
+    caption: "LAZARE | MONOLITH PROJECT",
+  },
+  {
+    type: "image",
+    src: "/images/chasing-sunsets.jpg",
+    alt: "Chasing Sun(Sets)",
+    caption: "CHASING SUN(SETS)",
+  },
+  {
+    type: "image",
+    src: "/images/autograf-recap.jpg",
+    alt: "Autograf live set",
+    credit: "TBA",
+    caption: "AUTOGRAF | LIVE SET",
+  },
+];
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -33,59 +69,21 @@ function pad(n: number) {
 export default function HeroSection() {
   const { days, hours, minutes, seconds, isExpired } = useCountdown(TARGET_DATE);
   const reduceMotion = useReducedMotion();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
-  useEffect(() => {
-    const id = window.setTimeout(() => setShouldLoadVideo(true), 500);
-    return () => window.clearTimeout(id);
-  }, []);
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
-    }
-  };
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
 
       {/* Full-bleed video background */}
-      <div className="absolute inset-0 z-0">
-        {shouldLoadVideo ? (
-          <video
-            ref={videoRef}
-            src="/videos/hero-video-1.mp4"
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            preload="metadata"
-            poster="/images/hero-monolith.jpg"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <img
-            src="/images/hero-monolith.jpg"
-            alt=""
-            decoding="async"
-            className="w-full h-full object-cover"
-          />
-        )}
-        {/* Balanced overlays: brighter center, protected edges for legibility */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(0,0,0,0.2),rgba(0,0,0,0.5)_78%,rgba(0,0,0,0.6)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(224,90,58,0.16),transparent_35%),radial-gradient(circle_at_85%_35%,rgba(139,92,246,0.14),transparent_38%)]" />
-        {/* Bottom fade into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
-      </div>
+      {/* Full-bleed video background - slider */}
+      <VideoHeroSlider slides={HERO_SLIDES} />
 
       {/* Editorial left-aligned content */}
-      <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40">
+      <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40 pointer-events-none">
 
         {/* Upper zone — title + subtitle */}
-        <div className="mt-auto mb-auto pt-8 md:pt-10">
+        <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto">
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,7 +108,7 @@ export default function HeroSection() {
         </div>
 
         {/* Lower zone — event info + CTAs */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16 pointer-events-auto">
 
           {/* Left: metadata + CTAs */}
           <motion.div
@@ -236,14 +234,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mute toggle — bottom right */}
-      <button
-        onClick={toggleMute}
-        aria-label={isMuted ? "Unmute hero video" : "Mute hero video"}
-        className="absolute bottom-8 right-6 md:right-8 z-30 p-3 border border-white/10 rounded-full bg-black/20 backdrop-blur-sm text-white/40 hover:text-white hover:border-white/30 transition-all"
-      >
-        {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-      </button>
+
     </section>
   );
 }

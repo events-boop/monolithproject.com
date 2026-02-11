@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import StickyPlayer from "@/components/StickyPlayer";
 
@@ -259,6 +260,7 @@ export default function Radio() {
         </div>
       </section>
 
+      <SlimSubscribeStrip title="SUBSCRIBE TO NEW MIXES" source="radio_strip" />
       <Footer />
 
       {/* Sticky player */}

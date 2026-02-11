@@ -2,7 +2,26 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
+import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import { Link } from "wouter";
+import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
+
+const CHASING_SUNSETS_SLIDES: Slide[] = [
+  {
+    type: "image",
+    src: "/images/chasing-sunsets.jpg",
+    alt: "Chasing Sun(Sets) Atmosphere",
+    caption: "CHASING SUN(SETS) | GOLDEN HOUR",
+  },
+  {
+    type: "image",
+    src: "/images/autograf-recap.jpg",
+    alt: "Autograf Live",
+    credit: "TBA",
+    caption: "AUTOGRAF | LIVE SET",
+  },
+];
 
 
 const events = [
@@ -29,33 +48,29 @@ export default function ChasingSunsets() {
       <Navigation variant="light" />
 
       {/* Hero — raw, warm, big type */}
-      <section className="relative pt-48 pb-32 px-6 overflow-hidden">
-        {/* Sunset gradient wash */}
-        <div
-          className="absolute inset-0 z-0 opacity-30"
-          style={{ background: `linear-gradient(180deg, ${warmGold}40, ${cream} 60%)` }}
-        />
-        {/* Warm glow orb */}
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-15 blur-[100px] pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${auburn}, transparent)` }}
-        />
+      <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+        {/* Full-bleed background slider */}
+        <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
-        <div className="relative z-10 container max-w-6xl mx-auto">
+        {/* Overlay gradient for readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-deepWarm via-transparent to-transparent opacity-80 z-10 pointer-events-none" style={{ color: deepWarm }} />
+
+        <div className="relative z-20 container max-w-6xl mx-auto pointer-events-none">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="pointer-events-auto"
           >
-            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6" style={{ color: auburn }}>
+            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-white/90">
               Series 01
             </span>
-            <h1 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display" style={{ color: deepWarm }}>
+            <h1 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white">
               CHASING
               <br />
               SUN(SETS)
             </h1>
-            <p className="max-w-lg text-lg leading-relaxed" style={{ color: `${deepWarm}90` }}>
+            <p className="max-w-lg text-lg leading-relaxed text-white/90">
               Golden hour. Good people. Great music. Rooftop shows and outdoor
               gatherings where the sun does half the work.
             </p>
@@ -117,6 +132,9 @@ export default function ChasingSunsets() {
           </div>
         </div>
       </section>
+
+      {/* NEW: Pitch / Details Section */}
+      <ChasingSunsetsDetails />
 
       {/* Upcoming Events */}
       <section className="py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>
@@ -194,6 +212,7 @@ export default function ChasingSunsets() {
         </div>
       </section>
 
+      <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />
       <Footer />
     </div>
   );

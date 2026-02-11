@@ -4,6 +4,7 @@ import { Sun, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
 import SectionDivider from "@/components/SectionDivider";
@@ -401,6 +402,7 @@ export default function About() {
         </div>
       </section>
 
+      <SlimSubscribeStrip title="STAY IN THE LOOP" source="about_strip" />
       <Footer />
     </div>
   );
