@@ -1,9 +1,8 @@
 
-import { Instagram, Headphones, Youtube, ArrowUpRight, ArrowRight } from "lucide-react";
+import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { POSH_TICKET_URL } from "@/data/events";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -100,7 +99,9 @@ export default function Footer() {
               PROJECT
             </span>
             <p className="text-white/55 text-sm leading-relaxed max-w-[220px]">
-              Built on music, community, and showing up for each other.
+              Togetherness is the frequency.
+              <br />
+              Music is the guide.
             </p>
           </div>
 

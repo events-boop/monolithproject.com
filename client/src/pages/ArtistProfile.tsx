@@ -5,26 +5,30 @@ import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
-const ARTISTS: Record<string, {
+type ArtistSeries = "chasing-sunsets" | "untold-story" | "sunsets-radio";
+
+interface ArtistProfileData {
   name: string;
   image: string;
   role: string;
-  series: "chasing-sunsets" | "untold-story";
+  series: ArtistSeries;
   origin: string;
   genre: string;
   bio: string;
   tags: string[];
   socials: { instagram: string; website: string };
   tracks: { title: string; duration: string }[];
-}> = {
-  "1": {
+}
+
+const ARTISTS: Record<string, ArtistProfileData> = {
+  "haai": {
     name: "HAAi",
     image: "/images/artist-haai.png",
     role: "HEADLINER",
     series: "untold-story",
     origin: "LONDON, UK",
     genre: "PSYCHEDELIC TECHNO",
-    bio: "Hailing from Australia and based in London, HAAi continues to redefine the boundaries of club music. Her sets are a journey through genre-bending soundscapes — exactly what Untold Story was built for.",
+    bio: "Hailing from Australia and based in London, HAAi continues to redefine the boundaries of club music. Her sets are a journey through genre-bending soundscapes that fit the Untold Story format.",
     tags: ["Techno", "Psychedelic", "Alternative"],
     socials: { instagram: "#", website: "#" },
     tracks: [
@@ -33,15 +37,15 @@ const ARTISTS: Record<string, {
       { title: "Lights Out", duration: "6:03" },
     ],
   },
-  "3": {
+  "lazare": {
     name: "LAZARE",
     image: "/images/artist-lazare.png",
     role: "RESIDENT",
     series: "untold-story",
     origin: "PARIS, FR",
     genre: "MELODIC HOUSE",
-    bio: "A staple of the Monolith sound. Lazare brings a sophisticated blend of melodic techno and progressive rhythms — sets known for emotional depth and driving energy.",
-    tags: ["Melodic Techno", "Progressive"],
+    bio: "A staple of the Monolith sound. Lazare brings a sophisticated blend of melodic house and progressive rhythms, with sets known for emotional depth and driving energy.",
+    tags: ["Melodic", "Progressive", "House"],
     socials: { instagram: "#", website: "#" },
     tracks: [
       { title: "Eternal Echoes", duration: "6:15" },
@@ -49,15 +53,15 @@ const ARTISTS: Record<string, {
       { title: "Resonance", duration: "4:45" },
     ],
   },
-  "4": {
+  "joezi": {
     name: "JOEZI",
     image: "/images/artist-joezi.png",
     role: "GUEST",
     series: "chasing-sunsets",
     origin: "TEL AVIV, IL",
     genre: "AFRO HOUSE",
-    bio: "Joezi's Afro-house rhythms and infectious energy have captivated audiences worldwide. He brings a vibrant, rhythmic soul to the Chasing Sun(Sets) stage.",
-    tags: ["Afro House", "Tribal"],
+    bio: "Joezi's Afro-house rhythms and percussive energy have captivated audiences worldwide. He brings a vibrant, rhythmic pulse to sunset and late-night floors alike.",
+    tags: ["Afro House", "Percussive", "Groove"],
     socials: { instagram: "#", website: "#" },
     tracks: [
       { title: "7 Seconds", duration: "6:20" },
@@ -65,15 +69,15 @@ const ARTISTS: Record<string, {
       { title: "The Way", duration: "4:55" },
     ],
   },
-  "5": {
+  "autograf": {
     name: "AUTOGRAF",
     image: "/images/artist-autograf.png",
     role: "LIVE SET",
     series: "chasing-sunsets",
     origin: "CHICAGO, US",
     genre: "FUTURE HOUSE",
-    bio: "Autograf blends live instrumentation with electronic production, creating an immersive experience. Their 'Future Soup' sound is a perfect fit for Chasing Sun(Sets).",
-    tags: ["Live Electronic", "Indie Dance", "Future Bass"],
+    bio: "Autograf blends live instrumentation with electronic production, creating immersive performances with melodic hooks and club-forward energy.",
+    tags: ["Live Electronic", "Indie Dance", "Future House"],
     socials: { instagram: "#", website: "#" },
     tracks: [
       { title: "Dream", duration: "3:45" },
@@ -81,22 +85,204 @@ const ARTISTS: Record<string, {
       { title: "Simple", duration: "4:12" },
     ],
   },
+  "deron": {
+    name: "DERON",
+    image: "/images/untold-story-juany-deron-v2.jpg",
+    role: "GUEST",
+    series: "untold-story",
+    origin: "CHICAGO, US",
+    genre: "AFRO HOUSE · MELODIC",
+    bio: "Deron is known for emotionally driven selections that move from deep grooves into peak-hour storytelling. His Untold Story sets are designed for dancers first.",
+    tags: ["Afro House", "Melodic", "Late Night"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Untold Intro", duration: "4:32" },
+      { title: "Chapter Shift", duration: "5:19" },
+      { title: "Closing Ceremony", duration: "6:04" },
+    ],
+  },
+  "juany-bravo": {
+    name: "JUANY BRAVO",
+    image: "/images/untold-story-juany-deron.png",
+    role: "GUEST",
+    series: "untold-story",
+    origin: "CHICAGO, US",
+    genre: "AFRO HOUSE · GLOBAL HOUSE",
+    bio: "Juany Bravo brings a global, percussion-driven house language and a highly dynamic approach to b2b performance in intimate rooms.",
+    tags: ["Global House", "Afro House", "B2B"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Ceremony Start", duration: "5:01" },
+      { title: "Room Energy", duration: "5:47" },
+      { title: "Sunrise Motif", duration: "4:58" },
+    ],
+  },
+  "sabry": {
+    name: "SABRY",
+    image: "/images/untold-story.jpg",
+    role: "RESIDENT",
+    series: "untold-story",
+    origin: "CHICAGO, US",
+    genre: "DEEP HOUSE · TECHNO",
+    bio: "Sabry anchors the Monolith sound with deep, hypnotic selections and long-form pacing that adapts to the room.",
+    tags: ["Deep House", "Techno", "Resident"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Night Architecture", duration: "5:56" },
+      { title: "After Hours Flow", duration: "6:08" },
+      { title: "Signal Drift", duration: "4:43" },
+    ],
+  },
+  "summers-uk": {
+    name: "SUMMERS UK",
+    image: "/images/chasing-sunsets.jpg",
+    role: "GUEST",
+    series: "chasing-sunsets",
+    origin: "LONDON, UK",
+    genre: "MELODIC HOUSE",
+    bio: "Summers UK blends warm melodic arrangements with open-air pacing built for sunset transitions.",
+    tags: ["Melodic House", "Sunset", "Open Air"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Golden Arrival", duration: "4:36" },
+      { title: "West Terrace", duration: "5:14" },
+      { title: "Hour Change", duration: "4:28" },
+    ],
+  },
+  "chris-idh": {
+    name: "CHRIS IDH",
+    image: "/images/artist-joezi.png",
+    role: "GUEST",
+    series: "chasing-sunsets",
+    origin: "PARIS, FR",
+    genre: "ORGANIC HOUSE",
+    bio: "Chris IDH delivers textured, organic rhythms with a focus on movement and atmosphere.",
+    tags: ["Organic", "Melodic", "House"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Open Roof", duration: "5:09" },
+      { title: "Driftline", duration: "4:51" },
+      { title: "Sunline", duration: "5:02" },
+    ],
+  },
+  "benchek": {
+    name: "BENCHEK",
+    image: "/images/chasing-sunsets.jpg",
+    role: "GUEST",
+    series: "sunsets-radio",
+    origin: "BERLIN, DE",
+    genre: "MELODIC TECHNO",
+    bio: "Benchek's mixes balance melodic intensity with dancefloor precision, both on radio episodes and live sets.",
+    tags: ["Melodic Techno", "Radio", "Guest"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Chapter III", duration: "58:23" },
+      { title: "Marbella Live", duration: "64:17" },
+      { title: "Afterglow", duration: "6:12" },
+    ],
+  },
+  "terranova": {
+    name: "TERRANOVA",
+    image: "/images/autograf-recap.jpg",
+    role: "GUEST",
+    series: "sunsets-radio",
+    origin: "BERLIN, DE",
+    genre: "DEEP HOUSE · ELECTRONICA",
+    bio: "Terranova blends deep house and electronica into detailed long-form sessions tailored for immersive listening.",
+    tags: ["Deep House", "Electronica", "Radio"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "TERRANOVA x CHASING SUN(SETS)", duration: "62:10" },
+      { title: "Night Thread", duration: "5:26" },
+      { title: "Pulse Study", duration: "4:50" },
+    ],
+  },
+  "ewerseen": {
+    name: "EWERSEEN",
+    image: "/images/radio-show.jpg",
+    role: "GUEST",
+    series: "sunsets-radio",
+    origin: "AMSTERDAM, NL",
+    genre: "AFRO HOUSE · ORGANIC",
+    bio: "EWERSEEN merges afro and organic palettes with clean structure and deep rhythmic progression.",
+    tags: ["Afro House", "Organic", "Radio"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "Mix Vol.3", duration: "55:48" },
+      { title: "Collab Mix Vol.2", duration: "48:32" },
+      { title: "Crossfade", duration: "5:03" },
+    ],
+  },
+  "radian": {
+    name: "RADIAN",
+    image: "/images/radio-show.jpg",
+    role: "RADIO MIX",
+    series: "sunsets-radio",
+    origin: "GLOBAL",
+    genre: "MELODIC HOUSE · DEEP",
+    bio: "Radian brings immersive, slow-burn melodic journeys built for repeat listening and late-night movement.",
+    tags: ["Radio", "Melodic", "Deep"],
+    socials: { instagram: "#", website: "#" },
+    tracks: [
+      { title: "RADIAN x UNTOLD STORY", duration: "71:05" },
+      { title: "Signal Path", duration: "5:11" },
+      { title: "Echo Frame", duration: "4:57" },
+    ],
+  },
 };
 
-export default function ArtistProfile() {
-  const { id } = useParams();
-  const artist = ARTISTS[id as keyof typeof ARTISTS] || ARTISTS["1"];
+const LEGACY_ID_MAP: Record<string, string> = {
+  "1": "haai",
+  "3": "lazare",
+  "4": "joezi",
+  "5": "autograf",
+};
 
-  const isSunsets = artist.series === "chasing-sunsets";
-  const accentClass = isSunsets ? "text-clay" : "text-primary";
-  const borderAccent = isSunsets ? "border-clay" : "border-primary";
-  const bgAccent = isSunsets ? "bg-clay/5" : "bg-primary/5";
+function resolveArtistId(id: string | undefined) {
+  if (!id) return undefined;
+  if (ARTISTS[id]) return id;
+  const legacy = LEGACY_ID_MAP[id];
+  if (legacy && ARTISTS[legacy]) return legacy;
+  return undefined;
+}
+
+export default function ArtistProfile() {
+  const { id } = useParams<{ id: string }>();
+  const resolvedId = resolveArtistId(id);
+  const artist = resolvedId ? ARTISTS[resolvedId] : undefined;
+
+  if (!artist) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <Navigation />
+        <section className="pt-48 pb-24 px-6">
+          <div className="container max-w-3xl mx-auto text-center">
+            <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase mb-4">Artist</p>
+            <h1 className="font-display text-[clamp(3rem,9vw,6rem)] leading-[0.9] uppercase mb-6">Profile Not Found</h1>
+            <p className="text-muted-foreground mb-8">We couldn't find that artist profile. View the full lineup to continue.</p>
+            <Link href="/lineup">
+              <a className="btn-pill-coral inline-flex">View Lineup</a>
+            </Link>
+          </div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
+  const isWarmSeries = artist.series !== "untold-story";
+  const accentClass = isWarmSeries ? "text-clay" : "text-primary";
+  const borderAccent = isWarmSeries ? "border-clay" : "border-primary";
+  const bgAccent = isWarmSeries ? "bg-clay/5" : "bg-primary/5";
+
+  const eventDetails = isWarmSeries
+    ? { date: "August 22, 2026", venue: "TBA", location: "Chicago, IL" }
+    : { date: "March 6, 2026", venue: "Alhambra Palace", location: "Chicago, IL" };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
 
-      {/* Hero — image-led profile card */}
       <section className="relative pt-40 pb-16 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-card to-background" />
         <div className="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_12%_18%,rgba(224,90,58,0.18),transparent_34%),radial-gradient(circle_at_88%_20%,rgba(255,255,255,0.08),transparent_36%)]" />
@@ -128,7 +314,7 @@ export default function ArtistProfile() {
                   {artist.role}
                 </span>
                 <span className={`text-xs font-mono tracking-widest uppercase ${accentClass}`}>
-                  {isSunsets ? "Sun(Sets)" : "Untold Story"}
+                  {artist.series === "chasing-sunsets" ? "Sun(Sets)" : artist.series === "sunsets-radio" ? "Sun(Sets) Radio" : "Untold Story"}
                 </span>
               </div>
 
@@ -159,9 +345,7 @@ export default function ArtistProfile() {
         </div>
       </section>
 
-      {/* Content */}
       <div className="container max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Left: Bio + Tracks */}
         <div className="lg:col-span-7 space-y-12">
           <section>
             <h3 className="font-display text-2xl text-foreground mb-4 uppercase">About</h3>
@@ -169,7 +353,7 @@ export default function ArtistProfile() {
               {artist.bio}
             </p>
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-6 flex-wrap">
               {artist.tags.map((tag) => (
                 <span
                   key={tag}
@@ -181,23 +365,22 @@ export default function ArtistProfile() {
             </div>
 
             <div className="flex gap-3 mt-6">
-              <a href={artist.socials.instagram} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+              <a href={artist.socials.instagram} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors" aria-label={`${artist.name} Instagram`}>
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href={artist.socials.website} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+              <a href={artist.socials.website} className="w-10 h-10 border border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-colors" aria-label={`${artist.name} Website`}>
                 <Globe className="w-4 h-4" />
               </a>
             </div>
           </section>
 
-          {/* Tracks */}
           <section>
             <h3 className="font-display text-2xl text-foreground mb-6 uppercase">Selected Tracks</h3>
             <div className="border-t border-border">
               {artist.tracks.map((track, i) => (
                 <div
-                  key={i}
-                  className="group flex items-center justify-between py-4 border-b border-border hover:text-primary transition-colors cursor-pointer"
+                  key={`${artist.name}-${track.title}`}
+                  className="group flex items-center justify-between py-4 border-b border-border hover:text-primary transition-colors"
                 >
                   <div className="flex items-center gap-4">
                     <span className="text-muted-foreground font-mono text-sm w-6">
@@ -216,34 +399,35 @@ export default function ArtistProfile() {
           </section>
         </div>
 
-        {/* Right: Event sidebar */}
         <div className="lg:col-span-5 space-y-8">
           <div className={`p-8 border ${borderAccent} ${bgAccent}`}>
             <h4 className={`font-display text-xl ${accentClass} mb-6 uppercase`}>
-              {isSunsets ? "Chasing Sun(Sets)" : "Untold Story"}
+              {artist.series === "chasing-sunsets" ? "Chasing Sun(Sets)" : artist.series === "sunsets-radio" ? "Sun(Sets) Radio" : "Untold Story"}
             </h4>
             <div className="space-y-4">
               <div className="flex justify-between items-center border-b border-border pb-4">
                 <span className="text-muted-foreground uppercase tracking-widest text-xs font-mono">Date</span>
-                <span className="text-foreground">August 22, 2026</span>
+                <span className="text-foreground">{eventDetails.date}</span>
               </div>
               <div className="flex justify-between items-center border-b border-border pb-4">
                 <span className="text-muted-foreground uppercase tracking-widest text-xs font-mono">Location</span>
-                <span className="text-foreground">Chicago, IL</span>
+                <span className="text-foreground">{eventDetails.location}</span>
               </div>
               <div className="flex justify-between items-center border-b border-border pb-4">
                 <span className="text-muted-foreground uppercase tracking-widest text-xs font-mono">Venue</span>
-                <span className="text-foreground">TBA</span>
+                <span className="text-foreground">{eventDetails.venue}</span>
               </div>
 
               <Link href="/tickets">
-                <button className={`w-full py-4 mt-4 font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
-                  isSunsets
-                    ? "bg-clay text-background hover:bg-foreground"
-                    : "bg-primary text-primary-foreground hover:bg-foreground"
-                }`}>
+                <a
+                  className={`block w-full text-center py-4 mt-4 font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
+                    isWarmSeries
+                      ? "bg-clay text-background hover:bg-foreground"
+                      : "bg-primary text-primary-foreground hover:bg-foreground"
+                  }`}
+                >
                   Get Tickets
-                </button>
+                </a>
               </Link>
             </div>
           </div>

@@ -28,9 +28,29 @@
   <meta property="twitter:description"
     content="Togetherness is the frequency. Music is the guide. A Chicago events collective." />
   <meta property="twitter:image" content="https://themonolithproject.com/og-image.jpg" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '166134370742863');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=166134370742863&ev=PageView&noscript=1" /></noscript>
   <div id="initial-loader"
     style="position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s">
     <span style="font-family:sans-serif;color:#c8a45a;letter-spacing:0.3em;font-size:14px">MONOLITH PROJECT</span>
@@ -43,12 +63,7 @@
   </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <!-- 
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script> 
-    -->
+
 </body>
 
 </html>

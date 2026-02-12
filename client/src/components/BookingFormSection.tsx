@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { MapPin, Send, CheckCircle } from "lucide-react";
+import { MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { submitBookingInquiry } from "@/lib/api";
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -19,6 +20,7 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 export default function BookingFormSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const {
     register,
@@ -36,10 +38,18 @@ export default function BookingFormSection() {
 
   const onSubmit = async (data: BookingFormValues) => {
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Form Submitted:", data);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError("");
+    try {
+      await submitBookingInquiry({
+        ...data,
+        location: data.location?.trim() || undefined,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Unable to submit inquiry right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -164,6 +174,13 @@ export default function BookingFormSection() {
               )}
             </button>
           </div>
+
+          {submitError && (
+            <p className="flex items-center gap-1.5 text-red-500 text-xs font-mono" role="alert" aria-live="polite">
+              <AlertCircle className="w-3 h-3" />
+              {submitError}
+            </p>
+          )}
         </form>
       )}
     </motion.div>

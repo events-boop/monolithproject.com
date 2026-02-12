@@ -16,38 +16,38 @@ const cardBg = "#0C0C1A";
 
 const eventVisuals = {
   poster: "/images/untold-story-juany-deron-v2.jpg",
-  deron: "/images/artist-joezi.png",
-  juany: "/images/lazare-recap.png",
+  deron: "/images/artist-deron-untold.png", // Updated
+  juany: "/images/artist-juany-bravo-untold.png", // Updated
 };
 
 const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/lineup-juany-bravo.jpg" },
-  { name: "Deron", role: "Chicago debut", image: "/images/lineup-deron.jpg" },
-  { name: "Hashtom", role: "Support", image: "/images/lineup-hashtom.jpg" },
-  { name: "Rose", role: "Support", image: "/images/lineup-rose.jpg" },
-  { name: "Avo", role: "Support", image: "/images/lineup-avo.jpg" },
-  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/lineup-jerome-kenbo.jpg" },
+  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.png" }, // Sync with Featured
+  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.png" }, // Sync with Featured
+  { name: "Hashtom", role: "Support", image: "/images/artist-haai.png" },
+  { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
+  { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },
+  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/hero-monolith.jpg" },
+];
+
+const untoldFaqs: Array<[string, string]> = [
+  ["Are tickets refundable?", "All sales are final. No refunds or exchanges."],
+  ["What time should I arrive?", "Doors open at 7:00 PM. Peak experience begins around 9:00 PM. Early arrival is recommended for the full journey."],
+  ["Is there re-entry?", "No re-entry permitted once you leave the venue."],
+  ["What's the age requirement?", "21+ only. Valid government-issued ID required for entry."],
+  ["Is parking available?", "Street parking and nearby garage parking available in the West Loop. Rideshare recommended."],
+  ["Do I need printed tickets?", "No. Mobile QR codes are accepted at the door."],
+  ["What's the dress code?", "Elevated nightlife attire encouraged. Dress to move comfortably — this is a dancefloor experience."],
+  ["Is food available?", "Yes. Food is available inside the venue."],
+  ["Can I bring a camera?", "Personal photos welcome. Professional cameras require prior approval. This event will be photographed for Monolith Project and partner marketing channels."],
+  ["What if the event is sold out?", "Limited door tickets may be available on the night of the event, but advance purchase is strongly recommended."],
 ];
 
 export default function UntoldStory() {
   const heroSlides = [
-    "/images/untold-story-juany-deron-v2.jpg",
+    "/images/untold-story-hero-post1.png",
   ];
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [heroSlideDirection, setHeroSlideDirection] = useState<1 | -1>(1);
-
-  const faqs = [
-    ["Are tickets refundable?", "All sales are final. No refunds or exchanges."],
-    ["What time should I arrive?", "Doors open at 7:00 PM. Peak experience begins around 9:00 PM. Early arrival is recommended for the full journey."],
-    ["Is there re-entry?", "No re-entry permitted once you leave the venue."],
-    ["What's the age requirement?", "21+ only. Valid government-issued ID required for entry."],
-    ["Is parking available?", "Street parking and nearby garage parking available in the West Loop. Rideshare recommended."],
-    ["Do I need printed tickets?", "No. Mobile QR codes are accepted at the door."],
-    ["What's the dress code?", "Elevated nightlife attire encouraged. Dress to move comfortably — this is a dancefloor experience."],
-    ["Is food available?", "Yes. Food is available inside the venue."],
-    ["Can I bring a camera?", "Personal photos welcome. Professional cameras require prior approval. This event will be photographed for Monolith Project and partner marketing channels."],
-    ["What if the event is sold out?", "Limited door tickets may be available on the night of the event, but advance purchase is strongly recommended."],
-  ];
 
   const goToNextHeroSlide = () => {
     setHeroSlideDirection(1);
@@ -117,7 +117,7 @@ export default function UntoldStory() {
     const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: faqs.map(([question, answer]) => ({
+      mainEntity: untoldFaqs.map(([question, answer]) => ({
         "@type": "Question",
         name: question,
         acceptedAnswer: {
@@ -144,7 +144,7 @@ export default function UntoldStory() {
       document.getElementById(eventSchemaId)?.remove();
       document.getElementById(faqSchemaId)?.remove();
     };
-  }, [faqs]);
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -174,7 +174,7 @@ export default function UntoldStory() {
               <img
                 src={heroSlides[heroSlideIndex]}
                 alt="Untold Story Atmosphere"
-                className="w-full h-full object-cover opacity-60"
+                className="w-full h-full object-cover opacity-100"
               />
             </motion.div>
           </AnimatePresence>
@@ -211,6 +211,18 @@ export default function UntoldStory() {
                 <br />
                 STORY
               </h1>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10">
+                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+                  <div
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center gap-3 cursor-pointer text-white rounded-full"
+                    style={{ background: `linear-gradient(135deg, ${violet}, ${cyan})` }}
+                  >
+                    GET TICKETS <ArrowUpRight size={16} />
+                  </div>
+                </a>
+                <span className="font-mono text-xs text-white/50 tracking-widest hidden sm:block">Tickets moving fast.</span>
+              </div>
 
               <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-lg">
                 <span className="text-white font-medium">Late night. Intimate rooms. 360 sound.</span> The story is told
@@ -421,7 +433,7 @@ export default function UntoldStory() {
                   Frequently Asked Questions
                 </span>
                 <div className="space-y-3">
-                  {faqs.map(([q, a]) => (
+                  {untoldFaqs.map(([q, a]) => (
                     <details key={q} className="border px-4 py-3" style={{ borderColor: `${violet}25` }}>
                       <summary className="cursor-pointer text-white font-medium">{q}</summary>
                       <p className="text-white/70 mt-2 text-sm">{a}</p>
@@ -440,18 +452,7 @@ export default function UntoldStory() {
                 </p>
               </div>
 
-              {/* Age + CTA */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
-                  <div
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center gap-3 cursor-pointer text-white rounded-full"
-                    style={{ background: `linear-gradient(135deg, ${violet}, ${cyan})` }}
-                  >
-                    GET TICKETS <ArrowUpRight size={16} />
-                  </div>
-                </a>
-                <span className="font-mono text-xs text-white/50 tracking-widest">Tickets are moving fast — prices increase as tiers sell out.</span>
-              </div>
+              {/* Age + CTA removed - moved to Hero */}
               {/* Contact / Socials */}
               <div className="mt-10 pt-8" style={{ borderTop: `1px solid ${violet}15` }}>
                 <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>

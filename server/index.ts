@@ -1,10 +1,10 @@
 import express from "express";
 import { createServer } from "http";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import { createHash, randomUUID } from "crypto";
+import { createHash, randomUUID, timingSafeEqual } from "crypto";
 import { z } from "zod";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,9 +32,27 @@ const ticketIntentSchema = z.object({
   eventId: z.string().trim().max(120).optional(),
 });
 
+const bookingInquirySchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(320),
+  entity: z.string().trim().min(2).max(160),
+  type: z.enum(["partner-on-location", "artist-booking", "sponsorship", "general"]),
+  location: z.string().trim().max(180).optional(),
+  message: z.string().trim().min(10).max(5000),
+});
+
+const sponsorAccessSchema = z.object({
+  password: z.string().trim().min(1).max(256),
+});
+
 const idempotencyTtlMs = 24 * 60 * 60 * 1000;
 const idempotencyCache = new Map<string, { status: number; body: unknown; expiresAt: number }>();
 const idempotencyInFlight = new Map<string, Promise<{ status: number; body: unknown }>>();
+const sponsorSessionTtlMs = 30 * 60 * 1000;
+const sponsorSessionCookieName = "monolith_sponsor_session";
+const sponsorDeckFilename = "Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf";
+const sponsorDeckPath = path.resolve(__dirname, "..", "private", "documents", sponsorDeckFilename);
+const sponsorSessions = new Map<string, number>();
 
 function logEvent(event: string, payload: Record<string, unknown>) {
   console.log(
@@ -57,6 +75,63 @@ function readProvider(): LeadProvider {
 
 function scrubEmail(email: string) {
   return email.trim().toLowerCase();
+}
+
+function parseCookieHeader(cookieHeader: string | undefined) {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+
+  for (const segment of cookieHeader.split(";")) {
+    const separator = segment.indexOf("=");
+    if (separator < 0) continue;
+    const key = segment.slice(0, separator).trim();
+    const rawValue = segment.slice(separator + 1).trim();
+    if (!key) continue;
+
+    try {
+      cookies[key] = decodeURIComponent(rawValue);
+    } catch {
+      cookies[key] = rawValue;
+    }
+  }
+
+  return cookies;
+}
+
+function pruneSponsorSessions(now = Date.now()) {
+  sponsorSessions.forEach((expiresAt, token) => {
+    if (expiresAt <= now) sponsorSessions.delete(token);
+  });
+}
+
+function buildSponsorSessionCookie(value: string, maxAgeSeconds: number) {
+  const secure = process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return `${sponsorSessionCookieName}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/api; HttpOnly; SameSite=Strict${secure}`;
+}
+
+function issueSponsorSession() {
+  pruneSponsorSessions();
+  const token = randomUUID();
+  sponsorSessions.set(token, Date.now() + sponsorSessionTtlMs);
+  return token;
+}
+
+function hasValidSponsorSession(token: string | undefined) {
+  if (!token) return false;
+  pruneSponsorSessions();
+  const expiresAt = sponsorSessions.get(token);
+  if (!expiresAt) return false;
+  if (expiresAt <= Date.now()) {
+    sponsorSessions.delete(token);
+    return false;
+  }
+  return true;
+}
+
+function secureCompare(input: string, expected: string) {
+  const inputHash = createHash("sha256").update(input).digest();
+  const expectedHash = createHash("sha256").update(expected).digest();
+  return timingSafeEqual(inputHash, expectedHash);
 }
 
 async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
@@ -203,8 +278,11 @@ async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof leadSc
 }
 
 const app = express();
+let appConfigured = false;
 
-async function startServer() {
+function configureApp() {
+  if (appConfigured) return;
+  appConfigured = true;
 
   app.use(
     helmet({
@@ -222,6 +300,24 @@ async function startServer() {
     message: "Too many requests from this IP, please try again after 15 minutes",
   });
   app.use(limiter);
+
+  const sponsorAccessLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+    handler: (_req, res) => {
+      return res.status(429).json({
+        ok: false,
+        requestId: randomUUID(),
+        error: {
+          code: "RATE_LIMITED",
+          message: "Too many access attempts. Please wait 15 minutes before retrying.",
+          retryable: true,
+        },
+      });
+    },
+  });
 
   app.get("/api/health", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
@@ -334,6 +430,187 @@ async function startServer() {
     return res.status(202).json({ ok: true });
   });
 
+  app.post("/api/booking-inquiry", async (req, res) => {
+    const requestId = randomUUID();
+    const parsed = bookingInquirySchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Please complete all required fields.",
+          retryable: false,
+        },
+      });
+    }
+
+    const webhook = process.env.BOOKING_WEBHOOK_URL;
+    const inquiry = parsed.data;
+
+    if (!webhook && process.env.NODE_ENV === "production") {
+      logEvent("booking.inquiry_unconfigured", {
+        requestId,
+        type: inquiry.type,
+      });
+
+      return res.status(503).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "UNAVAILABLE",
+          message: "Booking inquiries are temporarily unavailable. Please try again later.",
+          retryable: false,
+        },
+      });
+    }
+
+    if (webhook) {
+      try {
+        const response = await fetch(webhook, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...inquiry,
+            requestId,
+            receivedAt: new Date().toISOString(),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Webhook delivery failed with status ${response.status}`);
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Booking inquiry delivery failed";
+        logEvent("booking.inquiry_failed", {
+          requestId,
+          type: inquiry.type,
+          message,
+        });
+
+        return res.status(502).json({
+          ok: false,
+          requestId,
+          error: {
+            code: "DELIVERY_FAILED",
+            message: "We couldn't submit your inquiry right now. Please try again.",
+            retryable: true,
+          },
+        });
+      }
+    }
+
+    logEvent("booking.inquiry_received", {
+      requestId,
+      type: inquiry.type,
+      entity: inquiry.entity,
+      location: inquiry.location || null,
+      hasWebhook: Boolean(webhook),
+      emailHash: createHash("sha256").update(scrubEmail(inquiry.email)).digest("hex").slice(0, 12),
+    });
+
+    return res.status(202).json({
+      ok: true,
+      requestId,
+      message: "Inquiry received",
+    });
+  });
+
+  app.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
+    const requestId = randomUUID();
+    const parsed = sponsorAccessSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Enter a valid access code.",
+          retryable: false,
+        },
+      });
+    }
+
+    const configuredPassword = process.env.SPONSOR_ACCESS_PASSWORD?.trim();
+    if (!configuredPassword) {
+      logEvent("sponsor.access_unconfigured", { requestId });
+      return res.status(503).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "UNAVAILABLE",
+          message: "Sponsor access is temporarily unavailable.",
+          retryable: false,
+        },
+      });
+    }
+
+    const providedPassword = parsed.data.password.trim();
+    if (!secureCompare(providedPassword, configuredPassword)) {
+      res.setHeader("Set-Cookie", buildSponsorSessionCookie("", 0));
+      logEvent("sponsor.access_denied", { requestId });
+      return res.status(401).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "INVALID_CREDENTIALS",
+          message: "Invalid access code.",
+          retryable: true,
+        },
+      });
+    }
+
+    const sessionToken = issueSponsorSession();
+    res.setHeader("Set-Cookie", buildSponsorSessionCookie(sessionToken, Math.floor(sponsorSessionTtlMs / 1000)));
+    logEvent("sponsor.access_granted", { requestId });
+    return res.status(200).json({ ok: true, requestId, sessionExpiresInSec: Math.floor(sponsorSessionTtlMs / 1000) });
+  });
+
+  app.get("/api/sponsor-deck", (req, res) => {
+    const requestId = randomUUID();
+    const sessionToken = parseCookieHeader(req.header("cookie"))[sponsorSessionCookieName];
+
+    if (!sessionToken || !hasValidSponsorSession(sessionToken)) {
+      res.setHeader("Set-Cookie", buildSponsorSessionCookie("", 0));
+      logEvent("sponsor.deck_denied", { requestId });
+      return res.status(401).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "INVALID_CREDENTIALS",
+          message: "Sponsor access required.",
+          retryable: true,
+        },
+      });
+    }
+
+    sponsorSessions.set(sessionToken, Date.now() + sponsorSessionTtlMs);
+
+    return res.download(sponsorDeckPath, sponsorDeckFilename, (error) => {
+      if (!error) {
+        logEvent("sponsor.deck_downloaded", { requestId });
+        return;
+      }
+
+      const code = (error as NodeJS.ErrnoException).code || "UNKNOWN";
+      const isMissing = code === "ENOENT";
+      logEvent("sponsor.deck_download_failed", { requestId, code, message: error.message });
+
+      if (res.headersSent) return;
+      return res.status(isMissing ? 404 : 500).json({
+        ok: false,
+        requestId,
+        error: {
+          code: isMissing ? "DOCUMENT_NOT_FOUND" : "DOCUMENT_UNAVAILABLE",
+          message: isMissing ? "Sponsor deck is unavailable." : "Unable to download sponsor deck right now.",
+          retryable: !isMissing,
+        },
+      });
+    });
+  });
+
   // Never allow /api/* to fall through to SPA HTML.
   app.use("/api", (_req, res) => {
     res.status(404).json({
@@ -345,8 +622,6 @@ async function startServer() {
     });
   });
 
-  const server = createServer(app);
-
   const staticPath =
     process.env.NODE_ENV === "production"
       ? path.resolve(__dirname, "public")
@@ -357,19 +632,33 @@ async function startServer() {
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
+}
 
+async function startServer() {
+  configureApp();
+  const server = createServer(app);
   const port = process.env.PORT || 3000;
 
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
+  await new Promise<void>((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}/`);
+      resolve();
+    });
   });
 }
 
-if (process.env.NODE_ENV !== "production") {
+configureApp();
+
+const isMainModule =
+  process.argv[1] !== undefined &&
+  pathToFileURL(process.argv[1]).href === import.meta.url;
+
+if (isMainModule) {
   startServer().catch((error) => {
     console.error(error);
     process.exit(1);
   });
 }
 
-export { app, startServer };
+export { app, configureApp, startServer };

@@ -5,21 +5,25 @@ import { Lock, ArrowRight, Download, FileText } from "lucide-react";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { verifySponsorAccess } from "@/lib/api";
 
 export default function SponsorAccess() {
     const [password, setPassword] = useState("");
     const [isUnlocked, setIsUnlocked] = useState(false);
-    const [error, setError] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleUnlock = (e: React.FormEvent) => {
+    const handleUnlock = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Simple client-side check for now
-        if (password.toUpperCase() === "MONOLITH2026") {
+        setErrorMessage("");
+        setIsVerifying(true);
+        try {
+            await verifySponsorAccess(password);
             setIsUnlocked(true);
-            setError(false);
-        } else {
-            setError(true);
-            // Shake animation trigger could go here
+        } catch (error) {
+            setErrorMessage(error instanceof Error ? error.message : "Invalid access code.");
+        } finally {
+            setIsVerifying(false);
         }
     };
 
@@ -57,27 +61,28 @@ export default function SponsorAccess() {
                                         value={password}
                                         onChange={(e) => {
                                             setPassword(e.target.value);
-                                            setError(false);
+                                            setErrorMessage("");
                                         }}
                                         placeholder="ACCESS CODE"
                                         className="w-full bg-background/50 border border-white/10 rounded-sm px-4 py-3 text-center tracking-[0.5em] text-lg focus:outline-none focus:border-primary/50 transition-colors uppercase placeholder:tracking-normal placeholder:text-sm"
                                     />
-                                    {error && (
+                                    {errorMessage && (
                                         <motion.p
                                             initial={{ opacity: 0, y: -10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             className="absolute -bottom-6 left-0 right-0 text-xs text-red-400 font-mono mt-2"
                                         >
-                                            INVALID TOKEN
+                                            {errorMessage}
                                         </motion.p>
                                     )}
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase py-3 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 group rounded-full"
+                                    disabled={isVerifying}
+                                    className="w-full bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase py-3 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 group rounded-full disabled:opacity-50"
                                 >
-                                    <span>Unlock</span>
+                                    <span>{isVerifying ? "Checking..." : "Unlock"}</span>
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </button>
                             </form>
@@ -115,8 +120,7 @@ export default function SponsorAccess() {
                                             Comprehensive overview of The Monolith Project, audience demographics, and tiered partnership opportunities (PDF).
                                         </p>
                                         <a
-                                            href="/documents/Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf"
-                                            download
+                                            href="/api/sponsor-deck"
                                             className="w-full py-4 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium rounded-full"
                                         >
                                             <Download className="w-4 h-4" />

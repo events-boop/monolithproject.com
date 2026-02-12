@@ -17,7 +17,7 @@ interface Artist {
 
 const SUNSETS_ROSTER: Artist[] = [
   {
-    id: "5",
+    id: "autograf",
     name: "AUTOGRAF",
     role: "LIVE SET",
     origin: "CHICAGO, US",
@@ -25,7 +25,7 @@ const SUNSETS_ROSTER: Artist[] = [
     image: "/images/autograf-recap.jpg",
   },
   {
-    id: "4",
+    id: "joezi",
     name: "JOEZI",
     role: "GUEST",
     origin: "TEL AVIV, IL",
@@ -36,15 +36,15 @@ const SUNSETS_ROSTER: Artist[] = [
 
 const UNTOLD_ROSTER: Artist[] = [
   {
-    id: "1",
+    id: "haai",
     name: "HAAi",
     role: "HEADLINER",
     origin: "LONDON, UK",
     genre: "PSYCHEDELIC TECHNO",
-    image: "/images/untold-story.jpg",
+    image: "/images/artist-haai.png",
   },
   {
-    id: "3",
+    id: "lazare",
     name: "LAZARE",
     role: "RESIDENT",
     origin: "PARIS, FR",

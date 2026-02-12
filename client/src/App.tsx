@@ -23,6 +23,9 @@ const UntoldStory = lazy(() => import("./pages/UntoldStory"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Partners = lazy(() => import("./pages/Partners"));
 const Lineup = lazy(() => import("./pages/Lineup"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
 
 const pageTransition = {
@@ -51,6 +54,9 @@ function Router() {
         <Route path={"/booking"} component={BookingTransition} />
         <Route path={"/lineup"} component={LineupTransition} />
         <Route path={"/partners"} component={PartnersTransition} />
+        <Route path={"/terms"} component={TermsTransition} />
+        <Route path={"/privacy"} component={PrivacyTransition} />
+        <Route path={"/cookies"} component={CookiesTransition} />
         <Route path={"/404"} component={NotFoundTransition} />
         <Route component={NotFoundTransition} />
       </Switch>
@@ -83,6 +89,9 @@ const UntoldStoryTransition = withTransition(UntoldStory);
 const BookingTransition = withTransition(Booking);
 const LineupTransition = withTransition(Lineup);
 const PartnersTransition = withTransition(Partners);
+const TermsTransition = withTransition(Terms);
+const PrivacyTransition = withTransition(Privacy);
+const CookiesTransition = withTransition(Cookies);
 const NotFoundTransition = withTransition(NotFoundLazy);
 
 function App() {
