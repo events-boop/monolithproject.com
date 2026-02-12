@@ -19,6 +19,7 @@ export interface ScheduledEvent {
     description?: string;
     age?: string;
     ticketUrl?: string;
+    ctaLabel?: string;
     headline?: string;
     mainExperience?: string;
     experienceIntro?: string;
@@ -48,6 +49,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         venue: "Alhambra Palace",
         location: "West Loop, Chicago",
         lineup: "Juany Bravo B2B Deron (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced",
+        image: "/images/untold-story-juany-deron-v2.jpg",
         status: "on-sale",
         format: "Immersive · Late Night · 360 Sound",
         dress: "Elevated nightlife attire",
@@ -104,19 +106,28 @@ export const upcomingEvents: ScheduledEvent[] = [
         sound: "Afro House · Techno · Melodic",
     },
     {
-        id: "css-002",
-        series: "chasing-sunsets",
-        episode: "EP.02",
-        title: "Golden Hour Vol. 2",
-        date: "September 2026",
-        time: "4:00 PM — 10:00 PM",
-        venue: "TBA",
-        location: "Chicago, IL",
-        status: "coming-soon",
-        capacity: "200",
-        format: "Rooftop · Outdoor",
-        dress: "Summer whites encouraged",
-        sound: "Afro House · Organic House · Global Rhythms",
+        id: "us-s3e3-autograf",
+        series: "untold-story",
+        episode: "S3·E3",
+        title: "AUTOGRAF",
+        subtitle: "Untold Story III",
+        headline: "Untold Story III — Autograf",
+        date: "Saturday, March 21, 2026",
+        time: "8:00 PM — 3:00 AM",
+        doors: "8:00 PM",
+        venue: "Alhambra Palace",
+        location: "West Loop, Chicago",
+        lineup: "AUTOGRAF (Live Set) · Support TBA",
+        image: "/images/autograf-recap.jpg",
+        status: "on-sale",
+        ctaLabel: "RSVP Now",
+        ticketUrl: "https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026",
+        capacity: "TBA",
+        format: "Untold Story III · Late Night",
+        dress: "Nightlife attire encouraged",
+        sound: "Live Electronic · Melodic House · Future House",
+        description: "Autograf lands in Chicago for Untold Story III at Alhambra Palace.",
+        eventNotice: "Early Mover RSVP is open now.",
     },
     {
         id: "us-002",

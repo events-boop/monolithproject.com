@@ -17,6 +17,7 @@ const navItems = [
   { label: "SCHEDULE", href: "/#schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
+  { label: "EVENTS", href: "/events" },
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   {
@@ -36,6 +37,7 @@ const mobileNavItems = [
   { label: "SCHEDULE", href: "/#schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
+  { label: "EVENTS", href: "/events" },
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "PARTNERS", href: "/partners" },

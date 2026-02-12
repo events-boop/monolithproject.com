@@ -4,6 +4,7 @@ import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-rea
 import { useState, useEffect, useRef } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import MagneticButton from "./MagneticButton";
 import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 
@@ -154,30 +155,34 @@ export default function HeroSection() {
 
             {/* Pill CTAs */}
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={POSH_TICKET_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              >
-                {!reduceMotion && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
-                )}
-                <Ticket className="w-3.5 h-3.5" />
-                Get Tickets
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="#movement"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-              >
-                Explore
-                <ArrowDown className="w-3.5 h-3.5" />
-              </a>
+              <MagneticButton strength={0.3}>
+                <a
+                  href={POSH_TICKET_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                >
+                  {!reduceMotion && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
+                  )}
+                  <Ticket className="w-3.5 h-3.5" />
+                  Get Tickets
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </MagneticButton>
+              <MagneticButton strength={0.3}>
+                <a
+                  href="#movement"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("movement")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  Explore
+                  <ArrowDown className="w-3.5 h-3.5" />
+                </a>
+              </MagneticButton>
             </div>
 
             {/* Series links */}

@@ -29,7 +29,6 @@ const themes = {
 };
 
 function getTheme(location: string) {
-  if (location === "/story") return themes.violet;
   if (location === "/chasing-sunsets") return themes.warm;
   return themes.default;
 }

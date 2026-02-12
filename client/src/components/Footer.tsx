@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { POSH_TICKET_URL } from "@/data/events";
 import { useState } from "react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import MagneticButton from "./MagneticButton";
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -38,6 +39,7 @@ const links = [
       { name: "Schedule", href: "/#schedule" },
       { name: "Tickets", href: "/tickets" },
       { name: "Lineup", href: "/lineup" },
+      { name: "Events", href: "/events" },
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
       { name: "Radio", href: "/radio" },
@@ -93,11 +95,13 @@ export default function Footer() {
         {/* Top: Navigation Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 z-10 relative">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display text-2xl tracking-wide block mb-6 text-white">
-              THE MONOLITH
-              <br />
-              PROJECT
-            </span>
+            <MagneticButton strength={0.1}>
+              <span className="font-display text-2xl tracking-wide block mb-6 text-white cursor-pointer hover:text-primary transition-colors">
+                THE MONOLITH
+                <br />
+                PROJECT
+              </span>
+            </MagneticButton>
             <p className="text-white/55 text-sm leading-relaxed max-w-[220px]">
               Togetherness is the frequency.
               <br />

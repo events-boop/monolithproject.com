@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
+import { appendFile, mkdir } from "fs/promises";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { createHash, randomUUID, timingSafeEqual } from "crypto";
@@ -41,9 +42,21 @@ const bookingInquirySchema = z.object({
   message: z.string().trim().min(10).max(5000),
 });
 
+const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());
+
 const sponsorAccessSchema = z.object({
   password: z.string().trim().min(1).max(256),
 });
+
+const adminControlsSchema = z
+  .object({
+    protectedRoutesDisabled: z.boolean().optional(),
+    clearSponsorSessions: z.boolean().optional(),
+  })
+  .refine(
+    (value) => value.protectedRoutesDisabled !== undefined || value.clearSponsorSessions === true,
+    "Provide at least one control change"
+  );
 
 const idempotencyTtlMs = 24 * 60 * 60 * 1000;
 const idempotencyCache = new Map<string, { status: number; body: unknown; expiresAt: number }>();
@@ -53,6 +66,9 @@ const sponsorSessionCookieName = "monolith_sponsor_session";
 const sponsorDeckFilename = "Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf";
 const sponsorDeckPath = path.resolve(__dirname, "..", "private", "documents", sponsorDeckFilename);
 const sponsorSessions = new Map<string, number>();
+const auditLogPath = process.env.AUDIT_LOG_PATH || path.resolve(__dirname, "..", "private", "audit.log");
+let auditLogPathReady: Promise<void> | undefined;
+let protectedRoutesDisabled = process.env.PROTECTED_ROUTES_DISABLED === "true";
 
 function logEvent(event: string, payload: Record<string, unknown>) {
   console.log(
@@ -63,6 +79,28 @@ function logEvent(event: string, payload: Record<string, unknown>) {
       ...payload,
     })
   );
+}
+
+function ensureAuditLogPath() {
+  if (!auditLogPathReady) {
+    auditLogPathReady = mkdir(path.dirname(auditLogPath), { recursive: true }).then(() => undefined);
+  }
+  return auditLogPathReady;
+}
+
+function writeAuditEvent(event: string, payload: Record<string, unknown>) {
+  const line = `${JSON.stringify({
+    ts: new Date().toISOString(),
+    event,
+    ...payload,
+  })}\n`;
+
+  void ensureAuditLogPath()
+    .then(() => appendFile(auditLogPath, line, "utf8"))
+    .catch((error) => {
+      const message = error instanceof Error ? error.message : String(error);
+      logEvent("audit.write_failed", { auditEvent: event, message });
+    });
 }
 
 function readProvider(): LeadProvider {
@@ -132,6 +170,82 @@ function secureCompare(input: string, expected: string) {
   const inputHash = createHash("sha256").update(input).digest();
   const expectedHash = createHash("sha256").update(expected).digest();
   return timingSafeEqual(inputHash, expectedHash);
+}
+
+function readAdminToken(req: express.Request) {
+  const bearer = req.header("authorization");
+  if (bearer?.toLowerCase().startsWith("bearer ")) {
+    const token = bearer.slice(7).trim();
+    if (token) return token;
+  }
+  return req.header("x-admin-token")?.trim();
+}
+
+function requestActor(req: express.Request) {
+  const forwardedFor = req.header("x-forwarded-for");
+  const ip = forwardedFor ? forwardedFor.split(",")[0].trim() : req.ip || null;
+  return {
+    ip,
+    userAgent: req.header("user-agent") || null,
+  };
+}
+
+function requireAdminAccess(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const requestId = randomUUID();
+  const configuredAdminToken = process.env.ADMIN_API_TOKEN?.trim();
+  const actor = requestActor(req);
+
+  if (!configuredAdminToken) {
+    logEvent("admin.access_unconfigured", { requestId, ...actor });
+    writeAuditEvent("admin.access_unconfigured", { requestId, ...actor });
+    return res.status(503).json({
+      ok: false,
+      requestId,
+      error: {
+        code: "UNAVAILABLE",
+        message: "Admin controls are unavailable.",
+        retryable: false,
+      },
+    });
+  }
+
+  const providedToken = readAdminToken(req);
+  if (!providedToken || !secureCompare(providedToken, configuredAdminToken)) {
+    logEvent("admin.access_denied", { requestId, ...actor });
+    writeAuditEvent("admin.access_denied", { requestId, ...actor });
+    return res.status(401).json({
+      ok: false,
+      requestId,
+      error: {
+        code: "INVALID_CREDENTIALS",
+        message: "Admin authorization failed.",
+        retryable: false,
+      },
+    });
+  }
+
+  res.locals.adminRequestId = requestId;
+  res.locals.adminActor = actor;
+  return next();
+}
+
+function enforceProtectedRoutesEnabled(routeId: string, req: express.Request, res: express.Response) {
+  if (!protectedRoutesDisabled) return true;
+
+  const requestId = randomUUID();
+  const actor = requestActor(req);
+  logEvent("protected_route_disabled", { requestId, routeId, ...actor });
+  writeAuditEvent("protected_route_disabled", { requestId, routeId, ...actor });
+  res.status(503).json({
+    ok: false,
+    requestId,
+    error: {
+      code: "ROUTES_DISABLED",
+      message: "This route is temporarily disabled by an administrator.",
+      retryable: true,
+    },
+  });
+  return false;
 }
 
 async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
@@ -319,6 +433,28 @@ function configureApp() {
     },
   });
 
+  const adminControlsLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 60,
+    standardHeaders: true,
+    legacyHeaders: false,
+    handler: (req, res) => {
+      const requestId = randomUUID();
+      const actor = requestActor(req);
+      logEvent("admin.controls_rate_limited", { requestId, ...actor });
+      writeAuditEvent("admin.controls_rate_limited", { requestId, ...actor });
+      return res.status(429).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "RATE_LIMITED",
+          message: "Too many admin control requests. Please try again later.",
+          retryable: true,
+        },
+      });
+    },
+  });
+
   app.get("/api/health", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
     res.json({ ok: true, service: "monolith-api", now: new Date().toISOString() });
@@ -449,10 +585,13 @@ function configureApp() {
     const inquiry = parsed.data;
 
     if (!webhook && process.env.NODE_ENV === "production") {
+      const actor = requestActor(req);
       logEvent("booking.inquiry_unconfigured", {
         requestId,
         type: inquiry.type,
+        ...actor,
       });
+      writeAuditEvent("booking.inquiry_unconfigured", { requestId, type: inquiry.type, ...actor });
 
       return res.status(503).json({
         ok: false,
@@ -484,11 +623,14 @@ function configureApp() {
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : "Booking inquiry delivery failed";
+        const actor = requestActor(req);
         logEvent("booking.inquiry_failed", {
           requestId,
           type: inquiry.type,
           message,
+          ...actor,
         });
+        writeAuditEvent("booking.inquiry_failed", { requestId, type: inquiry.type, message, ...actor });
 
         return res.status(502).json({
           ok: false,
@@ -509,6 +651,15 @@ function configureApp() {
       location: inquiry.location || null,
       hasWebhook: Boolean(webhook),
       emailHash: createHash("sha256").update(scrubEmail(inquiry.email)).digest("hex").slice(0, 12),
+      ...requestActor(req),
+    });
+    writeAuditEvent("booking.inquiry_received", {
+      requestId,
+      type: inquiry.type,
+      entity: inquiry.entity,
+      hasWebhook: Boolean(webhook),
+      emailHash: createHash("sha256").update(scrubEmail(inquiry.email)).digest("hex").slice(0, 12),
+      ...requestActor(req),
     });
 
     return res.status(202).json({
@@ -518,10 +669,91 @@ function configureApp() {
     });
   });
 
-  app.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
+  app.post("/api/webhooks/posh", (req, res) => {
     const requestId = randomUUID();
+    const actor = requestActor(req);
+    const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();
+
+    if (!configuredSecret) {
+      logEvent("posh.webhook_unconfigured", { requestId, ...actor });
+      writeAuditEvent("posh.webhook_unconfigured", { requestId, ...actor });
+      return res.status(503).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "UNAVAILABLE",
+          message: "Webhook handler is not configured.",
+          retryable: false,
+        },
+      });
+    }
+
+    const providedSecret = req.header("Posh-Secret")?.trim();
+    if (!providedSecret || !secureCompare(providedSecret, configuredSecret)) {
+      logEvent("posh.webhook_denied", { requestId, ...actor });
+      writeAuditEvent("posh.webhook_denied", { requestId, ...actor });
+      return res.status(401).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "INVALID_CREDENTIALS",
+          message: "Webhook authorization failed.",
+          retryable: false,
+        },
+      });
+    }
+
+    const parsed = poshWebhookPayloadSchema.safeParse(req.body);
+    if (!parsed.success) {
+      logEvent("posh.webhook_invalid_payload", { requestId, ...actor });
+      writeAuditEvent("posh.webhook_invalid_payload", { requestId, ...actor });
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Invalid webhook payload.",
+          retryable: false,
+        },
+      });
+    }
+
+    const payload = parsed.data;
+    const inferredEventType =
+      typeof payload.type === "string"
+        ? payload.type
+        : typeof payload.event === "string"
+          ? payload.event
+          : "unknown";
+    const inferredEventId =
+      typeof payload.id === "string" || typeof payload.id === "number"
+        ? String(payload.id)
+        : null;
+
+    logEvent("posh.webhook_received", {
+      requestId,
+      ...actor,
+      eventType: inferredEventType,
+      eventId: inferredEventId,
+    });
+    writeAuditEvent("posh.webhook_received", {
+      requestId,
+      ...actor,
+      eventType: inferredEventType,
+      eventId: inferredEventId,
+    });
+
+    return res.status(200).json({ ok: true, requestId });
+  });
+
+  app.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
+    if (!enforceProtectedRoutesEnabled("sponsor-access", req, res)) return;
+
+    const requestId = randomUUID();
+    const actor = requestActor(req);
     const parsed = sponsorAccessSchema.safeParse(req.body);
     if (!parsed.success) {
+      writeAuditEvent("sponsor.access_validation_failed", { requestId, ...actor });
       return res.status(400).json({
         ok: false,
         requestId,
@@ -535,7 +767,8 @@ function configureApp() {
 
     const configuredPassword = process.env.SPONSOR_ACCESS_PASSWORD?.trim();
     if (!configuredPassword) {
-      logEvent("sponsor.access_unconfigured", { requestId });
+      logEvent("sponsor.access_unconfigured", { requestId, ...actor });
+      writeAuditEvent("sponsor.access_unconfigured", { requestId, ...actor });
       return res.status(503).json({
         ok: false,
         requestId,
@@ -550,7 +783,8 @@ function configureApp() {
     const providedPassword = parsed.data.password.trim();
     if (!secureCompare(providedPassword, configuredPassword)) {
       res.setHeader("Set-Cookie", buildSponsorSessionCookie("", 0));
-      logEvent("sponsor.access_denied", { requestId });
+      logEvent("sponsor.access_denied", { requestId, ...actor });
+      writeAuditEvent("sponsor.access_denied", { requestId, ...actor });
       return res.status(401).json({
         ok: false,
         requestId,
@@ -564,17 +798,22 @@ function configureApp() {
 
     const sessionToken = issueSponsorSession();
     res.setHeader("Set-Cookie", buildSponsorSessionCookie(sessionToken, Math.floor(sponsorSessionTtlMs / 1000)));
-    logEvent("sponsor.access_granted", { requestId });
+    logEvent("sponsor.access_granted", { requestId, ...actor });
+    writeAuditEvent("sponsor.access_granted", { requestId, ...actor });
     return res.status(200).json({ ok: true, requestId, sessionExpiresInSec: Math.floor(sponsorSessionTtlMs / 1000) });
   });
 
   app.get("/api/sponsor-deck", (req, res) => {
+    if (!enforceProtectedRoutesEnabled("sponsor-deck", req, res)) return;
+
     const requestId = randomUUID();
+    const actor = requestActor(req);
     const sessionToken = parseCookieHeader(req.header("cookie"))[sponsorSessionCookieName];
 
     if (!sessionToken || !hasValidSponsorSession(sessionToken)) {
       res.setHeader("Set-Cookie", buildSponsorSessionCookie("", 0));
-      logEvent("sponsor.deck_denied", { requestId });
+      logEvent("sponsor.deck_denied", { requestId, ...actor });
+      writeAuditEvent("sponsor.deck_denied", { requestId, ...actor });
       return res.status(401).json({
         ok: false,
         requestId,
@@ -590,13 +829,15 @@ function configureApp() {
 
     return res.download(sponsorDeckPath, sponsorDeckFilename, (error) => {
       if (!error) {
-        logEvent("sponsor.deck_downloaded", { requestId });
+        logEvent("sponsor.deck_downloaded", { requestId, ...actor });
+        writeAuditEvent("sponsor.deck_downloaded", { requestId, ...actor });
         return;
       }
 
       const code = (error as NodeJS.ErrnoException).code || "UNKNOWN";
       const isMissing = code === "ENOENT";
-      logEvent("sponsor.deck_download_failed", { requestId, code, message: error.message });
+      logEvent("sponsor.deck_download_failed", { requestId, code, message: error.message, ...actor });
+      writeAuditEvent("sponsor.deck_download_failed", { requestId, code, message: error.message, ...actor });
 
       if (res.headersSent) return;
       return res.status(isMissing ? 404 : 500).json({
@@ -608,6 +849,75 @@ function configureApp() {
           retryable: !isMissing,
         },
       });
+    });
+  });
+
+  app.get("/api/admin/controls", adminControlsLimiter, requireAdminAccess, (req, res) => {
+    const requestId = (res.locals.adminRequestId as string) || randomUUID();
+    const actor = (res.locals.adminActor as { ip: string | null; userAgent: string | null }) || requestActor(req);
+
+    writeAuditEvent("admin.controls_read", {
+      requestId,
+      ...actor,
+      protectedRoutesDisabled,
+      activeSponsorSessions: sponsorSessions.size,
+      sponsorSessionTtlMs,
+    });
+
+    return res.status(200).json({
+      ok: true,
+      requestId,
+      controls: {
+        protectedRoutesDisabled,
+      },
+      stats: {
+        activeSponsorSessions: sponsorSessions.size,
+        sponsorSessionTtlMs,
+      },
+    });
+  });
+
+  app.post("/api/admin/controls", adminControlsLimiter, requireAdminAccess, (req, res) => {
+    const requestId = (res.locals.adminRequestId as string) || randomUUID();
+    const actor = (res.locals.adminActor as { ip: string | null; userAgent: string | null }) || requestActor(req);
+    const parsed = adminControlsSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      writeAuditEvent("admin.controls_invalid_payload", { requestId, ...actor });
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Invalid admin control payload.",
+          retryable: false,
+        },
+      });
+    }
+
+    const changes: Record<string, unknown> = {};
+
+    if (parsed.data.protectedRoutesDisabled !== undefined) {
+      protectedRoutesDisabled = parsed.data.protectedRoutesDisabled;
+      changes.protectedRoutesDisabled = protectedRoutesDisabled;
+    }
+
+    if (parsed.data.clearSponsorSessions) {
+      const clearedSessions = sponsorSessions.size;
+      sponsorSessions.clear();
+      changes.clearedSponsorSessions = clearedSessions;
+    }
+
+    logEvent("admin.controls_updated", { requestId, ...actor, ...changes });
+    writeAuditEvent("admin.controls_updated", { requestId, ...actor, ...changes });
+
+    return res.status(200).json({
+      ok: true,
+      requestId,
+      controls: {
+        protectedRoutesDisabled,
+      },
+      ...changes,
     });
   });
 

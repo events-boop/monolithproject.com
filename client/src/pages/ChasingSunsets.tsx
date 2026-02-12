@@ -79,7 +79,7 @@ export default function ChasingSunsets() {
       </section>
 
       {/* The Concept */}
-      <section className="py-24 px-6" style={{ borderTop: `1px solid ${auburn}15` }}>
+      <section className="py-32 px-6" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <motion.div

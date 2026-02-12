@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import EventBanner from "./components/EventBanner";
 import FloatingTicketButton from "./components/FloatingTicketButton";
 import GridBackground from "./components/GridBackground";
+import ReactiveBackground from "./components/ReactiveBackground";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
@@ -23,16 +24,17 @@ const UntoldStory = lazy(() => import("./pages/UntoldStory"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Partners = lazy(() => import("./pages/Partners"));
 const Lineup = lazy(() => import("./pages/Lineup"));
+const Events = lazy(() => import("./pages/Events"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
 
 const pageTransition = {
-  initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
-  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
 };
 
 function Router() {
@@ -53,6 +55,7 @@ function Router() {
         <Route path={"/untold-story-deron-juany-bravo"} component={UntoldStoryTransition} />
         <Route path={"/booking"} component={BookingTransition} />
         <Route path={"/lineup"} component={LineupTransition} />
+        <Route path={"/events"} component={EventsTransition} />
         <Route path={"/partners"} component={PartnersTransition} />
         <Route path={"/terms"} component={TermsTransition} />
         <Route path={"/privacy"} component={PrivacyTransition} />
@@ -88,6 +91,7 @@ const RadioTransition = withTransition(Radio);
 const UntoldStoryTransition = withTransition(UntoldStory);
 const BookingTransition = withTransition(Booking);
 const LineupTransition = withTransition(Lineup);
+const EventsTransition = withTransition(Events);
 const PartnersTransition = withTransition(Partners);
 const TermsTransition = withTransition(Terms);
 const PrivacyTransition = withTransition(Privacy);
@@ -104,6 +108,18 @@ function App() {
             <SmoothScroll />
             <EventBanner />
             <GridBackground />
+            <ReactiveBackground />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={window.location.pathname}
+                initial={{ scaleY: 1 }}
+                animate={{ scaleY: 0 }}
+                exit={{ scaleY: 1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="fixed inset-0 bg-[#0a0a0a] z-[100] origin-top"
+                style={{ pointerEvents: 'none' }}
+              />
+            </AnimatePresence>
             <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
               <Router />
             </Suspense>
