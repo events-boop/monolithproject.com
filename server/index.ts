@@ -7,9 +7,17 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { createHash, randomUUID, timingSafeEqual } from "crypto";
 import { z } from "zod";
+import Stripe from "stripe";
+import { db } from "./db";
+import { events, tickets, orders } from "./db/schema";
+import { eq } from "drizzle-orm";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+  typescript: true,
+});
 
 type LeadProvider = "mailchimp" | "beehiiv" | "convertkit" | "hubspot";
 
@@ -69,6 +77,33 @@ const sponsorSessions = new Map<string, number>();
 const auditLogPath = process.env.AUDIT_LOG_PATH || path.resolve(__dirname, "..", "private", "audit.log");
 let auditLogPathReady: Promise<void> | undefined;
 let protectedRoutesDisabled = process.env.PROTECTED_ROUTES_DISABLED === "true";
+
+interface SocialEchoEventStats {
+  eventKey: string;
+  eventId: string | null;
+  eventTitle: string | null;
+  city: string | null;
+  goingCount: number;
+  pendingCount: number;
+  updatedAt: string;
+}
+
+interface SocialEchoActivity {
+  id: string;
+  at: string;
+  eventType: string;
+  eventKey: string;
+  eventId: string | null;
+  eventTitle: string | null;
+  city: string | null;
+  status: string | null;
+  quantity: number;
+  attendeeAlias: string;
+}
+
+const socialEchoByEvent = new Map<string, SocialEchoEventStats>();
+const socialEchoActivity: SocialEchoActivity[] = [];
+const socialEchoActivityMaxItems = 120;
 
 function logEvent(event: string, payload: Record<string, unknown>) {
   console.log(
@@ -188,6 +223,65 @@ function requestActor(req: express.Request) {
     ip,
     userAgent: req.header("user-agent") || null,
   };
+}
+
+function readPath(payload: Record<string, unknown>, pathParts: string[]) {
+  let current: unknown = payload;
+  for (const part of pathParts) {
+    if (typeof current !== "object" || current === null || !(part in current)) return undefined;
+    current = (current as Record<string, unknown>)[part];
+  }
+  return current;
+}
+
+function pickString(payload: Record<string, unknown>, candidates: string[]) {
+  for (const candidate of candidates) {
+    const value = readPath(payload, candidate.split("."));
+    if (typeof value === "string") {
+      const normalized = value.trim();
+      if (normalized) return normalized;
+    }
+  }
+  return null;
+}
+
+function pickQuantity(payload: Record<string, unknown>) {
+  const numericCandidates = [
+    "quantity",
+    "ticketQuantity",
+    "tickets_count",
+    "numTickets",
+    "order.quantity",
+    "order.ticketQuantity",
+    "order.tickets_count",
+  ];
+
+  for (const candidate of numericCandidates) {
+    const value = readPath(payload, candidate.split("."));
+    if (typeof value === "number" && Number.isFinite(value) && value > 0) {
+      return Math.min(20, Math.floor(value));
+    }
+    if (typeof value === "string") {
+      const parsed = Number.parseInt(value, 10);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        return Math.min(20, parsed);
+      }
+    }
+  }
+
+  const tickets = readPath(payload, ["order", "tickets"]);
+  if (Array.isArray(tickets) && tickets.length > 0) {
+    return Math.min(20, tickets.length);
+  }
+
+  return 1;
+}
+
+function pushSocialActivity(activity: SocialEchoActivity) {
+  socialEchoActivity.unshift(activity);
+  if (socialEchoActivity.length > socialEchoActivityMaxItems) {
+    socialEchoActivity.length = socialEchoActivityMaxItems;
+  }
 }
 
 function requireAdminAccess(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -403,6 +497,43 @@ function configureApp() {
       contentSecurityPolicy: false,
     })
   );
+
+  // Stripe Webhook - Requires raw body for signature verification
+  app.post("/api/webhooks/stripe", express.raw({ type: "application/json" }), async (req, res) => {
+    const sig = req.headers["stripe-signature"];
+    let event: Stripe.Event;
+
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig as string, process.env.STRIPE_WEBHOOK_SECRET || "");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Webhook Error";
+      console.error(`Webhook signature verification failed: ${message}`);
+      return res.status(400).send(`Webhook Error: ${message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      console.log(`[Stripe] Checkout session completed: ${session.id}`);
+
+      // Basic Order Fulfillment
+      if (session.amount_total) {
+        try {
+          await db.insert(orders).values({
+            userId: session.metadata?.userId || null,
+            stripeCheckoutId: session.id,
+            amount: session.amount_total,
+            status: "completed",
+            customerEmail: session.customer_details?.email || null,
+          });
+          console.log(`[DB] Order created for session ${session.id}`);
+        } catch (dbError) {
+          console.error("[DB] Failed to create order", dbError);
+        }
+      }
+    }
+
+    res.json({ received: true });
+  });
 
   app.use(express.json({ limit: "1mb" }));
 
@@ -919,6 +1050,96 @@ function configureApp() {
       },
       ...changes,
     });
+  });
+
+  // ============================================
+  // COMMERCE API
+  // ============================================
+
+  app.get("/api/events", async (_req, res) => {
+    try {
+      const allEvents = await db.select().from(events);
+      res.json({ ok: true, data: allEvents });
+    } catch (error) {
+      console.error("[DB] Failed to fetch events", error);
+      res.status(500).json({ ok: false, error: "Database error" });
+    }
+  });
+
+  app.get("/api/events/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) return res.status(400).json({ ok: false, error: "Invalid ID" });
+
+      const result = await db.select().from(events).where(eq(events.id, id)).limit(1);
+      if (!result.length) return res.status(404).json({ ok: false, error: "Event not found" });
+
+      res.json({ ok: true, data: result[0] });
+    } catch (error) {
+      console.error("[DB] Failed to fetch event", error);
+      res.status(500).json({ ok: false, error: "Database error" });
+    }
+  });
+
+  app.post("/api/checkout/create-session", async (req, res) => {
+    const { eventId, ticketTier, quantity = 1 } = req.body;
+    const requestId = randomUUID();
+
+    if (!eventId || !ticketTier) {
+      return res.status(400).json({ ok: false, error: "Missing eventId or ticketTier" });
+    }
+
+    try {
+      const id = parseInt(eventId);
+      const result = await db.select().from(events).where(eq(events.id, id)).limit(1);
+      if (!result.length) return res.status(404).json({ ok: false, error: "Event not found" });
+
+      const event = result[0];
+      // Type assertion for simple JSON handling
+      const ticketTypes = event.ticketTypes as Array<{ name: string; price: number }>;
+      const selectedTier = ticketTypes.find((t) => t.name === ticketTier);
+
+      if (!selectedTier) {
+        return res.status(400).json({ ok: false, error: "Invalid ticket tier" });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
+              currency: "usd",
+              product_data: {
+                name: `${event.name} - ${ticketTier}`,
+                metadata: {
+                  eventId: event.id,
+                  ticketTier: ticketTier,
+                },
+              },
+              unit_amount: selectedTier.price, // Price in cents
+            },
+            quantity: quantity,
+          },
+        ],
+        mode: "payment",
+        success_url: `${req.headers.origin}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}/order/canceled`,
+        metadata: {
+          requestId,
+          eventId: event.id.toString(),
+          ticketTier: ticketTier,
+          // userId to be added in Phase 2
+        },
+      });
+
+      logEvent("checkout.session_created", { requestId, eventId, ticketTier, amount: selectedTier.price });
+
+      res.json({ ok: true, url: session.url });
+
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Checkout error";
+      console.error("[Stripe] Checkout failed", error);
+      res.status(500).json({ ok: false, error: message });
+    }
   });
 
   // Never allow /api/* to fall through to SPA HTML.
