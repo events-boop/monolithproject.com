@@ -857,24 +857,133 @@ function configureApp() {
           ? payload.event
           : "unknown";
     const inferredEventId =
-      typeof payload.id === "string" || typeof payload.id === "number"
-        ? String(payload.id)
-        : null;
+      pickString(payload, ["event.id", "eventId", "event_id", "event.slug", "eventSlug"]) ||
+      (typeof payload.id === "string" || typeof payload.id === "number" ? String(payload.id) : null);
+    const inferredEventTitle = pickString(payload, ["event.name", "eventName", "event_title", "name"]);
+    const inferredCity = pickString(payload, ["event.city", "city", "venue.city", "event.location.city"]);
+    const inferredStatus = pickString(payload, ["status", "order.status", "orderStatus"]);
+    const quantity = pickQuantity(payload);
+
+    const normalizedEventType = inferredEventType.toLowerCase();
+    const normalizedStatus = (inferredStatus || "").toLowerCase();
+    const eventKey = inferredEventId || inferredEventTitle || "unknown";
+    const attendeeAlias = `guest-${requestId.slice(0, 4).toLowerCase()}`;
+    const existingStats = socialEchoByEvent.get(eventKey);
+    const baseStats: SocialEchoEventStats = existingStats || {
+      eventKey,
+      eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      goingCount: 0,
+      pendingCount: 0,
+      updatedAt: new Date().toISOString(),
+    };
+
+    let goingDelta = 0;
+    let pendingDelta = 0;
+
+    if (normalizedEventType.includes("pending")) {
+      pendingDelta += quantity;
+    } else if (normalizedEventType.includes("updated")) {
+      if (
+        normalizedStatus.includes("refund") ||
+        normalizedStatus.includes("cancel") ||
+        normalizedStatus.includes("void")
+      ) {
+        goingDelta -= quantity;
+      } else if (
+        normalizedStatus.includes("approved") ||
+        normalizedStatus.includes("accept") ||
+        normalizedStatus.includes("complete") ||
+        normalizedStatus.includes("paid")
+      ) {
+        pendingDelta -= quantity;
+        goingDelta += quantity;
+      }
+    } else if (
+      normalizedEventType.includes("new order") ||
+      normalizedEventType.includes("new_order") ||
+      normalizedEventType.includes("new")
+    ) {
+      goingDelta += quantity;
+    } else if (normalizedEventType.includes("order")) {
+      goingDelta += quantity;
+    }
+
+    const nextStats: SocialEchoEventStats = {
+      ...baseStats,
+      eventId: baseStats.eventId || inferredEventId,
+      eventTitle: baseStats.eventTitle || inferredEventTitle,
+      city: baseStats.city || inferredCity,
+      goingCount: Math.max(0, baseStats.goingCount + goingDelta),
+      pendingCount: Math.max(0, baseStats.pendingCount + pendingDelta),
+      updatedAt: new Date().toISOString(),
+    };
+    socialEchoByEvent.set(eventKey, nextStats);
+    pushSocialActivity({
+      id: requestId,
+      at: new Date().toISOString(),
+      eventType: inferredEventType,
+      eventKey,
+      eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      status: inferredStatus,
+      quantity,
+      attendeeAlias,
+    });
 
     logEvent("posh.webhook_received", {
       requestId,
       ...actor,
       eventType: inferredEventType,
       eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      status: inferredStatus,
+      quantity,
+      goingCount: nextStats.goingCount,
+      pendingCount: nextStats.pendingCount,
     });
     writeAuditEvent("posh.webhook_received", {
       requestId,
       ...actor,
       eventType: inferredEventType,
       eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      status: inferredStatus,
+      quantity,
+      eventKey,
+      goingCount: nextStats.goingCount,
+      pendingCount: nextStats.pendingCount,
     });
 
     return res.status(200).json({ ok: true, requestId });
+  });
+
+  app.get("/api/social/echo", (_req, res) => {
+    const events = Array.from(socialEchoByEvent.values()).sort((a, b) => {
+      const scoreA = a.goingCount * 1000 + a.pendingCount * 100;
+      const scoreB = b.goingCount * 1000 + b.pendingCount * 100;
+      if (scoreA !== scoreB) return scoreB - scoreA;
+      return b.updatedAt.localeCompare(a.updatedAt);
+    });
+
+    const totalGoing = events.reduce((sum, event) => sum + event.goingCount, 0);
+    const totalPending = events.reduce((sum, event) => sum + event.pendingCount, 0);
+
+    return res.status(200).json({
+      ok: true,
+      now: new Date().toISOString(),
+      summary: {
+        totalGoing,
+        totalPending,
+        liveEvents: events.length,
+      },
+      events,
+      activity: socialEchoActivity.slice(0, 30),
+    });
   });
 
   app.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {

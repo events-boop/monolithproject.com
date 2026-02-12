@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
 
 /*
   Flat mercator-style map with artist location pins.
@@ -13,13 +14,15 @@ interface LocationPin {
   type: "artist" | "listener";
 }
 
-const locations: LocationPin[] = [
+const artistLocations: LocationPin[] = [
   // Artists (real roster)
   { label: "HAAi", lat: 51.5, lon: -0.12, type: "artist" },
   { label: "AUTOGRAF", lat: 41.87, lon: -87.62, type: "artist" },
   { label: "LAZARE", lat: 48.85, lon: 2.35, type: "artist" },
   { label: "JOEZI", lat: 32.06, lon: 34.78, type: "artist" },
-  // Listener clusters (aspirational but plausible)
+];
+
+const listenerSeeds: LocationPin[] = [
   { label: "NYC", lat: 40.71, lon: -74.0, type: "listener" },
   { label: "LA", lat: 34.05, lon: -118.24, type: "listener" },
   { label: "Berlin", lat: 52.52, lon: 13.4, type: "listener" },
@@ -37,6 +40,38 @@ function toXY(lat: number, lon: number): { x: number; y: number } {
 }
 
 export default function GlobalListenerMap() {
+  const [liveListeners, setLiveListeners] = useState<LocationPin[]>([]);
+  const randomSeed = useMemo(() => Math.random() * 1000, []);
+
+  useEffect(() => {
+    const buildListeners = (offset: number) => {
+      const next: LocationPin[] = [];
+      const desired = 14;
+      for (let i = 0; i < desired; i += 1) {
+        const seed = listenerSeeds[i % listenerSeeds.length];
+        const jitterLat = Math.sin(offset + i * 1.13 + randomSeed) * 2.2;
+        const jitterLon = Math.cos(offset + i * 1.27 + randomSeed) * 2.8;
+        next.push({
+          ...seed,
+          lat: seed.lat + jitterLat,
+          lon: seed.lon + jitterLon,
+        });
+      }
+      return next;
+    };
+
+    let tick = 0;
+    setLiveListeners(buildListeners(0));
+    const intervalId = window.setInterval(() => {
+      tick += 1;
+      setLiveListeners(buildListeners(tick * 0.65));
+    }, 3500);
+
+    return () => window.clearInterval(intervalId);
+  }, [randomSeed]);
+
+  const locations = [...artistLocations, ...liveListeners];
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       <svg

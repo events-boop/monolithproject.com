@@ -12,12 +12,13 @@ interface NavigationProps {
 }
 
 const navItems = [
-  { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
-  { label: "UNTOLD STORY", href: "/story" },
+  { label: "CHASING SUN(SETS)", href: "/series/chasing-sunsets" },
+  { label: "UNTOLD STORY", href: "/series/untold-story" },
   { label: "SCHEDULE", href: "/#schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
   { label: "EVENTS", href: "/events" },
+  { label: "ARCHIVE", href: "/archive" },
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   {
@@ -32,12 +33,13 @@ const navItems = [
 ];
 
 const mobileNavItems = [
-  { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
-  { label: "UNTOLD STORY", href: "/story" },
+  { label: "CHASING SUN(SETS)", href: "/series/chasing-sunsets" },
+  { label: "UNTOLD STORY", href: "/series/untold-story" },
   { label: "SCHEDULE", href: "/#schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
   { label: "EVENTS", href: "/events" },
+  { label: "ARCHIVE", href: "/archive" },
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "PARTNERS", href: "/partners" },

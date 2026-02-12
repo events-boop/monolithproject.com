@@ -22,6 +22,41 @@ export interface BookingInquiryPayload {
   message: string;
 }
 
+export interface SocialEchoEvent {
+  eventKey: string;
+  eventId: string | null;
+  eventTitle: string | null;
+  city: string | null;
+  goingCount: number;
+  pendingCount: number;
+  updatedAt: string;
+}
+
+export interface SocialEchoActivityItem {
+  id: string;
+  at: string;
+  eventType: string;
+  eventKey: string;
+  eventId: string | null;
+  eventTitle: string | null;
+  city: string | null;
+  status: string | null;
+  quantity: number;
+  attendeeAlias: string;
+}
+
+export interface SocialEchoResponse {
+  ok: true;
+  now: string;
+  summary: {
+    totalGoing: number;
+    totalPending: number;
+    liveEvents: number;
+  };
+  events: SocialEchoEvent[];
+  activity: SocialEchoActivityItem[];
+}
+
 interface ApiError {
   message?: string;
   error?: {
@@ -104,4 +139,18 @@ export async function trackTicketIntent(source: string, eventId?: string) {
     body: JSON.stringify({ source, eventId }),
     keepalive: true,
   }).catch(() => undefined);
+}
+
+export async function fetchSocialEcho() {
+  const response = await fetch("/api/social/echo", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const body = (await response.json().catch(() => ({}))) as ApiError;
+    throw new Error(parseApiError(body, "Unable to load social activity."));
+  }
+
+  return (await response.json()) as SocialEchoResponse;
 }

@@ -1,11 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Calendar, Clock, MapPin, Ticket } from "lucide-react";
+import { ArrowUpRight, Calendar, Clock, MapPin, Ticket, Users } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import { upcomingEvents, type ScheduledEvent } from "@/data/events";
+import { fetchSocialEcho, type SocialEchoEvent, type SocialEchoResponse } from "@/lib/api";
 
 type SeriesFilter = "all" | ScheduledEvent["series"];
 type StatusFilter = "all" | ScheduledEvent["status"];
@@ -61,9 +62,9 @@ function getSeriesLabel(series: ScheduledEvent["series"]) {
 
 function getEventDetailsPath(event: ScheduledEvent) {
   if (event.id === "us-s3e2") return "/untold-story-deron-juany-bravo";
-  if (event.series === "untold-story") return "/story";
-  if (event.series === "chasing-sunsets") return "/chasing-sunsets";
-  return "/about";
+  if (event.series === "untold-story") return "/series/untold-story";
+  if (event.series === "chasing-sunsets") return "/series/chasing-sunsets";
+  return "/series/monolith-project";
 }
 
 function getEventCta(event: ScheduledEvent) {
@@ -72,6 +73,19 @@ function getEventCta(event: ScheduledEvent) {
     return { href: event.ticketUrl, label: ctaLabel, external: true as const };
   }
   return { href: "/tickets", label: ctaLabel, external: false as const };
+}
+
+function findEchoForEvent(event: ScheduledEvent, echoEvents: SocialEchoEvent[]) {
+  const titleNeedle = event.title.toLowerCase();
+  const episodeNeedle = event.episode.toLowerCase();
+  return (
+    echoEvents.find((echo) => {
+      if (echo.eventId && echo.eventId === event.id) return true;
+      const echoTitle = (echo.eventTitle || "").toLowerCase();
+      if (echoTitle && (echoTitle.includes(titleNeedle) || titleNeedle.includes(echoTitle))) return true;
+      return echoTitle.includes(episodeNeedle);
+    }) || null
+  );
 }
 
 function EventAction({
@@ -104,6 +118,8 @@ function EventAction({
 export default function Events() {
   const [seriesFilter, setSeriesFilter] = useState<SeriesFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [socialEcho, setSocialEcho] = useState<SocialEchoResponse | null>(null);
+  const [socialEchoError, setSocialEchoError] = useState<string | null>(null);
 
   const orderedEvents = useMemo(() => {
     return [...upcomingEvents].sort((a, b) => parseEventDate(a.date) - parseEventDate(b.date));
@@ -131,6 +147,35 @@ export default function Events() {
 
   const featuredCta = getEventCta(featuredEvent);
   const secondaryCta = secondaryFeaturedEvent ? getEventCta(secondaryFeaturedEvent) : null;
+  const featuredEcho = socialEcho ? findEchoForEvent(featuredEvent, socialEcho.events) : null;
+  const secondaryEcho =
+    socialEcho && secondaryFeaturedEvent ? findEchoForEvent(secondaryFeaturedEvent, socialEcho.events) : null;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadSocialEcho = async () => {
+      try {
+        const payload = await fetchSocialEcho();
+        if (!isMounted) return;
+        setSocialEcho(payload);
+        setSocialEchoError(null);
+      } catch (error) {
+        if (!isMounted) return;
+        setSocialEchoError(error instanceof Error ? error.message : "Unable to load live attendance.");
+      }
+    };
+
+    void loadSocialEcho();
+    const intervalId = window.setInterval(() => {
+      void loadSocialEcho();
+    }, 20000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div
@@ -263,6 +308,20 @@ export default function Events() {
                 </p>
               </div>
 
+              {featuredEcho && (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase border border-cyan-200/45 text-cyan-100 rounded-full inline-flex items-center gap-1.5">
+                    <Users className="w-3 h-3" />
+                    {featuredEcho.goingCount} Going
+                  </span>
+                  {featuredEcho.pendingCount > 0 && (
+                    <span className="px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase border border-amber-200/45 text-amber-100 rounded-full">
+                      {featuredEcho.pendingCount} Pending
+                    </span>
+                  )}
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-3">
                 <EventAction
                   href={featuredCta.href}
@@ -322,6 +381,19 @@ export default function Events() {
                       </span>
                     </p>
                   </div>
+                  {secondaryEcho && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      <span className="px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase border border-cyan-200/45 text-cyan-100 rounded-full inline-flex items-center gap-1.5">
+                        <Users className="w-3 h-3" />
+                        {secondaryEcho.goingCount} Going
+                      </span>
+                      {secondaryEcho.pendingCount > 0 && (
+                        <span className="px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase border border-amber-200/45 text-amber-100 rounded-full">
+                          {secondaryEcho.pendingCount} Pending
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="flex flex-wrap gap-3">
                     {secondaryCta && (
                       <EventAction
@@ -358,6 +430,70 @@ export default function Events() {
                 </>
               )}
             </motion.div>
+          </div>
+
+          <div className="border border-white/20 rounded-2xl p-5 md:p-6 backdrop-blur-lg mb-8 bg-[linear-gradient(145deg,rgba(255,255,255,0.16),rgba(11,18,36,0.65))]">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <p className="font-mono text-[11px] tracking-[0.18em] uppercase text-white/60 mb-2">Social Echo</p>
+                <h3 className="font-display text-2xl md:text-3xl">Live Attendance Momentum</h3>
+              </div>
+              <span className="px-3 py-1 text-[10px] font-bold tracking-[0.15em] uppercase border border-white/30 rounded-full text-white/75">
+                Refreshes every 20s
+              </span>
+            </div>
+
+            {socialEcho ? (
+              <>
+                <div className="grid sm:grid-cols-3 gap-3 mb-5">
+                  <div className="border border-white/20 rounded-xl p-3 bg-black/20">
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/55 mb-1">Total Going</p>
+                    <p className="font-display text-3xl">{socialEcho.summary.totalGoing}</p>
+                  </div>
+                  <div className="border border-white/20 rounded-xl p-3 bg-black/20">
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/55 mb-1">Pending Approval</p>
+                    <p className="font-display text-3xl">{socialEcho.summary.totalPending}</p>
+                  </div>
+                  <div className="border border-white/20 rounded-xl p-3 bg-black/20">
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/55 mb-1">Live Events</p>
+                    <p className="font-display text-3xl">{socialEcho.summary.liveEvents}</p>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="border border-white/20 rounded-xl p-4 bg-black/20">
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/55 mb-3">Top Events</p>
+                    <div className="space-y-2">
+                      {socialEcho.events.slice(0, 4).map((event) => (
+                        <div key={event.eventKey} className="flex items-center justify-between border-b border-white/10 pb-2">
+                          <span className="text-sm text-white/85 truncate pr-3">{event.eventTitle || event.eventKey}</span>
+                          <span className="font-mono text-xs text-white/60">{event.goingCount} going</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="border border-white/20 rounded-xl p-4 bg-black/20">
+                    <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-white/55 mb-3">Recent Activity</p>
+                    <div className="space-y-2">
+                      {socialEcho.activity.slice(0, 5).map((activity) => (
+                        <div key={activity.id} className="flex items-center justify-between border-b border-white/10 pb-2">
+                          <p className="text-sm text-white/82 truncate pr-3">
+                            {activity.attendeeAlias} joined {activity.eventTitle || "an event"}
+                          </p>
+                          <span className="font-mono text-xs text-white/55">+{activity.quantity}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="border border-white/20 rounded-xl p-4 bg-black/20">
+                <p className="text-white/75 text-sm">
+                  {socialEchoError || "Waiting for live attendance signals from webhook events."}
+                </p>
+              </div>
+            )}
           </div>
 
           <AnimatePresence mode="popLayout">
