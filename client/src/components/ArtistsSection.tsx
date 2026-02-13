@@ -154,10 +154,10 @@ export default function ArtistsSection() {
           </div>
         </div>
 
-        {/* CTAs — consumer + artist */}
+          {/* CTAs — consumer + artist */}
         <div className="border-t border-border pt-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Link href="/lineup">
+            <Link href="/lineup" asChild>
               <a className="btn-pill group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
                 <span>See Full Lineup</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -170,7 +170,7 @@ export default function ArtistsSection() {
               </div>
             </a>
           </div>
-          <Link href="/booking">
+          <Link href="/booking" asChild>
             <a className="group flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
               <span className="font-mono tracking-widest uppercase text-xs">Artist? Send Us Your Mix</span>
               <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />

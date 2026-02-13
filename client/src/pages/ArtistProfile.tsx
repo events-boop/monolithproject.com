@@ -260,7 +260,7 @@ export default function ArtistProfile() {
             <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase mb-4">Artist</p>
             <h1 className="font-display text-[clamp(3rem,9vw,6rem)] leading-[0.9] uppercase mb-6">Profile Not Found</h1>
             <p className="text-muted-foreground mb-8">We couldn't find that artist profile. View the full lineup to continue.</p>
-            <Link href="/lineup">
+            <Link href="/lineup" asChild>
               <a className="btn-pill-coral inline-flex">View Lineup</a>
             </Link>
           </div>
@@ -335,7 +335,7 @@ export default function ArtistProfile() {
                 {artist.bio}
               </p>
 
-              <Link href="/tickets">
+              <Link href="/tickets" asChild>
                 <a className="btn-pill-coral inline-flex">
                   View Event Tickets
                 </a>
@@ -418,7 +418,7 @@ export default function ArtistProfile() {
                 <span className="text-foreground">{eventDetails.venue}</span>
               </div>
 
-              <Link href="/tickets">
+              <Link href="/tickets" asChild>
                 <a
                   className={`block w-full text-center py-4 mt-4 font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
                     isWarmSeries

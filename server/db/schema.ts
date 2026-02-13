@@ -24,3 +24,15 @@ export const socialEchoActivity = pgTable("social_echo_activity", {
   rawPayload: jsonb("raw_payload").notNull().default({}),
 });
 
+export const leads = pgTable("leads", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  source: text("source"),
+  provider: text("provider"),
+  providerStatus: text("provider_status"), // 'success' | 'failed'
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
+  metadata: jsonb("metadata").notNull().default({}),
+});
+

@@ -17,6 +17,7 @@ const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
 const ConnectSection = lazy(() => import("@/components/ConnectSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
+import SEO from "@/components/SEO";
 
 export default function Home() {
   useEffect(() => {
@@ -25,6 +26,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+      <SEO
+        title="Home"
+        description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
+      />
       <Navigation />
 
       <main>
@@ -48,7 +53,7 @@ export default function Home() {
           <Suspense fallback={null}>
             <CinematicBreak
               image="/images/untold-story-juany-deron-v2.jpg"
-              videoSrc="/videos/hero-video-1.mp4"
+              videoSrc="/videos/hero-video-short.mp4"
               quote="We believe music carries emotion. We believe gathering should feel shared. We believe in rhythm, story, and togetherness."
               attribution="The Monolith Project"
               ctaLabel="Get Tickets"
@@ -80,8 +85,7 @@ export default function Home() {
           </Suspense>
         </ViewportLazy>
 
-        {/* Tickets banner */}
-        <Ticker />
+
 
         {/* 07 — Get Involved */}
         <SectionDivider number="07" label="Join Us" />
@@ -105,6 +109,9 @@ export default function Home() {
             <NewsletterSection />
           </Suspense>
         </ViewportLazy>
+
+        {/* Tickets banner */}
+        <Ticker />
 
         {/* Gradient bridge into footer */}
         <div className="relative h-24 bg-background overflow-hidden" aria-hidden="true">

@@ -6,8 +6,14 @@ import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
+import SEO from "@/components/SEO";
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
+  {
+    type: "video",
+    src: "/videos/hero-video-1.mp4",
+    caption: "THE MONOLITH PROJECT",
+  },
   {
     type: "image",
     src: "/images/chasing-sunsets.jpg",
@@ -44,8 +50,12 @@ const deepWarm = "#2C1810";
 export default function ChasingSunsets() {
   return (
     <div className="min-h-screen selection:text-white relative overflow-hidden" style={{ background: cream, color: deepWarm }}>
+      <SEO
+        title="Chasing Sun(Sets)"
+        description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
+      />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_16%,rgba(232,184,109,0.25),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(194,112,62,0.2),transparent_32%),radial-gradient(circle_at_75%_84%,rgba(139,92,246,0.14),transparent_36%)]" />
-      <Navigation variant="light" />
+      <Navigation variant="dark" brand="chasing-sunsets" />
 
       {/* Hero — raw, warm, big type */}
       <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
@@ -53,7 +63,12 @@ export default function ChasingSunsets() {
         <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
         {/* Overlay gradient for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-deepWarm via-transparent to-transparent opacity-80 z-10 pointer-events-none" style={{ color: deepWarm }} />
+        <div
+          className="absolute inset-0 opacity-80 z-10 pointer-events-none"
+          style={{
+            background: `linear-gradient(to top, ${deepWarm}ee 0%, ${deepWarm}66 45%, transparent 78%)`,
+          }}
+        />
 
         <div className="relative z-20 container max-w-6xl mx-auto pointer-events-none">
           <motion.div
@@ -66,9 +81,9 @@ export default function ChasingSunsets() {
               Series 01
             </span>
             <h1 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white">
-              CHASING
-              <br />
-              SUN(SETS)
+              <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
+                CHASING SUN(SETS)
+              </span>
             </h1>
             <p className="max-w-lg text-lg leading-relaxed text-white/90">
               Golden hour. Good people. Great music. Rooftop shows and outdoor
@@ -170,13 +185,13 @@ export default function ChasingSunsets() {
                     </div>
                   </div>
                 </div>
-                <Link href="/tickets">
-                  <div
-                    className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full"
+                <Link href="/tickets" asChild>
+                  <a
+                    className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
                     style={{ background: `linear-gradient(135deg, ${auburn}, ${warmGold})` }}
                   >
                     GET TICKETS <ArrowUpRight size={14} />
-                  </div>
+                  </a>
                 </Link>
               </div>
             ))}
@@ -218,18 +233,21 @@ export default function ChasingSunsets() {
             Sign up for the newsletter to get ticket access before anyone else.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/story">
-              <div className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-80 transition-opacity cursor-pointer rounded-full" style={{ border: `1px solid ${deepWarm}30`, color: deepWarm }}>
+            <Link href="/story" asChild>
+              <a
+                className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-80 transition-opacity cursor-pointer rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2C1810]/20"
+                style={{ border: `1px solid ${deepWarm}30`, color: deepWarm }}
+              >
                 UNTOLD STORY
-              </div>
+              </a>
             </Link>
-            <Link href="/">
-              <div
-                className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer text-white rounded-full"
+            <Link href="/" asChild>
+              <a
+                className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer text-white rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
                 style={{ background: `linear-gradient(135deg, ${auburn}, ${warmGold})` }}
               >
                 BACK TO MONOLITH
-              </div>
+              </a>
             </Link>
           </div>
         </div>

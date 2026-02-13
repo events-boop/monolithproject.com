@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { PostHogProvider } from "./components/PostHogProvider";
 import EventBanner from "./components/EventBanner";
 import FloatingTicketButton from "./components/FloatingTicketButton";
 import GridBackground from "./components/GridBackground";
@@ -25,6 +26,7 @@ const Partners = lazy(() => import("./pages/Partners"));
 const Lineup = lazy(() => import("./pages/Lineup"));
 const Schedule = lazy(() => import("./pages/Schedule"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
+const Contact = lazy(() => import("./pages/Contact"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
@@ -57,6 +59,7 @@ function Router() {
         <Route path={"/lineup"} component={LineupTransition} />
         <Route path={"/schedule"} component={ScheduleTransition} />
         <Route path={"/newsletter"} component={NewsletterTransition} />
+        <Route path={"/contact"} component={ContactTransition} />
         <Route path={"/partners"} component={PartnersTransition} />
         <Route path={"/terms"} component={TermsTransition} />
         <Route path={"/privacy"} component={PrivacyTransition} />
@@ -94,6 +97,7 @@ const BookingTransition = withTransition(Booking);
 const LineupTransition = withTransition(Lineup);
 const ScheduleTransition = withTransition(Schedule);
 const NewsletterTransition = withTransition(Newsletter);
+const ContactTransition = withTransition(Contact);
 const PartnersTransition = withTransition(Partners);
 const TermsTransition = withTransition(Terms);
 const PrivacyTransition = withTransition(Privacy);
@@ -104,20 +108,22 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <>
-            <SmoothScroll />
-            <EventBanner />
-            <GridBackground />
-            <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
-              <div className="origin-top">
-                <Router />
-              </div>
-            </Suspense>
-            <FloatingTicketButton />
-          </>
-        </TooltipProvider>
+        <PostHogProvider>
+          <TooltipProvider>
+            <Toaster />
+            <>
+              <SmoothScroll />
+              <EventBanner />
+              <GridBackground />
+              <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+                <div className="origin-top">
+                  <Router />
+                </div>
+              </Suspense>
+              <FloatingTicketButton />
+            </>
+          </TooltipProvider>
+        </PostHogProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

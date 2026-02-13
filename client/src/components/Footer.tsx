@@ -42,6 +42,7 @@ const links = [
       { name: "Untold Story", href: "/story" },
       { name: "Radio", href: "/radio" },
       { name: "About", href: "/about" },
+      { name: "Contact", href: "/contact" },
       { name: "FAQ", href: "/#faq" },
     ]
   },
@@ -125,7 +126,7 @@ export default function Footer() {
                         <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </a>
                     ) : (
-                      <Link href={item.href}>
+                      <Link href={item.href} asChild>
                         <a className={`transition-colors text-sm tracking-wide ${item.name === "Get Tickets"
                           ? "px-2 py-1 rounded-full bg-primary/18 border border-primary/40 text-primary font-semibold hover:text-primary hover:bg-primary/25"
                           : "text-white/75 hover:text-white"

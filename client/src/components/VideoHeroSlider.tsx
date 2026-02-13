@@ -82,13 +82,14 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
               loop
               muted={isMuted}
               playsInline
+              preload="metadata"
               className="w-full h-full object-cover"
             />
           ) : (
             <img
               src={slide.src}
               alt={slide.alt || ""}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[80%_center]"
             />
           )}
         </motion.div>
@@ -99,6 +100,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
 
       {/* Left/Right arrows */}
       <button
+        type="button"
         onClick={prev}
         className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
         aria-label="Previous slide"
@@ -106,6 +108,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
         <ChevronLeft className="w-5 h-5" />
       </button>
       <button
+        type="button"
         onClick={next}
         className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
         aria-label="Next slide"
@@ -119,8 +122,11 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
         <div className="flex gap-2">
           {slides.map((_, index) => (
             <button
+              type="button"
               key={index}
               onClick={() => setCurrentSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === currentSlide ? "true" : undefined}
               className={`h-[2px] transition-all duration-500 ${index === currentSlide
                 ? "bg-primary w-10"
                 : "bg-white/20 w-5 hover:bg-white/40"
@@ -138,8 +144,10 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
           )}
           {slide.type === "video" && (
             <button
+              type="button"
               onClick={toggleMute}
               className="p-2 border border-white/10 text-white/40 hover:text-white hover:border-white/30 transition-all"
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
             >
               {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
             </button>

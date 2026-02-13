@@ -100,7 +100,7 @@ export default function MovementSection() {
               <div className="space-y-6">
                 {/* Branch 1: Chasing Sunsets */}
                 <div className="group">
-                  <Link href="/chasing-sunsets">
+                  <Link href="/chasing-sunsets" asChild>
                     <a className="text-xl font-display text-charcoal hover:text-warmGold transition-colors mb-1 inline-flex items-center gap-2">
                       CHASING SUN(SETS)
                       <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-warmGold" />
@@ -113,7 +113,7 @@ export default function MovementSection() {
 
                 {/* Branch 2: Untold Story */}
                 <div className="group">
-                  <Link href="/story">
+                  <Link href="/story" asChild>
                     <a className="text-xl font-display text-charcoal hover:text-clay transition-colors mb-1 inline-flex items-center gap-2">
                       UNTOLD STORY
                       <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-clay" />
@@ -126,7 +126,7 @@ export default function MovementSection() {
 
                 {/* Branch 3: Radio */}
                 <div className="group">
-                  <Link href="/radio">
+                  <Link href="/radio" asChild>
                     <a className="text-xl font-display text-charcoal hover:text-stone transition-colors mb-1 inline-flex items-center gap-2">
                       MONOLITH RADIO
                       <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-stone" />

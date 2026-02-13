@@ -340,9 +340,26 @@
     text-transform: uppercase;
   }
 
-  /* Smooth scroll */
-  html {
-    scroll-behavior: auto;
+  /* Smooth scroll - Lenis recommended styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
   }
 
   /* Textured background noise overlay - z-index lowered to avoid click interference */
@@ -611,5 +628,16 @@
         rgba(0, 0, 0, 1) 70%);
     mask-size: 200%;
     animation: shine 3s linear infinite;
+  }
+
+  @keyframes border-beam {
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  .animate-border-beam {
+    animation: border-beam calc(var(--duration)*1s) infinite linear;
+    offset-distance: 0%;
   }
 }

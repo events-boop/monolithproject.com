@@ -1,3 +1,5 @@
+import RevealText from "./RevealText";
+
 interface EditorialHeaderProps {
   kicker: string;
   title: string;
@@ -20,20 +22,42 @@ export default function EditorialHeader({
   return (
     <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div className="max-w-3xl">
-        <span className="ui-kicker text-primary/85 mb-4 block">
+        <RevealText
+          as="span"
+          className="ui-kicker text-primary/85 mb-4 block"
+          delay={0.1}
+          stagger={0.02}
+        >
           {kicker}
-        </span>
-        <h2 className={`ui-heading font-display text-[clamp(2.6rem,7vw,6.2rem)] tracking-[0.02em] uppercase ${titleClass}`}>
+        </RevealText>
+        <RevealText
+          as="h2"
+          className={`ui-heading font-display text-[clamp(2.6rem,7vw,6.2rem)] tracking-[0.02em] uppercase ${titleClass}`}
+          delay={0.2}
+          blurStrength={16}
+        >
           {title}
-        </h2>
+        </RevealText>
         {description && (
-          <p className={`mt-3 max-w-2xl ${bodyClass}`}>{description}</p>
+          <RevealText
+            as="p"
+            className={`mt-4 max-w-2xl leading-relaxed ${bodyClass}`}
+            delay={0.4}
+            stagger={0.008} // Fast stagger for long text
+            blurStrength={8}
+          >
+            {description}
+          </RevealText>
         )}
       </div>
       {rightMeta && (
-        <span className={`ui-meta md:pb-3 ${metaClass}`}>
+        <RevealText
+          as="span"
+          className={`ui-meta md:pb-3 ${metaClass}`}
+          delay={0.5}
+        >
           {rightMeta}
-        </span>
+        </RevealText>
       )}
     </div>
   );

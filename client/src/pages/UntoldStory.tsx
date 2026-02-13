@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import TicketTicker from "@/components/TicketTicker";
+import SEO from "@/components/SEO";
 import { POSH_TICKET_URL } from "@/data/events";
 
 // Untold Story palette — Electric Violet + Cyan
@@ -156,9 +157,12 @@ export default function UntoldStory() {
 
   return (
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white" style={{ background: deepBg }}>
+      <SEO
+        title="Untold Story"
+        description="A late-night journey through Afro and melodic house. Immersive 360° sound in Chicago."
+      />
       <Navigation />
 
-      {/* Hero — heavy, dark, confrontational */}
       {/* Hero — heavy, dark, confrontational */}
       <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
         {/* Full Screen Background Rotator */}
@@ -175,7 +179,7 @@ export default function UntoldStory() {
               <img
                 src={heroSlides[heroSlideIndex]}
                 alt="Untold Story Atmosphere"
-                className="w-full h-full object-cover opacity-100"
+                className="w-full h-full object-cover object-[80%_center] opacity-100"
               />
             </motion.div>
           </AnimatePresence>

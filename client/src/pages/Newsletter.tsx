@@ -37,7 +37,7 @@ export default function Newsletter() {
           </div>
 
           <div className="mt-8">
-            <Link href="/schedule">
+            <Link href="/schedule" asChild>
               <a className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.16em] uppercase text-charcoal/70 hover:text-charcoal transition-colors">
                 Back to Schedule
                 <ArrowRight className="w-3.5 h-3.5" />

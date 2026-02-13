@@ -15,11 +15,14 @@ import {
   type SocialEchoActivityRow,
   type SocialEchoEventStatsRow,
 } from "./db/socialEchoRepo";
+import { getDatabase } from "./db/client";
+import { leads } from "./db/schema";
+import { eq } from "drizzle-orm";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-type LeadProvider = "mailchimp" | "beehiiv" | "convertkit" | "hubspot";
+type LeadProvider = "mailchimp" | "beehiiv" | "convertkit" | "hubspot" | "brevo" | "emailoctopus";
 
 const leadSchema = z.object({
   email: z.string().email(),
@@ -80,10 +83,10 @@ function logEvent(event: string, payload: Record<string, unknown>) {
 
 function readProvider(): LeadProvider {
   const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
-  if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit" || provider === "hubspot") {
+  if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit" || provider === "hubspot" || provider === "brevo" || provider === "emailoctopus") {
     return provider;
   }
-  throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, convertkit, or hubspot.");
+  throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, convertkit, hubspot, brevo, or emailoctopus.");
 }
 
 function scrubEmail(email: string) {
@@ -310,6 +313,74 @@ async function subscribeBeehiiv(lead: z.infer<typeof leadSchema>) {
   }
 }
 
+// ... (existing code)
+
+// ... (existing code)
+
+async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
+  const apiKey = process.env.EMAILOCTOPUS_API_KEY;
+  const listId = process.env.EMAILOCTOPUS_LIST_ID;
+  if (!apiKey || !listId) {
+    throw new Error("EMAILOCTOPUS_API_KEY and EMAILOCTOPUS_LIST_ID are required");
+  }
+
+  const endpoint = `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`;
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      api_key: apiKey,
+      email_address: scrubEmail(lead.email),
+      fields: {
+        FirstName: lead.firstName || "",
+        LastName: lead.lastName || "",
+        Source: lead.source || "website",
+      },
+      status: "SUBSCRIBED",
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    if (data.error && data.error.code === "MEMBER_EXISTS_WITH_EMAIL_ADDRESS") return;
+    throw new Error(data.error?.message || "EmailOctopus subscription failed");
+  }
+}
+
+async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    throw new Error("BREVO_API_KEY is required");
+  }
+
+  const endpoint = "https://api.brevo.com/v3/contacts";
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "api-key": apiKey,
+    },
+    body: JSON.stringify({
+      email: scrubEmail(lead.email),
+      updateEnabled: true,
+      attributes: {
+        FIRSTNAME: lead.firstName || "",
+        LASTNAME: lead.lastName || "",
+        SOURCE: lead.source || "website",
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    // Ignore if contact already exists (error code duplicate_parameter usually)
+    if (data.code === "duplicate_parameter") return;
+    throw new Error(data.message || "Brevo subscription failed");
+  }
+}
+
 async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
   const apiKey = process.env.CONVERTKIT_API_KEY;
   const formId = process.env.CONVERTKIT_FORM_ID;
@@ -379,6 +450,8 @@ async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof leadSc
   if (provider === "mailchimp") return subscribeMailchimp(lead);
   if (provider === "beehiiv") return subscribeBeehiiv(lead);
   if (provider === "hubspot") return subscribeHubSpot(lead);
+  if (provider === "brevo") return subscribeBrevo(lead);
+  if (provider === "emailoctopus") return subscribeEmailOctopus(lead);
   return subscribeConvertKit(lead);
 }
 
@@ -465,8 +538,34 @@ function configureApp() {
     }
 
     const operation = (async () => {
+      const dbLeadId = randomUUID();
+      const db = getDatabase();
+
       try {
+        // 1. Backup to DB first (Critical)
+        if (db) {
+          await db.insert(leads).values({
+            id: dbLeadId,
+            email: email,
+            firstName: parsed.data.firstName,
+            lastName: parsed.data.lastName,
+            source: parsed.data.source || "website",
+            provider: provider,
+            providerStatus: "pending",
+            metadata: parsed.data,
+          }).catch(err => console.error("Failed to backup lead to DB:", err));
+        }
+
         await subscribeLead(provider, parsed.data);
+
+        // 2. Update DB status on success
+        if (db) {
+          // Fire and forget update
+          db.update(leads)
+            .set({ providerStatus: "success" })
+            .where(eq(leads.id, dbLeadId))
+            .catch(() => { });
+        }
 
         const body = {
           ok: true,
@@ -489,6 +588,15 @@ function configureApp() {
         return { status: 200, body };
       } catch (error) {
         const message = error instanceof Error ? error.message : "Subscription failed";
+
+        // 3. Update DB status on failure
+        if (db) {
+          db.update(leads)
+            .set({ providerStatus: "failed", metadata: { ...parsed.data, error: message } })
+            .where(eq(leads.id, dbLeadId))
+            .catch(() => { });
+        }
+
         const body = {
           ok: false,
           requestId,

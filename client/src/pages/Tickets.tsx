@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import { trackTicketIntent } from "@/lib/api";
+import SEO from "@/components/SEO";
 
 interface TicketTier {
   id: string;
@@ -89,6 +90,10 @@ export default function Tickets() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <SEO
+        title="Tickets"
+        description="Secure your spot for the next Monolith Project event. Limited capacity available."
+      />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(34,211,238,0.16),transparent_34%),radial-gradient(circle_at_86%_20%,rgba(224,90,58,0.14),transparent_32%),radial-gradient(circle_at_50%_78%,rgba(139,92,246,0.14),transparent_42%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.45)_0%,rgba(6,6,15,0)_30%,rgba(6,6,15,0.55)_100%)]" />
       <Navigation />
@@ -249,11 +254,10 @@ export default function Tickets() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
-                className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm ${
-                  tier.highlight
+                className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm ${tier.highlight
                     ? "border-primary bg-[linear-gradient(145deg,rgba(224,90,58,0.2),rgba(139,92,246,0.16))] shadow-[0_10px_30px_rgba(224,90,58,0.25)]"
                     : "border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]"
-                }`}
+                  }`}
               >
                 {tier.highlight && (
                   <div className="absolute -top-3 left-6 px-4 py-1 bg-primary text-white text-[10px] font-mono tracking-widest uppercase rounded-full">
@@ -261,9 +265,8 @@ export default function Tickets() {
                   </div>
                 )}
 
-                <div className={`w-10 h-10 flex items-center justify-center mb-6 ${
-                  tier.highlight ? "text-primary" : "text-muted-foreground"
-                }`}>
+                <div className={`w-10 h-10 flex items-center justify-center mb-6 ${tier.highlight ? "text-primary" : "text-muted-foreground"
+                  }`}>
                   {tier.icon}
                 </div>
 
@@ -294,11 +297,10 @@ export default function Tickets() {
                 <button
                   onClick={handlePurchase}
                   disabled={!tier.available}
-                  className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all flex items-center justify-center gap-2 rounded-full ${
-                    tier.highlight
+                  className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all flex items-center justify-center gap-2 rounded-full ${tier.highlight
                       ? "border border-primary text-primary hover:bg-primary hover:text-white"
                       : "border border-white/30 text-white hover:border-white/60 hover:bg-white/5"
-                  } ${!tier.available && "opacity-50 cursor-not-allowed"}`}
+                    } ${!tier.available && "opacity-50 cursor-not-allowed"}`}
                 >
                   {tier.available ? (
                     <>

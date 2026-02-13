@@ -6,6 +6,8 @@ import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
+import HeroSpotlight from "./ui/HeroSpotlight";
+import { BorderBeam } from "./ui/BorderBeam";
 
 // March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
 
@@ -13,15 +15,15 @@ const TARGET_DATE = new Date("2026-03-06T19:00:00-06:00").getTime();
 
 const HERO_SLIDES: Slide[] = [
   {
+    type: "video",
+    src: "/videos/hero-video-short.mp4",
+    caption: "THE MONOLITH PROJECT",
+  },
+  {
     type: "image",
     src: "/images/untold-story-juany-deron-v2.jpg",
     alt: "Juany Bravo x Deron",
     caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
-  },
-  {
-    type: "video",
-    src: "/videos/hero-video-1.mp4",
-    caption: "THE MONOLITH PROJECT",
   },
   {
     type: "image",
@@ -94,7 +96,9 @@ export default function HeroSection() {
             className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display"
           >
             <div className="relative inline-block translate-y-2 md:translate-y-3">
-              <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
+              <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
+                <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
+              </HeroSpotlight>
             </div>
             <span className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0">PROJECT</span>
           </motion.div>
@@ -164,6 +168,7 @@ export default function HeroSection() {
                 {!reduceMotion && (
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
                 )}
+                <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
                 <Ticket className="w-3.5 h-3.5" />
                 Get Tickets
                 <ArrowRight className="w-3.5 h-3.5" />

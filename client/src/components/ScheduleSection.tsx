@@ -237,13 +237,13 @@ export default function ScheduleSection() {
             More dates to be announced.
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <Link href="/schedule">
+            <Link href="/schedule" asChild>
               <a className="btn-pill-dark">
                 View Full Schedule
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>
-            <Link href="/newsletter">
+            <Link href="/newsletter" asChild>
               <a className="group inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-primary hover:text-foreground transition-colors">
                 Get Early Access
                 <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
