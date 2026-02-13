@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -71,13 +71,16 @@ export default function HeroSection() {
   const reduceMotion = useReducedMotion();
 
 
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, 150]); // Parallax effect
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
 
-      {/* Full-bleed video background */}
-      {/* Full-bleed video background - slider */}
-      <VideoHeroSlider slides={HERO_SLIDES} />
+      {/* Full-bleed video background with Parallax */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0 h-[115%] -top-[5%]">
+        <VideoHeroSlider slides={HERO_SLIDES} />
+      </motion.div>
 
       {/* Editorial left-aligned content */}
       <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40 pointer-events-none">
@@ -142,13 +145,11 @@ export default function HeroSection() {
             )}
 
             {isExpired && (
-              <Link href="/story">
-                <a className="group flex items-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                  <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
-                  <span className="font-mono text-xs tracking-widest uppercase text-primary group-hover:text-white transition-colors">
-                    Untold Story S3·E2 — View Recap →
-                  </span>
-                </a>
+              <Link href="/story" className="group flex items-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <span className="font-mono text-xs tracking-widest uppercase text-primary group-hover:text-white transition-colors">
+                  Untold Story S3·E2 — View Recap →
+                </span>
               </Link>
             )}
 
@@ -182,21 +183,17 @@ export default function HeroSection() {
 
             {/* Series links */}
             <div className="flex items-center gap-4">
-              <Link href="/chasing-sunsets">
-                <a className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
-                  <Sun className="w-4.5 h-4.5 text-clay" />
-                  <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
-                    Chasing Sun(Sets)
-                  </span>
-                </a>
+              <Link href="/chasing-sunsets" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
+                <Sun className="w-4.5 h-4.5 text-clay" />
+                <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
+                  Chasing Sun(Sets)
+                </span>
               </Link>
-              <Link href="/story">
-                <a className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                  <UntoldButterflyLogo className="w-5 h-5 accent-story" />
-                  <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
-                    Untold
-                  </span>
-                </a>
+              <Link href="/story" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                <UntoldButterflyLogo className="w-5 h-5 accent-story" />
+                <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
+                  Untold
+                </span>
               </Link>
             </div>
 

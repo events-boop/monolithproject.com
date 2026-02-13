@@ -184,6 +184,29 @@ export default function ChasingSunsets() {
         </div>
       </section>
 
+      {/* Submit DJ Set */}
+      <section className="py-24 px-6" style={{ borderTop: `1px solid ${auburn}15`, background: cream }}>
+        <div className="container max-w-4xl mx-auto text-center">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: auburn }}>
+            For The Selectors
+          </span>
+          <h2 className="font-display text-5xl md:text-6xl mb-8" style={{ color: deepWarm }}>
+            SUBMIT YOUR SET
+          </h2>
+          <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: `${deepWarm}80` }}>
+            Chasing Sun(Sets) is about the perfect vibe for the golden hour.
+            Melodic, Organic, Afro House. If you have the sound, we have the sunset.
+          </p>
+          <a
+            href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission"
+            className="inline-block px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer text-white rounded-full"
+            style={{ background: `linear-gradient(135deg, ${auburn}, ${warmGold})` }}
+          >
+            SUBMIT A MIX
+          </a>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-32 px-6 relative" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(194,112,62,0.18),transparent_32%),radial-gradient(circle_at_82%_76%,rgba(232,184,109,0.22),transparent_34%)]" />

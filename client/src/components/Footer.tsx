@@ -35,7 +35,7 @@ const socials = [
 const links = [
   {
     title: "Navigate", items: [
-      { name: "Schedule", href: "/#schedule" },
+      { name: "Schedule", href: "/schedule" },
       { name: "Tickets", href: "/tickets" },
       { name: "Lineup", href: "/lineup" },
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },

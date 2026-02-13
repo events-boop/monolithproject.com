@@ -245,6 +245,24 @@
     letter-spacing: -0.02em;
   }
 
+  /* KIKK-inspired schedule typography (page-scoped override). */
+  .schedule-page {
+    font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+  }
+
+  .schedule-page .font-display {
+    font-family: "Suisse Int'l", 'Instrument Sans', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    font-stretch: normal;
+  }
+
+  .schedule-page .font-mono {
+    font-family: "Suisse Int'l", 'Instrument Sans', 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+
   .accent-story {
     color: var(--color-story);
   }
@@ -324,7 +342,7 @@
 
   /* Smooth scroll */
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 
   /* Textured background noise overlay - z-index lowered to avoid click interference */
@@ -533,6 +551,15 @@
     backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid oklch(0.95 0.005 85 / 0.1);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Cinematic Velocity Skew */
+  .velocity-skew {
+    transform: skewY(clamp(-2deg, calc(var(--scroll-velocity, 0) * 0.01deg), 2deg));
+    transform-origin: center;
+    will-change: transform;
+    pointer-events: auto;
+    /* Ensure clicks still work */
   }
 
   @keyframes marquee {

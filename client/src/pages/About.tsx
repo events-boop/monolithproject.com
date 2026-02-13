@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SectionDivider from "@/components/SectionDivider";
+import TicketTicker from "@/components/TicketTicker";
 
 // Custom hook for animated numbers
 const useCounter = (end: number, duration: number = 2000) => {
@@ -216,6 +217,8 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
+      <TicketTicker />
 
       {/* SECTION 5: Origin Story */}
       <section className="py-24 px-6 md:px-12">

@@ -89,8 +89,61 @@ export default function Radio() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-40 pb-16 px-6">
-        <div className="container max-w-6xl mx-auto">
+      <section className="relative pt-40 pb-32 px-6 overflow-hidden">
+        {/* Background Globe */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          {/* Rotating Ring */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120vw] md:w-[60vw] aspect-square rounded-full border border-dashed border-primary/20 opacity-30 mix-blend-screen"
+          />
+
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-40 mix-blend-screen"
+            style={{
+              backgroundImage: "url('/images/radio-globe.png')",
+              backgroundSize: "contain",
+              backgroundPosition: "center top",
+              backgroundRepeat: "no-repeat"
+            }}
+          />
+
+          {/* Signal Pings */}
+          {[
+            { top: "20%", left: "45%", delay: 0 },
+            { top: "35%", left: "55%", delay: 2 },
+            { top: "25%", left: "52%", delay: 4 },
+            { top: "15%", left: "48%", delay: 1.5 },
+            { top: "30%", left: "42%", delay: 3.5 },
+          ].map((ping, i) => (
+            <div key={i} className="absolute inset-0 pointer-events-none">
+              <div
+                className="absolute w-full max-w-5xl left-1/2 -translate-x-1/2 h-full"
+              >
+                <div className="absolute" style={{ top: ping.top, left: ping.left }}>
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0.8 }}
+                    animate={{ scale: 4, opacity: 0 }}
+                    transition={{ duration: 3, repeat: Infinity, delay: ping.delay, ease: "easeOut" }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-primary/60 bg-primary/20"
+                  />
+                  <motion.div
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
+                    className="w-1 h-1 rounded-full bg-primary blur-[1px]"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Gradient overlays to blend it in */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background opacity-80" />
+        </div>
+
+        <div className="container max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -99,10 +152,10 @@ export default function Radio() {
             <span className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6">
               Mix Series
             </span>
-            <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] uppercase text-foreground mb-8">
+            <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] uppercase text-foreground mb-8 drop-shadow-2xl">
               RADIO
             </h1>
-            <p className="max-w-lg text-muted-foreground text-lg leading-relaxed">
+            <p className="max-w-lg text-muted-foreground text-lg leading-relaxed mix-blend-plus-lighter">
               Curated sets and live recordings from our artists and guests.
               The music doesn't stop when the show ends.
             </p>
@@ -123,8 +176,8 @@ export default function Radio() {
                 key={f.value}
                 onClick={() => setFilter(f.value)}
                 className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 border rounded-full ${filter === f.value
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
                   }`}
               >
                 {f.icon}
@@ -182,8 +235,8 @@ export default function Radio() {
 
                   {/* Series tag */}
                   <span className={`hidden md:block px-2 py-0.5 text-[10px] font-mono tracking-widest uppercase border ${track.series === "sunsets"
-                      ? "text-clay border-clay/30"
-                      : "text-primary border-primary/30"
+                    ? "text-clay border-clay/30"
+                    : "text-primary border-primary/30"
                     }`}>
                     {track.series === "sunsets" ? "SUN(SETS)" : "UNTOLD"}
                   </span>

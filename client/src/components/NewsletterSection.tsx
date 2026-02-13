@@ -5,7 +5,26 @@ import { Check, ArrowUpRight, AlertCircle } from "lucide-react";
 import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
 
-export default function NewsletterSection() {
+interface NewsletterSectionProps {
+  source?: string;
+  compactIntro?: boolean;
+  description?: string;
+  benefits?: string[];
+}
+
+const defaultBenefits = [
+  "Early access ticket windows",
+  "Lineup announcements first",
+  "New radio show mixes",
+  "Private event drops",
+];
+
+export default function NewsletterSection({
+  source = "newsletter_section",
+  compactIntro = false,
+  description = "Get early ticket access, lineup announcements, and updates on upcoming shows. No spam — just the stuff that matters.",
+  benefits = defaultBenefits,
+}: NewsletterSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,7 +67,7 @@ export default function NewsletterSection() {
           firstName: firstName || undefined,
           lastName: lastName || undefined,
           consent: true,
-          source: "newsletter_section",
+          source,
         },
         crypto.randomUUID()
       );
@@ -104,29 +123,41 @@ export default function NewsletterSection() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div className="grid md:grid-cols-2 gap-16 items-start">
+              <div className={`grid md:grid-cols-2 items-start ${compactIntro ? "gap-10 md:gap-12" : "gap-16"}`}>
 
                 {/* Left — copy */}
                 <div>
-                  <span className="font-serif italic text-lg text-clay/80 block mb-4">
-                    Newsletter
-                  </span>
-                  <h2 className="font-display text-section-title text-charcoal mb-6 tracking-tight-display">
-                    <GlitchText className="text-charcoal">STAY IN</GlitchText>
-                    <br />
-                    <GlitchText className="text-charcoal">THE LOOP</GlitchText>
-                  </h2>
-                  <p className="text-stone leading-relaxed mb-8">
-                    Get early ticket access, lineup announcements, and updates on
-                    upcoming shows. No spam — just the stuff that matters.
-                  </p>
+                  {compactIntro ? (
+                    <>
+                      <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-clay/80 block mb-4">
+                        Member Perks
+                      </span>
+                      <p className="text-stone leading-relaxed mb-6">
+                        {description}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-serif italic text-lg text-clay/80 block mb-4">
+                        Newsletter
+                      </span>
+                      <h2 className="font-display text-section-title text-charcoal mb-6 tracking-tight-display">
+                        <GlitchText className="text-charcoal">STAY IN</GlitchText>
+                        <br />
+                        <GlitchText className="text-charcoal">THE LOOP</GlitchText>
+                      </h2>
+                      <p className="text-stone leading-relaxed mb-8">
+                        {description}
+                      </p>
+                    </>
+                  )}
 
                   {/* What you get */}
-                  <div className="space-y-3">
-                    {["Early ticket access", "Lineup announcements", "New radio mixes"].map((item) => (
-                      <div key={item} className="flex items-center gap-3">
+                  <div className={`${compactIntro ? "grid gap-2" : "space-y-3"}`}>
+                    {benefits.map((item) => (
+                      <div key={item} className={`flex items-center gap-3 ${compactIntro ? "rounded-full border border-charcoal/15 bg-white/60 px-3 py-2" : ""}`}>
                         <div className="w-1 h-1 bg-clay" />
-                        <span className="text-sm text-stone font-mono tracking-wide">{item}</span>
+                        <span className={`text-sm font-mono uppercase ${compactIntro ? "text-charcoal/80 tracking-[0.12em]" : "text-stone tracking-wide"}`}>{item}</span>
                       </div>
                     ))}
                   </div>

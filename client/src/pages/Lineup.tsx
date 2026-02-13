@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
+import TicketTicker from "@/components/TicketTicker";
 
 type Series = "all" | "chasing-sunsets" | "untold-story" | "sunsets-radio";
 
@@ -221,8 +222,8 @@ export default function Lineup() {
                   key={f.value}
                   onClick={() => setActiveFilter(f.value)}
                   className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 border rounded-full ${isActive
-                      ? activeStyles
-                      : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                    ? activeStyles
+                    : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
                     }`}
                   style={isActive ? activeBg : undefined}
                 >
@@ -313,6 +314,7 @@ export default function Lineup() {
         </div>
       </section>
 
+      <TicketTicker />
       <SlimSubscribeStrip title="GET LINEUP DROPS FIRST" source="lineup_strip" />
       <Footer />
     </div>

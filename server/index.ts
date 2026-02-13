@@ -6,6 +6,15 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { createHash, randomUUID, timingSafeEqual } from "crypto";
 import { z } from "zod";
+import { hasDatabase } from "./db/client";
+import {
+  insertSocialEchoActivity,
+  readSocialEchoEventByKey,
+  readSocialEchoSnapshot,
+  upsertSocialEchoEventStats,
+  type SocialEchoActivityRow,
+  type SocialEchoEventStatsRow,
+} from "./db/socialEchoRepo";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +53,7 @@ const bookingInquirySchema = z.object({
 const sponsorAccessSchema = z.object({
   password: z.string().trim().min(1).max(256),
 });
+const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());
 
 const idempotencyTtlMs = 24 * 60 * 60 * 1000;
 const idempotencyCache = new Map<string, { status: number; body: unknown; expiresAt: number }>();
@@ -53,6 +63,9 @@ const sponsorSessionCookieName = "monolith_sponsor_session";
 const sponsorDeckFilename = "Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf";
 const sponsorDeckPath = path.resolve(__dirname, "..", "private", "documents", sponsorDeckFilename);
 const sponsorSessions = new Map<string, number>();
+const socialEchoByEvent = new Map<string, SocialEchoEventStatsRow>();
+const socialEchoActivity = new Map<string, SocialEchoActivityRow>();
+const socialEchoActivityMaxItems = 120;
 
 function logEvent(event: string, payload: Record<string, unknown>) {
   console.log(
@@ -132,6 +145,98 @@ function secureCompare(input: string, expected: string) {
   const inputHash = createHash("sha256").update(input).digest();
   const expectedHash = createHash("sha256").update(expected).digest();
   return timingSafeEqual(inputHash, expectedHash);
+}
+
+function readPath(payload: Record<string, unknown>, pathParts: string[]) {
+  let current: unknown = payload;
+  for (const part of pathParts) {
+    if (typeof current !== "object" || current === null || !(part in current)) return undefined;
+    current = (current as Record<string, unknown>)[part];
+  }
+  return current;
+}
+
+function pickString(payload: Record<string, unknown>, candidates: string[]) {
+  for (const candidate of candidates) {
+    const value = readPath(payload, candidate.split("."));
+    if (typeof value === "string") {
+      const normalized = value.trim();
+      if (normalized) return normalized;
+    }
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return String(value);
+    }
+  }
+  return null;
+}
+
+function pickQuantity(payload: Record<string, unknown>) {
+  const numericCandidates = [
+    "quantity",
+    "ticketQuantity",
+    "tickets_count",
+    "numTickets",
+    "order.quantity",
+    "order.ticketQuantity",
+    "order.tickets_count",
+  ];
+
+  for (const candidate of numericCandidates) {
+    const value = readPath(payload, candidate.split("."));
+    if (typeof value === "number" && Number.isFinite(value) && value > 0) {
+      return Math.min(20, Math.floor(value));
+    }
+    if (typeof value === "string") {
+      const parsed = Number.parseInt(value, 10);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        return Math.min(20, parsed);
+      }
+    }
+  }
+
+  const tickets = readPath(payload, ["order", "tickets"]);
+  if (Array.isArray(tickets) && tickets.length > 0) {
+    return Math.min(20, tickets.length);
+  }
+
+  return 1;
+}
+
+function rememberSocialActivity(activity: SocialEchoActivityRow) {
+  socialEchoActivity.set(activity.id, activity);
+  if (socialEchoActivity.size <= socialEchoActivityMaxItems) return;
+
+  const ordered = Array.from(socialEchoActivity.values()).sort((a, b) => b.at.localeCompare(a.at));
+  const keep = new Set(ordered.slice(0, socialEchoActivityMaxItems).map((item) => item.id));
+  socialEchoActivity.forEach((_value, key) => {
+    if (!keep.has(key)) socialEchoActivity.delete(key);
+  });
+}
+
+function readInMemorySocialEchoSnapshot() {
+  const events = Array.from(socialEchoByEvent.values()).sort((a, b) => {
+    const scoreA = a.goingCount * 1000 + a.pendingCount * 100;
+    const scoreB = b.goingCount * 1000 + b.pendingCount * 100;
+    if (scoreA !== scoreB) return scoreB - scoreA;
+    return b.updatedAt.localeCompare(a.updatedAt);
+  });
+  const activity = Array.from(socialEchoActivity.values())
+    .sort((a, b) => b.at.localeCompare(a.at))
+    .slice(0, 30);
+
+  const totalGoing = events.reduce((sum, event) => sum + event.goingCount, 0);
+  const totalPending = events.reduce((sum, event) => sum + event.pendingCount, 0);
+
+  return {
+    now: new Date().toISOString(),
+    summary: {
+      totalGoing,
+      totalPending,
+      liveEvents: events.length,
+    },
+    events,
+    activity,
+  };
 }
 
 async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
@@ -283,6 +388,8 @@ let appConfigured = false;
 function configureApp() {
   if (appConfigured) return;
   appConfigured = true;
+
+  logEvent("database.mode", { provider: "neon-postgres", configured: hasDatabase() });
 
   app.use(
     helmet({
@@ -516,6 +623,209 @@ function configureApp() {
       requestId,
       message: "Inquiry received",
     });
+  });
+
+  app.post("/api/webhooks/posh", async (req, res) => {
+    const requestId = randomUUID();
+    const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();
+
+    if (!configuredSecret) {
+      logEvent("posh.webhook_unconfigured", { requestId });
+      return res.status(503).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "UNAVAILABLE",
+          message: "Webhook handler is not configured.",
+          retryable: false,
+        },
+      });
+    }
+
+    const providedSecret = req.header("Posh-Secret")?.trim();
+    if (!providedSecret || !secureCompare(providedSecret, configuredSecret)) {
+      logEvent("posh.webhook_denied", { requestId });
+      return res.status(401).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "INVALID_CREDENTIALS",
+          message: "Webhook authorization failed.",
+          retryable: false,
+        },
+      });
+    }
+
+    const parsed = poshWebhookPayloadSchema.safeParse(req.body);
+    if (!parsed.success) {
+      logEvent("posh.webhook_invalid_payload", { requestId });
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Invalid webhook payload.",
+          retryable: false,
+        },
+      });
+    }
+
+    const payload = parsed.data;
+    const inferredEventType = pickString(payload, ["type", "event", "webhookType"]) || "unknown";
+    const inferredEventId = pickString(payload, ["event.id", "eventId", "event_id", "event.slug", "eventSlug"]);
+    const inferredEventTitle = pickString(payload, ["event.name", "eventName", "event_title", "name"]);
+    const inferredCity = pickString(payload, ["event.city", "city", "venue.city", "event.location.city"]);
+    const inferredStatus = pickString(payload, ["status", "order.status", "orderStatus"]);
+    const quantity = pickQuantity(payload);
+    const providerEventId =
+      pickString(payload, ["id", "webhook_id", "eventWebhookId", "order.id", "orderId"]) ||
+      `${inferredEventType}:${inferredEventId || inferredEventTitle || "unknown"}:${quantity}`;
+
+    const eventKey = inferredEventId || inferredEventTitle || "unknown";
+    const activityId = createHash("sha256")
+      .update(`${providerEventId}:${inferredEventType}:${eventKey}`)
+      .digest("hex");
+    const attendeeAlias = `guest-${activityId.slice(0, 4).toLowerCase()}`;
+    const normalizedEventType = inferredEventType.toLowerCase();
+    const normalizedStatus = (inferredStatus || "").toLowerCase();
+
+    let inserted = true;
+    if (hasDatabase()) {
+      inserted = await insertSocialEchoActivity({
+        id: activityId,
+        at: new Date().toISOString(),
+        eventType: inferredEventType,
+        eventKey,
+        eventId: inferredEventId,
+        eventTitle: inferredEventTitle,
+        city: inferredCity,
+        status: inferredStatus,
+        quantity,
+        attendeeAlias,
+        rawPayload: payload,
+      });
+    } else if (socialEchoActivity.has(activityId)) {
+      inserted = false;
+    } else {
+      rememberSocialActivity({
+        id: activityId,
+        at: new Date().toISOString(),
+        eventType: inferredEventType,
+        eventKey,
+        eventId: inferredEventId,
+        eventTitle: inferredEventTitle,
+        city: inferredCity,
+        status: inferredStatus,
+        quantity,
+        attendeeAlias,
+        rawPayload: payload,
+      });
+    }
+
+    if (!inserted) {
+      logEvent("posh.webhook_duplicate_ignored", {
+        requestId,
+        activityId,
+        providerEventId,
+        eventType: inferredEventType,
+      });
+      return res.status(200).json({ ok: true, requestId, duplicate: true });
+    }
+
+    const existingStats =
+      socialEchoByEvent.get(eventKey) || (hasDatabase() ? await readSocialEchoEventByKey(eventKey) : null);
+
+    const baseStats: SocialEchoEventStatsRow = existingStats || {
+      eventKey,
+      eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      goingCount: 0,
+      pendingCount: 0,
+      updatedAt: new Date().toISOString(),
+    };
+
+    let goingDelta = 0;
+    let pendingDelta = 0;
+
+    if (normalizedEventType.includes("pending")) {
+      pendingDelta += quantity;
+    } else if (normalizedEventType.includes("updated")) {
+      if (
+        normalizedStatus.includes("refund") ||
+        normalizedStatus.includes("cancel") ||
+        normalizedStatus.includes("void")
+      ) {
+        goingDelta -= quantity;
+      } else if (
+        normalizedStatus.includes("approved") ||
+        normalizedStatus.includes("accept") ||
+        normalizedStatus.includes("complete") ||
+        normalizedStatus.includes("paid")
+      ) {
+        pendingDelta -= quantity;
+        goingDelta += quantity;
+      }
+    } else if (
+      normalizedEventType.includes("new order") ||
+      normalizedEventType.includes("new_order") ||
+      normalizedEventType.includes("new")
+    ) {
+      goingDelta += quantity;
+    } else if (normalizedEventType.includes("order")) {
+      goingDelta += quantity;
+    }
+
+    const nextStats: SocialEchoEventStatsRow = {
+      ...baseStats,
+      eventId: baseStats.eventId || inferredEventId,
+      eventTitle: baseStats.eventTitle || inferredEventTitle,
+      city: baseStats.city || inferredCity,
+      goingCount: Math.max(0, baseStats.goingCount + goingDelta),
+      pendingCount: Math.max(0, baseStats.pendingCount + pendingDelta),
+      updatedAt: new Date().toISOString(),
+    };
+
+    socialEchoByEvent.set(eventKey, nextStats);
+    if (hasDatabase()) {
+      await upsertSocialEchoEventStats(nextStats);
+    }
+
+    logEvent("posh.webhook_received", {
+      requestId,
+      eventType: inferredEventType,
+      eventId: inferredEventId,
+      eventTitle: inferredEventTitle,
+      city: inferredCity,
+      status: inferredStatus,
+      quantity,
+      goingCount: nextStats.goingCount,
+      pendingCount: nextStats.pendingCount,
+      persistence: hasDatabase() ? "database" : "memory",
+    });
+
+    return res.status(200).json({ ok: true, requestId });
+  });
+
+  app.get("/api/social/echo", async (_req, res) => {
+    try {
+      const snapshot = hasDatabase() ? await readSocialEchoSnapshot() : null;
+      if (snapshot) {
+        return res.status(200).json({ ok: true, ...snapshot });
+      }
+
+      return res.status(200).json({ ok: true, ...readInMemorySocialEchoSnapshot() });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      logEvent("social.echo_read_failed", { message });
+      return res.status(500).json({
+        ok: false,
+        error: {
+          code: "SOCIAL_ECHO_UNAVAILABLE",
+          message: "Unable to load live social activity right now.",
+        },
+      });
+    }
   });
 
   app.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {

@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
+import TicketTicker from "@/components/TicketTicker";
 import { POSH_TICKET_URL } from "@/data/events";
 
 // Untold Story palette — Electric Violet + Cyan
@@ -338,28 +339,33 @@ export default function UntoldStory() {
                 </div>
               </div>
 
-              {/* The experience */}
+              {/* The Experience */}
               <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
-                The Experience
+                The Vision
               </span>
-              <p className="text-white/70 text-base leading-relaxed mb-4">
-                Untold Story returns with its most anticipated pairing yet. Juany Bravo and Deron share the decks for an extended B2B session, moving from deep, soulful grooves to peak-hour energy inside the intimate Alhambra Palace setting.
+              <p className="text-white/70 text-base leading-relaxed mb-6">
+                Untold Story is for the energy givers — the storytellers.
+                A 360° experience where the DJ becomes the narrator, and sound becomes the language. Every set is a chapter, every transition a moment, every drop a feeling shared between the booth and the dancefloor.
               </p>
-              <p className="text-white/70 text-base leading-relaxed mb-8">
-                This is not a club night. This is a musical journey built for dancers, not spectators.
+              <p className="text-white/70 text-base leading-relaxed mb-6">
+                This project was built as a gathering place — a space where people meet through movement, connection, and shared intention.
+                Rooted in the ethos of The Monolith Project, Untold Story celebrates the deeper meaning behind DJing: the art of guiding a room, shaping emotion, and telling a story through sound.
+              </p>
+              <p className="text-white/90 text-lg font-display tracking-wide mb-8">
+                Togetherness is the frequency. Music is the guide.
               </p>
 
               <div className="mb-10">
                 <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
-                  What to Expect
+                  Core Elements
                 </span>
                 <div className="flex flex-wrap gap-3">
                   {[
-                    "360° Immersive Dancefloor",
-                    "Extended B2B DJ Storytelling",
-                    "World-Class Sound System",
-                    "Afro House, Melodic Grooves & Global Rhythms",
-                    "Community-Driven Energy",
+                    "Boiler Room-Style 360° Setup",
+                    "Immersive Storytelling",
+                    "Emerging Talent Showcase",
+                    "Audio/Visual Documentation",
+                    "Community Connection",
                   ].map((item) => (
                     <span
                       key={item}
@@ -370,7 +376,6 @@ export default function UntoldStory() {
                     </span>
                   ))}
                 </div>
-                <p className="text-white/80 italic mt-6">This is house music as ceremony.</p>
               </div>
 
               {/* Lineup */}
@@ -509,6 +514,10 @@ export default function UntoldStory() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="py-0">
+        <TicketTicker />
       </section>
 
       <SlimSubscribeStrip title="UNLOCK UNTOLD UPDATES" source="untold_story_strip" />

@@ -14,7 +14,7 @@ interface NavigationProps {
 const navItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
   { label: "UNTOLD STORY", href: "/story" },
-  { label: "SCHEDULE", href: "/#schedule" },
+  { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
   { label: "RADIO", href: "/radio" },
@@ -33,7 +33,7 @@ const navItems = [
 const mobileNavItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
   { label: "UNTOLD STORY", href: "/story" },
-  { label: "SCHEDULE", href: "/#schedule" },
+  { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
   { label: "RADIO", href: "/radio" },
@@ -152,17 +152,15 @@ export default function Navigation({ activeSection, variant = "dark" }: Navigati
                           }`}
                       >
                         {item.children.map((child) => (
-                          <Link key={child.label} href={child.href}>
-                            <a
-                              onClick={() => setDropdownOpen(false)}
-                              className={`block px-5 py-2.5 text-[11px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
-                                ? `hover:text-clay hover:bg-charcoal/5 ${location === child.href ? "text-clay" : "text-stone"}`
-                                : `hover:text-primary hover:bg-white/5 ${location === child.href ? "text-primary" : "text-white/80"}`
-                                }`}
-                              role="menuitem"
-                            >
-                              {child.label}
-                            </a>
+                          <Link key={child.label} href={child.href}
+                            onClick={() => setDropdownOpen(false)}
+                            className={`block px-5 py-2.5 text-[11px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
+                              ? `hover:text-clay hover:bg-charcoal/5 ${location === child.href ? "text-clay" : "text-stone"}`
+                              : `hover:text-primary hover:bg-white/5 ${location === child.href ? "text-primary" : "text-white/80"}`
+                              }`}
+                            role="menuitem"
+                          >
+                            {child.label}
                           </Link>
                         ))}
                       </motion.div>
@@ -170,33 +168,31 @@ export default function Navigation({ activeSection, variant = "dark" }: Navigati
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link key={item.label} href={item.href}>
-                  <a
-                    onClick={(e) => {
-                      if (item.href.startsWith("/#")) {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }
-                    }}
-                    className={`text-[11px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
-                      ? `hover:text-clay ${location === item.href ? "text-clay" : "text-stone"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === item.href ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-                      }`}
-                  >
-                    {item.label === "CHASING SUN(SETS)" ? (
-                      <span className="inline-flex items-center gap-1.5 text-clay">
-                        <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
-                        <span>{item.label}</span>
-                      </span>
-                    ) : item.label === "UNTOLD STORY" ? (
-                      <span className="inline-flex items-center gap-1.5 text-primary">
-                        <UntoldButterflyLogo className="w-3.5 h-3.5" />
-                        <span>{item.label}</span>
-                      </span>
-                    ) : (
-                      item.label
-                    )}
-                  </a>
+                <Link key={item.label} href={item.href}
+                  onClick={(e) => {
+                    if (item.href.startsWith("/#")) {
+                      e.preventDefault();
+                      handleNavClick(item.href);
+                    }
+                  }}
+                  className={`text-[11px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                    ? `hover:text-clay ${location === item.href ? "text-clay" : "text-stone"}`
+                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === item.href ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                    }`}
+                >
+                  {item.label === "CHASING SUN(SETS)" ? (
+                    <span className="inline-flex items-center gap-1.5 text-clay">
+                      <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
+                      <span>{item.label}</span>
+                    </span>
+                  ) : item.label === "UNTOLD STORY" ? (
+                    <span className="inline-flex items-center gap-1.5 text-primary">
+                      <UntoldButterflyLogo className="w-3.5 h-3.5" />
+                      <span>{item.label}</span>
+                    </span>
+                  ) : (
+                    item.label
+                  )}
                 </Link>
               )
             )}
@@ -260,19 +256,21 @@ export default function Navigation({ activeSection, variant = "dark" }: Navigati
 
             <div className="flex flex-col items-center gap-8 relative z-10 w-full px-8">
               {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
-                <Link key={item.label} href={item.href.startsWith("/#") ? "/" : item.href}>
-                  <motion.a
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.1 }}
+                >
+                  <Link
+                    href={item.href.startsWith("/#") ? "/" : item.href}
                     onClick={() => {
                       setMobileMenuOpen(false);
                       if (item.href.startsWith("/#")) {
                         handleNavClick(item.href);
                       }
                     }}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + index * 0.1 }}
-                    className={`font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${location === item.href ? "text-white" : "text-muted-foreground"
-                      }`}
+                    className={`font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${location === item.href ? "text-white" : "text-muted-foreground"}`}
                   >
                     {item.label === "CHASING SUN(SETS)" ? (
                       <span className="inline-flex items-center gap-3 text-clay">
@@ -287,8 +285,8 @@ export default function Navigation({ activeSection, variant = "dark" }: Navigati
                     ) : (
                       item.label
                     )}
-                  </motion.a>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
 
               {/* Emphasized ticket CTA */}

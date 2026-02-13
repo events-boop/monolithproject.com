@@ -39,83 +39,115 @@ export default function MovementSection() {
       </div>
       <div className="container max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left Column */}
+          {/* Left Column - The Definition */}
           <motion.div
             initial={{ opacity: 0, x: -80 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
           >
-            <span className="font-serif italic text-lg text-clay mb-4 block">
-              What we're building
-            </span>
-            <h2 className="font-display text-section-title tracking-wide text-charcoal mb-6">
-              NOT JUST EVENTS.
-              <br />
-              <span className="text-clay">A COLLECTIVE.</span>
-            </h2>
+            <div className="font-serif text-charcoal space-y-6 select-none">
+              <div>
+                <h2 className="text-6xl md:text-7xl mb-2 font-serif tracking-tight">Monolith</h2>
+                <span className="text-stone font-mono text-sm tracking-wide italic opacity-60">/monelīTH/</span>
+                <p className="text-stone font-serif italic text-sm mt-1">(from Greek mónos "single" + líthos "stone")</p>
+              </div>
 
-            <div className="flex flex-wrap items-center gap-4 mt-8">
-              <Link href="/#schedule">
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("schedule")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="btn-pill-dark"
-                >
-                  See Upcoming Events
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Link>
-              <Link href="/about">
-                <a className="group inline-flex items-center gap-2 text-xs text-stone hover:text-clay transition-colors font-bold tracking-widest uppercase cursor-pointer">
-                  Our Story
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Link>
+              <div className="space-y-4 pl-4 border-l-2 border-clay/20">
+                <div>
+                  <span className="font-bold text-clay mr-2">1.</span>
+                  <span className="text-xl md:text-2xl text-charcoal/80 italic leading-relaxed">
+                    A symbol of unity, a gathering point for our community.
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold text-clay mr-2">2.</span>
+                  <span className="text-xl md:text-2xl text-charcoal/80 italic leading-relaxed">
+                    A single, massive block; a beacon of togetherness.
+                  </span>
+                </div>
+              </div>
+
+              <div className="pt-4 mt-2">
+                <p className="font-display uppercase tracking-widest text-clay text-sm">Target Frequency</p>
+                <p className="text-2xl font-serif italic text-charcoal">Togetherness.</p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Right Column */}
+          {/* Right Column - The Manifesto */}
           <motion.div
             initial={{ opacity: 0, x: 80 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-6"
+            className="space-y-10 pl-0 lg:pl-12 border-l-0 lg:border-l border-charcoal/10"
           >
-            <p className="text-lg text-charcoal/90 leading-relaxed">
-              The Monolith Project is an events collective out of Chicago. We put on shows
-              where the music matters, the crowd is part of it, and you leave feeling like
-              you were actually there — not just watching through a screen.
-            </p>
+            <div className="space-y-8">
+              {/* The Intro */}
+              <div>
+                <span className="font-serif italic text-lg text-clay mb-2 block">
+                  Guided by authentic intention — the purest form of energy.
+                </span>
+                <p className="text-lg text-charcoal/90 leading-relaxed max-w-lg">
+                  The Monolith Project is a creative house, an experience engine, and a cultural movement built on one simple truth: <span className="font-medium text-charcoal">Togetherness is the frequency. Music is the guide.</span>
+                </p>
+                <p className="text-charcoal/80 leading-relaxed mt-4 text-sm max-w-lg">
+                  Born in Chicago, designed for the world, we unite sound, storytelling, and human connection across three signature series.
+                </p>
+              </div>
 
-            <p className="text-base text-stone leading-relaxed">
-              Two event series run under the collective. Chasing Sun(Sets) brings sunset
-              rooftop energy with afro house and organic sounds. Untold Story goes deep —
-              late-night, intimate, 360-degree sound where the DJ tells the story.
-            </p>
+              {/* The Pillars */}
+              <div className="space-y-6">
+                {/* Branch 1: Chasing Sunsets */}
+                <div className="group">
+                  <Link href="/chasing-sunsets">
+                    <a className="text-xl font-display text-charcoal hover:text-warmGold transition-colors mb-1 inline-flex items-center gap-2">
+                      CHASING SUN(SETS)
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-warmGold" />
+                    </a>
+                  </Link>
+                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
+                    A global ritual of light, sound, and soul, celebrating the magic of golden hour.
+                  </p>
+                </div>
 
-            <div className="pt-6 border-t border-charcoal/10 rounded-xl bg-white/25 backdrop-blur-[2px] px-4 pb-4">
-              <p className="font-serif italic text-lg text-charcoal/70 leading-relaxed">
-                "We believe music carries emotion. We believe gathering should feel shared.
-                We believe in rhythm, story, and togetherness."
-              </p>
-            </div>
+                {/* Branch 2: Untold Story */}
+                <div className="group">
+                  <Link href="/story">
+                    <a className="text-xl font-display text-charcoal hover:text-clay transition-colors mb-1 inline-flex items-center gap-2">
+                      UNTOLD STORY
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-clay" />
+                    </a>
+                  </Link>
+                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
+                    An immersive, narrative-driven nightlife experience. Artists become storytellers and energy givers in a 360° setting.
+                  </p>
+                </div>
 
-            <div className="flex flex-wrap gap-4 pt-4">
-              {["Community", "Music", "Togetherness", "Chicago", "Real Moments"].map(
-                (value, index) => (
-                  <motion.span
-                    key={value}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    className="px-4 py-2 text-xs tracking-widest uppercase border border-charcoal/20 text-stone hover:border-clay hover:text-clay transition-colors"
-                  >
-                    {value}
-                  </motion.span>
-                )
-              )}
+                {/* Branch 3: Radio */}
+                <div className="group">
+                  <Link href="/radio">
+                    <a className="text-xl font-display text-charcoal hover:text-stone transition-colors mb-1 inline-flex items-center gap-2">
+                      MONOLITH RADIO
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-stone" />
+                    </a>
+                  </Link>
+                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
+                    A signal of gathering. Moving fast. Stay tuned.
+                  </p>
+                </div>
+              </div>
+
+              {/* The Outro */}
+              <div className="pt-6 border-t border-charcoal/10">
+                <p className="text-charcoal/80 text-sm italic leading-relaxed max-w-lg mb-6">
+                  "We exist to elevate the culture with intention — crafting experiences that turn nights into memories and artists into storytellers. This is the blueprint for something different."
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 text-xs font-mono uppercase tracking-widest text-stone">
+                  <a href="https://instagram.com/untoldstory.music" className="hover:text-clay transition-colors">@untoldstory.music</a>
+                  <a href="https://instagram.com/chasingsunsets.music" className="hover:text-warmGold transition-colors">@chasingsunsets.music</a>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

@@ -21,6 +21,10 @@ export default function SmoothScroll() {
 
         lenisRef.current = lenis;
 
+        lenis.on('scroll', (e: any) => {
+            document.documentElement.style.setProperty('--scroll-velocity', e.velocity);
+        });
+
         function raf(time: number) {
             lenis.raf(time);
             reqIdRef.current = requestAnimationFrame(raf);
