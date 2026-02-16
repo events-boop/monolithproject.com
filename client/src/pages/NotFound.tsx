@@ -1,9 +1,11 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
+import SEO from "@/components/SEO";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6">
+      <SEO title="404" description="Page not found." noIndex />
       <span className="font-mono text-xs text-primary tracking-widest uppercase mb-6">
         Lost Signal
       </span>

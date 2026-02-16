@@ -69,17 +69,17 @@ const ticketTiers: TicketTier[] = [
 
 const eventVisuals = {
   poster: "/images/untold-story.jpg",
-  deron: "/images/artist-lazare.png",
-  juany: "/images/artist-joezi.png",
+  deron: "/images/artist-deron-untold.webp",
+  juany: "/images/artist-juany-bravo-untold.webp",
 };
 
 const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-joezi.png" },
-  { name: "Deron", role: "Chicago debut", image: "/images/artist-lazare.png" },
-  { name: "Hashtom", role: "Support", image: "/images/artist-haai.png" },
-  { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
-  { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },
-  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/hero-monolith.jpg" },
+  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.webp" },
+  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.webp" },
+  { name: "Hashtom", role: "Support", image: "/images/untold-story-hero-post1.webp" },
+  { name: "Rose", role: "Support", image: "/images/untold-story.jpg" },
+  { name: "Avo", role: "Support", image: "/images/artist-avo-untold.webp" },
+  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/artist-kenbo-untold.webp" },
 ];
 
 export default function Tickets() {
@@ -144,6 +144,8 @@ export default function Tickets() {
                   <img
                     src={eventVisuals.poster}
                     alt="Juany Bravo b2b Deron featured poster"
+                    loading="eager"
+                    decoding="async"
                     className="w-full h-auto object-cover"
                   />
                 </div>
@@ -171,10 +173,22 @@ export default function Tickets() {
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-8">
                   <div className="overflow-hidden rounded-xl border border-white/25">
-                    <img src={eventVisuals.deron} alt="Deron portrait artwork" className="w-full h-auto object-cover" />
+                    <img
+                      src={eventVisuals.deron}
+                      alt="Deron portrait artwork"
+                      loading="eager"
+                      decoding="async"
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                   <div className="overflow-hidden rounded-xl border border-white/25">
-                    <img src={eventVisuals.juany} alt="Juany Bravo portrait artwork" className="w-full h-auto object-cover" />
+                    <img
+                      src={eventVisuals.juany}
+                      alt="Juany Bravo portrait artwork"
+                      loading="eager"
+                      decoding="async"
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                 </div>
 
@@ -225,7 +239,13 @@ export default function Tickets() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {lineupVisuals.map((artist) => (
                       <div key={artist.name} className="overflow-hidden rounded-xl border border-white/25 bg-black/20">
-                        <img src={artist.image} alt={`${artist.name} lineup image`} className="w-full aspect-[4/5] object-cover" />
+                        <img
+                          src={artist.image}
+                          alt={`${artist.name} lineup image`}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full aspect-[4/5] object-cover"
+                        />
                         <div className="px-3 py-2">
                           <p className="text-white text-sm font-semibold">{artist.name}</p>
                           <p className="text-white/65 text-xs">{artist.role}</p>

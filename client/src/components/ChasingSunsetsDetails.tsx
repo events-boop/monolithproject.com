@@ -47,7 +47,7 @@ export default function ChasingSunsetsDetails() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="bg-white/50 backdrop-blur-sm p-8 rounded-2xl border border-clay/20"
+                        className="season-panel-warm p-8"
                     >
                         <h3 className="font-display text-2xl mb-6 text-charcoal">THE VISION</h3>
                         <p className="mb-6 opacity-80">
@@ -80,7 +80,7 @@ export default function ChasingSunsetsDetails() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                                className="p-6 bg-white/60 backdrop-blur-md rounded-xl border border-clay/20 text-center hover:border-clay/40 transition-colors"
+                                className="season-panel-warm p-6 text-center hover:border-clay/40 transition-colors"
                             >
                                 <m.icon className="w-6 h-6 mx-auto mb-4 text-clay" />
                                 <div className="font-display text-3xl md:text-4xl mb-2 text-charcoal">{m.value}</div>

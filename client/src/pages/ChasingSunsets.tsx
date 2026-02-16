@@ -4,6 +4,9 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
+import MixedMediaGallery from "@/components/MixedMediaGallery";
+import SeasonAnchorNav from "@/components/SeasonAnchorNav";
+import { chasingSeason1, chasingSeason2 } from "@/data/galleryData";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
@@ -12,6 +15,7 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-1.mp4",
+    poster: "/images/hero-video-1-poster.jpg",
     caption: "THE MONOLITH PROJECT",
   },
   {
@@ -33,12 +37,20 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
 const events = [
   {
     month: "AUG",
-    day: "2026",
+    day: "22",
     title: "THE FIRST MONOLITH",
     location: "Chicago, IL",
     time: "4:00 PM - Late",
     status: "coming-soon" as const,
   },
+];
+
+const CHASING_ANCHORS = [
+  { label: "Format", href: "#chasing-concept" },
+  { label: "Records", href: "#chasing-records" },
+  { label: "Upcoming", href: "#chasing-upcoming" },
+  { label: "Submit", href: "#chasing-submit" },
+  { label: "Network", href: "#chasing-cta" },
 ];
 
 // Chasing Sunsets palette — Auburn + Warm Gold
@@ -49,16 +61,18 @@ const deepWarm = "#2C1810";
 
 export default function ChasingSunsets() {
   return (
-    <div className="min-h-screen selection:text-white relative overflow-hidden" style={{ background: cream, color: deepWarm }}>
+    <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise" style={{ background: cream, color: deepWarm }}>
       <SEO
         title="Chasing Sun(Sets)"
         description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
+        image="/images/chasing-sunsets.jpg"
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_16%,rgba(232,184,109,0.25),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(194,112,62,0.2),transparent_32%),radial-gradient(circle_at_75%_84%,rgba(139,92,246,0.14),transparent_36%)]" />
       <Navigation variant="dark" brand="chasing-sunsets" />
+      <main id="main-content" tabIndex={-1}>
 
       {/* Hero — raw, warm, big type */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+      <section id="chasing-hero" className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
         {/* Full-bleed background slider */}
         <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
@@ -89,12 +103,23 @@ export default function ChasingSunsets() {
               Golden hour. Good people. Great music. Rooftop shows and outdoor
               gatherings where the sun does half the work.
             </p>
+            <div className="mt-8 flex flex-wrap gap-2.5">
+              {["Open Air Ritual", "Melodic + Afro House", "Sunset Community", "Rooftop Culture"].map((pill) => (
+                <span
+                  key={pill}
+                  className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border border-white/30 bg-black/20 text-white/90"
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
+      <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
       {/* The Concept */}
-      <section className="py-24 px-6" style={{ borderTop: `1px solid ${auburn}15` }}>
+      <section id="chasing-concept" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <motion.div
@@ -149,10 +174,32 @@ export default function ChasingSunsets() {
       </section>
 
       {/* NEW: Pitch / Details Section */}
-      <ChasingSunsetsDetails />
+      <div id="chasing-manifesto" className="scroll-mt-44">
+        <ChasingSunsetsDetails />
+      </div>
+
+      {/* Season Records */}
+      <div id="chasing-records" className="scroll-mt-44">
+        <MixedMediaGallery
+          title="Season I"
+          subtitle="2025 Archives"
+          description="The beginning. Rooftops, rivers, and the golden hour."
+          media={chasingSeason1}
+          className="bg-transparent border-t border-[#C2703E]/10"
+          style={{ color: deepWarm }}
+        />
+        <MixedMediaGallery
+          title="Season II"
+          subtitle="2026 Archives"
+          description="Expanding the horizon. New venues, same sun."
+          media={chasingSeason2}
+          className="bg-transparent border-t border-[#C2703E]/10"
+          style={{ color: deepWarm }}
+        />
+      </div>
 
       {/* Upcoming Events */}
-      <section className="py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>
+      <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-end justify-between mb-16 pb-6" style={{ borderBottom: `1px solid ${auburn}15` }}>
             <h2 className="font-display text-4xl md:text-5xl" style={{ color: deepWarm }}>UPCOMING</h2>
@@ -200,7 +247,7 @@ export default function ChasingSunsets() {
       </section>
 
       {/* Submit DJ Set */}
-      <section className="py-24 px-6" style={{ borderTop: `1px solid ${auburn}15`, background: cream }}>
+      <section id="chasing-submit" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${auburn}15`, background: cream }}>
         <div className="container max-w-4xl mx-auto text-center">
           <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: auburn }}>
             For The Selectors
@@ -223,7 +270,7 @@ export default function ChasingSunsets() {
       </section>
 
       {/* CTA */}
-      <section className="py-32 px-6 relative" style={{ borderTop: `1px solid ${auburn}15` }}>
+      <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(194,112,62,0.18),transparent_32%),radial-gradient(circle_at_82%_76%,rgba(232,184,109,0.22),transparent_34%)]" />
         <div className="container max-w-4xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl mb-6" style={{ color: deepWarm }}>
@@ -252,6 +299,7 @@ export default function ChasingSunsets() {
           </div>
         </div>
       </section>
+      </main>
 
       <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />
       <Footer />

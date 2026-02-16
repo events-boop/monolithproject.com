@@ -7,8 +7,11 @@ import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import TicketTicker from "@/components/TicketTicker";
+import MixedMediaGallery from "@/components/MixedMediaGallery";
+import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import SEO from "@/components/SEO";
 import { POSH_TICKET_URL } from "@/data/events";
+import { untoldSeason1, untoldSeason2 } from "@/data/galleryData";
 
 // Untold Story palette — Electric Violet + Cyan
 const violet = "#8B5CF6";
@@ -18,14 +21,14 @@ const cardBg = "#0C0C1A";
 
 const eventVisuals = {
   poster: "/images/untold-story-juany-deron-v2.jpg",
-  deron: "/images/artist-deron-untold.png", // Updated
-  juany: "/images/artist-juany-bravo-untold.png", // Updated
+  deron: "/images/artist-deron-untold.webp", // Updated
+  juany: "/images/artist-juany-bravo-untold.webp", // Updated
 };
 
 const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.png" }, // Sync with Featured
-  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.png" }, // Sync with Featured
-  { name: "Hashtom", role: "Support", image: "/images/artist-haai.png" },
+  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.webp" }, // Sync with Featured
+  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.webp" }, // Sync with Featured
+  { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
   { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
   { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },
   { name: "Jerome b2b Kenbo", role: "Support", image: "/images/hero-monolith.jpg" },
@@ -44,9 +47,16 @@ const untoldFaqs: Array<[string, string]> = [
   ["What if the event is sold out?", "Limited door tickets may be available on the night of the event, but advance purchase is strongly recommended."],
 ];
 
+const UNTOLD_ANCHORS = [
+  { label: "Event", href: "#untold-event" },
+  { label: "Contrast", href: "#untold-contrast" },
+  { label: "Records", href: "#untold-records" },
+  { label: "Tickets", href: "#untold-tickets" },
+];
+
 export default function UntoldStory() {
   const heroSlides = [
-    "/images/untold-story-hero-post1.png",
+    "/images/untold-story-hero-post1.webp",
   ];
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [heroSlideDirection, setHeroSlideDirection] = useState<1 | -1>(1);
@@ -65,6 +75,9 @@ export default function UntoldStory() {
     const eventSchemaId = "schema-untold-event";
     const faqSchemaId = "schema-untold-faq";
 
+    const origin = window.location.origin || "https://monolithproject.com";
+    const pageUrl = `${origin}${window.location.pathname}`;
+
     const eventSchema = {
       "@context": "https://schema.org",
       "@type": "MusicEvent",
@@ -76,9 +89,9 @@ export default function UntoldStory() {
       eventStatus: "https://schema.org/EventScheduled",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       image: [
-        "https://monolithproject.com/images/untold-juany-deron-poster.jpg",
-        "https://monolithproject.com/images/untold-deron-single.jpg",
-        "https://monolithproject.com/images/untold-juany-single.jpg",
+        `${origin}${eventVisuals.poster}`,
+        `${origin}${eventVisuals.deron}`,
+        `${origin}${eventVisuals.juany}`,
       ],
       location: {
         "@type": "Place",
@@ -103,7 +116,7 @@ export default function UntoldStory() {
       organizer: {
         "@type": "Organization",
         name: "The Monolith Project",
-        url: "https://monolithproject.com",
+        url: origin,
       },
       offers: {
         "@type": "Offer",
@@ -113,7 +126,7 @@ export default function UntoldStory() {
         priceCurrency: "USD",
         price: "45",
       },
-      url: "https://monolithproject.com/untold-story-deron-juany-bravo",
+      url: pageUrl,
     };
 
     const faqSchema = {
@@ -156,12 +169,14 @@ export default function UntoldStory() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white" style={{ background: deepBg }}>
+    <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise" style={{ background: deepBg }}>
       <SEO
         title="Untold Story"
         description="A late-night journey through Afro and melodic house. Immersive 360° sound in Chicago."
+        image={eventVisuals.poster}
       />
       <Navigation />
+      <main id="main-content" tabIndex={-1}>
 
       {/* Hero — heavy, dark, confrontational */}
       <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
@@ -246,13 +261,24 @@ export default function UntoldStory() {
                   />
                 ))}
               </div>
+              <div className="mt-8 flex flex-wrap gap-2.5">
+                {["360° Dancefloor", "Afro + Melodic", "Friday Nights", "West Loop Chicago"].map((pill) => (
+                  <span
+                    key={pill}
+                    className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border border-white/20 bg-white/5 text-white/85"
+                  >
+                    {pill}
+                  </span>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
+      <SeasonAnchorNav items={UNTOLD_ANCHORS} tone="nocturne" className="-mt-7 mb-5" />
 
       {/* Featured Event Detail */}
-      <section className="py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
+      <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
         <div className="container max-w-5xl mx-auto">
           <div className="flex items-end justify-between mb-8 pb-6" style={{ borderBottom: `1px solid ${violet}20` }}>
             <div>
@@ -270,8 +296,7 @@ export default function UntoldStory() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative overflow-hidden"
-            style={{ border: `1px solid ${violet}30`, background: deepBg }}
+            className="season-panel-nocturne relative overflow-hidden"
           >
             {/* Glow accent */}
             <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none" style={{ background: violet }} />
@@ -410,8 +435,8 @@ export default function UntoldStory() {
                 </span>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {lineupVisuals.map((artist) => (
-                    <div key={artist.name} className="overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
-                      <img src={artist.image} alt={`${artist.name} lineup image`} className="w-full aspect-[4/5] object-cover" />
+                    <div key={artist.name} className="overflow-hidden rounded-xl border group" style={{ borderColor: `${violet}25` }}>
+                      <img src={artist.image} alt={`${artist.name} lineup image`} className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                       <div className="px-3 py-2 bg-black/35">
                         <p className="text-white font-semibold text-sm">{artist.name}</p>
                         <p className="text-white/60 text-xs">{artist.role}</p>
@@ -443,7 +468,7 @@ export default function UntoldStory() {
                 </span>
                 <div className="space-y-3">
                   {untoldFaqs.map(([q, a]) => (
-                    <details key={q} className="border px-4 py-3" style={{ borderColor: `${violet}25` }}>
+                    <details key={q} className="border px-4 py-3 rounded-xl transition-colors hover:border-[#22D3EE]/30" style={{ borderColor: `${violet}25` }}>
                       <summary className="cursor-pointer text-white font-medium">{q}</summary>
                       <p className="text-white/70 mt-2 text-sm">{a}</p>
                     </details>
@@ -493,7 +518,7 @@ export default function UntoldStory() {
       </section>
 
       {/* The Contrast */}
-      <section className="py-32 px-6 border-t" style={{ borderColor: `${violet}15` }}>
+      <section id="untold-contrast" className="scroll-mt-44 py-32 px-6 border-t" style={{ borderColor: `${violet}15` }}>
         <div className="container max-w-4xl mx-auto text-center">
           <h2 className="font-display text-5xl md:text-7xl text-white mb-6">
             TWO SIDES
@@ -520,9 +545,28 @@ export default function UntoldStory() {
         </div>
       </section>
 
-      <section className="py-0">
+      {/* Season Records */}
+      <div id="untold-records" className="scroll-mt-44">
+        <MixedMediaGallery
+          title="Season I"
+          subtitle="2025 Archives"
+          description="The seeds were sown. Deep beats and deeper connections."
+          media={untoldSeason1}
+          className="bg-[#0a0a0a] border-t border-white/5"
+        />
+        <MixedMediaGallery
+          title="Season II"
+          subtitle="2026 Archives"
+          description="The story unfolds. Higher energy, wider spaces."
+          media={untoldSeason2}
+          className="bg-[#0a0a0a] border-t border-white/5"
+        />
+      </div>
+
+      <section id="untold-tickets" className="scroll-mt-44 py-0">
         <TicketTicker />
       </section>
+      </main>
 
       <SlimSubscribeStrip title="UNLOCK UNTOLD UPDATES" source="untold_story_strip" />
       <Footer />

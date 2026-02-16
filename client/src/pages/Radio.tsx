@@ -97,7 +97,7 @@ export default function Radio() {
       <Navigation />
 
       {/* Hero */}
-      <section className="relative pt-40 pb-32 px-6 overflow-hidden">
+      <section className="relative pt-44 md:pt-48 pb-32 px-6 overflow-hidden">
         {/* Background Globe */}
         <div className="absolute inset-0 pointer-events-none z-0">
           {/* Rotating Ring */}
@@ -110,7 +110,7 @@ export default function Radio() {
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-40 mix-blend-screen"
             style={{
-              backgroundImage: "url('/images/radio-globe.png')",
+              backgroundImage: "url('/images/radio-globe.webp')",
               backgroundSize: "contain",
               backgroundPosition: "center top",
               backgroundRepeat: "no-repeat"

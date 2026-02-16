@@ -3,12 +3,17 @@ import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ViewportLazy from "@/components/ViewportLazy";
+import SEO from "@/components/SEO";
 
 const BookingFormSection = lazy(() => import("@/components/BookingFormSection"));
 
 export default function Booking() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Booking"
+        description="Submit a mix or inquiry to play with The Monolith Project. We review every booking request for alignment with the collective."
+      />
       <Navigation />
 
       <section className="pt-48 pb-16 px-6">

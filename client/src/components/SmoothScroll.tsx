@@ -49,12 +49,14 @@ export default function SmoothScroll() {
         };
     }, [reduceMotion]);
 
-    // Reset scroll on route change
+    // Reset scroll on route change (including reduced-motion users, where Lenis is disabled).
     useEffect(() => {
-        // We can rely on wouter/browser default behavior, 
-        // or force lenis to scroll to top.
+        if (reduceMotion) {
+            window.scrollTo(0, 0);
+            return;
+        }
         lenisRef.current?.scrollTo(0, { immediate: true });
-    }, [location]);
+    }, [location, reduceMotion]);
 
     return null;
 }

@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
@@ -62,7 +61,7 @@ export default function ChaptersSection() {
           <EditorialHeader
             kicker="Program"
             title="The Events"
-            description="Two series, one collective. Distinct formats, shared standards."
+            description="Two event series, one collective. Distinct formats, shared standards."
           />
         </motion.div>
       </div>
@@ -89,6 +88,8 @@ export default function ChaptersSection() {
                       <img
                         src={chapter.image}
                         alt={chapter.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 will-change-transform"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />

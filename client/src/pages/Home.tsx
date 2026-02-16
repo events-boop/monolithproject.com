@@ -6,6 +6,7 @@ import MovementSection from "@/components/MovementSection";
 import ChaptersSection from "@/components/ChaptersSection";
 import ArtistsSection from "@/components/ArtistsSection";
 import ScheduleSection from "@/components/ScheduleSection";
+import MixedMediaGallery from "@/components/MixedMediaGallery";
 import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
@@ -32,7 +33,7 @@ export default function Home() {
       />
       <Navigation />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Hero — countdown + video + CTAs */}
         <HeroSection />
 
@@ -47,6 +48,10 @@ export default function Home() {
         {/* 03 — Artists */}
         <SectionDivider number="03" label="The Roster" />
         <ArtistsSection />
+
+        {/* 04 — Gallery */}
+        <SectionDivider number="04" label="Archives" />
+        <MixedMediaGallery />
 
         {/* Cinematic break — full-bleed parallax with pull quote */}
         <ViewportLazy minHeightClassName="min-h-[60vh]">
@@ -63,12 +68,12 @@ export default function Home() {
           </Suspense>
         </ViewportLazy>
 
-        {/* 04 — Schedule */}
-        <SectionDivider number="04" label="Season 01" />
+        {/* 05 — Schedule */}
+        <SectionDivider number="05" label="Season 01" />
         <ScheduleSection />
 
-        {/* 05 — Listen */}
-        <SectionDivider number="05" label="Mixes" />
+        {/* 06 — Listen */}
+        <SectionDivider number="06" label="Mixes" />
         <ViewportLazy minHeightClassName="min-h-[420px]">
           <div className="bg-card">
             <Suspense fallback={null}>
@@ -77,8 +82,8 @@ export default function Home() {
           </div>
         </ViewportLazy>
 
-        {/* 06 — Past Events */}
-        <SectionDivider number="06" label="Recaps" />
+        {/* 07 — Past Events */}
+        <SectionDivider number="07" label="Recaps" />
         <ViewportLazy minHeightClassName="min-h-[420px]">
           <Suspense fallback={null}>
             <PastEventsSection />
@@ -87,16 +92,16 @@ export default function Home() {
 
 
 
-        {/* 07 — Get Involved */}
-        <SectionDivider number="07" label="Join Us" />
+        {/* 08 — Get Involved */}
+        <SectionDivider number="08" label="Join Us" />
         <ViewportLazy minHeightClassName="min-h-[360px]">
           <Suspense fallback={null}>
             <ConnectSection />
           </Suspense>
         </ViewportLazy>
 
-        {/* 08 — FAQ */}
-        <SectionDivider number="08" label="FAQ" />
+        {/* 09 — FAQ */}
+        <SectionDivider number="09" label="FAQ" />
         <ViewportLazy minHeightClassName="min-h-[320px]">
           <Suspense fallback={null}>
             <FAQSection />

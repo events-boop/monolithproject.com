@@ -5,7 +5,10 @@
       "startServerCommand": "npm run start",
       "url": [
         "http://127.0.0.1:3000/",
-        "http://127.0.0.1:3000/tickets"
+        "http://127.0.0.1:3000/tickets",
+        "http://127.0.0.1:3000/chasing-sunsets",
+        "http://127.0.0.1:3000/radio",
+        "http://127.0.0.1:3000/contact"
       ]
     },
     "assert": {

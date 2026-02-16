@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { ArrowRight, MapPin, Music, Sun } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
+import { ARTISTS } from "@/data/artists";
 import EditorialHeader from "./EditorialHeader";
 
 interface Artist {
@@ -15,43 +16,11 @@ interface Artist {
   image: string;
 }
 
-const SUNSETS_ROSTER: Artist[] = [
-  {
-    id: "autograf",
-    name: "AUTOGRAF",
-    role: "LIVE SET",
-    origin: "CHICAGO, US",
-    genre: "FUTURE HOUSE",
-    image: "/images/autograf-recap.jpg",
-  },
-  {
-    id: "joezi",
-    name: "JOEZI",
-    role: "GUEST",
-    origin: "TEL AVIV, IL",
-    genre: "AFRO HOUSE",
-    image: "/images/artist-joezi.png",
-  },
-];
+const SUNSETS_ROSTER_IDS = ["autograf", "chus"] as const;
+const UNTOLD_ROSTER_IDS = ["haai", "lazare"] as const;
 
-const UNTOLD_ROSTER: Artist[] = [
-  {
-    id: "haai",
-    name: "HAAi",
-    role: "HEADLINER",
-    origin: "LONDON, UK",
-    genre: "PSYCHEDELIC TECHNO",
-    image: "/images/artist-haai.png",
-  },
-  {
-    id: "lazare",
-    name: "LAZARE",
-    role: "RESIDENT",
-    origin: "PARIS, FR",
-    genre: "MELODIC HOUSE",
-    image: "/images/lazare-recap.png",
-  },
-];
+const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map((id) => ARTISTS[id]);
+const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map((id) => ARTISTS[id]);
 
 function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColor: string; delay: number }) {
   return (
@@ -69,6 +38,8 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
           <img
             src={artist.image}
             alt={artist.name}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />

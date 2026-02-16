@@ -4,6 +4,7 @@ import { ArrowRight, Wrench, Building2, Handshake, Camera, Music, Shield, Lightb
 import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const productionRoles = [
   {
@@ -70,10 +71,14 @@ export default function Partners() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Partners & Crew"
+        description="Work with The Monolith Project. We're looking for venue partners, brands, and production crew to help build the shows."
+      />
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-40 pb-20 relative">
+      <section className="pt-44 md:pt-48 pb-20 relative">
         <div className="container max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

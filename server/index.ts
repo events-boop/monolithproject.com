@@ -426,7 +426,7 @@ async function subscribeHubSpot(lead: z.infer<typeof leadSchema>) {
     ...(lead.lastName ? [{ name: "lastname", value: lead.lastName }] : []),
   ];
 
-  const contextUrl = lead.pageUrl || "https://themonolithproject.com";
+  const contextUrl = lead.pageUrl || "https://monolithproject.com";
   const context = {
     pageUri: contextUrl,
     pageName: lead.source || "website",
@@ -1055,12 +1055,16 @@ function configureApp() {
 async function startServer() {
   configureApp();
   const server = createServer(app);
-  const port = process.env.PORT || 3000;
+  const portEnv = process.env.PORT;
+  const port = portEnv ? Number.parseInt(portEnv, 10) : 3000;
+  const portNumber = Number.isFinite(port) ? port : 3000;
+  const host = process.env.HOST || "127.0.0.1";
 
   await new Promise<void>((resolve, reject) => {
     server.once("error", reject);
-    server.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}/`);
+    server.listen(portNumber, host, () => {
+      const displayHost = host === "0.0.0.0" ? "localhost" : host;
+      console.log(`Server running on http://${displayHost}:${portNumber}/`);
       resolve();
     });
   });

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SectionDivider from "@/components/SectionDivider";
 import TicketTicker from "@/components/TicketTicker";
+import SEO from "@/components/SEO";
 
 // Custom hook for animated numbers
 const useCounter = (end: number, duration: number = 2000) => {
@@ -87,6 +88,10 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden selection:bg-[#d4a853]/30">
+      <SEO
+        title="About"
+        description="The Monolith Project is a Chicago events collective built around togetherness: showing up, staying present, and letting the music guide."
+      />
       <Navigation />
 
       {/* SECTION 1: Hero */}
@@ -261,7 +266,7 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-white py-4 border-l-2 border-[#d4a853]/50 pl-6 my-8 italic font-serif text-xl md:text-2xl"
           >
-            "Each event is called a chapter. Chasing Sun(Sets) chases golden hour on Chicago rooftops. Untold Story goes deeper — dark rooms, heavy bass, stories told through sound. Two series, one frequency."
+            "Each event is called a chapter. Chasing Sun(Sets) chases golden hour on Chicago rooftops. Untold Story goes deeper — dark rooms, heavy bass, stories told through sound. Two event series, one frequency."
           </motion.p>
         </div>
       </section>

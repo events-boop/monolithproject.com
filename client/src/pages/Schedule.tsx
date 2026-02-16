@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SocialGrid from "@/components/SocialGrid";
 import { upcomingEvents } from "@/data/events";
+import SEO from "@/components/SEO";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -48,6 +49,10 @@ export default function Schedule() {
 
   return (
     <div className="min-h-screen bg-paper text-charcoal relative overflow-hidden">
+      <SEO
+        title="Schedule"
+        description="A curated season of sound, ritual, and connection from The Monolith Project."
+      />
       <Navigation variant="light" />
 
       {/* Background Atmosphere */}

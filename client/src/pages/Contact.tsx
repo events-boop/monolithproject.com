@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
+import SEO from "@/components/SEO";
 
 const contactTiles = [
   {
@@ -48,6 +49,10 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <SEO
+        title="Contact"
+        description="Get in touch with The Monolith Project for bookings, partnerships, and general inquiries."
+      />
       <Navigation />
 
       {/* Atmosphere */}

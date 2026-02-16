@@ -51,7 +51,12 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
   const [location, setLocation] = useLocation();
+  const partnersMenuId = "nav-partners-menu";
+  const mobileMenuId = "nav-mobile-menu";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,6 +77,53 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // Escape closes any open menus.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setDropdownOpen(false);
+      setMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Close any open menus on navigation.
+  useEffect(() => {
+    setDropdownOpen(false);
+    setMobileMenuOpen(false);
+  }, [location]);
+
+  // Lock background scroll when mobile menu is open.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [mobileMenuOpen]);
+
+  // Basic focus management for the mobile dialog: focus close on open, restore on close.
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      lastFocusedRef.current = document.activeElement as HTMLElement | null;
+      window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+      return;
+    }
+    const el = lastFocusedRef.current;
+    if (el && typeof el.focus === "function") el.focus();
+    lastFocusedRef.current = null;
+  }, [mobileMenuOpen]);
+
+  const isActiveHref = (href: string) => {
+    if (location === href) return true;
+    // Aliases kept for marketing links.
+    if (href === "/about" && location === "/togetherness") return true;
+    if (href === "/story" && location === "/untold-story-deron-juany-bravo") return true;
+    return false;
+  };
+
   const handleNavClick = (href: string) => {
     if (href.startsWith("/#")) {
       const id = href.slice(2);
@@ -87,7 +139,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   };
 
   const handleLogoClick = () => {
-    const logoHref = brand === "chasing-sunsets" ? "/chasing-sunsets" : "/";
+    const logoHref = "/";
     if (location === logoHref) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -108,6 +160,17 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
           : "bg-transparent border-transparent py-6"
           }`}
       >
+        <a
+          href="#main-content"
+          onClick={() => {
+            window.setTimeout(() => {
+              document.getElementById("main-content")?.focus();
+            }, 0);
+          }}
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:px-4 focus:py-3 focus:rounded-md focus:bg-black focus:text-white focus:ring-2 focus:ring-primary/70"
+        >
+          Skip to content
+        </a>
         <div className="w-full px-4 sm:px-6 md:px-8 xl:px-12 2xl:px-20 flex items-center justify-between gap-3">
           {/* LEFT: LOGO */}
           <div className="flex-shrink min-w-0 -ml-1 md:-ml-2">
@@ -115,25 +178,13 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               <button
                 type="button"
                 onClick={handleLogoClick}
-                aria-label={brand === "chasing-sunsets" ? "Go to Chasing Sun(Sets)" : "Go to homepage"}
-                className={`flex items-end gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm ${brand === "chasing-sunsets" ? "focus-visible:ring-clay/70" : "focus-visible:ring-primary/70"}`}
+                aria-label="Go to homepage"
+                className="flex items-end gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70"
               >
-                {brand === "chasing-sunsets" ? (
-                  <>
-                    <div className="w-2.5 h-2.5 rounded-full mb-1 bg-gradient-to-br from-[#C2703E] to-[#E8B86D] group-hover:shadow-[0_0_14px_rgba(232,184,109,0.55)] transition-shadow duration-300" />
-                    <span className="relative font-display text-[clamp(0.82rem,1.25vw,1.15rem)] tracking-[0.12em] leading-none text-left whitespace-nowrap text-white/95 transition-colors">
-                      CHASING <span className="text-white/70">SUN(SETS)</span>
-                      <span aria-hidden="true" className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent opacity-70" />
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
-                    <span className={`font-display text-[clamp(0.82rem,1.25vw,1.15rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
-                      MONOLITH PROJECT
-                    </span>
-                  </>
-                )}
+                <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
+                <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
+                  MONOLITH PROJECT
+                </span>
               </button>
             </MagneticButton>
           </div>
@@ -147,7 +198,8 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     onClick={() => setDropdownOpen((v) => !v)}
                     aria-expanded={dropdownOpen}
                     aria-haspopup="menu"
-                    className={`flex items-center gap-1 text-[11px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                    aria-controls={partnersMenuId}
+                    className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
                       ? `hover:text-clay text-stone`
                       : brand === "chasing-sunsets"
                         ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
@@ -168,15 +220,19 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                           ? "bg-sand/95 border-charcoal/10"
                           : "bg-[#0a0a0a]/95 border-white/10"
                           }`}
+                        id={partnersMenuId}
+                        role="menu"
+                        aria-label="Partners"
                       >
                         {item.children.map((child) => (
                           <Link key={child.label} href={child.href}
                             onClick={() => setDropdownOpen(false)}
-                            className={`block px-5 py-2.5 text-[11px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
-                              ? `hover:text-clay hover:bg-charcoal/5 ${location === child.href ? "text-clay" : "text-stone"}`
+                            aria-current={isActiveHref(child.href) ? "page" : undefined}
+                            className={`block px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
+                              ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                               : brand === "chasing-sunsets"
-                                ? `hover:text-white hover:bg-white/5 ${location === child.href ? "text-white" : "text-white/80"}`
-                              : `hover:text-primary hover:bg-white/5 ${location === child.href ? "text-primary" : "text-white/80"}`
+                                ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
+                              : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
                               }`}
                             role="menuitem"
                           >
@@ -195,22 +251,35 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       handleNavClick(item.href);
                     }
                   }}
-                  className={`text-[11px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
-                    ? `hover:text-clay ${location === item.href ? "text-clay" : "text-stone"}`
+                  aria-current={isActiveHref(item.href) ? "page" : undefined}
+                  className={`group text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                    ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
-                      ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${location === item.href ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === item.href ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
+                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
                 >
                   {item.label === "CHASING SUN(SETS)" ? (
                     <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
                       <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
-                      <span>{item.label}</span>
+                      <span className="relative inline-block">
+                        <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
+                      </span>
                     </span>
                   ) : item.label === "UNTOLD STORY" ? (
-                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-primary"}`}>
+                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
                       <UntoldButterflyLogo className="w-3.5 h-3.5" />
-                      <span>{item.label}</span>
+                      <span className="relative inline-block">
+                        <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
+                      </span>
                     </span>
                   ) : (
                     item.label
@@ -230,7 +299,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     : "shadow-[0_0_18px_rgba(224,90,58,0.35)]"
                     }`}>
                     <Ticket className="w-3.5 h-3.5" />
-                    <span className="font-bold text-[11px] tracking-[0.14em] uppercase">Tickets</span>
+                    <span className="font-bold text-[12px] tracking-[0.14em] uppercase">Tickets</span>
                     <ArrowUpRight className="w-3 h-3 opacity-60" />
                   </div>
                 </a>
@@ -244,6 +313,9 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                   type="button"
                   onClick={() => setMobileMenuOpen(true)}
                   aria-label="Open navigation menu"
+                  aria-haspopup="dialog"
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls={mobileMenuId}
                   className={`p-2 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
                 >
                   <Menu size={24} />
@@ -262,6 +334,44 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+            ref={mobileDialogRef}
+            id={mobileMenuId}
+            onKeyDown={(e) => {
+              if (e.key !== "Tab") return;
+              const dialog = mobileDialogRef.current;
+              if (!dialog) return;
+
+              const focusable = Array.from(
+                dialog.querySelectorAll<HTMLElement>(
+                  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+                ),
+              ).filter((el) => el.offsetParent !== null && el.getAttribute("aria-hidden") !== "true");
+
+              if (focusable.length === 0) {
+                e.preventDefault();
+                return;
+              }
+
+              const first = focusable[0];
+              const last = focusable[focusable.length - 1];
+              const active = document.activeElement as HTMLElement | null;
+
+              if (e.shiftKey) {
+                if (active === first || !active || !dialog.contains(active)) {
+                  e.preventDefault();
+                  last.focus();
+                }
+                return;
+              }
+
+              if (active === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }}
           >
             <div className="absolute top-6 right-6">
               <MagneticButton>
@@ -269,6 +379,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close navigation menu"
+                  ref={closeButtonRef}
                   className="p-2 text-foreground/50 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <X size={32} />
@@ -292,23 +403,36 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                         handleNavClick(item.href);
                       }
                     }}
-                    className={`font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${location === item.href ? "text-white" : "text-muted-foreground"}`}
+                    aria-current={isActiveHref(item.href) ? "page" : undefined}
+                    className={`group font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
                   >
-                    {item.label === "CHASING SUN(SETS)" ? (
-                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                        <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
+                  {item.label === "CHASING SUN(SETS)" ? (
+                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                      <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
+                      <span className="relative inline-block pb-2">
                         <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
                       </span>
-                    ) : item.label === "UNTOLD STORY" ? (
-                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-primary"}`}>
-                        <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
+                    </span>
+                  ) : item.label === "UNTOLD STORY" ? (
+                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                      <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
+                      <span className="relative inline-block pb-2">
                         <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
                       </span>
-                    ) : (
-                      item.label
-                    )}
-                  </Link>
-                </motion.div>
+                    </span>
+                  ) : (
+                    item.label
+                  )}
+                </Link>
+              </motion.div>
               ))}
 
               {/* Emphasized ticket CTA */}
@@ -320,7 +444,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + mobileNavItems.length * 0.1 }}
-                className="mt-4 px-10 py-4 border border-white/25 rounded-full text-white font-display text-2xl tracking-widest uppercase flex items-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer"
+                className="mt-4 px-10 py-4 border border-white/25 rounded-full text-white font-display text-2xl tracking-widest uppercase flex items-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               >
                 <Ticket className="w-5 h-5" />
                 GET TICKETS

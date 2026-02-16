@@ -8,8 +8,10 @@ import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
 import TicketTicker from "@/components/TicketTicker";
+import SEO from "@/components/SEO";
+import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 
-type Series = "all" | "chasing-sunsets" | "untold-story" | "sunsets-radio";
+type Series = "all" | ArtistSeries;
 
 interface Artist {
   id: string;
@@ -18,139 +20,23 @@ interface Artist {
   origin: string;
   genre: string;
   image: string;
-  series: "chasing-sunsets" | "untold-story" | "sunsets-radio";
+  series: ArtistSeries;
 }
 
 interface ArtistEntry extends Omit<Artist, "series"> {
-  series: ("chasing-sunsets" | "untold-story" | "sunsets-radio")[];
+  series: ArtistSeries[];
 }
 
-const artistEntries: ArtistEntry[] = [
-  // Untold Story
-  {
-    id: "lazare",
-    name: "LAZARE",
-    role: "RESIDENT",
-    origin: "PARIS, FR",
-    genre: "MELODIC HOUSE",
-    image: "/images/lazare-recap.png",
-    series: ["untold-story"],
-  },
-  {
-    id: "sabry",
-    name: "SABRY",
-    role: "RESIDENT",
-    origin: "CHICAGO, US",
-    genre: "DEEP HOUSE · TECHNO",
-    image: "/images/untold-story.jpg",
-    series: ["untold-story"],
-  },
-  {
-    id: "autograf",
-    name: "AUTOGRAF",
-    role: "LIVE SET",
-    origin: "CHICAGO, US",
-    genre: "FUTURE HOUSE",
-    image: "/images/autograf-recap.jpg",
-    series: ["untold-story"],
-  },
-  {
-    id: "deron",
-    name: "DERON",
-    role: "GUEST",
-    origin: "GLOBAL",
-    genre: "AFRO HOUSE · MELODIC",
-    image: "/images/artist-joezi.png",
-    series: ["untold-story"],
-  },
-  {
-    id: "juany-bravo",
-    name: "JUANY BRAVO",
-    role: "GUEST",
-    origin: "CHICAGO, US",
-    genre: "AFRO HOUSE · GLOBAL HOUSE",
-    image: "/images/untold-story.jpg",
-    series: ["untold-story"],
-  },
-  {
-    id: "haai",
-    name: "HAAi",
-    role: "HEADLINER",
-    origin: "LONDON, UK",
-    genre: "PSYCHEDELIC TECHNO",
-    image: "/images/lazare-recap.png",
-    series: ["untold-story"],
-  },
-  // Chasing Sun(Sets) — some also appear on Radio
-  {
-    id: "summers-uk",
-    name: "SUMMERS UK",
-    role: "GUEST",
-    origin: "LONDON, UK",
-    genre: "MELODIC HOUSE",
-    image: "/images/chasing-sunsets.jpg",
-    series: ["chasing-sunsets"],
-  },
-  {
-    id: "chris-idh",
-    name: "CHRIS IDH",
-    role: "GUEST",
-    origin: "PARIS, FR",
-    genre: "ORGANIC HOUSE",
-    image: "/images/artist-joezi.png",
-    series: ["chasing-sunsets"],
-  },
-  {
-    id: "benchek",
-    name: "BENCHEK",
-    role: "GUEST",
-    origin: "BERLIN, DE",
-    genre: "MELODIC TECHNO",
-    image: "/images/chasing-sunsets.jpg",
-    series: ["chasing-sunsets", "sunsets-radio"],
-  },
-  {
-    id: "terranova",
-    name: "TERRANOVA",
-    role: "GUEST",
-    origin: "BERLIN, DE",
-    genre: "DEEP HOUSE · ELECTRONICA",
-    image: "/images/autograf-recap.jpg",
-    series: ["chasing-sunsets", "sunsets-radio"],
-  },
-  {
-    id: "ewerseen",
-    name: "EWERSEEN",
-    role: "GUEST",
-    origin: "AMSTERDAM, NL",
-    genre: "AFRO HOUSE · ORGANIC",
-    image: "/images/artist-joezi.png",
-    series: ["chasing-sunsets", "sunsets-radio"],
-  },
-  {
-    id: "joezi",
-    name: "JOEZI",
-    role: "GUEST",
-    origin: "TEL AVIV, IL",
-    genre: "AFRO HOUSE",
-    image: "/images/artist-joezi.png",
-    series: ["chasing-sunsets"],
-  },
-  // Radio-only
-  {
-    id: "radian",
-    name: "RADIAN",
-    role: "RADIO MIX",
-    origin: "GLOBAL",
-    genre: "MELODIC HOUSE · DEEP",
-    image: "/images/radio-show.jpg",
-    series: ["sunsets-radio"],
-  },
-];
+const artistEntries: ArtistEntry[] = ARTIST_ENTRIES;
 
 // Flatten for display — each artist appears once, with primary series for badge color
 const artists: Artist[] = artistEntries.map((a) => ({
-  ...a,
+  id: a.id,
+  name: a.name,
+  role: a.role,
+  origin: a.origin,
+  genre: a.genre,
+  image: a.image,
   series: a.series[0],
 }));
 
@@ -159,7 +45,15 @@ function filterArtists(filter: Series): Artist[] {
   if (filter === "all") return artists;
   return artistEntries
     .filter((a) => a.series.includes(filter))
-    .map((a) => ({ ...a, series: filter }));
+    .map((a) => ({
+      id: a.id,
+      name: a.name,
+      role: a.role,
+      origin: a.origin,
+      genre: a.genre,
+      image: a.image,
+      series: filter,
+    }));
 }
 
 const filters: { label: string; value: Series; icon?: React.ReactNode }[] = [
@@ -176,10 +70,14 @@ export default function Lineup() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Lineup"
+        description="Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio."
+      />
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-40 pb-12 px-6">
+      <section className="pt-44 md:pt-48 pb-12 px-6">
         <div className="container max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -196,14 +94,14 @@ export default function Lineup() {
               LINEUP
             </RevealText>
             <p className="text-muted-foreground text-lg max-w-xl">
-              The artists behind The Monolith Project. Two series, one community.
+              The artists behind The Monolith Project. Two event series plus Sun(Sets) Radio. One community.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Filters */}
-      <section className="px-6 pb-12 sticky top-10 z-40">
+      <section className="px-6 pb-12 sticky top-24 md:top-28 z-40">
         <div className="container max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-3 py-4 border-b border-border">
             {filters.map((f) => {
@@ -241,7 +139,7 @@ export default function Lineup() {
         <div className="container max-w-6xl mx-auto">
           <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             <AnimatePresence mode="popLayout">
-              {filtered.map((artist) => (
+              {filtered.map((artist, idx) => (
                 <motion.div
                   key={artist.id}
                   layout
@@ -257,6 +155,8 @@ export default function Lineup() {
                         <img
                           src={artist.image}
                           alt={artist.name}
+                          loading={idx < 8 ? "eager" : "lazy"}
+                          decoding="async"
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />

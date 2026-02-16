@@ -188,7 +188,7 @@ export default function NewsletterSection({
                       placeholder="you@email.com"
                       aria-invalid={Boolean(touched.email && errors.email)}
                       aria-describedby={touched.email && errors.email ? "newsletter-email-error" : undefined}
-                      className={`w-full bg-white/88 border px-4 py-4 text-charcoal placeholder:text-stone/50 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200 ${touched.email && errors.email ? "border-red-400" : "border-charcoal/20"}`}
+                      className={`w-full bg-white/88 border px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200 ${touched.email && errors.email ? "border-red-400" : "border-charcoal/20"}`}
                     />
                     {touched.email && errors.email && (
                       <p id="newsletter-email-error" className="flex items-center gap-1.5 mt-1.5 text-red-500 text-xs font-mono">
@@ -208,7 +208,7 @@ export default function NewsletterSection({
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="First"
-                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/50 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
+                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
                       />
                     </div>
                     <div>
@@ -221,7 +221,7 @@ export default function NewsletterSection({
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder="Last"
-                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/50 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
+                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
                       />
                     </div>
                   </div>
@@ -244,7 +244,7 @@ export default function NewsletterSection({
                         {agreed && <Check className="w-3 h-3 text-white" />}
                       </div>
                     </div>
-                    <span className={`text-xs font-mono tracking-wide group-hover:text-charcoal transition-colors ${touched.agreed && errors.agreed ? "text-red-500" : "text-stone"}`}>
+                    <span className={`text-[13px] font-mono tracking-wide group-hover:text-charcoal transition-colors ${touched.agreed && errors.agreed ? "text-red-500" : "text-stone/90"}`}>
                       I agree to receive emails from The Monolith Project
                     </span>
                   </label>

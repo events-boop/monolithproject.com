@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 export default function Newsletter() {
   const benefits = [
@@ -14,6 +15,10 @@ export default function Newsletter() {
 
   return (
     <div className="min-h-screen bg-sand text-charcoal relative overflow-hidden">
+      <SEO
+        title="Newsletter"
+        description="Join the Monolith list for priority ticket windows, lineup drops, and fresh radio mixes."
+      />
       <Navigation variant="light" />
 
       <section className="pt-44 md:pt-48 pb-8 px-6 relative">

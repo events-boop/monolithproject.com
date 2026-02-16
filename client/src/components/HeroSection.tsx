@@ -17,6 +17,7 @@ const HERO_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-short.mp4",
+    poster: "/images/hero-video-short-poster.jpg",
     caption: "THE MONOLITH PROJECT",
   },
   {
@@ -27,7 +28,7 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: "/images/lazare-recap.png",
+    src: "/images/lazare-recap.webp",
     alt: "Lazare at Monolith Project",
     credit: "JP Quindara",
     caption: "LAZARE | MONOLITH PROJECT",
@@ -211,6 +212,7 @@ export default function HeroSection() {
           {/* Right: Countdown */}
           {!isExpired && (
             <motion.div
+              data-testid="hero-countdown"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}

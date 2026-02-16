@@ -99,7 +99,7 @@ export default function Footer() {
               <br />
               PROJECT
             </span>
-            <p className="text-white/55 text-sm leading-relaxed max-w-[220px]">
+            <p className="text-white/70 text-sm leading-relaxed max-w-[220px]">
               Togetherness is the frequency.
               <br />
               Music is the guide.
@@ -108,7 +108,7 @@ export default function Footer() {
 
           {links.map((group) => (
             <div key={group.title}>
-              <h4 className="ui-kicker text-white/45 mb-6">{group.title}</h4>
+              <h4 className="ui-kicker text-white/60 mb-6">{group.title}</h4>
               <ul className="space-y-3">
                 {group.items.map((item) => (
                   <li key={item.name}>
@@ -119,7 +119,7 @@ export default function Footer() {
                         rel="noopener noreferrer"
                         className={`transition-colors text-sm tracking-wide flex items-center gap-1 group ${item.name === "Get Tickets"
                           ? "px-2 py-1 rounded-full bg-primary/18 border border-primary/40 text-primary font-semibold hover:text-primary hover:bg-primary/25"
-                          : "text-white/75 hover:text-white"
+                          : "text-white/85 hover:text-white"
                           }`}
                       >
                         {renderItemLabel(item.name)}
@@ -129,7 +129,7 @@ export default function Footer() {
                       <Link href={item.href} asChild>
                         <a className={`transition-colors text-sm tracking-wide ${item.name === "Get Tickets"
                           ? "px-2 py-1 rounded-full bg-primary/18 border border-primary/40 text-primary font-semibold hover:text-primary hover:bg-primary/25"
-                          : "text-white/75 hover:text-white"
+                          : "text-white/85 hover:text-white"
                           }`}>
                           {renderItemLabel(item.name)}
                         </a>
@@ -186,10 +186,10 @@ export default function Footer() {
           </div>
 
           <div className="text-center md:text-right">
-            <p className="ui-chip text-white/35">
+            <p className="ui-chip text-white/55">
               © {new Date().getFullYear()} The Monolith Project
             </p>
-            <p className="ui-chip text-white/25 mt-1">
+            <p className="ui-chip text-white/45 mt-1">
               Engineered in Chicago by Stark Industries
             </p>
           </div>

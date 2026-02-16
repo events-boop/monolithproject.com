@@ -14,6 +14,10 @@
     "db:studio": "drizzle-kit studio",
     "format": "prettier --write .",
     "test:e2e": "npx playwright test --config=playwright.config.ts",
+    "test:visual": "VISUAL_TESTS=1 npm run test:e2e",
+    "test:visual:update": "VISUAL_TESTS=1 npx playwright test e2e/visual.spec.ts --config=playwright.config.ts --update-snapshots",
+    "bundle:report": "npm run build && node scripts/bundle_report.mjs",
+    "pixieset:download": "node scripts/pixieset_bulk_download.mjs",
     "lhci": "lhci autorun"
   },
   "dependencies": {

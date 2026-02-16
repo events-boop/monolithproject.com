@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lock, ArrowRight, Download, FileText } from "lucide-react";
@@ -6,6 +5,7 @@ import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { verifySponsorAccess } from "@/lib/api";
+import SEO from "@/components/SEO";
 
 export default function SponsorAccess() {
     const [password, setPassword] = useState("");
@@ -29,6 +29,11 @@ export default function SponsorAccess() {
 
     return (
         <div className="min-h-screen bg-background text-foreground relative overflow-hidden font-sans">
+            <SEO
+                title="Partner Access"
+                description="Confidential partner materials for The Monolith Project."
+                noIndex
+            />
             <Navigation activeSection="partnerships" />
 
 
