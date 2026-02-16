@@ -80,25 +80,13 @@ export default function NewsletterSection({
   };
 
   return (
-    <section id="newsletter" className="relative section-rhythm-tight bg-sand text-charcoal overflow-hidden">
-      {/* Gradient bridge from dark to light */}
-      <div className="absolute -top-32 left-0 right-0 h-32 bg-gradient-to-b from-background to-sand pointer-events-none" />
-      <div className="absolute inset-0 atmo-surface-soft pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.08),transparent_32%),radial-gradient(circle_at_82%_74%,rgba(224,90,58,0.12),transparent_36%)] pointer-events-none" />
-      <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-white/10 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-noise opacity-[0.025] pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-[52%] pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-[0.055] blur-[0.5px]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to left, rgba(241,245,249,0.52), rgba(241,245,249,0.16) 26%, transparent 72%), url('/images/chasing-sunsets.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-      </div>
-      <div className="container max-w-6xl mx-auto px-6">
+    <section id="newsletter" className="relative section-rhythm-tight bg-[#050505] text-white overflow-hidden">
+      {/* Gradient bridge from dark to light - removed, keeping it dark */}
+      <div className="absolute inset-0 atmo-surface-soft pointer-events-none opacity-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.05),transparent_32%),radial-gradient(circle_at_82%_74%,rgba(224,90,58,0.08),transparent_36%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
+
+      <div className="container max-w-6xl mx-auto px-6 relative z-10">
 
         <AnimatePresence mode="wait">
           {isSubmitted ? (
@@ -108,11 +96,11 @@ export default function NewsletterSection({
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-12"
             >
-              <div className="w-16 h-16 border border-clay bg-clay/10 flex items-center justify-center mx-auto mb-8">
-                <Check className="w-6 h-6 text-clay" />
+              <div className="w-16 h-16 border border-white/20 bg-white/5 flex items-center justify-center mx-auto mb-8 rounded-full">
+                <Check className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-display text-4xl text-charcoal mb-4">YOU'RE IN</h3>
-              <p className="text-stone">
+              <h3 className="font-display text-4xl text-white mb-4">YOU'RE IN</h3>
+              <p className="text-white/60">
                 We'll be in touch when tickets drop and new shows are announced.
               </p>
             </motion.div>
@@ -129,24 +117,24 @@ export default function NewsletterSection({
                 <div>
                   {compactIntro ? (
                     <>
-                      <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-clay/80 block mb-4">
+                      <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-clay block mb-4">
                         Member Perks
                       </span>
-                      <p className="text-stone leading-relaxed mb-6">
+                      <p className="text-white/70 leading-relaxed mb-6">
                         {description}
                       </p>
                     </>
                   ) : (
                     <>
-                      <span className="font-serif italic text-lg text-clay/80 block mb-4">
+                      <span className="font-serif italic text-lg text-white/60 block mb-4">
                         Newsletter
                       </span>
-                      <h2 className="font-display text-section-title text-charcoal mb-6 tracking-tight-display">
-                        <GlitchText className="text-charcoal">STAY IN</GlitchText>
+                      <h2 className="font-display text-section-title text-white mb-6 tracking-tight-display">
+                        <GlitchText className="text-white">STAY IN</GlitchText>
                         <br />
-                        <GlitchText className="text-charcoal">THE LOOP</GlitchText>
+                        <GlitchText className="text-white">THE LOOP</GlitchText>
                       </h2>
-                      <p className="text-stone leading-relaxed mb-8">
+                      <p className="text-white/70 leading-relaxed mb-8">
                         {description}
                       </p>
                     </>
@@ -155,18 +143,18 @@ export default function NewsletterSection({
                   {/* What you get */}
                   <div className={`${compactIntro ? "grid gap-2" : "space-y-3"}`}>
                     {benefits.map((item) => (
-                      <div key={item} className={`flex items-center gap-3 ${compactIntro ? "rounded-full border border-charcoal/15 bg-white/60 px-3 py-2" : ""}`}>
-                        <div className="w-1 h-1 bg-clay" />
-                        <span className={`text-sm font-mono uppercase ${compactIntro ? "text-charcoal/80 tracking-[0.12em]" : "text-stone tracking-wide"}`}>{item}</span>
+                      <div key={item} className={`flex items-center gap-3 ${compactIntro ? "rounded-full border border-white/10 bg-white/5 px-3 py-2" : ""}`}>
+                        <div className="w-1 h-1 bg-white" />
+                        <span className={`text-sm font-mono uppercase ${compactIntro ? "text-white/80 tracking-[0.12em]" : "text-white/60 tracking-wide"}`}>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Right — form */}
-                <form onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-2xl border border-charcoal/15 bg-white/38 backdrop-blur-md p-6 md:p-7 shadow-[0_12px_30px_rgba(0,0,0,0.08)]" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
+                <form onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-7 shadow-2xl" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
                   <div className="relative">
-                    <label htmlFor="email" className="ui-chip text-stone block mb-2">
+                    <label htmlFor="email" className="ui-chip text-white/50 block mb-2">
                       Email Address *
                     </label>
                     <input
@@ -199,7 +187,7 @@ export default function NewsletterSection({
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="firstName" className="ui-chip text-stone block mb-2">
+                      <label htmlFor="firstName" className="ui-chip text-white/50 block mb-2">
                         First Name
                       </label>
                       <input
@@ -212,7 +200,7 @@ export default function NewsletterSection({
                       />
                     </div>
                     <div>
-                      <label htmlFor="lastName" className="ui-chip text-stone block mb-2">
+                      <label htmlFor="lastName" className="ui-chip text-white/50 block mb-2">
                         Last Name
                       </label>
                       <input
@@ -240,8 +228,8 @@ export default function NewsletterSection({
                         }}
                         className="peer sr-only"
                       />
-                      <div className={`w-4 h-4 border transition-colors flex items-center justify-center ${agreed ? "bg-clay border-clay" : touched.agreed && errors.agreed ? "border-red-400" : "border-charcoal/30"}`}>
-                        {agreed && <Check className="w-3 h-3 text-white" />}
+                      <div className={`w-4 h-4 border transition-colors flex items-center justify-center ${agreed ? "bg-white border-white" : touched.agreed && errors.agreed ? "border-red-400" : "border-white/30"}`}>
+                        {agreed && <Check className="w-3 h-3 text-black" />}
                       </div>
                     </div>
                     <span className={`text-[13px] font-mono tracking-wide group-hover:text-charcoal transition-colors ${touched.agreed && errors.agreed ? "text-red-500" : "text-stone/90"}`}>
@@ -263,10 +251,9 @@ export default function NewsletterSection({
                     type="submit"
                     disabled={isSubmitting}
                     aria-label={isSubmitting ? "Joining newsletter..." : "Join newsletter list"}
-                    className="btn-pill-dark w-full justify-center text-sm disabled:opacity-50 relative overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay focus-visible:ring-offset-2"
+                    className="w-full py-4 rounded-full bg-white text-black font-display font-bold tracking-widest text-sm disabled:opacity-50 relative overflow-hidden group hover:bg-white/90 transition-colors"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/10 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
-                    <span className="relative z-10 flex items-center gap-2">
+                    <span className="relative z-10 flex items-center justify-center gap-2">
                       {isSubmitting ? "JOINING..." : "JOIN THE LIST"}
                       {!isSubmitting && <ArrowUpRight className="w-4 h-4" />}
                     </span>

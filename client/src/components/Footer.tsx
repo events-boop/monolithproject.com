@@ -142,27 +142,45 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Middle: Giant Interactive Typography */}
+        {/* Middle: Giant Interactive Typography with Spotlight */}
         <div
-          className="relative py-10 md:py-20 -mx-6 md:-mx-12 overflow-hidden cursor-default select-none group"
+          className="relative py-10 md:py-24 -mx-6 md:-mx-12 overflow-hidden cursor-default select-none group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+            e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+          }}
         >
+          {/* Spotlight Gradient - Follows Mouse */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+            style={{
+              background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(224,90,58,0.15), transparent 40%)`
+            }}
+          />
+
           {/* Background Video/Gradient Fill Effect */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-clay to-primary bg-[length:200%_auto] animate-marquee" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-clay/20 to-primary/20 bg-[length:200%_auto] animate-marquee" />
             <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
           </div>
 
-          {/* Huge Text */}
-          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-colors duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/15 to-white/5 drop-shadow-[0_0_18px_rgba(224,90,58,0.22)] group-hover:drop-shadow-[0_0_26px_rgba(224,90,58,0.4)] group-hover:text-black mix-blend-screen group-hover:mix-blend-normal">
+          {/* Huge Text - Base Layer */}
+          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] group-hover:text-white/90 mix-blend-overlay group-hover:mix-blend-normal transform group-hover:scale-[1.02]">
             MONOLITH
           </h1>
 
           {/* Outline Overlay for Stroke Effect */}
           <h1
-            className="absolute inset-0 top-10 md:top-20 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-10 group-hover:opacity-100 transition-opacity duration-700 text-transparent"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.2)" }}
+            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 text-transparent"
+            style={{
+              WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+              transform: "translateZ(0)"
+            }}
           >
             MONOLITH
           </h1>

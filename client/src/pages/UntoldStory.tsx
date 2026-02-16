@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "wouter";
-import { ArrowUpRight, Calendar, MapPin, Clock, Users, Shirt, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
-import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import TicketTicker from "@/components/TicketTicker";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
@@ -161,13 +157,6 @@ export default function UntoldStory() {
     };
   }, []);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      goToNextHeroSlide();
-    }, 10000);
-    return () => window.clearInterval(timer);
-  }, []);
-
   return (
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise" style={{ background: deepBg }}>
       <SEO
@@ -178,26 +167,9 @@ export default function UntoldStory() {
       <Navigation />
       <main id="main-content" tabIndex={-1}>
 
-      {/* Hero — heavy, dark, confrontational */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
-        {/* Full Screen Background Rotator */}
-        <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={heroSlideIndex}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <img
-                src={heroSlides[heroSlideIndex]}
-                alt="Untold Story Atmosphere"
-                className="w-full h-full object-cover object-[80%_center] opacity-100"
-              />
-            </motion.div>
-          </AnimatePresence>
+      <UntoldHero />
+      <UntoldContent />
+      <UntoldContrast />
 
           {/* Gradients for readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#06060F] via-[#06060F]/40 to-black/60 z-10" />

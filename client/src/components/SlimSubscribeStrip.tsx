@@ -71,9 +71,12 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
           <button
             type="submit"
             disabled={submitting}
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-full border transition-all ${dark ? "border-white/35 text-white hover:border-primary hover:text-primary" : "border-charcoal/35 text-charcoal hover:border-primary hover:text-primary"} disabled:opacity-50`}
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold tracking-widest text-xs transition-all ${dark
+                ? "bg-white text-black hover:bg-white/90 border border-white"
+                : "bg-charcoal text-white hover:bg-charcoal/90 border border-charcoal"
+              } disabled:opacity-50`}
           >
-            {ok ? "Subscribed" : submitting ? "Submitting..." : "Subscribe"}
+            {ok ? "SUBSCRIBED" : submitting ? "JOINING..." : "JOIN THE LIST"}
             <ArrowUpRight className="w-4 h-4" />
           </button>
         </form>

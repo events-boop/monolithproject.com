@@ -119,27 +119,32 @@ export default function ChaptersSection() {
                     </div>
 
                     {/* Content — bottom aligned */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 z-30">
-                      <p className={`${chapter.taglineColor} text-[11px] font-mono tracking-[0.26em] uppercase mb-4`}>
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 z-30 flex flex-col justify-end">
+                      <p className={`text-[10px] font-mono tracking-widest uppercase mb-3 opacity-80 ${chapter.id === 'untold-story' ? 'text-story' : 'text-clay'}`}>
                         {chapter.moment}
                       </p>
 
-                      <h3 className="ui-heading font-display text-4xl md:text-6xl tracking-[0.01em] text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/80 transition-all duration-300">
+                      <h3 className={`ui-heading mb-4 text-white transition-all duration-500
+                        ${chapter.id === 'untold-story'
+                          ? 'font-serif italic text-5xl md:text-7xl tracking-tight' // Narrative Feel
+                          : 'font-display text-4xl md:text-6xl tracking-widest uppercase' // Airy Feel
+                        }`}
+                      >
                         {chapter.title}
                       </h3>
 
-                      <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-40">
-                        <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-lg">
+                      <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-700 ease-out opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-48">
+                        <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6 max-w-lg font-sans">
                           {chapter.description}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-white group-hover:text-primary transition-colors">
-                        <div className="w-10 h-[1px] bg-white/40 group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
-                        <span className="tracking-widest uppercase font-bold text-xs">
+                      <div className={`flex items-center gap-3 text-sm transition-colors duration-300 ${chapter.id === 'untold-story' ? 'group-hover:text-story' : 'group-hover:text-clay'}`}>
+                        <div className={`h-[1px] bg-white/40 transition-all duration-500 ${chapter.id === 'untold-story' ? 'w-8 group-hover:w-16 group-hover:bg-story' : 'w-8 group-hover:w-24 group-hover:bg-clay'}`} />
+                        <span className="tracking-[0.2em] uppercase font-bold text-[10px]">
                           {chapter.id === "chasing-sunsets" ? "Explore Sun(Sets)" : "Enter Untold Story"}
                         </span>
-                        <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 delay-100" />
+                        <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 delay-100" />
                       </div>
                     </div>
                   </a>

@@ -53,35 +53,35 @@ export default function ContactFormSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="ui-card border border-white/10 bg-white/[0.02] backdrop-blur-md p-8 md:p-10"
+      className="ui-card border border-charcoal/15 bg-white/75 backdrop-blur-sm p-8 md:p-10"
     >
       {isSubmitted ? (
         <div className="min-h-[360px] flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 text-primary rounded-2xl">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <h3 className="font-display text-3xl mb-4 uppercase text-foreground">Message Received</h3>
-          <p className="text-muted-foreground max-w-md">
+          <h3 className="font-display text-3xl mb-4 uppercase text-charcoal">Message Received</h3>
+          <p className="text-charcoal/70 max-w-md">
             We read everything. If it needs a reply, we will get back to you.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
           <div>
-            <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Name</label>
+            <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
             <input
               id="contact-name"
               {...register("name")}
               autoComplete="name"
               aria-invalid={Boolean(errors.name)}
-              className="w-full bg-transparent border border-white/10 p-4 text-foreground placeholder:text-white/25 focus:border-primary/60 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="Full name"
             />
-            {errors.name && <span className="text-red-400 text-xs mt-1 block">{errors.name.message}</span>}
+            {errors.name && <span className="text-red-600 text-xs mt-1 block">{errors.name.message}</span>}
           </div>
 
           <div>
-            <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Email</label>
+            <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Email</label>
             <input
               id="contact-email"
               type="email"
@@ -89,43 +89,43 @@ export default function ContactFormSection() {
               {...register("email")}
               autoComplete="email"
               aria-invalid={Boolean(errors.email)}
-              className="w-full bg-transparent border border-white/10 p-4 text-foreground placeholder:text-white/25 focus:border-primary/60 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="email@address.com"
             />
-            {errors.email && <span className="text-red-400 text-xs mt-1 block">{errors.email.message}</span>}
+            {errors.email && <span className="text-red-600 text-xs mt-1 block">{errors.email.message}</span>}
           </div>
 
           <div>
-            <label htmlFor="contact-subject" className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Subject</label>
+            <label htmlFor="contact-subject" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Subject</label>
             <input
               id="contact-subject"
               {...register("subject")}
               autoComplete="off"
               aria-invalid={Boolean(errors.subject)}
-              className="w-full bg-transparent border border-white/10 p-4 text-foreground placeholder:text-white/25 focus:border-primary/60 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="What is this about?"
             />
-            {errors.subject && <span className="text-red-400 text-xs mt-1 block">{errors.subject.message}</span>}
+            {errors.subject && <span className="text-red-600 text-xs mt-1 block">{errors.subject.message}</span>}
           </div>
 
           <div>
-            <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Message</label>
+            <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Message</label>
             <textarea
               id="contact-message"
               {...register("message")}
               autoComplete="off"
               aria-invalid={Boolean(errors.message)}
               rows={6}
-              className="w-full bg-transparent border border-white/10 p-4 text-foreground placeholder:text-white/25 focus:border-primary/60 focus:outline-none transition-colors resize-none rounded-xl"
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors resize-none rounded-xl"
               placeholder="Tell us what you need, with dates/links if relevant..."
             />
-            {errors.message && <span className="text-red-400 text-xs mt-1 block">{errors.message.message}</span>}
+            {errors.message && <span className="text-red-600 text-xs mt-1 block">{errors.message.message}</span>}
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-white/35">
+            <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-charcoal/55">
               Or email{" "}
-              <a className="underline hover:text-white transition-colors" href="mailto:events@monolithproject.com">
+              <a className="underline hover:text-charcoal transition-colors" href="mailto:events@monolithproject.com">
                 events@monolithproject.com
               </a>
             </p>
@@ -146,7 +146,7 @@ export default function ContactFormSection() {
           </div>
 
           {submitError && (
-            <p className="flex items-center gap-1.5 text-red-400 text-xs font-mono" role="alert" aria-live="polite">
+            <p className="flex items-center gap-1.5 text-red-600 text-xs font-mono" role="alert" aria-live="polite">
               <AlertCircle className="w-3 h-3" />
               {submitError}
             </p>

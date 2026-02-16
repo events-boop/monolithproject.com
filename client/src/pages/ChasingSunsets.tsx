@@ -198,6 +198,24 @@ export default function ChasingSunsets() {
         />
       </div>
 
+      {/* Season Records */}
+      <MixedMediaGallery
+        title="Season I"
+        subtitle="2025 Archives"
+        description="The beginning. Rooftops, rivers, and the golden hour."
+        media={chasingSeason1}
+        className="bg-transparent border-t border-[#C2703E]/10"
+        style={{ color: deepWarm }}
+      />
+      <MixedMediaGallery
+        title="Season II"
+        subtitle="2026 Archives"
+        description="Expanding the horizon. New venues, same sun."
+        media={chasingSeason2}
+        className="bg-transparent border-t border-[#C2703E]/10"
+        style={{ color: deepWarm }}
+      />
+
       {/* Upcoming Events */}
       <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-5xl mx-auto">

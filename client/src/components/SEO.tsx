@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
   title: string;
@@ -22,9 +22,14 @@ export default function SEO({ title, description, image = "/og-image.jpg", type 
   const defaultDescription =
     "A Chicago-based events collective building on music, community, and showing up for each other.";
   const resolvedDescription = description || defaultDescription;
+  const canonicalUrl = typeof window !== "undefined" ? window.location.href : "https://themonolithproject.com";
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
+  return (
+    <Helmet prioritizeSeoTags>
+      {/* Core Meta */}
+      <title>{fullTitle}</title>
+      <meta name="description" content={resolvedDescription} />
+      <link rel="canonical" href={canonicalUrl} />
 
     const origin = window.location.origin || CANONICAL_ORIGIN;
     const canonicalOrigin = (() => {
@@ -81,3 +86,4 @@ export default function SEO({ title, description, image = "/og-image.jpg", type 
 
   return null;
 }
+
