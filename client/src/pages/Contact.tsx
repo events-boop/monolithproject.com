@@ -56,9 +56,9 @@ export default function Contact() {
       <Navigation />
 
       {/* Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 atmo-surface opacity-35" />
+      <div className="pointer-events-none fixed inset-0 z-0 atmo-surface opacity-35" />
 
-      <main className="relative pt-44 md:pt-48 pb-24">
+      <main className="relative z-10 pt-44 md:pt-48 pb-24">
         <section className="px-6">
           <div className="container max-w-6xl mx-auto">
             <motion.div

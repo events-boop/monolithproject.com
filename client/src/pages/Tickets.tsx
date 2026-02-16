@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import type { SyntheticEvent } from "react";
 import { Calendar, MapPin, Clock, Users, Ticket, Star, Crown, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -83,6 +84,11 @@ const lineupVisuals = [
 ];
 
 export default function Tickets() {
+  const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = "/images/hero-monolith.jpg";
+  };
+
   const handlePurchase = () => {
     void trackTicketIntent("tickets_page");
     window.open(POSH_TICKET_URL, "_blank", "noopener,noreferrer");
@@ -146,6 +152,7 @@ export default function Tickets() {
                     alt="Juany Bravo b2b Deron featured poster"
                     loading="eager"
                     decoding="async"
+                    onError={handleImageError}
                     className="w-full h-auto object-cover"
                   />
                 </div>
@@ -178,6 +185,7 @@ export default function Tickets() {
                       alt="Deron portrait artwork"
                       loading="eager"
                       decoding="async"
+                      onError={handleImageError}
                       className="w-full h-auto object-cover"
                     />
                   </div>
@@ -187,6 +195,7 @@ export default function Tickets() {
                       alt="Juany Bravo portrait artwork"
                       loading="eager"
                       decoding="async"
+                      onError={handleImageError}
                       className="w-full h-auto object-cover"
                     />
                   </div>
@@ -244,6 +253,7 @@ export default function Tickets() {
                           alt={`${artist.name} lineup image`}
                           loading="lazy"
                           decoding="async"
+                          onError={handleImageError}
                           className="w-full aspect-[4/5] object-cover"
                         />
                         <div className="px-3 py-2">

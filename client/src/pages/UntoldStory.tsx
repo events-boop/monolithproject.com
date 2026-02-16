@@ -552,14 +552,14 @@ export default function UntoldStory() {
           subtitle="2025 Archives"
           description="The seeds were sown. Deep beats and deeper connections."
           media={untoldSeason1}
-          className="bg-[#0a0a0a] border-t border-white/5"
+          className="bg-card border-t border-border/50"
         />
         <MixedMediaGallery
           title="Season II"
           subtitle="2026 Archives"
           description="The story unfolds. Higher energy, wider spaces."
           media={untoldSeason2}
-          className="bg-[#0a0a0a] border-t border-white/5"
+          className="bg-card border-t border-border/50"
         />
       </div>
 
