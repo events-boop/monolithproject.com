@@ -18,7 +18,26 @@ const benefits = [
 export default function ChasingSunsetsDetails() {
     return (
         <section className="py-24 px-6 bg-sand text-charcoal relative overflow-hidden">
-            <div className="container max-w-6xl mx-auto">
+            {/* Background image wash (kept subtle so copy remains readable) */}
+            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+                <img
+                    src="/images/chasing-sunsets-tradition.jpg"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                        // Fallback if the preferred photo hasn't been added yet.
+                        (e.currentTarget as HTMLImageElement).src = "/images/chasing-sunsets.jpg";
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover object-[50%_35%] opacity-[0.6] saturate-[1.1] contrast-[1.08] brightness-[0.98]"
+                />
+                {/* Cream gradient veil for legibility */}
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,245,237,0.82)_0%,rgba(251,245,237,0.62)_40%,rgba(251,245,237,0.84)_100%)]" />
+                {/* Warm accent blooms */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(232,184,109,0.22),transparent_52%),radial-gradient(circle_at_82%_78%,rgba(194,112,62,0.18),transparent_56%)] mix-blend-multiply" />
+            </div>
+
+            <div className="container max-w-6xl mx-auto relative z-10">
 
                 {/* Intro / Vision */}
                 <div className="grid md:grid-cols-2 gap-16 mb-24">

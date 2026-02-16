@@ -25,12 +25,12 @@ const SUNSETS_ROSTER: Artist[] = [
     image: "/images/autograf-recap.jpg",
   },
   {
-    id: "joezi",
-    name: "JOEZI",
+    id: "chus",
+    name: "CHUS",
     role: "GUEST",
     origin: "TEL AVIV, IL",
     genre: "AFRO HOUSE",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-chus.webp",
   },
 ];
 
@@ -41,7 +41,7 @@ const UNTOLD_ROSTER: Artist[] = [
     role: "HEADLINER",
     origin: "LONDON, UK",
     genre: "PSYCHEDELIC TECHNO",
-    image: "/images/artist-haai.png",
+    image: "/images/artist-haai.webp",
   },
   {
     id: "lazare",
@@ -49,7 +49,7 @@ const UNTOLD_ROSTER: Artist[] = [
     role: "RESIDENT",
     origin: "PARIS, FR",
     genre: "MELODIC HOUSE",
-    image: "/images/lazare-recap.png",
+    image: "/images/lazare-recap.webp",
   },
 ];
 

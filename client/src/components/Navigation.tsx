@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, Ticket, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
@@ -53,13 +53,23 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  const navBackground = useTransform(
+    scrollY,
+    [0, 50],
+    ["rgba(var(--background), 0)", "rgba(var(--background), 0.8)"]
+  );
+  const navBlur = useTransform(scrollY, [0, 50], ["blur(0px)", "blur(12px)"]);
+  const borderOpacity = useTransform(scrollY, [0, 50], [0, 0.1]);
+
+  // Dynamic values for light/dark mode - Fixed: Hooks must be unconditional
+  const bgValueLight = useTransform(scrollY, [0, 50], ["rgba(251, 245, 237, 0)", "rgba(251, 245, 237, 0.85)"]);
+  const bgValueDark = useTransform(scrollY, [0, 50], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.85)"]);
+  const bgValue = isLight ? bgValueLight : bgValueDark;
+
+  const borderValueLight = useTransform(scrollY, [0, 50], ["transparent", "rgba(21, 2, 217, 0.05)"]);
+  const borderValueDark = useTransform(scrollY, [0, 50], ["transparent", "rgba(255, 255, 255, 0.08)"]);
+  const borderValue = isLight ? borderValueLight : borderValueDark;
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -101,12 +111,12 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        className={`fixed top-10 left-0 right-0 z-50 transition-all duration-500 border-b ${scrolled
-          ? isLight
-            ? "bg-sand/80 backdrop-blur-xl border-charcoal/5 py-3"
-            : "bg-[#0a0a0a]/80 backdrop-blur-xl border-white/10 py-3"
-          : "bg-transparent border-transparent py-6"
-          }`}
+        style={{
+          backgroundColor: bgValue,
+          backdropFilter: navBlur,
+          borderColor: borderValue
+        }}
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-500 border-b py-4"
       >
         <div className="w-full px-4 sm:px-6 md:px-8 xl:px-12 2xl:px-20 flex items-center justify-between gap-3">
           {/* LEFT: LOGO */}
@@ -121,8 +131,10 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 {brand === "chasing-sunsets" ? (
                   <>
                     <div className="w-2.5 h-2.5 rounded-full mb-1 bg-gradient-to-br from-[#C2703E] to-[#E8B86D] group-hover:shadow-[0_0_14px_rgba(232,184,109,0.55)] transition-shadow duration-300" />
-                    <span className="relative font-display text-[clamp(0.82rem,1.25vw,1.15rem)] tracking-[0.12em] leading-none text-left whitespace-nowrap text-white/95 transition-colors">
-                      CHASING <span className="text-white/70">SUN(SETS)</span>
+                    <span className="relative font-display text-[clamp(0.82rem,1.25vw,1.15rem)] tracking-[0.12em] leading-none text-left whitespace-nowrap">
+                      <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]">
+                        CHASING SUN(SETS)
+                      </span>
                       <span aria-hidden="true" className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent opacity-70" />
                     </span>
                   </>
@@ -151,7 +163,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       ? `hover:text-clay text-stone`
                       : brand === "chasing-sunsets"
                         ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90"}`
+                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90"}`
                       }`}
                   >
                     {item.label}
@@ -176,7 +188,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                               ? `hover:text-clay hover:bg-charcoal/5 ${location === child.href ? "text-clay" : "text-stone"}`
                               : brand === "chasing-sunsets"
                                 ? `hover:text-white hover:bg-white/5 ${location === child.href ? "text-white" : "text-white/80"}`
-                              : `hover:text-primary hover:bg-white/5 ${location === child.href ? "text-primary" : "text-white/80"}`
+                                : `hover:text-primary hover:bg-white/5 ${location === child.href ? "text-primary" : "text-white/80"}`
                               }`}
                             role="menuitem"
                           >
@@ -199,7 +211,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     ? `hover:text-clay ${location === item.href ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
                       ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${location === item.href ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === item.href ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === item.href ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
                 >
                   {item.label === "CHASING SUN(SETS)" ? (

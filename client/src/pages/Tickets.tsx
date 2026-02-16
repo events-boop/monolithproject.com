@@ -69,14 +69,14 @@ const ticketTiers: TicketTier[] = [
 
 const eventVisuals = {
   poster: "/images/untold-story.jpg",
-  deron: "/images/artist-lazare.png",
-  juany: "/images/artist-joezi.png",
+  deron: "/images/artist-lazare.webp",
+  juany: "/images/artist-joezi.webp",
 };
 
 const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-joezi.png" },
-  { name: "Deron", role: "Chicago debut", image: "/images/artist-lazare.png" },
-  { name: "Hashtom", role: "Support", image: "/images/artist-haai.png" },
+  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-joezi.webp" },
+  { name: "Deron", role: "Chicago debut", image: "/images/artist-lazare.webp" },
+  { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
   { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
   { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },
   { name: "Jerome b2b Kenbo", role: "Support", image: "/images/hero-monolith.jpg" },

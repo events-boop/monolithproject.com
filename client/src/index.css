@@ -12,9 +12,11 @@
 
 @theme inline {
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Bebas Neue', system-ui, sans-serif;
+  --font-display: 'Instrument Sans', system-ui, sans-serif;
+  /* Switched from Bebas for premium Swiss feel */
   --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-script: 'Pinyon Script', cursive;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -61,17 +63,29 @@
   --color-obsidian: oklch(0.12 0.01 285);
   --color-void: oklch(0.08 0.005 285);
 
+  /* Series Brands */
+  --color-clay: oklch(0.65 0.15 45);
+  /* Sunsets */
+  --color-story: oklch(0.62 0.21 300);
+  /* Untold Story (Purple/Mag) */
+  --color-story-soft: oklch(0.92 0.03 300);
+
+  /* Untold Story sub-brand palette */
+  --color-untold-violet: #8B5CF6;
+  --color-untold-cyan: #22D3EE;
+  --color-untold-deep: #06060F;
+  --color-untold-card: #0C0C1A;
+
+  /* Chasing Sunsets sub-brand palette */
+  --color-sunsets-auburn: #C2703E;
+  --color-sunsets-gold: #E8B86D;
+  --color-sunsets-cream: #FBF5ED;
+  --color-sunsets-deep: #2C1810;
+
   /* Scorpios Inspiration - Earth & Nature */
   --color-sand: oklch(0.97 0.02 85);
-  /* Warm Ecru */
-  --color-clay: oklch(0.65 0.15 45);
-  /* Terracotta/Sunset */
   --color-stone: oklch(0.35 0.03 85);
-  /* Warm Grey/Stone */
   --color-charcoal: oklch(0.15 0.02 85);
-  /* Deep Warm Black */
-  --color-story: oklch(0.62 0.21 300);
-  --color-story-soft: oklch(0.92 0.03 300);
 }
 
 :root {
@@ -229,14 +243,24 @@
     }
   }
 
-  /* Display font utility */
+  /* Display font utility - KIKK / Swiss Style */
   .font-display {
-    font-family: 'Bebas Neue', system-ui, sans-serif;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    /* Tight tracking for that premium grotesk feel */
   }
 
   /* Monospace font utility */
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Script font for signature touches */
+  .font-script {
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400;
   }
 
   /* Serif font for Editorial/Quote sections */

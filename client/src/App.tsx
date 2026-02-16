@@ -4,16 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { PostHogProvider } from "./components/PostHogProvider";
+import Analytics from "./components/Analytics";
+import DeferredEnhancements from "./components/DeferredEnhancements";
 import EventBanner from "./components/EventBanner";
-import FloatingTicketButton from "./components/FloatingTicketButton";
-import GridBackground from "./components/GridBackground";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
-import SmoothScroll from "./components/SmoothScroll";
+import Home from "./pages/Home";
 
-const Home = lazy(() => import("./pages/Home"));
 const Tickets = lazy(() => import("./pages/Tickets"));
 const About = lazy(() => import("./pages/About"));
 const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
@@ -108,22 +106,17 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
-        <PostHogProvider>
-          <TooltipProvider>
-            <Toaster />
-            <>
-              <SmoothScroll />
-              <EventBanner />
-              <GridBackground />
-              <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
-                <div className="origin-top">
-                  <Router />
-                </div>
-              </Suspense>
-              <FloatingTicketButton />
-            </>
-          </TooltipProvider>
-        </PostHogProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Analytics />
+          <EventBanner />
+          <DeferredEnhancements />
+          <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+            <div className="origin-top">
+              <Router />
+            </div>
+          </Suspense>
+        </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

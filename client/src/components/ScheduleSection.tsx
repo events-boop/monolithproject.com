@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
 import { Link } from "wouter";
 import { upcomingEvents } from "../data/events";
+import FloatingImage from "./FloatingImage";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -25,6 +27,19 @@ const seriesLabels: Record<string, string> = {
 export default function ScheduleSection() {
   const [expandedId, setExpandedId] = useState<string | null>(upcomingEvents[0]?.id || null);
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
+  const [hoveredEvent, setHoveredEvent] = useState<{ image: string; title: string } | null>(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -32,8 +47,6 @@ export default function ScheduleSection() {
 
   // Group events by month
   const months = ["ALL", ...Array.from(new Set(upcomingEvents.map(e => {
-    // Naive parsing or just taking the month string if possible. 
-    // Format is "March 6, 2026" or "September 2026".
     return e.date.split(" ")[0].toUpperCase();
   })))];
 
@@ -45,7 +58,16 @@ export default function ScheduleSection() {
     <section id="schedule" className="relative section-rhythm bg-paper text-charcoal overflow-hidden min-h-screen">
       <div className="absolute inset-0 atmo-surface-soft opacity-50 pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-8 max-w-[95%]">
+      {/* Floating Image Reveal */}
+      <FloatingImage
+        src={hoveredEvent?.image || "/images/hero-monolith.jpg"}
+        alt={hoveredEvent?.title || "Event Image"}
+        isVisible={!!hoveredEvent?.image}
+        mouseX={mouseX}
+        mouseY={mouseY}
+      />
+
+      <div className="container mx-auto px-4 md:px-8 max-w-[95%] relative z-10">
 
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
           <h2 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] tracking-tight-display text-charcoal uppercase">
@@ -93,6 +115,8 @@ export default function ScheduleSection() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.05, duration: 0.4 }}
                 className="group border-b border-charcoal relative"
+                onMouseEnter={() => event.image && setHoveredEvent({ image: event.image, title: event.title })}
+                onMouseLeave={() => setHoveredEvent(null)}
               >
                 {/* Main Row */}
                 <div

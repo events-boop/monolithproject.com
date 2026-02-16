@@ -23,7 +23,7 @@ interface ArtistProfileData {
 const ARTISTS: Record<string, ArtistProfileData> = {
   "haai": {
     name: "HAAi",
-    image: "/images/artist-haai.png",
+    image: "/images/artist-haai.webp",
     role: "HEADLINER",
     series: "untold-story",
     origin: "LONDON, UK",
@@ -39,7 +39,7 @@ const ARTISTS: Record<string, ArtistProfileData> = {
   },
   "lazare": {
     name: "LAZARE",
-    image: "/images/artist-lazare.png",
+    image: "/images/artist-lazare.webp",
     role: "RESIDENT",
     series: "untold-story",
     origin: "PARIS, FR",
@@ -53,14 +53,14 @@ const ARTISTS: Record<string, ArtistProfileData> = {
       { title: "Resonance", duration: "4:45" },
     ],
   },
-  "joezi": {
-    name: "JOEZI",
-    image: "/images/artist-joezi.png",
+  "chus": {
+    name: "CHUS",
+    image: "/images/artist-chus.webp",
     role: "GUEST",
     series: "chasing-sunsets",
     origin: "TEL AVIV, IL",
     genre: "AFRO HOUSE",
-    bio: "Joezi's Afro-house rhythms and percussive energy have captivated audiences worldwide. He brings a vibrant, rhythmic pulse to sunset and late-night floors alike.",
+    bio: "Chus' Afro-house rhythms and percussive energy have captivated audiences worldwide. He brings a vibrant, rhythmic pulse to sunset and late-night floors alike.",
     tags: ["Afro House", "Percussive", "Groove"],
     socials: { instagram: "#", website: "#" },
     tracks: [
@@ -71,7 +71,7 @@ const ARTISTS: Record<string, ArtistProfileData> = {
   },
   "autograf": {
     name: "AUTOGRAF",
-    image: "/images/artist-autograf.png",
+    image: "/images/artist-autograf.webp",
     role: "LIVE SET",
     series: "chasing-sunsets",
     origin: "CHICAGO, US",
@@ -103,7 +103,7 @@ const ARTISTS: Record<string, ArtistProfileData> = {
   },
   "juany-bravo": {
     name: "JUANY BRAVO",
-    image: "/images/untold-story-juany-deron.png",
+    image: "/images/untold-story-juany-deron.webp",
     role: "GUEST",
     series: "untold-story",
     origin: "CHICAGO, US",
@@ -151,7 +151,7 @@ const ARTISTS: Record<string, ArtistProfileData> = {
   },
   "chris-idh": {
     name: "CHRIS IDH",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-joezi.webp",
     role: "GUEST",
     series: "chasing-sunsets",
     origin: "PARIS, FR",
@@ -234,8 +234,10 @@ const ARTISTS: Record<string, ArtistProfileData> = {
 const LEGACY_ID_MAP: Record<string, string> = {
   "1": "haai",
   "3": "lazare",
-  "4": "joezi",
+  "4": "chus",
   "5": "autograf",
+  // Backward compatible artist slug
+  "joezi": "chus",
 };
 
 function resolveArtistId(id: string | undefined) {

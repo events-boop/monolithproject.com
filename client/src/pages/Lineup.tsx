@@ -33,7 +33,7 @@ const artistEntries: ArtistEntry[] = [
     role: "RESIDENT",
     origin: "PARIS, FR",
     genre: "MELODIC HOUSE",
-    image: "/images/lazare-recap.png",
+    image: "/images/lazare-recap.webp",
     series: ["untold-story"],
   },
   {
@@ -60,7 +60,7 @@ const artistEntries: ArtistEntry[] = [
     role: "GUEST",
     origin: "GLOBAL",
     genre: "AFRO HOUSE · MELODIC",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-joezi.webp",
     series: ["untold-story"],
   },
   {
@@ -78,7 +78,7 @@ const artistEntries: ArtistEntry[] = [
     role: "HEADLINER",
     origin: "LONDON, UK",
     genre: "PSYCHEDELIC TECHNO",
-    image: "/images/lazare-recap.png",
+    image: "/images/lazare-recap.webp",
     series: ["untold-story"],
   },
   // Chasing Sun(Sets) — some also appear on Radio
@@ -97,7 +97,7 @@ const artistEntries: ArtistEntry[] = [
     role: "GUEST",
     origin: "PARIS, FR",
     genre: "ORGANIC HOUSE",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-joezi.webp",
     series: ["chasing-sunsets"],
   },
   {
@@ -124,16 +124,16 @@ const artistEntries: ArtistEntry[] = [
     role: "GUEST",
     origin: "AMSTERDAM, NL",
     genre: "AFRO HOUSE · ORGANIC",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-joezi.webp",
     series: ["chasing-sunsets", "sunsets-radio"],
   },
   {
-    id: "joezi",
-    name: "JOEZI",
+    id: "chus",
+    name: "CHUS",
     role: "GUEST",
     origin: "TEL AVIV, IL",
     genre: "AFRO HOUSE",
-    image: "/images/artist-joezi.png",
+    image: "/images/artist-chus.webp",
     series: ["chasing-sunsets"],
   },
   // Radio-only

@@ -110,7 +110,7 @@ export default function Radio() {
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-40 mix-blend-screen"
             style={{
-              backgroundImage: "url('/images/radio-globe.png')",
+              backgroundImage: "url('/images/radio-globe.webp')",
               backgroundSize: "contain",
               backgroundPosition: "center top",
               backgroundRepeat: "no-repeat"

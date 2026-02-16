@@ -4,8 +4,10 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import MovementSection from "@/components/MovementSection";
 import ChaptersSection from "@/components/ChaptersSection";
-import ArtistsSection from "@/components/ArtistsSection";
 import ScheduleSection from "@/components/ScheduleSection";
+import MixedMediaGallery from "@/components/MixedMediaGallery";
+import TextLineupSection from "@/components/TextLineupSection";
+import FixedTicketBadge from "@/components/FixedTicketBadge";
 import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
@@ -31,6 +33,7 @@ export default function Home() {
         description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
       />
       <Navigation />
+      <FixedTicketBadge />
 
       <main>
         {/* Hero — countdown + video + CTAs */}
@@ -44,9 +47,13 @@ export default function Home() {
         <SectionDivider number="02" label="The Events" />
         <ChaptersSection />
 
-        {/* 03 — Artists */}
+        {/* 03 — Artists - Swapped for Text Lineup Cloud */}
         <SectionDivider number="03" label="The Roster" />
-        <ArtistsSection />
+        <TextLineupSection />
+
+        {/* 04 — Gallery */}
+        <SectionDivider number="04" label="Archives" />
+        <MixedMediaGallery />
 
         {/* Cinematic break — full-bleed parallax with pull quote */}
         <ViewportLazy minHeightClassName="min-h-[60vh]">

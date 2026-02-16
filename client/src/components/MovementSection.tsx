@@ -31,7 +31,7 @@ export default function MovementSection() {
           className="absolute left-0 bottom-0 h-[44%] w-[44%] opacity-[0.05] blur-[0.8px]"
           style={{
             backgroundImage:
-              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-recap.png')",
+              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-recap.webp')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

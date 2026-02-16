@@ -19,7 +19,7 @@ const pastEvents: PastEvent[] = [
     subtitle: "UNTOLD STORY S3·E1",
     date: "December 12th, 2025",
     photographer: "JP Quindara",
-    image: "/images/lazare-recap.png",
+    image: "/images/lazare-recap.webp",
     galleryUrl: "https://pogistudios.pixieset.com/lazarecarbon/",
   },
   {

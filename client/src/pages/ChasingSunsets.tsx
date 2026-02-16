@@ -4,6 +4,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
+import MixedMediaGallery from "@/components/MixedMediaGallery";
+import { chasingSeason1, chasingSeason2 } from "@/data/galleryData";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
@@ -12,6 +14,7 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-1.mp4",
+    poster: "/images/hero-video-1-poster.jpg",
     caption: "THE MONOLITH PROJECT",
   },
   {
@@ -41,7 +44,9 @@ const events = [
   },
 ];
 
-// Chasing Sunsets palette — Auburn + Warm Gold
+// Chasing Sunsets palette — synced with CSS custom properties in index.css
+// (--color-sunsets-auburn, --color-sunsets-gold, --color-sunsets-cream, --color-sunsets-deep)
+// Raw hex kept here for inline style alpha concatenation (e.g. `${auburn}15`)
 const auburn = "#C2703E";
 const warmGold = "#E8B86D";
 const cream = "#FBF5ED";
@@ -58,7 +63,7 @@ export default function ChasingSunsets() {
       <Navigation variant="dark" brand="chasing-sunsets" />
 
       {/* Hero — raw, warm, big type */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+      <section id="chasing-hero" className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
         {/* Full-bleed background slider */}
         <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
@@ -150,6 +155,24 @@ export default function ChasingSunsets() {
 
       {/* NEW: Pitch / Details Section */}
       <ChasingSunsetsDetails />
+
+      {/* Season Records */}
+      <MixedMediaGallery
+        title="Season I"
+        subtitle="2025 Archives"
+        description="The beginning. Rooftops, rivers, and the golden hour."
+        media={chasingSeason1}
+        className="bg-transparent border-t border-[#C2703E]/10"
+        style={{ color: deepWarm }}
+      />
+      <MixedMediaGallery
+        title="Season II"
+        subtitle="2026 Archives"
+        description="Expanding the horizon. New venues, same sun."
+        media={chasingSeason2}
+        className="bg-transparent border-t border-[#C2703E]/10"
+        style={{ color: deepWarm }}
+      />
 
       {/* Upcoming Events */}
       <section className="py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>

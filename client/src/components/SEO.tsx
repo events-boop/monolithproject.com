@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
   title: string;
@@ -11,29 +11,27 @@ export default function SEO({ title, description }: SEOProps) {
   const defaultDescription =
     "A Chicago-based events collective building on music, community, and showing up for each other.";
   const resolvedDescription = description || defaultDescription;
+  const canonicalUrl = typeof window !== "undefined" ? window.location.href : "https://themonolithproject.com";
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
+  return (
+    <Helmet prioritizeSeoTags>
+      {/* Core Meta */}
+      <title>{fullTitle}</title>
+      <meta name="description" content={resolvedDescription} />
+      <link rel="canonical" href={canonicalUrl} />
 
-    document.title = fullTitle;
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={resolvedDescription} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:site_name" content={siteTitle} />
 
-    const upsertMeta = (attr: "name" | "property", key: string, content: string) => {
-      const selector = `meta[${attr}="${key}"]`;
-      let tag = document.head.querySelector(selector) as HTMLMetaElement | null;
-      if (!tag) {
-        tag = document.createElement("meta");
-        tag.setAttribute(attr, key);
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute("content", content);
-    };
-
-    upsertMeta("name", "description", resolvedDescription);
-    upsertMeta("property", "og:title", fullTitle);
-    upsertMeta("property", "og:description", resolvedDescription);
-    upsertMeta("property", "twitter:title", fullTitle);
-    upsertMeta("property", "twitter:description", resolvedDescription);
-  }, [fullTitle, resolvedDescription]);
-
-  return null;
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={resolvedDescription} />
+    </Helmet>
+  );
 }
+

@@ -1,6 +1,7 @@
 import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { runWhenIdle } from "@/lib/idle";
 
 interface CinematicBreakProps {
   image: string;
@@ -16,6 +17,7 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "200px", once: true });
   const reduceMotion = useReducedMotion();
+  const [loadVideo, setLoadVideo] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -24,6 +26,22 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
   const y = useTransform(scrollYProgress, [0, 1], ["0%", reduceMotion ? "0%" : "20%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], reduceMotion ? [1, 1, 1, 1] : [0.5, 1, 1, 0.5]);
 
+  // Keep the still image as the "instant" paint, then attach the video src once
+  // the section is near the viewport and the browser is idle. This reduces
+  // bandwidth contention and helps keep scrolling smooth.
+  useEffect(() => {
+    if (!videoSrc) return;
+    if (!isInView) return;
+    if (loadVideo) return;
+    if (reduceMotion) return;
+
+    const conn = (navigator as any).connection as { saveData?: boolean; effectiveType?: string } | undefined;
+    if (conn?.saveData) return;
+    if (conn?.effectiveType && ["slow-2g", "2g", "3g"].includes(conn.effectiveType)) return;
+
+    return runWhenIdle(() => setLoadVideo(true), 1500);
+  }, [videoSrc, isInView, loadVideo, reduceMotion]);
+
   return (
     <div ref={ref} className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
       {/* Parallax image */}
@@ -31,7 +49,7 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
         style={{ y }}
         className="absolute inset-0 -top-[20%] -bottom-[20%]"
       >
-        {videoSrc && isInView ? (
+        {videoSrc && isInView && loadVideo ? (
           <video
             src={videoSrc}
             autoPlay
@@ -46,8 +64,9 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
           <img
             src={image}
             alt=""
-            loading="lazy"
+            loading={isInView ? "eager" : "lazy"}
             decoding="async"
+            fetchPriority={isInView ? "high" : "auto"}
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}

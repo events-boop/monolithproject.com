@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&family=Pinyon+Script&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&family=Pinyon+Script&display=swap"
     rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -29,23 +29,8 @@
     content="Togetherness is the frequency. Music is the guide. A Chicago events collective." />
   <meta property="twitter:image" content="https://themonolithproject.com/og-image.jpg" />
 
-  <!-- Meta Pixel Code -->
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-      };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '166134370742863');
-    fbq('track', 'PageView');
-  </script>
-  <!-- End Meta Pixel Code -->
+  <!-- Preload Critical Hero Asset (LCP Optimization) -->
+  <link rel="preload" as="image" href="/images/hero-video-short-poster.jpg" fetchpriority="high" />
 </head>
 
 <body>
@@ -56,10 +41,21 @@
     <span style="font-family:sans-serif;color:#c8a45a;letter-spacing:0.3em;font-size:14px">MONOLITH PROJECT</span>
   </div>
   <script>
-    window.addEventListener('load', () => {
+    // Failsafe: Remove loader after 3s max, or immediately on DOMContentLoaded
+    const removeLoader = () => {
       const loader = document.getElementById('initial-loader');
-      if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }
-    });
+      if (loader && loader.style.opacity !== '0') {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 500);
+      }
+    };
+
+    // Primary trigger: ASAP
+    window.addEventListener('DOMContentLoaded', () => setTimeout(removeLoader, 100)); // Slight buffer for React hydration
+
+    // Backup trigger: If DOMContentLoaded already fired (unlikely here but good practice) or stalls
+    window.addEventListener('load', removeLoader);
+    setTimeout(removeLoader, 3000); 
   </script>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
