@@ -4,7 +4,7 @@ import { violet, cyan, deepBg, cardBg, eventVisuals, lineupVisuals, untoldFaqs }
 
 export default function UntoldContent() {
   return (
-    <section className="py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
+    <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
       <div className="container max-w-5xl mx-auto">
         <div className="flex items-end justify-between mb-8 pb-6" style={{ borderBottom: `1px solid ${violet}20` }}>
           <div>

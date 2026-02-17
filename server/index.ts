@@ -504,6 +504,38 @@ function configureApp() {
     res.json({ ok: true, service: "monolith-api", now: new Date().toISOString() });
   });
 
+  app.get("/api/instagram", async (_req, res) => {
+    const accessToken = process.env.IG_ACCESS_TOKEN;
+    if (!accessToken) {
+      logEvent("instagram.missing_token", {});
+      return res.status(503).json({ ok: false, error: "Instagram token not configured" });
+    }
+
+    try {
+      // Instagram Graph API for Basic Display
+      // https://graph.instagram.com/me/media?fields=...&access_token=...
+      const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count";
+      const limit = 8;
+      const url = `https://graph.instagram.com/me/media?fields=${fields}&limit=${limit}&access_token=${accessToken}`;
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        logEvent("instagram.fetch_failed", { status: response.status, error: errorData });
+        return res.status(502).json({ ok: false, error: "Failed to fetch from Instagram" });
+      }
+
+      const data = await response.json();
+
+      // Cache for 15 minutes
+      res.setHeader("Cache-Control", "public, max-age=900, s-maxage=900");
+      return res.json({ ok: true, posts: data.data });
+    } catch (error) {
+      logEvent("instagram.error", { message: error instanceof Error ? error.message : "Unknown error" });
+      return res.status(500).json({ ok: false, error: "Internal server error" });
+    }
+  });
+
   app.post("/api/leads", async (req, res) => {
     const requestId = randomUUID();
     const parsed = leadSchema.safeParse(req.body);

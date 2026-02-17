@@ -3,7 +3,7 @@ import { violet, cyan } from "./constants";
 
 export default function UntoldContrast() {
   return (
-    <section className="py-32 px-6 border-t" style={{ borderColor: `${violet}15` }}>
+    <section id="untold-contrast" className="scroll-mt-44 py-32 px-6 border-t" style={{ borderColor: `${violet}15` }}>
       <div className="container max-w-4xl mx-auto text-center">
         <h2 className="font-display text-5xl md:text-7xl text-white mb-6">TWO SIDES</h2>
         <p className="text-white/50 text-lg max-w-xl mx-auto mb-4">
