@@ -29,29 +29,8 @@ export default defineConfig(({ mode }) => {
       // Keep this explicit so we never accidentally ship sourcemaps.
       sourcemap: false,
       minify: "esbuild",
-      rollupOptions: {
-        output: {
-          // Keep the entry chunk from becoming a giant blob as the site grows.
-          // This also improves long-term caching by splitting stable vendor code.
-          manualChunks(id) {
-            if (!id.includes("node_modules")) return;
-            // Keep React + its runtime helpers together to avoid circular chunk graphs.
-            if (
-              id.includes("node_modules/react/") ||
-              id.includes("node_modules/react-dom/") ||
-              id.includes("node_modules/scheduler/") ||
-              id.includes("node_modules/use-sync-external-store/") ||
-              id.includes("node_modules/react-is/")
-            )
-              return "vendor-react";
-            if (id.includes("framer-motion")) return "vendor-motion";
-            if (id.includes("@radix-ui") || id.includes("cmdk") || id.includes("vaul")) return "vendor-ui";
-            if (id.includes("posthog-js")) return "vendor-analytics";
-            if (id.includes("zod")) return "vendor-zod";
-            return "vendor";
-          },
-        },
-      },
+      // Let Rollup handle chunking automatically to avoid circular vendor graphs.
+      // The previous manualChunks setup produced runtime TDZ crashes in deploy previews.
     },
     server: {
       port: 3000,
