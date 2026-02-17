@@ -23,35 +23,39 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      const showDebugDetails = import.meta.env.DEV && Boolean(this.state.error?.stack);
+      // Force showing debug details even in production for now to diagnose the crash
+      const showDebugDetails = true;
+      const errorMessage = this.state.error?.message || "Unknown error";
+      const errorStack = this.state.error?.stack || "";
+
       return (
-        <div className="flex items-center justify-center min-h-screen p-8 bg-background">
-          <div className="flex flex-col items-center w-full max-w-2xl p-8">
+        <div
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-8 bg-black text-white"
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, backgroundColor: '#000', color: '#fff', overflow: 'auto' }}
+        >
+          <div className="flex flex-col items-center w-full max-w-4xl p-8 border border-red-500 rounded-lg bg-[#111]">
             <AlertTriangle
               size={48}
-              className="text-destructive mb-6 flex-shrink-0"
+              className="text-red-500 mb-6 flex-shrink-0"
+              style={{ color: '#ef4444' }}
             />
 
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
+            <h2 className="text-2xl font-bold mb-4 text-red-500">APPLICATION CRASHED</h2>
+            <p className="text-lg mb-6 text-center text-gray-300">{errorMessage}</p>
 
-            {showDebugDetails ? (
-              <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
-                <pre className="text-sm text-muted-foreground whitespace-break-spaces">
-                  {this.state.error?.stack}
+            {showDebugDetails && (
+              <div className="p-4 w-full rounded bg-[#222] overflow-auto mb-6 max-h-[60vh] border border-gray-700">
+                <pre className="text-xs font-mono text-green-400 whitespace-pre-wrap">
+                  {errorStack}
                 </pre>
               </div>
-            ) : (
-              <p className="text-muted-foreground mb-6 text-center">
-                Please refresh the page. If this keeps happening, contact support.
-              </p>
             )}
 
             <button
               onClick={() => window.location.reload()}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-lg",
-                "bg-primary text-primary-foreground",
-                "hover:opacity-90 cursor-pointer"
+                "flex items-center gap-2 px-6 py-3 rounded-lg font-bold",
+                "bg-white text-black hover:bg-gray-200 cursor-pointer"
               )}
             >
               <RotateCcw size={16} />
