@@ -10,7 +10,7 @@ import EventBanner from "./components/EventBanner";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
-import Home from "./pages/Home";
+const Home = lazy(() => import("./pages/Home"));
 
 const Tickets = lazy(() => import("./pages/Tickets"));
 const About = lazy(() => import("./pages/About"));
