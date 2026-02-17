@@ -4,9 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Analytics from "./components/Analytics";
-import DeferredEnhancements from "./components/DeferredEnhancements";
-import EventBanner from "./components/EventBanner";
+// Imports moved to lazy load below
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
@@ -102,16 +100,22 @@ const PrivacyTransition = withTransition(Privacy);
 const CookiesTransition = withTransition(Cookies);
 const NotFoundTransition = withTransition(NotFoundLazy);
 
+const Analytics = lazy(() => import("./components/Analytics"));
+const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancements"));
+const EventBanner = lazy(() => import("./components/EventBanner"));
+
+// ... (Router component remains unchanged)
+
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          <Analytics />
-          <EventBanner />
-          <DeferredEnhancements />
-          <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+          <Suspense fallback={null}>
+            <Analytics />
+            <EventBanner />
+            <DeferredEnhancements />
             {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
             <div id="main-content" tabIndex={-1} className="w-full">
               <div className="origin-top">
