@@ -6,7 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 // Imports moved to lazy load below
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import { useLocation } from "wouter";
 const Home = lazy(() => import("./pages/Home"));
 
@@ -70,7 +70,7 @@ function Router() {
 
 const withTransition = (Component: React.ComponentType<any>) => {
   return (props: any) => (
-    <motion.div
+    <m.div
       initial={pageTransition.initial}
       animate={pageTransition.animate}
       exit={pageTransition.exit}
@@ -78,7 +78,7 @@ const withTransition = (Component: React.ComponentType<any>) => {
       className="w-full"
     >
       <Component {...props} />
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -114,21 +114,23 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <Toaster />
-          <Suspense fallback={null}>
-            <KineticGrain />
-            <CustomCursor />
-            <Preloader onComplete={() => { }} />
-            <Analytics />
-            <EventBanner />
-            <DeferredEnhancements />
-            {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
-            <div id="main-content" tabIndex={-1} className="w-full">
-              <div className="origin-top">
-                <Router />
+          <LazyMotion features={domAnimation}>
+            <Toaster />
+            <Suspense fallback={null}>
+              <KineticGrain />
+              <CustomCursor />
+              <Preloader onComplete={() => { }} />
+              <Analytics />
+              <EventBanner />
+              <DeferredEnhancements />
+              {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
+              <div id="main-content" tabIndex={-1} className="w-full">
+                <div className="origin-top">
+                  <Router />
+                </div>
               </div>
-            </div>
-          </Suspense>
+            </Suspense>
+          </LazyMotion>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
