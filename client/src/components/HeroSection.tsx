@@ -1,9 +1,8 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, ArrowDown, Sun, Ticket } from "lucide-react";
+import { ArrowRight, ArrowDown, Ticket } from "lucide-react";
 import { useState, useEffect, memo } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
-import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 import HeroSpotlight from "./ui/HeroSpotlight";
@@ -233,25 +232,12 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Series links */}
-            <div className="flex items-center gap-4">
-              <Link href="/chasing-sunsets" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
-                <Sun className="w-4.5 h-4.5 text-clay" />
-                <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
-                  Chasing Sun(Sets)
-                </span>
-              </Link>
-              <Link href="/story" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                <UntoldButterflyLogo className="w-5 h-5 accent-story" />
-                <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
-                  Untold
-                </span>
-              </Link>
-            </div>
-
-            {/* Metadata */}
-            <div className="ui-meta bg-gradient-to-r from-white/70 via-white to-white/75 bg-clip-text text-transparent">
-              Chicago Events Collective · Est. 2025
+            {/* Location stamp */}
+            <div className="flex items-center gap-2 ui-meta text-white/40">
+              <span className="w-1 h-1 rounded-full bg-primary inline-block" />
+              <span>Chicago, IL</span>
+              <span className="text-white/20">·</span>
+              <span>Est. 2025</span>
             </div>
           </motion.div>
 
