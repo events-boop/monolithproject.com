@@ -40,7 +40,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         episode: "S3·E2",
         title: "DERON B2B JUANY BRAVO",
         subtitle: "Untold Story — Season III · Episode II",
-        headline: "JUANY BRAVO B2B DERON (Chicago Debut)",
+        headline: "DERON B2B JUANY BRAVO (Chicago Debut)",
         date: "March 6, 2026",
         time: "7:00 PM — 2:00 AM",
         mainExperience: "9:00 PM — 2:00 AM",

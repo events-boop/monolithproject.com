@@ -114,11 +114,9 @@ export default function Home() {
         </ViewportLazy>
 
         {/* Newsletter */}
-        <ViewportLazy minHeightClassName="min-h-[320px]">
-          <Suspense fallback={null}>
-            <NewsletterSection />
-          </Suspense>
-        </ViewportLazy>
+        <Suspense fallback={null}>
+          <NewsletterSection />
+        </Suspense>
 
         {/* 10 — The Pulse */}
         <SectionDivider number="10" label="The Feed" />

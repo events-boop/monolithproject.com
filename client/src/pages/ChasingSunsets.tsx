@@ -37,12 +37,20 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
 
 const events = [
   {
-    month: "AUG",
-    day: "22",
-    title: "THE FIRST MONOLITH",
-    location: "Chicago, IL",
-    time: "4:00 PM - Late",
-    status: "coming-soon" as const,
+    month: "MAR",
+    day: "06",
+    title: "DERON B2B JUANY BRAVO",
+    location: "Alhambra Palace, Chicago",
+    time: "9:00 PM - Late",
+    status: "on-sale" as const,
+  },
+  {
+    month: "MAR",
+    day: "21",
+    title: "AUTOGRAF",
+    location: "Alhambra Palace, Chicago",
+    time: "9:00 PM - Late",
+    status: "on-sale" as const,
   },
 ];
 
