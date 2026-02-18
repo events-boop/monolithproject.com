@@ -29,6 +29,9 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
 const FAQ = lazy(() => import("./pages/FAQ"));
+const Archive = lazy(() => import("./pages/Archive"));
+const Press = lazy(() => import("./pages/Press"));
+const Submit = lazy(() => import("./pages/Submit"));
 
 const pageTransition = {
   initial: { opacity: 0, y: 12 },
@@ -63,6 +66,9 @@ function Router() {
         <Route path={"/privacy"} component={PrivacyTransition} />
         <Route path={"/cookies"} component={CookiesTransition} />
         <Route path={"/faq"} component={FAQTransition} />
+        <Route path={"/archive"} component={ArchiveTransition} />
+        <Route path={"/press"} component={PressTransition} />
+        <Route path={"/submit"} component={SubmitTransition} />
         <Route path={"/404"} component={NotFoundTransition} />
         <Route component={NotFoundTransition} />
       </Switch>
@@ -102,6 +108,9 @@ const TermsTransition = withTransition(Terms);
 const PrivacyTransition = withTransition(Privacy);
 const CookiesTransition = withTransition(Cookies);
 const FAQTransition = withTransition(FAQ);
+const ArchiveTransition = withTransition(Archive);
+const PressTransition = withTransition(Press);
+const SubmitTransition = withTransition(Submit);
 const NotFoundTransition = withTransition(NotFoundLazy);
 
 const Analytics = lazy(() => import("./components/Analytics"));

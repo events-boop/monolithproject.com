@@ -41,15 +41,17 @@ const links = [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
       { name: "Radio", href: "/radio" },
+      { name: "Archive", href: "/archive" },
       { name: "About", href: "/about" },
       { name: "Contact", href: "/contact" },
-      { name: "FAQ", href: "/#faq" },
     ]
   },
   {
     title: "Work With Us", items: [
       { name: "Partners", href: "/partners" },
       { name: "Booking", href: "/booking" },
+      { name: "Artist Submission", href: "/submit" },
+      { name: "Press & Media", href: "/press" },
       { name: "Sponsor Access", href: "/sponsors" },
       { name: "Get Tickets", href: POSH_TICKET_URL, external: true },
     ]
