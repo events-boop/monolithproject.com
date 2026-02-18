@@ -118,6 +118,7 @@ const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancement
 const EventBanner = lazy(() => import("./components/EventBanner"));
 const KineticGrain = lazy(() => import("./components/ui/CinematicGrain").then(module => ({ default: module.KineticGrain })));
 const CustomCursor = lazy(() => import("./components/CustomCursor"));
+const CookieConsent = lazy(() => import("./components/CookieConsent"));
 
 // ... (Router component remains unchanged)
 
@@ -140,6 +141,7 @@ function App() {
               <Analytics />
               <EventBanner />
               <DeferredEnhancements />
+              <CookieConsent />
               {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
               <div id="main-content" tabIndex={-1} className="w-full">
                 <div className="origin-top">
