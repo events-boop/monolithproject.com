@@ -5,6 +5,7 @@ import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
+import { isEventBannerVisible } from "@/lib/eventBanner";
 
 interface NavigationProps {
   activeSection?: string;
@@ -47,6 +48,7 @@ const mobileNavItems = [
 
 export default function Navigation({ activeSection, variant = "dark", brand = "monolith" }: NavigationProps) {
   const isLight = variant === "light";
+  const hasEventBanner = isEventBannerVisible();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -160,15 +162,15 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         style={{
           backgroundColor: bgValue,
           backdropFilter: navBlur,
           borderColor: borderValue
         }}
-        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-500 border-b py-4"
+        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 transition-colors duration-500 border-b py-4`}
       >
         <a
           href="#main-content"
@@ -242,7 +244,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                               ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                               : brand === "chasing-sunsets"
                                 ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
-                              : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
+                                : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
                               }`}
                             role="menuitem"
                           >
@@ -266,7 +268,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
                       ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
                 >
                   {item.label === "CHASING SUN(SETS)" ? (
@@ -416,33 +418,33 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
                     className={`group font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
                   >
-                  {item.label === "CHASING SUN(SETS)" ? (
-                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                      <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
-                      <span className="relative inline-block pb-2">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
+                    {item.label === "CHASING SUN(SETS)" ? (
+                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                        <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
+                        <span className="relative inline-block pb-2">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
                       </span>
-                    </span>
-                  ) : item.label === "UNTOLD STORY" ? (
-                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
-                      <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
-                      <span className="relative inline-block pb-2">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
+                    ) : item.label === "UNTOLD STORY" ? (
+                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                        <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
+                        <span className="relative inline-block pb-2">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
                       </span>
-                    </span>
-                  ) : (
-                    item.label
-                  )}
-                </Link>
-              </motion.div>
+                    ) : (
+                      item.label
+                    )}
+                  </Link>
+                </motion.div>
               ))}
 
               {/* Emphasized ticket CTA */}

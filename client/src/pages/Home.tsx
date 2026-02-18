@@ -34,7 +34,7 @@ export default function Home() {
         description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
       />
       <Navigation />
-      <FixedTicketBadge />
+
 
       <main id="main-content" tabIndex={-1}>
         {/* Hero — countdown + video + CTAs */}

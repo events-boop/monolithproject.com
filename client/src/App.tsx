@@ -11,6 +11,7 @@ import { useLocation } from "wouter";
 const Home = lazy(() => import("./pages/Home"));
 
 const Tickets = lazy(() => import("./pages/Tickets"));
+const Preloader = lazy(() => import("./components/Preloader"));
 const About = lazy(() => import("./pages/About"));
 const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
 const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
@@ -113,6 +114,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Suspense fallback={null}>
+            <Preloader onComplete={() => { }} />
             <Analytics />
             <EventBanner />
             <DeferredEnhancements />
