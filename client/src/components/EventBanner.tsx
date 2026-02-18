@@ -1,21 +1,12 @@
 import { POSH_TICKET_URL } from "@/data/events";
 import { Ticket } from "lucide-react";
-
-const EVENT_DATE = new Date("2026-03-06T19:00:00-06:00");
-const EVENT_END = new Date("2026-03-07T04:00:00-06:00");
-
-function getEventStatus() {
-  const now = new Date();
-  if (now >= EVENT_DATE && now <= EVENT_END) return "live";
-  if (now > EVENT_END) return "past";
-  return "upcoming";
-}
+import { getEventBannerStatus } from "@/lib/eventBanner";
 
 const MESSAGE = "MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW";
 const LIVE_MESSAGE = "LIVE NOW — UNTOLD STORY — DERON B2B JUANY BRAVO — ALHAMBRA PALACE";
 
 export default function EventBanner() {
-  const status = getEventStatus();
+  const status = getEventBannerStatus();
   if (status === "past") return null;
 
   const text = status === "live" ? LIVE_MESSAGE : MESSAGE;

@@ -86,6 +86,27 @@ export default function ChasingSunsetsDetails() {
                     </motion.div>
                 </div>
 
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7 }}
+                    className="season-panel-warm p-8 md:p-10 mb-24 text-center"
+                >
+                    <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-5 text-clay">
+                        Positioning
+                    </span>
+                    <p className="font-display text-2xl md:text-4xl leading-tight text-charcoal">
+                        Untold builds culture indoors. Sunsets builds scale outdoors.
+                    </p>
+                    <p className="mt-4 font-mono text-[11px] tracking-[0.2em] uppercase text-clay">
+                        Sponsors want both.
+                    </p>
+                    <p className="mt-3 text-sm md:text-base opacity-80">
+                        We have record nights and a slate of Chicago venues.
+                    </p>
+                </motion.div>
+
                 {/* Metrics Grid */}
                 <div className="mb-24">
                     <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-8 text-center text-clay">

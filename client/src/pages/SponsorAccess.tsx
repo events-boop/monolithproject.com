@@ -7,6 +7,22 @@ import Footer from "@/components/Footer";
 import { verifySponsorAccess } from "@/lib/api";
 import SEO from "@/components/SEO";
 
+const untoldStoryStrengths = [
+    "Indoor atmosphere built for immersive club storytelling",
+    "High-spend nightlife audience",
+    "International DJs debuting in Chicago",
+    "Culture + tastemaker crowd",
+    "Strong brand growth phase",
+];
+
+const chasingSunsetsStrengths = [
+    "Massive daytime reach",
+    "Beach, rooftop, and lifestyle energy",
+    "Broad demographic appeal",
+    "Ideal for cocktails, tequila, beer, and seltzers",
+    "Highly social and Instagram-forward",
+];
+
 export default function SponsorAccess() {
     const [password, setPassword] = useState("");
     const [isUnlocked, setIsUnlocked] = useState(false);
@@ -111,6 +127,43 @@ export default function SponsorAccess() {
                                 <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
                                     2026 Sponsorship & Partnership Framework
                                 </p>
+                                <p className="mt-6 text-sm md:text-base text-foreground/85 max-w-3xl mx-auto font-medium">
+                                    Untold builds culture indoors. Sunsets builds scale outdoors.
+                                </p>
+                                <p className="mt-2 text-xs tracking-[0.14em] uppercase text-primary/85">
+                                    Sponsors want both.
+                                </p>
+                                <p className="mt-3 text-sm text-muted-foreground/90 max-w-3xl mx-auto">
+                                    We have record nights and a slate of Chicago venues.
+                                </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-6 mb-10">
+                                <div className="p-6 border border-border bg-card/30">
+                                    <h3 className="font-display text-2xl text-foreground mb-1">Untold Story</h3>
+                                    <p className="text-xs uppercase tracking-[0.2em] text-primary/80 mb-4">Club Experience · Indoors</p>
+                                    <ul className="space-y-2 text-sm text-foreground/85">
+                                        {untoldStoryStrengths.map((item) => (
+                                            <li key={item} className="flex items-start gap-2">
+                                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="p-6 border border-border bg-card/30">
+                                    <h3 className="font-display text-2xl text-foreground mb-1">Chasing Sun(Sets)</h3>
+                                    <p className="text-xs uppercase tracking-[0.2em] text-primary/80 mb-4">Daytime Lifestyle · Open Air Outdoors</p>
+                                    <ul className="space-y-2 text-sm text-foreground/85">
+                                        {chasingSunsetsStrengths.map((item) => (
+                                            <li key={item} className="flex items-start gap-2">
+                                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-6">

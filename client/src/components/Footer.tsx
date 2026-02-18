@@ -170,7 +170,7 @@ export default function Footer() {
           </div>
 
           {/* Huge Text - Base Layer */}
-          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] group-hover:text-white/90 mix-blend-overlay group-hover:mix-blend-normal transform group-hover:scale-[1.02]">
+          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/18 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] transform group-hover:scale-[1.02]">
             MONOLITH
           </h1>
 
