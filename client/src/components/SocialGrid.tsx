@@ -64,7 +64,7 @@ export default function SocialGrid() {
                     </p>
 
                     <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-charcoal uppercase leading-[0.8] tracking-tight mb-8">
-                        @MONOLITHPROJECT
+                        @monolithproject.events
                     </h2>
 
                     <div className="flex items-center justify-center gap-4 text-charcoal">

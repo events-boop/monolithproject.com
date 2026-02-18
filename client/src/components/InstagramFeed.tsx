@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, ExternalLink, Heart, MessageCircle } from "lucide-react";
 
+function TikTokIcon({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+        </svg>
+    );
+}
+
 interface InstagramPost {
     id: string;
     caption: string;
@@ -101,29 +109,60 @@ export default function InstagramFeed() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.03),transparent_40%)] pointer-events-none" />
 
             <div className="container max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
-                    <div>
-                        <span className="font-mono text-xs text-clay tracking-widest uppercase mb-3 block">
-                            Social
+                <div className="flex flex-col items-center justify-center mb-16 gap-10">
+                    <div className="text-center mb-2">
+                        <span className="font-mono text-xs text-clay tracking-[0.2em] uppercase mb-4 block">
+                            Follow the Frequency
                         </span>
-                        <h2 className="font-display text-4xl md:text-6xl uppercase text-white mb-2">
-                            @MonolithProject
+                        <h2 className="font-display text-4xl md:text-5xl uppercase text-white tracking-wide">
+                            The Network
                         </h2>
-                        <p className="text-white/60 text-lg">
-                            Follow the frequency.
-                        </p>
                     </div>
 
-                    <a
-                        href="https://instagram.com/monolithproject"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-pill group border-white/20 hover:bg-white hover:text-black hover:border-white transition-all duration-300"
-                    >
-                        <Instagram className="w-4 h-4 mr-2" />
-                        <span className="font-bold tracking-widest text-xs uppercase">Follow Us</span>
-                        <ExternalLink className="w-3 h-3 ml-2 opacity-50 group-hover:opacity-100" />
-                    </a>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-4xl px-4">
+                        {/* Left: Chasing Sun(Sets) */}
+                        <div className="flex flex-col items-center text-center space-y-4">
+                            <h3 className="font-display text-xl text-white/90 uppercase tracking-widest hidden md:block opacity-60">Chasing Sun(Sets)</h3>
+                            <div className="flex flex-col gap-3">
+                                <a href="https://instagram.com/chasingsunsets.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-primary transition-colors group">
+                                    <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                    <span>@chasingsunsets.music</span>
+                                </a>
+                                <a href="https://tiktok.com/@chasingsunsets" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-primary transition-colors group">
+                                    <TikTokIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                    <span>@chasingsunsets</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Center: Monolith Project (Main) */}
+                        <div className="flex flex-col items-center text-center space-y-5 md:scale-110 origin-top">
+                            <div className="inline-block px-4 py-1 border border-white/10 rounded-full bg-white/5 mb-2">
+                                <h3 className="font-display text-xl text-white uppercase tracking-widest">Monolith Project</h3>
+                            </div>
+                            <div className="flex flex-col gap-3">
+                                <a href="https://instagram.com/monolithproject.events" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
+                                    <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    <span>@monolithproject.events</span>
+                                </a>
+                                <a href="https://tiktok.com/@monolithproject" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
+                                    <TikTokIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    <span>@monolithproject</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Right: Untold Story */}
+                        <div className="flex flex-col items-center text-center space-y-4">
+                            <h3 className="font-display text-xl text-white/90 uppercase tracking-widest hidden md:block opacity-60">Untold Story</h3>
+                            <div className="flex flex-col gap-3">
+                                <a href="https://instagram.com/untoldstory.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-story transition-colors group">
+                                    <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                    <span>@untoldstory.music</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
