@@ -32,13 +32,13 @@ export default function CustomCursor() {
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
 
-            // Check if hovering interactive element
+            // Check if hovering interactive element (avoid getComputedStyle — layout thrash)
             const isInteractive =
                 target.tagName === "BUTTON" ||
                 target.tagName === "A" ||
                 target.closest("button") ||
                 target.closest("a") ||
-                window.getComputedStyle(target).cursor === "pointer";
+                target.closest("[role='button']");
 
             setIsHovered(!!isInteractive);
         };
@@ -54,7 +54,8 @@ export default function CustomCursor() {
             window.removeEventListener("mouseup", handleMouseUp);
             window.removeEventListener("mouseover", handleMouseOver);
         };
-    }, [isVisible, mouseX, mouseY]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (!isVisible) return null;
 

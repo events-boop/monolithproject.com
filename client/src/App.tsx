@@ -104,6 +104,8 @@ const NotFoundTransition = withTransition(NotFoundLazy);
 const Analytics = lazy(() => import("./components/Analytics"));
 const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancements"));
 const EventBanner = lazy(() => import("./components/EventBanner"));
+const KineticGrain = lazy(() => import("./components/ui/CinematicGrain").then(module => ({ default: module.KineticGrain })));
+const CustomCursor = lazy(() => import("./components/CustomCursor"));
 
 // ... (Router component remains unchanged)
 
@@ -114,6 +116,8 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Suspense fallback={null}>
+            <KineticGrain />
+            <CustomCursor />
             <Preloader onComplete={() => { }} />
             <Analytics />
             <EventBanner />
