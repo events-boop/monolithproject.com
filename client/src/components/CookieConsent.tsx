@@ -36,7 +36,8 @@ export default function CookieConsent() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 100, opacity: 0 }}
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    className="fixed bottom-0 left-0 right-0 z-[9999] px-4 pb-4 md:px-6 md:pb-6"
+                    className="fixed bottom-0 left-0 right-0 z-[9999] px-3 pb-3 md:px-6 md:pb-6"
+                    style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))" }}
                     role="dialog"
                     aria-label="Cookie consent"
                 >
@@ -52,7 +53,7 @@ export default function CookieConsent() {
                         {/* Top accent line */}
                         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
 
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-5 md:p-6">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 md:p-5">
                             {/* Text */}
                             <div className="flex-1 min-w-0">
                                 <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-primary/70 mb-1.5">

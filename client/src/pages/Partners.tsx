@@ -394,7 +394,7 @@ ${details}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     onSubmit={handleSubmit}
-                    className="relative overflow-hidden p-8 md:p-10 space-y-7"
+                    className="relative overflow-hidden p-5 md:p-8 lg:p-10 space-y-7"
                     style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}
                   >
                     {/* Top accent */}
@@ -406,7 +406,7 @@ ${details}
                     {/* Inquiry type */}
                     <div>
                       <label className={labelClass}>I'm interested in</label>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {inquiryOptions.map((opt) => {
                           const isActive = inquiryType === opt.id;
                           return (
@@ -571,7 +571,7 @@ ${details}
                       </p>
                     )}
 
-                    <div className="flex items-center justify-between gap-4 pt-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
                       <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/20">
                         48-hour response
                       </p>

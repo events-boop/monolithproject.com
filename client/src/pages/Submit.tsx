@@ -266,7 +266,7 @@ ${form.bio}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                         onSubmit={handleSubmit}
-                                        className="relative overflow-hidden p-8 md:p-10 space-y-8"
+                                        className="relative overflow-hidden p-5 md:p-8 lg:p-10 space-y-8"
                                         style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}
                                     >
                                         {/* Top accent — changes with series selection */}
@@ -278,7 +278,7 @@ ${form.bio}
                                         {/* Series fit selector */}
                                         <div>
                                             <label className={labelClass}>Which series fits your sound?</label>
-                                            <div className="grid grid-cols-2 gap-2">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                                 {seriesOptions.map((opt) => {
                                                     const isActive = form.seriesFit === opt.id;
                                                     return (
@@ -445,7 +445,7 @@ ${form.bio}
                                         )}
 
                                         {/* Submit */}
-                                        <div className="flex items-center justify-between gap-4 pt-2">
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                                             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/20">
                                                 * Required fields
                                             </p>

@@ -162,7 +162,7 @@ export default function MixedMediaGallery({
             aria-modal="true"
             aria-label="Image gallery viewer"
             tabIndex={-1}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 outline-none"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-10 outline-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -260,22 +260,22 @@ export default function MixedMediaGallery({
                 )}
               </AnimatePresence>
 
-              {/* Navigation arrows */}
+              {/* Navigation arrows — inside image on mobile, outside on desktop */}
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); prev(); }}
-                className="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 p-3 border border-white/10 bg-black/70 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                className="absolute left-2 top-1/2 -translate-y-1/2 md:-left-16 p-2.5 md:p-3 border border-white/10 bg-black/80 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
               </button>
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); next(); }}
-                className="absolute right-2 md:-right-16 top-1/2 -translate-y-1/2 p-3 border border-white/10 bg-black/70 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                className="absolute right-2 top-1/2 -translate-y-1/2 md:-right-16 p-2.5 md:p-3 border border-white/10 bg-black/80 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 aria-label="Next image"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </motion.div>
           </motion.div>
