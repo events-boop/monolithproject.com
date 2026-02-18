@@ -190,16 +190,16 @@ export default function Footer() {
             <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
           </div>
 
-          {/* Huge Text - Base Layer */}
-          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] group-hover:text-white/90 mix-blend-overlay group-hover:mix-blend-normal transform group-hover:scale-[1.02]">
+          {/* Huge Text - Base Layer: visible at rest, blooms on hover */}
+          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/10 group-hover:from-white/90 group-hover:to-white/70 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_40px_rgba(224,90,58,0.4)] transform group-hover:scale-[1.02]">
             MONOLITH
           </h1>
 
-          {/* Outline Overlay for Stroke Effect */}
+          {/* Outline Overlay for Stroke Effect: always visible, intensifies on hover */}
           <h1
-            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 text-transparent"
+            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-700 text-transparent"
             style={{
-              WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+              WebkitTextStroke: "1px rgba(255,255,255,0.35)",
               transform: "translateZ(0)"
             }}
           >
