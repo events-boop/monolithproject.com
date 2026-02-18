@@ -1,0 +1,102 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.7,
+    "actual": 0.61,
+    "values": [
+      0.61
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 600000,
+    "actual": 627749,
+    "values": [
+      627749
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditProperty": "script.size",
+    "auditId": "resource-summary",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/",
+    "auditTitle": "Resources Summary"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.7,
+    "actual": 0.6,
+    "values": [
+      0.6
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/tickets"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.7,
+    "actual": 0.57,
+    "values": [
+      0.57
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/chasing-sunsets"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.7,
+    "actual": 0.48,
+    "values": [
+      0.48
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/radio"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.7,
+    "actual": 0.6,
+    "values": [
+      0.6
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/contact"
+  },
+  {
+    "name": "maxNumericValue",
+    "expected": 600000,
+    "actual": 644844,
+    "values": [
+      644844
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditProperty": "script.size",
+    "auditId": "resource-summary",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/contact",
+    "auditTitle": "Resources Summary"
+  }
+]

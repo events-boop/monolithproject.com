@@ -33,6 +33,12 @@ const Archive = lazy(() => import("./pages/Archive"));
 const Press = lazy(() => import("./pages/Press"));
 const Submit = lazy(() => import("./pages/Submit"));
 
+const Shop = lazy(() => import("./pages/Shop"));
+const Ambassadors = lazy(() => import("./pages/Ambassadors"));
+const Travel = lazy(() => import("./pages/Travel"));
+const Guide = lazy(() => import("./pages/Guide"));
+const VIP = lazy(() => import("./pages/VIP"));
+
 const pageTransition = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -69,6 +75,11 @@ function Router() {
         <Route path={"/archive"} component={ArchiveTransition} />
         <Route path={"/press"} component={PressTransition} />
         <Route path={"/submit"} component={SubmitTransition} />
+        <Route path={"/shop"} component={ShopTransition} />
+        <Route path={"/ambassadors"} component={AmbassadorsTransition} />
+        <Route path={"/travel"} component={TravelTransition} />
+        <Route path={"/guide"} component={GuideTransition} />
+        <Route path={"/vip"} component={VIPTransition} />
         <Route path={"/404"} component={NotFoundTransition} />
         <Route component={NotFoundTransition} />
       </Switch>
@@ -112,6 +123,11 @@ const ArchiveTransition = withTransition(Archive);
 const PressTransition = withTransition(Press);
 const SubmitTransition = withTransition(Submit);
 const NotFoundTransition = withTransition(NotFoundLazy);
+const ShopTransition = withTransition(Shop);
+const AmbassadorsTransition = withTransition(Ambassadors);
+const TravelTransition = withTransition(Travel);
+const GuideTransition = withTransition(Guide);
+const VIPTransition = withTransition(VIP);
 
 const Analytics = lazy(() => import("./components/Analytics"));
 const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancements"));

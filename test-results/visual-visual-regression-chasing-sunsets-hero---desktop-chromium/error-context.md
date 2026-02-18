@@ -1,0 +1,442 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - link "Open tickets for current featured event" [ref=e4] [cursor=pointer]:
+    - /url: https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e11]
+      - generic [ref=e13]:
+        - generic [ref=e14]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e15]
+      - generic [ref=e17]:
+        - generic [ref=e18]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e19]
+      - generic [ref=e21]:
+        - generic [ref=e22]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e23]
+      - generic [ref=e25]:
+        - generic [ref=e26]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e27]
+      - generic [ref=e29]:
+        - generic [ref=e30]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e31]
+      - generic [ref=e33]:
+        - generic [ref=e34]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e35]
+      - generic [ref=e37]:
+        - generic [ref=e38]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e39]
+      - generic [ref=e41]:
+        - generic [ref=e42]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e43]
+      - generic [ref=e45]:
+        - generic [ref=e46]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e47]
+      - generic [ref=e49]:
+        - generic [ref=e50]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e51]
+      - generic [ref=e53]:
+        - generic [ref=e54]: MAR 6 — ALHAMBRA PALACE — DERON B2B JUANY BRAVO — UNTOLD STORY S3·E2 — TICKETS ON SALE NOW
+        - img [ref=e55]
+  - link "Book tickets":
+    - /url: https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo
+    - generic [ref=e57] [cursor=pointer]:
+      - img [ref=e59]:
+        - generic [ref=e60]: BOOK TICKETS · BOOK TICKETS ·
+      - generic:
+        - generic:
+          - img
+  - dialog "Cookie consent" [ref=e63]:
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - paragraph [ref=e68]: Cookie Notice
+        - paragraph [ref=e69]:
+          - text: We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our
+          - link "Cookie Policy" [ref=e70] [cursor=pointer]:
+            - /url: /cookies
+          - text: and
+          - link "Privacy Policy" [ref=e71] [cursor=pointer]:
+            - /url: /privacy
+          - text: .
+      - generic [ref=e72]:
+        - button "Decline" [ref=e73] [cursor=pointer]
+        - button "Accept All" [ref=e74] [cursor=pointer]
+        - button "Close" [ref=e75] [cursor=pointer]:
+          - img [ref=e76]
+  - generic [ref=e82]:
+    - dialog "Golden Hour Is Coming Back":
+      - generic [ref=e84]:
+        - button "Close" [ref=e86] [cursor=pointer]:
+          - img [ref=e87]
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - img [ref=e93]
+            - generic [ref=e99]: Chasing Sun(Sets) · 2026 Season
+          - heading "Golden Hour Is Coming Back" [level=2] [ref=e100]:
+            - text: Golden Hour
+            - text: Is Coming Back
+          - paragraph [ref=e101]: Rooftop shows. Sunset sets. The 2026 season is being built right now.
+          - paragraph [ref=e102]: Get early access · Presale tickets · First to know
+          - generic [ref=e104]:
+            - textbox "your@email.com" [ref=e106]
+            - button "Get Early Access" [ref=e107] [cursor=pointer]:
+              - text: Get Early Access
+              - img [ref=e108]
+          - paragraph [ref=e110]: No spam · Unsubscribe anytime
+          - button "Maybe later" [ref=e111] [cursor=pointer]
+    - navigation [ref=e113]:
+      - link "Skip to content" [ref=e114] [cursor=pointer]:
+        - /url: "#main-content"
+      - generic [ref=e115]:
+        - button "Go to homepage" [ref=e118] [cursor=pointer]:
+          - generic [ref=e120]: MONOLITH PROJECT
+        - generic [ref=e121]:
+          - link "CHASING SUN(SETS)" [ref=e122] [cursor=pointer]:
+            - /url: /chasing-sunsets
+            - generic [ref=e123]:
+              - generic [ref=e124]: ☀️
+              - generic [ref=e125]: CHASING SUN(SETS)
+          - link "UNTOLD STORY" [ref=e127] [cursor=pointer]:
+            - /url: /story
+            - generic [ref=e128]:
+              - img [ref=e129]
+              - generic [ref=e136]: UNTOLD STORY
+          - link "SCHEDULE" [ref=e138] [cursor=pointer]:
+            - /url: /schedule
+          - link "TICKETS" [ref=e139] [cursor=pointer]:
+            - /url: /tickets
+          - link "LINEUP" [ref=e140] [cursor=pointer]:
+            - /url: /lineup
+          - link "RADIO" [ref=e141] [cursor=pointer]:
+            - /url: /radio
+          - link "ABOUT" [ref=e142] [cursor=pointer]:
+            - /url: /about
+          - link "CONTACT" [ref=e143] [cursor=pointer]:
+            - /url: /contact
+          - button "MORE" [ref=e145] [cursor=pointer]:
+            - text: MORE
+            - img [ref=e146]
+        - link "Tickets" [ref=e151] [cursor=pointer]:
+          - /url: https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo
+          - generic [ref=e152]:
+            - img [ref=e153]
+            - generic [ref=e155]: Tickets
+            - img [ref=e156]
+    - main [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - img [ref=e163]
+          - button "Previous slide" [ref=e165] [cursor=pointer]:
+            - img [ref=e166]
+          - button "Next slide" [ref=e168] [cursor=pointer]:
+            - img [ref=e169]
+          - generic [ref=e172]:
+            - button "Go to slide 1" [ref=e173] [cursor=pointer]
+            - button "Go to slide 2" [ref=e174] [cursor=pointer]
+            - button "Go to slide 3" [ref=e175] [cursor=pointer]
+        - generic [ref=e176]:
+          - generic [ref=e177]: Series 01
+          - heading "CHASING SUN(SETS)" [level=1] [ref=e178]
+          - paragraph [ref=e179]: Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings where the sun does half the work.
+          - generic [ref=e180]:
+            - generic [ref=e181]: Open Air Ritual
+            - generic [ref=e182]: Melodic + Afro House
+            - generic [ref=e183]: Sunset Community
+            - generic [ref=e184]: Rooftop Culture
+      - navigation "Season page sections" [ref=e187]:
+        - link "Format" [ref=e188] [cursor=pointer]:
+          - /url: "#chasing-concept"
+        - link "Records" [ref=e189] [cursor=pointer]:
+          - /url: "#chasing-records"
+        - link "Upcoming" [ref=e190] [cursor=pointer]:
+          - /url: "#chasing-upcoming"
+        - link "Submit" [ref=e191] [cursor=pointer]:
+          - /url: "#chasing-submit"
+        - link "Network" [ref=e192] [cursor=pointer]:
+          - /url: "#chasing-cta"
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - generic [ref=e197]: The Format
+          - heading "SUNSET TO SUNDOWN" [level=2] [ref=e198]:
+            - text: SUNSET TO
+            - text: SUNDOWN
+        - generic [ref=e199]:
+          - paragraph [ref=e200]: Every Chasing Sun(Sets) show starts during golden hour. The music builds as the light changes. By the time the sun is gone, the energy is already there.
+          - paragraph [ref=e201]: Melodic house, afro house, organic downtempo — sounds that match the warmth. Rooftops, gardens, open-air spaces. No dark rooms, no strobes. Just the sky and the sound.
+          - generic [ref=e202]:
+            - generic [ref=e203]: Rooftop
+            - generic [ref=e204]: Golden Hour
+            - generic [ref=e205]: Melodic House
+            - generic [ref=e206]: Afro House
+            - generic [ref=e207]: Open Air
+      - generic [ref=e210]:
+        - generic [ref=e211]:
+          - generic [ref=e212]:
+            - generic [ref=e213]: Who We Are
+            - heading "A DEFINING SUMMER TRADITION" [level=2] [ref=e214]
+            - paragraph [ref=e215]: Chasing Sun(sets) is a globally recognized, sunset-focused event series built on community, intention, and melodic/Afro house music.
+            - paragraph [ref=e216]: We create cinematic, luxury-minimalist experiences that attract sophisticated, high-value audiences. Our vision is to establish an annual summer tradition that grows in scale and prestige.
+          - generic [ref=e217]:
+            - heading "THE VISION" [level=3] [ref=e218]
+            - paragraph [ref=e219]: Partner with The Monolith Project for the Chasing Sun(sets) Summer Series 2026. A collaboration to bring 4-6 defining moments to the city (May-Sept).
+            - list [ref=e220]:
+              - listitem [ref=e221]:
+                - img [ref=e223]
+                - generic [ref=e226]:
+                  - strong [ref=e227]: Community Impact
+                  - text: Creating spaces for connection in a disconnected world.
+              - listitem [ref=e228]:
+                - img [ref=e230]
+                - generic [ref=e233]:
+                  - strong [ref=e234]: Cultural Alignment
+                  - text: Aligning with a sophisticated, globally recognized music brand.
+              - listitem [ref=e235]:
+                - img [ref=e237]
+                - generic [ref=e240]:
+                  - strong [ref=e241]: New Audience
+                  - text: Engaging a high-value, culturally aware demographic (25-45).
+              - listitem [ref=e242]:
+                - img [ref=e244]
+                - generic [ref=e247]:
+                  - strong [ref=e248]: Curated Experience
+                  - text: Bespoke production, world-class sound, and thoughtful design.
+        - generic [ref=e249]:
+          - generic [ref=e250]: Track Record (2025)
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - img [ref=e253]
+              - generic [ref=e258]: 3,000+
+              - generic [ref=e259]: Attendees (July 4th)
+            - generic [ref=e260]:
+              - img [ref=e261]
+              - generic [ref=e263]: 1,400+
+              - generic [ref=e264]: Rooftop RSVPs
+            - generic [ref=e265]:
+              - img [ref=e266]
+              - generic [ref=e270]: 12 Hours
+              - generic [ref=e271]: Programming
+            - generic [ref=e272]:
+              - img [ref=e273]
+              - generic [ref=e278]: Sarat, Kenbo & Friends
+              - generic [ref=e279]: Talent
+      - generic [ref=e280]:
+        - generic [ref=e282]:
+          - generic [ref=e283]:
+            - generic [ref=e284]:
+              - generic [ref=e285]: 2025 Archives
+              - heading "Season I" [level=2] [ref=e286]
+            - paragraph [ref=e287]: The beginning. Rooftops, rivers, and the golden hour.
+          - generic [ref=e288]:
+            - 'button "View: Rooftop Vibes" [ref=e289] [cursor=pointer]':
+              - img "Rooftop Vibes" [ref=e290]
+              - generic: Rooftop Vibes
+            - button "Open video" [ref=e291] [cursor=pointer]
+            - 'button "View: Autograf Live" [ref=e296] [cursor=pointer]':
+              - img "Autograf Live" [ref=e297]
+              - generic: Autograf Live
+            - 'button "View: Golden Hour Crowd" [ref=e298] [cursor=pointer]':
+              - img "Golden Hour Crowd" [ref=e299]
+              - generic: Golden Hour Crowd
+        - generic [ref=e301]:
+          - generic [ref=e302]:
+            - generic [ref=e303]:
+              - generic [ref=e304]: 2026 Archives
+              - heading "Season II" [level=2] [ref=e305]
+            - paragraph [ref=e306]: Expanding the horizon. New venues, same sun.
+          - generic [ref=e307]:
+            - 'button "View: Season 2 Opener" [ref=e308] [cursor=pointer]':
+              - img "Season 2 Opener" [ref=e309]
+              - generic: Season 2 Opener
+            - 'button "View: Sunset Moments"':
+              - generic: Sunset Moments
+            - button "Open video" [ref=e310] [cursor=pointer]
+      - generic [ref=e316]:
+        - generic [ref=e317]:
+          - heading "UPCOMING" [level=2] [ref=e318]
+          - generic [ref=e319]: SEASON 2026
+        - generic [ref=e320]:
+          - generic [ref=e321]:
+            - generic [ref=e322]:
+              - generic [ref=e323]:
+                - generic [ref=e324]: MAR
+                - generic [ref=e325]: "06"
+              - generic [ref=e326]:
+                - heading "DERON B2B JUANY BRAVO" [level=3] [ref=e327]
+                - generic [ref=e328]:
+                  - generic [ref=e329]:
+                    - img [ref=e330]
+                    - text: Alhambra Palace, Chicago
+                  - generic [ref=e333]:
+                    - img [ref=e334]
+                    - text: 9:00 PM - Late
+            - link "GET TICKETS" [ref=e336] [cursor=pointer]:
+              - /url: /tickets
+              - text: GET TICKETS
+              - img [ref=e337]
+          - generic [ref=e340]:
+            - generic [ref=e341]:
+              - generic [ref=e342]:
+                - generic [ref=e343]: MAR
+                - generic [ref=e344]: "21"
+              - generic [ref=e345]:
+                - heading "AUTOGRAF" [level=3] [ref=e346]
+                - generic [ref=e347]:
+                  - generic [ref=e348]:
+                    - img [ref=e349]
+                    - text: Alhambra Palace, Chicago
+                  - generic [ref=e352]:
+                    - img [ref=e353]
+                    - text: 9:00 PM - Late
+            - link "GET TICKETS" [ref=e355] [cursor=pointer]:
+              - /url: /tickets
+              - text: GET TICKETS
+              - img [ref=e356]
+      - generic [ref=e360]:
+        - generic [ref=e361]: For The Selectors
+        - heading "SUBMIT YOUR SET" [level=2] [ref=e362]
+        - paragraph [ref=e363]: Chasing Sun(Sets) is about the perfect vibe for the golden hour. Melodic, Organic, Afro House. If you have the sound, we have the sunset.
+        - link "SUBMIT A MIX" [ref=e364] [cursor=pointer]:
+          - /url: mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission
+      - generic [ref=e366]:
+        - heading "CHASE THE LIGHT" [level=2] [ref=e367]
+        - paragraph [ref=e368]: Sign up for the newsletter to get ticket access before anyone else.
+        - generic [ref=e369]:
+          - link "UNTOLD STORY" [ref=e370] [cursor=pointer]:
+            - /url: /story
+          - link "BACK TO MONOLITH" [ref=e371] [cursor=pointer]:
+            - /url: /
+    - generic [ref=e374]:
+      - heading "SUBSCRIBE FOR SUN(SETS)" [level=3] [ref=e375]
+      - generic [ref=e376]:
+        - text: Enter Your Email Address
+        - textbox "Enter Your Email Address" [ref=e377]:
+          - /placeholder: you@email.com
+        - generic [ref=e378]:
+          - checkbox "I agree to the Privacy Policy ." [ref=e379] [cursor=pointer]
+          - text: I agree to the
+          - generic [ref=e380]: Privacy Policy
+          - text: .
+      - button "JOIN THE LIST" [ref=e381] [cursor=pointer]:
+        - text: JOIN THE LIST
+        - img [ref=e382]
+    - contentinfo [ref=e385]:
+      - generic [ref=e386]:
+        - generic [ref=e387]:
+          - generic [ref=e388]:
+            - generic [ref=e389]:
+              - text: THE MONOLITH
+              - text: PROJECT
+            - paragraph [ref=e390]:
+              - text: Togetherness is the frequency.
+              - text: Music is the guide.
+          - generic [ref=e391]:
+            - heading "Navigate" [level=4] [ref=e392]
+            - list [ref=e393]:
+              - listitem [ref=e394]:
+                - link "Schedule" [ref=e395] [cursor=pointer]:
+                  - /url: /schedule
+              - listitem [ref=e396]:
+                - link "Tickets" [ref=e397] [cursor=pointer]:
+                  - /url: /tickets
+              - listitem [ref=e398]:
+                - link "Lineup" [ref=e399] [cursor=pointer]:
+                  - /url: /lineup
+              - listitem [ref=e400]:
+                - link "Chasing Sun(Sets)" [ref=e401] [cursor=pointer]:
+                  - /url: /chasing-sunsets
+                  - generic [ref=e402]:
+                    - generic [ref=e403]: ☀️
+                    - generic [ref=e404]: Chasing Sun(Sets)
+              - listitem [ref=e405]:
+                - link "Untold Story" [ref=e406] [cursor=pointer]:
+                  - /url: /story
+                  - generic [ref=e407]:
+                    - img [ref=e408]
+                    - generic [ref=e415]: Untold Story
+              - listitem [ref=e416]:
+                - link "Radio" [ref=e417] [cursor=pointer]:
+                  - /url: /radio
+              - listitem [ref=e418]:
+                - link "Archive" [ref=e419] [cursor=pointer]:
+                  - /url: /archive
+              - listitem [ref=e420]:
+                - link "About" [ref=e421] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e422]:
+                - link "Contact" [ref=e423] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e424]:
+            - heading "Work With Us" [level=4] [ref=e425]
+            - list [ref=e426]:
+              - listitem [ref=e427]:
+                - link "Partners" [ref=e428] [cursor=pointer]:
+                  - /url: /partners
+              - listitem [ref=e429]:
+                - link "Booking" [ref=e430] [cursor=pointer]:
+                  - /url: /booking
+              - listitem [ref=e431]:
+                - link "Artist Submission" [ref=e432] [cursor=pointer]:
+                  - /url: /submit
+              - listitem [ref=e433]:
+                - link "Press & Media" [ref=e434] [cursor=pointer]:
+                  - /url: /press
+              - listitem [ref=e435]:
+                - link "Sponsor Access" [ref=e436] [cursor=pointer]:
+                  - /url: /sponsors
+              - listitem [ref=e437]:
+                - link "Get Tickets" [ref=e438] [cursor=pointer]:
+                  - /url: https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo
+                  - text: Get Tickets
+                  - img [ref=e439]
+          - generic [ref=e442]:
+            - heading "Legal" [level=4] [ref=e443]
+            - list [ref=e444]:
+              - listitem [ref=e445]:
+                - link "FAQ" [ref=e446] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e447]:
+                - link "Terms of Service" [ref=e448] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e449]:
+                - link "Privacy Policy" [ref=e450] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e451]:
+                - link "Cookie Policy" [ref=e452] [cursor=pointer]:
+                  - /url: /cookies
+        - generic [ref=e453]:
+          - heading "MONOLITH" [level=1] [ref=e457]
+          - heading "MONOLITH" [level=1]
+        - generic [ref=e458]:
+          - generic [ref=e459]:
+            - link "Chasing Sun(Sets) Instagram" [ref=e460] [cursor=pointer]:
+              - /url: https://instagram.com/chasingsunsets.music
+              - img [ref=e461]
+            - link "Untold Story Instagram" [ref=e464] [cursor=pointer]:
+              - /url: https://instagram.com/untoldstory.music
+              - img [ref=e465]
+            - link "Monolith Instagram" [ref=e468] [cursor=pointer]:
+              - /url: https://instagram.com/monolithproject.events
+              - img [ref=e469]
+            - link "Chasing Sun(Sets) TikTok" [ref=e472] [cursor=pointer]:
+              - /url: https://tiktok.com/@chasingsunsets
+              - img [ref=e473]
+            - link "Monolith TikTok" [ref=e475] [cursor=pointer]:
+              - /url: https://tiktok.com/@monolithproject
+              - img [ref=e476]
+            - link "YouTube" [ref=e478] [cursor=pointer]:
+              - /url: https://youtube.com/@monolithproject
+              - img [ref=e479]
+            - link "Spotify" [ref=e482] [cursor=pointer]:
+              - /url: https://open.spotify.com
+              - img [ref=e483]
+            - link "SoundCloud" [ref=e485] [cursor=pointer]:
+              - /url: https://soundcloud.com/chasing-sun-sets
+              - img [ref=e486]
+          - generic [ref=e488]:
+            - paragraph [ref=e489]: © 2026 The Monolith Project
+            - paragraph [ref=e490]: Engineered in Chicago by Stark Industries
+```
