@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /* ── tiny colour math ── */
 
@@ -83,30 +83,32 @@ export interface SunsetPalette {
   progress: number;
 }
 
+const INITIAL: SunsetPalette = {
+  bg: "#FBF5ED",
+  text: "#2C1810",
+  accent: "#C2703E",
+  warmGold: "#E8B86D",
+  glass: "#FFFFFF",
+  progress: 0,
+};
+
 export default function useScrollSunset(): SunsetPalette {
-  const [palette, setPalette] = useState<SunsetPalette>({
-    bg: "#FBF5ED",
-    text: "#2C1810",
-    accent: "#C2703E",
-    warmGold: "#E8B86D",
-    glass: "#FFFFFF",
-    progress: 0,
-  });
+  const [palette, setPalette] = useState<SunsetPalette>(INITIAL);
+  const prevRef = useRef(-1);
+  const rafRef = useRef(0);
 
   useEffect(() => {
-    let raf = 0;
-    let prev = -1;
-
     const tick = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const t = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
 
-      // skip if scroll barely moved (< 0.3%)
-      if (Math.abs(t - prev) < 0.003) {
-        raf = 0;
+      // Update state for smooth 60fps color transition
+      // Threshold lowered significantly to prevent "stepped" look
+      if (Math.abs(t - prevRef.current) < 0.0005) {
+        rafRef.current = 0;
         return;
       }
-      prev = t;
+      prevRef.current = t;
 
       setPalette({
         bg: sample(BG, t),
@@ -116,18 +118,18 @@ export default function useScrollSunset(): SunsetPalette {
         glass: sample(GLASS, t),
         progress: t,
       });
-      raf = 0;
+      rafRef.current = 0;
     };
 
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(tick);
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     tick(); // initialise at current position
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 

@@ -109,11 +109,16 @@ const CustomCursor = lazy(() => import("./components/CustomCursor"));
 
 // ... (Router component remains unchanged)
 
+import SmoothScroll from "./components/SmoothScroll";
+
+// ... existing imports ...
+
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
+          <SmoothScroll />
           <LazyMotion features={domAnimation}>
             <Toaster />
             <Suspense fallback={null}>
