@@ -11,6 +11,7 @@ import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
 import useScrollSunset from "@/hooks/useScrollSunset";
+import ChasingSunsetsOptIn from "@/components/ChasingSunsetsOptIn";
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
@@ -70,6 +71,7 @@ export default function ChasingSunsets() {
 
   return (
     <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise" style={{ background: bg, color: text }}>
+      <ChasingSunsetsOptIn />
       <SEO
         title="Chasing Sun(Sets)"
         description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
