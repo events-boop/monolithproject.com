@@ -122,7 +122,7 @@ export default function Footer() {
       <div className="container max-w-7xl mx-auto px-6 flex flex-col justify-between min-h-[60vh]">
 
         {/* Top: Navigation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 z-10 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 md:gap-12 mb-20 z-10 relative">
           <div className="col-span-2 md:col-span-1">
             <span className="font-display text-2xl tracking-wide block mb-6 text-white">
               THE MONOLITH

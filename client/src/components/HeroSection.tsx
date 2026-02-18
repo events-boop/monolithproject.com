@@ -135,7 +135,7 @@ export default function HeroSection() {
 
         {/* Upper zone — title + subtitle */}
         <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto">
-          <div className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display">
+          <div className="font-display text-[clamp(2.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display break-words">
             {/* MONOLITH — clip-path curtain reveal */}
             <div className="relative inline-block translate-y-2 md:translate-y-3 overflow-hidden">
               <motion.div

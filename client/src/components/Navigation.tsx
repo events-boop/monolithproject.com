@@ -171,10 +171,10 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 border-b py-4 transition-all duration-500 ${scrolled
-            ? isLight
-              ? "bg-[rgba(251,245,237,0.85)] backdrop-blur-[12px] border-[rgba(21,2,217,0.05)]"
-              : "bg-[rgba(10,10,10,0.85)] backdrop-blur-[12px] border-[rgba(255,255,255,0.08)]"
-            : "bg-transparent backdrop-blur-none border-transparent"
+          ? isLight
+            ? "bg-[rgba(251,245,237,0.85)] backdrop-blur-[12px] border-[rgba(21,2,217,0.05)]"
+            : "bg-[rgba(10,10,10,0.85)] backdrop-blur-[12px] border-[rgba(255,255,255,0.08)]"
+          : "bg-transparent backdrop-blur-none border-transparent"
           }`}
       >
         <a
@@ -350,7 +350,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
@@ -390,7 +390,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               }
             }}
           >
-            <div className="absolute top-6 right-6">
+            <div className="fixed top-6 right-6 z-20">
               <MagneticButton>
                 <button
                   type="button"
@@ -404,13 +404,14 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               </MagneticButton>
             </div>
 
-            <div className="flex flex-col items-center gap-8 relative z-10 w-full px-8">
+            <div className="min-h-full flex flex-col items-center justify-start pt-24 pb-12 px-6">
               {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.1 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                  className="mb-6 last:mb-0"
                 >
                   <Link
                     href={item.href.startsWith("/#") ? "/" : item.href}
