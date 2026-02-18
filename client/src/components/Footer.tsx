@@ -56,6 +56,7 @@ const links = [
   },
   {
     title: "Legal", items: [
+      { name: "FAQ", href: "/faq" },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Cookie Policy", href: "/cookies" },
