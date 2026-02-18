@@ -1,13 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Ticket } from "lucide-react";
 import { POSH_TICKET_URL } from "@/data/events";
 
 export default function FixedTicketBadge() {
-    const { scrollY } = useScroll();
-    const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
-
     return (
-        <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
+        <div className="fixed bottom-6 right-6 z-50 hidden md:block">
             <a
                 href={POSH_TICKET_URL}
                 target="_blank"
@@ -15,12 +11,9 @@ export default function FixedTicketBadge() {
                 className="group relative flex items-center justify-center w-32 h-32 rounded-full cursor-pointer"
                 aria-label="Get Tickets"
             >
-                {/* Rotating Text Ring */}
-                <motion.div
-                    style={{ rotate }}
-                    className="absolute inset-0 w-full h-full flex items-center justify-center"
-                >
-                    <svg viewBox="0 0 100 100" width="100%" height="100%" className="animate-[spin_10s_linear_infinite]">
+                {/* Rotating Text Ring — CSS-only, no JS scroll listener */}
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" className="animate-spin-slow">
                         <defs>
                             <path
                                 id="circlePath"
@@ -33,7 +26,7 @@ export default function FixedTicketBadge() {
                             </textPath>
                         </text>
                     </svg>
-                </motion.div>
+                </div>
 
                 {/* Center Icon */}
                 <div className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white text-black flex items-center justify-center transition-transform group-hover:scale-110">

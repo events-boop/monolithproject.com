@@ -47,7 +47,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         doors: "7:00 PM",
         venue: "Alhambra Palace",
         location: "West Loop, Chicago",
-        lineup: "Juany Bravo B2B Deron (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced",
+        lineup: "Deron B2B Juany Bravo (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced",
         status: "on-sale",
         format: "Immersive · Late Night · 360 Sound",
         dress: "Elevated nightlife attire",

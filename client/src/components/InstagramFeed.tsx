@@ -122,13 +122,13 @@ export default function InstagramFeed() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-4xl px-4">
                         {/* Left: Chasing Sun(Sets) */}
                         <div className="flex flex-col items-center text-center space-y-4">
-                            <h3 className="font-display text-xl text-white/90 uppercase tracking-widest hidden md:block opacity-60">Chasing Sun(Sets)</h3>
+                            <h3 className="font-display text-xl text-[#E8B86D] uppercase tracking-widest hidden md:block opacity-80 shadow-orange-500/20 drop-shadow-sm">Chasing Sun(Sets)</h3>
                             <div className="flex flex-col gap-3">
-                                <a href="https://instagram.com/chasingsunsets.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-primary transition-colors group">
+                                <a href="https://instagram.com/chasingsunsets.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#E8B86D] transition-colors group">
                                     <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@chasingsunsets.music</span>
                                 </a>
-                                <a href="https://tiktok.com/@chasingsunsets" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-primary transition-colors group">
+                                <a href="https://tiktok.com/@chasingsunsets" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#E8B86D] transition-colors group">
                                     <TikTokIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@chasingsunsets</span>
                                 </a>
@@ -154,9 +154,9 @@ export default function InstagramFeed() {
 
                         {/* Right: Untold Story */}
                         <div className="flex flex-col items-center text-center space-y-4">
-                            <h3 className="font-display text-xl text-white/90 uppercase tracking-widest hidden md:block opacity-60">Untold Story</h3>
+                            <h3 className="font-display text-xl text-[#8B5CF6] uppercase tracking-widest hidden md:block opacity-80 shadow-purple-500/20 drop-shadow-sm">Untold Story</h3>
                             <div className="flex flex-col gap-3">
-                                <a href="https://instagram.com/untoldstory.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-story transition-colors group">
+                                <a href="https://instagram.com/untoldstory.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#8B5CF6] transition-colors group">
                                     <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@untoldstory.music</span>
                                 </a>
@@ -213,7 +213,7 @@ export default function InstagramFeed() {
 
                 <div className="mt-8 text-center md:hidden">
                     <a
-                        href="https://instagram.com/monolithproject"
+                        href="https://instagram.com/monolithproject.events"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/60 hover:text-white transition-colors"

@@ -477,7 +477,7 @@
 
   .bg-noise::before {
     content: '';
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -681,9 +681,7 @@
   .velocity-skew {
     transform: skewY(clamp(-2deg, calc(var(--scroll-velocity, 0) * 0.01deg), 2deg));
     transform-origin: center;
-    will-change: transform;
     pointer-events: auto;
-    /* Ensure clicks still work */
   }
 
   @keyframes marquee {

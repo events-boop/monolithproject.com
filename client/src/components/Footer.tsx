@@ -2,7 +2,7 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { POSH_TICKET_URL } from "@/data/events";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -65,6 +65,31 @@ const links = [
 
 export default function Footer() {
   const [isHovered, setIsHovered] = useState(false);
+  const rectRef = useRef<DOMRect | null>(null);
+  const rectAgeRef = useRef(0);
+
+  const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    setIsHovered(true);
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+    rectAgeRef.current = 0;
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!rectRef.current || rectAgeRef.current++ > 10) {
+      rectRef.current = e.currentTarget.getBoundingClientRect();
+      rectAgeRef.current = 0;
+    }
+    const x = e.clientX - rectRef.current.left;
+    const y = e.clientY - rectRef.current.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    rectRef.current = null;
+  }, []);
+
   const renderItemLabel = (name: string) => {
     if (name === "Chasing Sun(Sets)") {
       return (
@@ -145,15 +170,9 @@ export default function Footer() {
         {/* Middle: Giant Interactive Typography with Spotlight */}
         <div
           className="relative py-10 md:py-24 -mx-6 md:-mx-12 overflow-hidden cursor-default select-none group"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-            e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
         >
           {/* Spotlight Gradient - Follows Mouse */}
           <div

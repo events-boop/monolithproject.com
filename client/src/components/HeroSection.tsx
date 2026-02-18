@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { ArrowRight, ArrowDown, Sun, Ticket } from "lucide-react";
+import { useState, useEffect, memo } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
@@ -24,7 +24,7 @@ const HERO_SLIDES: Slide[] = [
     type: "image",
     src: "/images/untold-story-juany-deron-v2.jpg",
     alt: "Juany Bravo x Deron",
-    caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
+    caption: "DERON B2B JUANY BRAVO | UNTOLD STORY",
   },
   {
     type: "image",
@@ -69,8 +69,54 @@ function pad(n: number) {
   return String(n).padStart(2, "0");
 }
 
+// Isolated countdown — only this component re-renders every second,
+// not the entire HeroSection (parallax, video slider, glitch text, etc.)
+const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
+  const { days, hours, minutes, seconds } = useCountdown(target);
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      data-testid="hero-countdown"
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
+      className="flex items-center gap-3 md:gap-4"
+    >
+      {[
+        { value: days, label: "DAYS", highlight: true },
+        { value: hours, label: "HRS", highlight: false },
+        { value: minutes, label: "MIN", highlight: false },
+        { value: seconds, label: "SEC", highlight: false },
+      ].map((unit) => (
+        <div key={unit.label} className="flex flex-col items-center">
+          <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
+            {pad(unit.value)}
+          </span>
+          <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
+            {unit.label}
+          </span>
+        </div>
+      ))}
+    </motion.div>
+  );
+});
+
+// Light hook — only checks once whether event has expired (no per-second ticking)
+function useIsExpired(target: number) {
+  const [expired, setExpired] = useState(Date.now() >= target);
+  useEffect(() => {
+    if (expired) return;
+    const remaining = target - Date.now();
+    if (remaining <= 0) { setExpired(true); return; }
+    const id = setTimeout(() => setExpired(true), remaining);
+    return () => clearTimeout(id);
+  }, [target, expired]);
+  return expired;
+}
+
 export default function HeroSection() {
-  const { days, hours, minutes, seconds, isExpired } = useCountdown(TARGET_DATE);
+  const isExpired = useIsExpired(TARGET_DATE);
   const reduceMotion = useReducedMotion();
 
 
@@ -209,32 +255,8 @@ export default function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Right: Countdown */}
-          {!isExpired && (
-            <motion.div
-              data-testid="hero-countdown"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
-              className="flex items-center gap-3 md:gap-4"
-            >
-              {[
-                { value: days, label: "DAYS", highlight: true },
-                { value: hours, label: "HRS", highlight: false },
-                { value: minutes, label: "MIN", highlight: false },
-                { value: seconds, label: "SEC", highlight: false },
-              ].map((unit) => (
-                <div key={unit.label} className="flex flex-col items-center">
-                  <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
-                    {pad(unit.value)}
-                  </span>
-                  <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
-                    {unit.label}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          )}
+          {/* Right: Countdown — isolated component, only digits re-render */}
+          {!isExpired && <CountdownDisplay target={TARGET_DATE} />}
         </div>
       </div>
 

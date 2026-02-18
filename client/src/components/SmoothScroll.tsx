@@ -12,44 +12,66 @@ export default function SmoothScroll() {
 
     useEffect(() => {
         if (reduceMotion) return;
-        // S-Tier Scrolling - Optimized for cinematic feel
         const lenis = new Lenis({
-            duration: 1.4, // Slightly longer for luxurious feel
+            duration: 1.4,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
             wheelMultiplier: 1,
             touchMultiplier: 2,
-            // Infinite scroll feel
         });
 
         lenisRef.current = lenis;
 
-        // CSS Hook
         document.documentElement.classList.add('lenis', 'lenis-smooth');
 
         lenis.on('scroll', (e: any) => {
-            // Expose velocity for skew effects
             document.documentElement.style.setProperty('--scroll-velocity', e.velocity);
         });
 
+        // Idle-aware RAF: stop the loop when Lenis is done animating, resume on input
+        let running = false;
+
         function raf(time: number) {
             lenis.raf(time);
+            if (lenis.isScrolling) {
+                reqIdRef.current = requestAnimationFrame(raf);
+            } else {
+                running = false;
+                reqIdRef.current = null;
+            }
+        }
+
+        function wake() {
+            if (running) return;
+            running = true;
             reqIdRef.current = requestAnimationFrame(raf);
         }
 
-        reqIdRef.current = requestAnimationFrame(raf);
+        // Kick-start on user input — covers wheel, touch, keyboard scroll
+        const opts: AddEventListenerOptions = { passive: true };
+        window.addEventListener("wheel", wake, opts);
+        window.addEventListener("touchstart", wake, opts);
+        window.addEventListener("keydown", wake, opts);
+        // Also wake on programmatic scrollTo (e.g. route change)
+        lenis.on("scroll", wake);
+
+        // Initial kick
+        wake();
 
         return () => {
             if (reqIdRef.current) cancelAnimationFrame(reqIdRef.current);
+            window.removeEventListener("wheel", wake);
+            window.removeEventListener("touchstart", wake);
+            window.removeEventListener("keydown", wake);
             document.documentElement.classList.remove('lenis', 'lenis-smooth');
             lenis.destroy();
             lenisRef.current = null;
         };
     }, [reduceMotion]);
 
-    // Reset scroll on route change (including reduced-motion users, where Lenis is disabled).
+    // Reset scroll on route change
     useEffect(() => {
         if (reduceMotion) {
             window.scrollTo(0, 0);

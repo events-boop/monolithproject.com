@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Ticket, Users, Zap } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Users, Zap } from "lucide-react";
 
 interface SocialSnapshot {
     summary: {
@@ -23,26 +23,42 @@ interface SocialSnapshot {
 
 export default function SocialEchoTicker() {
     const [snapshot, setSnapshot] = useState<SocialSnapshot | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Poll for stats
         const fetchStats = async () => {
             try {
                 const res = await fetch("/api/social/echo");
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.ok) {
-                        setSnapshot(data);
-                    }
+                    if (data.ok) setSnapshot(data);
                 }
-            } catch (e) {
-                console.error("Failed to fetch social echo", e);
-            }
+            } catch { /* silent */ }
         };
 
-        fetchStats();
-        const interval = setInterval(fetchStats, 30000); // 30s poll
-        return () => clearInterval(interval);
+        // Only poll when the ticker is visible on screen
+        let interval: ReturnType<typeof setInterval> | null = null;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    fetchStats();
+                    interval = setInterval(fetchStats, 60_000); // 60s (was 30s)
+                } else if (interval) {
+                    clearInterval(interval);
+                    interval = null;
+                }
+            },
+            { threshold: 0 },
+        );
+
+        const node = containerRef.current;
+        if (node) observer.observe(node);
+        fetchStats(); // initial fetch
+
+        return () => {
+            observer.disconnect();
+            if (interval) clearInterval(interval);
+        };
     }, []);
 
     if (!snapshot) return null;
@@ -90,7 +106,7 @@ export default function SocialEchoTicker() {
     const marqueeItems = [...items, ...items, ...items];
 
     return (
-        <div className="w-full overflow-hidden h-[40px] md:h-[48px] bg-charcoal text-white flex items-center relative z-40 border-y border-white/10">
+        <div ref={containerRef} className="w-full overflow-hidden h-[40px] md:h-[48px] bg-charcoal text-white flex items-center relative z-40 border-y border-white/10">
             <div className="flex animate-marquee whitespace-nowrap min-w-full shrink-0 items-center gap-12 px-6">
                 {marqueeItems.map((item, i) => (
                     <div key={i} className="flex items-center gap-3 shrink-0 opacity-90 transition-opacity hover:opacity-100">

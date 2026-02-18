@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Ticket, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
@@ -60,23 +60,22 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   const partnersMenuId = "nav-partners-menu";
   const mobileMenuId = "nav-mobile-menu";
 
-  const { scrollY } = useScroll();
-  const navBackground = useTransform(
-    scrollY,
-    [0, 50],
-    ["rgba(var(--background), 0)", "rgba(var(--background), 0.8)"]
-  );
-  const navBlur = useTransform(scrollY, [0, 50], ["blur(0px)", "blur(12px)"]);
-  const borderOpacity = useTransform(scrollY, [0, 50], [0, 0.1]);
-
-  // Dynamic values for light/dark mode - Fixed: Hooks must be unconditional
-  const bgValueLight = useTransform(scrollY, [0, 50], ["rgba(251, 245, 237, 0)", "rgba(251, 245, 237, 0.85)"]);
-  const bgValueDark = useTransform(scrollY, [0, 50], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.85)"]);
-  const bgValue = isLight ? bgValueLight : bgValueDark;
-
-  const borderValueLight = useTransform(scrollY, [0, 50], ["transparent", "rgba(21, 2, 217, 0.05)"]);
-  const borderValueDark = useTransform(scrollY, [0, 50], ["transparent", "rgba(255, 255, 255, 0.08)"]);
-  const borderValue = isLight ? borderValueLight : borderValueDark;
+  // Replace 6 useTransform hooks with a single scroll listener + CSS transitions.
+  // This eliminates 6 per-frame transform calculations.
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -165,12 +164,13 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-        style={{
-          backgroundColor: bgValue,
-          backdropFilter: navBlur,
-          borderColor: borderValue
-        }}
-        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 transition-colors duration-500 border-b py-4`}
+        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 border-b py-4 transition-all duration-500 ${
+          scrolled
+            ? isLight
+              ? "bg-[rgba(251,245,237,0.85)] backdrop-blur-[12px] border-[rgba(21,2,217,0.05)]"
+              : "bg-[rgba(10,10,10,0.85)] backdrop-blur-[12px] border-[rgba(255,255,255,0.08)]"
+            : "bg-transparent backdrop-blur-none border-transparent"
+        }`}
       >
         <a
           href="#main-content"

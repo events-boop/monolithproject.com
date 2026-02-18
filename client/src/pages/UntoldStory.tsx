@@ -33,7 +33,7 @@ export default function UntoldStory() {
     const eventSchema = {
       "@context": "https://schema.org",
       "@type": "MusicEvent",
-      name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
+      name: "DERON B2B JUANY BRAVO — Untold Story Season III Episode II",
       description:
         "A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360 dancefloor experience.",
       startDate: "2026-03-06T19:00:00-06:00",

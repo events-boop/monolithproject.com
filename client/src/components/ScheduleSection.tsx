@@ -32,14 +32,16 @@ export default function ScheduleSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  // Only track mouse when an event row is hovered (was: global listener always firing)
   useEffect(() => {
+    if (!hoveredEvent) return;
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [hoveredEvent, mouseX, mouseY]);
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
