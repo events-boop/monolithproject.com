@@ -53,25 +53,36 @@ export default function TextLineupSection() {
                         className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4 text-center leading-tight transition-all duration-500"
                         onMouseLeave={() => setHoveredIndex(null)}
                     >
-                        {lineup.map((artist, i) => (
-                            <span
-                                key={artist}
-                                className="group relative inline-block transition-all duration-500 ease-out"
-                                onMouseEnter={() => setHoveredIndex(i)}
-                                style={{
-                                    opacity: hoveredIndex === null || hoveredIndex === i ? 1 : 0.15,
-                                    filter: hoveredIndex !== null && hoveredIndex !== i ? "blur(3px)" : "blur(0px)",
-                                    transform: hoveredIndex === i ? "scale(1.05)" : "scale(1)"
-                                }}
-                            >
-                                <span className={`font-display text-3xl md:text-5xl lg:text-6xl uppercase tracking-tight transition-colors duration-300 cursor-default ${hoveredIndex === i ? "text-[#E05A3A]" : "text-[#050505]"}`}>
-                                    {artist}
+                        {lineup.map((artist, i) => {
+                            // Alternate brand colors: gold for even, violet for odd
+                            const hoverColor = i % 2 === 0 ? "#E8B86D" : "#8B5CF6";
+                            const isHovered = hoveredIndex === i;
+                            return (
+                                <span
+                                    key={artist}
+                                    className="group relative inline-block transition-all duration-500 ease-out"
+                                    onMouseEnter={() => setHoveredIndex(i)}
+                                    style={{
+                                        opacity: hoveredIndex === null || isHovered ? 1 : 0.15,
+                                        filter: hoveredIndex !== null && !isHovered ? "blur(3px)" : "blur(0px)",
+                                        transform: isHovered ? "scale(1.05)" : "scale(1)"
+                                    }}
+                                >
+                                    <span
+                                        className="font-display text-3xl md:text-5xl lg:text-6xl uppercase tracking-tight transition-all duration-300 cursor-default"
+                                        style={{
+                                            color: isHovered ? hoverColor : "#050505",
+                                            textShadow: isHovered ? `0 0 40px ${hoverColor}80, 0 0 80px ${hoverColor}40` : "none",
+                                        }}
+                                    >
+                                        {artist}
+                                    </span>
+                                    {i < lineup.length - 1 && (
+                                        <span className="inline-block mx-2 md:mx-4 align-middle w-1.5 h-1.5 bg-[#050505]/20 rounded-full" />
+                                    )}
                                 </span>
-                                {i < lineup.length - 1 && (
-                                    <span className="inline-block mx-2 md:mx-4 align-middle w-1.5 h-1.5 bg-[#050505]/20 rounded-full" />
-                                )}
-                            </span>
-                        ))}
+                            );
+                        })}
                     </div>
                 </motion.div>
 

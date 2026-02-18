@@ -158,9 +158,14 @@ export default function ScheduleSection() {
                           {seriesLabels[event.series]}
                         </span>
                         {event.status === "on-sale" && (
-                          <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full">
+                          <motion.span
+                            className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full inline-flex items-center gap-1"
+                            animate={{ scale: [1, 1.06, 1], opacity: [1, 0.85, 1] }}
+                            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-white inline-block" />
                             ON SALE
-                          </span>
+                          </motion.span>
                         )}
                       </div>
                     </div>
