@@ -23,6 +23,7 @@ export default function MixedMediaGallery({
   columns = "columns-1 md:columns-2 lg:columns-3",
 }: MixedMediaGalleryProps) {
   const [index, setIndex] = useState<number | null>(null);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const active = useMemo(() => {
@@ -37,31 +38,41 @@ export default function MixedMediaGallery({
   }, [active]);
 
   const close = () => setIndex(null);
-  const prev = () => setIndex((i) => (i === null ? null : (i - 1 + media.length) % media.length));
-  const next = () => setIndex((i) => (i === null ? null : (i + 1) % media.length));
+
+  const prev = () => {
+    setDirection(-1);
+    setIndex((i) => (i === null ? null : (i - 1 + media.length) % media.length));
+  };
+
+  const next = () => {
+    setDirection(1);
+    setIndex((i) => (i === null ? null : (i + 1) % media.length));
+  };
 
   // Keyboard navigation + body scroll lock
   useEffect(() => {
     if (index === null) return;
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
-
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
-
-    // Focus the dialog for screen readers
     dialogRef.current?.focus();
-
     return () => {
       document.body.style.overflow = prevOverflow;
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [index]);
+
+  // Slide variants for image crossfade navigation
+  const slideVariants = {
+    enter: (dir: number) => ({ opacity: 0, x: dir * 40, scale: 0.98 }),
+    center: { opacity: 1, x: 0, scale: 1 },
+    exit: (dir: number) => ({ opacity: 0, x: dir * -40, scale: 0.98 }),
+  };
 
   return (
     <section className={`py-24 ${className}`} style={style}>
@@ -94,8 +105,8 @@ export default function MixedMediaGallery({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => setIndex(i)}
-              className="relative group cursor-pointer overflow-hidden rounded-lg break-inside-avoid mb-4 bg-white/5 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              onClick={() => { setDirection(1); setIndex(i); }}
+              className="relative group cursor-pointer overflow-hidden break-inside-avoid mb-4 bg-white/5 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               aria-label={item.kind === "video" ? "Open video" : (item.kind === "image" && item.alt) ? `View: ${item.alt}` : "Open image"}
             >
               {item.kind === "video" ? (
@@ -127,9 +138,9 @@ export default function MixedMediaGallery({
               )}
 
               {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Caption on hover for images */}
+              {/* Caption on hover */}
               {item.kind === "image" && item.alt && (
                 <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 pointer-events-none">
                   <span className="text-white text-xs font-mono tracking-widest uppercase">
@@ -142,7 +153,7 @@ export default function MixedMediaGallery({
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* ── Lightbox ── */}
       <AnimatePresence>
         {active && (
           <motion.div
@@ -151,15 +162,21 @@ export default function MixedMediaGallery({
             aria-modal="true"
             aria-label="Image gallery viewer"
             tabIndex={-1}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 outline-none"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 outline-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.3 }}
           >
+            {/* Backdrop — richer blur + vignette */}
             <motion.button
               type="button"
-              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+              className="absolute inset-0"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.97) 100%)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+              }}
               onClick={close}
               aria-label="Close gallery"
               initial={{ opacity: 0 }}
@@ -167,75 +184,95 @@ export default function MixedMediaGallery({
               exit={{ opacity: 0 }}
             />
 
+            {/* Content panel */}
             <motion.div
               className="relative z-10 w-full max-w-5xl"
-              initial={{ opacity: 0, scale: 0.96, y: 10 }}
+              initial={{ opacity: 0, scale: 0.93, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/60" aria-live="polite">
+              {/* Top bar */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-white/40" aria-live="polite">
                   {index !== null ? `${index + 1} / ${media.length}` : null}
                 </div>
                 <button
                   type="button"
                   onClick={close}
-                  className="p-2 rounded-full border border-white/15 bg-white/5 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                  className="p-2 border border-white/15 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                   aria-label="Close"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/95 flex items-center justify-center">
-                {active.kind === "video" ? (
-                  <video
-                    className="w-full max-h-[80vh] object-contain"
-                    controls
-                    playsInline
-                    poster={active.poster}
+              {/* Image area with crossfade navigation */}
+              <div className="relative overflow-hidden border border-white/10 bg-black flex items-center justify-center"
+                style={{ minHeight: "40vh" }}>
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key={index}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full"
                   >
-                    <source src={active.src} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img
-                    src={active.src}
-                    alt={active.alt || ""}
-                    className="w-full max-h-[80vh] object-contain"
-                    decoding="async"
-                  />
-                )}
+                    {active.kind === "video" ? (
+                      <video
+                        className="w-full max-h-[78vh] object-contain"
+                        controls
+                        playsInline
+                        poster={active.poster}
+                      >
+                        <source src={active.src} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <img
+                        src={active.src}
+                        alt={active.alt || ""}
+                        className="w-full max-h-[78vh] object-contain"
+                        decoding="async"
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
-              {/* Caption bar */}
-              {activeCaption && (
-                <div className="mt-3 text-center">
-                  <span className="text-white/70 text-xs font-mono tracking-widest uppercase">
-                    {activeCaption}
-                  </span>
-                </div>
-              )}
+              {/* Caption */}
+              <AnimatePresence mode="wait">
+                {activeCaption && (
+                  <motion.div
+                    key={activeCaption}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.25 }}
+                    className="mt-4 text-center"
+                  >
+                    <span className="text-white/50 text-xs font-mono tracking-[0.25em] uppercase">
+                      {activeCaption}
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              {/* Navigation */}
+              {/* Navigation arrows */}
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prev();
-                }}
-                className="absolute left-2 md:-left-14 top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/10 bg-black/60 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+                className="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 p-3 border border-white/10 bg-black/70 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  next();
-                }}
-                className="absolute right-2 md:-right-14 top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/10 bg-black/60 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                onClick={(e) => { e.stopPropagation(); next(); }}
+                className="absolute right-2 md:-right-16 top-1/2 -translate-y-1/2 p-3 border border-white/10 bg-black/70 text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5" />

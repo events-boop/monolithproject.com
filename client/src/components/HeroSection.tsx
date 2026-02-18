@@ -135,29 +135,49 @@ export default function HeroSection() {
 
         {/* Upper zone — title + subtitle */}
         <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.3 }}
-            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display"
-          >
-            <div className="relative inline-block translate-y-2 md:translate-y-3">
-              <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
-                <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
-              </HeroSpotlight>
+          <div className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display">
+            {/* MONOLITH — clip-path curtain reveal */}
+            <div className="relative inline-block translate-y-2 md:translate-y-3 overflow-hidden">
+              <motion.div
+                initial={reduceMotion ? {} : { y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
+                  <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
+                </HeroSpotlight>
+              </motion.div>
             </div>
-            <span className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0">PROJECT</span>
-          </motion.div>
+            {/* PROJECT — follows with slight delay */}
+            <div className="overflow-hidden">
+              <motion.span
+                initial={reduceMotion ? {} : { y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: reduceMotion ? 0.01 : 0.9, delay: reduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+                className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0"
+              >
+                PROJECT
+              </motion.span>
+            </div>
+          </div>
+
+          {/* Accent line — draws in after title */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+            style={{ originX: 0 }}
+            className="h-px w-36 bg-gradient-to-r from-primary/70 to-transparent mb-6"
+          />
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.5 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
           >
             Built on music, community, and showing up for each other.
           </motion.p>
-          <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
         </div>
 
         {/* Lower zone — event info + CTAs */}

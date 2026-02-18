@@ -23,11 +23,14 @@ const navItems = [
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
   {
-    label: "PARTNERS",
+    label: "MORE",
     href: "/partners",
     children: [
-      { label: "PARTNERS & CREW", href: "/partners" },
+      { label: "PARTNERS & EVENTS", href: "/partners" },
       { label: "BOOKING", href: "/booking" },
+      { label: "ARTIST SUBMISSION", href: "/submit" },
+      { label: "PRESS & MEDIA", href: "/press" },
+      { label: "ARCHIVE", href: "/archive" },
       { label: "SPONSOR ACCESS", href: "/sponsors" },
     ],
   },
@@ -42,8 +45,11 @@ const mobileNavItems = [
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
-  { label: "PARTNERS", href: "/partners" },
+  { label: "PARTNERS & EVENTS", href: "/partners" },
   { label: "BOOKING", href: "/booking" },
+  { label: "ARTIST SUBMISSION", href: "/submit" },
+  { label: "PRESS & MEDIA", href: "/press" },
+  { label: "ARCHIVE", href: "/archive" },
 ];
 
 export default function Navigation({ activeSection, variant = "dark", brand = "monolith" }: NavigationProps) {
@@ -164,13 +170,12 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 border-b py-4 transition-all duration-500 ${
-          scrolled
+        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 border-b py-4 transition-all duration-500 ${scrolled
             ? isLight
               ? "bg-[rgba(251,245,237,0.85)] backdrop-blur-[12px] border-[rgba(21,2,217,0.05)]"
               : "bg-[rgba(10,10,10,0.85)] backdrop-blur-[12px] border-[rgba(255,255,255,0.08)]"
             : "bg-transparent backdrop-blur-none border-transparent"
-        }`}
+          }`}
       >
         <a
           href="#main-content"

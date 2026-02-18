@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Download, Mail, FileText, Image, Music, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Download, Mail, FileText, Image, Music } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -316,25 +316,23 @@ export default function Press() {
                         <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">As Seen In</p>
                         <div className="space-y-3">
                             {pressHighlights.map((item, idx) => (
-                                <motion.a
+                                <motion.div
                                     key={idx}
-                                    href={item.url}
                                     initial={{ opacity: 0, x: -12 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: idx * 0.07, duration: 0.4 }}
-                                    className="group flex items-center gap-5 p-5 transition-all duration-200 hover:bg-white/[0.03]"
+                                    className="flex items-center gap-5 p-5"
                                     style={{ border: "1px solid rgba(255,255,255,0.06)" }}
                                 >
                                     <div className="flex-shrink-0 w-24">
                                         <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-primary/70">{item.outlet}</p>
                                         <p className="font-mono text-[8px] text-white/25 mt-0.5">{item.year}</p>
                                     </div>
-                                    <p className="flex-1 text-sm text-white/55 group-hover:text-white/75 transition-colors leading-relaxed italic">
+                                    <p className="flex-1 text-sm text-white/55 leading-relaxed italic">
                                         "{item.headline}"
                                     </p>
-                                    <ExternalLink className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 flex-shrink-0 transition-colors" />
-                                </motion.a>
+                                </motion.div>
                             ))}
                         </div>
                         <p className="mt-4 text-xs text-white/25 font-mono italic">* Coverage examples — update with real placements as they come in.</p>
