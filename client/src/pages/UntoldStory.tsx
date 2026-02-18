@@ -12,6 +12,7 @@ import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
 import { deepBg, eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
+import UntoldStoryOptIn from "@/components/UntoldStoryOptIn";
 
 
 
@@ -115,6 +116,7 @@ export default function UntoldStory() {
 
   return (
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise" style={{ background: deepBg }}>
+      <UntoldStoryOptIn />
       <SEO
         title="Untold Story"
         description="A late-night journey through Afro and melodic house. Immersive 360° sound in Chicago."
