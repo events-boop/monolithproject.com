@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useTransform, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
+import { motion, useTransform, useScroll, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const TracingBeam = ({
@@ -18,8 +18,6 @@ export const TracingBeam = ({
 
     const contentRef = useRef<HTMLDivElement>(null);
     const [svgHeight, setSvgHeight] = useState(0);
-    // Track whether user has scrolled past the start (binary, not per-frame)
-    const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -27,12 +25,6 @@ export const TracingBeam = ({
         }
     }, []);
 
-    // Only fire once when scrollYProgress crosses 0 → avoids 3 per-frame transforms
-    useMotionValueEvent(scrollYProgress, "change", (v) => {
-        if (v > 0 && !hasScrolled) setHasScrolled(true);
-    });
-
-    // These 2 springs are needed for the SVG gradient line
     const y1 = useSpring(useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]), {
         stiffness: 500,
         damping: 90,
@@ -42,10 +34,11 @@ export const TracingBeam = ({
         damping: 90,
     });
 
-    // Dot styles — static based on hasScrolled (was: 3 separate useTransform hooks)
-    const dotStyles = hasScrolled
-        ? { boxShadow: "none", bg: "#ffffff", border: "#ffffff" }
-        : { boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", bg: "#18CCFC", border: "#0ea5e9" };
+    const dotShadow = useTransform(scrollYProgress, (v) =>
+        v > 0 ? "none" : "rgba(0, 0, 0, 0.24) 0px 3px 8px"
+    );
+    const dotBg = useTransform(scrollYProgress, (v) => (v > 0 ? "#ffffff" : "#18CCFC"));
+    const dotBorder = useTransform(scrollYProgress, (v) => (v > 0 ? "#ffffff" : "#0ea5e9"));
 
     return (
         <motion.div
@@ -53,15 +46,15 @@ export const TracingBeam = ({
             className={cn("relative w-full max-w-4xl mx-auto h-full", className)}
         >
             <div className="absolute -left-4 md:-left-20 top-3">
-                <div
-                    style={{ boxShadow: dotStyles.boxShadow }}
+                <motion.div
+                    style={{ boxShadow: dotShadow }}
                     className="ml-[27px] h-4 w-4 rounded-full border border-neutral-200 shadow-sm flex items-center justify-center"
                 >
-                    <div
-                        style={{ backgroundColor: dotStyles.bg, borderColor: dotStyles.border }}
+                    <motion.div
+                        style={{ backgroundColor: dotBg, borderColor: dotBorder }}
                         className="h-2 w-2 rounded-full border border-neutral-300 bg-white"
                     />
-                </div>
+                </motion.div>
                 <svg
                     viewBox={`0 0 20 ${svgHeight}`}
                     width="20"

@@ -84,6 +84,8 @@ export default function FloatingTicketButton() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          animate={isHovered ? { y: 0 } : reduceMotion ? { y: 0 } : { y: [0, -8, 0] }}
+          transition={isHovered ? { type: "spring", stiffness: 300, damping: 20 } : reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
           style={{ x: springX, y: springY }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -118,7 +120,7 @@ export default function FloatingTicketButton() {
 
           {/* Rotating Gradient Background (Outer Ring) */}
           <div className={`absolute inset-0 rounded-full overflow-hidden -z-10 ${theme.shadow} opacity-70 group-hover:opacity-100 transition-opacity duration-500`}>
-            <div className={`absolute inset-[-50%] ${theme.ring} animate-spin-slow`} />
+            <div className={`absolute inset-[-50%] ${theme.ring} animate-[spin_4s_linear_infinite] blur-sm`} />
           </div>
         </motion.div>
       </div>

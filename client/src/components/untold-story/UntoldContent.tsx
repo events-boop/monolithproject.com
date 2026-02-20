@@ -4,14 +4,14 @@ import { violet, cyan, deepBg, cardBg, eventVisuals, lineupVisuals, untoldFaqs }
 
 export default function UntoldContent() {
   return (
-    <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
+    <section className="py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
       <div className="container max-w-5xl mx-auto">
         <div className="flex items-end justify-between mb-8 pb-6" style={{ borderBottom: `1px solid ${violet}20` }}>
           <div>
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2" style={{ color: cyan }}>
               Season III · Episode II
             </span>
-            <h2 className="font-display text-4xl md:text-5xl text-white">DERON B2B JUANY BRAVO</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-white">JUANY BRAVO B2B DERON</h2>
           </div>
           <span className="font-mono text-xs tracking-widest" style={{ color: violet }}>THE JUANY X DERON SHOW</span>
         </div>
@@ -32,7 +32,7 @@ export default function UntoldContent() {
             <div className="mb-10 overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
               <img
                 src={eventVisuals.poster}
-                alt="Deron B2B Juany Bravo featured event artwork"
+                alt="Juany Bravo b2b Deron featured event artwork"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -132,7 +132,7 @@ export default function UntoldContent() {
                 Lineup
               </span>
               <p className="text-white text-lg font-display tracking-wide mb-2">
-                DERON B2B JUANY BRAVO (Headliner)
+                JUANY BRAVO B2B DERON (Headliner)
               </p>
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-white/60 text-sm">
                 <span>Hashtom</span>

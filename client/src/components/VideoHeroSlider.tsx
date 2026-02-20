@@ -90,7 +90,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
   if (!slide) return null;
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden group">
+    <div className="absolute inset-0 z-0 overflow-hidden">
       <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
@@ -143,7 +143,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
       <button
         type="button"
         onClick={prev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all opacity-0 group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -151,7 +151,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
       <button
         type="button"
         onClick={next}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all opacity-0 group-hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5" />

@@ -1,6 +1,6 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { type ReactNode, useRef } from "react";
+import { ReactNode, useRef } from "react";
 
 interface MagneticButtonProps {
     children: ReactNode;
@@ -25,26 +25,23 @@ export default function MagneticButton({
     const springX = useSpring(x, springConfig);
     const springY = useSpring(y, springConfig);
 
-    // Cache the bounding rect on mouseenter — avoids layout thrash per mousemove
-    const rectRef = useRef<DOMRect | null>(null);
-
-    const handleMouseEnter = () => {
-        if (ref.current) rectRef.current = ref.current.getBoundingClientRect();
-    };
-
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = rectRef.current;
-        if (!rect) return;
+        if (!ref.current) return;
 
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = ref.current.getBoundingClientRect();
 
-        x.set((e.clientX - centerX) * strength);
-        y.set((e.clientY - centerY) * strength);
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+
+        const distanceX = clientX - centerX;
+        const distanceY = clientY - centerY;
+
+        x.set(distanceX * strength);
+        y.set(distanceY * strength);
     };
 
     const handleMouseLeave = () => {
-        rectRef.current = null;
         x.set(0);
         y.set(0);
     };
@@ -52,7 +49,6 @@ export default function MagneticButton({
     return (
         <motion.div
             ref={ref}
-            onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={() => onClick?.()}

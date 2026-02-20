@@ -149,7 +149,7 @@ export default function Tickets() {
                 <div className="mb-8 overflow-hidden rounded-xl border border-white/25">
                   <img
                     src={eventVisuals.poster}
-                    alt="Deron B2B Juany Bravo featured poster"
+                    alt="Juany Bravo b2b Deron featured poster"
                     loading="eager"
                     decoding="async"
                     onError={handleImageError}
@@ -285,8 +285,8 @@ export default function Tickets() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
                 className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm ${tier.highlight
-                  ? "border-primary bg-[linear-gradient(145deg,rgba(224,90,58,0.2),rgba(139,92,246,0.16))] shadow-[0_10px_30px_rgba(224,90,58,0.25)]"
-                  : "border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]"
+                    ? "border-primary bg-[linear-gradient(145deg,rgba(224,90,58,0.2),rgba(139,92,246,0.16))] shadow-[0_10px_30px_rgba(224,90,58,0.25)]"
+                    : "border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]"
                   }`}
               >
                 {tier.highlight && (
@@ -328,8 +328,8 @@ export default function Tickets() {
                   onClick={handlePurchase}
                   disabled={!tier.available}
                   className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all flex items-center justify-center gap-2 rounded-full ${tier.highlight
-                    ? "border border-primary text-primary hover:bg-primary hover:text-white"
-                    : "border border-white/30 text-white hover:border-white/60 hover:bg-white/5"
+                      ? "border border-primary text-primary hover:bg-primary hover:text-white"
+                      : "border border-white/30 text-white hover:border-white/60 hover:bg-white/5"
                     } ${!tier.available && "opacity-50 cursor-not-allowed"}`}
                 >
                   {tier.available ? (

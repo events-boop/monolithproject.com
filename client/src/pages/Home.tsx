@@ -10,8 +10,6 @@ import Ticker from "@/components/Ticker";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
-import FixedTicketBadge from "@/components/FixedTicketBadge";
-import TextLineupSection from "@/components/TextLineupSection";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
 const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
@@ -19,7 +17,6 @@ const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
 const ConnectSection = lazy(() => import("@/components/ConnectSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
-const InstagramFeed = lazy(() => import("@/components/InstagramFeed"));
 import SEO from "@/components/SEO";
 
 export default function Home() {
@@ -34,7 +31,7 @@ export default function Home() {
         description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
       />
       <Navigation />
-
+      <FixedTicketBadge />
 
       <main id="main-content" tabIndex={-1}>
         {/* Hero — countdown + video + CTAs */}
@@ -56,7 +53,9 @@ export default function Home() {
         <SectionDivider number="04" label="Archives" />
         <MixedMediaGallery />
 
-
+        {/* 04 — Gallery */}
+        <SectionDivider number="04" label="Archives" />
+        <MixedMediaGallery />
 
         {/* Cinematic break — full-bleed parallax with pull quote */}
         <ViewportLazy minHeightClassName="min-h-[60vh]">
@@ -114,15 +113,9 @@ export default function Home() {
         </ViewportLazy>
 
         {/* Newsletter */}
-        <Suspense fallback={null}>
-          <NewsletterSection />
-        </Suspense>
-
-        {/* 10 — The Pulse */}
-        <SectionDivider number="10" label="The Feed" />
-        <ViewportLazy minHeightClassName="min-h-[600px]">
+        <ViewportLazy minHeightClassName="min-h-[320px]">
           <Suspense fallback={null}>
-            <InstagramFeed />
+            <NewsletterSection />
           </Suspense>
         </ViewportLazy>
 

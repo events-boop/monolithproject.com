@@ -4,14 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-// Imports moved to lazy load below
+import Analytics from "./components/Analytics";
+import DeferredEnhancements from "./components/DeferredEnhancements";
+import EventBanner from "./components/EventBanner";
 
-import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
-const Home = lazy(() => import("./pages/Home"));
+import Home from "./pages/Home";
 
 const Tickets = lazy(() => import("./pages/Tickets"));
-const Preloader = lazy(() => import("./components/Preloader"));
 const About = lazy(() => import("./pages/About"));
 const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
 const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
@@ -28,16 +29,6 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
-const FAQ = lazy(() => import("./pages/FAQ"));
-const Archive = lazy(() => import("./pages/Archive"));
-const Press = lazy(() => import("./pages/Press"));
-const Submit = lazy(() => import("./pages/Submit"));
-
-const Shop = lazy(() => import("./pages/Shop"));
-const Ambassadors = lazy(() => import("./pages/Ambassadors"));
-const Travel = lazy(() => import("./pages/Travel"));
-const Guide = lazy(() => import("./pages/Guide"));
-const VIP = lazy(() => import("./pages/VIP"));
 
 const pageTransition = {
   initial: { opacity: 0, y: 12 },
@@ -71,15 +62,6 @@ function Router() {
         <Route path={"/terms"} component={TermsTransition} />
         <Route path={"/privacy"} component={PrivacyTransition} />
         <Route path={"/cookies"} component={CookiesTransition} />
-        <Route path={"/faq"} component={FAQTransition} />
-        <Route path={"/archive"} component={ArchiveTransition} />
-        <Route path={"/press"} component={PressTransition} />
-        <Route path={"/submit"} component={SubmitTransition} />
-        <Route path={"/shop"} component={ShopTransition} />
-        <Route path={"/ambassadors"} component={AmbassadorsTransition} />
-        <Route path={"/travel"} component={TravelTransition} />
-        <Route path={"/guide"} component={GuideTransition} />
-        <Route path={"/vip"} component={VIPTransition} />
         <Route path={"/404"} component={NotFoundTransition} />
         <Route component={NotFoundTransition} />
       </Switch>
@@ -89,7 +71,7 @@ function Router() {
 
 const withTransition = (Component: React.ComponentType<any>) => {
   return (props: any) => (
-    <m.div
+    <motion.div
       initial={pageTransition.initial}
       animate={pageTransition.animate}
       exit={pageTransition.exit}
@@ -97,7 +79,7 @@ const withTransition = (Component: React.ComponentType<any>) => {
       className="w-full"
     >
       <Component {...props} />
-    </m.div>
+    </motion.div>
   );
 };
 
@@ -118,54 +100,25 @@ const PartnersTransition = withTransition(Partners);
 const TermsTransition = withTransition(Terms);
 const PrivacyTransition = withTransition(Privacy);
 const CookiesTransition = withTransition(Cookies);
-const FAQTransition = withTransition(FAQ);
-const ArchiveTransition = withTransition(Archive);
-const PressTransition = withTransition(Press);
-const SubmitTransition = withTransition(Submit);
 const NotFoundTransition = withTransition(NotFoundLazy);
-const ShopTransition = withTransition(Shop);
-const AmbassadorsTransition = withTransition(Ambassadors);
-const TravelTransition = withTransition(Travel);
-const GuideTransition = withTransition(Guide);
-const VIPTransition = withTransition(VIP);
-
-const Analytics = lazy(() => import("./components/Analytics"));
-const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancements"));
-const EventBanner = lazy(() => import("./components/EventBanner"));
-const KineticGrain = lazy(() => import("./components/ui/CinematicGrain").then(module => ({ default: module.KineticGrain })));
-const CustomCursor = lazy(() => import("./components/CustomCursor"));
-const CookieConsent = lazy(() => import("./components/CookieConsent"));
-
-// ... (Router component remains unchanged)
-
-import SmoothScroll from "./components/SmoothScroll";
-
-// ... existing imports ...
 
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <SmoothScroll />
-          <LazyMotion features={domAnimation}>
-            <Toaster />
-            <Suspense fallback={null}>
-              <KineticGrain />
-              <CustomCursor />
-              <Preloader onComplete={() => { }} />
-              <Analytics />
-              <EventBanner />
-              <DeferredEnhancements />
-              <CookieConsent />
-              {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
-              <div id="main-content" tabIndex={-1} className="w-full">
-                <div className="origin-top">
-                  <Router />
-                </div>
+          <Toaster />
+          <Analytics />
+          <EventBanner />
+          <DeferredEnhancements />
+          <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+            {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
+            <div id="main-content" tabIndex={-1} className="w-full">
+              <div className="origin-top">
+                <Router />
               </div>
-            </Suspense>
-          </LazyMotion>
+            </div>
+          </Suspense>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

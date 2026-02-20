@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, Ticket, ChevronDown, ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
-import { isEventBannerVisible } from "@/lib/eventBanner";
 
 interface NavigationProps {
   activeSection?: string;
@@ -22,21 +21,12 @@ const navItems = [
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
-  { label: "SHOP", href: "/shop" },
   {
-    label: "MORE",
+    label: "PARTNERS",
     href: "/partners",
     children: [
-      { label: "PARTNERS & EVENTS", href: "/partners" },
-      { label: "VIP & TABLES", href: "/vip" },
-      { label: "AMBASSADORS", href: "/ambassadors" },
-      { label: "TRAVEL & HOTELS", href: "/travel" },
-      { label: "ARRIVAL GUIDE", href: "/guide" },
+      { label: "PARTNERS & CREW", href: "/partners" },
       { label: "BOOKING", href: "/booking" },
-      { label: "ARTIST SUBMISSION", href: "/submit" },
-      { label: "PRESS & MEDIA", href: "/press" },
-      { label: "ARCHIVE", href: "/archive" },
-      { label: "FAQ", href: "/faq" },
       { label: "SPONSOR ACCESS", href: "/sponsors" },
     ],
   },
@@ -51,22 +41,12 @@ const mobileNavItems = [
   { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
-  { label: "SHOP", href: "/shop" },
-  { label: "PARTNERS & EVENTS", href: "/partners" },
-  { label: "VIP & TABLES", href: "/vip" },
-  { label: "AMBASSADORS", href: "/ambassadors" },
-  { label: "TRAVEL & HOTELS", href: "/travel" },
-  { label: "ARRIVAL GUIDE", href: "/guide" },
+  { label: "PARTNERS", href: "/partners" },
   { label: "BOOKING", href: "/booking" },
-  { label: "ARTIST SUBMISSION", href: "/submit" },
-  { label: "PRESS & MEDIA", href: "/press" },
-  { label: "ARCHIVE", href: "/archive" },
-  { label: "FAQ", href: "/faq" },
 ];
 
 export default function Navigation({ activeSection, variant = "dark", brand = "monolith" }: NavigationProps) {
   const isLight = variant === "light";
-  const hasEventBanner = isEventBannerVisible();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -78,22 +58,23 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   const partnersMenuId = "nav-partners-menu";
   const mobileMenuId = "nav-mobile-menu";
 
-  // Replace 6 useTransform hooks with a single scroll listener + CSS transitions.
-  // This eliminates 6 per-frame transform calculations.
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 50);
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  const navBackground = useTransform(
+    scrollY,
+    [0, 50],
+    ["rgba(var(--background), 0)", "rgba(var(--background), 0.8)"]
+  );
+  const navBlur = useTransform(scrollY, [0, 50], ["blur(0px)", "blur(12px)"]);
+  const borderOpacity = useTransform(scrollY, [0, 50], [0, 0.1]);
+
+  // Dynamic values for light/dark mode - Fixed: Hooks must be unconditional
+  const bgValueLight = useTransform(scrollY, [0, 50], ["rgba(251, 245, 237, 0)", "rgba(251, 245, 237, 0.85)"]);
+  const bgValueDark = useTransform(scrollY, [0, 50], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.85)"]);
+  const bgValue = isLight ? bgValueLight : bgValueDark;
+
+  const borderValueLight = useTransform(scrollY, [0, 50], ["transparent", "rgba(21, 2, 217, 0.05)"]);
+  const borderValueDark = useTransform(scrollY, [0, 50], ["transparent", "rgba(255, 255, 255, 0.08)"]);
+  const borderValue = isLight ? borderValueLight : borderValueDark;
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -179,15 +160,15 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   return (
     <>
       <motion.nav
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-        className={`fixed ${hasEventBanner ? "top-12" : "top-0"} left-0 right-0 z-50 border-b py-4 transition-all duration-500 ${scrolled
-          ? isLight
-            ? "bg-[rgba(251,245,237,0.85)] backdrop-blur-[12px] border-[rgba(21,2,217,0.05)]"
-            : "bg-[rgba(10,10,10,0.85)] backdrop-blur-[12px] border-[rgba(255,255,255,0.08)]"
-          : "bg-transparent backdrop-blur-none border-transparent"
-          }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        style={{
+          backgroundColor: bgValue,
+          backdropFilter: navBlur,
+          borderColor: borderValue
+        }}
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-500 border-b py-4"
       >
         <a
           href="#main-content"
@@ -261,7 +242,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                               ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                               : brand === "chasing-sunsets"
                                 ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
-                                : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
+                              : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
                               }`}
                             role="menuitem"
                           >
@@ -285,7 +266,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
                       ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
                 >
                   {item.label === "CHASING SUN(SETS)" ? (
@@ -362,7 +343,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl overflow-y-auto"
+            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
@@ -402,7 +383,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               }
             }}
           >
-            <div className="fixed top-6 right-6 z-20">
+            <div className="absolute top-6 right-6">
               <MagneticButton>
                 <button
                   type="button"
@@ -416,14 +397,13 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               </MagneticButton>
             </div>
 
-            <div className="min-h-full flex flex-col items-center justify-start pt-24 pb-12 px-6">
+            <div className="flex flex-col items-center gap-8 relative z-10 w-full px-8">
               {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                  className="mb-6 last:mb-0"
+                  transition={{ delay: 0.1 + index * 0.1 }}
                 >
                   <Link
                     href={item.href.startsWith("/#") ? "/" : item.href}
@@ -436,33 +416,33 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
                     className={`group font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
                   >
-                    {item.label === "CHASING SUN(SETS)" ? (
-                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                        <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
-                        <span className="relative inline-block pb-2">
-                          <span>{item.label}</span>
-                          <span
-                            aria-hidden="true"
-                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                          />
-                        </span>
+                  {item.label === "CHASING SUN(SETS)" ? (
+                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                      <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
+                      <span className="relative inline-block pb-2">
+                        <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
                       </span>
-                    ) : item.label === "UNTOLD STORY" ? (
-                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
-                        <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
-                        <span className="relative inline-block pb-2">
-                          <span>{item.label}</span>
-                          <span
-                            aria-hidden="true"
-                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                          />
-                        </span>
+                    </span>
+                  ) : item.label === "UNTOLD STORY" ? (
+                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                      <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
+                      <span className="relative inline-block pb-2">
+                        <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
                       </span>
-                    ) : (
-                      item.label
-                    )}
-                  </Link>
-                </motion.div>
+                    </span>
+                  ) : (
+                    item.label
+                  )}
+                </Link>
+              </motion.div>
               ))}
 
               {/* Emphasized ticket CTA */}

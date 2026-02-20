@@ -2,7 +2,7 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { POSH_TICKET_URL } from "@/data/events";
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -41,24 +41,21 @@ const links = [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
       { name: "Radio", href: "/radio" },
-      { name: "Archive", href: "/archive" },
       { name: "About", href: "/about" },
       { name: "Contact", href: "/contact" },
+      { name: "FAQ", href: "/#faq" },
     ]
   },
   {
     title: "Work With Us", items: [
       { name: "Partners", href: "/partners" },
       { name: "Booking", href: "/booking" },
-      { name: "Artist Submission", href: "/submit" },
-      { name: "Press & Media", href: "/press" },
       { name: "Sponsor Access", href: "/sponsors" },
       { name: "Get Tickets", href: POSH_TICKET_URL, external: true },
     ]
   },
   {
     title: "Legal", items: [
-      { name: "FAQ", href: "/faq" },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Cookie Policy", href: "/cookies" },
@@ -68,31 +65,6 @@ const links = [
 
 export default function Footer() {
   const [isHovered, setIsHovered] = useState(false);
-  const rectRef = useRef<DOMRect | null>(null);
-  const rectAgeRef = useRef(0);
-
-  const handleMouseEnter = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    setIsHovered(true);
-    rectRef.current = e.currentTarget.getBoundingClientRect();
-    rectAgeRef.current = 0;
-  }, []);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!rectRef.current || rectAgeRef.current++ > 10) {
-      rectRef.current = e.currentTarget.getBoundingClientRect();
-      rectAgeRef.current = 0;
-    }
-    const x = e.clientX - rectRef.current.left;
-    const y = e.clientY - rectRef.current.top;
-    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
-    rectRef.current = null;
-  }, []);
-
   const renderItemLabel = (name: string) => {
     if (name === "Chasing Sun(Sets)") {
       return (
@@ -115,14 +87,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-background border-t border-white/5 relative overflow-hidden pt-20 pb-8 text-foreground">
-      {/* Gradient bridge from page content into footer */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background/0 via-background/60 to-background z-0" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(224,90,58,0.14),transparent_38%),radial-gradient(circle_at_88%_82%,rgba(194,112,62,0.1),transparent_42%),radial-gradient(circle_at_70%_30%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_30%_78%,rgba(139,92,246,0.1),transparent_36%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.16)_0%,rgba(6,6,15,0.45)_100%)]" />
       <div className="container max-w-7xl mx-auto px-6 flex flex-col justify-between min-h-[60vh]">
 
         {/* Top: Navigation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 md:gap-12 mb-20 z-10 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 z-10 relative">
           <div className="col-span-2 md:col-span-1">
             <span className="font-display text-2xl tracking-wide block mb-6 text-white">
               THE MONOLITH
@@ -175,9 +145,15 @@ export default function Footer() {
         {/* Middle: Giant Interactive Typography with Spotlight */}
         <div
           className="relative py-10 md:py-24 -mx-6 md:-mx-12 overflow-hidden cursor-default select-none group"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+            e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+          }}
         >
           {/* Spotlight Gradient - Follows Mouse */}
           <div
@@ -193,16 +169,16 @@ export default function Footer() {
             <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
           </div>
 
-          {/* Huge Text - Base Layer: visible at rest, blooms on hover */}
-          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-white/10 group-hover:from-white/90 group-hover:to-white/70 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_40px_rgba(224,90,58,0.4)] transform group-hover:scale-[1.02]">
+          {/* Huge Text - Base Layer */}
+          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] group-hover:text-white/90 mix-blend-overlay group-hover:mix-blend-normal transform group-hover:scale-[1.02]">
             MONOLITH
           </h1>
 
-          {/* Outline Overlay for Stroke Effect: always visible, intensifies on hover */}
+          {/* Outline Overlay for Stroke Effect */}
           <h1
-            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-700 text-transparent"
+            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 text-transparent"
             style={{
-              WebkitTextStroke: "1px rgba(255,255,255,0.35)",
+              WebkitTextStroke: "1px rgba(255,255,255,0.15)",
               transform: "translateZ(0)"
             }}
           >

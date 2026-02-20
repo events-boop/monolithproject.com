@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useState } from "react";
 
 interface GlitchTextProps {
@@ -30,7 +30,7 @@ export default function GlitchText({ children, className = "" }: GlitchTextProps
                     transition={{
                         duration: 0.2,
                         times: [0, 0.5, 1],
-                        repeat: 3,
+                        repeat: Infinity,
                         repeatDelay: 0.1
                     }}
                 >
@@ -50,7 +50,7 @@ export default function GlitchText({ children, className = "" }: GlitchTextProps
                     transition={{
                         duration: 0.2,
                         times: [0, 0.5, 1],
-                        repeat: 3,
+                        repeat: Infinity,
                         repeatDelay: 0.15
                     }}
                 >
