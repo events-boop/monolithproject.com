@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 interface SEOProps {
   title: string;
@@ -16,55 +16,70 @@ function resolveAbsoluteUrl(url: string, origin: string) {
   return `${origin}/${url}`;
 }
 
-export default function SEO({ title, description, image = "/og-image.jpg", type = "website", noIndex = false }: SEOProps) {
-  /* 
-    Logic for canonical URLs and resolving absolute paths 
-  */
-  const origin = typeof window !== "undefined" ? window.location.origin : CANONICAL_ORIGIN;
-  const canonicalOrigin = (() => {
-    // Keep local/dev environments "as-is" so links behave predictably.
-    if (origin.includes("localhost") || origin.includes("127.0.0.1")) return origin;
-    // Treat both custom domains as valid, but collapse canonical URLs to the preferred domain.
-    if (/^https?:\/\/(www\.)?themonolithproject\.com$/i.test(origin)) return CANONICAL_ORIGIN;
-    if (/^https?:\/\/(www\.)?monolithproject\.com$/i.test(origin)) return CANONICAL_ORIGIN;
-    return origin;
-  })();
+function upsertMeta(attr: "name" | "property", key: string, content: string) {
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+}
 
+function upsertLink(rel: string, href: string) {
+  let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+}
+
+export default function SEO({ title, description, image = "/og-image.jpg", type = "website", noIndex = false }: SEOProps) {
   const siteTitle = "The Monolith Project";
   const fullTitle = `${title} | ${siteTitle}`;
   const defaultDescription =
     "A Chicago-based events collective building on music, community, and showing up for each other.";
   const resolvedDescription = description || defaultDescription;
 
-  const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
-  const canonicalUrl = `${canonicalOrigin}${currentPath}`;
+  const origin = typeof window !== "undefined" ? (window.location.origin || CANONICAL_ORIGIN) : CANONICAL_ORIGIN;
+  const canonicalOrigin = (() => {
+    if (origin.includes("localhost") || origin.includes("127.0.0.1")) return origin;
+    if (/^https?:\/\/(www\.)?themonolithproject\.com$/i.test(origin)) return CANONICAL_ORIGIN;
+    if (/^https?:\/\/(www\.)?monolithproject\.com$/i.test(origin)) return CANONICAL_ORIGIN;
+    return origin;
+  })();
+
+  const canonicalUrl = typeof window !== "undefined" ? `${canonicalOrigin}${window.location.pathname}` : CANONICAL_ORIGIN;
   const resolvedImage = resolveAbsoluteUrl(image, canonicalOrigin);
 
-  return (
-    <Helmet prioritizeSeoTags>
-      {/* Core Meta */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={resolvedDescription} />
-      <link rel="canonical" href={canonicalUrl} />
+  useEffect(() => {
+    document.title = fullTitle;
 
-      {/* Robots */}
-      <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow"} />
+    upsertMeta("name", "description", resolvedDescription);
+    upsertLink("canonical", canonicalUrl);
 
-      {/* Open Graph */}
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={resolvedDescription} />
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:image" content={resolvedImage} />
-      <meta property="og:site_name" content={siteTitle} />
+    upsertMeta("property", "og:title", fullTitle);
+    upsertMeta("property", "og:description", resolvedDescription);
+    upsertMeta("property", "og:type", type);
+    upsertMeta("property", "og:url", canonicalUrl);
+    upsertMeta("property", "og:image", resolvedImage);
+    upsertMeta("property", "og:site_name", siteTitle);
 
-      {/* Twitter */}
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={resolvedDescription} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={canonicalUrl} />
-      <meta name="twitter:image" content={resolvedImage} />
-    </Helmet>
-  );
+    upsertMeta("name", "twitter:title", fullTitle);
+    upsertMeta("name", "twitter:description", resolvedDescription);
+    upsertMeta("name", "twitter:card", "summary_large_image");
+    upsertMeta("name", "twitter:url", canonicalUrl);
+    upsertMeta("name", "twitter:image", resolvedImage);
+
+    if (noIndex) {
+      upsertMeta("name", "robots", "noindex,nofollow");
+    } else {
+      const robotsEl = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]');
+      if (robotsEl) robotsEl.remove();
+    }
+  }, [fullTitle, resolvedDescription, canonicalUrl, resolvedImage, type, noIndex]);
+
+  return null;
 }
-

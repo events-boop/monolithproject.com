@@ -84,54 +84,48 @@ export interface SunsetPalette {
 }
 
 const INITIAL: SunsetPalette = {
-  bg: "#FBF5ED",
-  text: "#2C1810",
-  accent: "#C2703E",
-  warmGold: "#E8B86D",
-  glass: "#FFFFFF",
+  bg: "var(--sunset-bg, #FBF5ED)",
+  text: "var(--sunset-text, #2C1810)",
+  accent: "var(--sunset-accent, #C2703E)",
+  warmGold: "var(--sunset-warmGold, #E8B86D)",
+  glass: "var(--sunset-glass, #FFFFFF)",
   progress: 0,
 };
 
 export default function useScrollSunset(): SunsetPalette {
-  const [palette, setPalette] = useState<SunsetPalette>(INITIAL);
-  const prevRef = useRef(-1);
-  const rafRef = useRef(0);
-
   useEffect(() => {
+    let rafRef = 0;
+    let prevT = -1;
+
     const tick = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const t = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
 
-      // Update state for smooth 60fps color transition
-      // Threshold lowered significantly to prevent "stepped" look
-      if (Math.abs(t - prevRef.current) < 0.0005) {
-        rafRef.current = 0;
-        return;
+      // Update native CSS vars to avoid heavy React state commits on scroll
+      if (Math.abs(t - prevT) > 0.001) {
+        prevT = t;
+        const root = document.documentElement;
+        root.style.setProperty("--sunset-bg", sample(BG, t));
+        root.style.setProperty("--sunset-text", sample(TEXT, t));
+        root.style.setProperty("--sunset-accent", sample(ACCENT, t));
+        root.style.setProperty("--sunset-warmGold", "#E8B86D");
+        root.style.setProperty("--sunset-glass", sample(GLASS, t));
       }
-      prevRef.current = t;
-
-      setPalette({
-        bg: sample(BG, t),
-        text: sample(TEXT, t),
-        accent: sample(ACCENT, t),
-        warmGold: "#E8B86D",
-        glass: sample(GLASS, t),
-        progress: t,
-      });
-      rafRef.current = 0;
+      rafRef = 0;
     };
 
     const onScroll = () => {
-      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+      if (!rafRef) rafRef = requestAnimationFrame(tick);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     tick(); // initialise at current position
+
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef) cancelAnimationFrame(rafRef);
     };
   }, []);
 
-  return palette;
+  return INITIAL;
 }

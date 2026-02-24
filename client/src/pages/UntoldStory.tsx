@@ -8,13 +8,11 @@ import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import SEO from "@/components/SEO";
 import { POSH_TICKET_URL } from "@/data/events";
 import { untoldSeason1, untoldSeason2 } from "@/data/galleryData";
+import { eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
+
 import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
-import { deepBg, eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
-import UntoldStoryOptIn from "@/components/UntoldStoryOptIn";
-
-
 
 const UNTOLD_ANCHORS = [
   { label: "Event", href: "#untold-event" },
@@ -34,7 +32,7 @@ export default function UntoldStory() {
     const eventSchema = {
       "@context": "https://schema.org",
       "@type": "MusicEvent",
-      name: "DERON B2B JUANY BRAVO — Untold Story Season III Episode II",
+      name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
       description:
         "A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360 dancefloor experience.",
       startDate: "2026-03-06T19:00:00-06:00",
@@ -115,23 +113,22 @@ export default function UntoldStory() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise" style={{ background: deepBg }}>
-      <UntoldStoryOptIn />
+    <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
         title="Untold Story"
         description="A late-night journey through Afro and melodic house. Immersive 360° sound in Chicago."
         image={eventVisuals.poster}
       />
       <Navigation />
-      <main id="main-content" tabIndex={-1}>
 
+      <main id="main-content" tabIndex={-1}>
         <UntoldHero />
-        <SeasonAnchorNav items={UNTOLD_ANCHORS} tone="nocturne" className="-mt-7 mb-5" />
+        <SeasonAnchorNav items={UNTOLD_ANCHORS} tone="nocturne" className="-mt-7 mb-5 relative z-30" />
         <UntoldContent />
         <UntoldContrast />
 
         {/* Season Records */}
-        <div id="untold-records" className="scroll-mt-44">
+        <div id="untold-records" className="scroll-mt-44 relative z-20">
           <MixedMediaGallery
             title="Season I"
             subtitle="2025 Archives"
@@ -148,7 +145,7 @@ export default function UntoldStory() {
           />
         </div>
 
-        <section id="untold-tickets" className="scroll-mt-44 py-0">
+        <section id="untold-tickets" className="scroll-mt-44 py-0 relative z-20">
           <TicketTicker />
         </section>
       </main>

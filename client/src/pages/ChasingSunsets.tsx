@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, Calendar, MapPin } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
@@ -12,6 +12,9 @@ import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
 import useScrollSunset from "@/hooks/useScrollSunset";
 import ChasingSunsetsOptIn from "@/components/ChasingSunsetsOptIn";
+import { useState } from "react";
+import ResidentDJCard from "@/components/ResidentDJCard";
+import MagneticButton from "@/components/MagneticButton";
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
@@ -67,17 +70,26 @@ const CHASING_ANCHORS = [
 const HERO_DARK = "#2C1810";
 
 export default function ChasingSunsets() {
-  const { bg, text, accent, warmGold, glass } = useScrollSunset();
+  useScrollSunset();
+  const [activeTab, setActiveTab] = useState<'live' | 'residents'>('live');
+  const [faqOpen, setFaqOpen] = useState(false);
+
+  const chasingFaqs = [
+    ["Where are the events located?", "Our events take place at various outdoor and rooftop locations across Chicago. Keep an eye on the schedule for specific venues."],
+    ["What time should I arrive?", "The magic happens during the golden hour. We highly recommend arriving early to experience the transition from sunset to sundown."],
+    ["Are tickets sold at the door?", "We operate as a presale-only collective to ensure the best experience and crowd control. Door sales are extremely rare."],
+    ["What's the dress code?", "Elevated, comfortable outdoor attire. Think rooftop chic. Dress for the weather and prepare to dance."]
+  ];
 
   return (
-    <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise" style={{ background: bg, color: text }}>
+    <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise sunset-page">
       <ChasingSunsetsOptIn />
       <SEO
         title="Chasing Sun(Sets)"
         description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
         image="/images/chasing-sunsets.jpg"
       />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_16%,rgba(232,184,109,0.25),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(194,112,62,0.2),transparent_32%),radial-gradient(circle_at_75%_84%,rgba(139,92,246,0.14),transparent_36%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1" />
       <Navigation variant="dark" brand="chasing-sunsets" />
       <main id="main-content" tabIndex={-1}>
 
@@ -87,12 +99,7 @@ export default function ChasingSunsets() {
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
           {/* Overlay gradient for readability */}
-          <div
-            className="absolute inset-0 opacity-80 z-10 pointer-events-none"
-            style={{
-              background: `linear-gradient(to top, ${HERO_DARK}ee 0%, ${HERO_DARK}66 45%, transparent 78%)`,
-            }}
-          />
+          <div className="absolute inset-0 opacity-80 z-10 pointer-events-none bg-chasing-hero-overlay" />
 
           <div className="relative z-20 container max-w-6xl mx-auto pointer-events-none">
             <motion.div
@@ -104,11 +111,16 @@ export default function ChasingSunsets() {
               <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-white/90">
                 Series 01
               </span>
-              <h1 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white">
+              <motion.h1
+                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
+                className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
+              >
                 <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
                   CHASING SUN(SETS)
                 </span>
-              </h1>
+              </motion.h1>
               <p className="max-w-lg text-lg leading-relaxed text-white/90">
                 Golden hour. Good people. Great music. Rooftop shows and outdoor
                 gatherings where the sun does half the work.
@@ -129,7 +141,7 @@ export default function ChasingSunsets() {
         <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
         {/* The Concept */}
-        <section id="chasing-concept" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${accent}15` }}>
+        <section id="chasing-concept" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
           <div className="container max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-start">
               <motion.div
@@ -137,10 +149,10 @@ export default function ChasingSunsets() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: accent }}>
+                <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4 sunset-accent">
                   The Format
                 </span>
-                <h2 className="font-display text-5xl md:text-6xl mb-6" style={{ color: text }}>
+                <h2 className="font-display text-5xl md:text-6xl mb-6 sunset-text">
                   SUNSET TO
                   <br />
                   SUNDOWN
@@ -152,15 +164,14 @@ export default function ChasingSunsets() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="space-y-6 rounded-2xl border p-6 md:p-8 backdrop-blur-sm"
-                style={{ borderColor: `${accent}22`, background: `linear-gradient(145deg,${glass}9E,${glass}5C)` }}
+                className="space-y-6 rounded-2xl border p-6 md:p-8 backdrop-blur-sm sunset-border-accent sunset-glass-card"
               >
-                <p className="text-lg leading-relaxed" style={{ color: `${text}80` }}>
+                <p className="text-lg leading-relaxed sunset-text-80">
                   Every Chasing Sun(Sets) show starts during golden hour. The music
                   builds as the light changes. By the time the sun is gone, the
                   energy is already there.
                 </p>
-                <p className="leading-relaxed" style={{ color: `${text}70` }}>
+                <p className="leading-relaxed sunset-text-70">
                   Melodic house, afro house, organic downtempo — sounds that match
                   the warmth. Rooftops, gardens, open-air spaces. No dark rooms,
                   no strobes. Just the sky and the sound.
@@ -171,8 +182,7 @@ export default function ChasingSunsets() {
                   {["Rooftop", "Golden Hour", "Melodic House", "Afro House", "Open Air"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-4 py-2 text-xs font-mono tracking-widest uppercase"
-                      style={{ border: `1px solid ${accent}30`, color: accent }}
+                      className="px-4 py-2 text-xs font-mono tracking-widest uppercase border sunset-accent-tag"
                     >
                       {tag}
                     </span>
@@ -195,119 +205,187 @@ export default function ChasingSunsets() {
             subtitle="2025 Archives"
             description="The beginning. Rooftops, rivers, and the golden hour."
             media={chasingSeason1}
-            className="bg-transparent border-t"
-            style={{ color: text, borderColor: `${accent}1A` }}
+            className="bg-transparent border-t sunset-border-accent sunset-text"
           />
           <MixedMediaGallery
             title="Season II"
             subtitle="2026 Archives"
             description="Expanding the horizon. New venues, same sun."
             media={chasingSeason2}
-            className="bg-transparent border-t"
-            style={{ color: text, borderColor: `${accent}1A` }}
+            className="bg-transparent border-t sunset-border-accent sunset-text"
           />
         </div>
 
 
 
-        {/* Upcoming Events */}
-        <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${accent}15` }}>
+        {/* Upcoming Events / Residents */}
+        <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6 sunset-warm-section sunset-border-accent border-t">
           <div className="container max-w-5xl mx-auto">
-            <div className="flex items-end justify-between mb-16 pb-6" style={{ borderBottom: `1px solid ${accent}15` }}>
-              <h2 className="font-display text-4xl md:text-5xl" style={{ color: text, borderColor: `${accent}1A` }}>UPCOMING</h2>
-              <span className="font-mono text-xs tracking-widest" style={{ color: accent }}>SEASON 2026</span>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 gap-6 sunset-border-accent border-b">
+              <div className="flex gap-8">
+                <button
+                  onClick={() => setActiveTab('live')}
+                  className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'live' ? '' : 'opacity-40 hover:opacity-70'}`}
+                >
+                  LIVE EVENTS
+                </button>
+                <button
+                  onClick={() => setActiveTab('residents')}
+                  className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'residents' ? '' : 'opacity-40 hover:opacity-70'}`}
+                >
+                  RESIDENT DJS
+                </button>
+              </div>
+              <span className="font-mono text-xs tracking-widest sunset-accent">SEASON 2026</span>
             </div>
 
-            <div className="space-y-4">
-              {events.map((event) => (
-                <div
-                  key={event.title}
-                  className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm"
-                  style={{ border: `1px solid ${accent}20`, background: `linear-gradient(145deg,${glass}BF,${glass}73)` }}
-                >
-                  <div className="flex items-start gap-6">
-                    <div className="flex flex-col items-center justify-center w-16 h-16" style={{ border: `1px solid ${accent}30`, background: `${accent}08` }}>
-                      <span className="text-xs font-bold uppercase" style={{ color: accent }}>{event.month}</span>
-                      <span className="text-lg font-display" style={{ color: text, borderColor: `${accent}1A` }}>{event.day}</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors" style={{ color: text, borderColor: `${accent}1A` }}>
-                        {event.title}
-                      </h3>
-                      <div className="flex gap-4 text-sm font-mono uppercase" style={{ color: `${text}60` }}>
-                        <span className="flex items-center gap-1">
-                          <MapPin size={12} /> {event.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar size={12} /> {event.time}
-                        </span>
+            {activeTab === 'live' ? (
+              <div className="space-y-4">
+                {events.map((event) => (
+                  <div
+                    key={event.title}
+                    className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm border sunset-border-accent-20 sunset-glass-card-solid"
+                  >
+                    <div className="flex items-start gap-6">
+                      <div className="flex flex-col items-center justify-center w-16 h-16 border sunset-border-accent-30 bg-[color-mix(in_srgb,var(--sunset-accent)_3%,transparent)]">
+                        <span className="text-xs font-bold uppercase sunset-accent">{event.month}</span>
+                        <span className="text-lg font-display sunset-text">{event.day}</span>
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors sunset-text">
+                          {event.title}
+                        </h3>
+                        <div className="flex gap-4 text-sm font-mono uppercase sunset-text-60">
+                          <span className="flex items-center gap-1">
+                            <MapPin size={12} /> {event.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar size={12} /> {event.time}
+                          </span>
+                        </div>
                       </div>
                     </div>
+                    <Link href="/tickets" asChild>
+                      <a
+                        className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                      >
+                        GET TICKETS <ArrowUpRight size={14} />
+                      </a>
+                    </Link>
                   </div>
-                  <Link href="/tickets" asChild>
-                    <a
-                      className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
-                      style={{ background: `linear-gradient(135deg, ${accent}, ${warmGold})` }}
-                    >
-                      GET TICKETS <ArrowUpRight size={14} />
-                    </a>
-                  </Link>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <ResidentDJCard />
+            )}
           </div>
         </section>
 
         {/* Submit DJ Set */}
-        <section id="chasing-submit" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${accent}15` }}>
+        <section id="chasing-submit" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
           <div className="container max-w-4xl mx-auto text-center">
-            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: accent }}>
+            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4 sunset-accent">
               For The Selectors
             </span>
-            <h2 className="font-display text-5xl md:text-6xl mb-8" style={{ color: text, borderColor: `${accent}1A` }}>
+            <h2 className="font-display text-5xl md:text-6xl mb-8 sunset-text">
               SUBMIT YOUR SET
             </h2>
-            <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: `${text}80` }}>
+            <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto sunset-text-80">
               Chasing Sun(Sets) is about the perfect vibe for the golden hour.
               Melodic, Organic, Afro House. If you have the sound, we have the sunset.
             </p>
-            <a
-              href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission"
-              className="inline-block px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer text-white rounded-full"
-              style={{ background: `linear-gradient(135deg, ${accent}, ${warmGold})` }}
+            <MagneticButton strength={0.4}>
+              <a
+                href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission"
+                className="inline-flex items-center gap-2 px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full sunset-gradient-btn group"
+              >
+                SUBMIT A MIX <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </MagneticButton>
+          </div>
+        </section>
+
+        {/* Chasing Sun(Sets) FAQ */}
+        <section id="chasing-faq" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
+          <div className="container max-w-4xl mx-auto">
+            <button
+              onClick={() => setFaqOpen(!faqOpen)}
+              className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-[#FDF6E3] transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(232,184,109,0.15)] hover:shadow-[0_0_50px_rgba(232,184,109,0.3)]"
             >
-              SUBMIT A MIX
-            </a>
+              <span>Frequently Asked Questions</span>
+              <span className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                <div className={`relative w-4 h-4 transition-transform duration-500 origin-center ${faqOpen ? "rotate-180" : "rotate-0"}`}>
+                  <span className={`absolute top-1/2 left-0 w-4 h-[2px] bg-[#C2703E] -translate-y-1/2 transition-transform duration-500`} />
+                  <span className={`absolute top-0 left-1/2 w-[2px] h-4 bg-[#C2703E] -translate-x-1/2 transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
+                </div>
+              </span>
+            </button>
+
+            <AnimatePresence>
+              {faqOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="pt-6 space-y-4">
+                    {chasingFaqs.map(([q, a], idx) => (
+                      <motion.details
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 + (idx * 0.05), duration: 0.4 }}
+                        key={q}
+                        className="border px-6 py-5 rounded-xl border-[#E8B86D]/20 bg-black/20 backdrop-blur-sm group cursor-pointer"
+                      >
+                        <summary className="text-white font-medium list-none flex items-center justify-between outline-none">
+                          <span className="pr-4">{q}</span>
+                          <span className="text-[#E8B86D] group-open:rotate-45 transition-transform duration-300 flex-shrink-0">
+                            <span className="block w-3 h-[2px] bg-current relative">
+                              <span className="block w-[2px] h-3 bg-current absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-open:opacity-0 transition-opacity" />
+                            </span>
+                          </span>
+                        </summary>
+                        <p className="text-white/70 mt-4 text-sm leading-relaxed border-t border-white/10 pt-4">{a}</p>
+                      </motion.details>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 
         {/* CTA */}
-        <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative" style={{ borderTop: `1px solid ${accent}15` }}>
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(194,112,62,0.18),transparent_32%),radial-gradient(circle_at_82%_76%,rgba(232,184,109,0.22),transparent_34%)]" />
+        <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative sunset-border-accent border-t">
+          <div className="pointer-events-none absolute inset-0 bg-chasing-glow-2" />
           <div className="container max-w-4xl mx-auto text-center">
-            <h2 className="font-display text-5xl md:text-7xl mb-6" style={{ color: text, borderColor: `${accent}1A` }}>
+            <h2 className="font-display text-5xl md:text-7xl mb-6 sunset-text">
               CHASE THE LIGHT
             </h2>
-            <p className="text-lg max-w-xl mx-auto mb-12" style={{ color: `${text}70` }}>
+            <p className="text-lg max-w-xl mx-auto mb-12 sunset-text-70">
               Sign up for the newsletter to get ticket access before anyone else.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/story" asChild>
-                <a
-                  className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-80 transition-opacity cursor-pointer rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2C1810]/20"
-                  style={{ border: `1px solid ${text}30`, color: text }}
-                >
-                  UNTOLD STORY
-                </a>
-              </Link>
-              <Link href="/" asChild>
-                <a
-                  className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer text-white rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
-                  style={{ background: `linear-gradient(135deg, ${accent}, ${warmGold})` }}
-                >
-                  BACK TO MONOLITH
-                </a>
-              </Link>
+              <MagneticButton strength={0.3}>
+                <Link href="/story" asChild>
+                  <a
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:bg-[color-mix(in_srgb,var(--sunset-text)_5%,transparent)] transition-all duration-300 cursor-pointer rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2C1810]/20 border sunset-text border-[color-mix(in_srgb,var(--sunset-text)_19%,transparent)] group"
+                  >
+                    UNTOLD STORY <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Link>
+              </MagneticButton>
+              <MagneticButton strength={0.3}>
+                <Link href="/" asChild>
+                  <a
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
+                  >
+                    BACK TO MONOLITH <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </a>
+                </Link>
+              </MagneticButton>
             </div>
           </div>
         </section>

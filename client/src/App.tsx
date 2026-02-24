@@ -2,11 +2,12 @@ import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
+import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 // Imports moved to lazy load below
 
-import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
 const Home = lazy(() => import("./pages/Home"));
 
@@ -89,7 +90,7 @@ function Router() {
 
 const withTransition = (Component: React.ComponentType<any>) => {
   return (props: any) => (
-    <m.div
+    <motion.div
       initial={pageTransition.initial}
       animate={pageTransition.animate}
       exit={pageTransition.exit}
@@ -97,7 +98,7 @@ const withTransition = (Component: React.ComponentType<any>) => {
       className="w-full"
     >
       <Component {...props} />
-    </m.div>
+    </motion.div>
   );
 };
 
@@ -139,36 +140,45 @@ const CookieConsent = lazy(() => import("./components/CookieConsent"));
 // ... (Router component remains unchanged)
 
 import SmoothScroll from "./components/SmoothScroll";
+import { UIProvider } from "./contexts/UIContext";
+import OffCanvasDrawer from "./components/ui/OffCanvasDrawer";
+import GlobalTicketButton from "./components/GlobalTicketButton";
 
 // ... existing imports ...
 
 function App() {
   return (
-    <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <SmoothScroll />
-          <LazyMotion features={domAnimation}>
-            <Toaster />
-            <Suspense fallback={null}>
-              <KineticGrain />
-              <CustomCursor />
-              <Preloader onComplete={() => { }} />
-              <Analytics />
-              <EventBanner />
-              <DeferredEnhancements />
-              <CookieConsent />
-              {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
-              <div id="main-content" tabIndex={-1} className="w-full">
-                <div className="origin-top">
-                  <Router />
+    <HelmetProvider>
+      <ErrorBoundary>
+        <ThemeProvider defaultTheme="dark">
+          <UIProvider>
+            <TooltipProvider>
+              <SmoothScroll />
+              <Toaster />
+              <Suspense fallback={null}>
+                <KineticGrain />
+                <CustomCursor />
+                <Preloader onComplete={() => { }} />
+                <Analytics />
+                <EventBanner />
+                <DeferredEnhancements />
+                <CookieConsent />
+
+                <OffCanvasDrawer />
+                <GlobalTicketButton />
+
+                {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
+                <div id="main-content" tabIndex={-1} className="w-full">
+                  <div className="origin-top">
+                    <Router />
+                  </div>
                 </div>
-              </div>
-            </Suspense>
-          </LazyMotion>
-        </TooltipProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
+              </Suspense>
+            </TooltipProvider>
+          </UIProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 }
 

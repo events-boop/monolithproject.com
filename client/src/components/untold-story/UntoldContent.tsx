@@ -1,19 +1,23 @@
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Clock, Users } from "lucide-react";
-import { violet, cyan, deepBg, cardBg, eventVisuals, lineupVisuals, untoldFaqs } from "./constants";
+import { eventVisuals, lineupVisuals, untoldFaqs } from "./constants";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 export default function UntoldContent() {
+  const [faqOpen, setFaqOpen] = useState(false);
+
   return (
-    <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t" style={{ background: cardBg, borderColor: `${violet}15` }}>
+    <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t bg-untold-card-solid border-untold-violet-15">
       <div className="container max-w-5xl mx-auto">
-        <div className="flex items-end justify-between mb-8 pb-6" style={{ borderBottom: `1px solid ${violet}20` }}>
+        <div className="flex items-end justify-between mb-8 pb-6 border-b border-untold-violet-20">
           <div>
-            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2" style={{ color: cyan }}>
+            <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">
               Season III · Episode II
             </span>
             <h2 className="font-display text-4xl md:text-5xl text-white">DERON B2B JUANY BRAVO</h2>
           </div>
-          <span className="font-mono text-xs tracking-widest" style={{ color: violet }}>THE JUANY X DERON SHOW</span>
+          <span className="font-mono text-xs tracking-widest text-untold-violet">THE JUANY X DERON SHOW</span>
         </div>
 
         {/* Featured event card */}
@@ -22,14 +26,13 @@ export default function UntoldContent() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative overflow-hidden"
-          style={{ border: `1px solid ${violet}30`, background: deepBg }}
+          className="relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid"
         >
           {/* Glow accent */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none" style={{ background: violet }} />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none bg-[#8B5CF6]" />
 
           <div className="relative p-8 md:p-12">
-            <div className="mb-10 overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
+            <div className="mb-10 overflow-hidden rounded-xl border border-untold-violet-25">
               <img
                 src={eventVisuals.poster}
                 alt="Deron B2B Juany Bravo featured event artwork"
@@ -38,10 +41,10 @@ export default function UntoldContent() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mb-10">
-              <div className="overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
+              <div className="overflow-hidden rounded-xl border border-untold-violet-25">
                 <img src={eventVisuals.deron} alt="Deron portrait artwork" className="w-full h-auto object-cover" />
               </div>
-              <div className="overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
+              <div className="overflow-hidden rounded-xl border border-untold-violet-25">
                 <img src={eventVisuals.juany} alt="Juany Bravo portrait artwork" className="w-full h-auto object-cover" />
               </div>
             </div>
@@ -51,19 +54,19 @@ export default function UntoldContent() {
             </p>
 
             {/* Event details grid */}
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase block mb-4" style={{ color: cyan }}>
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase block mb-4 text-untold-cyan">
               Event Details
             </span>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 pb-10" style={{ borderBottom: `1px solid ${violet}15` }}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 pb-10 border-b border-untold-violet-15">
               <div className="space-y-2">
-                <div className="flex items-center gap-2" style={{ color: `${violet}99` }}>
+                <div className="flex items-center gap-2 text-untold-violet-99">
                   <Calendar className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Date</span>
                 </div>
                 <p className="text-white text-sm font-medium">Friday, March 6, 2026</p>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2" style={{ color: `${violet}99` }}>
+                <div className="flex items-center gap-2 text-untold-violet-99">
                   <Clock className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Doors</span>
                 </div>
@@ -71,7 +74,7 @@ export default function UntoldContent() {
                 <p className="text-white/40 text-xs">Main Experience: 9:00 PM - 2:00 AM</p>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2" style={{ color: `${violet}99` }}>
+                <div className="flex items-center gap-2 text-untold-violet-99">
                   <MapPin className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Venue</span>
                 </div>
@@ -79,7 +82,7 @@ export default function UntoldContent() {
                 <p className="text-white/40 text-xs">West Loop, Chicago</p>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2" style={{ color: `${violet}99` }}>
+                <div className="flex items-center gap-2 text-untold-violet-99">
                   <Users className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Age</span>
                 </div>
@@ -88,7 +91,7 @@ export default function UntoldContent() {
             </div>
 
             {/* The Experience */}
-            <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+            <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
               The Vision
             </span>
             <p className="text-white/70 text-base leading-relaxed mb-6">
@@ -104,7 +107,7 @@ export default function UntoldContent() {
             </p>
 
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Core Elements
               </span>
               <div className="flex flex-wrap gap-3">
@@ -117,8 +120,7 @@ export default function UntoldContent() {
                 ].map((item) => (
                   <span
                     key={item}
-                    className="px-4 py-2 text-xs font-mono tracking-widest uppercase text-white/80"
-                    style={{ border: `1px solid ${violet}25`, background: `${violet}08` }}
+                    className="px-4 py-2 text-xs font-mono tracking-widest uppercase text-white/80 border border-untold-violet-25 bg-untold-violet-08"
                   >
                     {item}
                   </span>
@@ -128,7 +130,7 @@ export default function UntoldContent() {
 
             {/* Lineup */}
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Lineup
               </span>
               <p className="text-white text-lg font-display tracking-wide mb-2">
@@ -149,12 +151,12 @@ export default function UntoldContent() {
             </div>
 
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Artist Visuals
               </span>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {lineupVisuals.map((artist) => (
-                  <div key={artist.name} className="overflow-hidden rounded-xl border" style={{ borderColor: `${violet}25` }}>
+                  <div key={artist.name} className="overflow-hidden rounded-xl border border-untold-violet-25">
                     <img src={artist.image} alt={`${artist.name} lineup image`} className="w-full aspect-[4/5] object-cover" />
                     <div className="px-3 py-2 bg-black/35">
                       <p className="text-white font-semibold text-sm">{artist.name}</p>
@@ -167,7 +169,7 @@ export default function UntoldContent() {
 
             {/* Tables */}
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Tables & Bottle Service
               </span>
               <p className="text-white/70 mb-4">All tables include bottle service and priority treatment throughout the night.</p>
@@ -180,24 +182,59 @@ export default function UntoldContent() {
               </div>
             </div>
 
-            {/* FAQ */}
+            {/* FAQ Toggle */}
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
-                Frequently Asked Questions
-              </span>
-              <div className="space-y-3">
-                {untoldFaqs.map(([q, a]) => (
-                  <details key={q} className="border px-4 py-3" style={{ borderColor: `${violet}25` }}>
-                    <summary className="cursor-pointer text-white font-medium">{q}</summary>
-                    <p className="text-white/70 mt-2 text-sm">{a}</p>
-                  </details>
-                ))}
-              </div>
+              <button
+                onClick={() => setFaqOpen(!faqOpen)}
+                className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-gray-100 transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
+              >
+                <span>Frequently Asked Questions</span>
+                <span className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                  <div className={`relative w-4 h-4 transition-transform duration-500 origin-center ${faqOpen ? "rotate-180" : "rotate-0"}`}>
+                    <span className={`absolute top-1/2 left-0 w-4 h-[2px] bg-black -translate-y-1/2 transition-transform duration-500`} />
+                    <span className={`absolute top-0 left-1/2 w-[2px] h-4 bg-black -translate-x-1/2 transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
+                  </div>
+                </span>
+              </button>
+
+              <AnimatePresence>
+                {faqOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-6 space-y-4">
+                      {untoldFaqs.map(([q, a], idx) => (
+                        <motion.details
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 + (idx * 0.05), duration: 0.4 }}
+                          key={q}
+                          className="border px-6 py-5 rounded-xl border-untold-violet-25 bg-black/20 backdrop-blur-sm group cursor-pointer"
+                        >
+                          <summary className="text-white font-medium list-none flex items-center justify-between outline-none">
+                            <span className="pr-4">{q}</span>
+                            <span className="text-untold-cyan group-open:rotate-45 transition-transform duration-300 flex-shrink-0">
+                              <span className="block w-3 h-[2px] bg-current relative">
+                                <span className="block w-[2px] h-3 bg-current absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-open:opacity-0 transition-opacity" />
+                              </span>
+                            </span>
+                          </summary>
+                          <p className="text-white/70 mt-4 text-sm leading-relaxed border-t border-white/10 pt-4">{a}</p>
+                        </motion.details>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Notice */}
             <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Photo & Video Notice
               </span>
               <p className="text-white/70 text-sm">
@@ -206,8 +243,8 @@ export default function UntoldContent() {
             </div>
 
             {/* Contact / Socials */}
-            <div className="mt-10 pt-8" style={{ borderTop: `1px solid ${violet}15` }}>
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3" style={{ color: cyan }}>
+            <div className="mt-10 pt-8 border-t border-untold-violet-15">
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Connect
               </span>
               <div className="flex flex-col gap-2 text-sm">

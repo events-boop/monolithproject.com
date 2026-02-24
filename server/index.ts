@@ -56,6 +56,14 @@ const bookingInquirySchema = z.object({
 const sponsorAccessSchema = z.object({
   password: z.string().trim().min(1).max(256),
 });
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(320),
+  subject: z.string().trim().min(2).max(200),
+  message: z.string().trim().min(2).max(5000),
+});
+
 const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());
 
 const idempotencyTtlMs = 24 * 60 * 60 * 1000;
@@ -763,6 +771,50 @@ function configureApp() {
       requestId,
       message: "Inquiry received",
     });
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    const requestId = randomUUID();
+    const parsed = contactSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      return res.status(400).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "VALIDATION_ERROR",
+          message: "Please complete all required fields.",
+          retryable: false,
+        },
+      });
+    }
+
+    const contact = parsed.data;
+    const webhook = process.env.CONTACT_WEBHOOK_URL || process.env.BOOKING_WEBHOOK_URL;
+
+    if (!webhook && process.env.NODE_ENV === "production") {
+      logEvent("contact.unconfigured", { requestId, subject: contact.subject });
+      // We still accept it to not break client flow, just log error
+    }
+
+    if (webhook) {
+      // Fire and forget webhook
+      fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...contact, requestId, receivedAt: new Date().toISOString(), type: "contact_form" }),
+      }).catch(err => {
+        console.error("Contact webhook failed", err);
+      });
+    }
+
+    logEvent("contact.received", {
+      requestId,
+      subject: contact.subject,
+      hash: createHash("sha256").update(contact.email).digest("hex").slice(0, 12)
+    });
+
+    return res.status(200).json({ ok: true });
   });
 
   app.post("/api/webhooks/posh", async (req, res) => {

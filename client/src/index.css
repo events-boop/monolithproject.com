@@ -130,6 +130,104 @@
   --atmo-coral: rgba(224, 90, 58, 0.2);
 }
 
+/* ── Scroll-sunset utility layer ──
+   These reference the CSS vars set by useScrollSunset on :root,
+   so the browser resolves colours via inheritance — zero React overhead. */
+:root {
+  --sunset-bg: #FBF5ED;
+  --sunset-text: #2C1810;
+  --sunset-accent: #C2703E;
+  --sunset-warmGold: #E8B86D;
+  --sunset-glass: #FFFFFF;
+}
+
+.sunset-page {
+  background: var(--sunset-bg);
+  color: var(--sunset-text);
+}
+
+.sunset-text {
+  color: var(--sunset-text);
+}
+
+.sunset-text-80 {
+  color: color-mix(in srgb, var(--sunset-text) 80%, transparent);
+}
+
+.sunset-text-70 {
+  color: color-mix(in srgb, var(--sunset-text) 70%, transparent);
+}
+
+.sunset-text-60 {
+  color: color-mix(in srgb, var(--sunset-text) 60%, transparent);
+}
+
+.sunset-text-50 {
+  color: color-mix(in srgb, var(--sunset-text) 50%, transparent);
+}
+
+.sunset-accent {
+  color: var(--sunset-accent);
+}
+
+.sunset-warmGold {
+  color: var(--sunset-warmGold);
+}
+
+.sunset-border-accent {
+  border-color: color-mix(in srgb, var(--sunset-accent) 13%, transparent);
+}
+
+.sunset-border-accent-20 {
+  border-color: color-mix(in srgb, var(--sunset-accent) 20%, transparent);
+}
+
+.sunset-border-accent-30 {
+  border-color: color-mix(in srgb, var(--sunset-accent) 30%, transparent);
+}
+
+.sunset-glass-card {
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--sunset-glass) 75%, transparent),
+      color-mix(in srgb, var(--sunset-glass) 36%, transparent));
+}
+
+.sunset-glass-card-solid {
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--sunset-glass) 87%, transparent),
+      color-mix(in srgb, var(--sunset-glass) 60%, transparent));
+}
+
+.sunset-warm-section {
+  background: color-mix(in srgb, var(--sunset-warmGold) 7%, transparent);
+}
+
+.sunset-accent-tag {
+  border-color: color-mix(in srgb, var(--sunset-accent) 19%, transparent);
+  color: var(--sunset-accent);
+}
+
+.sunset-warmGold-tag {
+  border-color: color-mix(in srgb, var(--sunset-warmGold) 21%, transparent);
+  color: var(--sunset-warmGold);
+  background: color-mix(in srgb, var(--sunset-warmGold) 3%, transparent);
+}
+
+.sunset-gradient-btn {
+  background: linear-gradient(135deg, var(--sunset-accent), var(--sunset-warmGold));
+}
+
+.sunset-glass-overlay {
+  background: linear-gradient(to top,
+      color-mix(in srgb, var(--sunset-glass) 88%, transparent) 0%,
+      transparent 50%);
+}
+
+.sunset-accent-glow {
+  background: radial-gradient(circle at 20% 50%,
+      color-mix(in srgb, var(--sunset-accent) 9%, transparent), transparent 60%);
+}
+
 .dark {
   --background: oklch(0.08 0.005 285);
   --foreground: oklch(0.95 0.005 85);
@@ -570,25 +668,41 @@
     gap: 0.5rem;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
-    border: 1px solid oklch(0.95 0.005 85 / 0.25);
+    border: 1px solid oklch(0.95 0.005 85 / 0.15);
     color: oklch(0.95 0.005 85);
     font-weight: 700;
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     background: transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transform: translateX(-150%) skewX(-15deg);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .btn-pill:hover {
-    background: oklch(0.95 0.005 85);
-    color: oklch(0.08 0.005 285);
-    border-color: oklch(0.95 0.005 85);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.12), inset 0 0 10px rgba(255, 255, 255, 0.04);
+    transform: translateY(-1px);
+  }
+
+  .btn-pill:hover::before {
+    transform: translateX(150%) skewX(-15deg);
   }
 
   .btn-pill:active {
-    transform: translateY(1px) scale(0.985);
+    transform: translateY(2px) scale(0.97);
   }
 
   /* Pill button for light sections */
@@ -627,30 +741,43 @@
     gap: 0.5rem;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
-    border: 1px solid oklch(0.65 0.2 25);
-    background: oklch(0.65 0.2 25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.55 0.15 30));
     color: white;
     font-weight: 700;
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
-    box-shadow: 0 4px 12px oklch(0.65 0.2 25 / 0.3);
+    box-shadow: 0 4px 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-pill-coral::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
 
   .btn-pill-coral:hover {
-    background: oklch(0.65 0.2 25);
-    color: white;
-    border-color: oklch(0.65 0.2 25);
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px oklch(0.65 0.2 25 / 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(224, 90, 58, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .btn-pill-coral:hover::after {
+    opacity: 1;
   }
 
   .btn-pill-coral:active {
-    transform: translateY(1px) scale(0.985);
-    box-shadow: 0 2px 8px oklch(0.65 0.2 25 / 0.32);
+    transform: translateY(1px) scale(0.97);
+    box-shadow: 0 2px 10px rgba(224, 90, 58, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -669,12 +796,30 @@
     letter-spacing: -0.04em;
   }
 
-  /* Backdrop blur for glass effects */
+  /* Advanced Optical Glassmorphism */
   .glass {
-    background: oklch(0.12 0.01 285 / 0.7);
-    backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid oklch(0.95 0.005 85 / 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, rgba(30, 30, 33, 0.4), rgba(15, 15, 18, 0.6));
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.15);
+    /* Top rim light */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Built-in Noise Mask for Glass */
+  .glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: -1;
   }
 
   /* Cinematic Velocity Skew */
@@ -793,4 +938,151 @@
   .animate-grain {
     animation: grain 8s steps(10) infinite;
   }
+}
+
+/* --- SENSORY HOVER EFFECT FOR TICKETS (toned down) --- */
+body:has(.sensory-ticket-btn:hover) #main-content>*:not(:has(.sensory-ticket-btn:hover)),
+body:has(.sensory-ticket-btn:hover) header,
+body:has(.sensory-ticket-btn:hover) footer {
+  filter: blur(6px) brightness(0.75) grayscale(15%);
+  transform: scale(0.995);
+}
+
+body:has(.sensory-ticket-btn:hover) .hero-bg,
+body:has(.sensory-ticket-btn:hover) .hero-text,
+body:has(.sensory-ticket-btn:hover) .ui-meta {
+  filter: blur(5px) brightness(0.65);
+  transform: scale(0.99);
+}
+
+#main-content>*,
+header,
+footer,
+.hero-bg,
+.hero-text,
+.ui-meta {
+  transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    brightness 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    grayscale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sensory-ticket-btn {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.sensory-ticket-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(224, 90, 58, 0.6);
+  z-index: 50;
+}
+
+/* --- THE MONOLITH PROJECT BACKGROUND UTILITIES --- */
+/* Abstracted these out from inline Tailwind values to preserve integrity of build */
+
+.bg-tickets-top-glow {
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.16), transparent 34%),
+    radial-gradient(circle at 86% 20%, rgba(224, 90, 58, 0.14), transparent 32%),
+    radial-gradient(circle at 50% 78%, rgba(139, 92, 246, 0.14), transparent 42%);
+}
+
+.bg-tickets-bottom-glow {
+  background-image: linear-gradient(180deg, rgba(6, 6, 15, 0.45) 0%, rgba(6, 6, 15, 0) 30%, rgba(6, 6, 15, 0.55) 100%);
+}
+
+.bg-tickets-card {
+  background-image: linear-gradient(140deg, rgba(139, 92, 246, 0.24), rgba(34, 211, 238, 0.16) 38%, rgba(224, 90, 58, 0.2) 100%);
+}
+
+.bg-tickets-event-overlay {
+  background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 45%);
+}
+
+.bg-tickets-tier {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+}
+
+.bg-tickets-tier-highlight {
+  background-image: linear-gradient(145deg, rgba(224, 90, 58, 0.2), rgba(139, 92, 246, 0.16));
+}
+
+.bg-chasing-hero-overlay {
+  background-image: linear-gradient(to top, #2C1810ee 0%, #2C181066 45%, transparent 78%);
+}
+
+.bg-chasing-glow-1 {
+  background-image:
+    radial-gradient(circle at 12% 16%, rgba(232, 184, 109, 0.25), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(194, 112, 62, 0.2), transparent 32%),
+    radial-gradient(circle at 75% 84%, rgba(139, 92, 246, 0.14), transparent 36%);
+}
+
+.bg-chasing-glow-2 {
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(194, 112, 62, 0.18), transparent 32%),
+    radial-gradient(circle at 82% 76%, rgba(232, 184, 109, 0.22), transparent 34%);
+}
+
+.bg-untold-hero-glow {
+  background-image: radial-gradient(circle, var(--color-untold-violet), transparent);
+}
+
+.bg-untold-hero-btn {
+  background-image: linear-gradient(135deg, var(--color-untold-violet), var(--color-untold-cyan));
+}
+
+.bg-untold-card {
+  background-color: var(--color-untold-deep);
+  border-color: color-mix(in srgb, var(--color-untold-violet) 30%, transparent);
+}
+
+.bg-untold-glow-cyan {
+  background-image: radial-gradient(circle, var(--color-untold-cyan), transparent);
+}
+
+.bg-untold-contrast {
+  background-image: linear-gradient(180deg, #06060F 0%, rgba(34, 211, 238, 0.05) 50%, #06060F 100%);
+}
+
+/* Base untold style variables */
+.border-untold-violet-15 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 15%, transparent);
+}
+
+.border-untold-violet-20 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 20%, transparent);
+}
+
+.border-untold-violet-25 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 25%, transparent);
+}
+
+.border-untold-violet-30 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 30%, transparent);
+}
+
+.text-untold-cyan {
+  color: var(--color-untold-cyan);
+}
+
+.text-untold-violet {
+  color: var(--color-untold-violet);
+}
+
+.text-untold-violet-99 {
+  color: color-mix(in srgb, var(--color-untold-violet) 99%, transparent);
+}
+
+.bg-untold-card-solid {
+  background-color: var(--color-untold-card);
+}
+
+.bg-untold-deep-solid {
+  background-color: var(--color-untold-deep);
+}
+
+.bg-untold-violet-08 {
+  background-color: color-mix(in srgb, var(--color-untold-violet) 8%, transparent);
 }

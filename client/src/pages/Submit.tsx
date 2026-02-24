@@ -4,6 +4,7 @@ import { Send, CheckCircle, AlertCircle, Music, Sun, Mic2, ArrowUpRight } from "
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import MagneticButton from "@/components/MagneticButton";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -449,20 +450,22 @@ ${form.bio}
                                             <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/20">
                                                 * Required fields
                                             </p>
-                                            <button
-                                                type="submit"
-                                                disabled={isSubmitting}
-                                                className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/85 transition-all duration-200 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                                            >
-                                                {isSubmitting ? (
-                                                    <span className="animate-pulse">Sending...</span>
-                                                ) : (
-                                                    <>
-                                                        <span>Submit Mix</span>
-                                                        <Send className="w-3.5 h-3.5" />
-                                                    </>
-                                                )}
-                                            </button>
+                                            <MagneticButton strength={0.2} className={isSubmitting ? "pointer-events-none" : ""}>
+                                                <button
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                    className="inline-flex items-center gap-2 px-9 py-4 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/90 hover:scale-[1.03] shadow-[0_0_0_rgba(224,90,58,0)] hover:shadow-[0_0_20px_rgba(224,90,58,0.4)] rounded-full transition-all duration-300 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 group"
+                                                >
+                                                    {isSubmitting ? (
+                                                        <span className="animate-pulse">Sending...</span>
+                                                    ) : (
+                                                        <>
+                                                            <span>Submit Mix</span>
+                                                            <Send className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </MagneticButton>
                                         </div>
                                     </motion.form>
                                 )}

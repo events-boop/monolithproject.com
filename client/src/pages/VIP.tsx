@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle, Send, Crown, Wine, Users, Sparkles } from "lucide-react";
+import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -35,6 +35,7 @@ const perks = [
 export default function VIP() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     const { register, handleSubmit, formState: { errors } } = useForm<VipFormValues>({
         resolver: zodResolver(vipSchema)
@@ -42,6 +43,7 @@ export default function VIP() {
 
     const onSubmit = async (data: VipFormValues) => {
         setIsSubmitting(true);
+        setSubmitError("");
         try {
             await submitContactForm({
                 name: data.name,
@@ -51,7 +53,7 @@ export default function VIP() {
             });
             setIsSubmitted(true);
         } catch (e) {
-            console.error(e);
+            setSubmitError(e instanceof Error ? e.message : "Unable to submit request right now.");
         } finally {
             setIsSubmitting(false);
         }
@@ -88,9 +90,9 @@ export default function VIP() {
                             <div className="grid sm:grid-cols-2 gap-8">
                                 {perks.map((p) => (
                                     <div key={p.title}>
-                                        <p className="font-display text-lg uppercase text-white mb-2 flex items-center gap-2">
+                                        <div className="font-display text-lg uppercase text-white mb-2 flex items-center gap-2">
                                             <p.icon className="w-4 h-4 text-primary" /> {p.title}
-                                        </p>
+                                        </div>
                                         <p className="text-sm text-white/40">{p.desc}</p>
                                     </div>
                                 ))}
@@ -139,6 +141,13 @@ export default function VIP() {
                                 <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/90 transition-all rounded">
                                     {isSubmitting ? "Sending..." : "Check Availability"}
                                 </button>
+
+                                {submitError && (
+                                    <div className="flex items-center gap-2 text-red-400 text-xs bg-red-400/5 p-3 rounded border border-red-400/10 mt-4">
+                                        <AlertCircle className="w-4 h-4 shrink-0" />
+                                        {submitError}
+                                    </div>
+                                )}
                             </form>
                         )}
                     </section>

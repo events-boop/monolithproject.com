@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Play, Pause, MapPin, Music, ArrowRight, Sun } from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
@@ -78,6 +78,13 @@ type Filter = "all" | "sunsets" | "untold";
 export default function Radio() {
   const [activeTrack, setActiveTrack] = useState<number | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
+  const [faqOpen, setFaqOpen] = useState(false);
+
+  const radioFaqs = [
+    ["How often are new mixes released?", "We drop new mixes regularly, capturing the very best live sets from our recent events as well as exclusive guest mixes."],
+    ["Can I submit a mix for the Radio show?", "Yes, we are always looking for selectors who fit the Monolith and Chasing Sun(Sets) sound. Reach out to us via the contact page."],
+    ["Are the live recordings edited?", "We try to keep them as raw and authentic as possible to capture the true energy and imperfections of the dancefloor."]
+  ];
 
   const filtered = filter === "all" ? tracks : tracks.filter((t) => t.series === filter);
 
@@ -158,9 +165,17 @@ export default function Radio() {
             </RevealText>
             <div className="mb-8">
               <HeroSpotlight className="-m-8 p-8" spotlightColor="rgba(255, 255, 255, 0.2)">
-                <RevealText as="h1" className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] uppercase text-foreground drop-shadow-2xl" blurStrength={20} delay={0.2}>
-                  RADIO
-                </RevealText>
+                <motion.h1
+                  initial={{ opacity: 0, y: 30, filter: "blur(20px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+                  className="font-display text-[clamp(2.5rem,8vw,7rem)] leading-[0.85] uppercase tracking-tight-display drop-shadow-2xl"
+                >
+                  <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)] block mb-2 md:mb-4">
+                    CHASING SUN(SETS)
+                  </span>
+                  <span className="text-foreground">RADIO</span>
+                </motion.h1>
               </HeroSpotlight>
             </div>
             <RevealText as="p" className="max-w-lg text-muted-foreground text-lg leading-relaxed mix-blend-plus-lighter" delay={0.4} stagger={0.01}>
@@ -299,6 +314,58 @@ export default function Radio() {
               <GlobalListenerMap />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Radio FAQ */}
+      <section id="radio-faq" className="px-6 py-24 border-t border-border">
+        <div className="container max-w-4xl mx-auto">
+          <button
+            onClick={() => setFaqOpen(!faqOpen)}
+            className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-gray-100 transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+          >
+            <span>Frequently Asked Questions</span>
+            <span className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+              <div className={`relative w-4 h-4 transition-transform duration-500 origin-center ${faqOpen ? "rotate-180" : "rotate-0"}`}>
+                <span className={`absolute top-1/2 left-0 w-4 h-[2px] bg-black -translate-y-1/2 transition-transform duration-500`} />
+                <span className={`absolute top-0 left-1/2 w-[2px] h-4 bg-black -translate-x-1/2 transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
+              </div>
+            </span>
+          </button>
+
+          <AnimatePresence>
+            {faqOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="pt-6 space-y-4">
+                  {radioFaqs.map(([q, a], idx) => (
+                    <motion.details
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + (idx * 0.05), duration: 0.4 }}
+                      key={q}
+                      className="border px-6 py-5 rounded-xl border-white/10 bg-black/20 backdrop-blur-sm group cursor-pointer"
+                    >
+                      <summary className="text-white font-medium list-none flex items-center justify-between outline-none">
+                        <span className="pr-4">{q}</span>
+                        <span className="text-primary group-open:rotate-45 transition-transform duration-300 flex-shrink-0">
+                          <span className="block w-3 h-[2px] bg-current relative">
+                            <span className="block w-[2px] h-3 bg-current absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-open:opacity-0 transition-opacity" />
+                          </span>
+                        </span>
+                      </summary>
+                      <p className="text-white/70 mt-4 text-sm leading-relaxed border-t border-white/10 pt-4">{a}</p>
+                    </motion.details>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 

@@ -1,10 +1,52 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
-import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
+import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
-import { upcomingEvents } from "../data/events";
+import { upcomingEvents, type ScheduledEvent } from "../data/events";
 import FloatingImage from "./FloatingImage";
+
+// --- iCal Generator Helper ---
+function downloadICS(event: ScheduledEvent) {
+  const parseDateToArr = (dateStr: string) => {
+    // Example format: "DEC 31"
+    const [monthName, day] = dateStr.split(" ");
+    const months: Record<string, number> = { JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12 };
+    const month = months[monthName.toUpperCase()] || 1;
+    // Assume current year if not specified (simplification for beta)
+    const year = new Date().getFullYear();
+    // We add 1 year if month is early next year but we are in late current year
+    const finalYear = (month < new Date().getMonth() + 1) ? year + 1 : year;
+    return [finalYear, month, parseInt(day)];
+  };
+
+  const [year, month, day] = parseDateToArr(event.date);
+
+  const pad2 = (n: number) => String(n).padStart(2, "0");
+  const dateStr = `${year}${pad2(month)}${pad2(day)}`;
+
+  // Format iCal template string — use TZID for Chicago local time
+  const icsStr = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Monolith Project//EN
+BEGIN:VEVENT
+DTSTART;TZID=America/Chicago:${dateStr}T200000
+DTEND;TZID=America/Chicago:${dateStr}T235900
+SUMMARY:${event.title}
+DESCRIPTION:${event.description || "The Monolith Project Event"}
+LOCATION:${event.venue} — ${event.location}
+END:VEVENT
+END:VCALENDAR`;
+
+  const blob = new Blob([icsStr], { type: "text/calendar;charset=utf-8" });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", `${event.title.replace(/\s+/g, "_")}.ics`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -247,6 +289,16 @@ export default function ScheduleSection() {
                                 Coming Soon
                               </button>
                             )}
+
+                            {/* NEW: Save to Calendar Button */}
+                            <button
+                              onClick={() => downloadICS(event)}
+                              className="group inline-flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-charcoal hover:bg-charcoal/5 px-4 py-2 border border-charcoal/20 rounded-full transition-colors"
+                            >
+                              <CalendarPlus className="w-3.5 h-3.5" />
+                              Save Date
+                            </button>
+
                             {event.tableReservationEmail && (
                               <a href={`mailto:${event.tableReservationEmail}`} className="text-xs font-bold uppercase tracking-widest text-charcoal/60 hover:text-primary underline decoration-1 underline-offset-4">
                                 Book a Table

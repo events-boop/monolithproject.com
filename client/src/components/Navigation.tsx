@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Ticket, ChevronDown, ArrowUpRight } from "lucide-react";
+import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Radio } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import { isEventBannerVisible } from "@/lib/eventBanner";
+import { useUI, DrawerType } from "@/contexts/UIContext";
 
 interface NavigationProps {
   activeSection?: string;
@@ -15,11 +16,11 @@ interface NavigationProps {
 
 const navItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+  { label: "RADIO", href: "/radio" },
   { label: "UNTOLD STORY", href: "/story" },
   { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
-  { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
   { label: "SHOP", href: "/shop" },
@@ -36,7 +37,6 @@ const navItems = [
       { label: "ARTIST SUBMISSION", href: "/submit" },
       { label: "PRESS & MEDIA", href: "/press" },
       { label: "ARCHIVE", href: "/archive" },
-      { label: "FAQ", href: "/faq" },
       { label: "SPONSOR ACCESS", href: "/sponsors" },
     ],
   },
@@ -44,11 +44,11 @@ const navItems = [
 
 const mobileNavItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+  { label: "RADIO", href: "/radio" },
   { label: "UNTOLD STORY", href: "/story" },
   { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
   { label: "LINEUP", href: "/lineup" },
-  { label: "RADIO", href: "/radio" },
   { label: "ABOUT", href: "/about" },
   { label: "CONTACT", href: "/contact" },
   { label: "SHOP", href: "/shop" },
@@ -61,7 +61,6 @@ const mobileNavItems = [
   { label: "ARTIST SUBMISSION", href: "/submit" },
   { label: "PRESS & MEDIA", href: "/press" },
   { label: "ARCHIVE", href: "/archive" },
-  { label: "FAQ", href: "/faq" },
 ];
 
 export default function Navigation({ activeSection, variant = "dark", brand = "monolith" }: NavigationProps) {
@@ -75,6 +74,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const [location, setLocation] = useLocation();
+  const { openDrawer } = useUI();
   const partnersMenuId = "nav-partners-menu";
   const mobileMenuId = "nav-mobile-menu";
 
@@ -218,7 +218,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             </MagneticButton>
           </div>
 
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 2xl:gap-8">
+          <div className="hidden lg:flex flex-grow justify-end items-center gap-4 xl:gap-5 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
             {navItems.map((item) =>
               item.children ? (
                 <div key={item.label} className="relative" ref={dropdownRef}>
@@ -255,7 +255,13 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       >
                         {item.children.map((child) => (
                           <Link key={child.label} href={child.href}
-                            onClick={() => setDropdownOpen(false)}
+                            onClick={(e) => {
+                              if (["/faq", "/about", "/contact"].includes(child.href)) {
+                                e.preventDefault();
+                                openDrawer(child.href.slice(1) as DrawerType);
+                              }
+                              setDropdownOpen(false);
+                            }}
                             aria-current={isActiveHref(child.href) ? "page" : undefined}
                             className={`block px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
                               ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
@@ -275,6 +281,11 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               ) : (
                 <Link key={item.label} href={item.href}
                   onClick={(e) => {
+                    if (["/faq", "/about", "/contact"].includes(item.href)) {
+                      e.preventDefault();
+                      openDrawer(item.href.slice(1) as DrawerType);
+                      return;
+                    }
                     if (item.href.startsWith("/#")) {
                       e.preventDefault();
                       handleNavClick(item.href);
@@ -296,6 +307,17 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                         <span
                           aria-hidden="true"
                           className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                        />
+                      </span>
+                    </span>
+                  ) : item.label === "RADIO" ? (
+                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
+                      <Radio className="w-3.5 h-3.5" />
+                      <span className="relative inline-block">
+                        <span>{item.label}</span>
+                        <span
+                          aria-hidden="true"
+                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
                         />
                       </span>
                     </span>
@@ -323,9 +345,9 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             <div>
               <MagneticButton strength={0.2}>
                 <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
-                  <div className={`hidden md:flex btn-pill-coral items-center gap-2 px-4 xl:px-5 py-2 ${isLight
-                    ? "!bg-charcoal !border-charcoal !text-sand hover:!bg-charcoal/90 !shadow-none"
-                    : "shadow-[0_0_18px_rgba(224,90,58,0.35)]"
+                  <div className={`hidden md:flex sunset-gradient-btn text-white rounded-full items-center gap-2 px-6 xl:px-7 py-2.5 transition-all duration-300 ${isLight
+                    ? "opacity-90 hover:opacity-100 !shadow-none"
+                    : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
                     }`}>
                     <Ticket className="w-3.5 h-3.5" />
                     <span className="font-bold text-[12px] tracking-[0.14em] uppercase">Tickets</span>
@@ -427,7 +449,13 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 >
                   <Link
                     href={item.href.startsWith("/#") ? "/" : item.href}
-                    onClick={() => {
+                    onClick={(e) => {
+                      if (["/faq", "/about", "/contact"].includes(item.href)) {
+                        e.preventDefault();
+                        setMobileMenuOpen(false);
+                        openDrawer(item.href.slice(1) as DrawerType);
+                        return;
+                      }
                       setMobileMenuOpen(false);
                       if (item.href.startsWith("/#")) {
                         handleNavClick(item.href);
@@ -444,6 +472,17 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                           <span
                             aria-hidden="true"
                             className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
+                      </span>
+                    ) : item.label === "RADIO" ? (
+                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
+                        <Radio className="w-6 h-6 md:w-8 md:h-8" />
+                        <span className="relative inline-block pb-2">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
                           />
                         </span>
                       </span>

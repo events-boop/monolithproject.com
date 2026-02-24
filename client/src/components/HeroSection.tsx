@@ -7,6 +7,8 @@ import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 import HeroSpotlight from "./ui/HeroSpotlight";
 import { BorderBeam } from "./ui/BorderBeam";
+import { EventSchema } from "@/components/StructuredData";
+import MagneticButton from "@/components/MagneticButton";
 
 // March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
 
@@ -114,9 +116,37 @@ function useIsExpired(target: number) {
   return expired;
 }
 
+
+
 export default function HeroSection() {
   const isExpired = useIsExpired(TARGET_DATE);
   const reduceMotion = useReducedMotion();
+
+  // SS-Tier: JSON-LD for Search Engines
+  const structuredData = (
+    <EventSchema
+      name="Untold Story S3·E2: Deron b2b Juany Bravo"
+      startDate="2026-03-06T19:00:00-06:00"
+      endDate="2026-03-07T02:00:00-06:00"
+      location={{
+        name: "Alhambra Palace",
+        address: "1240 W Randolph St"
+      }}
+      image={["https://monolithproject.com/images/untold-story-juany-deron-v2.jpg"]}
+      description="The Monolith Project presents Untold Story S3·E2 featuring Deron b2b Juany Bravo at Alhambra Palace. An immersive night of house music."
+      offers={{
+        url: POSH_TICKET_URL,
+        price: "25.00",
+        currency: "USD",
+        availability: "https://schema.org/InStock"
+      }}
+      performer={[
+        { name: "Deron", type: "Person" },
+        { name: "Juany Bravo", type: "Person" }
+      ]}
+    />
+  );
+
 
 
   const { scrollY } = useScroll();
@@ -124,9 +154,9 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
-
+      {structuredData}
       {/* Full-bleed video background with Parallax */}
-      <motion.div style={{ y }} className="absolute inset-0 z-0 h-[115%] -top-[5%]">
+      <motion.div style={{ y }} className="absolute inset-0 z-0 h-[115%] -top-[5%] hero-bg">
         <VideoHeroSlider slides={HERO_SLIDES} />
       </motion.div>
 
@@ -134,7 +164,7 @@ export default function HeroSection() {
       <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40 pointer-events-none">
 
         {/* Upper zone — title + subtitle */}
-        <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto">
+        <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto hero-text">
           <div className="font-display text-[clamp(2.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display break-words">
             {/* MONOLITH — clip-path curtain reveal */}
             <div className="relative inline-block translate-y-2 md:translate-y-3 overflow-hidden">
@@ -225,31 +255,35 @@ export default function HeroSection() {
 
             {/* Pill CTAs */}
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={POSH_TICKET_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              >
-                {!reduceMotion && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
-                )}
-                <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
-                <Ticket className="w-3.5 h-3.5" />
-                Get Tickets
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="#movement"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-              >
-                Explore
-                <ArrowDown className="w-3.5 h-3.5" />
-              </a>
+              <MagneticButton strength={0.4}>
+                <a
+                  href={POSH_TICKET_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sensory-ticket-btn"
+                >
+                  {!reduceMotion && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
+                  )}
+                  <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
+                  <Ticket className="w-3.5 h-3.5" />
+                  Get Tickets
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </a>
+              </MagneticButton>
+              <MagneticButton strength={0.3}>
+                <a
+                  href="#movement"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 group"
+                >
+                  Explore
+                  <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1" />
+                </a>
+              </MagneticButton>
             </div>
 
             {/* Location stamp */}

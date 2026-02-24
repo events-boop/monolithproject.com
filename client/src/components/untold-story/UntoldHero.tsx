@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
-import { violet, cyan } from "./constants";
+import MagneticButton from "@/components/MagneticButton";
 
 const heroSlides = ["/images/untold-story-hero-post1.webp"];
 
@@ -46,8 +46,7 @@ export default function UntoldHero() {
 
       {/* Subtle purple glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full opacity-20 blur-[150px] pointer-events-none z-10"
-        style={{ background: `radial-gradient(circle, ${violet}, transparent)` }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full opacity-20 blur-[150px] pointer-events-none z-10 bg-untold-hero-glow"
       />
 
       <div className="container max-w-7xl mx-auto relative z-20">
@@ -60,28 +59,34 @@ export default function UntoldHero() {
           >
             <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
             <div className="flex items-center gap-4 mb-6">
-              <span className="font-mono text-xs tracking-[0.3em] uppercase" style={{ color: cyan }}>
+              <span className="font-mono text-xs tracking-[0.3em] uppercase text-untold-cyan">
                 Series 02
               </span>
               <div className="h-px w-12 bg-white/20" />
               <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">Chicago</span>
             </div>
 
-            <h1 className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display mix-blend-overlay opacity-90">
+            <motion.h1
+              initial={{ filter: "blur(12px)", opacity: 0, y: 30 }}
+              animate={{ filter: "blur(0px)", opacity: 0.9, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+              className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display mix-blend-overlay"
+            >
               UNTOLD
               <br />
               STORY
-            </h1>
+            </motion.h1>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10">
-              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
-                <div
-                  className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center gap-3 cursor-pointer text-white rounded-full"
-                  style={{ background: `linear-gradient(135deg, ${violet}, ${cyan})` }}
-                >
-                  GET TICKETS <ArrowUpRight size={16} />
-                </div>
-              </a>
+              <MagneticButton strength={0.4}>
+                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+                  <div
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group"
+                  >
+                    GET TICKETS <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </div>
+                </a>
+              </MagneticButton>
               <span className="font-mono text-xs text-white/50 tracking-widest hidden sm:block">
                 Tickets moving fast.
               </span>

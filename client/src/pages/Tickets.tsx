@@ -7,6 +7,10 @@ import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import { trackTicketIntent } from "@/lib/api";
 import SEO from "@/components/SEO";
+import { EventSchema } from "@/components/StructuredData";
+import SmartImage from "@/components/SmartImage";
+import MagneticButton from "@/components/MagneticButton";
+
 
 interface TicketTier {
   id: string;
@@ -100,8 +104,29 @@ export default function Tickets() {
         title="Tickets"
         description="Secure your spot for the next Monolith Project event. Limited capacity available."
       />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(34,211,238,0.16),transparent_34%),radial-gradient(circle_at_86%_20%,rgba(224,90,58,0.14),transparent_32%),radial-gradient(circle_at_50%_78%,rgba(139,92,246,0.14),transparent_42%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.45)_0%,rgba(6,6,15,0)_30%,rgba(6,6,15,0.55)_100%)]" />
+      <EventSchema
+        name="Untold Story S3·E2: Deron b2b Juany Bravo"
+        startDate="2026-03-06T19:00:00-06:00"
+        endDate="2026-03-07T02:00:00-06:00"
+        location={{
+          name: "Alhambra Palace",
+          address: "1240 W Randolph St"
+        }}
+        image={["https://monolithproject.com/images/untold-story.jpg"]}
+        description="Ticket sales for Untold Story S3·E2 featuring Deron b2b Juany Bravo."
+        offers={{
+          url: POSH_TICKET_URL,
+          price: "25.00",
+          currency: "USD",
+          availability: "https://schema.org/InStock"
+        }}
+        performer={[
+          { name: "Deron", type: "Person" },
+          { name: "Juany Bravo", type: "Person" }
+        ]}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />
+      <div className="pointer-events-none absolute inset-0 bg-tickets-bottom-glow" />
       <Navigation />
 
       {/* Header */}
@@ -115,7 +140,7 @@ export default function Tickets() {
             <span className="font-serif italic text-lg text-primary/80 block mb-6">
               On sale now
             </span>
-            <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase text-foreground mb-6">
+            <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
               GET TICKETS
             </h1>
             <p className="text-white/80 text-lg max-w-lg mb-4">
@@ -139,23 +164,20 @@ export default function Tickets() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="border border-white/20 p-8 md:p-10 relative overflow-hidden rounded-2xl bg-[linear-gradient(140deg,rgba(139,92,246,0.24),rgba(34,211,238,0.16)_38%,rgba(224,90,58,0.2)_100%)] backdrop-blur-sm shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
+            <div className="border border-white/20 p-8 md:p-10 relative overflow-hidden rounded-2xl bg-tickets-card backdrop-blur-sm shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
               {/* Glow */}
               <div className="absolute -top-12 -right-12 w-[260px] h-[260px] opacity-40 blur-[90px] pointer-events-none bg-cyan-300/35" />
               <div className="absolute -bottom-16 -left-12 w-[260px] h-[260px] opacity-35 blur-[100px] pointer-events-none bg-orange-300/35" />
-              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.08),transparent_45%)] pointer-events-none" />
+              <div className="absolute inset-0 bg-tickets-event-overlay pointer-events-none" />
 
               <div className="relative">
-                <div className="mb-8 overflow-hidden rounded-xl border border-white/25">
-                  <img
-                    src={eventVisuals.poster}
-                    alt="Deron B2B Juany Bravo featured poster"
-                    loading="eager"
-                    decoding="async"
-                    onError={handleImageError}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
+                <SmartImage
+                  src={eventVisuals.poster}
+                  alt="Deron B2B Juany Bravo featured poster"
+                  priority
+                  containerClassName="mb-8 rounded-xl border border-white/25"
+                  className="w-full h-auto object-cover"
+                />
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
                   <div className="flex items-center gap-3">
@@ -164,14 +186,16 @@ export default function Tickets() {
                       Untold Story — Season III · Episode II
                     </span>
                   </div>
-                  <a
-                    href={POSH_TICKET_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-pill-coral sm:ml-auto w-fit"
-                  >
-                    BUY TICKETS <ArrowUpRight className="w-4 h-4" />
-                  </a>
+                  <MagneticButton strength={0.3} className="sm:ml-auto w-fit">
+                    <a
+                      href={POSH_TICKET_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-pill-coral flex"
+                    >
+                      BUY TICKETS <ArrowUpRight className="w-4 h-4 ml-1" />
+                    </a>
+                  </MagneticButton>
                 </div>
 
                 <h2 className="font-display text-3xl md:text-4xl tracking-wide text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.28)] mb-8">
@@ -179,26 +203,18 @@ export default function Tickets() {
                 </h2>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                  <div className="overflow-hidden rounded-xl border border-white/25">
-                    <img
-                      src={eventVisuals.deron}
-                      alt="Deron portrait artwork"
-                      loading="eager"
-                      decoding="async"
-                      onError={handleImageError}
-                      className="w-full h-auto object-cover"
-                    />
-                  </div>
-                  <div className="overflow-hidden rounded-xl border border-white/25">
-                    <img
-                      src={eventVisuals.juany}
-                      alt="Juany Bravo portrait artwork"
-                      loading="eager"
-                      decoding="async"
-                      onError={handleImageError}
-                      className="w-full h-auto object-cover"
-                    />
-                  </div>
+                  <SmartImage
+                    src={eventVisuals.deron}
+                    alt="Deron portrait artwork"
+                    priority
+                    containerClassName="rounded-xl border border-white/25"
+                  />
+                  <SmartImage
+                    src={eventVisuals.juany}
+                    alt="Juany Bravo portrait artwork"
+                    priority
+                    containerClassName="rounded-xl border border-white/25"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -284,9 +300,9 @@ export default function Tickets() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
-                className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm ${tier.highlight
-                  ? "border-primary bg-[linear-gradient(145deg,rgba(224,90,58,0.2),rgba(139,92,246,0.16))] shadow-[0_10px_30px_rgba(224,90,58,0.25)]"
-                  : "border-white/15 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]"
+                className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${tier.highlight
+                  ? "border-primary bg-tickets-tier-highlight shadow-[0_10px_30px_rgba(224,90,58,0.25)] hover:shadow-[0_20px_40px_rgba(224,90,58,0.4)] hover:border-primary/80"
+                  : "border-white/15 bg-tickets-tier hover:border-white/30 hover:bg-white/5"
                   }`}
               >
                 {tier.highlight && (
@@ -327,10 +343,10 @@ export default function Tickets() {
                 <button
                   onClick={handlePurchase}
                   disabled={!tier.available}
-                  className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all flex items-center justify-center gap-2 rounded-full ${tier.highlight
-                    ? "border border-primary text-primary hover:bg-primary hover:text-white"
-                    : "border border-white/30 text-white hover:border-white/60 hover:bg-white/5"
-                    } ${!tier.available && "opacity-50 cursor-not-allowed"}`}
+                  className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-full ${tier.highlight
+                    ? "btn-pill-coral shadow-none w-full"
+                    : "border border-white/30 text-white hover:border-white hover:bg-white hover:text-black"
+                    } ${!tier.available && "opacity-50 cursor-not-allowed hidden"}`}
                 >
                   {tier.available ? (
                     <>
@@ -357,15 +373,19 @@ export default function Tickets() {
             <p className="text-white/70 text-sm mb-6 font-mono tracking-wide">
               Ready? All ticket tiers are available on Posh.
             </p>
-            <a
-              href={POSH_TICKET_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-pill group text-base"
-            >
-              BUY TICKETS NOW
-              <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            <div className="flex justify-center mt-6">
+              <MagneticButton strength={0.4}>
+                <a
+                  href={POSH_TICKET_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill group text-base"
+                >
+                  BUY TICKETS NOW
+                  <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ml-2" />
+                </a>
+              </MagneticButton>
+            </div>
           </motion.div>
         </div>
       </section>
