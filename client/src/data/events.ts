@@ -28,6 +28,7 @@ export interface ScheduledEvent {
     faqs?: Array<{ q: string; a: string }>;
     photoNotice?: string;
     eventNotice?: string;
+    activeFunnels?: ("waitlist" | "waitlist-chasing" | "waitlist-untold" | "giveaway" | "coordinates")[];
 }
 
 /** Active ticket link — Posh */
@@ -40,14 +41,14 @@ export const upcomingEvents: ScheduledEvent[] = [
         episode: "S3·E2",
         title: "DERON B2B JUANY BRAVO",
         subtitle: "Untold Story — Season III · Episode II",
-        headline: "JUANY BRAVO B2B DERON (Chicago Debut)",
+        headline: "DERON B2B JUANY BRAVO (Chicago Debut)",
         date: "March 6, 2026",
         time: "7:00 PM — 2:00 AM",
         mainExperience: "9:00 PM — 2:00 AM",
         doors: "7:00 PM",
         venue: "Alhambra Palace",
         location: "West Loop, Chicago",
-        lineup: "Juany Bravo B2B Deron (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced",
+        lineup: "Deron B2B Juany Bravo (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced",
         status: "on-sale",
         format: "Immersive · Late Night · 360 Sound",
         dress: "Elevated nightlife attire",
@@ -85,6 +86,38 @@ export const upcomingEvents: ScheduledEvent[] = [
         eventNotice: "Presented by The Monolith Project: UNTOLD STORY 360 EXPERIENCE",
         age: "21+",
         ticketUrl: POSH_TICKET_URL,
+        activeFunnels: ["coordinates", "waitlist-untold"], // Activate coordinate drop and waitlist for this event
+    },
+    {
+        id: "mp-autograf-mar21",
+        series: "monolith-project",
+        episode: "SPECIAL EVENT",
+        title: "AUTOGRAF",
+        subtitle: "The Monolith Project Presents",
+        headline: "AUTOGRAF — CHICAGO",
+        date: "March 21, 2026",
+        time: "9:00 PM — Late",
+        doors: "9:00 PM",
+        venue: "Alhambra Palace",
+        location: "Chicago, IL",
+        lineup: "Autograf (Live Set) · Local Support TBA",
+        status: "on-sale",
+        format: "Live Instrumentation · Immersive · Festival Energy",
+        dress: "Elevated nightlife attire",
+        sound: "Melodic House · Afro House · Organic House",
+        description: "Global dance music trio Autograf returns for a special Chicago night, bringing their signature blend of melodic house, live instrumentation, and festival-level energy to one of the city’s most iconic venues.",
+        experienceIntro: "Known for unforgettable performances across Coachella, EDC, and international stages, Autograf delivers an emotional, high-energy experience built for dance floors that move together. This night brings together Chicago’s tastemakers, music lovers, and culture drivers under one roof for a true Monolith experience.",
+        whatToExpect: [
+            "International headliner performance",
+            "Immersive indoor experience",
+            "Elevated sound & lighting production",
+            "Chicago tastemaker crowd",
+            "Signature Monolith Project energy",
+        ],
+        eventNotice: "THE MONOLITH PROJECT PRESENTS: AUTOGRAF",
+        age: "21+",
+        ticketUrl: POSH_TICKET_URL, // Identifying this as the likely link or placeholder
+        activeFunnels: ["giveaway"], // Activate giveaway for the tickets page
     },
     {
         id: "mp-launch-001",
@@ -102,6 +135,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         format: "Sunset → Late Night",
         dress: "Come as you are",
         sound: "Afro House · Techno · Melodic",
+        activeFunnels: ["waitlist"],
     },
     {
         id: "css-002",
@@ -117,6 +151,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         format: "Rooftop · Outdoor",
         dress: "Summer whites encouraged",
         sound: "Afro House · Organic House · Global Rhythms",
+        activeFunnels: ["waitlist-chasing"], // Activate Inner Circle waitlist here
     },
     {
         id: "us-002",
