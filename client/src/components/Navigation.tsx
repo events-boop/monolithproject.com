@@ -5,6 +5,7 @@ import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
+import RevealText from "./RevealText";
 
 interface NavigationProps {
   activeSection?: string;
@@ -14,6 +15,7 @@ interface NavigationProps {
 
 const navItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+  { label: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts" },
   { label: "UNTOLD STORY", href: "/story" },
   { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
@@ -34,6 +36,7 @@ const navItems = [
 
 const mobileNavItems = [
   { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+  { label: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts" },
   { label: "UNTOLD STORY", href: "/story" },
   { label: "SCHEDULE", href: "/schedule" },
   { label: "TICKETS", href: "/tickets" },
@@ -168,7 +171,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
           backdropFilter: navBlur,
           borderColor: borderValue
         }}
-        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-500 border-b py-4"
+        className="fixed top-14 left-0 right-0 z-50 transition-colors duration-500 px-3 sm:px-4 py-3"
       >
         <a
           href="#main-content"
@@ -181,7 +184,15 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         >
           Skip to content
         </a>
-        <div className="w-full px-4 sm:px-6 md:px-8 xl:px-12 2xl:px-20 flex items-center justify-between gap-3">
+        <div
+          className={`mx-auto w-full max-w-[1700px] rounded-2xl border shadow-[0_16px_40px_rgba(0,0,0,0.22)] ${isLight
+            ? "border-charcoal/12 bg-white/72 backdrop-blur-2xl"
+            : brand === "chasing-sunsets"
+              ? "border-white/16 bg-black/32 backdrop-blur-2xl"
+              : "border-white/12 bg-black/35 backdrop-blur-2xl"
+            }`}
+        >
+          <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 flex items-center justify-between gap-3">
           {/* LEFT: LOGO */}
           <div className="flex-shrink min-w-0 -ml-1 md:-ml-2">
             <MagneticButton strength={0.2}>
@@ -193,7 +204,15 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               >
                 <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
                 <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
-                  MONOLITH PROJECT
+                  <RevealText
+                    as="span"
+                    delay={0.1}
+                    stagger={0.03}
+                    blurStrength={4}
+                    className="inline-block"
+                  >
+                    MONOLITH PROJECT
+                  </RevealText>
                 </span>
               </button>
             </MagneticButton>
@@ -242,7 +261,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                               ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                               : brand === "chasing-sunsets"
                                 ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
-                              : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
+                                : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
                               }`}
                             role="menuitem"
                           >
@@ -266,7 +285,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
                       ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                    : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
                 >
                   {item.label === "CHASING SUN(SETS)" ? (
@@ -326,13 +345,14 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                   aria-haspopup="dialog"
                   aria-expanded={mobileMenuOpen}
                   aria-controls={mobileMenuId}
-                  className={`p-2 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
+                  className={`p-2.5 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
                 >
                   <Menu size={24} />
                 </button>
               </MagneticButton>
             </div>
           </div>
+        </div>
         </div>
       </motion.nav>
 
@@ -343,7 +363,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[60] bg-[radial-gradient(circle_at_20%_15%,rgba(224,90,58,0.22),transparent_34%),radial-gradient(circle_at_82%_82%,rgba(34,211,238,0.18),transparent_36%),linear-gradient(180deg,rgba(6,6,15,0.94),rgba(6,6,15,0.98))] backdrop-blur-3xl flex flex-col items-center justify-center"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
@@ -390,14 +410,14 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close navigation menu"
                   ref={closeButtonRef}
-                  className="p-2 text-foreground/50 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  className="p-2.5 text-foreground/50 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <X size={32} />
                 </button>
               </MagneticButton>
             </div>
 
-            <div className="flex flex-col items-center gap-8 relative z-10 w-full px-8">
+            <div className="flex flex-col items-center gap-6 relative z-10 w-full max-w-2xl max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 sm:px-8 py-8 sm:py-10 rounded-3xl border border-white/12 bg-black/30 backdrop-blur-2xl shadow-[0_24px_58px_rgba(0,0,0,0.45)]">
               {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -414,35 +434,35 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       }
                     }}
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group font-display text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
+                    className={`group font-display text-2xl sm:text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
                   >
-                  {item.label === "CHASING SUN(SETS)" ? (
-                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                      <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
-                      <span className="relative inline-block pb-2">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
+                    {item.label === "CHASING SUN(SETS)" ? (
+                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                        <span aria-hidden="true" className="text-2xl md:text-3xl leading-none">☀️</span>
+                        <span className="relative inline-block pb-2">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
                       </span>
-                    </span>
-                  ) : item.label === "UNTOLD STORY" ? (
-                    <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
-                      <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
-                      <span className="relative inline-block pb-2">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
+                    ) : item.label === "UNTOLD STORY" ? (
+                      <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                        <UntoldButterflyLogo className="w-6 h-6 md:w-8 md:h-8" />
+                        <span className="relative inline-block pb-2">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
                       </span>
-                    </span>
-                  ) : (
-                    item.label
-                  )}
-                </Link>
-              </motion.div>
+                    ) : (
+                      item.label
+                    )}
+                  </Link>
+                </motion.div>
               ))}
 
               {/* Emphasized ticket CTA */}
@@ -454,7 +474,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + mobileNavItems.length * 0.1 }}
-                className="mt-4 px-10 py-4 border border-white/25 rounded-full text-white font-display text-2xl tracking-widest uppercase flex items-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                className="mt-2 w-full sm:w-auto px-8 sm:px-10 py-4 border border-white/25 rounded-full text-white font-display text-xl sm:text-2xl tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               >
                 <Ticket className="w-5 h-5" />
                 GET TICKETS

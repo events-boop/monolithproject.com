@@ -114,7 +114,7 @@ export default function ScheduleSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.05, duration: 0.4 }}
-                className="group border-b border-charcoal relative"
+                className="group border-b border-charcoal relative velocity-skew"
                 onMouseEnter={() => event.image && setHoveredEvent({ image: event.image, title: event.title })}
                 onMouseLeave={() => setHoveredEvent(null)}
               >

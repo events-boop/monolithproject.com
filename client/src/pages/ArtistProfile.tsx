@@ -5,6 +5,7 @@ import { Instagram, Globe, MapPin, Music } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { ARTISTS } from "@/data/artists";
 
 const LEGACY_ID_MAP: Record<string, string> = {
@@ -29,6 +30,7 @@ export default function ArtistProfile() {
   const [, setLocation] = useLocation();
   const resolvedId = resolveArtistId(id);
   const artist = resolvedId ? ARTISTS[resolvedId] : undefined;
+  const canonicalArtistPath = resolvedId ? `/artists/${resolvedId}` : id ? `/artists/${id}` : "/lineup";
 
   // If someone hits a legacy slug like `/artists/joezi`, rewrite to canonical.
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function ArtistProfile() {
         <SEO
           title="Artist Not Found"
           description="We couldn't find that artist profile. View the full lineup to continue exploring The Monolith Project."
+          canonicalPath={canonicalArtistPath}
         />
         <Navigation />
         <section className="pt-48 pb-24 px-6">
@@ -55,6 +58,7 @@ export default function ArtistProfile() {
             </Link>
           </div>
         </section>
+        <EntityBoostStrip tone="dark" className="pb-8" />
         <Footer />
       </div>
     );
@@ -96,7 +100,7 @@ export default function ArtistProfile() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title={artist.name} description={artist.bio} />
+      <SEO title={artist.name} description={artist.bio} canonicalPath={canonicalArtistPath} />
       <Navigation />
 
       <section className="relative pt-44 md:pt-48 pb-16 px-6 overflow-hidden">
@@ -261,6 +265,7 @@ export default function ArtistProfile() {
         </div>
       </div>
 
+      <EntityBoostStrip tone="dark" className="pb-8" />
       <Footer />
     </div>
   );

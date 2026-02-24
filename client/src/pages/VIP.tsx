@@ -7,7 +7,7 @@ import { CheckCircle, Send, Crown, Wine, Users, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { submitContactForm } from "@/lib/api";
+import { submitBookingInquiry } from "@/lib/api";
 
 const vipSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -43,10 +43,11 @@ export default function VIP() {
     const onSubmit = async (data: VipFormValues) => {
         setIsSubmitting(true);
         try {
-            await submitContactForm({
+            await submitBookingInquiry({
                 name: data.name,
                 email: data.email,
-                subject: `VIP Table Request — ${data.name}`,
+                entity: "VIP Table Request",
+                type: "general",
                 message: `Phone: ${data.phone}\nGuests: ${data.guests}\n\nInterest: VIP Table Service`,
             });
             setIsSubmitted(true);

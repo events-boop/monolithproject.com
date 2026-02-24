@@ -7,7 +7,7 @@ import { CheckCircle, Send, AlertCircle, Users, Wine, Ticket, Star } from "lucid
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { submitContactForm } from "@/lib/api";
+import { submitBookingInquiry } from "@/lib/api";
 
 const ambassadorSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -65,10 +65,11 @@ export default function Ambassadors() {
         setIsSubmitting(true);
         setSubmitError("");
         try {
-            await submitContactForm({
+            await submitBookingInquiry({
                 name: data.name,
                 email: data.email,
-                subject: `Ambassador Application (@${data.instagram})`,
+                entity: `Ambassador Application (@${data.instagram})`,
+                type: "general",
                 message: `Instagram: ${data.instagram}\n\nNote: ${data.message || "No specific message."}`,
             });
             setIsSubmitted(true);

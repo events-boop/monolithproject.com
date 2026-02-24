@@ -10,6 +10,7 @@ interface RevealTextProps {
   delay?: number;
   blurStrength?: number;
   stagger?: number;
+  style?: React.CSSProperties;
 }
 
 export default function RevealText({
@@ -19,6 +20,7 @@ export default function RevealText({
   delay = 0,
   blurStrength = 12,
   stagger = 0.03, // Slightly faster default
+  style,
 }: RevealTextProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
@@ -28,7 +30,7 @@ export default function RevealText({
   const safeStagger = children.length > 50 ? 0.01 : stagger;
 
   return (
-    <Tag ref={ref} className={cn("inline-block leading-tight", className)}>
+    <Tag ref={ref} className={cn("inline-block leading-tight", className)} style={style}>
       <span className="sr-only">{children}</span>
       {words.map((word, i) => (
         <span key={i} className="inline-block whitespace-pre-wrap">

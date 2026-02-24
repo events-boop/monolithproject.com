@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SocialGrid from "@/components/SocialGrid";
 import { upcomingEvents } from "@/data/events";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -48,10 +49,11 @@ export default function Schedule() {
     : upcomingEvents.filter(e => e.date.toUpperCase().startsWith(activeMonth));
 
   return (
-    <div className="min-h-screen bg-paper text-charcoal relative overflow-hidden">
+    <div className="schedule-page min-h-screen bg-paper text-charcoal relative overflow-hidden">
       <SEO
-        title="Schedule"
-        description="A curated season of sound, ritual, and connection from The Monolith Project."
+        title="Chicago Event Schedule | Chasing Sun(Sets) + Monolith Project"
+        description="Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links."
+        canonicalPath="/schedule"
       />
       <Navigation variant="light" />
 
@@ -60,34 +62,36 @@ export default function Schedule() {
 
       <main className="relative pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-8 max-w-[95%]">
+          <div className="luxe-surface-light p-5 md:p-8 mb-12 md:mb-14">
+            {/* Header & Filters */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div>
+                <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] tracking-tight-display text-charcoal uppercase">
+                  Schedule
+                </h1>
+                <p className="font-mono text-sm tracking-[0.15em] text-charcoal/60 mt-6 uppercase max-w-md leading-relaxed ml-2">
+                  A curated season of sound, ritual, and connection.
+                </p>
+              </div>
 
-          {/* Header & Filters */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
-            <div>
-              <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] tracking-tight-display text-charcoal uppercase">
-                Schedule
-              </h1>
-              <p className="font-mono text-sm tracking-[0.15em] text-charcoal/60 mt-6 uppercase max-w-md leading-relaxed ml-2">
-                A curated season of sound, ritual, and connection.
-              </p>
-            </div>
-
-            {/* Month Filters */}
-            <div className="flex flex-wrap gap-2 md:gap-4 pb-2">
-              {months.map(month => (
+              {/* Month Filters */}
+              <div className="flex flex-wrap gap-2 md:gap-4 pb-2">
+                {months.map(month => (
                 <button
                   key={month}
                   onClick={() => setActiveMonth(month)}
-                  className={`px-4 py-2 border rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${activeMonth === month
+                  className={`px-4 py-2.5 border rounded-full text-[11px] font-bold tracking-widest uppercase transition-all duration-300 ${activeMonth === month
                     ? "bg-charcoal text-white border-charcoal"
                     : "border-charcoal/20 text-charcoal/60 hover:border-charcoal hover:text-charcoal"
                     }`}
                 >
-                  {month}
-                </button>
-              ))}
+                    {month}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+          <EntityBoostStrip tone="light" className="mb-12 px-0" contextLabel="Schedule + Brand Navigation" />
 
           {/* List Header (Desktop) */}
           <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-charcoal text-[10px] uppercase tracking-widest font-mono text-charcoal/50">
@@ -99,7 +103,7 @@ export default function Schedule() {
           </div>
 
           {/* Event List */}
-          <div className="flex flex-col mb-20">
+          <div className="flex flex-col mb-20 rounded-3xl overflow-hidden border border-charcoal/10 bg-white/62 shadow-[0_22px_40px_rgba(44,24,16,0.12)] backdrop-blur-sm">
             {filteredEvents.length === 0 ? (
               <div className="text-center py-20 border-b border-charcoal">
                 <p className="font-mono text-charcoal/50 uppercase tracking-widest">No events found for {activeMonth}</p>
@@ -117,11 +121,11 @@ export default function Schedule() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: index * 0.05, duration: 0.4 }}
-                    className="group border-b border-charcoal relative"
+                    className="group border-b border-charcoal/10 relative"
                   >
                     {/* Main Row */}
                     <div
-                      className="w-full relative z-10 hover:bg-charcoal/5 transition-colors duration-300 group"
+                      className="w-full relative z-10 hover:bg-charcoal/[0.035] transition-colors duration-300 group"
                       role="button"
                       tabIndex={0}
                       onClick={() => toggle(event.id)}
@@ -136,7 +140,7 @@ export default function Schedule() {
                         {/* Date Col */}
                         <div className="md:col-span-2 flex md:flex-col items-center md:items-start gap-3 md:gap-0">
                           <span className="font-display text-xl md:text-3xl text-charcoal">{dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}</span>
-                          <span className="font-mono text-xs text-charcoal/60 md:mt-1">{event.time.split("—")[0]}</span>
+                          <span className="font-mono text-[13px] md:text-xs text-charcoal/70 md:mt-1">{event.time.split("—")[0]}</span>
                         </div>
 
                         {/* Thumbnail Col */}
@@ -153,11 +157,14 @@ export default function Schedule() {
                             {event.title}
                           </h3>
                           <div className="flex flex-wrap gap-2 mt-1">
-                            <span className={`text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 border border-charcoal/10 rounded-full ${seriesTextAccent[event.series]}`}>
+                            <span
+                              className={`text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 border border-charcoal/20 rounded-full ${seriesTextAccent[event.series]}`}
+                              style={{ background: "rgba(255,255,255,0.72)" }}
+                            >
                               {seriesLabels[event.series]}
                             </span>
                             {event.status === "on-sale" && (
-                              <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full">
+                              <span className="text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 bg-primary text-white rounded-full shadow-[0_8px_16px_rgba(224,90,58,0.22)]">
                                 ON SALE
                               </span>
                             )}
@@ -167,7 +174,7 @@ export default function Schedule() {
                         {/* Location Col */}
                         <div className="md:col-span-3 hidden md:flex flex-col">
                           <span className="font-bold text-lg leading-tight">{event.venue}</span>
-                          <span className="text-xs text-charcoal/60 font-mono mt-1">{event.location}</span>
+                          <span className="text-[13px] text-charcoal/65 font-mono mt-1">{event.location}</span>
                         </div>
 
                         {/* Action Col */}
@@ -187,7 +194,7 @@ export default function Schedule() {
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-                          className="overflow-hidden bg-charcoal/5"
+                          className="overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.62),rgba(255,255,255,0.42))]"
                         >
                           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 px-4 md:px-0 py-8 md:py-12 border-t border-charcoal/10">
                             {/* Empty spacer for alignment */}
@@ -201,7 +208,7 @@ export default function Schedule() {
 
                               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                                 {/* Lineup Block */}
-                                <div className="p-6 bg-white border border-charcoal/5 rounded-none shadow-sm">
+                                <div className="luxe-surface-light p-6 border border-charcoal/10 rounded-2xl shadow-[0_10px_22px_rgba(44,24,16,0.1)]">
                                   <div className="flex items-center gap-2 mb-3 text-charcoal/40">
                                     <Music className="w-4 h-4" />
                                     <span className="text-[10px] uppercase tracking-widest font-bold">Lineup</span>
@@ -210,7 +217,7 @@ export default function Schedule() {
                                 </div>
 
                                 {/* Venue Block */}
-                                <div className="p-6 bg-white border border-charcoal/5 rounded-none shadow-sm">
+                                <div className="luxe-surface-light p-6 border border-charcoal/10 rounded-2xl shadow-[0_10px_22px_rgba(44,24,16,0.1)]">
                                   <div className="flex items-center gap-2 mb-3 text-charcoal/40">
                                     <MapPin className="w-4 h-4" />
                                     <span className="text-[10px] uppercase tracking-widest font-bold">Venue</span>
@@ -220,7 +227,7 @@ export default function Schedule() {
                                 </div>
 
                                 {/* Details Block */}
-                                <div className="p-6 bg-white border border-charcoal/5 rounded-none shadow-sm">
+                                <div className="luxe-surface-light p-6 border border-charcoal/10 rounded-2xl shadow-[0_10px_22px_rgba(44,24,16,0.1)]">
                                   <div className="flex items-center gap-2 mb-3 text-charcoal/40">
                                     <Clock className="w-4 h-4" />
                                     <span className="text-[10px] uppercase tracking-widest font-bold">Details</span>

@@ -33,6 +33,7 @@ export default function SponsorAccess() {
                 title="Partner Access"
                 description="Confidential partner materials for The Monolith Project."
                 noIndex
+                canonicalPath="/sponsors"
             />
             <Navigation activeSection="partnerships" />
 

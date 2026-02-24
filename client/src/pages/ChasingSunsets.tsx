@@ -10,6 +10,9 @@ import { chasingSeason1, chasingSeason2 } from "@/data/galleryData";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
+import BrandMotifDivider from "@/components/BrandMotifDivider";
+import FloatingFactsChip from "@/components/FloatingFactsChip";
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
@@ -38,7 +41,9 @@ const events = [
   {
     month: "AUG",
     day: "22",
+    dateLabel: "August 22, 2026",
     title: "THE FIRST MONOLITH",
+    venue: "Venue TBA",
     location: "Chicago, IL",
     time: "4:00 PM - Late",
     status: "coming-soon" as const,
@@ -47,6 +52,7 @@ const events = [
 
 const CHASING_ANCHORS = [
   { label: "Format", href: "#chasing-concept" },
+  { label: "July Recap", href: "#chasing-july-2025-recap" },
   { label: "Records", href: "#chasing-records" },
   { label: "Upcoming", href: "#chasing-upcoming" },
   { label: "Submit", href: "#chasing-submit" },
@@ -58,14 +64,26 @@ const auburn = "#C2703E";
 const warmGold = "#E8B86D";
 const cream = "#FBF5ED";
 const deepWarm = "#2C1810";
+const JULY_2025_RECAP_URL = "https://www.youtube.com/watch?v=9R6XH7JZlJI";
+const JULY_2025_RECAP_EMBED_URL = "https://www.youtube-nocookie.com/embed/9R6XH7JZlJI";
+const sectionTransition = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };
+const sectionReveal = {
+  initial: { opacity: 0, y: 26 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-90px" },
+  transition: sectionTransition,
+};
 
 export default function ChasingSunsets() {
+  const featuredEvent = events[0];
+
   return (
     <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise" style={{ background: cream, color: deepWarm }}>
       <SEO
-        title="Chasing Sun(Sets)"
-        description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
+        title="Chasing Sun(Sets) Chicago | Sunset House Music Series"
+        description="Official Chasing Sun(Sets) page for Chicago sunset house music events, lineup updates, the July 2025 recap video, and ticket links."
         image="/images/chasing-sunsets.jpg"
+        canonicalPath="/chasing-sunsets"
       />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_16%,rgba(232,184,109,0.25),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(194,112,62,0.2),transparent_32%),radial-gradient(circle_at_75%_84%,rgba(139,92,246,0.14),transparent_36%)]" />
       <Navigation variant="dark" brand="chasing-sunsets" />
@@ -118,14 +136,106 @@ export default function ChasingSunsets() {
       </section>
       <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
+      {/* July 2025 Recap Video */}
+      <section
+        id="chasing-july-2025-recap"
+        className="scroll-mt-44 py-24 px-6"
+        style={{ borderTop: `1px solid ${auburn}15`, background: `${warmGold}08` }}
+      >
+        <motion.div className="container max-w-6xl mx-auto" {...sectionReveal}>
+          <div className="lg:hidden sticky top-[5.65rem] z-20 mb-8">
+            <div className="luxe-surface-warm p-2.5">
+              <div className="overflow-hidden rounded-[0.9rem] border bg-black" style={{ borderColor: `${auburn}36` }}>
+                <div className="aspect-video">
+                  <iframe
+                    title="July 2025 Chasing Sun(Sets) recap video mobile preview"
+                    src={JULY_2025_RECAP_EMBED_URL}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-14 items-start">
+            <div className="lg:order-1">
+              <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: auburn }}>
+                Featured Recap
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl mb-4" style={{ color: deepWarm }}>
+                JULY 2025 CHASING SUN(SETS) RECAP
+              </h2>
+              <p className="text-lg mb-5 max-w-3xl leading-relaxed" style={{ color: `${deepWarm}80` }}>
+                This is the official Chasing Sun(Sets) recap video from July 2025 - a visual archive of the sunset chapter.
+              </p>
+              <p className="text-base mb-6 max-w-3xl leading-relaxed" style={{ color: `${deepWarm}73` }}>
+                From first light to closing track, this chapter captures the exact pace and emotional arc that defines the series:
+                open-air ritual, community movement, and sunset energy turning into night momentum.
+              </p>
+              <div className="flex flex-wrap gap-2.5 mb-6">
+                {["Official Recap", "Chicago — July 2025", "Sunset Chapter Archive"].map((label) => (
+                  <span
+                    key={label}
+                    className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border"
+                    style={{ borderColor: `${auburn}45`, color: `${deepWarm}C8`, background: "rgba(255,255,255,0.74)" }}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+              <div className="cta-stack">
+                <a
+                  href={JULY_2025_RECAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-3 font-bold tracking-widest text-xs uppercase text-white rounded-full lift-hover"
+                  style={{ background: `linear-gradient(135deg, ${auburn}, ${warmGold})` }}
+                >
+                  Watch Recap <ArrowUpRight size={14} />
+                </a>
+                <Link href="/tickets" className="btn-pill-dark">
+                  Get Tickets
+                </Link>
+              </div>
+              <p className="ui-meta mt-4" style={{ color: `${deepWarm}99` }}>
+                16:9 Live Chapter Film · Official Set Recap
+              </p>
+            </div>
+
+            <div className="hidden lg:block lg:order-2">
+              <div className="sticky top-28">
+                <div className="luxe-surface-warm p-3 md:p-4">
+                  <div className="overflow-hidden rounded-[0.9rem] border bg-black" style={{ borderColor: `${auburn}30` }}>
+                    <div className="aspect-video">
+                      <iframe
+                        title="July 2025 Chasing Sun(Sets) recap video"
+                        src={JULY_2025_RECAP_EMBED_URL}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      <BrandMotifDivider tone="warm" className="my-6" />
+
       {/* The Concept */}
       <section id="chasing-concept" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={sectionReveal.initial}
+              whileInView={sectionReveal.whileInView}
+              viewport={sectionReveal.viewport}
+              transition={sectionTransition}
             >
               <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: auburn }}>
                 The Format
@@ -138,10 +248,10 @@ export default function ChasingSunsets() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              initial={sectionReveal.initial}
+              whileInView={sectionReveal.whileInView}
+              viewport={sectionReveal.viewport}
+              transition={{ ...sectionTransition, delay: 0.1 }}
               className="space-y-6 rounded-2xl border p-6 md:p-8 backdrop-blur-sm"
               style={{ borderColor: `${auburn}22`, background: "linear-gradient(145deg,rgba(255,255,255,0.62),rgba(255,255,255,0.36))" }}
             >
@@ -198,38 +308,26 @@ export default function ChasingSunsets() {
         />
       </div>
 
-      {/* Season Records */}
-      <MixedMediaGallery
-        title="Season I"
-        subtitle="2025 Archives"
-        description="The beginning. Rooftops, rivers, and the golden hour."
-        media={chasingSeason1}
-        className="bg-transparent border-t border-[#C2703E]/10"
-        style={{ color: deepWarm }}
-      />
-      <MixedMediaGallery
-        title="Season II"
-        subtitle="2026 Archives"
-        description="Expanding the horizon. New venues, same sun."
-        media={chasingSeason2}
-        className="bg-transparent border-t border-[#C2703E]/10"
-        style={{ color: deepWarm }}
-      />
+      <BrandMotifDivider tone="warm" className="my-6" />
 
       {/* Upcoming Events */}
       <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6" style={{ background: `${warmGold}12`, borderTop: `1px solid ${auburn}15` }}>
         <div className="container max-w-5xl mx-auto">
-          <div className="flex items-end justify-between mb-16 pb-6" style={{ borderBottom: `1px solid ${auburn}15` }}>
+          <motion.div className="flex items-end justify-between mb-16 pb-6" style={{ borderBottom: `1px solid ${auburn}15` }} {...sectionReveal}>
             <h2 className="font-display text-4xl md:text-5xl" style={{ color: deepWarm }}>UPCOMING</h2>
             <span className="font-mono text-xs tracking-widest" style={{ color: auburn }}>SEASON 2026</span>
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
-            {events.map((event) => (
-              <div
+            {events.map((event, index) => (
+              <motion.div
                 key={event.title}
                 className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm"
                 style={{ border: `1px solid ${auburn}20`, background: "linear-gradient(145deg,rgba(255,255,255,0.75),rgba(255,255,255,0.45))" }}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-70px" }}
+                transition={{ ...sectionTransition, delay: Math.min(index * 0.08, 0.2) }}
               >
                 <div className="flex items-start gap-6">
                   <div className="flex flex-col items-center justify-center w-16 h-16" style={{ border: `1px solid ${auburn}30`, background: `${auburn}08` }}>
@@ -240,11 +338,17 @@ export default function ChasingSunsets() {
                     <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors" style={{ color: deepWarm }}>
                       {event.title}
                     </h3>
-                    <div className="flex gap-4 text-sm font-mono uppercase" style={{ color: `${deepWarm}60` }}>
-                      <span className="flex items-center gap-1">
+                    <div className="flex flex-wrap gap-2.5 text-sm md:text-[0.95rem] font-mono uppercase" style={{ color: `${deepWarm}78` }}>
+                      <span
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] md:text-xs tracking-[0.12em]"
+                        style={{ background: "rgba(255,255,255,0.9)", border: `1px solid ${auburn}42` }}
+                      >
                         <MapPin size={12} /> {event.location}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] md:text-xs tracking-[0.12em]"
+                        style={{ background: "rgba(255,255,255,0.9)", border: `1px solid ${auburn}42` }}
+                      >
                         <Calendar size={12} /> {event.time}
                       </span>
                     </div>
@@ -252,13 +356,13 @@ export default function ChasingSunsets() {
                 </div>
                 <Link href="/tickets" asChild>
                   <a
-                    className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
+                    className="w-full sm:w-auto px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
                     style={{ background: `linear-gradient(135deg, ${auburn}, ${warmGold})` }}
                   >
                     GET TICKETS <ArrowUpRight size={14} />
                   </a>
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -266,7 +370,7 @@ export default function ChasingSunsets() {
 
       {/* Submit DJ Set */}
       <section id="chasing-submit" className="scroll-mt-44 py-24 px-6" style={{ borderTop: `1px solid ${auburn}15`, background: cream }}>
-        <div className="container max-w-4xl mx-auto text-center">
+        <motion.div className="container max-w-4xl mx-auto text-center" {...sectionReveal}>
           <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4" style={{ color: auburn }}>
             For The Selectors
           </span>
@@ -284,13 +388,13 @@ export default function ChasingSunsets() {
           >
             SUBMIT A MIX
           </a>
-        </div>
+        </motion.div>
       </section>
 
       {/* CTA */}
       <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative" style={{ borderTop: `1px solid ${auburn}15` }}>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(194,112,62,0.18),transparent_32%),radial-gradient(circle_at_82%_76%,rgba(232,184,109,0.22),transparent_34%)]" />
-        <div className="container max-w-4xl mx-auto text-center">
+        <motion.div className="container max-w-4xl mx-auto text-center" {...sectionReveal}>
           <h2 className="font-display text-5xl md:text-7xl mb-6" style={{ color: deepWarm }}>
             CHASE THE LIGHT
           </h2>
@@ -315,11 +419,51 @@ export default function ChasingSunsets() {
               </a>
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
       </main>
 
       <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />
+      <EntityBoostStrip
+        tone="warm"
+        className="pb-8"
+        contextLabel="Chasing Sun(Sets) Identity Links"
+        intent="watch-recap"
+      />
+      <section className="px-6 pb-8">
+        <div className="container max-w-6xl mx-auto">
+          <div
+            className="luxe-surface-warm rounded-2xl px-5 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-6 justify-between"
+          >
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.22em] uppercase" style={{ color: `${deepWarm}90` }}>
+                Next Event
+              </p>
+              <p className="font-display text-2xl md:text-3xl uppercase mt-1" style={{ color: deepWarm }}>
+                {featuredEvent.title}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-2.5 text-[11px] md:text-xs font-mono uppercase tracking-[0.12em]" style={{ color: `${deepWarm}84` }}>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border" style={{ borderColor: `${auburn}38`, background: "rgba(255,255,255,0.72)" }}>
+                  <Calendar size={12} /> {featuredEvent.dateLabel}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border" style={{ borderColor: `${auburn}38`, background: "rgba(255,255,255,0.72)" }}>
+                  <MapPin size={12} /> {featuredEvent.venue}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full border" style={{ borderColor: `${auburn}32`, background: "rgba(255,255,255,0.62)" }}>
+                  {featuredEvent.location}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full border" style={{ borderColor: `${auburn}32`, background: "rgba(255,255,255,0.62)" }}>
+                  {featuredEvent.time}
+                </span>
+              </div>
+            </div>
+            <Link href="/tickets" className="btn-pill-coral w-full md:w-auto">
+              Get Tickets
+            </Link>
+          </div>
+        </div>
+      </section>
+      <FloatingFactsChip tone="warm" storageKey="floating-facts-chip-chasing" />
       <Footer />
     </div>
   );

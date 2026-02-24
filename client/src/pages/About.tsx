@@ -6,7 +6,8 @@ import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SectionDivider from "@/components/SectionDivider";
 import TicketTicker from "@/components/TicketTicker";
 import SEO from "@/components/SEO";
-
+import TextSpotlightReveal from "@/components/ui/TextSpotlightReveal";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 // Custom hook for animated numbers
 const useCounter = (end: number, duration: number = 2000) => {
   const [count, setCount] = useState(0);
@@ -91,6 +92,7 @@ export default function About() {
       <SEO
         title="About"
         description="The Monolith Project is a Chicago events collective built around togetherness: showing up, staying present, and letting the music guide."
+        canonicalPath="/about"
       />
       <Navigation />
 
@@ -128,6 +130,7 @@ export default function About() {
           />
         </motion.div>
       </section>
+      <EntityBoostStrip tone="dark" className="pb-8" contextLabel="About + Entity Clarity" />
 
       {/* SECTION 2: The Intro */}
       <section className="py-24 px-6 md:px-12">
@@ -207,18 +210,20 @@ export default function About() {
             transition={{ duration: 1 }}
             className="space-y-8"
           >
-            <p className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-              A frequency is something you tune into. It's invisible. It travels through walls, through bodies, through air. You can't hold it, but you feel it.
-            </p>
-            <p className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-              Togetherness works the same way. It's not something you see — it's something that happens when a room full of strangers decides to stop being strangers. When the bass drops and everyone moves at the same time. When the sun sets and nobody reaches for their phone.
-            </p>
-            <div className="pt-8">
-              <p className="font-display text-4xl md:text-6xl text-[#d4a853] leading-tight tracking-tight">
-                That's the frequency.<br />
-                <span className="text-white">Music is how we find it.</span>
+            <TextSpotlightReveal spotlightSize={450} baseOpacity={0.08} className="cursor-none">
+              <p className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-8">
+                A frequency is something you tune into. It's invisible. It travels through walls, through bodies, through air. You can't hold it, but you feel it.
               </p>
-            </div>
+              <p className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-8">
+                Togetherness works the same way. It's not something you see — it's something that happens when a room full of strangers decides to stop being strangers. When the bass drops and everyone moves at the same time. When the sun sets and nobody reaches for their phone.
+              </p>
+              <div className="pt-8">
+                <p className="font-display text-4xl md:text-6xl text-[#d4a853] leading-tight tracking-tight drop-shadow-[0_0_8px_rgba(212,168,83,0.8)]">
+                  That's the frequency.<br />
+                  <span className="text-white">Music is how we find it.</span>
+                </p>
+              </div>
+            </TextSpotlightReveal>
           </motion.div>
         </div>
       </section>

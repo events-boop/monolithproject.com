@@ -2,9 +2,9 @@
   {
     "name": "minScore",
     "expected": 0.7,
-    "actual": 0.61,
+    "actual": 0.67,
     "values": [
-      0.61
+      0.67
     ],
     "operator": ">=",
     "passed": false,
@@ -14,26 +14,11 @@
     "url": "http://127.0.0.1:3000/"
   },
   {
-    "name": "maxNumericValue",
-    "expected": 600000,
-    "actual": 627749,
-    "values": [
-      627749
-    ],
-    "operator": "<=",
-    "passed": false,
-    "auditProperty": "script.size",
-    "auditId": "resource-summary",
-    "level": "error",
-    "url": "http://127.0.0.1:3000/",
-    "auditTitle": "Resources Summary"
-  },
-  {
     "name": "minScore",
     "expected": 0.7,
-    "actual": 0.6,
+    "actual": 0.65,
     "values": [
-      0.6
+      0.65
     ],
     "operator": ">=",
     "passed": false,
@@ -45,9 +30,9 @@
   {
     "name": "minScore",
     "expected": 0.7,
-    "actual": 0.57,
+    "actual": 0.64,
     "values": [
-      0.57
+      0.64
     ],
     "operator": ">=",
     "passed": false,
@@ -57,11 +42,26 @@
     "url": "http://127.0.0.1:3000/chasing-sunsets"
   },
   {
+    "name": "maxNumericValue",
+    "expected": 600000,
+    "actual": 601818,
+    "values": [
+      601818
+    ],
+    "operator": "<=",
+    "passed": false,
+    "auditProperty": "script.size",
+    "auditId": "resource-summary",
+    "level": "error",
+    "url": "http://127.0.0.1:3000/chasing-sunsets",
+    "auditTitle": "Resources Summary"
+  },
+  {
     "name": "minScore",
     "expected": 0.7,
-    "actual": 0.48,
+    "actual": 0.64,
     "values": [
-      0.48
+      0.64
     ],
     "operator": ">=",
     "passed": false,
@@ -73,9 +73,9 @@
   {
     "name": "minScore",
     "expected": 0.7,
-    "actual": 0.6,
+    "actual": 0.63,
     "values": [
-      0.6
+      0.63
     ],
     "operator": ">=",
     "passed": false,
@@ -87,9 +87,9 @@
   {
     "name": "maxNumericValue",
     "expected": 600000,
-    "actual": 644844,
+    "actual": 676028,
     "values": [
-      644844
+      676028
     ],
     "operator": "<=",
     "passed": false,

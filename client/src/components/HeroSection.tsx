@@ -8,6 +8,7 @@ import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 import HeroSpotlight from "./ui/HeroSpotlight";
 import { BorderBeam } from "./ui/BorderBeam";
+import MagneticButton from "./ui/MagneticButton";
 
 // March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
 
@@ -110,7 +111,31 @@ export default function HeroSection() {
             transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.5 }}
             className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
           >
-            Built on music, community, and showing up for each other.
+            Built on togetherness, music, and showing up for each other.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.6 }}
+            className="mt-4 text-sm md:text-base text-white/80 max-w-3xl"
+          >
+            Chasing Sun(Sets) is our Chicago sunset house music event series and radio show.{" "}
+            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              Not the fragrance — official music series
+            </Link>
+            . Browse{" "}
+            <Link href="/radio" className="text-primary underline underline-offset-4">
+              radio episodes
+            </Link>{" "}
+            and{" "}
+            <Link href="/chasing-sunsets#chasing-july-2025-recap" className="text-primary underline underline-offset-4">
+              watch the July 2025 recap video
+            </Link>{" "}
+            and{" "}
+            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              Chasing Sun(Sets) Facts
+            </Link>
+            .
           </motion.p>
           <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
         </div>
@@ -159,32 +184,36 @@ export default function HeroSection() {
             )}
 
             {/* Pill CTAs */}
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={POSH_TICKET_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              >
-                {!reduceMotion && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
-                )}
-                <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
-                <Ticket className="w-3.5 h-3.5" />
-                Get Tickets
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="#movement"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-              >
-                Explore
-                <ArrowDown className="w-3.5 h-3.5" />
-              </a>
+            <div className="cta-stack items-center">
+              <MagneticButton>
+                <a
+                  href={POSH_TICKET_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill w-full md:w-auto relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                >
+                  {!reduceMotion && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
+                  )}
+                  <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
+                  <Ticket className="w-3.5 h-3.5" />
+                  Get Tickets
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <a
+                  href="#movement"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="btn-pill w-full md:w-auto border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  Explore
+                  <ArrowDown className="w-3.5 h-3.5" />
+                </a>
+              </MagneticButton>
             </div>
 
             {/* Series links */}
@@ -203,10 +232,6 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Metadata */}
-            <div className="ui-meta bg-gradient-to-r from-white/70 via-white to-white/75 bg-clip-text text-transparent">
-              Chicago Events Collective · Est. 2025
-            </div>
           </motion.div>
 
           {/* Right: Countdown */}
@@ -216,7 +241,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
-              className="flex items-center gap-3 md:gap-4"
+              className="flex items-center gap-3 md:gap-4 luxe-surface-dark px-4 py-4 md:px-6 md:py-5"
             >
               {[
                 { value: days, label: "DAYS", highlight: true },

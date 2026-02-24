@@ -1,0 +1,165 @@
+
+Running 3 tests using 3 workers
+
+  ✘  1 [chromium] › e2e/smoke.spec.ts:52:1 › ticket flow emits intent tracking and preserves outbound ticket link (5.3s)
+  ✘  4 [chromium] › e2e/smoke.spec.ts:52:1 › ticket flow emits intent tracking and preserves outbound ticket link (retry #1) (5.3s)
+  ✘  2 [chromium] › e2e/smoke.spec.ts:69:1 › scoped a11y checks pass for newsletter and tickets header (15.2s)
+  ✘  3 [chromium] › e2e/smoke.spec.ts:19:1 › newsletter flow shows user-visible error then success (17.8s)
+  ✘  5 [chromium] › e2e/smoke.spec.ts:69:1 › scoped a11y checks pass for newsletter and tickets header (retry #1) (15.3s)
+  ✘  6 [chromium] › e2e/smoke.spec.ts:19:1 › newsletter flow shows user-visible error then success (retry #1) (15.3s)
+
+
+  1) [chromium] › e2e/smoke.spec.ts:19:1 › newsletter flow shows user-visible error then success ───
+
+    TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#newsletter') to be visible[22m
+
+
+      13 |   // Newsletter is viewport-lazy; scroll first to trigger render.
+      14 |   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    > 15 |   await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+         |              ^
+      16 |   await page.locator("#newsletter").scrollIntoViewIfNeeded();
+      17 | }
+      18 |
+        at ensureNewsletterVisible (/Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:15:14)
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:31:3
+
+    Error Context: test-results/smoke-newsletter-flow-shows-user-visible-error-then-success-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#newsletter') to be visible[22m
+
+
+      13 |   // Newsletter is viewport-lazy; scroll first to trigger render.
+      14 |   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    > 15 |   await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+         |              ^
+      16 |   await page.locator("#newsletter").scrollIntoViewIfNeeded();
+      17 | }
+      18 |
+        at ensureNewsletterVisible (/Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:15:14)
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:31:3
+
+    Error Context: test-results/smoke-newsletter-flow-shows-user-visible-error-then-success-chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/smoke-newsletter-flow-shows-user-visible-error-then-success-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/smoke-newsletter-flow-shows-user-visible-error-then-success-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/smoke.spec.ts:52:1 › ticket flow emits intent tracking and preserves outbound ticket link 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('heading', { name: 'GET TICKETS' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for getByRole('heading', { name: 'GET TICKETS' })[22m
+
+
+      58 |
+      59 |   await page.goto("/tickets");
+    > 60 |   await expect(page.getByRole("heading", { name: "GET TICKETS" })).toBeVisible();
+         |                                                                    ^
+      61 |
+      62 |   const ctaLink = page.locator(`a[href*="posh.vip"]`).first();
+      63 |   await expect(ctaLink).toBeVisible();
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:60:68
+
+    Error Context: test-results/smoke-ticket-flow-emits-in-4808d-serves-outbound-ticket-link-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('heading', { name: 'GET TICKETS' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for getByRole('heading', { name: 'GET TICKETS' })[22m
+
+
+      58 |
+      59 |   await page.goto("/tickets");
+    > 60 |   await expect(page.getByRole("heading", { name: "GET TICKETS" })).toBeVisible();
+         |                                                                    ^
+      61 |
+      62 |   const ctaLink = page.locator(`a[href*="posh.vip"]`).first();
+      63 |   await expect(ctaLink).toBeVisible();
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:60:68
+
+    Error Context: test-results/smoke-ticket-flow-emits-in-4808d-serves-outbound-ticket-link-chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/smoke-ticket-flow-emits-in-4808d-serves-outbound-ticket-link-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/smoke-ticket-flow-emits-in-4808d-serves-outbound-ticket-link-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/smoke.spec.ts:69:1 › scoped a11y checks pass for newsletter and tickets header 
+
+    TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#newsletter') to be visible[22m
+
+
+      13 |   // Newsletter is viewport-lazy; scroll first to trigger render.
+      14 |   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    > 15 |   await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+         |              ^
+      16 |   await page.locator("#newsletter").scrollIntoViewIfNeeded();
+      17 | }
+      18 |
+        at ensureNewsletterVisible (/Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:15:14)
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:70:3
+
+    Error Context: test-results/smoke-scoped-a11y-checks-p-f008c-wsletter-and-tickets-header-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('#newsletter') to be visible[22m
+
+
+      13 |   // Newsletter is viewport-lazy; scroll first to trigger render.
+      14 |   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    > 15 |   await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+         |              ^
+      16 |   await page.locator("#newsletter").scrollIntoViewIfNeeded();
+      17 | }
+      18 |
+        at ensureNewsletterVisible (/Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:15:14)
+        at /Users/starkindustries/Downloads/monolith-project website /e2e/smoke.spec.ts:70:3
+
+    Error Context: test-results/smoke-scoped-a11y-checks-p-f008c-wsletter-and-tickets-header-chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/smoke-scoped-a11y-checks-p-f008c-wsletter-and-tickets-header-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/smoke-scoped-a11y-checks-p-f008c-wsletter-and-tickets-header-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › e2e/smoke.spec.ts:19:1 › newsletter flow shows user-visible error then success ────
+    [chromium] › e2e/smoke.spec.ts:52:1 › ticket flow emits intent tracking and preserves outbound ticket link 
+    [chromium] › e2e/smoke.spec.ts:69:1 › scoped a11y checks pass for newsletter and tickets header 

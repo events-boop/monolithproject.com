@@ -1,7 +1,7 @@
 {
-  "http://127.0.0.1:3000/": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771404452125-1852.report.html",
-  "http://127.0.0.1:3000/tickets": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771404452387-3858.report.html",
-  "http://127.0.0.1:3000/chasing-sunsets": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771404452627-17562.report.html",
-  "http://127.0.0.1:3000/radio": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771404452886-29060.report.html",
-  "http://127.0.0.1:3000/contact": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771404453095-45722.report.html"
+  "http://127.0.0.1:3000/": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771405418126-3359.report.html",
+  "http://127.0.0.1:3000/tickets": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771405418350-2558.report.html",
+  "http://127.0.0.1:3000/chasing-sunsets": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771405418574-1934.report.html",
+  "http://127.0.0.1:3000/radio": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771405418806-90425.report.html",
+  "http://127.0.0.1:3000/contact": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1771405419332-4581.report.html"
 }

@@ -18,6 +18,9 @@ const ConnectSection = lazy(() => import("@/components/ConnectSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
 import SEO from "@/components/SEO";
+import FixedTicketBadge from "@/components/FixedTicketBadge";
+import TextLineupSection from "@/components/TextLineupSection";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Home() {
   useEffect(() => {
@@ -27,8 +30,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
       <SEO
-        title="Home"
-        description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
+        title="Chicago House Music Events & Radio Show"
+        description="Official site for The Monolith Project and Chasing Sun(Sets), a Chicago-based sunset house music event series and radio show. Find tickets, schedule, and episodes."
+        canonicalPath="/"
       />
       <Navigation />
       <FixedTicketBadge />
@@ -36,6 +40,7 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         {/* Hero — countdown + video + CTAs */}
         <HeroSection />
+        <EntityBoostStrip tone="dark" className="mt-10" contextLabel="Entity Stack" />
 
         {/* 01 — The Movement */}
         <SectionDivider number="01" label="The Collective" />

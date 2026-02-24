@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const productionRoles = [
   {
@@ -74,6 +75,7 @@ export default function Partners() {
       <SEO
         title="Partners & Crew"
         description="Work with The Monolith Project. We're looking for venue partners, brands, and production crew to help build the shows."
+        canonicalPath="/partners"
       />
       <Navigation />
 
@@ -221,6 +223,7 @@ export default function Partners() {
         </div>
       </section>
 
+      <EntityBoostStrip tone="dark" className="pb-16" />
       <NewsletterSection />
       <Footer />
     </div>

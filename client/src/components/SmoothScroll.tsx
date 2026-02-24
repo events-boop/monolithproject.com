@@ -14,14 +14,13 @@ export default function SmoothScroll() {
         if (reduceMotion) return;
         // S-Tier Scrolling - Optimized for cinematic feel
         const lenis = new Lenis({
-            duration: 1.4, // Slightly longer for luxurious feel
+            duration: 1.1, // Reduced for a snappier, grounded feel while maintaining physics stability
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
-            wheelMultiplier: 1,
+            wheelMultiplier: 1.05,
             touchMultiplier: 2,
-            // Infinite scroll feel
         });
 
         lenisRef.current = lenis;
@@ -34,15 +33,40 @@ export default function SmoothScroll() {
             document.documentElement.style.setProperty('--scroll-velocity', e.velocity);
         });
 
+        // Idle-aware RAF: stop the loop when Lenis is done animating, resume on input
+        let running = false;
+
         function raf(time: number) {
             lenis.raf(time);
+            if (lenis.isScrolling) {
+                reqIdRef.current = requestAnimationFrame(raf);
+            } else {
+                running = false;
+                reqIdRef.current = null;
+            }
+        }
+
+        function wake() {
+            if (running) return;
+            running = true;
             reqIdRef.current = requestAnimationFrame(raf);
         }
 
-        reqIdRef.current = requestAnimationFrame(raf);
+        // Kick-start on user input — covers wheel, touch, keyboard scroll
+        const opts: AddEventListenerOptions = { passive: true };
+        window.addEventListener("wheel", wake, opts);
+        window.addEventListener("touchstart", wake, opts);
+        window.addEventListener("keydown", wake, opts);
+        lenis.on("scroll", wake);
+
+        // Initial kick
+        wake();
 
         return () => {
             if (reqIdRef.current) cancelAnimationFrame(reqIdRef.current);
+            window.removeEventListener("wheel", wake);
+            window.removeEventListener("touchstart", wake);
+            window.removeEventListener("keydown", wake);
             document.documentElement.classList.remove('lenis', 'lenis-smooth');
             lenis.destroy();
             lenisRef.current = null;

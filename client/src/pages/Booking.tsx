@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ViewportLazy from "@/components/ViewportLazy";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const BookingFormSection = lazy(() => import("@/components/BookingFormSection"));
 
@@ -13,6 +14,7 @@ export default function Booking() {
       <SEO
         title="Booking"
         description="Submit a mix or inquiry to play with The Monolith Project. We review every booking request for alignment with the collective."
+        canonicalPath="/booking"
       />
       <Navigation />
 
@@ -45,6 +47,7 @@ export default function Booking() {
         </div>
       </section>
 
+      <EntityBoostStrip tone="dark" className="pb-20" />
       <Footer />
     </div>
   );

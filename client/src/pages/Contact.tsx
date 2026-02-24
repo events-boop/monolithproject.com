@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const contactTiles = [
   {
@@ -52,6 +53,7 @@ export default function Contact() {
       <SEO
         title="Contact"
         description="Get in touch with The Monolith Project for bookings, partnerships, and general inquiries."
+        canonicalPath="/contact"
       />
       <Navigation />
 
@@ -168,6 +170,7 @@ export default function Contact() {
         </section>
       </main>
 
+      <EntityBoostStrip tone="light" className="pb-20" />
       <Footer />
     </div>
   );

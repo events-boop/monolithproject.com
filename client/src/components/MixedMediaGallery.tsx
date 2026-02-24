@@ -117,7 +117,7 @@ export default function MixedMediaGallery({
                 <img
                   src={item.src}
                   alt={item.alt || ""}
-                  className="w-full h-auto object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.03]"
+                  className="w-full h-auto object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.03] group-hover:[filter:url(#liquid-distortion)]"
                   loading="lazy"
                   decoding="async"
                   onError={(e) => {
