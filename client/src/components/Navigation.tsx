@@ -202,7 +202,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
         >
           <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 flex items-center justify-between gap-3">
             {/* LEFT: LOGO */}
-            <div className="flex-shrink min-w-0 -ml-1 md:-ml-2">
+            <div className="shrink-0 -ml-1 md:-ml-2">
               <MagneticButton strength={0.2}>
                 <button
                   type="button"

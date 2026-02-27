@@ -192,20 +192,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Accent line — draws in after title */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.3 }}
-            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display"
-          >
-            <div className="relative inline-block translate-y-2 md:translate-y-3">
-              <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
-                <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
-              </HeroSpotlight>
-            </div>
-            <span className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0">PROJECT</span>
-          </motion.div>
+
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -215,30 +202,7 @@ export default function HeroSection() {
           >
             Built on togetherness, music, and showing up for each other.
           </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.6 }}
-            className="mt-4 text-sm md:text-base text-white/80 max-w-3xl"
-          >
-            Chasing Sun(Sets) is our Chicago sunset house music event series and radio show.{" "}
-            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
-              Not the fragrance — official music series
-            </Link>
-            . Browse{" "}
-            <Link href="/radio" className="text-primary underline underline-offset-4">
-              radio episodes
-            </Link>{" "}
-            and{" "}
-            <Link href="/chasing-sunsets#chasing-july-2025-recap" className="text-primary underline underline-offset-4">
-              watch the July 2025 recap video
-            </Link>{" "}
-            and{" "}
-            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
-              Chasing Sun(Sets) Facts
-            </Link>
-            .
-          </motion.p>
+
           <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
         </div>
 
