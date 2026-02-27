@@ -212,15 +212,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 >
                   <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
                   <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
-                    <RevealText
-                      as="span"
-                      delay={0.1}
-                      stagger={0.03}
-                      blurStrength={4}
-                      className="inline-block"
-                    >
-                      MONOLITH PROJECT
-                    </RevealText>
+                    MONOLITH PROJECT
                   </span>
                 </button>
               </MagneticButton>
