@@ -62,18 +62,6 @@ export default function Schedule() {
 
       <main className="relative pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-8 max-w-[95%]">
-          <div className="luxe-surface-light p-5 md:p-8 mb-12 md:mb-14">
-            {/* Header & Filters */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-              <div>
-                <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] tracking-tight-display text-charcoal uppercase">
-                  Schedule
-                </h1>
-                <p className="font-mono text-sm tracking-[0.15em] text-charcoal/60 mt-6 uppercase max-w-md leading-relaxed ml-2">
-                  A curated season of sound, ritual, and connection.
-                </p>
-              </div>
-
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
             <div>
@@ -96,10 +84,9 @@ export default function Schedule() {
                     : "border-border text-muted-foreground hover:border-border hover:text-foreground"
                     }`}
                 >
-                    {month}
-                  </button>
-                ))}
-              </div>
+                  {month}
+                </button>
+              ))}
             </div>
           </div>
           <EntityBoostStrip tone="light" className="mb-12 px-0" contextLabel="Schedule + Brand Navigation" />
@@ -278,7 +265,6 @@ export default function Schedule() {
               More dates to be announced specific to seasons.
             </p>
           </div>
-
         </div>
       </main>
 

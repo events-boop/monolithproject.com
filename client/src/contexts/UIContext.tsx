@@ -6,18 +6,21 @@ interface UIContextProps {
     activeDrawer: DrawerType;
     openDrawer: (drawer: DrawerType) => void;
     closeDrawer: () => void;
+    isSensoryOverloadActive: boolean;
+    setSensoryOverloadActive: (active: boolean) => void;
 }
 
 const UIContext = createContext<UIContextProps | undefined>(undefined);
 
 export function UIProvider({ children }: { children: ReactNode }) {
     const [activeDrawer, setActiveDrawer] = useState<DrawerType>(null);
+    const [isSensoryOverloadActive, setSensoryOverloadActive] = useState<boolean>(false);
 
     const openDrawer = (drawer: DrawerType) => setActiveDrawer(drawer);
     const closeDrawer = () => setActiveDrawer(null);
 
     return (
-        <UIContext.Provider value={{ activeDrawer, openDrawer, closeDrawer }}>
+        <UIContext.Provider value={{ activeDrawer, openDrawer, closeDrawer, isSensoryOverloadActive, setSensoryOverloadActive }}>
             {children}
         </UIContext.Provider>
     );

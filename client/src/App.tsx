@@ -5,9 +5,6 @@ import { Route, Switch } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Analytics from "./components/Analytics";
-import DeferredEnhancements from "./components/DeferredEnhancements";
-import EventBanner from "./components/EventBanner";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
@@ -34,8 +31,11 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
-
-const pageTransition = {
+const Shop = lazy(() => import("./pages/Shop"));
+const Ambassadors = lazy(() => import("./pages/Ambassadors"));
+const Travel = lazy(() => import("./pages/Travel"));
+const Guide = lazy(() => import("./pages/Guide"));
+const VIP = lazy(() => import("./pages/VIP")); const pageTransition = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -12 },
@@ -135,11 +135,33 @@ const CookieConsent = lazy(() => import("./components/CookieConsent"));
 // ... (Router component remains unchanged)
 
 import SmoothScroll from "./components/SmoothScroll";
-import { UIProvider } from "./contexts/UIContext";
+import Preloader from "./components/Preloader";
+import { useUI, UIProvider } from "./contexts/UIContext";
 import OffCanvasDrawer from "./components/ui/OffCanvasDrawer";
 import GlobalTicketButton from "./components/GlobalTicketButton";
 
-// ... existing imports ...
+function MainContentWrapper() {
+  const { isSensoryOverloadActive } = useUI();
+  return (
+    <>
+      <OffCanvasDrawer />
+      <GlobalTicketButton />
+      <motion.div
+        id="main-content"
+        tabIndex={-1}
+        className="w-full origin-top"
+        animate={{
+          filter: isSensoryOverloadActive ? "blur(8px) grayscale(100%)" : "blur(0px) grayscale(0%)",
+          scale: isSensoryOverloadActive ? 0.98 : 1,
+          opacity: isSensoryOverloadActive ? 0.4 : 1
+        }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <Router />
+      </motion.div>
+    </>
+  );
+}
 
 function App() {
   return (
@@ -158,16 +180,7 @@ function App() {
                 <EventBanner />
                 <DeferredEnhancements />
                 <CookieConsent />
-
-                <OffCanvasDrawer />
-                <GlobalTicketButton />
-
-                {/* Skip-link target; pages may define their own <main>, so avoid nesting <main> here. */}
-                <div id="main-content" tabIndex={-1} className="w-full">
-                  <div className="origin-top">
-                    <Router />
-                  </div>
-                </div>
+                <MainContentWrapper />
               </Suspense>
             </TooltipProvider>
           </UIProvider>

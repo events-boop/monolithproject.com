@@ -2,9 +2,11 @@ import { useLocation } from "wouter";
 import { Ticket } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { POSH_TICKET_URL } from "@/data/events";
+import { useUI } from "@/contexts/UIContext";
 
 export default function GlobalTicketButton() {
     const [location] = useLocation();
+    const { setSensoryOverloadActive } = useUI();
 
     // Hide on ticket page
     if (location === "/tickets") return null;
@@ -16,6 +18,8 @@ export default function GlobalTicketButton() {
                     href={POSH_TICKET_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onMouseEnter={() => setSensoryOverloadActive(true)}
+                    onMouseLeave={() => setSensoryOverloadActive(false)}
                     className="group block relative w-20 h-20 rounded-full bg-black/80 backdrop-blur-xl border border-white/15 flex items-center justify-center shadow-2xl overflow-hidden hover:scale-110 hover:border-primary/50 transition-all duration-500 cursor-pointer sensory-ticket-btn"
                 >
                     {/* Glowing Orb Background */}

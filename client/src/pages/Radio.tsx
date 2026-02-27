@@ -21,6 +21,68 @@ const radioArtists = [
   { name: "EWERSEEN", image: "/images/artist-ewerseen.png" },
 ];
 
+interface Track {
+  title: string;
+  artist: string;
+  series: "sunsets" | "untold";
+  duration: string;
+  soundcloudUrl: string;
+  embedUrl: string;
+}
+
+const tracks: Track[] = [
+  {
+    title: "Spécial NYE",
+    artist: "BENCHEK",
+    series: "sunsets",
+    duration: "58:23",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "TERRANOVA x CHASING SUN(SETS)",
+    artist: "TERRANOVA",
+    series: "sunsets",
+    duration: "62:10",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Mix Vol.3",
+    artist: "EWERSEEN",
+    series: "sunsets",
+    duration: "55:48",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "RADIAN x UNTOLD STORY",
+    artist: "RADIAN",
+    series: "untold",
+    duration: "71:05",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Collab Mix Vol.2",
+    artist: "EWERSEEN",
+    series: "sunsets",
+    duration: "48:32",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+  {
+    title: "Live from Marbella EP02",
+    artist: "BENCHEK",
+    series: "sunsets",
+    duration: "64:17",
+    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+  },
+];
+
+type Filter = "all" | "sunsets" | "untold";
+
 const sectionTransition = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };
 const sectionReveal = {
   initial: { opacity: 0, y: 28 },
@@ -349,9 +411,10 @@ export default function Radio() {
               );
             })}
           </div>
-        </motion.section>
+        </div>
+      </section>
 
-        <BrandMotifDivider tone="nocturne" className="my-10" />
+      <BrandMotifDivider tone="nocturne" className="my-10" />
 
       {/* Map Section */}
       <section className="px-6 py-20 bg-card border-t border-border">

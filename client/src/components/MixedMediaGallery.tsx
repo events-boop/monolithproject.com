@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { MediaItem, homeGallery } from "@/data/galleryData";
+import ImageTrail from "./ui/ImageTrail";
 
 interface MixedMediaGalleryProps {
   media?: MediaItem[];
@@ -18,11 +19,12 @@ export default function MixedMediaGallery({
   title = "Captured Moments",
   subtitle = "Visual Archives",
   description = "A collection of fragments from our past gatherings. Immersive soundscapes and visual memories.",
-  className = "bg-background border-t border-white/5",
+  className = "bg-background border-t border-white/5 relative",
   style,
   columns = "columns-1 md:columns-2 lg:columns-3",
 }: MixedMediaGalleryProps) {
   const [index, setIndex] = useState<number | null>(null);
+  const [isHoveringGallery, setIsHoveringGallery] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const active = useMemo(() => {
@@ -39,6 +41,11 @@ export default function MixedMediaGallery({
   const close = () => setIndex(null);
   const prev = () => setIndex((i) => (i === null ? null : (i - 1 + media.length) % media.length));
   const next = () => setIndex((i) => (i === null ? null : (i + 1) % media.length));
+
+  // Extract just image sources for the trail
+  const trailImages = useMemo(() => {
+    return media.filter(m => m.kind === "image").map(m => m.src);
+  }, [media]);
 
   // Keyboard navigation + body scroll lock
   useEffect(() => {
@@ -64,8 +71,16 @@ export default function MixedMediaGallery({
   }, [index]);
 
   return (
-    <section className={`py-24 ${className}`} style={style}>
-      <div className="container max-w-7xl mx-auto px-6">
+    <section
+      className={`py-24 relative ${className}`}
+      style={style}
+      onMouseEnter={() => setIsHoveringGallery(true)}
+      onMouseLeave={() => setIsHoveringGallery(false)}
+    >
+      {/* Background WebGL Image Trail Effect */}
+      <ImageTrail images={trailImages} isActive={isHoveringGallery && index === null} distanceToEmit={60} maxImages={12} />
+
+      <div className="container max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div>
             {subtitle && (
