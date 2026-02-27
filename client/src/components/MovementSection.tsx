@@ -146,6 +146,7 @@ export default function MovementSection() {
                 <div className="flex flex-col sm:flex-row gap-6 text-xs font-mono uppercase tracking-widest text-stone">
                   <a href="https://instagram.com/untoldstory.music" className="hover:text-clay transition-colors">@untoldstory.music</a>
                   <a href="https://instagram.com/chasingsunsets.music" className="hover:text-warmGold transition-colors">@chasingsunsets.music</a>
+                  <a href="https://instagram.com/monolithproject.events" className="hover:text-primary transition-colors">@monolithproject.events</a>
                 </div>
               </div>
             </div>

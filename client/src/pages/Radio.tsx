@@ -17,6 +17,7 @@ import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
+import ReactPlayer from "react-player";
 
 const radioArtists = [
   { name: "BENCHEK", image: "/images/artist-benchek.jpg" },
@@ -249,10 +250,28 @@ export default function Radio() {
           <RadioGlobe />
         </div>
 
-        <div className="container max-w-7xl mx-auto h-full relative z-10 w-full flex flex-col md:flex-row items-center justify-between px-6">
+        {/* Floating Autograf Video (Double size = ~320x320 sq) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+          <ReactPlayer
+            url="https://www.youtube.com/watch?v=FtbM8kG1cQE" // Autograf - Simple
+            playing={true}
+            loop={true}
+            muted={true}
+            width="100%"
+            height="100%"
+            style={{ objectFit: 'cover', transform: 'scale(1.5)' }} // scale up to crop and fill square
+            config={{
+              youtube: {
+                playerVars: { showinfo: 0 as any, controls: 0, rel: 0, modestbranding: 1 }
+              }
+            }}
+          />
+        </div>
+
+        <div className="container max-w-7xl mx-auto h-full relative z-20 w-full flex flex-col md:flex-row items-center justify-between px-6 pointer-events-none">
           {/* Rotating Album Cover Frame with 3D Tilt */}
           <div
-            className="w-full h-full flex items-center justify-center md:justify-start"
+            className="w-full h-full flex items-center justify-center md:justify-start pointer-events-auto"
             style={{ perspective: 1200 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}

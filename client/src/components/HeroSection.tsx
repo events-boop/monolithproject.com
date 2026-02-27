@@ -83,7 +83,7 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
       initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
-      className="flex items-center gap-3 md:gap-4"
+      className="flex items-center gap-5 md:gap-8 luxe-surface-dark px-6 py-4 md:px-8 md:py-5 rounded-3xl w-fit border border-white/5 shadow-2xl"
     >
       {[
         { value: days, label: "DAYS", highlight: true },
@@ -216,6 +216,11 @@ export default function HeroSection() {
             transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7 }}
             className="space-y-6"
           >
+            {/* Countdown */}
+            {!isExpired && (
+              <CountdownDisplay target={TARGET_DATE} />
+            )}
+
             {/* Event info */}
             {!isExpired && (
               <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="group block">
@@ -236,7 +241,7 @@ export default function HeroSection() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                <span className="ui-chip text-primary">Limited Tickets On Sale</span>
+                <span className="ui-chip text-primary">Final Tier II Tickets On Sale</span>
               </div>
             )}
 
@@ -285,47 +290,21 @@ export default function HeroSection() {
             {/* Series links */}
             <div className="flex items-center gap-4">
               <Link href="/chasing-sunsets" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
-                <Sun className="w-4.5 h-4.5 text-clay" />
+                <Sun className="w-5 h-5 text-clay group-hover:animate-spin-slow" />
                 <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
                   Chasing Sun(Sets)
                 </span>
               </Link>
               <Link href="/story" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                <UntoldButterflyLogo className="w-5 h-5 accent-story" />
+                <UntoldButterflyLogo className="w-6 h-6 accent-story group-hover:scale-110 transition-transform" />
                 <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
-                  Untold
+                  Untold Story
                 </span>
               </Link>
             </div>
 
           </motion.div>
 
-          {/* Right: Countdown */}
-          {!isExpired && (
-            <motion.div
-              data-testid="hero-countdown"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
-              className="flex items-center gap-3 md:gap-4 luxe-surface-dark px-4 py-4 md:px-6 md:py-5"
-            >
-              {[
-                { value: days, label: "DAYS", highlight: true },
-                { value: hours, label: "HRS", highlight: false },
-                { value: minutes, label: "MIN", highlight: false },
-                { value: seconds, label: "SEC", highlight: false },
-              ].map((unit) => (
-                <div key={unit.label} className="flex flex-col items-center">
-                  <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
-                    {pad(unit.value)}
-                  </span>
-                  <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
-                    {unit.label}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          )}
         </div>
       </div>
 
