@@ -253,7 +253,7 @@ export default function Radio() {
         {/* Floating Autograf Video (Double size = ~320x320 sq) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20">
           <ReactPlayer
-            url="https://www.youtube.com/watch?v=FtbM8kG1cQE" // Autograf - Simple
+            url="https://www.youtube.com/watch?v=9R6XH7JZlJI&list=RD9R6XH7JZlJI&start_radio=1&t=3714s" // Autograf - Simple
             playing={true}
             loop={true}
             muted={true}
