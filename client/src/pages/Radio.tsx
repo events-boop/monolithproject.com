@@ -262,7 +262,7 @@ export default function Radio() {
             style={{ objectFit: 'cover', transform: 'scale(1.5)' }} // scale up to crop and fill square
             config={{
               youtube: {
-                playerVars: { showinfo: 0 as any, controls: 0, rel: 0, modestbranding: 1 }
+                playerVars: { showinfo: 0, controls: 0, rel: 0, modestbranding: 1 } as any
               }
             }}
           />
