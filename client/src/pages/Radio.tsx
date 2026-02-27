@@ -15,6 +15,8 @@ import ShimmerButton from "@/components/ui/ShimmerButton";
 import SEO from "@/components/SEO";
 import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
+import BrandMotifDivider from "@/components/BrandMotifDivider";
+import FloatingFactsChip from "@/components/FloatingFactsChip";
 
 const radioArtists = [
   { name: "BENCHEK", image: "/images/artist-benchek.jpg" },
