@@ -4,6 +4,9 @@ import { Plus, Minus, MapPin, Clock, CreditCard, Shield, Accessibility, Music, H
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import JsonLd from "@/components/JsonLd";
+import { buildFaqSchema } from "@/lib/schema";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const categories = [
     {
@@ -171,6 +174,9 @@ function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boo
 export default function FAQ() {
     const [activeCategory, setActiveCategory] = useState(0);
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const faqSchemaEntries = categories.flatMap((category) =>
+        category.faqs.map((faq) => [faq.q, faq.a] as [string, string]),
+    );
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -182,9 +188,11 @@ export default function FAQ() {
     return (
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
             <SEO
-                title="FAQ"
-                description="Frequently asked questions about Monolith Project events — tickets, venue, artists, safety, and more."
+                title="FAQ | Chasing Sun(Sets), Tickets, Venue & Radio Show"
+                description="Official FAQ for Chasing Sun(Sets) and The Monolith Project in Chicago: tickets, venue, accessibility, radio show, and brand identity."
+                canonicalPath="/faq"
             />
+            <JsonLd id="schema-main-faq" data={buildFaqSchema(faqSchemaEntries)} />
             <Navigation />
 
             {/* Atmosphere */}
@@ -220,6 +228,7 @@ export default function FAQ() {
                             Everything you need to know before, during, and after an event.
                         </p>
                     </motion.div>
+                    <EntityBoostStrip tone="nocturne" className="px-0 mb-10" contextLabel="FAQ + Official Identity Links" />
 
                     <div className="grid lg:grid-cols-12 gap-10">
 
@@ -230,12 +239,12 @@ export default function FAQ() {
                             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                             className="lg:col-span-3"
                         >
-                            <div className="space-y-1 lg:sticky lg:top-32">
+                            <div className="space-y-1 lg:sticky lg:top-32 luxe-surface-dark p-2 md:p-3">
                                 {categories.map((cat, idx) => (
                                     <button
                                         key={cat.label}
                                         onClick={() => setActiveCategory(idx)}
-                                        className="w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                                        className="w-full min-h-[44px] flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                                         style={{
                                             background: activeCategory === idx ? `${cat.color}12` : "transparent",
                                             borderLeft: `2px solid ${activeCategory === idx ? cat.color : "transparent"}`,
@@ -252,7 +261,7 @@ export default function FAQ() {
                                     <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mb-3 px-4">Still need help?</p>
                                     <a
                                         href="mailto:events@monolithproject.com"
-                                        className="flex items-center gap-2 px-4 py-2 text-xs text-primary/70 hover:text-primary transition-colors font-mono"
+                                        className="flex items-center gap-2 px-4 py-2.5 text-xs text-primary/70 hover:text-primary transition-colors font-mono"
                                     >
                                         <HelpCircle className="w-3.5 h-3.5" />
                                         Email us
@@ -270,11 +279,7 @@ export default function FAQ() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -8 }}
                                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                                    className="relative overflow-hidden p-8 md:p-10"
-                                    style={{
-                                        background: "rgba(255,255,255,0.025)",
-                                        border: "1px solid rgba(255,255,255,0.07)",
-                                    }}
+                                    className="relative overflow-hidden p-8 md:p-10 luxe-surface-dark"
                                 >
                                     {/* Top accent */}
                                     <div

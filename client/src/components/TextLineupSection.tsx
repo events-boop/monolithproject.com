@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { POSH_TICKET_URL } from "@/data/events";
@@ -23,7 +23,6 @@ export default function TextLineupSection() {
     });
 
     const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     return (
         <section ref={containerRef} className="relative py-32 bg-[#F5F5F0] text-[#050505] overflow-hidden">
@@ -49,40 +48,17 @@ export default function TextLineupSection() {
                 </div>
 
                 <motion.div style={{ y }} className="relative">
-                    <div
-                        className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4 text-center leading-tight transition-all duration-500"
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        {lineup.map((artist, i) => {
-                            // Alternate brand colors: gold for even, violet for odd
-                            const hoverColor = i % 2 === 0 ? "#E8B86D" : "#8B5CF6";
-                            const isHovered = hoveredIndex === i;
-                            return (
-                                <span
-                                    key={artist}
-                                    className="group relative inline-block transition-all duration-500 ease-out"
-                                    onMouseEnter={() => setHoveredIndex(i)}
-                                    style={{
-                                        opacity: hoveredIndex === null || isHovered ? 1 : 0.15,
-                                        filter: hoveredIndex !== null && !isHovered ? "blur(3px)" : "blur(0px)",
-                                        transform: isHovered ? "scale(1.05)" : "scale(1)"
-                                    }}
-                                >
-                                    <span
-                                        className="font-display text-3xl md:text-5xl lg:text-6xl uppercase tracking-tight transition-all duration-300 cursor-default"
-                                        style={{
-                                            color: isHovered ? hoverColor : "#050505",
-                                            textShadow: isHovered ? `0 0 40px ${hoverColor}80, 0 0 80px ${hoverColor}40` : "none",
-                                        }}
-                                    >
-                                        {artist}
-                                    </span>
-                                    {i < lineup.length - 1 && (
-                                        <span className="inline-block mx-2 md:mx-4 align-middle w-1.5 h-1.5 bg-[#050505]/20 rounded-full" />
-                                    )}
+                    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4 text-center leading-tight">
+                        {lineup.map((artist, i) => (
+                            <span key={artist} className="group relative">
+                                <span className="font-display text-3xl md:text-5xl lg:text-6xl text-[#050505] uppercase tracking-tight hover:text-[#E05A3A] transition-colors duration-300 cursor-default">
+                                    {artist}
                                 </span>
-                            );
-                        })}
+                                {i < lineup.length - 1 && (
+                                    <span className="inline-block mx-2 md:mx-4 align-middle w-1.5 h-1.5 bg-[#050505]/20 rounded-full" />
+                                )}
+                            </span>
+                        ))}
                     </div>
                 </motion.div>
 

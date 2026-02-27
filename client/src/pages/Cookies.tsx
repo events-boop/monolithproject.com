@@ -1,11 +1,12 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Cookies() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Cookie Policy" description="Cookie policy for The Monolith Project website." />
+      <SEO title="Cookie Policy" description="Cookie policy for The Monolith Project website." canonicalPath="/cookies" />
       <Navigation />
       <section className="pt-44 pb-20 px-6">
         <div className="container max-w-4xl mx-auto">
@@ -36,6 +37,7 @@ export default function Cookies() {
           </div>
         </div>
       </section>
+      <EntityBoostStrip tone="dark" className="pb-20" />
       <Footer />
     </div>
   );

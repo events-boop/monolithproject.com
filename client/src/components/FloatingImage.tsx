@@ -19,13 +19,11 @@ export default function FloatingImage({
     mouseY,
     aspectRatio = "aspect-[4/3]"
 }: FloatingImageProps) {
-    // Smooth springs for the image movement - slower/heavier than the cursor
-    const springConfig = { damping: 20, stiffness: 200, mass: 0.8 };
+    const springConfig = { damping: 25, stiffness: 220, mass: 1.2 };
     const x = useSpring(mouseX, springConfig);
     const y = useSpring(mouseY, springConfig);
 
-    // Tilt effect based on velocity would be cool, but simple follow is S-tier enough for now.
-
+    // We can also extract velocity for tilt, but let's keep it highly grounded
     return (
         <motion.div
             style={{
@@ -34,27 +32,28 @@ export default function FloatingImage({
                 translateX: "-50%",
                 translateY: "-50%",
                 pointerEvents: "none",
-                zIndex: 50
+                zIndex: 0 // Place it behind the text content
             }}
             className="fixed top-0 left-0 hidden md:block"
         >
             <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
                 animate={{
-                    opacity: isVisible ? 1 : 0,
+                    opacity: isVisible ? 0.8 : 0,
                     scale: isVisible ? 1 : 0.8,
-                    rotate: isVisible ? 0 : 5 // Subtle rotation on exit
+                    rotate: isVisible ? 0 : 3,
+                    filter: isVisible ? "blur(0px)" : "blur(10px)"
                 }}
-                transition={{ duration: 0.3, ease: "circOut" }}
-                className={`w-[280px] ${aspectRatio} rounded-lg overflow-hidden shadow-2xl border-2 border-white/20 relative bg-charcoal`}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className={`w-[480px] h-[580px] rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] border border-white/10 relative bg-charcoal`}
             >
                 <img
                     src={src}
                     alt={alt}
-                    className="w-full h-full object-cover"
+                    style={{ filter: 'url(#liquid-distortion) grayscale(100%)' }}
+                    className="w-full h-full object-cover mix-blend-luminosity will-change-transform"
                 />
-                {/* Glossy overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent mix-blend-overlay" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             </motion.div>
         </motion.div>
     );

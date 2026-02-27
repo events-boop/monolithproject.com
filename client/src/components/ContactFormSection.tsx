@@ -15,16 +15,6 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-const inputClass = `
-  w-full px-4 py-3.5 text-sm text-white placeholder-white/25
-  bg-white/[0.04] border border-white/10
-  focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:outline-none
-  transition-all duration-200
-  rounded-none
-`;
-
-const labelClass = "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/35 mb-2";
-
 export default function ContactFormSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -62,116 +52,101 @@ export default function ContactFormSection() {
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden p-8 md:p-10"
-      style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
-      }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="ui-card border border-charcoal/15 bg-white/75 backdrop-blur-sm p-8 md:p-10"
     >
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-primary/70 via-primary/30 to-transparent" />
-
       {isSubmitted ? (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="min-h-[360px] flex flex-col items-center justify-center text-center"
-        >
-          <div
-            className="w-16 h-16 flex items-center justify-center mb-6 text-primary"
-            style={{ background: "rgba(224,90,58,0.12)", border: "1px solid rgba(224,90,58,0.3)" }}
-          >
+        <div className="min-h-[360px] flex flex-col items-center justify-center text-center">
+          <div className="w-16 h-16 border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 text-primary rounded-2xl">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <h3 className="font-display text-3xl mb-4 uppercase text-white tracking-wide">Message Received</h3>
-          <p className="text-white/45 max-w-md text-sm leading-relaxed">
-            We read everything. If it needs a reply, we'll get back to you.
+          <h3 className="font-display text-3xl mb-4 uppercase text-charcoal">Message Received</h3>
+          <p className="text-charcoal/70 max-w-md">
+            We read everything. If it needs a reply, we will get back to you.
           </p>
-        </motion.div>
+        </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="contact-name" className={labelClass}>Name</label>
-              <input
-                id="contact-name"
-                {...register("name")}
-                autoComplete="name"
-                aria-invalid={Boolean(errors.name)}
-                className={inputClass}
-                placeholder="Full name"
-              />
-              {errors.name && <span className="text-red-400 text-xs mt-1.5 block font-mono">{errors.name.message}</span>}
-            </div>
-            <div>
-              <label htmlFor="contact-email" className={labelClass}>Email</label>
-              <input
-                id="contact-email"
-                type="email"
-                inputMode="email"
-                {...register("email")}
-                autoComplete="email"
-                aria-invalid={Boolean(errors.email)}
-                className={inputClass}
-                placeholder="email@address.com"
-              />
-              {errors.email && <span className="text-red-400 text-xs mt-1.5 block font-mono">{errors.email.message}</span>}
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+          <div>
+            <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
+            <input
+              id="contact-name"
+              {...register("name")}
+              autoComplete="name"
+              aria-invalid={Boolean(errors.name)}
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
+              placeholder="Full name"
+            />
+            {errors.name && <span className="text-red-600 text-xs mt-1 block">{errors.name.message}</span>}
           </div>
 
           <div>
-            <label htmlFor="contact-subject" className={labelClass}>Subject</label>
+            <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Email</label>
+            <input
+              id="contact-email"
+              type="email"
+              inputMode="email"
+              {...register("email")}
+              autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
+              placeholder="email@address.com"
+            />
+            {errors.email && <span className="text-red-600 text-xs mt-1 block">{errors.email.message}</span>}
+          </div>
+
+          <div>
+            <label htmlFor="contact-subject" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Subject</label>
             <input
               id="contact-subject"
               {...register("subject")}
               autoComplete="off"
               aria-invalid={Boolean(errors.subject)}
-              className={inputClass}
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="What is this about?"
             />
-            {errors.subject && <span className="text-red-400 text-xs mt-1.5 block font-mono">{errors.subject.message}</span>}
+            {errors.subject && <span className="text-red-600 text-xs mt-1 block">{errors.subject.message}</span>}
           </div>
 
           <div>
-            <label htmlFor="contact-message" className={labelClass}>Message</label>
+            <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Message</label>
             <textarea
               id="contact-message"
               {...register("message")}
               autoComplete="off"
               aria-invalid={Boolean(errors.message)}
               rows={6}
-              className={`${inputClass} resize-none`}
+              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors resize-none rounded-xl"
               placeholder="Tell us what you need, with dates/links if relevant..."
             />
-            {errors.message && <span className="text-red-400 text-xs mt-1.5 block font-mono">{errors.message.message}</span>}
+            {errors.message && <span className="text-red-600 text-xs mt-1 block">{errors.message.message}</span>}
           </div>
 
-          <div className="flex items-center justify-between gap-4 pt-2">
-            <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/25">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-charcoal/55">
               Or email{" "}
-              <a className="text-primary/60 hover:text-primary transition-colors" href="mailto:events@monolithproject.com">
+              <a className="underline hover:text-charcoal transition-colors" href="mailto:events@monolithproject.com">
                 events@monolithproject.com
               </a>
             </p>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/85 transition-all duration-200 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-bold tracking-widest uppercase text-xs hover:bg-primary/90 transition-colors disabled:opacity-50 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             >
               {isSubmitting ? (
                 <span className="animate-pulse">Sending...</span>
               ) : (
                 <>
                   <span>Send</span>
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-4 h-4" />
                 </>
               )}
             </button>
           </div>
 
           {submitError && (
-            <p className="flex items-center gap-1.5 text-red-400 text-xs font-mono" role="alert" aria-live="polite">
+            <p className="flex items-center gap-1.5 text-red-600 text-xs font-mono" role="alert" aria-live="polite">
               <AlertCircle className="w-3 h-3" />
               {submitError}
             </p>

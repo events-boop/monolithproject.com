@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Newsletter() {
   const benefits = [
@@ -18,6 +19,7 @@ export default function Newsletter() {
       <SEO
         title="Newsletter"
         description="Join the Monolith list for priority ticket windows, lineup drops, and fresh radio mixes."
+        canonicalPath="/newsletter"
       />
       <Navigation variant="light" />
 
@@ -52,6 +54,7 @@ export default function Newsletter() {
         </div>
       </section>
 
+      <EntityBoostStrip tone="light" className="pb-8" />
       <NewsletterSection
         source="newsletter_page"
         compactIntro

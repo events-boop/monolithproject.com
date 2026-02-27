@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
@@ -6,24 +5,24 @@ export default function CustomCursor() {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicking, setIsClicking] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [cursorText, setCursorText] = useState("");
 
-    // Use motion values for raw position to feed into spring
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    const mouseX = useMotionValue(-100);
+    const mouseY = useMotionValue(-100);
 
-    // Smooth out the movement
-    const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
+    // Spring physics configuration for the heavy trailing effect (Premium feel)
+    const springConfig = { damping: 28, stiffness: 300, mass: 0.8 };
     const springX = useSpring(mouseX, springConfig);
     const springY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
-        // Only activate on non-touch devices
         if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return;
 
         const moveCursor = (e: MouseEvent) => {
             if (!isVisible) setIsVisible(true);
-            mouseX.set(e.clientX - 10); // Center the 20px cursor
-            mouseY.set(e.clientY - 10);
+            // Adjust center offset dynamically based on scale logic, but keep raw coords here
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
 
         const handleMouseDown = () => setIsClicking(true);
@@ -32,15 +31,24 @@ export default function CustomCursor() {
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
 
-            // Check if hovering interactive element (avoid getComputedStyle — layout thrash)
+            // Look for custom text to inject into the cursor ring
+            const textElement = target.closest('[data-cursor-text]');
+            if (textElement) {
+                setCursorText(textElement.getAttribute('data-cursor-text') || "");
+                setIsHovered(true);
+                return;
+            }
+
+            // Standard interactive elements
             const isInteractive =
                 target.tagName === "BUTTON" ||
                 target.tagName === "A" ||
                 target.closest("button") ||
                 target.closest("a") ||
-                target.closest("[role='button']");
+                window.getComputedStyle(target).cursor === "pointer";
 
             setIsHovered(!!isInteractive);
+            setCursorText("");
         };
 
         window.addEventListener("mousemove", moveCursor);
@@ -54,36 +62,66 @@ export default function CustomCursor() {
             window.removeEventListener("mouseup", handleMouseUp);
             window.removeEventListener("mouseover", handleMouseOver);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isVisible, mouseX, mouseY]);
 
     if (!isVisible) return null;
+
+    // Derived states
+    const hasText = cursorText.length > 0;
+    const isExpanded = isHovered || hasText;
+
+    // Dynamic sizing
+    const size = hasText ? 80 : isHovered ? 50 : 16;
+    const offset = size / 2;
 
     return (
         <>
             <style>{`
         @media (pointer: fine) {
-          body, a, button, [role="button"] { cursor: none !important; }
+          body, a, button, [role="button"], input, textarea, select { cursor: none !important; }
         }
       `}</style>
+
+            {/* Main Outer Ring */}
             <motion.div
-                className="fixed top-0 left-0 w-5 h-5 rounded-full border border-white pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 pointer-events-none z-[99999] mix-blend-difference flex items-center justify-center rounded-full overflow-hidden"
                 style={{
                     x: springX,
                     y: springY,
+                    translateX: "-50%",
+                    translateY: "-50%",
+                    width: size,
+                    height: size,
                 }}
                 animate={{
-                    scale: isClicking ? 0.8 : isHovered ? 2.5 : 1,
-                    backgroundColor: isHovered ? "white" : "transparent",
+                    backgroundColor: isExpanded ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)",
+                    border: isExpanded ? "0px solid transparent" : "2px solid rgba(255, 255, 255, 1)",
+                    scale: isClicking ? 0.8 : 1,
                 }}
                 transition={{
-                    scale: { type: "spring", stiffness: 300, damping: 20 },
-                    backgroundColor: { duration: 0.2 }
+                    scale: { type: "spring", stiffness: 400, damping: 28 },
+                    backgroundColor: { duration: 0.2 },
+                    border: { duration: 0.2 },
+                    width: { type: "spring", stiffness: 300, damping: 25 },
+                    height: { type: "spring", stiffness: 300, damping: 25 },
                 }}
             >
-                {/* Inner dot just for non-hover state */}
-                {!isHovered && (
-                    <div className="absolute inset-0 m-auto w-1 h-1 bg-white rounded-full" />
+                {/* Injected Text */}
+                <motion.span
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: hasText ? 1 : 0, scale: hasText ? 1 : 0.5 }}
+                    className="text-black font-display text-[10px] font-bold tracking-widest uppercase absolute"
+                >
+                    {cursorText}
+                </motion.span>
+
+                {/* Inner dot just for non-hover minimal state */}
+                {!isExpanded && (
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="absolute inset-0 m-auto w-1 h-1 bg-white rounded-full"
+                    />
                 )}
             </motion.div>
         </>

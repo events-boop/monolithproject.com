@@ -1,8 +1,9 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, ArrowDown, Ticket } from "lucide-react";
-import { useState, useEffect, memo } from "react";
+import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
+import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 import HeroSpotlight from "./ui/HeroSpotlight";
@@ -25,7 +26,7 @@ const HERO_SLIDES: Slide[] = [
     type: "image",
     src: "/images/untold-story-juany-deron-v2.jpg",
     alt: "Juany Bravo x Deron",
-    caption: "DERON B2B JUANY BRAVO | UNTOLD STORY",
+    caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
   },
   {
     type: "image",
@@ -119,7 +120,7 @@ function useIsExpired(target: number) {
 
 
 export default function HeroSection() {
-  const isExpired = useIsExpired(TARGET_DATE);
+  const { days, hours, minutes, seconds, isExpired } = useCountdown(TARGET_DATE);
   const reduceMotion = useReducedMotion();
 
   // SS-Tier: JSON-LD for Search Engines
@@ -193,21 +194,52 @@ export default function HeroSection() {
 
           {/* Accent line — draws in after title */}
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-            style={{ originX: 0 }}
-            className="h-px w-36 bg-gradient-to-r from-primary/70 to-transparent mb-6"
-          />
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.3 }}
+            className="font-display text-[clamp(3.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display"
+          >
+            <div className="relative inline-block translate-y-2 md:translate-y-3">
+              <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
+                <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
+              </HeroSpotlight>
+            </div>
+            <span className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0">PROJECT</span>
+          </motion.div>
 
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.5 }}
+            className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
+          >
+            Built on togetherness, music, and showing up for each other.
+          </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
+            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.6 }}
+            className="mt-4 text-sm md:text-base text-white/80 max-w-3xl"
           >
-            Built on music, community, and showing up for each other.
+            Chasing Sun(Sets) is our Chicago sunset house music event series and radio show.{" "}
+            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              Not the fragrance — official music series
+            </Link>
+            . Browse{" "}
+            <Link href="/radio" className="text-primary underline underline-offset-4">
+              radio episodes
+            </Link>{" "}
+            and{" "}
+            <Link href="/chasing-sunsets#chasing-july-2025-recap" className="text-primary underline underline-offset-4">
+              watch the July 2025 recap video
+            </Link>{" "}
+            and{" "}
+            <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              Chasing Sun(Sets) Facts
+            </Link>
+            .
           </motion.p>
+          <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
         </div>
 
         {/* Lower zone — event info + CTAs */}
@@ -286,17 +318,50 @@ export default function HeroSection() {
               </MagneticButton>
             </div>
 
-            {/* Location stamp */}
-            <div className="flex items-center gap-2 ui-meta text-white/40">
-              <span className="w-1 h-1 rounded-full bg-primary inline-block" />
-              <span>Chicago, IL</span>
-              <span className="text-white/20">·</span>
-              <span>Est. 2025</span>
+            {/* Series links */}
+            <div className="flex items-center gap-4">
+              <Link href="/chasing-sunsets" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
+                <Sun className="w-4.5 h-4.5 text-clay" />
+                <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
+                  Chasing Sun(Sets)
+                </span>
+              </Link>
+              <Link href="/story" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                <UntoldButterflyLogo className="w-5 h-5 accent-story" />
+                <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
+                  Untold
+                </span>
+              </Link>
             </div>
+
           </motion.div>
 
-          {/* Right: Countdown — isolated component, only digits re-render */}
-          {!isExpired && <CountdownDisplay target={TARGET_DATE} />}
+          {/* Right: Countdown */}
+          {!isExpired && (
+            <motion.div
+              data-testid="hero-countdown"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
+              className="flex items-center gap-3 md:gap-4 luxe-surface-dark px-4 py-4 md:px-6 md:py-5"
+            >
+              {[
+                { value: days, label: "DAYS", highlight: true },
+                { value: hours, label: "HRS", highlight: false },
+                { value: minutes, label: "MIN", highlight: false },
+                { value: seconds, label: "SEC", highlight: false },
+              ].map((unit) => (
+                <div key={unit.label} className="flex flex-col items-center">
+                  <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
+                    {pad(unit.value)}
+                  </span>
+                  <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
+                    {unit.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </div>
 

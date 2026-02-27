@@ -31,8 +31,7 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
   await ensureNewsletterVisible(page);
 
   await page.fill("#email", "test@example.com");
-  // Checkbox is sr-only (screen-reader only); click the visible label wrapper instead
-  await page.locator('label:has(input[type="checkbox"])').click();
+  await page.check('input[type="checkbox"]');
   await page.getByRole("button", { name: /join newsletter list/i }).click();
 
   await expect(page.getByText("Provider unavailable. Please retry.")).toBeVisible();

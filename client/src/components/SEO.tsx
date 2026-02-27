@@ -6,6 +6,8 @@ interface SEOProps {
   image?: string;
   type?: "website" | "article" | "profile";
   noIndex?: boolean;
+  canonicalPath?: string;
+  absoluteTitle?: boolean;
 }
 
 const CANONICAL_ORIGIN = "https://monolithproject.com";

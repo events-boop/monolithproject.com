@@ -9,6 +9,7 @@ import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
 import TicketTicker from "@/components/TicketTicker";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 
 type Series = "all" | ArtistSeries;
@@ -73,6 +74,7 @@ export default function Lineup() {
       <SEO
         title="Lineup"
         description="Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio."
+        canonicalPath="/lineup"
       />
       <Navigation />
 
@@ -147,6 +149,7 @@ export default function Lineup() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
+                  className="velocity-skew"
                 >
                   <Link href={`/artists/${artist.id}`}>
                     <div className="group relative aspect-[3/4] cursor-pointer overflow-hidden border border-border hover:border-primary/50 transition-colors duration-500">
@@ -214,6 +217,7 @@ export default function Lineup() {
         </div>
       </section>
 
+      <EntityBoostStrip tone="dark" className="pb-16" />
       <TicketTicker />
       <SlimSubscribeStrip title="GET LINEUP DROPS FIRST" source="lineup_strip" />
       <Footer />

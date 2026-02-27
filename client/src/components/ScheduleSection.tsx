@@ -74,16 +74,14 @@ export default function ScheduleSection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Only track mouse when an event row is hovered (was: global listener always firing)
   useEffect(() => {
-    if (!hoveredEvent) return;
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [hoveredEvent, mouseX, mouseY]);
+  }, []);
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -158,7 +156,7 @@ export default function ScheduleSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.05, duration: 0.4 }}
-                className="group border-b border-charcoal relative"
+                className="group border-b border-charcoal relative velocity-skew"
                 onMouseEnter={() => event.image && setHoveredEvent({ image: event.image, title: event.title })}
                 onMouseLeave={() => setHoveredEvent(null)}
               >
@@ -200,14 +198,9 @@ export default function ScheduleSection() {
                           {seriesLabels[event.series]}
                         </span>
                         {event.status === "on-sale" && (
-                          <motion.span
-                            className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full inline-flex items-center gap-1"
-                            animate={{ scale: [1, 1.06, 1], opacity: [1, 0.85, 1] }}
-                            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-white inline-block" />
+                          <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full">
                             ON SALE
-                          </motion.span>
+                          </span>
                         )}
                       </div>
                     </div>

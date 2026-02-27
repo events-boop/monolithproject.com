@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-moti
 import { Ticket } from "lucide-react";
 import { useLocation } from "wouter";
 import { POSH_TICKET_URL } from "@/data/events";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const themes = {
   default: {
@@ -37,11 +37,26 @@ function getTheme(location: string) {
 export default function FloatingTicketButton() {
   const [location] = useLocation();
   const theme = getTheme(location);
-  const text = "BOOK TICKETS · BOOK TICKETS · ";
+  const text = "BOOK TICKETS • TICKETS • "; // Fixed overlapping by shortening length
   const reduceMotion = useReducedMotion();
 
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      // If we are within 200px of the bottom of the page, consider it "at bottom" (near footer)
+      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+      setIsAtBottom(scrolledToBottom);
+    };
+
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    // Initial check
+    checkScroll();
+
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, []);
 
   // Magnetic Physics
   const x = useMotionValue(0);
@@ -75,7 +90,8 @@ export default function FloatingTicketButton() {
       className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-full"
     >
       <div
-        className="fixed bottom-6 right-6 md:bottom-10 md:right-8 z-50 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center pointer-events-none"
+        className={`fixed bottom-6 right-6 md:bottom-10 md:right-8 z-50 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center pointer-events-none transition-all duration-700 ease-in-out ${isAtBottom ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"
+          }`}
       >
         {/* Interactive Container */}
         <motion.div
@@ -84,6 +100,8 @@ export default function FloatingTicketButton() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          animate={isHovered ? { y: 0 } : reduceMotion ? { y: 0 } : { y: [0, -8, 0] }}
+          transition={isHovered ? { type: "spring", stiffness: 300, damping: 20 } : reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
           style={{ x: springX, y: springY }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -118,7 +136,7 @@ export default function FloatingTicketButton() {
 
           {/* Rotating Gradient Background (Outer Ring) */}
           <div className={`absolute inset-0 rounded-full overflow-hidden -z-10 ${theme.shadow} opacity-70 group-hover:opacity-100 transition-opacity duration-500`}>
-            <div className={`absolute inset-[-50%] ${theme.ring} animate-spin-slow`} />
+            <div className={`absolute inset-[-50%] ${theme.ring} animate-[spin_4s_linear_infinite] blur-sm`} />
           </div>
         </motion.div>
       </div>

@@ -1,11 +1,12 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Privacy Policy" description="Privacy policy for The Monolith Project website and event communications." />
+      <SEO title="Privacy Policy" description="Privacy policy for The Monolith Project website and event communications." canonicalPath="/privacy" />
       <Navigation />
       <section className="pt-44 pb-20 px-6">
         <div className="container max-w-4xl mx-auto">
@@ -44,6 +45,7 @@ export default function Privacy() {
           </div>
         </div>
       </section>
+      <EntityBoostStrip tone="dark" className="pb-20" />
       <Footer />
     </div>
   );

@@ -1,11 +1,12 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO title="Terms of Service" description="Terms of Service for The Monolith Project website and events." />
+      <SEO title="Terms of Service" description="Terms of Service for The Monolith Project website and events." canonicalPath="/terms" />
       <Navigation />
       <section className="pt-44 pb-20 px-6">
         <div className="container max-w-4xl mx-auto">
@@ -44,6 +45,7 @@ export default function Terms() {
           </div>
         </div>
       </section>
+      <EntityBoostStrip tone="dark" className="pb-20" />
       <Footer />
     </div>
   );

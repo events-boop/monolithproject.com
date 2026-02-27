@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SocialGrid from "@/components/SocialGrid";
 import { upcomingEvents } from "@/data/events";
 import SEO from "@/components/SEO";
+import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -50,8 +51,9 @@ export default function Schedule() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="Schedule"
-        description="A curated season of sound, ritual, and connection from The Monolith Project."
+        title="Chicago Event Schedule | Chasing Sun(Sets) + Monolith Project"
+        description="Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links."
+        canonicalPath="/schedule"
       />
       <Navigation />
 
@@ -60,6 +62,17 @@ export default function Schedule() {
 
       <main className="relative pt-32 pb-20">
         <div className="container mx-auto px-4 md:px-8 max-w-[95%]">
+          <div className="luxe-surface-light p-5 md:p-8 mb-12 md:mb-14">
+            {/* Header & Filters */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div>
+                <h1 className="font-display text-[clamp(4rem,12vw,10rem)] leading-[0.85] tracking-tight-display text-charcoal uppercase">
+                  Schedule
+                </h1>
+                <p className="font-mono text-sm tracking-[0.15em] text-charcoal/60 mt-6 uppercase max-w-md leading-relaxed ml-2">
+                  A curated season of sound, ritual, and connection.
+                </p>
+              </div>
 
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
@@ -83,11 +96,13 @@ export default function Schedule() {
                     : "border-border text-muted-foreground hover:border-border hover:text-foreground"
                     }`}
                 >
-                  {month}
-                </button>
-              ))}
+                    {month}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+          <EntityBoostStrip tone="light" className="mb-12 px-0" contextLabel="Schedule + Brand Navigation" />
 
           {/* List Header (Desktop) */}
           <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-border text-[10px] uppercase tracking-widest font-mono text-muted-foreground">
@@ -99,7 +114,7 @@ export default function Schedule() {
           </div>
 
           {/* Event List */}
-          <div className="flex flex-col mb-20">
+          <div className="flex flex-col mb-20 rounded-3xl overflow-hidden border border-charcoal/10 bg-white/62 shadow-[0_22px_40px_rgba(44,24,16,0.12)] backdrop-blur-sm">
             {filteredEvents.length === 0 ? (
               <div className="text-center py-20 border-b border-border">
                 <p className="font-mono text-muted-foreground uppercase tracking-widest">No events found for {activeMonth}</p>
@@ -157,7 +172,7 @@ export default function Schedule() {
                               {seriesLabels[event.series]}
                             </span>
                             {event.status === "on-sale" && (
-                              <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 bg-primary text-white rounded-full">
+                              <span className="text-[11px] font-bold tracking-[0.14em] uppercase px-2.5 py-1 bg-primary text-white rounded-full shadow-[0_8px_16px_rgba(224,90,58,0.22)]">
                                 ON SALE
                               </span>
                             )}

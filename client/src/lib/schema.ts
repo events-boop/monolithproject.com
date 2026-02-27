@@ -1,0 +1,250 @@
+import { POSH_TICKET_URL } from "@/data/events";
+import type { RadioEpisode } from "@/data/radioEpisodes";
+
+export const SITE_ORIGIN = "https://monolithproject.com";
+export const FACTS_PAGE_PATH = "/chasing-sunsets-facts";
+export const RADIO_HUB_PATH = "/radio";
+export const CHASING_SUNSETS_PATH = "/chasing-sunsets";
+
+const RA_PROMOTER_PROFILE_URL: string | null = null;
+
+const organizationSameAs = [
+  "https://instagram.com/monolithproject.events",
+  "https://youtube.com/@monolithproject",
+  POSH_TICKET_URL,
+].concat(RA_PROMOTER_PROFILE_URL ? [RA_PROMOTER_PROFILE_URL] : []);
+
+const brandSameAs = [
+  "https://instagram.com/chasingsunsets.music",
+  "https://soundcloud.com/chasing-sun-sets",
+  "https://youtube.com/@monolithproject",
+  POSH_TICKET_URL,
+].concat(RA_PROMOTER_PROFILE_URL ? [RA_PROMOTER_PROFILE_URL] : []);
+
+export const CHASING_BRAND_NAMES = [
+  "Chasing Sun(Sets)",
+  "Chasing Sunsets",
+  "The Monolith Project Presents: Chasing Sun(Sets)",
+];
+
+function isAbsoluteUrl(value: string) {
+  return /^https?:\/\//i.test(value);
+}
+
+export function toAbsoluteUrl(pathOrUrl: string) {
+  if (isAbsoluteUrl(pathOrUrl)) return pathOrUrl;
+  return `${SITE_ORIGIN}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`}`;
+}
+
+export function buildSitewideIdentitySchema() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_ORIGIN}/#website`,
+        url: SITE_ORIGIN,
+        name: "The Monolith Project",
+        inLanguage: "en-US",
+        publisher: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+      {
+        "@type": ["Organization", "MusicGroup"],
+        "@id": `${SITE_ORIGIN}/#organization`,
+        name: "The Monolith Project",
+        url: SITE_ORIGIN,
+        sameAs: organizationSameAs,
+        brand: { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+      },
+      {
+        "@type": "Brand",
+        "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets`,
+        name: "Chasing Sun(Sets)",
+        alternateName: CHASING_BRAND_NAMES,
+        description:
+          "Chicago-based sunset house music event series and radio show by The Monolith Project.",
+        url: toAbsoluteUrl(CHASING_SUNSETS_PATH),
+        sameAs: brandSameAs,
+        isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+    ],
+  };
+}
+
+export function buildFactsPageSchema() {
+  const pageUrl = toAbsoluteUrl(FACTS_PAGE_PATH);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["WebPage", "AboutPage"],
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "Chasing Sun(Sets) Facts | Chicago Sunset House Music Series + Radio Show",
+        description:
+          "Official identity and disambiguation page for Chasing Sun(Sets), the Chicago-based sunset house music event series and radio show.",
+        mainEntity: { "@id": `${pageUrl}#brand` },
+        isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
+      },
+      {
+        "@type": "Brand",
+        "@id": `${pageUrl}#brand`,
+        name: "Chasing Sun(Sets)",
+        alternateName: CHASING_BRAND_NAMES,
+        description:
+          "A Chicago-based sunset house music event series and radio show presented by The Monolith Project.",
+        url: toAbsoluteUrl(CHASING_SUNSETS_PATH),
+        isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
+        sameAs: brandSameAs,
+      },
+    ],
+  };
+}
+
+export function buildPodcastSeriesSchema(episodes: RadioEpisode[]) {
+  const seriesUrl = toAbsoluteUrl(RADIO_HUB_PATH);
+  return {
+    "@context": "https://schema.org",
+    "@type": "PodcastSeries",
+    "@id": `${seriesUrl}#podcast-series`,
+    name: "Chasing Sun(Sets) Radio Show",
+    alternateName: ["Chasing Sunsets Radio Show"],
+    description:
+      "Guest mixes, sunset-ready selections, and Chicago-rooted global house storytelling from The Monolith Project.",
+    url: seriesUrl,
+    inLanguage: "en-US",
+    publisher: { "@id": `${SITE_ORIGIN}/#organization` },
+    isPartOf: { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+    sameAs: [
+      "https://soundcloud.com/chasing-sun-sets",
+      "https://youtube.com/@monolithproject",
+    ],
+    hasPart: episodes.map((episode) => ({
+      "@id": `${toAbsoluteUrl(`${RADIO_HUB_PATH}/${episode.slug}`)}#podcast-episode`,
+    })),
+  };
+}
+
+export function buildPodcastEpisodeSchema(episode: RadioEpisode) {
+  const episodeUrl = toAbsoluteUrl(`${RADIO_HUB_PATH}/${episode.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    "@id": `${episodeUrl}#podcast-episode`,
+    url: episodeUrl,
+    name: `Chasing Sun(Sets) Radio Show ${episode.shortCode}: ${episode.title}`,
+    datePublished: episode.datePublished,
+    description: episode.summary,
+    partOfSeries: { "@id": `${toAbsoluteUrl(RADIO_HUB_PATH)}#podcast-series` },
+    associatedMedia: {
+      "@type": "MediaObject",
+      contentUrl: episode.audioUrl,
+      embedUrl: episode.embedUrl,
+      name: `${episode.guest} guest mix`,
+    },
+    image: toAbsoluteUrl(episode.image),
+    publisher: { "@id": `${SITE_ORIGIN}/#organization` },
+    mainEntityOfPage: episodeUrl,
+  };
+}
+
+interface EventSchemaInput {
+  pagePath: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  image: string[];
+  performer: string[];
+  ticketUrl: string;
+  locationName: string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+}
+
+export function buildEventSchema(input: EventSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: input.name,
+    description: input.description,
+    startDate: input.startDate,
+    endDate: input.endDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    url: toAbsoluteUrl(input.pagePath),
+    image: input.image.map((img) => toAbsoluteUrl(img)),
+    location: {
+      "@type": "Place",
+      name: input.locationName,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: input.streetAddress,
+        addressLocality: input.addressLocality,
+        addressRegion: input.addressRegion,
+        postalCode: input.postalCode,
+        addressCountry: input.addressCountry,
+      },
+    },
+    offers: {
+      "@type": "Offer",
+      url: input.ticketUrl,
+      price: "45",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "USD",
+      validFrom: "2026-02-01T00:00:00-06:00",
+    },
+    organizer: {
+      "@type": "Organization",
+      "@id": `${SITE_ORIGIN}/#organization`,
+      name: "The Monolith Project",
+      url: SITE_ORIGIN,
+    },
+    performer: input.performer.map((name) => ({
+      "@type": "MusicGroup",
+      name,
+    })),
+  };
+}
+
+export function buildUntoldStoryEventSchema(pagePath: string) {
+  return buildEventSchema({
+    pagePath,
+    name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
+    description:
+      "A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360 dancefloor experience.",
+    startDate: "2026-03-06T19:00:00-06:00",
+    endDate: "2026-03-07T02:00:00-06:00",
+    image: [
+      "/images/untold-story.jpg",
+      "/images/artist-deron-untold.webp",
+      "/images/artist-juany-bravo-untold.webp",
+    ],
+    performer: ["Juany Bravo", "Deron", "Hashtom", "Rose", "Avo", "Jerome b2b Kenbo"],
+    ticketUrl: POSH_TICKET_URL,
+    locationName: "Alhambra Palace",
+    streetAddress: "1240 W Randolph St",
+    addressLocality: "Chicago",
+    addressRegion: "IL",
+    postalCode: "60607",
+    addressCountry: "US",
+  });
+}
+
+export function buildFaqSchema(faqEntries: Array<[string, string]>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqEntries.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: answer,
+      },
+    })),
+  };
+}

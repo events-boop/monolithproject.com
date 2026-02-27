@@ -12,6 +12,7 @@ export default function SmoothScroll() {
 
     useEffect(() => {
         if (reduceMotion) return;
+        // S-Tier Scrolling - Optimized for cinematic feel
         const lenis = new Lenis({
             duration: 1.1, // Reduced from 1.4 for a snappier feel while maintaining physics stability
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -24,9 +25,11 @@ export default function SmoothScroll() {
 
         lenisRef.current = lenis;
 
+        // CSS Hook
         document.documentElement.classList.add('lenis', 'lenis-smooth');
 
         lenis.on('scroll', (e: any) => {
+            // Expose velocity for skew effects
             document.documentElement.style.setProperty('--scroll-velocity', e.velocity);
         });
 
@@ -54,7 +57,6 @@ export default function SmoothScroll() {
         window.addEventListener("wheel", wake, opts);
         window.addEventListener("touchstart", wake, opts);
         window.addEventListener("keydown", wake, opts);
-        // Also wake on programmatic scrollTo (e.g. route change)
         lenis.on("scroll", wake);
 
         // Initial kick
@@ -71,7 +73,7 @@ export default function SmoothScroll() {
         };
     }, [reduceMotion]);
 
-    // Reset scroll on route change
+    // Reset scroll on route change (including reduced-motion users, where Lenis is disabled).
     useEffect(() => {
         if (reduceMotion) {
             window.scrollTo(0, 0);

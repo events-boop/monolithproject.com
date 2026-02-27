@@ -90,7 +90,7 @@ export default function ChaptersSection() {
                         alt={chapter.title}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 will-change-transform"
+                        className="w-full h-full object-cover transition-all duration-[1200ms] group-hover:scale-110 will-change-transform group-hover:[filter:url(#liquid-distortion)]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                       <div className={`absolute inset-0 bg-gradient-to-t ${chapter.accent} to-transparent opacity-45 transition-opacity duration-500 group-hover:opacity-65`} />

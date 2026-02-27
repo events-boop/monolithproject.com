@@ -21,67 +21,13 @@ const radioArtists = [
   { name: "EWERSEEN", image: "/images/artist-ewerseen.png" },
 ];
 
-interface Track {
-  title: string;
-  artist: string;
-  series: "sunsets" | "untold";
-  duration: string;
-  soundcloudUrl: string;
-  embedUrl: string;
-}
-
-const tracks: Track[] = [
-  {
-    title: "Spécial NYE",
-    artist: "BENCHEK",
-    series: "sunsets",
-    duration: "58:23",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "TERRANOVA x CHASING SUN(SETS)",
-    artist: "TERRANOVA",
-    series: "sunsets",
-    duration: "62:10",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Mix Vol.3",
-    artist: "EWERSEEN",
-    series: "sunsets",
-    duration: "55:48",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "RADIAN x UNTOLD STORY",
-    artist: "RADIAN",
-    series: "untold",
-    duration: "71:05",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Collab Mix Vol.2",
-    artist: "EWERSEEN",
-    series: "sunsets",
-    duration: "48:32",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Live from Marbella EP02",
-    artist: "BENCHEK",
-    series: "sunsets",
-    duration: "64:17",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-];
-
-type Filter = "all" | "sunsets" | "untold";
+const sectionTransition = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };
+const sectionReveal = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-90px" },
+  transition: sectionTransition,
+};
 
 const radioFaqs = [
   ["How often are new mixes released?", "We drop new mixes regularly, capturing the very best live sets from our recent events as well as exclusive guest mixes."],
@@ -171,8 +117,10 @@ export default function Radio() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Radio"
-        description="Listen to curated sets and live recordings from The Monolith Project artists. The music doesn't stop when the show ends."
+        title="Chasing Sun(Sets) Radio Show | Episodes, Tracklists, Guest Mixes"
+        description="Official Chasing Sun(Sets) Radio Show archive from Chicago with guest mixes, episode pages, tracklists, and links to tickets and facts."
+        absoluteTitle
+        canonicalPath="/radio"
       />
       <Navigation />
 
@@ -401,21 +349,9 @@ export default function Radio() {
               );
             })}
           </div>
+        </motion.section>
 
-          {/* SoundCloud link */}
-          <div className="mt-6 flex items-center justify-between">
-            <a
-              href="https://soundcloud.com/chasing-sun-sets"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
-            >
-              <span className="font-mono tracking-wide uppercase text-xs">All mixes on SoundCloud</span>
-              <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
-        </div>
-      </section>
+        <BrandMotifDivider tone="nocturne" className="my-10" />
 
       {/* Map Section */}
       <section className="px-6 py-20 bg-card border-t border-border">
@@ -537,14 +473,8 @@ export default function Radio() {
         </div>
       </section>
 
-      <SlimSubscribeStrip title="SUBSCRIBE TO NEW MIXES" source="radio_strip" />
+      <FloatingFactsChip tone="nocturne" storageKey="floating-facts-chip-radio" />
       <Footer />
-
-      {/* Sticky player */}
-      <StickyPlayer
-        track={activeTrack !== null ? tracks[activeTrack] : null}
-        onClose={() => setActiveTrack(null)}
-      />
     </div>
   );
 }

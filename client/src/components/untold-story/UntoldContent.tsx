@@ -15,7 +15,7 @@ export default function UntoldContent() {
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">
               Season III · Episode II
             </span>
-            <h2 className="font-display text-4xl md:text-5xl text-white">DERON B2B JUANY BRAVO</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-white">JUANY BRAVO B2B DERON</h2>
           </div>
           <span className="font-mono text-xs tracking-widest text-untold-violet">THE JUANY X DERON SHOW</span>
         </div>
@@ -35,7 +35,7 @@ export default function UntoldContent() {
             <div className="mb-10 overflow-hidden rounded-xl border border-untold-violet-25">
               <img
                 src={eventVisuals.poster}
-                alt="Deron B2B Juany Bravo featured event artwork"
+                alt="Juany Bravo b2b Deron featured event artwork"
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -134,7 +134,7 @@ export default function UntoldContent() {
                 Lineup
               </span>
               <p className="text-white text-lg font-display tracking-wide mb-2">
-                DERON B2B JUANY BRAVO (Headliner)
+                JUANY BRAVO B2B DERON (Headliner)
               </p>
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-white/60 text-sm">
                 <span>Hashtom</span>

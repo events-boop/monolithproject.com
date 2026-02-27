@@ -22,13 +22,8 @@ const defaultBenefits = [
 export default function NewsletterSection({
   source = "newsletter_section",
   compactIntro = false,
-  description = "Chasing Sun(Sets) season is returning. Untold Story chapters continue. Sign up for first drops, exclusive DJ sets from Chasing Sun(Sets) Radio, and priority access.",
-  benefits = [
-    "First access to tickets",
-    "Exclusive Chasing Sun(Sets) Mixes",
-    "Untold Story Chapter announcements",
-    "Private community drops",
-  ],
+  description = "Get early ticket access, lineup announcements, and updates on upcoming shows. No spam — just the stuff that matters.",
+  benefits = defaultBenefits,
 }: NewsletterSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
