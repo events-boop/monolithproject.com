@@ -12,6 +12,7 @@ import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 import FixedTicketBadge from "@/components/FixedTicketBadge";
 import TextLineupSection from "@/components/TextLineupSection";
+import EventFunnelStack from "@/components/EventFunnelStack";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
 const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
@@ -104,6 +105,10 @@ export default function Home() {
             <InstagramFeed />
           </Suspense>
         </ViewportLazy>
+
+        {/* VIP / Waitlist Funnel */}
+        <SectionDivider number="09" label="Inner Circle" />
+        <EventFunnelStack eventId="mp-launch-001" />
 
         {/* Tickets banner */}
         <Ticker />

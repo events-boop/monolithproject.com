@@ -880,6 +880,20 @@
     animation: shine 3s linear infinite;
   }
 
+  @keyframes sweep {
+    0% {
+      transform: translateX(-150%);
+    }
+
+    100% {
+      transform: translateX(150%);
+    }
+  }
+
+  .animate-sweep {
+    animation: sweep 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
   @keyframes border-beam {
     100% {
       offset-distance: 100%;

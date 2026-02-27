@@ -5,7 +5,10 @@ import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import MagneticButton from "@/components/MagneticButton";
 
-const heroSlides = ["/images/untold-story-hero-post1.webp"];
+const heroSlides = [
+  "/images/untold-story-juany-deron.webp",
+  "/images/untold-story-hero-post1.webp"
+];
 
 export default function UntoldHero() {
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);

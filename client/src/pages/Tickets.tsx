@@ -10,7 +10,7 @@ import SEO from "@/components/SEO";
 import { EventSchema } from "@/components/StructuredData";
 import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
-
+import EventFunnelStack from "@/components/EventFunnelStack";
 
 interface TicketTier {
   id: string;
@@ -155,6 +155,9 @@ export default function Tickets() {
           </motion.div>
         </div>
       </section>
+
+      {/* Giveaway / Viral Loop Funnel */}
+      <EventFunnelStack eventId="mp-autograf-mar21" />
 
       {/* Featured Event — S3E2 */}
       <section className="pb-16 px-6 relative">
@@ -389,6 +392,9 @@ export default function Tickets() {
           </motion.div>
         </div>
       </section>
+
+      {/* SSS-Tier Pre-Sale Funnel */}
+      <EventFunnelStack eventId="mp-launch-001" />
 
       <Footer />
     </div>

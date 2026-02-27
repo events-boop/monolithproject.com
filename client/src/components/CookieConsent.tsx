@@ -61,16 +61,12 @@ export default function CookieConsent() {
                                 </p>
                                 <p className="text-sm text-white/55 leading-relaxed">
                                     We use cookies to improve your experience and analyze site traffic. By continuing, you agree to our{" "}
-                                    <Link href="/cookies">
-                                        <a className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
-                                            Cookie Policy
-                                        </a>
+                                    <Link href="/cookies" className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
+                                        Cookie Policy
                                     </Link>
                                     {" "}and{" "}
-                                    <Link href="/privacy">
-                                        <a className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
-                                            Privacy Policy
-                                        </a>
+                                    <Link href="/privacy" className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
+                                        Privacy Policy
                                     </Link>
                                     .
                                 </p>

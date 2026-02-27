@@ -28,6 +28,7 @@ export interface ScheduledEvent {
     faqs?: Array<{ q: string; a: string }>;
     photoNotice?: string;
     eventNotice?: string;
+    activeFunnels?: ("waitlist" | "waitlist-chasing" | "waitlist-untold" | "giveaway" | "coordinates")[];
 }
 
 /** Active ticket link — Posh */
@@ -85,6 +86,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         eventNotice: "Presented by The Monolith Project: UNTOLD STORY 360 EXPERIENCE",
         age: "21+",
         ticketUrl: POSH_TICKET_URL,
+        activeFunnels: ["coordinates", "waitlist-untold"], // Activate coordinate drop and waitlist for this event
     },
     {
         id: "mp-autograf-mar21",
@@ -115,6 +117,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         eventNotice: "THE MONOLITH PROJECT PRESENTS: AUTOGRAF",
         age: "21+",
         ticketUrl: POSH_TICKET_URL, // Identifying this as the likely link or placeholder
+        activeFunnels: ["giveaway"], // Activate giveaway for the tickets page
     },
     {
         id: "mp-launch-001",
@@ -132,6 +135,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         format: "Sunset → Late Night",
         dress: "Come as you are",
         sound: "Afro House · Techno · Melodic",
+        activeFunnels: ["waitlist"],
     },
     {
         id: "css-002",
@@ -147,6 +151,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         format: "Rooftop · Outdoor",
         dress: "Summer whites encouraged",
         sound: "Afro House · Organic House · Global Rhythms",
+        activeFunnels: ["waitlist-chasing"], // Activate Inner Circle waitlist here
     },
     {
         id: "us-002",

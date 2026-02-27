@@ -60,8 +60,10 @@ function Router() {
         <Route path={"/about"} component={AboutTransition} />
         <Route path={"/togetherness"} component={AboutTransition} />
         <Route path={"/chasing-sunsets"} component={ChasingSunsetsTransition} />
+        <Route path={"/chasing-sunsets/:season"} component={ArchiveGalleryPageTransition} />
         <Route path={"/radio"} component={RadioTransition} />
         <Route path={"/story"} component={UntoldStoryTransition} />
+        <Route path={"/untold-story/:season"} component={ArchiveGalleryPageTransition} />
         <Route path={"/untold-story-deron-juany-bravo"} component={UntoldStoryTransition} />
         <Route path={"/booking"} component={BookingTransition} />
         <Route path={"/lineup"} component={LineupTransition} />
@@ -129,6 +131,10 @@ const AmbassadorsTransition = withTransition(Ambassadors);
 const TravelTransition = withTransition(Travel);
 const GuideTransition = withTransition(Guide);
 const VIPTransition = withTransition(VIP);
+const ArchiveGalleryPageTransition = withTransition(
+  lazy(() => import("./pages/ArchiveGalleryPage"))
+);
+
 
 const Analytics = lazy(() => import("./components/Analytics"));
 const DeferredEnhancements = lazy(() => import("./components/DeferredEnhancements"));

@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Play, Pause, MapPin, Music, ArrowRight, Sun } from "lucide-react";
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { Play, Pause, Sun, X, MapPin, Music, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
+import RadioGlobe from "@/components/RadioGlobe";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
@@ -10,8 +11,15 @@ import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import StickyPlayer from "@/components/StickyPlayer";
 import RevealText from "@/components/RevealText";
 import HeroSpotlight from "@/components/ui/HeroSpotlight";
-import { BorderBeam } from "@/components/ui/BorderBeam";
+import ShimmerButton from "@/components/ui/ShimmerButton";
 import SEO from "@/components/SEO";
+import SmartImage from "@/components/SmartImage";
+import MagneticButton from "@/components/MagneticButton";
+
+const radioArtists = [
+  { name: "BENCHEK", image: "/images/artist-benchek.jpg" },
+  { name: "EWERSEEN", image: "/images/artist-ewerseen.png" },
+];
 
 interface Track {
   title: string;
@@ -75,21 +83,86 @@ const tracks: Track[] = [
 
 type Filter = "all" | "sunsets" | "untold";
 
+const radioFaqs = [
+  ["How often are new mixes released?", "We drop new mixes regularly, capturing the very best live sets from our recent events as well as exclusive guest mixes."],
+  ["Can I submit a mix for the Radio show?", "Yes, we are always looking for selectors who fit the Monolith and Chasing Sun(Sets) sound. Reach out to us via the contact page."],
+  ["Are the live recordings edited?", "We try to keep them as raw and authentic as possible to capture the true energy and imperfections of the dancefloor."]
+];
+
+// Audio Visualizer Component
+function AudioVisualizer({ isActive }: { isActive: boolean }) {
+  if (!isActive) return null;
+
+  return (
+    <div className="flex items-end gap-[3px] h-4">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div
+          key={i}
+          className="w-1 bg-primary rounded-sm transition-all"
+          style={{
+            animation: `radioVisualizerBar ${0.5 + Math.random() * 0.5}s ease-in-out infinite alternate`,
+            animationDelay: `${Math.random() * 0.3}s`,
+            height: '20%',
+          }}
+        />
+      ))}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes radioVisualizerBar {
+          0% { height: 20%; opacity: 0.6; }
+          100% { height: 100%; opacity: 1; }
+        }
+      `}} />
+    </div>
+  );
+}
+
 export default function Radio() {
   const [activeTrack, setActiveTrack] = useState<number | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
-  const [faqOpen, setFaqOpen] = useState(false);
+  const [faqDrawerOpen, setFaqDrawerOpen] = useState(false);
+  const [artistIndex, setArtistIndex] = useState(0);
 
-  const radioFaqs = [
-    ["How often are new mixes released?", "We drop new mixes regularly, capturing the very best live sets from our recent events as well as exclusive guest mixes."],
-    ["Can I submit a mix for the Radio show?", "Yes, we are always looking for selectors who fit the Monolith and Chasing Sun(Sets) sound. Reach out to us via the contact page."],
-    ["Are the live recordings edited?", "We try to keep them as raw and authentic as possible to capture the true energy and imperfections of the dancefloor."]
-  ];
+  // 3D Tilt calculations
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setArtistIndex((prev) => (prev + 1) % radioArtists.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const filtered = filter === "all" ? tracks : tracks.filter((t) => t.series === filter);
 
   const handlePlay = (index: number) => {
-    // Find real index in full tracks array
     const track = filtered[index];
     const realIndex = tracks.indexOf(track);
     setActiveTrack((current) => (current === realIndex ? null : realIndex));
@@ -104,110 +177,166 @@ export default function Radio() {
       <Navigation />
 
       {/* Hero */}
-      <section className="relative pt-44 md:pt-48 pb-32 px-6 overflow-hidden">
-        {/* Background Globe */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Rotating Ring */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120vw] md:w-[60vw] aspect-square rounded-full border border-dashed border-primary/20 opacity-30 mix-blend-screen"
-          />
-
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-5xl opacity-40 mix-blend-screen"
-            style={{
-              backgroundImage: "url('/images/radio-globe.webp')",
-              backgroundSize: "contain",
-              backgroundPosition: "center top",
-              backgroundRepeat: "no-repeat"
-            }}
-          />
-
-          {/* Signal Pings */}
-          {[
-            { top: "20%", left: "45%", delay: 0 },
-            { top: "35%", left: "55%", delay: 2 },
-            { top: "25%", left: "52%", delay: 4 },
-            { top: "15%", left: "48%", delay: 1.5 },
-            { top: "30%", left: "42%", delay: 3.5 },
-          ].map((ping, i) => (
-            <div key={i} className="absolute inset-0 pointer-events-none">
-              <div
-                className="absolute w-full max-w-5xl left-1/2 -translate-x-1/2 h-full"
-              >
-                <div className="absolute" style={{ top: ping.top, left: ping.left }}>
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0.8 }}
-                    animate={{ scale: 4, opacity: 0 }}
-                    transition={{ duration: 3, repeat: Infinity, delay: ping.delay, ease: "easeOut" }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-primary/60 bg-primary/20"
-                  />
-                  <motion.div
-                    animate={{ opacity: [0.4, 1, 0.4] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: ping.delay }}
-                    className="w-1 h-1 rounded-full bg-primary blur-[1px]"
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Gradient overlays to blend it in */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background opacity-80" />
+      <section className="relative pt-44 md:pt-48 pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
+        {/* Full Bleed Rotating Background */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={artistIndex}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 0.6, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <SmartImage
+                src={(radioArtists[artistIndex] || radioArtists[0]).image}
+                alt={(radioArtists[artistIndex] || radioArtists[0]).name}
+                priority
+                className="w-full h-full object-cover object-[center_30%]"
+                containerClassName="h-full w-full bg-transparent"
+              />
+            </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black/80 to-transparent" />
         </div>
 
-        <div className="container max-w-6xl mx-auto relative z-10">
-          <motion.div>
+        <div className="container max-w-7xl mx-auto relative z-10 w-full">
+          <div className="max-w-3xl">
             <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6" delay={0.1}>
               Mix Series
             </RevealText>
-            <div className="mb-8">
-              <HeroSpotlight className="-m-8 p-8" spotlightColor="rgba(255, 255, 255, 0.2)">
+            <div className="mb-8 relative">
+              <HeroSpotlight className="-m-8 p-8" spotlightColor="rgba(255, 255, 255, 0.15)">
                 <motion.h1
                   initial={{ opacity: 0, y: 30, filter: "blur(20px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-                  className="font-display text-[clamp(2.5rem,8vw,7rem)] leading-[0.85] uppercase tracking-tight-display drop-shadow-2xl"
+                  className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.85] uppercase tracking-tight-display drop-shadow-2xl"
                 >
                   <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)] block mb-2 md:mb-4">
                     CHASING SUN(SETS)
                   </span>
-                  <span className="text-foreground">RADIO</span>
+                  <span className="text-white">RADIO</span>
                 </motion.h1>
               </HeroSpotlight>
             </div>
-            <RevealText as="p" className="max-w-lg text-muted-foreground text-lg leading-relaxed mix-blend-plus-lighter" delay={0.4} stagger={0.01}>
+            <RevealText as="p" className="max-w-lg text-white/80 text-lg md:text-xl leading-relaxed drop-shadow-lg font-light" delay={0.4} stagger={0.01}>
               Curated sets and live recordings from our artists and guests.
               The music doesn't stop when the show ends.
             </RevealText>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="px-6 pb-8">
+      {/* Massive Globe Separator with Rotating Frame */}
+      <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[550px] overflow-hidden border-t border-border bg-card flex flex-col justify-center">
+        {/* Globe */}
+        <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0 mt-[-10vh] translate-y-24 md:translate-y-12 opacity-80 mix-blend-lighten">
+          <RadioGlobe />
+        </div>
+
+        <div className="container max-w-7xl mx-auto h-full relative z-10 w-full flex flex-col md:flex-row items-center justify-between px-6">
+          {/* Rotating Album Cover Frame with 3D Tilt */}
+          <div
+            className="w-full h-full flex items-center justify-center md:justify-start"
+            style={{ perspective: 1200 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            <motion.div
+              style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ opacity: { duration: 1.2, delay: 0.5 }, y: { duration: 1.2, delay: 0.5, ease: "easeOut" } }}
+              className="relative w-[300px] md:w-[400px] aspect-square rounded-2xl overflow-hidden bg-background/5 border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] z-20"
+            >
+              {/* Decorative Elements */}
+              <div
+                style={{ transform: "translateZ(30px)" }}
+                className="absolute top-4 right-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                <span className="font-mono text-[9px] text-white/80 tracking-widest uppercase">Live</span>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={artistIndex}
+                  initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute inset-0 z-10"
+                  style={{ transform: "translateZ(10px)" }}
+                >
+                  <SmartImage
+                    src={(radioArtists[artistIndex] || radioArtists[0]).image}
+                    alt={(radioArtists[artistIndex] || radioArtists[0]).name}
+                    className="w-full h-full object-cover"
+                    containerClassName="w-full h-full bg-black"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Artist Name Container */}
+              <div
+                className="absolute bottom-0 left-0 right-0 p-6 z-30"
+                style={{ transform: "translateZ(40px)" }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={artistIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col gap-1 drop-shadow-lg"
+                  >
+                    <span className="font-mono text-[9px] tracking-[0.3em] text-[#E8B86D] uppercase font-bold drop-shadow-md">Now Playing</span>
+                    <span className="font-display text-3xl md:text-4xl text-white tracking-widest uppercase drop-shadow-xl block">{(radioArtists[artistIndex] || radioArtists[0]).name}</span>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Filters with LayoutId Gliding Pill */}
+      <section className="px-6 pb-8 border-t border-border pt-12 md:pt-16">
         <div className="container max-w-6xl mx-auto">
-          <div className="flex flex-wrap gap-3 pb-6 border-b border-border">
+          <div className="flex flex-wrap gap-3 pb-6 border-b border-border relative">
             {([
               { label: "ALL", value: "all" as Filter, icon: null },
               { label: "SUN(SETS)", value: "sunsets" as Filter, icon: <Sun className="w-3.5 h-3.5" /> },
               { label: "UNTOLD", value: "untold" as Filter, icon: <UntoldButterflyLogo className="w-4 h-4" /> },
-            ]).map((f) => (
-              <button
-                key={f.value}
-                type="button"
-                onClick={() => setFilter(f.value)}
-                className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 border rounded-full ${filter === f.value
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
-                  }`}
-              >
-                {f.icon}
-                {f.label}
-              </button>
-            ))}
+            ]).map((f) => {
+              const isActive = filter === f.value;
+              return (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => setFilter(f.value)}
+                  className={`relative flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-colors outline-none z-10 ${isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-primary/90 border border-primary rounded-full z-0 pointer-events-none shadow-md backdrop-blur-sm"
+                      transition={{ duration: 0.4, type: "spring", stiffness: 300, damping: 25 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    {f.icon}
+                    {f.label}
+                  </span>
+                </button>
+              );
+            })}
             <span className="ml-auto font-mono text-xs text-muted-foreground self-center">
               {filtered.length} SET{filtered.length !== 1 ? "S" : ""}
             </span>
@@ -223,56 +352,52 @@ export default function Radio() {
               const realIndex = tracks.indexOf(track);
               const isActive = activeTrack === realIndex;
               return (
-                <motion.button
+                <motion.div
                   key={track.soundcloudUrl}
-                  type="button"
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.03 }}
-                  aria-pressed={isActive}
-                  aria-label={`${isActive ? "Pause" : "Play"} ${track.title} by ${track.artist}`}
-                  className={`group w-full text-left flex items-center gap-4 md:gap-6 py-5 px-4 border-b border-border/50 transition-colors cursor-pointer bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${isActive ? "bg-white/5" : "hover:bg-white/[0.03]"
+                  className={`group w-full flex items-center gap-4 md:gap-6 py-5 px-4 border-b border-border/50 transition-colors bg-transparent ${isActive ? "bg-white/5" : "hover:bg-white/[0.03]"
                     }`}
-                  onClick={() => handlePlay(index)}
                 >
-                  {/* Track number / play */}
-                  <div className="w-8 flex items-center justify-center shrink-0">
-                    <span className={`font-mono text-sm transition-opacity ${isActive ? "hidden" : "group-hover:hidden"}`}>
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className={`${isActive ? "block" : "hidden group-hover:block"}`}>
+                  {/* Magnetic Play Button */}
+                  <MagneticButton strength={0.4} onClick={() => handlePlay(index)}>
+                    <div className={`w-12 h-12 flex items-center justify-center rounded-full transition-all flex-shrink-0 ${isActive ? "bg-primary text-primary-foreground border-transparent shadow-[0_0_15px_rgba(224,90,58,0.5)]" : "bg-black/20 border border-white/10 text-white group-hover:border-primary/50 group-hover:text-primary"}`} aria-label={`${isActive ? "Pause" : "Play"} ${track.title}`}>
                       {isActive ? (
-                        <Pause className="w-4 h-4 text-primary" />
+                        <Pause className="w-5 h-5 fill-current" />
                       ) : (
-                        <Play className="w-4 h-4 text-primary ml-0.5" />
+                        <Play className="w-5 h-5 fill-current ml-1" />
                       )}
-                    </span>
-                  </div>
+                    </div>
+                  </MagneticButton>
 
                   {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <span className={`block text-sm font-medium truncate transition-colors ${isActive ? "text-primary" : "text-foreground"}`}>
-                      {track.title}
-                    </span>
-                    <span className="block text-xs text-muted-foreground font-mono tracking-wide">
+                  <div className="flex-1 min-w-0 flex flex-col justify-center cursor-pointer" onClick={() => handlePlay(index)}>
+                    <div className="flex items-center gap-3">
+                      <span className={`block text-base md:text-lg font-medium truncate transition-colors ${isActive ? "text-primary" : "text-foreground group-hover:text-primary"}`}>
+                        {track.title}
+                      </span>
+                      <AudioVisualizer isActive={isActive} />
+                    </div>
+                    <span className="block text-xs md:text-sm text-muted-foreground font-mono tracking-wide mt-1">
                       {track.artist}
                     </span>
                   </div>
 
-                  {/* Series tag */}
-                  <span className={`hidden md:block px-2 py-0.5 text-[10px] font-mono tracking-widest uppercase border ${track.series === "sunsets"
-                    ? "text-clay border-clay/30"
-                    : "text-primary border-primary/30"
-                    }`}>
-                    {track.series === "sunsets" ? "SUN(SETS)" : "UNTOLD"}
-                  </span>
-
-                  {/* Duration */}
-                  <span className="font-mono text-xs text-muted-foreground tabular-nums shrink-0">
-                    {track.duration}
-                  </span>
-                </motion.button>
+                  {/* Series tag & Duration */}
+                  <div className="flex flex-col items-end gap-2 shrink-0 cursor-pointer" onClick={() => handlePlay(index)}>
+                    <span className={`hidden md:inline-block px-3 py-1 text-[10px] font-mono tracking-widest uppercase border rounded-md ${track.series === "sunsets"
+                      ? "text-orange-300 border-orange-300/30 bg-orange-300/10"
+                      : "text-primary border-primary/30 bg-primary/10"
+                      }`}>
+                      {track.series === "sunsets" ? "SUN(SETS)" : "UNTOLD"}
+                    </span>
+                    <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                      {track.duration}
+                    </span>
+                  </div>
+                </motion.div>
               );
             })}
           </div>
@@ -300,7 +425,7 @@ export default function Radio() {
               <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-2" delay={0.1}>
                 Global Reach
               </RevealText>
-              <RevealText as="h2" className="font-display text-3xl md:text-4xl text-foreground" delay={0.2} blurStrength={10}>
+              <RevealText as="h2" className="font-display text-4xl text-foreground" delay={0.2} blurStrength={10}>
                 WHERE WE ARE
               </RevealText>
             </div>
@@ -309,64 +434,80 @@ export default function Radio() {
             </span>
           </div>
 
-          <div className="border border-border bg-background p-6">
-            <div className="h-[300px] md:h-[400px]">
+          <div className="border border-border bg-background p-6 rounded-xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none z-10" />
+            <div className="h-[300px] md:h-[400px] relative z-0">
               <GlobalListenerMap />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Radio FAQ */}
-      <section id="radio-faq" className="px-6 py-24 border-t border-border">
-        <div className="container max-w-4xl mx-auto">
-          <button
-            onClick={() => setFaqOpen(!faqOpen)}
-            className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-gray-100 transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
-          >
-            <span>Frequently Asked Questions</span>
-            <span className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-              <div className={`relative w-4 h-4 transition-transform duration-500 origin-center ${faqOpen ? "rotate-180" : "rotate-0"}`}>
-                <span className={`absolute top-1/2 left-0 w-4 h-[2px] bg-black -translate-y-1/2 transition-transform duration-500`} />
-                <span className={`absolute top-0 left-1/2 w-[2px] h-4 bg-black -translate-x-1/2 transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
-              </div>
-            </span>
-          </button>
+      {/* Radio FAQ - Modern Floating Button triggering Off-Canvas */}
+      <section className="px-6 pb-24 border-t border-border mt-12 md:mt-0 pt-20">
+        <div className="container max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 bg-card border border-border/50 p-8 md:p-12 rounded-3xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2" />
 
-          <AnimatePresence>
-            {faqOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden"
+          <div className="relative z-10 max-w-xl text-center md:text-left">
+            <h3 className="font-display text-3xl md:text-5xl uppercase tracking-wide text-foreground mb-4">Have Questions?</h3>
+            <p className="text-muted-foreground font-light text-lg">Learn more about our recording process, mix submissions, and release schedules.</p>
+          </div>
+
+          <div className="relative z-10">
+            <MagneticButton strength={0.4}>
+              <button
+                onClick={() => setFaqDrawerOpen(true)}
+                className="btn-pill-coral flex shadow-[0_10px_30px_rgba(224,90,58,0.25)] hover:shadow-[0_15px_40px_rgba(224,90,58,0.4)]"
               >
-                <div className="pt-6 space-y-4">
-                  {radioFaqs.map(([q, a], idx) => (
-                    <motion.details
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 + (idx * 0.05), duration: 0.4 }}
-                      key={q}
-                      className="border px-6 py-5 rounded-xl border-white/10 bg-black/20 backdrop-blur-sm group cursor-pointer"
-                    >
-                      <summary className="text-white font-medium list-none flex items-center justify-between outline-none">
-                        <span className="pr-4">{q}</span>
-                        <span className="text-primary group-open:rotate-45 transition-transform duration-300 flex-shrink-0">
-                          <span className="block w-3 h-[2px] bg-current relative">
-                            <span className="block w-[2px] h-3 bg-current absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-open:opacity-0 transition-opacity" />
-                          </span>
-                        </span>
-                      </summary>
-                      <p className="text-white/70 mt-4 text-sm leading-relaxed border-t border-white/10 pt-4">{a}</p>
-                    </motion.details>
-                  ))}
+                VIEW FAQ
+                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+              </button>
+            </MagneticButton>
+          </div>
+        </div>
+
+        {/* Off-Canvas Drawer for FAQ */}
+        <AnimatePresence>
+          {faqDrawerOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setFaqDrawerOpen(false)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+              />
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed top-0 right-0 bottom-0 w-full md:w-[500px] lg:w-[600px] bg-background border-l border-border z-50 flex flex-col shadow-2xl"
+              >
+                <div className="p-6 md:p-8 border-b border-border flex items-center justify-between shrink-0">
+                  <h2 className="font-display text-3xl text-foreground uppercase tracking-wider">Radio FAQ</h2>
+                  <button
+                    onClick={() => setFaqDrawerOpen(false)}
+                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background hover:border-foreground transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-6 md:p-8 flex-1 overflow-y-auto">
+                  <div className="space-y-6">
+                    {radioFaqs.map(([q, a], idx) => (
+                      <div key={idx} className="border border-white/5 bg-white/5 p-6 rounded-2xl">
+                        <h4 className="font-bold text-foreground mb-3 text-lg leading-tight">{q}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{a}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+            </>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* CTA */}
@@ -375,22 +516,23 @@ export default function Radio() {
           <RevealText as="h2" className="font-display text-4xl md:text-6xl text-foreground mb-4" blurStrength={12}>
             HEAR IT LIVE
           </RevealText>
-          <RevealText as="p" className="text-muted-foreground max-w-md mx-auto mb-12" stagger={0.01} delay={0.2}>
+          <RevealText as="p" className="text-muted-foreground max-w-md mx-auto mb-12 flex" stagger={0.01} delay={0.2}>
             Every set gets recorded and added to the archive.
             Come to the show, hear it first.
           </RevealText>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/tickets" asChild>
-              <a className="group relative overflow-hidden px-10 py-4 bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase hover:opacity-90 transition-opacity cursor-pointer rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+            <MagneticButton strength={0.4}>
+              <a href="/tickets" className="btn-pill-coral w-full flex items-center justify-center" onClick={(e) => { e.preventDefault(); window.location.href = '/tickets'; }}>
                 GET TICKETS
-                <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
               </a>
-            </Link>
-            <Link href="/lineup" asChild>
-              <a className="px-10 py-4 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                VIEW LINEUP
-              </a>
-            </Link>
+            </MagneticButton>
+            <MagneticButton strength={0.4}>
+              <Link href="/lineup" asChild>
+                <a className="px-10 h-14 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                  VIEW LINEUP
+                </a>
+              </Link>
+            </MagneticButton>
           </div>
         </div>
       </section>

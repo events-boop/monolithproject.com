@@ -4,6 +4,7 @@ import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Radio } from "lucide-react"
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import CommunityDropdown from "./CommunityDropdown";
 import { POSH_TICKET_URL } from "@/data/events";
 import { isEventBannerVisible } from "@/lib/eventBanner";
 import { useUI, DrawerType } from "@/contexts/UIContext";
@@ -338,6 +339,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 </Link>
               )
             )}
+            <CommunityDropdown isLight={isLight} brand={brand} />
           </div>
 
           {/* RIGHT: CTA & MOBILE TOGGLE */}

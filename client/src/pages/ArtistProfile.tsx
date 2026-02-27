@@ -99,62 +99,59 @@ export default function ArtistProfile() {
       <SEO title={artist.name} description={artist.bio} />
       <Navigation />
 
-      <section className="relative pt-44 md:pt-48 pb-16 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-card to-background" />
-        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_12%_18%,rgba(224,90,58,0.18),transparent_34%),radial-gradient(circle_at_88%_20%,rgba(255,255,255,0.08),transparent_36%)]" />
+      <section className="relative min-h-[75vh] flex flex-col justify-end pb-20 px-6 overflow-hidden pt-44">
+        {/* Full Bleed Profile Image */}
+        <div className="absolute inset-0 z-0 bg-black/50">
+          <img
+            src={artist.image}
+            alt={artist.name}
+            className="w-full h-full object-cover object-top opacity-60"
+          />
+          {/* Gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          {/* Top gradient for navbar */}
+          <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-black/80 to-transparent" />
+        </div>
 
         <div className="container max-w-6xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="grid lg:grid-cols-[360px_1fr] gap-10 items-end"
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl"
           >
-            <div className="bg-white p-3 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
-              <div className="bg-zinc-100 p-3">
-                <img
-                  src={artist.image}
-                  alt={artist.name}
-                  loading="eager"
-                  decoding="async"
-                  className="w-full aspect-[3/4] object-cover"
-                />
-                <div className="flex items-center justify-between mt-3 text-[11px] font-mono tracking-wide text-zinc-600 uppercase">
-                  <span>{artist.name}</span>
-                  <span>{artist.role}</span>
-                </div>
-              </div>
+            <div className="flex items-center gap-4 mb-5">
+              <span className="px-3 py-1 border border-white/20 text-white text-[10px] font-mono tracking-[0.2em] uppercase backdrop-blur-md bg-black/30 rounded-full">
+                {artist.role}
+              </span>
+              <span className={`text-[10px] font-mono tracking-[0.2em] uppercase ${accentClass}`}>
+                {primarySeries === "chasing-sunsets" ? "Sun(Sets)" : primarySeries === "sunsets-radio" ? "Sun(Sets) Radio" : "Untold Story"}
+              </span>
             </div>
 
-            <div>
-              <div className="flex items-center gap-4 mb-4">
-                <span className={`px-3 py-1 border ${borderAccent} ${accentClass} text-xs font-mono tracking-widest uppercase`}>
-                  {artist.role}
-                </span>
-                <span className={`text-xs font-mono tracking-widest uppercase ${accentClass}`}>
-                  {primarySeries === "chasing-sunsets" ? "Sun(Sets)" : primarySeries === "sunsets-radio" ? "Sun(Sets) Radio" : "Untold Story"}
-                </span>
-              </div>
+            <h1 className="font-display text-[clamp(4rem,11vw,9.5rem)] leading-[0.85] uppercase text-white mb-6 drop-shadow-2xl">
+              {artist.name}
+            </h1>
 
-              <h1 className="font-display text-[clamp(3.2rem,9vw,8.5rem)] leading-[0.9] uppercase text-foreground mb-6">
-                {artist.name}
-              </h1>
+            <div className="flex flex-wrap gap-6 text-[10px] font-mono text-white/80 uppercase tracking-[0.2em] mb-8">
+              <span className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5">
+                <MapPin className="w-3 h-3 text-white/50" /> {artist.origin}
+              </span>
+              <span className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/5">
+                <Music className="w-3 h-3 text-white/50" /> {artist.genre}
+              </span>
+            </div>
 
-              <div className="flex flex-wrap gap-6 text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6">
-                <span className="flex items-center gap-2">
-                  <MapPin className="w-3 h-3" /> {artist.origin}
-                </span>
-                <span className="flex items-center gap-2">
-                  <Music className="w-3 h-3" /> {artist.genre}
-                </span>
-              </div>
+            <p className="text-white/90 max-w-2xl text-lg md:text-xl leading-relaxed mb-10 drop-shadow-lg font-light">
+              {heroBlurb}
+            </p>
 
-              <p className="text-muted-foreground max-w-2xl leading-relaxed mb-8">
-                {heroBlurb}
-              </p>
-
+            <div className="flex flex-wrap gap-4">
               <Link href={primaryAction.href} asChild>
-                <a className="btn-pill-coral inline-flex">
+                <a className={`px-10 py-4 font-bold tracking-widest text-xs uppercase transition-all rounded-full flex items-center gap-2 ${isWarmSeries
+                    ? "bg-clay text-[#1A0E08] hover:bg-white"
+                    : "bg-primary text-primary-foreground hover:bg-white hover:text-black"
+                  }`}>
                   {primaryAction.label}
                 </a>
               </Link>
@@ -247,11 +244,10 @@ export default function ArtistProfile() {
 
               <Link href={sidebarAction.href} asChild>
                 <a
-                  className={`block w-full text-center py-4 mt-4 font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${
-                    isWarmSeries
+                  className={`block w-full text-center py-4 mt-4 font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${isWarmSeries
                       ? "bg-clay text-background hover:bg-foreground"
                       : "bg-primary text-primary-foreground hover:bg-foreground"
-                  }`}
+                    }`}
                 >
                   {sidebarAction.label}
                 </a>

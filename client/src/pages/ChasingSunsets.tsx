@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
+import EpisodeGallery from "@/components/EpisodeGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
-import { chasingSeason1, chasingSeason2 } from "@/data/galleryData";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
@@ -15,6 +15,7 @@ import ChasingSunsetsOptIn from "@/components/ChasingSunsetsOptIn";
 import { useState } from "react";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
+import EventFunnelStack from "@/components/EventFunnelStack";
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
@@ -199,21 +200,46 @@ export default function ChasingSunsets() {
         </div>
 
         {/* Season Records */}
-        <div id="chasing-records" className="scroll-mt-44">
-          <MixedMediaGallery
-            title="Season I"
-            subtitle="2025 Archives"
-            description="The beginning. Rooftops, rivers, and the golden hour."
-            media={chasingSeason1}
-            className="bg-transparent border-t sunset-border-accent sunset-text"
+        <div id="chasing-records" className="scroll-mt-44 container max-w-6xl mx-auto px-6 border-t sunset-border-accent">
+          <EpisodeGallery
+            series="chasing-sunsets"
+            season="Season I"
+            episode="Chapter 01"
+            title="The First Sunset"
+            subtitle="Amari • Sarat • Erik"
+            description="The beginning. Rooftops, the skyline, and the golden hour. A look back at the flyers that started it all on August 9th, 2024 at The Penthouse."
+            accentColor="#E8B86D"
+            images={[
+              { src: "/images/chasing-s1e1-amari.jpg", alt: "Amari - Chapter 01", label: "AMARI" },
+              { src: "/images/chasing-s1e1-sarat.jpg", alt: "Sarat - Chapter 01", label: "SARAT" },
+              { src: "/images/chasing-s1e1-erik.jpg", alt: "Erik - Chapter 01", label: "ERIK" },
+              { src: "/images/chasing-s1e1-group.jpg", alt: "The Collective - Chapter 01", label: "THE TRINITY" },
+            ]}
           />
-          <MixedMediaGallery
-            title="Season II"
-            subtitle="2026 Archives"
-            description="Expanding the horizon. New venues, same sun."
-            media={chasingSeason2}
-            className="bg-transparent border-t sunset-border-accent sunset-text"
-          />
+
+          {/* Links for Season 2 and 3 Galleries */}
+          <div className="py-12 flex flex-col md:flex-row gap-6 border-t sunset-border-accent">
+            <div className="flex-1 p-8 border sunset-border-accent rounded-2xl glass hover:bg-white/5 transition-colors group">
+              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season II</span>
+              <h4 className="font-display text-2xl uppercase text-white mb-4">Expanded Horizons</h4>
+              <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Bigger rooms, deeper grooves, more golden hours. 2025 Archives.</p>
+              <Link href="/chasing-sunsets/season-2" asChild>
+                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors">
+                  View Archive <ArrowUpRight className="w-4 h-4" />
+                </a>
+              </Link>
+            </div>
+            <div className="flex-1 p-8 border sunset-border-accent rounded-2xl glass hover:bg-white/5 transition-colors group">
+              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season III</span>
+              <h4 className="font-display text-2xl uppercase text-white mb-4">The Next Chapter</h4>
+              <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">The season is coming. Golden hour, elevated. 2026 Archives.</p>
+              <Link href="/chasing-sunsets/season-3" asChild>
+                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors">
+                  View Archive <ArrowUpRight className="w-4 h-4" />
+                </a>
+              </Link>
+            </div>
+          </div>
         </div>
 
 
@@ -356,6 +382,11 @@ export default function ChasingSunsets() {
             </AnimatePresence>
           </div>
         </section>
+
+        {/* Inner Circle Pre-registration Funnel */}
+        <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10">
+          <EventFunnelStack eventId="css-002" />
+        </div>
 
         {/* CTA */}
         <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative sunset-border-accent border-t">
