@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Radio } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import MagneticButton from "./MagneticButton";
+import RevealText from "./RevealText";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import CommunityDropdown from "./CommunityDropdown";
 import { POSH_TICKET_URL } from "@/data/events";
@@ -200,189 +201,189 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             }`}
         >
           <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 flex items-center justify-between gap-3">
-          {/* LEFT: LOGO */}
-          <div className="flex-shrink min-w-0 -ml-1 md:-ml-2">
-            <MagneticButton strength={0.2}>
-              <button
-                type="button"
-                onClick={handleLogoClick}
-                aria-label="Go to homepage"
-                className="flex items-end gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70"
-              >
-                <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
-                <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
-                  <RevealText
-                    as="span"
-                    delay={0.1}
-                    stagger={0.03}
-                    blurStrength={4}
-                    className="inline-block"
-                  >
-                    MONOLITH PROJECT
-                  </RevealText>
-                </span>
-              </button>
-            </MagneticButton>
-          </div>
-
-          <div className="hidden lg:flex flex-grow justify-end items-center gap-4 xl:gap-5 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
-            {navItems.map((item) =>
-              item.children ? (
-                <div key={item.label} className="relative" ref={dropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => setDropdownOpen((v) => !v)}
-                    aria-expanded={dropdownOpen}
-                    aria-haspopup="menu"
-                    aria-controls={partnersMenuId}
-                    className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
-                      ? `hover:text-clay text-stone`
-                      : brand === "chasing-sunsets"
-                        ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90"}`
-                      }`}
-                  >
-                    {item.label}
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
-                  </button>
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 4 }}
-                        transition={{ duration: 0.15 }}
-                        className={`absolute top-full mt-3 left-0 min-w-[180px] py-2 border backdrop-blur-md ${isLight
-                          ? "bg-sand/95 border-charcoal/10"
-                          : "bg-[#0a0a0a]/95 border-white/10"
-                          }`}
-                        id={partnersMenuId}
-                        role="menu"
-                        aria-label="Partners"
-                      >
-                        {item.children.map((child) => (
-                          <Link key={child.label} href={child.href}
-                            onClick={(e) => {
-                              if (["/faq", "/about", "/contact"].includes(child.href)) {
-                                e.preventDefault();
-                                openDrawer(child.href.slice(1) as DrawerType);
-                              }
-                              setDropdownOpen(false);
-                            }}
-                            aria-current={isActiveHref(child.href) ? "page" : undefined}
-                            className={`block px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
-                              ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
-                              : brand === "chasing-sunsets"
-                                ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
-                                : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
-                              }`}
-                            role="menuitem"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <Link key={item.label} href={item.href}
-                  onClick={(e) => {
-                    if (["/faq", "/about", "/contact"].includes(item.href)) {
-                      e.preventDefault();
-                      openDrawer(item.href.slice(1) as DrawerType);
-                      return;
-                    }
-                    if (item.href.startsWith("/#")) {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }
-                  }}
-                  aria-current={isActiveHref(item.href) ? "page" : undefined}
-                  className={`group text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
-                    ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
-                    : brand === "chasing-sunsets"
-                      ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-                    }`}
-                >
-                  {item.label === "CHASING SUN(SETS)" ? (
-                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                      <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
-                      <span className="relative inline-block">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
-                      </span>
-                    </span>
-                  ) : item.label === "RADIO" ? (
-                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
-                      <Radio className="w-3.5 h-3.5" />
-                      <span className="relative inline-block">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
-                      </span>
-                    </span>
-                  ) : item.label === "UNTOLD STORY" ? (
-                    <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
-                      <UntoldButterflyLogo className="w-3.5 h-3.5" />
-                      <span className="relative inline-block">
-                        <span>{item.label}</span>
-                        <span
-                          aria-hidden="true"
-                          className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
-                        />
-                      </span>
-                    </span>
-                  ) : (
-                    item.label
-                  )}
-                </Link>
-              )
-            )}
-            <CommunityDropdown isLight={isLight} brand={brand} />
-          </div>
-
-          {/* RIGHT: CTA & MOBILE TOGGLE */}
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
-            <div>
+            {/* LEFT: LOGO */}
+            <div className="flex-shrink min-w-0 -ml-1 md:-ml-2">
               <MagneticButton strength={0.2}>
-                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
-                  <div className={`hidden md:flex sunset-gradient-btn text-white rounded-full items-center gap-2 px-6 xl:px-7 py-2.5 transition-all duration-300 ${isLight
-                    ? "opacity-90 hover:opacity-100 !shadow-none"
-                    : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
-                    }`}>
-                    <Ticket className="w-3.5 h-3.5" />
-                    <span className="font-bold text-[12px] tracking-[0.14em] uppercase">Tickets</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-60" />
-                  </div>
-                </a>
-              </MagneticButton>
-            </div>
-
-            {/* Mobile Toggle */}
-            <div className="lg:hidden">
-              <MagneticButton>
                 <button
                   type="button"
-                  onClick={() => setMobileMenuOpen(true)}
-                  aria-label="Open navigation menu"
-                  aria-haspopup="dialog"
-                  aria-expanded={mobileMenuOpen}
-                  aria-controls={mobileMenuId}
-                  className={`p-2.5 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
+                  onClick={handleLogoClick}
+                  aria-label="Go to homepage"
+                  className="flex items-end gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70"
                 >
-                  <Menu size={24} />
+                  <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
+                  <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
+                    <RevealText
+                      as="span"
+                      delay={0.1}
+                      stagger={0.03}
+                      blurStrength={4}
+                      className="inline-block"
+                    >
+                      MONOLITH PROJECT
+                    </RevealText>
+                  </span>
                 </button>
               </MagneticButton>
             </div>
+
+            <div className="hidden lg:flex flex-grow justify-end items-center gap-4 xl:gap-5 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
+              {navItems.map((item) =>
+                item.children ? (
+                  <div key={item.label} className="relative" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => setDropdownOpen((v) => !v)}
+                      aria-expanded={dropdownOpen}
+                      aria-haspopup="menu"
+                      aria-controls={partnersMenuId}
+                      className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                        ? `hover:text-clay text-stone`
+                        : brand === "chasing-sunsets"
+                          ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
+                          : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90"}`
+                        }`}
+                    >
+                      {item.label}
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    <AnimatePresence>
+                      {dropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 4 }}
+                          transition={{ duration: 0.15 }}
+                          className={`absolute top-full mt-3 left-0 min-w-[180px] py-2 border backdrop-blur-md ${isLight
+                            ? "bg-sand/95 border-charcoal/10"
+                            : "bg-[#0a0a0a]/95 border-white/10"
+                            }`}
+                          id={partnersMenuId}
+                          role="menu"
+                          aria-label="Partners"
+                        >
+                          {item.children.map((child) => (
+                            <Link key={child.label} href={child.href}
+                              onClick={(e) => {
+                                if (["/faq", "/about", "/contact"].includes(child.href)) {
+                                  e.preventDefault();
+                                  openDrawer(child.href.slice(1) as DrawerType);
+                                }
+                                setDropdownOpen(false);
+                              }}
+                              aria-current={isActiveHref(child.href) ? "page" : undefined}
+                              className={`block px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
+                                ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
+                                : brand === "chasing-sunsets"
+                                  ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
+                                  : `hover:text-primary hover:bg-white/5 ${isActiveHref(child.href) ? "text-primary" : "text-white/80"}`
+                                }`}
+                              role="menuitem"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link key={item.label} href={item.href}
+                    onClick={(e) => {
+                      if (["/faq", "/about", "/contact"].includes(item.href)) {
+                        e.preventDefault();
+                        openDrawer(item.href.slice(1) as DrawerType);
+                        return;
+                      }
+                      if (item.href.startsWith("/#")) {
+                        e.preventDefault();
+                        handleNavClick(item.href);
+                      }
+                    }}
+                    aria-current={isActiveHref(item.href) ? "page" : undefined}
+                    className={`group text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                      ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
+                      : brand === "chasing-sunsets"
+                        ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
+                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActiveHref(item.href) ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      }`}
+                  >
+                    {item.label === "CHASING SUN(SETS)" ? (
+                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                        <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
+                        <span className="relative inline-block">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
+                      </span>
+                    ) : item.label === "RADIO" ? (
+                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
+                        <Radio className="w-3.5 h-3.5" />
+                        <span className="relative inline-block">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
+                      </span>
+                    ) : item.label === "UNTOLD STORY" ? (
+                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                        <UntoldButterflyLogo className="w-3.5 h-3.5" />
+                        <span className="relative inline-block">
+                          <span>{item.label}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                          />
+                        </span>
+                      </span>
+                    ) : (
+                      item.label
+                    )}
+                  </Link>
+                )
+              )}
+              <CommunityDropdown isLight={isLight} brand={brand} />
+            </div>
+
+            {/* RIGHT: CTA & MOBILE TOGGLE */}
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
+              <div>
+                <MagneticButton strength={0.2}>
+                  <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+                    <div className={`hidden md:flex sunset-gradient-btn text-white rounded-full items-center gap-2 px-6 xl:px-7 py-2.5 transition-all duration-300 ${isLight
+                      ? "opacity-90 hover:opacity-100 !shadow-none"
+                      : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
+                      }`}>
+                      <Ticket className="w-3.5 h-3.5" />
+                      <span className="font-bold text-[12px] tracking-[0.14em] uppercase">Tickets</span>
+                      <ArrowUpRight className="w-3 h-3 opacity-60" />
+                    </div>
+                  </a>
+                </MagneticButton>
+              </div>
+
+              {/* Mobile Toggle */}
+              <div className="lg:hidden">
+                <MagneticButton>
+                  <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen(true)}
+                    aria-label="Open navigation menu"
+                    aria-haspopup="dialog"
+                    aria-expanded={mobileMenuOpen}
+                    aria-controls={mobileMenuId}
+                    className={`p-2.5 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
+                  >
+                    <Menu size={24} />
+                  </button>
+                </MagneticButton>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </motion.nav>
 
