@@ -216,6 +216,24 @@ export default function ChasingSunsets() {
               { src: "/images/chasing-s1e1-group.jpg", alt: "The Collective - Chapter 01", label: "THE TRINITY" },
             ]}
           />
+          <EpisodeGallery
+            series="chasing-sunsets"
+            season="Season I"
+            episode="July 4th"
+            title="Independence Day"
+            subtitle="The Crowd • The Energy"
+            description="A special Chasing Sun(Sets) on the 4th of July. The sights, the faces, and the open-air energy."
+            accentColor="#E8B86D"
+            images={[
+              { src: "/images/chasing-sunsets-1.jpg", alt: "July 4th Crowd 1", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-2.jpg", alt: "July 4th Crowd 2", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-3.jpg", alt: "July 4th Crowd 3", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-4.jpg", alt: "July 4th Crowd 4", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-5.jpg", alt: "July 4th Crowd 5", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-6.jpg", alt: "July 4th Crowd 6", label: "THE CROWD" },
+              { src: "/images/chasing-sunsets-7.jpg", alt: "July 4th Crowd 7", label: "THE CROWD" },
+            ]}
+          />
 
           {/* Links for Season 2 and 3 Galleries */}
           <div className="py-12 flex flex-col md:flex-row gap-6 border-t sunset-border-accent">
@@ -224,7 +242,7 @@ export default function ChasingSunsets() {
               <h4 className="font-display text-2xl uppercase text-white mb-4">Expanded Horizons</h4>
               <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Bigger rooms, deeper grooves, more golden hours. 2025 Archives.</p>
               <Link href="/chasing-sunsets/season-2" asChild>
-                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors">
+                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
                   View Archive <ArrowUpRight className="w-4 h-4" />
                 </a>
               </Link>
@@ -234,7 +252,7 @@ export default function ChasingSunsets() {
               <h4 className="font-display text-2xl uppercase text-white mb-4">The Next Chapter</h4>
               <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">The season is coming. Golden hour, elevated. 2026 Archives.</p>
               <Link href="/chasing-sunsets/season-3" asChild>
-                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors">
+                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
                   View Archive <ArrowUpRight className="w-4 h-4" />
                 </a>
               </Link>
@@ -252,12 +270,14 @@ export default function ChasingSunsets() {
                 <button
                   onClick={() => setActiveTab('live')}
                   className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'live' ? '' : 'opacity-40 hover:opacity-70'}`}
+                  data-cursor-text="LIVE"
                 >
                   LIVE EVENTS
                 </button>
                 <button
                   onClick={() => setActiveTab('residents')}
                   className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'residents' ? '' : 'opacity-40 hover:opacity-70'}`}
+                  data-cursor-text="DJS"
                 >
                   RESIDENT DJS
                 </button>

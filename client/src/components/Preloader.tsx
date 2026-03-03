@@ -24,16 +24,16 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       return;
     }
 
-    // Terminal Boot Sequence — fast cadence to keep total under 2.5s
+    // Keep the first-load preloader short so content paints almost immediately.
     let currentLog = 0;
     const interval = setInterval(() => {
       currentLog += 1;
       setLogIndex(currentLog);
       if (currentLog === BOOT_LOGS.length - 1) {
         clearInterval(interval);
-        setTimeout(() => setBooted(true), 350);
+        setTimeout(() => setBooted(true), 120);
       }
-    }, 220);
+    }, 110);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -53,8 +53,8 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const exitTimer = setTimeout(() => {
       setEntered(true);
       sessionStorage.setItem("monolith-loaded-v2", "1");
-      setTimeout(() => onComplete(), 600);
-    }, 700);
+      setTimeout(() => onComplete(), 150);
+    }, 260);
 
     return () => clearTimeout(exitTimer);
   }, [booted, containerControls, onComplete]);
@@ -65,7 +65,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         <motion.div
           key="preloader"
           exit={{ opacity: 0, scale: 1.1, filter: "brightness(5)" }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[200] bg-[#050505] text-white flex items-center justify-center select-none overflow-hidden touch-none"
         >
           {/* Ambient Noise overlay */}

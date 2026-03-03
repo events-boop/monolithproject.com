@@ -1,7 +1,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Check, ArrowUpRight, AlertCircle } from "lucide-react";
+import { Check, ArrowUpRight, AlertCircle, Sparkles, Radio, MapPinned } from "lucide-react";
 import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
 
@@ -19,6 +19,24 @@ const defaultBenefits = [
   "Private event drops",
 ];
 
+const invitationNotes = [
+  {
+    icon: Sparkles,
+    label: "Private invitations",
+    copy: "Get first notice when we drop something limited, intimate, or unexpected.",
+  },
+  {
+    icon: MapPinned,
+    label: "Secret locations",
+    copy: "Stay close to the details before the rest of the room catches up.",
+  },
+  {
+    icon: Radio,
+    label: "Signal before noise",
+    copy: "Lineups, mixes, and community updates without the filler.",
+  },
+] as const;
+
 export default function NewsletterSection({
   source = "newsletter_section",
   compactIntro = false,
@@ -29,8 +47,9 @@ export default function NewsletterSection({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [isAdult, setIsAdult] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState("");
@@ -46,13 +65,14 @@ export default function NewsletterSection({
     const emailError = validateEmail(email);
     if (emailError) newErrors.email = emailError;
     if (!agreed) newErrors.agreed = "Please agree to continue";
+    if (!isAdult) newErrors.isAdult = "Please confirm you are 18 or older";
     return newErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = validate();
-    setTouched({ email: true, agreed: true });
+    setTouched({ email: true, agreed: true, isAdult: true });
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -65,9 +85,9 @@ export default function NewsletterSection({
         {
           email,
           firstName: firstName || undefined,
-          lastName: lastName || undefined,
           consent: true,
           source,
+          utmContent: phone ? "sms_interest" : undefined,
         },
         crypto.randomUUID()
       );
@@ -99,9 +119,9 @@ export default function NewsletterSection({
               <div className="w-16 h-16 border border-white/20 bg-white/5 flex items-center justify-center mx-auto mb-8 rounded-full">
                 <Check className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-display text-4xl text-white mb-4">YOU'RE IN</h3>
-              <p className="text-white/60">
-                We'll be in touch when tickets drop and new shows are announced.
+              <h3 className="font-display text-4xl text-white mb-4">YOU'RE ON THE LIST</h3>
+              <p className="text-white/60 max-w-xl mx-auto">
+                Expect first access to lineups, secret drops, and private invitations before they hit the wider feed.
               </p>
             </motion.div>
           ) : (
@@ -111,36 +131,60 @@ export default function NewsletterSection({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div className={`grid md:grid-cols-2 items-start ${compactIntro ? "gap-10 md:gap-12" : "gap-16"}`}>
+              <div className={`grid md:grid-cols-[1.05fr_0.95fr] items-start ${compactIntro ? "gap-10 md:gap-12" : "gap-16"}`}>
 
                 {/* Left — copy */}
                 <div>
                   {compactIntro ? (
                     <>
                       <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-clay block mb-4">
-                        Member Perks
+                        Inner Circle Access
                       </span>
-                      <p className="text-white/70 leading-relaxed mb-6">
-                        {description}
+                      <p className="text-white/70 leading-relaxed mb-4 max-w-xl">
+                        Be the first to know. Be part of the story.
+                      </p>
+                      <p className="text-white/48 leading-relaxed mb-6 max-w-xl">
+                        Get involved and stay close to upcoming experiences, from lineups and limited-access venues to invitation-only moments.
                       </p>
                     </>
                   ) : (
                     <>
                       <span className="font-serif italic text-lg text-white/60 block mb-4">
-                        Newsletter
+                        Join Us
                       </span>
                       <h2 className="font-display text-section-title text-white mb-6 tracking-tight-display">
-                        <GlitchText className="text-white">STAY IN</GlitchText>
+                        <GlitchText className="text-white">JOIN THE</GlitchText>
                         <br />
-                        <GlitchText className="text-white">THE LOOP</GlitchText>
+                        <GlitchText className="text-white">INNER CIRCLE</GlitchText>
                       </h2>
-                      <p className="text-white/70 leading-relaxed mb-8">
-                        {description}
+                      <p className="text-white/70 leading-relaxed mb-3 max-w-xl">
+                        Be the first to know. Be part of the story.
+                      </p>
+                      <p className="text-white/48 leading-relaxed mb-8 max-w-xl">
+                        Get first access to lineups, secret locations, private invitations, and Monolith updates without the generic blast-email feel.
                       </p>
                     </>
                   )}
 
-                  {/* What you get */}
+                  <div className="grid gap-3 mb-8">
+                    {invitationNotes.map((item) => (
+                      <div
+                        key={item.label}
+                        className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-sm"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-clay">
+                            <item.icon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className="font-display text-lg uppercase text-white">{item.label}</p>
+                            <p className="mt-1 text-sm leading-relaxed text-white/52">{item.copy}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className={`${compactIntro ? "grid gap-2" : "space-y-3"}`}>
                     {benefits.map((item) => (
                       <div key={item} className={`flex items-center gap-3 ${compactIntro ? "rounded-full border border-white/10 bg-white/5 px-3 py-2" : ""}`}>
@@ -152,7 +196,33 @@ export default function NewsletterSection({
                 </div>
 
                 {/* Right — form */}
-                <form onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-7 shadow-2xl" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
+                <form onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-[2rem] border border-white/12 bg-[linear-gradient(165deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] backdrop-blur-xl p-6 md:p-8 shadow-2xl" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
+                  <div className="space-y-3 border-b border-white/10 pb-5">
+                    <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-clay/85">Join Us</span>
+                    <div>
+                      <h3 className="font-display text-[clamp(2rem,5vw,3rem)] leading-[0.9] uppercase text-white">Get Early Access</h3>
+                      <p className="mt-2 max-w-md text-sm leading-relaxed text-white/55">
+                        Email is all we need. Add your phone only if you want text-first updates when something special drops.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4">
+                    <div>
+                      <label htmlFor="firstName" className="ui-chip text-white/50 block mb-2">
+                        First Name <span className="text-white/30">(Optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        placeholder="Erik"
+                        className="w-full rounded-2xl bg-white/90 border border-charcoal/15 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
+                      />
+                    </div>
+                  </div>
+
                   <div className="relative">
                     <label htmlFor="email" className="ui-chip text-white/50 block mb-2">
                       Email Address *
@@ -176,7 +246,7 @@ export default function NewsletterSection({
                       placeholder="you@email.com"
                       aria-invalid={Boolean(touched.email && errors.email)}
                       aria-describedby={touched.email && errors.email ? "newsletter-email-error" : undefined}
-                      className={`w-full bg-white/88 border px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200 ${touched.email && errors.email ? "border-red-400" : "border-charcoal/20"}`}
+                      className={`w-full rounded-2xl bg-white/90 border px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200 ${touched.email && errors.email ? "border-red-400" : "border-charcoal/15"}`}
                     />
                     {touched.email && errors.email && (
                       <p id="newsletter-email-error" className="flex items-center gap-1.5 mt-1.5 text-red-500 text-xs font-mono">
@@ -185,31 +255,18 @@ export default function NewsletterSection({
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <div>
-                      <label htmlFor="firstName" className="ui-chip text-white/50 block mb-2">
-                        First Name
+                      <label htmlFor="phone" className="ui-chip text-white/50 block mb-2">
+                        Phone Number <span className="text-white/30">(Optional, for text alerts)</span>
                       </label>
                       <input
-                        type="text"
-                        id="firstName"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="First"
-                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="ui-chip text-white/50 block mb-2">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Last"
-                        className="w-full bg-white/88 border border-charcoal/20 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
+                        type="tel"
+                        id="phone"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="(312) 555-0148"
+                        className="w-full rounded-2xl bg-white/90 border border-charcoal/15 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
                       />
                     </div>
                   </div>
@@ -233,7 +290,7 @@ export default function NewsletterSection({
                       </div>
                     </div>
                     <span className={`text-[13px] font-mono tracking-wide group-hover:text-charcoal transition-colors ${touched.agreed && errors.agreed ? "text-red-500" : "text-stone/90"}`}>
-                      I agree to receive emails from The Monolith Project
+                      I agree to receive updates and event announcements from The Monolith Project.
                     </span>
                   </label>
                   {touched.agreed && errors.agreed && (
@@ -241,20 +298,56 @@ export default function NewsletterSection({
                       <AlertCircle className="w-3 h-3" /> {errors.agreed}
                     </p>
                   )}
+
+                  <label className="flex items-start gap-3 cursor-pointer group -mt-1">
+                    <div className="relative mt-0.5">
+                      <input
+                        type="checkbox"
+                        checked={isAdult}
+                        onChange={(e) => {
+                          setIsAdult(e.target.checked);
+                          setTouched(prev => ({ ...prev, isAdult: true }));
+                          if (e.target.checked) {
+                            setErrors(prev => {
+                              const { isAdult: _isAdult, ...rest } = prev;
+                              return rest;
+                            });
+                          }
+                        }}
+                        className="peer sr-only"
+                      />
+                      <div className={`w-4 h-4 border transition-colors flex items-center justify-center ${isAdult ? "bg-white border-white" : touched.isAdult && errors.isAdult ? "border-red-400" : "border-white/30"}`}>
+                        {isAdult && <Check className="w-3 h-3 text-black" />}
+                      </div>
+                    </div>
+                    <span className={`text-[13px] font-mono tracking-wide group-hover:text-charcoal transition-colors ${touched.isAdult && errors.isAdult ? "text-red-500" : "text-stone/90"}`}>
+                      I confirm that I am 18 years old or older.
+                    </span>
+                  </label>
+                  {touched.isAdult && errors.isAdult && (
+                    <p className="flex items-center gap-1.5 -mt-4 text-red-500 text-xs font-mono">
+                      <AlertCircle className="w-3 h-3" /> {errors.isAdult}
+                    </p>
+                  )}
+
                   {submitError && (
                     <p id="newsletter-submit-error" className="flex items-center gap-1.5 -mt-2 text-red-600 text-xs font-mono" role="alert" aria-live="polite">
                       <AlertCircle className="w-3 h-3" /> {submitError}
                     </p>
                   )}
 
+                  <p className="text-[11px] leading-relaxed text-white/40">
+                    You can unsubscribe anytime. Phone number is only used for priority text updates when enabled in future drops.
+                  </p>
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    aria-label={isSubmitting ? "Joining newsletter..." : "Join newsletter list"}
+                    aria-label={isSubmitting ? "Joining newsletter..." : "Get early access"}
                     className="w-full py-4 rounded-full bg-white text-black font-display font-bold tracking-widest text-sm disabled:opacity-50 relative overflow-hidden group hover:bg-white/90 transition-colors"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
-                      {isSubmitting ? "JOINING..." : "JOIN THE LIST"}
+                      {isSubmitting ? "JOINING..." : "GET EARLY ACCESS"}
                       {!isSubmitting && <ArrowUpRight className="w-4 h-4" />}
                     </span>
                   </button>

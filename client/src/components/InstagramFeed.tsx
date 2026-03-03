@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, ExternalLink, Heart, MessageCircle } from "lucide-react";
+import { INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL } from "@/data/events";
 
 function TikTokIcon({ className }: { className?: string }) {
     return (
@@ -28,7 +29,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-1",
         media_type: "IMAGE",
         media_url: "/images/untold-story-juany-deron-v2.jpg",
-        permalink: "https://instagram.com",
+        permalink: INSTAGRAM_MONOLITH,
         caption: "The energy in the room was unmatched. ✨ #MonolithProject #UntoldStory",
         timestamp: new Date().toISOString(),
         like_count: 1240,
@@ -38,7 +39,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-2",
         media_type: "IMAGE",
         media_url: "/images/artist-haai.webp",
-        permalink: "https://instagram.com",
+        permalink: INSTAGRAM_MONOLITH,
         caption: "HAAi taking us on a journey. Next stop: March 6th.",
         timestamp: new Date().toISOString(),
         like_count: 890,
@@ -48,7 +49,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-3",
         media_type: "IMAGE",
         media_url: "/images/chasing-sunsets.jpg",
-        permalink: "https://instagram.com",
+        permalink: INSTAGRAM_SUNSETS,
         caption: "Chasing Sun(Sets) returns soon. Are you ready?",
         timestamp: new Date().toISOString(),
         like_count: 2100,
@@ -58,7 +59,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-4",
         media_type: "IMAGE",
         media_url: "/images/lazare-recap.webp",
-        permalink: "https://instagram.com",
+        permalink: INSTAGRAM_UNTOlD,
         caption: "Lazare deep in the mix. 🌑",
         timestamp: new Date().toISOString(),
         like_count: 750,
@@ -68,7 +69,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-5",
         media_type: "IMAGE",
         media_url: "/images/autograf-recap.jpg",
-        permalink: "https://instagram.com",
+        permalink: INSTAGRAM_MONOLITH,
         caption: "Autograf live set was pure magic.",
         timestamp: new Date().toISOString(),
         like_count: 1540,
@@ -124,7 +125,7 @@ export default function InstagramFeed() {
                         <div className="flex flex-col items-center text-center space-y-4">
                             <h3 className="font-display text-xl text-[#E8B86D] uppercase tracking-widest hidden md:block opacity-80 shadow-orange-500/20 drop-shadow-sm">Chasing Sun(Sets)</h3>
                             <div className="flex flex-col gap-3">
-                                <a href="https://instagram.com/chasingsunsets.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#E8B86D] transition-colors group">
+                                <a href={INSTAGRAM_SUNSETS} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#E8B86D] transition-colors group">
                                     <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@chasingsunsets.music</span>
                                 </a>
@@ -141,11 +142,11 @@ export default function InstagramFeed() {
                                 <h3 className="font-display text-xl text-white uppercase tracking-widest">Monolith Project</h3>
                             </div>
                             <div className="flex flex-col gap-3">
-                                <a href="https://instagram.com/monolithproject.events" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
+                                <a href={INSTAGRAM_MONOLITH} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
                                     <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                     <span>@monolithproject.events</span>
                                 </a>
-                                <a href="https://tiktok.com/@monolithproject" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
+                                <a href={TIKTOK_URL} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-base font-mono text-white hover:text-primary transition-colors group font-bold">
                                     <TikTokIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
                                     <span>@monolithproject</span>
                                 </a>
@@ -156,7 +157,7 @@ export default function InstagramFeed() {
                         <div className="flex flex-col items-center text-center space-y-4">
                             <h3 className="font-display text-xl text-[#8B5CF6] uppercase tracking-widest hidden md:block opacity-80 shadow-purple-500/20 drop-shadow-sm">Untold Story</h3>
                             <div className="flex flex-col gap-3">
-                                <a href="https://instagram.com/untoldstory.music" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#8B5CF6] transition-colors group">
+                                <a href={INSTAGRAM_UNTOlD} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#8B5CF6] transition-colors group">
                                     <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@untoldstory.music</span>
                                 </a>
@@ -213,7 +214,7 @@ export default function InstagramFeed() {
 
                 <div className="mt-8 text-center md:hidden">
                     <a
-                        href="https://instagram.com/monolithproject.events"
+                        href={INSTAGRAM_MONOLITH}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-white/60 hover:text-white transition-colors"

@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
+import ReactPlayer from "react-player";
 
 export interface Slide {
-  type: "video" | "image";
+  type: "video" | "image" | "youtube";
   src: string;
   poster?: string;
   alt?: string;
@@ -38,13 +39,10 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
     }
   };
 
-  // Auto-advance for images
+  // Auto-advance for all slides
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    const slide = slides[currentSlide];
-    if (slide?.type === "image") {
-      timerRef.current = setTimeout(next, 6000);
-    }
+    timerRef.current = setTimeout(next, 7000); // 7 seconds per slide
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
@@ -100,7 +98,33 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          {slide.type === "video" ? (
+          {slide.type === "youtube" ? (
+            <div className="w-full h-full relative" style={{ paddingTop: '56.25%' }}>
+              <ReactPlayer
+                url={slide.src}
+                playing={!reduceMotion}
+                loop={true}
+                muted={isMuted}
+                width="100%"
+                height="100%"
+                style={{ position: 'absolute', top: 0, left: 0 }}
+                config={{
+                  youtube: {
+                    // @ts-ignore
+                    playerVars: {
+                      showinfo: 0,
+                      controls: 0,
+                      modestbranding: 1,
+                      rel: 0,
+                      fs: 0,
+                      disablekb: 1,
+                      iv_load_policy: 3
+                    }
+                  }
+                }}
+              />
+            </div>
+          ) : slide.type === "video" ? (
             loadVideo || !slide.poster ? (
               <video
                 ref={videoRef}
@@ -183,7 +207,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
               Photo: {slide.credit}
             </span>
           )}
-          {slide.type === "video" && (loadVideo || !slide.poster) && !reduceMotion && (
+          {(slide.type === "video" || slide.type === "youtube") && (loadVideo || !slide.poster) && !reduceMotion && (
             <button
               type="button"
               onClick={toggleMute}

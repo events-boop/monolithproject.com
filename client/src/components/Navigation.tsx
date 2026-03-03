@@ -200,7 +200,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               : "border-white/12 bg-black/35 backdrop-blur-2xl"
             }`}
         >
-          <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 flex items-center justify-between gap-3">
+          <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 lg:py-3 flex items-center justify-between gap-3">
             {/* LEFT: LOGO */}
             <div className="shrink-0 -ml-1 md:-ml-2">
               <MagneticButton strength={0.2}>
@@ -218,7 +218,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               </MagneticButton>
             </div>
 
-            <div className="hidden lg:flex flex-grow justify-end items-center gap-4 xl:gap-5 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
+            <div className="hidden lg:flex flex-grow justify-end items-center gap-4 lg:gap-5 xl:gap-6 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
               {navItems.map((item) =>
                 item.children ? (
                   <div key={item.label} className="relative" ref={dropdownRef}>
@@ -245,7 +245,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className={`absolute top-full mt-3 left-0 min-w-[180px] py-2 border backdrop-blur-md ${isLight
+                          className={`absolute top-full mt-4 -left-2 min-w-[210px] py-2.5 rounded-2xl border shadow-2xl backdrop-blur-xl ${isLight
                             ? "bg-sand/95 border-charcoal/10"
                             : "bg-[#0a0a0a]/95 border-white/10"
                             }`}
@@ -263,7 +263,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                                 setDropdownOpen(false);
                               }}
                               aria-current={isActiveHref(child.href) ? "page" : undefined}
-                              className={`block px-5 py-2.5 text-[12px] font-bold tracking-[0.14em] uppercase transition-colors ${isLight
+                              className={`block px-6 py-2.5 text-[11px] font-bold tracking-[0.16em] uppercase transition-colors ${isLight
                                 ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                                 : brand === "chasing-sunsets"
                                   ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
@@ -345,7 +345,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
               <div>
                 <MagneticButton strength={0.2}>
-                  <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+                  <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" data-cursor-text="TICKETS">
                     <div className={`hidden md:flex sunset-gradient-btn text-white rounded-full items-center gap-2 px-6 xl:px-7 py-2.5 transition-all duration-300 ${isLight
                       ? "opacity-90 hover:opacity-100 !shadow-none"
                       : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
@@ -368,6 +368,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                     aria-haspopup="dialog"
                     aria-expanded={mobileMenuOpen}
                     aria-controls={mobileMenuId}
+                    data-cursor-text="MENU"
                     className={`p-2.5 ${isLight ? "text-charcoal hover:text-clay" : brand === "chasing-sunsets" ? "text-foreground hover:text-white" : "text-foreground hover:text-primary"} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
                   >
                     <Menu size={24} />
@@ -426,13 +427,14 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               }
             }}
           >
-            <div className="absolute top-6 right-6">
+            <div className="absolute top-8 right-8">
               <MagneticButton>
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close navigation menu"
                   ref={closeButtonRef}
+                  data-cursor-text="CLOSE"
                   className="p-2.5 text-foreground/50 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <X size={32} />
@@ -440,7 +442,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               </MagneticButton>
             </div>
 
-            <div className="flex flex-col items-center gap-6 relative z-10 w-full max-w-2xl max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 sm:px-8 py-8 sm:py-10 rounded-3xl border border-white/12 bg-black/30 backdrop-blur-2xl shadow-[0_24px_58px_rgba(0,0,0,0.45)]">
+            <div className="flex flex-col items-center gap-4 sm:gap-5 relative z-10 w-full max-w-2xl max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 sm:px-8 py-6 sm:py-8 rounded-3xl border border-white/12 bg-black/30 backdrop-blur-2xl shadow-[0_24px_58px_rgba(0,0,0,0.45)] scrollbar-hide">
               {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -463,7 +465,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       }
                     }}
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group font-display text-2xl sm:text-3xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
+                    className={`group font-display text-xl sm:text-2xl md:text-4xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
                   >
                     {item.label === "CHASING SUN(SETS)" ? (
                       <span className={`inline-flex items-center gap-3 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
@@ -514,7 +516,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + mobileNavItems.length * 0.1 }}
-                className="mt-2 w-full sm:w-auto px-8 sm:px-10 py-4 border border-white/25 rounded-full text-white font-display text-xl sm:text-2xl tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                className="mt-2 w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 border border-white/25 rounded-full text-white font-display text-xl sm:text-2xl tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
               >
                 <Ticket className="w-5 h-5" />
                 GET TICKETS

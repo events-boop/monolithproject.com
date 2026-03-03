@@ -36,3 +36,35 @@ export const leads = pgTable("leads", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+export const scheduledEvents = pgTable("scheduled_events", {
+  id: text("id").primaryKey(),
+  series: text("series").notNull(), // 'chasing-sunsets' | 'untold-story' | 'monolith-project'
+  episode: text("episode").notNull(),
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+  date: text("date").notNull(),
+  time: text("time").notNull(),
+  doors: text("doors"),
+  venue: text("venue").notNull(),
+  location: text("location").notNull(),
+  lineup: text("lineup"),
+  image: text("image"),
+  status: text("status").notNull(), // 'on-sale' | 'coming-soon' | 'sold-out'
+  capacity: text("capacity"),
+  format: text("format"),
+  dress: text("dress"),
+  sound: text("sound"),
+  description: text("description"),
+  age: text("age"),
+  ticketUrl: text("ticket_url"),
+  headline: text("headline"),
+  mainExperience: text("main_experience"),
+  experienceIntro: text("experience_intro"),
+  whatToExpect: jsonb("what_to_expect").default([]),
+  tablePackages: jsonb("table_packages").default([]),
+  tableReservationEmail: text("table_reservation_email"),
+  faqs: jsonb("faqs").default([]),
+  photoNotice: text("photo_notice"),
+  eventNotice: text("event_notice"),
+  activeFunnels: jsonb("active_funnels").default([]),
+});

@@ -428,18 +428,19 @@
 
   .ui-card {
     border-radius: 0.85rem;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    background: linear-gradient(160deg, rgba(30, 30, 33, 0.6), rgba(15, 15, 18, 0.8));
+    backdrop-filter: blur(12px);
     transition:
-      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 220ms ease,
-      background-color 220ms ease,
-      color 220ms ease;
+      transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 300ms ease,
+      background-color 300ms ease;
   }
 
   .ui-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   }
 
   .luxe-surface-dark {
@@ -506,6 +507,7 @@
   }
 
   @media (max-width: 768px) {
+
     .btn-pill,
     .btn-pill-dark,
     .btn-pill-coral {
@@ -646,12 +648,11 @@
     pointer-events: none;
   }
 
-  /* Textured background noise overlay - z-index lowered to avoid click interference */
-  /* Textured background noise overlay - z-index lowered to avoid click interference */
   .bg-noise {
     position: relative;
   }
 
+  /* Switched from intense SVG noise to a very subtle smooth atmospheric film grain */
   .bg-noise::before {
     content: '';
     position: fixed;
@@ -661,64 +662,34 @@
     height: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.03;
-    /* Slightly increased for visibility */
+    opacity: 0.015;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
   }
 
-  /* Premium Paper Texture for Light Sections */
+  /* Premium Smooth Section Background */
   .bg-paper {
     background-color: var(--color-sand);
+    background-image: radial-gradient(circle at 15% 0%, rgba(255, 255, 255, 0.9), transparent 50%),
+      radial-gradient(circle at 85% 100%, rgba(232, 184, 109, 0.1), transparent 50%);
     position: relative;
     isolation: isolate;
   }
 
-  .bg-paper::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.5'/%3E%3C/svg%3E");
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-
-  /* Sage Green Paper Texture */
+  /* Sage Green Smooth Background */
   .bg-sage-paper {
     background-color: var(--color-sage-light);
+    background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.8), transparent 60%);
     position: relative;
     isolation: isolate;
   }
 
-  .bg-sage-paper::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.5'/%3E%3C/svg%3E");
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-
-  /* Rose Pink Paper Texture */
+  /* Rose Pink Smooth Background */
   .bg-rose-paper {
     background-color: var(--color-rose-light);
+    background-image: radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.8), transparent 60%);
     position: relative;
     isolation: isolate;
-  }
-
-  .bg-rose-paper::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.5'/%3E%3C/svg%3E");
-    mix-blend-mode: multiply;
-    pointer-events: none;
   }
 
   /* Section styling */
@@ -818,6 +789,7 @@
 
   /* Coral accent pill */
   /* Coral accent pill - Solid by default */
+  /* Coral accent pill - Solid by default */
   .btn-pill-coral {
     display: inline-flex;
     align-items: center;
@@ -826,18 +798,19 @@
     gap: 0.5rem;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     background: linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.55 0.15 30));
     color: white;
     font-weight: 700;
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .btn-pill-coral::after {
@@ -845,15 +818,17 @@
     position: absolute;
     inset: 0;
     border-radius: 9999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent);
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
   }
 
   .btn-pill-coral:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(224, 90, 58, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 30px rgba(224, 90, 58, 0.6), 0 0 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, oklch(0.68 0.22 25), oklch(0.58 0.17 30));
   }
 
   .btn-pill-coral:hover::after {
@@ -861,8 +836,8 @@
   }
 
   .btn-pill-coral:active {
-    transform: translateY(1px) scale(0.97);
-    box-shadow: 0 2px 10px rgba(224, 90, 58, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px) scale(0.975);
+    box-shadow: 0 2px 8px rgba(224, 90, 58, 0.4), inset 0 2px 6px rgba(0, 0, 0, 0.35);
   }
 }
 
@@ -883,14 +858,15 @@
 
   /* Advanced Optical Glassmorphism */
   .glass {
-    background: linear-gradient(145deg, rgba(30, 30, 33, 0.4), rgba(15, 15, 18, 0.6));
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    background: linear-gradient(145deg, rgba(35, 35, 40, 0.45), rgba(15, 15, 18, 0.7));
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
     border-radius: var(--radius-xl);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top-color: rgba(255, 255, 255, 0.15);
-    /* Top rim light */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    border-top-color: rgba(255, 255, 255, 0.18);
+    border-left-color: rgba(255, 255, 255, 0.12);
+    /* Top & left rim light */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08), inset 0 -1px 1px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
   }
@@ -993,6 +969,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+
     .lift-hover,
     .ui-card,
     .btn-pill,

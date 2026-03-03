@@ -1,6 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Instagram, Music, Headphones, Mail, ArrowRight } from "lucide-react";
+import {
+    INSTAGRAM_MONOLITH,
+    TIKTOK_URL,
+    SOUNDCLOUD_URL,
+    SPOTIFY_URL,
+    LAYLO_URL
+} from "@/data/events";
 
 interface CommunityDropdownProps {
     isLight?: boolean;
@@ -11,21 +18,21 @@ const communityLinks = [
     {
         title: "Instagram",
         description: "Follow our latest news",
-        href: "https://instagram.com",
+        href: INSTAGRAM_MONOLITH,
         icon: <Instagram className="w-5 h-5" />,
         color: "group-hover:text-pink-500",
     },
     {
         title: "TikTok",
         description: "Watch our moments",
-        href: "https://tiktok.com",
+        href: TIKTOK_URL,
         icon: <Music className="w-5 h-5" />,
         color: "group-hover:text-white",
     },
     {
         title: "SoundCloud",
         description: "Listen to the sets",
-        href: "https://soundcloud.com",
+        href: SOUNDCLOUD_URL,
         icon: (
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M11.69 16.538v-8.483c.25.04.496.082.723.11v8.361c-..." />
@@ -38,7 +45,7 @@ const communityLinks = [
     {
         title: "Spotify",
         description: "Our curated playlists",
-        href: "https://spotify.com",
+        href: SPOTIFY_URL,
         iconOverride: (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zm5.454 17.3c-.22.364-.69.475-1.05.257-2.883-1.76-6.51-2.155-10.796-1.18-.42.096-.837-.17-.93-.59-.095-.42.17-.837.59-.93 4.673-1.063 8.71-.62 11.927 1.345.362.22.472.69.255 1.05zm1.536-3.44c-.28.45-.873.593-1.325.313-3.308-2.036-8.384-2.63-12.008-1.436-.51.17-1.057-.107-1.226-.618-.17-.51.107-1.055.618-1.225 4.14-1.37 9.773-.7 13.628 1.67.45.28.592.872.313 1.324zm.14-3.56c-3.953-2.347-10.468-2.564-14.25-.14-.582.37-1.332.2-1.704-.38-.372-.582-.202-1.332.38-1.704 4.38-2.8 11.616-2.54 16.155 1.15.536.435.618 1.192.183 1.728-.433.535-1.19.617-1.726.182z" />
@@ -56,7 +63,7 @@ const communityLinks = [
     {
         title: "Laylo Drops",
         description: "Text alerts & updates",
-        href: "https://laylo.com",
+        href: LAYLO_URL,
         iconOverride: <ArrowRight className="w-5 h-5 pointer-events-none" />,
         color: "group-hover:text-purple-500",
     },
@@ -94,10 +101,10 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
                 className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
-                        ? "hover:text-clay text-stone"
-                        : brand === "chasing-sunsets"
-                            ? "hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] text-white/90"
-                            : "hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] text-white/90"
+                    ? "hover:text-clay text-stone"
+                    : brand === "chasing-sunsets"
+                        ? "hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] text-white/90"
+                        : "hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] text-white/90"
                     }`}
             >
                 COMMUNITY
@@ -112,8 +119,8 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                         className={`absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[340px] p-2 rounded-[20px] shadow-2xl ${isLight
-                                ? "bg-sand/95 border border-charcoal/10 backdrop-blur-xl"
-                                : "bg-[#0B0C0F]/95 border border-white/5 backdrop-blur-2xl"
+                            ? "bg-sand/95 border border-charcoal/10 backdrop-blur-xl"
+                            : "bg-[#0B0C0F]/95 border border-white/5 backdrop-blur-2xl"
                             }`}
                         style={{
                             boxShadow: "0 24px 48px rgba(0,0,0,0.6), 0 0 0 1px inset rgba(255,255,255,0.05)"
@@ -133,8 +140,8 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                                     {/* Icon Box */}
                                     <div
                                         className={`shrink-0 flex items-center justify-center w-11 h-11 rounded-[10px] border transition-colors duration-300 ${isLight
-                                                ? "bg-white border-charcoal/10 text-charcoal/60 group-hover:border-charcoal/20"
-                                                : "bg-white/[0.03] border-white/[0.08] text-white/50 group-hover:border-white/[0.15]"
+                                            ? "bg-white border-charcoal/10 text-charcoal/60 group-hover:border-charcoal/20"
+                                            : "bg-white/[0.03] border-white/[0.08] text-white/50 group-hover:border-white/[0.15]"
                                             } ${link.color}`}
                                     >
                                         {link.iconOverride || link.icon}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Users, Music, Calendar, TrendingUp } from "lucide-react";
+import RevealText from "./RevealText";
 
 const metrics = [
     { label: "Attendees (July 4th)", value: "3,000+", icon: Users },
@@ -50,9 +51,9 @@ export default function ChasingSunsetsDetails() {
                         <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-clay">
                             Who We Are
                         </span>
-                        <h2 className="font-display text-4xl md:text-5xl leading-tight mb-6 text-charcoal">
+                        <RevealText as="h2" className="font-display text-4xl md:text-5xl leading-tight mb-6 text-charcoal">
                             A DEFINING SUMMER TRADITION
-                        </h2>
+                        </RevealText>
                         <p className="text-lg leading-relaxed opacity-80 mb-6">
                             Chasing Sun(sets) is a globally recognized, sunset-focused event series built on community, intention, and melodic/Afro house music.
                         </p>
@@ -67,6 +68,7 @@ export default function ChasingSunsetsDetails() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="season-panel-warm p-8"
+                        data-cursor-text="IMPACT"
                     >
                         <h3 className="font-display text-2xl mb-6 text-charcoal">THE VISION</h3>
                         <p className="mb-6 opacity-80">
@@ -100,6 +102,7 @@ export default function ChasingSunsetsDetails() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
                                 className="season-panel-warm p-6 text-center hover:border-clay/40 transition-colors"
+                                data-cursor-text="IMPACT"
                             >
                                 <m.icon className="w-6 h-6 mx-auto mb-4 text-clay" />
                                 <div className="font-display text-3xl md:text-4xl mb-2 text-charcoal">{m.value}</div>

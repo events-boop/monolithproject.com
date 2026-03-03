@@ -79,7 +79,10 @@ export default function ChaptersSection() {
                 className={`group relative ${index === 0 ? "md:col-span-7" : "md:col-span-5"}`}
               >
                 <Link href={chapter.id === "chasing-sunsets" ? "/chasing-sunsets" : "/story"} asChild>
-                  <a className={`ui-card relative block h-[520px] md:h-[620px] cursor-pointer overflow-hidden border border-white/20 ${chapter.borderColor} ${chapter.glowColor} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}>
+                  <a
+                    className={`ui-card relative block h-[400px] md:h-[520px] lg:h-[620px] cursor-pointer overflow-hidden border border-white/20 ${chapter.borderColor} ${chapter.glowColor} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
+                    data-cursor-text="EXPLORE"
+                  >
                     {/* Cinematic Hover Shine */}
                     <div className="absolute inset-0 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 w-[200%] -translate-x-[50%] bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg]" />
 

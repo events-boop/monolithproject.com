@@ -7,14 +7,14 @@ export const deepBg = "#06060F";
 export const cardBg = "#0C0C1A";
 
 export const eventVisuals = {
-  poster: "/images/untold-story-juany-deron-v2.jpg",
-  deron: "/images/artist-deron-untold.webp",
-  juany: "/images/artist-juany-bravo-untold.webp",
+  poster: "/images/juany-deron-flyer.png",
+  deron: "/images/deron-press.jpg",
+  juany: "/images/juany-bravo-press.jpg",
 };
 
 export const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.webp" },
-  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.webp" },
+  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/juany-bravo-press.jpg" },
+  { name: "Deron", role: "Chicago debut", image: "/images/deron-press.jpg" },
   { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
   { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
   { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },

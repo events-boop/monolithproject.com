@@ -22,6 +22,7 @@ import ReactPlayer from "react-player";
 const radioArtists = [
   { name: "BENCHEK", image: "/images/artist-benchek.jpg" },
   { name: "EWERSEEN", image: "/images/artist-ewerseen.png" },
+  { name: "CHRIS IDH", image: "/images/chris-idh-radio.jpg" },
 ];
 
 interface Track {
@@ -251,18 +252,23 @@ export default function Radio() {
         </div>
 
         {/* Floating Autograf Video (Double size = ~320x320 sq) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-cover bg-center bg-black/20"
+          style={{ backgroundImage: "url('/images/autograf-recap.jpg')" }}
+        >
           <ReactPlayer
-            url="https://www.youtube.com/watch?v=9R6XH7JZlJI&list=RD9R6XH7JZlJI&start_radio=1&t=3714s" // Autograf - Simple
+            url="https://www.youtube.com/watch?v=9R6XH7JZlJI"
             playing={true}
             loop={true}
             muted={true}
+            playsinline={true}
             width="100%"
             height="100%"
             style={{ objectFit: 'cover', transform: 'scale(1.5)' }} // scale up to crop and fill square
             config={{
               youtube: {
-                playerVars: { showinfo: 0, controls: 0, rel: 0, modestbranding: 1 } as any
+                // @ts-ignore
+                playerVars: { showinfo: 0, controls: 0, rel: 0, modestbranding: 1, playsinline: 1, autoplay: 1, mute: 1, start: 3714 }
               }
             }}
           />

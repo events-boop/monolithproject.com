@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { POSH_TICKET_URL } from "@/data/events";
+import RevealText from "./RevealText";
 
 const lineup = [
     "Aaron Hibell", "Acid Pauli", "Adriatique", "Âme DJ b2b Sama' Abdulhadi",
@@ -29,8 +30,9 @@ export default function TextLineupSection() {
             <div className="container max-w-6xl mx-auto px-6 relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
                     <div>
-                        <h2 className="font-display text-8xl md:text-[10rem] leading-[0.8] tracking-tighter mb-4 text-[#050505]">
-                            THE<br />ARTISTS
+                        <h2 className="font-display flex flex-col text-8xl md:text-[10rem] leading-[0.8] tracking-tighter mb-4 text-[#050505]">
+                            <RevealText>THE</RevealText>
+                            <RevealText>ARTISTS</RevealText>
                         </h2>
                         <p className="font-mono text-sm tracking-widest uppercase text-[#050505]/60 max-w-md">
                             3 days of music, 3 stages, 44 artists to send you into orbit.

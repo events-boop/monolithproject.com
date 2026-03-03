@@ -1,7 +1,6 @@
-
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
-import { POSH_TICKET_URL } from "@/data/events";
+import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
 import { useState } from "react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
@@ -22,14 +21,14 @@ function SpotifyIcon({ className }: { className?: string }) {
 }
 
 const socials = [
-  { name: "Chasing Sun(Sets) Instagram", icon: Instagram, url: "https://instagram.com/chasingsunsets.music" },
-  { name: "Untold Story Instagram", icon: Instagram, url: "https://instagram.com/untoldstory.music" },
-  { name: "Monolith Instagram", icon: Instagram, url: "https://instagram.com/monolithproject.events" },
+  { name: "Chasing Sun(Sets) Instagram", icon: Instagram, url: INSTAGRAM_SUNSETS },
+  { name: "Untold Story Instagram", icon: Instagram, url: INSTAGRAM_UNTOlD },
+  { name: "Monolith Instagram", icon: Instagram, url: INSTAGRAM_MONOLITH },
   { name: "Chasing Sun(Sets) TikTok", icon: TikTokIcon, url: "https://tiktok.com/@chasingsunsets" },
-  { name: "Monolith TikTok", icon: TikTokIcon, url: "https://tiktok.com/@monolithproject" },
+  { name: "Monolith TikTok", icon: TikTokIcon, url: TIKTOK_URL },
   { name: "YouTube", icon: Youtube, url: "https://youtube.com/@monolithproject" },
-  { name: "Spotify", icon: SpotifyIcon, url: "https://open.spotify.com" },
-  { name: "SoundCloud", icon: Headphones, url: "https://soundcloud.com/chasing-sun-sets" },
+  { name: "Spotify", icon: SpotifyIcon, url: SPOTIFY_URL },
+  { name: "SoundCloud", icon: Headphones, url: SOUNDCLOUD_URL },
 ];
 
 const links = [

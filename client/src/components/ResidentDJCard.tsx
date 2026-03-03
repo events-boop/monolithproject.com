@@ -67,6 +67,7 @@ export default function ResidentDJCard({
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                     className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 rounded-3xl overflow-hidden p-8 md:p-10 border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)] sunset-border-accent-20 sunset-glass-card"
+                    data-cursor-text="LISTEN"
                 >
                     {/* Ambient glow */}
                     <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 sunset-accent-glow" />

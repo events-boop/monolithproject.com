@@ -166,6 +166,7 @@ export default function ScheduleSection() {
                   role="button"
                   tabIndex={0}
                   onClick={() => toggle(event.id)}
+                  data-cursor-text="EXPAND"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();

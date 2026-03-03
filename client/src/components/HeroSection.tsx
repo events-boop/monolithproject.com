@@ -19,8 +19,8 @@ const HERO_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-short.mp4",
-    poster: "/images/hero-video-short-poster.jpg",
-    caption: "THE MONOLITH PROJECT",
+    poster: "/images/untold-story-juany-deron-v2.jpg",
+    caption: "THE MONOLITH PROJECT (LIVE)",
   },
   {
     type: "image",
@@ -120,7 +120,7 @@ function useIsExpired(target: number) {
 
 
 export default function HeroSection() {
-  const { days, hours, minutes, seconds, isExpired } = useCountdown(TARGET_DATE);
+  const isExpired = useIsExpired(TARGET_DATE);
   const reduceMotion = useReducedMotion();
 
   // SS-Tier: JSON-LD for Search Engines
@@ -166,7 +166,7 @@ export default function HeroSection() {
 
         {/* Upper zone — title + subtitle */}
         <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto hero-text">
-          <div className="font-display text-[clamp(2.5rem,10vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display break-words">
+          <div className="font-display text-[clamp(2rem,11vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display break-words">
             {/* MONOLITH — clip-path curtain reveal */}
             <div className="relative inline-block translate-y-2 md:translate-y-3 overflow-hidden">
               <motion.div
@@ -255,13 +255,13 @@ export default function HeroSection() {
             )}
 
             {/* Pill CTAs */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <MagneticButton strength={0.4}>
                 <a
                   href={POSH_TICKET_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sensory-ticket-btn"
+                  className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sensory-ticket-btn items-center justify-center w-full sm:w-auto"
                 >
                   {!reduceMotion && (
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
@@ -279,7 +279,7 @@ export default function HeroSection() {
                     e.preventDefault();
                     document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 group"
+                  className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 group items-center justify-center w-full sm:w-auto"
                 >
                   Explore
                   <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1" />

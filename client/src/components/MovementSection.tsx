@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
+import RevealText from "./RevealText";
 
 export default function MovementSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <section
@@ -31,7 +33,7 @@ export default function MovementSection() {
           className="absolute left-0 bottom-0 h-[44%] w-[44%] opacity-[0.05] blur-[0.8px]"
           style={{
             backgroundImage:
-              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-recap.webp')",
+              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-carbon-center.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -48,7 +50,7 @@ export default function MovementSection() {
           >
             <div className="font-serif text-charcoal space-y-6 select-none">
               <div>
-                <h2 className="text-6xl md:text-7xl mb-2 font-serif tracking-tight">Monolith</h2>
+                <RevealText as="h2" className="text-6xl md:text-7xl mb-2 font-serif tracking-tight">Monolith</RevealText>
                 <span className="text-stone font-mono text-sm tracking-wide italic opacity-60">/monelīTH/</span>
                 <p className="text-stone font-serif italic text-sm mt-1">(from Greek mónos "single" + líthos "stone")</p>
               </div>
@@ -71,6 +73,46 @@ export default function MovementSection() {
               <div className="pt-4 mt-2">
                 <p className="font-display uppercase tracking-widest text-clay text-sm">Target Frequency</p>
                 <p className="text-2xl font-serif italic text-charcoal">Togetherness.</p>
+              </div>
+
+              {/* Floating Autograf Video on Home Front */}
+              <div
+                className="mt-12 md:mt-16 mx-auto lg:mx-0 relative w-[240px] h-[240px] md:w-[320px] md:h-[320px] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-charcoal/10 group bg-cover bg-center bg-black/5"
+                style={{ backgroundImage: "url('/images/autograf-recap.jpg')" }}
+              >
+                <div className="absolute inset-0 z-0">
+                  {isInView && showVideo ? (
+                    <iframe
+                      className="absolute inset-0 h-full w-full scale-[1.45]"
+                      src="https://www.youtube.com/embed/9R6XH7JZlJI?autoplay=1&mute=1&controls=0&loop=1&playlist=9R6XH7JZlJI&playsinline=1&rel=0&modestbranding=1&start=3714"
+                      title="Autograf live at Monolith"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : null}
+                </div>
+                {!showVideo && (
+                  <button
+                    type="button"
+                    onClick={() => setShowVideo(true)}
+                    className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[1px] transition-colors hover:bg-black/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/60"
+                    aria-label="Play Autograf clip"
+                  >
+                    <span className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-black/55 px-5 py-3 text-white/95 shadow-lg">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-charcoal">
+                        <Play className="h-4 w-4 fill-current" />
+                      </span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Play clip</span>
+                    </span>
+                  </button>
+                )}
+                <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-white font-mono text-[10px] uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    Live at Monolith
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>

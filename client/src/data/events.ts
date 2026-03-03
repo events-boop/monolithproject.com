@@ -31,6 +31,15 @@ export interface ScheduledEvent {
     activeFunnels?: ("waitlist" | "waitlist-chasing" | "waitlist-untold" | "giveaway" | "coordinates")[];
 }
 
+/** Core Socials & Links */
+export const LAYLO_URL = "https://laylo.com/monolithproject"; // Placeholder - map this to specific Laylo handle
+export const SOUNDCLOUD_URL = "https://soundcloud.com/monolithproject"; // Placeholder
+export const SPOTIFY_URL = "https://spotify.com/"; // Placeholder
+export const TIKTOK_URL = "https://tiktok.com/@monolithproject"; // Placeholder
+export const INSTAGRAM_MONOLITH = "https://instagram.com/monolithproject.events";
+export const INSTAGRAM_UNTOlD = "https://instagram.com/untoldstory.music";
+export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
+
 /** Active ticket link — Posh */
 export const POSH_TICKET_URL = "https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo";
 

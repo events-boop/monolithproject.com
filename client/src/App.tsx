@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
@@ -140,6 +140,40 @@ import { useUI, UIProvider } from "./contexts/UIContext";
 import OffCanvasDrawer from "./components/ui/OffCanvasDrawer";
 import GlobalTicketButton from "./components/GlobalTicketButton";
 
+function DeferredAppEnhancements() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const browserWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (typeof browserWindow.requestIdleCallback === "function") {
+      const handle = browserWindow.requestIdleCallback(() => setReady(true), { timeout: 1200 });
+      return () => browserWindow.cancelIdleCallback?.(handle);
+    }
+
+    const timeoutId = window.setTimeout(() => setReady(true), 350);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  if (!ready) {
+    return null;
+  }
+
+  return (
+    <Suspense fallback={null}>
+      <KineticGrain />
+      <CustomCursor />
+      <Analytics />
+      <EventBanner />
+      <DeferredEnhancements />
+      <CookieConsent />
+    </Suspense>
+  );
+}
+
 function MainContentWrapper() {
   const { isSensoryOverloadActive } = useUI();
   return (
@@ -172,16 +206,9 @@ function App() {
             <TooltipProvider>
               <SmoothScroll />
               <Toaster />
-              <Suspense fallback={null}>
-                <KineticGrain />
-                <CustomCursor />
-                <Preloader onComplete={() => { }} />
-                <Analytics />
-                <EventBanner />
-                <DeferredEnhancements />
-                <CookieConsent />
-                <MainContentWrapper />
-              </Suspense>
+              <Preloader onComplete={() => { }} />
+              <MainContentWrapper />
+              <DeferredAppEnhancements />
             </TooltipProvider>
           </UIProvider>
         </ThemeProvider>
