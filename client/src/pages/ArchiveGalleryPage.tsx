@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import { Link } from "wouter";
@@ -61,8 +60,6 @@ export default function ArchiveGalleryPage() {
                     />
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

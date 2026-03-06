@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle, Music, Sun, Mic2, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import MagneticButton from "@/components/MagneticButton";
 
@@ -475,8 +474,6 @@ ${form.bio}
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

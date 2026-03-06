@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
@@ -443,7 +442,6 @@ export default function ChasingSunsets() {
       </main>
 
       <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />
-      <Footer />
     </div>
   );
 }

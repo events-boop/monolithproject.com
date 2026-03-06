@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Mail, Handshake, Music, ShieldQuestion } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/ContactFormSection";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
@@ -171,7 +170,6 @@ export default function Contact() {
       </main>
 
       <EntityBoostStrip tone="light" className="pb-20" />
-      <Footer />
     </div>
   );
 }

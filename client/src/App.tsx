@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "wouter";
 import Home from "./pages/Home";
 import GlobalSVGFilters from "./components/ui/GlobalSVGFilters";
+import Footer from "./components/Footer";
 
 const Tickets = lazy(() => import("./pages/Tickets"));
 const About = lazy(() => import("./pages/About"));
@@ -82,15 +83,9 @@ import PageTransition from "./components/PageTransition";
 
 const withTransition = (Component: React.ComponentType<any>) => {
   return (props: any) => (
-    <motion.div
-      initial={pageTransition.initial}
-      animate={pageTransition.animate}
-      exit={pageTransition.exit}
-      transition={pageTransition.transition}
-      className="w-full"
-    >
+    <PageTransition>
       <Component {...props} />
-    </motion.div>
+    </PageTransition>
   );
 };
 
@@ -192,6 +187,7 @@ function MainContentWrapper() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <Router />
+        <Footer />
       </motion.div>
     </>
   );

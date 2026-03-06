@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Clock, MapPin, AlertCircle, CheckCircle, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 const timeline = [
@@ -110,8 +109,6 @@ export default function Guide() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

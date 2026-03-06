@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lock, ArrowRight, Download, FileText } from "lucide-react";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { verifySponsorAccess } from "@/lib/api";
 import SEO from "@/components/SEO";
 
@@ -165,8 +164,6 @@ export default function SponsorAccess() {
                     )}
                 </AnimatePresence>
             </div>
-
-            <Footer />
         </div>
     );
 }

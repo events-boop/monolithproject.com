@@ -37,7 +37,7 @@ function getTheme(location: string) {
 export default function FloatingTicketButton() {
   const [location] = useLocation();
   const theme = getTheme(location);
-  const text = "BOOK TICKETS • TICKETS • "; // Fixed overlapping by shortening length
+  const text = "BOOK TICKETS • BOOK TICKETS • ";
   const reduceMotion = useReducedMotion();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -90,7 +90,7 @@ export default function FloatingTicketButton() {
       className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-full"
     >
       <div
-        className={`fixed bottom-4 right-4 md:bottom-10 md:right-8 z-50 w-24 h-24 md:w-32 md:h-32 hidden md:flex items-center justify-center pointer-events-none transition-all duration-700 ease-in-out scale-[0.65] md:scale-100 origin-bottom-right ${isAtBottom ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"
+        className={`fixed bottom-4 right-4 md:bottom-10 md:right-8 z-[45] w-24 h-24 md:w-32 md:h-32 hidden md:flex items-center justify-center pointer-events-none transition-all duration-700 ease-in-out scale-[0.65] md:scale-100 origin-bottom-right ${isAtBottom ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"
           }`}
       >
         {/* Interactive Container */}
@@ -116,10 +116,10 @@ export default function FloatingTicketButton() {
               <defs>
                 <path
                   id="circlePath"
-                  d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                  d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
                 />
               </defs>
-              <text className={`${theme.text} text-[10.5px] font-bold tracking-[0.15em] uppercase font-mono`}>
+              <text fill="currentColor" className={`${theme.text} font-bold tracking-[0.16em] uppercase font-mono`} fontSize="13.5">
                 <textPath href="#circlePath" startOffset="0%">
                   {text}
                 </textPath>
@@ -128,10 +128,8 @@ export default function FloatingTicketButton() {
           </div>
 
           {/* Center circle with icon */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center ${theme.center} shadow-inner border border-white/20 z-20`}>
-              <Ticket className={`w-7 h-7 ${theme.icon} transition-transform duration-500 group-hover:rotate-[360deg]`} />
-            </div>
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 md:w-[68px] md:h-[68px] rounded-full flex items-center justify-center ${theme.center} shadow-inner border border-white/20 z-20 pointer-events-none`}>
+            <Ticket className={`w-6 h-6 md:w-7 md:h-7 ${theme.icon} transition-transform duration-500 group-hover:rotate-[360deg]`} />
           </div>
 
           {/* Rotating Gradient Background (Outer Ring) */}

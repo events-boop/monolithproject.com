@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { MapPin, Bed, Car, Plane, Train, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import RevealText from "@/components/RevealText";
 
@@ -174,8 +173,6 @@ export default function Travel() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

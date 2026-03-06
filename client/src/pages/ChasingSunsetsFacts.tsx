@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import JsonLd from "@/components/JsonLd";
@@ -200,17 +199,17 @@ export default function ChasingSunsetsFacts() {
 
         <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-6">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground leading-loose">
               Need the short version?{" "}
-              <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
                 Official Chasing Sun(Sets) Identity
               </Link>{" "}
               and{" "}
-              <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
                 Not the fragrance — official music series
               </Link>
               . Listen on the{" "}
-              <Link href="/radio" className="text-primary underline underline-offset-4">
+              <Link href="/radio" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
                 official radio hub
               </Link>
               .
@@ -220,7 +219,6 @@ export default function ChasingSunsetsFacts() {
       </main>
 
       <EntityBoostStrip tone="dark" className="pb-16" />
-      <Footer />
     </div>
   );
 }

@@ -5,7 +5,6 @@ import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
 import RadioGlobe from "@/components/RadioGlobe";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import StickyPlayer from "@/components/StickyPlayer";
@@ -564,7 +563,6 @@ export default function Radio() {
       </section>
 
       <FloatingFactsChip tone="nocturne" storageKey="floating-facts-chip-radio" />
-      <Footer />
     </div>
   );
 }

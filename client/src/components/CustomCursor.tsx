@@ -6,6 +6,7 @@ export default function CustomCursor() {
     const [isClicking, setIsClicking] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [cursorText, setCursorText] = useState("");
+    const [cursorImage, setCursorImage] = useState("");
 
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
@@ -30,6 +31,15 @@ export default function CustomCursor() {
 
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
+
+            const imageElement = target.closest('[data-cursor-image]');
+            if (imageElement) {
+                setCursorImage(imageElement.getAttribute('data-cursor-image') || "");
+                setIsHovered(true);
+                return;
+            } else {
+                setCursorImage("");
+            }
 
             // Look for custom text to inject into the cursor ring
             const textElement = target.closest('[data-cursor-text]');
@@ -68,10 +78,11 @@ export default function CustomCursor() {
 
     // Derived states
     const hasText = cursorText.length > 0;
-    const isExpanded = isHovered || hasText;
+    const hasImage = cursorImage.length > 0;
+    const isExpanded = isHovered || hasText || hasImage;
 
-    // Dynamic sizing
-    const size = hasText ? 80 : isHovered ? 50 : 16;
+    // Dynamic sizing (Make it massive for pictures, normal for text)
+    const size = hasImage ? 280 : hasText ? 80 : isHovered ? 50 : 16;
     const offset = size / 2;
 
     return (
@@ -109,11 +120,24 @@ export default function CustomCursor() {
                 {/* Injected Text */}
                 <motion.span
                     initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: hasText ? 1 : 0, scale: hasText ? 1 : 0.5 }}
-                    className="text-black font-display text-[10px] font-bold tracking-widest uppercase absolute"
+                    animate={{ opacity: hasText && !hasImage ? 1 : 0, scale: hasText && !hasImage ? 1 : 0.5 }}
+                    className="text-black font-display text-[10px] font-bold tracking-widest uppercase absolute z-20"
                 >
                     {cursorText}
                 </motion.span>
+
+                {/* Injected Image for Artist Hover */}
+                {hasImage && (
+                    <motion.img
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.3 }}
+                        src={cursorImage}
+                        alt="cursor visual"
+                        className="absolute inset-0 w-full h-full object-cover rounded-full z-10"
+                    />
+                )}
 
                 {/* Inner dot just for non-hover minimal state */}
                 {!isExpanded && (

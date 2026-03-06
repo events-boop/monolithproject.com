@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sun, ArrowUpRight, Calendar, MapPin, Users, Play } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 
@@ -474,8 +473,6 @@ export default function Archive() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

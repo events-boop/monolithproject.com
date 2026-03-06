@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Wrench, Building2, Handshake, Camera, Music, Shield, Lightbulb, Drama, Beer } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 
@@ -225,7 +224,6 @@ export default function Partners() {
 
       <EntityBoostStrip tone="dark" className="pb-16" />
       <NewsletterSection />
-      <Footer />
     </div>
   );
 }

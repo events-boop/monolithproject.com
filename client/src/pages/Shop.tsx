@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SEO from "@/components/SEO";
 import RevealText from "@/components/RevealText";
@@ -68,8 +67,6 @@ export default function Shop() {
                     source="shop_coming_soon"
                 />
             </div>
-
-            <Footer />
         </div>
     );
 }

@@ -16,6 +16,18 @@ const lineup = [
     "Thylacine", "Vintage Culture", "Weval", "YOTTO"
 ];
 
+const hoverImages = [
+    "/images/artist-autograf.webp",
+    "/images/artist-avo-untold.webp",
+    "/images/artist-benchek.jpg",
+    "/images/artist-chus.webp",
+    "/images/artist-deron-untold.webp",
+    "/images/artist-haai.webp",
+    "/images/artist-joezi.webp",
+    "/images/artists-collective.jpg",
+    "/images/artist-lazare.webp"
+];
+
 export default function TextLineupSection() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -52,7 +64,11 @@ export default function TextLineupSection() {
                 <motion.div style={{ y }} className="relative">
                     <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4 text-center leading-tight">
                         {lineup.map((artist, i) => (
-                            <span key={artist} className="group relative">
+                            <span
+                                key={artist}
+                                className="group relative z-50 hover:z-[60]"
+                                data-cursor-image={hoverImages[i % hoverImages.length]}
+                            >
                                 <span className="font-display text-3xl md:text-5xl lg:text-6xl text-[#050505] uppercase tracking-tight hover:text-[#E05A3A] transition-colors duration-300 cursor-default">
                                     {artist}
                                 </span>

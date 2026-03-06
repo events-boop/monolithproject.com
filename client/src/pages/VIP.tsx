@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { submitBookingInquiry } from "@/lib/api";
 
@@ -155,8 +154,6 @@ export default function VIP() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

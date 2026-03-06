@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SectionDivider from "@/components/SectionDivider";
 import TicketTicker from "@/components/TicketTicker";
@@ -352,7 +351,6 @@ export default function About() {
       </section>
 
       <SlimSubscribeStrip title="JOIN THE FREQUENCY" source="about_page" />
-      <Footer />
     </div>
   );
 }

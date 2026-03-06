@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { MediaItem, homeGallery } from "@/data/galleryData";
 import ImageTrail from "./ui/ImageTrail";
+import TiltImage from "./TiltImage";
 
 interface MixedMediaGalleryProps {
   media?: MediaItem[];
@@ -102,57 +103,58 @@ export default function MixedMediaGallery({
         {/* Masonry-style Grid */}
         <div className={`${columns} gap-4`}>
           {media.map((item, i) => (
-            <motion.button
-              key={`${item.kind}-${item.src}-${i}`}
-              type="button"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => setIndex(i)}
-              className="relative group cursor-pointer overflow-hidden rounded-lg break-inside-avoid mb-4 bg-white/5 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              aria-label={item.kind === "video" ? "Open video" : (item.kind === "image" && item.alt) ? `View: ${item.alt}` : "Open image"}
-            >
-              {item.kind === "video" ? (
-                <div className="aspect-video relative">
-                  <div className="absolute inset-0 flex items-center justify-center z-10">
-                    <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all duration-500 group-hover:scale-110 group-hover:bg-white/20">
-                      <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+            <TiltImage key={`${item.kind}-${item.src}-${i}`} strength={8} className="break-inside-avoid mb-4 w-full">
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: (i % 6) * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                onClick={() => setIndex(i)}
+                className="relative group cursor-pointer overflow-hidden rounded-lg w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 block bg-white/5"
+                aria-label={item.kind === "video" ? "Open video" : (item.kind === "image" && item.alt) ? `View: ${item.alt}` : "Open image"}
+              >
+                {item.kind === "video" ? (
+                  <div className="aspect-video relative">
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                      <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all duration-500 group-hover:scale-110 group-hover:bg-white/20">
+                        <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                      </div>
                     </div>
+                    <img
+                      src={item.poster || "/images/hero-video-short-poster.jpg"}
+                      alt=""
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
+                ) : (
                   <img
-                    src={item.poster || "/images/hero-video-short-poster.jpg"}
-                    alt=""
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100"
+                    src={item.src}
+                    alt={item.alt || ""}
+                    className="w-full h-auto object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.03] group-hover:[filter:url(#liquid-distortion)]"
                     loading="lazy"
                     decoding="async"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
                   />
-                </div>
-              ) : (
-                <img
-                  src={item.src}
-                  alt={item.alt || ""}
-                  className="w-full h-auto object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.03] group-hover:[filter:url(#liquid-distortion)]"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
-              )}
+                )}
 
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Caption on hover for images */}
-              {item.kind === "image" && item.alt && (
-                <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 pointer-events-none">
-                  <span className="text-white text-xs font-mono tracking-widest uppercase">
-                    {item.alt}
-                  </span>
-                </div>
-              )}
-            </motion.button>
+                {/* Caption on hover for images */}
+                {item.kind === "image" && item.alt && (
+                  <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 pointer-events-none">
+                    <span className="text-white text-xs font-mono tracking-widest uppercase">
+                      {item.alt}
+                    </span>
+                  </div>
+                )}
+              </motion.button>
+            </TiltImage>
           ))}
         </div>
       </div>

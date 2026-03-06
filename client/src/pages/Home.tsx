@@ -7,7 +7,6 @@ import ChaptersSection from "@/components/ChaptersSection";
 import ScheduleSection from "@/components/ScheduleSection";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import Ticker from "@/components/Ticker";
-import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 import FixedTicketBadge from "@/components/FixedTicketBadge";
@@ -118,8 +117,6 @@ export default function Home() {
           <div className="absolute inset-0 atmo-bridge" />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

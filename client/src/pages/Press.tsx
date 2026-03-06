@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Download, Mail, FileText, Image, Music } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 const pressContacts = [
@@ -361,8 +360,6 @@ export default function Press() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

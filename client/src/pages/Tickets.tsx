@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import type { SyntheticEvent } from "react";
 import { Calendar, MapPin, Clock, Users, Ticket, Star, Crown, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import { trackTicketIntent } from "@/lib/api";
 import SEO from "@/components/SEO";
-import { EventSchema } from "@/components/StructuredData";
+import JsonLd from "@/components/JsonLd";
+import { buildUntoldStoryEventSchema } from "@/lib/schema";
 import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
@@ -104,27 +104,7 @@ export default function Tickets() {
         title="Tickets"
         description="Secure your spot for the next Monolith Project event. Limited capacity available."
       />
-      <EventSchema
-        name="Untold Story S3·E2: Deron b2b Juany Bravo"
-        startDate="2026-03-06T19:00:00-06:00"
-        endDate="2026-03-07T02:00:00-06:00"
-        location={{
-          name: "Alhambra Palace",
-          address: "1240 W Randolph St"
-        }}
-        image={["https://monolithproject.com/images/untold-story.jpg"]}
-        description="Ticket sales for Untold Story S3·E2 featuring Deron b2b Juany Bravo."
-        offers={{
-          url: POSH_TICKET_URL,
-          price: "25.00",
-          currency: "USD",
-          availability: "https://schema.org/InStock"
-        }}
-        performer={[
-          { name: "Deron", type: "Person" },
-          { name: "Juany Bravo", type: "Person" }
-        ]}
-      />
+      <JsonLd data={buildUntoldStoryEventSchema("/tickets")} />
       <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />
       <div className="pointer-events-none absolute inset-0 bg-tickets-bottom-glow" />
       <Navigation />
@@ -395,8 +375,6 @@ export default function Tickets() {
 
       {/* SSS-Tier Pre-Sale Funnel */}
       <EventFunnelStack eventId="mp-launch-001" />
-
-      <Footer />
     </div>
   );
 }

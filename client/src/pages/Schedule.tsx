@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SocialGrid from "@/components/SocialGrid";
 import { upcomingEvents } from "@/data/events";
 import SEO from "@/components/SEO";
+import JsonLd from "@/components/JsonLd";
+import { buildScheduleSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 const seriesAccent: Record<string, string> = {
@@ -55,12 +56,15 @@ export default function Schedule() {
         description="Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links."
         canonicalPath="/schedule"
       />
+      <JsonLd data={buildScheduleSchema(upcomingEvents)} />
       <Navigation />
 
       {/* Background Atmosphere */}
-      <div className="absolute inset-0 atmo-surface-soft opacity-50 pointer-events-none fixed" />
+      <div className="fixed inset-0 bg-gradient-to-br from-[#1c1214] via-[#0d0f1a] to-[#1a1118] z-0" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(224,90,58,0.25),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.2),transparent_50%),radial-gradient(circle_at_50%_50%,rgba(232,184,109,0.08),transparent_100%)] z-0 pointer-events-none" />
+      <div className="fixed inset-0 bg-noise opacity-[0.08] mix-blend-overlay z-0 pointer-events-none" />
 
-      <main className="relative pt-32 pb-20">
+      <main className="relative pt-32 pb-20 z-10">
         <div className="container mx-auto px-4 md:px-8 max-w-[95%]">
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
@@ -74,17 +78,24 @@ export default function Schedule() {
             </div>
 
             {/* Month Filters */}
-            <div className="flex flex-wrap gap-2 md:gap-4 pb-2">
+            <div className="flex flex-wrap gap-1 p-1 bg-white/[0.03] border border-white/5 rounded-full pb-1">
               {months.map(month => (
                 <button
                   key={month}
                   onClick={() => setActiveMonth(month)}
-                  className={`px-4 py-2 border rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${activeMonth === month
-                    ? "bg-foreground text-background border-border"
-                    : "border-border text-muted-foreground hover:border-border hover:text-foreground"
+                  className={`relative px-5 py-2.5 rounded-full text-[10px] md:text-xs font-[800] tracking-[0.15em] uppercase transition-all duration-300 ${activeMonth === month
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                     }`}
                 >
-                  {month}
+                  {activeMonth === month && (
+                    <motion.div
+                      layoutId="schedule-active-tab"
+                      className="absolute inset-0 bg-primary/90 rounded-full"
+                      transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                    />
+                  )}
+                  <span className="relative z-10">{month}</span>
                 </button>
               ))}
             </div>
@@ -101,7 +112,7 @@ export default function Schedule() {
           </div>
 
           {/* Event List */}
-          <div className="flex flex-col mb-20 rounded-3xl overflow-hidden border border-charcoal/10 bg-white/62 shadow-[0_22px_40px_rgba(44,24,16,0.12)] backdrop-blur-sm">
+          <div className="flex flex-col mb-20 rounded-3xl overflow-hidden border border-white/10 bg-white/10 shadow-[0_30px_60px_rgba(224,90,58,0.1)] backdrop-blur-3xl">
             {filteredEvents.length === 0 ? (
               <div className="text-center py-20 border-b border-border">
                 <p className="font-mono text-muted-foreground uppercase tracking-widest">No events found for {activeMonth}</p>
@@ -123,7 +134,7 @@ export default function Schedule() {
                   >
                     {/* Main Row */}
                     <div
-                      className="w-full relative z-10 hover:bg-transparent/5 transition-colors duration-300 group"
+                      className="w-full relative z-10 hover:bg-transparent/5 transition-colors duration-300 group px-6 md:px-12"
                       role="button"
                       tabIndex={0}
                       onClick={() => toggle(event.id)}
@@ -137,15 +148,18 @@ export default function Schedule() {
                       <div className="py-6 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-4 md:items-center w-full text-left">
                         {/* Date Col */}
                         <div className="md:col-span-2 flex md:flex-col items-center md:items-start gap-3 md:gap-0">
-                          <span className="font-display text-xl md:text-3xl text-foreground">{dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}</span>
+                          <span className="font-display text-xl md:text-3xl text-foreground whitespace-nowrap">{dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}</span>
                           <span className="font-mono text-xs text-muted-foreground md:mt-1">{event.time.split("—")[0]}</span>
                         </div>
 
                         {/* Thumbnail Col */}
                         <div className="md:col-span-1 hidden md:flex justify-center">
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center ${seriesAccent[event.series]} text-white`}>
-                            {/* Simple Icon based on series */}
-                            <div className="w-3 h-3 bg-current rounded-full animate-pulse" />
+                            {/* S-Tier Radar Pulse Indicator */}
+                            <div className="relative flex h-3 w-3">
+                              <span className="absolute inline-flex h-full w-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full bg-current opacity-75" />
+                              <span className="relative inline-flex rounded-full h-3 w-3 bg-current" />
+                            </div>
                           </div>
                         </div>
 
@@ -189,9 +203,9 @@ export default function Schedule() {
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-                          className="overflow-hidden bg-transparent/5"
+                          className="overflow-hidden bg-transparent/10"
                         >
-                          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 px-4 md:px-0 py-8 md:py-12 border-t border-border">
+                          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 px-6 md:px-12 py-8 md:py-12 border-t border-white/5">
                             {/* Empty spacer for alignment */}
                             <div className="md:col-span-3 hidden md:block" />
 
@@ -269,7 +283,6 @@ export default function Schedule() {
       </main>
 
       <SocialGrid />
-      <Footer />
     </div>
   );
 }

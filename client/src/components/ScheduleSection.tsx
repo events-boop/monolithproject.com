@@ -184,8 +184,11 @@ export default function ScheduleSection() {
                     {/* Thumbnail Col */}
                     <div className="md:col-span-1 hidden md:flex justify-center">
                       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${seriesAccent[event.series]} text-white`}>
-                        {/* Simple Icon based on series */}
-                        <div className="w-3 h-3 bg-current rounded-full animate-pulse" />
+                        {/* S-Tier Radar Pulse Indicator */}
+                        <div className="relative flex h-3 w-3">
+                          <span className="absolute inline-flex h-full w-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full bg-current opacity-75" />
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-current" />
+                        </div>
                       </div>
                     </div>
 

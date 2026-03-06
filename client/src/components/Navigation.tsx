@@ -170,6 +170,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
 
   return (
     <>
+      <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent pointer-events-none z-[49]" />
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -193,16 +194,16 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
           Skip to content
         </a>
         <div
-          className={`mx-auto w-full max-w-[1700px] rounded-2xl border shadow-[0_16px_40px_rgba(0,0,0,0.22)] ${isLight
-            ? "border-charcoal/12 bg-white/72 backdrop-blur-2xl"
+          className={`mx-auto w-[98%] max-w-[1920px] rounded-full border shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isLight
+            ? "border-charcoal/30 bg-white/75 backdrop-blur-3xl"
             : brand === "chasing-sunsets"
-              ? "border-white/16 bg-black/32 backdrop-blur-2xl"
-              : "border-white/12 bg-black/35 backdrop-blur-2xl"
+              ? "border-white/30 bg-black/50 backdrop-blur-3xl"
+              : "border-white/25 bg-black/60 backdrop-blur-3xl"
             }`}
         >
-          <div className="w-full px-4 sm:px-6 md:px-8 xl:px-10 2xl:px-12 py-2.5 lg:py-3 flex items-center justify-between gap-3">
+          <div className="w-full px-5 sm:px-6 xl:px-8 py-2 lg:py-3 flex items-center justify-between">
             {/* LEFT: LOGO */}
-            <div className="shrink-0 -ml-1 md:-ml-2">
+            <div className="shrink-0 mr-4 lg:mr-8 xl:mr-12">
               <MagneticButton strength={0.2}>
                 <button
                   type="button"
@@ -210,15 +211,16 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                   aria-label="Go to homepage"
                   className="flex items-end gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70"
                 >
-                  <div className={`w-2 h-2 rounded-full mb-1 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
-                  <span className={`font-display text-[clamp(0.9rem,1.3vw,1.2rem)] tracking-[0.05em] leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
+                  <div className={`w-2 h-2 rounded-full mb-0.5 ${isLight ? "bg-clay" : "bg-primary"} group-hover:shadow-[0_0_10px_var(--primary)] transition-shadow duration-300`} />
+                  <span className={`font-display text-[clamp(1rem,1.2vw,1.3rem)] tracking-[0.08em] uppercase leading-none text-left whitespace-nowrap ${isLight ? "text-charcoal group-hover:text-clay" : "text-foreground group-hover:text-primary"} transition-colors`}>
                     MONOLITH PROJECT
                   </span>
                 </button>
               </MagneticButton>
             </div>
 
-            <div className="hidden lg:flex flex-grow justify-end items-center gap-4 lg:gap-5 xl:gap-6 2xl:gap-8 mr-4 md:mr-6 lg:mr-8 xl:mr-10">
+            {/* CENTER/RIGHT: LINKS */}
+            <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-5 2xl:gap-9 pr-4 whitespace-nowrap overflow-hidden">
               {navItems.map((item) =>
                 item.children ? (
                   <div key={item.label} className="relative" ref={dropdownRef}>
@@ -228,7 +230,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       aria-expanded={dropdownOpen}
                       aria-haspopup="menu"
                       aria-controls={partnersMenuId}
-                      className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                      className={`flex items-center gap-1 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.12em] xl:tracking-[0.16em] uppercase transition-all duration-300 ${isLight
                         ? `hover:text-clay text-stone`
                         : brand === "chasing-sunsets"
                           ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${[item.href, ...item.children.map(c => c.href)].includes(location) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
@@ -263,7 +265,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                                 setDropdownOpen(false);
                               }}
                               aria-current={isActiveHref(child.href) ? "page" : undefined}
-                              className={`block px-6 py-2.5 text-[11px] font-bold tracking-[0.16em] uppercase transition-colors ${isLight
+                              className={`block px-6 py-2.5 text-[11px] font-[800] tracking-[0.16em] uppercase transition-colors ${isLight
                                 ? `hover:text-clay hover:bg-charcoal/5 ${isActiveHref(child.href) ? "text-clay" : "text-stone"}`
                                 : brand === "chasing-sunsets"
                                   ? `hover:text-white hover:bg-white/5 ${isActiveHref(child.href) ? "text-white" : "text-white/80"}`
@@ -292,7 +294,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       }
                     }}
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                    className={`group text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.12em] xl:tracking-[0.16em] uppercase transition-all duration-300 ${isLight
                       ? `hover:text-clay ${isActiveHref(item.href) ? "text-clay" : "text-stone"}`
                       : brand === "chasing-sunsets"
                         ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActiveHref(item.href) ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
@@ -300,35 +302,35 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
                       }`}
                   >
                     {item.label === "CHASING SUN(SETS)" ? (
-                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
-                        <span aria-hidden="true" className="text-[12px] leading-none">☀️</span>
-                        <span className="relative inline-block">
+                      <span className={`inline-flex items-center justify-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-clay"}`}>
+                        <span aria-hidden="true" className="text-[12px] pb-[2px]">☀️</span>
+                        <span className="relative inline-block pb-1">
                           <span>{item.label}</span>
                           <span
                             aria-hidden="true"
-                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                            className={`absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
                           />
                         </span>
                       </span>
                     ) : item.label === "RADIO" ? (
-                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
-                        <Radio className="w-3.5 h-3.5" />
-                        <span className="relative inline-block">
+                      <span className={`inline-flex items-center justify-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#E05A3A]"}`}>
+                        <Radio className="w-3.5 h-3.5 pb-[1px]" />
+                        <span className="relative inline-block pb-1">
                           <span>{item.label}</span>
                           <span
                             aria-hidden="true"
-                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                            className={`absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-[#E05A3A] via-[#F43F5E] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
                           />
                         </span>
                       </span>
                     ) : item.label === "UNTOLD STORY" ? (
-                      <span className={`inline-flex items-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
-                        <UntoldButterflyLogo className="w-3.5 h-3.5" />
-                        <span className="relative inline-block">
+                      <span className={`inline-flex items-center justify-center gap-1.5 ${brand === "chasing-sunsets" ? "text-white" : "text-[#8B5CF6]"}`}>
+                        <UntoldButterflyLogo className="w-3.5 h-3.5 pb-[1px]" />
+                        <span className="relative inline-block pb-1">
                           <span>{item.label}</span>
                           <span
                             aria-hidden="true"
-                            className={`absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
+                            className={`absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-[#8B5CF6] via-[#22D3EE] to-transparent transition-opacity duration-300 ${isActiveHref(item.href) ? "opacity-100" : "opacity-70 group-hover:opacity-100"}`}
                           />
                         </span>
                       </span>
@@ -359,7 +361,7 @@ export default function Navigation({ activeSection, variant = "dark", brand = "m
               </div>
 
               {/* Mobile Toggle */}
-              <div className="lg:hidden">
+              <div className="xl:hidden">
                 <MagneticButton>
                   <button
                     type="button"

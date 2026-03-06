@@ -2,7 +2,6 @@ import { Link, useParams } from "wouter";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { getRadioEpisode, radioEpisodes } from "@/data/radioEpisodes";
@@ -56,7 +55,6 @@ export default function RadioEpisode() {
           </section>
         </main>
         <EntityBoostStrip tone="dark" className="pb-8" />
-        <Footer />
       </div>
     );
   }
@@ -84,7 +82,7 @@ export default function RadioEpisode() {
             <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
               For disambiguation details, review{" "}
-              <Link href="/chasing-sunsets-facts" className="text-primary underline underline-offset-4">
+              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
                 Official Chasing Sun(Sets) Identity
               </Link>
               .
@@ -138,9 +136,8 @@ export default function RadioEpisode() {
             {episode.tracklist.map((track, index) => (
               <div
                 key={`${track.timecode}-${track.artist}-${track.title}`}
-                className={`px-5 py-4 border-b border-border/40 last:border-b-0 flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-white/[0.03] transition-colors ${
-                  index % 2 === 0 ? "bg-white/[0.015]" : ""
-                }`}
+                className={`px-5 py-4 border-b border-border/40 last:border-b-0 flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-white/[0.03] transition-colors ${index % 2 === 0 ? "bg-white/[0.015]" : ""
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/55">
@@ -238,7 +235,6 @@ export default function RadioEpisode() {
       </main>
 
       <EntityBoostStrip tone="dark" className="pb-8" intent="listen-episode" episodeHref="#listen" />
-      <Footer />
     </div>
   );
 }

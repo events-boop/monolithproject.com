@@ -1,5 +1,4 @@
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 
@@ -46,7 +45,6 @@ export default function Terms() {
         </div>
       </section>
       <EntityBoostStrip tone="dark" className="pb-20" />
-      <Footer />
     </div>
   );
 }

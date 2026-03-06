@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import ViewportLazy from "@/components/ViewportLazy";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
@@ -48,7 +47,6 @@ export default function Booking() {
       </section>
 
       <EntityBoostStrip tone="dark" className="pb-20" />
-      <Footer />
     </div>
   );
 }

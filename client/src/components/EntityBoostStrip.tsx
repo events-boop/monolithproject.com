@@ -24,7 +24,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
     title: "text-white",
     body: "text-white/65",
     line: "border-white/10",
-    link: "text-primary hover:text-white",
+    link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
     cta: "btn-pill-dark",
   },
   light: {
@@ -32,7 +32,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
     title: "text-charcoal",
     body: "text-charcoal/70",
     line: "border-charcoal/12",
-    link: "text-charcoal hover:text-clay",
+    link: "border-charcoal/20 text-charcoal bg-white/50 hover:bg-white hover:border-clay hover:text-clay",
     cta: "btn-pill-dark",
   },
   warm: {
@@ -40,7 +40,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
     title: "text-[#2C1810]",
     body: "text-[#2C1810]/70",
     line: "border-[#C2703E]/18",
-    link: "text-[#C2703E] hover:text-[#2C1810]",
+    link: "border-[#C2703E]/30 text-[#C2703E] bg-[#C2703E]/5 hover:bg-[#C2703E]/10 hover:border-[#2C1810] hover:text-[#2C1810]",
     cta: "btn-pill-dark",
   },
   nocturne: {
@@ -48,7 +48,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
     title: "text-white",
     body: "text-white/65",
     line: "border-white/10",
-    link: "text-primary hover:text-white",
+    link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
     cta: "btn-pill-dark",
   },
 };
@@ -126,14 +126,14 @@ export default function EntityBoostStrip({
           </>
         )}
 
-        <div className={`flex flex-wrap gap-x-5 gap-y-2 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}>
-          <Link href="/chasing-sunsets-facts" className={`underline underline-offset-4 transition-colors ${ui.link}`}>
+        <div className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}>
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
             Chasing Sun(Sets) Facts
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`underline underline-offset-4 transition-colors ${ui.link}`}>
-            Official Chasing Sun(Sets) Identity
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+            Official Identity
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`underline underline-offset-4 transition-colors ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
             Not the fragrance — official music series
           </Link>
         </div>

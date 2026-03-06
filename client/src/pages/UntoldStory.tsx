@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import TicketTicker from "@/components/TicketTicker";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
@@ -189,7 +188,6 @@ export default function UntoldStory() {
       </main>
 
       <SlimSubscribeStrip title="UNLOCK UNTOLD UPDATES" source="untold_story_strip" />
-      <Footer />
     </div>
   );
 }

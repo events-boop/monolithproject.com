@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, MapPin, Clock, CreditCard, Shield, Accessibility, Music, HelpCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema } from "@/lib/schema";
@@ -317,8 +316,6 @@ export default function FAQ() {
 
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 }

@@ -2,7 +2,6 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 
@@ -61,7 +60,6 @@ export default function Newsletter() {
         description="One signup, direct signal: ticket access, lineup updates, and mixes worth saving."
         benefits={benefits}
       />
-      <Footer />
     </div>
   );
 }

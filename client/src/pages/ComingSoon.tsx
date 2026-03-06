@@ -1,6 +1,5 @@
 import { Link, useLocation } from "wouter";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 interface ComingSoonConfig {
@@ -160,8 +159,6 @@ export default function ComingSoon() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

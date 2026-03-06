@@ -3,7 +3,6 @@ import { Link, useLocation, useParams } from "wouter";
 import { motion } from "framer-motion";
 import { Instagram, Globe, MapPin, Music } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { ARTISTS } from "@/data/artists";
@@ -59,7 +58,6 @@ export default function ArtistProfile() {
           </div>
         </section>
         <EntityBoostStrip tone="dark" className="pb-8" />
-        <Footer />
       </div>
     );
   }
@@ -262,7 +260,6 @@ export default function ArtistProfile() {
       </div>
 
       <EntityBoostStrip tone="dark" className="pb-8" />
-      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { POSH_TICKET_URL } from "@/data/events";
+import { POSH_TICKET_URL, ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
 
 export const SITE_ORIGIN = "https://monolithproject.com";
@@ -246,5 +246,45 @@ export function buildFaqSchema(faqEntries: Array<[string, string]>) {
         text: answer,
       },
     })),
+  };
+}
+
+function tryParseDate(dateStr: string, timeStr: string) {
+  let cleanTime = timeStr.split("—")[0].split("-")[0].trim();
+  if (cleanTime === "TBA" || cleanTime === "Late") cleanTime = "10:00 PM";
+  try {
+    const d = new Date(`${dateStr} ${cleanTime}`);
+    if (!isNaN(d.getTime())) return d.toISOString();
+  } catch { }
+
+  try {
+    const d = new Date(dateStr);
+    if (!isNaN(d.getTime())) return d.toISOString();
+  } catch { }
+  return new Date().toISOString();
+}
+
+export function buildScheduleSchema(events: ScheduledEvent[]) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": events.filter(e => e.status === "on-sale" || e.status === "coming-soon").map(event => {
+      const startDate = tryParseDate(event.date, event.time);
+      return buildEventSchema({
+        pagePath: `/schedule`,
+        name: event.headline || event.title,
+        description: event.description || event.experienceIntro || `The Monolith Project presents ${event.title}`,
+        startDate,
+        endDate: startDate,
+        image: event.image ? [event.image] : ["/images/chasing-sunsets.jpg"],
+        performer: event.lineup ? event.lineup.split("·").map(s => s.trim()) : [event.title],
+        ticketUrl: event.ticketUrl || POSH_TICKET_URL,
+        locationName: event.venue,
+        streetAddress: event.venue === "Alhambra Palace" ? "1240 W Randolph St" : "Chicago IL",
+        addressLocality: "Chicago",
+        addressRegion: "IL",
+        postalCode: "60607",
+        addressCountry: "US",
+      });
+    })
   };
 }

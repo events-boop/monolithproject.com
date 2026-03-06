@@ -1,7 +1,8 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -37,27 +38,30 @@ const links = [
       { name: "Schedule", href: "/schedule" },
       { name: "Tickets", href: "/tickets" },
       { name: "Lineup", href: "/lineup" },
+    ]
+  },
+  {
+    title: "Series", items: [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
-      { name: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts" },
-      { name: "Official Chasing Sun(Sets) Identity", href: "/chasing-sunsets-facts" },
-      { name: "Not the fragrance — official music series", href: "/chasing-sunsets-facts" },
       { name: "Untold Story", href: "/story" },
+      { name: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts" },
+      { name: "Official Identity", href: "/chasing-sunsets-facts" },
       { name: "Radio", href: "/radio" },
-      { name: "About", href: "/about" },
-      { name: "Contact", href: "/contact" },
-      { name: "FAQ", href: "/#faq" },
     ]
   },
   {
     title: "Work With Us", items: [
+      { name: "About", href: "/about" },
+      { name: "Contact", href: "/contact" },
+      { name: "FAQ", href: "/#faq" },
       { name: "Partners", href: "/partners" },
       { name: "Booking", href: "/booking" },
       { name: "Sponsor Access", href: "/sponsors" },
-      { name: "Get Tickets", href: POSH_TICKET_URL, external: true },
     ]
   },
   {
-    title: "Legal", items: [
+    title: "Legal & Tickets", items: [
+      { name: "Get Tickets", href: POSH_TICKET_URL, external: true },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Cookie Policy", href: "/cookies" },
@@ -67,6 +71,16 @@ const links = [
 
 export default function Footer() {
   const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"]
+  });
+
+  const textScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const textY = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
   const renderItemLabel = (name: string) => {
     if (name === "Chasing Sun(Sets)") {
       return (
@@ -94,7 +108,7 @@ export default function Footer() {
       <div className="container max-w-7xl mx-auto px-6 flex flex-col justify-between min-h-[60vh]">
 
         {/* Top: Navigation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 z-10 relative">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-20 z-10 relative">
           <div className="col-span-2 md:col-span-1">
             <span className="font-display text-2xl tracking-wide block mb-6 text-white">
               THE MONOLITH
@@ -110,8 +124,8 @@ export default function Footer() {
 
           {links.map((group) => (
             <div key={group.title}>
-              <h4 className="ui-kicker text-white/60 mb-6">{group.title}</h4>
-              <ul className="space-y-3">
+              <h4 className="font-bold text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{group.title}</h4>
+              <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={item.name}>
                     {item.external ? (
@@ -119,9 +133,9 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors text-sm tracking-wide flex items-center gap-1 group ${item.name === "Get Tickets"
-                          ? "px-2 py-1 rounded-full bg-primary/18 border border-primary/40 text-primary font-semibold hover:text-primary hover:bg-primary/25"
-                          : "text-white/85 hover:text-white"
+                        className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === "Get Tickets"
+                          ? "px-3 py-1.5 rounded-full bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
+                          : "text-white/80 hover:text-white"
                           }`}
                       >
                         {renderItemLabel(item.name)}
@@ -129,9 +143,9 @@ export default function Footer() {
                       </a>
                     ) : (
                       <Link href={item.href} asChild>
-                        <a className={`transition-colors text-sm tracking-wide ${item.name === "Get Tickets"
-                          ? "px-2 py-1 rounded-full bg-primary/18 border border-primary/40 text-primary font-semibold hover:text-primary hover:bg-primary/25"
-                          : "text-white/85 hover:text-white"
+                        <a className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === "Get Tickets"
+                          ? "px-3 py-1.5 rounded-full bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
+                          : "text-white/80 hover:text-white"
                           }`}>
                           {renderItemLabel(item.name)}
                         </a>
@@ -144,52 +158,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Middle: Giant Interactive Typography with Spotlight */}
-        <div
-          className="relative py-10 md:py-24 -mx-6 md:-mx-12 overflow-hidden cursor-default select-none group"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-            e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-          }}
-        >
-          {/* Spotlight Gradient - Follows Mouse */}
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
-            style={{
-              background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(224,90,58,0.15), transparent 40%)`
-            }}
-          />
-
-          {/* Background Video/Gradient Fill Effect */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-clay/20 to-primary/20 bg-[length:200%_auto] animate-marquee" />
-            <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
-          </div>
-
-          {/* Huge Text - Base Layer */}
-          <h1 className="relative z-10 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_30px_rgba(224,90,58,0.3)] group-hover:text-white/90 mix-blend-overlay group-hover:mix-blend-normal transform group-hover:scale-[1.02]">
-            MONOLITH
-          </h1>
-
-          {/* Outline Overlay for Stroke Effect */}
-          <h1
-            className="absolute inset-0 top-10 md:top-24 z-20 font-display text-[13.5vw] leading-[0.8] text-center tracking-tight-display pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 text-transparent"
-            style={{
-              WebkitTextStroke: "1px rgba(255,255,255,0.15)",
-              transform: "translateZ(0)"
-            }}
-          >
-            MONOLITH
-          </h1>
-        </div>
-
         {/* Bottom: Socials & Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5 z-10 relative">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-12 pb-12 border-t border-white/5 z-10 relative">
           <div className="flex gap-4">
             {socials.map((s) => (
               <a
@@ -214,6 +184,47 @@ export default function Footer() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Mega Footer: Giant Interactive Typography */}
+      <div
+        ref={containerRef}
+        className="w-full relative overflow-hidden cursor-default select-none group flex justify-center items-end mt-auto pt-10"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+          e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+        }}
+      >
+        {/* Spotlight Gradient - Follows Mouse */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
+          style={{
+            background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(224,90,58,0.15), transparent 40%)`
+          }}
+        />
+
+        {/* Huge Edge-to-Edge Text */}
+        <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full translate-y-[10%]">
+          <h1 className="relative z-10 font-display text-[21vw] leading-[0.72] text-center tracking-tighter transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/90 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_80px_rgba(224,90,58,0.4)] mix-blend-overlay group-hover:mix-blend-normal">
+            MONOLITH
+          </h1>
+
+          {/* Outline Overlay for Stroke Effect */}
+          <h1
+            className="absolute inset-0 top-0 z-20 font-display text-[21vw] leading-[0.72] text-center tracking-tighter pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent"
+            style={{
+              WebkitTextStroke: "2px rgba(255,255,255,0.25)",
+              transform: "translateZ(0)"
+            }}
+          >
+            MONOLITH
+          </h1>
+        </motion.div>
       </div>
     </footer>
   );

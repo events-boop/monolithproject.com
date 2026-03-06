@@ -8,7 +8,8 @@ import { POSH_TICKET_URL } from "@/data/events";
 import GlitchText from "./GlitchText";
 import HeroSpotlight from "./ui/HeroSpotlight";
 import { BorderBeam } from "./ui/BorderBeam";
-import { EventSchema } from "@/components/StructuredData";
+import JsonLd from "@/components/JsonLd";
+import { buildUntoldStoryEventSchema } from "@/lib/schema";
 import MagneticButton from "@/components/MagneticButton";
 
 // March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
@@ -92,10 +93,10 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
         { value: seconds, label: "SEC", highlight: false },
       ].map((unit) => (
         <div key={unit.label} className="flex flex-col items-center">
-          <span className={`font-display text-3xl md:text-4xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
+          <span className={`font-display font-[900] tracking-tighter text-4xl md:text-5xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
             {pad(unit.value)}
           </span>
-          <span className={`font-mono text-[8px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/70" : "text-white/45"}`}>
+          <span className={`font-mono font-bold text-[10px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/80" : "text-white/60"}`}>
             {unit.label}
           </span>
         </div>
@@ -125,27 +126,7 @@ export default function HeroSection() {
 
   // SS-Tier: JSON-LD for Search Engines
   const structuredData = (
-    <EventSchema
-      name="Untold Story S3·E2: Deron b2b Juany Bravo"
-      startDate="2026-03-06T19:00:00-06:00"
-      endDate="2026-03-07T02:00:00-06:00"
-      location={{
-        name: "Alhambra Palace",
-        address: "1240 W Randolph St"
-      }}
-      image={["https://monolithproject.com/images/untold-story-juany-deron-v2.jpg"]}
-      description="The Monolith Project presents Untold Story S3·E2 featuring Deron b2b Juany Bravo at Alhambra Palace. An immersive night of house music."
-      offers={{
-        url: POSH_TICKET_URL,
-        price: "25.00",
-        currency: "USD",
-        availability: "https://schema.org/InStock"
-      }}
-      performer={[
-        { name: "Deron", type: "Person" },
-        { name: "Juany Bravo", type: "Person" }
-      ]}
-    />
+    <JsonLd data={buildUntoldStoryEventSchema("/")} />
   );
 
 
@@ -207,14 +188,14 @@ export default function HeroSection() {
         </div>
 
         {/* Lower zone — event info + CTAs */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16 pointer-events-auto">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16 pointer-events-auto mt-24">
 
           {/* Left: metadata + CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7 }}
-            className="space-y-6"
+            className="space-y-8"
           >
             {/* Countdown */}
             {!isExpired && (
