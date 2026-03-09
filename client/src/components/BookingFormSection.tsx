@@ -70,7 +70,7 @@ export default function BookingFormSection() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form action="/api/booking-inquiry" method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           <div>
             <label className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
               Inquiry Type
@@ -84,11 +84,10 @@ export default function BookingFormSection() {
               ].map((type) => (
                 <label
                   key={type.id}
-                  className={`cursor-pointer border p-4 text-center transition-colors ${
-                    watch("type") === type.id
+                  className={`cursor-pointer border p-4 text-center transition-colors ${watch("type") === type.id
                       ? "border-primary text-primary bg-primary/5"
                       : "border-border text-muted-foreground hover:border-muted-foreground"
-                  }`}
+                    }`}
                 >
                   <input type="radio" value={type.id} {...register("type")} className="sr-only" />
                   <span className="text-xs font-bold uppercase tracking-wider">{type.label}</span>
@@ -103,6 +102,7 @@ export default function BookingFormSection() {
                 <label className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Name</label>
                 <input
                   {...register("name")}
+                  autoComplete="name"
                   className="w-full bg-transparent border border-border p-4 text-foreground focus:border-primary focus:outline-none transition-colors"
                   placeholder="Full name"
                 />
@@ -113,6 +113,7 @@ export default function BookingFormSection() {
                 <label className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Email</label>
                 <input
                   {...register("email")}
+                  autoComplete="email"
                   className="w-full bg-transparent border border-border p-4 text-foreground focus:border-primary focus:outline-none transition-colors"
                   placeholder="email@address.com"
                 />
@@ -125,6 +126,7 @@ export default function BookingFormSection() {
                 <label className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2">Organization</label>
                 <input
                   {...register("entity")}
+                  autoComplete="organization"
                   className="w-full bg-transparent border border-border p-4 text-foreground focus:border-primary focus:outline-none transition-colors"
                   placeholder="Company, venue, or artist name"
                 />
@@ -138,9 +140,8 @@ export default function BookingFormSection() {
                 <input
                   {...register("location")}
                   disabled={selectedType !== "partner-on-location"}
-                  className={`w-full bg-transparent border border-border p-4 text-foreground focus:border-primary focus:outline-none transition-colors ${
-                    selectedType !== "partner-on-location" ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`w-full bg-transparent border border-border p-4 text-foreground focus:border-primary focus:outline-none transition-colors ${selectedType !== "partner-on-location" ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   placeholder={selectedType === "partner-on-location" ? "City, State, or Venue Name" : "N/A"}
                 />
               </motion.div>

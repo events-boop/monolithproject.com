@@ -474,7 +474,18 @@ function configureApp() {
 
   app.use(
     helmet({
-      contentSecurityPolicy: false,
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://challenges.cloudflare.com", "https://maps.googleapis.com"],
+          styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+          imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://maps.gstatic.com", "https://maps.googleapis.com"],
+          connectSrc: ["'self'", "https://maps.googleapis.com"],
+          fontSrc: ["'self'", "https://fonts.gstatic.com"],
+          frameSrc: ["'self'", "https://challenges.cloudflare.com", "https://www.youtube.com", "https://player.vimeo.com"],
+        },
+      },
+      crossOriginEmbedderPolicy: false,
     })
   );
 
@@ -510,6 +521,50 @@ function configureApp() {
   app.get("/api/health", (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
     res.json({ ok: true, service: "monolith-api", now: new Date().toISOString() });
+  });
+
+  app.get("/sitemap.xml", (req, res) => {
+    res.setHeader("Content-Type", "application/xml");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    const domain = "https://monolithproject.com";
+    const routes = [
+      "",
+      "/tickets",
+      "/about",
+      "/togetherness",
+      "/chasing-sunsets",
+      "/radio",
+      "/story",
+      "/booking",
+      "/lineup",
+      "/schedule",
+      "/newsletter",
+      "/contact",
+      "/faq",
+      "/partners",
+      "/vip"
+    ];
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${routes.map(route => `  <url>
+    <loc>${domain}${route}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>${route === "" ? "1.0" : "0.8"}</priority>
+  </url>`).join("\\n")}
+</urlset>`;
+
+    res.send(sitemap);
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.send(`User-agent: *
+Allow: /
+
+Sitemap: https://monolithproject.com/sitemap.xml
+`);
   });
 
   app.post("/api/leads", async (req, res) => {
@@ -595,12 +650,12 @@ function configureApp() {
 
         return { status: 200, body };
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Subscription failed";
+        const rawMessage = error instanceof Error ? error.message : "Subscription failed";
 
         // 3. Update DB status on failure
         if (db) {
           db.update(leads)
-            .set({ providerStatus: "failed", metadata: { ...parsed.data, error: message } })
+            .set({ providerStatus: "failed", metadata: { ...parsed.data, error: rawMessage } })
             .where(eq(leads.id, dbLeadId))
             .catch(() => { });
         }
@@ -610,7 +665,7 @@ function configureApp() {
           requestId,
           error: {
             code: "PROVIDER_ERROR",
-            message,
+            message: "We couldn't process your request. Please try again.",
             retryable: true,
           },
         };
@@ -618,7 +673,7 @@ function configureApp() {
         logEvent("lead.subscription_failed", {
           requestId,
           provider,
-          message,
+          message: rawMessage,
         });
 
         return { status: 502, body };
@@ -706,11 +761,11 @@ function configureApp() {
           throw new Error(`Webhook delivery failed with status ${response.status}`);
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Booking inquiry delivery failed";
+        const rawMessage = error instanceof Error ? error.message : "Booking inquiry delivery failed";
         logEvent("booking.inquiry_failed", {
           requestId,
           type: inquiry.type,
-          message,
+          message: rawMessage,
         });
 
         return res.status(502).json({

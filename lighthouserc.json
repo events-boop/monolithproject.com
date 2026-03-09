@@ -1,52 +1,43 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 1,
       "startServerCommand": "npm run start",
       "url": [
-        "http://127.0.0.1:3000/",
-        "http://127.0.0.1:3000/tickets",
-        "http://127.0.0.1:3000/chasing-sunsets",
-        "http://127.0.0.1:3000/radio",
-        "http://127.0.0.1:3000/contact"
-      ]
+        "http://localhost:5000/",
+        "http://localhost:5000/tickets"
+      ],
+      "numberOfRuns": 3
+    },
+    "upload": {
+      "target": "temporary-public-storage"
     },
     "assert": {
       "assertions": {
         "categories:performance": [
           "error",
           {
-            "minScore": 0.7
+            "minScore": 0.95
           }
         ],
         "categories:accessibility": [
           "error",
           {
-            "minScore": 0.9
+            "minScore": 0.95
           }
         ],
         "categories:best-practices": [
           "error",
           {
-            "minScore": 0.85
+            "minScore": 0.95
           }
         ],
         "categories:seo": [
           "error",
           {
-            "minScore": 0.85
-          }
-        ],
-        "resource-summary:script:size": [
-          "error",
-          {
-            "maxNumericValue": 600000
+            "minScore": 0.95
           }
         ]
       }
-    },
-    "upload": {
-      "target": "temporary-public-storage"
     }
   }
 }

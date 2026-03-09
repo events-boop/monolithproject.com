@@ -181,10 +181,11 @@ export default function UntoldStoryOptIn() {
                                         />
 
                                         {/* Form */}
-                                        <form onSubmit={handleSubmit} className="space-y-3">
+                                        <form action="/api/leads" method="POST" onSubmit={handleSubmit} className="space-y-3">
                                             <input
                                                 type="email"
                                                 value={email}
+                                                autoComplete="email"
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 placeholder="your@email.com"
                                                 required

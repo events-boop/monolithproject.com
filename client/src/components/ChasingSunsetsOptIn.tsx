@@ -160,11 +160,12 @@ export default function ChasingSunsetsOptIn() {
                                         <div className="h-px mb-6" style={{ background: "linear-gradient(to right, rgba(232,184,109,0.3), transparent)" }} />
 
                                         {/* Form */}
-                                        <form onSubmit={handleSubmit} className="space-y-3">
+                                        <form action="/api/leads" method="POST" onSubmit={handleSubmit} className="space-y-3">
                                             <div className="relative">
                                                 <input
                                                     type="email"
                                                     value={email}
+                                                    autoComplete="email"
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     placeholder="your@email.com"
                                                     required

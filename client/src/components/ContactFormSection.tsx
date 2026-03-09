@@ -66,7 +66,7 @@ export default function ContactFormSection() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+        <form action="/api/contact" method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-7">
           <div>
             <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
             <input

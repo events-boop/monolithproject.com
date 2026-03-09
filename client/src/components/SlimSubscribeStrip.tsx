@@ -47,7 +47,7 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
         : "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.08),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.08),transparent_34%)]"
         }`} />
       <div className="container max-w-6xl mx-auto relative z-10">
-        <form onSubmit={onSubmit} className="grid lg:grid-cols-[1.1fr_1.5fr_auto] gap-4 lg:gap-8 items-center">
+        <form action="/api/leads" method="POST" onSubmit={onSubmit} className="grid lg:grid-cols-[1.1fr_1.5fr_auto] gap-4 lg:gap-8 items-center">
           <h3 className={`font-display text-3xl md:text-5xl leading-[0.9] uppercase ${dark ? "text-white" : "text-charcoal"}`}>{title}</h3>
 
           <div className="space-y-3">
@@ -58,6 +58,7 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
               id={`strip-email-${source}`}
               type="email"
               value={email}
+              autoComplete="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
               className={`w-full bg-transparent border-b pb-2 outline-none ${dark ? "border-white/35 text-white placeholder:text-white/45" : "border-charcoal/30 text-charcoal placeholder:text-charcoal/50"}`}
@@ -72,8 +73,8 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
             type="submit"
             disabled={submitting}
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold tracking-widest text-xs transition-all ${dark
-                ? "bg-white text-black hover:bg-white/90 border border-white"
-                : "bg-charcoal text-white hover:bg-charcoal/90 border border-charcoal"
+              ? "bg-white text-black hover:bg-white/90 border border-white"
+              : "bg-charcoal text-white hover:bg-charcoal/90 border border-charcoal"
               } disabled:opacity-50`}
           >
             {ok ? "SUBSCRIBED" : submitting ? "JOINING..." : "JOIN THE LIST"}

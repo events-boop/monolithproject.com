@@ -196,7 +196,7 @@ export default function NewsletterSection({
                 </div>
 
                 {/* Right — form */}
-                <form onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-[2rem] border border-white/12 bg-[linear-gradient(165deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] backdrop-blur-xl p-6 md:p-8 shadow-2xl" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
+                <form action="/api/leads" method="POST" onSubmit={handleSubmit} className="relative z-[60] space-y-6 rounded-[2rem] border border-white/12 bg-[linear-gradient(165deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] backdrop-blur-xl p-6 md:p-8 shadow-2xl" noValidate aria-describedby={submitError ? "newsletter-submit-error" : undefined}>
                   <div className="space-y-3 border-b border-white/10 pb-5">
                     <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-clay/85">Join Us</span>
                     <div>
@@ -218,6 +218,7 @@ export default function NewsletterSection({
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="Erik"
+                        autoComplete="given-name"
                         className="w-full rounded-2xl bg-white/90 border border-charcoal/15 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
                       />
                     </div>
@@ -244,6 +245,7 @@ export default function NewsletterSection({
                         setErrors(prev => err ? { ...prev, email: err } : (({ email: _, ...rest }) => rest)(prev));
                       }}
                       placeholder="you@email.com"
+                      autoComplete="email"
                       aria-invalid={Boolean(touched.email && errors.email)}
                       aria-describedby={touched.email && errors.email ? "newsletter-email-error" : undefined}
                       className={`w-full rounded-2xl bg-white/90 border px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200 ${touched.email && errors.email ? "border-red-400" : "border-charcoal/15"}`}
@@ -266,6 +268,7 @@ export default function NewsletterSection({
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="(312) 555-0148"
+                        autoComplete="tel"
                         className="w-full rounded-2xl bg-white/90 border border-charcoal/15 px-4 py-4 text-charcoal placeholder:text-stone/70 focus:outline-none focus:border-l-4 focus:border-l-clay transition-all duration-200"
                       />
                     </div>
