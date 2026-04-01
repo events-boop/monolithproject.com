@@ -23,58 +23,60 @@ export default function FeaturedCampaigns() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          {/* Untold Story May 16 */}
-          <Link href="/story" className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
-            <div className="absolute inset-0 bg-[url('/images/untold-story.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
-            <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                  <div className="px-3 py-1 bg-[#22D3EE]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse"></span>
-                    Artist Debut
-                  </div>
-                  <div className="flex items-center gap-1.5 text-white/50 text-[10px] font-mono tracking-widest uppercase">
-                      <Calendar className="w-3.5 h-3.5" /> May 16, 2026
-                  </div>
+          <Link href="/story" asChild>
+            <a className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
+              <div className="absolute inset-0 bg-[url('/images/untold-story.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
+              <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="px-3 py-1 bg-[#22D3EE]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse"></span>
+                      Artist Debut
+                    </div>
+                    <div className="flex items-center gap-1.5 text-white/50 text-[10px] font-mono tracking-widest uppercase">
+                        <Calendar className="w-3.5 h-3.5" /> May 16, 2026
+                    </div>
+                </div>
+                <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#22D3EE] transition-colors">
+                  Untold Story<br/>Eran Hersh
+                </h3>
+                <p className="text-white/60 font-sans max-w-sm mb-8 text-sm md:text-base">
+                  A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago for a 360° dancefloor experience.
+                </p>
+                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[10px] tracking-widest uppercase font-bold">
+                    Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </div>
               </div>
-              <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#22D3EE] transition-colors">
-                Untold Story<br/>Eran Hersh
-              </h3>
-              <p className="text-white/60 font-sans max-w-sm mb-8 text-sm md:text-base">
-                A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago for a 360° dancefloor experience.
-              </p>
-              <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[10px] tracking-widest uppercase font-bold">
-                  Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </div>
-            </div>
+            </a>
           </Link>
 
-          {/* Chasing Sunsets July 4 */}
-          <Link href="/chasing-sunsets" className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
-            <div className="absolute inset-0 bg-[url('/images/chasing-sunsets.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
-            <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                  <div className="px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/20 text-[#E8B86D] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8B86D] animate-pulse"></span>  
-                    Flagship Event
-                  </div>
-                  <div className="flex items-center gap-1.5 text-white/50 text-[10px] font-mono tracking-widest uppercase">
-                      <Calendar className="w-3.5 h-3.5" /> July 4, 2026
-                  </div>
+          <Link href="/chasing-sunsets" asChild>
+            <a className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
+              <div className="absolute inset-0 bg-[url('/images/chasing-sunsets.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
+              <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/20 text-[#E8B86D] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E8B86D] animate-pulse"></span>  
+                      Flagship Event
+                    </div>
+                    <div className="flex items-center gap-1.5 text-white/50 text-[10px] font-mono tracking-widest uppercase">
+                        <Calendar className="w-3.5 h-3.5" /> July 4, 2026
+                    </div>
+                </div>
+                <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#E8B86D] transition-colors">
+                  Chasing Sun(Sets)<br/>4th of July
+                </h3>
+                <p className="text-white/60 font-sans max-w-sm mb-8 text-sm md:text-base">
+                  The summer flagship rooftop session. Start at sunset, continue after dark. Join the waitlist for priority entry before tickets go live.
+                </p>
+                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[10px] tracking-widest uppercase font-bold">
+                    Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </div>
               </div>
-              <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#E8B86D] transition-colors">
-                Chasing Sun(Sets)<br/>4th of July
-              </h3>
-              <p className="text-white/60 font-sans max-w-sm mb-8 text-sm md:text-base">
-                The summer flagship rooftop session. Start at sunset, continue after dark. Join the waitlist for priority entry before tickets go live.
-              </p>
-              <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[10px] tracking-widest uppercase font-bold">
-                  Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </div>
-            </div>
+            </a>
           </Link>
         </div>
 

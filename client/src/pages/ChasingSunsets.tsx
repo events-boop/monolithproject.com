@@ -3,6 +3,7 @@ import { ArrowUpRight, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
+import ChasingSunsetsTicketing from "@/components/ChasingSunsetsTicketing";
 import EpisodeGallery from "@/components/EpisodeGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import { Link } from "wouter";
@@ -251,6 +252,11 @@ export default function ChasingSunsets() {
         {/* NEW: Pitch / Details Section */}
         <div id="chasing-manifesto" className="scroll-shell-target">
           <ChasingSunsetsDetails />
+        </div>
+
+        {/* NEW: Ticketing / Season Pass Release Structure */}
+        <div id="chasing-tickets" className="scroll-shell-target">
+          <ChasingSunsetsTicketing />
         </div>
 
         {/* Season Records */}

@@ -715,21 +715,22 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.1 }}
                 >
-                  <Link
-                    href={item.href.startsWith("/#") ? "/" : item.href}
-                    onClick={(e) => {
-                      signalChirp.click();
-                      if (handleUtilityLink(item.href)) {
-                        e.preventDefault();
+                  <Link href={item.href.startsWith("/#") ? "/" : item.href} asChild>
+                    <a
+                      onClick={(e) => {
+                        signalChirp.click();
+                        if (handleUtilityLink(item.href)) {
+                          e.preventDefault();
+                          setMobileMenuOpen(false);
+                          return;
+                        }
                         setMobileMenuOpen(false);
-                        return;
-                      }
-                      setMobileMenuOpen(false);
-                    }}
-                    aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group font-display text-3xl sm:text-4xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
-                  >
-                    {renderNavLabel(item.label, true)}
+                      }}
+                      aria-current={isActiveHref(item.href) ? "page" : undefined}
+                      className={`group font-display text-3xl sm:text-4xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
+                    >
+                      {renderNavLabel(item.label, true)}
+                    </a>
                   </Link>
                 </motion.div>
               ))}
@@ -757,13 +758,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                  className="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-8 pt-6 w-full border-t border-white/10"
               >
                  {mobileSecondaryItems.map((item) => (
-                   <Link 
-                     key={item.label} 
-                     href={item.href} 
-                     onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
-                     className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/40 hover:text-white transition-colors"
-                   >
-                     {item.label}
+                   <Link key={item.label} href={item.href} asChild>
+                     <a 
+                       onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
+                       className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/40 hover:text-white transition-colors cursor-pointer"
+                     >
+                       {item.label}
+                     </a>
                    </Link>
                  ))}
               </motion.div>
