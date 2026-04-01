@@ -18,6 +18,7 @@ import EventCountdown from "@/components/EventCountdown";
 import NightInNumbers from "@/components/NightInNumbers";
 import WhatToExpect from "@/components/WhatToExpect";
 import ConversionStrip from "@/components/ConversionStrip";
+import HomeShowcaseAccordion from "@/components/HomeShowcaseAccordion";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -112,24 +113,44 @@ export default function Home() {
         <TextLineupSection />
         <NightInNumbers />
 
-        <SectionDivider id="journal" number="05" label="Beyond The Night" />
-        <EditorialSignalsSection />
-
-        <SectionDivider id="archive" number="06" label="The Archive" />
-        <ViewportLazy minHeightClassName="min-h-[520px]">
-          <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
-            <MixedMediaGallery />
-          </Suspense>
-        </ViewportLazy>
-
-        <SectionDivider id="mixes" number="07" label="Mixes" />
-        <ViewportLazy minHeightClassName="min-h-[420px]">
-          <div className="bg-card">
-            <Suspense fallback={null}>
-              <SoundCloudSection />
-            </Suspense>
-          </div>
-        </ViewportLazy>
+        {/* Collapsible SS-Tier Showcase Modules */}
+        <HomeShowcaseAccordion items={[
+          {
+            id: "journal",
+            number: "05",
+            title: "The Longest Record",
+            subtitle: "Beyond the night · Editorials",
+            content: <EditorialSignalsSection />
+          },
+          {
+            id: "archive",
+            number: "06",
+            title: "Captured Moments",
+            subtitle: "The Archive · Visual Records",
+            content: (
+              <ViewportLazy minHeightClassName="min-h-[520px]">
+                <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
+                  <MixedMediaGallery />
+                </Suspense>
+              </ViewportLazy>
+            )
+          },
+          {
+            id: "mixes",
+            number: "07",
+            title: "Radio Transmission",
+            subtitle: "Mixes · Curated Sound",
+            content: (
+              <ViewportLazy minHeightClassName="min-h-[420px]">
+                <div className="bg-card">
+                  <Suspense fallback={null}>
+                    <SoundCloudSection />
+                  </Suspense>
+                </div>
+              </ViewportLazy>
+            )
+          }
+        ]} />
 
         <SectionDivider id="community" number="08" label="Inner Circle" />
         {funnelEvent ? <EventFunnelStack eventId={funnelEvent.id} /> : null}
