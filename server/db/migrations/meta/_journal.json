@@ -8,6 +8,13 @@
       "when": 1770885202566,
       "tag": "0000_equal_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1775040000000,
+      "tag": "0001_rate_limit_buckets",
+      "breakpoints": true
     }
   ]
 }

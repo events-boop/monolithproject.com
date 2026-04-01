@@ -12,16 +12,31 @@ router.get("/sitemap.xml", (req, res) => {
     "/about",
     "/togetherness",
     "/chasing-sunsets",
+    "/chasing-sunsets-facts",
     "/radio",
     "/story",
+    "/archive",
+    "/insights",
     "/booking",
+    "/submit",
     "/lineup",
     "/schedule",
     "/newsletter",
+    "/inner-circle",
     "/contact",
     "/faq",
     "/partners",
-    "/vip"
+    "/press",
+    "/vip",
+    "/travel",
+    "/guide",
+    "/shop",
+    "/ambassadors",
+    "/alerts",
+    "/sponsors",
+    "/terms",
+    "/privacy",
+    "/cookies"
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

@@ -204,10 +204,11 @@ export function useVisitorContext() {
     const routeHistory = readRouteHistory();
     const explicitAudience = inferExplicitAudience(window.location.search);
     const segment = resolveSegment({ explicitAudience, profile, routeHistory });
+    const isHome = window.location.pathname === "/";
     const nextProfile: VisitorProfile = {
       explicitAudience: explicitAudience ?? profile?.explicitAudience ?? null,
       firstSeenAt: profile?.firstSeenAt ?? new Date().toISOString(),
-      homeVisits: (profile?.homeVisits ?? 0) + 1,
+      homeVisits: isHome ? (profile?.homeVisits ?? 0) + 1 : (profile?.homeVisits ?? 0),
       lastSeenAt: new Date().toISOString(),
       lastSegment: segment,
     };

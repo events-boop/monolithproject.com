@@ -2,16 +2,18 @@ import { Router } from "express";
 import { createHash, randomUUID } from "crypto";
 import { contactSchema } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
+import { asyncHandler } from "../lib/async";
 import { scrubEmail } from "../lib/security";
 import { getDatabase } from "../db/client";
 import { contactSubmissions } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { resolveSubmissionOutcome } from "../services/submission-delivery";
 
 const router = Router();
 
 const WEBHOOK_TIMEOUT_MS = 8_000;
 
-router.post("/api/contact", async (req, res) => {
+router.post("/api/contact", asyncHandler(async (req, res) => {
   const requestId = randomUUID();
   const parsed = contactSchema.safeParse(req.body);
 
@@ -33,6 +35,8 @@ router.post("/api/contact", async (req, res) => {
   const webhook = process.env.CONTACT_WEBHOOK_URL || process.env.BOOKING_WEBHOOK_URL;
   const db = getDatabase();
   const dbRecordId = randomUUID();
+  const receivedAt = new Date().toISOString();
+  let dbPersisted = false;
 
   // 1. Persist to DB first — this is the audit trail
   if (db) {
@@ -44,8 +48,9 @@ router.post("/api/contact", async (req, res) => {
         subject: contact.subject,
         message: contact.message,
         webhookStatus: "pending",
-        metadata: { requestId, receivedAt: new Date().toISOString() },
+        metadata: { requestId, receivedAt, deliveryState: "pending" },
       });
+      dbPersisted = true;
     } catch (err) {
       logEvent("contact.db_write_failed", {
         requestId,
@@ -57,14 +62,16 @@ router.post("/api/contact", async (req, res) => {
 
   // 2. Deliver webhook — awaited, with timeout
   if (!webhook && process.env.NODE_ENV === "production") {
-    logEvent("contact.unconfigured", { requestId, subject: contact.subject });
-    // Still accept — data is in DB, webhook can be replayed later
+    logEvent("contact.unconfigured", { requestId, subject: contact.subject, dbPersisted });
   }
 
   let webhookOk = false;
+  let webhookError: string | null = null;
+  let lastWebhookAttemptAt: string | null = null;
 
   if (webhook) {
     try {
+      lastWebhookAttemptAt = new Date().toISOString();
       const response = await fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +79,7 @@ router.post("/api/contact", async (req, res) => {
           ...contact,
           email,
           requestId,
-          receivedAt: new Date().toISOString(),
+          receivedAt,
           type: "contact_form",
         }),
         signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
@@ -84,20 +91,38 @@ router.post("/api/contact", async (req, res) => {
 
       webhookOk = true;
     } catch (err) {
+      webhookError = err instanceof Error ? err.message : "Unknown error";
       logEvent("contact.webhook_failed", {
         requestId,
-        message: err instanceof Error ? err.message : "Unknown error",
+        message: webhookError,
       });
     }
-  } else {
-    // No webhook configured — DB is the only record, that's fine
-    webhookOk = true;
   }
 
+  const outcome = resolveSubmissionOutcome({
+    acceptedMessage: "Message received",
+    deliveryFailedMessage: "We couldn't deliver your message right now. Please try again.",
+    unavailableMessage: "Contact is temporarily unavailable. Please try again later.",
+    successStatus: 200,
+    webhookConfigured: Boolean(webhook),
+    webhookDelivered: webhookOk,
+    dbPersisted,
+  });
+
   // 3. Update DB with webhook delivery status
-  if (db) {
+  if (db && dbPersisted) {
     db.update(contactSubmissions)
-      .set({ webhookStatus: webhookOk ? "success" : "failed" })
+      .set({
+        webhookStatus: outcome.webhookStatus,
+        metadata: {
+          requestId,
+          receivedAt,
+          deliveryState: outcome.deliveryState,
+          webhookConfigured: Boolean(webhook),
+          lastWebhookAttemptAt,
+          lastWebhookError: webhookError,
+        },
+      })
       .where(eq(contactSubmissions.id, dbRecordId))
       .catch(() => {});
   }
@@ -106,24 +131,29 @@ router.post("/api/contact", async (req, res) => {
     requestId,
     subject: contact.subject,
     hash: emailHash,
+    deliveryState: outcome.deliveryState,
     webhookDelivered: webhookOk,
-    dbPersisted: Boolean(db),
+    dbPersisted,
   });
 
-  // If webhook failed AND we have no DB — data is truly lost, tell the user
-  if (!webhookOk && !db) {
-    return res.status(502).json({
+  if (outcome.deliveryState === "failed") {
+    return res.status(outcome.responseStatus).json({
       ok: false,
       requestId,
       error: {
-        code: "DELIVERY_FAILED",
-        message: "We couldn't deliver your message right now. Please try again.",
-        retryable: true,
+        code: Boolean(webhook) ? "DELIVERY_FAILED" : "UNAVAILABLE",
+        message: outcome.responseMessage,
+        retryable: outcome.retryable,
       },
     });
   }
 
-  return res.status(200).json({ ok: true, requestId });
-});
+  return res.status(outcome.responseStatus).json({
+    ok: true,
+    requestId,
+    message: outcome.responseMessage,
+    deliveryState: outcome.deliveryState,
+  });
+}));
 
 export default router;

@@ -54,12 +54,7 @@ export default function Newsletter() {
       </section>
 
       <EntityBoostStrip tone="light" className="pb-8" />
-      <NewsletterSection
-        source="newsletter_page"
-        compactIntro
-        description="One signup, direct signal: ticket access, lineup updates, and mixes worth saving."
-        benefits={benefits}
-      />
+      <NewsletterSection source="newsletter_page" />
     </div>
   );
 }

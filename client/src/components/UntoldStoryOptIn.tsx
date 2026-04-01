@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { submitNewsletterLead } from "@/lib/api";
 
 const SESSION_KEY = "us-optin-dismissed";
 const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
@@ -58,25 +59,15 @@ export default function UntoldStoryOptIn() {
         setErrorMsg("");
 
         try {
-            const res = await fetch("/api/leads", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: email.trim(),
-                    source: "untold-story-optin",
-                    tags: ["untold-story", "season-3"],
-                }),
-            });
-            const data = await res.json();
-            if (!res.ok || !data.ok) {
-                setErrorMsg(data?.error?.message || "Something went wrong. Try again.");
-                setStatus("error");
-            } else {
-                setStatus("success");
-                sessionStorage.setItem(SESSION_KEY, "1");
-            }
-        } catch {
-            setErrorMsg("Network error. Please try again.");
+            await submitNewsletterLead({
+                email: email.trim(),
+                consent: true,
+                source: "untold-story-optin",
+            }, `optin-us-${Date.now()}`);
+            setStatus("success");
+            sessionStorage.setItem(SESSION_KEY, "1");
+        } catch (err) {
+            setErrorMsg(err instanceof Error ? err.message : "Network error. Please try again.");
             setStatus("error");
         }
     };
@@ -141,31 +132,42 @@ export default function UntoldStoryOptIn() {
                             <div className="relative px-8 pt-10 pb-8">
                                 {status === "success" ? (
                                     /* Success state */
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className="text-center py-6"
-                                    >
-                                        <div
-                                            className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
-                                            style={{
-                                                background: "rgba(139,92,246,0.12)",
-                                                border: "1px solid rgba(139,92,246,0.35)",
-                                            }}
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="text-center py-6"
                                         >
-                                            <UntoldButterflyLogo className="w-7 h-7 text-violet-400" />
-                                        </div>
-                                        <h2 className="font-display text-2xl text-white mb-2 tracking-wide">YOU'RE IN</h2>
-                                        <p className="text-white/50 text-sm font-mono tracking-widest uppercase">
-                                            The story will find you.
-                                        </p>
-                                        <button
-                                            onClick={dismiss}
-                                            className="mt-6 text-xs font-mono tracking-widest uppercase text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors"
-                                        >
-                                            Close
-                                        </button>
-                                    </motion.div>
+                                            <div
+                                                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                                                style={{
+                                                    background: "rgba(139,92,246,0.12)",
+                                                    border: "1px solid rgba(139,92,246,0.35)",
+                                                }}
+                                            >
+                                                <UntoldButterflyLogo className="w-7 h-7 text-violet-400" />
+                                            </div>
+                                            <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">ACCESS SECURED</h2>
+                                            <p className="text-white/50 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
+                                                Priority signal active. Watch your inbox.
+                                            </p>
+                                            <a 
+                                                href="https://instagram.com/untoldstory.music" 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="flex items-center justify-center gap-2 w-full py-4 text-[10px] md:text-xs font-mono tracking-widest uppercase font-bold transition-all transition-colors"
+                                                style={{ border: "1px solid rgba(139,92,246,0.5)", color: "#fff", background: "rgba(139,92,246,0.1)" }}
+                                                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.9)"; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.1)"; }}
+                                            >
+                                                Initialize Follow <ArrowRight className="w-3.5 h-3.5" />
+                                            </a>
+                                            <button
+                                                onClick={dismiss}
+                                                className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#8B5CF6]/50 hover:text-[#8B5CF6] transition-colors"
+                                            >
+                                                Close Module
+                                            </button>
+                                        </motion.div>
                                 ) : (
                                     <>
                                         {/* Icon + kicker */}

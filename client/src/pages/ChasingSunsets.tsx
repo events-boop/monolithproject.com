@@ -21,6 +21,7 @@ import {
   getPrimaryTicketUrl,
   getSeriesEvents,
   isTicketOnSale,
+  getExperienceEvent
 } from "@/lib/siteExperience";
 
 const chasingPosterImage = getResponsiveImage("chasingSunsets");
@@ -69,6 +70,11 @@ export default function ChasingSunsets() {
   const chasingFunnelEvent = chasingEvents.find((event) => event.activeFunnels?.length);
   const liveChasingEvent = chasingEvents.find((event) => isTicketOnSale(event));
   const liveChasingTicketUrl = liveChasingEvent ? getPrimaryTicketUrl(liveChasingEvent) : null;
+  const siteHeroEvent = getExperienceEvent("hero");
+  const isChasingCampaign = siteHeroEvent?.series === "chasing-sunsets";
+  const campaignEvent = isChasingCampaign ? siteHeroEvent : null;
+  const hasLiveTickets = isTicketOnSale(campaignEvent);
+  const campaignTicketUrl = hasLiveTickets ? getPrimaryTicketUrl(campaignEvent) : null;
 
   const chasingFaqs = [
     ["Where are the events located?", "Our events take place at various outdoor and rooftop locations across Chicago. Keep an eye on the schedule for specific venues."],
@@ -79,7 +85,6 @@ export default function ChasingSunsets() {
 
   return (
     <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise sunset-page">
-      <ChasingSunsetsOptIn />
       <SEO
         title="Chasing Sun(Sets)"
         description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
@@ -105,33 +110,57 @@ export default function ChasingSunsets() {
               className="pointer-events-auto"
             >
               <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-white/90">
-                Series 01
+                {campaignEvent ? `${campaignEvent.episode}` : "Series 01"}
               </span>
               <motion.h1
                 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
-                className="font-display text-[clamp(4rem,10vw,9rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
+                className="font-display text-[clamp(3.5rem,8vw,8rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
               >
                 <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
-                  CHASING SUN(SETS)
+                  {campaignEvent ? campaignEvent.headline || campaignEvent.title : "CHASING SUN(SETS)"}
                 </span>
               </motion.h1>
-              <p className="max-w-lg text-lg leading-relaxed text-white/90">
-                Golden hour. Good people. Great music. Rooftop shows and outdoor
-                gatherings where the sun does half the work.
-              </p>
+              
+              <div className="max-w-xl">
+                 <p className="text-lg leading-relaxed text-white/90 mb-4">
+                   {campaignEvent?.description || "Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings where the sun does half the work."}
+                 </p>
+                 {campaignEvent && (
+                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-8">
+                      <span>{campaignEvent.date}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/20" />
+                      <span>{getEventVenueLabel(campaignEvent)}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/20" />
+                      <span>{campaignEvent.lineup || "Lineup TBA"}</span>
+                   </div>
+                 )}
+              </div>
+
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <MagneticButton strength={0.3}>
-                  {liveChasingTicketUrl ? (
+                  {hasLiveTickets && campaignTicketUrl ? (
                     <a
-                      href={liveChasingTicketUrl}
+                      href={campaignTicketUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
                     >
                       {CTA_LABELS.tickets}
                       <ArrowUpRight size={14} />
+                    </a>
+                  ) : campaignEvent ? (
+                    <a
+                      href="#chasing-cta"
+                      onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById('chasing-cta')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                    >
+                      {CTA_LABELS.innerCircle}
+                      <ArrowRight size={14} />
                     </a>
                   ) : (
                     <Link href="/schedule" asChild>

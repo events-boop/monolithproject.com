@@ -1,4 +1,5 @@
 import { runWhenIdle } from "./idle";
+import { hasAnalyticsConsent } from "./cookieConsent";
 
 declare global {
   interface Window {
@@ -28,7 +29,7 @@ function isTrackingHost() {
 
 function isEnabled() {
   // Avoid penalizing Lighthouse / previews with third-party tags.
-  return import.meta.env.PROD && isTrackingHost() && Boolean(PIXEL_ID);
+  return import.meta.env.PROD && isTrackingHost() && Boolean(PIXEL_ID) && hasAnalyticsConsent();
 }
 
 function ensureFbq(pixelId: string) {
@@ -82,4 +83,3 @@ export function queueMetaPixelPageview() {
   window.fbq("track", "PageView");
   pendingPageview = false;
 }
-

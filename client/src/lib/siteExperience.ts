@@ -4,11 +4,11 @@ export type SiteExperienceSlot = "hero" | "banner" | "funnel" | "ticket" | "guid
 export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
 
 const EXPERIENCE_EVENT_IDS: Record<SiteExperienceSlot, string> = {
-  hero: "mp-autograf-mar21",
-  banner: "mp-autograf-mar21",
-  funnel: "mp-autograf-mar21",
-  ticket: "mp-autograf-mar21",
-  guide: "mp-autograf-mar21",
+  hero: "css-jul04",
+  banner: "css-jul04",
+  funnel: "css-jul04",
+  ticket: "css-jul04",
+  guide: "css-jul04",
 };
 
 function isValidDate(value?: string) {
@@ -109,7 +109,7 @@ export function getExperienceEvent(
 }
 
 export function getPrimaryTicketUrl(event?: ScheduledEvent | null) {
-  return event?.ticketUrl || POSH_TICKET_URL;
+  return event?.ticketUrl;
 }
 
 export function getEventVenueLabel(event?: ScheduledEvent | null) {

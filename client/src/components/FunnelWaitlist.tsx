@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, User, Sparkles, CheckCircle, ArrowRight } from "lucide-react";
+import { Mail, Phone, User, Sparkles, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
+import { submitNewsletterLead } from "@/lib/api";
 
 interface FunnelWaitlistProps {
     variant?: "default" | "chasing-sunsets" | "untold-story";
 }
 
 export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistProps) {
-    const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const contentMap = {
         "default": {
@@ -59,13 +64,38 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
 
     const content = contentMap[variant];
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const sourceMap = {
+        "default": "funnel_waitlist",
+        "chasing-sunsets": "funnel_waitlist_chasing",
+        "untold-story": "funnel_waitlist_untold",
+    } as const;
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!email.trim()) return;
         setStatus("loading");
-        // Simulate network request
-        setTimeout(() => {
+        setErrorMsg("");
+
+        const [firstName, ...lastParts] = fullName.trim().split(" ");
+        const lastName = lastParts.join(" ") || undefined;
+
+        try {
+            await submitNewsletterLead(
+                {
+                    email: email.trim(),
+                    firstName: firstName || undefined,
+                    lastName,
+                    consent: true,
+                    source: sourceMap[variant],
+                    utmContent: phone.trim() ? "sms_interest" : undefined,
+                },
+                crypto.randomUUID(),
+            );
             setStatus("success");
-        }, 1500);
+        } catch (err) {
+            setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+            setStatus("error");
+        }
     };
 
     return (
@@ -159,6 +189,9 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                                     <input
                                                         required
                                                         type="text"
+                                                        value={fullName}
+                                                        onChange={(e) => setFullName(e.target.value)}
+                                                        autoComplete="name"
                                                         placeholder="John Doe"
                                                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                                                     />
@@ -172,6 +205,9 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                                     <input
                                                         required
                                                         type="email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                        autoComplete="email"
                                                         placeholder="john@example.com"
                                                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                                                     />
@@ -184,11 +220,20 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                                                     <input
                                                         type="tel"
+                                                        value={phone}
+                                                        onChange={(e) => setPhone(e.target.value)}
+                                                        autoComplete="tel"
                                                         placeholder="+1 (555) 000-0000"
                                                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                                                     />
                                                 </div>
                                             </div>
+
+                                            {status === "error" && errorMsg && (
+                                                <p className="flex items-center gap-2 text-red-400 text-xs font-mono mt-1">
+                                                    <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errorMsg}
+                                                </p>
+                                            )}
 
                                             <button
                                                 type="submit"

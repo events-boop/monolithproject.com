@@ -9,6 +9,7 @@ import { isEventBannerVisible } from "@/lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
 import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
+import NavigationMegamenu from "./NavigationMegamenu";
 
 interface NavigationProps {
   activeSection?: string;
@@ -56,16 +57,20 @@ const navItems: {
   { label: "CONTACT", href: "/contact" },
 ];
 
-const mobileNavItems = [
+const mobilePrimaryItems = [
+  { label: "SCHEDULE", href: "/schedule" },
+  { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+  { label: "UNTOLD STORY", href: "/story" },
   { label: "ABOUT", href: "/about" },
-  { label: "EVENTS", href: "/schedule" },
+];
+
+const mobileSecondaryItems = [
   { label: "ARTISTS", href: "/lineup" },
+  { label: "RADIO", href: "/radio" },
   { label: "ARCHIVE", href: "/archive" },
-  { label: "JOURNAL", href: "/insights" },
+  { label: "NIGHT GUIDE", href: "/guide" },
   { label: "PARTNERS", href: "/partners" },
   { label: "CONTACT", href: "/contact" },
-  { label: "INNER CIRCLE", href: "/newsletter" },
-  { label: "NIGHT GUIDE", href: "/guide" },
 ];
 
 export default function Navigation({ activeSection, variant, brand }: NavigationProps) {
@@ -427,9 +432,87 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               </AnimatePresence>
             </div>
 
-            {/* CENTER/RIGHT: LINKS */}
             <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-3 xl:gap-5 2xl:gap-8 pr-4 whitespace-nowrap">
-              {navItems.map((item) =>
+              {/* NAVIGATION MEGAMENU INJECTIONS */}
+              <NavigationMegamenu
+                label="EVENTS"
+                href="/schedule"
+                isActive={[ "/schedule", "/chasing-sunsets", "/story", "/tickets" ].includes(location)}
+                isLight={isLight}
+                brand={resolvedBrand}
+                onNavigate={handleNavClick}
+                megamenu={{
+                  items: [
+                    { label: "SCHEDULE", href: "/schedule" },
+                    { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+                    { label: "UNTOLD STORY", href: "/story" },
+                    { label: "TICKETS", href: "/tickets" },
+                  ],
+                  feature: {
+                    title: "ERAN HERSH",
+                    subtitle: "Untold Story S3·E3",
+                    image: "/images/artist-lazare.webp",
+                    href: ticketHref || "/story",
+                    ctaText: ticketHref ? "On Sale Now" : "Join Waitlist",
+                    icon: "ticket",
+                    badge: "FEATURED",
+                    external: !!ticketHref
+                  }
+                }}
+              />
+
+              <NavigationMegamenu
+                label="ARTISTS"
+                href="/lineup"
+                isActive={[ "/lineup", "/radio" ].includes(location)}
+                isLight={isLight}
+                brand={resolvedBrand}
+                onNavigate={handleNavClick}
+                megamenu={{
+                  items: [
+                    { label: "LINEUP", href: "/lineup" },
+                    { label: "RADIO SESSIONS", href: "/radio" },
+                  ],
+                  feature: {
+                    title: "SEASON 3 EPISODE 1",
+                    subtitle: "Radio Show",
+                    image: "/images/radio-show.jpg",
+                    href: "/radio",
+                    ctaText: "Listen Now",
+                    icon: "play",
+                    badge: "STREAMS"
+                  }
+                }}
+              />
+
+              <NavigationMegamenu
+                label="PARTNERS"
+                href="/partners"
+                isActive={[ "/partners", "/sponsors", "/booking", "/submit", "/press" ].includes(location)}
+                isLight={isLight}
+                brand={resolvedBrand}
+                onNavigate={handleNavClick}
+                megamenu={{
+                  items: [
+                    { label: "OUR PARTNERS", href: "/partners" },
+                    { label: "SPONSOR ACCESS", href: "/sponsors" },
+                    { label: "BOOKING", href: "/booking" },
+                    { label: "ARTIST SUBMISSION", href: "/submit" },
+                    { label: "PRESS & MEDIA", href: "/press" },
+                  ],
+                  feature: {
+                    title: "JOIN THE COLLECTIVE",
+                    subtitle: "Partnerships",
+                    image: "/images/artists-collective.jpg",
+                    href: "/booking",
+                    ctaText: "Inquire Now",
+                    icon: "play",
+                    badge: "ACCESS"
+                  }
+                }}
+              />
+
+              {navItems.filter(i => ![ "EVENTS", "ARTISTS", "PARTNERS" ].includes(i.label)).map((item) =>
                 item.children ? (
                     <div 
                       key={item.label} 
@@ -520,7 +603,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               {/* TICKETS BUTTON */}
               <div className="hidden sm:block">
                 <MagneticButton strength={0.2}>
-                  <a href={ticketHref} target="_blank" rel="noopener noreferrer" data-cursor-text="TICKETS" onClick={() => signalChirp.click()}>
+                  <a href={ticketHref || "/schedule"} target={ticketHref ? "_blank" : undefined} rel={ticketHref ? "noopener noreferrer" : undefined} data-cursor-text="TICKETS" onClick={() => signalChirp.click()}>
                     <div className={`sunset-gradient-btn text-white rounded-full items-center gap-2 px-5 min-[1150px]:px-6 xl:px-7 py-2.5 transition-all duration-300 flex ${isLight
                       ? "opacity-90 hover:opacity-100 !shadow-none"
                       : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
@@ -625,7 +708,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
             </div>
 
             <div className="scrollbar-hide relative z-10 flex max-h-[calc(100vh-7rem)] w-full max-w-2xl flex-col items-center gap-4 overflow-y-auto rounded-[28px] border border-white/12 bg-black/28 px-5 py-5 shadow-[0_24px_58px_rgba(0,0,0,0.45)] backdrop-blur-2xl sm:gap-5 sm:rounded-3xl sm:px-8 sm:py-8 md:max-h-[calc(100vh-5.5rem)]">
-              {mobileNavItems.filter(i => i.label !== "TICKETS").map((item, index) => (
+              {mobilePrimaryItems.map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 30 }}
@@ -644,7 +727,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       setMobileMenuOpen(false);
                     }}
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group font-display text-xl sm:text-2xl md:text-4xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-muted-foreground"}`}
+                    className={`group font-display text-3xl sm:text-4xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
                   >
                     {renderNavLabel(item.label, true)}
                   </Link>
@@ -653,19 +736,37 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
               {/* Emphasized ticket CTA */}
               <motion.a
-                href={ticketHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={ticketHref || "/schedule"}
+                target={ticketHref ? "_blank" : undefined}
+                rel={ticketHref ? "noopener noreferrer" : undefined}
                 onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + mobileNavItems.length * 0.1 }}
-                className="mt-2 w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 border border-white/25 rounded-full text-white font-display text-xl sm:text-2xl tracking-widest uppercase flex items-center justify-center gap-3 hover:bg-white hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                transition={{ delay: 0.1 + mobilePrimaryItems.length * 0.1 }}
+                className="mt-6 w-full sm:w-auto px-8 sm:px-10 py-5 sm:py-6 bg-white rounded-full text-black font-heavy text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all cursor-pointer shadow-[0_10px_40px_rgba(255,255,255,0.2)] focus-visible:outline-none"
               >
-                <Ticket className="w-5 h-5" />
-                GET TICKETS
-                <ArrowUpRight className="w-5 h-5" />
+                <Ticket className="w-4 h-4" />
+                {ticketHref ? "SECURE SECRETS / TICKETS" : "SECURE PRIORITY ENTRY"}
+                <ArrowUpRight className="w-4 h-4" />
               </motion.a>
+
+              <motion.div 
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ delay: 0.5 }}
+                 className="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-8 pt-6 w-full border-t border-white/10"
+              >
+                 {mobileSecondaryItems.map((item) => (
+                   <Link 
+                     key={item.label} 
+                     href={item.href} 
+                     onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
+                     className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/40 hover:text-white transition-colors"
+                   >
+                     {item.label}
+                   </Link>
+                 ))}
+              </motion.div>
             </div>
           </motion.div>
         )}

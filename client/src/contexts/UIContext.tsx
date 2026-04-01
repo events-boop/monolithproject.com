@@ -10,12 +10,16 @@ const drawerRouteMap = {
     "/inner-circle": "newsletter",
 } as const;
 
+export type ExpressionId = "sunsets" | "untold" | "radio" | null;
+
 interface UIContextProps {
     activeDrawer: DrawerType;
     openDrawer: (drawer: DrawerType) => void;
     closeDrawer: () => void;
     isSensoryOverloadActive: boolean;
     setSensoryOverloadActive: (active: boolean) => void;
+    hoveredExpression: ExpressionId;
+    setHoveredExpression: (id: ExpressionId) => void;
 }
 
 const UIContext = createContext<UIContextProps | undefined>(undefined);
@@ -29,12 +33,21 @@ function normalizePathname(pathname: string) {
 export function UIProvider({ children }: { children: ReactNode }) {
     const [activeDrawer, setActiveDrawer] = useState<DrawerType>(null);
     const [isSensoryOverloadActive, setSensoryOverloadActive] = useState<boolean>(false);
+    const [hoveredExpression, setHoveredExpression] = useState<ExpressionId>(null);
 
     const openDrawer = (drawer: DrawerType) => setActiveDrawer(drawer);
     const closeDrawer = () => setActiveDrawer(null);
 
     return (
-        <UIContext.Provider value={{ activeDrawer, openDrawer, closeDrawer, isSensoryOverloadActive, setSensoryOverloadActive }}>
+        <UIContext.Provider value={{ 
+            activeDrawer, 
+            openDrawer, 
+            closeDrawer, 
+            isSensoryOverloadActive, 
+            setSensoryOverloadActive,
+            hoveredExpression,
+            setHoveredExpression
+        }}>
             {children}
         </UIContext.Provider>
     );

@@ -7,8 +7,9 @@ const startTime = Date.now();
 router.get("/api/health", (_req, res) => {
   res.setHeader("Cache-Control", "no-store");
   
+  const isHealthy = hasDatabase();
   const status = {
-    ok: true,
+    ok: isHealthy,
     service: "monolith-api",
     version: "1.0.0-ss-tier",
     uptime: Math.floor((Date.now() - startTime) / 1000),
@@ -18,9 +19,8 @@ router.get("/api/health", (_req, res) => {
     }
   };
 
-  const isHealthy = hasDatabase();
-
-  res.status(isHealthy ? 200 : 503).json(status);
+  // Return 200 even if degraded to prevent aggressive orchestrator restarts
+  res.status(200).json(status);
 });
 
 export default router;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sun, ArrowRight } from "lucide-react";
+import { submitNewsletterLead } from "@/lib/api";
 
 const SESSION_KEY = "cs-optin-dismissed";
 const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
@@ -57,25 +58,15 @@ export default function ChasingSunsetsOptIn() {
         setErrorMsg("");
 
         try {
-            const res = await fetch("/api/leads", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: email.trim(),
-                    source: "chasing-sunsets-optin",
-                    tags: ["chasing-sunsets", "2026-season"],
-                }),
-            });
-            const data = await res.json();
-            if (!res.ok || !data.ok) {
-                setErrorMsg(data?.error?.message || "Something went wrong. Try again.");
-                setStatus("error");
-            } else {
-                setStatus("success");
-                sessionStorage.setItem(SESSION_KEY, "1");
-            }
-        } catch {
-            setErrorMsg("Network error. Please try again.");
+            await submitNewsletterLead({
+                email: email.trim(),
+                consent: true,
+                source: "chasing-sunsets-optin",
+            }, `optin-cs-${Date.now()}`);
+            setStatus("success");
+            sessionStorage.setItem(SESSION_KEY, "1");
+        } catch (err) {
+            setErrorMsg(err instanceof Error ? err.message : "Network error. Please try again.");
             setStatus("error");
         }
     };
@@ -146,15 +137,32 @@ export default function ChasingSunsetsOptIn() {
                                             style={{ background: "rgba(232,184,109,0.1)" }}>
                                             <Sun className="w-7 h-7 text-[#E8B86D]" />
                                         </div>
-                                        <h2 className="font-display text-2xl text-white mb-2 tracking-wide">YOU'RE IN</h2>
-                                        <p className="text-white/60 text-sm font-mono tracking-widest uppercase">
-                                            Signal received.
+                                        <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">ACCESS SECURED</h2>
+                                        <p className="text-white/60 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
+                                            Priority signal active. Watch your inbox.
                                         </p>
+                                        <a 
+                                            href="https://instagram.com/chasingsunsets.music" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-2 w-full py-4 text-[10px] md:text-xs font-mono tracking-widest uppercase font-bold transition-all transition-colors"
+                                            style={{ border: "1px solid rgba(232,184,109,0.5)", color: "#E8B86D", background: "rgba(232,184,109,0.1)" }}
+                                            onMouseEnter={(e) => { 
+                                                e.currentTarget.style.background = "rgba(232,184,109,0.9)"; 
+                                                e.currentTarget.style.color = "#1A0F00";
+                                            }}
+                                            onMouseLeave={(e) => { 
+                                                e.currentTarget.style.background = "rgba(232,184,109,0.1)"; 
+                                                e.currentTarget.style.color = "#E8B86D";
+                                            }}
+                                        >
+                                            Initialize Follow <ArrowRight className="w-3.5 h-3.5" />
+                                        </a>
                                         <button
                                             onClick={dismiss}
-                                            className="mt-6 text-xs font-mono tracking-widest uppercase text-[#E8B86D]/60 hover:text-[#E8B86D] transition-colors"
+                                            className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#E8B86D]/50 hover:text-[#E8B86D] transition-colors"
                                         >
-                                            Close
+                                            Close Module
                                         </button>
                                     </motion.div>
                                 ) : (
@@ -188,7 +196,7 @@ export default function ChasingSunsetsOptIn() {
                                         <div className="h-px mb-6" style={{ background: "linear-gradient(to right, rgba(232,184,109,0.3), transparent)" }} />
 
                                         {/* Form */}
-                                        <form action="/api/leads" method="POST" onSubmit={handleSubmit} className="space-y-3">
+                                        <form onSubmit={handleSubmit} className="space-y-3">
                                             <div className="relative">
                                                 <input
                                                     type="email"

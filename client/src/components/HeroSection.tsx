@@ -106,7 +106,7 @@ const HERO_SUPPORT_LINES = [
 const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
 
 const HERO_SUBHEAD =
-  "The Monolith Project holds four connected expressions: the umbrella world, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story. Together they shape recurring Chicago rooms built for people who care what the night feels like.";
+  "Monolith is the umbrella. Chasing Sun(Sets) is sunset and open air. Untold Story is the deep after-dark expression. Recurring Chicago rooms built for people who care what the night feels like.";
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -194,9 +194,11 @@ export default function HeroSection() {
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
   
-  const primaryCtaLabel = getHomePrimaryCtaLabel(hasLiveTickets);
-  const secondaryCtaLabel = getHomeSecondaryCtaLabel(hasLiveTickets);
-  const secondaryCtaHref = hasLiveTickets ? "/schedule" : "/insights";
+  const primaryCtaLabel = hasLiveTickets ? getHomePrimaryCtaLabel(true) : featuredEvent?.status === 'coming-soon' ? "Join Priority Access" : getHomePrimaryCtaLabel(false);
+  const secondaryCtaLabel = hasLiveTickets ? getHomeSecondaryCtaLabel(true) : featuredEvent?.status === 'coming-soon' ? "Event Details" : getHomeSecondaryCtaLabel(false);
+  
+  const primaryCtaHref = hasLiveTickets ? ticketUrl : featuredEvent?.status === 'coming-soon' ? (featuredEvent.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/schedule";
+  const secondaryCtaHref = hasLiveTickets ? "/schedule" : featuredEvent?.status === 'coming-soon' ? (featuredEvent.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/insights";
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">
@@ -305,15 +307,17 @@ export default function HeroSection() {
               </div>
            )}
 
-           <div className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/40 leading-loose font-mono max-w-lg mx-auto mb-10">
-             <WordScrubReveal text="Recurring Chicago rooms built for people who care what the night feels like." />
+           <div className="text-[10px] md:text-sm uppercase tracking-[0.25em] text-white/50 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
+             <WordScrubReveal text={HERO_SUBHEAD} />
            </div>
            
            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
               <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
                 <a
-                  href={hasLiveTickets ? ticketUrl : "/schedule"}
+                  href={primaryCtaHref as string}
                   target={hasLiveTickets ? "_blank" : undefined}
+                  data-cursor-magnetic
+                  data-cursor-text={hasLiveTickets ? "RSVP" : "ACCESS"}
                   className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[10px] font-bold uppercase tracking-[0.4em] text-white w-full sm:w-auto"
                 >
                   <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
@@ -347,7 +351,7 @@ export default function HeroSection() {
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              transition={{ delay: 2.2 }}
-             className="flex gap-6"
+             className="hidden md:flex gap-6"
            >
               {COLLECTIVE_PATHS.map((path) => (
                 <Link key={path.title} href={path.href} className="group pointer-events-auto">

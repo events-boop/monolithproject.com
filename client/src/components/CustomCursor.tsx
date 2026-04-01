@@ -9,6 +9,7 @@ export default function CustomCursor() {
     const [cursorText, setCursorText] = React.useState("");
     const [cursorImage, setCursorImage] = React.useState("");
 
+    const [magneticTarget, setMagneticTarget] = React.useState<HTMLElement | null>(null);
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
 
@@ -22,8 +23,26 @@ export default function CustomCursor() {
 
         const moveCursor = (e: MouseEvent) => {
             if (!isVisible) setIsVisible(true);
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
+            
+            let x = e.clientX;
+            let y = e.clientY;
+
+            // Magnetic Pull Logic
+            const target = e.target as HTMLElement;
+            const magneticEl = target.closest('[data-cursor-magnetic]') as HTMLElement;
+            
+            if (magneticEl) {
+                const rect = magneticEl.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Pull toward center by 30%
+                x = x + (centerX - x) * 0.35;
+                y = y + (centerY - y) * 0.35;
+            }
+
+            mouseX.set(x);
+            mouseY.set(y);
         };
 
         const handleMouseDown = () => {

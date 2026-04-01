@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { logEvent } from "../lib/logging";
+import { asyncHandler } from "../lib/async";
 import { hasDatabase } from "../db/client";
 import { readSocialEchoSnapshot } from "../db/socialEchoRepo";
 import { readInMemorySocialEchoSnapshot } from "../services/social-echo";
 
 const router = Router();
 
-router.get("/api/social/echo", async (_req, res) => {
+router.get("/api/social/echo", asyncHandler(async (_req, res) => {
   try {
     const snapshot = hasDatabase() ? await readSocialEchoSnapshot() : null;
     if (snapshot) {
@@ -25,6 +26,6 @@ router.get("/api/social/echo", async (_req, res) => {
       },
     });
   }
-});
+}));
 
 export default router;

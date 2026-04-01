@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch, useLocation } from "wouter";
@@ -215,6 +215,7 @@ function MainContentWrapper() {
 
 function App() {
   const [showPreloader, setShowPreloader] = useState(true);
+  const handlePreloaderComplete = useCallback(() => setShowPreloader(false), []);
 
   return (
     <HelmetProvider>
@@ -229,7 +230,7 @@ function App() {
               
               <AnimatePresence mode="wait">
                 {showPreloader && (
-                   <Preloader key="preloader" onComplete={() => setShowPreloader(false)} />
+                   <Preloader key="preloader" onComplete={handlePreloaderComplete} />
                 )}
               </AnimatePresence>
               

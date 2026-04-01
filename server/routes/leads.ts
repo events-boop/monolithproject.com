@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createHash, randomUUID } from "crypto";
 import { leadSchema } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
+import { asyncHandler } from "../lib/async";
 import { scrubEmail } from "../lib/security";
 import { readProvider } from "../lib/env";
 import { getFromCache, setInCache, hasInFlight, setInFlight, resolveInFlight, deleteInFlight } from "../services/idempotency";
@@ -12,7 +13,7 @@ import { eq } from "drizzle-orm";
 
 const router = Router();
 
-router.post("/api/leads", async (req, res) => {
+router.post("/api/leads", asyncHandler(async (req, res) => {
   const requestId = randomUUID();
   const parsed = leadSchema.safeParse(req.body);
 
@@ -80,7 +81,7 @@ router.post("/api/leads", async (req, res) => {
         db.update(leads)
           .set({ providerStatus: "success" })
           .where(eq(leads.id, dbLeadId))
-          .catch(() => { });
+          .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'success':`, err));
       }
 
       const body = {
@@ -110,7 +111,7 @@ router.post("/api/leads", async (req, res) => {
         db.update(leads)
           .set({ providerStatus: "failed", metadata: { ...parsed.data, error: rawMessage } })
           .where(eq(leads.id, dbLeadId))
-          .catch(() => { });
+          .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'failed':`, err));
       }
 
       const body = {
@@ -134,12 +135,13 @@ router.post("/api/leads", async (req, res) => {
   })();
 
   setInFlight(idempotencyKey, operation);
-  const result = await operation;
-
-  setInCache(idempotencyKey, result.status, result.body);
-  deleteInFlight(idempotencyKey);
-
-  return res.status(result.status).json(result.body);
-});
+  try {
+    const result = await operation;
+    setInCache(idempotencyKey, result.status, result.body);
+    return res.status(result.status).json(result.body);
+  } finally {
+    deleteInFlight(idempotencyKey);
+  }
+}));
 
 export default router;

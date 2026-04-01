@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
+import { useUI } from "@/contexts/UIContext";
 
 const SIGNALS: Record<string, string[]> = {
   DEFAULT: [
@@ -28,6 +29,7 @@ const SIGNALS: Record<string, string[]> = {
 
 export default function SystemHUD() {
   const [location] = useLocation();
+  const { hoveredExpression } = useUI();
   const [uptime, setUptime] = useState(0);
   const [requestId, setRequestId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,15 +54,18 @@ export default function SystemHUD() {
   }, []);
 
   // Contextual Branding
-  const isSunsets = location === "/chasing-sunsets";
-  const isUntold = location === "/story";
-  const isRadio = location === "/radio";
+  const activeExp = hoveredExpression || (
+    location === "/chasing-sunsets" ? "sunsets" :
+    location === "/story" || location === "/untold-story-deron-juany-bravo" ? "untold" :
+    location === "/radio" ? "radio" : null
+  );
   
   let accentColor = "rgba(224,90,58,0.2)";
   let textColor = "text-primary";
-  if (isSunsets) { accentColor = "rgba(232,184,109,0.25)"; textColor = "text-[#E8B86D]"; }
-  if (isUntold) { accentColor = "rgba(34,211,238,0.25)"; textColor = "text-[#22D3EE]"; }
-  if (isRadio) { accentColor = "rgba(255,255,255,0.15)"; textColor = "text-white"; }
+
+  if (activeExp === "sunsets") { accentColor = "rgba(232,184,109,0.35)"; textColor = "text-[#E8B86D]"; }
+  if (activeExp === "untold") { accentColor = "rgba(34,211,238,0.35)"; textColor = "text-[#22D3EE]"; }
+  if (activeExp === "radio") { accentColor = "rgba(255,255,255,0.25)"; textColor = "text-white"; }
 
   // REQID & Uptime (Immutable per session)
   useEffect(() => {
@@ -130,8 +135,8 @@ export default function SystemHUD() {
 
   return (
     <div className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
-      {/* HUD Frame Components */}
-      <div className="absolute top-6 right-8 flex flex-col items-end gap-1.5 mix-blend-difference pointer-events-auto">
+      {/* HUD Frame Components — hidden on small screens to prevent content coverage */}
+      <div className="absolute top-6 right-8 hidden xl:flex flex-col items-end gap-1.5 mix-blend-difference pointer-events-auto">
         <button 
           onClick={() => setDiagnosticsOpen(!diagnosticsOpen)}
           className="group flex flex-col items-end gap-1.5 cursor-pointer"
@@ -174,7 +179,7 @@ export default function SystemHUD() {
         )}
       </AnimatePresence>
 
-      <div className="absolute bottom-6 left-8 flex flex-col items-start gap-1.5 mix-blend-difference">
+      <div className="absolute bottom-6 left-8 hidden lg:flex flex-col items-start gap-1.5 mix-blend-difference">
         <div className="flex items-center gap-4 mb-2 pointer-events-auto">
            <div className="grid grid-cols-4 gap-1">
              {[...Array(16)].map((_, i) => (
@@ -197,7 +202,7 @@ export default function SystemHUD() {
         </span>
       </div>
 
-      <div className="absolute bottom-6 right-8 flex flex-col items-end gap-1.5 mix-blend-difference min-w-[200px]">
+      <div className="absolute bottom-6 right-8 hidden lg:flex flex-col items-end gap-1.5 mix-blend-difference min-w-[200px]">
         <AnimatePresence mode="wait">
           <motion.div 
             key={currentSignal}
@@ -228,7 +233,7 @@ export default function SystemHUD() {
         </AnimatePresence>
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-[100] overflow-hidden mix-blend-overlay opacity-30">
+      <div className="pointer-events-none fixed inset-0 z-[100] overflow-hidden mix-blend-overlay opacity-30 hidden md:block">
         <div className="absolute inset-0 w-full h-[100%] bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] animate-scanline" />
         <div 
           className="absolute inset-0 opacity-60"

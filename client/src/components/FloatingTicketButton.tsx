@@ -28,7 +28,7 @@ export default function FloatingTicketButton() {
     return () => window.removeEventListener("scroll", checkScroll);
   }, []);
 
-  if (!nextEvent) return null;
+  if (!nextEvent || !ticketUrl) return null;
 
   // Determine accent color based on series
   const isSunsets = nextEvent.series === "chasing-sunsets";
@@ -42,8 +42,8 @@ export default function FloatingTicketButton() {
 
   return (
     <div
-      className={`fixed bottom-0 right-0 md:bottom-8 md:right-8 z-[45] hidden md:block transition-all duration-700 ease-in-out origin-bottom-right ${
-        isAtBottom ? "opacity-0 translate-y-10 pointer-events-none" : "opacity-100 translate-y-0"
+      className={`fixed bottom-0 left-0 right-0 md:bottom-8 md:right-8 md:left-auto z-[45] transition-transform duration-700 ease-in-out origin-bottom ${
+        isAtBottom ? "translate-y-[120%]" : "translate-y-0"
       }`}
     >
       <a
@@ -59,27 +59,27 @@ export default function FloatingTicketButton() {
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.8, delay: 1 }}
-           className="bg-black/80 backdrop-blur-xl border border-white/15 p-6 md:p-8 flex items-center gap-6 md:gap-8 transition-all duration-500 hover:bg-white hover:border-white overflow-hidden shadow-2xl"
+           className="bg-black border-t md:border border-white/15 p-5 sm:p-6 md:p-8 flex items-center justify-between md:justify-end gap-4 md:gap-8 transition-all duration-500 hover:bg-white hover:border-white overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-2xl"
         >
           {/* Edge Accent Line */}
           <div className={`absolute top-0 bottom-0 left-0 w-[3px] opacity-50 group-hover:opacity-100 transition-all duration-500 ${accentColor}`} />
 
-          <div className="flex flex-col text-right items-end z-10">
+          <div className="flex flex-col text-left md:text-right items-start md:items-end z-10 w-full md:w-auto">
             {nextEvent.ticketUrl && (
-              <div className="flex items-center gap-2 justify-end mb-3">
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <span className="relative flex h-2 w-2">
                   <span className={`animate-ping absolute inline-flex h-full w-full opacity-75 ${accentColor}`} />
                   <span className={`relative inline-flex h-2 w-2 ${accentColor}`} />
                 </span>
                 <span className={`font-mono text-[9px] uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
-                  On Sale
+                  Priority Access
                 </span>
               </div>
             )}
-            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-2">
-              Next Event · {shortDate}
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-1.5 md:mb-2">
+              {shortDate}
             </span>
-            <span className="font-heavy text-2xl md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none">
+            <span className="font-heavy text-lg md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none truncate max-w-[200px] md:max-w-xs">
               {nextEvent.title}
             </span>
           </div>

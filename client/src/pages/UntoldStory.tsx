@@ -23,7 +23,7 @@ const UNTOLD_ANCHORS = [
 ];
 
 export default function UntoldStory() {
-  const scheduledEvent = getEventById("us-s3e2");
+  const scheduledEvent = getEventById("us-s3e3");
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 
@@ -44,13 +44,13 @@ export default function UntoldStory() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1}>
-        <UntoldHero />
+        <UntoldHero event={scheduledEvent} />
         <SeasonAnchorNav items={UNTOLD_ANCHORS} tone="nocturne" className="-mt-7 mb-5 relative z-30" />
-        <UntoldContent />
+        <UntoldContent event={scheduledEvent} />
         <UntoldContrast />
 
         {/* Dynamic Funnels for this Event */}
-        <EventFunnelStack eventId="us-s3e2" />
+        <EventFunnelStack eventId="us-may16" />
 
         {/* Season Records */}
         <div id="untold-records" className="scroll-shell-target relative z-20 container max-w-6xl mx-auto px-6 border-t border-white/10">

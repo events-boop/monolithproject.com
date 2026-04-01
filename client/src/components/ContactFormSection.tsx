@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
-import { submitBookingInquiry } from "@/lib/api";
+import { submitContactForm } from "@/lib/api";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120, "Name is too long"),
@@ -32,11 +32,10 @@ export default function ContactFormSection() {
     setIsSubmitting(true);
     setSubmitError("");
     try {
-      await submitBookingInquiry({
+      await submitContactForm({
         name: data.name.trim(),
         email: data.email.trim(),
-        entity: data.subject.trim(),
-        type: "general",
+        subject: data.subject.trim(),
         message: data.message.trim(),
       });
       setIsSubmitted(true);
@@ -66,7 +65,7 @@ export default function ContactFormSection() {
           </p>
         </div>
       ) : (
-        <form action="/api/contact" method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
           <div>
             <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
             <input

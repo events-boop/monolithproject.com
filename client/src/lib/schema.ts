@@ -212,25 +212,24 @@ export function buildEventSchema(input: EventSchemaInput) {
 }
 
 export function buildUntoldStoryEventSchema(pagePath: string) {
-  const event = getEventById("us-s3e2");
+  const event = getEventById("us-s3e3");
   if (event) return buildScheduledEventSchema(event, pagePath);
 
   return buildEventSchema({
     pagePath,
-    name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
+    name: "ERAN HERSH — Untold Story Season III Episode III",
     description:
-      "A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360 dancefloor experience.",
-    startDate: "2026-03-06T19:00:00-06:00",
-    endDate: "2026-03-07T02:00:00-06:00",
+      "A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago. Intimate room, deep grooves.",
+    startDate: "2026-05-16T21:00:00-05:00",
+    endDate: "2026-05-17T03:00:00-05:00",
     image: [
       "/images/untold-story.jpg",
-      "/images/artist-deron-untold.webp",
-      "/images/artist-juany-bravo-untold.webp",
+      "/images/artist-lazare.webp",
     ],
-    performer: ["Juany Bravo", "Deron", "Hashtom", "Rose", "Avo", "Jerome b2b Kenbo"],
+    performer: ["Eran Hersh"],
     ticketUrl: POSH_TICKET_URL,
-    locationName: "Alhambra Palace",
-    streetAddress: "1240 W Randolph St",
+    locationName: "Venue Reveal Soon",
+    streetAddress: "Chicago IL",
     addressLocality: "Chicago",
     addressRegion: "IL",
     postalCode: "60607",

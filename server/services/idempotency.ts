@@ -4,7 +4,9 @@ export const idempotencyInFlight = new Map<string, Promise<{ status: number; bod
 
 export function getFromCache(key: string) {
   const cached = idempotencyCache.get(key);
-  if (cached && cached.expiresAt > Date.now()) return cached;
+  if (!cached) return undefined;
+  if (cached.expiresAt > Date.now()) return cached;
+  idempotencyCache.delete(key); // Evict expired entry
   return undefined;
 }
 
@@ -31,3 +33,12 @@ export function resolveInFlight(key: string) {
 export function deleteInFlight(key: string) {
   idempotencyInFlight.delete(key);
 }
+
+// Periodic eviction sweep — prevents unbounded memory growth
+const EVICTION_INTERVAL_MS = 60_000;
+setInterval(() => {
+  const now = Date.now();
+  idempotencyCache.forEach((entry, key) => {
+    if (entry.expiresAt <= now) idempotencyCache.delete(key);
+  });
+}, EVICTION_INTERVAL_MS).unref();

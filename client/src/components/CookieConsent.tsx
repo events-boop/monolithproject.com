@@ -2,22 +2,24 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { X } from "lucide-react";
-
-const STORAGE_KEY = "monolith_cookie_consent";
+import {
+    COOKIE_CONSENT_RESOLVED_EVENT,
+    COOKIE_CONSENT_STORAGE_KEY,
+} from "@/lib/cookieConsent";
 
 export default function CookieConsent() {
     const [visible, setVisible] = useState(false);
 
     const resolveConsent = (value: "accepted" | "declined") => {
-        localStorage.setItem(STORAGE_KEY, value);
-        window.dispatchEvent(new CustomEvent("monolith:cookie-consent-resolved", { detail: value }));
+        localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
+        window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_RESOLVED_EVENT, { detail: value }));
         setVisible(false);
     };
 
     useEffect(() => {
         // Small delay so it doesn't flash on first paint
         const timer = setTimeout(() => {
-            if (!localStorage.getItem(STORAGE_KEY)) {
+            if (!localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY)) {
                 setVisible(true);
             }
         }, 1800);

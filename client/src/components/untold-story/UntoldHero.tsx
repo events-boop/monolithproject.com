@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
-import { POSH_TICKET_URL } from "@/data/events";
 import MagneticButton from "@/components/MagneticButton";
+import { ScheduledEvent } from "@/data/events";
 
 const heroSlides = [
   "/images/untold-story-juany-deron.webp",
   "/images/untold-story-hero-post1.webp"
 ];
 
-export default function UntoldHero() {
+export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
 
   useEffect(() => {
@@ -20,6 +20,9 @@ export default function UntoldHero() {
     }, 10000);
     return () => window.clearInterval(timer);
   }, []);
+
+  const headlineLines = event ? event.title.split(" ") : ["UNTOLD", "STORY"];
+  const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
@@ -72,10 +75,10 @@ export default function UntoldHero() {
             <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
             <div className="flex items-center gap-4 mb-6">
               <span className="font-mono text-xs tracking-[0.3em] uppercase text-untold-cyan">
-                Series 02
+                {event?.episode || "Series 02"}
               </span>
               <div className="h-px w-12 bg-white/20" />
-              <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">Chicago</span>
+              <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">{event?.location || "Chicago"}</span>
             </div>
 
             {/* Visible Title */}
@@ -85,21 +88,29 @@ export default function UntoldHero() {
               transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
               className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]"
             >
-              UNTOLD<br />STORY
+              {headlineLines.map((line, i) => (
+                <span key={i} className="block">{line}</span>
+              ))}
             </motion.h1>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10 w-full md:w-auto">
               <MagneticButton strength={0.4}>
-                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-                  <div
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full"
-                  >
-                    GET TICKETS <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </div>
-                </a>
+                {hasTickets ? (
+                  <a href={event!.ticketUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                    <div className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full">
+                      GET TICKETS <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
+                  </a>
+                ) : (
+                  <a href="#untold-tickets" onClick={(e) => { e.preventDefault(); document.getElementById('untold-tickets')?.scrollIntoView({ behavior: 'smooth' }); }} className="w-full sm:w-auto">
+                    <div className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full">
+                      PRIORITY ACCESS <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </div>
+                  </a>
+                )}
               </MagneticButton>
               <span className="font-mono text-xs text-white/50 tracking-widest hidden sm:block">
-                Tickets moving fast.
+                {hasTickets ? "Tickets moving fast." : "Space is extremely limited."}
               </span>
             </div>
 

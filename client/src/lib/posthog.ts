@@ -1,4 +1,5 @@
 import { runWhenIdle } from "./idle";
+import { hasAnalyticsConsent } from "./cookieConsent";
 
 type PostHogClient = (typeof import("posthog-js"))["default"];
 
@@ -23,7 +24,7 @@ function isTrackingHost() {
 
 function isEnabled() {
   // Avoid penalizing Lighthouse / previews with analytics scripts.
-  return import.meta.env.PROD && isTrackingHost() && Boolean(POSTHOG_KEY);
+  return import.meta.env.PROD && isTrackingHost() && Boolean(POSTHOG_KEY) && hasAnalyticsConsent();
 }
 
 async function loadPostHog(): Promise<PostHogClient | null> {

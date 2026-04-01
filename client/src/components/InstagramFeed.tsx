@@ -78,27 +78,8 @@ const MOCK_POSTS: InstagramPost[] = [
 ];
 
 export default function InstagramFeed() {
-    const [posts, setPosts] = useState<InstagramPost[]>(MOCK_POSTS);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchPosts() {
-            try {
-                const res = await fetch("/api/instagram");
-                if (!res.ok) throw new Error("Failed to fetch instagram feed");
-                const data = await res.json();
-                if (data.posts && data.posts.length > 0) {
-                    setPosts(data.posts);
-                }
-            } catch (error) {
-                console.warn("Using mock instagram data:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        fetchPosts();
-    }, []);
+    const [posts] = useState<InstagramPost[]>(MOCK_POSTS);
+    const isLoading = false;
 
     // Display only first 4-8 posts depending on layout
     const displayPosts = posts.slice(0, 4);

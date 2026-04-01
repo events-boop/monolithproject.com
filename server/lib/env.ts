@@ -11,14 +11,29 @@ export function readProvider(): LeadProvider {
 export function validateEnvironment() {
   const isProd = process.env.NODE_ENV === "production";
 
-  if (isProd) {
-    // 1. Database Requirement
-    if (!process.env.DATABASE_URL) {
+  // 1. Database Requirement
+  if (!process.env.DATABASE_URL) {
+    if (isProd) {
       console.error("❌ CRITICAL BOOT FAILURE: DATABASE_URL environment variable is missing.");
       console.error("   The application form handlers and security depend on the database in production.");
       process.exit(1);
+    } else {
+      console.warn("⚠️  DATABASE_URL is not set — running without database persistence.");
     }
+  }
 
+  const requiredGlobalVars = ["SPONSOR_SESSION_SECRET"];
+  const missingGlobal = requiredGlobalVars.filter((v) => !process.env[v]);
+  if (missingGlobal.length > 0) {
+    if (isProd) {
+      console.error(`❌ CRITICAL BOOT FAILURE: Missing global env vars: ${missingGlobal.join(", ")}`);
+      process.exit(1);
+    } else {
+      console.warn(`⚠️  Missing env vars (non-fatal in dev): ${missingGlobal.join(", ")}`);
+    }
+  }
+
+  if (isProd) {
     // 2. Email Provider Requirement
     const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
     const requiredEnvVars: Record<string, string[]> = {

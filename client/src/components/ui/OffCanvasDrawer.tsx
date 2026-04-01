@@ -50,7 +50,7 @@ function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
         case "faq":
             return <FAQSection />;
         case "newsletter":
-            return <NewsletterSection compactIntro />;
+            return <NewsletterSection />;
         case "contact":
             return <ConnectSection compact />;
         case "guide":

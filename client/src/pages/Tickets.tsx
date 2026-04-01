@@ -83,17 +83,13 @@ const ticketTiers: TicketTier[] = [
 
 const eventVisuals = {
   poster: "/images/untold-story.jpg",
-  deron: "/images/artist-deron-untold.webp",
-  juany: "/images/artist-juany-bravo-untold.webp",
+  eran: "/images/artist-lazare.webp", // Replace when real art is available
 };
 
 const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/artist-juany-bravo-untold.webp" },
-  { name: "Deron", role: "Chicago debut", image: "/images/artist-deron-untold.webp" },
+  { name: "Eran Hersh", role: "Chicago debut / Headliner", image: "/images/artist-lazare.webp" },
   { name: "Hashtom", role: "Support", image: "/images/untold-story-hero-post1.webp" },
-  { name: "Rose", role: "Support", image: "/images/untold-story.jpg" },
-  { name: "Avo", role: "Support", image: "/images/artist-avo-untold.webp" },
-  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/artist-kenbo-untold.webp" },
+  { name: "Local Support TBA", role: "Support", image: "/images/untold-story.jpg" },
 ];
 
 const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
@@ -109,10 +105,10 @@ export default function Tickets() {
   const featuredEyebrow = featuredEvent?.subtitle || getEventEyebrow(featuredEvent);
   const featuredVenue = getEventVenueLabel(featuredEvent);
   const featuredPoster =
-    featuredEvent?.id === "us-s3e2"
+    featuredEvent?.id === "us-s3e3"
       ? eventVisuals.poster
       : featuredEvent?.image || "/images/autograf-recap.jpg";
-  const showLineupVisuals = featuredEvent?.id === "us-s3e2";
+  const showLineupVisuals = featuredEvent?.id === "us-s3e3";
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.onerror = null;
@@ -197,10 +193,10 @@ export default function Tickets() {
              <div className="lg:col-span-7 w-full">
                 <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
                    <SmartImage
-                     src={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.src : featuredPoster}
+                     src={featuredEvent?.id === "us-s3e3" ? untoldTicketPoster.src : featuredPoster}
                      alt={featuredHeadline}
-                     sources={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.sources : undefined}
-                     sizes={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.sizes : undefined}
+                     sources={featuredEvent?.id === "us-s3e3" ? untoldTicketPoster.sources : undefined}
+                     sizes={featuredEvent?.id === "us-s3e3" ? untoldTicketPoster.sizes : undefined}
                      priority
                      className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
                    />

@@ -1,39 +1,75 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import express from "express";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
 import { randomUUID } from "crypto";
+import { createRateLimitMiddleware } from "./services/rate-limit";
 
 export function configureMiddleware(app: Express) {
+  app.set("trust proxy", true);
+
   // 1. Security: Hardened Headers
   app.use(
     helmet({
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://challenges.cloudflare.com", "https://maps.googleapis.com"],
+          scriptSrc: [
+            "'self'", 
+            "'unsafe-inline'", 
+            "'unsafe-eval'", 
+            "https://challenges.cloudflare.com", 
+            "https://maps.googleapis.com",
+            "https://t.contentsquare.net",
+            "https://googletagmanager.com",
+            "https://connect.facebook.net",
+            "https://static.posthog.com"
+          ],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-          imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://maps.gstatic.com", "https://maps.googleapis.com"],
-          connectSrc: ["'self'", "https://maps.googleapis.com"],
+          imgSrc: [
+            "'self'", 
+            "data:", 
+            "https://images.unsplash.com", 
+            "https://maps.gstatic.com", 
+            "https://maps.googleapis.com",
+            "https://www.facebook.com",
+            "https://google-analytics.com"
+          ],
+          connectSrc: [
+            "'self'", 
+            "https://maps.googleapis.com",
+            "https://app.posthog.com",
+            "https://us.i.posthog.com",
+            "https://*.hotjar.com",
+            "https://*.algolia.net",
+            "https://www.facebook.com",
+            "https://connect.facebook.net",
+            "https://google-analytics.com"
+          ],
           fontSrc: ["'self'", "https://fonts.gstatic.com"],
-          frameSrc: ["'self'", "https://challenges.cloudflare.com", "https://www.youtube.com", "https://player.vimeo.com"],
+          frameSrc: [
+            "'self'", 
+            "https://challenges.cloudflare.com", 
+            "https://www.youtube-nocookie.com", 
+            "https://www.youtube.com", 
+            "https://player.vimeo.com",
+            "https://w.soundcloud.com"
+          ],
         },
       },
       crossOriginEmbedderPolicy: false,
     })
   );
 
-  app.use(express.json({ limit: "1mb" }));
-
-  // 3. Resilience: Tuned Rate Limiting (Human Pace)
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    limit: 200, 
-    standardHeaders: true,
-    legacyHeaders: false,
-    message: "System capacity reached. Please try again after 15 minutes.",
-  });
-  app.use(limiter);
+  app.use(
+    "/api",
+    createRateLimitMiddleware({
+      scope: "api:global",
+      windowMs: 15 * 60 * 1000,
+      limit: 200,
+      message: "System capacity reached. Please try again after 15 minutes.",
+    })
+  );
+  app.use("/api", express.json({ limit: "1mb" }));
 }
 
 export function configureErrorMiddleware(app: Express) {

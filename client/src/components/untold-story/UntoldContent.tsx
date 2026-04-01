@@ -5,10 +5,11 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import SmartImage from "@/components/SmartImage";
 import { getResponsiveImage } from "@/lib/responsiveImages";
+import { ScheduledEvent } from "@/data/events";
 
 const untoldPosterImage = getResponsiveImage("untoldStoryPoster");
 
-export default function UntoldContent() {
+export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
   const [faqOpen, setFaqOpen] = useState(false);
 
   return (
@@ -17,11 +18,11 @@ export default function UntoldContent() {
         <div className="flex items-end justify-between mb-8 pb-6 border-b border-untold-violet-20">
           <div>
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">
-              Season III · Episode II
+              {event?.subtitle || "Season III"}
             </span>
-            <h2 className="font-display text-4xl md:text-5xl text-white">JUANY BRAVO B2B DERON</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-white">{event?.headline || event?.title || "UNTOLD STORY"}</h2>
           </div>
-          <span className="font-mono text-xs tracking-widest text-untold-violet">THE JUANY X DERON SHOW</span>
+          <span className="font-mono text-xs tracking-widest text-untold-violet">{event?.episode || "Chapter"}</span>
         </div>
 
         {/* Featured event card */}
@@ -39,7 +40,7 @@ export default function UntoldContent() {
             <div className="mb-10 overflow-hidden rounded-xl border border-untold-violet-25">
               <SmartImage
                 src={untoldPosterImage.src}
-                alt="Juany Bravo b2b Deron featured event artwork"
+                alt={`${event?.title} featured event artwork`}
                 sources={untoldPosterImage.sources}
                 sizes={untoldPosterImage.sizes}
                 containerClassName="bg-transparent"
@@ -47,17 +48,8 @@ export default function UntoldContent() {
               />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 mb-10">
-              <div className="overflow-hidden rounded-xl border border-untold-violet-25">
-                <img src={eventVisuals.deron} alt="Deron portrait artwork" className="w-full h-auto object-cover" />
-              </div>
-              <div className="overflow-hidden rounded-xl border border-untold-violet-25">
-                <img src={eventVisuals.juany} alt="Juany Bravo portrait artwork" className="w-full h-auto object-cover" />
-              </div>
-            </div>
-
             <p className="text-white/80 text-lg leading-relaxed max-w-3xl mb-10">
-              A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360° dancefloor experience.
+              {event?.description || "A late-night journey through Afro and melodic house led by Chicago's finest selectors in an immersive 360° dancefloor experience."}
             </p>
 
             {/* Event details grid */}
@@ -70,30 +62,32 @@ export default function UntoldContent() {
                   <Calendar className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Date</span>
                 </div>
-                <p className="text-white text-sm font-medium">Friday, March 6, 2026</p>
+                <p className="text-white text-sm font-medium">{event?.date || "TBD"}</p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-untold-violet-99">
                   <Clock className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Doors</span>
                 </div>
-                <p className="text-white text-sm font-medium">7:00 PM</p>
-                <p className="text-white/40 text-xs">Main Experience: 9:00 PM - 2:00 AM</p>
+                <p className="text-white text-sm font-medium">{event?.doors || (event?.time ? event.time.split("—")[0].trim() : "9:00 PM")}</p>
+                {event?.mainExperience && (
+                    <p className="text-white/40 text-xs">Main Experience: {event.mainExperience}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-untold-violet-99">
                   <MapPin className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Venue</span>
                 </div>
-                <p className="text-white text-sm font-medium">Alhambra Palace</p>
-                <p className="text-white/40 text-xs">West Loop, Chicago</p>
+                <p className="text-white text-sm font-medium">{event?.venue || "Venue Reveal Soon"}</p>
+                <p className="text-white/40 text-xs">{event?.location || "Chicago, IL"}</p>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-untold-violet-99">
                   <Users className="w-3.5 h-3.5" />
                   <span className="font-mono text-[10px] tracking-widest uppercase">Age</span>
                 </div>
-                <p className="text-white text-sm font-medium">21+ (Valid ID Required)</p>
+                <p className="text-white text-sm font-medium">{event?.age || "21+ (Valid ID Required)"}</p>
               </div>
             </div>
 
@@ -102,13 +96,13 @@ export default function UntoldContent() {
               The Vision
             </span>
             <p className="text-white/70 text-base leading-relaxed mb-6">
-              Untold Story is for the energy givers — the storytellers.
-              A 360° experience where the DJ becomes the narrator, and sound becomes the language. Every set is a chapter, every transition a moment, every drop a feeling shared between the booth and the dancefloor.
+              {event?.experienceIntro || "Untold Story is for the energy givers — the storytellers. A 360° experience where the DJ becomes the narrator, and sound becomes the language. Every set is a chapter, every transition a moment, every drop a feeling shared between the booth and the dancefloor."}
             </p>
-            <p className="text-white/70 text-base leading-relaxed mb-6">
-              This project was built as a gathering place — a space where people meet through movement, connection, and shared intention.
-              Rooted in the ethos of The Monolith Project, Untold Story celebrates the deeper meaning behind DJing: the art of guiding a room, shaping emotion, and telling a story through sound.
-            </p>
+            {!event?.experienceIntro && (
+              <p className="text-white/70 text-base leading-relaxed mb-6">
+                This project was built as a gathering place — a space where people meet through movement, connection, and shared intention. Rooted in the ethos of The Monolith Project, Untold Story celebrates the deeper meaning behind DJing: the art of guiding a room, shaping emotion, and telling a story through sound.
+              </p>
+            )}
             <p className="text-white/90 text-lg font-display tracking-wide mb-8">
               Togetherness is the frequency. Music is the guide.
             </p>
@@ -118,13 +112,13 @@ export default function UntoldContent() {
                 Core Elements
               </span>
               <div className="flex flex-wrap gap-3">
-                {[
+                {(event?.whatToExpect || [
                   "Boiler Room-Style 360° Setup",
                   "Immersive Storytelling",
                   "Emerging Talent Showcase",
                   "Audio/Visual Documentation",
                   "Community Connection",
-                ].map((item) => (
+                ]).map((item) => (
                   <span
                     key={item}
                     className="px-4 py-2 text-xs font-mono tracking-widest uppercase text-white/80 border border-untold-violet-25 bg-untold-violet-08"
@@ -141,37 +135,8 @@ export default function UntoldContent() {
                 Lineup
               </span>
               <p className="text-white text-lg font-display tracking-wide mb-2">
-                JUANY BRAVO B2B DERON (Headliner)
+                {event?.lineup || "Lineup drops soon."}
               </p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-white/60 text-sm">
-                <span>Hashtom</span>
-                <span className="text-white/20">·</span>
-                <span>Rose</span>
-                <span className="text-white/20">·</span>
-                <span>Jerome</span>
-                <span className="text-white/20">·</span>
-                <span>b2b Kenbo</span>
-                <span className="text-white/20">·</span>
-                <span>Avo</span>
-              </div>
-              <p className="text-white/40 text-xs mt-2">Additional guests may be announced</p>
-            </div>
-
-            <div className="mb-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
-                Artist Visuals
-              </span>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {lineupVisuals.map((artist) => (
-                  <div key={artist.name} className="overflow-hidden rounded-xl border border-untold-violet-25">
-                    <img src={artist.image} alt={`${artist.name} lineup image`} className="w-full aspect-[4/5] object-cover" />
-                    <div className="px-3 py-2 bg-black/35">
-                      <p className="text-white font-semibold text-sm">{artist.name}</p>
-                      <p className="text-white/60 text-xs">{artist.role}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Tables */}

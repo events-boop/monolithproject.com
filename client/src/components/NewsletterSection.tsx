@@ -7,17 +7,7 @@ import { submitNewsletterLead } from "@/lib/api";
 
 interface NewsletterSectionProps {
   source?: string;
-  compactIntro?: boolean;
-  description?: string;
-  benefits?: string[];
 }
-
-const defaultBenefits = [
-  "Early access ticket windows",
-  "Lineup announcements first",
-  "New radio show mixes",
-  "Private event drops",
-];
 
 const invitationNotes = [
   {
@@ -39,9 +29,6 @@ const invitationNotes = [
 
 export default function NewsletterSection({
   source = "newsletter_section",
-  compactIntro = false,
-  description = "Get early ticket access, lineup announcements, and updates on upcoming shows. No spam — just the stuff that matters.",
-  benefits = defaultBenefits,
 }: NewsletterSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -172,8 +159,6 @@ export default function NewsletterSection({
 
               {/* Right — Brutalist Form */}
               <form 
-                action="/api/leads" 
-                method="POST" 
                 onSubmit={handleSubmit} 
                 className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16" 
                 noValidate 
@@ -189,7 +174,7 @@ export default function NewsletterSection({
                 {/* Inputs */}
                 <div className="flex flex-col gap-8">
                   <div className="relative group">
-                    <label htmlFor="firstName" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
+                    <label htmlFor="firstName" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
                       First Name (Optional)
                     </label>
                     <input
@@ -203,7 +188,7 @@ export default function NewsletterSection({
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="email" className={`font-mono text-[10px] uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/40 group-hover:text-white/70"}`}>
+                    <label htmlFor="email" className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/40 group-hover:text-white/70"}`}>
                       Email Address *
                     </label>
                     <input
@@ -211,6 +196,7 @@ export default function NewsletterSection({
                       id="email"
                       value={email}
                       autoComplete="email"
+                      aria-describedby={touched.email && errors.email ? "newsletter-email-error" : undefined}
                       onChange={(e) => {
                         setEmail(e.target.value);
                         if (touched.email) {
@@ -227,14 +213,14 @@ export default function NewsletterSection({
                       className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/20 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
                     />
                     {touched.email && errors.email && (
-                      <p id="newsletter-email-error" className="flex items-center gap-2 mt-3 text-primary text-[10px] font-mono uppercase tracking-[0.1em]">
+                      <p id="newsletter-email-error" className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.11em]">
                         <AlertCircle className="w-3 h-3" /> {errors.email}
                       </p>
                     )}
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
+                    <label htmlFor="phone" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
                       Phone Number (Optional)
                     </label>
                     <input

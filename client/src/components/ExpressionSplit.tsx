@@ -40,8 +40,22 @@ const expressions = [
   },
 ];
 
+import { useUI } from "@/contexts/UIContext";
+
 export default function ExpressionSplit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const { setHoveredExpression } = useUI();
+
+  const handleHoverStart = (id: string) => {
+    setHoveredId(id);
+    const normalizedId = id === "untold" ? "untold" : id === "sunsets" ? "sunsets" : "radio";
+    setHoveredExpression(normalizedId as any);
+  };
+
+  const handleHoverEnd = () => {
+    setHoveredId(null);
+    setHoveredExpression(null);
+  };
 
   return (
     <section className="relative min-h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
@@ -49,15 +63,15 @@ export default function ExpressionSplit() {
         {expressions.map((exp, index) => (
           <motion.div
             key={exp.id}
-            onHoverStart={() => setHoveredId(exp.id)}
-            onHoverEnd={() => setHoveredId(null)}
+            onHoverStart={() => handleHoverStart(exp.id)}
+            onHoverEnd={handleHoverEnd}
             animate={{
               flex: hoveredId === exp.id ? 2 : hoveredId === null ? 1 : 0.8,
             }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className={`relative group h-[33.33vh] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0`}
           >
-            <Link href={exp.href} className="absolute inset-0 block h-full w-full">
+            <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
                 <motion.img

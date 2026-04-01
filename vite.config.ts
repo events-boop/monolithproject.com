@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 3000,
+      port: 3001,
       strictPort: false,
       host: true,
       allowedHosts: ["localhost", "127.0.0.1"],

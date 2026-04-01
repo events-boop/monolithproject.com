@@ -144,15 +144,17 @@ export default function ExperienceGuidePanel() {
         </div>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={ticketUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-black transition-colors hover:bg-white/90"
-          >
-            Tickets
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
+          {ticketUrl && (
+            <a
+              href={ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-black transition-colors hover:bg-white/90"
+            >
+              Tickets
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          )}
 
           <a
             href={venueMapHref}

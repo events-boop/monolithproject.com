@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createHash, randomUUID } from "crypto";
 import { poshWebhookPayloadSchema } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
+import { asyncHandler } from "../lib/async";
 import { secureCompare } from "../lib/security";
 import { pickString, pickQuantity } from "../lib/payload";
 import { hasDatabase } from "../db/client";
@@ -20,7 +21,7 @@ import {
 
 const router = Router();
 
-router.post("/api/webhooks/posh", async (req, res) => {
+router.post("/api/webhooks/posh", asyncHandler(async (req, res) => {
   const requestId = randomUUID();
   const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();
 
@@ -203,6 +204,6 @@ router.post("/api/webhooks/posh", async (req, res) => {
   });
 
   return res.status(200).json({ ok: true, requestId });
-});
+}));
 
 export default router;

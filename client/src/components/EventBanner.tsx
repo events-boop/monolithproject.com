@@ -33,7 +33,7 @@ export default function EventBanner() {
             {items.map((t, i) => (
               <span key={i} className="relative z-10 inline-flex items-center">
                 <span
-                  className={`mx-7 text-[13px] leading-none font-mono tracking-[0.14em] uppercase ${
+                  className={`mx-4 md:mx-7 text-[11px] md:text-[13px] leading-none font-mono tracking-[0.1em] md:tracking-[0.14em] uppercase ${
                     payload.status === "live" ? "text-white font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]" : "text-white/95 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
                   }`}
                 >

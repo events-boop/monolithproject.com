@@ -22,6 +22,13 @@ export interface BookingInquiryPayload {
   message: string;
 }
 
+export interface ContactPayload {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 interface ApiError {
   message?: string;
   error?: {
@@ -37,6 +44,7 @@ export async function submitNewsletterLead(payload: LeadPayload, idempotencyKey:
   const url = typeof window !== "undefined" ? new URL(window.location.href) : null;
   const enrichedPayload: LeadPayload = {
     ...payload,
+    eventInterest: payload.eventInterest || url?.searchParams.get("event") || url?.searchParams.get("eventId") || url?.searchParams.get("eventInterest") || undefined,
     pageUrl: payload.pageUrl || url?.href,
     utmSource: payload.utmSource || url?.searchParams.get("utm_source") || undefined,
     utmMedium: payload.utmMedium || url?.searchParams.get("utm_medium") || undefined,
@@ -74,6 +82,23 @@ export async function submitBookingInquiry(payload: BookingInquiryPayload) {
   if (!response.ok) {
     const body = (await response.json().catch(() => ({}))) as ApiError;
     throw new Error(parseApiError(body, "We couldn't submit your inquiry right now. Please try again."));
+  }
+
+  return response.json();
+}
+
+export async function submitContactForm(payload: ContactPayload) {
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const body = (await response.json().catch(() => ({}))) as ApiError;
+    throw new Error(parseApiError(body, "We couldn't deliver your message right now. Please try again."));
   }
 
   return response.json();

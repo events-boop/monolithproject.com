@@ -1,21 +1,45 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, User, Instagram, Sparkles, Copy, CheckCircle, ArrowRight, Gift } from "lucide-react";
+import { Mail, User, Instagram, Sparkles, Copy, CheckCircle, ArrowRight, Gift, AlertCircle } from "lucide-react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import { submitNewsletterLead } from "@/lib/api";
 
 export default function GiveawayFunnel() {
-    const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [copied, setCopied] = useState(false);
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [handle, setHandle] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!email.trim()) return;
         signalChirp.click();
         setStatus("loading");
-        // Simulate API request
-        setTimeout(() => {
+        setErrorMsg("");
+
+        const [firstName, ...lastParts] = fullName.trim().split(" ");
+        const lastName = lastParts.join(" ") || undefined;
+
+        try {
+            await submitNewsletterLead(
+                {
+                    email: email.trim(),
+                    firstName: firstName || undefined,
+                    lastName,
+                    consent: true,
+                    source: "giveaway_funnel",
+                    utmContent: handle.trim() ? `ig:${handle.trim().replace(/^@/, "")}` : undefined,
+                },
+                crypto.randomUUID(),
+            );
             signalChirp.boot();
             setStatus("success");
-        }, 1500);
+        } catch (err) {
+            setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+            setStatus("error");
+        }
     };
 
     const copyToClipboard = () => {
@@ -165,6 +189,9 @@ export default function GiveawayFunnel() {
                                                 <input
                                                     required
                                                     type="text"
+                                                    value={fullName}
+                                                    onChange={(e) => setFullName(e.target.value)}
+                                                    autoComplete="name"
                                                     placeholder="IDENTITY / NAME"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
@@ -175,6 +202,9 @@ export default function GiveawayFunnel() {
                                                 <input
                                                     required
                                                     type="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    autoComplete="email"
                                                     placeholder="SIGNAL / EMAIL"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
@@ -184,11 +214,19 @@ export default function GiveawayFunnel() {
                                                 <Instagram className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
                                                 <input
                                                     type="text"
+                                                    value={handle}
+                                                    onChange={(e) => setHandle(e.target.value)}
                                                     placeholder="ORIGIN / @HANDLE"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
                                         </div>
+
+                                        {status === "error" && errorMsg && (
+                                            <p className="flex items-center gap-2 text-red-400 text-xs font-mono mt-1">
+                                                <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errorMsg}
+                                            </p>
+                                        )}
 
                                         <div className="pt-6">
                                             <button

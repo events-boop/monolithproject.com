@@ -7,18 +7,14 @@ export const deepBg = "#06060F";
 export const cardBg = "#0C0C1A";
 
 export const eventVisuals = {
-  poster: "/images/juany-deron-flyer.png",
-  deron: "/images/deron-press.jpg",
-  juany: "/images/juany-bravo-press.jpg",
+  poster: "/images/untold-story.jpg",
+  eran: "/images/artist-lazare.webp", // placeholder
 };
 
 export const lineupVisuals = [
-  { name: "Juany Bravo", role: "B2B set with Deron", image: "/images/juany-bravo-press.jpg" },
-  { name: "Deron", role: "Chicago debut", image: "/images/deron-press.jpg" },
+  { name: "Eran Hersh", role: "Headliner", image: "/images/artist-lazare.webp" },
   { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
-  { name: "Rose", role: "Support", image: "/images/autograf-recap.jpg" },
-  { name: "Avo", role: "Support", image: "/images/chasing-sunsets.jpg" },
-  { name: "Jerome b2b Kenbo", role: "Support", image: "/images/hero-monolith.jpg" },
+  { name: "Local Support TBA", role: "Support", image: "/images/chasing-sunsets.jpg" },
 ];
 
 export const untoldFaqs: Array<[string, string]> = [

@@ -5,6 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import VisitorContextPanel from "@/components/VisitorContextPanel";
 import MovementSection from "@/components/MovementSection";
 import ExpressionSplit from "@/components/ExpressionSplit";
+import FeaturedCampaigns from "@/components/FeaturedCampaigns";
 import ScheduleSection from "@/components/ScheduleSection";
 import Ticker from "@/components/Ticker";
 import SectionDivider from "@/components/SectionDivider";
@@ -18,6 +19,7 @@ import NightInNumbers from "@/components/NightInNumbers";
 import WhatToExpect from "@/components/WhatToExpect";
 import ConversionStrip from "@/components/ConversionStrip";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
 const MixedMediaGallery = lazy(() => import("@/components/MixedMediaGallery"));
@@ -60,6 +62,7 @@ export default function Home() {
 
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
+        <FeaturedCampaigns />
 
         <SectionDivider id="series" number="01" label="The Series" />
         <ExpressionSplit />
@@ -76,7 +79,7 @@ export default function Home() {
         <MovementSection />
 
         <ViewportLazy minHeightClassName="min-h-[60vh]">
-          <Suspense fallback={null}>
+          <Suspense fallback={<Skeleton className="w-full h-[60vh] opacity-20" />}>
             <CinematicBreak
               image="/images/untold-story-juany-deron-v2.jpg"
               videoSrc="/videos/hero-video-short.mp4"
@@ -109,7 +112,7 @@ export default function Home() {
 
         <SectionDivider id="archive" number="06" label="The Archive" />
         <ViewportLazy minHeightClassName="min-h-[520px]">
-          <Suspense fallback={null}>
+          <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
             <MixedMediaGallery />
           </Suspense>
         </ViewportLazy>

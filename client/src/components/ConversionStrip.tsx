@@ -57,7 +57,7 @@ export default function ConversionStrip() {
     return () => clearInterval(interval);
   }, [event]);
 
-  if (!event || !timeLeft) return null;
+  if (!event || !timeLeft || !ticketUrl) return null;
 
   const isSunsets = event.series === "chasing-sunsets";
   const themeColor = isSunsets ? "#E8B86D" : "#22D3EE";

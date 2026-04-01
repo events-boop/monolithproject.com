@@ -192,7 +192,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom: Socials & Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-12 pb-12 border-t border-white/5 z-10 relative">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-12 pb-8 lg:pb-20 border-t border-white/5 z-10 relative">
           <div className="flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
@@ -200,11 +200,11 @@ export default function Footer() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/15 bg-white/[0.02] text-white/50 hover:text-white hover:border-white/40 hover:bg-white/[0.06] transition-all duration-300"
+                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/20 bg-white/[0.04] text-white/50 hover:text-white hover:border-white/50 hover:bg-white/[0.1] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label={s.name}
                 title={s.name}
               >
-                <s.icon className="w-4 h-4" />
+                <s.icon className="w-5 h-5" />
               </a>
             ))}
           </div>

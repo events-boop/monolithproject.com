@@ -26,7 +26,7 @@ export default function GlobalTicketButton() {
     }[scene.ticketTheme];
 
     // Hide on ticket page
-    if (location === "/tickets") return null;
+    if (location === "/tickets" || !ticketUrl) return null;
 
     return (
         <div className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[100] hidden md:block">
@@ -35,6 +35,8 @@ export default function GlobalTicketButton() {
                     href={ticketUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-cursor-magnetic
+                    data-cursor-text="BOOK"
                     onFocus={() => setSensoryOverloadActive(true)}
                     onBlur={() => setSensoryOverloadActive(false)}
                     aria-label={`Open tickets for ${featuredEvent?.headline || featuredEvent?.title || "the featured event"}`}

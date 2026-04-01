@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Sun, AudioLines } from "lucide-react";
+import { Link } from "wouter";
 import UntoldButterflyLogo from "../UntoldButterflyLogo";
+import { useUI } from "@/contexts/UIContext";
 
 const expressions = [
   {
@@ -106,6 +108,8 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
 
   const Icon = exp.icon;
 
+  const { setHoveredExpression } = useUI();
+
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
       {/* The Visual Circle Path */}
@@ -132,25 +136,33 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
       {/* The Orbiting Content */}
       <motion.div
         style={{ x, y }}
-        className="absolute z-10 flex items-center gap-3 p-2 group"
+        className="absolute z-10 flex items-center gap-3 p-2 group pointer-events-auto"
+        onMouseEnter={() => setHoveredExpression(exp.id === 'story' ? 'untold' : exp.id)}
+        onMouseLeave={() => setHoveredExpression(null)}
       >
-        {/* Glassmorphic Badge */}
-        <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/60">
-          <div 
-             className="flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full border border-white/10"
-             style={{ backgroundColor: `${exp.color}15`, color: exp.color }}
-          >
-             {exp.id === 'story' ? <UntoldButterflyLogo className="h-3 w-3 lg:h-4 lg:w-4" /> : <Icon className="h-3 w-3 lg:h-4 lg:w-4" />}
+        <Link 
+          href={`/${exp.id === 'story' ? 'story' : exp.id}`} 
+          className="cursor-pointer"
+          data-cursor-text="EXPLORE"
+        >
+          {/* Glassmorphic Badge */}
+          <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/80 hover:scale-105 active:scale-95">
+            <div 
+              className="flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full border border-white/10"
+              style={{ backgroundColor: `${exp.color}15`, color: exp.color }}
+            >
+              {exp.id === 'story' ? <UntoldButterflyLogo className="h-3 w-3 lg:h-4 lg:w-4" /> : <Icon className="h-3 w-3 lg:h-4 lg:w-4" />}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[7px] lg:text-[9px] uppercase tracking-[0.2em] opacity-40 leading-none mb-1">
+                {exp.label}
+              </span>
+              <span className="font-display text-xs lg:text-sm uppercase tracking-wider text-white whitespace-nowrap">
+                {exp.title}
+              </span>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <span className="text-[7px] lg:text-[9px] uppercase tracking-[0.2em] opacity-40 leading-none mb-1">
-              {exp.label}
-            </span>
-            <span className="font-display text-xs lg:text-sm uppercase tracking-wider text-white whitespace-nowrap">
-              {exp.title}
-            </span>
-          </div>
-        </div>
+        </Link>
       </motion.div>
     </div>
   );

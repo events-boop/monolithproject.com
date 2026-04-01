@@ -131,7 +131,7 @@ export default function Guide() {
                                 </p>
                             </div>
 
-                            {guideEvent && (
+                            {guideEvent && ticketUrl && (
                                 <a
                                     href={ticketUrl}
                                     target="_blank"

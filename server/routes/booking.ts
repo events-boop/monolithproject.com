@@ -2,16 +2,18 @@ import { Router } from "express";
 import { createHash, randomUUID } from "crypto";
 import { bookingInquirySchema } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
+import { asyncHandler } from "../lib/async";
 import { scrubEmail } from "../lib/security";
 import { getDatabase } from "../db/client";
 import { bookingInquiries } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { resolveSubmissionOutcome } from "../services/submission-delivery";
 
 const router = Router();
 
 const WEBHOOK_TIMEOUT_MS = 8_000;
 
-router.post("/api/booking-inquiry", async (req, res) => {
+router.post("/api/booking-inquiry", asyncHandler(async (req, res) => {
   const requestId = randomUUID();
   const parsed = bookingInquirySchema.safeParse(req.body);
   if (!parsed.success) {
@@ -32,6 +34,8 @@ router.post("/api/booking-inquiry", async (req, res) => {
   const emailHash = createHash("sha256").update(email).digest("hex").slice(0, 12);
   const db = getDatabase();
   const dbRecordId = randomUUID();
+  const receivedAt = new Date().toISOString();
+  let dbPersisted = false;
 
   // 1. Persist to DB first — audit trail
   if (db) {
@@ -45,8 +49,9 @@ router.post("/api/booking-inquiry", async (req, res) => {
         location: inquiry.location || null,
         message: inquiry.message,
         webhookStatus: "pending",
-        metadata: { requestId, receivedAt: new Date().toISOString() },
+        metadata: { requestId, receivedAt, deliveryState: "pending" },
       });
+      dbPersisted = true;
     } catch (err) {
       logEvent("booking.db_write_failed", {
         requestId,
@@ -60,42 +65,17 @@ router.post("/api/booking-inquiry", async (req, res) => {
     logEvent("booking.inquiry_unconfigured", {
       requestId,
       type: inquiry.type,
-    });
-
-    // If we have DB, data is safe — accept it
-    if (db) {
-      logEvent("booking.inquiry_received", {
-        requestId,
-        type: inquiry.type,
-        entity: inquiry.entity,
-        location: inquiry.location || null,
-        hasWebhook: false,
-        emailHash,
-        dbPersisted: true,
-      });
-
-      return res.status(202).json({
-        ok: true,
-        requestId,
-        message: "Inquiry received",
-      });
-    }
-
-    return res.status(503).json({
-      ok: false,
-      requestId,
-      error: {
-        code: "UNAVAILABLE",
-        message: "Booking inquiries are temporarily unavailable. Please try again later.",
-        retryable: false,
-      },
+      dbPersisted,
     });
   }
 
   let webhookOk = false;
+  let webhookError: string | null = null;
+  let lastWebhookAttemptAt: string | null = null;
 
   if (webhook) {
     try {
+      lastWebhookAttemptAt = new Date().toISOString();
       const response = await fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -103,7 +83,7 @@ router.post("/api/booking-inquiry", async (req, res) => {
           ...inquiry,
           email,
           requestId,
-          receivedAt: new Date().toISOString(),
+          receivedAt,
         }),
         signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
       });
@@ -114,22 +94,40 @@ router.post("/api/booking-inquiry", async (req, res) => {
 
       webhookOk = true;
     } catch (error) {
-      const rawMessage = error instanceof Error ? error.message : "Booking inquiry delivery failed";
+      webhookError = error instanceof Error ? error.message : "Booking inquiry delivery failed";
       logEvent("booking.inquiry_failed", {
         requestId,
         type: inquiry.type,
-        message: rawMessage,
+        message: webhookError,
       });
     }
-  } else {
-    // Dev mode, no webhook — that's fine
-    webhookOk = true;
   }
 
+  const outcome = resolveSubmissionOutcome({
+    acceptedMessage: "Inquiry received",
+    deliveryFailedMessage: webhook
+      ? "We couldn't submit your inquiry right now. Please try again."
+      : "Booking inquiries are temporarily unavailable. Please try again later.",
+    successStatus: 202,
+    webhookConfigured: Boolean(webhook),
+    webhookDelivered: webhookOk,
+    dbPersisted,
+  });
+
   // 3. Update DB with webhook delivery status
-  if (db) {
+  if (db && dbPersisted) {
     db.update(bookingInquiries)
-      .set({ webhookStatus: webhookOk ? "success" : "failed" })
+      .set({
+        webhookStatus: outcome.webhookStatus,
+        metadata: {
+          requestId,
+          receivedAt,
+          deliveryState: outcome.deliveryState,
+          webhookConfigured: Boolean(webhook),
+          lastWebhookAttemptAt,
+          lastWebhookError: webhookError,
+        },
+      })
       .where(eq(bookingInquiries.id, dbRecordId))
       .catch(() => {});
   }
@@ -141,38 +139,29 @@ router.post("/api/booking-inquiry", async (req, res) => {
     location: inquiry.location || null,
     hasWebhook: Boolean(webhook),
     emailHash,
+    deliveryState: outcome.deliveryState,
     webhookDelivered: webhookOk,
-    dbPersisted: Boolean(db),
+    dbPersisted,
   });
 
-  // If webhook failed — tell the user, but data may still be in DB
-  if (!webhookOk) {
-    // Data is in DB if available — we can retry webhook later
-    if (db) {
-      // Accept with degraded status — data is safe
-      return res.status(202).json({
-        ok: true,
-        requestId,
-        message: "Inquiry received",
-      });
-    }
-
-    return res.status(502).json({
+  if (outcome.deliveryState === "failed") {
+    return res.status(outcome.responseStatus).json({
       ok: false,
       requestId,
       error: {
-        code: "DELIVERY_FAILED",
-        message: "We couldn't submit your inquiry right now. Please try again.",
-        retryable: true,
+        code: Boolean(webhook) ? "DELIVERY_FAILED" : "UNAVAILABLE",
+        message: outcome.responseMessage,
+        retryable: outcome.retryable,
       },
     });
   }
 
-  return res.status(202).json({
+  return res.status(outcome.responseStatus).json({
     ok: true,
     requestId,
-    message: "Inquiry received",
+    message: outcome.responseMessage,
+    deliveryState: outcome.deliveryState,
   });
-});
+}));
 
 export default router;
