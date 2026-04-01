@@ -70,7 +70,12 @@ export default function Home() {
 
         <SectionDivider id="season" number="02" label="The Season" dark={false} />
         <ScheduleSection />
-        <EventCountdown />
+        
+        {/* Official Campaign Countdowns Stack */}
+        <div className="flex flex-col w-full">
+            <EventCountdown eventId="us-s3e3" />
+            <EventCountdown eventId="css-jul04" />
+        </div>
 
         {/* Gradient bridge: cream schedule → black rooms */}
         <div className="h-24 w-full bg-gradient-to-b from-[#EAEAEA] to-[#050505]" />

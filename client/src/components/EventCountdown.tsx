@@ -2,8 +2,16 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { upcomingEvents } from "@/data/events";
 
-function getNextEvent() {
-  return upcomingEvents.find(e => e.ticketUrl) || upcomingEvents[0];
+export function getEventById(id: string) {
+  return upcomingEvents.find(e => e.id === id);
+}
+
+function getNextEvent(eventId?: string) {
+  if (eventId) {
+    const specificEvent = getEventById(eventId);
+    if (specificEvent) return specificEvent;
+  }
+  return upcomingEvents.find(e => e.ticketUrl && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
 }
 
 function parseEventDate(dateStr: string): Date {
@@ -11,8 +19,9 @@ function parseEventDate(dateStr: string): Date {
     JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
     JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11
   };
-  const [monthName, day] = dateStr.split(" ");
-  const month = months[monthName?.toUpperCase()] ?? 0;
+  const [monthName, dayStr] = dateStr.split(" ");
+  const day = dayStr?.replace(",", "") ?? "1"; 
+  const month = monthName ? months[monthName.toUpperCase()] ?? 0 : 0;
   const year = new Date().getFullYear();
   const d = new Date(year, month, parseInt(day) || 1, 20, 0, 0);
   // If in the past, push to next year
@@ -47,22 +56,38 @@ function Digit({ value, label }: { value: number; label: string }) {
   );
 }
 
-export default function EventCountdown() {
-  const event = getNextEvent();
+function LiveClock({ targetDate }: { targetDate: string }) {
   const [timeLeft, setTimeLeft] = useState(() =>
-    event ? getTimeLeft(parseEventDate(event.date)) : null
+    getTimeLeft(parseEventDate(targetDate))
   );
 
   useEffect(() => {
-    if (!event) return;
-    const target = parseEventDate(event.date);
+    const target = parseEventDate(targetDate);
     const interval = setInterval(() => {
       setTimeLeft(getTimeLeft(target));
     }, 1000);
     return () => clearInterval(interval);
-  }, [event]);
+  }, [targetDate]);
 
-  if (!event || !timeLeft) return null;
+  if (!timeLeft) return null;
+
+  return (
+    <div className="flex items-end gap-4 md:gap-8">
+      <Digit value={timeLeft.days} label="Days" />
+      <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
+      <Digit value={timeLeft.hours} label="Hours" />
+      <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
+      <Digit value={timeLeft.minutes} label="Min" />
+      <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
+      <Digit value={timeLeft.seconds} label="Sec" />
+    </div>
+  );
+}
+
+export default function EventCountdown({ eventId }: { eventId?: string }) {
+  const event = getNextEvent(eventId);
+
+  if (!event) return null;
 
   const isSunsets = event.series === "chasing-sunsets";
   const isUntold = event.series === "untold-story";
@@ -120,7 +145,7 @@ export default function EventCountdown() {
                 </p>
               </div>
             </div>
-            {event.ticketUrl && (
+            {event.ticketUrl ? (
               <a
                 href={event.ticketUrl}
                 target="_blank"
@@ -132,20 +157,22 @@ export default function EventCountdown() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>
               </a>
+            ) : (
+              <a
+                href={event.series === "untold-story" ? "/newsletter" : "/newsletter"}
+                className="group inline-flex items-center justify-between gap-12 px-8 py-5 border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-500 self-start"
+              >
+                <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Join The Inner Circle</span>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </a>
             )}
           </div>
 
           {/* Right: Live countdown */}
           <div className="flex flex-1 justify-center lg:justify-end">
-            <div className="flex items-end gap-4 md:gap-8">
-              <Digit value={timeLeft.days} label="Days" />
-              <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
-              <Digit value={timeLeft.hours} label="Hours" />
-              <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
-              <Digit value={timeLeft.minutes} label="Min" />
-              <div className="font-heavy text-[clamp(3rem,6vw,7rem)] leading-none text-white/20 mb-6 md:mb-8 select-none">:</div>
-              <Digit value={timeLeft.seconds} label="Sec" />
-            </div>
+            <LiveClock targetDate={event.date} />
           </div>
 
         </div>
