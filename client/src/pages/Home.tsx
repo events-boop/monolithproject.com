@@ -1,86 +1,120 @@
 import { lazy, Suspense, useEffect } from "react";
-import { POSH_TICKET_URL } from "@/data/events";
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
+import VisitorContextPanel from "@/components/VisitorContextPanel";
 import MovementSection from "@/components/MovementSection";
-import ChaptersSection from "@/components/ChaptersSection";
+import ExpressionSplit from "@/components/ExpressionSplit";
 import ScheduleSection from "@/components/ScheduleSection";
-import MixedMediaGallery from "@/components/MixedMediaGallery";
 import Ticker from "@/components/Ticker";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
-import FixedTicketBadge from "@/components/FixedTicketBadge";
 import TextLineupSection from "@/components/TextLineupSection";
+import EditorialSignalsSection from "@/components/EditorialSignalsSection";
 import EventFunnelStack from "@/components/EventFunnelStack";
+import NewsletterSection from "@/components/NewsletterSection";
+import EventCountdown from "@/components/EventCountdown";
+import NightInNumbers from "@/components/NightInNumbers";
+import WhatToExpect from "@/components/WhatToExpect";
+import ConversionStrip from "@/components/ConversionStrip";
+import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
+const MixedMediaGallery = lazy(() => import("@/components/MixedMediaGallery"));
 const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
 const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
 const InstagramFeed = lazy(() => import("@/components/InstagramFeed"));
 import SEO from "@/components/SEO";
 
 export default function Home() {
+  const funnelEvent = getExperienceEvent("funnel");
+  const ticketUrl = getPrimaryTicketUrl(funnelEvent);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
-        title="Home"
-        description="The Monolith Project is a Chicago-based events collective building on music, community, and showing up for each other."
+        title="Chicago Music Nights, Series, and Archive | The Monolith Project"
+        description="The Monolith Project is a Chicago-rooted music world built through recurring nights, distinct series, a radio show, and an archive shaped by curation, atmosphere, and return-worthy rooms."
       />
       {/* Ambient static background glows for depth */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-[50vh] h-[50vh] bg-primary/5 blur-[150px] mix-blend-screen rounded-full" />
-        <div className="absolute bottom-1/4 right-0 w-[60vh] h-[60vh] bg-violet-500/5 blur-[150px] mix-blend-screen rounded-full" />
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 3 }}
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      >
+        <div
+          className="absolute -left-[8vw] -top-[10vh] h-[42rem] w-[42rem] rounded-full opacity-[0.12]"
+          style={{ background: "radial-gradient(circle, var(--scene-glow) 0%, transparent 62%)" }}
+        />
+        <div
+          className="absolute -right-[8vw] bottom-[-16vh] h-[34rem] w-[34rem] rounded-full opacity-[0.08]"
+          style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 68%)" }}
+        />
+      </motion.div>
       <Navigation />
 
-
       <main id="main-content" tabIndex={-1}>
-        {/* Hero — countdown + video + CTAs */}
         <HeroSection />
 
-        {/* 01 — The Movement */}
-        <SectionDivider number="01" label="The Collective" />
+        <SectionDivider id="series" number="01" label="The Series" />
+        <ExpressionSplit />
+        <WhatToExpect />
+
+        <SectionDivider id="season" number="02" label="The Season" dark={false} />
+        <ScheduleSection />
+        <EventCountdown />
+
+        {/* Gradient bridge: cream schedule → black rooms */}
+        <div className="h-24 w-full bg-gradient-to-b from-[#EAEAEA] to-[#050505]" />
+
+        <SectionDivider id="collective" number="03" label="The Collective" />
         <MovementSection />
 
-        {/* 02 — Two Series */}
-        <SectionDivider number="02" label="The Events" />
-        <ChaptersSection />
-
-        {/* 03 — Artists - Swapped for Text Lineup Cloud */}
-        <SectionDivider number="03" label="The Roster" />
-        <TextLineupSection />
-
-        {/* 04 — Gallery */}
-        <SectionDivider number="04" label="Archives" />
-        <MixedMediaGallery />
-
-
-
-        {/* Cinematic break — full-bleed parallax with pull quote */}
         <ViewportLazy minHeightClassName="min-h-[60vh]">
           <Suspense fallback={null}>
             <CinematicBreak
               image="/images/untold-story-juany-deron-v2.jpg"
               videoSrc="/videos/hero-video-short.mp4"
-              quote="We believe music carries emotion. We believe gathering should feel shared. We believe in rhythm, story, and togetherness."
+              quote="We believe music can hold a room together. We believe gathering should feel shared. We believe the strongest nights leave a record behind."
               attribution="The Monolith Project"
               ctaLabel="Get Tickets"
-              ctaUrl={POSH_TICKET_URL}
+              ctaUrl={ticketUrl}
               ctaExternal
             />
           </Suspense>
         </ViewportLazy>
 
-        {/* 05 — Schedule */}
-        <SectionDivider number="05" label="Season 01" />
-        <ScheduleSection />
+        {/* HUD Recognition Reveal + SS-Conversion Strip */}
+        <div className="relative pt-24 md:pt-32 pb-12">
+           <div className="absolute inset-x-0 top-1/2 h-px bg-white/10 -translate-y-1/2" />
+           <VisitorContextPanel />
+        </div>
+        <div className="px-6 mb-24 md:mb-32">
+          <div className="container mx-auto max-w-6xl">
+            <ConversionStrip />
+          </div>
+        </div>
 
-        {/* 06 — Listen */}
-        <SectionDivider number="06" label="Mixes" />
+        <SectionDivider id="roster" number="04" label="The Roster" />
+        <TextLineupSection />
+        <NightInNumbers />
+
+        <SectionDivider id="journal" number="05" label="Beyond The Night" />
+        <EditorialSignalsSection />
+
+        <SectionDivider id="archive" number="06" label="The Archive" />
+        <ViewportLazy minHeightClassName="min-h-[520px]">
+          <Suspense fallback={null}>
+            <MixedMediaGallery />
+          </Suspense>
+        </ViewportLazy>
+
+        <SectionDivider id="mixes" number="07" label="Mixes" />
         <ViewportLazy minHeightClassName="min-h-[420px]">
           <div className="bg-card">
             <Suspense fallback={null}>
@@ -89,33 +123,15 @@ export default function Home() {
           </div>
         </ViewportLazy>
 
-        {/* 07 — Past Events */}
-        <SectionDivider number="07" label="Recaps" />
-        <ViewportLazy minHeightClassName="min-h-[420px]">
-          <Suspense fallback={null}>
-            <PastEventsSection />
-          </Suspense>
-        </ViewportLazy>
+        <SectionDivider id="community" number="08" label="Inner Circle" />
+        {funnelEvent ? <EventFunnelStack eventId={funnelEvent.id} /> : null}
 
-        {/* 08 — The Pulse */}
-        <SectionDivider number="08" label="The Feed" />
-        <ViewportLazy minHeightClassName="min-h-[600px]">
-          <Suspense fallback={null}>
-            <InstagramFeed />
-          </Suspense>
-        </ViewportLazy>
+        <NewsletterSection source="homepage_bottom" />
+        
+        {/* Structural buffer for Footer / HUD clearance */}
+        <div className="h-24 md:h-32" />
 
-        {/* VIP / Waitlist Funnel */}
-        <SectionDivider number="09" label="Inner Circle" />
-        <EventFunnelStack eventId="mp-launch-001" />
-
-        {/* Tickets banner */}
         <Ticker />
-
-        {/* Gradient bridge into footer */}
-        <div className="relative h-24 bg-background overflow-hidden" aria-hidden="true">
-          <div className="absolute inset-0 atmo-bridge" />
-        </div>
       </main>
     </div>
   );

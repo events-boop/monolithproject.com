@@ -65,92 +65,101 @@ const tracks: Track[] = [
 
 export default function SoundCloudSection() {
   return (
-    <section id="listen" className="relative section-rhythm">
-      <div className="container max-w-5xl mx-auto px-6">
+    <section id="listen" className="relative py-24 md:py-32 bg-[#050505] text-white">
+      {/* Background Archival Texture */}
+      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
+
+      <div className="container max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.15 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-12"
         >
-          <EditorialHeader
-            kicker="Mixes"
-            title="Listen"
-            description="CHASING SUN(SETS) RADIO SHOW. Every set in one place, curated as episodes."
-          />
+          <div>
+            <span className="font-mono text-[10px] md:text-sm tracking-[0.3em] text-white/40 mb-6 block uppercase">
+              Signals & Mixes
+            </span>
+            <h2 className="font-heavy text-[clamp(4rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white flex flex-col">
+              <span className="text-white/30">RADIO</span>
+              <span>TRANSMISSION.</span>
+            </h2>
+          </div>
+          <p className="font-sans text-lg text-white/50 leading-relaxed font-light max-w-md pb-4">
+            CHASING SUN(SETS) RADIO SHOW. Every recorded set and studio mix compiled into a singular broadcast archive.
+          </p>
         </motion.div>
 
-        <div className="mb-6">
-          <span className="ui-kicker text-clay block mb-2">
-            Podcasts
-          </span>
-          <h3 className="font-display text-4xl md:text-5xl leading-[0.9] uppercase text-foreground">
-            CHASING SUN(SETS) RADIO SHOW
-          </h3>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="flex flex-col border-t border-white/10">
           {tracks.map((podcast, index) => (
             <motion.a
               key={podcast.soundcloudUrl}
               href={podcast.soundcloudUrl}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: index * 0.05 }}
-              className="ui-card group border border-border/70 bg-card/40 p-5 hover:border-clay/50 hover:bg-card/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/60"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="group relative block border-b border-white/10 py-8 md:py-10 transition-colors hover:bg-white/[0.02] px-2 md:px-8"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-4">
-                  <div className="w-14 h-14 shrink-0 border border-clay/40 bg-gradient-to-br from-clay/25 to-primary/20 flex items-center justify-center text-clay group-hover:scale-105 transition-transform">
-                    <Disc3 className="w-6 h-6" />
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white scale-y-0 origin-top group-hover:scale-y-100 transition-transform duration-500" />
+              
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12">
+                <div className="flex items-start md:items-center gap-6 md:gap-8 flex-1">
+                  <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 border border-white/20 bg-[#050505] flex items-center justify-center text-white/30 group-hover:bg-white group-hover:text-black transition-all duration-500 rounded-none shadow-2xl">
+                    <Disc3 className="w-6 h-6 md:w-8 md:h-8 group-hover:animate-[spin_4s_linear_infinite]" />
                   </div>
-                  <div>
-                    <p className="ui-chip text-clay mb-2">
-                      Episode {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <h4 className="ui-heading font-display text-2xl text-foreground uppercase mb-2 group-hover:text-clay transition-colors">
-                      {podcast.title}
-                    </h4>
-                    <p className="text-sm font-semibold tracking-wide text-primary">
+                  <div className="flex flex-col">
+                    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 mb-3 group-hover:text-white/70 transition-colors">
+                      EPISODE {String(index + 1).padStart(2, "0")} • {podcast.duration}
+                    </span>
+                    <h4 className="font-heavy text-3xl md:text-5xl uppercase tracking-tighter text-white group-hover:text-white transition-colors leading-none drop-shadow-md">
                       {podcast.artist}
+                    </h4>
+                    <p className="font-sans text-sm md:text-lg text-white/50 mt-2 font-light group-hover:text-white/80 transition-colors max-w-xl">
+                      {podcast.title}
                     </p>
                   </div>
                 </div>
-                <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                  {podcast.duration}
-                </span>
+                
+                <div className="flex items-center gap-6 mt-4 md:mt-0 md:justify-end self-end md:self-auto">
+                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/30 group-hover:text-white transition-colors hidden sm:block">
+                    Intercept Signal
+                  </span>
+                  <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 flex items-center justify-center border border-white/20 rounded-none group-hover:bg-white group-hover:border-white transition-all duration-500">
+                    <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white/50 group-hover:text-black group-hover:-rotate-45 transition-all duration-500" />
+                  </div>
+                </div>
               </div>
-              <div className="mt-4 inline-flex items-center gap-2 ui-meta text-muted-foreground group-hover:text-clay transition-colors">
-                Listen Now
-                <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-              </div>
-              <div className="mt-3 h-px bg-gradient-to-r from-clay/50 to-transparent" />
             </motion.a>
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-16 md:mt-24 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <a
             href="https://soundcloud.com/chasing-sun-sets"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+            className="group flex items-center gap-4 text-white hover:text-white transition-all duration-500 outline-none"
           >
-            <span className="font-mono tracking-wide uppercase text-xs">All mixes on SoundCloud</span>
-            <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+            <span className="font-mono tracking-[0.25em] uppercase text-xs text-white/50 group-hover:text-white transition-colors">
+              Access Full Archive
+            </span>
+            <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-2 transition-transform duration-500" />
           </a>
+          
           <a
             href={POSH_TICKET_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-pill-coral"
+            className="group flex items-center justify-between gap-8 px-8 py-5 border border-white/20 bg-white/[0.02] hover:bg-white hover:text-black hover:border-white transition-all duration-500"
           >
-            <Ticket className="w-3.5 h-3.5" />
-            Hear Them Live
-            <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+            <span className="font-mono font-bold tracking-[0.2em] uppercase text-xs">
+              Hear Them Live
+            </span>
+            <Ticket className="w-4 h-4 transition-transform group-hover:-rotate-12" />
           </a>
         </div>
       </div>

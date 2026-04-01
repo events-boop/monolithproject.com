@@ -1,7 +1,14 @@
 export type EventBannerStatus = "upcoming" | "live" | "past";
 
-const EVENT_START_AT = new Date("2026-03-06T19:00:00-06:00");
-const EVENT_END_AT = new Date("2026-03-07T04:00:00-06:00");
+import {
+  getEventEyebrow,
+  getEventVenueLabel,
+  getExperienceEvent,
+  getEventWindowStatus,
+  getPrimaryTicketUrl,
+  isTicketOnSale,
+} from "@/lib/siteExperience";
+
 const BANNER_ENABLED_PATHS = new Set([
   "/",
   "/tickets",
@@ -14,9 +21,11 @@ const BANNER_ENABLED_PATHS = new Set([
 ]);
 
 export function getEventBannerStatus(now: Date = new Date()): EventBannerStatus {
-  if (now >= EVENT_START_AT && now <= EVENT_END_AT) return "live";
-  if (now > EVENT_END_AT) return "past";
-  return "upcoming";
+  const event = getExperienceEvent("banner");
+  const status = getEventWindowStatus(event, now);
+
+  if (status === "unscheduled") return "past";
+  return status;
 }
 
 function normalizePathname(pathname: string) {
@@ -33,4 +42,28 @@ export function isEventBannerVisible(pathname?: string, now: Date = new Date()) 
   if (getEventBannerStatus(now) === "past") return false;
   if (!pathname) return true;
   return isEventBannerRouteEligible(pathname);
+}
+
+export function getEventBannerPayload(now: Date = new Date()) {
+  const event = getExperienceEvent("banner");
+  const status = getEventBannerStatus(now);
+
+  if (!event) {
+    return null;
+  }
+
+  const headline = (event.headline || event.title).toUpperCase();
+  const eyebrow = getEventEyebrow(event).toUpperCase();
+  const venue = getEventVenueLabel(event).toUpperCase();
+  const message =
+    `${event.date.toUpperCase()} — ${venue} — ${headline} — ${eyebrow} — ` +
+    `${isTicketOnSale(event, now) ? "TICKETS ON SALE NOW" : "SAVE THE DATE"}`;
+  const liveMessage = `LIVE NOW — ${headline} — ${venue}`;
+
+  return {
+    event,
+    status,
+    text: status === "live" ? liveMessage : message,
+    ticketUrl: getPrimaryTicketUrl(event),
+  };
 }

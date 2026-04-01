@@ -1,0 +1,44 @@
+@layer components {
+  /* Display font utility - A24 Cinematic Style */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+  }
+
+  /* Monospace font utility */
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Script font for signature touches */
+  .font-script {
+    font-family: 'Pinyon Script', cursive;
+    font-weight: 400;
+  }
+
+  /* Serif font for Editorial/Quote sections */
+  .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+
+  /* KIKK-inspired schedule typography (page-scoped override). */
+  .schedule-page {
+    font-family: var(--font-sans);
+  }
+
+  .schedule-page .font-display {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    font-stretch: normal;
+  }
+
+  .schedule-page .font-mono {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+  }
+}

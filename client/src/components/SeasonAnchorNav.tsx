@@ -55,7 +55,7 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45 }}
-      className={`sticky top-[5.25rem] z-40 px-6 ${className}`}
+      className={`sticky sticky-shell-top z-40 px-6 ${className}`}
     >
       <div className="container max-w-6xl mx-auto">
         <nav className={`season-anchor-shell ${shellToneClass}`} aria-label="Season page sections">
@@ -74,8 +74,7 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
                   const target = document.getElementById(sectionId);
                   if (!target) return;
                   e.preventDefault();
-                  const top = target.getBoundingClientRect().top + window.scrollY - 150;
-                  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+                  target.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 className={`season-anchor-link ${isActive ? activeClass : ""}`}
               >

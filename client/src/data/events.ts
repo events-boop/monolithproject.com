@@ -3,9 +3,12 @@ export interface ScheduledEvent {
     series: "chasing-sunsets" | "untold-story" | "monolith-project";
     episode: string;
     title: string;
+    slug?: string;
     subtitle?: string;
     date: string;
     time: string;
+    startsAt?: string;
+    endsAt?: string;
     doors?: string;
     venue: string;
     location: string;
@@ -41,7 +44,7 @@ export const INSTAGRAM_UNTOlD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
 /** Active ticket link — Posh */
-export const POSH_TICKET_URL = "https://posh.vip/e/untold-story-360-experiencefeat-deron-b2b-juany-bravo";
+export const POSH_TICKET_URL = "https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026";
 
 export const upcomingEvents: ScheduledEvent[] = [
     {
@@ -51,8 +54,11 @@ export const upcomingEvents: ScheduledEvent[] = [
         title: "DERON B2B JUANY BRAVO",
         subtitle: "Untold Story — Season III · Episode II",
         headline: "DERON B2B JUANY BRAVO (Chicago Debut)",
+        slug: "untold-story-season-iii-episode-ii",
         date: "March 6, 2026",
         time: "7:00 PM — 2:00 AM",
+        startsAt: "2026-03-06T19:00:00-06:00",
+        endsAt: "2026-03-07T02:00:00-06:00",
         mainExperience: "9:00 PM — 2:00 AM",
         doors: "7:00 PM",
         venue: "Alhambra Palace",
@@ -104,8 +110,11 @@ export const upcomingEvents: ScheduledEvent[] = [
         title: "AUTOGRAF",
         subtitle: "The Monolith Project Presents",
         headline: "AUTOGRAF — CHICAGO",
+        slug: "autograf-alhambra-palace-march-21-2026",
         date: "March 21, 2026",
         time: "9:00 PM — Late",
+        startsAt: "2026-03-21T21:00:00-05:00",
+        endsAt: "2026-03-22T03:00:00-05:00",
         doors: "9:00 PM",
         venue: "Alhambra Palace",
         location: "Chicago, IL",
@@ -115,7 +124,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         dress: "Elevated nightlife attire",
         sound: "Melodic House · Afro House · Organic House",
         description: "Global dance music trio Autograf returns for a special Chicago night, bringing their signature blend of melodic house, live instrumentation, and festival-level energy to one of the city’s most iconic venues.",
-        experienceIntro: "Known for unforgettable performances across Coachella, EDC, and international stages, Autograf delivers an emotional, high-energy experience built for dance floors that move together. This night brings together Chicago’s tastemakers, music lovers, and culture drivers under one roof for a true Monolith experience.",
+        experienceIntro: "Known for unforgettable performances across Coachella, EDC, and international stages, Autograf delivers an emotional, high-energy experience built for spaces that move together. This night brings together Chicago’s tastemakers, music lovers, and culture drivers under one roof for a true Monolith experience.",
         whatToExpect: [
             "International headliner performance",
             "Immersive indoor experience",
@@ -164,7 +173,7 @@ export const upcomingEvents: ScheduledEvent[] = [
     {
         id: "us-jul04",
         series: "untold-story",
-        episode: "AFTER PARTY",
+        episode: "LATE NIGHT",
         title: "Untold Story",
         date: "July 4, 2026",
         time: "Late",

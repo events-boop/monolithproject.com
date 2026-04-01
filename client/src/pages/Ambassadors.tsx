@@ -83,7 +83,7 @@ export default function Ambassadors() {
         <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
             <SEO
                 title="Ambassador Program"
-                description="Join the Monolith Project team. Sell 5 tickets and get yours free + drink tokens for the crew."
+                description="Join the Monolith Project team. Sell 5 tickets and get yours free + drink tokens for the collective."
             />
             <Navigation />
 
@@ -93,7 +93,7 @@ export default function Ambassadors() {
                 <div className="absolute inset-0 bg-noise opacity-[0.04]" />
             </div>
 
-            <main className="relative z-10 pt-44 md:pt-52 pb-32">
+            <main className="relative z-10 page-shell-start-loose pb-32">
                 <div className="container max-w-6xl mx-auto px-6">
 
                     {/* Header */}
@@ -107,7 +107,7 @@ export default function Ambassadors() {
                             — Join The Team
                         </span>
                         <h1 className="font-display text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] uppercase tracking-tight-display text-white mb-6">
-                            BRING THE CREW.<br />PARTY ON US.
+                            BRING THE COLLECTIVE.<br />THE NIGHT ON US.
                         </h1>
                         <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto">
                             You're already bringing your friends. You might as well get rewarded for it.

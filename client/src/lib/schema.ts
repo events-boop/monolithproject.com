@@ -1,5 +1,6 @@
 import { POSH_TICKET_URL, ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
+import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
 
 export const SITE_ORIGIN = "https://monolithproject.com";
 export const FACTS_PAGE_PATH = "/chasing-sunsets-facts";
@@ -211,6 +212,9 @@ export function buildEventSchema(input: EventSchemaInput) {
 }
 
 export function buildUntoldStoryEventSchema(pagePath: string) {
+  const event = getEventById("us-s3e2");
+  if (event) return buildScheduledEventSchema(event, pagePath);
+
   return buildEventSchema({
     pagePath,
     name: "JUANY BRAVO B2B DERON — Untold Story Season III Episode II",
@@ -264,27 +268,51 @@ function tryParseDate(dateStr: string, timeStr: string) {
   return new Date().toISOString();
 }
 
+function getVenueAddress(event: ScheduledEvent) {
+  if (event.venue === "Alhambra Palace") {
+    return {
+      streetAddress: "1240 W Randolph St",
+      postalCode: "60607",
+    };
+  }
+
+  return {
+    streetAddress: "Chicago IL",
+    postalCode: "60607",
+  };
+}
+
+export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: string) {
+  const startDate = event.startsAt || tryParseDate(event.date, event.time);
+  const endDate = event.endsAt || startDate;
+  const address = getVenueAddress(event);
+
+  return buildEventSchema({
+    pagePath,
+    name: event.headline || event.title,
+    description:
+      event.description || event.experienceIntro || `The Monolith Project presents ${event.title}`,
+    startDate,
+    endDate,
+    image: event.image ? [event.image] : ["/images/chasing-sunsets.jpg"],
+    performer: event.lineup
+      ? event.lineup.split("·").map((segment) => segment.trim())
+      : [event.title],
+    ticketUrl: event.ticketUrl || POSH_TICKET_URL,
+    locationName: event.venue,
+    streetAddress: address.streetAddress,
+    addressLocality: "Chicago",
+    addressRegion: "IL",
+    postalCode: address.postalCode,
+    addressCountry: "US",
+  });
+}
+
 export function buildScheduleSchema(events: ScheduledEvent[]) {
   return {
     "@context": "https://schema.org",
-    "@graph": events.filter(e => e.status === "on-sale" || e.status === "coming-soon").map(event => {
-      const startDate = tryParseDate(event.date, event.time);
-      return buildEventSchema({
-        pagePath: `/schedule`,
-        name: event.headline || event.title,
-        description: event.description || event.experienceIntro || `The Monolith Project presents ${event.title}`,
-        startDate,
-        endDate: startDate,
-        image: event.image ? [event.image] : ["/images/chasing-sunsets.jpg"],
-        performer: event.lineup ? event.lineup.split("·").map(s => s.trim()) : [event.title],
-        ticketUrl: event.ticketUrl || POSH_TICKET_URL,
-        locationName: event.venue,
-        streetAddress: event.venue === "Alhambra Palace" ? "1240 W Randolph St" : "Chicago IL",
-        addressLocality: "Chicago",
-        addressRegion: "IL",
-        postalCode: "60607",
-        addressCountry: "US",
-      });
-    })
+    "@graph": events
+      .filter((event) => getEventWindowStatus(event) !== "past")
+      .map((event) => buildScheduledEventSchema(event, "/schedule")),
   };
 }

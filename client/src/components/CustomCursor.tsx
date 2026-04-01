@@ -1,32 +1,35 @@
-import { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import * as React from "react";
+import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 export default function CustomCursor() {
-    const [isHovered, setIsHovered] = useState(false);
-    const [isClicking, setIsClicking] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
-    const [cursorText, setCursorText] = useState("");
-    const [cursorImage, setCursorImage] = useState("");
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [isClicking, setIsClicking] = React.useState(false);
+    const [isVisible, setIsVisible] = React.useState(false);
+    const [cursorText, setCursorText] = React.useState("");
+    const [cursorImage, setCursorImage] = React.useState("");
 
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
 
-    // Spring physics configuration for the heavy trailing effect (Premium feel)
-    const springConfig = { damping: 28, stiffness: 300, mass: 0.8 };
+    // Ultra-smooth architectural spring physics
+    const springConfig = { damping: 30, stiffness: 400, mass: 0.5 };
     const springX = useSpring(mouseX, springConfig);
     const springY = useSpring(mouseY, springConfig);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return;
 
         const moveCursor = (e: MouseEvent) => {
             if (!isVisible) setIsVisible(true);
-            // Adjust center offset dynamically based on scale logic, but keep raw coords here
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
         };
 
-        const handleMouseDown = () => setIsClicking(true);
+        const handleMouseDown = () => {
+            setIsClicking(true);
+            signalChirp.click();
+        };
         const handleMouseUp = () => setIsClicking(false);
 
         const handleMouseOver = (e: MouseEvent) => {
@@ -35,13 +38,13 @@ export default function CustomCursor() {
             const imageElement = target.closest('[data-cursor-image]');
             if (imageElement) {
                 setCursorImage(imageElement.getAttribute('data-cursor-image') || "");
+                if (!isHovered) signalChirp.hover();
                 setIsHovered(true);
                 return;
             } else {
                 setCursorImage("");
             }
 
-            // Look for custom text to inject into the cursor ring
             const textElement = target.closest('[data-cursor-text]');
             if (textElement) {
                 setCursorText(textElement.getAttribute('data-cursor-text') || "");
@@ -49,7 +52,6 @@ export default function CustomCursor() {
                 return;
             }
 
-            // Standard interactive elements
             const isInteractive =
                 target.tagName === "BUTTON" ||
                 target.tagName === "A" ||
@@ -76,78 +78,82 @@ export default function CustomCursor() {
 
     if (!isVisible) return null;
 
-    // Derived states
     const hasText = cursorText.length > 0;
     const hasImage = cursorImage.length > 0;
     const isExpanded = isHovered || hasText || hasImage;
 
-    // Dynamic sizing (Make it massive for pictures, normal for text)
-    const size = hasImage ? 280 : hasText ? 80 : isHovered ? 50 : 16;
-    const offset = size / 2;
+    // Architectural sizing logic
+    const size = hasImage ? 240 : hasText ? 60 : isHovered ? 40 : 10;
 
     return (
-        <>
+        <React.Fragment>
             <style>{`
         @media (pointer: fine) {
           body, a, button, [role="button"], input, textarea, select { cursor: none !important; }
         }
       `}</style>
 
-            {/* Main Outer Ring */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[99999] mix-blend-difference flex items-center justify-center rounded-full overflow-hidden"
+                className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center rounded-full overflow-hidden"
                 style={{
                     x: springX,
                     y: springY,
                     translateX: "-50%",
                     translateY: "-50%",
+                    mixBlendMode: !isExpanded ? "difference" : "normal",
+                    backdropFilter: isHovered && !hasImage ? "blur(10px) brightness(1.1)" : "none",
+                    WebkitBackdropFilter: isHovered && !hasImage ? "blur(10px) brightness(1.1)" : "none",
                     width: size,
                     height: size,
                 }}
                 animate={{
-                    backgroundColor: isExpanded ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)",
-                    border: isExpanded ? "0px solid transparent" : "2px solid rgba(255, 255, 255, 1)",
-                    scale: isClicking ? 0.8 : 1,
+                    backgroundColor: hasText || hasImage ? "white" : isHovered ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 1)",
+                    border: isHovered && !hasText && !hasImage ? "1px solid rgba(255, 255, 255, 0.3)" : "none",
+                    scale: isClicking ? 0.9 : 1,
                 }}
                 transition={{
-                    scale: { type: "spring", stiffness: 400, damping: 28 },
-                    backgroundColor: { duration: 0.2 },
-                    border: { duration: 0.2 },
-                    width: { type: "spring", stiffness: 300, damping: 25 },
-                    height: { type: "spring", stiffness: 300, damping: 25 },
+                    scale: { type: "spring", stiffness: 400, damping: 30 },
+                    backgroundColor: { duration: 0.15 },
+                    width: { type: "spring", stiffness: 350, damping: 28 },
+                    height: { type: "spring", stiffness: 350, damping: 28 },
                 }}
             >
-                {/* Injected Text */}
-                <motion.span
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: hasText && !hasImage ? 1 : 0, scale: hasText && !hasImage ? 1 : 0.5 }}
-                    className="text-black font-display text-[10px] font-bold tracking-widest uppercase absolute z-20"
-                >
-                    {cursorText}
-                </motion.span>
+                <AnimatePresence>
+                    {hasText && !hasImage && (
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            className="text-black font-mono text-[9px] font-bold tracking-widest uppercase absolute z-20"
+                        >
+                            {cursorText}
+                        </motion.span>
+                    )}
+                </AnimatePresence>
 
-                {/* Injected Image for Artist Hover */}
-                {hasImage && (
-                    <motion.img
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.3 }}
-                        src={cursorImage}
-                        alt="cursor visual"
-                        className="absolute inset-0 w-full h-full object-cover rounded-full z-10"
-                    />
-                )}
-
-                {/* Inner dot just for non-hover minimal state */}
-                {!isExpanded && (
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute inset-0 m-auto w-1 h-1 bg-white rounded-full"
-                    />
-                )}
+                <AnimatePresence>
+                    {hasImage && (
+                        <motion.img
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            src={cursorImage}
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-cover rounded-full z-10"
+                        />
+                    )}
+                </AnimatePresence>
             </motion.div>
-        </>
+
+            <motion.div
+                animate={{ 
+                    scale: [1, 2],
+                    opacity: [0.15, 0]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
+                style={{ x: mouseX, y: mouseY }}
+                className="fixed top-0 left-0 w-20 h-20 border border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[99998]"
+            />
+        </React.Fragment>
     );
 }

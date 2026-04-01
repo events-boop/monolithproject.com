@@ -1,12 +1,23 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
-import ReactPlayer from "react-player";
+import YouTubeEmbed from "./ui/YouTubeEmbed";
+
+interface SlideSource {
+  srcSet: string;
+  type: string;
+  media?: string;
+  sizes?: string;
+}
 
 export interface Slide {
   type: "video" | "image" | "youtube";
   src: string;
   poster?: string;
+  sources?: SlideSource[];
+  sizes?: string;
+  posterSources?: SlideSource[];
+  posterSizes?: string;
   alt?: string;
   credit?: string;
   caption?: string;
@@ -14,6 +25,48 @@ export interface Slide {
 
 interface VideoHeroSliderProps {
   slides: Slide[];
+}
+
+function ResponsiveSlideImage({
+  alt,
+  ariaHidden,
+  className,
+  fetchPriority = "auto",
+  sizes,
+  sources,
+  src,
+}: {
+  alt: string;
+  ariaHidden?: boolean;
+  className: string;
+  fetchPriority?: "auto" | "high" | "low";
+  sizes?: string;
+  sources?: SlideSource[];
+  src: string;
+}) {
+  return (
+    <picture>
+      {sources?.map((source, index) => (
+        <source
+          key={`${source.type}-${index}`}
+          media={source.media}
+          sizes={source.sizes || sizes}
+          srcSet={source.srcSet}
+          type={source.type}
+        />
+      ))}
+      <img
+        src={src}
+        alt={alt}
+        sizes={sizes}
+        loading={fetchPriority === "high" ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={fetchPriority}
+        className={className}
+        aria-hidden={ariaHidden}
+      />
+    </picture>
+  );
 }
 
 export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
@@ -62,6 +115,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
   }, [prev, next]);
 
   const slide = slides[currentSlide];
+  const slideFetchPriority = currentSlide === 0 ? "high" : "auto";
 
   // Avoid competing with critical JS/CSS on slow connections: keep the poster image
   // until the browser is idle, and skip video entirely for Save-Data / 2g/3g.
@@ -69,7 +123,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
     if (loadVideo) return;
     if (reduceMotion) return;
     if (!slide) return;
-    if (slide.type !== "video") return;
+    if (slide.type !== "video" && slide.type !== "youtube") return;
 
     const conn = (navigator as any).connection as { saveData?: boolean; effectiveType?: string } | undefined;
     if (conn?.saveData) return;
@@ -99,30 +153,31 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
           className="absolute inset-0"
         >
           {slide.type === "youtube" ? (
-            <div className="w-full h-full relative" style={{ paddingTop: '56.25%' }}>
-              <ReactPlayer
-                url={slide.src}
-                playing={!reduceMotion}
-                loop={true}
-                muted={isMuted}
-                width="100%"
-                height="100%"
-                style={{ position: 'absolute', top: 0, left: 0 }}
-                config={{
-                  youtube: {
-                    // @ts-ignore
-                    playerVars: {
-                      showinfo: 0,
-                      controls: 0,
-                      modestbranding: 1,
-                      rel: 0,
-                      fs: 0,
-                      disablekb: 1,
-                      iv_load_policy: 3
-                    }
-                  }
-                }}
-              />
+            <div className="absolute inset-0 overflow-hidden bg-black">
+              {loadVideo || !slide.poster ? (
+                <YouTubeEmbed
+                  url={slide.src}
+                  title={slide.alt || slide.caption || "Monolith Project video"}
+                  autoplay={!reduceMotion}
+                  muted
+                  controls={false}
+                  loop
+                  playsInline
+                  allowFullScreen={false}
+                  loading="eager"
+                  className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
+                />
+              ) : (
+                <ResponsiveSlideImage
+                  src={slide.poster}
+                  alt=""
+                  ariaHidden
+                  fetchPriority={slideFetchPriority}
+                  sources={slide.posterSources}
+                  sizes={slide.posterSizes}
+                  className="w-full h-full object-cover object-center md:object-[80%_center]"
+                />
+              )}
             </div>
           ) : slide.type === "video" ? (
             loadVideo || !slide.poster ? (
@@ -135,26 +190,29 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
                 muted={isMuted}
                 playsInline
                 preload="metadata"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center md:object-[80%_center]"
                 aria-hidden="true"
                 tabIndex={-1}
               />
             ) : (
-              <img
+              <ResponsiveSlideImage
                 src={slide.poster}
                 alt=""
-                decoding="async"
-                fetchPriority="high"
-                className="w-full h-full object-cover object-[80%_center]"
-                aria-hidden="true"
+                ariaHidden
+                fetchPriority={slideFetchPriority}
+                sources={slide.posterSources}
+                sizes={slide.posterSizes}
+                className="w-full h-full object-cover object-center md:object-[80%_center]"
               />
             )
           ) : (
-            <img
+            <ResponsiveSlideImage
               src={slide.src}
               alt={slide.alt || ""}
-              decoding="async"
-              className="w-full h-full object-cover object-[80%_center]"
+              fetchPriority={slideFetchPriority}
+              sources={slide.sources}
+              sizes={slide.sizes}
+              className="w-full h-full object-cover object-center md:object-[80%_center]"
             />
           )}
         </motion.div>
@@ -167,7 +225,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
       <button
         type="button"
         onClick={prev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -175,16 +233,16 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
       <button
         type="button"
         onClick={next}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
       {/* Bottom bar: indicators + credit + mute */}
-      <div className="absolute bottom-36 left-0 right-0 z-20 px-6 md:px-8 flex items-end justify-between">
+      <div className="absolute bottom-24 md:bottom-36 left-0 right-0 z-20 px-5 md:px-8 hidden sm:flex items-end justify-between">
         {/* Left: Slide indicators */}
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 md:gap-2">
           {slides.map((_, index) => (
             <button
               type="button"
@@ -193,8 +251,8 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === currentSlide ? "true" : undefined}
               className={`h-[2px] transition-all duration-500 ${index === currentSlide
-                ? "bg-primary w-10"
-                : "bg-white/20 w-5 hover:bg-white/40"
+                ? "bg-primary w-8 md:w-10"
+                : "bg-white/20 w-4 md:w-5 hover:bg-white/40"
                 } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
             />
           ))}
@@ -207,7 +265,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
               Photo: {slide.credit}
             </span>
           )}
-          {(slide.type === "video" || slide.type === "youtube") && (loadVideo || !slide.poster) && !reduceMotion && (
+          {slide.type === "video" && (loadVideo || !slide.poster) && !reduceMotion && (
             <button
               type="button"
               onClick={toggleMute}

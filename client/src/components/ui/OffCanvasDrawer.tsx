@@ -1,32 +1,60 @@
+import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
-import { useUI, DrawerType } from "../../contexts/UIContext";
-import { lazy, Suspense, useEffect, useRef, useCallback } from "react";
+import { ArrowUpRight, X } from "lucide-react";
+import { lazy, Suspense, useEffect } from "react";
+import { Link } from "wouter";
+import { DrawerType, useUI } from "../../contexts/UIContext";
 import MagneticButton from "../MagneticButton";
 
 const FAQSection = lazy(() => import("../FAQSection"));
 const NewsletterSection = lazy(() => import("../NewsletterSection"));
 const ConnectSection = lazy(() => import("../ConnectSection"));
+const ExperienceGuidePanel = lazy(() => import("../ExperienceGuidePanel"));
 
-function DrawerContent({ type }: { type: DrawerType }) {
+const drawerMeta: Record<
+    Exclude<DrawerType, null>,
+    { eyebrow: string; title: string; description: string; href: string; hrefLabel: string }
+> = {
+    faq: {
+        eyebrow: "Answers",
+        title: "Frequently Asked Questions",
+        description: "Fast clarity on entry, tickets, tables, and what to expect inside the room.",
+        href: "/faq",
+        hrefLabel: "Full FAQ",
+    },
+    newsletter: {
+        eyebrow: "Inner Circle",
+        title: "Stay On Signal",
+        description: "Private drops, early access windows, and lineups before the public blast.",
+        href: "/newsletter",
+        hrefLabel: "Newsletter Page",
+    },
+    contact: {
+        eyebrow: "Connect",
+        title: "Work With The Monolith",
+        description: "Artists, crew, venue partners, and aligned brands all funnel through one contact surface.",
+        href: "/contact",
+        hrefLabel: "Contact Page",
+    },
+    guide: {
+        eyebrow: "Night Guide",
+        title: "Arrival Intelligence",
+        description: "Everything the room needs before doors: timing, entry rhythm, venue notes, and maps.",
+        href: "/guide",
+        hrefLabel: "Full Guide",
+    },
+};
+
+function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
     switch (type) {
         case "faq":
             return <FAQSection />;
         case "newsletter":
-            return <NewsletterSection />;
+            return <NewsletterSection compactIntro />;
         case "contact":
-            return <ConnectSection />;
-        case "about":
-            return (
-                <div className="p-12 md:p-24 flex flex-col justify-center min-h-full">
-                    <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4 text-primary">The Monolith Project</span>
-                    <h2 className="font-display text-5xl md:text-7xl mb-8 uppercase text-white tracking-tight">Gathering<br />Should Feel<br />Shared.</h2>
-                    <p className="text-white/70 max-w-xl text-lg leading-relaxed mb-6">
-                        We believe music carries emotion. We believe getting together should be intentional. The Monolith Project is an underground events collective based in Chicago focused on curation over capacity, and rhythm over everything.
-                    </p>
-                    <div className="h-px w-24 bg-border my-12" />
-                </div>
-            );
+            return <ConnectSection compact />;
+        case "guide":
+            return <ExperienceGuidePanel />;
         default:
             return null;
     }
@@ -34,108 +62,102 @@ function DrawerContent({ type }: { type: DrawerType }) {
 
 export default function OffCanvasDrawer() {
     const { activeDrawer, closeDrawer } = useUI();
-    const panelRef = useRef<HTMLDivElement>(null);
-    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const meta = activeDrawer ? drawerMeta[activeDrawer] : null;
 
-    // Lock body scroll when any drawer is active
-    useEffect(() => {
-        if (activeDrawer) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, [activeDrawer]);
-
-    // Escape key to close
     useEffect(() => {
         if (!activeDrawer) return;
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") closeDrawer();
-        };
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [activeDrawer, closeDrawer]);
 
-    // Focus trap + auto-focus close button on open
-    useEffect(() => {
-        if (!activeDrawer || !panelRef.current) return;
-        closeButtonRef.current?.focus();
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
 
-        const panel = panelRef.current;
-        const onTab = (e: KeyboardEvent) => {
-            if (e.key !== "Tab") return;
-            const focusable = panel.querySelectorAll<HTMLElement>(
-                'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-            );
-            if (focusable.length === 0) return;
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-            if (e.shiftKey && document.activeElement === first) {
-                e.preventDefault();
-                last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-                e.preventDefault();
-                first.focus();
-            }
+        return () => {
+            document.body.style.overflow = previousOverflow;
         };
-        window.addEventListener("keydown", onTab);
-        return () => window.removeEventListener("keydown", onTab);
     }, [activeDrawer]);
 
     return (
-        <AnimatePresence>
-            {activeDrawer && (
-                <div className="fixed inset-0 z-[110] flex justify-end" aria-modal="true" role="dialog">
-                    {/* Backdrop */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute inset-0 bg-black/40 backdrop-blur-md cursor-pointer"
-                        onClick={closeDrawer}
-                    />
+        <Dialog.Root open={Boolean(activeDrawer)} onOpenChange={(open) => !open && closeDrawer()}>
+            <AnimatePresence>
+                {activeDrawer && meta ? (
+                    <Dialog.Portal forceMount>
+                        <Dialog.Overlay asChild>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                className="fixed inset-0 z-[120] bg-black/58 backdrop-blur-[6px]"
+                            />
+                        </Dialog.Overlay>
 
-                    {/* Drawer Panel */}
-                    <motion.div
-                        ref={panelRef}
-                        initial={{ x: "100%" }}
-                        animate={{ x: 0 }}
-                        exit={{ x: "100%" }}
-                        transition={{ type: "spring", damping: 30, stiffness: 250, mass: 0.8 }}
-                        className="relative w-full max-w-2xl h-full shadow-2xl overflow-y-auto"
-                        style={{
-                            background: "linear-gradient(145deg, rgba(20,20,20,0.95), rgba(10,10,12,0.98))",
-                            borderLeft: "1px solid rgba(255,255,255,0.08)"
-                        }}
-                    >
-                        {/* Ambient Noise for Glass effect */}
-                        <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none mix-blend-overlay" />
+                        <Dialog.Content asChild>
+                            <motion.div
+                                initial={{ x: 48, opacity: 0 }}
+                                animate={{ x: 0 }}
+                                exit={{ x: 48, opacity: 0 }}
+                                transition={{ type: "spring", damping: 28, stiffness: 260, mass: 0.8 }}
+                                className="fixed inset-x-0 bottom-0 z-[130] flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-[2rem] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.42)] md:bottom-4 md:left-auto md:right-4 md:top-[calc(var(--shell-nav-offset)+0.5rem)] md:max-h-none md:w-[min(42rem,calc(100vw-2rem))] md:rounded-[2rem]"
+                                style={{
+                                    background:
+                                        "linear-gradient(160deg, rgba(16,16,18,0.96), rgba(8,8,10,0.99))",
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none mix-blend-overlay" />
 
-                        <div className="sticky top-0 right-0 z-50 flex justify-end p-6">
-                            <MagneticButton>
-                                <button
-                                    ref={closeButtonRef}
-                                    onClick={closeDrawer}
-                                    aria-label="Close drawer"
-                                    className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
-                            </MagneticButton>
-                        </div>
+                                <div className="sticky top-0 z-20 border-b border-white/8 bg-black/28 px-6 py-5 backdrop-blur-2xl md:px-8">
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="max-w-xl">
+                                            <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-primary/75">
+                                                {meta.eyebrow}
+                                            </p>
+                                            <Dialog.Title className="mt-3 font-display text-3xl uppercase leading-[0.9] text-white md:text-[2.4rem]">
+                                                {meta.title}
+                                            </Dialog.Title>
+                                            <Dialog.Description className="mt-3 max-w-lg text-sm leading-relaxed text-white/56">
+                                                {meta.description}
+                                            </Dialog.Description>
+                                        </div>
 
-                        <div className="relative z-10 w-full">
-                            <Suspense fallback={<div className="p-24 text-white/40 font-mono text-sm tracking-widest uppercase">Loading interface...</div>}>
-                                <DrawerContent type={activeDrawer} />
-                            </Suspense>
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </AnimatePresence>
+                                        <MagneticButton>
+                                            <Dialog.Close asChild>
+                                                <button
+                                                    aria-label="Close drawer"
+                                                    className="rounded-full border border-white/10 bg-white/5 p-3 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                                                >
+                                                    <X className="h-5 w-5" />
+                                                </button>
+                                            </Dialog.Close>
+                                        </MagneticButton>
+                                    </div>
+
+                                    <div className="mt-5">
+                                        <Link
+                                            href={meta.href}
+                                            onClick={() => closeDrawer()}
+                                            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-white/78 transition-colors hover:border-white/20 hover:text-white"
+                                        >
+                                            {meta.hrefLabel}
+                                            <ArrowUpRight className="h-3.5 w-3.5" />
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                <div className="relative z-10 flex-1 overflow-y-auto">
+                                    <Suspense
+                                        fallback={
+                                            <div className="p-12 text-white/40 font-mono text-sm tracking-widest uppercase">
+                                                Loading interface...
+                                            </div>
+                                        }
+                                    >
+                                        <DrawerContent type={activeDrawer} />
+                                    </Suspense>
+                                </div>
+                            </motion.div>
+                        </Dialog.Content>
+                    </Dialog.Portal>
+                ) : null}
+            </AnimatePresence>
+        </Dialog.Root>
     );
 }

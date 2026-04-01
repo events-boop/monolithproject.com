@@ -1,9 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { lazy, Suspense, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { MasonryPhotoAlbum, Photo } from "react-photo-album";
+import "react-photo-album/masonry.css";
 import { MediaItem, homeGallery } from "@/data/galleryData";
 import ImageTrail from "./ui/ImageTrail";
-import TiltImage from "./TiltImage";
+
+const GalleryLightbox = lazy(() => import("./GalleryLightbox"));
+
+type GalleryPhoto = Photo & {
+  media: MediaItem;
+  kind: MediaItem["kind"];
+  label: string;
+  caption?: string;
+  credit?: string;
+  description?: string;
+};
 
 interface MixedMediaGalleryProps {
   media?: MediaItem[];
@@ -12,7 +23,6 @@ interface MixedMediaGalleryProps {
   description?: string;
   className?: string;
   style?: React.CSSProperties;
-  columns?: string;
 }
 
 export default function MixedMediaGallery({
@@ -22,54 +32,48 @@ export default function MixedMediaGallery({
   description = "A collection of fragments from our past gatherings. Immersive soundscapes and visual memories.",
   className = "bg-background border-t border-white/5 relative",
   style,
-  columns = "columns-1 md:columns-2 lg:columns-3",
 }: MixedMediaGalleryProps) {
-  const [index, setIndex] = useState<number | null>(null);
+  const [index, setIndex] = useState(-1);
   const [isHoveringGallery, setIsHoveringGallery] = useState(false);
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  const active = useMemo(() => {
-    if (index === null) return null;
-    return media[index] ?? null;
-  }, [index, media]);
-
-  const activeCaption = useMemo(() => {
-    if (!active) return null;
-    if (active.kind === "image") return active.alt || null;
-    return null;
-  }, [active]);
-
-  const close = () => setIndex(null);
-  const prev = () => setIndex((i) => (i === null ? null : (i - 1 + media.length) % media.length));
-  const next = () => setIndex((i) => (i === null ? null : (i + 1) % media.length));
+  const isLightboxOpen = index >= 0;
+  const hasMedia = media.length > 0;
 
   // Extract just image sources for the trail
   const trailImages = useMemo(() => {
-    return media.filter(m => m.kind === "image").map(m => m.src);
+    return media.filter((item) => item.kind === "image").map((item) => item.src);
   }, [media]);
 
-  // Keyboard navigation + body scroll lock
-  useEffect(() => {
-    if (index === null) return;
+  const photos = useMemo<GalleryPhoto[]>(() => {
+    return media.map((item) => {
+      const base = item.kind === "video"
+        ? {
+            src: item.poster,
+            width: item.posterWidth,
+            height: item.posterHeight,
+          }
+        : {
+            src: item.src,
+            width: item.width,
+            height: item.height,
+          };
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    };
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", onKeyDown);
-
-    // Focus the dialog for screen readers
-    dialogRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [index]);
+      return {
+        key: item.id,
+        ...base,
+        alt: item.alt,
+        title: item.caption || item.alt,
+        media: item,
+        kind: item.kind,
+        caption: item.caption,
+        description: item.description,
+        credit: item.credit,
+        label:
+          item.kind === "video"
+            ? `Open video: ${item.caption || item.alt}`
+            : `Open image: ${item.caption || item.alt}`,
+      };
+    });
+  }, [media]);
 
   return (
     <section
@@ -79,188 +83,131 @@ export default function MixedMediaGallery({
       onMouseLeave={() => setIsHoveringGallery(false)}
     >
       {/* Background WebGL Image Trail Effect */}
-      <ImageTrail images={trailImages} isActive={isHoveringGallery && index === null} distanceToEmit={60} maxImages={12} />
+      <ImageTrail
+        images={trailImages}
+        isActive={trailImages.length > 0 && isHoveringGallery && !isLightboxOpen}
+        distanceToEmit={60}
+        maxImages={12}
+      />
 
       <div className="container max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 md:mb-32 gap-12 lg:gap-24">
+          <div className="max-w-3xl">
             {subtitle && (
-              <span className="font-mono text-xs tracking-widest text-primary mb-2 block uppercase opacity-80">
+              <span className="font-mono text-[10px] md:text-sm tracking-[0.3em] text-white/40 mb-6 block uppercase">
                 {subtitle}
               </span>
             )}
-            <h2 className="font-display text-4xl md:text-5xl text-current uppercase opacity-95">
-              {title}
+            <h2 className="font-heavy text-[clamp(4rem,8vw,9rem)] leading-[0.85] tracking-tighter text-white uppercase mb-8">
+              {title.split(" ").map((word, i) => (
+                <span key={i} className={`block ${i === 0 ? "text-white/30" : "text-white"}`}>
+                  {word}{i === title.split(" ").length - 1 ? "." : ""}
+                </span>
+              ))}
             </h2>
+            {description && (
+              <p className="font-sans text-lg md:text-xl text-white/50 leading-relaxed font-light max-w-xl">
+                {description}
+              </p>
+            )}
           </div>
-          {description && (
-            <p className="opacity-60 max-w-sm text-sm leading-relaxed text-current">
-              {description}
-            </p>
-          )}
+          
+          <div className="hidden lg:block w-px h-32 bg-gradient-to-b from-white/20 to-transparent mr-24" />
         </div>
 
-        {/* Masonry-style Grid */}
-        <div className={`${columns} gap-4`}>
-          {media.map((item, i) => (
-            <TiltImage key={`${item.kind}-${item.src}-${i}`} strength={8} className="break-inside-avoid mb-4 w-full">
-              <motion.button
-                type="button"
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: (i % 6) * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => setIndex(i)}
-                className="relative group cursor-pointer overflow-hidden rounded-lg w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 block bg-white/5"
-                aria-label={item.kind === "video" ? "Open video" : (item.kind === "image" && item.alt) ? `View: ${item.alt}` : "Open image"}
-              >
-                {item.kind === "video" ? (
-                  <div className="aspect-video relative">
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
-                      <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all duration-500 group-hover:scale-110 group-hover:bg-white/20">
-                        <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+        <motion.div
+           initial={{ opacity: 0, y: 40 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-100px" }}
+           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {hasMedia ? (
+            <MasonryPhotoAlbum
+              photos={photos}
+              columns={(containerWidth) =>
+                containerWidth < 640 ? 1 : containerWidth < 1080 ? 2 : 3
+              }
+              spacing={24}
+              padding={0}
+              sizes={{
+                size: "calc(100vw - 3rem)",
+                sizes: [
+                  { viewport: "(min-width: 1280px)", size: "384px" },
+                  { viewport: "(min-width: 640px)", size: "calc((100vw - 5rem) / 2)" },
+                ],
+              }}
+              onClick={({ index: nextIndex }) => setIndex(nextIndex)}
+              componentsProps={{
+                wrapper: () => ({
+                  className:
+                    "group relative mb-6 overflow-hidden rounded-none border-l border-b border-white/10 bg-[#050505] transition-all duration-700 hover:border-white/30",
+                }),
+                button: ({ photo }) => ({
+                  className:
+                    "block w-full overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                  "aria-label": photo.label,
+                }),
+                image: ({ photo }) => ({
+                  className: `w-full h-auto object-cover transition-all duration-[1.5s] ease-[0.22,1,0.36,1] filter grayscale group-hover:grayscale-0 ${
+                    photo.kind === "video"
+                      ? "opacity-90 group-hover:scale-[1.02]"
+                      : "opacity-70 group-hover:scale-[1.05] group-hover:opacity-100"
+                  }`,
+                }),
+              }}
+              render={{
+                extras: (_, { photo }) => (
+                  <>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
+
+                    {photo.kind === "video" && (
+                      <div className="pointer-events-none absolute left-6 top-6 inline-flex items-center gap-2 border border-white/20 bg-black/50 px-3 py-1.5 text-[9px] font-mono uppercase tracking-[0.2em] text-white/90 backdrop-blur-md">
+                        <span className="h-1.5 w-1.5 rounded-none bg-primary animate-pulse" />
+                        Motion
                       </div>
-                    </div>
-                    <img
-                      src={item.poster || "/images/hero-video-short-poster.jpg"}
-                      alt=""
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                ) : (
-                  <img
-                    src={item.src}
-                    alt={item.alt || ""}
-                    className="w-full h-auto object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-[1.03] group-hover:[filter:url(#liquid-distortion)]"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                )}
+                    )}
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                {/* Caption on hover for images */}
-                {item.kind === "image" && item.alt && (
-                  <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 pointer-events-none">
-                    <span className="text-white text-xs font-mono tracking-widest uppercase">
-                      {item.alt}
-                    </span>
-                  </div>
-                )}
-              </motion.button>
-            </TiltImage>
-          ))}
-        </div>
+                    {(photo.caption || photo.credit || photo.description) && (
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 md:p-8">
+                        <div className="translate-y-4 opacity-0 transition-all duration-700 ease-out group-hover:translate-y-0 group-hover:opacity-100 flex flex-col gap-2">
+                          {photo.caption && (
+                            <p className="font-heavy text-2xl md:text-3xl uppercase tracking-tighter leading-none text-white drop-shadow-xl">
+                              {photo.caption}
+                            </p>
+                          )}
+                          {(photo.credit || photo.description) && (
+                            <div className="w-12 h-px bg-primary/70 my-1" />
+                          )}
+                          {(photo.credit || photo.description) && (
+                            <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-white/50">
+                              {photo.credit || photo.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ),
+              }}
+            />
+          ) : (
+            <div className="rounded-none border border-white/10 bg-white/[0.03] px-6 py-12 text-center shadow-[0_18px_34px_rgba(0,0,0,0.18)]">
+              <p className="font-display text-2xl uppercase text-white/90">
+                Archive In Assembly
+              </p>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/55">
+                This season has been structured for the new gallery system, but the final edit is still being curated.
+              </p>
+            </div>
+          )}
+        </motion.div>
       </div>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Image gallery viewer"
-            tabIndex={-1}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 outline-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <motion.button
-              type="button"
-              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
-              onClick={close}
-              aria-label="Close gallery"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-
-            <motion.div
-              className="relative z-10 w-full max-w-5xl"
-              initial={{ opacity: 0, scale: 0.96, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-white/60" aria-live="polite">
-                  {index !== null ? `${index + 1} / ${media.length}` : null}
-                </div>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="p-2 rounded-full border border-white/15 bg-white/5 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/95 flex items-center justify-center">
-                {active.kind === "video" ? (
-                  <video
-                    className="w-full max-h-[80vh] object-contain"
-                    controls
-                    playsInline
-                    poster={active.poster}
-                  >
-                    <source src={active.src} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img
-                    src={active.src}
-                    alt={active.alt || ""}
-                    className="w-full max-h-[80vh] object-contain"
-                    decoding="async"
-                  />
-                )}
-              </div>
-
-              {/* Caption bar */}
-              {activeCaption && (
-                <div className="mt-3 text-center">
-                  <span className="text-white/70 text-xs font-mono tracking-widest uppercase">
-                    {activeCaption}
-                  </span>
-                </div>
-              )}
-
-              {/* Navigation */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prev();
-                }}
-                className="absolute left-2 md:-left-14 top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/10 bg-black/60 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  next();
-                }}
-                className="absolute right-2 md:-right-14 top-1/2 -translate-y-1/2 p-3 rounded-full border border-white/10 bg-black/60 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-                aria-label="Next image"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isLightboxOpen && hasMedia ? (
+        <Suspense fallback={null}>
+          <GalleryLightbox media={media} index={index} onClose={() => setIndex(-1)} />
+        </Suspense>
+      ) : null}
     </section>
   );
 }

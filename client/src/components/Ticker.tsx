@@ -1,38 +1,60 @@
-import { Ticket } from "lucide-react";
-import { POSH_TICKET_URL } from "@/data/events";
+import { Ticket, ArrowRight } from "lucide-react";
+import { POSH_TICKET_URL, upcomingEvents } from "@/data/events";
+
+const seriesAccent: Record<string, string> = {
+  "chasing-sunsets": "text-[#E8B86D]",
+  "untold-story": "text-[#22D3EE]",
+  "monolith-project": "text-primary",
+};
 
 export default function Ticker() {
-  const items = Array.from({ length: 12 });
+  // Build items from real events, duplicated for seamless loop
+  const baseItems = upcomingEvents.length > 0
+    ? upcomingEvents.map(e => ({
+        label: e.title,
+        date: e.date,
+        series: e.series,
+        ticketUrl: e.ticketUrl || POSH_TICKET_URL,
+      }))
+    : [
+        { label: "Deron B2B Juany Bravo", date: "MAY 2026", series: "untold-story", ticketUrl: POSH_TICKET_URL },
+        { label: "Lazare Sabry", date: "TBD 2026", series: "untold-story", ticketUrl: POSH_TICKET_URL },
+        { label: "Autograf", date: "TBD 2026", series: "monolith-project", ticketUrl: POSH_TICKET_URL },
+      ];
+
+  const items = [...baseItems, ...baseItems, ...baseItems, ...baseItems];
 
   return (
     <a
       href={POSH_TICKET_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Get tickets"
-      className="block w-full overflow-hidden select-none h-[56px] flex items-center relative z-[100] cursor-pointer border-y border-primary/35 shadow-[0_10px_30px_rgba(224,90,58,0.2)] group sensory-ticket-btn"
-      style={{ background: "linear-gradient(100deg, #3b1812 0%, #8f3a24 30%, #e05a3a 65%, #f39c6b 100%)" }}
+      aria-label="Get tickets to upcoming Monolith events"
+      className="group relative z-[100] block w-full cursor-pointer overflow-hidden border-y border-white/10 bg-[#050505] select-none"
+      style={{ height: "52px" }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_50%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_82%_50%,rgba(255,220,180,0.3),transparent_35%)]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/10" />
-      <div className="flex overflow-hidden">
-        <div className="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap min-w-full shrink-0">
-          {items.map((_, i) => (
-            <div key={i} className="flex items-center gap-3 shrink-0 px-12">
-              <Ticket className="w-4.5 h-4.5 text-white/90 transition-colors relative z-10 group-hover:text-white" />
-              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/95 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)] relative z-10">
-                GET TICKETS
+      {/* Gradient fade masks on edges */}
+      <div className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(90deg, #050505, transparent)" }} />
+      <div className="absolute inset-y-0 right-0 w-24 z-10 pointer-events-none"
+        style={{ background: "linear-gradient(270deg, #050505, transparent)" }} />
+
+      <div className="flex overflow-hidden h-full items-center">
+        <div className="flex w-max min-w-full shrink-0 animate-marquee items-center whitespace-nowrap group-hover:[animation-play-state:paused]">
+          {items.map((item, i) => (
+            <div key={i} className="flex shrink-0 items-center gap-4 md:gap-6 px-8 md:px-12">
+              <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white/30">
+                {item.date}
               </span>
-            </div>
-          ))}
-        </div>
-        <div className="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap min-w-full shrink-0" aria-hidden="true">
-          {items.map((_, i) => (
-            <div key={`clone-${i}`} className="flex items-center gap-3 shrink-0 px-12">
-              <Ticket className="w-4.5 h-4.5 text-white/90 group-hover:text-white transition-colors" />
-              <span className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/95 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]">
-                GET TICKETS
+              <div className="w-1 h-1 rounded-full bg-white/10" />
+              <span className={`font-heavy text-sm md:text-base uppercase tracking-tight ${seriesAccent[item.series] || "text-white/70"}`}>
+                {item.label}
               </span>
+              <div className="w-1 h-1 rounded-full bg-white/10" />
+              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/20 inline-flex items-center gap-2">
+                <Ticket className="w-3 h-3" /> Get Tickets
+              </span>
+              <ArrowRight className="w-3 h-3 text-white/20" />
             </div>
           ))}
         </div>
@@ -40,3 +62,4 @@ export default function Ticker() {
     </a>
   );
 }
+

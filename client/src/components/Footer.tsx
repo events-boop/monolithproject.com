@@ -1,9 +1,11 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { CTA_LABELS } from "@/lib/cta";
+import { getSceneForPath } from "@/lib/scenes";
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -34,34 +36,36 @@ const socials = [
 
 const links = [
   {
-    title: "Navigate", items: [
-      { name: "Schedule", href: "/schedule" },
-      { name: "Tickets", href: "/tickets" },
-      { name: "Lineup", href: "/lineup" },
+    title: "Explore", items: [
+      { name: "Events", href: "/schedule" },
+      { name: "Artists", href: "/lineup" },
+      { name: "Archive", href: "/archive" },
+      { name: "Journal", href: "/insights" },
+      { name: "Contact", href: "/contact" },
     ]
   },
   {
     title: "Series", items: [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
-      { name: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts" },
-      { name: "Official Identity", href: "/chasing-sunsets-facts" },
       { name: "Radio", href: "/radio" },
     ]
   },
   {
     title: "Work With Us", items: [
-      { name: "About", href: "/about" },
-      { name: "Contact", href: "/contact" },
-      { name: "FAQ", href: "/#faq" },
       { name: "Partners", href: "/partners" },
-      { name: "Booking", href: "/booking" },
       { name: "Sponsor Access", href: "/sponsors" },
+      { name: "Booking", href: "/booking" },
+      { name: "Artist Submission", href: "/submit" },
+      { name: "Press & Media", href: "/press" },
     ]
   },
   {
-    title: "Legal & Tickets", items: [
-      { name: "Get Tickets", href: POSH_TICKET_URL, external: true },
+    title: "Utilities", items: [
+      { name: "Inner Circle", href: "/newsletter" },
+      { name: "Night Guide", href: "/guide" },
+      { name: "FAQ", href: "/faq" },
+      { name: CTA_LABELS.tickets, href: POSH_TICKET_URL, external: true },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Cookie Policy", href: "/cookies" },
@@ -70,6 +74,10 @@ const links = [
 ];
 
 export default function Footer() {
+  const [location] = useLocation();
+  const scene = getSceneForPath(location);
+  const resolvedBrand = scene.brand || "monolith";
+
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -81,6 +89,33 @@ export default function Footer() {
   const textScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
   const textY = useTransform(scrollYProgress, [0, 1], [100, 0]);
   const textOpacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+
+  let displayTitle = "MONOLITH";
+  let topNavLeft = "MONOLITH";
+  let topNavRight = "PROJECT";
+  let glowColor = "rgba(224,90,58";
+  let fontSizeClass = "text-[18vw]";
+
+  if ((resolvedBrand as string) === "chasing-sunsets") {
+    displayTitle = "CHASING SUNSETS";
+    topNavLeft = "CHASING";
+    topNavRight = "SUN(SETS)";
+    glowColor = "rgba(232,184,109";
+    fontSizeClass = "text-[12vw]";
+  } else if ((resolvedBrand as string) === "untold-story") {
+    displayTitle = "UNTOLD STORY";
+    topNavLeft = "UNTOLD";
+    topNavRight = "STORY";
+    glowColor = "rgba(34,211,238";
+    fontSizeClass = "text-[13vw]";
+  } else if ((resolvedBrand as string) === "radio") {
+    displayTitle = "MONOLITH RADIO";
+    topNavLeft = "MONOLITH";
+    topNavRight = "RADIO";
+    glowColor = "rgba(244,63,94";
+    fontSizeClass = "text-[11.5vw]";
+  }
+
   const renderItemLabel = (name: string) => {
     if (name === "Chasing Sun(Sets)") {
       return (
@@ -102,23 +137,21 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-background border-t border-white/5 relative overflow-hidden pt-20 pb-8 text-foreground">
+    <footer className="bg-background border-t border-white/5 relative overflow-hidden pt-12 md:pt-16 pb-8 text-foreground">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(224,90,58,0.14),transparent_38%),radial-gradient(circle_at_88%_82%,rgba(194,112,62,0.1),transparent_42%),radial-gradient(circle_at_70%_30%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_30%_78%,rgba(139,92,246,0.1),transparent_36%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.16)_0%,rgba(6,6,15,0.45)_100%)]" />
       <div className="container max-w-7xl mx-auto px-6 flex flex-col justify-between min-h-[60vh]">
 
         {/* Top: Navigation Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-20 z-10 relative">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-16 z-10 relative">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-display text-2xl tracking-wide block mb-6 text-white">
-              THE MONOLITH
+            <span className="font-heavy text-3xl md:text-3xl tracking-wide block mb-6 text-white leading-none">
+              {topNavLeft}
               <br />
-              PROJECT
+              {topNavRight}
             </span>
             <p className="text-white/70 text-sm leading-relaxed max-w-[220px]">
-              Togetherness is the frequency.
-              <br />
-              Music is the guide.
+              A Chicago-rooted music project built through recurring nights, distinct series, and rooms worth returning to.
             </p>
           </div>
 
@@ -133,8 +166,8 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === "Get Tickets"
-                          ? "px-3 py-1.5 rounded-full bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
+                        className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
+                          ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}
                       >
@@ -143,8 +176,8 @@ export default function Footer() {
                       </a>
                     ) : (
                       <Link href={item.href} asChild>
-                        <a className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === "Get Tickets"
-                          ? "px-3 py-1.5 rounded-full bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
+                        <a className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === CTA_LABELS.tickets
+                          ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}>
                           {renderItemLabel(item.name)}
@@ -160,15 +193,16 @@ export default function Footer() {
 
         {/* Bottom: Socials & Copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-12 pb-12 border-t border-white/5 z-10 relative">
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
                 key={s.name}
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/25 bg-white/[0.03] flex items-center justify-center text-white/75 hover:text-white hover:border-white/45 hover:bg-white/[0.08] transition-all"
+                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/15 bg-white/[0.02] text-white/50 hover:text-white hover:border-white/40 hover:bg-white/[0.06] transition-all duration-300"
                 aria-label={s.name}
+                title={s.name}
               >
                 <s.icon className="w-4 h-4" />
               </a>
@@ -189,7 +223,7 @@ export default function Footer() {
       {/* Mega Footer: Giant Interactive Typography */}
       <div
         ref={containerRef}
-        className="w-full relative overflow-hidden cursor-default select-none group flex justify-center items-end mt-auto pt-10"
+        className="w-full relative overflow-hidden cursor-default select-none group flex justify-center items-end mt-auto pt-24 md:pt-32 pb-8 md:pb-12"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={(e) => {
@@ -204,25 +238,25 @@ export default function Footer() {
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
           style={{
-            background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(224,90,58,0.15), transparent 40%)`
+            background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), ${glowColor},0.15), transparent 40%)`
           }}
         />
 
         {/* Huge Edge-to-Edge Text */}
-        <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full translate-y-[10%]">
-          <h1 className="relative z-10 font-display text-[21vw] leading-[0.72] text-center tracking-tighter transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white/90 to-white/5 drop-shadow-[0_0_0_rgba(224,90,58,0)] group-hover:drop-shadow-[0_0_80px_rgba(224,90,58,0.4)] mix-blend-overlay group-hover:mix-blend-normal">
-            MONOLITH
+        <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full relative z-10">
+          <h1 className={`relative z-10 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
+            {displayTitle}
           </h1>
 
           {/* Outline Overlay for Stroke Effect */}
           <h1
-            className="absolute inset-0 top-0 z-20 font-display text-[21vw] leading-[0.72] text-center tracking-tighter pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent"
+            className={`absolute inset-x-0 top-0 z-20 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
             style={{
-              WebkitTextStroke: "2px rgba(255,255,255,0.25)",
+              WebkitTextStroke: "2px rgba(255,255,255,0.3)",
               transform: "translateZ(0)"
             }}
           >
-            MONOLITH
+            {displayTitle}
           </h1>
         </motion.div>
       </div>

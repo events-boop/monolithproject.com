@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, ArrowUpRight, Calendar, MapPin, Users, Play } from "lucide-react";
 import { Link } from "wouter";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
+import { archiveCollectionsBySlug } from "@/data/galleryData";
+import { CTA_LABELS } from "@/lib/cta";
 
 // ─── Archive Data ────────────────────────────────────────────────────────────
 
@@ -51,7 +54,7 @@ const archiveData: ArchiveSeason[] = [
                 venue: "Chicago Rooftop",
                 location: "Chicago, IL",
                 lineup: "Resident DJs · Special Guests",
-                highlight: "The inaugural season — rooftop sunsets, golden hour vibes, and the beginning of something.",
+                highlight: "The inaugural season — rooftop sunsets, golden hour pacing, and the foundation of the series.",
                 hasFootage: true,
             },
         ],
@@ -62,7 +65,7 @@ const archiveData: ArchiveSeason[] = [
         season: "Season II",
         year: "2025",
         title: "Chasing Sun(Sets)",
-        subtitle: "Bigger rooms, deeper grooves, more golden hours.",
+        subtitle: "Bigger rooms, deeper rhythm, more golden hours.",
         status: "past",
         accentColor: "#E8B86D",
         borderColor: "rgba(232,184,109,0.25)",
@@ -133,13 +136,13 @@ const archiveData: ArchiveSeason[] = [
         status: "past",
         accentColor: "#8B5CF6",
         borderColor: "rgba(139,92,246,0.25)",
-        coverImage: "/images/untold-juany-single.jpg",
+        coverImage: "/images/lazare-recap.webp",
         events: [
             {
-                date: "2025",
+                date: "December 12, 2025",
                 venue: "Chicago",
                 location: "Chicago, IL",
-                lineup: "Juany Bravo · Deron · Guests",
+                lineup: "Lazare Sabry · Special Guests",
                 highlight: "Season II introduced 360° immersive sound and a new level of production. The room got bigger, the music got deeper.",
                 hasFootage: true,
             },
@@ -163,8 +166,7 @@ const archiveData: ArchiveSeason[] = [
                 location: "West Loop, Chicago",
                 lineup: "Deron B2B Juany Bravo · Hashtom · Rose · Jerome · Avo · Kenny",
                 highlight: "S3·E2 — Deron B2B Juany Bravo. The most anticipated pairing in Untold Story history.",
-                hasFootage: false,
-                footageUrl: "/story",
+                hasFootage: true,
             },
         ],
     },
@@ -181,6 +183,16 @@ const statusBadge = {
     active: { label: "Season Active", color: "#8B5CF6", bg: "rgba(139,92,246,0.12)" },
     upcoming: { label: "Coming Soon", color: "#E8B86D", bg: "rgba(232,184,109,0.12)" },
 };
+
+function getSeasonGalleryHref(season: ArchiveSeason) {
+    const seasonNumber = season.id.match(/s(\d+)$/)?.[1];
+    if (!seasonNumber) return null;
+
+    const key = `${season.series}-season-${seasonNumber}`;
+    const gallery = archiveCollectionsBySlug[key];
+
+    return gallery && gallery.media.length > 0 ? `/${season.series}/season-${seasonNumber}` : null;
+}
 
 function SeriesIcon({ series, color }: { series: ArchiveSeason["series"]; color: string }) {
     if (series === "chasing-sunsets") return <Sun className="w-4 h-4" style={{ color }} />;
@@ -211,7 +223,7 @@ export default function Archive() {
                 <div className="absolute inset-0 bg-noise opacity-[0.03]" />
             </div>
 
-            <main className="relative z-10 pt-44 md:pt-52 pb-32">
+            <main className="relative z-10 page-shell-start-loose pb-32">
                 <div className="container max-w-6xl mx-auto px-6">
 
                     {/* Header */}
@@ -224,7 +236,7 @@ export default function Archive() {
                         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
                             — The History
                         </span>
-                        <h1 className="font-display text-[clamp(3.5rem,10vw,8.5rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
+                        <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
                             ARCHIVE
                         </h1>
                         <motion.div
@@ -290,6 +302,7 @@ export default function Archive() {
                             {filtered.map((season, idx) => {
                                 const badge = statusBadge[season.status];
                                 const isOpen = expanded === season.id;
+                                const galleryHref = getSeasonGalleryHref(season);
 
                                 return (
                                     <motion.div
@@ -311,15 +324,20 @@ export default function Archive() {
 
                                         {/* Header row — always visible */}
                                         <button
-                                            onClick={() => setExpanded(isOpen ? null : season.id)}
+                                            onClick={() => { signalChirp.click(); setExpanded(isOpen ? null : season.id); }}
+                                            onMouseEnter={() => signalChirp.hover()}
+                                            data-cursor-image={season.coverImage}
                                             className="w-full flex items-center gap-5 p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 group"
                                         >
                                             {/* Cover thumbnail */}
                                             <div
-                                                className="w-14 h-14 flex-shrink-0 bg-cover bg-center overflow-hidden"
+                                                className="w-14 h-14 flex-shrink-0 bg-cover bg-center overflow-hidden relative"
                                                 style={{ backgroundImage: `url(${season.coverImage})` }}
                                             >
                                                 <div className="w-full h-full" style={{ background: `${season.accentColor}30` }} />
+                                                {/* 🧬 MEMORY GLITCH OVERLAY */}
+                                                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity mix-blend-overlay group-hover:animate-pulse" />
+                                                <div className="absolute inset-0 bg-noise opacity-0 group-hover:opacity-[0.1] pointer-events-none" />
                                             </div>
 
                                             <div className="flex-1 min-w-0">
@@ -394,22 +412,8 @@ export default function Archive() {
 
                                                                 {/* CTAs */}
                                                                 <div className="flex flex-wrap gap-3">
-                                                                    {event.hasFootage && (
-                                                                        <a
-                                                                            href="#"
-                                                                            className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
-                                                                            style={{
-                                                                                background: `${season.accentColor}12`,
-                                                                                border: `1px solid ${season.accentColor}30`,
-                                                                                color: season.accentColor,
-                                                                            }}
-                                                                        >
-                                                                            <Play className="w-3 h-3" />
-                                                                            Watch Footage
-                                                                        </a>
-                                                                    )}
-                                                                    {season.status === "active" && (
-                                                                        <Link href="/story" asChild>
+                                                                    {event.hasFootage && galleryHref && (
+                                                                        <Link href={galleryHref} asChild>
                                                                             <a
                                                                                 className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
                                                                                 style={{
@@ -418,7 +422,22 @@ export default function Archive() {
                                                                                     color: season.accentColor,
                                                                                 }}
                                                                             >
-                                                                                Get Tickets
+                                                                                <Play className="w-3 h-3" />
+                                                                                Open Archive
+                                                                            </a>
+                                                                        </Link>
+                                                                    )}
+                                                                    {season.status === "active" && (
+                                                                        <Link href="/tickets" asChild>
+                                                                            <a
+                                                                                className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
+                                                                                style={{
+                                                                                    background: `${season.accentColor}12`,
+                                                                                    border: `1px solid ${season.accentColor}30`,
+                                                                                    color: season.accentColor,
+                                                                                }}
+                                                                            >
+                                                                                {CTA_LABELS.tickets}
                                                                                 <ArrowUpRight className="w-3 h-3" />
                                                                             </a>
                                                                         </Link>
@@ -433,7 +452,7 @@ export default function Archive() {
                                                                                     color: season.accentColor,
                                                                                 }}
                                                                             >
-                                                                                Learn More
+                                                                                {CTA_LABELS.sunSets}
                                                                                 <ArrowUpRight className="w-3 h-3" />
                                                                             </a>
                                                                         </Link>
@@ -465,7 +484,7 @@ export default function Archive() {
                         </div>
                         <Link href="/schedule" asChild>
                             <a className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-mono text-[10px] tracking-widest uppercase hover:bg-primary/85 transition-all">
-                                View Schedule
+                                {CTA_LABELS.schedule}
                                 <ArrowUpRight className="w-3.5 h-3.5" />
                             </a>
                         </Link>

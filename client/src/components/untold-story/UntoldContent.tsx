@@ -3,12 +3,16 @@ import { Calendar, MapPin, Clock, Users } from "lucide-react";
 import { eventVisuals, lineupVisuals, untoldFaqs } from "./constants";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import SmartImage from "@/components/SmartImage";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+
+const untoldPosterImage = getResponsiveImage("untoldStoryPoster");
 
 export default function UntoldContent() {
   const [faqOpen, setFaqOpen] = useState(false);
 
   return (
-    <section id="untold-event" className="scroll-mt-44 py-24 px-6 border-t bg-untold-card-solid border-untold-violet-15">
+    <section id="untold-event" className="scroll-shell-target py-24 px-6 border-t bg-untold-card-solid border-untold-violet-15">
       <div className="container max-w-5xl mx-auto">
         <div className="flex items-end justify-between mb-8 pb-6 border-b border-untold-violet-20">
           <div>
@@ -33,9 +37,12 @@ export default function UntoldContent() {
 
           <div className="relative p-8 md:p-12">
             <div className="mb-10 overflow-hidden rounded-xl border border-untold-violet-25">
-              <img
-                src={eventVisuals.poster}
+              <SmartImage
+                src={untoldPosterImage.src}
                 alt="Juany Bravo b2b Deron featured event artwork"
+                sources={untoldPosterImage.sources}
+                sizes={untoldPosterImage.sizes}
+                containerClassName="bg-transparent"
                 className="w-full h-auto object-cover"
               />
             </div>

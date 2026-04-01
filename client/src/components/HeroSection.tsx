@@ -1,31 +1,48 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, ArrowDown, Sun, Volume2, VolumeX, Ticket } from "lucide-react";
-import { useState, useEffect, useRef, memo } from "react";
+import { ArrowRight, AudioLines, Sun, Ticket } from "lucide-react";
+import { useEffect, useState, memo } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { POSH_TICKET_URL } from "@/data/events";
-import GlitchText from "./GlitchText";
-import HeroSpotlight from "./ui/HeroSpotlight";
 import { BorderBeam } from "./ui/BorderBeam";
 import JsonLd from "@/components/JsonLd";
-import { buildUntoldStoryEventSchema } from "@/lib/schema";
 import MagneticButton from "@/components/MagneticButton";
+import KineticDecryption from "./KineticDecryption";
+import WordScrubReveal from "./ui/WordScrubReveal";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+import { buildScheduledEventSchema } from "@/lib/schema";
+import {
+  getEventEyebrow,
+  getEventStartTimestamp,
+  getEventVenueLabel,
+  getExperienceEvent,
+  getPrimaryTicketUrl,
+  isTicketOnSale,
+} from "@/lib/siteExperience";
+import {
+  getHeroEventStatusLabel,
+  getHomePrimaryCtaLabel,
+  getHomeSecondaryCtaLabel,
+} from "@/lib/cta";
 
-// March 6, 2026 — Untold Story S3·E2 at 7:00 PM CT
-
-const TARGET_DATE = new Date("2026-03-06T19:00:00-06:00").getTime();
+const heroPosterImage = getResponsiveImage("chasingSunsets");
+const heroUntoldImage = getResponsiveImage("untoldStoryHero");
+const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 
 const HERO_SLIDES: Slide[] = [
   {
     type: "video",
-    src: "/videos/hero-video-short.mp4",
-    poster: "/images/untold-story-juany-deron-v2.jpg",
+    src: "/videos/hero-video-1.mp4",
+    poster: heroPosterImage.src,
+    posterSources: heroPosterImage.sources,
+    posterSizes: heroPosterImage.sizes,
     caption: "THE MONOLITH PROJECT (LIVE)",
   },
   {
     type: "image",
-    src: "/images/untold-story-juany-deron-v2.jpg",
+    src: heroUntoldImage.src,
+    sources: heroUntoldImage.sources,
+    sizes: heroUntoldImage.sizes,
     alt: "Juany Bravo x Deron",
     caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
   },
@@ -38,7 +55,9 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: "/images/chasing-sunsets.jpg",
+    src: heroSunsetsImage.src,
+    sources: heroSunsetsImage.sources,
+    sizes: heroSunsetsImage.sizes,
     alt: "Chasing Sun(Sets)",
     caption: "CHASING SUN(SETS)",
   },
@@ -50,6 +69,44 @@ const HERO_SLIDES: Slide[] = [
     caption: "AUTOGRAF | LIVE SET",
   },
 ];
+
+const COLLECTIVE_PATHS = [
+  {
+    description: "Open-air rooms built for warmth, rhythm, and daylight turning into dusk.",
+    href: "/chasing-sunsets",
+    icon: Sun,
+    label: "Open Air",
+    title: "Chasing Sun(Sets)",
+    tone: "sun",
+  },
+  {
+    description: "The closer chapter where the room narrows and the sound gets deeper.",
+    href: "/story",
+    icon: UntoldButterflyLogo,
+    label: "After Dark",
+    title: "Untold Story",
+    tone: "story",
+  },
+  {
+    description: "Mixes and artist sessions that keep the taste moving between nights.",
+    href: "/radio",
+    icon: AudioLines,
+    label: "Signal",
+    title: "Radio Show",
+    tone: "radio",
+  },
+] as const;
+
+const HERO_SUPPORT_LINES = [
+  "Music nights",
+  "built with taste",
+  "and rooms worth returning to.",
+ ] as const;
+
+const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
+
+const HERO_SUBHEAD =
+  "The Monolith Project holds four connected expressions: the umbrella world, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story. Together they shape recurring Chicago rooms built for people who care what the night feels like.";
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -65,15 +122,13 @@ function useCountdown(target: number) {
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
 
-  return { days, hours, minutes, seconds, isExpired: diff === 0 };
+  return { days, hours, minutes, seconds };
 }
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
 }
 
-// Isolated countdown — only this component re-renders every second,
-// not the entire HeroSection (parallax, video slider, glitch text, etc.)
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
   const reduceMotion = useReducedMotion();
@@ -84,7 +139,7 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
       initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduceMotion ? 0.01 : 0.45, delay: reduceMotion ? 0 : 0.4 }}
-      className="flex items-center gap-5 md:gap-8 luxe-surface-dark px-6 py-4 md:px-8 md:py-5 rounded-3xl w-fit border border-white/5 shadow-2xl"
+      className="flex items-center gap-5 md:gap-8 w-fit rounded-none border border-white/10 px-6 py-4 shadow-2xl bg-black/60 backdrop-blur-xl md:px-8 md:py-5"
     >
       {[
         { value: days, label: "DAYS", highlight: true },
@@ -93,10 +148,10 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
         { value: seconds, label: "SEC", highlight: false },
       ].map((unit) => (
         <div key={unit.label} className="flex flex-col items-center">
-          <span className={`font-display font-[900] tracking-tighter text-4xl md:text-5xl tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
+          <span className={`font-display text-4xl md:text-5xl font-[900] tracking-tighter tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
             {pad(unit.value)}
           </span>
-          <span className={`font-mono font-bold text-[10px] tracking-[0.3em] mt-1 ${unit.highlight ? "text-primary/80" : "text-white/60"}`}>
+          <span className={`mt-1 font-mono text-[10px] font-bold tracking-[0.3em] ${unit.highlight ? "text-primary/80" : "text-white/60"}`}>
             {unit.label}
           </span>
         </div>
@@ -105,191 +160,219 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
   );
 });
 
-// Light hook — only checks once whether event has expired (no per-second ticking)
 function useIsExpired(target: number) {
   const [expired, setExpired] = useState(Date.now() >= target);
+
   useEffect(() => {
     if (expired) return;
     const remaining = target - Date.now();
-    if (remaining <= 0) { setExpired(true); return; }
+    if (remaining <= 0) {
+      setExpired(true);
+      return;
+    }
     const id = setTimeout(() => setExpired(true), remaining);
     return () => clearTimeout(id);
   }, [target, expired]);
+
   return expired;
 }
 
-
-
 export default function HeroSection() {
-  const isExpired = useIsExpired(TARGET_DATE);
+  const featuredEvent = getExperienceEvent("hero");
+  const targetDate = getEventStartTimestamp(featuredEvent);
+  const ticketUrl = getPrimaryTicketUrl(featuredEvent);
+  const hasLiveTickets = isTicketOnSale(featuredEvent);
+  const isExpired = useIsExpired(targetDate ?? 0);
   const reduceMotion = useReducedMotion();
-
-  // SS-Tier: JSON-LD for Search Engines
-  const structuredData = (
-    <JsonLd data={buildUntoldStoryEventSchema("/")} />
-  );
-
-
-
+  const headline = featuredEvent?.headline || featuredEvent?.title || "The Monolith Project";
+  const eyebrow = getEventEyebrow(featuredEvent);
+  const venueLabel = getEventVenueLabel(featuredEvent);
+  
+  const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 150]); // Parallax effect
+  const y = useTransform(scrollY, [0, 1000], [0, reduceMotion ? 0 : 150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
+  const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
+  
+  const primaryCtaLabel = getHomePrimaryCtaLabel(hasLiveTickets);
+  const secondaryCtaLabel = getHomeSecondaryCtaLabel(hasLiveTickets);
+  const secondaryCtaHref = hasLiveTickets ? "/schedule" : "/insights";
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">
       {structuredData}
-      {/* Full-bleed video background with Parallax */}
-      <motion.div style={{ y }} className="absolute inset-0 z-0 h-[115%] -top-[5%] hero-bg">
+      
+      {/* 🌊 NEURAL DRIFT BACKGROUND (Absolute Zero) */}
+      <style>{`
+        @keyframes neural-drift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .neural-drift-gradient {
+          background: linear-gradient(-45deg, rgba(0,0,0,0), rgba(224,90,58,0.02), rgba(0,0,0,0), rgba(34,211,238,0.02));
+          background-size: 400% 400%;
+          animation: neural-drift 15s ease infinite;
+        }
+      `}</style>
+      <div className="absolute inset-0 z-[1] neural-drift-gradient pointer-events-none" />
+
+      {/* Cinematic Background Layer */}
+      <motion.div style={{ y, opacity, scale }} className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
         <VideoHeroSlider slides={HERO_SLIDES} />
       </motion.div>
 
-      {/* Editorial left-aligned content */}
-      <div className="relative z-20 flex-1 flex flex-col justify-between px-6 md:px-12 lg:px-20 pb-16 md:pb-24 pt-40 pointer-events-none">
-
-        {/* Upper zone — title + subtitle */}
-        <div className="mt-auto mb-auto pt-8 md:pt-10 pointer-events-auto hero-text">
-          <div className="font-display text-[clamp(2rem,11vw,9rem)] leading-[0.85] uppercase text-white mb-4 tracking-tight-display break-words">
-            {/* MONOLITH — clip-path curtain reveal */}
-            <div className="relative inline-block translate-y-2 md:translate-y-3 overflow-hidden">
-              <motion.div
-                initial={reduceMotion ? {} : { y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <HeroSpotlight className="-m-16 p-16" spotlightColor="rgba(255, 255, 255, 0.25)">
-                  <GlitchText className="block text-white leading-none">MONOLITH</GlitchText>
-                </HeroSpotlight>
-              </motion.div>
-            </div>
-            {/* PROJECT — follows with slight delay */}
-            <div className="overflow-hidden">
-              <motion.span
-                initial={reduceMotion ? {} : { y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: reduceMotion ? 0.01 : 0.9, delay: reduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
-                className="block text-[0.48em] text-white/65 leading-none tracking-[0.24em] mt-0"
-              >
-                PROJECT
-              </motion.span>
-            </div>
-          </div>
-
-
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 1, delay: reduceMotion ? 0 : 0.5 }}
-            className="font-serif italic text-xl md:text-2xl text-white/80 max-w-lg"
-          >
-            Built on togetherness, music, and showing up for each other.
-          </motion.p>
-
-          <div className="mt-6 h-px w-36 bg-gradient-to-r from-primary/70 to-transparent" />
-        </div>
-
-        {/* Lower zone — event info + CTAs */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-16 pointer-events-auto mt-24">
-
-          {/* Left: metadata + CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.01 : 0.8, delay: reduceMotion ? 0 : 0.7 }}
-            className="space-y-8"
-          >
-            {/* Countdown */}
-            {!isExpired && (
-              <CountdownDisplay target={TARGET_DATE} />
-            )}
-
-            {/* Event info */}
-            {!isExpired && (
-              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="group block">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 ui-meta text-white/90">
-                  <span className="accent-story font-bold">Untold Story S3·E2</span>
-                  <span className="text-white/35">—</span>
-                  <span className="text-primary font-bold">March 6, 2026</span>
-                  <span className="text-white/35">—</span>
-                  <span className="text-white/80">Alhambra Palace, Chicago</span>
-                  <span className="text-white/70 group-hover:text-primary transition-colors">→</span>
-                </div>
-              </a>
-            )}
-
-            {!isExpired && (
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/45 bg-primary/12 px-3 py-1.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                </span>
-                <span className="ui-chip text-primary">Final Tier II Tickets On Sale</span>
-              </div>
-            )}
-
-            {isExpired && (
-              <Link href="/story" className="group flex items-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
-                <span className="font-mono text-xs tracking-widest uppercase text-primary group-hover:text-white transition-colors">
-                  Untold Story S3·E2 — View Recap →
-                </span>
-              </Link>
-            )}
-
-            {/* Pill CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-              <MagneticButton strength={0.4}>
-                <a
-                  href={POSH_TICKET_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-pill relative overflow-hidden group border-primary bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 sensory-ticket-btn items-center justify-center w-full sm:w-auto"
-                >
-                  {!reduceMotion && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] translate-x-[-200%] group-hover:animate-[shine_1s_ease-in-out_infinite]" />
-                  )}
-                  <BorderBeam size={60} duration={3} colorFrom="#ffffff" colorTo="#E8B86D" borderWidth={1.5} />
-                  <Ticket className="w-3.5 h-3.5" />
-                  Get Tickets
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </a>
-              </MagneticButton>
-              <MagneticButton strength={0.3}>
-                <a
-                  href="#movement"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("movement")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="btn-pill border-white/40 bg-black/20 text-white/90 hover:text-white hover:border-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 group items-center justify-center w-full sm:w-auto"
-                >
-                  Explore
-                  <ArrowDown className="w-3.5 h-3.5 transition-transform group-hover:translate-y-1" />
-                </a>
-              </MagneticButton>
-            </div>
-
-            {/* Series links */}
-            <div className="flex items-center gap-4">
-              <Link href="/chasing-sunsets" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/70">
-                <Sun className="w-5 h-5 text-clay group-hover:animate-spin-slow" />
-                <span className="ui-meta text-white/80 group-hover:text-clay transition-colors">
-                  Chasing Sun(Sets)
-                </span>
-              </Link>
-              <Link href="/story" className="group flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                <UntoldButterflyLogo className="w-6 h-6 accent-story group-hover:scale-110 transition-transform" />
-                <span className="ui-meta text-white/80 group-hover:accent-story transition-colors">
-                  Untold Story
-                </span>
-              </Link>
-            </div>
-
-          </motion.div>
-
-        </div>
+      {/* Architectural HUD Grid Overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
+        {/* Scanning Line */}
+        <motion.div 
+          animate={{ top: ["-10%", "110%"] }} 
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" 
+        />
       </div>
 
+      {/* Main Impact Visuals (Center Focused) */}
+      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-[10vh] lg:pt-0 px-6 text-center w-full pointer-events-none">
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-8 lg:mb-16 relative"
+        >
+          <div className="flex items-center gap-4 justify-center">
+             <div className="h-px w-8 md:w-20 bg-white/10" />
+             <h2 className="font-mono text-[9px] md:text-xs uppercase tracking-[0.8em] text-white/30">
+               {eyebrow || "The Monolith Project"} / System Active
+             </h2>
+             <div className="h-px w-8 md:w-20 bg-white/10" />
+          </div>
+        </motion.div>
 
+        <motion.div
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center justify-center text-white relative z-10"
+        >
+          {/* Kinetic Fragmented Typography */}
+          <div className="relative">
+                <motion.h1
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                  className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto"
+                >
+                  <KineticDecryption text="MONOLITH" />
+                </motion.h1>
+          </div>
+          
+          <motion.div 
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "120%", opacity: 1 }}
+            transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }}
+            className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" 
+          />
+          
+          <span className="font-monolith text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90 pl-[0.5em]">
+            PROJECT
+          </span>
+        </motion.div>
+
+        <motion.div
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 2, delay: 1.4 }}
+           className="mt-16 flex flex-col items-center w-full px-4"
+        >
+           {/* Primary Hero Signal Box */}
+           {featuredEvent && (
+              <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.02] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
+                 <div className="flex items-center gap-4">
+                    <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
+                    <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-primary/80">Next Open-Air Signal</span>
+                 </div>
+                 <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
+                    {headline}
+                 </h2>
+                 <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[9px] uppercase tracking-[0.4em] text-white/30">
+                    <span className="text-white/60">{venueLabel}</span>
+                    <span className="hidden md:inline-block w-px h-3 bg-white/10" />
+                    <span className="text-white/60">{featuredEvent.date}</span>
+                 </div>
+              </div>
+           )}
+
+           <div className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/40 leading-loose font-mono max-w-lg mx-auto mb-10">
+             <WordScrubReveal text="Recurring Chicago rooms built for people who care what the night feels like." />
+           </div>
+           
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
+              <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
+                <a
+                  href={hasLiveTickets ? ticketUrl : "/schedule"}
+                  target={hasLiveTickets ? "_blank" : undefined}
+                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[10px] font-bold uppercase tracking-[0.4em] text-white w-full sm:w-auto"
+                >
+                  <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
+                  <span className="relative z-10 flex items-center gap-3">
+                    <Ticket className="w-4 h-4" />
+                    {primaryCtaLabel}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </a>
+              </MagneticButton>
+
+              <MagneticButton strength={0.25}>
+                <Link
+                  href={secondaryCtaHref}
+                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[10px] font-bold uppercase tracking-[0.4em] text-white/60 hover:text-white transition-colors w-full sm:w-auto"
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    {secondaryCtaLabel}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </MagneticButton>
+           </div>
+        </motion.div>
+      </div>
+
+      {/* Subtle Bottom Signal */}
+      <div className="absolute inset-x-0 bottom-12 z-40 px-6 pointer-events-none">
+        <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-end gap-8">
+           <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 2.2 }}
+             className="flex gap-6"
+           >
+              {COLLECTIVE_PATHS.map((path) => (
+                <Link key={path.title} href={path.href} className="group pointer-events-auto">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors">
+                    {path.title}
+                  </span>
+                </Link>
+              ))}
+           </motion.div>
+
+           <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 2.4 }}
+             className="hidden md:block pointer-events-auto"
+           >
+              {!isExpired && targetDate ? (
+                <div className="flex items-baseline gap-4">
+                   <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20">Sequence Timer:</span>
+                   <CountdownDisplay target={targetDate} />
+                </div>
+              ) : null}
+           </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

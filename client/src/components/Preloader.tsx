@@ -1,5 +1,6 @@
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useState, useEffect } from "react";
+import KineticDecryption from "./KineticDecryption";
 
 const BOOT_LOGS = [
   "INITIALIZING SENSORY OVERLOAD [OK]",
@@ -24,16 +25,16 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       return;
     }
 
-    // Keep the first-load preloader short so content paints almost immediately.
+    // Hyper-fast boot sequence for zero-latency entry 
     let currentLog = 0;
     const interval = setInterval(() => {
       currentLog += 1;
       setLogIndex(currentLog);
       if (currentLog === BOOT_LOGS.length - 1) {
         clearInterval(interval);
-        setTimeout(() => setBooted(true), 120);
+        setTimeout(() => setBooted(true), 50);
       }
-    }, 110);
+    }, 40);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -46,15 +47,15 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     setGlowPulse(true);
     containerControls.start({
       scale: 0.96,
-      filter: "blur(1.5px) brightness(1.15)",
-      transition: { duration: 0.6, ease: "easeOut" },
+      filter: "blur(4px) brightness(1.25)",
+      transition: { duration: 0.8, ease: "easeOut" },
     });
 
     const exitTimer = setTimeout(() => {
       setEntered(true);
       sessionStorage.setItem("monolith-loaded-v2", "1");
-      setTimeout(() => onComplete(), 150);
-    }, 260);
+      onComplete();
+    }, 400);
 
     return () => clearTimeout(exitTimer);
   }, [booted, containerControls, onComplete]);
@@ -65,7 +66,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         <motion.div
           key="preloader"
           exit={{ opacity: 0, scale: 1.1, filter: "brightness(5)" }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[200] bg-[#050505] text-white flex items-center justify-center select-none overflow-hidden touch-none"
         >
           {/* Ambient Noise overlay */}
@@ -101,12 +102,15 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                   animate={{
                     scale: glowPulse ? 1.05 : 1,
                     textShadow: glowPulse
-                      ? "0 0 30px rgba(255,255,255,0.8)"
+                      ? "0 0 40px rgba(255,255,255,0.8)"
                       : "0 0 0px rgba(255,255,255,0)",
                   }}
-                  className="font-display text-4xl sm:text-6xl md:text-8xl tracking-tight uppercase relative z-10"
+                  className="font-heavy text-[clamp(2.5rem,6vw,8rem)] tracking-[-0.04em] uppercase relative z-10 flex flex-col"
                 >
-                  MONOLITH PROJECT
+                  <KineticDecryption text="MONOLITH" />
+                  <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none mix-blend-overlay mt-[-1%] text-white/50">
+                    <KineticDecryption text="PROJECT" />
+                  </span>
                 </motion.div>
 
                 {/* Chromatic aberration layers */}
@@ -116,17 +120,19 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.5 }}
                       transition={{ duration: 0.6 }}
-                      className="absolute inset-0 text-red-500 font-display text-4xl sm:text-6xl md:text-8xl tracking-tight uppercase mix-blend-screen translate-x-1 sm:translate-x-2 blur-[2px] z-0"
+                      className="absolute inset-x-0 top-0 text-red-500 font-heavy text-[clamp(2.5rem,6vw,8rem)] tracking-[-0.04em] uppercase mix-blend-screen translate-x-1 sm:translate-x-2 blur-[2px] z-0 flex flex-col"
                     >
-                      MONOLITH PROJECT
+                      <span>MONOLITH</span>
+                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">PROJECT</span>
                     </motion.div>
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.5 }}
                       transition={{ duration: 0.6 }}
-                      className="absolute inset-0 text-blue-500 font-display text-4xl sm:text-6xl md:text-8xl tracking-tight uppercase mix-blend-screen -translate-x-1 sm:-translate-x-2 blur-[2px] z-0"
+                      className="absolute inset-x-0 top-0 text-blue-500 font-heavy text-[clamp(2.5rem,6vw,8rem)] tracking-[-0.04em] uppercase mix-blend-screen -translate-x-1 sm:-translate-x-2 blur-[2px] z-0 flex flex-col"
                     >
-                      MONOLITH PROJECT
+                      <span>MONOLITH</span>
+                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">PROJECT</span>
                     </motion.div>
                   </>
                 )}

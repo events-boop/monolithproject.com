@@ -37,7 +37,7 @@ export default function SponsorAccess() {
             <Navigation activeSection="partnerships" />
 
 
-            <div className="container relative z-10 min-h-screen flex flex-col items-center justify-center py-20">
+            <div className="container relative z-10 min-h-screen flex flex-col items-center justify-center page-shell-start pb-20">
 
                 <AnimatePresence mode="wait">
                     {!isUnlocked ? (

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Instagram, Music, Headphones, Mail, ArrowRight } from "lucide-react";
+import { ChevronDown, Instagram, Music, Headphones, Mail, ArrowRight, MapPinned } from "lucide-react";
+import { useLocation } from "wouter";
 import {
     INSTAGRAM_MONOLITH,
     TIKTOK_URL,
@@ -8,10 +9,11 @@ import {
     SPOTIFY_URL,
     LAYLO_URL
 } from "@/data/events";
+import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
 
 interface CommunityDropdownProps {
     isLight?: boolean;
-    brand?: "monolith" | "chasing-sunsets";
+    brand?: "monolith" | "chasing-sunsets" | "untold-story" | "radio";
 }
 
 const communityLinks = [
@@ -56,9 +58,16 @@ const communityLinks = [
     {
         title: "Inner Circle",
         description: "Opt in for exclusivity",
-        href: "/inner-circle",
+        href: "/newsletter",
         iconOverride: <Mail className="w-5 h-5" />,
         color: "group-hover:text-primary",
+    },
+    {
+        title: "Night Guide",
+        description: "Entry, timing, and arrival notes",
+        href: "/guide",
+        iconOverride: <MapPinned className="w-5 h-5" />,
+        color: "group-hover:text-clay",
     },
     {
         title: "Laylo Drops",
@@ -72,11 +81,32 @@ const communityLinks = [
 export default function CommunityDropdown({ isLight, brand }: CommunityDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const [, setLocation] = useLocation();
+    const { openDrawer } = useUI();
+    const menuId = "community-menu";
+
+    const getMenuItems = () =>
+        Array.from(menuRef.current?.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]') ?? []);
+
+    const focusMenuItem = (index: number) => {
+        const items = getMenuItems();
+        if (items.length === 0) return;
+        const nextIndex = ((index % items.length) + items.length) % items.length;
+        items[nextIndex]?.focus();
+    };
+
+    const closeMenu = (restoreFocus = false) => {
+        setIsOpen(false);
+        if (!restoreFocus) return;
+        window.setTimeout(() => triggerRef.current?.focus(), 0);
+    };
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-                setIsOpen(false);
+                closeMenu();
             }
         };
         document.addEventListener("mousedown", handleClick);
@@ -87,19 +117,86 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key !== "Escape") return;
-            setIsOpen(false);
+            closeMenu(true);
         };
         document.addEventListener("keydown", handleKeyDown);
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+    const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+        const drawer = getDrawerTypeForHref(href);
+
+        if (drawer) {
+            e.preventDefault();
+            openDrawer(drawer);
+        } else if (href.startsWith("/")) {
+            e.preventDefault();
+            setLocation(href);
+        }
+
+        closeMenu();
+    };
+
+    const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setIsOpen(true);
+            window.setTimeout(() => focusMenuItem(0), 0);
+            return;
+        }
+
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setIsOpen(true);
+            window.setTimeout(() => focusMenuItem(-1), 0);
+        }
+    };
+
+    const handleMenuKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        const items = getMenuItems();
+        if (items.length === 0) return;
+
+        const activeIndex = items.findIndex((item) => item === document.activeElement);
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            focusMenuItem(activeIndex + 1);
+            return;
+        }
+
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            focusMenuItem(activeIndex <= 0 ? items.length - 1 : activeIndex - 1);
+            return;
+        }
+
+        if (e.key === "Home") {
+            e.preventDefault();
+            focusMenuItem(0);
+            return;
+        }
+
+        if (e.key === "End") {
+            e.preventDefault();
+            focusMenuItem(items.length - 1);
+            return;
+        }
+
+        if (e.key === "Tab") {
+            setIsOpen(false);
+        }
+    };
+
     return (
         <div className="relative" ref={dropdownRef}>
             <button
+                ref={triggerRef}
                 type="button"
                 onClick={() => setIsOpen((v) => !v)}
+                onKeyDown={handleTriggerKeyDown}
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
+                aria-controls={menuId}
                 className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
                     ? "hover:text-clay text-stone"
                     : brand === "chasing-sunsets"
@@ -114,16 +211,21 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        ref={menuRef}
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className={`absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[340px] p-2 rounded-[20px] shadow-2xl ${isLight
-                            ? "bg-sand/95 border border-charcoal/10 backdrop-blur-xl"
-                            : "bg-[#0B0C0F]/95 border border-white/5 backdrop-blur-2xl"
+                        transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                        className={`absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[340px] p-2 rounded-[20px] ${isLight
+                            ? "bg-sand/98 border border-charcoal/10"
+                            : "bg-[#0B0C0F]/98 border border-white/6"
                             }`}
+                        id={menuId}
+                        role="menu"
+                        aria-label="Community links"
+                        onKeyDown={handleMenuKeyDown}
                         style={{
-                            boxShadow: "0 24px 48px rgba(0,0,0,0.6), 0 0 0 1px inset rgba(255,255,255,0.05)"
+                            boxShadow: "0 18px 40px rgba(0,0,0,0.45)"
                         }}
                     >
                         <div className="flex flex-col gap-1">
@@ -133,9 +235,10 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                                     href={link.href}
                                     target={link.href.startsWith("/") ? "_self" : "_blank"}
                                     rel={link.href.startsWith("/") ? "" : "noopener noreferrer"}
+                                    onClick={handleLinkClick(link.href)}
+                                    role="menuitem"
                                     className={`group flex items-center gap-4 p-2.5 rounded-[14px] transition-all duration-300 ${isLight ? "hover:bg-charcoal/5" : "hover:bg-white/[0.04]"
                                         }`}
-                                    onClick={() => setIsOpen(false)}
                                 >
                                     {/* Icon Box */}
                                     <div

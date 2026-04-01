@@ -1,6 +1,6 @@
-
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ReactNode, useRef } from "react";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 interface MagneticButtonProps {
     children: ReactNode;
@@ -46,12 +46,22 @@ export default function MagneticButton({
         y.set(0);
     };
 
+    const handleMouseEnter = () => {
+        signalChirp.hover();
+    };
+
+    const handleInternalClick = () => {
+        signalChirp.click();
+        onClick?.();
+    };
+
     return (
         <motion.div
             ref={ref}
+            onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onClick={() => onClick?.()}
+            onClick={handleInternalClick}
             style={{ x: springX, y: springY }}
             className={`cursor-pointer ${className}`}
             whileTap={{ scale: 0.97 }}

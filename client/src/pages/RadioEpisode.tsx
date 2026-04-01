@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { getRadioEpisode, radioEpisodes } from "@/data/radioEpisodes";
+import { CTA_LABELS } from "@/lib/cta";
 
 function isExternalLink(url: string) {
   return /^https?:\/\//i.test(url);
@@ -41,7 +42,7 @@ export default function RadioEpisode() {
           canonicalPath="/radio"
         />
         <Navigation />
-        <main id="main-content" tabIndex={-1} className="pt-44 pb-24 px-6">
+        <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
           <section className="container max-w-3xl mx-auto text-center">
             <h1 className="font-display text-[clamp(2.7rem,7vw,5rem)] uppercase mb-5">
               Episode Not Found
@@ -50,7 +51,7 @@ export default function RadioEpisode() {
               This radio episode URL does not exist. Visit the official radio archive for available episodes.
             </p>
             <Link href="/radio" className="btn-pill-coral">
-              Back to Radio Hub
+              {CTA_LABELS.radioHub}
             </Link>
           </section>
         </main>
@@ -69,7 +70,7 @@ export default function RadioEpisode() {
       />
       <Navigation />
 
-      <main id="main-content" tabIndex={-1} className="pt-44 pb-24 px-6">
+      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <motion.section className="container max-w-5xl mx-auto" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-4">
@@ -115,7 +116,7 @@ export default function RadioEpisode() {
           </nav>
         </motion.section>
 
-        <motion.section id="listen" className="container max-w-5xl mx-auto mt-10 scroll-mt-40" {...sectionReveal}>
+        <motion.section id="listen" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Listen</h2>
           <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
             <iframe
@@ -130,7 +131,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section id="tracklist" className="container max-w-5xl mx-auto mt-10 scroll-mt-40" {...sectionReveal}>
+        <motion.section id="tracklist" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Tracklist</h2>
           <div className="border border-border/70 rounded-xl bg-card/40 luxe-surface-dark">
             {episode.tracklist.map((track, index) => (
@@ -153,7 +154,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section id="story" className="container max-w-5xl mx-auto mt-10 scroll-mt-40" {...sectionReveal}>
+        <motion.section id="story" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Episode Story</h2>
           <article className="border border-border/70 rounded-xl p-6 bg-card/40 space-y-4 text-muted-foreground leading-relaxed luxe-surface-dark">
             {episode.narrative.split("\n\n").map((paragraph) => (
@@ -162,7 +163,7 @@ export default function RadioEpisode() {
           </article>
         </motion.section>
 
-        <motion.section id="guest-links" className="container max-w-5xl mx-auto mt-10 scroll-mt-40" {...sectionReveal}>
+        <motion.section id="guest-links" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Guest Links</h2>
           <div className="flex flex-wrap gap-3">
             {episode.guestLinks.map((link) =>
@@ -183,7 +184,7 @@ export default function RadioEpisode() {
               ),
             )}
             <Link href="/tickets" className="btn-pill-coral">
-              Buy Tickets
+              {CTA_LABELS.tickets}
             </Link>
           </div>
         </motion.section>

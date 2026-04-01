@@ -200,7 +200,7 @@ export default function FAQ() {
                 <div className="absolute inset-0 bg-noise opacity-[0.03]" />
             </div>
 
-            <main className="relative z-10 pt-44 md:pt-52 pb-32">
+            <main className="relative z-10 page-shell-start-loose pb-32">
                 <div className="container max-w-6xl mx-auto px-6">
 
                     {/* Header */}

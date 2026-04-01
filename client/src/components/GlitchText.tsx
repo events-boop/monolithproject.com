@@ -5,10 +5,12 @@ import { useState } from "react";
 interface GlitchTextProps {
     children: React.ReactNode;
     className?: string;
+    active?: boolean;
 }
 
-export default function GlitchText({ children, className = "" }: GlitchTextProps) {
+export default function GlitchText({ children, className = "", active = false }: GlitchTextProps) {
     const [isHovered, setIsHovered] = useState(false);
+    const isGlitching = isHovered || active;
 
     return (
         <div
@@ -19,7 +21,7 @@ export default function GlitchText({ children, className = "" }: GlitchTextProps
             <span className="relative z-10">{children}</span>
 
             {/* Glitch Layer 1 - Cyan Shift */}
-            {isHovered && (
+            {isGlitching && (
                 <motion.span
                     className="absolute inset-0 z-0 text-cyan-400 opacity-70 mix-blend-screen"
                     initial={{ x: 0, opacity: 0 }}
@@ -39,7 +41,7 @@ export default function GlitchText({ children, className = "" }: GlitchTextProps
             )}
 
             {/* Glitch Layer 2 - Red Shift */}
-            {isHovered && (
+            {isGlitching && (
                 <motion.span
                     className="absolute inset-0 z-0 text-red-500 opacity-70 mix-blend-screen"
                     initial={{ x: 0, opacity: 0 }}

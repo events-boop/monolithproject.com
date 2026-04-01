@@ -24,7 +24,7 @@ export default function EditorialHeader({
       <div className="max-w-3xl">
         <RevealText
           as="span"
-          className="ui-kicker text-primary/85 mb-4 block"
+          className="ui-kicker scene-kicker mb-4 block"
           delay={0.1}
           stagger={0.02}
         >
@@ -32,7 +32,7 @@ export default function EditorialHeader({
         </RevealText>
         <RevealText
           as="h2"
-          className={`ui-heading font-display text-[clamp(2.6rem,7vw,6.2rem)] tracking-[0.02em] uppercase ${titleClass}`}
+          className={`ui-heading font-serif font-light text-[clamp(2.5rem,6vw,5rem)] tracking-widest uppercase drop-shadow-md ${titleClass}`}
           delay={0.2}
           blurStrength={16}
         >

@@ -1,198 +1,171 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { Link } from "wouter";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import RevealText from "./RevealText";
+import CircularOrbit from "./ui/CircularOrbit";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+
+const lazareImage = getResponsiveImage("lazareCarbonCenter", "(min-width: 1024px) 44vw, 60vw");
+
+const movementPaths = [
+  {
+    href: "/chasing-sunsets",
+    label: "Open Air",
+    title: "Chasing Sun(Sets)",
+    description:
+      "The warmer chapter. Open-air rooms, golden-hour pacing, and music that can hold a social room without flattening it.",
+    toneClass: "border-clay/20 bg-clay/10 text-clay",
+  },
+  {
+    href: "/story",
+    label: "After Dark",
+    title: "Untold Story",
+    description:
+      "The closer chapter. Deeper sound, stronger tension, and a room that narrows the focus once the light drops.",
+    toneClass: "border-primary/20 bg-primary/10 text-primary",
+  },
+  {
+    href: "/radio",
+    label: "Signal",
+    title: "Radio Show",
+    description:
+      "The connective tissue. Guest mixes and artist sessions that make the booking taste easier to hear between nights.",
+    toneClass: "border-white/15 bg-white/[0.06] text-white/76",
+  },
+] as const;
 
 export default function MovementSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [showVideo, setShowVideo] = useState(false);
 
   return (
     <section
       id="movement"
       ref={ref}
-      className="relative section-padding bg-sand overflow-hidden"
+      className="relative py-24 md:py-40 bg-black overflow-hidden border-t border-white/10"
     >
-      <div className="absolute inset-0 atmo-surface" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(34,211,238,0.08),transparent_34%),radial-gradient(circle_at_82%_78%,rgba(224,90,58,0.12),transparent_36%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
+      {/* Sanjaya-style ambient glow & depth layers */}
+      <div className="absolute top-0 right-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+      <div className="absolute bottom-[-20%] left-[10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none mix-blend-screen" />
+      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
+
+      {/* Background Grid Lines (Sanjaya structural aesthetic) */}
       <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute right-0 top-0 bottom-0 w-[52%] opacity-[0.06] blur-[1px]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to left, rgba(255,255,255,0.16), rgba(255,255,255,0.08) 22%, transparent 68%), url('/images/autograf-recap.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div
-          className="absolute left-0 bottom-0 h-[44%] w-[44%] opacity-[0.05] blur-[0.8px]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to top, rgba(255,255,255,0.18), transparent 55%), url('/images/lazare-carbon-center.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+         <div className="absolute left-[8%] md:left-[10%] top-0 bottom-0 w-px bg-white/5" />
+         <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/5" />
       </div>
-      <div className="container max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left Column - The Definition */}
+
+      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-start">
+          
+          {/* LEFT: Massive Bleeding Stacked Typography */}
           <motion.div
-            initial={{ opacity: 0, x: -80 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col"
           >
-            <div className="font-serif text-charcoal space-y-6 select-none">
-              <div>
-                <RevealText as="h2" className="text-6xl md:text-7xl mb-2 font-serif tracking-tight">Monolith</RevealText>
-                <span className="text-stone font-mono text-sm tracking-wide italic opacity-60">/monelīTH/</span>
-                <p className="text-stone font-serif italic text-sm mt-1">(from Greek mónos "single" + líthos "stone")</p>
-              </div>
+            <div className="flex items-center gap-4 mb-8 md:mb-12">
+               <div className="h-px w-12 bg-primary/70" />
+               <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/90 font-bold">The Collective</span>
+            </div>
+            
+            <h2 className="font-heavy text-[clamp(4.5rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
+              <span className="text-white/25">CHICAGO</span>
+              <span className="text-white">ROOTED</span>
+              <span className="text-primary mt-1">ROOMS.</span>
+            </h2>
 
-              <div className="space-y-4 pl-4 border-l-2 border-clay/20">
-                <div>
-                  <span className="font-bold text-clay mr-2">1.</span>
-                  <span className="text-xl md:text-2xl text-charcoal/80 italic leading-relaxed">
-                    A symbol of unity, a gathering point for our community.
-                  </span>
-                </div>
-                <div>
-                  <span className="font-bold text-clay mr-2">2.</span>
-                  <span className="text-xl md:text-2xl text-charcoal/80 italic leading-relaxed">
-                    A single, massive block; a beacon of togetherness.
-                  </span>
-                </div>
-              </div>
-
-              <div className="pt-4 mt-2">
-                <p className="font-display uppercase tracking-widest text-clay text-sm">Target Frequency</p>
-                <p className="text-2xl font-serif italic text-charcoal">Togetherness.</p>
-              </div>
-
-              {/* Floating Autograf Video on Home Front */}
-              <div
-                className="mt-12 md:mt-16 mx-auto lg:mx-0 relative w-[240px] h-[240px] md:w-[320px] md:h-[320px] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-charcoal/10 group bg-cover bg-center bg-black/5"
-                style={{ backgroundImage: "url('/images/autograf-recap.jpg')" }}
-              >
-                <div className="absolute inset-0 z-0">
-                  {isInView && showVideo ? (
-                    <iframe
-                      className="absolute inset-0 h-full w-full scale-[1.45]"
-                      src="https://www.youtube.com/embed/9R6XH7JZlJI?autoplay=1&mute=1&controls=0&loop=1&playlist=9R6XH7JZlJI&playsinline=1&rel=0&modestbranding=1&start=3714"
-                      title="Autograf live at Monolith"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
-                  ) : null}
-                </div>
-                {!showVideo && (
-                  <button
-                    type="button"
-                    onClick={() => setShowVideo(true)}
-                    className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 backdrop-blur-[1px] transition-colors hover:bg-black/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay/60"
-                    aria-label="Play Autograf clip"
-                  >
-                    <span className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-black/55 px-5 py-3 text-white/95 shadow-lg">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-charcoal">
-                        <Play className="h-4 w-4 fill-current" />
+            {/* Glass Information Panel */}
+            <div className="backdrop-blur-md bg-white/[0.02] border border-white/10 p-8 md:p-10 rounded-none relative overflow-hidden group">
+               {/* Subtle Holo gradient reveal on hover */}
+               <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/[0.07] to-primary/0 translate-y-full group-hover:translate-y-[-20%] transition-transform duration-[1.5s] ease-out pointer-events-none" />
+               
+               <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light relative z-10">
+                 The Monolith Project is a cultural house built through recurring rooms, distinct series, and a record that stays visible after the night ends.
+               </p>
+               
+               <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
+                 <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-1">
+                   Artists scheduled for 2026:
+                 </p>
+                 <div className="flex flex-wrap gap-x-6 gap-y-2">
+                    {[
+                      { name: "DERON B2B JUANY BRAVO", color: "text-[#22D3EE]" },
+                      { name: "LAZARE SABRY", color: "text-[#22D3EE]" },
+                      { name: "AUTOGRAF", color: "text-primary" },
+                      { name: "ERAN HERSH", color: "text-primary" }
+                    ].map((artist) => (
+                      <span key={artist.name} className={`font-heavy text-xl md:text-2xl uppercase tracking-tighter drop-shadow-sm ${artist.color}`}>
+                        {artist.name}
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Play clip</span>
+                    ))}
+                    <span className="font-heavy text-xl md:text-2xl uppercase tracking-tighter text-white/20">
+                      + MORE TBA
                     </span>
-                  </button>
-                )}
-                <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/80 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-white font-mono text-[10px] uppercase tracking-widest flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
-                    Live at Monolith
-                  </span>
-                </div>
-              </div>
+                 </div>
+               </div>
             </div>
           </motion.div>
 
-          {/* Right Column - The Manifesto */}
+          {/* RIGHT: Sanjaya Glass Panel Interaction Stack */}
           <motion.div
-            initial={{ opacity: 0, x: 80 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-10 pl-0 lg:pl-12 border-l-0 lg:border-l border-charcoal/10"
+            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col gap-6"
           >
-            <div className="space-y-8">
-              {/* The Intro */}
-              <div>
-                <span className="font-serif italic text-lg text-clay mb-2 block">
-                  Guided by authentic intention — the purest form of energy.
-                </span>
-                <p className="text-lg text-charcoal/90 leading-relaxed max-w-lg">
-                  The Monolith Project is a creative house, an experience engine, and a cultural movement built on one simple truth: <span className="font-medium text-charcoal">Togetherness is the frequency. Music is the guide.</span>
-                </p>
-                <p className="text-charcoal/80 leading-relaxed mt-4 text-sm max-w-lg">
-                  Born in Chicago, designed for the world, we unite sound, storytelling, and human connection across three signature series.
-                </p>
-              </div>
+            {movementPaths.map((path, index) => {
+               // Determine specific holo glow based on the series
+               const isSunsets = path.title.includes("Sun(Sets)");
+               const isStory = path.title.includes("Story");
+               const glowClass = isSunsets 
+                  ? "bg-sunsets-gold shadow-[0_0_20px_rgba(232,184,109,0.5)]" 
+                  : isStory 
+                     ? "bg-untold-cyan shadow-[0_0_20px_rgba(34,211,238,0.5)]" 
+                     : "bg-white shadow-[0_0_20px_rgba(255,255,255,0.5)]";
+               const accentText = isSunsets ? "text-sunsets-gold" : isStory ? "text-untold-cyan" : "text-white";
 
-              {/* The Pillars */}
-              <div className="space-y-6">
-                {/* Branch 1: Chasing Sunsets */}
-                <div className="group">
-                  <Link href="/chasing-sunsets" asChild>
-                    <a className="text-xl font-display text-charcoal hover:text-warmGold transition-colors mb-1 inline-flex items-center gap-2">
-                      CHASING SUN(SETS)
-                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-warmGold" />
-                    </a>
+               return (
+                  <Link key={path.title} href={path.href} className="group relative block outline-none">
+                     {/* Glass container with holo border edge */}
+                     <div className="relative p-8 md:p-10 rounded-none border border-white/5 bg-white/[0.015] backdrop-blur-md overflow-hidden transition-all duration-500 hover:bg-white/[0.04] hover:border-white/15">
+                        
+                        {/* Kinetic Holo Top Edge */}
+                        <div className={`absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${glowClass}`} />
+
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+                           <div className="flex flex-col gap-4 max-w-[85%]">
+                              <span className={`font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 group-hover:${accentText} transition-colors duration-500`}>
+                                 {path.label}
+                              </span>
+                              <h3 className="font-heavy text-3xl md:text-[2.5rem] tracking-tight uppercase leading-none text-white drop-shadow-md">
+                                 {path.title}
+                              </h3>
+                              <p className="font-sans text-sm md:text-base text-white/50 leading-relaxed mt-2 blend-luminosity transition-colors group-hover:text-white/70">
+                                 {path.description}
+                              </p>
+                           </div>
+                           
+                           <div className="shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-none border border-white/10 group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-500">
+                              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white/30 group-hover:text-primary transition-all duration-500 transform group-hover:-rotate-45 group-hover:scale-110" />
+                           </div>
+                        </div>
+                     </div>
                   </Link>
-                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
-                    A global ritual of light, sound, and soul, celebrating the magic of golden hour.
-                  </p>
-                </div>
-
-                {/* Branch 2: Untold Story */}
-                <div className="group">
-                  <Link href="/story" asChild>
-                    <a className="text-xl font-display text-charcoal hover:text-clay transition-colors mb-1 inline-flex items-center gap-2">
-                      UNTOLD STORY
-                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-clay" />
-                    </a>
-                  </Link>
-                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
-                    An immersive, narrative-driven nightlife experience. Artists become storytellers and energy givers in a 360° setting.
-                  </p>
-                </div>
-
-                {/* Branch 3: Radio */}
-                <div className="group">
-                  <Link href="/radio" asChild>
-                    <a className="text-xl font-display text-charcoal hover:text-stone transition-colors mb-1 inline-flex items-center gap-2">
-                      MONOLITH RADIO
-                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-stone" />
-                    </a>
-                  </Link>
-                  <p className="text-charcoal/70 leading-relaxed text-sm max-w-md">
-                    A signal of gathering. Moving fast. Stay tuned.
-                  </p>
-                </div>
-              </div>
-
-              {/* The Outro */}
-              <div className="pt-6 border-t border-charcoal/10">
-                <p className="text-charcoal/80 text-sm italic leading-relaxed max-w-lg mb-6">
-                  "We exist to elevate the culture with intention — crafting experiences that turn nights into memories and artists into storytellers. This is the blueprint for something different."
-                </p>
-                <div className="flex flex-col sm:flex-row gap-6 text-xs font-mono uppercase tracking-widest text-stone">
-                  <a href="https://instagram.com/untoldstory.music" className="hover:text-clay transition-colors">@untoldstory.music</a>
-                  <a href="https://instagram.com/chasingsunsets.music" className="hover:text-warmGold transition-colors">@chasingsunsets.music</a>
-                  <a href="https://instagram.com/monolithproject.events" className="hover:text-primary transition-colors">@monolithproject.events</a>
-                </div>
-              </div>
+               );
+            })}
+            
+            {/* Ambient Signoff block */}
+            <div className="mt-4 p-8 md:p-10 rounded-none border border-white/5 bg-[radial-gradient(ellipse_at_top_right,rgba(224,90,58,0.08),transparent_60%)] relative overflow-hidden">
+               <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/30" />
+               <p className="font-mono text-[10px] md:text-xs text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
+                 "Monolith exists to build nights that feel connected to something larger than themselves."
+               </p>
             </div>
           </motion.div>
+          
         </div>
       </div>
     </section>

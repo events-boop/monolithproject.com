@@ -42,7 +42,7 @@ const connectOptions = [
     }
 ];
 
-export default function ConnectSection() {
+export default function ConnectSection({ compact = false }: { compact?: boolean }) {
     return (
         <section id="connect" className="section-rhythm-tight bg-background relative overflow-hidden">
             {/* Ambient Base Layer */}
@@ -57,7 +57,7 @@ export default function ConnectSection() {
                     description="We're building something and we need the right people. Artists, crew, venues, brands — let's connect."
                 />
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className={`grid gap-4 ${compact ? "grid-cols-1 sm:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-4"}`}>
                     {connectOptions.map((option) => (
                         <motion.div
                             key={option.id}
@@ -68,7 +68,7 @@ export default function ConnectSection() {
                             className="h-full"
                         >
                             <Link href={option.link} className="block h-full group focus-visible:outline-none rounded-sm">
-                                <div className="relative h-full p-8 md:p-10 border border-white/5 bg-white/[0.015] backdrop-blur-sm transition-all duration-500 hover:bg-white/[0.03] hover:border-primary/20 flex flex-col group-focus-visible:ring-2 ring-primary/50 overflow-hidden">
+                                <div className={`relative h-full border border-white/5 bg-white/[0.015] backdrop-blur-sm transition-all duration-500 hover:bg-white/[0.03] hover:border-primary/20 flex flex-col group-focus-visible:ring-2 ring-primary/50 overflow-hidden ${compact ? "p-6" : "p-8 md:p-10"}`}>
 
                                     {/* Hover Glow Effect */}
                                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -76,8 +76,8 @@ export default function ConnectSection() {
                                     {/* Content */}
                                     <div className="relative z-10 flex flex-col h-full">
                                         {/* Icon */}
-                                        <div className="mb-8 text-white/30 group-hover:text-primary group-hover:scale-110 origin-left transition-all duration-500">
-                                            <option.icon strokeWidth={1} className="w-10 h-10" />
+                                        <div className={`${compact ? "mb-6" : "mb-8"} text-white/30 group-hover:text-primary group-hover:scale-110 origin-left transition-all duration-500`}>
+                                            <option.icon strokeWidth={1} className={compact ? "w-8 h-8" : "w-10 h-10"} />
                                         </div>
 
                                         {/* Meta */}
@@ -85,13 +85,13 @@ export default function ConnectSection() {
                                             <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary/70">
                                                 {option.subtitle}
                                             </span>
-                                            <h3 className="font-display text-3xl md:text-4xl text-white leading-[0.85] tracking-wide group-hover:text-white transition-colors">
+                                            <h3 className={`font-display text-white leading-[0.85] tracking-wide group-hover:text-white transition-colors ${compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}>
                                                 {option.title}
                                             </h3>
                                         </div>
 
                                         {/* Desc */}
-                                        <p className="text-white/40 text-sm leading-relaxed mb-10 flex-grow font-light border-l border-white/5 pl-4 ml-1 group-hover:border-primary/30 transition-colors duration-500">
+                                        <p className={`text-white/40 leading-relaxed flex-grow font-light border-l border-white/5 pl-4 ml-1 group-hover:border-primary/30 transition-colors duration-500 ${compact ? "text-xs mb-6" : "text-sm mb-10"}`}>
                                             {option.description}
                                         </p>
 

@@ -36,6 +36,30 @@ export const leads = pgTable("leads", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  webhookStatus: text("webhook_status").notNull().default("pending"), // 'pending' | 'success' | 'failed'
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
+  metadata: jsonb("metadata").notNull().default({}),
+});
+
+export const bookingInquiries = pgTable("booking_inquiries", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  entity: text("entity").notNull(),
+  type: text("type").notNull(), // 'partner-on-location' | 'artist-booking' | 'sponsorship' | 'general'
+  location: text("location"),
+  message: text("message").notNull(),
+  webhookStatus: text("webhook_status").notNull().default("pending"), // 'pending' | 'success' | 'failed'
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
+  metadata: jsonb("metadata").notNull().default({}),
+});
+
 export const scheduledEvents = pgTable("scheduled_events", {
   id: text("id").primaryKey(),
   series: text("series").notNull(), // 'chasing-sunsets' | 'untold-story' | 'monolith-project'

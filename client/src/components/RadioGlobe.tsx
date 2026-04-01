@@ -7,42 +7,64 @@ export default function RadioGlobe() {
 
     useEffect(() => {
         let phi = 0;
+        let globe: { destroy: () => void } | null = null;
 
         if (!canvasRef.current) return;
 
-        const globe = createGlobe(canvasRef.current, {
-            devicePixelRatio: 2,
-            width: 1200 * 2,
-            height: 1200 * 2,
-            phi: 0,
-            theta: 0,
-            dark: 1,
-            diffuse: 2,
-            mapSamples: 16000,
-            mapBrightness: 6,
-            baseColor: [0.15, 0.15, 0.15], // Dark gray/black base
-            markerColor: [0.88, 0.35, 0.23], // Primary orange
-            glowColor: [0.1, 0.1, 0.1], // glow
-            markers: [
-                { location: [41.8781, -87.6298], size: 0.05 }, // Chicago
-                { location: [48.8566, 2.3522], size: 0.05 }, // Paris
-                { location: [40.4168, -3.7038], size: 0.05 }, // Madrid
-                { location: [20.2114, -87.4653], size: 0.05 }, // Tulum
-                { location: [38.9067, 1.4206], size: 0.05 }, // Ibiza
-                { location: [40.7128, -74.0060], size: 0.05 }, // NYC
-                { location: [-33.9249, 18.4241], size: 0.05 }, // Cape Town
-                { location: [25.2048, 55.2708], size: 0.05 }, // Dubai
-            ],
-            onRender: (state: any) => {
-                // Called on every animation frame.
-                // `state` will be an empty object, return updated params.
-                state.phi = phi;
-                phi += 0.003;
-            },
-        });
+        const canvas = canvasRef.current;
+        const contextAttributes = {
+            alpha: true,
+            antialias: true,
+            premultipliedAlpha: true,
+            preserveDrawingBuffer: false,
+        };
+
+        const webgl =
+            canvas.getContext("webgl2", contextAttributes) ||
+            canvas.getContext("webgl", contextAttributes) ||
+            canvas.getContext("experimental-webgl", contextAttributes);
+
+        if (!webgl) {
+            return;
+        }
+
+        try {
+            globe = createGlobe(canvas, {
+                devicePixelRatio: 2,
+                width: 1200 * 2,
+                height: 1200 * 2,
+                phi: 0,
+                theta: 0,
+                dark: 1,
+                diffuse: 2,
+                mapSamples: 16000,
+                mapBrightness: 6,
+                baseColor: [0.15, 0.15, 0.15], // Dark gray/black base
+                markerColor: [0.88, 0.35, 0.23], // Primary orange
+                glowColor: [0.1, 0.1, 0.1], // glow
+                markers: [
+                    { location: [41.8781, -87.6298], size: 0.05 }, // Chicago
+                    { location: [48.8566, 2.3522], size: 0.05 }, // Paris
+                    { location: [40.4168, -3.7038], size: 0.05 }, // Madrid
+                    { location: [20.2114, -87.4653], size: 0.05 }, // Tulum
+                    { location: [38.9067, 1.4206], size: 0.05 }, // Ibiza
+                    { location: [40.7128, -74.0060], size: 0.05 }, // NYC
+                    { location: [-33.9249, 18.4241], size: 0.05 }, // Cape Town
+                    { location: [25.2048, 55.2708], size: 0.05 }, // Dubai
+                ],
+                onRender: (state: any) => {
+                    // Called on every animation frame.
+                    // `state` will be an empty object, return updated params.
+                    state.phi = phi;
+                    phi += 0.003;
+                },
+            });
+        } catch {
+            globe = null;
+        }
 
         return () => {
-            globe.destroy();
+            globe?.destroy();
         };
     }, []);
 

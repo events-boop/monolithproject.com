@@ -22,7 +22,7 @@ export default function UntoldHero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -37,28 +37,37 @@ export default function UntoldHero() {
             <img
               src={heroSlides[heroSlideIndex]}
               alt="Untold Story Atmosphere"
+              fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
+              loading={heroSlideIndex === 0 ? "eager" : "lazy"}
               className="w-full h-full object-cover object-[80%_center]"
             />
           </motion.div>
         </AnimatePresence>
-
-        {/* Gradients for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#06060F] via-[#06060F]/40 to-black/60 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#06060F] via-[#06060F]/60 to-transparent z-10" />
       </div>
 
-      {/* Subtle purple glow */}
+      {/* Giant Butterfly (Elements of butterfly in the background) */}
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none z-10 flex items-center justify-center opacity-40 mix-blend-screen overflow-hidden">
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <UntoldButterflyLogo className="w-full h-full text-[#8B5CF6]/60" glow />
+        </motion.div>
+      </div>
+
+      {/* Subtle purple glow above the mask */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full opacity-20 blur-[150px] pointer-events-none z-10 bg-untold-hero-glow"
+        className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.25] blur-[120px] pointer-events-none z-10 bg-[#8B5CF6]"
       />
 
-      <div className="container max-w-7xl mx-auto relative z-20">
+      {/* Ordinary Content Layer */}
+      <div className="container max-w-7xl mx-auto relative z-30">
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-8"
+            className="lg:col-span-8 flex flex-col"
           >
             <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
             <div className="flex items-center gap-4 mb-6">
@@ -69,22 +78,21 @@ export default function UntoldHero() {
               <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">Chicago</span>
             </div>
 
+            {/* Visible Title */}
             <motion.h1
               initial={{ filter: "blur(12px)", opacity: 0, y: 30 }}
-              animate={{ filter: "blur(0px)", opacity: 0.9, y: 0 }}
+              animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-              className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display mix-blend-overlay"
+              className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]"
             >
-              UNTOLD
-              <br />
-              STORY
+              UNTOLD<br />STORY
             </motion.h1>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10 w-full md:w-auto">
               <MagneticButton strength={0.4}>
-                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+                <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
                   <div
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group"
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full"
                   >
                     GET TICKETS <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </div>
@@ -95,18 +103,18 @@ export default function UntoldHero() {
               </span>
             </div>
 
-            <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-lg">
-              <span className="text-white font-medium">Late night. Intimate rooms. 360 sound.</span> The story is told
+            <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+              <span className="text-white font-medium drop-shadow-lg">Late night. Intimate rooms. 360 sound.</span> The story is told
               through the music — no narrative, no script, just what happens when the lights go down.
             </p>
 
             {heroSlides.length > 1 && (
-              <div className="flex gap-2">
+              <div className="flex gap-2 relative z-30">
                 {heroSlides.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setHeroSlideIndex(idx)}
-                    className={`h-1 transition-all duration-500 rounded-full ${idx === heroSlideIndex ? "w-12 bg-white" : "w-4 bg-white/20 hover:bg-white/40"}`}
+                    className={`h-1 transition-all duration-500 rounded-full ${idx === heroSlideIndex ? "w-12 bg-[#8B5CF6]" : "w-4 bg-white/30 hover:bg-white/60"}`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}

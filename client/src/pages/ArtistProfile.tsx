@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { ARTISTS } from "@/data/artists";
+import { CTA_LABELS } from "@/lib/cta";
 
 const LEGACY_ID_MAP: Record<string, string> = {
   "1": "haai",
@@ -47,7 +48,7 @@ export default function ArtistProfile() {
           canonicalPath={canonicalArtistPath}
         />
         <Navigation />
-        <section className="pt-48 pb-24 px-6">
+        <section className="page-shell-start-loose pb-24 px-6">
           <div className="container max-w-3xl mx-auto text-center">
             <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase mb-4">Artist</p>
             <h1 className="font-display text-[clamp(3rem,9vw,6rem)] leading-[0.9] uppercase mb-6">Profile Not Found</h1>
@@ -79,17 +80,17 @@ export default function ArtistProfile() {
 
   const primaryAction =
     primarySeries === "untold-story"
-      ? { href: "/tickets", label: "View Event Tickets" }
+      ? { href: "/tickets", label: CTA_LABELS.tickets }
       : primarySeries === "chasing-sunsets"
-        ? { href: "/chasing-sunsets", label: "Explore Sun(Sets)" }
-        : { href: "/radio", label: "Listen on Radio" };
+        ? { href: "/chasing-sunsets", label: CTA_LABELS.sunSets }
+        : { href: "/radio", label: CTA_LABELS.radioHub };
 
   const sidebarAction =
     primarySeries === "untold-story"
-      ? { href: "/tickets", label: "Get Tickets" }
+      ? { href: "/tickets", label: CTA_LABELS.tickets }
       : primarySeries === "chasing-sunsets"
-        ? { href: "/schedule", label: "View Schedule" }
-        : { href: "/radio", label: "Listen" };
+        ? { href: "/schedule", label: CTA_LABELS.schedule }
+        : { href: "/radio", label: CTA_LABELS.radioHub };
 
   const socials = [
     { key: "instagram", href: artist.socials.instagram, label: "Instagram", Icon: Instagram },
@@ -101,7 +102,7 @@ export default function ArtistProfile() {
       <SEO title={artist.name} description={artist.bio} canonicalPath={canonicalArtistPath} />
       <Navigation />
 
-      <section className="relative min-h-[75vh] flex flex-col justify-end pb-20 px-6 overflow-hidden pt-44">
+      <section className="relative min-h-[75vh] flex flex-col justify-end pb-20 px-6 overflow-hidden page-shell-start">
         {/* Full Bleed Profile Image */}
         <div className="absolute inset-0 z-0 bg-black/50">
           <img
@@ -131,7 +132,7 @@ export default function ArtistProfile() {
               </span>
             </div>
 
-            <h1 className="font-display text-[clamp(4rem,11vw,9.5rem)] leading-[0.85] uppercase text-white mb-6 drop-shadow-2xl">
+            <h1 className="font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.85] uppercase text-white mb-6 drop-shadow-2xl">
               {artist.name}
             </h1>
 

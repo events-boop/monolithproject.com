@@ -22,7 +22,7 @@ export default function Newsletter() {
       />
       <Navigation variant="light" />
 
-      <section className="pt-44 md:pt-48 pb-8 px-6 relative">
+      <section className="page-shell-start-loose pb-8 px-6 relative">
         <div className="container max-w-6xl mx-auto">
           <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Early Access</span>
           <h1 className="font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.88] uppercase mt-4">

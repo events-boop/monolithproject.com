@@ -12,11 +12,18 @@
 
 @theme inline {
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Instrument Sans', system-ui, sans-serif;
-  /* Switched from Bebas for premium Swiss feel */
+  --font-display: 'Bebas Neue', 'Arial Narrow', system-ui, sans-serif;
+  /* Restored thicker condensed display family */
   --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-script: 'Pinyon Script', cursive;
+
+  /* The 4 Distinct Brand Fonts */
+  --font-heavy: 'Archivo Black', sans-serif;
+  --font-monolith: 'Syncopate', sans-serif;
+  --font-sunsets: 'Marcellus', serif;
+  --font-untold: 'Syne', sans-serif;
+  --font-radio: 'Space Mono', monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -99,13 +106,24 @@
   --motion-luxe: cubic-bezier(0.22, 1, 0.36, 1);
   --reading-max: 70ch;
   --tap-target-min: 44px;
-  /* Dark editorial — sparse coral pops */
-  --background: oklch(0.08 0.005 285);
-  --foreground: oklch(0.95 0.005 85);
-  --card: oklch(0.12 0.01 285);
-  --card-foreground: oklch(0.95 0.005 85);
-  --popover: oklch(0.12 0.01 285);
-  --popover-foreground: oklch(0.95 0.005 85);
+  --scene-accent: #E05A3A;
+  --scene-glow: rgba(224, 90, 58, 0.35);
+  --shell-banner-height: 0px;
+  --shell-nav-gap: clamp(0.75rem, 1.8vw, 1rem);
+  --shell-nav-height: 4.75rem;
+  --shell-nav-offset: calc(env(safe-area-inset-top, 0px) + var(--shell-banner-height) + var(--shell-nav-gap));
+  --shell-page-top-hero: calc(var(--shell-nav-offset) + var(--shell-nav-height) + clamp(0.5rem, 1vw, 1rem));
+  --shell-page-top: calc(var(--shell-nav-offset) + var(--shell-nav-height) + clamp(0.875rem, 1.4vw, 1.5rem));
+  --shell-page-top-loose: calc(var(--shell-page-top) + clamp(0.75rem, 1vw, 1.25rem));
+  --shell-sticky-top: calc(var(--shell-nav-offset) + var(--shell-nav-height) + clamp(0.5rem, 1vw, 0.875rem));
+  --shell-scroll-offset: calc(var(--shell-sticky-top) + clamp(0.5rem, 1vw, 1rem));
+  /* Dark editorial — A24 Cinematic, warm deep off-black */
+  --background: oklch(0.12 0.01 40);
+  --foreground: oklch(0.95 0.01 40);
+  --card: oklch(0.14 0.01 40);
+  --card-foreground: oklch(0.95 0.01 40);
+  --popover: oklch(0.14 0.01 40);
+  --popover-foreground: oklch(0.95 0.01 40);
   --primary: oklch(0.65 0.2 25);
   --primary-foreground: oklch(0.98 0.005 85);
   --secondary: oklch(0.18 0.01 285);
@@ -235,12 +253,13 @@
 }
 
 .dark {
-  --background: oklch(0.08 0.005 285);
-  --foreground: oklch(0.95 0.005 85);
-  --card: oklch(0.12 0.01 285);
-  --card-foreground: oklch(0.95 0.005 85);
-  --popover: oklch(0.12 0.01 285);
-  --popover-foreground: oklch(0.95 0.005 85);
+  /* A24 Cinematic dark mode */
+  --background: oklch(0.12 0.01 40);
+  --foreground: oklch(0.95 0.01 40);
+  --card: oklch(0.14 0.01 40);
+  --card-foreground: oklch(0.95 0.01 40);
+  --popover: oklch(0.14 0.01 40);
+  --popover-foreground: oklch(0.95 0.01 40);
   --primary: oklch(0.65 0.2 25);
   --primary-foreground: oklch(0.98 0.005 85);
   --secondary: oklch(0.18 0.01 285);
@@ -279,6 +298,7 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
 
   button:not(:disabled),
@@ -293,22 +313,35 @@
     @apply cursor-pointer;
   }
 
-  /* SS-Tier Immersion: Hide native scrollbar (relying on Lenis smooth scroll) */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  * {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-  }
-
   /* Brand Selection Color */
   ::selection {
     background: var(--primary);
     color: white;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--scene-accent) 52%, rgba(255, 255, 255, 0.2)) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    background: color-mix(in srgb, var(--scene-accent) 48%, rgba(255, 255, 255, 0.18));
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--scene-accent) 66%, rgba(255, 255, 255, 0.24));
   }
 }
 
@@ -341,18 +374,49 @@
     }
   }
 
-  /* Display font utility - KIKK / Swiss Style */
+  /* Display font utility - A24 Cinematic Style */
   .font-display {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
-    /* Tight tracking for that premium grotesk feel */
+    letter-spacing: 0.05em;
   }
 
   /* Monospace font utility */
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* --- BRAND LOGOTYPE UTILITIES --- */
+  .font-heavy {
+    font-family: var(--font-heavy);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .font-monolith {
+    font-family: var(--font-monolith);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .font-sunsets {
+    font-family: var(--font-sunsets);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .font-untold {
+    font-family: var(--font-untold);
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .font-radio {
+    font-family: var(--font-radio);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   /* Script font for signature touches */
@@ -418,6 +482,52 @@
       linear-gradient(to bottom, transparent, rgba(224, 90, 58, 0.12)),
       radial-gradient(circle at 18% 30%, rgba(59, 130, 246, 0.16), transparent 38%),
       radial-gradient(circle at 82% 65%, rgba(224, 90, 58, 0.16), transparent 40%);
+  }
+
+  .scene-kicker {
+    color: color-mix(in srgb, var(--scene-accent) 72%, rgba(255, 255, 255, 0.88));
+  }
+
+  .scene-rule {
+    background: linear-gradient(to right, color-mix(in srgb, var(--scene-accent) 52%, transparent), transparent 72%);
+  }
+
+  .shell-frame {
+    border: 1px solid color-mix(in srgb, var(--scene-accent) 16%, rgba(255, 255, 255, 0.08));
+    background:
+      linear-gradient(160deg, rgba(18, 18, 24, 0.88), rgba(8, 8, 12, 0.72)),
+      radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--scene-glow) 68%, transparent), transparent 42%);
+    box-shadow:
+      0 22px 52px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .shell-frame-light {
+    border: 1px solid color-mix(in srgb, var(--scene-accent) 12%, rgba(44, 24, 16, 0.12));
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(250, 245, 237, 0.82)),
+      radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--scene-glow) 40%, transparent), transparent 44%);
+    box-shadow:
+      0 20px 44px rgba(28, 18, 10, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .quiet-panel {
+    border-radius: 1.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+      linear-gradient(190deg, rgba(10, 10, 16, 0.82), rgba(10, 10, 16, 0.48));
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.28);
+  }
+
+  .quiet-panel-light {
+    border-radius: 1.6rem;
+    border: 1px solid rgba(44, 24, 16, 0.12);
+    background:
+      linear-gradient(165deg, rgba(255, 255, 255, 0.94), rgba(255, 248, 239, 0.82)),
+      linear-gradient(190deg, rgba(255, 255, 255, 0.72), rgba(255, 245, 229, 0.44));
+    box-shadow: 0 18px 40px rgba(28, 18, 10, 0.1);
   }
 
   .ui-card {
@@ -500,6 +610,42 @@
     max-width: var(--reading-max);
   }
 
+  .page-shell-start {
+    padding-top: var(--shell-page-top);
+  }
+
+  .page-shell-start-loose {
+    padding-top: var(--shell-page-top-loose);
+  }
+
+  .hero-shell-start {
+    padding-top: var(--shell-page-top-hero);
+  }
+
+  .hero-shell-content {
+    padding-top: var(--shell-page-top-hero);
+  }
+
+  .sticky-shell-top {
+    top: var(--shell-sticky-top);
+  }
+
+  .scroll-shell-target {
+    scroll-margin-top: var(--shell-scroll-offset);
+  }
+
+  @media (min-width: 640px) {
+    .hero-shell-content {
+      padding-top: calc(var(--shell-page-top-hero) + 0.5rem);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-shell-content {
+      padding-top: calc(var(--shell-page-top-hero) + 1rem);
+    }
+  }
+
   @media (max-width: 768px) {
 
     .btn-pill,
@@ -511,8 +657,8 @@
   }
 
   .ui-heading {
-    letter-spacing: 0.012em;
-    line-height: 0.9;
+    letter-spacing: 0.028em;
+    line-height: 0.88;
   }
 
   .ui-kicker {
@@ -655,10 +801,30 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
-    opacity: 0.015;
+    z-index: 1000;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
+  }
+
+  /* Kinetic scanlines for HUD feel */
+  .bg-scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(255, 255, 255, 0.02) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
   }
 
   /* Premium Smooth Section Background */
@@ -688,15 +854,15 @@
 
   /* Section styling */
   .section-padding {
-    @apply py-20 md:py-32;
+    @apply py-16 md:py-24;
   }
 
   .section-rhythm {
-    @apply py-24 md:py-32;
+    @apply py-16 md:py-24;
   }
 
   .section-rhythm-tight {
-    @apply py-20 md:py-24;
+    @apply py-12 md:py-16;
   }
 
   /* Responsive display heading scale */
@@ -847,7 +1013,7 @@
   }
 
   .tracking-tight-display {
-    letter-spacing: -0.04em;
+    letter-spacing: -0.015em;
   }
 
   /* Advanced Optical Glassmorphism */
@@ -877,13 +1043,11 @@
     z-index: -1;
   }
 
-  /* Cinematic Velocity Skew */
+  /* Keep scroll surfaces stable. The old velocity skew read as a visual glitch. */
   .velocity-skew {
-    transform: skewY(clamp(-4deg, calc(var(--scroll-velocity, 0) * 0.15deg), 4deg));
+    transform: none;
     transform-origin: center;
-    will-change: transform;
     pointer-events: auto;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   @keyframes marquee {
@@ -986,33 +1150,7 @@
   }
 }
 
-/* --- SENSORY HOVER EFFECT FOR TICKETS (toned down) --- */
-body:has(.sensory-ticket-btn:hover) #main-content>*:not(:has(.sensory-ticket-btn:hover)),
-body:has(.sensory-ticket-btn:hover) header,
-body:has(.sensory-ticket-btn:hover) footer {
-  filter: blur(6px) brightness(0.75) grayscale(15%);
-  transform: scale(0.995);
-}
-
-body:has(.sensory-ticket-btn:hover) .hero-bg,
-body:has(.sensory-ticket-btn:hover) .hero-text,
-body:has(.sensory-ticket-btn:hover) .ui-meta {
-  filter: blur(5px) brightness(0.65);
-  transform: scale(0.99);
-}
-
-#main-content>*,
-header,
-footer,
-.hero-bg,
-.hero-text,
-.ui-meta {
-  transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    brightness 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    grayscale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* Ticket CTAs stay lively without pulling the entire page into a blur pass. */
 
 .sensory-ticket-btn {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;

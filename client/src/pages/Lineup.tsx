@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { MapPin, Music, Sun, Headphones } from "lucide-react";
@@ -65,8 +65,25 @@ const filters: { label: string; value: Series; icon?: React.ReactNode }[] = [
 
 export default function Lineup() {
   const [activeFilter, setActiveFilter] = useState<Series>("all");
+  const [starredIds, setStarredIds] = useState<string[]>([]);
+  const [showOnlyStarred, setShowOnlyStarred] = useState(false);
 
-  const filtered = filterArtists(activeFilter);
+  useEffect(() => {
+    const saved = localStorage.getItem("monolith-starred-rites");
+    if (saved) setStarredIds(JSON.parse(saved));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("monolith-starred-rites", JSON.stringify(starredIds));
+  }, [starredIds]);
+
+  const toggleStar = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setStarredIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  const filtered = filterArtists(activeFilter).filter(a => !showOnlyStarred || starredIds.includes(a.id));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -78,7 +95,7 @@ export default function Lineup() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-44 md:pt-48 pb-12 px-6">
+      <section className="page-shell-start-loose pb-12 px-6">
         <div className="container max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -102,7 +119,7 @@ export default function Lineup() {
       </section>
 
       {/* Filters */}
-      <section className="px-6 pb-12 sticky top-24 md:top-28 z-40">
+      <section className="px-6 pb-12 sticky sticky-shell-top z-40">
         <div className="container max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-3 py-4 border-b border-border">
             {filters.map((f) => {
@@ -127,10 +144,20 @@ export default function Lineup() {
                   style={isActive ? activeBg : undefined}
                 >
                   {f.icon}
-                  {f.label}
                 </button>
               );
             })}
+
+            <button
+               onClick={() => setShowOnlyStarred(!showOnlyStarred)}
+               className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 border rounded-full ${showOnlyStarred
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-transparent text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                }`}
+            >
+               <div className={`w-2 h-2 rounded-full ${showOnlyStarred ? "bg-white" : "bg-primary"}`} />
+               {showOnlyStarred ? "CLEAR FAVORITES" : "MY FAVORITES"}
+            </button>
           </div>
         </div>
       </section>
@@ -165,14 +192,22 @@ export default function Lineup() {
                       </div>
 
                       {/* Series badge */}
-                      <div className="absolute top-3 left-3 z-10">
-                        {artist.series === "chasing-sunsets" ? (
-                          <Sun className="w-3.5 h-3.5 text-clay opacity-60 group-hover:opacity-100 transition-opacity" />
-                        ) : artist.series === "sunsets-radio" ? (
-                          <Headphones className="w-3.5 h-3.5 text-[#D4A574] opacity-60 group-hover:opacity-100 transition-opacity" />
-                        ) : (
-                          <UntoldButterflyLogo className="w-4 h-4 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
-                        )}
+                      <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-center">
+                        <div>
+                          {artist.series === "chasing-sunsets" ? (
+                            <Sun className="w-3.5 h-3.5 text-clay opacity-60 group-hover:opacity-100 transition-opacity" />
+                          ) : artist.series === "sunsets-radio" ? (
+                            <Headphones className="w-3.5 h-3.5 text-[#D4A574] opacity-60 group-hover:opacity-100 transition-opacity" />
+                          ) : (
+                            <UntoldButterflyLogo className="w-4 h-4 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
+                          )}
+                        </div>
+                        <button 
+                          onClick={(e) => toggleStar(artist.id, e)}
+                          className={`w-8 h-8 flex items-center justify-center transition-all ${starredIds.includes(artist.id) ? "scale-110" : "opacity-0 group-hover:opacity-100"}`}
+                        >
+                           <div className={`w-2 h-2 rounded-full ${starredIds.includes(artist.id) ? "bg-primary shadow-[0_0_10px_rgba(224,90,58,0.8)]" : "bg-white/40 hover:bg-white"}`} />
+                        </button>
                       </div>
 
                       {/* Content */}

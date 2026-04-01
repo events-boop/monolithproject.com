@@ -4,6 +4,7 @@ import { X, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 const SESSION_KEY = "us-optin-dismissed";
+const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
 
 export default function UntoldStoryOptIn() {
     const [visible, setVisible] = useState(false);
@@ -14,8 +15,35 @@ export default function UntoldStoryOptIn() {
     // Show after a short delay, once per session
     useEffect(() => {
         if (sessionStorage.getItem(SESSION_KEY)) return;
-        const id = setTimeout(() => setVisible(true), 900);
-        return () => clearTimeout(id);
+
+        let timeoutId: number | null = null;
+
+        const queueOpen = (delay: number) => {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
+            timeoutId = window.setTimeout(() => setVisible(true), delay);
+        };
+
+        if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+            queueOpen(900);
+        } else {
+            const handleConsentResolved = () => queueOpen(420);
+            window.addEventListener("monolith:cookie-consent-resolved", handleConsentResolved, { once: true });
+
+            return () => {
+                window.removeEventListener("monolith:cookie-consent-resolved", handleConsentResolved);
+                if (timeoutId) {
+                    window.clearTimeout(timeoutId);
+                }
+            };
+        }
+
+        return () => {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
+        };
     }, []);
 
     const dismiss = () => {
@@ -64,7 +92,7 @@ export default function UntoldStoryOptIn() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.35 }}
-                        className="fixed inset-0 z-[90] bg-black/75 backdrop-blur-sm"
+                        className="fixed inset-0 z-[90] bg-black/72"
                         onClick={dismiss}
                         aria-hidden="true"
                     />
@@ -161,15 +189,15 @@ export default function UntoldStoryOptIn() {
                                             id="us-optin-title"
                                             className="font-serif italic text-3xl md:text-4xl text-white leading-[1.05] mb-3"
                                         >
-                                            The Story<br />
-                                            <span style={{ color: "#8B5CF6" }}>Continues</span>
+                                            The Room<br />
+                                            <span style={{ color: "#8B5CF6" }}>Awaits</span>
                                         </h2>
 
                                         <p className="text-white/55 text-sm leading-relaxed mb-2">
-                                            Late-night. Immersive. 360 sound. Season III is unfolding — be inside it before the doors open.
+                                            Late-night. Immersive. 360° sound. The next chapter is unfolding — secure access before the doors open.
                                         </p>
-                                        <p className="text-white/35 text-xs font-mono tracking-widest uppercase mb-7">
-                                            Early access · Presale tickets · First to know
+                                        <p className="text-white/35 text-[10px] font-mono tracking-widest uppercase mb-7">
+                                            Priority Access · Private Signals · First To Know
                                         </p>
 
                                         {/* Divider */}
@@ -211,10 +239,10 @@ export default function UntoldStoryOptIn() {
                                                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                                             >
                                                 {status === "loading" ? (
-                                                    <span className="animate-pulse">Joining...</span>
+                                                    <span className="animate-pulse">Requesting...</span>
                                                 ) : (
                                                     <>
-                                                        Enter the Story
+                                                        Request Priority Access
                                                         <ArrowRight className="w-4 h-4" />
                                                     </>
                                                 )}
@@ -222,7 +250,7 @@ export default function UntoldStoryOptIn() {
                                         </form>
 
                                         <p className="mt-4 text-center text-white/20 text-[10px] font-mono tracking-widest uppercase">
-                                            No spam · Unsubscribe anytime
+                                            Curated Signals Only · Opt out anytime
                                         </p>
 
                                         <button

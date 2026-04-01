@@ -1,15 +1,13 @@
-import { motion } from "framer-motion";
 import { Clock, MapPin, AlertCircle, CheckCircle, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import TacticalVenueMap from "@/components/TacticalVenueMap";
 import SEO from "@/components/SEO";
-
-const timeline = [
-    { time: "9:00 PM", event: "Doors Open", desc: "Arrive early to avoid the line." },
-    { time: "10:00 PM", event: "Opener: AvO", desc: "Set the mood right." },
-    { time: "11:30 PM", event: "Direct Support: Hashtom", desc: "Energy builds." },
-    { time: "1:00 AM", event: "Headliner: Deron", desc: "Peak hour." },
-    { time: "2:00 AM", event: "Close", desc: "Safe travels home." }
-];
+import {
+    getEventEyebrow,
+    getEventVenueLabel,
+    getExperienceEvent,
+    getPrimaryTicketUrl,
+} from "@/lib/siteExperience";
 
 const checklist = [
     { icon: CheckCircle, text: "Valid Government ID (21+)" },
@@ -19,7 +17,44 @@ const checklist = [
     { icon: AlertCircle, text: "No Outside Drinks" }
 ];
 
+const venueMapHref = "https://maps.google.com/?q=1240+W+Randolph+St+Chicago+IL+60607";
+
+function formatIsoTime(value?: string) {
+    if (!value) return null;
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return new Intl.DateTimeFormat("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+    }).format(date);
+}
+
 export default function Guide() {
+    const guideEvent = getExperienceEvent("guide");
+    const ticketUrl = getPrimaryTicketUrl(guideEvent);
+    const timeline = guideEvent
+        ? [
+              {
+                  time: guideEvent.doors || guideEvent.time,
+                  event: "Doors Open",
+                  desc: "Arrive in the first hour for the easiest entry and the full room arc.",
+              },
+              {
+                  time: guideEvent.mainExperience || "Peak Window",
+                  event: guideEvent.title === "AUTOGRAF" ? "Featured Performance" : "Main Experience",
+                  desc:
+                      guideEvent.description ||
+                      "This is when the room locks in and the production hits full intensity.",
+              },
+              {
+                  time: formatIsoTime(guideEvent.endsAt) || "Late",
+                  event: "Closing Arc",
+                  desc: "Last call energy. Confirm your exit plan before you leave the venue.",
+              },
+          ]
+        : [];
+
     return (
         <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
             <SEO
@@ -29,17 +64,19 @@ export default function Guide() {
             <Navigation />
 
             {/* Mobile-focused minimal header */}
-            <main className="relative z-10 pt-32 md:pt-44 pb-32">
+            <main className="relative z-10 page-shell-start pb-32">
                 <div className="container max-w-4xl mx-auto px-6">
 
                     <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-6">
                         <div>
-                            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-2">● Live Updates</p>
+                            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-2">
+                                ● {getEventEyebrow(guideEvent)}
+                            </p>
                             <h1 className="font-display text-4xl md:text-6xl uppercase text-white">The Night Of</h1>
                         </div>
                         <div className="text-right hidden sm:block">
-                            <p className="font-mono text-xs text-white/50 tracking-wide">MARCH 6, 2026</p>
-                            <p className="font-mono text-xs text-white/50 tracking-wide">ALHAMBRA PALACE</p>
+                            <p className="font-mono text-xs text-white/50 tracking-wide">{guideEvent?.date || "Date TBA"}</p>
+                            <p className="font-mono text-xs text-white/50 tracking-wide">{guideEvent?.venue || "Venue TBA"}</p>
                         </div>
                     </div>
 
@@ -81,29 +118,30 @@ export default function Guide() {
                             </div>
 
                             {/* Arrival Map */}
-                            <div>
-                                <h3 className="font-display text-lg uppercase text-white mb-4 flex items-center gap-2">
-                                    <MapPin className="w-5 h-5 text-primary" /> Arrival
+                            <div className="space-y-6">
+                                <h3 className="font-display text-lg uppercase text-white flex items-center gap-2">
+                                    <MapPin className="w-5 h-5 text-primary" /> Arrival Strategy
                                 </h3>
-                                <div className="aspect-video bg-white/5 rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center group cursor-pointer hover:bg-white/10 transition-colors">
-                                    <p className="font-mono text-xs uppercase tracking-widest text-white/50">
-                                        Tap to Open Maps
-                                    </p>
-                                    <a
-                                        href="https://goo.gl/maps/example"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="absolute inset-0 z-10"
-                                        aria-label="Open Map"
-                                    />
-                                    <ArrowRight className="absolute bottom-4 right-4 w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0" />
-                                </div>
+                                
+                                <TacticalVenueMap />
+                                
                                 <p className="mt-3 text-xs text-white/40 font-mono tracking-wide">
-                                    Use the MAIN ENTRANCE on W Randolph St. <br />
-                                    VIP/Table check-in fast lane on the left.
+                                    Use the main entrance for general admission. <br />
+                                    {guideEvent ? `${getEventVenueLabel(guideEvent)}.` : "VIP/Table check-in fast lane on the left."}
                                 </p>
                             </div>
 
+                            {guideEvent && (
+                                <a
+                                    href={ticketUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-primary transition-colors hover:bg-primary/15"
+                                >
+                                    Tickets
+                                    <ArrowRight className="w-4 h-4" />
+                                </a>
+                            )}
                         </section>
                     </div>
 

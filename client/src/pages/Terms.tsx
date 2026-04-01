@@ -7,7 +7,7 @@ export default function Terms() {
     <div className="min-h-screen bg-background text-foreground">
       <SEO title="Terms of Service" description="Terms of Service for The Monolith Project website and events." canonicalPath="/terms" />
       <Navigation />
-      <section className="pt-44 pb-20 px-6">
+      <section className="page-shell-start pb-20 px-6">
         <div className="container max-w-4xl mx-auto">
           <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">Legal</p>
           <h1 className="font-display text-[clamp(3rem,10vw,7rem)] leading-[0.9] uppercase mb-6">Terms of Service</h1>

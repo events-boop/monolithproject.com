@@ -40,7 +40,7 @@ export const radioEpisodes: RadioEpisode[] = [
     displayDate: "December 30, 2025",
     duration: "58:23",
     summary:
-      "BENCHEK opens the Chasing Sun(Sets) Radio Show with a melodic New Year transition session built for sunset starts and after-dark lift.",
+      "BENCHEK opens the Chasing Sun(Sets) Radio Show with a melodic New Year transition session built for sunset starts and late-night lift.",
     narrative:
       "Episode 01 sets the frame for what Chasing Sun(Sets) Radio Show is supposed to be: a bridge between the rooftop chapter and the headphones chapter. BENCHEK starts with warm percussion and low-end patience, then gradually pushes into rolling melodic house without ever losing the sunset feel. The progression is intentional. Nothing rushes. Every transition sounds like a continuation of the same story instead of a hard cut for attention. That is exactly the energy we build at Chasing Sun(Sets) events in Chicago, and this first episode translates that identity into a clean, repeatable listen.\n\nThe middle section leans deeper with organic textures and vocal accents, then resolves with a final stretch designed for late-evening momentum. If you were at one of our golden-hour sessions, you will recognize the emotional pacing immediately. If this is your first touchpoint with the brand, this episode is the right entry point: melodic, precise, and community-first.",
     image: "/images/radio-show.jpg",

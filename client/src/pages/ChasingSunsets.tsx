@@ -3,7 +3,6 @@ import { ArrowUpRight, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
-import MixedMediaGallery from "@/components/MixedMediaGallery";
 import EpisodeGallery from "@/components/EpisodeGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import { Link } from "wouter";
@@ -15,17 +14,32 @@ import { useState } from "react";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+import { CTA_LABELS } from "@/lib/cta";
+import {
+  getEventVenueLabel,
+  getPrimaryTicketUrl,
+  getSeriesEvents,
+  isTicketOnSale,
+} from "@/lib/siteExperience";
+
+const chasingPosterImage = getResponsiveImage("chasingSunsets");
+const chasingHeroImage = getResponsiveImage("chasingSunsets");
 
 const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-1.mp4",
-    poster: "/images/hero-video-1-poster.jpg",
+    poster: chasingPosterImage.src,
+    posterSources: chasingPosterImage.sources,
+    posterSizes: chasingPosterImage.sizes,
     caption: "THE MONOLITH PROJECT",
   },
   {
     type: "image",
-    src: "/images/chasing-sunsets.jpg",
+    src: chasingHeroImage.src,
+    sources: chasingHeroImage.sources,
+    sizes: chasingHeroImage.sizes,
     alt: "Chasing Sun(Sets) Atmosphere",
     caption: "CHASING SUN(SETS) | GOLDEN HOUR",
   },
@@ -39,25 +53,6 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
 ];
 
 
-const events = [
-  {
-    month: "MAR",
-    day: "06",
-    title: "DERON B2B JUANY BRAVO",
-    location: "Alhambra Palace, Chicago",
-    time: "9:00 PM - Late",
-    status: "on-sale" as const,
-  },
-  {
-    month: "MAR",
-    day: "21",
-    title: "AUTOGRAF",
-    location: "Alhambra Palace, Chicago",
-    time: "9:00 PM - Late",
-    status: "on-sale" as const,
-  },
-];
-
 const CHASING_ANCHORS = [
   { label: "Format", href: "#chasing-concept" },
   { label: "Records", href: "#chasing-records" },
@@ -66,13 +61,14 @@ const CHASING_ANCHORS = [
   { label: "Network", href: "#chasing-cta" },
 ];
 
-// Static dark — only for the hero video overlay (always needs contrast)
-const HERO_DARK = "#2C1810";
-
 export default function ChasingSunsets() {
   useScrollSunset();
   const [activeTab, setActiveTab] = useState<'live' | 'residents'>('live');
   const [faqOpen, setFaqOpen] = useState(false);
+  const chasingEvents = getSeriesEvents("chasing-sunsets");
+  const chasingFunnelEvent = chasingEvents.find((event) => event.activeFunnels?.length);
+  const liveChasingEvent = chasingEvents.find((event) => isTicketOnSale(event));
+  const liveChasingTicketUrl = liveChasingEvent ? getPrimaryTicketUrl(liveChasingEvent) : null;
 
   const chasingFaqs = [
     ["Where are the events located?", "Our events take place at various outdoor and rooftop locations across Chicago. Keep an eye on the schedule for specific venues."],
@@ -94,7 +90,7 @@ export default function ChasingSunsets() {
       <main id="main-content" tabIndex={-1}>
 
         {/* Hero — raw, warm, big type */}
-        <section id="chasing-hero" className="relative min-h-screen flex flex-col justify-end pb-32 pt-48 px-6 overflow-hidden">
+        <section id="chasing-hero" className="relative min-h-screen flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
           {/* Full-bleed background slider */}
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
@@ -115,7 +111,7 @@ export default function ChasingSunsets() {
                 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
-                className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
+                className="font-display text-[clamp(4rem,10vw,9rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
               >
                 <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
                   CHASING SUN(SETS)
@@ -125,8 +121,38 @@ export default function ChasingSunsets() {
                 Golden hour. Good people. Great music. Rooftop shows and outdoor
                 gatherings where the sun does half the work.
               </p>
-              <div className="mt-8 flex flex-wrap gap-2.5">
-                {["Open Air Ritual", "Melodic + Afro House", "Sunset Community", "Rooftop Culture"].map((pill) => (
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <MagneticButton strength={0.3}>
+                  {liveChasingTicketUrl ? (
+                    <a
+                      href={liveChasingTicketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                    >
+                      {CTA_LABELS.tickets}
+                      <ArrowUpRight size={14} />
+                    </a>
+                  ) : (
+                    <Link href="/schedule" asChild>
+                      <a className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn">
+                        {CTA_LABELS.schedule}
+                        <ArrowUpRight size={14} />
+                      </a>
+                    </Link>
+                  )}
+                </MagneticButton>
+                <MagneticButton strength={0.22}>
+                  <Link href="/radio" asChild>
+                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-8 py-3 font-bold tracking-widest text-xs uppercase text-white/92 transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+                      {CTA_LABELS.radioHub}
+                      <ArrowRight size={14} />
+                    </a>
+                  </Link>
+                </MagneticButton>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                {["Open Air Rooms", "Melodic + Afro House", "Togetherness", "Rooftop Culture"].map((pill) => (
                   <span
                     key={pill}
                     className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border border-white/30 bg-black/20 text-white/90"
@@ -141,7 +167,7 @@ export default function ChasingSunsets() {
         <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
         {/* The Concept */}
-        <section id="chasing-concept" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
+        <section id="chasing-concept" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
           <div className="container max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-start">
               <motion.div
@@ -194,12 +220,12 @@ export default function ChasingSunsets() {
         </section>
 
         {/* NEW: Pitch / Details Section */}
-        <div id="chasing-manifesto" className="scroll-mt-44">
+        <div id="chasing-manifesto" className="scroll-shell-target">
           <ChasingSunsetsDetails />
         </div>
 
         {/* Season Records */}
-        <div id="chasing-records" className="scroll-mt-44 container max-w-6xl mx-auto px-6 border-t sunset-border-accent">
+        <div id="chasing-records" className="scroll-shell-target container max-w-6xl mx-auto px-6 border-t sunset-border-accent">
           <EpisodeGallery
             series="chasing-sunsets"
             season="Season I"
@@ -262,7 +288,7 @@ export default function ChasingSunsets() {
 
 
         {/* Upcoming Events / Residents */}
-        <section id="chasing-upcoming" className="scroll-mt-44 py-24 px-6 sunset-warm-section sunset-border-accent border-t">
+        <section id="chasing-upcoming" className="scroll-shell-target py-16 md:py-24 px-6 sunset-warm-section sunset-border-accent border-t">
           <div className="container max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 gap-6 sunset-border-accent border-b">
               <div className="flex gap-8">
@@ -286,39 +312,75 @@ export default function ChasingSunsets() {
 
             {activeTab === 'live' ? (
               <div className="space-y-4">
-                {events.map((event) => (
-                  <div
-                    key={event.title}
-                    className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm border sunset-border-accent-20 sunset-glass-card-solid"
-                  >
-                    <div className="flex items-start gap-6">
-                      <div className="flex flex-col items-center justify-center w-16 h-16 border sunset-border-accent-30 bg-[color-mix(in_srgb,var(--sunset-accent)_3%,transparent)]">
-                        <span className="text-xs font-bold uppercase sunset-accent">{event.month}</span>
-                        <span className="text-lg font-display sunset-text">{event.day}</span>
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors sunset-text">
-                          {event.title}
-                        </h3>
-                        <div className="flex gap-4 text-sm font-mono uppercase sunset-text-60">
-                          <span className="flex items-center gap-1">
-                            <MapPin size={12} /> {event.location}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar size={12} /> {event.time}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <Link href="/tickets" asChild>
-                      <a
-                        className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                {chasingEvents.length > 0 ? (
+                  chasingEvents.map((event) => {
+                    const [month, day] = event.date.replace(",", "").split(" ");
+                    const eventLabel = event.headline || `${event.title} · ${event.episode}`;
+
+                    return (
+                      <div
+                        key={event.id}
+                        className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm border sunset-border-accent-20 sunset-glass-card-solid"
                       >
-                        GET TICKETS <ArrowUpRight size={14} />
+                        <div className="flex items-start gap-6">
+                          <div className="flex flex-col items-center justify-center w-16 h-16 border sunset-border-accent-30 bg-[color-mix(in_srgb,var(--sunset-accent)_3%,transparent)]">
+                            <span className="text-xs font-bold uppercase sunset-accent">{month.substring(0, 3).toUpperCase()}</span>
+                            <span className="text-lg font-display sunset-text">{day}</span>
+                          </div>
+                          <div>
+                            <p className="mb-2 font-mono text-[10px] tracking-[0.24em] uppercase sunset-accent">
+                              {event.episode}
+                            </p>
+                            <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors sunset-text">
+                              {eventLabel}
+                            </h3>
+                            <div className="flex flex-wrap gap-4 text-sm font-mono uppercase sunset-text-60">
+                              <span className="flex items-center gap-1">
+                                <MapPin size={12} /> {getEventVenueLabel(event)}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Calendar size={12} /> {event.time}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        {isTicketOnSale(event) ? (
+                          <a
+                            href={getPrimaryTicketUrl(event)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                          >
+                            {CTA_LABELS.tickets} <ArrowUpRight size={14} />
+                          </a>
+                        ) : (
+                          <Link href="/newsletter" asChild>
+                            <a
+                              className="px-8 py-3 font-bold tracking-widest text-xs uppercase transition-colors flex items-center gap-2 cursor-pointer rounded-full border border-[#E8B86D]/35 text-[#E8B86D] hover:bg-[#E8B86D]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
+                            >
+                              {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
+                            </a>
+                          </Link>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="rounded-2xl border p-10 text-center sunset-border-accent-20 sunset-glass-card-solid">
+                    <p className="mb-3 font-mono text-[10px] tracking-[0.3em] uppercase sunset-accent">
+                      Season 2026
+                    </p>
+                    <h3 className="mb-4 font-display text-3xl sunset-text">Season Dates Incoming</h3>
+                    <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed sunset-text-70">
+                      The next open-air chapters are being finalized. Join the list and get the coordinates before public release.
+                    </p>
+                    <Link href="/newsletter" asChild>
+                      <a className="inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/35 px-8 py-3 font-bold tracking-widest text-xs uppercase text-[#E8B86D] transition-colors hover:bg-[#E8B86D]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50">
+                        {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
                       </a>
                     </Link>
                   </div>
-                ))}
+                )}
               </div>
             ) : (
               <ResidentDJCard />
@@ -327,7 +389,7 @@ export default function ChasingSunsets() {
         </section>
 
         {/* Submit DJ Set */}
-        <section id="chasing-submit" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
+        <section id="chasing-submit" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
           <div className="container max-w-4xl mx-auto text-center">
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4 sunset-accent">
               For The Selectors
@@ -351,7 +413,7 @@ export default function ChasingSunsets() {
         </section>
 
         {/* Chasing Sun(Sets) FAQ */}
-        <section id="chasing-faq" className="scroll-mt-44 py-24 px-6 sunset-border-accent border-t">
+        <section id="chasing-faq" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
           <div className="container max-w-4xl mx-auto">
             <button
               onClick={() => setFaqOpen(!faqOpen)}
@@ -403,36 +465,48 @@ export default function ChasingSunsets() {
         </section>
 
         {/* Inner Circle Pre-registration Funnel */}
-        <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10">
-          <EventFunnelStack eventId="css-002" />
-        </div>
+        {chasingFunnelEvent ? (
+          <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10">
+            <EventFunnelStack eventId={chasingFunnelEvent.id} />
+          </div>
+        ) : null}
 
-        {/* CTA */}
-        <section id="chasing-cta" className="scroll-mt-44 py-32 px-6 relative sunset-border-accent border-t">
+        <section id="chasing-cta" className="scroll-shell-target py-20 md:py-24 px-6 relative sunset-border-accent border-t">
           <div className="pointer-events-none absolute inset-0 bg-chasing-glow-2" />
           <div className="container max-w-4xl mx-auto text-center">
             <h2 className="font-display text-5xl md:text-7xl mb-6 sunset-text">
               CHASE THE LIGHT
             </h2>
             <p className="text-lg max-w-xl mx-auto mb-12 sunset-text-70">
-              Sign up for the newsletter to get ticket access before anyone else.
+              Stay close to the next chapter, the next room, and the signal between them.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <MagneticButton strength={0.3}>
-                <Link href="/story" asChild>
+                {liveChasingTicketUrl ? (
                   <a
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:bg-[color-mix(in_srgb,var(--sunset-text)_5%,transparent)] transition-all duration-300 cursor-pointer rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2C1810]/20 border sunset-text border-[color-mix(in_srgb,var(--sunset-text)_19%,transparent)] group"
+                    href={liveChasingTicketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
                   >
-                    UNTOLD STORY <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    {CTA_LABELS.tickets} <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </a>
-                </Link>
+                ) : (
+                  <Link href="/newsletter" asChild>
+                    <a
+                      className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
+                    >
+                      {CTA_LABELS.innerCircle} <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </a>
+                  </Link>
+                )}
               </MagneticButton>
               <MagneticButton strength={0.3}>
-                <Link href="/" asChild>
+                <Link href="/radio" asChild>
                   <a
                     className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
                   >
-                    BACK TO MONOLITH <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    {CTA_LABELS.radioHub} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Link>
               </MagneticButton>

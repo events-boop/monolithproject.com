@@ -1,11 +1,1016 @@
 # Page snapshot
 
 ```yaml
-- generic [ref=e4]:
-  - img [ref=e5]
-  - heading "An unexpected error occurred." [level=2] [ref=e7]
-  - paragraph [ref=e8]: Please refresh the page. If this keeps happening, contact support.
-  - button "Reload Page" [ref=e9] [cursor=pointer]:
-    - img [ref=e10]
-    - text: Reload Page
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - img
+  - link "Open tickets for Eran Hersh" [ref=e5] [cursor=pointer]:
+    - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+    - img [ref=e8]
+    - generic [ref=e10]:
+      - generic [ref=e11]: Secure Tickets
+      - generic [ref=e12]: Move With Us
+    - img [ref=e13]
+  - generic [active] [ref=e16]:
+    - generic [ref=e19]:
+      - navigation [ref=e20]:
+        - link "Skip to content" [ref=e21] [cursor=pointer]:
+          - /url: "#main-content"
+        - generic [ref=e23]:
+          - button "Go to homepage" [ref=e26] [cursor=pointer]:
+            - generic [ref=e28]: MONOLITH PROJECT
+          - generic [ref=e29]:
+            - link "ABOUT" [ref=e30] [cursor=pointer]:
+              - /url: /about
+              - text: ABOUT
+            - button "EVENTS" [ref=e33] [cursor=pointer]:
+              - text: EVENTS
+              - img [ref=e34]
+            - button "ARTISTS" [ref=e37] [cursor=pointer]:
+              - text: ARTISTS
+              - img [ref=e38]
+            - link "ARCHIVE" [ref=e40] [cursor=pointer]:
+              - /url: /archive
+              - text: ARCHIVE
+            - link "JOURNAL" [ref=e42] [cursor=pointer]:
+              - /url: /insights
+              - text: JOURNAL
+            - button "PARTNERS" [ref=e45] [cursor=pointer]:
+              - text: PARTNERS
+              - img [ref=e46]
+            - link "CONTACT" [ref=e48] [cursor=pointer]:
+              - /url: /contact
+              - text: CONTACT
+            - button "COMMUNITY" [ref=e51] [cursor=pointer]:
+              - text: COMMUNITY
+              - img [ref=e52]
+          - link "Tickets" [ref=e57] [cursor=pointer]:
+            - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+            - generic [ref=e58]:
+              - img [ref=e59]
+              - generic [ref=e61]: Tickets
+              - img [ref=e62]
+      - main [ref=e65]:
+        - generic [ref=e66]:
+          - generic [ref=e68]:
+            - img "Autograf live set" [ref=e71]
+            - button "Previous slide" [ref=e73] [cursor=pointer]:
+              - img [ref=e74]
+            - button "Next slide" [ref=e76] [cursor=pointer]:
+              - img [ref=e77]
+            - generic [ref=e79]:
+              - generic [ref=e80]:
+                - button "Go to slide 1" [ref=e81] [cursor=pointer]
+                - button "Go to slide 2" [ref=e82] [cursor=pointer]
+                - button "Go to slide 3" [ref=e83] [cursor=pointer]
+                - button "Go to slide 4" [ref=e84] [cursor=pointer]
+                - button "Go to slide 5" [ref=e85] [cursor=pointer]
+              - generic [ref=e87]: "Photo: TBA"
+          - generic:
+            - generic:
+              - generic:
+                - heading "The Monolith Project SPECIAL EVENT / System Active" [level=2]
+            - generic:
+              - generic:
+                - generic: MONOLITH
+                - generic: MONOLITH
+              - generic: PROJECT
+            - generic:
+              - paragraph: "The Monolith Project holds four connected expressions: the umbrella world, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story. Together they shape recurring Chicago rooms built for people who care what the night feels like."
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - generic [ref=e91]: Music nights
+                - generic [ref=e92]: built with taste
+                - generic [ref=e93]: and rooms worth returning to.
+              - generic [ref=e94]:
+                - paragraph [ref=e97]: Transmission / Next Opportunity
+                - generic [ref=e98]:
+                  - generic [ref=e99]:
+                    - heading "Eran Hersh" [level=2] [ref=e100]
+                    - paragraph [ref=e102]: The Monolith Project SPECIAL EVENT
+                  - generic [ref=e103]: TBA, Chicago, IL
+              - generic [ref=e104]:
+                - generic [ref=e105]: Chicago-rooted
+                - generic [ref=e106]: Music-first
+                - generic [ref=e107]: Room-led
+              - generic [ref=e108]:
+                - generic [ref=e109]:
+                  - link "The Program" [ref=e111] [cursor=pointer]:
+                    - /url: /schedule
+                    - img [ref=e113]
+                    - text: The Program
+                    - img [ref=e115]
+                  - link "View Records" [ref=e118] [cursor=pointer]:
+                    - /url: /insights
+                    - text: View Records
+                    - img [ref=e119]
+                - paragraph [ref=e121]: Decrypted sequence 2026 / System v1.02. Trace the signal to its origin.
+            - complementary [ref=e122]:
+              - generic [ref=e123]:
+                - generic [ref=e125]:
+                  - generic [ref=e126]: Collective Entry
+                  - heading "Select Your Protocol" [level=2] [ref=e127]
+                - generic [ref=e129]:
+                  - link "Open Air Chasing Sun(Sets) Open-air rooms built for warmth, rhythm, and daylight turning into dusk." [ref=e130] [cursor=pointer]:
+                    - /url: /chasing-sunsets
+                    - generic [ref=e131]:
+                      - img [ref=e133]
+                      - generic [ref=e139]:
+                        - paragraph [ref=e140]: Open Air
+                        - heading "Chasing Sun(Sets)" [level=3] [ref=e141]
+                        - paragraph [ref=e142]: Open-air rooms built for warmth, rhythm, and daylight turning into dusk.
+                  - link "After Dark Untold Story The closer chapter where the room narrows and the sound gets deeper." [ref=e143] [cursor=pointer]:
+                    - /url: /story
+                    - generic [ref=e144]:
+                      - img [ref=e146]
+                      - generic [ref=e153]:
+                        - paragraph [ref=e154]: After Dark
+                        - heading "Untold Story" [level=3] [ref=e155]
+                        - paragraph [ref=e156]: The closer chapter where the room narrows and the sound gets deeper.
+                  - link "Signal Radio Show Mixes and artist sessions that keep the taste moving between nights." [ref=e157] [cursor=pointer]:
+                    - /url: /radio
+                    - generic [ref=e158]:
+                      - img [ref=e160]
+                      - generic [ref=e161]:
+                        - paragraph [ref=e162]: Signal
+                        - heading "Radio Show" [level=3] [ref=e163]
+                        - paragraph [ref=e164]: Mixes and artist sessions that keep the taste moving between nights.
+                - generic [ref=e165]:
+                  - paragraph [ref=e168]: Architecture of the night
+                  - paragraph [ref=e169]: Systems engineered for minimal spectacle and maximum atmospheric impact. Select with intent.
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - generic [ref=e174]: Section
+            - generic [ref=e175]: "01"
+          - heading "The Series" [level=2] [ref=e177]
+        - generic [ref=e181]:
+          - link "Chasing Sun(Sets) 01 Open Air Chasing Sun(Sets) Golden hour. Open air. A room that breathes. Enter Expression Chasing Sun(Sets)" [ref=e183] [cursor=pointer]:
+            - /url: /chasing-sunsets
+            - img "Chasing Sun(Sets)" [ref=e185]
+            - generic:
+              - generic: "01"
+              - generic: Open Air
+            - generic [ref=e189]:
+              - img [ref=e191]
+              - heading "Chasing Sun(Sets)" [level=3] [ref=e197]
+              - generic:
+                - paragraph [ref=e198]: Golden hour. Open air. A room that breathes.
+                - generic [ref=e199]:
+                  - generic [ref=e200]: Enter Expression
+                  - img [ref=e202]
+            - generic: Chasing Sun(Sets)
+          - link "Untold Story 02 After Dark Untold Story When the light drops, the room changes shape. Enter Expression Untold Story" [ref=e206] [cursor=pointer]:
+            - /url: /story
+            - img "Untold Story" [ref=e208]
+            - generic:
+              - generic: "02"
+              - generic: After Dark
+            - generic [ref=e212]:
+              - img [ref=e214]
+              - heading "Untold Story" [level=3] [ref=e221]
+              - generic:
+                - paragraph [ref=e222]: When the light drops, the room changes shape.
+                - generic [ref=e223]:
+                  - generic [ref=e224]: Enter Expression
+                  - img [ref=e226]
+            - generic: Untold Story
+          - link "Radio Show 03 Signal Radio Show The collective record. Guest sessions and signal. Enter Expression Radio Show" [ref=e230] [cursor=pointer]:
+            - /url: /radio
+            - img "Radio Show" [ref=e232]
+            - generic:
+              - generic: "03"
+              - generic: Signal
+            - generic [ref=e236]:
+              - img [ref=e238]
+              - heading "Radio Show" [level=3] [ref=e239]
+              - generic:
+                - paragraph [ref=e240]: The collective record. Guest sessions and signal.
+                - generic [ref=e241]:
+                  - generic [ref=e242]: Enter Expression
+                  - img [ref=e244]
+            - generic: Radio Show
+        - generic [ref=e249]:
+          - generic [ref=e250]:
+            - generic [ref=e251]: Section
+            - generic [ref=e252]: "02"
+          - heading "The Collective" [level=2] [ref=e254]
+        - generic [ref=e263]:
+          - generic [ref=e264]:
+            - generic [ref=e265]:
+              - generic [ref=e266]: Definition
+              - generic [ref=e267]:
+                - heading "Monolith M o n o l i t h" [level=2] [ref=e268]:
+                  - generic [ref=e269]: Monolith
+                  - generic [ref=e270]:
+                    - generic [ref=e271]: M
+                    - generic [ref=e272]: o
+                    - generic [ref=e273]: "n"
+                    - generic [ref=e274]: o
+                    - generic [ref=e275]: l
+                    - generic [ref=e276]: i
+                    - generic [ref=e277]: t
+                    - generic [ref=e278]: h
+                - text: /monelīTH/
+                - paragraph [ref=e279]: (from Greek mónos "single" + líthos "stone")
+              - generic [ref=e280]:
+                - generic [ref=e281]:
+                  - generic [ref=e282]: "01"
+                  - generic [ref=e283]: A gathering point built around sound, intention, and return.
+                - generic [ref=e284]:
+                  - generic [ref=e285]: "02"
+                  - generic [ref=e286]: A single idea expressed through different rooms, each with its own shape, pace, and afterglow.
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - paragraph [ref=e289]: Operating Frequency
+                  - paragraph [ref=e290]: Togetherness.
+                - paragraph [ref=e292]: Nights that feel shared on the floor, coherent in the booking, and recognizable after the lights come back up.
+            - generic [ref=e293]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: M
+                  - generic: The Monolith
+                - generic:
+                  - generic:
+                    - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - generic: Open Air
+                          - generic: Chasing Sun(Sets)
+                  - generic:
+                    - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - generic: Signal
+                          - generic: Radio Show
+                  - generic:
+                    - img
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - generic: After Dark
+                          - generic: Untold Story
+          - generic [ref=e294]:
+            - generic [ref=e295]:
+              - generic [ref=e296]: Built with intention. Held together by music.
+              - paragraph [ref=e297]: The Monolith Project is a Chicago-rooted cultural house built through recurring rooms, distinct series, and a record that stays visible after the night ends.
+              - paragraph [ref=e298]: What makes people return is not spectacle by itself. It is stronger curation, better atmosphere, clearer hospitality, and a room that actually feels shared.
+            - generic [ref=e299]:
+              - link "Open Air Chasing Sun(Sets) Explore The warmer chapter. Open-air rooms, golden-hour pacing, and music that can hold a social room without flattening it." [ref=e301] [cursor=pointer]:
+                - /url: /chasing-sunsets
+                - generic [ref=e302]:
+                  - img [ref=e304]
+                  - generic [ref=e306]:
+                    - generic [ref=e307]:
+                      - generic [ref=e308]:
+                        - paragraph [ref=e309]: Open Air
+                        - heading "Chasing Sun(Sets)" [level=3] [ref=e310]
+                      - generic [ref=e311]: Explore
+                    - paragraph [ref=e312]: The warmer chapter. Open-air rooms, golden-hour pacing, and music that can hold a social room without flattening it.
+              - link "After Dark Untold Story Explore The closer chapter. Deeper sound, stronger tension, and a room that narrows the focus once the light drops." [ref=e315] [cursor=pointer]:
+                - /url: /story
+                - generic [ref=e316]:
+                  - img [ref=e318]
+                  - generic [ref=e320]:
+                    - generic [ref=e321]:
+                      - generic [ref=e322]:
+                        - paragraph [ref=e323]: After Dark
+                        - heading "Untold Story" [level=3] [ref=e324]
+                      - generic [ref=e325]: Explore
+                    - paragraph [ref=e326]: The closer chapter. Deeper sound, stronger tension, and a room that narrows the focus once the light drops.
+              - link "Signal Radio Show Explore The connective tissue. Guest mixes and artist sessions that make the booking taste easier to hear between nights." [ref=e329] [cursor=pointer]:
+                - /url: /radio
+                - generic [ref=e330]:
+                  - img [ref=e332]
+                  - generic [ref=e334]:
+                    - generic [ref=e335]:
+                      - generic [ref=e336]:
+                        - paragraph [ref=e337]: Signal
+                        - heading "Radio Show" [level=3] [ref=e338]
+                      - generic [ref=e339]: Explore
+                    - paragraph [ref=e340]: The connective tissue. Guest mixes and artist sessions that make the booking taste easier to hear between nights.
+            - generic [ref=e341]:
+              - paragraph [ref=e342]: "\"Monolith exists to build nights that feel connected to something larger than themselves.\""
+              - generic [ref=e343]:
+                - link "@untoldstory.music" [ref=e344] [cursor=pointer]:
+                  - /url: https://instagram.com/untoldstory.music
+                - link "@chasingsunsets.music" [ref=e345] [cursor=pointer]:
+                  - /url: https://instagram.com/chasingsunsets.music
+                - link "@monolithproject.events" [ref=e346] [cursor=pointer]:
+                  - /url: https://instagram.com/monolithproject.events
+        - generic [ref=e349]:
+          - generic [ref=e350]:
+            - generic [ref=e351]: Section
+            - generic [ref=e352]: "03"
+          - heading "The Season" [level=2] [ref=e354]
+        - generic [ref=e358]:
+          - generic [ref=e359]:
+            - generic [ref=e360]:
+              - heading "Schedule" [level=2] [ref=e361]
+              - paragraph [ref=e362]: Start with the next date. The series and the room will tell you the rest.
+            - generic [ref=e363]:
+              - button "ALL" [ref=e364] [cursor=pointer]
+              - button "MARCH" [ref=e365] [cursor=pointer]
+              - button "MAY" [ref=e366] [cursor=pointer]
+              - button "JUNE" [ref=e367] [cursor=pointer]
+              - button "JULY" [ref=e368] [cursor=pointer]
+              - button "AUGUST" [ref=e369] [cursor=pointer]
+              - button "SEPTEMBER" [ref=e370] [cursor=pointer]
+          - generic [ref=e371]:
+            - generic [ref=e372]:
+              - generic [ref=e373]: Date / Time
+              - generic [ref=e375]: Event
+              - generic [ref=e376]: Location
+              - generic [ref=e377]: Action
+            - generic [ref=e378]:
+              - generic [ref=e379]:
+                - button "Mar 6 7:00 PM DERON B2B JUANY BRAVO UNTOLD ON SALE Alhambra Palace West Loop, Chicago" [expanded] [ref=e380] [cursor=pointer]:
+                  - generic [ref=e381]:
+                    - generic [ref=e382]:
+                      - generic [ref=e383]: Mar 6
+                      - generic [ref=e384]: 7:00 PM
+                    - generic [ref=e390]:
+                      - heading "DERON B2B JUANY BRAVO" [level=3] [ref=e391]
+                      - generic [ref=e392]:
+                        - generic [ref=e393]: UNTOLD
+                        - generic [ref=e394]: ON SALE
+                    - generic [ref=e395]:
+                      - generic [ref=e396]: Alhambra Palace
+                      - generic [ref=e397]: West Loop, Chicago
+                    - img [ref=e400]
+                - generic [ref=e405]:
+                  - paragraph [ref=e406]: A late-night journey through Afro and melodic house led by two of Chicago's finest selectors in an immersive 360° dancefloor experience.
+                  - generic [ref=e407]:
+                    - generic [ref=e408]:
+                      - generic [ref=e409]:
+                        - img [ref=e410]
+                        - generic [ref=e414]: Lineup
+                      - paragraph [ref=e415]: "Deron B2B Juany Bravo (Headliner) · Support: Hashtom · Rose · Jerome · Avo · Kenny · Additional guests may be announced"
+                    - generic [ref=e416]:
+                      - generic [ref=e417]:
+                        - img [ref=e418]
+                        - generic [ref=e421]: Venue
+                      - paragraph [ref=e422]: Alhambra Palace
+                      - paragraph [ref=e423]: West Loop, Chicago
+                    - generic [ref=e424]:
+                      - generic [ref=e425]:
+                        - img [ref=e426]
+                        - generic [ref=e429]: Details
+                      - paragraph [ref=e430]: 7:00 PM — 2:00 AM
+                      - paragraph [ref=e431]: 21+ · Elevated nightlife attire
+                  - generic [ref=e432]:
+                    - link "Secure Tickets" [ref=e433] [cursor=pointer]:
+                      - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+                      - text: Secure Tickets
+                      - img [ref=e434]
+                    - button "Save Date" [ref=e436] [cursor=pointer]:
+                      - img [ref=e437]
+                      - text: Save Date
+                    - link "Book a Table" [ref=e439] [cursor=pointer]:
+                      - /url: mailto:events@monolithproject.com
+              - button "Mar 21 9:00 PM AUTOGRAF MONOLITH ON SALE Alhambra Palace Chicago, IL" [ref=e441] [cursor=pointer]:
+                - generic [ref=e442]:
+                  - generic [ref=e443]:
+                    - generic [ref=e444]: Mar 21
+                    - generic [ref=e445]: 9:00 PM
+                  - generic [ref=e451]:
+                    - heading "AUTOGRAF" [level=3] [ref=e452]
+                    - generic [ref=e453]:
+                      - generic [ref=e454]: MONOLITH
+                      - generic [ref=e455]: ON SALE
+                  - generic [ref=e456]:
+                    - generic [ref=e457]: Alhambra Palace
+                    - generic [ref=e458]: Chicago, IL
+                  - img [ref=e461]
+              - button "May 16 TBA Eran Hersh MONOLITH TBA Chicago, IL" [ref=e464] [cursor=pointer]:
+                - generic [ref=e465]:
+                  - generic [ref=e466]:
+                    - generic [ref=e467]: May 16
+                    - generic [ref=e468]: TBA
+                  - generic [ref=e474]:
+                    - heading "Eran Hersh" [level=3] [ref=e475]
+                    - generic [ref=e477]: MONOLITH
+                  - generic [ref=e478]:
+                    - generic [ref=e479]: TBA
+                    - generic [ref=e480]: Chicago, IL
+                  - img [ref=e483]
+              - button "Jun 7 TBA Chasing Sun(Sets) SUN(SETS) TBA Chicago, IL" [ref=e486] [cursor=pointer]:
+                - generic [ref=e487]:
+                  - generic [ref=e488]:
+                    - generic [ref=e489]: Jun 7
+                    - generic [ref=e490]: TBA
+                  - generic [ref=e496]:
+                    - heading "Chasing Sun(Sets)" [level=3] [ref=e497]
+                    - generic [ref=e499]: SUN(SETS)
+                  - generic [ref=e500]:
+                    - generic [ref=e501]: TBA
+                    - generic [ref=e502]: Chicago, IL
+                  - img [ref=e505]
+              - button "Jul 4 TBA Chasing Sun(Sets) SUN(SETS) TBA Chicago, IL" [ref=e508] [cursor=pointer]:
+                - generic [ref=e509]:
+                  - generic [ref=e510]:
+                    - generic [ref=e511]: Jul 4
+                    - generic [ref=e512]: TBA
+                  - generic [ref=e518]:
+                    - heading "Chasing Sun(Sets)" [level=3] [ref=e519]
+                    - generic [ref=e521]: SUN(SETS)
+                  - generic [ref=e522]:
+                    - generic [ref=e523]: TBA
+                    - generic [ref=e524]: Chicago, IL
+                  - img [ref=e527]
+              - button "Jul 4 Late Untold Story UNTOLD TBA Chicago, IL" [ref=e530] [cursor=pointer]:
+                - generic [ref=e531]:
+                  - generic [ref=e532]:
+                    - generic [ref=e533]: Jul 4
+                    - generic [ref=e534]: Late
+                  - generic [ref=e540]:
+                    - heading "Untold Story" [level=3] [ref=e541]
+                    - generic [ref=e543]: UNTOLD
+                  - generic [ref=e544]:
+                    - generic [ref=e545]: TBA
+                    - generic [ref=e546]: Chicago, IL
+                  - img [ref=e549]
+              - button "Aug 8 TBA Untold Story UNTOLD TBA Chicago, IL" [ref=e552] [cursor=pointer]:
+                - generic [ref=e553]:
+                  - generic [ref=e554]:
+                    - generic [ref=e555]: Aug 8
+                    - generic [ref=e556]: TBA
+                  - generic [ref=e562]:
+                    - heading "Untold Story" [level=3] [ref=e563]
+                    - generic [ref=e565]: UNTOLD
+                  - generic [ref=e566]:
+                    - generic [ref=e567]: TBA
+                    - generic [ref=e568]: Chicago, IL
+                  - img [ref=e571]
+              - button "Aug 22 TBA Chasing Sun(Sets) SUN(SETS) TBA Chicago, IL" [ref=e574] [cursor=pointer]:
+                - generic [ref=e575]:
+                  - generic [ref=e576]:
+                    - generic [ref=e577]: Aug 22
+                    - generic [ref=e578]: TBA
+                  - generic [ref=e584]:
+                    - heading "Chasing Sun(Sets)" [level=3] [ref=e585]
+                    - generic [ref=e587]: SUN(SETS)
+                  - generic [ref=e588]:
+                    - generic [ref=e589]: TBA
+                    - generic [ref=e590]: Chicago, IL
+                  - img [ref=e593]
+              - button "Sep 26 TBA Chasing Sun(Sets) SUN(SETS) TBA Chicago, IL" [ref=e596] [cursor=pointer]:
+                - generic [ref=e597]:
+                  - generic [ref=e598]:
+                    - generic [ref=e599]: Sep 26
+                    - generic [ref=e600]: TBA
+                  - generic [ref=e606]:
+                    - heading "Chasing Sun(Sets)" [level=3] [ref=e607]
+                    - generic [ref=e609]: SUN(SETS)
+                  - generic [ref=e610]:
+                    - generic [ref=e611]: TBA
+                    - generic [ref=e612]: Chicago, IL
+                  - img [ref=e615]
+          - generic [ref=e617]:
+            - paragraph [ref=e618]: More dates to be announced.
+            - generic [ref=e619]:
+              - link "View Full Schedule" [ref=e620] [cursor=pointer]:
+                - /url: /schedule
+                - text: View Full Schedule
+                - img [ref=e621]
+              - link "Get Early Access" [ref=e623] [cursor=pointer]:
+                - /url: /newsletter
+                - text: Get Early Access
+                - img [ref=e624]
+        - generic [ref=e630]:
+          - generic [ref=e631]:
+            - generic [ref=e632]:
+              - generic [ref=e633]: Start Here
+              - heading "New here? Start with the next date, then the world around it." [level=2] [ref=e634]
+              - paragraph [ref=e635]: The fastest way into Monolith is the next night, a few past chapters, and the pages that explain how the music, the series, and the room fit together.
+            - generic [ref=e636]:
+              - generic [ref=e637]: Tailored Entry
+              - generic [ref=e638]: First Visit
+          - generic [ref=e639]:
+            - link "Live dates The Program Start with the upcoming calendar and the series each night belongs to. Open" [ref=e641] [cursor=pointer]:
+              - /url: /schedule
+              - generic [ref=e642]:
+                - generic [ref=e643]:
+                  - paragraph [ref=e644]: Live dates
+                  - heading "The Program" [level=3] [ref=e645]
+                - img [ref=e647]
+              - paragraph [ref=e649]: Start with the upcoming calendar and the series each night belongs to.
+              - generic [ref=e650]:
+                - text: Open
+                - img [ref=e651]
+            - link "Listen first The Signal The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive. Open" [ref=e655] [cursor=pointer]:
+              - /url: /radio
+              - generic [ref=e656]:
+                - generic [ref=e657]:
+                  - paragraph [ref=e658]: Listen first
+                  - heading "The Signal" [level=3] [ref=e659]
+                - img [ref=e661]
+              - paragraph [ref=e667]: The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive.
+              - generic [ref=e668]:
+                - text: Open
+                - img [ref=e669]
+            - link "Past chapters View Records See what the nights actually looked and felt like once the doors opened. Open" [ref=e673] [cursor=pointer]:
+              - /url: /archive
+              - generic [ref=e674]:
+                - generic [ref=e675]:
+                  - paragraph [ref=e676]: Past chapters
+                  - heading "View Records" [level=3] [ref=e677]
+                - img [ref=e679]
+              - paragraph [ref=e682]: See what the nights actually looked and felt like once the doors opened.
+              - generic [ref=e683]:
+                - text: Open
+                - img [ref=e684]
+        - generic [ref=e689]:
+          - generic [ref=e690]:
+            - generic [ref=e691]: Section
+            - generic [ref=e692]: "04"
+          - heading "The Roster" [level=2] [ref=e694]
+        - generic [ref=e699]:
+          - generic [ref=e700]:
+            - generic [ref=e701]:
+              - generic [ref=e702]: The Collective Roster
+              - heading "Selected For The Room." [level=2] [ref=e703]:
+                - generic [ref=e704]: Selected For
+                - generic [ref=e705]: The Room.
+              - paragraph [ref=e706]: Artists selected for the pace and curation of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
+            - link "Full Historical Lineup" [ref=e709] [cursor=pointer]:
+              - /url: /lineup
+              - generic [ref=e710]: Full Historical Lineup
+              - img [ref=e711]
+          - generic [ref=e715]:
+            - generic [ref=e716]: Aaron Hibell
+            - generic [ref=e717]: Acid Pauli
+            - generic [ref=e718]: Adriatique
+            - generic [ref=e719]: Anfisa Letyago
+            - generic [ref=e721]: ANNA
+            - generic [ref=e722]: Arodes
+            - generic [ref=e723]: ARTBAT
+            - generic [ref=e724]: Ben Böhmer
+            - generic [ref=e726]: berlioz
+            - generic [ref=e727]: Carlita
+            - generic [ref=e728]: Deer Jade
+            - generic [ref=e729]: Enfant Sauvage
+            - generic [ref=e731]: Eric Prydz
+            - generic [ref=e732]: Étienne de Crécy
+            - generic [ref=e733]: Funk Tribu
+            - generic [ref=e734]: Ginton
+            - generic [ref=e736]: Jimi Jules
+            - generic [ref=e737]: Kasablanca
+            - generic [ref=e738]: Kenya Grace
+            - generic [ref=e739]: Kerri Chandler
+            - generic [ref=e741]: KILIMANJARO
+            - generic [ref=e742]: Kölsch
+            - generic [ref=e743]: Lane 8
+            - generic [ref=e744]: LP Giobbi
+            - generic [ref=e746]: Mahmut Orhan
+            - generic [ref=e747]: Marten Lou
+            - generic [ref=e748]: meera
+            - generic [ref=e749]: Michael Bibi
+            - generic [ref=e751]: Mind Against
+            - generic [ref=e752]: Miss Monique
+            - generic [ref=e753]: Monolink
+            - generic [ref=e754]: nimino
+            - generic [ref=e756]: Parra for Cuva
+            - generic [ref=e757]: Rodrigo Gallardo
+            - generic [ref=e758]: Röyksopp
+            - generic [ref=e759]: Sammy Virji
+            - generic [ref=e761]: Thylacine
+            - generic [ref=e762]: Vintage Culture
+            - generic [ref=e763]: Weval
+            - generic [ref=e764]: YOTTO
+          - generic [ref=e766]:
+            - generic [ref=e767]:
+              - generic [ref=e768]: Status
+              - generic [ref=e769]: Archival
+            - generic [ref=e770]:
+              - generic [ref=e771]: Standard
+              - generic [ref=e772]: Music-First
+            - generic [ref=e773]:
+              - generic [ref=e774]: Updated
+              - generic [ref=e775]: Season 01
+        - generic [ref=e778]:
+          - generic [ref=e779]:
+            - generic [ref=e780]: Section
+            - generic [ref=e781]: "05"
+          - heading "The Journal" [level=2] [ref=e783]
+        - generic [ref=e787]:
+          - generic [ref=e788]:
+            - generic [ref=e789]:
+              - generic [ref=e790]: Beyond The Night
+              - heading "The strongest rooms leave a record behind." [level=2] [ref=e791]
+              - paragraph [ref=e792]: Radio, archive, and press surfaces make it easier to understand who we book, what kind of room we build, and why people return. The night matters more when the signal around it stays coherent.
+            - generic [ref=e793]:
+              - generic [ref=e794]: Identity
+              - generic [ref=e795]: Radio
+              - generic [ref=e796]: Archive
+              - generic [ref=e797]: Press
+          - generic [ref=e798]:
+            - link "Notes Inside Monolith Short notes, references, and project context that explain the taste behind the nights and the world that holds them together. Why it matters When the music, the archive, and the written context all point in the same direction, the next chapter feels connected to the last one. The Archive" [ref=e800] [cursor=pointer]:
+              - /url: /insights
+              - generic [ref=e801]:
+                - generic [ref=e802]:
+                  - paragraph [ref=e803]: Notes
+                  - heading "Inside Monolith" [level=3] [ref=e804]
+                - img [ref=e806]
+              - paragraph [ref=e809]: Short notes, references, and project context that explain the taste behind the nights and the world that holds them together.
+              - generic [ref=e810]:
+                - generic [ref=e811]:
+                  - paragraph [ref=e812]: Why it matters
+                  - paragraph [ref=e813]: When the music, the archive, and the written context all point in the same direction, the next chapter feels connected to the last one.
+                - generic [ref=e814]:
+                  - text: The Archive
+                  - img [ref=e815]
+            - generic [ref=e818]:
+              - link "Listen Back Radio Show The Chasing Sun(Sets) Radio Show extends the series through mixes, artist sessions, and a clearer sense of the project’s pace. Play" [ref=e820] [cursor=pointer]:
+                - /url: /radio
+                - generic [ref=e821]:
+                  - generic [ref=e822]:
+                    - paragraph [ref=e823]: Listen Back
+                    - heading "Radio Show" [level=3] [ref=e824]
+                  - img [ref=e826]
+                - paragraph [ref=e827]: The Chasing Sun(Sets) Radio Show extends the series through mixes, artist sessions, and a clearer sense of the project’s pace.
+                - generic [ref=e828]:
+                  - text: Play
+                  - img [ref=e829]
+              - link "Past Nights Archive Season-by-season photos and recaps that make the record visible instead of forcing the brand to start over every time. View Records" [ref=e833] [cursor=pointer]:
+                - /url: /archive
+                - generic [ref=e834]:
+                  - generic [ref=e835]:
+                    - paragraph [ref=e836]: Past Nights
+                    - heading "Archive" [level=3] [ref=e837]
+                  - img [ref=e839]
+                - paragraph [ref=e842]: Season-by-season photos and recaps that make the record visible instead of forcing the brand to start over every time.
+                - generic [ref=e843]:
+                  - text: View Records
+                  - img [ref=e844]
+              - link "Fast Facts Press & Media Quick facts, context, and assets for media, collaborators, and partners who need the clearest version of the project. Press" [ref=e848] [cursor=pointer]:
+                - /url: /press
+                - generic [ref=e849]:
+                  - generic [ref=e850]:
+                    - paragraph [ref=e851]: Fast Facts
+                    - heading "Press & Media" [level=3] [ref=e852]
+                  - img [ref=e854]
+                - paragraph [ref=e861]: Quick facts, context, and assets for media, collaborators, and partners who need the clearest version of the project.
+                - generic [ref=e862]:
+                  - text: Press
+                  - img [ref=e863]
+        - generic [ref=e868]:
+          - generic [ref=e869]:
+            - generic [ref=e870]: Section
+            - generic [ref=e871]: "06"
+          - heading "The Archive" [level=2] [ref=e873]
+        - generic [ref=e880]:
+          - generic [ref=e881]:
+            - generic [ref=e882]: Section
+            - generic [ref=e883]: "07"
+          - heading "Mixes" [level=2] [ref=e885]
+        - generic [ref=e891]:
+          - generic [ref=e892]:
+            - generic [ref=e893]: Section
+            - generic [ref=e894]: "08"
+          - heading "Inner Circle" [level=2] [ref=e896]
+        - generic [ref=e902]:
+          - generic [ref=e903]:
+            - generic [ref=e904]: Join Us
+            - heading "JOIN THE INNER CIRCLE" [level=2] [ref=e905]:
+              - generic [ref=e906]: JOIN THE
+              - generic [ref=e907]: INNER CIRCLE
+            - paragraph [ref=e908]: Be the first to know. Be part of the story.
+            - paragraph [ref=e909]: Get first access to lineups, secret locations, private invitations, and Monolith updates without the generic blast-email feel.
+            - generic [ref=e910]:
+              - generic [ref=e912]:
+                - img [ref=e914]
+                - generic [ref=e916]:
+                  - paragraph [ref=e917]: Private invitations
+                  - paragraph [ref=e918]: Get first notice when we drop something limited, intimate, or unexpected.
+              - generic [ref=e920]:
+                - img [ref=e922]
+                - generic [ref=e926]:
+                  - paragraph [ref=e927]: Secret locations
+                  - paragraph [ref=e928]: Stay close to the details before the rest of the room catches up.
+              - generic [ref=e930]:
+                - img [ref=e932]
+                - generic [ref=e938]:
+                  - paragraph [ref=e939]: Signal before noise
+                  - paragraph [ref=e940]: Lineups, mixes, and community updates without the filler.
+            - generic [ref=e941]:
+              - generic [ref=e944]: Early access ticket windows
+              - generic [ref=e947]: Lineup announcements first
+              - generic [ref=e950]: New radio show mixes
+              - generic [ref=e953]: Private event drops
+          - generic [ref=e954]:
+            - generic [ref=e955]:
+              - text: Join Us
+              - generic [ref=e956]:
+                - heading "Get Early Access" [level=3] [ref=e957]
+                - paragraph [ref=e958]: Email is all we need. Add your phone only if you want text-first updates when something special drops.
+            - generic [ref=e960]:
+              - generic [ref=e961]: First Name (Optional)
+              - textbox "First Name (Optional)" [ref=e962]:
+                - /placeholder: Erik
+            - generic [ref=e963]:
+              - generic [ref=e964]: Email Address *
+              - textbox "Email Address *" [ref=e965]:
+                - /placeholder: you@email.com
+                - text: test@example.com
+            - generic [ref=e967]:
+              - generic [ref=e968]: Phone Number (Optional, for text alerts)
+              - textbox "Phone Number (Optional, for text alerts)" [ref=e969]:
+                - /placeholder: (312) 555-0148
+            - generic [ref=e970] [cursor=pointer]:
+              - checkbox "I agree to receive updates and event announcements from The Monolith Project." [ref=e972]
+              - generic [ref=e974]: I agree to receive updates and event announcements from The Monolith Project.
+            - generic [ref=e975] [cursor=pointer]:
+              - checkbox "I confirm that I am 18 years old or older." [ref=e977]
+              - generic [ref=e979]: I confirm that I am 18 years old or older.
+            - paragraph [ref=e980]: You can unsubscribe anytime. Phone number is only used for priority text updates when enabled in future drops.
+            - button "Get early access" [ref=e981] [cursor=pointer]:
+              - generic [ref=e982]:
+                - text: GET EARLY ACCESS
+                - img [ref=e983]
+        - link "Get tickets" [ref=e986] [cursor=pointer]:
+          - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+          - generic [ref=e990]:
+            - generic [ref=e991]:
+              - generic [ref=e992]: Tickets
+              - img [ref=e993]
+              - generic [ref=e995]: Reserve your place
+            - generic [ref=e996]:
+              - generic [ref=e997]: Tickets
+              - img [ref=e998]
+              - generic [ref=e1000]: Reserve your place
+            - generic [ref=e1001]:
+              - generic [ref=e1002]: Tickets
+              - img [ref=e1003]
+              - generic [ref=e1005]: Reserve your place
+            - generic [ref=e1006]:
+              - generic [ref=e1007]: Tickets
+              - img [ref=e1008]
+              - generic [ref=e1010]: Reserve your place
+            - generic [ref=e1011]:
+              - generic [ref=e1012]: Tickets
+              - img [ref=e1013]
+              - generic [ref=e1015]: Reserve your place
+            - generic [ref=e1016]:
+              - generic [ref=e1017]: Tickets
+              - img [ref=e1018]
+              - generic [ref=e1020]: Reserve your place
+            - generic [ref=e1021]:
+              - generic [ref=e1022]: Tickets
+              - img [ref=e1023]
+              - generic [ref=e1025]: Reserve your place
+            - generic [ref=e1026]:
+              - generic [ref=e1027]: Tickets
+              - img [ref=e1028]
+              - generic [ref=e1030]: Reserve your place
+            - generic [ref=e1031]:
+              - generic [ref=e1032]: Tickets
+              - img [ref=e1033]
+              - generic [ref=e1035]: Reserve your place
+            - generic [ref=e1036]:
+              - generic [ref=e1037]: Tickets
+              - img [ref=e1038]
+              - generic [ref=e1040]: Reserve your place
+            - generic [ref=e1041]:
+              - generic [ref=e1042]: Tickets
+              - img [ref=e1043]
+              - generic [ref=e1045]: Reserve your place
+            - generic [ref=e1046]:
+              - generic [ref=e1047]: Tickets
+              - img [ref=e1048]
+              - generic [ref=e1050]: Reserve your place
+            - generic [ref=e1051]:
+              - generic [ref=e1052]: Tickets
+              - img [ref=e1053]
+              - generic [ref=e1055]: Reserve your place
+            - generic [ref=e1056]:
+              - generic [ref=e1057]: Tickets
+              - img [ref=e1058]
+              - generic [ref=e1060]: Reserve your place
+            - generic [ref=e1061]:
+              - generic [ref=e1062]: Tickets
+              - img [ref=e1063]
+              - generic [ref=e1065]: Reserve your place
+            - generic [ref=e1066]:
+              - generic [ref=e1067]: Tickets
+              - img [ref=e1068]
+              - generic [ref=e1070]: Reserve your place
+            - generic [ref=e1071]:
+              - generic [ref=e1072]: Tickets
+              - img [ref=e1073]
+              - generic [ref=e1075]: Reserve your place
+            - generic [ref=e1076]:
+              - generic [ref=e1077]: Tickets
+              - img [ref=e1078]
+              - generic [ref=e1080]: Reserve your place
+            - generic [ref=e1081]:
+              - generic [ref=e1082]: Tickets
+              - img [ref=e1083]
+              - generic [ref=e1085]: Reserve your place
+            - generic [ref=e1086]:
+              - generic [ref=e1087]: Tickets
+              - img [ref=e1088]
+              - generic [ref=e1090]: Reserve your place
+            - generic [ref=e1091]:
+              - generic [ref=e1092]: Tickets
+              - img [ref=e1093]
+              - generic [ref=e1095]: Reserve your place
+            - generic [ref=e1096]:
+              - generic [ref=e1097]: Tickets
+              - img [ref=e1098]
+              - generic [ref=e1100]: Reserve your place
+            - generic [ref=e1101]:
+              - generic [ref=e1102]: Tickets
+              - img [ref=e1103]
+              - generic [ref=e1105]: Reserve your place
+            - generic [ref=e1106]:
+              - generic [ref=e1107]: Tickets
+              - img [ref=e1108]
+              - generic [ref=e1110]: Reserve your place
+    - contentinfo [ref=e1111]:
+      - generic [ref=e1112]:
+        - generic [ref=e1113]:
+          - generic [ref=e1114]:
+            - generic [ref=e1115]:
+              - text: THE MONOLITH
+              - text: PROJECT
+            - paragraph [ref=e1116]: A Chicago-rooted music project built through recurring nights, distinct series, and rooms worth returning to.
+          - generic [ref=e1117]:
+            - heading "Explore" [level=4] [ref=e1118]
+            - list [ref=e1119]:
+              - listitem [ref=e1120]:
+                - link "Events" [ref=e1121] [cursor=pointer]:
+                  - /url: /schedule
+              - listitem [ref=e1122]:
+                - link "Artists" [ref=e1123] [cursor=pointer]:
+                  - /url: /lineup
+              - listitem [ref=e1124]:
+                - link "Archive" [ref=e1125] [cursor=pointer]:
+                  - /url: /archive
+              - listitem [ref=e1126]:
+                - link "Journal" [ref=e1127] [cursor=pointer]:
+                  - /url: /insights
+              - listitem [ref=e1128]:
+                - link "Contact" [ref=e1129] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e1130]:
+            - heading "Series" [level=4] [ref=e1131]
+            - list [ref=e1132]:
+              - listitem [ref=e1133]:
+                - link "Chasing Sun(Sets)" [ref=e1134] [cursor=pointer]:
+                  - /url: /chasing-sunsets
+                  - generic [ref=e1135]:
+                    - generic [ref=e1136]: ☀️
+                    - generic [ref=e1137]: Chasing Sun(Sets)
+              - listitem [ref=e1138]:
+                - link "Untold Story" [ref=e1139] [cursor=pointer]:
+                  - /url: /story
+                  - generic [ref=e1140]:
+                    - img [ref=e1141]
+                    - generic [ref=e1148]: Untold Story
+              - listitem [ref=e1149]:
+                - link "Radio" [ref=e1150] [cursor=pointer]:
+                  - /url: /radio
+          - generic [ref=e1151]:
+            - heading "Work With Us" [level=4] [ref=e1152]
+            - list [ref=e1153]:
+              - listitem [ref=e1154]:
+                - link "Partners" [ref=e1155] [cursor=pointer]:
+                  - /url: /partners
+              - listitem [ref=e1156]:
+                - link "Sponsor Access" [ref=e1157] [cursor=pointer]:
+                  - /url: /sponsors
+              - listitem [ref=e1158]:
+                - link "Booking" [ref=e1159] [cursor=pointer]:
+                  - /url: /booking
+              - listitem [ref=e1160]:
+                - link "Artist Submission" [ref=e1161] [cursor=pointer]:
+                  - /url: /submit
+              - listitem [ref=e1162]:
+                - link "Press & Media" [ref=e1163] [cursor=pointer]:
+                  - /url: /press
+          - generic [ref=e1164]:
+            - heading "Utilities" [level=4] [ref=e1165]
+            - list [ref=e1166]:
+              - listitem [ref=e1167]:
+                - link "Inner Circle" [ref=e1168] [cursor=pointer]:
+                  - /url: /newsletter
+              - listitem [ref=e1169]:
+                - link "Night Guide" [ref=e1170] [cursor=pointer]:
+                  - /url: /guide
+              - listitem [ref=e1171]:
+                - link "FAQ" [ref=e1172] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e1173]:
+                - link "Secure Tickets" [ref=e1174] [cursor=pointer]:
+                  - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+                  - text: Secure Tickets
+                  - img [ref=e1175]
+              - listitem [ref=e1178]:
+                - link "Terms of Service" [ref=e1179] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e1180]:
+                - link "Privacy Policy" [ref=e1181] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e1182]:
+                - link "Cookie Policy" [ref=e1183] [cursor=pointer]:
+                  - /url: /cookies
+        - generic [ref=e1184]:
+          - generic [ref=e1185]:
+            - link "Chasing Sun(Sets) Instagram" [ref=e1186] [cursor=pointer]:
+              - /url: https://instagram.com/chasingsunsets.music
+              - img [ref=e1187]
+            - link "Untold Story Instagram" [ref=e1190] [cursor=pointer]:
+              - /url: https://instagram.com/untoldstory.music
+              - img [ref=e1191]
+            - link "Monolith Instagram" [ref=e1194] [cursor=pointer]:
+              - /url: https://instagram.com/monolithproject.events
+              - img [ref=e1195]
+            - link "Chasing Sun(Sets) TikTok" [ref=e1198] [cursor=pointer]:
+              - /url: https://tiktok.com/@chasingsunsets
+              - img [ref=e1199]
+            - link "Monolith TikTok" [ref=e1201] [cursor=pointer]:
+              - /url: https://tiktok.com/@monolithproject
+              - img [ref=e1202]
+            - link "YouTube" [ref=e1204] [cursor=pointer]:
+              - /url: https://youtube.com/@monolithproject
+              - img [ref=e1205]
+            - link "Spotify" [ref=e1208] [cursor=pointer]:
+              - /url: https://spotify.com/
+              - img [ref=e1209]
+            - link "SoundCloud" [ref=e1211] [cursor=pointer]:
+              - /url: https://soundcloud.com/monolithproject
+              - img [ref=e1212]
+          - generic [ref=e1214]:
+            - paragraph [ref=e1215]: © 2026 The Monolith Project
+            - paragraph [ref=e1216]: Engineered in Chicago by Stark Industries
+      - generic [ref=e1218]:
+        - heading "MONOLITH" [level=1] [ref=e1219]
+        - heading "MONOLITH" [level=1]
+  - link "Open tickets for current featured event" [ref=e1221] [cursor=pointer]:
+    - /url: https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026
+    - generic [ref=e1225]:
+      - generic [ref=e1226]:
+        - generic [ref=e1227]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1228]
+      - generic [ref=e1230]:
+        - generic [ref=e1231]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1232]
+      - generic [ref=e1234]:
+        - generic [ref=e1235]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1236]
+      - generic [ref=e1238]:
+        - generic [ref=e1239]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1240]
+      - generic [ref=e1242]:
+        - generic [ref=e1243]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1244]
+      - generic [ref=e1246]:
+        - generic [ref=e1247]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1248]
+      - generic [ref=e1250]:
+        - generic [ref=e1251]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1252]
+      - generic [ref=e1254]:
+        - generic [ref=e1255]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1256]
+      - generic [ref=e1258]:
+        - generic [ref=e1259]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1260]
+      - generic [ref=e1262]:
+        - generic [ref=e1263]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1264]
+      - generic [ref=e1266]:
+        - generic [ref=e1267]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1268]
+      - generic [ref=e1270]:
+        - generic [ref=e1271]: MAY 16, 2026 — TBA, CHICAGO, IL — ERAN HERSH — THE MONOLITH PROJECT SPECIAL EVENT — SAVE THE DATE
+        - img [ref=e1272]
+  - region "Cookie consent" [ref=e1274]:
+    - generic [ref=e1275]:
+      - button "Dismiss cookie notice" [ref=e1277] [cursor=pointer]:
+        - img [ref=e1278]
+      - generic [ref=e1281]:
+        - generic [ref=e1282]:
+          - paragraph [ref=e1283]: Cookie Notice
+          - paragraph [ref=e1284]:
+            - text: We use cookies for analytics. Continuing means you agree to our
+            - link "Cookie Policy" [ref=e1285] [cursor=pointer]:
+              - /url: /cookies
+            - text: and
+            - link "Privacy Policy" [ref=e1286] [cursor=pointer]:
+              - /url: /privacy
+            - text: .
+        - generic [ref=e1287]:
+          - button "Decline" [ref=e1288] [cursor=pointer]
+          - button "Accept All" [ref=e1289] [cursor=pointer]
 ```

@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Ticket } from "lucide-react";
 import { POSH_TICKET_URL } from "@/data/events";
+import { CTA_LABELS } from "@/lib/cta";
 
 export default function FixedTicketBadge() {
     const { scrollY } = useScroll();
@@ -13,7 +14,7 @@ export default function FixedTicketBadge() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative flex items-center justify-center w-32 h-32 rounded-full cursor-pointer"
-                aria-label="Get Tickets"
+                aria-label={CTA_LABELS.tickets}
             >
                 {/* Rotating Text Ring */}
                 <motion.div
@@ -29,7 +30,7 @@ export default function FixedTicketBadge() {
                         </defs>
                         <text className="text-[11px] font-bold uppercase tracking-[0.18em] fill-white font-mono">
                             <textPath xlinkHref="#circlePath" startOffset="0%">
-                                Get Tickets • The Monolith Project • Get Tickets •
+                                {`${CTA_LABELS.tickets} • The Monolith Project • ${CTA_LABELS.tickets} •`}
                             </textPath>
                         </text>
                     </svg>

@@ -1,6 +1,14 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type DrawerType = "faq" | "newsletter" | "about" | "contact" | null;
+export type DrawerType = "faq" | "newsletter" | "contact" | "guide" | null;
+
+const drawerRouteMap = {
+    "/faq": "faq",
+    "/newsletter": "newsletter",
+    "/contact": "contact",
+    "/guide": "guide",
+    "/inner-circle": "newsletter",
+} as const;
 
 interface UIContextProps {
     activeDrawer: DrawerType;
@@ -11,6 +19,12 @@ interface UIContextProps {
 }
 
 const UIContext = createContext<UIContextProps | undefined>(undefined);
+
+function normalizePathname(pathname: string) {
+    const clean = pathname.split("?")[0]?.split("#")[0] || "/";
+    if (clean.length > 1 && clean.endsWith("/")) return clean.slice(0, -1);
+    return clean || "/";
+}
 
 export function UIProvider({ children }: { children: ReactNode }) {
     const [activeDrawer, setActiveDrawer] = useState<DrawerType>(null);
@@ -32,4 +46,8 @@ export function useUI() {
         throw new Error("useUI must be used within a UIProvider");
     }
     return context;
+}
+
+export function getDrawerTypeForHref(href: string): DrawerType {
+    return drawerRouteMap[normalizePathname(href) as keyof typeof drawerRouteMap] ?? null;
 }

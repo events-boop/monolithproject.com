@@ -16,7 +16,8 @@ import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
-import ReactPlayer from "react-player";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import { CTA_LABELS } from "@/lib/cta";
 
 const radioArtists = [
   { name: "BENCHEK", image: "/images/artist-benchek.jpg" },
@@ -190,7 +191,7 @@ export default function Radio() {
       <Navigation />
 
       {/* Hero */}
-      <section className="relative pt-44 md:pt-48 pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
+      <section className="relative page-shell-start-loose pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
         {/* Full Bleed Rotating Background */}
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
@@ -239,6 +240,21 @@ export default function Radio() {
               Curated sets and live recordings from our artists and guests.
               The music doesn't stop when the show ends.
             </RevealText>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <MagneticButton strength={0.3}>
+                <a href="#radio-tracks" className="btn-pill-coral inline-flex items-center justify-center">
+                  {CTA_LABELS.listenNow}
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </a>
+              </MagneticButton>
+              <MagneticButton strength={0.22}>
+                <Link href="/schedule" asChild>
+                  <a className="px-10 h-14 border border-white/20 text-white font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 bg-black/20">
+                    {CTA_LABELS.schedule}
+                  </a>
+                </Link>
+              </MagneticButton>
+            </div>
           </div>
         </div>
       </section>
@@ -255,21 +271,18 @@ export default function Radio() {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-cover bg-center bg-black/20"
           style={{ backgroundImage: "url('/images/autograf-recap.jpg')" }}
         >
-          <ReactPlayer
+          <YouTubeEmbed
             url="https://www.youtube.com/watch?v=9R6XH7JZlJI"
-            playing={true}
-            loop={true}
-            muted={true}
-            playsinline={true}
-            width="100%"
-            height="100%"
-            style={{ objectFit: 'cover', transform: 'scale(1.5)' }} // scale up to crop and fill square
-            config={{
-              youtube: {
-                // @ts-ignore
-                playerVars: { showinfo: 0, controls: 0, rel: 0, modestbranding: 1, playsinline: 1, autoplay: 1, mute: 1, start: 3714 }
-              }
-            }}
+            title="Autograf live at Monolith"
+            autoplay
+            muted
+            controls={false}
+            loop
+            playsInline
+            start={3714}
+            allowFullScreen={false}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full scale-[1.5] border-0"
           />
         </div>
 
@@ -381,7 +394,7 @@ export default function Radio() {
       </section>
 
       {/* Track List */}
-      <section className="px-6 pb-16">
+      <section id="radio-tracks" className="px-6 pb-16 scroll-shell-target">
         <div className="container max-w-6xl mx-auto">
           <div className="border-t border-border/50">
             {filtered.map((track, index) => {
@@ -547,14 +560,16 @@ export default function Radio() {
           </RevealText>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <MagneticButton strength={0.4}>
-              <a href="/tickets" className="btn-pill-coral w-full flex items-center justify-center" onClick={(e) => { e.preventDefault(); window.location.href = '/tickets'; }}>
-                GET TICKETS
-              </a>
+              <Link href="/tickets" asChild>
+                <a className="btn-pill-coral w-full flex items-center justify-center">
+                  {CTA_LABELS.tickets}
+                </a>
+              </Link>
             </MagneticButton>
             <MagneticButton strength={0.4}>
-              <Link href="/lineup" asChild>
+              <Link href="/schedule" asChild>
                 <a className="px-10 h-14 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-                  VIEW LINEUP
+                  {CTA_LABELS.schedule}
                 </a>
               </Link>
             </MagneticButton>

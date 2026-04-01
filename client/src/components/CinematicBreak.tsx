@@ -81,26 +81,31 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
           style={{ opacity }}
           className="absolute inset-0 flex items-center justify-center px-8"
         >
-          <div className="max-w-3xl text-center">
-            <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-white/90 leading-relaxed italic">
-              "{quote}"
-            </p>
-            {attribution && (
-              <span className="block mt-6 font-mono text-xs text-white/70 tracking-[0.3em] uppercase">
-                — {attribution}
-              </span>
-            )}
-            {ctaLabel && ctaUrl && (
-              <a
-                href={ctaUrl}
-                target={ctaExternal ? "_blank" : undefined}
-                rel={ctaExternal ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center gap-2 mt-8 px-8 py-3 border border-white/40 text-white hover:border-primary hover:text-primary transition-all font-mono text-xs tracking-widest uppercase group rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              >
-                {ctaLabel}
-                <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            )}
+          <div className="max-w-4xl text-center">
+            <span className="inline-flex items-center rounded-none border border-white/15 bg-black/20 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-white/70">
+              The Collective
+            </span>
+            <div className="quiet-panel mt-6 px-6 py-8 md:px-10 md:py-10">
+              <p className="font-serif text-2xl md:text-4xl lg:text-5xl text-white/90 leading-relaxed italic">
+                "{quote}"
+              </p>
+              {attribution && (
+                <span className="block mt-6 font-mono text-xs text-white/70 tracking-[0.3em] uppercase">
+                  — {attribution}
+                </span>
+              )}
+              {ctaLabel && ctaUrl && (
+                <a
+                  href={ctaUrl}
+                  target={ctaExternal ? "_blank" : undefined}
+                  rel={ctaExternal ? "noopener noreferrer" : undefined}
+                  className="inline-flex items-center gap-2 mt-8 px-8 py-3 border border-white/40 text-white hover:border-primary hover:text-primary transition-all font-mono text-xs tracking-widest uppercase group rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                >
+                  {ctaLabel}
+                  <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              )}
+            </div>
           </div>
         </motion.div>
       )}

@@ -12,12 +12,12 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
       ViteImageOptimizer({
-        // Default options are usually fine, but we can explicitly enable aggressive compression for prod
-        png: { quality: 80 },
-        jpeg: { quality: 80 },
-        jpg: { quality: 80 },
-        webp: { lossless: true },
-        avif: { lossless: true },
+        // Favor delivery size over archival fidelity for photographic assets.
+        png: { quality: 78 },
+        jpeg: { quality: 76 },
+        jpg: { quality: 76 },
+        webp: { quality: 74 },
+        avif: { quality: 52 },
       }),
     ],
     resolve: {
@@ -39,8 +39,9 @@ export default defineConfig(({ mode }) => {
       minify: "esbuild",
       rollupOptions: {
         output: {
-          // Keep the entry chunk from becoming a giant blob as the site grows.
-          // This also improves long-term caching by splitting stable vendor code.
+          // Only pin chunks that are either core to the shell or genuinely shared.
+          // Let Rollup keep route-specific libraries with their routes instead of
+          // flattening everything into one preloaded fallback bundle.
           manualChunks(id) {
             if (!id.includes("node_modules")) return;
             // Keep React + its runtime helpers together to avoid circular chunk graphs.
@@ -55,8 +56,13 @@ export default defineConfig(({ mode }) => {
             if (id.includes("framer-motion")) return "vendor-motion";
             if (id.includes("@radix-ui") || id.includes("cmdk") || id.includes("vaul")) return "vendor-ui";
             if (id.includes("posthog-js")) return "vendor-analytics";
+            if (id.includes("react-hook-form") || id.includes("@hookform/resolvers") || id.includes("input-otp")) return "vendor-forms";
+            if (id.includes("react-day-picker")) return "vendor-calendar";
+            if (id.includes("recharts")) return "vendor-charts";
+            if (id.includes("cobe")) return "vendor-globe";
+            if (id.includes("react-photo-album") || id.includes("yet-another-react-lightbox")) return "vendor-gallery";
             if (id.includes("zod")) return "vendor-zod";
-            return "vendor";
+            return undefined;
           },
         },
       },

@@ -1,143 +1,95 @@
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
-import { Ticket } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { useLocation } from "wouter";
-import { POSH_TICKET_URL } from "@/data/events";
-import { useRef, useState, useEffect } from "react";
-
-const themes = {
-  default: {
-    center: "bg-gradient-to-br from-[#E05A3A] to-[#C2422A]",
-    ring: "bg-[conic-gradient(from_0deg,#E05A3A,#F07050,#C2422A,#E05A3A)]",
-    shadow: "shadow-[0_0_30px_rgba(224,90,58,0.3)]",
-    text: "fill-white",
-    icon: "text-white",
-  },
-  violet: {
-    center: "bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9]",
-    ring: "bg-[conic-gradient(from_0deg,#8B5CF6,#A78BFA,#6D28D9,#8B5CF6)]",
-    shadow: "shadow-[0_0_30px_rgba(139,92,246,0.4)]",
-    text: "fill-white",
-    icon: "text-white",
-  },
-  warm: {
-    center: "bg-gradient-to-br from-[#C2703E] to-[#8B4513]",
-    ring: "bg-[conic-gradient(from_0deg,#C2703E,#E8B86D,#8B4513,#C2703E)]",
-    shadow: "shadow-[0_0_30px_rgba(194,112,62,0.4)]",
-    text: "fill-[#2C1810]",
-    icon: "text-white",
-  },
-};
-
-function getTheme(location: string) {
-  if (location === "/story") return themes.violet;
-  if (location === "/chasing-sunsets") return themes.warm;
-  return themes.default;
-}
+import { useState, useEffect } from "react";
+import { getSceneForPath } from "@/lib/scenes";
+import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
+import { CTA_LABELS } from "@/lib/cta";
 
 export default function FloatingTicketButton() {
   const [location] = useLocation();
-  const theme = getTheme(location);
-  const text = "BOOK TICKETS • BOOK TICKETS • ";
+  const scene = getSceneForPath(location);
+  const nextEvent = getExperienceEvent("ticket");
+  const ticketUrl = getPrimaryTicketUrl(nextEvent);
   const reduceMotion = useReducedMotion();
 
-  const ref = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
     const checkScroll = () => {
-      // If we are within 200px of the bottom of the page, consider it "at bottom" (near footer)
-      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+      // Hide if near the footer to avoid overlap with the massive footer typography
+      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 400;
       setIsAtBottom(scrolledToBottom);
     };
 
     window.addEventListener("scroll", checkScroll, { passive: true });
-    // Initial check
     checkScroll();
 
     return () => window.removeEventListener("scroll", checkScroll);
   }, []);
 
-  // Magnetic Physics
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
+  if (!nextEvent) return null;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * 0.3); // Strength of pull
-    y.set((clientY - centerY) * 0.3);
-  };
+  // Determine accent color based on series
+  const isSunsets = nextEvent.series === "chasing-sunsets";
+  const isStory = nextEvent.series === "untold-story";
+  const accentColor = isSunsets ? "bg-[#E8B86D]" : isStory ? "bg-[#22D3EE]" : "bg-primary";
+  const textAccent = isSunsets ? "text-[#E8B86D]" : isStory ? "text-[#22D3EE]" : "text-primary";
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    x.set(0);
-    y.set(0);
-  };
+  // Parse Date
+  const dateParts = nextEvent.date.split(" ");
+  const shortDate = dateParts.length >= 2 ? `${dateParts[0].substring(0, 3)} ${dateParts[1].replace(',', '')}` : nextEvent.date;
 
   return (
-    <a
-      href={POSH_TICKET_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Book tickets"
-      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-full"
+    <div
+      className={`fixed bottom-0 right-0 md:bottom-8 md:right-8 z-[45] hidden md:block transition-all duration-700 ease-in-out origin-bottom-right ${
+        isAtBottom ? "opacity-0 translate-y-10 pointer-events-none" : "opacity-100 translate-y-0"
+      }`}
     >
-      <div
-        className={`fixed bottom-4 right-4 md:bottom-10 md:right-8 z-[45] w-24 h-24 md:w-32 md:h-32 hidden md:flex items-center justify-center pointer-events-none transition-all duration-700 ease-in-out scale-[0.65] md:scale-100 origin-bottom-right ${isAtBottom ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"
-          }`}
+      <a
+        href={ticketUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={CTA_LABELS.tickets}
+        tabIndex={isAtBottom ? -1 : 0}
+        aria-hidden={isAtBottom}
+        className="group relative flex flex-col focus-visible:outline-none"
       >
-        {/* Interactive Container */}
         <motion.div
-          ref={ref}
-          className="relative w-20 h-20 md:w-28 md:h-28 cursor-pointer group pointer-events-auto"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          animate={isHovered ? { y: 0 } : reduceMotion ? { y: 0 } : { y: [0, -8, 0] }}
-          transition={isHovered ? { type: "spring", stiffness: 300, damping: 20 } : reduceMotion ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          style={{ x: springX, y: springY }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, delay: 1 }}
+           className="bg-black/80 backdrop-blur-xl border border-white/15 p-6 md:p-8 flex items-center gap-6 md:gap-8 transition-all duration-500 hover:bg-white hover:border-white overflow-hidden shadow-2xl"
         >
-          {/* Spinning text ring with metallic shine */}
-          <div className="absolute inset-0 z-10 opacity-90 group-hover:opacity-100 transition-opacity">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 animate-shine pointer-events-none mix-blend-overlay" />
-            <svg
-              className={`w-full h-full ${reduceMotion ? "" : "animate-spin-slow"}`}
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <path
-                  id="circlePath"
-                  d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
-                />
-              </defs>
-              <text fill="currentColor" className={`${theme.text} font-bold tracking-[0.16em] uppercase font-mono`} fontSize="13.5">
-                <textPath href="#circlePath" startOffset="0%">
-                  {text}
-                </textPath>
-              </text>
-            </svg>
+          {/* Edge Accent Line */}
+          <div className={`absolute top-0 bottom-0 left-0 w-[3px] opacity-50 group-hover:opacity-100 transition-all duration-500 ${accentColor}`} />
+
+          <div className="flex flex-col text-right items-end z-10">
+            {nextEvent.ticketUrl && (
+              <div className="flex items-center gap-2 justify-end mb-3">
+                <span className="relative flex h-2 w-2">
+                  <span className={`animate-ping absolute inline-flex h-full w-full opacity-75 ${accentColor}`} />
+                  <span className={`relative inline-flex h-2 w-2 ${accentColor}`} />
+                </span>
+                <span className={`font-mono text-[9px] uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
+                  On Sale
+                </span>
+              </div>
+            )}
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-2">
+              Next Event · {shortDate}
+            </span>
+            <span className="font-heavy text-2xl md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none">
+              {nextEvent.title}
+            </span>
           </div>
 
-          {/* Center circle with icon */}
-          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 md:w-[68px] md:h-[68px] rounded-full flex items-center justify-center ${theme.center} shadow-inner border border-white/20 z-20 pointer-events-none`}>
-            <Ticket className={`w-6 h-6 md:w-7 md:h-7 ${theme.icon} transition-transform duration-500 group-hover:rotate-[360deg]`} />
+          <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center border border-white/20 rounded-none group-hover:bg-black group-hover:border-black transition-all duration-500 z-10">
+            <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-black transition-all duration-500 transform group-hover:scale-110" />
           </div>
 
-          {/* Rotating Gradient Background (Outer Ring) */}
-          <div className={`absolute inset-0 rounded-full overflow-hidden -z-10 ${theme.shadow} opacity-70 group-hover:opacity-100 transition-opacity duration-500`}>
-            <div className={`absolute inset-[-50%] ${theme.ring} animate-[spin_4s_linear_infinite] blur-sm`} />
-          </div>
         </motion.div>
-      </div>
-    </a>
+      </a>
+    </div>
   );
 }

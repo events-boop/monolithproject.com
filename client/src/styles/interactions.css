@@ -1,0 +1,88 @@
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  .lift-hover {
+    transition:
+      transform 300ms var(--motion-luxe),
+      box-shadow 300ms var(--motion-luxe),
+      border-color 220ms ease,
+      background-color 220ms ease;
+    will-change: transform;
+  }
+
+  .lift-hover:hover {
+    transform: translateY(-4px);
+  }
+
+  .cta-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .read-width {
+    max-width: var(--reading-max);
+  }
+
+  .page-shell-start {
+    padding-top: var(--shell-page-top);
+  }
+
+  .page-shell-start-loose {
+    padding-top: var(--shell-page-top-loose);
+  }
+
+  .hero-shell-start {
+    padding-top: var(--shell-page-top-hero);
+  }
+
+  .hero-shell-content {
+    padding-top: var(--shell-page-top-hero);
+  }
+
+  .sticky-shell-top {
+    top: var(--shell-sticky-top);
+  }
+
+  .scroll-shell-target {
+    scroll-margin-top: var(--shell-scroll-offset);
+  }
+
+  @media (min-width: 640px) {
+    .hero-shell-content {
+      padding-top: calc(var(--shell-page-top-hero) + 0.5rem);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-shell-content {
+      padding-top: calc(var(--shell-page-top-hero) + 1rem);
+    }
+  }
+}

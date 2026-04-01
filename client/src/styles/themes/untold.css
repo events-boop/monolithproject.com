@@ -1,0 +1,61 @@
+.bg-untold-hero-glow {
+  background-image: radial-gradient(circle, var(--color-untold-violet), transparent);
+}
+
+.bg-untold-hero-btn {
+  background-image: linear-gradient(135deg, var(--color-untold-violet), var(--color-untold-cyan));
+}
+
+.bg-untold-card {
+  background-color: var(--color-untold-deep);
+  border-color: color-mix(in srgb, var(--color-untold-violet) 30%, transparent);
+}
+
+.bg-untold-glow-cyan {
+  background-image: radial-gradient(circle, var(--color-untold-cyan), transparent);
+}
+
+.bg-untold-contrast {
+  background-image: linear-gradient(180deg, #06060F 0%, rgba(34, 211, 238, 0.05) 50%, #06060F 100%);
+}
+
+/* Base untold style variables */
+.border-untold-violet-15 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 15%, transparent);
+}
+
+.border-untold-violet-20 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 20%, transparent);
+}
+
+.border-untold-violet-25 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 25%, transparent);
+}
+
+.border-untold-violet-30 {
+  border-color: color-mix(in srgb, var(--color-untold-violet) 30%, transparent);
+}
+
+.text-untold-cyan {
+  color: var(--color-untold-cyan);
+}
+
+.text-untold-violet {
+  color: var(--color-untold-violet);
+}
+
+.text-untold-violet-99 {
+  color: color-mix(in srgb, var(--color-untold-violet) 99%, transparent);
+}
+
+.bg-untold-card-solid {
+  background-color: var(--color-untold-card);
+}
+
+.bg-untold-deep-solid {
+  background-color: var(--color-untold-deep);
+}
+
+.bg-untold-violet-08 {
+  background-color: color-mix(in srgb, var(--color-untold-violet) 8%, transparent);
+}

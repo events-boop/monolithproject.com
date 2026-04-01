@@ -79,7 +79,7 @@ export default function Partners() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-44 md:pt-48 pb-20 relative">
+      <section className="page-shell-start-loose pb-20 relative">
         <div className="container max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

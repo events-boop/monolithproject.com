@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Sun, ArrowRight } from "lucide-react";
 
 const SESSION_KEY = "cs-optin-dismissed";
+const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
 
 export default function ChasingSunsetsOptIn() {
     const [visible, setVisible] = useState(false);
@@ -13,8 +14,35 @@ export default function ChasingSunsetsOptIn() {
     // Show after a short delay, once per session
     useEffect(() => {
         if (sessionStorage.getItem(SESSION_KEY)) return;
-        const id = setTimeout(() => setVisible(true), 900);
-        return () => clearTimeout(id);
+
+        let timeoutId: number | null = null;
+
+        const queueOpen = (delay: number) => {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
+            timeoutId = window.setTimeout(() => setVisible(true), delay);
+        };
+
+        if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+            queueOpen(900);
+        } else {
+            const handleConsentResolved = () => queueOpen(420);
+            window.addEventListener("monolith:cookie-consent-resolved", handleConsentResolved, { once: true });
+
+            return () => {
+                window.removeEventListener("monolith:cookie-consent-resolved", handleConsentResolved);
+                if (timeoutId) {
+                    window.clearTimeout(timeoutId);
+                }
+            };
+        }
+
+        return () => {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
+        };
     }, []);
 
     const dismiss = () => {
@@ -63,7 +91,7 @@ export default function ChasingSunsetsOptIn() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.35 }}
-                        className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
+                        className="fixed inset-0 z-[90] bg-black/68"
                         onClick={dismiss}
                         aria-hidden="true"
                     />
@@ -120,7 +148,7 @@ export default function ChasingSunsetsOptIn() {
                                         </div>
                                         <h2 className="font-display text-2xl text-white mb-2 tracking-wide">YOU'RE IN</h2>
                                         <p className="text-white/60 text-sm font-mono tracking-widest uppercase">
-                                            See you at golden hour.
+                                            Signal received.
                                         </p>
                                         <button
                                             onClick={dismiss}
@@ -145,15 +173,15 @@ export default function ChasingSunsetsOptIn() {
 
                                         {/* Headline */}
                                         <h2 id="cs-optin-title" className="font-display text-3xl md:text-4xl text-white leading-[1.05] mb-3 tracking-wide uppercase">
-                                            Golden Hour<br />
-                                            <span style={{ color: "#E8B86D" }}>Is Coming Back</span>
+                                            The Season<br />
+                                            <span style={{ color: "#E8B86D" }}>Is Taking Shape</span>
                                         </h2>
 
                                         <p className="text-white/60 text-sm leading-relaxed mb-2">
-                                            Rooftop shows. Sunset sets. The 2026 season is being built right now.
+                                            Open air. Golden hour pacing. The 2026 chapter is being curated right now.
                                         </p>
-                                        <p className="text-white/40 text-xs font-mono tracking-widest uppercase mb-7">
-                                            Get early access · Presale tickets · First to know
+                                        <p className="text-white/40 text-[10px] font-mono tracking-widest uppercase mb-7">
+                                            Priority Access · Private Signals · First To Know
                                         </p>
 
                                         {/* Divider */}
@@ -195,10 +223,10 @@ export default function ChasingSunsetsOptIn() {
                                                 onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
                                             >
                                                 {status === "loading" ? (
-                                                    <span className="animate-pulse">Joining...</span>
+                                                    <span className="animate-pulse">Requesting...</span>
                                                 ) : (
                                                     <>
-                                                        Get Early Access
+                                                        Request Priority Access
                                                         <ArrowRight className="w-4 h-4" />
                                                     </>
                                                 )}
@@ -207,7 +235,7 @@ export default function ChasingSunsetsOptIn() {
 
                                         {/* Footer note */}
                                         <p className="mt-4 text-center text-white/25 text-[10px] font-mono tracking-widest uppercase">
-                                            No spam · Unsubscribe anytime
+                                            Curated Signals Only · Opt out anytime
                                         </p>
 
                                         {/* Skip link */}

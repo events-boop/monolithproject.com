@@ -92,29 +92,8 @@ export default function SocialEchoTicker() {
     return (
         <div className="w-full overflow-hidden h-[40px] md:h-[48px] bg-charcoal text-white flex items-center relative z-40 border-y border-white/10">
             <div className="flex animate-marquee whitespace-nowrap min-w-full shrink-0 items-center gap-12 px-6">
-                {marqueeItems.map((item, i) => (
+                {[...marqueeItems, ...marqueeItems].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 shrink-0 opacity-90 transition-opacity hover:opacity-100">
-                        {item.type === "sales" ? (
-                            <Zap className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400/20" />
-                        ) : (
-                            <Users className="w-3.5 h-3.5 text-primary" />
-                        )}
-                        <div className="flex flex-col justify-center">
-                            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.15em] uppercase font-bold text-white/95 leading-none">
-                                {item.label}
-                            </span>
-                            {item.sub && (
-                                <span className="font-sans text-[9px] tracking-wide text-white/60 leading-none mt-0.5">
-                                    {item.sub}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className="flex animate-marquee whitespace-nowrap min-w-full shrink-0 items-center gap-12 px-6" aria-hidden="true">
-                {marqueeItems.map((item, i) => (
-                    <div key={`clone-${i}`} className="flex items-center gap-3 shrink-0 opacity-90">
                         {item.type === "sales" ? (
                             <Zap className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400/20" />
                         ) : (

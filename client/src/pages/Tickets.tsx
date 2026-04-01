@@ -1,16 +1,25 @@
 import { motion } from "framer-motion";
 import type { SyntheticEvent } from "react";
 import { Calendar, MapPin, Clock, Users, Ticket, Star, Crown, ArrowUpRight } from "lucide-react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
-import { POSH_TICKET_URL } from "@/data/events";
 import { trackTicketIntent } from "@/lib/api";
 import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
-import { buildUntoldStoryEventSchema } from "@/lib/schema";
+import { buildScheduledEventSchema } from "@/lib/schema";
 import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
+import {
+  getEventEyebrow,
+  getEventVenueLabel,
+  getEventWindowStatus,
+  getExperienceEvent,
+  getPrimaryTicketUrl,
+} from "@/lib/siteExperience";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+import { CTA_LABELS } from "@/lib/cta";
 
 interface TicketTier {
   id: string;
@@ -87,7 +96,24 @@ const lineupVisuals = [
   { name: "Jerome b2b Kenbo", role: "Support", image: "/images/artist-kenbo-untold.webp" },
 ];
 
+const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
+
 export default function Tickets() {
+  const featuredEvent = getExperienceEvent("ticket");
+  const ticketUrl = getPrimaryTicketUrl(featuredEvent);
+  const featuredEventSchema =
+    featuredEvent && getEventWindowStatus(featuredEvent) !== "past"
+      ? buildScheduledEventSchema(featuredEvent, "/tickets")
+      : null;
+  const featuredHeadline = featuredEvent?.headline || featuredEvent?.title || "Featured Event";
+  const featuredEyebrow = featuredEvent?.subtitle || getEventEyebrow(featuredEvent);
+  const featuredVenue = getEventVenueLabel(featuredEvent);
+  const featuredPoster =
+    featuredEvent?.id === "us-s3e2"
+      ? eventVisuals.poster
+      : featuredEvent?.image || "/images/autograf-recap.jpg";
+  const showLineupVisuals = featuredEvent?.id === "us-s3e2";
+
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.onerror = null;
     event.currentTarget.src = "/images/hero-monolith.jpg";
@@ -95,7 +121,7 @@ export default function Tickets() {
 
   const handlePurchase = () => {
     void trackTicketIntent("tickets_page");
-    window.open(POSH_TICKET_URL, "_blank", "noopener,noreferrer");
+    window.open(ticketUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -104,13 +130,13 @@ export default function Tickets() {
         title="Tickets"
         description="Secure your spot for the next Monolith Project event. Limited capacity available."
       />
-      <JsonLd data={buildUntoldStoryEventSchema("/tickets")} />
+      {featuredEventSchema ? <JsonLd data={featuredEventSchema} /> : null}
       <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />
       <div className="pointer-events-none absolute inset-0 bg-tickets-bottom-glow" />
       <Navigation />
 
       {/* Header */}
-      <section className="pt-48 pb-16 px-6 relative">
+      <section className="page-shell-start-loose pb-16 px-6 relative">
         <div className="container max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -118,7 +144,7 @@ export default function Tickets() {
             transition={{ duration: 0.8 }}
           >
             <span className="font-serif italic text-lg text-primary/80 block mb-6">
-              On sale now
+              {featuredEyebrow}
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
               GET TICKETS
@@ -132,208 +158,178 @@ export default function Tickets() {
                 Tickets selling fast — Limited availability
               </span>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Giveaway / Viral Loop Funnel */}
-      <EventFunnelStack eventId="mp-autograf-mar21" />
-
-      {/* Featured Event — S3E2 */}
-      <section className="pb-16 px-6 relative">
-        <div className="container max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="border border-white/20 p-8 md:p-10 relative overflow-hidden rounded-2xl bg-tickets-card backdrop-blur-sm shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
-              {/* Glow */}
-              <div className="absolute -top-12 -right-12 w-[260px] h-[260px] opacity-40 blur-[90px] pointer-events-none bg-cyan-300/35" />
-              <div className="absolute -bottom-16 -left-12 w-[260px] h-[260px] opacity-35 blur-[100px] pointer-events-none bg-orange-300/35" />
-              <div className="absolute inset-0 bg-tickets-event-overlay pointer-events-none" />
-
-              <div className="relative">
-                <SmartImage
-                  src={eventVisuals.poster}
-                  alt="Deron B2B Juany Bravo featured poster"
-                  priority
-                  containerClassName="mb-8 rounded-xl border border-white/25"
-                  className="w-full h-auto object-cover"
-                />
-
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
-                  <div className="flex items-center gap-3">
-                    <UntoldButterflyLogo className="w-5 h-5 text-primary" />
-                    <span className="ui-chip text-primary">
-                      Untold Story — Season III · Episode II
-                    </span>
-                  </div>
-                  <MagneticButton strength={0.3} className="sm:ml-auto w-fit">
-                    <a
-                      href={POSH_TICKET_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-pill-coral flex"
-                    >
-                      BUY TICKETS <ArrowUpRight className="w-4 h-4 ml-1" />
-                    </a>
-                  </MagneticButton>
-                </div>
-
-                <h2 className="font-display text-3xl md:text-4xl tracking-wide text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.28)] mb-8">
-                  DERON B2B JUANY BRAVO
-                </h2>
-
-                <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                  <SmartImage
-                    src={eventVisuals.deron}
-                    alt="Deron portrait artwork"
-                    priority
-                    containerClassName="rounded-xl border border-white/25"
-                  />
-                  <SmartImage
-                    src={eventVisuals.juany}
-                    alt="Juany Bravo portrait artwork"
-                    priority
-                    containerClassName="rounded-xl border border-white/25"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 border border-white/25 bg-white/10 flex items-center justify-center rounded-lg">
-                      <Calendar className="w-4 h-4 text-cyan-200" />
-                    </div>
-                    <div>
-                      <p className="ui-chip text-white/75">Date</p>
-                      <p className="text-white">Friday, March 6, 2026</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 border border-white/25 bg-white/10 flex items-center justify-center rounded-lg">
-                      <Clock className="w-4 h-4 text-cyan-200" />
-                    </div>
-                    <div>
-                      <p className="ui-chip text-white/75">Doors</p>
-                      <p className="text-white">7:00 PM — 2:00 AM</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 border border-white/25 bg-white/10 flex items-center justify-center rounded-lg">
-                      <MapPin className="w-4 h-4 text-orange-200" />
-                    </div>
-                    <div>
-                      <p className="ui-chip text-white/75">Venue</p>
-                      <p className="text-white">Alhambra Palace · West Loop, Chicago</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 border border-white/25 bg-white/10 flex items-center justify-center rounded-lg">
-                      <Users className="w-4 h-4 text-violet-200" />
-                    </div>
-                    <div>
-                      <p className="ui-chip text-white/75">Age</p>
-                      <p className="text-white">21+ · Valid ID Required</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8">
-                  <p className="ui-kicker text-white/75 mb-3">Lineup Visuals</p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {lineupVisuals.map((artist) => (
-                      <div key={artist.name} className="overflow-hidden rounded-xl border border-white/25 bg-black/20">
-                        <img
-                          src={artist.image}
-                          alt={`${artist.name} lineup image`}
-                          loading="lazy"
-                          decoding="async"
-                          onError={handleImageError}
-                          className="w-full aspect-[4/5] object-cover"
-                        />
-                        <div className="px-3 py-2">
-                          <p className="text-white text-sm font-semibold">{artist.name}</p>
-                          <p className="text-white/65 text-xs">{artist.role}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <MagneticButton strength={0.3}>
+                <a
+                  href={ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill-coral flex items-center justify-center"
+                >
+                  {CTA_LABELS.tickets}
+                  <ArrowUpRight className="w-4 h-4 ml-2" />
+                </a>
+              </MagneticButton>
+              <MagneticButton strength={0.22}>
+                <Link href="/schedule" asChild>
+                  <a className="btn-pill border-white/20 bg-white/[0.03] text-white/90 hover:text-white hover:border-white/40 flex items-center justify-center">
+                    {CTA_LABELS.schedule}
+                  </a>
+                </Link>
+              </MagneticButton>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Ticket Tiers */}
-      <section className="pb-24 px-6 relative">
-        <div className="container max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h2 className="font-display text-3xl tracking-wide text-foreground">Choose Your Access</h2>
-            <p className="text-white/75 text-sm mt-2">Pick a tier and complete purchase on Posh.</p>
+      {/* Giveaway / Viral Loop Funnel */}
+      {featuredEvent?.activeFunnels?.length ? <EventFunnelStack eventId={featuredEvent.id} /> : null}      {/* Featured Event Section */}
+      <section className="pb-32 px-6 relative">
+        <div className="container max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-start"
+          >
+             {/* Left — Visual Focus */}
+             <div className="lg:col-span-7 w-full">
+                <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
+                   <SmartImage
+                     src={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.src : featuredPoster}
+                     alt={featuredHeadline}
+                     sources={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.sources : undefined}
+                     sizes={featuredEvent?.id === "us-s3e2" ? untoldTicketPoster.sizes : undefined}
+                     priority
+                     className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                   
+                   {/* Lineup Overlay (If US S3E2) */}
+                   {showLineupVisuals && (
+                      <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-wrap gap-3">
+                         {lineupVisuals.slice(0, 3).map((artist) => (
+                           <div key={artist.name} className="flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10">
+                              <img src={artist.image} className="w-8 h-8 rounded-full object-cover" />
+                              <span className="font-mono text-[9px] uppercase tracking-widest text-white/80">{artist.name}</span>
+                           </div>
+                         ))}
+                      </div>
+                   )}
+                </div>
+             </div>
+
+             {/* Right — Technicals & Action */}
+             <div className="lg:col-span-5 flex flex-col gap-10">
+                <div>
+                   <div className="flex items-center gap-4 mb-6 text-primary">
+                      {featuredEvent?.series === "untold-story" ? <UntoldButterflyLogo className="w-5 h-5" /> : <div className="h-2 w-2 rounded-full bg-primary" />}
+                      <span className="font-mono text-[10px] uppercase tracking-[0.5em]">{featuredEyebrow} / Sequence</span>
+                   </div>
+                   <h2 className="font-display text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.95] text-white tracking-widest block mb-8">
+                     {featuredHeadline}
+                   </h2>
+                   <div className="h-px w-20 bg-primary/40 mb-8" />
+                   <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-lg font-light">
+                      {featuredEvent?.description || "High-end atmosphere meeting deep recurring sound logic."}
+                   </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-y-12 gap-x-8 border-y border-white/5 py-12">
+                   {[
+                      { icon: <Calendar className="w-4 h-4" />, label: "Sequence Date", value: featuredEvent?.date || "TBA" },
+                      { icon: <Clock className="w-4 h-4" />, label: "System Start", value: featuredEvent?.time || "TBA" },
+                      { icon: <MapPin className="w-4 h-4" />, label: "Coordinate Location", value: featuredVenue },
+                      { icon: <Users className="w-4 h-4" />, label: "Access Protocol", value: "21+ · ID Required" }
+                   ].map((item) => (
+                      <div key={item.label} className="flex flex-col gap-3">
+                         <div className="flex items-center gap-2 text-white/20">
+                            {item.icon}
+                            <span className="font-mono text-[9px] uppercase tracking-[0.3em]">{item.label}</span>
+                         </div>
+                         <span className="font-display text-lg uppercase tracking-wider text-white/90">{item.value}</span>
+                      </div>
+                   ))}
+                </div>
+
+                <div className="pt-4">
+                   <MagneticButton strength={0.4}>
+                      <a href={ticketUrl} target="_blank" className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]">
+                         EXECUTE ACCESS
+                         <ArrowUpRight className="w-4 h-4 ml-3" />
+                      </a>
+                   </MagneticButton>
+                </div>
+             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Ticket Tiers — Integrated Grid */}
+      <section className="pb-32 px-6 border-t border-white/5 pt-32 relative">
+        <div className="container max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-20">
+             <div className="max-w-xl">
+                <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">Tier Logic</span>
+                <h2 className="font-display text-5xl uppercase text-white tracking-widest">Select Access</h2>
+                <p className="mt-6 text-lg text-white/40 font-light">Choose your level of engagement for the upcoming chapter. All tiers integrated through Posh.</p>
+             </div>
+             <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 italic">Systems synchronized {new Date().getFullYear()}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2.5rem] overflow-hidden">
             {ticketTiers.map((tier) => (
               <motion.div
                 key={tier.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                className={`relative border p-8 flex flex-col rounded-2xl backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${tier.highlight
-                  ? "border-primary bg-tickets-tier-highlight shadow-[0_10px_30px_rgba(224,90,58,0.25)] hover:shadow-[0_20px_40px_rgba(224,90,58,0.4)] hover:border-primary/80"
-                  : "border-white/15 bg-tickets-tier hover:border-white/30 hover:bg-white/5"
-                  }`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.8 }}
+                className={`bg-[#050505] p-12 lg:p-16 flex flex-col h-full transition-all duration-700 hover:bg-white/[0.01] group`}
               >
-                {tier.highlight && (
-                  <div className="absolute -top-3 left-6 px-4 py-1 bg-primary text-white text-[10px] font-mono tracking-widest uppercase rounded-full">
-                    Popular
-                  </div>
-                )}
-
-                <div className={`w-10 h-10 flex items-center justify-center mb-6 ${tier.highlight ? "text-primary" : "text-muted-foreground"
-                  }`}>
-                  {tier.icon}
+                <div className="flex items-center justify-between mb-12">
+                   <div className={`w-14 h-14 rounded-full border border-white/5 flex items-center justify-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/5 ${tier.highlight ? "text-primary border-primary/20 bg-primary/10" : "text-white/20 group-hover:text-primary"}`}>
+                      {tier.icon}
+                   </div>
+                   {tier.highlight && <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/80 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">High Demand</span>}
                 </div>
 
-                <h3 className="font-display text-xl tracking-wide text-white mb-1 uppercase">
-                  {tier.name}
-                </h3>
+                <div className="flex-1">
+                   <h3 className="font-display text-3xl uppercase tracking-widest text-white mb-6">
+                     {tier.name}
+                   </h3>
+                   <div className="flex items-baseline gap-3 mb-8">
+                     <span className="font-display text-5xl text-white">${tier.price}</span>
+                     {tier.originalPrice && <span className="text-white/20 line-through text-lg">${tier.originalPrice}</span>}
+                   </div>
+                   
+                   <p className="text-white/40 text-base font-light mb-10 leading-relaxed max-w-sm">
+                      {tier.description}
+                   </p>
 
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-display text-4xl text-white">${tier.price}</span>
-                  {tier.originalPrice && (
-                    <span className="text-muted-foreground line-through text-sm">
-                      ${tier.originalPrice}
-                    </span>
-                  )}
+                   <ul className="space-y-4 mb-16">
+                     {tier.features.map((feature, i) => (
+                       <li key={i} className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/30 group-hover:text-white/60 transition-colors">
+                         <div className="h-px w-3 bg-white/10 group-hover:bg-primary transition-colors" />
+                         {feature}
+                       </li>
+                     ))}
+                   </ul>
                 </div>
-
-                <p className="text-white/70 text-sm mb-4">{tier.description}</p>
-
-                <ul className="space-y-3 mb-8 flex-1">
-                  {tier.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-white/85">
-                      <div className="w-1 h-1 bg-primary" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
 
                 <button
                   onClick={handlePurchase}
                   disabled={!tier.available}
-                  className={`w-full py-4 font-bold text-xs tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-full ${tier.highlight
-                    ? "btn-pill-coral shadow-none w-full"
-                    : "border border-white/30 text-white hover:border-white hover:bg-white hover:text-black"
-                    } ${!tier.available && "opacity-50 cursor-not-allowed hidden"}`}
+                  className={`w-full h-16 flex items-center justify-center gap-3 rounded-full text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-700 ${
+                    tier.highlight 
+                      ? "bg-primary text-white shadow-[0_15px_30px_rgba(224,90,58,0.2)] hover:shadow-[0_20px_40px_rgba(224,90,58,0.3)] hover:-translate-y-1" 
+                      : "border border-white/10 text-white/40 hover:text-white hover:border-primary hover:bg-primary/5"
+                  }`}
                 >
                   {tier.available ? (
                     <>
-                      Get {tier.name}
+                      GET {tier.name}
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </>
                   ) : "Sold Out"}
@@ -342,39 +338,20 @@ export default function Tickets() {
             ))}
           </div>
 
-          <p className="text-white/55 text-xs font-mono tracking-wide mt-8">
-            All tickets are non-refundable. By purchasing, you agree to our terms and conditions. Elevated nightlife attire required.
-          </p>
-
-          {/* Bottom CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-16 text-center border-t border-border pt-12"
-          >
-            <p className="text-white/70 text-sm mb-6 font-mono tracking-wide">
-              Ready? All ticket tiers are available on Posh.
-            </p>
-            <div className="flex justify-center mt-6">
-              <MagneticButton strength={0.4}>
-                <a
-                  href={POSH_TICKET_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-pill group text-base"
-                >
-                  BUY TICKETS NOW
-                  <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ml-2" />
-                </a>
-              </MagneticButton>
-            </div>
-          </motion.div>
+          <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+             <p className="text-white/20 text-[9px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
+                All transmissions final. Access protocol non-refundable. Wear with intent.
+             </p>
+             <div className="flex items-center gap-4">
+                <div className="h-2 w-2 rounded-full bg-primary/20" />
+                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Secure Signal Posh:2026 // Active</span>
+             </div>
+          </div>
         </div>
       </section>
 
-      {/* SSS-Tier Pre-Sale Funnel */}
-      <EventFunnelStack eventId="mp-launch-001" />
+      {/* Footer / Funnel Spill */}
+      {featuredEvent?.activeFunnels?.length ? <EventFunnelStack eventId={featuredEvent.id} /> : null}
     </div>
   );
 }

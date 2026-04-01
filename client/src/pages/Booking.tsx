@@ -17,7 +17,7 @@ export default function Booking() {
       />
       <Navigation />
 
-      <section className="pt-48 pb-16 px-6">
+      <section className="page-shell-start-loose pb-16 px-6">
         <div className="container max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -1,6 +1,7 @@
 import { ChevronDown, ArrowUpRight } from "lucide-react";
 import EditorialHeader from "./EditorialHeader";
 import { POSH_TICKET_URL } from "@/data/events";
+import { CTA_LABELS } from "@/lib/cta";
 
 const faqs = [
   {
@@ -9,7 +10,7 @@ const faqs = [
   },
   {
     q: "What is the difference between Chasing Sun(Sets) and Untold Story?",
-    a: "Chasing Sun(Sets) is rooftop sunset energy. Untold Story is a deeper, darker late-night chapter with immersive sound.",
+    a: "Chasing Sun(Sets) is rooftop sunset energy. Untold Story is a closer late-night chapter with deeper sound and a tighter room.",
   },
   {
     q: "What should I wear?",
@@ -59,7 +60,7 @@ export default function FAQSection() {
             rel="noopener noreferrer"
             className="btn-pill-coral inline-flex items-center gap-2"
           >
-            Get Tickets
+            {CTA_LABELS.tickets}
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>

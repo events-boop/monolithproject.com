@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "framer-motion";
 import App from "./App";
-import "./index.css";
+import "./styles/index.css";
 
 try {
   const rootElement = document.getElementById("root");

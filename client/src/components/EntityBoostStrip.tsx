@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
+import { CTA_LABELS } from "@/lib/cta";
 
 type Tone = "dark" | "light" | "warm" | "nocturne";
 type Intent = "default" | "watch-recap" | "listen-episode" | "tickets";
@@ -63,15 +64,15 @@ export default function EntityBoostStrip({
 }: EntityBoostStripProps) {
   const ui = toneClasses[tone];
   const intentPrimary: Record<Intent, SmartAction> = {
-    default: { label: "Radio Hub", href: "/radio" },
+    default: { label: CTA_LABELS.radioHub, href: "/radio" },
     "watch-recap": { label: "Watch Recap", href: "/chasing-sunsets#chasing-july-2025-recap" },
-    "listen-episode": { label: "Listen Episode", href: episodeHref || "/radio" },
-    tickets: { label: "Get Tickets", href: "/tickets" },
+    "listen-episode": { label: CTA_LABELS.listenNow, href: episodeHref || "/radio" },
+    tickets: { label: CTA_LABELS.tickets, href: "/tickets" },
   };
   const intentSecondary: Record<Intent, SmartAction> = {
-    default: { label: "Get Tickets", href: "/tickets" },
-    "watch-recap": { label: "Get Tickets", href: "/tickets" },
-    "listen-episode": { label: "Radio Hub", href: "/radio" },
+    default: { label: CTA_LABELS.tickets, href: "/tickets" },
+    "watch-recap": { label: CTA_LABELS.tickets, href: "/tickets" },
+    "listen-episode": { label: CTA_LABELS.radioHub, href: "/radio" },
     tickets: { label: "Watch Recap", href: "/chasing-sunsets#chasing-july-2025-recap" },
   };
 

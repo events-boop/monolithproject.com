@@ -1,0 +1,114 @@
+/* ── Scroll-sunset utility layer ──
+   These reference the CSS vars set by useScrollSunset on :root,
+   so the browser resolves colours via inheritance — zero React overhead. */
+:root {
+  --sunset-bg: #FBF5ED;
+  --sunset-text: #2C1810;
+  --sunset-accent: #C2703E;
+  --sunset-warmGold: #E8B86D;
+  --sunset-glass: #FFFFFF;
+}
+
+.sunset-page {
+  background: var(--sunset-bg);
+  color: var(--sunset-text);
+}
+
+.sunset-text {
+  color: var(--sunset-text);
+}
+
+.sunset-text-80 {
+  color: color-mix(in srgb, var(--sunset-text) 80%, transparent);
+}
+
+.sunset-text-70 {
+  color: color-mix(in srgb, var(--sunset-text) 70%, transparent);
+}
+
+.sunset-text-60 {
+  color: color-mix(in srgb, var(--sunset-text) 60%, transparent);
+}
+
+.sunset-text-50 {
+  color: color-mix(in srgb, var(--sunset-text) 50%, transparent);
+}
+
+.sunset-accent {
+  color: var(--sunset-accent);
+}
+
+.sunset-warmGold {
+  color: var(--sunset-warmGold);
+}
+
+.sunset-border-accent {
+  border-color: color-mix(in srgb, var(--sunset-accent) 13%, transparent);
+}
+
+.sunset-border-accent-20 {
+  border-color: color-mix(in srgb, var(--sunset-accent) 20%, transparent);
+}
+
+.sunset-border-accent-30 {
+  border-color: color-mix(in srgb, var(--sunset-accent) 30%, transparent);
+}
+
+.sunset-glass-card {
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--sunset-glass) 75%, transparent),
+      color-mix(in srgb, var(--sunset-glass) 36%, transparent));
+}
+
+.sunset-glass-card-solid {
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--sunset-glass) 87%, transparent),
+      color-mix(in srgb, var(--sunset-glass) 60%, transparent));
+}
+
+.sunset-warm-section {
+  background: color-mix(in srgb, var(--sunset-warmGold) 7%, transparent);
+}
+
+.sunset-accent-tag {
+  border-color: color-mix(in srgb, var(--sunset-accent) 19%, transparent);
+  color: var(--sunset-accent);
+}
+
+.sunset-warmGold-tag {
+  border-color: color-mix(in srgb, var(--sunset-warmGold) 21%, transparent);
+  color: var(--sunset-warmGold);
+  background: color-mix(in srgb, var(--sunset-warmGold) 3%, transparent);
+}
+
+.sunset-gradient-btn {
+  background: linear-gradient(135deg, var(--sunset-accent), var(--sunset-warmGold));
+}
+
+.sunset-glass-overlay {
+  background: linear-gradient(to top,
+      color-mix(in srgb, var(--sunset-glass) 88%, transparent) 0%,
+      transparent 50%);
+}
+
+.sunset-accent-glow {
+  background: radial-gradient(circle at 20% 50%,
+      color-mix(in srgb, var(--sunset-accent) 9%, transparent), transparent 60%);
+}
+
+.bg-chasing-hero-overlay {
+  background-image: linear-gradient(to top, #2C1810ee 0%, #2C181066 45%, transparent 78%);
+}
+
+.bg-chasing-glow-1 {
+  background-image:
+    radial-gradient(circle at 12% 16%, rgba(232, 184, 109, 0.25), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(194, 112, 62, 0.2), transparent 32%),
+    radial-gradient(circle at 75% 84%, rgba(139, 92, 246, 0.14), transparent 36%);
+}
+
+.bg-chasing-glow-2 {
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(194, 112, 62, 0.18), transparent 32%),
+    radial-gradient(circle at 82% 76%, rgba(232, 184, 109, 0.22), transparent 34%);
+}

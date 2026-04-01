@@ -8,6 +8,7 @@ interface SmartImageProps extends ImgHTMLAttributes<HTMLImageElement> {
         srcSet: string;
         type: string;
         media?: string;
+        sizes?: string;
     }[];
     priority?: boolean;
     className?: string;
@@ -23,9 +24,16 @@ export default function SmartImage({
     className,
     containerClassName,
     aspectRatio,
+    decoding,
+    fetchPriority,
+    loading,
+    sizes,
     ...props
 }: SmartImageProps) {
     const [isLoaded, setIsLoaded] = useState(false);
+    const imageLoading = loading ?? (priority ? "eager" : "lazy");
+    const imageDecoding = decoding ?? (priority ? "sync" : "async");
+    const imageFetchPriority = fetchPriority ?? (priority ? "high" : "auto");
 
     return (
         <div
@@ -34,13 +42,21 @@ export default function SmartImage({
         >
             <picture>
                 {sources?.map((source, idx) => (
-                    <source key={idx} srcSet={source.srcSet} type={source.type} media={source.media} />
+                    <source
+                        key={idx}
+                        srcSet={source.srcSet}
+                        type={source.type}
+                        media={source.media}
+                        sizes={source.sizes || sizes}
+                    />
                 ))}
                 <img
                     src={src}
                     alt={alt}
-                    loading={priority ? "eager" : "lazy"}
-                    decoding={priority ? "sync" : "async"}
+                    loading={imageLoading}
+                    decoding={imageDecoding}
+                    fetchPriority={imageFetchPriority}
+                    sizes={sizes}
                     onLoad={() => setIsLoaded(true)}
                     className={cn(
                         "w-full h-full object-cover transition-opacity duration-700 ease-out",

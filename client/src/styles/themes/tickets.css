@@ -1,0 +1,29 @@
+/* --- THE MONOLITH PROJECT BACKGROUND UTILITIES --- */
+/* Abstracted these out from inline Tailwind values to preserve integrity of build */
+
+.bg-tickets-top-glow {
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.16), transparent 34%),
+    radial-gradient(circle at 86% 20%, rgba(224, 90, 58, 0.14), transparent 32%),
+    radial-gradient(circle at 50% 78%, rgba(139, 92, 246, 0.14), transparent 42%);
+}
+
+.bg-tickets-bottom-glow {
+  background-image: linear-gradient(180deg, rgba(6, 6, 15, 0.45) 0%, rgba(6, 6, 15, 0) 30%, rgba(6, 6, 15, 0.55) 100%);
+}
+
+.bg-tickets-card {
+  background-image: linear-gradient(140deg, rgba(139, 92, 246, 0.24), rgba(34, 211, 238, 0.16) 38%, rgba(224, 90, 58, 0.2) 100%);
+}
+
+.bg-tickets-event-overlay {
+  background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 45%);
+}
+
+.bg-tickets-tier {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+}
+
+.bg-tickets-tier-highlight {
+  background-image: linear-gradient(145deg, rgba(224, 90, 58, 0.2), rgba(139, 92, 246, 0.16));
+}

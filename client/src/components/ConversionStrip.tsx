@@ -1,0 +1,138 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, ArrowRight } from "lucide-react";
+import { getExperienceEvent, getPrimaryTicketUrl, isTicketOnSale } from "@/lib/siteExperience";
+import { CTA_LABELS } from "@/lib/cta";
+
+function getTimeLeft(target: Date) {
+  const diff = target.getTime() - Date.now();
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  return {
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000) / 60000),
+    seconds: Math.floor((diff % 60000) / 1000),
+  };
+}
+
+function parseEventDate(dateStr: string): Date {
+  const months: Record<string, number> = {
+    JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
+    JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11
+  };
+  const [monthName, day] = dateStr.split(" ");
+  const month = months[monthName?.toUpperCase()] ?? 0;
+  const year = new Date().getFullYear();
+  const d = new Date(year, month, parseInt(day) || 1, 20, 0, 0);
+  if (d < new Date()) d.setFullYear(year + 1);
+  return d;
+}
+
+function HUDDigit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <div className="flex gap-1">
+        {String(value).padStart(2, "0").split("").map((d, i) => (
+          <div key={i} className="w-10 h-14 md:w-14 md:h-20 bg-white/5 border border-white/10 flex items-center justify-center font-heavy text-2xl md:text-4xl text-white tabular-nums">
+            {d}
+          </div>
+        ))}
+      </div>
+      <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/30">{label}</span>
+    </div>
+  );
+}
+
+export default function ConversionStrip() {
+  const event = getExperienceEvent("ticket");
+  const ticketUrl = getPrimaryTicketUrl(event);
+  const [timeLeft, setTimeLeft] = useState(() => 
+    event ? getTimeLeft(parseEventDate(event.date)) : null
+  );
+
+  useEffect(() => {
+    if (!event) return;
+    const target = parseEventDate(event.date);
+    const interval = setInterval(() => setTimeLeft(getTimeLeft(target)), 1000);
+    return () => clearInterval(interval);
+  }, [event]);
+
+  if (!event || !timeLeft) return null;
+
+  const isSunsets = event.series === "chasing-sunsets";
+  const themeColor = isSunsets ? "#E8B86D" : "#22D3EE";
+  const themeBg = isSunsets ? "bg-[#E8B86D]" : "bg-[#22D3EE]";
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative w-full overflow-hidden border border-white/10 bg-black/60 backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.6)] group"
+    >
+      {/* Background Pixel Grid */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+      
+      <div className="container max-w-7xl mx-auto px-6 py-10 md:py-14 relative z-10">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-8">
+          
+          {/* LEFT: Signals & Headline */}
+          <div className="flex flex-col gap-6 max-w-sm">
+            <div className="flex flex-wrap gap-2">
+              <span className={`px-2 py-1 rounded-none text-[9px] font-bold uppercase tracking-[0.2em] text-black ${themeBg}`}>
+                Limited Window
+              </span>
+              <span className="px-2 py-1 rounded-none text-[9px] font-bold uppercase tracking-[0.2em] border border-white/20 text-white/60">
+                Level 01 Entry
+              </span>
+            </div>
+            <div>
+              <h2 className="font-heavy text-3xl md:text-4xl uppercase tracking-tighter leading-[0.9] text-white">
+                ANNIVERSARY SALE<br />
+                <span style={{ color: themeColor }}>73% CLAIMED</span>
+              </h2>
+              <p className="mt-4 font-sans text-sm text-white/40 leading-relaxed">
+                Secure Level 01 pricing before the window expires. Once the room reaches capacity, entry logic resets.
+              </p>
+            </div>
+          </div>
+
+          {/* MIDDLE: HUD Timer */}
+          <div className="flex items-center gap-4 md:gap-6 mx-auto lg:mx-0">
+            <HUDDigit value={timeLeft.days} label="Days" />
+            <div className="w-px h-12 bg-white/10 self-center hidden md:block" />
+            <HUDDigit value={timeLeft.hours} label="Hours" />
+            <HUDDigit value={timeLeft.minutes} label="Min" />
+            <HUDDigit value={timeLeft.seconds} label="Sec" />
+          </div>
+
+          {/* RIGHT: Benefits & CTA */}
+          <div className="flex flex-col sm:flex-row items-center gap-8 lg:gap-12 w-full lg:w-auto">
+            <ul className="flex flex-col gap-3 min-w-[200px]">
+              {["Priority Entry", "Rooftop Access", "Exclusive Archive Access"].map(point => (
+                <li key={point} className="flex items-center gap-3">
+                  <div className={`w-4 h-4 flex items-center justify-center rounded-none ${themeBg}`}>
+                    <Check className="w-3 h-3 text-black stroke-[3px]" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/80">{point}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a 
+              href={ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`relative px-10 py-5 group/btn overflow-hidden w-full sm:w-auto text-center ${themeBg}`}
+            >
+              <span className="relative z-10 font-heavy text-xs uppercase tracking-[0.3em] text-black">
+                {CTA_LABELS.tickets}
+              </span>
+              <div className="absolute inset-0 bg-white translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]" />
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </motion.div>
+  );
+}

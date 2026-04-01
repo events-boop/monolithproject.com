@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import { CTA_LABELS } from "@/lib/cta";
 
 interface ComingSoonConfig {
   title: string;
@@ -19,7 +20,7 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     description: "Merch drops and limited releases are being prepared.",
     primaryCtaLabel: "Get Drop Alerts",
     primaryCtaHref: "/newsletter",
-    secondaryCtaLabel: "View Tickets",
+    secondaryCtaLabel: CTA_LABELS.tickets,
     secondaryCtaHref: "/tickets",
   },
   "/vip": {
@@ -28,7 +29,7 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     description: "Table bookings and elevated experiences are opening soon.",
     primaryCtaLabel: "Request VIP Access",
     primaryCtaHref: "mailto:events@monolithproject.com?subject=VIP%20%26%20Tables%20Inquiry",
-    secondaryCtaLabel: "View Tickets",
+    secondaryCtaLabel: CTA_LABELS.tickets,
     secondaryCtaHref: "/tickets",
   },
   "/ambassadors": {
@@ -46,14 +47,14 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     description: "Preferred hotel blocks and travel guidance are being finalized.",
     primaryCtaLabel: "Get Travel Updates",
     primaryCtaHref: "/newsletter",
-    secondaryCtaLabel: "View Schedule",
+    secondaryCtaLabel: CTA_LABELS.schedule,
     secondaryCtaHref: "/schedule",
   },
   "/guide": {
     title: "Arrival Guide",
     headline: "Arrival Guide",
     description: "Venue entry, timing, and check-in guidance will be published soon.",
-    primaryCtaLabel: "View Tickets",
+    primaryCtaLabel: CTA_LABELS.tickets,
     primaryCtaHref: "/tickets",
     secondaryCtaLabel: "Contact Team",
     secondaryCtaHref: "/contact",
@@ -80,7 +81,7 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     title: "Archive",
     headline: "Archive",
     description: "A full archive of events, visuals, and stories is coming soon.",
-    primaryCtaLabel: "Listen on Radio",
+    primaryCtaLabel: CTA_LABELS.radioHub,
     primaryCtaHref: "/radio",
     secondaryCtaLabel: "View Gallery",
     secondaryCtaHref: "/",
@@ -91,7 +92,7 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     description: "A centralized FAQ page is being assembled.",
     primaryCtaLabel: "Contact Team",
     primaryCtaHref: "/contact",
-    secondaryCtaLabel: "View Tickets",
+    secondaryCtaLabel: CTA_LABELS.tickets,
     secondaryCtaHref: "/tickets",
   },
 };
@@ -102,7 +103,7 @@ const FALLBACK_CONTENT: ComingSoonConfig = {
   description: "This page is being prepared.",
   primaryCtaLabel: "Contact Team",
   primaryCtaHref: "/contact",
-  secondaryCtaLabel: "View Tickets",
+  secondaryCtaLabel: CTA_LABELS.tickets,
   secondaryCtaHref: "/tickets",
 };
 
@@ -119,7 +120,7 @@ export default function ComingSoon() {
       <SEO title={content.title} description={content.description} noIndex />
       <Navigation />
 
-      <main id="main-content" tabIndex={-1} className="pt-40 pb-24 px-6">
+      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <div className="container max-w-3xl mx-auto text-center">
           <p className="font-mono text-xs tracking-[0.24em] uppercase text-primary/80 mb-6">Monolith Project</p>
           <h1 className="font-display text-5xl md:text-7xl tracking-tight-display mb-6">{content.headline}</h1>

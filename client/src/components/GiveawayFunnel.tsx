@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, User, Instagram, Sparkles, Copy, CheckCircle, ArrowRight, Gift } from "lucide-react";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 export default function GiveawayFunnel() {
     const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
@@ -8,9 +9,11 @@ export default function GiveawayFunnel() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        signalChirp.click();
         setStatus("loading");
         // Simulate API request
         setTimeout(() => {
+            signalChirp.boot();
             setStatus("success");
         }, 1500);
     };
@@ -22,60 +25,78 @@ export default function GiveawayFunnel() {
     };
 
     return (
-        <section className="relative w-full py-20 lg:py-32 overflow-hidden bg-black flex items-center justify-center border-y border-white/10">
-            {/* Background Orbs */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[#E8B86D]/20 to-[#E05A3A]/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#8B5CF6]/10 to-[#22D3EE]/10 rounded-full blur-[100px] pointer-events-none" />
+        <section className="relative w-full py-24 lg:py-40 overflow-hidden bg-black flex items-center justify-center border-y border-white/5">
+            {/* Architectural Grid Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:50px_50px]" />
+            </div>
+
+            {/* Atmosphere Orbs */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container relative z-10 px-4 md:px-6">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="max-w-5xl mx-auto rounded-[2rem] p-[1px] bg-gradient-to-b from-white/20 via-white/5 to-transparent relative"
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-6xl mx-auto rounded-[2.5rem] p-[1px] bg-gradient-to-b from-white/10 via-white/5 to-transparent relative shadow-[0_40px_100px_rgba(0,0,0,0.6)] bg-scanlines"
                 >
-                    {/* Inner dark card */}
-                    <div className="bg-black/80 backdrop-blur-2xl rounded-[2rem] overflow-hidden grid lg:grid-cols-5 relative">
+                    {/* Inner Card: Secure Access Protocol */}
+                    <div className="bg-[#0a0a0c]/80 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden grid lg:grid-cols-12 relative">
+                        
+                        {/* Header/Prize Section */}
+                        <div className="lg:col-span-7 p-10 lg:p-20 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
 
-                        {/* Left Side: Prize Details */}
-                        <div className="lg:col-span-3 p-8 lg:p-14 border-b lg:border-b-0 lg:border-r border-white/5 relative">
-                            <div className="absolute top-0 left-0 w-[150px] h-[150px] bg-white/5 blur-[50px] rounded-full pointer-events-none" />
-
-                            <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border border-white/20 bg-white/5">
-                                <Gift className="w-3.5 h-3.5 text-[#E8B86D]" />
-                                <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase text-[#E8B86D]">
-                                    Ultimate Event Experience
+                            <motion.div 
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.3, duration: 1 }}
+                                className="inline-flex items-center gap-3 px-4 py-2 mb-10 rounded-full border border-primary/20 bg-primary/5"
+                            >
+                                <div className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
+                                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-primary font-bold">
+                                    Transmission: Open Entry
                                 </span>
-                            </div>
+                            </motion.div>
 
-                            <h2 className="font-display text-4xl lg:text-5xl uppercase tracking-widest text-white mb-6 leading-tight">
-                                Win <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/50">The Weekend</span>
+                            <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-[0.05em] text-white mb-10 leading-[0.9] drop-shadow-2xl">
+                                Access the <span className="text-primary italic">Decrypted</span> <br />Room
                             </h2>
 
-                            <p className="text-white/70 text-sm md:text-base mb-8 max-w-md">
-                                Enter now for a chance to win the ultimate Monolith Project experience for you and a friend. We're flying one lucky winner out for our biggest show yet.
+                            <div className="h-px w-20 bg-white/10 mb-10" />
+
+                            <p className="text-white/50 text-base md:text-lg mb-12 max-w-lg leading-relaxed font-mono uppercase tracking-widest text-balance">
+                                The Monolith Project is an architectural response to the night. Register your signal to secure a position in the next sequence.
                             </p>
 
-                            <div className="space-y-4 font-mono text-sm">
+                            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6 font-mono text-[11px] tracking-[0.15em] uppercase">
                                 {[
-                                    "2x VIP Backstage Passes",
-                                    "Flights & Hotel Accommodations",
-                                    "Meet & Greet with Headliners",
-                                    "Exclusive Merch Pack"
+                                    { text: "Priority Guest Access", icon: Gift },
+                                    { text: "Private Room Entry", icon: Sparkles },
+                                    { text: "Artist Connectivity", icon: CheckCircle },
+                                    { text: "System Records", icon: Gift }
                                 ].map((perk, i) => (
-                                    <div key={i} className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                                            <Sparkles className="w-3.5 h-3.5 text-white/60" />
+                                    <motion.div 
+                                        key={i} 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.5 + (i * 0.1), duration: 0.8 }}
+                                        className="flex items-center gap-4 group"
+                                    >
+                                        <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center shrink-0 group-hover:border-primary/40 transition-colors duration-500">
+                                            <perk.icon className="w-4 h-4 text-white/30 group-hover:text-primary transition-colors duration-500" />
                                         </div>
-                                        <span className="text-white/80">{perk}</span>
-                                    </div>
+                                        <span className="text-white/40 group-hover:text-white/70 transition-colors duration-500">{perk.text}</span>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Right Side: The Viral Funnel Form */}
-                        <div className="lg:col-span-2 p-8 lg:p-12 relative flex flex-col justify-center bg-white/[0.02]">
+                        {/* Form Section: Entry Protocol */}
+                        <div className="lg:col-span-5 p-10 lg:p-16 relative flex flex-col justify-center bg-white/[0.01]">
                             <AnimatePresence mode="wait">
                                 {status === "success" ? (
                                     <motion.div
@@ -88,37 +109,37 @@ export default function GiveawayFunnel() {
                                             initial={{ scale: 0 }}
                                             animate={{ scale: 1 }}
                                             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                                            className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-6 border border-green-500/20"
+                                            className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-10 border border-primary/20"
                                         >
-                                            <CheckCircle className="w-8 h-8 text-green-400" />
+                                            <CheckCircle className="w-10 h-10 text-primary" />
                                         </motion.div>
 
-                                        <h3 className="font-display text-2xl uppercase text-white mb-2">You're Entered!</h3>
-                                        <p className="text-sm text-white/60 mb-8 font-mono">
-                                            Want to increase your chances?
+                                        <h3 className="font-display text-3xl uppercase text-white mb-4 tracking-widest">Signal Locked</h3>
+                                        <p className="text-[11px] text-white/40 mb-10 font-mono uppercase tracking-[0.2em] max-w-xs">
+                                            Your presence has been registered in the system.
                                         </p>
 
-                                        <div className="w-full bg-white/5 border border-white/10 rounded-xl p-6 text-left mb-6 relative overflow-hidden">
-                                            <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-                                                <Gift className="w-24 h-24" />
+                                        <div className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-8 text-left mb-6 relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 p-6 opacity-[0.02] pointer-events-none text-white group-hover:opacity-[0.05] transition-opacity duration-700">
+                                                <Sparkles className="w-32 h-32" />
                                             </div>
-                                            <h4 className="text-white font-mono text-sm mb-2 uppercase tracking-widest">Viral Multiplier</h4>
-                                            <p className="text-white/50 text-xs mb-4">
-                                                Share your unique invite link below. When 3 friends enter, you get <strong>10 extra entries</strong> automatically.
+                                            <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">Network Multiplication</h4>
+                                            <p className="text-white/40 text-[11px] mb-8 leading-relaxed font-mono uppercase tracking-widest">
+                                                The sequence strengthens through resonance. Use this unique identifier to invite others. 3 successful connections = Level 2 Priority.
                                             </p>
 
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-3">
                                                 <input
                                                     type="text"
                                                     readOnly
                                                     value="monolithproject.com/win/ref-x89f2a"
-                                                    className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 px-3 text-xs text-white/70 font-mono outline-none"
+                                                    className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-5 text-[10px] text-white/60 font-mono outline-none focus:border-primary/50 transition-colors uppercase tracking-widest"
                                                 />
                                                 <button
                                                     onClick={copyToClipboard}
-                                                    className="shrink-0 bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-lg transition-colors"
+                                                    className="shrink-0 bg-primary h-12 w-12 flex items-center justify-center text-white rounded-xl hover:bg-white hover:text-black transition-all duration-500 shadow-lg shadow-primary/20"
                                                 >
-                                                    {copied ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                                                    {copied ? <CheckCircle className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                                                 </button>
                                             </div>
                                         </div>
@@ -128,62 +149,74 @@ export default function GiveawayFunnel() {
                                         key="form"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
                                         onSubmit={handleSubmit}
-                                        className="space-y-4"
+                                        className="space-y-6"
                                     >
-                                        <div>
-                                            <h3 className="font-display text-2xl uppercase text-white mb-1">Enter to Win</h3>
-                                            <p className="text-xs font-mono text-white/50 mb-6 uppercase tracking-widest">Takes 30 seconds</p>
+                                        <div className="mb-8">
+                                            <div className="h-px w-8 bg-primary mb-4" />
+                                            <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.05em]">Protocol <span className="text-white/30">Entry</span></h3>
+                                            <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Authorize your sequence</p>
                                         </div>
 
-                                        <div className="space-y-1">
-                                            <div className="relative">
-                                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                                        <div className="space-y-4">
+                                            <div className="relative group">
+                                                <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
                                                 <input
                                                     required
                                                     type="text"
-                                                    placeholder="Your Name"
-                                                    className="w-full bg-black/50 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-all text-sm"
+                                                    placeholder="IDENTITY / NAME"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
-                                        </div>
 
-                                        <div className="space-y-1">
-                                            <div className="relative">
-                                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                                            <div className="relative group">
+                                                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
                                                 <input
                                                     required
                                                     type="email"
-                                                    placeholder="Email Address"
-                                                    className="w-full bg-black/50 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-all text-sm"
+                                                    placeholder="SIGNAL / EMAIL"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
-                                        </div>
 
-                                        <div className="space-y-1">
-                                            <div className="relative">
-                                                <Instagram className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                                            <div className="relative group">
+                                                <Instagram className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
                                                 <input
                                                     type="text"
-                                                    placeholder="@instagram_handle"
-                                                    className="w-full bg-black/50 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-all text-sm"
+                                                    placeholder="ORIGIN / @HANDLE"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
                                         </div>
 
-                                        <button
-                                            type="submit"
-                                            disabled={status === "loading"}
-                                            className="w-full mt-4 bg-white text-black py-4 rounded-xl font-bold tracking-widest uppercase text-xs hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2 group"
-                                        >
-                                            {status === "loading" ? "Submitting..." : "Drop My Name"}
-                                            {status !== "loading" && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-                                        </button>
+                                        <div className="pt-6">
+                                            <button
+                                                type="submit"
+                                                disabled={status === "loading"}
+                                                className="w-full bg-primary text-white py-5 rounded-xl font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-white hover:text-black transition-all duration-700 flex items-center justify-center gap-4 group shadow-[0_20px_40px_rgba(224,90,58,0.2)]"
+                                            >
+                                                {status === "loading" ? (
+                                                    <span className="flex items-center gap-3">
+                                                        <div className="h-4 w-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                                        Processing...
+                                                    </span>
+                                                ) : (
+                                                    <>
+                                                        Initialize Protocol
+                                                        <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                                                    </>
+                                                )}
+                                            </button>
+                                        </div>
 
-                                        <p className="text-[10px] text-center text-white/30 font-mono pt-2">
-                                            Must be 21+ to enter. Winner selected randomly next month.
-                                        </p>
+                                        <div className="flex items-center gap-3 pt-4">
+                                            <div className="h-px flex-1 bg-white/5" />
+                                            <p className="text-[9px] text-white/20 font-mono uppercase tracking-[0.2em] whitespace-nowrap">
+                                                Verification Required 21+
+                                            </p>
+                                            <div className="h-px flex-1 bg-white/5" />
+                                        </div>
                                     </motion.form>
                                 )}
                             </AnimatePresence>

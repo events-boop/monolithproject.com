@@ -28,7 +28,7 @@ const hotels = [
         area: "Fulton Market",
         dist: "0.4 miles from venue",
         price: "$$$",
-        desc: "Mid-century modern vibes. Great lobby bar for pre-game drinks. Very community focused.",
+        desc: "Mid-century modern design. Great lobby bar for pre-show drinks. Very community focused.",
         link: "https://acehotel.com/chicago/",
         code: "MONOLITH"
     }
@@ -67,7 +67,7 @@ export default function Travel() {
                 <div className="absolute inset-0 bg-noise opacity-[0.04]" />
             </div>
 
-            <main className="relative z-10 pt-44 md:pt-52 pb-32">
+            <main className="relative z-10 page-shell-start-loose pb-32">
                 <div className="container max-w-6xl mx-auto px-6">
 
                     {/* Header */}

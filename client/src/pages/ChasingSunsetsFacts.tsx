@@ -5,6 +5,7 @@ import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema } from "@/lib/schema";
+import { CTA_LABELS } from "@/lib/cta";
 import { POSH_TICKET_URL } from "@/data/events";
 import { Link } from "wouter";
 
@@ -28,7 +29,7 @@ const faqItems: Array<[string, string]> = [
 const officialLinks = [
   { label: "Official Chasing Sun(Sets) site", href: "/chasing-sunsets", external: false },
   { label: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts", external: false },
-  { label: "Official Radio Hub", href: "/radio", external: false },
+  { label: CTA_LABELS.radioHub, href: "/radio", external: false },
   { label: "Official Tickets", href: POSH_TICKET_URL, external: true },
   { label: "Instagram", href: "https://instagram.com/chasingsunsets.music", external: true },
   { label: "SoundCloud", href: "https://soundcloud.com/chasing-sun-sets", external: true },
@@ -57,7 +58,7 @@ export default function ChasingSunsetsFacts() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(224,90,58,0.14),transparent_34%),radial-gradient(circle_at_88%_18%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_72%_78%,rgba(139,92,246,0.11),transparent_36%)]" />
       <Navigation />
 
-      <main id="main-content" tabIndex={-1} className="pt-44 pb-24 px-6">
+      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <motion.section className="container max-w-5xl mx-auto" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-5">
@@ -85,7 +86,7 @@ export default function ChasingSunsetsFacts() {
             </div>
             <div className="mt-6 cta-stack">
               <Link href="/radio" className="btn-pill-coral">
-                Listen to Radio Episodes
+                {CTA_LABELS.radioHub}
               </Link>
               <a
                 href={POSH_TICKET_URL}
@@ -93,7 +94,7 @@ export default function ChasingSunsetsFacts() {
                 rel="noopener noreferrer"
                 className="btn-pill-dark"
               >
-                Buy Tickets
+                {CTA_LABELS.tickets}
               </a>
             </div>
           </div>

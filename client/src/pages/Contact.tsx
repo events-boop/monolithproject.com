@@ -59,7 +59,7 @@ export default function Contact() {
       {/* Atmosphere */}
       <div className="pointer-events-none fixed inset-0 z-0 atmo-surface opacity-35" />
 
-      <main className="relative z-10 pt-44 md:pt-48 pb-24">
+      <main className="relative z-10 page-shell-start-loose pb-24">
         <section className="px-6">
           <div className="container max-w-6xl mx-auto">
             <motion.div
