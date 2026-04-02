@@ -7,9 +7,10 @@ interface SectionDividerProps {
   number: string;
   label?: string;
   dark?: boolean;
+  glow?: string;
 }
 
-export default function SectionDivider({ id, number, label, dark }: SectionDividerProps) {
+export default function SectionDivider({ id, number, label, dark, glow }: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,6 +26,8 @@ export default function SectionDivider({ id, number, label, dark }: SectionDivid
   // Aggressive parallax for the large architectural number
   const yParallax = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
   const xParallax = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
+  const glowX = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
@@ -63,6 +66,21 @@ export default function SectionDivider({ id, number, label, dark }: SectionDivid
              </div>
           ))}
       </div>
+
+      {/* 🔮 ATMOSPHERIC GLOW */}
+      {glow && (
+        <motion.div
+           style={{ opacity: glowOpacity, x: glowX }}
+           className="absolute inset-0 pointer-events-none z-0"
+        >
+           <div 
+             className="absolute inset-x-[-20%] inset-y-[-100%] blur-[120px] opacity-[0.14]"
+             style={{
+               background: `radial-gradient(circle at center, ${glow}, transparent 70%)`
+             }}
+           />
+        </motion.div>
+      )}
 
       {/* 📟 PULSING SCANLINE */}
       <motion.div 

@@ -205,7 +205,14 @@ export default function Archive() {
     const [filter, setFilter] = useState<"all" | "chasing-sunsets" | "untold-story">("all");
     const [expanded, setExpanded] = useState<string | null>(null);
 
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+    useEffect(() => { 
+        window.scrollTo(0, 0); 
+    }, []);
+
+    const toggle = (id: string) => {
+        signalChirp.click();
+        setExpanded(expanded === id ? null : id);
+    };
 
     const filtered = filter === "all" ? archiveData : archiveData.filter((s) => s.series === filter);
 
@@ -289,15 +296,14 @@ export default function Archive() {
                         ))}
                     </div>
 
-                    {/* Archive grid */}
+                    {/* Archive grid — Fan Down Pattern */}
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={filter}
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="space-y-4"
+                            className="border-t border-white/10"
                         >
                             {filtered.map((season, idx) => {
                                 const badge = statusBadge[season.status];
@@ -305,166 +311,147 @@ export default function Archive() {
                                 const galleryHref = getSeasonGalleryHref(season);
 
                                 return (
-                                    <motion.div
-                                        key={season.id}
-                                        initial={{ opacity: 0, y: 16 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                                        className="relative overflow-hidden"
-                                        style={{ border: `1px solid ${isOpen ? season.borderColor : "rgba(255,255,255,0.07)"}`, transition: "border-color 0.3s" }}
+                                    <div 
+                                        key={season.id} 
+                                        id={season.id} 
+                                        className="w-full border-b border-white/10 flex flex-col group scroll-mt-32"
                                     >
-                                        {/* Top accent */}
-                                        <div
-                                            className="absolute top-0 left-0 right-0 h-[1px] transition-opacity duration-300"
-                                            style={{
-                                                background: `linear-gradient(to right, ${season.accentColor}80, ${season.accentColor}20, transparent)`,
-                                                opacity: isOpen ? 1 : 0.4,
-                                            }}
-                                        />
-
-                                        {/* Header row — always visible */}
                                         <button
-                                            onClick={() => { signalChirp.click(); setExpanded(isOpen ? null : season.id); }}
+                                            onClick={() => toggle(season.id)}
                                             onMouseEnter={() => signalChirp.hover()}
                                             data-cursor-image={season.coverImage}
-                                            className="w-full flex items-center gap-5 p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 group"
+                                            className="w-full text-left py-8 md:py-12 px-2 flex items-center justify-between hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:bg-white/[0.03]"
                                         >
-                                            {/* Cover thumbnail */}
-                                            <div
-                                                className="w-14 h-14 flex-shrink-0 bg-cover bg-center overflow-hidden relative"
-                                                style={{ backgroundImage: `url(${season.coverImage})` }}
-                                            >
-                                                <div className="w-full h-full" style={{ background: `${season.accentColor}30` }} />
-                                                {/* 🧬 MEMORY GLITCH OVERLAY */}
-                                                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity mix-blend-overlay group-hover:animate-pulse" />
-                                                <div className="absolute inset-0 bg-noise opacity-0 group-hover:opacity-[0.1] pointer-events-none" />
+                                            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-12 flex-grow">
+                                                <div className="flex items-center gap-4 min-w-[140px]">
+                                                    <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/30">
+                                                        {season.year}
+                                                    </span>
+                                                    <div className="flex-grow h-px bg-white/10 hidden md:block" />
+                                                </div>
+                                                
+                                                <div className="min-w-0 flex-grow">
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <SeriesIcon series={season.series} color={season.accentColor} />
+                                                        <span className="font-mono text-[9px] tracking-[0.25em] uppercase" style={{ color: season.accentColor }}>
+                                                            {season.title}
+                                                        </span>
+                                                        <span
+                                                            className="px-2 py-0.5 font-mono text-[8px] tracking-widest uppercase border"
+                                                            style={{ 
+                                                                background: `${badge.color}10`, 
+                                                                color: badge.color, 
+                                                                borderColor: `${badge.color}25` 
+                                                            }}
+                                                        >
+                                                            {badge.label}
+                                                        </span>
+                                                    </div>
+                                                    <h2 className="font-display text-3xl md:text-5xl uppercase tracking-widest text-white/90 group-hover:text-white group-hover:translate-x-2 transition-all duration-500">
+                                                        {season.season}
+                                                    </h2>
+                                                </div>
                                             </div>
 
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex flex-wrap items-center gap-3 mb-1">
-                                                    <SeriesIcon series={season.series} color={season.accentColor} />
-                                                    <span className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ color: season.accentColor }}>
-                                                        {season.title}
-                                                    </span>
-                                                    <span
-                                                        className="px-2 py-0.5 font-mono text-[8px] tracking-widest uppercase"
-                                                        style={{ background: badge.bg, color: badge.color, border: `1px solid ${badge.color}30` }}
-                                                    >
-                                                        {badge.label}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-baseline gap-3">
-                                                    <h2 className="font-display text-xl md:text-2xl uppercase text-white">{season.season}</h2>
-                                                    <span className="font-mono text-sm text-white/30">{season.year}</span>
-                                                </div>
-                                                <p className="text-sm text-white/40 mt-1 truncate">{season.subtitle}</p>
-                                            </div>
-
-                                            <div
-                                                className="flex-shrink-0 w-8 h-8 flex items-center justify-center transition-transform duration-300"
-                                                style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
-                                            >
-                                                <span className="text-white/30 text-xl leading-none">+</span>
+                                            <div className="w-12 h-12 rounded-full border border-white/10 flex flex-shrink-0 items-center justify-center group-hover:bg-white group-hover:border-white transition-all ml-4">
+                                                <motion.div
+                                                    animate={{ rotate: isOpen ? 45 : 0 }}
+                                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                                >
+                                                    <span className="text-white/60 group-hover:text-black transition-colors text-2xl font-light leading-none">+</span>
+                                                </motion.div>
                                             </div>
                                         </button>
 
-                                        {/* Expanded content */}
                                         <AnimatePresence initial={false}>
                                             {isOpen && (
                                                 <motion.div
                                                     initial={{ height: 0, opacity: 0 }}
                                                     animate={{ height: "auto", opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
-                                                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                                                    className="overflow-hidden"
+                                                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                                    className="overflow-hidden bg-white/[0.01]"
                                                 >
-                                                    <div className="px-6 pb-6 border-t border-white/6">
-                                                        {season.events.map((event, eIdx) => (
-                                                            <div key={eIdx} className="pt-6">
-                                                                {/* Event meta */}
-                                                                <div className="flex flex-wrap gap-4 mb-4">
-                                                                    {[
-                                                                        { icon: Calendar, text: event.date },
-                                                                        { icon: MapPin, text: `${event.venue} · ${event.location}` },
-                                                                    ].map(({ icon: Icon, text }) => (
-                                                                        <div key={text} className="flex items-center gap-2 text-xs text-white/40 font-mono">
-                                                                            <Icon className="w-3 h-3" style={{ color: season.accentColor }} />
-                                                                            {text}
-                                                                        </div>
-                                                                    ))}
-                                                                </div>
-
-                                                                {/* Lineup */}
-                                                                <div className="mb-4">
-                                                                    <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/25 mb-1">Lineup</p>
-                                                                    <p className="text-sm text-white/60">{event.lineup}</p>
-                                                                </div>
-
-                                                                {/* Highlight */}
-                                                                {event.highlight && (
-                                                                    <div
-                                                                        className="p-4 mb-5"
-                                                                        style={{ background: `${season.accentColor}08`, borderLeft: `2px solid ${season.accentColor}40` }}
-                                                                    >
-                                                                        <p className="text-sm text-white/55 leading-relaxed italic">"{event.highlight}"</p>
-                                                                    </div>
-                                                                )}
-
-                                                                {/* CTAs */}
-                                                                <div className="flex flex-wrap gap-3">
-                                                                    {event.hasFootage && galleryHref && (
-                                                                        <Link href={galleryHref} asChild>
-                                                                            <a
-                                                                                className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
-                                                                                style={{
-                                                                                    background: `${season.accentColor}12`,
-                                                                                    border: `1px solid ${season.accentColor}30`,
-                                                                                    color: season.accentColor,
-                                                                                }}
-                                                                            >
-                                                                                <Play className="w-3 h-3" />
-                                                                                Open Archive
-                                                                            </a>
-                                                                        </Link>
-                                                                    )}
-                                                                    {season.status === "active" && (
-                                                                        <Link href="/tickets" asChild>
-                                                                            <a
-                                                                                className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
-                                                                                style={{
-                                                                                    background: `${season.accentColor}12`,
-                                                                                    border: `1px solid ${season.accentColor}30`,
-                                                                                    color: season.accentColor,
-                                                                                }}
-                                                                            >
-                                                                                {CTA_LABELS.tickets}
-                                                                                <ArrowUpRight className="w-3 h-3" />
-                                                                            </a>
-                                                                        </Link>
-                                                                    )}
-                                                                    {season.status === "upcoming" && (
-                                                                        <Link href="/chasing-sunsets" asChild>
-                                                                            <a
-                                                                                className="inline-flex items-center gap-2 px-4 py-2 font-mono text-[10px] tracking-widest uppercase transition-all"
-                                                                                style={{
-                                                                                    background: `${season.accentColor}12`,
-                                                                                    border: `1px solid ${season.accentColor}30`,
-                                                                                    color: season.accentColor,
-                                                                                }}
-                                                                            >
-                                                                                {CTA_LABELS.sunSets}
-                                                                                <ArrowUpRight className="w-3 h-3" />
-                                                                            </a>
-                                                                        </Link>
-                                                                    )}
+                                                    <div className="px-6 md:px-12 pb-16 pt-4 border-t border-white/5">
+                                                        <div className="grid lg:grid-cols-12 gap-12 items-start">
+                                                            {/* Media Visual */}
+                                                            <div className="lg:col-span-5 relative aspect-[4/5] md:aspect-square overflow-hidden bg-white/5">
+                                                                <img 
+                                                                    src={season.coverImage} 
+                                                                    alt={season.title}
+                                                                    className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
+                                                                />
+                                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                                                <div className="absolute bottom-8 left-8">
+                                                                    <p className="text-white/60 text-sm max-w-xs italic leading-relaxed">
+                                                                        "{season.subtitle}"
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                        ))}
+
+                                                            {/* Event Details */}
+                                                            <div className="lg:col-span-7 space-y-12">
+                                                                {season.events.map((event, eIdx) => (
+                                                                    <div key={eIdx} className="space-y-8">
+                                                                        <div className="flex flex-wrap gap-x-12 gap-y-6">
+                                                                            <div className="flex flex-col gap-2">
+                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Temporal</span>
+                                                                                <div className="flex items-center gap-3 text-white text-lg font-display uppercase">
+                                                                                    <Calendar className="w-4 h-4" style={{ color: season.accentColor }} />
+                                                                                    {event.date}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="flex flex-col gap-2">
+                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Geographic</span>
+                                                                                <div className="flex items-center gap-3 text-white text-lg font-display uppercase">
+                                                                                    <MapPin className="w-4 h-4" style={{ color: season.accentColor }} />
+                                                                                    {event.venue} — {event.location}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 block mb-4">Frequency Selector</span>
+                                                                            <p className="text-xl md:text-2xl font-display text-white/80 leading-snug tracking-wider">
+                                                                                {event.lineup}
+                                                                            </p>
+                                                                        </div>
+
+                                                                        {event.highlight && (
+                                                                            <div className="p-6 bg-white/5 border-l-2 border-primary/40">
+                                                                                <p className="text-white/50 text-sm leading-relaxed italic">
+                                                                                    {event.highlight}
+                                                                                </p>
+                                                                            </div>
+                                                                        )}
+
+                                                                        <div className="flex flex-wrap gap-4 pt-4">
+                                                                            {event.hasFootage && galleryHref && (
+                                                                                <Link href={galleryHref} asChild>
+                                                                                    <a className="px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all duration-300 font-mono text-[10px] tracking-widest uppercase flex items-center gap-3 group/btn">
+                                                                                        <Play className="w-3 h-3 transition-transform group-hover/btn:scale-110" />
+                                                                                        Access Archive
+                                                                                    </a>
+                                                                                </Link>
+                                                                            )}
+                                                                            {season.status === "active" && (
+                                                                                <Link href="/tickets" asChild>
+                                                                                    <a className="px-8 py-4 bg-primary text-white hover:bg-primary/90 transition-all duration-300 font-mono text-[10px] tracking-widest uppercase flex items-center gap-3">
+                                                                                        Get Tickets
+                                                                                        <ArrowUpRight className="w-3 h-3" />
+                                                                                    </a>
+                                                                                </Link>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
-                                    </motion.div>
+                                    </div>
                                 );
                             })}
                         </motion.div>

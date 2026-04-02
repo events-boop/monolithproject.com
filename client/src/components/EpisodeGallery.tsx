@@ -57,7 +57,7 @@ export default function EpisodeGallery({
                     )}
                 </div>
                 <div className="flex items-center gap-3">
-                    <Link href={`/${series}/gallery/${season.replace(/\s+/g, "-").toLowerCase()}`} asChild>
+                    <Link href={`/${series}/${season.replace(/\s+/g, "-").toLowerCase()}`} asChild>
                         <a
                             className="px-6 py-2.5 rounded-full font-mono text-[10px] tracking-widest uppercase border hover:bg-white/5 transition-all flex items-center gap-2 text-white"
                             style={{ borderColor: `${accentColor}40` }}

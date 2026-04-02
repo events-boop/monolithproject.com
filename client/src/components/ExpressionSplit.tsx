@@ -58,8 +58,8 @@ export default function ExpressionSplit() {
   };
 
   return (
-    <section className="relative min-h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
-      <div className="flex h-full w-full flex-col lg:flex-row">
+    <section className="relative h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
+      <div className="flex flex-col lg:flex-row h-full w-full">
         {expressions.map((exp, index) => (
           <motion.div
             key={exp.id}

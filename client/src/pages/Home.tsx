@@ -65,11 +65,11 @@ export default function Home() {
         <HeroSection />
         <FeaturedCampaigns />
 
-        <SectionDivider id="series" number="01" label="The Series" />
+        <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" />
         <ExpressionSplit />
         <WhatToExpect />
 
-        <SectionDivider id="season" number="02" label="The Season" dark={false} />
+        <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
         <ScheduleSection />
         
         {/* Official Campaign Countdowns Stack */}
@@ -81,7 +81,7 @@ export default function Home() {
         {/* Gradient bridge: cream schedule → black rooms */}
         <div className="h-24 w-full bg-gradient-to-b from-[#EAEAEA] to-[#050505]" />
 
-        <SectionDivider id="collective" number="03" label="The Collective" />
+        <SectionDivider id="collective" number="03" label="The Collective" glow="rgba(255,255,255,0.15)" />
         <MovementSection />
 
         <ViewportLazy minHeightClassName="min-h-[60vh]">
@@ -109,17 +109,24 @@ export default function Home() {
           </div>
         </div>
 
-        <SectionDivider id="roster" number="04" label="The Roster" />
-        <TextLineupSection />
         <NightInNumbers />
 
         {/* Collapsible SS-Tier Showcase Modules */}
         <HomeShowcaseAccordion items={[
           {
+            id: "roster",
+            number: "04",
+            title: "The Roster",
+            subtitle: "Collective · Selectors",
+            previewImage: "/images/artists-collective.jpg",
+            content: <TextLineupSection />
+          },
+          {
             id: "journal",
             number: "05",
             title: "The Longest Record",
             subtitle: "Beyond the night · Editorials",
+            previewImage: "/images/editorial-bg.jpg",
             content: <EditorialSignalsSection />
           },
           {
@@ -127,6 +134,7 @@ export default function Home() {
             number: "06",
             title: "Captured Moments",
             subtitle: "The Archive · Visual Records",
+            previewImage: "/images/autograf-recap.jpg",
             content: (
               <ViewportLazy minHeightClassName="min-h-[520px]">
                 <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
@@ -140,6 +148,7 @@ export default function Home() {
             number: "07",
             title: "Radio Transmission",
             subtitle: "Mixes · Curated Sound",
+            previewImage: "/images/radio-show.jpg",
             content: (
               <ViewportLazy minHeightClassName="min-h-[420px]">
                 <div className="bg-card">
@@ -152,7 +161,7 @@ export default function Home() {
           }
         ]} />
 
-        <SectionDivider id="community" number="08" label="Inner Circle" />
+        <SectionDivider id="community" number="08" label="Inner Circle" glow="#D4A574" />
         {funnelEvent ? <EventFunnelStack eventId={funnelEvent.id} /> : null}
 
         <NewsletterSection source="homepage_bottom" />

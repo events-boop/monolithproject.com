@@ -115,16 +115,16 @@ export default function FeaturedCampaigns() {
                 
                 <div className="w-full relative overflow-hidden bg-black/40 rounded-[12px]">
                   {/* Using a placeholder Spotify track ID - standard house mix */}
+                  {/* Swapping restricted Spotify embed for a reliable SoundCloud Monolith session */}
                   <iframe 
-                    style={{ borderRadius: '12px', background: 'transparent' }} 
-                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXa2PvUprniZG?utm_source=generator&theme=0" 
                     width="100%" 
-                    height="152" 
-                    frameBorder="0" 
-                    allowFullScreen 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="lazy">
-                  </iframe>
+                    height="166" 
+                    scrolling="no" 
+                    frameBorder="no" 
+                    allow="autoplay" 
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2270398436&color=%23E05A3A&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
+                    className="rounded-xl opacity-80 hover:opacity-100 transition-opacity"
+                  ></iframe>
                 </div>
             </div>
         </div>

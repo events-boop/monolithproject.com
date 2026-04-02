@@ -183,13 +183,9 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);
 
-  const shellTransform = isDrawerActive ? "translateY(4px) scale(0.994)" : "none";
-  const shellOpacity = isDrawerActive ? 0.88 : isSensoryOverloadActive ? 0.96 : 1;
-  const shellFilter = isDrawerActive
-    ? "blur(8px) saturate(0.9)"
-    : isSensoryOverloadActive
-      ? "blur(1.5px) saturate(0.98)"
-      : "none";
+  const shellTransform = isDrawerActive ? "translateY(0) scale(0.985)" : "none";
+  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.96 : 1;
+  const shellFilter = isSensoryOverloadActive ? "blur(1px) saturate(0.98)" : "none";
 
   return (
     <>
@@ -199,11 +195,12 @@ function MainContentWrapper() {
       <GlobalTicketButton />
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,
           filter: shellFilter,
+          pointerEvents: isDrawerActive ? "none" : "auto",
         }}
       >
         <Router />

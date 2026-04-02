@@ -301,7 +301,7 @@ export default function ChasingSunsets() {
               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season II</span>
               <h4 className="font-display text-2xl uppercase text-white mb-4">Expanded Horizons</h4>
               <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Bigger rooms, deeper grooves, more golden hours. 2025 Archives.</p>
-              <Link href="/chasing-sunsets/season-2" asChild>
+              <Link href="/chasing-sunsets/season-ii" asChild>
                 <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
                   View Archive <ArrowUpRight className="w-4 h-4" />
                 </a>
@@ -311,7 +311,7 @@ export default function ChasingSunsets() {
               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season III</span>
               <h4 className="font-display text-2xl uppercase text-white mb-4">The Next Chapter</h4>
               <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">The season is coming. Golden hour, elevated. 2026 Archives.</p>
-              <Link href="/chasing-sunsets/season-3" asChild>
+              <Link href="/chasing-sunsets/season-iii" asChild>
                 <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
                   View Archive <ArrowUpRight className="w-4 h-4" />
                 </a>

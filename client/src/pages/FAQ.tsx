@@ -6,6 +6,7 @@ import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const categories = [
     {
@@ -229,90 +230,93 @@ export default function FAQ() {
                     </motion.div>
                     <EntityBoostStrip tone="nocturne" className="px-0 mb-10" contextLabel="FAQ + Official Identity Links" />
 
-                    <div className="grid lg:grid-cols-12 gap-10">
-
-                        {/* Category sidebar */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -16 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                            className="lg:col-span-3"
-                        >
-                            <div className="space-y-1 lg:sticky lg:top-32 luxe-surface-dark p-2 md:p-3">
-                                {categories.map((cat, idx) => (
-                                    <button
-                                        key={cat.label}
-                                        onClick={() => setActiveCategory(idx)}
-                                        className="w-full min-h-[44px] flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                                        style={{
-                                            background: activeCategory === idx ? `${cat.color}12` : "transparent",
-                                            borderLeft: `2px solid ${activeCategory === idx ? cat.color : "transparent"}`,
-                                        }}
-                                    >
-                                        <cat.icon className="w-4 h-4 flex-shrink-0" style={{ color: activeCategory === idx ? cat.color : "rgba(255,255,255,0.3)" }} />
-                                        <span className={`text-xs font-mono tracking-widest uppercase transition-colors ${activeCategory === idx ? "text-white" : "text-white/35 hover:text-white/60"}`}>
-                                            {cat.label}
-                                        </span>
-                                    </button>
-                                ))}
-
-                                <div className="pt-6 mt-4 border-t border-white/8">
-                                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mb-3 px-4">Still need help?</p>
-                                    <a
-                                        href="mailto:events@monolithproject.com"
-                                        className="flex items-center gap-2 px-4 py-2.5 text-xs text-primary/70 hover:text-primary transition-colors font-mono"
-                                    >
-                                        <HelpCircle className="w-3.5 h-3.5" />
-                                        Email us
-                                    </a>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* FAQ content */}
-                        <div className="lg:col-span-9">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeCategory}
-                                    initial={{ opacity: 0, y: 12 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -8 }}
-                                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                                    className="relative overflow-hidden p-8 md:p-10 luxe-surface-dark"
+                    <div className="max-w-4xl mx-auto space-y-4">
+                        {categories.map((cat, idx) => {
+                            const isCatOpen = activeCategory === idx;
+                            return (
+                                <div 
+                                    key={cat.label} 
+                                    className="border-b border-white/10 flex flex-col group scroll-mt-32 backdrop-blur-sm"
                                 >
-                                    {/* Top accent */}
-                                    <div
-                                        className="absolute top-0 left-0 right-0 h-[1px]"
-                                        style={{ background: `linear-gradient(to right, ${current.color}80, ${current.color}20, transparent)` }}
-                                    />
-
-                                    <div className="flex items-center gap-3 mb-8">
-                                        <div
-                                            className="w-9 h-9 flex items-center justify-center"
-                                            style={{ background: `${current.color}15`, border: `1px solid ${current.color}30` }}
-                                        >
-                                            <current.icon className="w-4 h-4" style={{ color: current.color }} />
+                                    {/* Category Header */}
+                                    <button
+                                        onClick={() => {
+                                            signalChirp.click();
+                                            setActiveCategory(isCatOpen ? -1 : idx);
+                                        }}
+                                        onMouseEnter={() => signalChirp.hover()}
+                                        className="w-full text-left py-8 md:py-10 px-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:bg-white/[0.03]"
+                                    >
+                                        <div className="flex items-center gap-6">
+                                            <div 
+                                                className="w-10 h-10 flex items-center justify-center rounded-none"
+                                                style={{ background: `${cat.color}15`, border: `1px solid ${cat.color}30` }}
+                                            >
+                                                <cat.icon className="w-4 h-4" style={{ color: cat.color }} />
+                                            </div>
+                                            <h2 className="font-display text-2xl md:text-3xl uppercase tracking-widest text-white/90 group-hover:text-white transition-all duration-300">
+                                                {cat.label}
+                                            </h2>
                                         </div>
-                                        <h2 className="font-display text-xl uppercase tracking-wide text-white">
-                                            {current.label}
-                                        </h2>
-                                    </div>
 
-                                    <div>
-                                        {current.faqs.map((faq, idx) => (
-                                            <FAQItem
-                                                key={idx}
-                                                q={faq.q}
-                                                a={faq.a}
-                                                isOpen={openIndex === idx}
-                                                onToggle={() => setOpenIndex(openIndex === idx ? null : idx)}
-                                            />
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
+                                        <div className="w-10 h-10 rounded-full border border-white/10 flex flex-shrink-0 items-center justify-center group-hover:bg-white group-hover:border-white transition-all">
+                                            <motion.div
+                                                animate={{ rotate: isCatOpen ? 45 : 0 }}
+                                                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                            >
+                                                <Plus className="w-5 h-5 text-white/60 group-hover:text-black transition-colors" />
+                                            </motion.div>
+                                        </div>
+                                    </button>
+
+                                    {/* Category Content */}
+                                    <AnimatePresence initial={false}>
+                                        {isCatOpen && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                                className="overflow-hidden"
+                                            >
+                                                <div className="px-4 md:px-16 pb-12 pt-4">
+                                                    <div className="space-y-2">
+                                                        {cat.faqs.map((faq, fIdx) => (
+                                                            <FAQItem
+                                                                key={fIdx}
+                                                                q={faq.q}
+                                                                a={faq.a}
+                                                                isOpen={openIndex === fIdx}
+                                                                onToggle={() => {
+                                                                    signalChirp.click();
+                                                                    setOpenIndex(openIndex === fIdx ? null : fIdx);
+                                                                }}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            );
+                        })}
                     </div>
+
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="mt-24 pt-12 border-t border-white/10 text-center"
+                    >
+                        <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">Still Have Questions?</p>
+                        <a
+                            href="mailto:events@monolithproject.com"
+                            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-mono text-[10px] tracking-[0.25em] uppercase hover:bg-white/90 transition-all"
+                        >
+                            <HelpCircle className="w-4 h-4" />
+                            Direct Inquiry
+                        </a>
+                    </motion.div>
 
                 </div>
             </main>

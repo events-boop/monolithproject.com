@@ -8,21 +8,55 @@ interface AccordionItem {
   title: string;
   subtitle: string;
   content: React.ReactNode;
+  previewImage?: string;
 }
 
 interface Props {
   items: AccordionItem[];
 }
 
+import { signalChirp } from "@/lib/SignalChirpEngine";
+
 export default function HomeShowcaseAccordion({ items }: Props) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleMouse = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouse);
+    return () => window.removeEventListener("mousemove", handleMouse);
+  }, []);
 
   const toggle = (id: string) => {
+    signalChirp.click();
     setOpenId(openId === id ? null : id);
   };
 
   return (
-    <div className="w-full flex flex-col border-t border-white/10 mt-12 mb-12">
+    <div className="w-full flex flex-col border-t border-white/10 mt-12 mb-12 relative">
+      {/* High-End Cursor Image Follower */}
+      <AnimatePresence>
+        {hoveredImage && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, mass: 1 }}
+            className="fixed pointer-events-none z-[100] w-64 h-64 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+            style={{
+              left: mousePos.x - 128,
+              top: mousePos.y - 128,
+            }}
+          >
+            <img src={hoveredImage} alt="Preview" className="w-full h-full object-cover scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {items.map((item) => {
         const isOpen = openId === item.id;
         return (
@@ -30,6 +64,11 @@ export default function HomeShowcaseAccordion({ items }: Props) {
             {/* Header / Trigger */}
             <button
               onClick={() => toggle(item.id)}
+              onMouseEnter={() => {
+                signalChirp.hover();
+                if (item.previewImage) setHoveredImage(item.previewImage);
+              }}
+              onMouseLeave={() => setHoveredImage(null)}
               className="w-full text-left py-8 md:py-12 px-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:bg-white/[0.03]"
             >
               <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">

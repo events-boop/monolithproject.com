@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { AnimatePresence, motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -57,7 +57,16 @@ const architectureExpressions = [
 
 const aboutCollectiveImage = getResponsiveImage("artistsCollective");
 
+import { signalChirp } from "@/lib/SignalChirpEngine";
+import { Plus } from "lucide-react";
+
 export default function About() {
+  const [expandedArchitecture, setExpandedArchitecture] = useState<string | null>(null);
+
+  const toggleArchitecture = (title: string) => {
+    signalChirp.click();
+    setExpandedArchitecture(expandedArchitecture === title ? null : title);
+  };
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -237,48 +246,71 @@ export default function About() {
               </p>
             </motion.div>
 
-            <div className="lg:w-2/3 grid gap-px bg-white/[0.03] border border-white/[0.03] rounded-none overflow-hidden">
-              {architectureExpressions.map((expression, index) => (
-                <motion.div
-                  key={expression.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-[#050505]"
-                >
-                  <Link
-                    href={expression.href}
-                    className="group flex flex-col md:flex-row md:items-center gap-8 p-10 md:p-14 transition-all duration-700 hover:bg-white/[0.01]"
+            <div className="lg:w-2/3 flex flex-col border-t border-white/10">
+              {architectureExpressions.map((expression) => {
+                const isExpanded = expandedArchitecture === expression.title;
+                return (
+                  <div 
+                    key={expression.title}
+                    className="w-full border-b border-white/10 flex flex-col group scroll-mt-32 backdrop-blur-sm"
                   >
-                    <div className="flex-1">
-                      <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/60 mb-4 block group-hover:text-primary transition-colors">
-                        {expression.label}
-                      </span>
-                      <h3 className={`uppercase leading-[0.9] text-white transition-all duration-700 group-hover:tracking-wider ${
-                        expression.label === "Open Air" ? "font-sunsets text-[2rem] md:text-[2.8rem]" :
-                        expression.label === "Late Night" ? "font-untold text-[2rem] md:text-[2.8rem]" :
-                        expression.label === "Signal" ? "font-radio text-[1.8rem] md:text-[2.4rem]" :
-                        "font-monolith text-[2.2rem] md:text-[3rem]"
-                      }`}>
-                        {expression.title}
-                      </h3>
-                      <p className="mt-6 text-base leading-relaxed text-white/30 group-hover:text-white/60 transition-all duration-700 max-w-xl">
-                        {expression.description}
-                      </p>
-                    </div>
-                    
-                    <div className="flex flex-col items-start md:items-end gap-6">
-                       <div className="h-12 w-12 rounded-none border border-white/5 flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all duration-700">
-                          <ArrowUpRight className="w-5 h-5 text-white/20 group-hover:text-primary transition-all duration-700 group-hover:scale-110" />
-                       </div>
-                       <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-all duration-700">
-                          {expression.cta}
-                       </span>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                    {/* Category Header */}
+                    <button
+                      onClick={() => toggleArchitecture(expression.title)}
+                      onMouseEnter={() => signalChirp.hover()}
+                      className="w-full text-left py-10 md:py-14 flex items-center justify-between hover:bg-white/[0.01] transition-all duration-500 focus-visible:outline-none focus-visible:bg-white/[0.03]"
+                    >
+                      <div className="flex-1">
+                        <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/60 mb-4 block group-hover:text-primary transition-colors">
+                          {expression.label}
+                        </span>
+                        <h3 className={`uppercase leading-[0.9] text-white transition-all duration-700 group-hover:translate-x-2 ${
+                            expression.label === "Open Air" ? "font-sunsets text-[2.2rem] md:text-[3.2rem]" :
+                            expression.label === "Late Night" ? "font-untold text-[2.2rem] md:text-[3.2rem]" :
+                            expression.label === "Signal" ? "font-radio text-[2rem] md:text-[2.8rem]" :
+                            "font-monolith text-[2.4rem] md:text-[3.4rem]"
+                        }`}>
+                          {expression.title}
+                        </h3>
+                      </div>
+
+                      <div className="h-12 w-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500 ml-6">
+                        <motion.div
+                          animate={{ rotate: isExpanded ? 45 : 0 }}
+                          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          <Plus className="w-5 h-5 text-white/40 group-hover:text-black transition-colors" />
+                        </motion.div>
+                      </div>
+                    </button>
+
+                    {/* Category Content */}
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-14 pt-2">
+                             <p className="text-xl md:text-2xl leading-relaxed text-white/60 font-light max-w-2xl mb-10">
+                                {expression.description}
+                             </p>
+                             <Link href={expression.href} asChild>
+                               <a className="inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all duration-300 font-mono text-[10px] tracking-widest uppercase">
+                                 {expression.cta}
+                                 <ArrowUpRight className="w-3 h-3" />
+                               </a>
+                             </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

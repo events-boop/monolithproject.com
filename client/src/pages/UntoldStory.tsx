@@ -78,7 +78,7 @@ export default function UntoldStory() {
                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season II</span>
                 <h4 className="font-display text-2xl uppercase text-white mb-4">The Story Grows</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">360° sound. Deeper rooms. The records of 2025.</p>
-                <Link href="/untold-story/season-2" asChild>
+                <Link href="/untold-story/season-ii" asChild>
                   <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">
                     View Archive <ArrowUpRight className="w-4 h-4" />
                   </a>
@@ -91,7 +91,7 @@ export default function UntoldStory() {
                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season III</span>
                 <h4 className="font-display text-2xl uppercase text-white mb-4">The Most Ambitious Chapter</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Currently unfolding. Unforgettable artist showcases.</p>
-                <Link href="/untold-story/season-3" asChild>
+                <Link href="/untold-story/season-iii" asChild>
                   <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">
                     View Archive <ArrowUpRight className="w-4 h-4" />
                   </a>

@@ -468,48 +468,48 @@ export const untoldSeason3: MediaItem[] = [
 ];
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
-  "chasing-sunsets-season-1": {
-    slug: "chasing-sunsets-season-1",
+  "chasing-sunsets-season-i": {
+    slug: "chasing-sunsets-season-i",
     title: "Chasing Sun(Sets) - Season I",
     subtitle: "Archive Collection",
     description: "Golden-hour frames, artist portraits, and moving records from the first season.",
     accentColor: "#E8B86D",
     media: chasingSeason1,
   },
-  "chasing-sunsets-season-2": {
-    slug: "chasing-sunsets-season-2",
+  "chasing-sunsets-season-ii": {
+    slug: "chasing-sunsets-season-ii",
     title: "Chasing Sun(Sets) - Season II",
     subtitle: "Archive Collection",
     description: "A tighter editorial cut from the second wave of the sunset series.",
     accentColor: "#E8B86D",
     media: chasingSeason2,
   },
-  "chasing-sunsets-season-3": {
-    slug: "chasing-sunsets-season-3",
+  "chasing-sunsets-season-iii": {
+    slug: "chasing-sunsets-season-iii",
     title: "Chasing Sun(Sets) - Season III",
     subtitle: "Archive Collection",
     description: "The latest wave of the shoreline series, featuring high-energy frames from the boat and beach club chapters.",
     accentColor: "#E8B86D",
     media: chasingSeason3,
   },
-  "untold-story-season-1": {
-    slug: "untold-story-season-1",
+  "untold-story-season-i": {
+    slug: "untold-story-season-i",
     title: "Untold Story - Season I",
     subtitle: "Archive Collection",
     description: "The first chapter of Untold Story in poster, crowd, and manifesto form.",
     accentColor: "#8B5CF6",
     media: untoldSeason1,
   },
-  "untold-story-season-2": {
-    slug: "untold-story-season-2",
+  "untold-story-season-ii": {
+    slug: "untold-story-season-ii",
     title: "Untold Story - Season II",
     subtitle: "Archive Collection",
     description: "Artist-led frames and portrait studies from the later Untold chapters.",
     accentColor: "#8B5CF6",
     media: untoldSeason2,
   },
-  "untold-story-season-3": {
-    slug: "untold-story-season-3",
+  "untold-story-season-iii": {
+    slug: "untold-story-season-iii",
     title: "Untold Story - Season III",
     subtitle: "Archive Collection",
     description: "The Deron B2B Juany Bravo chapter.",
