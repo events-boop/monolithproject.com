@@ -1,22 +1,24 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "wouter";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const lineupData = [
-  { name: "ADRIATIQUE", series: "untold" }, { name: "BEN BÖHMER [LIVE]", series: "sunsets" }, { name: "KEINEMUSIK", series: "sunsets" }, { name: "MONOLINK [LIVE]", series: "sunsets" },
-  { name: "Aaron Hibell" }, { name: "Acid Pauli" }, { name: "Anfisa Letyago" },
-  { name: "ANNA" }, { name: "Arodes" }, { name: "ARTBAT" }, { name: "Autograf" },
-  { name: "Benchek", series: "radio" }, { name: "berlioz" }, { name: "Carlita" }, { name: "Chris IDH", series: "radio" },
-  { name: "Deer Jade" }, { name: "Deron B2B Juany Bravo", series: "untold" }, { name: "Enfant Sauvage" }, { name: "Eran Hersh" },
-  { name: "Eric Prydz" }, { name: "Ewerseen", series: "radio" }, { name: "Étienne de Crécy" }, { name: "Funk Tribu" },
-  { name: "Ginton" }, { name: "Jimi Jules" }, { name: "Kasablanca" }, { name: "Kenya Grace" },
-  { name: "Kerri Chandler" }, { name: "KILIMANJARO" }, { name: "Kölsch" }, { name: "Lane 8" }, { name: "Lazare Sabry", series: "untold" },
-  { name: "LP Giobbi" }, { name: "Mahmut Orhan" }, { name: "Marten Lou" },
-  { name: "meera" }, { name: "Michael Bibi" }, { name: "Mind Against" }, { name: "Miss Monique" },
-  { name: "nimino" }, { name: "Parra for Cuva" }, { name: "Radian OFC", series: "radio" },
-  { name: "Rodrigo Gallardo" }, { name: "Röyksopp" }, { name: "Sammy Virji" },
-  { name: "Summers (UK)", series: "radio" }, { name: "Terranova", series: "radio" }, { name: "Thylacine" },
-  { name: "Vintage Culture" }, { name: "Weval" }, { name: "YOTTO" }
+  { name: "ADRIATIQUE", series: "untold", id: "adriatique" }, { name: "BEN BÖHMER [LIVE]", series: "sunsets", id: "ben-bohmer" }, { name: "KEINEMUSIK", series: "sunsets", id: "keinemusik" }, { name: "MONOLINK [LIVE]", series: "sunsets", id: "monolink" },
+  { name: "Aaron Hibell", id: "aaron-hibell" }, { name: "Acid Pauli", id: "acid-pauli" }, { name: "Anfisa Letyago", id: "anfisa-letyago" },
+  { name: "ANNA", id: "anna" }, { name: "Arodes", id: "arodes" }, { name: "ARTBAT", id: "artbat" }, { name: "Autograf", id: "autograf" },
+  { name: "Benchek", series: "radio", id: "benchek" }, { name: "berlioz", id: "berlioz" }, { name: "Carlita", id: "carlita" }, { name: "Chris IDH", series: "radio", id: "chris-idh" },
+  { name: "Deer Jade", id: "deer-jade" }, { name: "Deron B2B Juany Bravo", series: "untold", id: "deron-juany-bravo" }, { name: "Enfant Sauvage", id: "enfant-sauvage" }, { name: "Eran Hersh", id: "eran-hersh" },
+  { name: "Eric Prydz", id: "eric-prydz" }, { name: "Ewerseen", series: "radio", id: "ewerseen" }, { name: "Étienne de Crécy", id: "etienne-de-crecy" }, { name: "Funk Tribu", id: "funk-tribu" },
+  { name: "Ginton", id: "ginton" }, { name: "Jimi Jules", id: "jimi-jules" }, { name: "Kasablanca", id: "kasablanca" }, { name: "Kenya Grace", id: "kenya-grace" },
+  { name: "Kerri Chandler", id: "kerri-chandler" }, { name: "KILIMANJARO", id: "kilimanjaro" }, { name: "Kölsch", id: "koelsch" }, { name: "Lane 8", id: "lane-8" }, { name: "Lazare Sabry", series: "untold", id: "lazare-sabry" },
+  { name: "LP Giobbi", id: "lp-giobbi" }, { name: "Mahmut Orhan", id: "mahmut-orhan" }, { name: "Marten Lou", id: "marten-lou" },
+  { name: "meera", id: "meera" }, { name: "Michael Bibi", id: "michael-bibi" }, { name: "Mind Against", id: "mind-against" }, { name: "Miss Monique", id: "miss-monique" },
+  { name: "nimino", id: "nimino" }, { name: "Parra for Cuva", id: "parra-for-cuva" }, { name: "Radian OFC", series: "radio", id: "radian-ofc" },
+  { name: "Rodrigo Gallardo", id: "rodrigo-gallardo" }, { name: "Röyksopp", id: "royksopp" }, { name: "Sammy Virji", id: "sammy-virji" },
+  { name: "Summers (UK)", series: "radio", id: "summers-uk" }, { name: "Terranova", series: "radio", id: "terranova" }, { name: "Thylacine", id: "thylacine" },
+  { name: "Vintage Culture", id: "vintage-culture" }, { name: "Weval", id: "weval" }, { name: "YOTTO", id: "yotto" }
 ];
 
 // Map artists to specific ghost images where we have them
@@ -102,12 +104,11 @@ export default function TextLineupSection() {
         <div className="flex flex-col lg:flex-row justify-between items-start md:items-end mb-24 gap-12 lg:gap-24">
           <div className="max-w-2xl">
             <span className="ui-kicker block text-white/40 mb-6 font-mono tracking-[0.3em] uppercase">The Collective Roster</span>
-            <h2 className="font-heavy text-[clamp(2.5rem,8vw,9rem)] leading-[0.85] tracking-[-0.03em] uppercase mb-8">
-              <span className="block opacity-40">Selected For</span>
-              <span className="block">The Room.</span>
+            <h2 className="font-heavy text-[clamp(4.5rem,8vw,10rem)] leading-[0.82] tracking-tighter uppercase mb-10">
+              THE ARTISTS.
             </h2>
-            <p className="font-mono text-[10px] md:text-sm tracking-[0.14em] uppercase text-white/50 leading-relaxed max-w-md">
-              A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster. These are the artists who understand the paces of the night.
+            <p className="font-mono text-[10px] md:text-sm tracking-[0.14em] uppercase text-white/50 leading-relaxed max-w-xl">
+              Artists selected for the room, the chapter, and the pace of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
             </p>
           </div>
 
@@ -163,9 +164,13 @@ export default function TextLineupSection() {
                     setHoveredArtist(null);
                   }}
                 >
-                  <span className={`font-heavy text-[clamp(1.5rem,4vw,6rem)] uppercase tracking-tight leading-none transition-all duration-500 group-hover:tracking-normal group-hover:opacity-100 ${restingColor} ${hoverColor}`}>
+                  <Link
+                    href={`/artists/${artist.id}`}
+                    onClick={() => signalChirp.click()}
+                    className={`font-heavy text-[clamp(1.5rem,4vw,6rem)] uppercase tracking-tight leading-none transition-all duration-500 group-hover:tracking-normal group-hover:opacity-100 ${restingColor} ${hoverColor}`}
+                  >
                     {artist.name}
-                  </span>
+                  </Link>
 
                   {/* Micro-hover indicator */}
                   <div className={`absolute -bottom-2 md:-bottom-4 left-0 w-0 h-[2px] ${indicatorColor} transition-all duration-500 ease-out group-hover:w-full`} />

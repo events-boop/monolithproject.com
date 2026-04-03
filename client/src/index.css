@@ -12,18 +12,17 @@
 
 @theme inline {
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Bebas Neue', 'Arial Narrow', system-ui, sans-serif;
-  /* Restored thicker condensed display family */
-  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-display: 'Archivo Black', sans-serif; 
+  --font-serif: 'Cormorant Garamond', serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-script: 'Pinyon Script', cursive;
+  --font-script: 'Cormorant Garamond', serif;
 
   /* The 4 Distinct Brand Fonts */
   --font-heavy: 'Archivo Black', sans-serif;
   --font-monolith: 'Syncopate', sans-serif;
-  --font-sunsets: 'Marcellus', serif;
+  --font-sunsets: 'Cormorant Garamond', serif;
   --font-untold: 'Syne', sans-serif;
-  --font-radio: 'Space Mono', monospace;
+  --font-radio: 'JetBrains Mono', monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

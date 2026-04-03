@@ -58,9 +58,10 @@ export default function EditorialSignalsSection() {
             <span className="font-mono text-[10px] md:text-sm tracking-[0.3em] text-white/40 mb-6 block uppercase border-b border-white/10 pb-4 inline-block">
               Beyond The Night
             </span>
-            <h2 className="font-heavy text-[clamp(4rem,7vw,8rem)] leading-[0.85] tracking-tighter uppercase text-white mb-6">
-              <span className="text-white/30 block">THE LONGEST</span>
-              <span className="block">RECORD.</span>
+            <h2 className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-[0.85] tracking-tighter uppercase text-white mb-6">
+              <span className="text-white/30 block shrink-0">The strongest</span>
+              <span className="block shrink-0">rooms leave a</span>
+              <span className="block shrink-0">record behind.</span>
             </h2>
             <p className="mt-4 max-w-xl text-lg font-light leading-relaxed text-white/50">
               Radio, archive, and journal surfaces make it easier to understand who we book, what

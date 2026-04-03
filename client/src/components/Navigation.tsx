@@ -2,7 +2,9 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Play, Mic2, Star, BookOpen, Clock } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import KineticDecryption from "./KineticDecryption";
 import MagneticButton from "./MagneticButton";
 import CommunityDropdown from "./CommunityDropdown";
 import { isEventBannerVisible } from "@/lib/eventBanner";
@@ -450,7 +452,29 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     exit={{ opacity: 0, x: -10 }}
                     className="hidden xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none"
                   >
-                    <span className="font-mono text-[9px] text-white/20 uppercase tracking-[0.4em] select-none">
+                  <Link 
+            href="/" 
+            className="flex flex-col items-start gap-0.5 group pointer-events-auto"
+            onClick={() => {
+              signalChirp.click();
+              setMobileMenuOpen(false);
+            }}
+            onMouseEnter={() => signalChirp.hover()}
+          >
+            <span className={cn(
+              "font-heavy text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
+              isLight ? "text-black" : "text-white"
+            )}>
+              <KineticDecryption text="MONOLITH" />
+            </span>
+            <span className={cn(
+              "font-monolith text-[9px] md:text-[11px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+              isLight ? "text-black/40" : "text-white/40"
+            )}>
+              <KineticDecryption text="PROJECT" />
+            </span>
+          </Link>
+ <span className="font-mono text-[9px] text-white/20 uppercase tracking-[0.4em] select-none">
                       Chapter
                     </span>
                     <span className="font-heavy text-xs text-white/80 tabular-nums">

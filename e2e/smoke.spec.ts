@@ -61,7 +61,7 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
   });
 
   await page.getByRole("button", { name: /SECURE ACCESS/i }).first().click();
-  await expect(page.getByRole("heading", { name: "SECURED." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Access Granted" })).toBeVisible();
 });
 
 test("ticket flow emits intent tracking and preserves outbound ticket link", async ({ page }) => {

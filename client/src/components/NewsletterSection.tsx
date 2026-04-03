@@ -5,6 +5,7 @@ import { Check, ArrowUpRight, AlertCircle, Sparkles, Radio, MapPinned } from "lu
 import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import KineticDecryption from "./KineticDecryption";
 
 interface NewsletterSectionProps {
   source?: string;
@@ -124,11 +125,15 @@ export default function NewsletterSection({
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
                     <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Resident_Name</span>
-                    <span className="font-heavy text-2xl text-white uppercase">{firstName || "Anonymous"}</span>
+                    <span className="font-heavy text-2xl text-white uppercase">
+                      <KineticDecryption text={firstName || "Anonymous"} />
+                    </span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
                     <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signal_Signature</span>
-                    <span className="font-heavy text-xl text-primary tabular-nums tracking-widest">#{residentId}</span>
+                    <span className="font-heavy text-xl text-primary tabular-nums tracking-widest">
+                      <KineticDecryption text={`#${residentId}`} />
+                    </span>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Clearance_Level</span>

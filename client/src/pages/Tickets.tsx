@@ -5,6 +5,8 @@ import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { trackTicketIntent } from "@/lib/api";
+import { signalChirp } from "@/lib/SignalChirpEngine";
+import KineticDecryption from "@/components/KineticDecryption";
 import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildScheduledEventSchema } from "@/lib/schema";
@@ -73,8 +75,13 @@ export default function Tickets() {
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
+    signalChirp.boot();
     void trackTicketIntent(source, featuredEvent?.id, destinationUrl);
-    window.open(destinationUrl, "_blank", "noopener,noreferrer");
+    
+    // Brief SS-Tier authentication delay for sensory depth
+    setTimeout(() => {
+      window.open(destinationUrl, "_blank", "noopener,noreferrer");
+    }, 400);
   };
 
   return (
@@ -192,7 +199,7 @@ export default function Tickets() {
                       <span className="font-mono text-[10px] uppercase tracking-[0.5em]">{featuredEyebrow} / Sequence</span>
                    </div>
                    <h2 className="font-display text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.95] text-white tracking-widest block mb-8">
-                     {featuredHeadline}
+                     <KineticDecryption text={featuredHeadline} />
                    </h2>
                    <div className="h-px w-20 bg-primary/40 mb-8" />
                    <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-lg font-light">
@@ -212,7 +219,9 @@ export default function Tickets() {
                             {item.icon}
                             <span className="font-mono text-[9px] uppercase tracking-[0.3em]">{item.label}</span>
                          </div>
-                         <span className="font-display text-lg uppercase tracking-wider text-white/90">{item.value}</span>
+                         <span className="font-display text-lg uppercase tracking-wider text-white/90">
+                           <KineticDecryption text={item.value} />
+                         </span>
                       </div>
                    ))}
                 </div>

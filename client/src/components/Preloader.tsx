@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useState, useEffect } from "react";
 import KineticDecryption from "./KineticDecryption";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const BOOT_LOGS = [
   "INITIALIZING SENSORY OVERLOAD [OK]",
@@ -30,9 +31,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const interval = setInterval(() => {
       currentLog += 1;
       setLogIndex(currentLog);
+      signalChirp.hover();
       if (currentLog === BOOT_LOGS.length - 1) {
         clearInterval(interval);
-        setTimeout(() => setBooted(true), 50);
+        setTimeout(() => {
+          signalChirp.boot();
+          setBooted(true);
+        }, 50);
       }
     }, 40);
 

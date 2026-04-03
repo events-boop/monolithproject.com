@@ -1,26 +1,16 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Switch, useLocation } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import GlobalSVGFilters from "./components/ui/GlobalSVGFilters";
-import Footer from "./components/Footer";
-import SystemHUD from "./components/SystemHUD";
-import CustomCursor from "./components/CustomCursor";
-import MonolithKernel from "./components/MonolithKernel";
-import SensoryOverloadOverlay from "./components/SensoryOverloadOverlay";
 import PageTransition from "./components/PageTransition";
 import MissYouTab from "./components/MissYouTab";
-import SmoothScroll from "./components/SmoothScroll";
-import Preloader from "./components/Preloader";
 import { useUI, UIProvider } from "./contexts/UIContext";
-import OffCanvasDrawer from "./components/ui/OffCanvasDrawer";
-import GlobalTicketButton from "./components/GlobalTicketButton";
+import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
@@ -187,8 +177,13 @@ function AttributionSync() {
 }
 
 const Analytics = lazy(() => import("./components/Analytics"));
+const DeferredShellChrome = lazy(() => import("./components/DeferredShellChrome"));
 const EventBanner = lazy(() => import("./components/EventBanner"));
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
+const Footer = lazy(() => import("./components/Footer"));
+const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
+const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
+const Toaster = lazy(() => import("@/components/ui/sonner").then((module) => ({ default: module.Toaster })));
 
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
@@ -203,8 +198,12 @@ function MainContentWrapper() {
       <SceneSync />
       <RouteMemory />
       <AttributionSync />
-      <OffCanvasDrawer />
-      <GlobalTicketButton />
+      <Suspense fallback={null}>
+        {activeDrawer ? <OffCanvasDrawer /> : null}
+      </Suspense>
+      <Suspense fallback={null}>
+        <GlobalTicketButton />
+      </Suspense>
       <div
         id="app-shell"
         className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
@@ -215,45 +214,33 @@ function MainContentWrapper() {
         }}
       >
         <Router />
-        <Footer />
+        <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        </ViewportLazy>
       </div>
     </>
   );
 }
 
 function App() {
-  const [showPreloader, setShowPreloader] = useState(true);
-  const handlePreloaderComplete = useCallback(() => setShowPreloader(false), []);
-
   return (
     <HelmetProvider>
       <ErrorBoundary>
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
-            <TooltipProvider>
-              <SmoothScroll />
+            <GlobalSVGFilters />
+            <MissYouTab />
+            <MainContentWrapper />
+            
+            <Suspense fallback={null}>
               <Toaster />
-              <GlobalSVGFilters />
-              <MissYouTab />
-              
-              <AnimatePresence mode="wait">
-                {showPreloader && (
-                   <Preloader key="preloader" onComplete={handlePreloaderComplete} />
-                )}
-              </AnimatePresence>
-              
-              <CustomCursor />
-              <SystemHUD />
-              <MonolithKernel />
-              <SensoryOverloadOverlay />
-              <MainContentWrapper />
-              
-              <Suspense fallback={null}>
-                <Analytics />
-                <EventBanner />
-                <CookieConsent />
-              </Suspense>
-            </TooltipProvider>
+              <DeferredShellChrome />
+              <Analytics />
+              <EventBanner />
+              <CookieConsent />
+            </Suspense>
           </UIProvider>
         </ThemeProvider>
       </ErrorBoundary>

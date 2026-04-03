@@ -5,13 +5,24 @@ interface PageTransitionProps {
     children: React.ReactNode;
 }
 
+let hasCompletedInitialPageLoad = false;
+
 export default function PageTransition({ children }: PageTransitionProps) {
-    const [isTransitioning, setIsTransitioning] = useState(true);
+    const [isTransitioning, setIsTransitioning] = useState(hasCompletedInitialPageLoad);
 
     useEffect(() => {
+        if (!hasCompletedInitialPageLoad) {
+            hasCompletedInitialPageLoad = true;
+            return;
+        }
+
         const timer = setTimeout(() => setIsTransitioning(false), 800);
         return () => clearTimeout(timer);
     }, []);
+
+    if (!isTransitioning) {
+        return <div className="relative w-full bg-background min-h-screen overflow-hidden">{children}</div>;
+    }
 
     return (
         <div className="relative w-full bg-background min-h-screen overflow-hidden">
@@ -71,4 +82,3 @@ export default function PageTransition({ children }: PageTransitionProps) {
         </div>
     );
 }
-

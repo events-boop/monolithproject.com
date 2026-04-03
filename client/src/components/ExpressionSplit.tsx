@@ -32,7 +32,7 @@ const expressions = [
     number: "03",
     label: "Signal",
     title: "Radio Show",
-    tagline: "The collective record. Guest sessions and signal.",
+    tagline: "The listening chapter. Mixes, artist sessions, and signal.",
     color: "#FFFFFF",
     image: "/images/radio-show.jpg",
     href: "/radio",

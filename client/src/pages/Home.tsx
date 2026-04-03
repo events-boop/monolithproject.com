@@ -2,31 +2,29 @@ import { lazy, Suspense, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import VisitorContextPanel from "@/components/VisitorContextPanel";
-import MovementSection from "@/components/MovementSection";
-import ExpressionSplit from "@/components/ExpressionSplit";
-import FeaturedCampaigns from "@/components/FeaturedCampaigns";
-import ScheduleSection from "@/components/ScheduleSection";
-import Ticker from "@/components/Ticker";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
-import TextLineupSection from "@/components/TextLineupSection";
-import EditorialSignalsSection from "@/components/EditorialSignalsSection";
-import EventFunnelStack from "@/components/EventFunnelStack";
-import NewsletterSection from "@/components/NewsletterSection";
-import EventCountdown from "@/components/EventCountdown";
-import NightInNumbers from "@/components/NightInNumbers";
-import WhatToExpect from "@/components/WhatToExpect";
-import ConversionStrip from "@/components/ConversionStrip";
-import HomeShowcaseAccordion from "@/components/HomeShowcaseAccordion";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
+const ConversionStrip = lazy(() => import("@/components/ConversionStrip"));
+const EditorialSignalsSection = lazy(() => import("@/components/EditorialSignalsSection"));
+const EventCountdown = lazy(() => import("@/components/EventCountdown"));
+const EventFunnelStack = lazy(() => import("@/components/EventFunnelStack"));
+const ExpressionSplit = lazy(() => import("@/components/ExpressionSplit"));
+const FeaturedCampaigns = lazy(() => import("@/components/FeaturedCampaigns"));
+const HomeShowcaseAccordion = lazy(() => import("@/components/HomeShowcaseAccordion"));
 const MixedMediaGallery = lazy(() => import("@/components/MixedMediaGallery"));
+const MovementSection = lazy(() => import("@/components/MovementSection"));
+const NightInNumbers = lazy(() => import("@/components/NightInNumbers"));
+const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
+const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
 const SoundCloudSection = lazy(() => import("@/components/SoundCloudSection"));
-const PastEventsSection = lazy(() => import("@/components/PastEventsSection"));
-const InstagramFeed = lazy(() => import("@/components/InstagramFeed"));
+const TextLineupSection = lazy(() => import("@/components/TextLineupSection"));
+const Ticker = lazy(() => import("@/components/Ticker"));
+const VisitorContextPanel = lazy(() => import("@/components/VisitorContextPanel"));
+const WhatToExpect = lazy(() => import("@/components/WhatToExpect"));
 import SEO from "@/components/SEO";
 
 export default function Home() {
@@ -63,26 +61,50 @@ export default function Home() {
 
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
-        <FeaturedCampaigns />
+        <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
+          <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
+            <FeaturedCampaigns />
+          </Suspense>
+        </ViewportLazy>
 
         <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" />
-        <ExpressionSplit />
-        <WhatToExpect />
+        <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
+          <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
+            <ExpressionSplit />
+          </Suspense>
+        </ViewportLazy>
+        <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="260px 0px">
+          <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
+            <WhatToExpect />
+          </Suspense>
+        </ViewportLazy>
 
         <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
-        <ScheduleSection />
+        <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
+          <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
+            <ScheduleSection />
+          </Suspense>
+        </ViewportLazy>
         
         {/* Official Campaign Countdowns Stack */}
-        <div className="flex flex-col w-full">
-            <EventCountdown eventId="us-s3e3" />
-            <EventCountdown eventId="css-jul04" />
-        </div>
+        <ViewportLazy minHeightClassName="min-h-[640px]" rootMargin="240px 0px">
+          <Suspense fallback={<Skeleton className="h-[640px] w-full opacity-10" />}>
+            <div className="flex flex-col w-full">
+                <EventCountdown eventId="us-s3e3" />
+                <EventCountdown eventId="css-jul04" />
+            </div>
+          </Suspense>
+        </ViewportLazy>
 
         {/* Gradient bridge: cream schedule → black rooms */}
         <div className="h-24 w-full bg-gradient-to-b from-[#EAEAEA] to-[#050505]" />
 
         <SectionDivider id="collective" number="03" label="The Collective" glow="rgba(255,255,255,0.15)" />
-        <MovementSection />
+        <ViewportLazy minHeightClassName="min-h-[820px]" rootMargin="260px 0px">
+          <Suspense fallback={<Skeleton className="h-[820px] w-full opacity-10" />}>
+            <MovementSection />
+          </Suspense>
+        </ViewportLazy>
 
         <ViewportLazy minHeightClassName="min-h-[60vh]">
           <Suspense fallback={<Skeleton className="w-full h-[60vh] opacity-20" />}>
@@ -101,75 +123,113 @@ export default function Home() {
         {/* HUD Recognition Reveal + SS-Conversion Strip */}
         <div className="relative pt-24 md:pt-32 pb-12">
            <div className="absolute inset-x-0 top-1/2 h-px bg-white/10 -translate-y-1/2" />
-           <VisitorContextPanel />
+           <ViewportLazy minHeightClassName="min-h-[280px]" rootMargin="220px 0px">
+             <Suspense fallback={<Skeleton className="mx-auto h-[280px] w-full max-w-6xl opacity-10" />}>
+               <VisitorContextPanel />
+             </Suspense>
+           </ViewportLazy>
         </div>
         <div className="px-6 mb-24 md:mb-32">
           <div className="container mx-auto max-w-6xl">
-            <ConversionStrip />
+            <ViewportLazy minHeightClassName="min-h-[180px]" rootMargin="220px 0px">
+              <Suspense fallback={<Skeleton className="h-[180px] w-full opacity-10" />}>
+                <ConversionStrip />
+              </Suspense>
+            </ViewportLazy>
           </div>
         </div>
 
-        <NightInNumbers />
+        <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="220px 0px">
+          <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
+            <NightInNumbers />
+          </Suspense>
+        </ViewportLazy>
 
         {/* Collapsible SS-Tier Showcase Modules */}
-        <HomeShowcaseAccordion items={[
-          {
-            id: "roster",
-            number: "04",
-            title: "The Roster",
-            subtitle: "Collective · Selectors",
-            previewImage: "/images/artists-collective.jpg",
-            content: <TextLineupSection />
-          },
-          {
-            id: "journal",
-            number: "05",
-            title: "The Longest Record",
-            subtitle: "Beyond the night · Editorials",
-            previewImage: "/images/editorial-bg.jpg",
-            content: <EditorialSignalsSection />
-          },
-          {
-            id: "archive",
-            number: "06",
-            title: "Captured Moments",
-            subtitle: "The Archive · Visual Records",
-            previewImage: "/images/autograf-recap.jpg",
-            content: (
-              <ViewportLazy minHeightClassName="min-h-[520px]">
-                <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
-                  <MixedMediaGallery />
-                </Suspense>
-              </ViewportLazy>
-            )
-          },
-          {
-            id: "mixes",
-            number: "07",
-            title: "Radio Transmission",
-            subtitle: "Mixes · Curated Sound",
-            previewImage: "/images/radio-show.jpg",
-            content: (
-              <ViewportLazy minHeightClassName="min-h-[420px]">
-                <div className="bg-card">
-                  <Suspense fallback={null}>
-                    <SoundCloudSection />
+        <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="220px 0px">
+          <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
+            <HomeShowcaseAccordion items={[
+              {
+                id: "roster",
+                number: "04",
+                title: "The Roster",
+                subtitle: "Collective · Selectors",
+                previewImage: "/images/artists-collective.jpg",
+                content: (
+                  <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
+                    <TextLineupSection />
                   </Suspense>
-                </div>
-              </ViewportLazy>
-            )
-          }
-        ]} />
+                )
+              },
+              {
+                id: "journal",
+                number: "05",
+                title: "The Longest Record",
+                subtitle: "Beyond the night · Editorials",
+                previewImage: "/images/editorial-bg.jpg",
+                content: (
+                  <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
+                    <EditorialSignalsSection />
+                  </Suspense>
+                )
+              },
+              {
+                id: "archive",
+                number: "06",
+                title: "Captured Moments",
+                subtitle: "The Archive · Visual Records",
+                previewImage: "/images/autograf-recap.jpg",
+                content: (
+                  <ViewportLazy minHeightClassName="min-h-[520px]">
+                    <Suspense fallback={<Skeleton className="w-full h-[520px] opacity-10" />}>
+                      <MixedMediaGallery />
+                    </Suspense>
+                  </ViewportLazy>
+                )
+              },
+              {
+                id: "mixes",
+                number: "07",
+                title: "Radio Transmission",
+                subtitle: "Mixes · Curated Sound",
+                previewImage: "/images/radio-show.jpg",
+                content: (
+                  <ViewportLazy minHeightClassName="min-h-[420px]">
+                    <div className="bg-card">
+                      <Suspense fallback={null}>
+                        <SoundCloudSection />
+                      </Suspense>
+                    </div>
+                  </ViewportLazy>
+                )
+              }
+            ]} />
+          </Suspense>
+        </ViewportLazy>
 
         <SectionDivider id="community" number="08" label="Inner Circle" glow="#D4A574" />
-        {funnelEvent ? <EventFunnelStack eventId={funnelEvent.id} /> : null}
+        {funnelEvent ? (
+          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
+            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
+              <EventFunnelStack eventId={funnelEvent.id} />
+            </Suspense>
+          </ViewportLazy>
+        ) : null}
 
-        <NewsletterSection source="homepage_bottom" />
+        <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
+          <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
+            <NewsletterSection source="homepage_bottom" />
+          </Suspense>
+        </ViewportLazy>
         
         {/* Structural buffer for Footer / HUD clearance */}
         <div className="h-24 md:h-32" />
 
-        <Ticker />
+        <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="180px 0px">
+          <Suspense fallback={<Skeleton className="h-[120px] w-full opacity-10" />}>
+            <Ticker />
+          </Suspense>
+        </ViewportLazy>
       </main>
     </div>
   );

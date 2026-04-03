@@ -154,7 +154,13 @@ export default function SystemHUD() {
             <div className="w-1.5 h-1.5 bg-green-500 rounded-none animate-pulse" />
           </div>
           <div className="flex items-center gap-3">
-            <span className={`font-heavy text-xs ${textColor} tracking-widest tabular-nums group-hover:text-white transition-colors`}>
+            <span 
+              onClick={(e) => {
+                e.stopPropagation();
+                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+              }}
+              className={`font-heavy text-xs ${textColor} tracking-widest tabular-nums group-hover:text-white transition-colors cursor-pointer hover:bg-white/5 px-2 py-0.5 rounded-sm`}
+            >
               REQID: {requestId}
             </span>
             <div className={`w-2 h-2 ${diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`} />

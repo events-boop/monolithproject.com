@@ -14,7 +14,7 @@ const movementPaths = [
     label: "Open Air",
     title: "Chasing Sun(Sets)",
     description:
-      "The warmer chapter. Open-air rooms, golden-hour pacing, and music that can hold a social room without flattening it.",
+      "The warmer chapter. Open-air rooms, golden-hour pace, and music that moves from daylight into dusk with ease.",
     toneClass: "border-clay/20 bg-clay/10 text-clay",
   },
   {
@@ -22,7 +22,7 @@ const movementPaths = [
     label: "After Dark",
     title: "Untold Story",
     description:
-      "The closer chapter. Deeper sound, stronger tension, and a room that narrows the focus once the light drops.",
+      "The late-night chapter. Closer rooms, deeper sound, and a more intimate kind of tension once the light drops.",
     toneClass: "border-primary/20 bg-primary/10 text-primary",
   },
   {
@@ -30,7 +30,7 @@ const movementPaths = [
     label: "Signal",
     title: "Radio Show",
     description:
-      "The connective tissue. Guest mixes and artist sessions that make the booking taste easier to hear between nights.",
+      "The listening chapter. Mixes, artist sessions, and a recurring signal that extends the taste behind the room between nights.",
     toneClass: "border-white/15 bg-white/[0.06] text-white/76",
   },
 ] as const;

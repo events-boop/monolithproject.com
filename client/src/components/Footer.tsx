@@ -1,6 +1,6 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight, Sun } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
+import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOLD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -25,7 +25,7 @@ function SpotifyIcon({ className }: { className?: string }) {
 
 const socials = [
   { name: "Chasing Sun(Sets) Instagram", icon: Instagram, url: INSTAGRAM_SUNSETS },
-  { name: "Untold Story Instagram", icon: Instagram, url: INSTAGRAM_UNTOlD },
+  { name: "Untold Story Instagram", icon: Instagram, url: INSTAGRAM_UNTOLD },
   { name: "Monolith Instagram", icon: Instagram, url: INSTAGRAM_MONOLITH },
   { name: "Chasing Sun(Sets) TikTok", icon: TikTokIcon, url: "https://tiktok.com/@chasingsunsets" },
   { name: "Monolith TikTok", icon: TikTokIcon, url: TIKTOK_URL },

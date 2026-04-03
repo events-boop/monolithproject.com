@@ -42,7 +42,7 @@ const chapters = [
 ];
 
 const radioSignal = {
-  description: "The signal between chapters: mixes, guest sessions, and a cleaner way into the taste behind the room.",
+  description: "The listening chapter. Mixes, artist sessions, and a recurring signal that extends the taste behind the room between nights.",
   href: "/radio",
   label: "03",
   title: "CHASING SUN(SETS) RADIO SHOW",

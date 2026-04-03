@@ -106,7 +106,7 @@ const HERO_SUPPORT_LINES = [
 const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
 
 const HERO_SUBHEAD =
-  "The Monolith Project holds four connected expressions: the umbrella world, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story. Together they shape recurring Chicago rooms built for people who care what the night feels like.";
+  "A Chicago-rooted music world built through recurring nights, distinct series, and a radio signal that keeps the taste alive between them.";
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -247,7 +247,7 @@ export default function HeroSection() {
           <div className="flex items-center gap-4 justify-center">
              <div className="h-px w-8 md:w-20 bg-white/10" />
              <h2 className="font-mono text-[9px] md:text-xs uppercase tracking-[0.8em] text-white/30">
-               {eyebrow || "The Monolith Project"} / System Active
+               {eyebrow || "Chicago-Rooted Event World"} / System Active
              </h2>
              <div className="h-px w-8 md:w-20 bg-white/10" />
           </div>

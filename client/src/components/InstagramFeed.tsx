@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, ExternalLink, Heart, MessageCircle } from "lucide-react";
-import { INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL } from "@/data/events";
+import { INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOLD, TIKTOK_URL } from "@/data/events";
 
 function TikTokIcon({ className }: { className?: string }) {
     return (
@@ -59,7 +59,7 @@ const MOCK_POSTS: InstagramPost[] = [
         id: "mock-4",
         media_type: "IMAGE",
         media_url: "/images/lazare-recap.webp",
-        permalink: INSTAGRAM_UNTOlD,
+        permalink: INSTAGRAM_UNTOLD,
         caption: "Lazare deep in the mix. 🌑",
         timestamp: new Date().toISOString(),
         like_count: 750,
@@ -138,7 +138,7 @@ export default function InstagramFeed() {
                         <div className="flex flex-col items-center text-center space-y-4">
                             <h3 className="font-display text-xl text-[#8B5CF6] uppercase tracking-widest hidden md:block opacity-80 shadow-purple-500/20 drop-shadow-sm">Untold Story</h3>
                             <div className="flex flex-col gap-3">
-                                <a href={INSTAGRAM_UNTOlD} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#8B5CF6] transition-colors group">
+                                <a href={INSTAGRAM_UNTOLD} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-mono text-white/70 hover:text-[#8B5CF6] transition-colors group">
                                     <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                     <span>@untoldstory.music</span>
                                 </a>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, Command, Zap, Search, Globe, ChevronRight } from "lucide-react";
 import { useUI } from "@/contexts/UIContext";
 import { useLocation } from "wouter";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const KERNEL_COMMANDS = [
     { cmd: "/scene untold", desc: "Shift environmental frequency to Untold Story" },
@@ -24,9 +25,14 @@ export default function MonolithKernel() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === "k") {
                 e.preventDefault();
-                setIsOpen(prev => !prev);
+                const next = !isOpen;
+                setIsOpen(next);
+                next ? signalChirp.boot() : signalChirp.error();
             }
-            if (e.key === "Escape") setIsOpen(false);
+            if (e.key === "Escape") {
+                setIsOpen(false);
+                signalChirp.error();
+            }
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
@@ -37,21 +43,27 @@ export default function MonolithKernel() {
         
         if (c.includes("/scene untold")) {
             document.documentElement.dataset.scene = "untold";
+            signalChirp.click();
             setIsOpen(false);
         } else if (c.includes("/scene sets")) {
             document.documentElement.dataset.scene = "chasing-sunsets";
+            signalChirp.click();
             setIsOpen(false);
         } else if (c.includes("/goto archive")) {
+            signalChirp.click();
             setLocation("/archive");
             setIsOpen(false);
         } else if (c.includes("/goto tickets")) {
+            signalChirp.click();
             setLocation("/tickets");
             setIsOpen(false);
         } else if (c.includes("/rites")) {
             const saved = localStorage.getItem("monolith-starred-rites");
+            signalChirp.click();
             alert(`PERSONALIZED_RITES: ${saved ? JSON.parse(saved).join(", ") : "NO_SIGNALS_FOUND"}`);
             setIsOpen(false);
         } else if (c.includes("/sensory overload")) {
+            signalChirp.boot();
             setSensoryOverloadActive(!isSensoryOverloadActive);
             setIsOpen(false);
         }
