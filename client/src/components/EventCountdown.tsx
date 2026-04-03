@@ -21,7 +21,9 @@ function parseEventDate(dateStr: string): Date {
   };
   const [monthName, dayStr] = dateStr.split(" ");
   const day = dayStr?.replace(",", "") ?? "1"; 
-  const month = monthName ? months[monthName.toUpperCase()] ?? 0 : 0;
+  // Use first 3 letters to match month signature
+  const monthKey = monthName ? monthName.toUpperCase().substring(0, 3) : "JAN";
+  const month = months[monthKey] ?? 0;
   const year = new Date().getFullYear();
   const d = new Date(year, month, parseInt(day) || 1, 20, 0, 0);
   // If in the past, push to next year
@@ -159,11 +161,14 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               </a>
             ) : (
               <a
-                href={event.series === "untold-story" ? "/newsletter" : "/newsletter"}
-                className="group inline-flex items-center justify-between gap-12 px-8 py-5 border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-500 self-start"
+                href="/newsletter"
+                className={`group inline-flex items-center justify-between gap-12 px-10 py-6 border ${isSunsets ? 'border-[#E8B86D] text-[#E8B86D]' : isUntold ? 'border-[#22D3EE] text-[#22D3EE]' : 'border-primary text-primary'} hover:bg-white hover:text-black transition-all duration-500 self-start relative overflow-hidden`}
               >
-                <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Join The Inner Circle</span>
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${accentBg}`} />
+                <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
+                  Join The Inner Circle
+                </span>
+                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>
               </a>

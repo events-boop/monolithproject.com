@@ -50,6 +50,9 @@ const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
 export default function Tickets() {
   const featuredEvent = getExperienceEvent("ticket");
   const ticketUrl = getPrimaryTicketUrl(featuredEvent);
+  const hasTicketLink = Boolean(ticketUrl);
+  const primaryCtaLabel = hasTicketLink ? CTA_LABELS.tickets : CTA_LABELS.innerCircle;
+  const executeCtaLabel = hasTicketLink ? "EXECUTE ACCESS" : CTA_LABELS.innerCircle;
   const featuredEventSchema =
     featuredEvent && getEventWindowStatus(featuredEvent) !== "past"
       ? buildScheduledEventSchema(featuredEvent, "/tickets")
@@ -69,6 +72,7 @@ export default function Tickets() {
   };
 
   const handlePurchase = () => {
+    if (!ticketUrl) return;
     void trackTicketIntent("tickets_page");
     window.open(ticketUrl, "_blank", "noopener,noreferrer");
   };
@@ -84,6 +88,7 @@ export default function Tickets() {
       <div className="pointer-events-none absolute inset-0 bg-tickets-bottom-glow" />
       <Navigation />
 
+      <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="page-shell-start-loose pb-16 px-6 relative">
         <div className="container max-w-5xl mx-auto">
@@ -109,15 +114,24 @@ export default function Tickets() {
             </div>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <MagneticButton strength={0.3}>
-                <a
-                  href={ticketUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-pill-coral flex items-center justify-center"
-                >
-                  {CTA_LABELS.tickets}
-                  <ArrowUpRight className="w-4 h-4 ml-2" />
-                </a>
+                {hasTicketLink ? (
+                  <a
+                    href={ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-pill-coral flex items-center justify-center"
+                  >
+                    {primaryCtaLabel}
+                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                  </a>
+                ) : (
+                  <Link href="/newsletter" asChild>
+                    <a className="btn-pill-coral flex items-center justify-center">
+                      {primaryCtaLabel}
+                      <ArrowUpRight className="w-4 h-4 ml-2" />
+                    </a>
+                  </Link>
+                )}
               </MagneticButton>
               <MagneticButton strength={0.22}>
                 <Link href="/schedule" asChild>
@@ -204,10 +218,24 @@ export default function Tickets() {
 
                 <div className="pt-4">
                    <MagneticButton strength={0.4}>
-                      <a href={ticketUrl} target="_blank" className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]">
-                         EXECUTE ACCESS
-                         <ArrowUpRight className="w-4 h-4 ml-3" />
-                      </a>
+                      {hasTicketLink ? (
+                        <a
+                          href={ticketUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]"
+                        >
+                           {executeCtaLabel}
+                           <ArrowUpRight className="w-4 h-4 ml-3" />
+                        </a>
+                      ) : (
+                        <Link href="/newsletter" asChild>
+                          <a className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]">
+                             {executeCtaLabel}
+                             <ArrowUpRight className="w-4 h-4 ml-3" />
+                          </a>
+                        </Link>
+                      )}
                    </MagneticButton>
                 </div>
              </div>
@@ -301,6 +329,7 @@ export default function Tickets() {
 
       {/* Footer / Funnel Spill */}
       {featuredEvent?.activeFunnels?.length ? <EventFunnelStack eventId={featuredEvent.id} /> : null}
+      </main>
     </div>
   );
 }

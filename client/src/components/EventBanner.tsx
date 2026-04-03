@@ -9,14 +9,22 @@ export default function EventBanner() {
   if (!payload || payload.status === "past" || !isEventBannerVisible(location)) return null;
 
   const items = Array(12).fill(payload.text);
+  const bannerHref = payload.ticketUrl || "/newsletter";
+  const opensExternally = /^https?:\/\//i.test(bannerHref);
+  const bannerLabel = payload.ticketUrl
+    ? "Open tickets for current featured event"
+    : "Request early access for the current featured event";
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-12 overflow-hidden border-b border-primary/35 shadow-[0_10px_35px_rgba(224,90,58,0.28)]">
+    <aside
+      aria-label="Featured event announcement"
+      className="fixed top-0 left-0 right-0 z-[60] h-12 overflow-hidden border-b border-primary/35 shadow-[0_10px_35px_rgba(224,90,58,0.28)]"
+    >
       <a
-        href={payload.ticketUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open tickets for current featured event"
+        href={bannerHref}
+        target={opensExternally ? "_blank" : undefined}
+        rel={opensExternally ? "noopener noreferrer" : undefined}
+        aria-label={bannerLabel}
         className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/90"
       >
         <div
@@ -46,6 +54,6 @@ export default function EventBanner() {
           </div>
         </div>
       </a>
-    </div>
+    </aside>
   );
 }

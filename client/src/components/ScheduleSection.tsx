@@ -93,9 +93,9 @@ export default function ScheduleSection() {
           <div className="flex flex-col gap-4 max-w-2xl">
             <WordScrubReveal 
               text="SCHEDULE" 
-              className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-primary uppercase drop-shadow-sm" 
+              className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm" 
             />
-            <p className="font-mono text-xs lg:text-[11px] uppercase tracking-[0.3em] text-black/50 pl-1 mt-2">
+            <p className="font-mono text-xs lg:text-[11px] uppercase tracking-[0.3em] text-black/70 pl-1 mt-2">
               Start with the next date. The series and the room will tell you the rest.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function ScheduleSection() {
                 onClick={() => setActiveMonth(month)}
                 className={`px-6 py-3 border rounded-none text-[10px] font-bold tracking-[0.25em] uppercase transition-all duration-500 hover:border-black/40 ${activeMonth === month
                   ? "bg-black text-white border-black"
-                  : "bg-transparent border-black/20 text-black/60 hover:bg-black/5 hover:text-black"
+                  : "bg-transparent border-black/20 text-black/75 hover:bg-black/5 hover:text-black"
                   }`}
               >
                 {month}
@@ -118,7 +118,7 @@ export default function ScheduleSection() {
 
         {/* Schedule List */}
         <div className="flex flex-col gap-0 border-t border-black/20 relative z-20">
-          <div className="hidden grid-cols-12 gap-4 border-b border-black/20 px-4 py-4 text-[9px] font-mono uppercase tracking-[0.3em] text-black/40 md:grid">
+          <div className="hidden grid-cols-12 gap-4 border-b border-black/20 px-4 py-4 text-[9px] font-mono uppercase tracking-[0.3em] text-black/65 md:grid">
             <div className="col-span-3">Date / Time</div>
             <div className="col-span-5 pl-8">Event</div>
             <div className="col-span-3">Location</div>
@@ -130,8 +130,8 @@ export default function ScheduleSection() {
             <div className="py-16 px-4 md:px-10 border-b border-black/15 flex items-center gap-6">
               <div className="w-1.5 h-12 bg-black/10" />
               <div>
-                <p className="font-heavy text-2xl uppercase text-black/30 tracking-tighter">No Events Scheduled For {activeMonth}.</p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/30 mt-2">More dates incoming — get early access to be first.</p>
+                <p className="font-heavy text-2xl uppercase text-black/65 tracking-tighter">No Events Scheduled For {activeMonth}.</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/60 mt-2">More dates incoming — get early access to be first.</p>
               </div>
             </div>
           ) : filteredEvents.map((event, index) => {
@@ -141,8 +141,8 @@ export default function ScheduleSection() {
             const isSunsets = event.series === "chasing-sunsets";
             const isStory = event.series === "untold-story";
             const glowClass = isSunsets ? "bg-[#E8B86D]" : isStory ? "bg-[#22D3EE]" : "bg-primary";
-            const dateColorClass = isSunsets ? "text-[#D09B45]" : isStory ? "text-[#06B6D4]" : "text-primary";
-            const hoverAccentText = isSunsets ? "group-hover:text-[#E8B86D]" : isStory ? "group-hover:text-[#22D3EE]" : "group-hover:text-primary";
+            const dateColorClass = isSunsets ? "text-[#8F5B0A]" : isStory ? "text-[#0E7490]" : "text-[#7F311D]";
+            const hoverAccentText = isSunsets ? "group-hover:text-[#8F5B0A]" : isStory ? "group-hover:text-[#0E7490]" : "group-hover:text-[#7F311D]";
 
             return (
               <motion.div
@@ -176,13 +176,13 @@ export default function ScheduleSection() {
                     {/* Date Column */}
                     <div className="md:col-span-3 flex md:flex-col items-center md:items-start md:pl-10 gap-4 md:gap-0">
                       <span className={`font-heavy text-4xl md:text-5xl lg:text-7xl ${dateColorClass} tracking-tighter leading-none whitespace-nowrap`}>{dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}</span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/50 md:mt-2 whitespace-nowrap">{event.time.split("—")[0]}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/70 md:mt-2 whitespace-nowrap">{event.time.split("—")[0]}</span>
                     </div>
 
                     {/* Main Title Column */}
                     <div className="md:col-span-5 flex flex-col gap-2 md:pl-8 pr-4 border-l border-black/10 md:border-none">
                       <div className="flex flex-wrap gap-2 mb-1">
-                        <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${isSunsets ? 'text-[#D09B45]' : isStory ? 'text-[#06B6D4]' : 'text-primary'}`}>
+                        <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${isSunsets ? 'text-[#8F5B0A]' : isStory ? 'text-[#0E7490]' : 'text-[#7F311D]'}`}>
                           {seriesLabels[event.series]}
                         </span>
                         {event.status === "on-sale" && (
@@ -199,7 +199,7 @@ export default function ScheduleSection() {
                     {/* Location Column */}
                     <div className="md:col-span-3 hidden md:flex flex-col gap-1 pr-4 border-l border-black/10 pl-8">
                       <span className="font-serif italic text-2xl leading-tight text-black/90">{event.venue}</span>
-                      <span className="text-[10px] text-black/40 font-mono tracking-widest uppercase mt-1">{event.location}</span>
+                      <span className="text-[10px] text-black/65 font-mono tracking-widest uppercase mt-1">{event.location}</span>
                     </div>
 
                     {/* Action Icon */}
@@ -304,7 +304,7 @@ export default function ScheduleSection() {
 
         {/* Footer actions */}
         <div className="mt-16 pt-8 border-t border-black/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 relative z-20">
-          <p className="text-black/40 text-[10px] uppercase tracking-[0.3em] font-mono pl-4">
+          <p className="text-black/65 text-[10px] uppercase tracking-[0.3em] font-mono pl-4">
             More dates to be announced.
           </p>
           <div className="flex flex-wrap items-center gap-4">
@@ -315,7 +315,7 @@ export default function ScheduleSection() {
               </a>
             </Link>
             <Link href="/newsletter" asChild>
-              <a className="group inline-flex items-center gap-2 text-[9px] font-bold tracking-[0.3em] uppercase text-primary hover:text-black transition-colors">
+              <a className="group inline-flex items-center gap-2 text-[9px] font-bold tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors">
                 Get Early Access
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </a>

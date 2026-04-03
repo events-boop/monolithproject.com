@@ -157,7 +157,7 @@ export default function Footer() {
 
           {links.map((group) => (
             <div key={group.title}>
-              <h4 className="font-bold text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{group.title}</h4>
+              <p className="font-bold text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{group.title}</p>
               <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={item.name}>

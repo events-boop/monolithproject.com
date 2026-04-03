@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
-        title="Chicago Music Nights, Series, and Archive | The Monolith Project"
+        title="Chicago Music Nights, Series, and Archive"
         description="The Monolith Project is a Chicago-rooted music world built through recurring nights, distinct series, a radio show, and an archive shaped by curation, atmosphere, and return-worthy rooms."
       />
       {/* Ambient static background glows for depth */}

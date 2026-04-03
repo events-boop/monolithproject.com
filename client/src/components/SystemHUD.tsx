@@ -134,7 +134,7 @@ export default function SystemHUD() {
   }, []); // No dependencies—observer is setup once.
 
   return (
-    <div className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
+    <div aria-hidden="true" className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
       {/* HUD Frame Components — hidden on small screens to prevent content coverage */}
       <div className="absolute top-6 right-8 hidden xl:flex flex-col items-end gap-1.5 mix-blend-difference pointer-events-auto">
         <button 

@@ -95,7 +95,7 @@ export default function CookieConsent() {
                                 </button>
                                 <button
                                     onClick={accept}
-                                    className="font-mono text-[9px] tracking-[0.25em] uppercase px-5 py-2 bg-primary text-white hover:bg-primary/85 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-full flex-1 sm:flex-none text-center"
+                                    className="font-mono text-[9px] tracking-[0.25em] uppercase px-5 py-2 bg-primary text-black hover:bg-primary/85 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-full flex-1 sm:flex-none text-center"
                                 >
                                     Accept All
                                 </button>
