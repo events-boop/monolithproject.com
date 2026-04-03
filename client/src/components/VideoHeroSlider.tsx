@@ -125,17 +125,7 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
     if (!slide) return;
     if (slide.type !== "video" && slide.type !== "youtube") return;
 
-    const conn = (navigator as any).connection as { saveData?: boolean; effectiveType?: string } | undefined;
-    if (conn?.saveData) return;
-    if (conn?.effectiveType && ["slow-2g", "2g", "3g"].includes(conn.effectiveType)) return;
-
-    const w = window as any;
-    if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(() => setLoadVideo(true), { timeout: 2500 });
-      return () => w.cancelIdleCallback?.(id);
-    }
-
-    const id = window.setTimeout(() => setLoadVideo(true), 2500);
+    const id = window.setTimeout(() => setLoadVideo(true), 0);
     return () => window.clearTimeout(id);
   }, [loadVideo, reduceMotion, slide?.type]);
 

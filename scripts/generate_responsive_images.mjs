@@ -18,6 +18,11 @@ const presets = [
     widths: [640, 960, 1280, 1600],
   },
   {
+    input: "hero-monolith.jpg",
+    baseName: "hero-monolith",
+    widths: [640, 960, 1280, 1600],
+  },
+  {
     input: "lazare-carbon-center.png",
     baseName: "lazare-carbon-center",
     widths: [480, 768, 1080],

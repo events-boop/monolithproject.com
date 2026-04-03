@@ -35,11 +35,8 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
     if (loadVideo) return;
     if (reduceMotion) return;
 
-    const conn = (navigator as any).connection as { saveData?: boolean; effectiveType?: string } | undefined;
-    if (conn?.saveData) return;
-    if (conn?.effectiveType && ["slow-2g", "2g", "3g"].includes(conn.effectiveType)) return;
-
-    return runWhenIdle(() => setLoadVideo(true), 1500);
+    const id = window.setTimeout(() => setLoadVideo(true), 50);
+    return () => window.clearTimeout(id);
   }, [videoSrc, isInView, loadVideo, reduceMotion]);
 
   return (

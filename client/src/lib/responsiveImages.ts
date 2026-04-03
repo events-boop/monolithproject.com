@@ -8,6 +8,7 @@ type ResponsiveImageSource = {
 type ResponsiveImageKey =
   | "artistsCollective"
   | "chasingSunsets"
+  | "heroMonolith"
   | "lazareCarbonCenter"
   | "untoldStoryHero"
   | "untoldStoryPoster";
@@ -30,6 +31,12 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     baseName: "chasing-sunsets",
     sizes: "100vw",
     src: "/images/chasing-sunsets.jpg",
+    widths: [640, 960, 1280, 1600],
+  },
+  heroMonolith: {
+    baseName: "hero-monolith",
+    sizes: "100vw",
+    src: "/images/hero-monolith.jpg",
     widths: [640, 960, 1280, 1600],
   },
   lazareCarbonCenter: {
