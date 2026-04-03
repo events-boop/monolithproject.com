@@ -38,6 +38,17 @@ const expressions = [
     href: "/radio",
     icon: AudioLines,
   },
+  {
+    id: "archive",
+    number: "04",
+    label: "Archive",
+    title: "Media & Insight",
+    tagline: "The captured moments and recorded history. A collective record.",
+    color: "#E05A3A",
+    image: "/images/video-poster-1.jpg",
+    href: "/archive",
+    icon: ArrowUpRight,
+  },
 ];
 
 import { useUI } from "@/contexts/UIContext";
@@ -69,7 +80,7 @@ export default function ExpressionSplit() {
               flex: hoveredId === exp.id ? 2 : hoveredId === null ? 1 : 0.8,
             }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative group h-[33.33vh] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0`}
+            className={`relative group h-[25vh] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0`}
           >
             <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}

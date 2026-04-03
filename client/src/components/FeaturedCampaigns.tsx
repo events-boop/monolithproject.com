@@ -1,6 +1,51 @@
-import { motion } from "framer-motion";
 import { ArrowUpRight, PlayCircle, Calendar } from "lucide-react";
 import { Link } from "wouter";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+
+const untoldStoryCampaignImage = getResponsiveImage("untoldStoryPoster", "(min-width: 1024px) 50vw, 100vw");
+const chasingSunsetsCampaignImage = getResponsiveImage("chasingSunsets", "(min-width: 1024px) 50vw, 100vw");
+const heroArchiveImage = getResponsiveImage("heroMonolith", "(min-width: 1024px) 67vw, 100vw");
+
+function CampaignBackdrop({
+  alt,
+  className,
+  sizes,
+  sources,
+  src,
+}: {
+  alt: string;
+  className: string;
+  sizes: string;
+  sources: {
+    srcSet: string;
+    type: string;
+    media?: string;
+    sizes?: string;
+  }[];
+  src: string;
+}) {
+  return (
+    <picture className={className}>
+      {sources.map((source) => (
+        <source
+          key={source.type}
+          media={source.media}
+          sizes={source.sizes || sizes}
+          srcSet={source.srcSet}
+          type={source.type}
+        />
+      ))}
+      <img
+        src={src}
+        alt={alt}
+        sizes={sizes}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover object-center"
+      />
+    </picture>
+  );
+}
 
 export default function FeaturedCampaigns() {
   return (
@@ -25,7 +70,13 @@ export default function FeaturedCampaigns() {
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           <Link href="/story" asChild>
             <a className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
-              <div className="absolute inset-0 bg-[url('/images/untold-story.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
+              <CampaignBackdrop
+                src={untoldStoryCampaignImage.src}
+                sources={untoldStoryCampaignImage.sources}
+                sizes={untoldStoryCampaignImage.sizes}
+                alt=""
+                className="absolute inset-0 opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
+              />
               <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
               
               <div className="relative z-10">
@@ -53,7 +104,13 @@ export default function FeaturedCampaigns() {
 
           <Link href="/chasing-sunsets" asChild>
             <a className="group relative border border-white/10 bg-white/[0.02] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
-              <div className="absolute inset-0 bg-[url('/images/chasing-sunsets.jpg')] bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-50 transition-all duration-700" />
+              <CampaignBackdrop
+                src={chasingSunsetsCampaignImage.src}
+                sources={chasingSunsetsCampaignImage.sources}
+                sizes={chasingSunsetsCampaignImage.sizes}
+                alt=""
+                className="absolute inset-0 opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
+              />
               <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
               
               <div className="relative z-10">
@@ -85,7 +142,13 @@ export default function FeaturedCampaigns() {
             {/* Prominent Video Recaps */}
             <div className="relative border border-white/10 bg-white/[0.02] p-8 md:p-12 group overflow-hidden min-h-[300px] flex flex-col justify-center border-l-4 border-l-[#E05A3A]">
                 <div className="absolute inset-0 bg-gradient-to-br from-black to-black/80 z-0" />
-                <div className="absolute inset-0 bg-[url('/images/hero-monolith.jpg')] bg-cover bg-center opacity-10 mix-blend-overlay z-0 group-hover:scale-105 transition-transform duration-700" />
+                <CampaignBackdrop
+                  src={heroArchiveImage.src}
+                  sources={heroArchiveImage.sources}
+                  sizes={heroArchiveImage.sizes}
+                  alt=""
+                  className="absolute inset-0 z-0 opacity-10 mix-blend-overlay transition-transform duration-700 group-hover:scale-105"
+                />
                 <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#E8B86D]/10 to-transparent mix-blend-screen pointer-events-none" />
                 
                 <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 h-full w-full">
