@@ -206,7 +206,7 @@ function MainContentWrapper() {
       </Suspense>
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full analogue-grid"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,

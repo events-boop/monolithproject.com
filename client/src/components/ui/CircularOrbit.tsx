@@ -146,7 +146,7 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
           className="cursor-pointer"
           data-cursor-text="EXPLORE"
         >
-          <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/80 hover:scale-105 active:scale-95">
+          <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/80 hover:scale-105 active:scale-95 liquid-hover">
             <div 
               className="flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full border border-white/10"
               style={{ backgroundColor: `${exp.color}15`, color: exp.color }}

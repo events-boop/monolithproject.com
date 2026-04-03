@@ -81,6 +81,24 @@
     })();
   </script>
   <div id="root"></div>
+
+  <!-- Unreplicable Architectural Layer: Analogue Grain & Liquid Displacement -->
+  <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
+    <filter id="liquid-distortion">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" seed="2" result="noise">
+        <animate attributeName="seed" from="1" to="100" dur="10s" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <filter id="analogue-grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.15" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
   <script type="module" src="/src/main.tsx"></script>
 
 </body>
