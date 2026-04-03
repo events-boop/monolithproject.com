@@ -32,6 +32,7 @@ export default function InfiniteScrollMarquee({
 
     const x = useTransform(baseX, (v) => `${wrap(-20, -50, v)}%`);
     const skewX = useTransform(smoothVelocity, [-1000, 1000], [-3, 3]);
+    const blur = useTransform(smoothVelocity, [-2000, 0, 2000], [4, 0, 4]);
 
     const directionFactor = useRef<number>(1);
     useAnimationFrame((t, delta) => {
@@ -53,7 +54,7 @@ export default function InfiniteScrollMarquee({
         <div className={`overflow-hidden whitespace-nowrap flex flex-nowrap ${className}`}>
             <motion.div 
                 className="flex whitespace-nowrap flex-nowrap shrink-0 items-center justify-center gap-[5vw]" 
-                style={{ x, skewX }}
+                style={{ x, skewX, filter: `blur(${blur.get()}px)` }}
             >
                 <span className="block shrink-0">{children}</span>
                 <span className="block shrink-0">{children}</span>

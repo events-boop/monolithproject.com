@@ -1,10 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 
 const CHARS = "ABCDEF0123456789!@#$%^&*()_+{}[]:;<>,.?/~";
 
-export default function KineticDecryption({ text, className = "" }: { text: string; className?: string }) {
+export default function KineticDecryption({ 
+  text, 
+  className = "", 
+  triggerOnce = true,
+  autoStart = true
+}: { 
+  text: string; 
+  className?: string;
+  triggerOnce?: boolean;
+  autoStart?: boolean;
+}) {
   const [displayText, setDisplayText] = useState(text);
   const [isScrambling, setIsScrambling] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: triggerOnce, margin: "-10%" });
 
   const startScramble = () => {
     if (isScrambling) return;
@@ -32,10 +45,17 @@ export default function KineticDecryption({ text, className = "" }: { text: stri
     }, 30);
   };
 
+  useEffect(() => {
+    if (autoStart && isInView) {
+      startScramble();
+    }
+  }, [isInView, autoStart]);
+
   return (
     <span 
+      ref={ref}
       onMouseEnter={startScramble}
-      className={`${className} cursor-default`}
+      className={`${className} cursor-default inline-block whitespace-nowrap`}
     >
       {displayText}
     </span>

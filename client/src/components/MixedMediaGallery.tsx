@@ -4,6 +4,7 @@ import { MasonryPhotoAlbum, Photo } from "react-photo-album";
 import "react-photo-album/masonry.css";
 import { MediaItem, homeGallery } from "@/data/galleryData";
 import ImageTrail from "./ui/ImageTrail";
+import KineticDecryption from "./KineticDecryption";
 
 const GalleryLightbox = lazy(() => import("./GalleryLightbox"));
 
@@ -101,7 +102,8 @@ export default function MixedMediaGallery({
             <h2 className="font-heavy text-[clamp(4rem,8vw,9rem)] leading-[0.85] tracking-tighter text-white uppercase mb-8">
               {title.split(" ").map((word, i) => (
                 <span key={i} className={`block ${i === 0 ? "text-white/30" : "text-white"}`}>
-                  {word}{i === title.split(" ").length - 1 ? "." : ""}
+                  <KineticDecryption text={word} />
+                  {i === title.split(" ").length - 1 ? "." : ""}
                 </span>
               ))}
             </h2>
@@ -148,7 +150,7 @@ export default function MixedMediaGallery({
                   "aria-label": photo.label,
                 }),
                 image: ({ photo }) => ({
-                  className: `w-full h-auto object-cover transition-all duration-[1.5s] ease-[0.22,1,0.36,1] filter grayscale group-hover:grayscale-0 ${
+                  className: `w-full h-auto object-cover transition-all duration-[1.5s] ease-[0.22,1,0.36,1] filter grayscale group-hover:grayscale-0 liquid-hover ${
                     photo.kind === "video"
                       ? "opacity-90 group-hover:scale-[1.02]"
                       : "opacity-70 group-hover:scale-[1.05] group-hover:opacity-100"
