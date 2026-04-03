@@ -46,21 +46,21 @@ const segmentContent: Record<
         href: "/schedule",
         icon: CalendarRange,
         note: "Live dates",
-        description: "Start with the upcoming calendar and the series each night belongs to.",
+        description: "The fastest way to see the live calendar and the specific series each night belongs to.",
       },
       {
         label: CTA_LABELS.radioHub,
         href: "/radio",
         icon: Radio,
         note: "Listen first",
-        description: "The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive.",
+        description: "The Radio Show is the easiest way to hear the taste behind the room before you arrive.",
       },
       {
         label: CTA_LABELS.archive,
         href: "/archive",
         icon: LibraryBig,
         note: "Past chapters",
-        description: "See what the nights actually looked and felt like once the doors opened.",
+        description: "See what the rooms actually looked and felt like once the doors opened.",
       },
     ],
   },
@@ -146,7 +146,7 @@ export default function VisitorContextPanel() {
   }
 
   const content = segmentContent[visitorContext.segment];
-  const actions = content.actions(ticketUrl, hasLiveTickets);
+  const actions = content.actions(ticketUrl || "#", hasLiveTickets);
 
   return (
     <section className="relative z-10 px-6 py-6 md:py-8">

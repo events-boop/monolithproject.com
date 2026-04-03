@@ -87,7 +87,8 @@ export default function SpatialAudioEngine() {
     return (
         <motion.button
             onClick={toggleSound}
-            className="fixed bottom-8 left-8 z-[999999] group flex items-center gap-3 mix-blend-difference"
+            aria-label={isPlaying ? "Mute ambient sound" : "Unmute ambient sound"}
+            className="fixed bottom-8 left-8 z-[200] group flex items-center gap-3 bg-black/20 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/5 hover:border-white/20 transition-all duration-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2 }}

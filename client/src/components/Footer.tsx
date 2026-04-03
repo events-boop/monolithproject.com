@@ -1,4 +1,4 @@
-import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
+import { Instagram, Headphones, Youtube, ArrowUpRight, Sun } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOlD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
 import { useState, useRef } from "react";
@@ -120,7 +120,7 @@ export default function Footer() {
     if (name === "Chasing Sun(Sets)") {
       return (
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true">☀️</span>
+          <Sun className="w-3.5 h-3.5 text-clay" />
           <span>{name}</span>
         </span>
       );

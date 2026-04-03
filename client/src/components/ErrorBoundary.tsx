@@ -41,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
                 </pre>
               </div>
             ) : (
-              <p className="text-muted-foreground mb-6 text-center">
+              <p className="mb-6 text-center text-white/65">
                 Please refresh the page. If this keeps happening, contact support.
               </p>
             )}
@@ -50,7 +50,7 @@ class ErrorBoundary extends Component<Props, State> {
               onClick={() => window.location.reload()}
               className={cn(
                 "flex items-center gap-2 px-4 py-2 rounded-lg",
-                "bg-primary text-primary-foreground",
+                "bg-primary text-black",
                 "hover:opacity-90 cursor-pointer"
               )}
             >

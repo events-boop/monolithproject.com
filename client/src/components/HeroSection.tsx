@@ -106,7 +106,7 @@ const HERO_SUPPORT_LINES = [
 const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
 
 const HERO_SUBHEAD =
-  "Monolith is the umbrella. Chasing Sun(Sets) is sunset and open air. Untold Story is the deep after-dark expression. Recurring Chicago rooms built for people who care what the night feels like.";
+  "The Monolith Project holds four connected expressions: the umbrella world, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story. Together they shape recurring Chicago rooms built for people who care what the night feels like.";
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -237,7 +237,7 @@ export default function HeroSection() {
       </div>
 
       {/* Main Impact Visuals (Center Focused) */}
-      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-[10vh] lg:pt-0 px-6 text-center w-full pointer-events-none">
+      <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-[22vh] lg:pt-0 px-6 text-center w-full pointer-events-none">
         <motion.div
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
@@ -318,7 +318,7 @@ export default function HeroSection() {
                   target={hasLiveTickets ? "_blank" : undefined}
                   data-cursor-magnetic
                   data-cursor-text={hasLiveTickets ? "RSVP" : "ACCESS"}
-                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[10px] font-bold uppercase tracking-[0.4em] text-white w-full sm:w-auto"
+                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white w-full sm:w-auto"
                 >
                   <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
                   <span className="relative z-10 flex items-center gap-3">
@@ -332,7 +332,7 @@ export default function HeroSection() {
               <MagneticButton strength={0.25}>
                 <Link
                   href={secondaryCtaHref}
-                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[10px] font-bold uppercase tracking-[0.4em] text-white/60 hover:text-white transition-colors w-full sm:w-auto"
+                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white/82 hover:text-white transition-colors w-full sm:w-auto"
                 >
                   <span className="relative z-10 flex items-center gap-3">
                     {secondaryCtaLabel}

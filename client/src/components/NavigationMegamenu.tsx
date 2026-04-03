@@ -10,14 +10,14 @@ export interface MegamenuProps {
     isLight: boolean;
     brand: string;
     megamenu: {
-        items: { label: string; href: string }[];
+        items: { label: string; href: string; icon?: "play" | "ticket" | "arrow" }[];
         feature: {
             title: string;
             subtitle?: string;
             image: string;
             href: string;
             ctaText: string;
-            icon?: "play" | "ticket";
+            icon?: "play" | "ticket" | "arrow";
             badge?: string;
             external?: boolean;
         };
@@ -62,6 +62,12 @@ export default function NavigationMegamenu({
             : megamenu.feature.icon === "ticket"
                 ? Ticket
                 : ArrowUpRight;
+
+    const ItemIcon = ({ type }: { type: "play" | "ticket" | "arrow" }) => {
+        if (type === "play") return <Play className="w-2.5 h-2.5 fill-current" />;
+        if (type === "ticket") return <Ticket className="w-2.5 h-2.5" />;
+        return <ArrowUpRight className="w-2.5 h-2.5 opacity-50" />;
+    };
 
     return (
         <div
@@ -124,7 +130,7 @@ export default function NavigationMegamenu({
                                 >
                                     Explore
                                 </span>
-                                <ul className="flex flex-col gap-4">
+                                <ul className="flex flex-col gap-3">
                                     {megamenu.items.map((item, i) => (
                                         <li key={i}>
                                             <Link
@@ -135,11 +141,12 @@ export default function NavigationMegamenu({
                                                     onNavigate(item.href);
                                                 }}
                                                 role="menuitem"
-                                                className={`text-sm font-medium tracking-wider transition-colors hover:-translate-y-0.5 inline-block duration-200 ${isLight
+                                                className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:-translate-y-0.5 duration-200 ${isLight
                                                     ? "text-charcoal hover:text-clay"
                                                     : "text-white/80 hover:text-white"
                                                     }`}
                                             >
+                                                {item.icon && <ItemIcon type={item.icon} />}
                                                 {item.label}
                                             </Link>
                                         </li>
@@ -185,10 +192,10 @@ export default function NavigationMegamenu({
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 onClick={() => setIsOpen(false)}
-                                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 ${megamenu.feature.icon === "ticket" ? "bg-primary text-black hover:bg-white hover:scale-105" : "bg-white/12 hover:bg-white/20 border border-white/20 text-white"}`}
+                                                className={`inline-flex items-center gap-2.5 px-6 py-3 rounded-full transition-all duration-300 ${megamenu.feature.icon === "ticket" ? "bg-primary text-black hover:bg-white hover:scale-105" : "bg-white/12 hover:bg-white/20 border border-white/20 text-white"}`}
                                             >
                                                 <FeatureIcon className="w-4 h-4" />
-                                                <span className="text-xs font-bold tracking-wider uppercase mt-0.5">
+                                                <span className="text-[13px] lg:text-sm font-black tracking-[0.16em] uppercase">
                                                     {megamenu.feature.ctaText}
                                                 </span>
                                             </a>
@@ -201,10 +208,10 @@ export default function NavigationMegamenu({
                                                     onNavigate(megamenu.feature.href);
                                                 }}
                                                 role="menuitem"
-                                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/12 hover:bg-white/20 border border-white/20 transition-all duration-300 text-white hover:scale-105"
+                                                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/12 hover:bg-white/20 border border-white/20 transition-all duration-300 text-white hover:scale-105"
                                             >
                                                 <FeatureIcon className="w-4 h-4" />
-                                                <span className="text-xs font-bold tracking-wider uppercase mt-0.5">
+                                                <span className="text-[13px] lg:text-sm font-black tracking-[0.16em] uppercase">
                                                     {megamenu.feature.ctaText}
                                                 </span>
                                             </Link>

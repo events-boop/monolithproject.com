@@ -117,8 +117,7 @@ export default function EditorialSignalsSection() {
                   <div className="max-w-xs">
                     <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">Why it matters</p>
                     <p className="text-sm font-light leading-relaxed text-white/60 group-hover:text-black/70">
-                      When the music, the archive, and the internal context point in the same
-                      direction, the next chapter connects.
+                      When the music, the archive, and the written context all point in the same direction, the next chapter feels connected to the last one.
                     </p>
                   </div>
                   <div className="inline-flex items-center justify-center h-12 w-12 border border-white/10 group-hover:border-black group-hover:bg-black transition-colors rounded-none shrink-0">

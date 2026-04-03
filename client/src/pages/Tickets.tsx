@@ -21,65 +21,18 @@ import {
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 
-interface TicketTier {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  description: string;
-  features: string[];
-  icon: React.ReactNode;
-  available: boolean;
-  highlight?: boolean;
-}
+import { TicketTier } from "@/data/events";
 
-const ticketTiers: TicketTier[] = [
-  {
-    id: "early-bird",
-    name: "Early Bird",
-    price: 45,
-    originalPrice: 65,
-    description: "Limited availability for early supporters",
-    features: [
-      "General admission",
-      "Access to all rooms",
-      "Welcome drink",
-    ],
-    icon: <Ticket className="w-6 h-6" />,
-    available: true,
-  },
-  {
-    id: "general",
-    name: "General Admission",
-    price: 65,
-    description: "Standard entry",
-    features: [
-      "General admission",
-      "Access to all rooms",
-      "Welcome drink",
-      "Event wristband",
-    ],
-    icon: <Star className="w-6 h-6" />,
-    available: true,
-    highlight: true,
-  },
-  {
-    id: "vip",
-    name: "VIP Experience",
-    price: 120,
-    description: "Elevated access",
-    features: [
-      "Priority entry",
-      "Access to all rooms",
-      "VIP lounge access",
-      "Complimentary drinks",
-      "Exclusive merch",
-      "Meet & greet opportunity",
-    ],
-    icon: <Crown className="w-6 h-6" />,
-    available: true,
-  },
-];
+// Icon mapping helper
+const getTierIcon = (iconName: string) => {
+  switch (iconName) {
+    case "star": return <Star className="w-6 h-6" />;
+    case "crown": return <Crown className="w-6 h-6" />;
+    case "ticket": 
+    default:
+      return <Ticket className="w-6 h-6" />;
+  }
+};
 
 const eventVisuals = {
   poster: "/images/untold-story.jpg",
@@ -275,7 +228,7 @@ export default function Tickets() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2.5rem] overflow-hidden">
-            {ticketTiers.map((tier) => (
+            {(featuredEvent?.ticketTiers || []).map((tier: TicketTier) => (
               <motion.div
                 key={tier.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -286,7 +239,7 @@ export default function Tickets() {
               >
                 <div className="flex items-center justify-between mb-12">
                    <div className={`w-14 h-14 rounded-full border border-white/5 flex items-center justify-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/5 ${tier.highlight ? "text-primary border-primary/20 bg-primary/10" : "text-white/20 group-hover:text-primary"}`}>
-                      {tier.icon}
+                      {getTierIcon(tier.icon)}
                    </div>
                    {tier.highlight && <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/80 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">High Demand</span>}
                 </div>
@@ -305,7 +258,7 @@ export default function Tickets() {
                    </p>
 
                    <ul className="space-y-4 mb-16">
-                     {tier.features.map((feature, i) => (
+                     {tier.features.map((feature: string, i: number) => (
                        <li key={i} className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/30 group-hover:text-white/60 transition-colors">
                          <div className="h-px w-3 bg-white/10 group-hover:bg-primary transition-colors" />
                          {feature}

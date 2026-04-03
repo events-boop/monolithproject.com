@@ -146,7 +146,7 @@ export default function ChasingSunsets() {
                       href={campaignTicketUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
                     >
                       {CTA_LABELS.tickets}
                       <ArrowUpRight size={14} />
@@ -158,14 +158,14 @@ export default function ChasingSunsets() {
                           e.preventDefault();
                           document.getElementById('chasing-cta')?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
                     >
                       {CTA_LABELS.innerCircle}
                       <ArrowRight size={14} />
                     </a>
                   ) : (
                     <Link href="/schedule" asChild>
-                      <a className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3 font-bold tracking-widest text-xs uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn">
+                      <a className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn">
                         {CTA_LABELS.schedule}
                         <ArrowUpRight size={14} />
                       </a>
@@ -174,7 +174,7 @@ export default function ChasingSunsets() {
                 </MagneticButton>
                 <MagneticButton strength={0.22}>
                   <Link href="/radio" asChild>
-                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-8 py-3 font-bold tracking-widest text-xs uppercase text-white/92 transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
                       {CTA_LABELS.radioHub}
                       <ArrowRight size={14} />
                     </a>
@@ -384,7 +384,7 @@ export default function ChasingSunsets() {
                             href={getPrimaryTicketUrl(event)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-8 py-3 font-bold tracking-widest text-xs uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                            className="px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
                           >
                             {CTA_LABELS.tickets} <ArrowUpRight size={14} />
                           </a>
@@ -501,7 +501,7 @@ export default function ChasingSunsets() {
 
         {/* Inner Circle Pre-registration Funnel */}
         {chasingFunnelEvent ? (
-          <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10">
+          <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10 mb-20 md:mb-24">
             <EventFunnelStack eventId={chasingFunnelEvent.id} />
           </div>
         ) : null}

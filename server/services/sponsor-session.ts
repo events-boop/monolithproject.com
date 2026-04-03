@@ -1,10 +1,6 @@
 import path from "path";
 import { existsSync } from "fs";
-import { fileURLToPath } from "url";
 import { randomUUID, createHmac, timingSafeEqual } from "crypto";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export const sponsorSessionTtlMs = 30 * 60 * 1000;
 export const sponsorSessionCookieName = "monolith_sponsor_session";
@@ -19,7 +15,6 @@ export function resolveSponsorDeckPath() {
   const candidates = [
     resolveCandidatePath(process.env.SPONSOR_DECK_PATH?.trim()),
     path.resolve(process.cwd(), "private", "documents", sponsorDeckFilename),
-    path.resolve(__dirname, "..", "..", "private", "documents", sponsorDeckFilename),
   ].filter((candidate): candidate is string => Boolean(candidate));
 
   for (const candidate of candidates) {

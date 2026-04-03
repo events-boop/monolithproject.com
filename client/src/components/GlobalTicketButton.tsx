@@ -37,10 +37,10 @@ export default function GlobalTicketButton() {
                     rel="noopener noreferrer"
                     data-cursor-magnetic
                     data-cursor-text="BOOK"
-                    onFocus={() => setSensoryOverloadActive(true)}
-                    onBlur={() => setSensoryOverloadActive(false)}
+                    onMouseEnter={() => setSensoryOverloadActive(true)}
+                    onMouseLeave={() => setSensoryOverloadActive(false)}
                     aria-label={`Open tickets for ${featuredEvent?.headline || featuredEvent?.title || "the featured event"}`}
-                    className={`group sensory-ticket-btn relative flex items-center gap-3 rounded-full bg-black/78 px-4 py-3 shadow-[0_18px_38px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_46px_rgba(0,0,0,0.28)] ${theme.border}`}
+                    className={`group sensory-ticket-btn relative flex items-center gap-3 rounded-full bg-black/78 px-5 py-3.5 shadow-[0_18px_38px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_46px_rgba(0,0,0,0.28)] ${theme.border}`}
                 >
                     <div
                         className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
@@ -56,14 +56,14 @@ export default function GlobalTicketButton() {
                         <Ticket className="h-4.5 w-4.5 text-white" />
                     </div>
 
-                    <div className="relative z-10 min-w-[7rem]">
-                        <span className="ui-chip block text-white/44">{CTA_LABELS.tickets}</span>
-                        <span className="mt-1 block text-[11px] font-bold uppercase tracking-[0.18em] text-white/88 transition-colors group-hover:text-white">
+                    <div className="relative z-10 min-w-[8.5rem]">
+                        <span className="ui-chip block text-white/54">{CTA_LABELS.tickets}</span>
+                        <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/92 transition-colors group-hover:text-white">
                             {CTA_LABELS.moveTogether}
                         </span>
                     </div>
 
-                    <ArrowUpRight className="relative z-10 h-3.5 w-3.5 text-white/56 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
+                    <ArrowUpRight className="relative z-10 h-4 w-4 text-white/64 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
                 </a>
             </MagneticButton>
         </div>

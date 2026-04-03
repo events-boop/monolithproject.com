@@ -200,7 +200,6 @@ function MainContentWrapper() {
           transform: shellTransform,
           opacity: shellOpacity,
           filter: shellFilter,
-          pointerEvents: isDrawerActive ? "none" : "auto",
         }}
       >
         <Router />

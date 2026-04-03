@@ -123,7 +123,7 @@ export default function About() {
         </div>
 
         {/* The Regular Content Layer */}
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-16 px-6 text-center w-full pointer-events-none">
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-28 md:pt-16 px-8 text-center w-full pointer-events-none">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ export default function About() {
               initial={{ filter: "blur(12px)", opacity: 0, scale: 0.95 }}
               animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heavy text-[clamp(2.8rem,15vw,12rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-[95vw] break-words"
+              className="font-heavy text-[clamp(2.4rem,12vw,12rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-[90vw] break-words"
             >
               MONOLITH
             </motion.h1>

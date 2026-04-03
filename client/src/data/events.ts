@@ -1,3 +1,15 @@
+export interface TicketTier {
+    id: string;
+    name: string;
+    price: number;
+    originalPrice?: number;
+    description: string;
+    features: string[];
+    icon: "ticket" | "star" | "crown";
+    available: boolean;
+    highlight?: boolean;
+}
+
 export interface ScheduledEvent {
     id: string;
     series: "chasing-sunsets" | "untold-story" | "monolith-project";
@@ -22,6 +34,7 @@ export interface ScheduledEvent {
     description?: string;
     age?: string;
     ticketUrl?: string;
+    ticketTiers?: TicketTier[];
     headline?: string;
     mainExperience?: string;
     experienceIntro?: string;
@@ -101,6 +114,37 @@ export const upcomingEvents: ScheduledEvent[] = [
         eventNotice: "Presented by The Monolith Project: UNTOLD STORY 360 EXPERIENCE",
         age: "21+",
         ticketUrl: POSH_TICKET_URL,
+        ticketTiers: [
+            {
+                id: "early-bird",
+                name: "Early Bird",
+                price: 45,
+                originalPrice: 65,
+                description: "Limited availability for early supporters",
+                features: ["General admission", "Access to all rooms", "Welcome drink"],
+                icon: "ticket",
+                available: true,
+            },
+            {
+                id: "general",
+                name: "General Admission",
+                price: 65,
+                description: "Standard entry",
+                features: ["General admission", "Access to all rooms", "Welcome drink", "Event wristband"],
+                icon: "star",
+                available: true,
+                highlight: true,
+            },
+            {
+                id: "vip",
+                name: "VIP Experience",
+                price: 120,
+                description: "Elevated access",
+                features: ["Priority entry", "Access to all rooms", "VIP lounge access", "Complimentary drinks", "Exclusive merch"],
+                icon: "crown",
+                available: true,
+            }
+        ],
         activeFunnels: ["coordinates", "waitlist-untold"], // Activate coordinate drop and waitlist for this event
     },
     {
@@ -135,6 +179,37 @@ export const upcomingEvents: ScheduledEvent[] = [
         eventNotice: "THE MONOLITH PROJECT PRESENTS: AUTOGRAF",
         age: "21+",
         ticketUrl: POSH_TICKET_URL, // Identifying this as the likely link or placeholder
+        ticketTiers: [
+            {
+                id: "early-bird",
+                name: "Early Bird",
+                price: 45,
+                originalPrice: 65,
+                description: "Limited availability for early supporters",
+                features: ["General admission", "Access to all rooms", "Welcome drink"],
+                icon: "ticket",
+                available: false,
+            },
+            {
+                id: "general",
+                name: "General Admission",
+                price: 65,
+                description: "Standard entry",
+                features: ["General admission", "Access to all rooms", "Welcome drink", "Event wristband"],
+                icon: "star",
+                available: true,
+                highlight: true,
+            },
+            {
+                id: "vip",
+                name: "VIP Experience",
+                price: 140,
+                description: "Elevated access",
+                features: ["Priority entry", "Access to all rooms", "VIP lounge access", "Complimentary drinks", "Exclusive merch"],
+                icon: "crown",
+                available: true,
+            }
+        ],
         activeFunnels: ["giveaway"], // Activate giveaway for the tickets page
     },
     {
@@ -169,6 +244,27 @@ export const upcomingEvents: ScheduledEvent[] = [
         ],
         age: "21+",
         activeFunnels: ["waitlist-untold"],
+        ticketTiers: [
+            {
+                id: "presale",
+                name: "Presale Access",
+                price: 40,
+                description: "Waitlist exclusive pricing",
+                features: ["General admission", "Access to all rooms", "Sign up via Laylo"],
+                icon: "ticket",
+                available: true,
+            },
+            {
+                id: "general",
+                name: "General Admission",
+                price: 60,
+                description: "Standard entry",
+                features: ["General admission", "Access to all rooms", "Welcome drink"],
+                icon: "star",
+                available: true,
+                highlight: true,
+            }
+        ]
     },
     {
         id: "css-jun07",
@@ -210,6 +306,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         time: "10:30 PM — Late",
         startsAt: "2026-07-04T22:30:00-05:00",
         endsAt: "2026-07-05T04:00:00-05:00",
+        doors: "10:30 PM",
         venue: "Venue Reveal Soon",
         location: "Chicago, IL",
         lineup: "Secret Guest B2B",

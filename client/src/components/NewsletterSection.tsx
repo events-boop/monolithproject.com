@@ -110,7 +110,7 @@ export default function NewsletterSection({
                 <Check className="w-8 h-8 text-black" />
               </div>
               <h3 className="font-heavy text-5xl md:text-7xl uppercase tracking-tighter text-white mb-6 drop-shadow-xl">SECURED.</h3>
-              <p className="font-sans text-xl text-white/50 max-w-xl mx-auto font-light leading-relaxed">
+              <p className="font-sans text-xl text-white/72 max-w-xl mx-auto font-light leading-relaxed">
                 You are on the list. Expect first access to lineups, secret drops, and private invitations.
               </p>
             </motion.div>
@@ -130,11 +130,11 @@ export default function NewsletterSection({
                 </span>
                 
                 <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/30">ENTER</span>
+                  <span className="text-white/45">ENTER</span>
                   <span>THE LIST.</span>
                 </h2>
                 
-                <p className="font-sans text-xl md:text-2xl text-white/60 leading-relaxed font-light mb-12 max-w-xl">
+                <p className="font-sans text-xl md:text-2xl text-white/78 leading-relaxed font-light mb-12 max-w-xl">
                   Get first access to lineups, secret locations, private invitations, and Monolith updates without the generic blast-email feel.
                 </p>
 
@@ -142,13 +142,13 @@ export default function NewsletterSection({
                   {invitationNotes.map((item) => (
                     <div key={item.label} className="flex items-start gap-6 group">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/10 bg-[#050505] transition-colors group-hover:border-primary">
-                        <item.icon className="h-5 w-5 text-white/40 group-hover:text-primary transition-colors" />
+                        <item.icon className="h-5 w-5 text-white/60 group-hover:text-primary transition-colors" />
                       </div>
                       <div className="flex flex-col justify-center">
                         <p className="font-heavy text-2xl uppercase tracking-tight text-white/90 group-hover:text-white transition-colors">
                           {item.label}
                         </p>
-                        <p className="font-sans text-sm text-white/40 mt-1 max-w-sm group-hover:text-white/60 transition-colors">
+                        <p className="font-sans text-sm text-white/60 mt-1 max-w-sm group-hover:text-white/78 transition-colors">
                           {item.copy}
                         </p>
                       </div>
@@ -166,7 +166,7 @@ export default function NewsletterSection({
               >
                 <div className="mb-4">
                   <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Request Access</h3>
-                  <p className="font-sans text-sm text-white/40 font-light">
+                  <p className="font-sans text-sm text-white/60 font-light">
                     Email is required. Phone is optional for text-first priority drops.
                   </p>
                 </div>
@@ -174,7 +174,7 @@ export default function NewsletterSection({
                 {/* Inputs */}
                 <div className="flex flex-col gap-8">
                   <div className="relative group">
-                    <label htmlFor="firstName" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
+                    <label htmlFor="firstName" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/85 transition-colors">
                       First Name (Optional)
                     </label>
                     <input
@@ -183,12 +183,12 @@ export default function NewsletterSection({
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Enter name"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/20 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="email" className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/40 group-hover:text-white/70"}`}>
+                    <label htmlFor="email" className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/60 group-hover:text-white/85"}`}>
                       Email Address *
                     </label>
                     <input
@@ -210,7 +210,7 @@ export default function NewsletterSection({
                         setErrors(prev => err ? { ...prev, email: err } : (({ email: _, ...rest }) => rest)(prev));
                       }}
                       placeholder="you@email.com"
-                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/20 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
+                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
                     />
                     {touched.email && errors.email && (
                       <p id="newsletter-email-error" className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.11em]">
@@ -220,7 +220,7 @@ export default function NewsletterSection({
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="phone" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/40 block mb-3 group-hover:text-white/70 transition-colors">
+                    <label htmlFor="phone" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/85 transition-colors">
                       Phone Number (Optional)
                     </label>
                     <input
@@ -230,7 +230,7 @@ export default function NewsletterSection({
                       autoComplete="tel"
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+1 (000) 000-0000"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/20 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
                 </div>

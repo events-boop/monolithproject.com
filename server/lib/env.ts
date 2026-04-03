@@ -1,5 +1,9 @@
 import type { LeadProvider } from "./schemas";
 
+type ValidateEnvironmentOptions = {
+  fatal?: boolean;
+};
+
 export function readProvider(): LeadProvider {
   const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
   if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit" || provider === "hubspot" || provider === "brevo" || provider === "emailoctopus") {
@@ -8,15 +12,26 @@ export function readProvider(): LeadProvider {
   throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, convertkit, hubspot, brevo, or emailoctopus.");
 }
 
-export function validateEnvironment() {
+function logValidationFailure(message: string, { fatal }: Required<ValidateEnvironmentOptions>) {
+  if (fatal) {
+    console.error(`❌ CRITICAL BOOT FAILURE: ${message}`);
+    throw new Error(message);
+  }
+
+  console.warn(`⚠️  ${message}`);
+}
+
+export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
+  const resolvedOptions: Required<ValidateEnvironmentOptions> = {
+    fatal: options.fatal ?? false,
+  };
   const isProd = process.env.NODE_ENV === "production";
 
   // 1. Database Requirement
   if (!process.env.DATABASE_URL) {
-    if (isProd) {
-      console.error("❌ CRITICAL BOOT FAILURE: DATABASE_URL environment variable is missing.");
+    if (resolvedOptions.fatal && isProd && !process.env.CI) {
+      logValidationFailure("DATABASE_URL environment variable is missing.", resolvedOptions);
       console.error("   The application form handlers and security depend on the database in production.");
-      process.exit(1);
     } else {
       console.warn("⚠️  DATABASE_URL is not set — running without database persistence.");
     }
@@ -25,11 +40,10 @@ export function validateEnvironment() {
   const requiredGlobalVars = ["SPONSOR_SESSION_SECRET"];
   const missingGlobal = requiredGlobalVars.filter((v) => !process.env[v]);
   if (missingGlobal.length > 0) {
-    if (isProd) {
-      console.error(`❌ CRITICAL BOOT FAILURE: Missing global env vars: ${missingGlobal.join(", ")}`);
-      process.exit(1);
+    if (resolvedOptions.fatal && isProd) {
+      logValidationFailure(`Missing global env vars: ${missingGlobal.join(", ")}`, resolvedOptions);
     } else {
-      console.warn(`⚠️  Missing env vars (non-fatal in dev): ${missingGlobal.join(", ")}`);
+      console.warn(`⚠️  Missing env vars at boot: ${missingGlobal.join(", ")}`);
     }
   }
 
@@ -47,14 +61,13 @@ export function validateEnvironment() {
 
     const vars = requiredEnvVars[provider];
     if (!vars) {
-      console.error(`❌ CRITICAL BOOT FAILURE: Unknown LEAD_PROVIDER "${provider}".`);
-      process.exit(1);
+      logValidationFailure(`Unknown LEAD_PROVIDER "${provider}".`, resolvedOptions);
+      return;
     }
 
     const missing = vars.filter((v) => !process.env[v]);
     if (missing.length > 0) {
-      console.error(`❌ CRITICAL BOOT FAILURE: Missing env vars for ${provider}: ${missing.join(", ")}`);
-      process.exit(1);
+      logValidationFailure(`Missing env vars for ${provider}: ${missing.join(", ")}`, resolvedOptions);
     }
   }
 }

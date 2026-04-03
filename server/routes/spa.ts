@@ -1,14 +1,31 @@
 import { Router } from "express";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import express from "express";
 import { injectHeroPreloads } from "../services/hero-preloads";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const router = Router();
+
+function resolveEntryDir() {
+  const entryPath = process.argv[1];
+  return entryPath ? path.dirname(path.resolve(entryPath)) : process.cwd();
+}
+
+function resolveStaticPath() {
+  const entryDir = resolveEntryDir();
+  const candidates =
+    process.env.NODE_ENV === "production"
+      ? [
+          path.resolve(process.cwd(), "dist", "public"),
+          path.resolve(entryDir, "public"),
+          path.resolve(process.cwd(), "client"),
+        ]
+      : [path.resolve(process.cwd(), "dist", "public"), path.resolve(process.cwd(), "client")];
+
+  return (
+    candidates.find((candidate) => existsSync(path.join(candidate, "index.html"))) ?? candidates[0]
+  );
+}
 
 // Never allow /api/* to fall through to SPA HTML.
 router.use("/api", (_req, res) => {
@@ -21,10 +38,7 @@ router.use("/api", (_req, res) => {
   });
 });
 
-const staticPath =
-  process.env.NODE_ENV === "production"
-    ? path.resolve(__dirname, "public")
-    : path.resolve(__dirname, "..", "..", "dist", "public");
+const staticPath = resolveStaticPath();
 const indexHtmlPath = path.join(staticPath, "index.html");
 let cachedIndexHtml: string | null = null;
 

@@ -50,7 +50,7 @@ export default function BrandClarityBlock() {
               
               <h2 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.85] uppercase text-white drop-shadow-2xl mb-10">
                 ONE HOUSE.<br />
-                <span className="text-white/30 italic">FOUR STORIES.</span>
+                <span className="text-white/30 italic">FOUR EXPRESSIONS.</span>
               </h2>
               
               <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-xl font-light">

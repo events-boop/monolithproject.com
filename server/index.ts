@@ -1,48 +1,17 @@
-import express from "express";
 import { createServer } from "http";
 import { pathToFileURL } from "url";
-import { hasDatabase } from "./db/client";
-import { logEvent } from "./lib/logging";
 import { validateEnvironment } from "./lib/env";
-import { configureMiddleware, configureErrorMiddleware } from "./middleware";
-import healthRouter from "./routes/health";
-import seoRouter from "./routes/seo";
-import leadsRouter from "./routes/leads";
-import ticketsRouter from "./routes/tickets";
-import bookingRouter from "./routes/booking";
-import contactRouter from "./routes/contact";
-import webhooksRouter from "./routes/webhooks";
-import socialEchoRouter from "./routes/social-echo";
-import sponsorRouter from "./routes/sponsor";
-import spaRouter from "./routes/spa";
+import { createApp } from "./app";
 
-const app = express();
-let appConfigured = false;
+const app = createApp();
 
 function configureApp() {
-  if (appConfigured) return;
-  appConfigured = true;
-
-  logEvent("database.mode", { provider: "neon-postgres", configured: hasDatabase() });
-
-  configureMiddleware(app);
-
-  app.use(healthRouter);
-  app.use(seoRouter);
-  app.use(leadsRouter);
-  app.use(ticketsRouter);
-  app.use(bookingRouter);
-  app.use(contactRouter);
-  app.use(webhooksRouter);
-  app.use(socialEchoRouter);
-  app.use(sponsorRouter);
-  app.use(spaRouter);
-
-  // 4. Finalize with global error handler
-  configureErrorMiddleware(app);
+  return app;
 }
 
 async function startServer() {
+  validateEnvironment({ fatal: true });
+
   const server = createServer(app);
   const portEnv = process.env.PORT;
   const port = portEnv ? Number.parseInt(portEnv, 10) : 5000;
@@ -59,7 +28,6 @@ async function startServer() {
   });
 }
 
-validateEnvironment();
 configureApp();
 
 const isMainModule =

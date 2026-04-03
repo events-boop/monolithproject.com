@@ -28,9 +28,9 @@ export default function EpisodeGallery({
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
     
-    // Asymmetrical scroll physics for true FWA gallery behavior
-    const yEven = useTransform(scrollYProgress, [0, 1], [80, -80]);
-    const yOdd = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+    // Asymmetrical scroll physics — significantly reduced on mobile to prevent content occlusion
+    const yEven = useTransform(scrollYProgress, [0, 1], [40, -40]);
+    const yOdd = useTransform(scrollYProgress, [0, 1], [-20, 20]);
 
     return (
         <div ref={containerRef} className={`py-16 ${isChasing ? "sunset-border-accent" : "border-white/10"}`}>

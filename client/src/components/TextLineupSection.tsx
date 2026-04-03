@@ -107,7 +107,7 @@ export default function TextLineupSection() {
               <span className="block">The Room.</span>
             </h2>
             <p className="font-mono text-[10px] md:text-sm tracking-[0.14em] uppercase text-white/50 leading-relaxed max-w-md">
-              Artists selected for the pace and curation of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
+              A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster. These are the artists who understand the paces of the night.
             </p>
           </div>
 

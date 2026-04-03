@@ -13,6 +13,7 @@ export interface ArtistData {
   tags: string[];
   socials: { instagram?: string; website?: string };
   tracks: { title: string; duration: string }[];
+  previousSets?: { title: string; date: string; url?: string }[];
 }
 
 export const ARTIST_ENTRIES: ArtistData[] = [
@@ -92,14 +93,18 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     genre: "PSYCHEDELIC TECHNO",
     image: "/images/artist-haai.webp",
     series: ["untold-story"],
-    bio: "Hailing from Australia and based in London, HAAi continues to redefine the boundaries of club music. Her sets are a journey through genre-bending soundscapes that fit the Untold Story format.",
+    bio: "Hailing from Australia and based in London, HAAi continues to redefine the boundaries of club music. Her sets are a journey through genre-bending soundscapes that fit the Untold Story format. Known for her unpredictable, high-energy selections and deep connection to the dancefloor, HAAi is a central pillar of the Monolith headliner ecosystem.",
     tags: ["Techno", "Psychedelic", "Alternative"],
-    socials: {},
+    socials: { instagram: "https://instagram.com/haaihaaihaai" },
     tracks: [
       { title: "Baby, We're Ascending", duration: "5:42" },
       { title: "The Sun Made For A Soft Landing", duration: "4:15" },
       { title: "Lights Out", duration: "6:03" },
     ],
+    previousSets: [
+      { title: "Untold Story S1 E2", date: "June 2024", url: "https://soundcloud.com/haaihaaihaai/untold-story-exclusive" },
+      { title: "Monolith Radio 044", date: "Oct 2024", url: "https://soundcloud.com/haaihaaihaai/monolith-radio-session" }
+    ]
   },
   {
     id: "autograf",
@@ -236,6 +241,27 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Signal Path", duration: "5:11" },
       { title: "Echo Frame", duration: "4:57" },
     ],
+  },
+  {
+    id: "avo",
+    name: "AVO",
+    role: "RESIDENT",
+    origin: "CHICAGO, US",
+    genre: "MELODIC TECHNO · AFRO",
+    image: "/images/artist-avo-profile.jpg",
+    series: ["untold-story"],
+    bio: "A cornerstone of the Monolith Project's residency program. AVO is known for his surgical precision in the booth, blending deep melodic techno with percussive afro-house rhythms. His sets are visceral, architectural, and built for the raw, concrete spaces of the Untold Story series. As a resident, he anchors the transition from tension to release, defining the sonic architecture of the room.",
+    tags: ["Resident", "Melodic Techno", "Afro House"],
+    socials: { instagram: "https://instagram.com/avomusic_" },
+    tracks: [
+      { title: "Architectural tension", duration: "6:42" },
+      { title: "Concrete Jungle", duration: "5:58" },
+      { title: "Lunar Shift", duration: "7:12" },
+    ],
+    previousSets: [
+      { title: "Untold Story S1 E4", date: "Nov 2024", url: "https://soundcloud.com/avomusic" },
+      { title: "Monolith Radio 038", date: "Aug 2024", url: "https://soundcloud.com/avomusic" }
+    ]
   },
 ];
 

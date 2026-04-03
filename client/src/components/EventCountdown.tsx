@@ -11,7 +11,7 @@ function getNextEvent(eventId?: string) {
     const specificEvent = getEventById(eventId);
     if (specificEvent) return specificEvent;
   }
-  return upcomingEvents.find(e => e.ticketUrl && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
+  return upcomingEvents.find(e => e.ticketUrl && e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
 }
 
 function parseEventDate(dateStr: string): Date {
