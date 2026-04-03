@@ -801,9 +801,11 @@
     height: 100%;
     pointer-events: none;
     z-index: 1000;
-    opacity: 0.15;
-    background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");
-    mix-blend-mode: soft-light;
+    background-color: transparent;
+    opacity: 0.12;
+    mask-image: radial-gradient(circle, #000 1px, transparent 1px);
+    mask-size: 4px 4px;
+    background-image: none;
   }
 
   /* Kinetic scanlines for HUD feel */

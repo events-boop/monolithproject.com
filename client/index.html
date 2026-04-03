@@ -9,9 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
-  {/* Preload critical LCP Hero assets */}
-  <link rel="preload" href="/images/chasing-sunsets.jpg" as="image" type="image/jpeg" />
-  <link rel="preload" href="/images/untold-story-hero.jpg" as="image" type="image/jpeg" />
+  <!-- Preload critical LCP Hero assets with responsive srcset -->
+  <link rel="preload" as="image" 
+    href="/images/generated/chasing-sunsets-1280.avif" 
+    imagesrcset="/images/generated/chasing-sunsets-640.avif 640w, /images/generated/chasing-sunsets-960.avif 960w, /images/generated/chasing-sunsets-1280.avif 1280w, /images/generated/chasing-sunsets-1600.avif 1600w"
+    imagesizes="100vw"
+    type="image/avif"
+    fetchpriority="high" />
 
   <link
     href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&family=Syncopate:wght@400;700&family=Syne:wght@700;800&display=swap"
@@ -49,7 +53,7 @@
       src="https://www.facebook.com/tr?id=166134370742863&ev=PageView&noscript=1" /></noscript>
   <div id="initial-loader"
     style="position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s">
-    <span style="font-family:'Bebas Neue','Arial Narrow',sans-serif;color:#c8a45a;letter-spacing:0.22em;font-size:20px">MONOLITH PROJECT</span>
+    <span style="font-family:'Archivo Black',system-ui,sans-serif;color:#c8a45a;letter-spacing:0.32em;font-size:18px;font-weight:900">MONOLITH PROJECT</span>
   </div>
   <script>
     (function () {

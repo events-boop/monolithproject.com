@@ -262,9 +262,9 @@ export default function HeroSection() {
           {/* Kinetic Fragmented Typography */}
           <div className="relative">
                 <motion.h1
-                  initial={{ opacity: 0, scale: 0.96 }}
+                  initial={{ opacity: 1, scale: 1 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                  transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                   className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto"
                 >
                   <KineticDecryption text="MONOLITH" />
