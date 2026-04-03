@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Sun, AudioLines } from "lucide-react";
+import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import UntoldButterflyLogo from "../UntoldButterflyLogo";
 import { useUI } from "@/contexts/UIContext";
@@ -12,8 +12,8 @@ const expressions = [
     label: "Open Air",
     icon: Sun,
     color: "#D4A574",
-    orbit: 180, // Radius in px
-    speed: 0.2, // Relative rotation speed
+    orbit: 180,
+    speed: 0.2, 
     initialAngle: 45,
   },
   {
@@ -36,6 +36,16 @@ const expressions = [
     speed: 0.1,
     initialAngle: 300,
   },
+  {
+    id: "archive",
+    title: "Media & Insight",
+    label: "Archive",
+    icon: ArrowUpRight,
+    color: "#FFFFFF",
+    orbit: 420,
+    speed: -0.1,
+    initialAngle: 60,
+  },
 ];
 
 export default function CircularOrbit() {
@@ -45,14 +55,12 @@ export default function CircularOrbit() {
     offset: ["start end", "end start"],
   });
 
-  // Master rotation controlled by scroll
   const rotation = useTransform(scrollYProgress, [0, 1], [0, 90]);
 
-  // Handle responsive orbit scaling
   const [scale, setScale] = useState(1);
   useEffect(() => {
     const handleResize = () => {
-      setScale(window.innerWidth < 768 ? 0.65 : window.innerWidth < 1024 ? 0.85 : 1);
+      setScale(window.innerWidth < 768 ? 0.6 : window.innerWidth < 1024 ? 0.75 : 1);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -62,12 +70,20 @@ export default function CircularOrbit() {
   return (
     <div
       ref={containerRef}
-      className="relative flex items-center justify-center w-full max-w-full h-[540px] md:h-[800px] overflow-hidden select-none pointer-events-none"
+      className="relative flex items-center justify-center w-full max-w-full h-[540px] md:h-[900px] overflow-hidden select-none pointer-events-none"
     >
-      {/* Background Glow */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-0">
+        <defs>
+          <linearGradient id="orbit-gradient-shared" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="white" stopOpacity="0" />
+            <stop offset="50%" stopColor="white" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,165,116,0.05)_0%,transparent_70%)] opacity-50" />
 
-      {/* Center - The Monolith */}
       <div className="relative z-20 flex flex-col items-center justify-center">
         <motion.div
            animate={{ 
@@ -82,7 +98,6 @@ export default function CircularOrbit() {
         <span className="ui-kicker mt-6 text-white/40">The Monolith</span>
       </div>
 
-      {/* Orbits */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         {expressions.map((exp) => (
           <OrbitCircle
@@ -98,42 +113,28 @@ export default function CircularOrbit() {
 }
 
 function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: any; scrollRotation: any; scale: number }) {
-  // Combine individual speed and base angle with scroll rotation
   const angle = useTransform(scrollRotation, (v: number) => v * exp.speed + exp.initialAngle);
-
-  // Position based on angle and orbit radius
   const radius = exp.orbit * scale;
   const x = useTransform(angle, (a) => Math.cos((a * Math.PI) / 180) * radius);
   const y = useTransform(angle, (a) => Math.sin((a * Math.PI) / 180) * radius);
-
   const Icon = exp.icon;
-
   const { setHoveredExpression } = useUI();
 
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      {/* The Visual Circle Path */}
       <svg className="absolute w-full h-full opacity-20 pointer-events-none">
         <circle
           cx="50%"
           cy="50%"
           r={radius}
-          stroke="url(#orbit-gradient)"
+          stroke="url(#orbit-gradient-shared)"
           strokeWidth="1"
           fill="none"
           strokeDasharray="4 8"
           className="opacity-40"
         />
-        <defs>
-          <linearGradient id="orbit-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="white" stopOpacity="0" />
-            <stop offset="50%" stopColor="white" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-        </defs>
       </svg>
 
-      {/* The Orbiting Content */}
       <motion.div
         style={{ x, y }}
         className="absolute z-10 flex items-center gap-3 p-2 group pointer-events-auto"
@@ -145,7 +146,6 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
           className="cursor-pointer"
           data-cursor-text="EXPLORE"
         >
-          {/* Glassmorphic Badge */}
           <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/80 hover:scale-105 active:scale-95">
             <div 
               className="flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full border border-white/10"
