@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 
 interface SectionDividerProps {
@@ -37,6 +37,12 @@ export default function SectionDivider({ id, number, label, dark, glow }: Sectio
     }
   }, [isInView]);
 
+  // 📡 AMBIENT DATA STREAM - Memoized to prevent re-generation on each scroll tick
+  const dataSegments = useMemo(() => 
+    Array.from({ length: 12 }).map(() => 
+      `0x${(Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase()} // NODE_${number}_DATA_SYNC_PROTOCOL_GHQ_ACCESS_GRANTED`
+    ), [number]);
+
   return (
     <motion.div
       ref={containerRef}
@@ -60,9 +66,9 @@ export default function SectionDivider({ id, number, label, dark, glow }: Sectio
 
       {/* 📡 AMBIENT DATA STREAM */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[9px] truncate whitespace-nowrap overflow-hidden select-none">
-          {Array.from({ length: 12 }).map((_, i) => (
+          {dataSegments.map((segment, i) => (
              <div key={i} className="flex gap-12 mb-1 animate-pulse" style={{ animationDelay: `${i * 0.4}s` }}>
-                {`0x${(Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase()} // NODE_${number}_DATA_SYNC_PROTOCOL_GHQ_ACCESS_GRANTED`}
+                {segment}
              </div>
           ))}
       </div>

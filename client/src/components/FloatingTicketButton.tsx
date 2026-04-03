@@ -63,12 +63,12 @@ export default function FloatingTicketButton() {
            transition={{ duration: 0.8, delay: 1 }}
            onMouseEnter={() => signalChirp.hover()}
            onClick={() => signalChirp.click()}
-           className="bg-black border-t md:border border-white/15 p-5 sm:p-6 md:p-8 flex items-center justify-between md:justify-end gap-4 md:gap-8 transition-all duration-500 hover:bg-white hover:border-white overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-2xl hover:[filter:url(#liquid-distortion)]"
+           className="bg-black border-t md:border border-white/15 p-5 sm:p-6 md:p-8 flex items-center justify-between md:justify-end gap-4 md:gap-8 transition-all duration-500 hover:bg-white hover:border-white overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.8)] md:shadow-2xl lg:hover:[filter:url(#liquid-distortion)]"
         >
           {/* Edge Accent Line */}
           <div className={`absolute top-0 bottom-0 left-0 w-[3px] opacity-50 group-hover:opacity-100 transition-all duration-500 ${accentColor}`} />
 
-          <div className="flex flex-col text-left md:text-right items-start md:items-end z-10 w-full md:w-auto">
+          <div className="flex flex-col text-left md:text-right items-start md:items-end z-10 w-full md:w-auto overflow-hidden">
             {nextEvent.ticketUrl && (
               <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <span className="relative flex h-2 w-2">
@@ -83,7 +83,7 @@ export default function FloatingTicketButton() {
             <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-1.5 md:mb-2">
               {shortDate}
             </span>
-            <span className="font-heavy text-lg md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none truncate max-w-[200px] md:max-w-xs">
+            <span className="font-heavy text-base md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none truncate md:whitespace-normal md:max-w-xs">
               <KineticDecryption text={nextEvent.title} />
             </span>
           </div>
