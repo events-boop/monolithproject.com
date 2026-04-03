@@ -10,6 +10,7 @@ import { subscribeLead } from "../providers/lead-providers";
 import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { sendWelcomeEmail } from "../services/email";
 
 const router = Router();
 
@@ -75,6 +76,11 @@ router.post("/api/leads", asyncHandler(async (req, res) => {
 
       await subscribeLead(provider, parsed.data);
 
+      const welcomeEmail = await sendWelcomeEmail(email, parsed.data.firstName).catch(err => {
+        console.error(`[${requestId}] Failed to send welcome email:`, err);
+        return null;
+      });
+
       // 2. Update DB status on success
       if (db) {
         // Fire and forget update
@@ -96,9 +102,14 @@ router.post("/api/leads", asyncHandler(async (req, res) => {
         provider,
         source: parsed.data.source || "website",
         eventInterest: parsed.data.eventInterest || null,
+        sessionId: parsed.data.sessionId || null,
+        landingPageUrl: parsed.data.landingPageUrl || null,
+        referrerDomain: parsed.data.referrerDomain || parsed.data.firstReferrerDomain || null,
         utmSource: parsed.data.utmSource || null,
         utmMedium: parsed.data.utmMedium || null,
         utmCampaign: parsed.data.utmCampaign || null,
+        firstUtmSource: parsed.data.firstUtmSource || null,
+        lastUtmSource: parsed.data.lastUtmSource || null,
         emailHash: createHash("sha256").update(email).digest("hex").slice(0, 12),
       });
 

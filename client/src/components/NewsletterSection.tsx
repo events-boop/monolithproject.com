@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Check, ArrowUpRight, AlertCircle, Sparkles, Radio, MapPinned } from "lucide-react";
 import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 interface NewsletterSectionProps {
   source?: string;
@@ -40,6 +41,7 @@ export default function NewsletterSection({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState("");
+  const [residentId, setResidentId] = useState("");
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -85,6 +87,8 @@ export default function NewsletterSection({
         },
         crypto.randomUUID()
       );
+      setResidentId(Math.random().toString(36).substring(7).toUpperCase());
+      signalChirp.boot();
       setIsSubmitted(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
@@ -102,17 +106,57 @@ export default function NewsletterSection({
           {isSubmitted ? (
             <motion.div
               key="success"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-24 border border-white/10 bg-white/[0.02]"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative max-w-2xl mx-auto border border-white/20 bg-black/60 p-12 backdrop-blur-3xl overflow-hidden group"
             >
-              <div className="w-16 h-16 border border-white/20 flex items-center justify-center mx-auto mb-8 bg-primary">
-                <Check className="w-8 h-8 text-black" />
+              <div className="absolute inset-0 bg-noise opacity-[0.05]" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[100px]" />
+              
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="w-16 h-16 border border-primary/40 flex items-center justify-center mb-10 bg-primary/5">
+                  <Check className="w-8 h-8 text-primary" />
+                </div>
+                
+                <span className="font-mono text-[9px] text-primary tracking-[0.5em] uppercase mb-4">Identity // Authenticated</span>
+                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Access Granted</h3>
+                
+                <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
+                  <div className="flex flex-col gap-2">
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Resident_Name</span>
+                    <span className="font-heavy text-2xl text-white uppercase">{firstName || "Anonymous"}</span>
+                  </div>
+                  <div className="flex flex-col gap-2 text-right md:text-left">
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signal_Signature</span>
+                    <span className="font-heavy text-xl text-primary tabular-nums tracking-widest">#{residentId}</span>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Clearance_Level</span>
+                    <span className="font-heavy text-lg text-white/80">SS-TIER // LIST_01</span>
+                  </div>
+                  <div className="flex flex-col gap-2 text-right md:text-left">
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Registry_Date</span>
+                    <span className="font-heavy text-lg text-white/80">{new Date().toLocaleDateString()}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-6 w-full">
+                  <button 
+                    onClick={() => window.print()}
+                    className="flex-1 py-5 border border-white/10 font-heavy text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-all flex items-center justify-center gap-3 group"
+                  >
+                    <span>Print Artifact</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </button>
+                  <a 
+                    href="/schedule"
+                    className="flex-1 py-5 bg-white text-black font-heavy text-xs uppercase tracking-[0.2em] hover:pr-12 transition-all relative flex items-center justify-center group"
+                  >
+                    <span>Secure Rituals</span>
+                    <ArrowUpRight className="w-4 h-4 ml-3" />
+                  </a>
+                </div>
               </div>
-              <h3 className="font-heavy text-5xl md:text-7xl uppercase tracking-tighter text-white mb-6 drop-shadow-xl">SECURED.</h3>
-              <p className="font-sans text-xl text-white/72 max-w-xl mx-auto font-light leading-relaxed">
-                You are on the list. Expect first access to lineups, secret drops, and private invitations.
-              </p>
             </motion.div>
           ) : (
             <motion.div

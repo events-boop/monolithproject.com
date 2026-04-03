@@ -71,10 +71,10 @@ export default function Tickets() {
     event.currentTarget.src = "/images/hero-monolith.jpg";
   };
 
-  const handlePurchase = () => {
-    if (!ticketUrl) return;
-    void trackTicketIntent("tickets_page");
-    window.open(ticketUrl, "_blank", "noopener,noreferrer");
+  const handlePurchase = (source: string, destinationUrl?: string) => {
+    if (!destinationUrl) return;
+    void trackTicketIntent(source, featuredEvent?.id, destinationUrl);
+    window.open(destinationUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -119,6 +119,7 @@ export default function Tickets() {
                     href={ticketUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => void trackTicketIntent("tickets_page_header", featuredEvent?.id, ticketUrl)}
                     className="btn-pill-coral flex items-center justify-center"
                   >
                     {primaryCtaLabel}
@@ -223,6 +224,7 @@ export default function Tickets() {
                           href={ticketUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, ticketUrl)}
                           className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]"
                         >
                            {executeCtaLabel}
@@ -296,7 +298,7 @@ export default function Tickets() {
                 </div>
 
                 <button
-                  onClick={handlePurchase}
+                  onClick={() => handlePurchase(`tickets_page_${tier.id}`, ticketUrl)}
                   disabled={!tier.available}
                   className={`w-full h-16 flex items-center justify-center gap-3 rounded-full text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-700 ${
                     tier.highlight 

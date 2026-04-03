@@ -1,3 +1,5 @@
+import { getAttributionPayload } from "./attribution";
+
 export interface LeadPayload {
   email: string;
   firstName?: string;
@@ -11,6 +13,78 @@ export interface LeadPayload {
   utmTerm?: string;
   utmContent?: string;
   pageUrl?: string;
+  sessionId?: string;
+  landingPageUrl?: string;
+  referrer?: string;
+  referrerDomain?: string;
+  firstReferrer?: string;
+  firstReferrerDomain?: string;
+  firstTouchAt?: string;
+  lastTouchAt?: string;
+  firstUtmSource?: string;
+  firstUtmMedium?: string;
+  firstUtmCampaign?: string;
+  firstUtmTerm?: string;
+  firstUtmContent?: string;
+  lastUtmSource?: string;
+  lastUtmMedium?: string;
+  lastUtmCampaign?: string;
+  lastUtmTerm?: string;
+  lastUtmContent?: string;
+  gclid?: string;
+  fbclid?: string;
+  ttclid?: string;
+  msclkid?: string;
+  firstGclid?: string;
+  firstFbclid?: string;
+  firstTtclid?: string;
+  firstMsclkid?: string;
+  lastGclid?: string;
+  lastFbclid?: string;
+  lastTtclid?: string;
+  lastMsclkid?: string;
+}
+
+export interface TicketIntentPayload {
+  source: string;
+  eventId?: string;
+  destinationUrl?: string;
+  pageUrl?: string;
+  sessionId?: string;
+  landingPageUrl?: string;
+  referrer?: string;
+  referrerDomain?: string;
+  firstReferrer?: string;
+  firstReferrerDomain?: string;
+  firstTouchAt?: string;
+  lastTouchAt?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  firstUtmSource?: string;
+  firstUtmMedium?: string;
+  firstUtmCampaign?: string;
+  firstUtmTerm?: string;
+  firstUtmContent?: string;
+  lastUtmSource?: string;
+  lastUtmMedium?: string;
+  lastUtmCampaign?: string;
+  lastUtmTerm?: string;
+  lastUtmContent?: string;
+  gclid?: string;
+  fbclid?: string;
+  ttclid?: string;
+  msclkid?: string;
+  firstGclid?: string;
+  firstFbclid?: string;
+  firstTtclid?: string;
+  firstMsclkid?: string;
+  lastGclid?: string;
+  lastFbclid?: string;
+  lastTtclid?: string;
+  lastMsclkid?: string;
 }
 
 export interface BookingInquiryPayload {
@@ -42,15 +116,17 @@ function parseApiError(body: ApiError, fallback: string) {
 
 export async function submitNewsletterLead(payload: LeadPayload, idempotencyKey: string) {
   const url = typeof window !== "undefined" ? new URL(window.location.href) : null;
+  const attribution = getAttributionPayload();
   const enrichedPayload: LeadPayload = {
+    ...attribution,
     ...payload,
     eventInterest: payload.eventInterest || url?.searchParams.get("event") || url?.searchParams.get("eventId") || url?.searchParams.get("eventInterest") || undefined,
-    pageUrl: payload.pageUrl || url?.href,
-    utmSource: payload.utmSource || url?.searchParams.get("utm_source") || undefined,
-    utmMedium: payload.utmMedium || url?.searchParams.get("utm_medium") || undefined,
-    utmCampaign: payload.utmCampaign || url?.searchParams.get("utm_campaign") || undefined,
-    utmTerm: payload.utmTerm || url?.searchParams.get("utm_term") || undefined,
-    utmContent: payload.utmContent || url?.searchParams.get("utm_content") || undefined,
+    pageUrl: payload.pageUrl || url?.href || attribution.pageUrl,
+    utmSource: payload.utmSource || url?.searchParams.get("utm_source") || attribution.utmSource,
+    utmMedium: payload.utmMedium || url?.searchParams.get("utm_medium") || attribution.utmMedium,
+    utmCampaign: payload.utmCampaign || url?.searchParams.get("utm_campaign") || attribution.utmCampaign,
+    utmTerm: payload.utmTerm || url?.searchParams.get("utm_term") || attribution.utmTerm,
+    utmContent: payload.utmContent || url?.searchParams.get("utm_content") || attribution.utmContent,
   };
 
   const response = await fetch("/api/leads", {
@@ -122,11 +198,20 @@ export async function verifySponsorAccess(password: string) {
   return response.json();
 }
 
-export async function trackTicketIntent(source: string, eventId?: string) {
+export async function trackTicketIntent(source: string, eventId?: string, destinationUrl?: string) {
+  const attribution = getAttributionPayload();
+  const payload: TicketIntentPayload = {
+    ...attribution,
+    source,
+    eventId,
+    destinationUrl,
+    pageUrl: attribution.pageUrl || (typeof window !== "undefined" ? window.location.href : undefined),
+  };
+
   await fetch("/api/ticket-intent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ source, eventId }),
+    body: JSON.stringify(payload),
     keepalive: true,
   }).catch(() => undefined);
 }

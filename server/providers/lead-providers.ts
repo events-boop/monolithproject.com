@@ -4,6 +4,14 @@ import { leadSchema, type LeadProvider } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
 import { scrubEmail } from "../lib/security";
 
+function getAttributionSource(lead: z.infer<typeof leadSchema>) {
+  return lead.lastUtmSource || lead.utmSource || lead.source || "website";
+}
+
+function getLeadContextUrl(lead: z.infer<typeof leadSchema>) {
+  return lead.pageUrl || lead.landingPageUrl || "https://monolithproject.com";
+}
+
 export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
   const apiKey = process.env.MAILCHIMP_API_KEY;
   const listId = process.env.MAILCHIMP_LIST_ID;
@@ -15,6 +23,11 @@ export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
   const normalizedEmail = scrubEmail(lead.email);
   const subscriberHash = createHash("md5").update(normalizedEmail).digest("hex");
   const endpoint = `https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}`;
+  const attributionSource = getAttributionSource(lead);
+  const tags = ["monolith-project", attributionSource];
+  if (lead.source && lead.source !== attributionSource) {
+    tags.push(`placement:${lead.source}`);
+  }
 
   const response = await fetch(endpoint, {
     method: "PUT",
@@ -30,7 +43,7 @@ export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
         FNAME: lead.firstName || "",
         LNAME: lead.lastName || "",
       },
-      tags: ["monolith-project", lead.source || "website"],
+      tags,
     }),
   });
 
@@ -49,6 +62,7 @@ export async function subscribeBeehiiv(lead: z.infer<typeof leadSchema>) {
   }
 
   const endpoint = `https://api.beehiiv.com/v2/publications/${publicationId}/subscriptions`;
+  const attributionSource = getAttributionSource(lead);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -59,7 +73,7 @@ export async function subscribeBeehiiv(lead: z.infer<typeof leadSchema>) {
       email: scrubEmail(lead.email),
       reactivate_existing: true,
       send_welcome_email: true,
-      utm_source: lead.source || "website",
+      utm_source: attributionSource,
       custom_fields: lead.firstName
         ? [{ name: "first_name", value: lead.firstName }]
         : [],
@@ -85,6 +99,7 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
   }
 
   const endpoint = `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`;
+  const attributionSource = getAttributionSource(lead);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -96,7 +111,7 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
       fields: {
         FirstName: lead.firstName || "",
         LastName: lead.lastName || "",
-        Source: lead.source || "website",
+        Source: attributionSource,
       },
       status: "SUBSCRIBED",
     }),
@@ -117,6 +132,7 @@ export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
   }
 
   const endpoint = "https://api.brevo.com/v3/contacts";
+  const attributionSource = getAttributionSource(lead);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -129,7 +145,7 @@ export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
       attributes: {
         FIRSTNAME: lead.firstName || "",
         LASTNAME: lead.lastName || "",
-        SOURCE: lead.source || "website",
+        SOURCE: attributionSource,
       },
     }),
   });
@@ -151,6 +167,7 @@ export async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
   }
 
   const endpoint = `https://api.convertkit.com/v3/forms/${formId}/subscribe`;
+  const attributionSource = getAttributionSource(lead);
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -161,7 +178,7 @@ export async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
       email: scrubEmail(lead.email),
       first_name: lead.firstName || undefined,
       fields: {
-        source: lead.source || "website",
+        source: attributionSource,
       },
     }),
   });
@@ -189,10 +206,10 @@ export async function subscribeHubSpot(lead: z.infer<typeof leadSchema>) {
     ...(lead.lastName ? [{ name: "lastname", value: lead.lastName }] : []),
   ];
 
-  const contextUrl = lead.pageUrl || "https://monolithproject.com";
+  const contextUrl = getLeadContextUrl(lead);
   const context = {
     pageUri: contextUrl,
-    pageName: lead.source || "website",
+    pageName: lead.source || getAttributionSource(lead),
   };
 
   const response = await fetch(endpoint, {

@@ -14,8 +14,8 @@ async function startServer() {
 
   const server = createServer(app);
   const portEnv = process.env.PORT;
-  const port = portEnv ? Number.parseInt(portEnv, 10) : 5000;
-  const portNumber = Number.isFinite(port) ? port : 5000;
+  const port = portEnv ? Number.parseInt(portEnv, 10) : 5001;
+  const portNumber = Number.isFinite(port) ? port : 5001;
   const host = process.env.HOST || "127.0.0.1";
 
   await new Promise<void>((resolve, reject) => {

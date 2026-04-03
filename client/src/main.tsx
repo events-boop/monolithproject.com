@@ -1,11 +1,14 @@
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "framer-motion";
 import App from "./App";
+import { initAttributionTracking } from "./lib/attribution";
 import "./styles/index.css";
 
 try {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("Root element not found");
+
+  initAttributionTracking();
 
   createRoot(rootElement).render(
     <MotionConfig reducedMotion="user">

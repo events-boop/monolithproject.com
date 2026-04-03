@@ -25,12 +25,28 @@ describe("leadSchema", () => {
       firstName: "Ada",
       lastName: "Lovelace",
       source: "home-hero",
+      sessionId: "sess_123",
       eventInterest: "cs-ibiza-2026",
+      landingPageUrl: "https://example.com/?utm_source=instagram",
+      referrer: "https://instagram.com/monolith",
+      referrerDomain: "instagram.com",
+      firstReferrer: "https://instagram.com/monolith",
+      firstReferrerDomain: "instagram.com",
+      firstTouchAt: "2026-04-03T01:00:00.000Z",
+      lastTouchAt: "2026-04-03T01:15:00.000Z",
       utmSource: "instagram",
       utmMedium: "social",
       utmCampaign: "summer-launch",
       utmTerm: "electronic+music",
       utmContent: "carousel-1",
+      firstUtmSource: "instagram",
+      firstUtmMedium: "social",
+      firstUtmCampaign: "summer-launch",
+      lastUtmSource: "instagram",
+      lastUtmCampaign: "summer-launch",
+      gclid: "gclid-123",
+      firstGclid: "gclid-123",
+      lastGclid: "gclid-123",
       pageUrl: "https://example.com/tickets",
     });
     expect(result.success).toBe(true);
@@ -148,6 +164,12 @@ describe("ticketIntentSchema", () => {
     const result = ticketIntentSchema.safeParse({
       source: "schedule-card",
       eventId: "evt-ibiza-2026",
+      destinationUrl: "https://posh.vip/e/example",
+      sessionId: "sess_123",
+      utmSource: "instagram",
+      utmCampaign: "summer-launch",
+      landingPageUrl: "https://example.com/?utm_source=instagram",
+      pageUrl: "https://example.com/tickets",
     });
     expect(result.success).toBe(true);
   });

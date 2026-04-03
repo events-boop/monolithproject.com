@@ -117,22 +117,40 @@ export default function FeaturedCampaigns() {
                 <div className="mb-6">
                    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60 mb-3 block">Newest Episode</span>
                    <h3 className="font-display text-2xl uppercase text-white mb-2">Radio Transmission</h3>
-                   <p className="text-white/72 text-xs">Stream the newest Chasing Sun(Sets) episode directly on Spotify.</p>
+                   <p className="text-white/82 text-xs leading-relaxed">Open the newest Chasing Sun(Sets) mix in the full radio archive instead of a third-party embed.</p>
                 </div>
-                
-                <div className="w-full relative overflow-hidden bg-black/40 rounded-[12px]">
-                  {/* Using a placeholder Spotify track ID - standard house mix */}
-                  {/* Swapping restricted Spotify embed for a reliable SoundCloud Monolith session */}
-                  <iframe 
-                    width="100%" 
-                    height="166" 
-                    scrolling="no" 
-                    frameBorder="no" 
-                    allow="autoplay" 
-                    title="Newest Chasing Sun(Sets) radio transmission"
-                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2270398436&color=%23E05A3A&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
-                    className="rounded-xl opacity-80 hover:opacity-100 transition-opacity"
-                  ></iframe>
+
+                <div className="w-full relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 p-5 md:p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#E05A3A]">Latest Audio Drop</span>
+                      <h4 className="mt-3 font-display text-2xl uppercase text-white leading-none">Chasing Sun(Sets) Radio</h4>
+                      <p className="mt-3 text-sm leading-relaxed text-white/78">
+                        Launch the full player, browse the recent transmissions, and listen in an accessible view without the embedded SoundCloud chrome.
+                      </p>
+                    </div>
+                    <div className="shrink-0 rounded-full border border-white/15 bg-white/5 p-4">
+                      <PlayCircle className="h-8 w-8 text-[#E8B86D]" />
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link href="/radio" asChild>
+                      <a className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white">
+                        Open Radio
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    </Link>
+                    <a
+                      href="https://soundcloud.com/chasing-sun-sets"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3 border border-white/20 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/82 transition-colors hover:border-white hover:text-white"
+                    >
+                      SoundCloud Archive
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </div>
                 </div>
             </div>
         </div>

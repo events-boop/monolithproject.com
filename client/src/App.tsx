@@ -22,6 +22,7 @@ import { useUI, UIProvider } from "./contexts/UIContext";
 import OffCanvasDrawer from "./components/ui/OffCanvasDrawer";
 import GlobalTicketButton from "./components/GlobalTicketButton";
 import { getSceneForPath } from "./lib/scenes";
+import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 
 // Lazy Pages
@@ -175,6 +176,16 @@ function RouteMemory() {
   return null;
 }
 
+function AttributionSync() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    syncAttributionForNavigation();
+  }, [location]);
+
+  return null;
+}
+
 const Analytics = lazy(() => import("./components/Analytics"));
 const EventBanner = lazy(() => import("./components/EventBanner"));
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
@@ -191,6 +202,7 @@ function MainContentWrapper() {
     <>
       <SceneSync />
       <RouteMemory />
+      <AttributionSync />
       <OffCanvasDrawer />
       <GlobalTicketButton />
       <div

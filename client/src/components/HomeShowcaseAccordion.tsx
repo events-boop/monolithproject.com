@@ -79,7 +79,7 @@ export default function HomeShowcaseAccordion({ items }: Props) {
                   <h2 className="font-display text-4xl md:text-6xl uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
                     {item.title}
                   </h2>
-                  <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mt-2">
+                  <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mt-2">
                     {item.subtitle}
                   </p>
                 </div>

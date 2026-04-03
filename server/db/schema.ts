@@ -43,6 +43,16 @@ export const leads = pgTable("leads", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+export const ticketIntents = pgTable("ticket_intents", {
+  id: text("id").primaryKey(),
+  source: text("source").notNull(),
+  eventId: text("event_id"),
+  sessionId: text("session_id"),
+  destinationUrl: text("destination_url"),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
+  metadata: jsonb("metadata").notNull().default({}),
+});
+
 export const contactSubmissions = pgTable("contact_submissions", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),

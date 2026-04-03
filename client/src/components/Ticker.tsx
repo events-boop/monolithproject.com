@@ -43,7 +43,7 @@ export default function Ticker() {
         <div className="flex w-max min-w-full shrink-0 animate-marquee items-center whitespace-nowrap group-hover:[animation-play-state:paused]">
           {items.map((item, i) => (
             <div key={i} className="flex shrink-0 items-center gap-4 md:gap-6 px-8 md:px-12">
-              <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white/30">
+              <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white/70">
                 {item.date}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/10" />
@@ -51,10 +51,10 @@ export default function Ticker() {
                 {item.label}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/10" />
-              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/20 inline-flex items-center gap-2">
+              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
                 <Ticket className="w-3 h-3" /> Get Tickets
               </span>
-              <ArrowRight className="w-3 h-3 text-white/20" />
+              <ArrowRight className="w-3 h-3 text-white/55" />
             </div>
           ))}
         </div>
@@ -62,4 +62,3 @@ export default function Ticker() {
     </a>
   );
 }
-

@@ -51,7 +51,7 @@ function Digit({ value, label }: { value: number; label: string }) {
           {display}
         </span>
       </div>
-      <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-white/30">
+      <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-white/70">
         {label}
       </span>
     </div>
@@ -109,7 +109,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
           <div className="flex flex-col gap-6 shrink-0">
             <div className="flex items-center gap-4">
               <div className={`w-2 h-2 rounded-none animate-pulse ${accentBg}`} />
-              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70">
                 Next Event
               </span>
             </div>
@@ -121,7 +121,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 {event.title}
               </h3>
               {event.venue && (
-                <p className="font-sans text-base md:text-lg text-white/40 mt-4 font-light">
+                <p className="font-sans text-base md:text-lg text-white/75 mt-4 font-light">
                   {event.venue} — {event.location}
                 </p>
               )}
@@ -129,7 +129,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               {/* Scarcity signal */}
               <div className="mt-8 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">Capacity</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">Capacity</span>
                   <span className={`font-mono text-[10px] uppercase tracking-[0.3em] font-bold ${accentText}`}>73% Claimed</span>
                 </div>
                 <div className="w-full h-[3px] bg-white/10 overflow-hidden">
@@ -142,7 +142,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                     style={{ width: "73%" }}
                   />
                 </div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/65">
                   Limited entry · Chicago, IL
                 </p>
               </div>

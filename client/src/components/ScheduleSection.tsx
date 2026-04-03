@@ -4,7 +4,6 @@ import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
 import { upcomingEvents, type ScheduledEvent } from "../data/events";
 import { CTA_LABELS } from "@/lib/cta";
-import WordScrubReveal from "@/components/ui/WordScrubReveal";
 
 // --- iCal Generator Helper ---
 function downloadICS(event: ScheduledEvent) {
@@ -91,10 +90,9 @@ export default function ScheduleSection() {
         {/* Header Block */}
         <div className="mb-16 md:mb-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between border-b border-black/10 pb-12">
           <div className="flex flex-col gap-4 max-w-2xl">
-            <WordScrubReveal 
-              text="SCHEDULE" 
-              className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm" 
-            />
+            <h2 className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
+              SCHEDULE
+            </h2>
             <p className="font-mono text-xs lg:text-[11px] uppercase tracking-[0.3em] text-black/70 pl-1 mt-2">
               Start with the next date. The series and the room will tell you the rest.
             </p>

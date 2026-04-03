@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { useUI } from "@/contexts/UIContext";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const SIGNALS: Record<string, string[]> = {
   DEFAULT: [
@@ -69,6 +70,7 @@ export default function SystemHUD() {
 
   // REQID & Uptime (Immutable per session)
   useEffect(() => {
+    signalChirp.boot();
     setRequestId(Math.random().toString(36).substring(7).toUpperCase());
     const interval = setInterval(() => setUptime(prev => prev + 1), 1000);
     return () => clearInterval(interval);
@@ -109,6 +111,7 @@ export default function SystemHUD() {
             // Only update state if the chapter actually changed to prevent infinite loops
             setCurrentChapter(prev => {
               if (prev?.label === matched.label) return prev;
+              signalChirp.hover();
               return { number: matched.number, label: matched.label };
             });
           }
@@ -137,8 +140,11 @@ export default function SystemHUD() {
     <div aria-hidden="true" className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
       {/* HUD Frame Components — hidden on small screens to prevent content coverage */}
       <div className="absolute top-6 right-8 hidden xl:flex flex-col items-end gap-1.5 mix-blend-difference pointer-events-auto">
-        <button 
-          onClick={() => setDiagnosticsOpen(!diagnosticsOpen)}
+        <div
+          onClick={() => {
+            setDiagnosticsOpen(!diagnosticsOpen);
+            diagnosticsOpen ? signalChirp.error() : signalChirp.click();
+          }}
           className="group flex flex-col items-end gap-1.5 cursor-pointer"
         >
           <div className="flex items-center gap-3">
@@ -153,7 +159,7 @@ export default function SystemHUD() {
             </span>
             <div className={`w-2 h-2 ${diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`} />
           </div>
-        </button>
+        </div>
       </div>
 
       <AnimatePresence>
