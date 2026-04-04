@@ -50,7 +50,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
       </div>
 
       {/* Giant Butterfly (Elements of butterfly in the background) */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none z-10 flex items-center justify-center opacity-40 mix-blend-screen overflow-hidden">
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none z-10 hidden lg:flex items-center justify-center opacity-40 mix-blend-screen overflow-hidden">
         <motion.div
           animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}

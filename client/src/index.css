@@ -676,9 +676,14 @@
 
   .ui-chip {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: var(--label-tracking-chip);
     text-transform: uppercase;
+  }
+
+  /* Safe Area Helper */
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
   }
 
   .season-anchor-shell {

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Ticket, Lock, Zap, Clock, CheckCircle2 } from "lucide-react";
 import { ScheduledEvent } from "@/data/events";
-import { getEventCta, FunnelTool } from "@/lib/cta";
+import { getEventCta, FunnelTool, isEventLowInventory } from "@/lib/cta";
 import MagneticButton from "@/components/MagneticButton";
 
 interface ConversionCTAProps {
@@ -34,7 +34,7 @@ export default function ConversionCTA({
     fillout: <Zap className="w-4 h-4" />,
   };
 
-  const urgencyText = event?.status === 'on-sale' && (event.capacity?.includes("Low") || event.capacity?.includes("90%"))
+  const urgencyText = event?.status === 'on-sale' && isEventLowInventory(event)
     ? "Final Tier — 90% Sold Out"
     : event?.status === 'coming-soon'
     ? "Join 12,000+ on the priority list"

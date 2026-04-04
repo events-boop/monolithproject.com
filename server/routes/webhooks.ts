@@ -6,6 +6,7 @@ import { asyncHandler } from "../lib/async";
 import { secureCompare } from "../lib/security";
 import { pickString, pickQuantity } from "../lib/payload";
 import { hasDatabase } from "../db/client";
+import { createRateLimitMiddleware } from "../services/rate-limit";
 import {
   insertSocialEchoActivity,
   readSocialEchoEventByKey,
@@ -20,8 +21,14 @@ import {
 } from "../services/social-echo";
 
 const router = Router();
+const poshWebhookLimiter = createRateLimitMiddleware({
+  scope: "api:webhooks:posh",
+  windowMs: 15 * 60 * 1000,
+  limit: 600,
+  message: "Webhook capacity reached. Please retry shortly.",
+});
 
-router.post("/api/webhooks/posh", asyncHandler(async (req, res) => {
+router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
   const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();
 

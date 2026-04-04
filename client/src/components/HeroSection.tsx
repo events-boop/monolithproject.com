@@ -19,7 +19,7 @@ import {
   getPrimaryTicketUrl,
   isTicketOnSale,
 } from "@/lib/siteExperience";
-import { getEventCta } from "@/lib/cta";
+import { getEventCta, getEventDetailsHref } from "@/lib/cta";
 
 const heroPosterImage = getResponsiveImage("chasingSunsets");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
@@ -192,7 +192,7 @@ export default function HeroSection() {
   const cta = getEventCta(featuredEvent);
   
   const secondaryCtaLabel = hasLiveTickets ? "Event Details" : featuredEvent?.status === 'coming-soon' ? "Explore The Series" : "Event Schedule";
-  const secondaryCtaHref = hasLiveTickets ? (featuredEvent?.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/schedule";
+  const secondaryCtaHref = hasLiveTickets ? getEventDetailsHref(featuredEvent) : "/schedule";
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">

@@ -1,3 +1,6 @@
+import { ScheduledEvent } from "@/data/events";
+import { getEventWindowStatus, isTicketOnSale } from "./siteExperience";
+
 export const CTA_LABELS = {
   tickets: "Get Tickets",
   schedule: "View Schedule",
@@ -44,8 +47,42 @@ export interface EventCta {
   isExternal: boolean;
 }
 
-import { ScheduledEvent, LAYLO_URL } from "@/data/events";
-import { getEventWindowStatus, isTicketOnSale } from "./siteExperience";
+function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
+  switch (series) {
+    case "chasing-sunsets":
+      return "/chasing-sunsets";
+    case "untold-story":
+      return "/story";
+    default:
+      return "/tickets";
+  }
+}
+
+function getSeriesFunnelHref(series: ScheduledEvent["series"]) {
+  switch (series) {
+    case "chasing-sunsets":
+      return "/chasing-sunsets#chasing-funnel";
+    case "untold-story":
+      return "/story#untold-funnel";
+    default:
+      return "/tickets#tickets-funnel";
+  }
+}
+
+export function getEventDetailsHref(event?: ScheduledEvent | null) {
+  if (!event) return "/schedule";
+  return getSeriesDetailsHref(event.series);
+}
+
+export function isEventLowInventory(event?: ScheduledEvent | null) {
+  if (!event) return false;
+  if (event.inventoryState === "low") return true;
+
+  const capacity = event.capacity?.toLowerCase();
+  if (!capacity) return false;
+
+  return /(low|last|final|sold out 9\d%|9\d%\s+sold)/.test(capacity);
+}
 
 /**
  * Returns the primary CTA configuration for an event based on its lifecycle state.
@@ -68,9 +105,9 @@ export function getEventCta(event?: ScheduledEvent | null, now: Date = new Date(
   if (windowStatus === "past") {
     return {
       label: CTA_LABELS.nextSignal,
-      href: LAYLO_URL,
+      href: getSeriesFunnelHref(event.series),
       tool: "laylo",
-      isExternal: true
+      isExternal: false
     };
   }
 
@@ -78,15 +115,14 @@ export function getEventCta(event?: ScheduledEvent | null, now: Date = new Date(
   if (event.status === "sold-out") {
     return {
       label: CTA_LABELS.joinWaitlist,
-      href: LAYLO_URL,
+      href: getSeriesFunnelHref(event.series),
       tool: "laylo",
-      isExternal: true
+      isExternal: false
     };
   }
 
-  // 3. LOW INVENTORY (Heuristic: usually set manually in status or can be derived from tiers)
-  // For now, if it's on-sale but has special status or low-cap signal
-  if (onSale && (event.capacity?.includes("Low") || event.capacity?.includes("90%"))) {
+  // 3. LOW INVENTORY
+  if (onSale && isEventLowInventory(event)) {
     return {
       label: CTA_LABELS.claimLast,
       href: event.ticketUrl || "/schedule",
@@ -108,8 +144,8 @@ export function getEventCta(event?: ScheduledEvent | null, now: Date = new Date(
   // 5. UPCOMING (Presale/Hype)
   return {
     label: CTA_LABELS.unlockPresale,
-    href: LAYLO_URL,
+    href: getSeriesFunnelHref(event.series),
     tool: "laylo",
-    isExternal: true
+    isExternal: false
   };
 }

@@ -4,6 +4,26 @@ import App from "./App";
 import { initAttributionTracking } from "./lib/attribution";
 import "./styles/index.css";
 
+function renderMountError(error: unknown) {
+  const wrapper = document.createElement("div");
+  wrapper.style.color = "red";
+  wrapper.style.padding = "20px";
+  wrapper.style.fontFamily = "monospace";
+
+  const heading = document.createElement("h1");
+  heading.textContent = "React Mount Error";
+
+  const details = document.createElement("pre");
+  const message = error instanceof Error ? error.message : String(error);
+  const stack = error instanceof Error ? error.stack || "" : "";
+  details.textContent = stack ? `${message}\n${stack}` : message;
+
+  wrapper.appendChild(heading);
+  wrapper.appendChild(details);
+
+  document.body.replaceChildren(wrapper);
+}
+
 try {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("Root element not found");
@@ -16,6 +36,6 @@ try {
     </MotionConfig>
   );
 } catch (e: any) {
-  document.body.innerHTML = `<div style="color:red;padding:20px;font-family:monospace"><h1>React Mount Error</h1><pre>${e?.message}\n${e?.stack}</pre></div>`;
+  renderMountError(e);
   console.error("React Mount Error:", e);
 }

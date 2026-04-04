@@ -141,7 +141,13 @@ export default function Tickets() {
       </section>
 
       {/* Giveaway / Viral Loop Funnel */}
-      {featuredEvent?.activeFunnels?.length ? <EventFunnelStack eventId={featuredEvent.id} /> : null}      {/* Featured Event Section */}
+      {featuredEvent?.activeFunnels?.length ? (
+        <section id="tickets-funnel">
+          <EventFunnelStack eventId={featuredEvent.id} />
+        </section>
+      ) : null}
+
+      {/* Featured Event Section */}
       <section className="pb-32 px-6 relative">
         <div className="container max-w-7xl mx-auto">
           <motion.div

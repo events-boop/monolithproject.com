@@ -66,14 +66,14 @@ export default function CookieConsent() {
                             <X className="w-4 h-4" />
                         </button>
 
-                        <div className="flex flex-col gap-3 p-3.5 sm:p-5 sm:pr-14">
+                        <div className="flex flex-col gap-4 p-4 sm:p-6 sm:pr-14">
                             {/* Text */}
                             <div className="flex-1 min-w-0">
-                                <p className="hidden sm:block font-mono text-[9px] tracking-[0.3em] uppercase text-primary/70 mb-1.5">
-                                    Cookie Notice
+                                <p className="hidden sm:block font-mono text-[10px] tracking-[0.3em] uppercase text-primary/70 mb-2">
+                                    Identity Verification // Cookie Notice
                                 </p>
-                                <p className="text-[12px] sm:text-sm text-white/60 leading-5 sm:leading-relaxed max-w-2xl">
-                                    We use cookies for analytics. Continuing means you agree to our{" "}
+                                <p className="text-[13px] sm:text-sm text-white/60 leading-relaxed max-w-2xl">
+                                    We use cookies for analytics and site optimization. Continuing means you agree to our{" "}
                                     <Link href="/cookies" className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
                                         Cookie Policy
                                     </Link>
@@ -86,16 +86,16 @@ export default function CookieConsent() {
                             </div>
 
                             {/* Actions */}
-                            <div className="flex items-center gap-2 sm:gap-3 flex-wrap w-full sm:w-auto">
+                            <div className="flex items-center gap-3 flex-wrap w-full sm:w-auto">
                                 <button
                                     onClick={decline}
-                                    className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/35 hover:text-white/60 transition-colors px-3 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/20 rounded-full"
+                                    className="font-mono text-xs tracking-[0.2em] uppercase text-white/35 hover:text-white/60 transition-colors px-4 py-2 hover:bg-white/5 rounded-full"
                                 >
                                     Decline
                                 </button>
                                 <button
                                     onClick={accept}
-                                    className="font-mono text-[9px] tracking-[0.25em] uppercase px-5 py-2 bg-primary text-black hover:bg-primary/85 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-full flex-1 sm:flex-none text-center"
+                                    className="font-mono text-xs tracking-[0.2em] uppercase px-8 py-3 bg-primary text-black font-black hover:bg-primary/85 transition-all duration-200 rounded-full flex-1 sm:flex-none text-center shadow-[0_4px_20px_rgba(224,90,58,0.2)]"
                                 >
                                     Accept All
                                 </button>

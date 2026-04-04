@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import type { Request, RequestHandler } from "express";
 
 const unsafeMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+const allowedFetchSites = new Set(["same-origin", "same-site", "none"]);
 
 function readForwardedHeader(value?: string | null) {
   return value?.split(",")[0]?.trim() || undefined;
@@ -41,6 +42,20 @@ export function createBrowserApiGuard(): RequestHandler {
     const requestId = randomUUID();
     const origin = req.header("origin")?.trim();
     const expectedOrigin = getRequestOrigin(req);
+    const fetchSite = req.header("sec-fetch-site")?.trim().toLowerCase();
+
+    if (fetchSite && !allowedFetchSites.has(fetchSite)) {
+      res.status(403).json({
+        ok: false,
+        requestId,
+        error: {
+          code: "FORBIDDEN_FETCH_SITE",
+          message: "This request context is not allowed.",
+          retryable: false,
+        },
+      });
+      return;
+    }
 
     if (origin && origin !== expectedOrigin) {
       res.status(403).json({

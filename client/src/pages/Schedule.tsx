@@ -229,11 +229,11 @@ export default function Schedule() {
                     >
                       <div className="py-8 md:py-14 grid grid-cols-1 md:grid-cols-12 gap-6 md:items-center w-full text-left">
                         {/* Date Col - Architectural Presentation */}
-                        <div className="md:col-span-2 flex md:flex-col items-center md:items-start gap-4 md:gap-0 pl-0 md:pl-4">
+                        <div className="md:col-span-2 flex flex-col items-start gap-1 md:items-start md:gap-0 pl-0 md:pl-4">
                           <span className="font-display text-2xl md:text-4xl text-foreground/90 group-hover:text-foreground transition-colors duration-500 whitespace-nowrap tracking-tighter">
                             {dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}
                           </span>
-                          <span className="font-mono text-[10px] text-muted-foreground/40 md:mt-2 tracking-[0.1em] group-hover:text-primary/60 transition-colors duration-500 uppercase">
+                          <span className="font-mono text-[11px] text-muted-foreground/40 md:mt-2 tracking-[0.1em] group-hover:text-primary/60 transition-colors duration-500 uppercase">
                             {event.time.split("—")[0]} CST
                           </span>
                         </div>

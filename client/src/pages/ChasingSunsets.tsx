@@ -476,7 +476,10 @@ export default function ChasingSunsets() {
 
         {/* Inner Circle Pre-registration Funnel */}
         {chasingFunnelEvent ? (
-          <div className="relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10 mb-20 md:mb-24">
+          <div
+            id="chasing-funnel"
+            className="scroll-shell-target relative z-10 w-full overflow-hidden bg-black/40 backdrop-blur-3xl border-y border-[#E8B86D]/10 mb-20 md:mb-24"
+          >
             <EventFunnelStack eventId={chasingFunnelEvent.id} />
           </div>
         ) : null}

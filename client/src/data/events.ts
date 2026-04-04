@@ -27,6 +27,7 @@ export interface ScheduledEvent {
     lineup?: string;
     image?: string;
     status: "on-sale" | "coming-soon" | "sold-out";
+    inventoryState?: "normal" | "low";
     capacity?: string;
     format?: string;
     dress?: string;

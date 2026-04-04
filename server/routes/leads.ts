@@ -54,17 +54,6 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
     });
   }
 
-  // SS-Tier Honeypot: Silent Rejection of Bots
-  if ((parsed.data as any).metadata_correlation_id) {
-    logEvent("bot.leads_honeypot_triggered", { requestId, ip: req.ip });
-    return res.status(200).json({
-      ok: true,
-      requestId,
-      provider: readProvider(),
-      message: "Subscribed successfully",
-    });
-  }
-
   const provider = readProvider();
   const email = scrubEmail(parsed.data.email);
   const incomingKey = req.header("Idempotency-Key")?.trim();

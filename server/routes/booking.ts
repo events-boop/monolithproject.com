@@ -47,12 +47,6 @@ router.post("/api/booking-inquiry", bookingLimiter, asyncHandler(async (req, res
     });
   }
 
-  // SS-Tier Honeypot: Silent Rejection of Bots
-  if ((parsed.data as any).metadata_correlation_id) {
-    logEvent("bot.booking_honeypot_triggered", { requestId, ip: req.ip });
-    return res.status(202).json({ ok: true, message: "Inquiry received", requestId });
-  }
-
   const webhook = process.env.BOOKING_WEBHOOK_URL;
   const inquiry = parsed.data;
   const email = scrubEmail(inquiry.email);
