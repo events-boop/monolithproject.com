@@ -6,6 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import SmartImage from "@/components/SmartImage";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { ScheduledEvent } from "@/data/events";
+import ConversionCTA from "@/components/ConversionCTA";
+import { Link } from "wouter";
 
 const untoldPosterImage = getResponsiveImage("untoldStoryPoster");
 
@@ -202,6 +204,31 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                   </motion.div>
                 )}
               </AnimatePresence>
+            </div>
+
+            {/* Access Actions */}
+            <div className="mb-10 pt-10 border-t border-untold-violet-15">
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-6 text-untold-cyan">
+                Sequence Protocol
+              </span>
+              <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center">
+                <ConversionCTA 
+                  event={event} 
+                  size="lg" 
+                  showUrgency={true}
+                />
+                
+                <div className="flex flex-col gap-4">
+                  <Link href="/vip" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-untold-cyan uppercase transition-colors flex items-center gap-2 group">
+                    Request VIP Access
+                    <Users className="w-3 h-3 transition-transform group-hover:scale-110" />
+                  </Link>
+                  <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-untold-cyan uppercase transition-colors flex items-center gap-2 group">
+                    Join SMS Updates
+                    <Clock className="w-3 h-3 transition-transform group-hover:scale-110" />
+                  </Link>
+                </div>
+              </div>
             </div>
 
             {/* Notice */}

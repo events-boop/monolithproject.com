@@ -19,11 +19,7 @@ import {
   getPrimaryTicketUrl,
   isTicketOnSale,
 } from "@/lib/siteExperience";
-import {
-  getHeroEventStatusLabel,
-  getHomePrimaryCtaLabel,
-  getHomeSecondaryCtaLabel,
-} from "@/lib/cta";
+import { getEventCta } from "@/lib/cta";
 
 const heroPosterImage = getResponsiveImage("chasingSunsets");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
@@ -180,7 +176,6 @@ function useIsExpired(target: number) {
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
   const targetDate = getEventStartTimestamp(featuredEvent);
-  const ticketUrl = getPrimaryTicketUrl(featuredEvent);
   const hasLiveTickets = isTicketOnSale(featuredEvent);
   const isExpired = useIsExpired(targetDate ?? 0);
   const reduceMotion = useReducedMotion();
@@ -194,11 +189,10 @@ export default function HeroSection() {
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
   
-  const primaryCtaLabel = hasLiveTickets ? getHomePrimaryCtaLabel(true) : featuredEvent?.status === 'coming-soon' ? "Join Priority Access" : getHomePrimaryCtaLabel(false);
-  const secondaryCtaLabel = hasLiveTickets ? getHomeSecondaryCtaLabel(true) : featuredEvent?.status === 'coming-soon' ? "Event Details" : getHomeSecondaryCtaLabel(false);
+  const cta = getEventCta(featuredEvent);
   
-  const primaryCtaHref = hasLiveTickets ? ticketUrl : featuredEvent?.status === 'coming-soon' ? (featuredEvent.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/schedule";
-  const secondaryCtaHref = hasLiveTickets ? "/schedule" : featuredEvent?.status === 'coming-soon' ? (featuredEvent.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/insights";
+  const secondaryCtaLabel = hasLiveTickets ? "Event Details" : featuredEvent?.status === 'coming-soon' ? "Explore The Series" : "Event Schedule";
+  const secondaryCtaHref = hasLiveTickets ? (featuredEvent?.series === 'chasing-sunsets' ? '/chasing-sunsets' : '/story') : "/schedule";
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">
@@ -312,22 +306,23 @@ export default function HeroSection() {
            </div>
            
            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
-              <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
-                <a
-                  href={primaryCtaHref as string}
-                  target={hasLiveTickets ? "_blank" : undefined}
-                  data-cursor-magnetic
-                  data-cursor-text={hasLiveTickets ? "RSVP" : "ACCESS"}
-                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white w-full sm:w-auto"
-                >
-                  <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
-                  <span className="relative z-10 flex items-center gap-3">
-                    <Ticket className="w-4 h-4" />
-                    {primaryCtaLabel}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </a>
-              </MagneticButton>
+               <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
+                 <a
+                   href={cta.href}
+                   target={cta.isExternal ? "_blank" : undefined}
+                   rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                   data-cursor-magnetic
+                   data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
+                   className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white w-full sm:w-auto"
+                 >
+                   <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
+                   <span className="relative z-10 flex items-center gap-3">
+                     <Ticket className="w-4 h-4" />
+                     {cta.label}
+                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                   </span>
+                 </a>
+               </MagneticButton>
 
               <MagneticButton strength={0.25}>
                 <Link

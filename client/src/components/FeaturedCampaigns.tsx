@@ -1,6 +1,8 @@
 import { ArrowUpRight, PlayCircle, Calendar } from "lucide-react";
 import { Link } from "wouter";
 import { getResponsiveImage } from "@/lib/responsiveImages";
+import { getEventById } from "@/lib/siteExperience";
+import { getEventCta } from "@/lib/cta";
 
 const untoldStoryCampaignImage = getResponsiveImage("untoldStoryPoster", "(min-width: 1024px) 50vw, 100vw");
 const chasingSunsetsCampaignImage = getResponsiveImage("chasingSunsets", "(min-width: 1024px) 50vw, 100vw");
@@ -48,6 +50,12 @@ function CampaignBackdrop({
 }
 
 export default function FeaturedCampaigns() {
+  const untoldEvent = getEventById("us-s3e3");
+  const sunsetEvent = getEventById("css-jul04");
+  
+  const untoldCta = getEventCta(untoldEvent);
+  const sunsetCta = getEventCta(sunsetEvent);
+
   return (
     <section className="py-24 bg-black border-t border-white/10 relative overflow-hidden">
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
@@ -95,8 +103,8 @@ export default function FeaturedCampaigns() {
                 <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
                   A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago for a 360° dancefloor experience.
                 </p>
-                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[11px] tracking-widest uppercase font-bold">
-                    Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]">
+                    {untoldCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
             </a>
@@ -129,8 +137,8 @@ export default function FeaturedCampaigns() {
                 <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
                   The summer flagship rooftop session. Start at sunset, continue after dark. Join the waitlist for priority entry before tickets go live.
                 </p>
-                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[11px] tracking-widest uppercase font-bold">
-                    Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]">
+                    {sunsetCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
             </a>

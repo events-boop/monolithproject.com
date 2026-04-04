@@ -7,12 +7,14 @@ import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildScheduleSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import { Link } from "wouter";
 import {
   getPrimaryTicketUrl,
   getScheduledEvents,
   isTicketOnSale,
 } from "@/lib/siteExperience";
-import { CTA_LABELS } from "@/lib/cta";
+import { CTA_LABELS, getEventCta } from "@/lib/cta";
+import ConversionCTA from "@/components/ConversionCTA";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -364,16 +366,11 @@ export default function Schedule() {
                               </div>
 
                               <div className="flex flex-wrap gap-6 items-center">
-                                {isTicketOnSale(event) ? (
-                                  <a href={getPrimaryTicketUrl(event)} target="_blank" rel="noopener noreferrer" className="btn-pill-coral px-10 py-5 text-sm font-bold tracking-[0.2em] transform hover:scale-105 active:scale-95 transition-all duration-500 shadow-[0_20px_40px_rgba(224,90,58,0.2)]">
-                                    SECURE ACCESS
-                                    <ArrowRight className="w-5 h-5 ml-2" />
-                                  </a>
-                                ) : (
-                                  <button disabled className="px-10 py-5 bg-white/5 border border-white/10 text-white/30 rounded-full text-sm font-bold tracking-[0.2em] cursor-not-allowed uppercase">
-                                    Protocol Pending
-                                  </button>
-                                )}
+                                <ConversionCTA 
+                                  event={event}
+                                  size="lg"
+                                  showUrgency={true}
+                                />
                                 {event.tableReservationEmail && (
                                   <a href={`mailto:${event.tableReservationEmail}`} className="group flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 hover:text-primary transition-all duration-500 underline decoration-white/10 underline-offset-[12px] decoration-1 hover:decoration-primary/50">
                                     TABLE ENQUIRIES
@@ -400,8 +397,8 @@ export default function Schedule() {
                <p className="text-muted-foreground/20 text-[9px] font-mono tracking-widest italic uppercase">Monolith Project Record: {new Date().getFullYear()} // v1.0.4</p>
             </div>
             <div className="flex items-center gap-8">
-               <a href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Notify Me</a>
-               <a href="/contact" className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/40 hover:text-foreground uppercase transition-colors">Inquiries</a>
+               <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Join SMS Updates</Link>
+               <Link href="/vip" className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/40 hover:text-foreground uppercase transition-colors">Request VIP Access</Link>
             </div>
           </div>
         </div>

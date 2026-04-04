@@ -21,7 +21,7 @@ import {
   getPrimaryTicketUrl,
 } from "@/lib/siteExperience";
 import { getResponsiveImage } from "@/lib/responsiveImages";
-import { CTA_LABELS } from "@/lib/cta";
+import { CTA_LABELS, getEventCta } from "@/lib/cta";
 
 import { TicketTier } from "@/data/events";
 
@@ -51,10 +51,8 @@ const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
 
 export default function Tickets() {
   const featuredEvent = getExperienceEvent("ticket");
-  const ticketUrl = getPrimaryTicketUrl(featuredEvent);
-  const hasTicketLink = Boolean(ticketUrl);
-  const primaryCtaLabel = hasTicketLink ? CTA_LABELS.tickets : CTA_LABELS.innerCircle;
-  const executeCtaLabel = hasTicketLink ? "EXECUTE ACCESS" : CTA_LABELS.innerCircle;
+  const cta = getEventCta(featuredEvent);
+  
   const featuredEventSchema =
     featuredEvent && getEventWindowStatus(featuredEvent) !== "past"
       ? buildScheduledEventSchema(featuredEvent, "/tickets")
@@ -78,10 +76,8 @@ export default function Tickets() {
     signalChirp.boot();
     void trackTicketIntent(source, featuredEvent?.id, destinationUrl);
     
-    // Brief SS-Tier authentication delay for sensory depth
-    setTimeout(() => {
-      window.open(destinationUrl, "_blank", "noopener,noreferrer");
-    }, 400);
+    // Immediate execution for zero-friction conversion
+    window.open(destinationUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -119,27 +115,18 @@ export default function Tickets() {
                 Tickets selling fast — Limited availability
               </span>
             </div>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
               <MagneticButton strength={0.3}>
-                {hasTicketLink ? (
                   <a
-                    href={ticketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => void trackTicketIntent("tickets_page_header", featuredEvent?.id, ticketUrl)}
-                    className="btn-pill-coral flex items-center justify-center"
+                    href={cta.href}
+                    target={cta.isExternal ? "_blank" : undefined}
+                    rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                    onClick={() => void trackTicketIntent("tickets_page_header", featuredEvent?.id, cta.href)}
+                    className="btn-pill-coral flex items-center justify-center min-w-[200px]"
                   >
-                    {primaryCtaLabel}
+                    {cta.label}
                     <ArrowUpRight className="w-4 h-4 ml-2" />
                   </a>
-                ) : (
-                  <Link href="/newsletter" asChild>
-                    <a className="btn-pill-coral flex items-center justify-center">
-                      {primaryCtaLabel}
-                      <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </a>
-                  </Link>
-                )}
               </MagneticButton>
               <MagneticButton strength={0.22}>
                 <Link href="/schedule" asChild>
@@ -228,25 +215,16 @@ export default function Tickets() {
 
                 <div className="pt-4">
                    <MagneticButton strength={0.4}>
-                      {hasTicketLink ? (
                         <a
-                          href={ticketUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, ticketUrl)}
-                          className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]"
+                          href={cta.href}
+                          target={cta.isExternal ? "_blank" : undefined}
+                          rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                          onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, cta.href)}
+                          className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)] min-w-[260px] flex items-center justify-center"
                         >
-                           {executeCtaLabel}
+                           {cta.label === CTA_LABELS.tickets ? "EXECUTE ACCESS" : cta.label}
                            <ArrowUpRight className="w-4 h-4 ml-3" />
                         </a>
-                      ) : (
-                        <Link href="/newsletter" asChild>
-                          <a className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)]">
-                             {executeCtaLabel}
-                             <ArrowUpRight className="w-4 h-4 ml-3" />
-                          </a>
-                        </Link>
-                      )}
                    </MagneticButton>
                 </div>
              </div>
@@ -307,7 +285,7 @@ export default function Tickets() {
                 </div>
 
                 <button
-                  onClick={() => handlePurchase(`tickets_page_${tier.id}`, ticketUrl)}
+                  onClick={() => handlePurchase(`tickets_page_${tier.id}`, cta.href)}
                   disabled={!tier.available}
                   className={`w-full h-16 flex items-center justify-center gap-3 rounded-full text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-700 ${
                     tier.highlight 
@@ -317,7 +295,7 @@ export default function Tickets() {
                 >
                   {tier.available ? (
                     <>
-                      GET {tier.name}
+                      {cta.label === CTA_LABELS.tickets ? `GET ${tier.name}` : cta.label}
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </>
                   ) : "Sold Out"}

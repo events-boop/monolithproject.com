@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle } from "lucide-react";
+import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import { Link } from "wouter";
 import HoneypotField from "@/components/HoneypotField";
 import { submitBookingInquiry } from "@/lib/api";
 
@@ -15,6 +16,7 @@ const vipSchema = z.object({
     guests: z.string().min(1, "Guest count required"),
     phone: z.string().min(10, "Phone number required"),
     metadata_correlation_id: z.string().optional(),
+    honeypot: z.string().optional(),
 });
 
 type VipFormValues = z.infer<typeof vipSchema>;
@@ -142,9 +144,20 @@ export default function VIP() {
                                     <input {...register("email")} placeholder="Email Address" className={inputClass} />
                                     <input {...register("guests")} placeholder="Number of Guests" className={inputClass} />
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/90 transition-all rounded">
-                                    {isSubmitting ? "Sending..." : "Check Availability"}
+                                <button type="submit" disabled={isSubmitting} className="w-full py-5 bg-primary text-white font-black tracking-[0.3em] uppercase text-xs hover:bg-primary/90 transition-all rounded shadow-[0_20px_40px_rgba(224,90,58,0.2)]">
+                                    {isSubmitting ? "Processing..." : "Submit VIP Request"}
                                 </button>
+                                
+                                <div className="mt-12 flex flex-col sm:flex-row gap-8 items-center justify-center border-t border-white/10 pt-12">
+                                  <Link href="/tickets" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-primary uppercase transition-colors flex items-center gap-2 group">
+                                     Get Tickets
+                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                  </Link>
+                                  <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-primary uppercase transition-colors flex items-center gap-2 group">
+                                     Join SMS Updates
+                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                  </Link>
+                                </div>
 
                                 {submitError && (
                                     <div className="flex items-center gap-2 text-red-400 text-xs bg-red-400/5 p-3 rounded border border-red-400/10 mt-4">

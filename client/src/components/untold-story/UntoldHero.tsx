@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
 import { ScheduledEvent } from "@/data/events";
+import ConversionCTA from "@/components/ConversionCTA";
 
 const heroSlides = [
   "/images/untold-story-juany-deron.webp",
@@ -94,23 +95,13 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </motion.h1>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10 w-full md:w-auto">
-              <MagneticButton strength={0.4}>
-                {hasTickets ? (
-                  <a href={event!.ticketUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-                    <div className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full">
-                      GET TICKETS <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </div>
-                  </a>
-                ) : (
-                  <a href="#untold-tickets" onClick={(e) => { e.preventDefault(); document.getElementById('untold-tickets')?.scrollIntoView({ behavior: 'smooth' }); }} className="w-full sm:w-auto">
-                    <div className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer text-white rounded-full bg-untold-hero-btn shadow-[0_0_0_rgba(139,92,246,0)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group w-full">
-                      PRIORITY ACCESS <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </div>
-                  </a>
-                )}
-              </MagneticButton>
+              <ConversionCTA 
+                event={event}
+                size="lg"
+                showUrgency={true}
+              />
               <span className="font-mono text-xs text-white/50 tracking-widest hidden sm:block">
-                {hasTickets ? "Tickets moving fast." : "Space is extremely limited."}
+                {event?.status === 'on-sale' ? "Tickets moving fast." : "Space is extremely limited."}
               </span>
             </div>
 

@@ -15,6 +15,7 @@ import { useState } from "react";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
+import ConversionCTA from "@/components/ConversionCTA";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import {
@@ -139,44 +140,18 @@ export default function ChasingSunsets() {
                  )}
               </div>
 
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <MagneticButton strength={0.3}>
-                  {hasLiveTickets && campaignTicketUrl ? (
-                    <a
-                      href={campaignTicketUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
-                    >
-                      {CTA_LABELS.tickets}
-                      <ArrowUpRight size={14} />
-                    </a>
-                  ) : campaignEvent ? (
-                    <a
-                      href="#chasing-cta"
-                      onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById('chasing-cta')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
-                    >
-                      {CTA_LABELS.innerCircle}
-                      <ArrowRight size={14} />
-                    </a>
-                  ) : (
-                    <Link href="/schedule" asChild>
-                      <a className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn">
-                        {CTA_LABELS.schedule}
-                        <ArrowUpRight size={14} />
-                      </a>
-                    </Link>
-                  )}
-                </MagneticButton>
+              <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
+                <ConversionCTA 
+                  event={campaignEvent} 
+                  size="lg"
+                  showUrgency={true}
+                />
+                
                 <MagneticButton strength={0.22}>
                   <Link href="/radio" asChild>
-                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-10 py-5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
                       {CTA_LABELS.radioHub}
-                      <ArrowRight size={14} />
+                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                     </a>
                   </Link>
                 </MagneticButton>
@@ -515,31 +490,17 @@ export default function ChasingSunsets() {
             <p className="text-lg max-w-xl mx-auto mb-12 sunset-text-70">
               Stay close to the next chapter, the next room, and the signal between them.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <MagneticButton strength={0.3}>
-                {liveChasingTicketUrl ? (
-                  <a
-                    href={liveChasingTicketUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
-                  >
-                    {CTA_LABELS.tickets} <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </a>
-                ) : (
-                  <Link href="/newsletter" asChild>
-                    <a
-                      className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
-                    >
-                      {CTA_LABELS.innerCircle} <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </a>
-                  </Link>
-                )}
-              </MagneticButton>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <ConversionCTA 
+                event={liveChasingEvent || campaignEvent}
+                size="lg"
+                showUrgency={true}
+              />
+              
               <MagneticButton strength={0.3}>
                 <Link href="/radio" asChild>
                   <a
-                    className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group"
+                    className="inline-flex items-center justify-center gap-2 px-10 py-5 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group border border-white/20"
                   >
                     {CTA_LABELS.radioHub} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </a>

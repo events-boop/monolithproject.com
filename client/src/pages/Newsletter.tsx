@@ -26,27 +26,24 @@ export default function Newsletter() {
         <div className="container max-w-6xl mx-auto">
           <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Early Access</span>
           <h1 className="font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.88] uppercase mt-4">
-            Stay In The Loop
+            JOIN SMS UPDATES
           </h1>
-          <p className="text-charcoal/70 mt-4 max-w-2xl">
-            Join the Monolith list for priority ticket windows, lineup drops, and fresh radio mixes.
+          <p className="text-charcoal/70 mt-4 max-w-2xl text-lg">
+            Join the Monolith Inner Circle. Get direct access to private ticket windows, secret lineup drops, and the next signal before it hits the public.
           </p>
-          <div className="mt-6 flex flex-wrap gap-2 max-w-3xl">
-            {benefits.map((item) => (
-              <span
-                key={item}
-                className="inline-flex items-center rounded-full border border-charcoal/15 bg-white/70 px-3 py-1.5 text-[10px] font-bold tracking-[0.14em] uppercase text-charcoal/80"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
 
-          <div className="mt-8">
+          <div className="mt-12 flex flex-col sm:flex-row gap-8 items-start sm:items-center border-t border-charcoal/10 pt-12">
             <Link href="/schedule" asChild>
-              <a className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.16em] uppercase text-charcoal/70 hover:text-charcoal transition-colors">
-                Back to Schedule
-                <ArrowRight className="w-3.5 h-3.5" />
+              <a className="inline-flex items-center gap-3 text-xs font-black tracking-[0.2em] uppercase text-charcoal/70 hover:text-charcoal transition-colors group">
+                View Schedule
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Link>
+            
+            <Link href="/vip" asChild>
+              <a className="inline-flex items-center gap-3 text-xs font-black tracking-[0.2em] uppercase text-charcoal/70 hover:text-charcoal transition-colors group">
+                Request VIP Access
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>
           </div>

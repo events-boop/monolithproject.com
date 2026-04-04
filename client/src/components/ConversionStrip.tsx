@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
-import { getExperienceEvent, getPrimaryTicketUrl, isTicketOnSale } from "@/lib/siteExperience";
-import { CTA_LABELS } from "@/lib/cta";
+import { getExperienceEvent, isTicketOnSale } from "@/lib/siteExperience";
+import { CTA_LABELS, getEventCta } from "@/lib/cta";
+import ConversionCTA from "./ConversionCTA";
 
 function getTimeLeft(target: Date) {
   const diff = target.getTime() - Date.now();
@@ -45,7 +46,7 @@ function HUDDigit({ value, label }: { value: number; label: string }) {
 
 export default function ConversionStrip() {
   const event = getExperienceEvent("ticket");
-  const ticketUrl = getPrimaryTicketUrl(event);
+  const cta = getEventCta(event);
   const [timeLeft, setTimeLeft] = useState(() => 
     event ? getTimeLeft(parseEventDate(event.date)) : null
   );
@@ -57,7 +58,7 @@ export default function ConversionStrip() {
     return () => clearInterval(interval);
   }, [event]);
 
-  if (!event || !timeLeft || !ticketUrl) return null;
+  if (!event || !timeLeft) return null;
 
   const isSunsets = event.series === "chasing-sunsets";
   const themeColor = isSunsets ? "#E8B86D" : "#22D3EE";
@@ -87,11 +88,11 @@ export default function ConversionStrip() {
             </div>
             <div>
               <h2 className="font-heavy text-3xl md:text-4xl uppercase tracking-tighter leading-[0.9] text-white">
-                ANNIVERSARY SALE<br />
-                <span style={{ color: themeColor }}>73% CLAIMED</span>
+                {cta.label === CTA_LABELS.tickets ? "ACCESS OPEN" : "NEXT SIGNAL"}<br />
+                <span style={{ color: themeColor }}>{event.headline || "SYSTEM SCANNING"}</span>
               </h2>
-              <p className="mt-4 font-sans text-sm text-white/40 leading-relaxed">
-                Secure Level 01 pricing before the window expires. Once the room reaches capacity, entry logic resets.
+              <p className="mt-4 font-sans text-sm text-white/40 leading-relaxed uppercase tracking-widest text-[10px]">
+                {event.status === 'on-sale' ? "Limited inventory available. Synchronize for Level 01 entry." : "Join the priority list for early access coordinates."}
               </p>
             </div>
           </div>
@@ -106,30 +107,11 @@ export default function ConversionStrip() {
           </div>
 
           {/* RIGHT: Benefits & CTA */}
-          <div className="flex flex-col sm:flex-row items-center gap-8 lg:gap-12 w-full lg:w-auto">
-            <ul className="flex flex-col gap-3 min-w-[200px]">
-              {["Priority Entry", "Rooftop Access", "Exclusive Archive Access"].map(point => (
-                <li key={point} className="flex items-center gap-3">
-                  <div className={`w-4 h-4 flex items-center justify-center rounded-none ${themeBg}`}>
-                    <Check className="w-3 h-3 text-black stroke-[3px]" />
-                  </div>
-                  <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.15em] text-white/85">{point}</span>
-                </li>
-              ))}
-            </ul>
-
-            <a 
-              href={ticketUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`relative px-10 py-5 group/btn overflow-hidden w-full sm:w-auto text-center ${themeBg}`}
-            >
-              <span className="relative z-10 font-heavy text-xs uppercase tracking-[0.3em] text-black">
-                {CTA_LABELS.tickets}
-              </span>
-              <div className="absolute inset-0 bg-white translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]" />
-            </a>
-          </div>
+          <ConversionCTA 
+            event={event}
+            size="lg"
+            showUrgency={false}
+          />
 
         </div>
       </div>
