@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { submitNewsletterLead } from "@/lib/api";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 
 const SESSION_KEY = "us-optin-dismissed";
 const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
@@ -63,7 +64,14 @@ export default function UntoldStoryOptIn() {
                 email: email.trim(),
                 consent: true,
                 source: "untold-story-optin",
-            }, `optin-us-${Date.now()}`);
+                ...buildFunnelLeadFields({
+                    funnelId: "untold_story_modal",
+                    offerId: "priority_access",
+                    eventSeries: "untold-story",
+                    eventTitle: "Untold Story Season III",
+                    interestTags: ["modal", "seasonal-optin", "untold-story"],
+                }),
+            }, buildLeadIdempotencyKey("untold-story-optin", email, "untold-story"));
             setStatus("success");
             sessionStorage.setItem(SESSION_KEY, "1");
         } catch (err) {

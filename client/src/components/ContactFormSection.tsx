@@ -5,12 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { submitContactForm } from "@/lib/api";
+import HoneypotField from "@/components/HoneypotField";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120, "Name is too long"),
   email: z.string().trim().email("Invalid email address").max(320, "Email is too long"),
   subject: z.string().trim().min(2, "Subject is required").max(160, "Subject is too long"),
   message: z.string().trim().min(10, "Please provide more details").max(5000, "Message is too long"),
+  metadata_correlation_id: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -37,6 +39,7 @@ export default function ContactFormSection() {
         email: data.email.trim(),
         subject: data.subject.trim(),
         message: data.message.trim(),
+        metadata_correlation_id: data.metadata_correlation_id || undefined,
       });
       setIsSubmitted(true);
     } catch (error) {
@@ -66,6 +69,8 @@ export default function ContactFormSection() {
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+          <HoneypotField {...register("metadata_correlation_id")} />
+
           <div>
             <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
             <input

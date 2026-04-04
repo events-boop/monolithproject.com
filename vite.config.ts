@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
     root: path.resolve(import.meta.dirname, "client"),
     // This makes the shipped code slightly less "copy friendly", but it is not
     // real protection. If something must be secret, it cannot live in the client.
-    esbuild: isProd ? { drop: ["console", "debugger"] } : undefined,
+    esbuild: isProd ? { drop: ["console", "debugger"], legalComments: "none" } : undefined,
     build: {
       outDir: path.resolve(import.meta.dirname, "dist/public"),
       emptyOutDir: true,

@@ -8,13 +8,32 @@ import { getDatabase } from "../db/client";
 import { contactSubmissions } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
+import { createRateLimitMiddleware } from "../services/rate-limit";
+import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
 const router = Router();
 
 const WEBHOOK_TIMEOUT_MS = 8_000;
+const contactLimiter = createRateLimitMiddleware({
+  scope: "api:contact",
+  windowMs: 15 * 60 * 1000,
+  limit: 8,
+  message: "Too many contact attempts. Please wait 15 minutes before trying again.",
+});
 
-router.post("/api/contact", asyncHandler(async (req, res) => {
+router.post("/api/contact", contactLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
+  const honeypotValue = readHoneypotValue(req.body);
+  if (honeypotValue) {
+    logEvent("bot.honeypot_triggered", {
+      requestId,
+      route: "/api/contact",
+      field: honeypotFieldName,
+      valueLength: honeypotValue.length,
+    });
+    return res.status(200).json({ ok: true, message: "Message received", requestId });
+  }
+
   const parsed = contactSchema.safeParse(req.body);
 
   if (!parsed.success) {

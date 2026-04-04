@@ -1,2 +1,4 @@
+https://themonolithproject.com/*  https://monolithproject.com/:splat  301!
+https://www.themonolithproject.com/*  https://monolithproject.com/:splat  301!
 /api/*  /.netlify/functions/api/:splat  200!
 /*  /index.html  200

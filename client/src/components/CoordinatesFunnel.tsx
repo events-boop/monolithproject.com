@@ -1,24 +1,59 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Phone, Lock, Unlock, ArrowRight } from "lucide-react";
+import { AlertCircle, CheckCircle, Lock, Mail, MapPin, Phone, User } from "lucide-react";
+import { submitNewsletterLead } from "@/lib/api";
+import type { ScheduledEvent } from "@/data/events";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 
-export default function CoordinatesFunnel() {
-    const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+interface CoordinatesFunnelProps {
+    event?: ScheduledEvent;
+}
+
+export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [firstName, setFirstName] = useState("");
+    const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [botCheck, setBotCheck] = useState(""); // Honeypot state
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const eventLabel = event?.headline || event?.title;
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!phone) return;
+        if (!email.trim() || !phone.trim()) return;
+
         setStatus("loading");
-        // Simulate API request
-        setTimeout(() => {
+        setErrorMsg("");
+
+        try {
+            await submitNewsletterLead(
+                {
+                    email: email.trim(),
+                    firstName: firstName.trim() || undefined,
+                    phone: phone.trim(),
+                    consent: true,
+                    source: "coordinates_funnel",
+                    ...buildFunnelLeadFields({
+                        funnelId: "coordinates_drop",
+                        offerId: "location_unlock",
+                        event,
+                        interestTags: ["coordinates", "sms", "locked-location"],
+                    }),
+                    utmContent: "coordinates_drop",
+                    metadata_correlation_id: botCheck || undefined,
+                },
+                buildLeadIdempotencyKey("coordinates_funnel", email, event?.id),
+            );
             setStatus("success");
-        }, 1500);
+        } catch (err) {
+            setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+            setStatus("error");
+        }
     };
 
     return (
         <section className="relative w-full py-24 overflow-hidden bg-black flex items-center justify-center border-y border-white/5">
-            {/* Target/Radar Background Pattern */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
                 <div className="w-[800px] h-[800px] rounded-full border border-white" />
                 <div className="absolute w-[600px] h-[600px] rounded-full border border-white" />
@@ -31,46 +66,69 @@ export default function CoordinatesFunnel() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#22D3EE]/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="container relative z-10 px-4 md:px-6">
-                <div className="max-w-2xl mx-auto flex flex-col items-center text-center">
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(34,211,238,0.15)]"
-                    >
-                        <MapPin className="w-6 h-6 text-[#22D3EE]" />
-                    </motion.div>
+                <div className="max-w-5xl mx-auto grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                    <div className="flex flex-col">
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            whileInView={{ scale: 1, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(34,211,238,0.15)]"
+                        >
+                            <MapPin className="w-6 h-6 text-[#22D3EE]" />
+                        </motion.div>
 
-                    <motion.h2
-                        initial={{ y: 20, opacity: 0 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-                        className="font-display text-4xl md:text-5xl uppercase tracking-widest text-white mb-4"
-                    >
-                        Encrypted <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
-                            Coordinates Drops
-                        </span>
-                    </motion.h2>
+                        <motion.h2
+                            initial={{ y: 20, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                            className="font-display text-4xl md:text-5xl uppercase tracking-widest text-white mb-4"
+                        >
+                            Encrypted <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
+                                Coordinates Drops
+                            </span>
+                        </motion.h2>
 
-                    <motion.p
-                        initial={{ y: 20, opacity: 0 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                        className="text-white/60 text-sm md:text-base mb-10 max-w-lg font-mono leading-relaxed"
-                    >
-                        The venue remains classified until 2 hours before doors. Enter your number to receive the exact drop pinged straight to your device.
-                    </motion.p>
+                        {eventLabel ? (
+                            <p className="text-[#22D3EE]/75 text-[10px] font-mono tracking-[0.35em] uppercase mb-6">
+                                {eventLabel}{event?.date ? ` · ${event.date}` : ""}
+                            </p>
+                        ) : null}
+
+                        <motion.p
+                            initial={{ y: 20, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                            className="text-white/60 text-sm md:text-base mb-10 max-w-lg font-mono leading-relaxed"
+                        >
+                            When the room stays classified until the last moment, this is the access list. Drop your best email and the number you actually check so we know where to reach you when the location unlocks.
+                        </motion.p>
+
+                        <ul className="grid gap-4 font-mono text-xs uppercase tracking-[0.18em] text-white/45">
+                            <li className="flex items-center gap-3">
+                                <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
+                                Venue details stay locked until the reveal window.
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
+                                Event context and attribution stay attached to this lead.
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
+                                Built for location drops, guestlist unlocks, and last-minute pivots.
+                            </li>
+                        </ul>
+                    </div>
 
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         whileInView={{ y: 0, opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                        className="w-full max-w-md"
+                        className="w-full"
                     >
                         <AnimatePresence mode="wait">
                             {status === "success" ? (
@@ -78,13 +136,16 @@ export default function CoordinatesFunnel() {
                                     key="success"
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-white/5 border border-[#22D3EE]/20 rounded-2xl p-8 backdrop-blur-md"
+                                    className="bg-white/5 border border-[#22D3EE]/20 rounded-[2rem] p-10 backdrop-blur-md"
                                 >
-                                    <Unlock className="w-8 h-8 text-[#22D3EE] mx-auto mb-4" />
-                                    <h3 className="font-display text-xl uppercase tracking-wider text-white mb-2">Number Secured</h3>
-                                    <p className="font-mono text-xs text-white/50">
-                                        Transmission status: <span className="text-[#22D3EE]">PENDING SIGNAL</span> <br />
-                                        Awaiting drop initiation.
+                                    <div className="w-16 h-16 rounded-full bg-[#22D3EE]/10 flex items-center justify-center mb-6 border border-[#22D3EE]/20">
+                                        <CheckCircle className="w-8 h-8 text-[#22D3EE]" />
+                                    </div>
+                                    <h3 className="font-display text-3xl uppercase tracking-wider text-white mb-3">Drop Armed</h3>
+                                    <p className="font-mono text-xs leading-relaxed text-white/55 uppercase tracking-[0.18em]">
+                                        {eventLabel
+                                            ? `Your ${eventLabel} coordinates request is registered. Watch the inbox and phone you submitted for the unlock window.`
+                                            : "Your coordinates request is registered. Watch the inbox and phone you submitted for the unlock window."}
                                     </p>
                                 </motion.div>
                             ) : (
@@ -92,43 +153,87 @@ export default function CoordinatesFunnel() {
                                     key="form"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
                                     onSubmit={handleSubmit}
-                                    className="relative group"
+                                    className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-md space-y-5"
                                 >
-                                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#8B5CF6]/30 to-[#22D3EE]/30 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500" />
-                                    <div className="relative flex items-center bg-black border border-white/20 rounded-full overflow-hidden p-1 Focus-within:border-white/40 transition-colors">
-                                        <div className="pl-4 pr-3 flex items-center shrink-0">
-                                            <Phone className="w-4 h-4 text-white/40" />
-                                            <span className="font-mono text-white/40 text-sm ml-2">+1</span>
-                                        </div>
+                                    <div className="mb-2">
+                                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-white/35 mb-3">Secure Your Signal</p>
+                                        <h3 className="font-display text-3xl uppercase tracking-[0.08em] text-white">Lock The Drop</h3>
+                                    </div>
+
+                                    {/* Honeypot: Bot Trap */}
+                                    <div style={{ opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, pointerEvents: 'none' }} aria-hidden="true">
+                                      <input
+                                        type="text"
+                                        name="metadata_correlation_id"
+                                        value={botCheck}
+                                        onChange={(e) => setBotCheck(e.target.value)}
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                      />
+                                    </div>
+
+                                    <div className="relative">
+                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
+                                        <input
+                                            type="text"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                            autoComplete="given-name"
+                                            placeholder="First name (optional)"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
+                                        />
+                                    </div>
+
+                                    <div className="relative">
+                                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
+                                        <input
+                                            required
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            autoComplete="email"
+                                            placeholder="Email address"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
+                                        />
+                                    </div>
+
+                                    <div className="relative">
+                                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
                                         <input
                                             required
                                             type="tel"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
-                                            placeholder="(555) 000-0000"
-                                            className="w-full bg-transparent py-3.5 pr-4 text-white placeholder:text-white/20 focus:outline-none font-mono text-sm tracking-widest"
+                                            autoComplete="tel"
+                                            placeholder="Mobile number"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
                                         />
-                                        <button
-                                            type="submit"
-                                            disabled={status === "loading" || !phone}
-                                            className="shrink-0 bg-white text-black px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed group/btn overflow-hidden relative"
-                                        >
-                                            <span className="relative z-10 flex items-center gap-2">
-                                                {status === "loading" ? "Syncing..." : "Connect"}
-                                                {status !== "loading" && <Lock className="w-3.5 h-3.5 group-hover/btn:hidden" />}
-                                                {status !== "loading" && <ArrowRight className="w-3.5 h-3.5 hidden group-hover/btn:block" />}
-                                            </span>
-                                        </button>
                                     </div>
+
+                                    {status === "error" && errorMsg ? (
+                                        <p className="flex items-center gap-2 text-red-400 text-xs font-mono">
+                                            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                                            {errorMsg}
+                                        </p>
+                                    ) : null}
+
+                                    <button
+                                        type="submit"
+                                        disabled={status === "loading"}
+                                        className="w-full bg-white text-black px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                    >
+                                        {status === "loading" ? "Syncing..." : "Arm My Drop"}
+                                        {status === "loading" ? null : <Lock className="w-4 h-4" />}
+                                    </button>
+
+                                    <p className="text-[10px] text-white/28 font-mono tracking-[0.18em] uppercase">
+                                        We only use this for event access, location release, and critical updates.
+                                    </p>
                                 </motion.form>
                             )}
                         </AnimatePresence>
-
-                        <p className="text-[10px] text-white/30 font-mono mt-4 tracking-widest uppercase">
-                            Standard signal and transmission rates apply.
-                        </p>
                     </motion.div>
                 </div>
             </div>

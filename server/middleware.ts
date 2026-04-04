@@ -2,6 +2,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import express from "express";
 import helmet from "helmet";
 import { randomUUID } from "crypto";
+import { createApiResponseHardening, createBrowserApiGuard } from "./lib/request-hardening";
 import { createRateLimitMiddleware } from "./services/rate-limit";
 
 export function configureMiddleware(app: Express) {
@@ -16,7 +17,6 @@ export function configureMiddleware(app: Express) {
           scriptSrc: [
             "'self'", 
             "'unsafe-inline'", 
-            "'unsafe-eval'", 
             "https://challenges.cloudflare.com", 
             "https://maps.googleapis.com",
             "https://t.contentsquare.net",
@@ -25,6 +25,10 @@ export function configureMiddleware(app: Express) {
             "https://static.posthog.com"
           ],
           styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+          objectSrc: ["'none'"],
+          baseUri: ["'self'"],
+          formAction: ["'self'"],
+          frameAncestors: ["'none'"],
           imgSrc: [
             "'self'", 
             "data:", 
@@ -54,12 +58,15 @@ export function configureMiddleware(app: Express) {
             "https://player.vimeo.com",
             "https://w.soundcloud.com"
           ],
+          upgradeInsecureRequests: [],
         },
       },
       crossOriginEmbedderPolicy: false,
     })
   );
 
+  app.use("/api", createApiResponseHardening());
+  app.use("/api", createBrowserApiGuard());
   app.use(
     "/api",
     createRateLimitMiddleware({

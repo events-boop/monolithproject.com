@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, User, Instagram, Sparkles, Copy, CheckCircle, ArrowRight, Gift, AlertCircle } from "lucide-react";
+import { Mail, User, Instagram, Sparkles, Copy, CheckCircle, ArrowRight, Gift, AlertCircle, Share2 } from "lucide-react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import { submitNewsletterLead } from "@/lib/api";
+import type { ScheduledEvent } from "@/data/events";
+import {
+    buildCommunityShareUrl,
+    buildFunnelLeadFields,
+    buildLeadIdempotencyKey,
+    normalizeInstagramHandle,
+    splitFullName,
+} from "@/lib/leadCapture";
 
-export default function GiveawayFunnel() {
+interface GiveawayFunnelProps {
+    event?: ScheduledEvent;
+}
+
+export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [copied, setCopied] = useState(false);
+    const [shared, setShared] = useState(false);
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [handle, setHandle] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [botCheck, setBotCheck] = useState(""); // Honeypot state
+    const shareUrl = useMemo(() => buildCommunityShareUrl(event), [event]);
+    const eventLabel = event?.headline || event?.title;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,8 +35,8 @@ export default function GiveawayFunnel() {
         setStatus("loading");
         setErrorMsg("");
 
-        const [firstName, ...lastParts] = fullName.trim().split(" ");
-        const lastName = lastParts.join(" ") || undefined;
+        const { firstName, lastName } = splitFullName(fullName);
+        const instagramHandle = normalizeInstagramHandle(handle);
 
         try {
             await submitNewsletterLead(
@@ -28,11 +44,19 @@ export default function GiveawayFunnel() {
                     email: email.trim(),
                     firstName: firstName || undefined,
                     lastName,
+                    instagramHandle: instagramHandle || undefined,
                     consent: true,
                     source: "giveaway_funnel",
-                    utmContent: handle.trim() ? `ig:${handle.trim().replace(/^@/, "")}` : undefined,
+                    ...buildFunnelLeadFields({
+                        funnelId: "giveaway_entry",
+                        offerId: "crew_access",
+                        event,
+                        interestTags: ["giveaway", "social-share"],
+                    }),
+                    utmContent: instagramHandle ? `ig:${instagramHandle}` : undefined,
+                    metadata_correlation_id: botCheck || undefined,
                 },
-                crypto.randomUUID(),
+                buildLeadIdempotencyKey("giveaway_funnel", email, event?.id),
             );
             signalChirp.boot();
             setStatus("success");
@@ -42,10 +66,33 @@ export default function GiveawayFunnel() {
         }
     };
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText("https://monolithproject.com/win/ref-x89f2a");
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(shareUrl);
         setCopied(true);
+        setShared(true);
         setTimeout(() => setCopied(false), 2000);
+    };
+
+    const shareEntry = async () => {
+        const sharePayload = {
+            title: eventLabel ? `${eventLabel} | The Monolith Project` : "The Monolith Project",
+            text: eventLabel
+                ? `I'm on the list for ${eventLabel}. Lock in early.`
+                : "I'm on the list for the next Monolith drop. Lock in early.",
+            url: shareUrl,
+        };
+
+        if (typeof navigator !== "undefined" && navigator.share) {
+            try {
+                await navigator.share(sharePayload);
+                setShared(true);
+                return;
+            } catch {
+                // Fall back to clipboard if native share is dismissed or unavailable.
+            }
+        }
+
+        await copyToClipboard();
     };
 
     return (
@@ -91,6 +138,12 @@ export default function GiveawayFunnel() {
                             </h2>
 
                             <div className="h-px w-20 bg-white/10 mb-10" />
+
+                            {eventLabel ? (
+                                <p className="text-primary/85 text-[10px] mb-6 font-mono uppercase tracking-[0.4em]">
+                                    {eventLabel}{event?.date ? ` · ${event.date}` : ""}
+                                </p>
+                            ) : null}
 
                             <p className="text-white/50 text-base md:text-lg mb-12 max-w-lg leading-relaxed font-mono uppercase tracking-widest text-balance">
                                 The Monolith Project is an architectural response to the night. Register your signal to secure a position in the next sequence.
@@ -147,26 +200,36 @@ export default function GiveawayFunnel() {
                                             <div className="absolute top-0 right-0 p-6 opacity-[0.02] pointer-events-none text-white group-hover:opacity-[0.05] transition-opacity duration-700">
                                                 <Sparkles className="w-32 h-32" />
                                             </div>
-                                            <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">Network Multiplication</h4>
+                                            <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">Crew Signal</h4>
                                             <p className="text-white/40 text-[11px] mb-8 leading-relaxed font-mono uppercase tracking-widest">
-                                                The sequence strengthens through resonance. Use this unique identifier to invite others. 3 successful connections = Level 2 Priority.
+                                                Share the event with the people you actually want in the room. This link carries the live event context and campaign attribution.
                                             </p>
 
                                             <div className="flex items-center gap-3">
                                                 <input
                                                     type="text"
                                                     readOnly
-                                                    value="monolithproject.com/win/ref-x89f2a"
+                                                    value={shareUrl.replace(/^https?:\/\//, "")}
                                                     className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-5 text-[10px] text-white/60 font-mono outline-none focus:border-primary/50 transition-colors uppercase tracking-widest"
                                                 />
                                                 <button
                                                     onClick={copyToClipboard}
+                                                    type="button"
                                                     className="shrink-0 bg-primary h-12 w-12 flex items-center justify-center text-white rounded-xl hover:bg-white hover:text-black transition-all duration-500 shadow-lg shadow-primary/20"
                                                 >
                                                     {copied ? <CheckCircle className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                                                 </button>
                                             </div>
                                         </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => void shareEntry()}
+                                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-[10px] font-mono tracking-[0.3em] uppercase text-white/70 hover:text-white hover:border-primary/40 transition-colors flex items-center justify-center gap-3"
+                                        >
+                                            {shared ? "Shared / Copied" : "Share With Your Crew"}
+                                            <Share2 className="w-4 h-4" />
+                                        </button>
                                     </motion.div>
                                 ) : (
                                     <motion.form
@@ -181,6 +244,18 @@ export default function GiveawayFunnel() {
                                             <div className="h-px w-8 bg-primary mb-4" />
                                             <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.05em]">Protocol <span className="text-white/30">Entry</span></h3>
                                             <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Authorize your sequence</p>
+                                        </div>
+
+                                        {/* Honeypot: Bot Trap */}
+                                        <div style={{ opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, pointerEvents: 'none' }} aria-hidden="true">
+                                          <input
+                                            type="text"
+                                            name="metadata_correlation_id"
+                                            value={botCheck}
+                                            onChange={(e) => setBotCheck(e.target.value)}
+                                            tabIndex={-1}
+                                            autoComplete="off"
+                                          />
                                         </div>
 
                                         <div className="space-y-4">

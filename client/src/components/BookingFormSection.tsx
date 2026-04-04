@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { submitBookingInquiry } from "@/lib/api";
+import HoneypotField from "@/components/HoneypotField";
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -13,6 +14,7 @@ const bookingSchema = z.object({
   type: z.enum(["partner-on-location", "artist-booking", "sponsorship", "general"]),
   location: z.string().optional(),
   message: z.string().min(10, "Please provide more details"),
+  metadata_correlation_id: z.string().optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
@@ -43,6 +45,7 @@ export default function BookingFormSection() {
       await submitBookingInquiry({
         ...data,
         location: data.location?.trim() || undefined,
+        metadata_correlation_id: data.metadata_correlation_id || undefined,
       });
       setIsSubmitted(true);
     } catch (error) {
@@ -71,6 +74,8 @@ export default function BookingFormSection() {
         </div>
       ) : (
         <form action="/api/booking-inquiry" method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <HoneypotField {...register("metadata_correlation_id")} />
+
           <div>
             <label className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-4">
               Inquiry Type

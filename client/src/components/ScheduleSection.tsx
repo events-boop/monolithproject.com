@@ -90,10 +90,10 @@ export default function ScheduleSection() {
         {/* Header Block */}
         <div className="mb-16 md:mb-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between border-b border-black/10 pb-12">
           <div className="flex flex-col gap-4 max-w-2xl">
-            <h2 className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
+            <h2 className="font-heavy text-[clamp(3.8rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
               SCHEDULE
             </h2>
-            <p className="font-mono text-xs lg:text-[11px] uppercase tracking-[0.3em] text-black/70 pl-1 mt-2">
+            <p className="font-mono text-xs md:text-[11px] uppercase tracking-[0.3em] text-black/70 pl-1 mt-2">
               Start with the next date. The series and the room will tell you the rest.
             </p>
           </div>
@@ -103,7 +103,7 @@ export default function ScheduleSection() {
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
-                className={`px-6 py-3 border rounded-none text-[10px] font-bold tracking-[0.25em] uppercase transition-all duration-500 hover:border-black/40 ${activeMonth === month
+                className={`px-6 py-3 border rounded-none text-xs md:text-[10px] font-bold tracking-[0.25em] uppercase transition-all duration-500 hover:border-black/40 ${activeMonth === month
                   ? "bg-black text-white border-black"
                   : "bg-transparent border-black/20 text-black/75 hover:bg-black/5 hover:text-black"
                   }`}
@@ -180,7 +180,7 @@ export default function ScheduleSection() {
                     {/* Main Title Column */}
                     <div className="md:col-span-5 flex flex-col gap-2 md:pl-8 pr-4 border-l border-black/10 md:border-none">
                       <div className="flex flex-wrap gap-2 mb-1">
-                        <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${isSunsets ? 'text-[#8F5B0A]' : isStory ? 'text-[#0E7490]' : 'text-[#7F311D]'}`}>
+                        <span className={`text-[11px] font-bold tracking-[0.3em] uppercase ${isSunsets ? 'text-[#8F5B0A]' : isStory ? 'text-[#0E7490]' : 'text-[#7F311D]'}`}>
                           {seriesLabels[event.series]}
                         </span>
                         {event.status === "on-sale" && (
@@ -302,18 +302,18 @@ export default function ScheduleSection() {
 
         {/* Footer actions */}
         <div className="mt-16 pt-8 border-t border-black/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 relative z-20">
-          <p className="text-black/65 text-[10px] uppercase tracking-[0.3em] font-mono pl-4">
+          <p className="text-black/65 text-xs font-mono uppercase tracking-[0.3em] pl-4">
             More dates to be announced.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/schedule" asChild>
-              <a className="group inline-flex items-center gap-3 px-6 py-3 rounded-none border border-black/30 text-black font-bold text-[9px] tracking-[0.25em] uppercase transition-all hover:bg-black hover:text-white">
+              <a className="group inline-flex items-center gap-3 px-6 py-3 rounded-none border border-black/30 text-black font-bold text-[11px] tracking-[0.25em] uppercase transition-all hover:bg-black hover:text-white">
                 View Full Schedule
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </a>
             </Link>
             <Link href="/newsletter" asChild>
-              <a className="group inline-flex items-center gap-2 text-[9px] font-bold tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors">
+              <a className="group inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors">
                 Get Early Access
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </a>

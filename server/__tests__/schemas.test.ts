@@ -24,9 +24,16 @@ describe("leadSchema", () => {
       ...validLead,
       firstName: "Ada",
       lastName: "Lovelace",
+      phone: "+1 (312) 555-0101",
+      instagramHandle: "monolithcrew",
       source: "home-hero",
+      funnelId: "newsletter_section",
+      offerId: "inner_circle",
       sessionId: "sess_123",
       eventInterest: "cs-ibiza-2026",
+      eventSeries: "chasing-sunsets",
+      eventTitle: "Chasing Sun(Sets) July 4",
+      interestTags: ["newsletter", "inner-circle"],
       landingPageUrl: "https://example.com/?utm_source=instagram",
       referrer: "https://instagram.com/monolith",
       referrerDomain: "instagram.com",
@@ -142,12 +149,22 @@ describe("leadSchema", () => {
       ...validLead,
       firstName: "  Ada  ",
       source: "  hero  ",
+      instagramHandle: "  @monolith  ",
     });
     expect(result.success).toBe(true);
     if (result.success) {
       expect(result.data.firstName).toBe("Ada");
       expect(result.data.source).toBe("hero");
+      expect(result.data.instagramHandle).toBe("@monolith");
     }
+  });
+
+  it("rejects interestTags when more than 12 values are provided", () => {
+    const result = leadSchema.safeParse({
+      ...validLead,
+      interestTags: new Array(13).fill("tag"),
+    });
+    expect(result.success).toBe(false);
   });
 });
 

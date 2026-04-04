@@ -68,10 +68,10 @@ export default function MovementSection() {
           >
             <div className="flex items-center gap-4 mb-8 md:mb-12">
                <div className="h-px w-12 bg-primary/70" />
-               <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/90 font-bold">The Collective</span>
+               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold">The Collective</span>
             </div>
             
-            <h2 className="font-heavy text-[clamp(4.5rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
+            <h2 className="font-heavy text-[clamp(4rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
               <span className="text-white/25">CHICAGO</span>
               <span className="text-white">ROOTED</span>
               <span className="text-primary mt-1">ROOMS.</span>
@@ -87,7 +87,7 @@ export default function MovementSection() {
                </p>
                
                <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
-                 <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-1">
+                 <p className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/45 mb-1">
                    Artists scheduled for 2026:
                  </p>
                  <div className="flex flex-wrap gap-x-6 gap-y-2">
@@ -137,7 +137,7 @@ export default function MovementSection() {
 
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
                            <div className="flex flex-col gap-4 max-w-[85%]">
-                              <span className={`font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-white/30 group-hover:${accentText} transition-colors duration-500`}>
+                              <span className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.3em] font-bold text-white/35 group-hover:${accentText} transition-colors duration-500`}>
                                  {path.label}
                               </span>
                               <h3 className="font-heavy text-3xl md:text-[2.5rem] tracking-tight uppercase leading-none text-white drop-shadow-md">
@@ -160,7 +160,7 @@ export default function MovementSection() {
             {/* Ambient Signoff block */}
             <div className="mt-4 p-8 md:p-10 rounded-none border border-white/5 bg-[radial-gradient(ellipse_at_top_right,rgba(224,90,58,0.08),transparent_60%)] relative overflow-hidden">
                <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/30" />
-               <p className="font-mono text-[10px] md:text-xs text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
+               <p className="font-mono text-[11px] md:text-sm text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
                  "Monolith exists to build nights that feel connected to something larger than themselves."
                </p>
             </div>

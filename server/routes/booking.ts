@@ -8,13 +8,32 @@ import { getDatabase } from "../db/client";
 import { bookingInquiries } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
+import { createRateLimitMiddleware } from "../services/rate-limit";
+import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
 const router = Router();
 
 const WEBHOOK_TIMEOUT_MS = 8_000;
+const bookingLimiter = createRateLimitMiddleware({
+  scope: "api:booking-inquiry",
+  windowMs: 15 * 60 * 1000,
+  limit: 8,
+  message: "Too many booking inquiries. Please wait 15 minutes before trying again.",
+});
 
-router.post("/api/booking-inquiry", asyncHandler(async (req, res) => {
+router.post("/api/booking-inquiry", bookingLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
+  const honeypotValue = readHoneypotValue(req.body);
+  if (honeypotValue) {
+    logEvent("bot.honeypot_triggered", {
+      requestId,
+      route: "/api/booking-inquiry",
+      field: honeypotFieldName,
+      valueLength: honeypotValue.length,
+    });
+    return res.status(202).json({ ok: true, requestId, message: "Inquiry received" });
+  }
+
   const parsed = bookingInquirySchema.safeParse(req.body);
   if (!parsed.success) {
     return res.status(400).json({
@@ -26,6 +45,12 @@ router.post("/api/booking-inquiry", asyncHandler(async (req, res) => {
         retryable: false,
       },
     });
+  }
+
+  // SS-Tier Honeypot: Silent Rejection of Bots
+  if ((parsed.data as any).metadata_correlation_id) {
+    logEvent("bot.booking_honeypot_triggered", { requestId, ip: req.ip });
+    return res.status(202).json({ ok: true, message: "Inquiry received", requestId });
   }
 
   const webhook = process.env.BOOKING_WEBHOOK_URL;

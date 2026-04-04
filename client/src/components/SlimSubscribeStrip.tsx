@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, AlertCircle } from "lucide-react";
 import { submitNewsletterLead } from "@/lib/api";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 
 interface SlimSubscribeStripProps {
   title: string;
@@ -29,7 +30,16 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
 
     setSubmitting(true);
     try {
-      await submitNewsletterLead({ email, consent: true, source }, crypto.randomUUID());
+      await submitNewsletterLead({
+        email,
+        consent: true,
+        source,
+        ...buildFunnelLeadFields({
+          funnelId: "slim_subscribe_strip",
+          offerId: "always_on_subscribe",
+          interestTags: ["newsletter", "strip"],
+        }),
+      }, buildLeadIdempotencyKey(source, email));
       setOk(true);
       setEmail("");
       setAgreed(false);
@@ -91,4 +101,3 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
     </section>
   );
 }
-

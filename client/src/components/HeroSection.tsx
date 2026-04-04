@@ -246,7 +246,7 @@ export default function HeroSection() {
         >
           <div className="flex items-center gap-4 justify-center">
              <div className="h-px w-8 md:w-20 bg-white/10" />
-             <h2 className="font-mono text-[9px] md:text-xs uppercase tracking-[0.8em] text-white/30">
+             <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">
                {eyebrow || "Chicago-Rooted Event World"} / System Active
              </h2>
              <div className="h-px w-8 md:w-20 bg-white/10" />
@@ -292,22 +292,22 @@ export default function HeroSection() {
            {/* Primary Hero Signal Box */}
            {featuredEvent && (
               <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.02] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
-                 <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4">
                     <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
-                    <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-primary/80">Next Open-Air Signal</span>
-                 </div>
-                 <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
-                    {headline}
-                 </h2>
-                 <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[9px] uppercase tracking-[0.4em] text-white/30">
-                    <span className="text-white/60">{venueLabel}</span>
-                    <span className="hidden md:inline-block w-px h-3 bg-white/10" />
-                    <span className="text-white/60">{featuredEvent.date}</span>
-                 </div>
+                    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary/90">Next Open-Air Signal</span>
+                  </div>
+                  <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
+                     {headline}
+                  </h2>
+                  <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/40">
+                     <span className="text-white/70">{venueLabel}</span>
+                     <span className="hidden md:inline-block w-px h-3 bg-white/10" />
+                     <span className="text-white/70">{featuredEvent.date}</span>
+                  </div>
               </div>
            )}
 
-           <div className="text-[10px] md:text-sm uppercase tracking-[0.25em] text-white/50 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
+           <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
              <WordScrubReveal text={HERO_SUBHEAD} />
            </div>
            

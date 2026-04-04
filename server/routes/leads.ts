@@ -11,11 +11,35 @@ import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { sendWelcomeEmail } from "../services/email";
+import { createRateLimitMiddleware } from "../services/rate-limit";
+import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
 const router = Router();
 
-router.post("/api/leads", asyncHandler(async (req, res) => {
+const leadsLimiter = createRateLimitMiddleware({
+  scope: "api:leads",
+  windowMs: 15 * 60 * 1000,
+  limit: 24,
+  message: "Too many signup attempts. Please wait 15 minutes before trying again.",
+});
+
+router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
+  const honeypotValue = readHoneypotValue(req.body);
+  if (honeypotValue) {
+    logEvent("bot.honeypot_triggered", {
+      requestId,
+      route: "/api/leads",
+      field: honeypotFieldName,
+      valueLength: honeypotValue.length,
+    });
+    return res.status(200).json({
+      ok: true,
+      requestId,
+      message: "Subscribed successfully",
+    });
+  }
+
   const parsed = leadSchema.safeParse(req.body);
 
   if (!parsed.success) {
@@ -27,6 +51,17 @@ router.post("/api/leads", asyncHandler(async (req, res) => {
         message: "Please provide a valid email and consent.",
         retryable: false,
       },
+    });
+  }
+
+  // SS-Tier Honeypot: Silent Rejection of Bots
+  if ((parsed.data as any).metadata_correlation_id) {
+    logEvent("bot.leads_honeypot_triggered", { requestId, ip: req.ip });
+    return res.status(200).json({
+      ok: true,
+      requestId,
+      provider: readProvider(),
+      message: "Subscribed successfully",
     });
   }
 
@@ -101,7 +136,11 @@ router.post("/api/leads", asyncHandler(async (req, res) => {
         requestId,
         provider,
         source: parsed.data.source || "website",
+        funnelId: parsed.data.funnelId || null,
+        offerId: parsed.data.offerId || null,
         eventInterest: parsed.data.eventInterest || null,
+        eventSeries: parsed.data.eventSeries || null,
+        eventTitle: parsed.data.eventTitle || null,
         sessionId: parsed.data.sessionId || null,
         landingPageUrl: parsed.data.landingPageUrl || null,
         referrerDomain: parsed.data.referrerDomain || parsed.data.firstReferrerDomain || null,
@@ -110,6 +149,8 @@ router.post("/api/leads", asyncHandler(async (req, res) => {
         utmCampaign: parsed.data.utmCampaign || null,
         firstUtmSource: parsed.data.firstUtmSource || null,
         lastUtmSource: parsed.data.lastUtmSource || null,
+        phoneProvided: Boolean(parsed.data.phone),
+        instagramHandleProvided: Boolean(parsed.data.instagramHandle),
         emailHash: createHash("sha256").update(email).digest("hex").slice(0, 12),
       });
 

@@ -4,9 +4,16 @@ export interface LeadPayload {
   email: string;
   firstName?: string;
   lastName?: string;
+  phone?: string;
+  instagramHandle?: string;
   consent: true;
   source: string;
+  funnelId?: string;
+  offerId?: string;
   eventInterest?: string;
+  eventSeries?: string;
+  eventTitle?: string;
+  interestTags?: string[];
   utmSource?: string;
   utmMedium?: string;
   utmCampaign?: string;
@@ -43,6 +50,7 @@ export interface LeadPayload {
   lastFbclid?: string;
   lastTtclid?: string;
   lastMsclkid?: string;
+  metadata_correlation_id?: string;
 }
 
 export interface TicketIntentPayload {
@@ -94,6 +102,7 @@ export interface BookingInquiryPayload {
   type: "partner-on-location" | "artist-booking" | "sponsorship" | "general";
   location?: string;
   message: string;
+  metadata_correlation_id?: string;
 }
 
 export interface ContactPayload {
@@ -101,6 +110,7 @@ export interface ContactPayload {
   email: string;
   subject: string;
   message: string;
+  metadata_correlation_id?: string;
 }
 
 interface ApiError {

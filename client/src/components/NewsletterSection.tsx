@@ -6,6 +6,8 @@ import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import KineticDecryption from "./KineticDecryption";
+import HoneypotField from "./HoneypotField";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 
 interface NewsletterSectionProps {
   source?: string;
@@ -43,6 +45,7 @@ export default function NewsletterSection({
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState("");
   const [residentId, setResidentId] = useState("");
+  const [botCheck, setBotCheck] = useState(""); // Honeypot state
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -82,11 +85,18 @@ export default function NewsletterSection({
         {
           email,
           firstName: firstName || undefined,
+          phone: phone || undefined,
           consent: true,
           source,
+          ...buildFunnelLeadFields({
+            funnelId: "newsletter_section",
+            offerId: "inner_circle",
+            interestTags: ["newsletter", "always-on"],
+          }),
           utmContent: phone ? "sms_interest" : undefined,
+          metadata_correlation_id: botCheck || undefined,
         },
-        crypto.randomUUID()
+        buildLeadIdempotencyKey(source, email)
       );
       setResidentId(Math.random().toString(36).substring(7).toUpperCase());
       signalChirp.boot();
@@ -119,12 +129,12 @@ export default function NewsletterSection({
                   <Check className="w-8 h-8 text-primary" />
                 </div>
                 
-                <span className="font-mono text-[9px] text-primary tracking-[0.5em] uppercase mb-4">Identity // Authenticated</span>
+                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Identity // Authenticated</span>
                 <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Access Granted</h3>
                 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Resident_Name</span>
+                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">Resident_Name</span>
                     <span className="font-heavy text-2xl text-white uppercase">
                       <KineticDecryption text={firstName || "Anonymous"} />
                     </span>
@@ -173,7 +183,7 @@ export default function NewsletterSection({
             >
               {/* Left — massive cinematic copy */}
               <div className="flex flex-col">
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/90 font-bold mb-6 flex items-center gap-4">
+                <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold mb-6 flex items-center gap-4">
                   <div className="h-px w-12 bg-primary/70" />
                   Inner Circle
                 </span>
@@ -219,6 +229,13 @@ export default function NewsletterSection({
                     Email is required. Phone is optional for text-first priority drops.
                   </p>
                 </div>
+
+                {/* Honeypot: Bot Trap */}
+                <HoneypotField
+                  name="metadata_correlation_id"
+                  value={botCheck}
+                  onChange={(e) => setBotCheck(e.target.value)}
+                />
 
                 {/* Inputs */}
                 <div className="flex flex-col gap-8">

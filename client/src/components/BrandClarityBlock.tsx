@@ -53,7 +53,7 @@ export default function BrandClarityBlock() {
             >
               <div className="flex items-center gap-4 mb-8">
                  <div className="h-[2px] w-12 bg-primary/40 shadow-[0_0_15px_rgba(224,90,58,0.3)]" />
-                 <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-primary/80">Project Clarity</span>
+                 <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] text-primary/90">Project Clarity</span>
               </div>
               
               <h2 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.85] uppercase text-white drop-shadow-2xl mb-10">
@@ -69,7 +69,7 @@ export default function BrandClarityBlock() {
                  <p className="text-xs uppercase tracking-[0.3em] text-white/20 font-mono">System Architecture v1.02</p>
                  <div className="flex flex-wrap gap-x-8 gap-y-4">
                     {["Curated Rooms", "Music-First", "Chicago-Rooted", "Global Signal"].map((trait) => (
-                      <span key={trait} className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/40">{trait}</span>
+                      <span key={trait} className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/50">{trait}</span>
                     ))}
                  </div>
               </div>
@@ -98,7 +98,7 @@ export default function BrandClarityBlock() {
                     
                     <div className="flex items-start justify-between gap-8 mb-6">
                       <div className="flex flex-col gap-2">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors">{card.label}</span>
+                        <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/35 group-hover:text-primary transition-colors">{card.label}</span>
                         <h3 className="font-display text-3xl md:text-4xl lg:text-5xl uppercase text-white group-hover:tracking-wider transition-all duration-700">
                           {card.title}
                         </h3>

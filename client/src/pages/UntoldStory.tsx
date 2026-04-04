@@ -50,7 +50,7 @@ export default function UntoldStory() {
         <UntoldContrast />
 
         {/* Dynamic Funnels for this Event */}
-        <EventFunnelStack eventId="us-may16" />
+        {scheduledEvent ? <EventFunnelStack eventId={scheduledEvent.id} /> : null}
 
         {/* Season Records */}
         <div id="untold-records" className="scroll-shell-target relative z-20 container max-w-6xl mx-auto px-6 border-t border-white/10">

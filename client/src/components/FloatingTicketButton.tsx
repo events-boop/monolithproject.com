@@ -75,12 +75,12 @@ export default function FloatingTicketButton() {
                   <span className={`animate-ping absolute inline-flex h-full w-full opacity-75 ${accentColor}`} />
                   <span className={`relative inline-flex h-2 w-2 ${accentColor}`} />
                 </span>
-                <span className={`font-mono text-[9px] uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
+                <span className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
                   Priority Access
                 </span>
               </div>
             )}
-            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-1.5 md:mb-2">
+            <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-1.5 md:mb-2">
               {shortDate}
             </span>
             <span className="font-heavy text-base md:text-3xl uppercase tracking-tighter text-white group-hover:text-black transition-colors leading-none truncate md:whitespace-normal md:max-w-xs">

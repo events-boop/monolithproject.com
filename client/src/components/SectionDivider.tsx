@@ -99,13 +99,13 @@ export default function SectionDivider({ id, number, label, dark, glow }: Sectio
         <div className="flex items-center justify-between py-6 md:py-8 lg:py-10">
           {/* Left: Label */}
           <div className="flex items-center gap-6">
-            <span className={`font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] ${labelColor} group-hover:text-primary transition-colors duration-500`}>
+            <span className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] ${labelColor} group-hover:text-primary transition-colors duration-500`}>
               {label || `Section ${number}`}
             </span>
           </div>
 
           {/* Right: Precise number marker */}
-          <span className={`font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] ${labelColor} opacity-50`}>
+          <span className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] ${labelColor} opacity-50`}>
             {number} —
           </span>
         </div>

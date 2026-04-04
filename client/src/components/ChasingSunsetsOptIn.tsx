@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sun, ArrowRight } from "lucide-react";
 import { submitNewsletterLead } from "@/lib/api";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 
 const SESSION_KEY = "cs-optin-dismissed";
 const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
@@ -62,7 +63,14 @@ export default function ChasingSunsetsOptIn() {
                 email: email.trim(),
                 consent: true,
                 source: "chasing-sunsets-optin",
-            }, `optin-cs-${Date.now()}`);
+                ...buildFunnelLeadFields({
+                    funnelId: "chasing_sunsets_modal",
+                    offerId: "priority_access",
+                    eventSeries: "chasing-sunsets",
+                    eventTitle: "Chasing Sun(Sets) 2026 Season",
+                    interestTags: ["modal", "seasonal-optin", "chasing-sunsets"],
+                }),
+            }, buildLeadIdempotencyKey("chasing-sunsets-optin", email, "chasing-sunsets"));
             setStatus("success");
             sessionStorage.setItem(SESSION_KEY, "1");
         } catch (err) {

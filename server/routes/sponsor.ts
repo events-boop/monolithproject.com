@@ -5,6 +5,7 @@ import { logEvent } from "../lib/logging";
 import { secureCompare } from "../lib/security";
 import { parseCookieHeader } from "../lib/cookies";
 import { createRateLimitMiddleware } from "../services/rate-limit";
+import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 import {
     sponsorSessionTtlMs,
     sponsorSessionCookieName,
@@ -23,9 +24,26 @@ const sponsorAccessLimiter = createRateLimitMiddleware({
     limit: 10,
     message: "Too many access attempts. Please wait 15 minutes before retrying.",
 });
+const sponsorDeckLimiter = createRateLimitMiddleware({
+    scope: "api:sponsor-deck",
+    windowMs: 15 * 60 * 1000,
+    limit: 20,
+    message: "Too many document requests. Please wait 15 minutes before retrying.",
+});
 
 router.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
     const requestId = randomUUID();
+    const honeypotValue = readHoneypotValue(req.body);
+    if (honeypotValue) {
+        logEvent("bot.honeypot_triggered", {
+            requestId,
+            route: "/api/sponsor-access",
+            field: honeypotFieldName,
+            valueLength: honeypotValue.length,
+        });
+        return res.status(200).json({ ok: true, requestId });
+    }
+
     const parsed = sponsorAccessSchema.safeParse(req.body);
     if (!parsed.success) {
         return res.status(400).json({
@@ -74,7 +92,7 @@ router.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
     return res.status(200).json({ ok: true, requestId, sessionExpiresInSec: Math.floor(sponsorSessionTtlMs / 1000) });
 });
 
-router.get("/api/sponsor-deck", (req, res) => {
+router.get("/api/sponsor-deck", sponsorDeckLimiter, (req, res) => {
     const requestId = randomUUID();
     const sessionToken = parseCookieHeader(req.header("cookie"))[sponsorSessionCookieName];
 
@@ -109,6 +127,9 @@ router.get("/api/sponsor-deck", (req, res) => {
             },
         });
     }
+
+    res.setHeader("Cache-Control", "private, no-store");
+    res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 
     return res.download(sponsorDeckPath, sponsorDeckFilename, (error) => {
         if (!error) {

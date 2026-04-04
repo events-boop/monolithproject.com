@@ -55,10 +55,10 @@ export default function FeaturedCampaigns() {
         
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60 block mb-4">
+              <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 block mb-4">
                 Active Campaigns
               </span>
-              <h2 className="font-display text-4xl md:text-5xl uppercase text-white tracking-widest">
+              <h2 className="font-display text-[clamp(1.8rem,6vw,3.5rem)] md:text-5xl uppercase text-white tracking-widest">
                 Priority Targets
               </h2>
             </div>
@@ -80,22 +80,22 @@ export default function FeaturedCampaigns() {
               <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
               
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="px-3 py-1 bg-[#22D3EE]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                    <div className="px-3 py-1 bg-[#22D3EE]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-[11px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse"></span>
                       Artist Debut
                     </div>
-                    <div className="flex items-center gap-1.5 text-white/72 text-[10px] font-mono tracking-widest uppercase">
+                    <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
                         <Calendar className="w-3.5 h-3.5" /> May 16, 2026
                     </div>
                 </div>
-                <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#22D3EE] transition-colors">
+                <h3 className="font-display text-[clamp(2rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#22D3EE] transition-colors">
                   Untold Story<br/>Eran Hersh
                 </h3>
                 <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
                   A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago for a 360° dancefloor experience.
                 </p>
-                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[10px] tracking-widest uppercase font-bold">
+                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[11px] tracking-widest uppercase font-bold">
                     Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
@@ -114,22 +114,22 @@ export default function FeaturedCampaigns() {
               <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
               
               <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/20 text-[#E8B86D] text-[9px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
+                <div className="flex items-center gap-3 mb-4 flex-wrap">
+                    <div className="px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/20 text-[#E8B86D] text-[11px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#E8B86D] animate-pulse"></span>  
                       Flagship Event
                     </div>
-                    <div className="flex items-center gap-1.5 text-white/72 text-[10px] font-mono tracking-widest uppercase">
+                    <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
                         <Calendar className="w-3.5 h-3.5" /> July 4, 2026
                     </div>
                 </div>
-                <h3 className="font-display text-4xl md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#E8B86D] transition-colors">
+                <h3 className="font-display text-[clamp(2.1rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#E8B86D] transition-colors">
                   Chasing Sun(Sets)<br/>4th of July
                 </h3>
                 <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
                   The summer flagship rooftop session. Start at sunset, continue after dark. Join the waitlist for priority entry before tickets go live.
                 </p>
-                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[10px] tracking-widest uppercase font-bold">
+                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[11px] tracking-widest uppercase font-bold">
                     Explore Campaign <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
@@ -153,7 +153,7 @@ export default function FeaturedCampaigns() {
                 
                 <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 h-full w-full">
                     <div className="max-w-md">
-                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] mb-4 block">Event Archive</span>
+                        <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-[#E8B86D] mb-4 block">Event Archive</span>
                         <h3 className="font-display text-3xl md:text-5xl uppercase text-white mb-4 leading-[0.9] drop-shadow-xl">
                            Chasing Sun(Sets)<br/>4th of July 2025
                         </h3>
@@ -178,7 +178,7 @@ export default function FeaturedCampaigns() {
             {/* Spotify Feature */}
             <div className="relative border border-white/10 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
                 <div className="mb-6">
-                   <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/60 mb-3 block">Newest Episode</span>
+                   <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 mb-3 block">Newest Episode</span>
                    <h3 className="font-display text-2xl uppercase text-white mb-2">Radio Transmission</h3>
                    <p className="text-white/82 text-xs leading-relaxed">Open the newest Chasing Sun(Sets) mix in the full radio archive instead of a third-party embed.</p>
                 </div>

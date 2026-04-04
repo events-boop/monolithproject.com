@@ -6,6 +6,7 @@ import { z } from "zod";
 import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import HoneypotField from "@/components/HoneypotField";
 import { submitBookingInquiry } from "@/lib/api";
 
 const vipSchema = z.object({
@@ -13,6 +14,7 @@ const vipSchema = z.object({
     email: z.string().email("Invalid email address"),
     guests: z.string().min(1, "Guest count required"),
     phone: z.string().min(10, "Phone number required"),
+    metadata_correlation_id: z.string().optional(),
 });
 
 type VipFormValues = z.infer<typeof vipSchema>;
@@ -50,6 +52,7 @@ export default function VIP() {
                 entity: "VIP Table Request",
                 type: "general",
                 message: `Phone: ${data.phone}\nGuests: ${data.guests}\n\nInterest: VIP Table Service`,
+                metadata_correlation_id: data.metadata_correlation_id || undefined,
             });
             setIsSubmitted(true);
         } catch (e) {
@@ -130,6 +133,7 @@ export default function VIP() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
+                                <HoneypotField {...register("metadata_correlation_id")} />
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <input {...register("name")} placeholder="Full Name" className={inputClass} />
                                     <input {...register("phone")} placeholder="Phone Number" className={inputClass} />

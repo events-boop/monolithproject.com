@@ -4,10 +4,17 @@ import { ticketIntentSchema } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
 import { getDatabase } from "../db/client";
 import { ticketIntents } from "../db/schema";
+import { createRateLimitMiddleware } from "../services/rate-limit";
 
 const router = Router();
+const ticketIntentLimiter = createRateLimitMiddleware({
+  scope: "api:ticket-intent",
+  windowMs: 15 * 60 * 1000,
+  limit: 90,
+  message: "Too many ticket redirects. Please wait 15 minutes before trying again.",
+});
 
-router.post("/api/ticket-intent", async (req, res) => {
+router.post("/api/ticket-intent", ticketIntentLimiter, async (req, res) => {
   const requestId = randomUUID();
   const parsed = ticketIntentSchema.safeParse(req.body);
   

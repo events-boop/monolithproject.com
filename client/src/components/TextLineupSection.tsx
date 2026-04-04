@@ -103,11 +103,11 @@ export default function TextLineupSection() {
       <div className="container max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start md:items-end mb-24 gap-12 lg:gap-24">
           <div className="max-w-2xl">
-            <span className="ui-kicker block text-white/40 mb-6 font-mono tracking-[0.3em] uppercase">The Collective Roster</span>
-            <h2 className="font-heavy text-[clamp(4.5rem,8vw,10rem)] leading-[0.82] tracking-tighter uppercase mb-10">
+            <span className="ui-kicker block text-white/45 mb-6 font-mono tracking-[0.3em] uppercase">The Collective Roster</span>
+            <h2 className="font-heavy text-[clamp(4rem,8vw,10rem)] leading-[0.82] tracking-tighter uppercase mb-10">
               THE ARTISTS.
             </h2>
-            <p className="font-mono text-[10px] md:text-sm tracking-[0.14em] uppercase text-white/50 leading-relaxed max-w-xl">
+            <p className="font-mono text-[11px] md:text-sm tracking-[0.14em] uppercase text-white/60 leading-relaxed max-w-xl">
               Artists selected for the room, the chapter, and the pace of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
             </p>
           </div>
@@ -193,7 +193,7 @@ export default function TextLineupSection() {
              { label: "Updated", val: "Season 01" }
            ].map(stat => (
              <div key={stat.label} className="flex justify-between items-center border-b border-white/5 pb-4">
-                <span className="font-mono text-[9px] uppercase tracking-widest">{stat.label}</span>
+                <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest">{stat.label}</span>
                 <span className="font-display font-bold text-sm uppercase">{stat.val}</span>
              </div>
            ))}

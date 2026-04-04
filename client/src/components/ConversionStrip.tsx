@@ -33,12 +33,12 @@ function HUDDigit({ value, label }: { value: number; label: string }) {
     <div className="flex flex-col items-center gap-1.5">
       <div className="flex gap-1">
         {String(value).padStart(2, "0").split("").map((d, i) => (
-          <div key={i} className="w-10 h-14 md:w-14 md:h-20 bg-white/5 border border-white/10 flex items-center justify-center font-heavy text-2xl md:text-4xl text-white tabular-nums">
+          <div key={i} className="w-8 h-12 md:w-14 md:h-20 bg-white/5 border border-white/10 flex items-center justify-center font-heavy text-xl md:text-4xl text-white tabular-nums">
             {d}
           </div>
         ))}
       </div>
-      <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/30">{label}</span>
+      <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] text-white/30">{label}</span>
     </div>
   );
 }
@@ -78,10 +78,10 @@ export default function ConversionStrip() {
           {/* LEFT: Signals & Headline */}
           <div className="flex flex-col gap-6 max-w-sm">
             <div className="flex flex-wrap gap-2">
-              <span className={`px-2 py-1 rounded-none text-[9px] font-bold uppercase tracking-[0.2em] text-black ${themeBg}`}>
+              <span className={`px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] text-black ${themeBg}`}>
                 Limited Window
               </span>
-              <span className="px-2 py-1 rounded-none text-[9px] font-bold uppercase tracking-[0.2em] border border-white/20 text-white/60">
+              <span className="px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] border border-white/20 text-white/60">
                 Level 01 Entry
               </span>
             </div>
@@ -113,7 +113,7 @@ export default function ConversionStrip() {
                   <div className={`w-4 h-4 flex items-center justify-center rounded-none ${themeBg}`}>
                     <Check className="w-3 h-3 text-black stroke-[3px]" />
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/80">{point}</span>
+                  <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.15em] text-white/85">{point}</span>
                 </li>
               ))}
             </ul>

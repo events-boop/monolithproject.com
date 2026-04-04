@@ -474,10 +474,10 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               <KineticDecryption text="PROJECT" />
             </span>
           </Link>
- <span className="font-mono text-[9px] text-white/20 uppercase tracking-[0.4em] select-none">
+  <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
                       Chapter
                     </span>
-                    <span className="font-heavy text-xs text-white/80 tabular-nums">
+                    <span className="font-heavy text-xs min-[1150px]:text-sm text-white/80 tabular-nums">
                       {currentChapter.number} / {currentChapter.label}
                     </span>
                   </motion.div>
@@ -575,14 +575,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       className="relative shrink-0"
                       onMouseEnter={() => { setOpenDropdownLabel(item.label); signalChirp.hover(); }}
                       onMouseLeave={() => setOpenDropdownLabel(null)}
-                    >
-                      <button
+                    >                      <button
                         type="button"
                         onClick={() => signalChirp.click()}
                         aria-expanded={openDropdownLabel === item.label}
                       aria-haspopup="menu"
                       aria-controls={getDropdownMenuId(item.label)}
-                      className={`flex items-center gap-1 text-[10px] min-[1150px]:text-[10px] xl:text-[11px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...item.children.map(c => c.href)].includes(location))}`}
+                      className={`flex items-center gap-1.5 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...item.children.map(c => c.href)].includes(location))}`}
                     >
                       {item.label}
                       <ChevronDown
@@ -628,8 +627,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <Link key={item.label} href={item.href}
-                    onMouseEnter={() => signalChirp.hover()}
+                  <Link key={item.label} href={item.href}                    onMouseEnter={() => signalChirp.hover()}
                     onClick={(e) => {
                       signalChirp.click();
                       if (handleUtilityLink(item.href)) {
@@ -637,7 +635,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       }
                     }}
                     aria-current={isActiveHref(item.href) ? "page" : undefined}
-                    className={`group relative shrink-0 text-[10px] min-[1150px]:text-[10px] xl:text-[11px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getTopLevelClass(isActiveHref(item.href))}`}
+                    className={`group relative shrink-0 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getTopLevelClass(isActiveHref(item.href))}`}
                   >
                     <span className="relative z-10">{renderNavLabel(item.label)}</span>
                     <motion.span 

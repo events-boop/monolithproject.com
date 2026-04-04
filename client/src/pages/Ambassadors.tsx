@@ -6,6 +6,7 @@ import { z } from "zod";
 import { CheckCircle, Send, AlertCircle, Wine, Ticket, Star } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import HoneypotField from "@/components/HoneypotField";
 import { submitBookingInquiry } from "@/lib/api";
 
 const ambassadorSchema = z.object({
@@ -13,6 +14,7 @@ const ambassadorSchema = z.object({
     email: z.string().email("Invalid email address"),
     instagram: z.string().min(2, "Instagram handle is required"),
     message: z.string().optional(),
+    metadata_correlation_id: z.string().optional(),
 });
 
 type AmbassadorFormValues = z.infer<typeof ambassadorSchema>;
@@ -70,6 +72,7 @@ export default function Ambassadors() {
                 entity: `Ambassador Application (@${data.instagram})`,
                 type: "general",
                 message: `Instagram: ${data.instagram}\n\nNote: ${data.message || "No specific message."}`,
+                metadata_correlation_id: data.metadata_correlation_id || undefined,
             });
             setIsSubmitted(true);
         } catch (error) {
@@ -161,6 +164,7 @@ export default function Ambassadors() {
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                                    <HoneypotField {...register("metadata_correlation_id")} />
 
                                     {/* Name */}
                                     <div>

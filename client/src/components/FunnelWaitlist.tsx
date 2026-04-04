@@ -2,12 +2,15 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, User, Sparkles, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
 import { submitNewsletterLead } from "@/lib/api";
+import type { ScheduledEvent } from "@/data/events";
+import { buildFunnelLeadFields, buildLeadIdempotencyKey, splitFullName } from "@/lib/leadCapture";
 
 interface FunnelWaitlistProps {
     variant?: "default" | "chasing-sunsets" | "untold-story";
+    event?: ScheduledEvent;
 }
 
-export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistProps) {
+export default function FunnelWaitlist({ variant = "default", event }: FunnelWaitlistProps) {
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -76,8 +79,9 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
         setStatus("loading");
         setErrorMsg("");
 
-        const [firstName, ...lastParts] = fullName.trim().split(" ");
-        const lastName = lastParts.join(" ") || undefined;
+        const { firstName, lastName } = splitFullName(fullName);
+        const phoneValue = phone.trim() || undefined;
+        const source = sourceMap[variant];
 
         try {
             await submitNewsletterLead(
@@ -85,11 +89,18 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                     email: email.trim(),
                     firstName: firstName || undefined,
                     lastName,
+                    phone: phoneValue,
                     consent: true,
-                    source: sourceMap[variant],
-                    utmContent: phone.trim() ? "sms_interest" : undefined,
+                    source,
+                    ...buildFunnelLeadFields({
+                        funnelId: `waitlist_${variant.replace(/-/g, "_")}`,
+                        offerId: variant === "default" ? "priority_presale" : "priority_access",
+                        event,
+                        interestTags: ["waitlist", variant],
+                    }),
+                    utmContent: phoneValue ? "sms_interest" : undefined,
                 },
-                crypto.randomUUID(),
+                buildLeadIdempotencyKey(source, email, event?.id),
             );
             setStatus("success");
         } catch (err) {
@@ -97,6 +108,10 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
             setStatus("error");
         }
     };
+
+    const eventLabel = event?.headline || event?.title;
+    const eventMeta = eventLabel ? `${eventLabel}${event?.date ? ` · ${event.date}` : ""}` : null;
+    const ctaLabel = event?.status === "on-sale" ? "Unlock Access" : "Join Waitlist";
 
     return (
         <div className="w-full relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
@@ -136,6 +151,12 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                     </span>
                                 </h2>
 
+                                {eventMeta ? (
+                                    <p className="mb-3 text-[10px] font-mono tracking-[0.28em] uppercase text-white/45">
+                                        {eventMeta}
+                                    </p>
+                                ) : null}
+
                                 <p className="text-white/60 text-sm md:text-base mb-8 max-w-md">
                                     {content.desc}
                                 </p>
@@ -170,7 +191,9 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                             </motion.div>
                                             <h3 className="font-display text-2xl uppercase text-white mb-2">You're On The List</h3>
                                             <p className="text-white/60 text-sm">
-                                                Keep an eye on your inbox. We'll send your exclusive access link before the drop.
+                                                {eventLabel
+                                                    ? `Keep an eye on your inbox. We'll reach out first when ${eventLabel} opens up.`
+                                                    : "Keep an eye on your inbox. We'll send your exclusive access link before the drop."}
                                             </p>
                                         </motion.div>
                                     ) : (
@@ -241,7 +264,7 @@ export default function FunnelWaitlist({ variant = "default" }: FunnelWaitlistPr
                                                 className={`w-full mt-4 ${content.button} text-white py-4 rounded-xl font-bold tracking-widest uppercase text-xs hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center gap-2 group relative overflow-hidden`}
                                             >
                                                 <span className="relative z-10 flex items-center gap-2">
-                                                    {status === "loading" ? "Processing..." : "Join Waitlist"}
+                                                    {status === "loading" ? "Processing..." : ctaLabel}
                                                     {status !== "loading" && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
                                                 </span>
                                                 {/* Shimmer effect */}

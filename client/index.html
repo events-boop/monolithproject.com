@@ -55,31 +55,7 @@
     style="position:fixed;inset:0;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s">
     <span style="font-family:'Archivo Black',system-ui,sans-serif;color:#c8a45a;letter-spacing:0.32em;font-size:18px;font-weight:900">MONOLITH PROJECT</span>
   </div>
-  <script>
-    (function () {
-      const loader = document.getElementById('initial-loader');
-      if (!loader) return;
-
-      let removed = false;
-      const removeLoader = () => {
-        if (removed) return;
-        removed = true;
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 500);
-      };
-
-      // Don't wait for window 'load' (videos/images can delay it a lot).
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => setTimeout(removeLoader, 100), { once: true });
-      } else {
-        setTimeout(removeLoader, 100);
-      }
-
-      // Failsafe.
-      window.addEventListener('load', removeLoader, { once: true });
-      setTimeout(removeLoader, 3000);
-    })();
-  </script>
+  <script defer src="/initial-loader.js"></script>
   <div id="root"></div>
 
   <!-- Unreplicable Architectural Layer: Analogue Grain & Liquid Displacement -->

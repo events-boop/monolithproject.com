@@ -157,7 +157,7 @@ export default function Footer() {
 
           {links.map((group) => (
             <div key={group.title}>
-              <p className="font-bold text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{group.title}</p>
+              <p className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/55 mb-6">{group.title}</p>
               <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={item.name}>
@@ -166,17 +166,17 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
+                        className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}
                       >
                         {renderItemLabel(item.name)}
-                        <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </a>
                     ) : (
                       <Link href={item.href} asChild>
-                        <a className={`transition-colors font-bold text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === CTA_LABELS.tickets
+                        <a className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === CTA_LABELS.tickets
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}>
@@ -210,11 +210,11 @@ export default function Footer() {
           </div>
 
           <div className="text-center md:text-right">
-            <p className="ui-chip text-white/55">
+            <p className="ui-chip text-white/55 text-[11px]">
               © {new Date().getFullYear()} The Monolith Project
             </p>
-            <p className="ui-chip text-white/45 mt-1">
-              Engineered in Chicago by Stark Industries
+            <p className="ui-chip text-white/45 mt-1.5 text-[11px]">
+              ENGINEERED BY STARK INDUSTRIES
             </p>
           </div>
         </div>
