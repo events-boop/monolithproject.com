@@ -291,7 +291,7 @@ export default function HeroSection() {
         >
            {/* Primary Hero Signal Box */}
            {featuredEvent && (
-              <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.02] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
+              <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.01] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
                   <div className="flex items-center gap-4">
                     <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
                     <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary/90">Next Open-Air Signal</span>

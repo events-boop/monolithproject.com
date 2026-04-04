@@ -47,11 +47,11 @@ function Digit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2 min-w-0">
       <div className="relative overflow-hidden">
-        <span className="font-heavy text-[clamp(2.5rem,8vw,8rem)] leading-none tracking-tighter text-black tabular-nums group-hover:text-primary transition-colors">
+        <span className="font-heavy text-[clamp(2.5rem,8vw,8rem)] leading-none tracking-tighter text-white tabular-nums group-hover:text-primary transition-colors">
           {display}
         </span>
       </div>
-      <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] text-black/50">
+      <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/50">
         {label}
       </span>
     </div>
@@ -76,11 +76,11 @@ function LiveClock({ targetDate }: { targetDate: string }) {
   return (
     <div className="flex items-end gap-2 md:gap-8">
       <Digit value={timeLeft.days} label="Days" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-black/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
       <Digit value={timeLeft.hours} label="Hours" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-black/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
       <Digit value={timeLeft.minutes} label="Min" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-black/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
       <Digit value={timeLeft.seconds} label="Sec" />
     </div>
   );
@@ -98,30 +98,31 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
   const [dateMonth, dateDay] = event.date.split(" ");
 
   return (
-    <div className="relative w-full bg-transparent overflow-hidden">
-      {/* Ambient glow related to series - Softened for Light context */}
-      <div className={`absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-[0.05] pointer-events-none ${accentBg}`} />
+    <div className={`relative w-full overflow-hidden transition-colors duration-700 bg-noise ${isSunsets ? 'bg-[#120f0a]' : 'bg-[#0a0f12]'}`}>
+      {/* Dynamic Series Gradient Glow */}
+      <div className={`absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[140px] opacity-[0.12] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-orange-500/40' : 'bg-cyan-500/40'}`} />
+      <div className={`absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[140px] opacity-[0.08] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-amber-600/30' : 'bg-indigo-600/30'}`} />
 
-      <div className="container max-w-7xl mx-auto px-6 py-16 md:py-24 relative z-10">
+      <div className="container max-w-7xl mx-auto px-6 py-16 md:py-24 relative z-10 transition-opacity">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-24">
 
           {/* Left: Event context */}
           <div className="flex flex-col gap-6 shrink-0">
             <div className="flex items-center gap-4">
               <div className={`w-2 h-2 rounded-none animate-pulse ${accentBg}`} />
-              <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-black/40">
+              <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-white/40">
                 Next Event
               </span>
             </div>
             <div>
-              <p className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] mb-4 ${accentText}`}>
+              <p className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] mb-4 drop-shadow-md ${accentText}`}>
                 {dateMonth} {dateDay}
               </p>
-              <h3 className="font-heavy text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-black leading-none max-w-md">
+              <h3 className="font-heavy text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-white leading-none max-w-md drop-shadow-2xl">
                 {event.title}
               </h3>
               {event.venue && (
-                <p className="font-sans text-base md:text-lg text-black/60 mt-4 font-light">
+                <p className="font-sans text-base md:text-lg text-white/50 mt-4 font-light">
                   {event.venue} — {event.location}
                 </p>
               )}
@@ -129,10 +130,10 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               {/* Scarcity signal */}
               <div className="mt-10 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-black/40">Capacity</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">Capacity</span>
                   <span className={`font-mono text-[11px] uppercase tracking-[0.3em] font-bold ${accentText}`}>73% Claimed</span>
                 </div>
-                <div className="w-full h-[4px] bg-black/5 overflow-hidden">
+                <div className="w-full h-[4px] bg-white/5 overflow-hidden">
                   <motion.div
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
@@ -142,7 +143,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                     style={{ width: "73%" }}
                   />
                 </div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/35">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
                   Limited entry · Chicago, IL
                 </p>
               </div>

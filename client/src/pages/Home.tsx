@@ -101,7 +101,7 @@ export default function Home() {
         </div>
 
         <div className="bg-[#080808] border-y border-white/5 relative z-10 transition-colors duration-500">
-           <SectionDivider id="collective" number="03" label="The Collective" glow="rgba(255,255,255,0.15)" />
+           <SectionDivider id="collective" number="03" label="The Philosophy" glow="rgba(255,255,255,0.15)" />
            <ViewportLazy minHeightClassName="min-h-[820px]" rootMargin="260px 0px">
              <Suspense fallback={<Skeleton className="h-[820px] w-full opacity-10" />}>
                <MovementSection />
@@ -155,8 +155,8 @@ export default function Home() {
               {
                 id: "roster",
                 number: "04",
-                title: "The Roster",
-                subtitle: "Collective · Selectors",
+                title: "The Collective",
+                subtitle: "The Roster · Selectors",
                 previewImage: "/images/artists-collective.jpg",
                 content: (
                   <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
