@@ -154,9 +154,9 @@ export default function UntoldStoryOptIn() {
                                             >
                                                 <UntoldButterflyLogo className="w-7 h-7 text-violet-400" />
                                             </div>
-                                            <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">ACCESS SECURED</h2>
+                                            <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">YOU'RE ON THE LIST</h2>
                                             <p className="text-white/50 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
-                                                Priority signal active. Watch your inbox.
+                                                Watch your inbox for late-night dates, lineup drops, and ticket windows.
                                             </p>
                                             <a 
                                                 href="https://instagram.com/untoldstory.music" 
@@ -167,13 +167,13 @@ export default function UntoldStoryOptIn() {
                                                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.9)"; }}
                                                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.1)"; }}
                                             >
-                                                Initialize Follow <ArrowRight className="w-3.5 h-3.5" />
+                                                Follow On Instagram <ArrowRight className="w-3.5 h-3.5" />
                                             </a>
                                             <button
                                                 onClick={dismiss}
                                                 className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#8B5CF6]/50 hover:text-[#8B5CF6] transition-colors"
                                             >
-                                                Close Module
+                                                Close
                                             </button>
                                         </motion.div>
                                 ) : (
@@ -199,15 +199,16 @@ export default function UntoldStoryOptIn() {
                                             id="us-optin-title"
                                             className="font-serif italic text-3xl md:text-4xl text-white leading-[1.05] mb-3"
                                         >
-                                            The Room<br />
-                                            <span style={{ color: "#8B5CF6" }}>Awaits</span>
+                                            Get Untold Story
+                                            <br />
+                                            <span style={{ color: "#8B5CF6" }}>Updates</span>
                                         </h2>
 
                                         <p className="text-white/55 text-sm leading-relaxed mb-2">
-                                            Late-night. Immersive. 360° sound. The next chapter is unfolding — secure access before the doors open.
+                                            Join the newsletter for early access to late-night dates, lineup announcements, and ticket windows.
                                         </p>
                                         <p className="text-white/35 text-[10px] font-mono tracking-widest uppercase mb-7">
-                                            Priority Access · Private Signals · First To Know
+                                            Early Access · New Dates · New Mixes
                                         </p>
 
                                         {/* Divider */}
@@ -252,7 +253,7 @@ export default function UntoldStoryOptIn() {
                                                     <span className="animate-pulse">Requesting...</span>
                                                 ) : (
                                                     <>
-                                                        Request Priority Access
+                                                        Get Updates
                                                         <ArrowRight className="w-4 h-4" />
                                                     </>
                                                 )}

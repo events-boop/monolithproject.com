@@ -94,22 +94,24 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             </div>
 
             {/* The Experience */}
-            <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
-              The Vision
-            </span>
-            <p className="text-white/70 text-base leading-relaxed mb-6">
-              {event?.experienceIntro || "Untold Story is for the energy givers — the storytellers. A 360° experience where the DJ becomes the narrator, and sound becomes the language. Every set is a chapter, every transition a moment, every drop a feeling shared between the booth and the dancefloor."}
-            </p>
-            {!event?.experienceIntro && (
+            <div id="vision" className="scroll-mt-32">
+              <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
+                What It Is
+              </span>
               <p className="text-white/70 text-base leading-relaxed mb-6">
-                This project was built as a gathering place — a space where people meet through movement, connection, and shared intention. Rooted in the ethos of The Monolith Project, Untold Story celebrates the deeper meaning behind DJing: the art of guiding a room, shaping emotion, and telling a story through sound.
+                {event?.experienceIntro || "Untold Story is Monolith's late-night series. It is built for tighter rooms, deeper pacing, and a crowd focused on the music from start to finish."}
               </p>
-            )}
-            <p className="text-white/90 text-lg font-display tracking-wide mb-8">
-              Togetherness is the frequency. Music is the guide.
-            </p>
+              {!event?.experienceIntro && (
+                <p className="text-white/70 text-base leading-relaxed mb-6">
+                  The goal is simple: a stronger late-night room with better pacing, clear sound, and a crowd that came for the same reason.
+                </p>
+              )}
+              <p className="text-white/90 text-lg font-display tracking-wide mb-8">
+                Music first. Good crowd. Late finish.
+              </p>
+            </div>
 
-            <div className="mb-10">
+            <div id="expect" className="mb-10 scroll-mt-32">
               <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Core Elements
               </span>
@@ -209,7 +211,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             {/* Access Actions */}
             <div className="mb-10 pt-10 border-t border-untold-violet-15">
               <span className="font-mono text-[10px] tracking-widest uppercase block mb-6 text-untold-cyan">
-                Sequence Protocol
+                Ways In
               </span>
               <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center">
                 <ConversionCTA 
@@ -224,7 +226,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                     <Users className="w-3 h-3 transition-transform group-hover:scale-110" />
                   </Link>
                   <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-untold-cyan uppercase transition-colors flex items-center gap-2 group">
-                    Join SMS Updates
+                    Get Updates
                     <Clock className="w-3 h-3 transition-transform group-hover:scale-110" />
                   </Link>
                 </div>

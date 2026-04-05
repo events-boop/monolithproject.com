@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import Lenis from "lenis";
+import { shouldEnableSmoothScroll } from "@/lib/runtimePerformance";
 
 export default function SmoothScroll() {
   const [location] = useLocation();
@@ -8,24 +9,16 @@ export default function SmoothScroll() {
   const hasHandledInitialLocationRef = useRef(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!shouldEnableSmoothScroll()) return;
 
-    const conn = (navigator as Navigator & {
-      connection?: { effectiveType?: string; saveData?: boolean };
-    }).connection;
-
-    if (conn?.saveData) return;
-    if (conn?.effectiveType && ["slow-2g", "2g"].includes(conn.effectiveType)) return;
-
-    // Initialize Lenis
     const lenis = new Lenis({
-        duration: 1.2,
+        duration: 0.95,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
         gestureOrientation: 'vertical',
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 2,
+        touchMultiplier: 1,
         infinite: false,
     });
 

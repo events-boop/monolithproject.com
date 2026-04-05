@@ -16,7 +16,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <SEO title="404 // NULL_ZONE" description="The requested signal does not exist. Environmental frequency lost." noIndex canonicalPath="/404" />
+      <SEO title="Page Not Found" description="The page you requested does not exist." noIndex canonicalPath="/404" />
 
       {/* 🔮 THE VOID BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] bg-noise" />
@@ -57,7 +57,7 @@ export default function NotFound() {
                Lost In The Frequency
             </h2>
             <p className="font-sans text-lg text-white/50 mb-12 font-light leading-relaxed">
-               The node you are requesting has been purged or never existed within this environment. Redirect your signal back to the core.
+               The page you requested does not exist or has moved. Head back to the homepage and continue from there.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">

@@ -1,15 +1,7 @@
-import { POSH_TICKET_URL, ScheduledEvent, upcomingEvents } from "@/data/events";
+import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
+import { getFeaturedEventForSlot, getPublicEvents } from "@/lib/siteData";
 
-export type SiteExperienceSlot = "hero" | "banner" | "funnel" | "ticket" | "guide";
 export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
-
-const EXPERIENCE_EVENT_IDS: Record<SiteExperienceSlot, string> = {
-  hero: "css-jul04",
-  banner: "css-jul04",
-  funnel: "css-jul04",
-  ticket: "css-jul04",
-  guide: "css-jul04",
-};
 
 function isValidDate(value?: string) {
   if (!value) return false;
@@ -31,7 +23,7 @@ function compareEvents(a: ScheduledEvent, b: ScheduledEvent) {
 
 export function getEventById(eventId?: string | null) {
   if (!eventId) return undefined;
-  return upcomingEvents.find((event) => event.id === eventId);
+  return getPublicEvents().find((event) => event.id === eventId);
 }
 
 export function getEventWindow(event?: ScheduledEvent | null) {
@@ -79,7 +71,7 @@ export function isTicketOnSale(event?: ScheduledEvent | null, now: Date = new Da
 }
 
 export function getScheduledEvents(now: Date = new Date()) {
-  return [...upcomingEvents]
+  return [...getPublicEvents()]
     .filter((event) => getEventWindowStatus(event, now) !== "past")
     .sort(compareEvents);
 }
@@ -95,7 +87,7 @@ export function getExperienceEvent(
   slot: SiteExperienceSlot,
   now: Date = new Date(),
 ) {
-  const configuredEvent = getEventById(EXPERIENCE_EVENT_IDS[slot]);
+  const configuredEvent = getFeaturedEventForSlot(slot);
   if (configuredEvent && getEventWindowStatus(configuredEvent, now) !== "past") {
     return configuredEvent;
   }
@@ -104,7 +96,7 @@ export function getExperienceEvent(
   return (
     scheduledEvents.find((event) => isTicketOnSale(event, now)) ??
     scheduledEvents[0] ??
-    [...upcomingEvents].sort(compareEvents)[0]
+    [...getPublicEvents()].sort(compareEvents)[0]
   );
 }
 

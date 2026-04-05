@@ -52,7 +52,7 @@ export default function SEO({
   const siteTitle = "The Monolith Project";
   const fullTitle = absoluteTitle ? title : `${title} | ${siteTitle}`;
   const defaultDescription =
-    "A Chicago-based events collective building on music, community, and showing up for each other.";
+    "A Chicago music project building events, radio, and archive around dance music and community.";
   const resolvedDescription = description || defaultDescription;
   const canonicalOrigin = getCanonicalOrigin();
   const canonicalTarget = normalizePath(

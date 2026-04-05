@@ -29,6 +29,12 @@ export interface RadioEpisode {
 
 export const RADIO_SERIES_NAME = "Chasing Sun(Sets) Radio Show";
 
+export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
+  autograf: "/artists/autograf",
+  lazare: "/artists/lazare",
+  "eran-hersh": "/story",
+};
+
 export const radioEpisodes: RadioEpisode[] = [
   {
     slug: "ep-01-benchek",
@@ -151,4 +157,8 @@ export const radioEpisodes: RadioEpisode[] = [
 
 export function getRadioEpisode(slug: string) {
   return radioEpisodes.find((episode) => episode.slug === slug);
+}
+
+export function getLegacyRadioRedirect(slug: string) {
+  return LEGACY_RADIO_SLUG_REDIRECTS[slug.trim().toLowerCase()];
 }

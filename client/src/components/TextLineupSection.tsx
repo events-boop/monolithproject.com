@@ -103,12 +103,12 @@ export default function TextLineupSection() {
       <div className="container max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start md:items-end mb-24 gap-12 lg:gap-24">
           <div className="max-w-2xl">
-            <span className="ui-kicker block text-white/45 mb-6 font-mono tracking-[0.3em] uppercase">The Collective Roster</span>
+            <span className="ui-kicker block text-white/45 mb-6 font-mono tracking-[0.3em] uppercase">Artist Roster</span>
             <h2 className="font-heavy text-[clamp(4rem,8vw,10rem)] leading-[0.82] tracking-tighter uppercase mb-10">
               THE ARTISTS.
             </h2>
             <p className="font-mono text-[11px] md:text-sm tracking-[0.14em] uppercase text-white/60 leading-relaxed max-w-xl">
-              Artists selected for the room, the chapter, and the pace of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
+              Artists selected for the room, the series, and the pace of the night. A lineup should tell you what kind of atmosphere you are stepping into, not just who made the poster.
             </p>
           </div>
 

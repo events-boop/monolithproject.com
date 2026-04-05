@@ -94,7 +94,7 @@ export default function Partners() {
               PARTNERS & CREW
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We're building a collective and we need the right people behind the scenes.
+              We're building a growing music project and we need the right people behind the scenes.
               If you help make shows happen, we want to hear from you.
             </p>
           </motion.div>

@@ -1,10 +1,11 @@
-import { Link, useParams } from "wouter";
+import { useEffect } from "react";
+import { Link, useLocation, useParams } from "wouter";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
-import { getRadioEpisode, radioEpisodes } from "@/data/radioEpisodes";
+import { getLegacyRadioRedirect, getRadioEpisode, radioEpisodes } from "@/data/radioEpisodes";
 import { CTA_LABELS } from "@/lib/cta";
 
 function isExternalLink(url: string) {
@@ -21,7 +22,9 @@ const sectionReveal = {
 
 export default function RadioEpisode() {
   const { slug } = useParams<{ slug: string }>();
+  const [, setLocation] = useLocation();
   const episode = slug ? getRadioEpisode(slug) : undefined;
+  const legacyRedirect = slug ? getLegacyRadioRedirect(slug) : undefined;
   const episodeIndex = episode ? radioEpisodes.findIndex((entry) => entry.slug === episode.slug) : -1;
   const previousEpisode = episodeIndex > 0 ? radioEpisodes[episodeIndex - 1] : undefined;
   const nextEpisode =
@@ -32,6 +35,41 @@ export default function RadioEpisode() {
     { href: "#story", label: "Story" },
     { href: "#guest-links", label: "Guest Links" },
   ];
+
+  useEffect(() => {
+    if (!slug || episode || !legacyRedirect) return;
+    setLocation(legacyRedirect, { replace: true });
+  }, [episode, legacyRedirect, setLocation, slug]);
+
+  if (!episode && legacyRedirect) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <SEO
+          title="Redirecting To The Current Monolith Page"
+          description="This legacy radio URL has moved to a current Monolith page."
+          canonicalPath={legacyRedirect}
+        />
+        <Navigation />
+        <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+          <section className="container max-w-3xl mx-auto text-center">
+            <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary mb-4">
+              Legacy Link Redirect
+            </p>
+            <h1 className="font-display text-[clamp(2.5rem,7vw,4.8rem)] uppercase mb-5">
+              Redirecting
+            </h1>
+            <p className="text-muted-foreground mb-8">
+              This older radio URL now points to the current Monolith page for that artist or series.
+            </p>
+            <Link href={legacyRedirect} className="btn-pill-coral">
+              Continue
+            </Link>
+          </section>
+        </main>
+        <EntityBoostStrip tone="dark" className="pb-8" />
+      </div>
+    );
+  }
 
   if (!episode) {
     return (

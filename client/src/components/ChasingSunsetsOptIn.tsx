@@ -145,9 +145,9 @@ export default function ChasingSunsetsOptIn() {
                                             style={{ background: "rgba(232,184,109,0.1)" }}>
                                             <Sun className="w-7 h-7 text-[#E8B86D]" />
                                         </div>
-                                        <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">ACCESS SECURED</h2>
+                                        <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">YOU'RE ON THE LIST</h2>
                                         <p className="text-white/60 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
-                                            Priority signal active. Watch your inbox.
+                                            Watch your inbox for new dates, lineup drops, and ticket windows.
                                         </p>
                                         <a 
                                             href="https://instagram.com/chasingsunsets.music" 
@@ -164,13 +164,13 @@ export default function ChasingSunsetsOptIn() {
                                                 e.currentTarget.style.color = "#E8B86D";
                                             }}
                                         >
-                                            Initialize Follow <ArrowRight className="w-3.5 h-3.5" />
+                                            Follow On Instagram <ArrowRight className="w-3.5 h-3.5" />
                                         </a>
                                         <button
                                             onClick={dismiss}
                                             className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#E8B86D]/50 hover:text-[#E8B86D] transition-colors"
                                         >
-                                            Close Module
+                                            Close
                                         </button>
                                     </motion.div>
                                 ) : (
@@ -189,15 +189,16 @@ export default function ChasingSunsetsOptIn() {
 
                                         {/* Headline */}
                                         <h2 id="cs-optin-title" className="font-display text-3xl md:text-4xl text-white leading-[1.05] mb-3 tracking-wide uppercase">
-                                            The Season<br />
-                                            <span style={{ color: "#E8B86D" }}>Is Taking Shape</span>
+                                            Get Chasing
+                                            <br />
+                                            <span style={{ color: "#E8B86D" }}>Sun(Sets) Updates</span>
                                         </h2>
 
                                         <p className="text-white/60 text-sm leading-relaxed mb-2">
-                                            Open air. Golden hour pacing. The 2026 chapter is being curated right now.
+                                            Join the newsletter for early access to dates, ticket windows, and lineup announcements.
                                         </p>
                                         <p className="text-white/40 text-[10px] font-mono tracking-widest uppercase mb-7">
-                                            Priority Access · Private Signals · First To Know
+                                            Early Access · New Dates · New Mixes
                                         </p>
 
                                         {/* Divider */}
@@ -242,7 +243,7 @@ export default function ChasingSunsetsOptIn() {
                                                     <span className="animate-pulse">Requesting...</span>
                                                 ) : (
                                                     <>
-                                                        Request Priority Access
+                                                        Get Updates
                                                         <ArrowRight className="w-4 h-4" />
                                                     </>
                                                 )}
@@ -251,7 +252,7 @@ export default function ChasingSunsetsOptIn() {
 
                                         {/* Footer note */}
                                         <p className="mt-4 text-center text-white/25 text-[10px] font-mono tracking-widest uppercase">
-                                            Curated Signals Only · Opt out anytime
+                                            Event updates only · Unsubscribe anytime
                                         </p>
 
                                         {/* Skip link */}

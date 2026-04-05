@@ -8,6 +8,7 @@ import { signalChirp } from "@/lib/SignalChirpEngine";
 import KineticDecryption from "./KineticDecryption";
 import HoneypotField from "./HoneypotField";
 import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 interface NewsletterSectionProps {
   source?: string;
@@ -16,18 +17,18 @@ interface NewsletterSectionProps {
 const invitationNotes = [
   {
     icon: Sparkles,
-    label: "Private invitations",
-    copy: "Get first notice when we drop something limited, intimate, or unexpected.",
+    label: "Early access",
+    copy: "Get ticket windows and limited drops before the general public.",
   },
   {
     icon: MapPinned,
-    label: "Secret locations",
-    copy: "Stay close to the details before the rest of the room catches up.",
+    label: "Event updates",
+    copy: "See lineup announcements, venue notes, and important changes in one place.",
   },
   {
     icon: Radio,
-    label: "Signal before noise",
-    copy: "Lineups, mixes, and community updates without the filler.",
+    label: "Radio drops",
+    copy: "New mixes, artist sessions, and Monolith updates without the filler.",
   },
 ] as const;
 
@@ -94,7 +95,7 @@ export default function NewsletterSection({
             interestTags: ["newsletter", "always-on"],
           }),
           utmContent: phone ? "sms_interest" : undefined,
-          metadata_correlation_id: botCheck || undefined,
+          [honeypotFieldName]: botCheck || undefined,
         },
         buildLeadIdempotencyKey(source, email)
       );
@@ -129,28 +130,28 @@ export default function NewsletterSection({
                   <Check className="w-8 h-8 text-primary" />
                 </div>
                 
-                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Identity // Authenticated</span>
-                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Access Granted</h3>
+                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Newsletter // Confirmed</span>
+                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">You're In</h3>
                 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">Resident_Name</span>
+                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">First Name</span>
                     <span className="font-heavy text-2xl text-white uppercase">
                       <KineticDecryption text={firstName || "Anonymous"} />
                     </span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signal_Signature</span>
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Subscriber ID</span>
                     <span className="font-heavy text-xl text-primary tabular-nums tracking-widest">
                       <KineticDecryption text={`#${residentId}`} />
                     </span>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Clearance_Level</span>
-                    <span className="font-heavy text-lg text-white/80">SS-TIER // LIST_01</span>
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Subscription</span>
+                    <span className="font-heavy text-lg text-white/80">Monolith updates</span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Registry_Date</span>
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signup Date</span>
                     <span className="font-heavy text-lg text-white/80">{new Date().toLocaleDateString()}</span>
                   </div>
                 </div>
@@ -160,14 +161,14 @@ export default function NewsletterSection({
                     onClick={() => window.print()}
                     className="flex-1 py-5 border border-white/10 font-heavy text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-all flex items-center justify-center gap-3 group"
                   >
-                    <span>Print Artifact</span>
+                    <span>Print Confirmation</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </button>
                   <a 
                     href="/schedule"
                     className="flex-1 py-5 bg-white text-black font-heavy text-xs uppercase tracking-[0.2em] hover:pr-12 transition-all relative flex items-center justify-center group"
                   >
-                    <span>Secure Rituals</span>
+                    <span>View Schedule</span>
                     <ArrowUpRight className="w-4 h-4 ml-3" />
                   </a>
                 </div>
@@ -185,16 +186,16 @@ export default function NewsletterSection({
               <div className="flex flex-col">
                 <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold mb-6 flex items-center gap-4">
                   <div className="h-px w-12 bg-primary/70" />
-                  Inner Circle
+                  Newsletter
                 </span>
                 
                 <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/45">ENTER</span>
-                  <span>THE LIST.</span>
+                  <span className="text-white/45">GET</span>
+                  <span>UPDATES.</span>
                 </h2>
                 
                 <p className="font-sans text-xl md:text-2xl text-white/78 leading-relaxed font-light mb-12 max-w-xl">
-                  Get first access to lineups, secret locations, private invitations, and Monolith updates without the generic blast-email feel.
+                  Get first access to lineups, ticket windows, new radio drops, and Monolith updates without the generic blast-email feel.
                 </p>
 
                 <div className="grid gap-6 border-t border-white/10 pt-8">
@@ -224,15 +225,14 @@ export default function NewsletterSection({
                 aria-describedby={submitError ? "newsletter-submit-error" : undefined}
               >
                 <div className="mb-4">
-                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Request Access</h3>
+                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Get Updates</h3>
                   <p className="font-sans text-sm text-white/60 font-light">
-                    Email is required. Phone is optional for text-first priority drops.
+                    Email is required. Phone is optional if you want text-first drops.
                   </p>
                 </div>
 
                 {/* Honeypot: Bot Trap */}
                 <HoneypotField
-                  name="metadata_correlation_id"
                   value={botCheck}
                   onChange={(e) => setBotCheck(e.target.value)}
                 />

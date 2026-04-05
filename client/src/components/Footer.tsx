@@ -39,8 +39,8 @@ const links = [
     title: "Explore", items: [
       { name: "Events", href: "/schedule" },
       { name: "Artists", href: "/lineup" },
-      { name: "Archive", href: "/archive" },
-      { name: "Journal", href: "/insights" },
+      { name: "Event Archive", href: "/archive" },
+      { name: "Articles", href: "/insights" },
       { name: "Contact", href: "/contact" },
     ]
   },
@@ -48,7 +48,7 @@ const links = [
     title: "Series", items: [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
       { name: "Untold Story", href: "/story" },
-      { name: "Radio", href: "/radio" },
+      { name: "Radio Show", href: "/radio" },
     ]
   },
   {
@@ -62,7 +62,7 @@ const links = [
   },
   {
     title: "Utilities", items: [
-      { name: "Inner Circle", href: "/newsletter" },
+      { name: "Newsletter", href: "/newsletter" },
       { name: "Night Guide", href: "/guide" },
       { name: "FAQ", href: "/faq" },
       { name: CTA_LABELS.tickets, href: POSH_TICKET_URL, external: true },

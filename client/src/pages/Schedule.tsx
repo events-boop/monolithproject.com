@@ -15,6 +15,7 @@ import {
 } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -41,6 +42,7 @@ const seriesDefaultImage: Record<string, string> = {
 };
 
 export default function Schedule() {
+  usePublicSiteDataVersion();
   const scheduleEvents = getScheduledEvents();
   const [expandedId, setExpandedId] = useState<string | null>(scheduleEvents[0]?.id || null);
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
@@ -133,7 +135,7 @@ export default function Schedule() {
                 Schedule
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">
-                A highly curated season of music, spatial atmosphere, and architectural togetherness.
+                Upcoming Monolith events, organized by month and series.
               </p>
             </div>
 

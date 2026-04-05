@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
-import { upcomingEvents, type ScheduledEvent } from "../data/events";
+import type { ScheduledEvent } from "../data/events";
+import { getPublicEvents } from "@/lib/siteData";
 import { CTA_LABELS } from "@/lib/cta";
 
 // --- iCal Generator Helper ---
@@ -61,6 +62,7 @@ const seriesLabels: Record<string, string> = {
 };
 
 export default function ScheduleSection() {
+  const upcomingEvents = getPublicEvents();
   const [expandedId, setExpandedId] = useState<string | null>(upcomingEvents[0]?.id || null);
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
 

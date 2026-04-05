@@ -1,17 +1,85 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { ArrowUpRight, ArrowRight, Ticket } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Ticket, Lock, Zap } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { useUI } from "@/contexts/UIContext";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
+import {
+    COOKIE_CONSENT_RESOLVED_EVENT,
+    getCookieConsentState,
+} from "@/lib/cookieConsent";
+
+function shouldDelayFloatingCta(pathname: string) {
+    return (
+        pathname === "/" ||
+        pathname === "/story" ||
+        pathname === "/untold-story-deron-juany-bravo" ||
+        pathname.startsWith("/untold-story/") ||
+        pathname.startsWith("/chasing-sunsets")
+    );
+}
 
 export default function GlobalTicketButton() {
+    usePublicSiteDataVersion();
     const [location] = useLocation();
     const { setSensoryOverloadActive } = useUI();
+    const [consentState, setConsentState] = useState(getCookieConsentState);
+    const [showAfterHero, setShowAfterHero] = useState(() => !shouldDelayFloatingCta(location));
     const scene = getSceneForPath(location);
     const featuredEvent = getExperienceEvent("ticket");
     const cta = getEventCta(featuredEvent);
+
+    useEffect(() => {
+        const handleConsentResolved = (event: Event) => {
+            const nextState = (event as CustomEvent<"accepted" | "declined">).detail;
+            setConsentState(nextState);
+        };
+        const handleStorage = () => {
+            setConsentState(getCookieConsentState());
+        };
+
+        window.addEventListener(COOKIE_CONSENT_RESOLVED_EVENT, handleConsentResolved as EventListener);
+        window.addEventListener("storage", handleStorage);
+
+        return () => {
+            window.removeEventListener(COOKIE_CONSENT_RESOLVED_EVENT, handleConsentResolved as EventListener);
+            window.removeEventListener("storage", handleStorage);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!shouldDelayFloatingCta(location)) {
+            setShowAfterHero(true);
+            return;
+        }
+
+        let rafId = 0;
+
+        const syncVisibility = () => {
+            rafId = 0;
+            const threshold = Math.max(window.innerHeight * 0.72, 480);
+            const nextVisible = window.scrollY > threshold;
+            setShowAfterHero((current) => (current === nextVisible ? current : nextVisible));
+        };
+
+        const handleScroll = () => {
+            if (rafId) return;
+            rafId = window.requestAnimationFrame(syncVisibility);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("resize", handleScroll);
+        syncVisibility();
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", handleScroll);
+            if (rafId) window.cancelAnimationFrame(rafId);
+        };
+    }, [location]);
 
     const theme = {
         default: {
@@ -25,8 +93,20 @@ export default function GlobalTicketButton() {
         },
     }[scene.ticketTheme];
 
-    // Hide on ticket page
-    if (location === "/tickets") return null;
+    const toolIcons = {
+        posh: <Ticket className="h-4.5 w-4.5 text-white" />,
+        laylo: <Lock className="h-4.5 w-4.5 text-white" />,
+        fillout: <Zap className="h-4.5 w-4.5 text-white" />,
+    };
+
+    const toolMobileStyles = {
+        posh: "bg-primary cta-posh",
+        laylo: "cta-laylo py-5",
+        fillout: "cta-fillout py-5"
+    };
+
+    // Keep the hero and consent flows focused before adding another conversion layer.
+    if (location === "/tickets" || consentState === null || !showAfterHero) return null;
 
     return (
         <div className="fixed bottom-0 left-0 right-0 md:bottom-12 md:right-12 md:left-auto z-[100] w-full md:w-auto">
@@ -46,15 +126,15 @@ export default function GlobalTicketButton() {
                         <div
                             className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
                             style={{
-                                background: `radial-gradient(circle at 12% 50%, ${scene.glow}, transparent 45%)`,
+                                background: `radial-gradient(circle at 12% 50%, ${cta.tool === 'posh' ? 'var(--scene-glow)' : 'rgba(255,255,255,0.1)'}, transparent 45%)`,
                             }}
                         />
 
                         <div
                             className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
-                            style={{ backgroundColor: "color-mix(in srgb, var(--scene-accent) 14%, rgba(255,255,255,0.02))" }}
+                            style={{ backgroundColor: cta.tool === 'posh' ? "color-mix(in srgb, var(--scene-accent) 14%, rgba(255,255,255,0.02))" : "rgba(255,255,255,0.05)" }}
                         >
-                            <Ticket className="h-4.5 w-4.5 text-white" />
+                            {toolIcons[cta.tool]}
                         </div>
 
                         <div className="relative z-10 min-w-[8.5rem]">
@@ -70,18 +150,18 @@ export default function GlobalTicketButton() {
             </div>
 
             {/* Mobile Sticky Bar */}
-            <div className="md:hidden w-full bg-black/90 backdrop-blur-xl border-t border-white/10 px-4 py-4 safe-bottom">
+            <div className={`md:hidden w-full backdrop-blur-xl px-4 py-4 safe-bottom ${cta.tool === 'posh' ? 'bg-black/90 border-t border-white/10' : 'bg-[#0a0a0d]/95 border-t border-white/5'}`}>
                  <a
                     href={cta.href}
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                    className="flex items-center justify-between w-full h-14 bg-primary text-white px-6 font-black text-xs tracking-[0.24em] uppercase shadow-[0_10px_30px_rgba(224,90,58,0.3)] active:scale-[0.98] transition-transform"
+                    className={`flex items-center justify-between w-full h-14 px-6 text-white transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]}`}
                 >
                     <div className="flex flex-col">
-                        <span className="text-[9px] text-white/60 mb-0.5 tracking-widest">{cta.label}</span>
-                        <span>{featuredEvent?.headline || featuredEvent?.title || "Access"}</span>
+                        <span className="text-[10px] mb-0.5 tracking-[0.24em] uppercase font-bold opacity-70">{cta.label}</span>
+                        <span className="font-black text-xs tracking-[0.18em] uppercase">{featuredEvent?.headline || featuredEvent?.title || "Access"}</span>
                     </div>
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-5 h-5 transition-transform group-active:translate-x-1" />
                 </a>
             </div>
         </div>

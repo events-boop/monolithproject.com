@@ -34,6 +34,12 @@ export default function ConversionCTA({
     fillout: <Zap className="w-4 h-4" />,
   };
 
+  const toolStyles: Record<FunnelTool, string> = {
+    posh: "cta-posh",
+    laylo: "cta-laylo",
+    fillout: "cta-fillout",
+  };
+
   const urgencyText = event?.status === 'on-sale' && isEventLowInventory(event)
     ? "Final Tier — 90% Sold Out"
     : event?.status === 'coming-soon'
@@ -41,22 +47,18 @@ export default function ConversionCTA({
     : null;
 
   const baseButton = (
-    <div className={`flex flex-col items-center gap-3 ${className}`}>
+    <div className={`flex flex-col items-center gap-4 ${className}`}>
       <a
         href={cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
         className={`
           group relative flex items-center justify-center gap-4 
-          font-black uppercase tracking-[0.3em] transition-all duration-500
+          transition-all duration-500 rounded-none
           ${sizeClasses[size]} w-full sm:w-auto
-          ${variant === 'primary' ? 'text-white' : 'text-primary border border-primary/30'}
+          ${toolStyles[cta.tool]}
         `}
       >
-        {variant === 'primary' && (
-          <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-[1.03]" />
-        )}
-        
         <span className="relative z-10 flex items-center gap-3">
           {toolIcons[cta.tool]}
           {cta.label}

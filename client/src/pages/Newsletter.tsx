@@ -24,12 +24,12 @@ export default function Newsletter() {
 
       <section className="page-shell-start-loose pb-8 px-6 relative">
         <div className="container max-w-6xl mx-auto">
-          <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Early Access</span>
+          <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Newsletter</span>
           <h1 className="font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.88] uppercase mt-4">
-            JOIN SMS UPDATES
+            GET MONOLITH UPDATES
           </h1>
           <p className="text-charcoal/70 mt-4 max-w-2xl text-lg">
-            Join the Monolith Inner Circle. Get direct access to private ticket windows, secret lineup drops, and the next signal before it hits the public.
+            Join the Monolith newsletter. Get early ticket windows, lineup drops, and new radio episodes before the public push.
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row gap-8 items-start sm:items-center border-t border-charcoal/10 pt-12">

@@ -5,10 +5,10 @@ import { CTA_LABELS } from "@/lib/cta";
 
 const editorialModules = [
   {
-    title: "Inside Monolith",
-    eyebrow: "Notes",
+    title: "Articles",
+    eyebrow: "News & Context",
     description:
-      "Short notes, references, and project context that explain the taste behind the nights and the world that holds them together.",
+      "Short articles, event notes, and project context that explain the taste behind the nights without forcing people to decode the brand.",
     href: "/insights",
     cta: CTA_LABELS.journal,
     icon: FileText,
@@ -16,18 +16,18 @@ const editorialModules = [
   },
   {
     title: "Radio Show",
-    eyebrow: "Listen Back",
+    eyebrow: "Listen",
     description:
-      "The Chasing Sun(Sets) Radio Show extends the series through mixes, artist sessions, and a clearer sense of the project’s pace.",
+      "The Chasing Sun(Sets) Radio Show extends the series through mixes, guest sessions, and full episode replays.",
     href: "/radio",
     cta: CTA_LABELS.listenNow,
     icon: AudioLines,
   },
   {
-    title: "Archive",
-    eyebrow: "Past Nights",
+    title: "Event Archive",
+    eyebrow: "Gallery & Recaps",
     description:
-      "Season-by-season photos and recaps that make the record visible instead of forcing the brand to start over every time.",
+      "Photos, recap assets, and past-night records that show what happened in the room instead of making the brand start over every time.",
     href: "/archive",
     cta: CTA_LABELS.archive,
     icon: LibraryBig,
@@ -56,22 +56,21 @@ export default function EditorialSignalsSection() {
         <div className="mb-16 md:mb-24 flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
           <div className="max-w-4xl">
             <span className="font-mono text-[10px] md:text-sm tracking-[0.3em] text-white/40 mb-6 block uppercase border-b border-white/10 pb-4 inline-block">
-              Beyond The Night
+              Articles, Radio & Archive
             </span>
             <h2 className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-[0.85] tracking-tighter uppercase text-white mb-6">
-              <span className="text-white/30 block shrink-0">The strongest</span>
-              <span className="block shrink-0">rooms leave a</span>
-              <span className="block shrink-0">record behind.</span>
+              <span className="text-white/30 block shrink-0">A project should</span>
+              <span className="block shrink-0">be easy to</span>
+              <span className="block shrink-0">follow.</span>
             </h2>
             <p className="mt-4 max-w-xl text-lg font-light leading-relaxed text-white/50">
-              Radio, archive, and journal surfaces make it easier to understand who we book, what
-              kind of room we build, and why people return. The night matters more when the signal
-              around it stays coherent.
+              Articles, radio, and the event archive make it easier to understand who Monolith
+              books, what each series sounds like, and what happened after the night ends.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            {["Identity", "Radio", "Archive", "Press"].map((signal, i, arr) => (
+            {["Articles", "Radio", "Archive", "Press"].map((signal, i, arr) => (
               <span
                 key={signal}
                 className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 text-right"
@@ -114,11 +113,11 @@ export default function EditorialSignalsSection() {
                   {featured.description}
                 </p>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pt-8 border-t border-white/10 group-hover:border-black/10 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pt-8 border-t border-white/10 group-hover:border-black/10 transition-colors">
                   <div className="max-w-xs">
                     <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">Why it matters</p>
                     <p className="text-sm font-light leading-relaxed text-white/60 group-hover:text-black/70">
-                      When the music, the archive, and the written context all point in the same direction, the next chapter feels connected to the last one.
+                      Clear articles, radio episodes, and recap surfaces make the next event feel connected to the last one.
                     </p>
                   </div>
                   <div className="inline-flex items-center justify-center h-12 w-12 border border-white/10 group-hover:border-black group-hover:bg-black transition-colors rounded-none shrink-0">

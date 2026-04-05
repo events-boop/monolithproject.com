@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
+import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import { ScheduledEvent } from "@/data/events";
 import ConversionCTA from "@/components/ConversionCTA";
 
@@ -93,6 +94,9 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
                 <span key={i} className="block">{line}</span>
               ))}
             </motion.h1>
+            <BrandTranslatorLabel className="mb-8" tone="nocturne">
+              A Late-Night Monolith Series
+            </BrandTranslatorLabel>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10 w-full md:w-auto">
               <ConversionCTA 
@@ -106,8 +110,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </div>
 
             <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-              <span className="text-white font-medium drop-shadow-lg">Late night. Intimate rooms. 360 sound.</span> The story is told
-              through the music — no narrative, no script, just what happens when the lights go down.
+              A late-night series built for deeper house music, tighter energy, and a more immersive dancefloor.
             </p>
 
             {heroSlides.length > 1 && (

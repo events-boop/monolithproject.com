@@ -1,22 +1,49 @@
 import { describe, expect, it } from "vitest";
-import { upcomingEvents, type ScheduledEvent } from "@/data/events";
+import type { ScheduledEvent } from "@/data/events";
 import {
   getEventCta,
   getEventDetailsHref,
   isEventLowInventory,
 } from "@/lib/cta";
 
+const monolithLiveEvent: ScheduledEvent = {
+  id: "mp-autograf-mar21",
+  series: "monolith-project",
+  episode: "SPECIAL EVENT",
+  title: "AUTOGRAF",
+  date: "March 21, 2026",
+  time: "9:00 PM — Late",
+  venue: "Alhambra Palace",
+  location: "Chicago, IL",
+  status: "on-sale",
+  ticketUrl: "/go/tickets/mp-autograf-mar21",
+};
+
+const untoldUpcomingEvent: ScheduledEvent = {
+  id: "us-s3e3",
+  series: "untold-story",
+  episode: "SEASON III · EPISODE III",
+  title: "ERAN HERSH",
+  date: "May 16, 2026",
+  time: "9:00 PM — Late",
+  venue: "Venue Reveal Soon",
+  location: "Chicago, IL",
+  status: "coming-soon",
+  primaryCta: {
+    label: "Unlock Presale Access",
+    href: "/story#untold-funnel",
+    tool: "laylo",
+    isExternal: false,
+  },
+};
+
 describe("cta", () => {
   it("routes monolith-project live event details to the tickets page", () => {
-    const event = upcomingEvents.find((entry) => entry.id === "mp-autograf-mar21");
-
-    expect(getEventDetailsHref(event)).toBe("/tickets");
+    expect(getEventDetailsHref(monolithLiveEvent)).toBe("/tickets");
   });
 
   it("routes upcoming untold-story events to the onsite untold waitlist funnel", () => {
-    const event = upcomingEvents.find((entry) => entry.id === "us-s3e3");
-
-    expect(getEventCta(event)).toMatchObject({
+    expect(getEventCta(untoldUpcomingEvent)).toMatchObject({
       label: "Unlock Presale Access",
       href: "/story#untold-funnel",
       isExternal: false,
@@ -35,6 +62,12 @@ describe("cta", () => {
       venue: "Chicago",
       location: "Chicago, IL",
       status: "sold-out",
+      primaryCta: {
+        label: "Join Waitlist",
+        href: "/chasing-sunsets#chasing-funnel",
+        tool: "laylo",
+        isExternal: false,
+      },
     };
 
     expect(getEventCta(event)).toMatchObject({
@@ -58,6 +91,12 @@ describe("cta", () => {
       status: "on-sale",
       inventoryState: "low",
       ticketUrl: "https://posh.vip/e/example",
+      primaryCta: {
+        label: "Claim Last Tickets",
+        href: "https://posh.vip/e/example",
+        tool: "posh",
+        isExternal: true,
+      },
     };
 
     expect(isEventLowInventory(event)).toBe(true);

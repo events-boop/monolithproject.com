@@ -52,18 +52,18 @@ export default function InsightArticle() {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <SEO
-          title="Journal Entry Not Found"
-          description="The requested journal entry was not found."
+          title="Article Not Found"
+          description="The requested article was not found."
           canonicalPath="/insights"
         />
         <Navigation />
         <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
           <section className="container max-w-3xl mx-auto text-center">
             <h1 className="font-display text-[clamp(2.8rem,7vw,5.4rem)] uppercase mb-5">
-              Entry Not Found
+              Article Not Found
             </h1>
             <p className="text-white/66 mb-8">
-              This journal entry does not exist yet. Head back to Inside Monolith to browse the published features.
+              This article is not live yet. Head back to Articles to browse the published pieces.
             </p>
             <Link href="/insights" className="btn-pill-coral">
               {CTA_LABELS.backToJournal}

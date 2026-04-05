@@ -23,7 +23,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
             titleTop: "Unlock Exclusive",
             titleBottom: "Pre-Sale Access",
             gradient: "from-[#E05A3A] to-[#E8B86D]",
-            desc: "Join the inner circle. Get notified 24 hours before the general public when tables and Tier 1 tickets for our next season go live.",
+            desc: "Join the newsletter. Get notified 24 hours before the public when tables and Tier 1 tickets for the next season go live.",
             button: "sunset-gradient-btn",
             glow1: "bg-[#E05A3A]/10",
             glow2: "bg-[#8B5CF6]/10",
@@ -34,18 +34,18 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
             ]
         },
         "chasing-sunsets": {
-            pill: "Inner Circle",
+            pill: "Newsletter",
             titleTop: "Unlock",
             titleBottom: "The Sunset",
             gradient: "from-[#C2703E] via-[#E8B86D] to-[#FBF5ED]",
-            desc: "Join the Chasing Sun(Sets) Inner Circle. Gain first access to exclusive sunset events and secret destination announcements.",
+            desc: "Join the Chasing Sun(Sets) newsletter. Get first access to sunset events and destination announcements.",
             button: "sunset-gradient-btn",
             glow1: "bg-[#E8B86D]/10",
             glow2: "bg-[#C2703E]/10",
             bulletPoints: [
                 "Early bird ticketing access",
                 "Secret location drops",
-                "Inner Circle community"
+                "Newsletter-first updates"
             ]
         },
         "untold-story": {

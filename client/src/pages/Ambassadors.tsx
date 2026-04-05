@@ -8,13 +8,14 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import HoneypotField from "@/components/HoneypotField";
 import { submitBookingInquiry } from "@/lib/api";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 const ambassadorSchema = z.object({
     name: z.string().min(2, "Name is required"),
     email: z.string().email("Invalid email address"),
     instagram: z.string().min(2, "Instagram handle is required"),
     message: z.string().optional(),
-    metadata_correlation_id: z.string().optional(),
+    [honeypotFieldName]: z.string().optional(),
 });
 
 type AmbassadorFormValues = z.infer<typeof ambassadorSchema>;
@@ -72,7 +73,7 @@ export default function Ambassadors() {
                 entity: `Ambassador Application (@${data.instagram})`,
                 type: "general",
                 message: `Instagram: ${data.instagram}\n\nNote: ${data.message || "No specific message."}`,
-                metadata_correlation_id: data.metadata_correlation_id || undefined,
+                [honeypotFieldName]: data[honeypotFieldName] || undefined,
             });
             setIsSubmitted(true);
         } catch (error) {
@@ -86,7 +87,7 @@ export default function Ambassadors() {
         <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
             <SEO
                 title="Ambassador Program"
-                description="Join the Monolith Project team. Sell 5 tickets and get yours free + drink tokens for the collective."
+                description="Join the Monolith Project ambassador team. Sell 5 tickets and get yours free plus drink tokens for the event."
             />
             <Navigation />
 
@@ -164,7 +165,7 @@ export default function Ambassadors() {
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                                    <HoneypotField {...register("metadata_correlation_id")} />
+                                    <HoneypotField {...register(honeypotFieldName)} />
 
                                     {/* Name */}
                                     <div>

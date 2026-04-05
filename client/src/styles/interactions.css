@@ -33,11 +33,16 @@
       box-shadow 300ms var(--motion-luxe),
       border-color 220ms ease,
       background-color 220ms ease;
-    will-change: transform;
   }
 
   .lift-hover:hover {
     transform: translateY(-4px);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lift-hover {
+      will-change: transform;
+    }
   }
 
   .cta-stack {

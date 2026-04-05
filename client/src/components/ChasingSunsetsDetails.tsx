@@ -3,17 +3,17 @@ import { Users, Music, Calendar, TrendingUp } from "lucide-react";
 import RevealText from "./RevealText";
 
 const metrics = [
-    { label: "Hours of Daylight", value: "Infinite", icon: Calendar },
+    { label: "Best Time", value: "Golden Hour", icon: Calendar },
     { label: "The Sound", value: "Melodic House", icon: Music },
     { label: "The Room", value: "Open-Air", icon: TrendingUp },
-    { label: "The Crowd", value: "Chicago-First", icon: Users },
+    { label: "The Crowd", value: "Music-First", icon: Users },
 ];
 
 const benefits = [
     { title: "What It Is", description: "A summer-long curation of outdoor rooms that start at sunset and end long after dark." },
     { title: "The July 4th Tradition", description: "Our flagship gathering. The energy of the city at its peak, soundtracked by world-class selectors." },
     { title: "Who It's For", description: "Those who prioritize the room, the music, and the people over the hype." },
-    { title: "How To Get In", description: "Capacities are strict. Priority access goes to those on the community list." },
+    { title: "How To Get Tickets", description: "Capacities are strict. Early access goes to the newsletter before public sale." },
 ];
 
 export default function ChasingSunsetsDetails() {
@@ -46,7 +46,7 @@ export default function ChasingSunsetsDetails() {
                         transition={{ duration: 0.8 }}
                     >
                         <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-clay">
-                            The Philosophy
+                            The Series
                         </span>
                         <RevealText as="h2" className="font-display text-4xl md:text-5xl leading-tight mb-6 text-charcoal">
                             DAYLIGHT TURNING INTO DUSK
@@ -55,7 +55,7 @@ export default function ChasingSunsetsDetails() {
                             Chasing Sun(Sets) is an open-air series built entirely around the golden hour. No dark rooms at the start, no vip ropes—just the sky and the sound.
                         </p>
                         <p className="text-lg leading-relaxed opacity-80">
-                            We curate cinematic, sunset-focused experiences soundtracked by Afro, Organic, and Melodic House. Every chapter is designed as a temporary escape right in the middle of Chicago.
+                            We book afro house, organic house, and melodic house for rooftops, beach clubs, and open-air spaces across Chicago.
                         </p>
                     </motion.div>
 
@@ -67,9 +67,9 @@ export default function ChasingSunsetsDetails() {
                         className="season-panel-warm p-8"
                         data-cursor-text="EXPERIENCE"
                     >
-                        <h3 className="font-display text-2xl mb-6 text-charcoal">THE EXPERIENCE</h3>
+                        <h3 className="font-display text-2xl mb-6 text-charcoal">WHAT TO EXPECT</h3>
                         <p className="mb-6 opacity-80">
-                            A collaboration to bring defining musical moments to the city. Four to six connected chapters from May to September.
+                            A run of summer dates built around sunset, movement, and strong bookings from May through September.
                         </p>
                         <ul className="space-y-4">
                             {benefits.map((b, i) => (

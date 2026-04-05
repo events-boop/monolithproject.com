@@ -12,7 +12,7 @@ export default function Booking() {
     <div className="min-h-screen bg-background text-foreground">
       <SEO
         title="Booking"
-        description="Submit a mix or inquiry to play with The Monolith Project. We review every booking request for alignment with the collective."
+        description="Submit a mix or inquiry to play with The Monolith Project. We review every booking request for fit with the project."
         canonicalPath="/booking"
       />
       <Navigation />
@@ -30,7 +30,7 @@ export default function Booking() {
               BOOKING
             </h1>
             <p className="text-muted-foreground text-lg max-w-xl">
-              Whether you represent a venue, an artist, or a brand — we review every inquiry for alignment with the collective.
+              Whether you represent a venue, an artist, or a brand, we review every inquiry for fit with the project.
             </p>
           </motion.div>
         </div>

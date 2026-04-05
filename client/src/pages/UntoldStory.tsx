@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import "@/styles/themes/untold.css";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import TicketTicker from "@/components/TicketTicker";
@@ -14,6 +15,7 @@ import EventFunnelStack from "@/components/EventFunnelStack";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const UNTOLD_ANCHORS = [
   { label: "Event", href: "#untold-event" },
@@ -23,6 +25,7 @@ const UNTOLD_ANCHORS = [
 ];
 
 export default function UntoldStory() {
+  usePublicSiteDataVersion();
   const scheduledEvent = getEventById("us-s3e3");
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
@@ -31,7 +34,7 @@ export default function UntoldStory() {
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
         title="Untold Story"
-        description="A late-night journey through Afro and melodic house. Immersive 360° sound in Chicago."
+        description="A late-night Monolith series focused on deeper house music, immersive sound, and tighter rooms in Chicago."
         image={eventVisuals.poster}
       />
       {showEventSchema ? (
@@ -64,7 +67,7 @@ export default function UntoldStory() {
             episode="Chapter 01"
             title="The Blueprint"
             subtitle="Summer Mel • Avo"
-            description="Late night. Immersive. The first chapter. A look back at the original flyers that set the tone on June 21st at Nisos Lounge."
+            description="The first Untold Story event. A look back at the original flyers that set the tone on June 21st at Nisos Lounge."
             accentColor="#8B5CF6"
             images={[
               { src: "/images/untold-s1e1-summer.jpg", alt: "Summer Mel - Chapter 01", label: "SUMMER MEL" },
@@ -80,7 +83,7 @@ export default function UntoldStory() {
               <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season II</span>
-                <h4 className="font-display text-2xl uppercase text-white mb-4">The Story Grows</h4>
+                <h4 className="font-display text-2xl uppercase text-white mb-4">The Series Grows</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">360° sound. Deeper rooms. The records of 2025.</p>
                 <Link href="/untold-story/season-ii" asChild>
                   <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">
@@ -93,7 +96,7 @@ export default function UntoldStory() {
               <div className="absolute inset-0 bg-gradient-to-bl from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season III</span>
-                <h4 className="font-display text-2xl uppercase text-white mb-4">The Most Ambitious Chapter</h4>
+                <h4 className="font-display text-2xl uppercase text-white mb-4">The Biggest Season Yet</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Currently unfolding. Unforgettable artist showcases.</p>
                 <Link href="/untold-story/season-iii" asChild>
                   <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">

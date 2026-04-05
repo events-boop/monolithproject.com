@@ -14,6 +14,7 @@ import ShimmerButton from "@/components/ui/ShimmerButton";
 import SEO from "@/components/SEO";
 import SmartImage from "@/components/SmartImage";
 import MagneticButton from "@/components/MagneticButton";
+import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
@@ -219,7 +220,7 @@ export default function Radio() {
         <div className="container max-w-7xl mx-auto relative z-10 w-full">
           <div className="max-w-3xl">
             <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6" delay={0.1}>
-              Mix Series
+              Radio Show
             </RevealText>
             <div className="mb-8 relative">
               <HeroSpotlight className="-m-8 p-8" spotlightColor="rgba(255, 255, 255, 0.15)">
@@ -234,11 +235,13 @@ export default function Radio() {
                   </span>
                   <span className="text-white">RADIO</span>
                 </motion.h1>
+                <BrandTranslatorLabel className="mt-2" tone="radio">
+                  The Radio Extension of Chasing Sun(Sets)
+                </BrandTranslatorLabel>
               </HeroSpotlight>
             </div>
             <RevealText as="p" className="max-w-lg text-white/80 text-lg md:text-xl leading-relaxed drop-shadow-lg font-light" delay={0.4} stagger={0.01}>
-              Curated sets and live recordings from our artists and guests.
-              The music doesn't stop when the show ends.
+              Mixes, guest sessions, and replayable episodes that keep Chasing Sun(Sets) active between events.
             </RevealText>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <MagneticButton strength={0.3}>
@@ -464,7 +467,7 @@ export default function Radio() {
                 Global Reach
               </RevealText>
               <RevealText as="h2" className="font-display text-4xl text-foreground" delay={0.2} blurStrength={10}>
-                WHERE WE ARE
+                WHERE PEOPLE LISTEN
               </RevealText>
             </div>
             <span className="font-mono text-xs text-muted-foreground tracking-widest">
@@ -487,8 +490,8 @@ export default function Radio() {
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2" />
 
           <div className="relative z-10 max-w-xl text-center md:text-left">
-            <h3 className="font-display text-3xl md:text-5xl uppercase tracking-wide text-foreground mb-4">Have Questions?</h3>
-            <p className="text-muted-foreground font-light text-lg">Learn more about our recording process, mix submissions, and release schedules.</p>
+            <h3 className="font-display text-3xl md:text-5xl uppercase tracking-wide text-foreground mb-4">Questions About The Radio Show?</h3>
+            <p className="text-muted-foreground font-light text-lg">Learn more about episode releases, mix submissions, and how the recordings are put together.</p>
           </div>
 
           <div className="relative z-10">

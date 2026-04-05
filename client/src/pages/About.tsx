@@ -8,6 +8,7 @@ import SmartImage from "@/components/SmartImage";
 import TextSpotlightReveal from "@/components/ui/TextSpotlightReveal";
 import WordScrubReveal from "@/components/ui/WordScrubReveal";
 import MagneticButton from "@/components/MagneticButton";
+import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 
@@ -15,8 +16,8 @@ const manifestoLines = [
   "We build rooms worth returning to.",
   "We choose curation over noise.",
   "We treat atmosphere as substance, not decoration.",
-  "We keep Chicago in the center of the story.",
-  "We build chapters, not one-off hype.",
+  "We keep Chicago at the center.",
+  "We build seasons, not one-off hype.",
   "We believe clarity is part of hospitality.",
 ];
 
@@ -39,9 +40,9 @@ const architectureExpressions = [
   },
   {
     title: "Radio Show",
-    label: "Signal",
+    label: "Radio",
     description:
-      "The Chasing Sun(Sets) Radio Show extends the taste behind the room through mixes, artist sessions, and recurring listening signals.",
+      "The Chasing Sun(Sets) Radio Show keeps the series active between events through mixes, guest sessions, and replayable episodes.",
     href: "/radio",
     cta: CTA_LABELS.radioHub,
   },
@@ -149,9 +150,12 @@ export default function About() {
             >
               MONOLITH
             </motion.h1>
+            <BrandTranslatorLabel className="mt-5" tone="neutral">
+              Chicago Cultural House
+            </BrandTranslatorLabel>
 
             <p className="max-w-xl text-center text-[11px] uppercase tracking-[0.22em] text-white/68 md:text-base">
-              A Chicago-rooted cultural house built through nights, series, and sound.
+              Recurring music experiences, radio, and archive from Chicago.
             </p>
           </motion.div>
 
@@ -162,7 +166,7 @@ export default function About() {
             className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center"
           >
             <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 mb-4 animate-pulse">
-              Scroll the world
+              Scroll down
             </span>
             <div className="w-px h-16 bg-gradient-to-b from-white/50 to-transparent" />
           </motion.div>
@@ -174,20 +178,23 @@ export default function About() {
         <div className="max-w-5xl mx-auto">
             <div className="space-y-16">
               <div>
+                <BrandTranslatorLabel tone="neutral" className="mb-8">
+                  Why Monolith Exists
+                </BrandTranslatorLabel>
                 <WordScrubReveal 
-                  text="We are tired of disposable nights." 
+                  text="We are tired of forgettable nights." 
                   className="font-serif text-[clamp(2.4rem,6vw,5.5rem)] tracking-tight uppercase leading-[0.95] text-white/90 text-balance"
                 />
               </div>
               <div>
                 <WordScrubReveal 
-                  text="Too much of nightlife is built to be consumed once and forgotten fast. The room becomes backdrop. The music becomes texture. The ticket becomes the whole story." 
+                  text="Too much nightlife is built to be consumed once and forgotten by morning. The room becomes backdrop. The music becomes texture. The ticket becomes the whole story." 
                   className="font-serif text-[clamp(1.4rem,3.5vw,2.8rem)] leading-[1.2] text-white/80 max-w-4xl text-balance"
                 />
               </div>
               <div className="mt-8">
                 <WordScrubReveal 
-                  text="We built The Monolith Project to hold onto what usually disappears: curation, atmosphere, continuity, and the feeling that a night can belong to something larger than itself." 
+                  text="We built The Monolith Project to keep what usually disappears visible: curation, atmosphere, continuity, and the feeling that a night can belong to something real." 
                   className="font-serif text-[clamp(1.2rem,3vw,2.4rem)] leading-[1.3] text-[#D4A574] italic drop-shadow-md text-balance"
                 />
               </div>
@@ -201,9 +208,9 @@ export default function About() {
 
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
           <div className="lg:w-1/3">
-            <div className="sticky top-40">
-              <span className="ui-kicker block text-[#d4a853] mb-4">Core Principles</span>
-              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Manifesto</h2>
+              <div className="sticky top-40">
+                <span className="ui-kicker block text-[#d4a853] mb-4">Core Principles</span>
+              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Principles</h2>
               <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />
             </div>
           </div>
@@ -221,7 +228,7 @@ export default function About() {
       </section>
 
       {/* Four-Part Architecture */}
-      <section className="relative px-6 py-32 md:py-48 z-30 overflow-hidden">
+      <section className="relative px-6 py-32 md:py-48 z-30 overflow-hidden" id="vision">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(224,90,58,0.05),transparent_40%),radial-gradient(circle_at_84%_74%,rgba(139,92,246,0.05),transparent_40%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -235,14 +242,14 @@ export default function About() {
             >
               <div className="flex items-center gap-4 mb-6">
                  <div className="h-px w-8 bg-primary/50" />
-                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">Architecture</span>
+                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">How It Works</span>
               </div>
               <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] uppercase text-white mb-8">
-                Four expressions.<br />
-                <span className="text-white/20">One standard.</span>
+                Four parts.<br />
+                <span className="text-white/20">One project.</span>
               </h2>
               <p className="text-lg leading-relaxed text-white/40 font-light max-w-sm">
-                The Monolith Project holds the umbrella. Chasing Sun(Sets), the Radio Show, and Untold Story carry the distinct temperatures of the night.
+                The Monolith Project is the parent brand. Chasing Sun(Sets), the Radio Show, and Untold Story each play a clear role inside it.
               </p>
             </motion.div>
 
@@ -316,7 +323,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Enter the Collective */}
+      {/* Explore Monolith */}
       <section className="relative h-screen flex flex-col items-center justify-center z-30 overflow-hidden" id="concept">
         <div className="absolute inset-0 z-0">
           <SmartImage
@@ -342,9 +349,9 @@ export default function About() {
             <MagneticButton strength={0.4}>
               <a href="/schedule" data-cursor-text="JOIN" className="group inline-block w-full max-w-[95vw]">
                 <h2 className="font-display text-[clamp(2.4rem,8vw,11rem)] tracking-[-0.03em] group-hover:tracking-normal transition-all duration-700 ease-out text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 leading-[0.8] uppercase mix-blend-screen drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] text-balance">
-                  Enter The
+                  Explore
                   <br />
-                  Collective
+                  Monolith
                 </h2>
               </a>
             </MagneticButton>

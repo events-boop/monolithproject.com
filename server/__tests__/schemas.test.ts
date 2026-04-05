@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { honeypotFieldName } from "@shared/generated/hardening";
 import {
   leadSchema,
   ticketIntentSchema,
@@ -165,6 +166,20 @@ describe("leadSchema", () => {
       interestTags: new Array(13).fill("tag"),
     });
     expect(result.success).toBe(false);
+  });
+
+  it("accepts both the current and legacy honeypot field names", () => {
+    const rotated = leadSchema.safeParse({
+      ...validLead,
+      [honeypotFieldName]: "trap",
+    });
+    const legacy = leadSchema.safeParse({
+      ...validLead,
+      metadata_correlation_id: "trap",
+    });
+
+    expect(rotated.success).toBe(true);
+    expect(legacy.success).toBe(true);
   });
 });
 

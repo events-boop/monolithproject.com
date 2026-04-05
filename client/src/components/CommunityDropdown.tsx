@@ -56,8 +56,8 @@ const communityLinks = [
         color: "group-hover:text-[#1DB954]",
     },
     {
-        title: "Inner Circle",
-        description: "Opt in for exclusivity",
+        title: "Newsletter",
+        description: "Get updates first",
         href: "/newsletter",
         iconOverride: <Mail className="w-5 h-5" />,
         color: "group-hover:text-primary",
@@ -123,13 +123,16 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
         return () => document.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+    const isFirstPartyRedirect = (href: string) => href.startsWith("/go/");
+    const isClientRoute = (href: string) => href.startsWith("/") && !isFirstPartyRedirect(href);
+
     const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
         const drawer = getDrawerTypeForHref(href);
 
         if (drawer) {
             e.preventDefault();
             openDrawer(drawer);
-        } else if (href.startsWith("/")) {
+        } else if (isClientRoute(href)) {
             e.preventDefault();
             setLocation(href);
         }
@@ -233,8 +236,8 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                                 <a
                                     key={link.title}
                                     href={link.href}
-                                    target={link.href.startsWith("/") ? "_self" : "_blank"}
-                                    rel={link.href.startsWith("/") ? "" : "noopener noreferrer"}
+                                    target={isClientRoute(link.href) ? "_self" : "_blank"}
+                                    rel={isClientRoute(link.href) ? "" : "noopener noreferrer"}
                                     onClick={handleLinkClick(link.href)}
                                     role="menuitem"
                                     className={`group flex items-center gap-4 p-2.5 rounded-[14px] transition-all duration-300 ${isLight ? "hover:bg-charcoal/5" : "hover:bg-white/[0.04]"

@@ -38,7 +38,7 @@ const scenes: Record<SceneId, SceneConfig> = {
   radio: {
     id: "radio",
     variant: "dark",
-    brand: "radio" as any,
+    brand: "monolith",
     ticketTheme: "default",
     accent: "#F43F5E",
     glow: "rgba(244, 63, 94, 0.3)",

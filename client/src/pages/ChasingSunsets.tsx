@@ -14,6 +14,7 @@ import ChasingSunsetsOptIn from "@/components/ChasingSunsetsOptIn";
 import { useState } from "react";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
+import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import EventFunnelStack from "@/components/EventFunnelStack";
 import ConversionCTA from "@/components/ConversionCTA";
 import { getResponsiveImage } from "@/lib/responsiveImages";
@@ -25,6 +26,7 @@ import {
   isTicketOnSale,
   getExperienceEvent
 } from "@/lib/siteExperience";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const chasingPosterImage = getResponsiveImage("chasingSunsets");
 const chasingHeroImage = getResponsiveImage("chasingSunsets");
@@ -65,6 +67,7 @@ const CHASING_ANCHORS = [
 ];
 
 export default function ChasingSunsets() {
+  usePublicSiteDataVersion();
   useScrollSunset();
   const [activeTab, setActiveTab] = useState<'live' | 'residents'>('live');
   const [faqOpen, setFaqOpen] = useState(false);
@@ -81,7 +84,7 @@ export default function ChasingSunsets() {
   const chasingFaqs = [
     ["Where are the events located?", "Our events take place at various outdoor and rooftop locations across Chicago. Keep an eye on the schedule for specific venues."],
     ["What time should I arrive?", "The magic happens during the golden hour. We highly recommend arriving early to experience the transition from sunset to sundown."],
-    ["Are tickets sold at the door?", "We operate as a presale-only collective to ensure the best experience and crowd control. Door sales are extremely rare."],
+    ["Are tickets sold at the door?", "We usually run as a presale-first series so we can manage capacity and keep the room comfortable. Door sales are rare."],
     ["What's the dress code?", "Elevated, comfortable outdoor attire. Think rooftop chic. Dress for the weather and prepare to dance."]
   ];
 
@@ -124,10 +127,13 @@ export default function ChasingSunsets() {
                   {campaignEvent ? campaignEvent.headline || campaignEvent.title : "CHASING SUN(SETS)"}
                 </span>
               </motion.h1>
+              <BrandTranslatorLabel className="mb-6" tone="warm">
+                An Open-Air Monolith Series
+              </BrandTranslatorLabel>
               
               <div className="max-w-xl">
                  <p className="text-lg leading-relaxed text-white/90 mb-4">
-                   {campaignEvent?.description || "Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings where the sun does half the work."}
+                   Open-air sunset and night sessions built for movement, warmth, and return.
                  </p>
                  {campaignEvent && (
                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-8">
@@ -140,24 +146,24 @@ export default function ChasingSunsets() {
                  )}
               </div>
 
-              <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
-                <ConversionCTA 
-                  event={campaignEvent} 
-                  size="lg"
-                  showUrgency={true}
-                />
-                
-                <MagneticButton strength={0.22}>
-                  <Link href="/radio" asChild>
-                    <a className="inline-flex items-center justify-center gap-2 rounded-full border border-white/28 bg-black/20 px-10 py-5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase text-white transition-colors hover:border-white/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
-                      {CTA_LABELS.radioHub}
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </a>
-                  </Link>
-                </MagneticButton>
-              </div>
+                <div className="flex flex-col sm:flex-row items-center gap-6 mt-8">
+                  <ConversionCTA
+                    event={campaignEvent}
+                    size="lg"
+                    showUrgency={true}
+                  />
+                  
+                  <MagneticButton strength={0.22}>
+                    <Link href="/radio">
+                      <a className="cta-ghost flex items-center justify-center px-10 py-5">
+                        {CTA_LABELS.radioHub}
+                        <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
+                      </a>
+                    </Link>
+                  </MagneticButton>
+                </div>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                {["Open Air Rooms", "Melodic + Afro House", "Togetherness", "Rooftop Culture"].map((pill) => (
+                {["Open Air", "Melodic + Afro House", "Good Crowd", "Rooftop Series"].map((pill) => (
                   <span
                     key={pill}
                     className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border border-white/30 bg-black/20 text-white/90"
@@ -382,7 +388,7 @@ export default function ChasingSunsets() {
                     </p>
                     <h3 className="mb-4 font-display text-3xl sunset-text">Season Dates Incoming</h3>
                     <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed sunset-text-70">
-                      The next open-air chapters are being finalized. Join the list and get the coordinates before public release.
+                      The next open-air dates are being finalized. Join the newsletter to hear about them before the public release.
                     </p>
                     <Link href="/newsletter" asChild>
                       <a className="inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/35 px-8 py-3 font-bold tracking-widest text-xs uppercase text-[#E8B86D] transition-colors hover:bg-[#E8B86D]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50">
@@ -408,8 +414,7 @@ export default function ChasingSunsets() {
               SUBMIT YOUR SET
             </h2>
             <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto sunset-text-80">
-              Chasing Sun(Sets) is about the perfect vibe for the golden hour.
-              Melodic, Organic, Afro House. If you have the sound, we have the sunset.
+              Chasing Sun(Sets) is built for golden-hour pacing. If your mix fits melodic, organic, or afro house in an open-air setting, send it through.
             </p>
             <MagneticButton strength={0.4}>
               <a
@@ -488,10 +493,10 @@ export default function ChasingSunsets() {
           <div className="pointer-events-none absolute inset-0 bg-chasing-glow-2" />
           <div className="container max-w-4xl mx-auto text-center">
             <h2 className="font-display text-5xl md:text-7xl mb-6 sunset-text">
-              CHASE THE LIGHT
+              SEE WHAT'S NEXT
             </h2>
             <p className="text-lg max-w-xl mx-auto mb-12 sunset-text-70">
-              Stay close to the next chapter, the next room, and the signal between them.
+              Stay close to the next date, the next venue, and new radio episodes between events.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <ConversionCTA 

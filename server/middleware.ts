@@ -5,66 +5,38 @@ import { randomUUID } from "crypto";
 import { createApiResponseHardening, createBrowserApiGuard } from "./lib/request-hardening";
 import { createRateLimitMiddleware } from "./services/rate-limit";
 
+const apiCspDirectives = {
+  defaultSrc: ["'none'"],
+  scriptSrc: ["'none'"],
+  styleSrc: ["'none'"],
+  objectSrc: ["'none'"],
+  baseUri: ["'none'"],
+  formAction: ["'none'"],
+  frameAncestors: ["'none'"],
+} as const;
+
 export function configureMiddleware(app: Express) {
   app.set("trust proxy", true);
 
-  // 1. Security: Hardened Headers
+  // Keep the broad security headers globally, but let Netlify own the document
+  // CSP. Express still serves JSON and redirects, and may serve HTML locally.
   app.use(
     helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: [
-            "'self'", 
-            "'unsafe-inline'", 
-            "https://challenges.cloudflare.com", 
-            "https://maps.googleapis.com",
-            "https://t.contentsquare.net",
-            "https://googletagmanager.com",
-            "https://connect.facebook.net",
-            "https://static.posthog.com"
-          ],
-          styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-          objectSrc: ["'none'"],
-          baseUri: ["'self'"],
-          formAction: ["'self'"],
-          frameAncestors: ["'none'"],
-          imgSrc: [
-            "'self'", 
-            "data:", 
-            "https://images.unsplash.com", 
-            "https://maps.gstatic.com", 
-            "https://maps.googleapis.com",
-            "https://www.facebook.com",
-            "https://google-analytics.com"
-          ],
-          connectSrc: [
-            "'self'", 
-            "https://maps.googleapis.com",
-            "https://app.posthog.com",
-            "https://us.i.posthog.com",
-            "https://*.hotjar.com",
-            "https://*.algolia.net",
-            "https://www.facebook.com",
-            "https://connect.facebook.net",
-            "https://google-analytics.com"
-          ],
-          fontSrc: ["'self'", "https://fonts.gstatic.com"],
-          frameSrc: [
-            "'self'", 
-            "https://challenges.cloudflare.com", 
-            "https://www.youtube-nocookie.com", 
-            "https://www.youtube.com", 
-            "https://player.vimeo.com",
-            "https://w.soundcloud.com"
-          ],
-          upgradeInsecureRequests: [],
-        },
-      },
+      contentSecurityPolicy: false,
       crossOriginEmbedderPolicy: false,
     })
   );
 
+  app.use(
+    "/api",
+    helmet({
+      contentSecurityPolicy: {
+        useDefaults: false,
+        directives: apiCspDirectives,
+      },
+      crossOriginEmbedderPolicy: false,
+    })
+  );
   app.use("/api", createApiResponseHardening());
   app.use("/api", createBrowserApiGuard());
   app.use(

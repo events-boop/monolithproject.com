@@ -21,31 +21,55 @@ interface SocialSnapshot {
     }>;
 }
 
+const EMPTY_SNAPSHOT: SocialSnapshot = {
+    summary: {
+        totalGoing: 0,
+        totalPending: 0,
+        liveEvents: 0,
+    },
+    events: [],
+    activity: [],
+};
+
 export default function SocialEchoTicker() {
-    const [snapshot, setSnapshot] = useState<SocialSnapshot | null>(null);
+    const [snapshot, setSnapshot] = useState<SocialSnapshot>(EMPTY_SNAPSHOT);
 
     useEffect(() => {
-        // Poll for stats
+        let cancelled = false;
+
         const fetchStats = async () => {
+            if (document.visibilityState === "hidden") return;
             try {
                 const res = await fetch("/api/social/echo");
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.ok) {
+                    if (!cancelled && data.ok) {
                         setSnapshot(data);
                     }
                 }
             } catch (e) {
-                console.error("Failed to fetch social echo", e);
+                if ((e as Error).name !== "AbortError") {
+                    console.error("Failed to fetch social echo", e);
+                }
             }
         };
 
-        fetchStats();
+        void fetchStats();
         const interval = setInterval(fetchStats, 30000); // 30s poll
-        return () => clearInterval(interval);
-    }, []);
 
-    if (!snapshot) return null;
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "visible") {
+                void fetchStats();
+            }
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        return () => {
+            cancelled = true;
+            clearInterval(interval);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
+    }, []);
 
     // Transform activity into marquee items
     const items: Array<{ type: "activity" | "stat" | "sales"; label: string; sub?: string }> = [];

@@ -129,7 +129,7 @@ export const insightEntries: InsightEntry[] = [
     relatedLinks: [
       { label: CTA_LABELS.tickets, href: "/tickets" },
       { label: CTA_LABELS.schedule, href: "/schedule" },
-      { label: "Explore The Archive", href: "/archive" },
+      { label: "View Event Archive", href: "/archive" },
     ],
     sections: [
       {
@@ -169,9 +169,9 @@ export const insightEntries: InsightEntry[] = [
     accent: "story",
     tags: ["Fan Feature", "Togetherness", "Room Culture"],
     relatedLinks: [
-      { label: "Browse Archive", href: "/archive" },
+      { label: "View Event Archive", href: "/archive" },
       { label: "Read The Night Guide", href: "/guide" },
-      { label: "Join The Inner Circle", href: "/newsletter" },
+      { label: "Join The Newsletter", href: "/newsletter" },
     ],
     sections: [
       {

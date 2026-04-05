@@ -53,12 +53,16 @@ function buildBucketKey(scope: string, identifier: string) {
 }
 
 function setRateLimitHeaders(res: Response, result: RateLimitResult) {
-  const resetAtMs = Date.parse(result.resetAt);
-  const resetAtUnix = Number.isFinite(resetAtMs) ? Math.ceil(resetAtMs / 1000) : 0;
+  const exposePolicy = process.env.RATE_LIMIT_DEBUG_HEADERS === "true";
 
-  res.setHeader("RateLimit-Limit", String(result.limit));
-  res.setHeader("RateLimit-Remaining", String(result.remaining));
-  res.setHeader("RateLimit-Reset", String(resetAtUnix));
+  if (exposePolicy) {
+    const resetAtMs = Date.parse(result.resetAt);
+    const resetAtUnix = Number.isFinite(resetAtMs) ? Math.ceil(resetAtMs / 1000) : 0;
+
+    res.setHeader("RateLimit-Limit", String(result.limit));
+    res.setHeader("RateLimit-Remaining", String(result.remaining));
+    res.setHeader("RateLimit-Reset", String(resetAtUnix));
+  }
 
   if (!result.allowed) {
     res.setHeader("Retry-After", String(result.retryAfterSec));

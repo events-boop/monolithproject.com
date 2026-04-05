@@ -1,15 +1,14 @@
-import { useMemo } from "react";
 import FunnelWaitlist from "@/components/FunnelWaitlist";
 import GiveawayFunnel from "@/components/GiveawayFunnel";
 import CoordinatesFunnel from "@/components/CoordinatesFunnel";
-import { upcomingEvents } from "@/data/events";
+import { getEventById } from "@/lib/siteExperience";
 
 interface EventFunnelStackProps {
     eventId: string;
 }
 
 export default function EventFunnelStack({ eventId }: EventFunnelStackProps) {
-    const event = useMemo(() => upcomingEvents.find((e) => e.id === eventId), [eventId]);
+    const event = getEventById(eventId);
 
     if (!event || !event.activeFunnels || event.activeFunnels.length === 0) {
         return null;

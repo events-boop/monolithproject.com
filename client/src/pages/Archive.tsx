@@ -110,7 +110,7 @@ const archiveData: ArchiveSeason[] = [
         season: "Season I",
         year: "2024",
         title: "Untold Story",
-        subtitle: "Late night. Immersive. The first chapter.",
+        subtitle: "Late night, immersive, and the first Untold Story season.",
         status: "past",
         accentColor: "#8B5CF6",
         borderColor: "rgba(139,92,246,0.25)",
@@ -154,7 +154,7 @@ const archiveData: ArchiveSeason[] = [
         season: "Season III",
         year: "2026",
         title: "Untold Story",
-        subtitle: "The most ambitious chapter yet. In progress.",
+        subtitle: "The biggest season yet. In progress.",
         status: "active",
         accentColor: "#8B5CF6",
         borderColor: "rgba(139,92,246,0.4)",
@@ -241,7 +241,7 @@ export default function Archive() {
                         className="mb-16"
                     >
                         <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
-                            — The History
+                            Event Archive
                         </span>
                         <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
                             ARCHIVE
@@ -254,7 +254,7 @@ export default function Archive() {
                             className="h-[2px] w-36 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-6"
                         />
                         <p className="text-white/45 max-w-xl leading-relaxed">
-                            Every season. Every chapter. The full story of what we've built — and what's still coming.
+                            Every season, every event, and every gallery we have published so far.
                         </p>
                     </motion.div>
 
@@ -395,14 +395,14 @@ export default function Archive() {
                                                                     <div key={eIdx} className="space-y-8">
                                                                         <div className="flex flex-wrap gap-x-12 gap-y-6">
                                                                             <div className="flex flex-col gap-2">
-                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Temporal</span>
+                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Date</span>
                                                                                 <div className="flex items-center gap-3 text-white text-lg font-display uppercase">
                                                                                     <Calendar className="w-4 h-4" style={{ color: season.accentColor }} />
                                                                                     {event.date}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="flex flex-col gap-2">
-                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Geographic</span>
+                                                                                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">Location</span>
                                                                                 <div className="flex items-center gap-3 text-white text-lg font-display uppercase">
                                                                                     <MapPin className="w-4 h-4" style={{ color: season.accentColor }} />
                                                                                     {event.venue} — {event.location}
@@ -411,7 +411,7 @@ export default function Archive() {
                                                                         </div>
 
                                                                         <div>
-                                                                            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 block mb-4">Frequency Selector</span>
+                                                                            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 block mb-4">Lineup</span>
                                                                             <p className="text-xl md:text-2xl font-display text-white/80 leading-snug tracking-wider">
                                                                                 {event.lineup}
                                                                             </p>
@@ -430,7 +430,7 @@ export default function Archive() {
                                                                                 <Link href={galleryHref} asChild>
                                                                                     <a className="px-8 py-4 border border-white/20 hover:bg-white hover:text-black transition-all duration-300 font-mono text-[10px] tracking-widest uppercase flex items-center gap-3 group/btn">
                                                                                         <Play className="w-3 h-3 transition-transform group-hover/btn:scale-110" />
-                                                                                        Access Archive
+                                                                                        View Gallery
                                                                                     </a>
                                                                                 </Link>
                                                                             )}
@@ -467,7 +467,7 @@ export default function Archive() {
                     >
                         <div>
                             <p className="font-display text-2xl uppercase text-white mb-1">What's Next</p>
-                            <p className="text-sm text-white/40">The next chapter is already in motion.</p>
+                            <p className="text-sm text-white/40">The next events are already on the calendar.</p>
                         </div>
                         <Link href="/schedule" asChild>
                             <a className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-mono text-[10px] tracking-widest uppercase hover:bg-primary/85 transition-all">

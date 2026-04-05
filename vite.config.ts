@@ -39,12 +39,14 @@ export default defineConfig(({ mode }) => {
       minify: "esbuild",
       rollupOptions: {
         output: {
+          chunkFileNames: "assets/[hash].js",
+          entryFileNames: "assets/[hash].js",
+          assetFileNames: "assets/[hash][extname]",
           // Only pin chunks that are either core to the shell or genuinely shared.
           // Let Rollup keep route-specific libraries with their routes instead of
           // flattening everything into one preloaded fallback bundle.
           manualChunks(id) {
             if (!id.includes("node_modules")) return;
-            // Keep React + its runtime helpers together to avoid circular chunk graphs.
             if (
               id.includes("node_modules/react/") ||
               id.includes("node_modules/react-dom/") ||
@@ -52,16 +54,16 @@ export default defineConfig(({ mode }) => {
               id.includes("node_modules/use-sync-external-store/") ||
               id.includes("node_modules/react-is/")
             )
-              return "vendor-react";
-            if (id.includes("framer-motion")) return "vendor-motion";
-            if (id.includes("@radix-ui") || id.includes("cmdk") || id.includes("vaul")) return "vendor-ui";
-            if (id.includes("posthog-js")) return "vendor-analytics";
-            if (id.includes("react-hook-form") || id.includes("@hookform/resolvers") || id.includes("input-otp")) return "vendor-forms";
-            if (id.includes("react-day-picker")) return "vendor-calendar";
-            if (id.includes("recharts")) return "vendor-charts";
-            if (id.includes("cobe")) return "vendor-globe";
-            if (id.includes("react-photo-album") || id.includes("yet-another-react-lightbox")) return "vendor-gallery";
-            if (id.includes("zod")) return "vendor-zod";
+              return "c0";
+            if (id.includes("framer-motion")) return "c1";
+            if (id.includes("@radix-ui") || id.includes("cmdk") || id.includes("vaul")) return "c2";
+            if (id.includes("posthog-js")) return "c3";
+            if (id.includes("react-hook-form") || id.includes("@hookform/resolvers") || id.includes("input-otp")) return "c4";
+            if (id.includes("react-day-picker")) return "c5";
+            if (id.includes("recharts")) return "c6";
+            if (id.includes("cobe")) return "c7";
+            if (id.includes("react-photo-album") || id.includes("yet-another-react-lightbox")) return "c8";
+            if (id.includes("zod")) return "c9";
             return undefined;
           },
         },

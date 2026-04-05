@@ -67,11 +67,11 @@ export default function FeaturedCampaigns() {
                 Active Campaigns
               </span>
               <h2 className="font-display text-[clamp(1.8rem,6vw,3.5rem)] md:text-5xl uppercase text-white tracking-widest">
-                Priority Targets
+                Upcoming Highlights
               </h2>
             </div>
             <p className="text-white/72 max-w-sm text-sm">
-              Discover the defining chapters of The Monolith Project. Secure your place at our upcoming flagship sessions.
+              Start with the biggest upcoming Monolith events and the latest radio release.
             </p>
         </div>
 
@@ -186,9 +186,9 @@ export default function FeaturedCampaigns() {
             {/* Spotify Feature */}
             <div className="relative border border-white/10 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
                 <div className="mb-6">
-                   <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 mb-3 block">Newest Episode</span>
-                   <h3 className="font-display text-2xl uppercase text-white mb-2">Radio Transmission</h3>
-                   <p className="text-white/82 text-xs leading-relaxed">Open the newest Chasing Sun(Sets) mix in the full radio archive instead of a third-party embed.</p>
+                   <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 mb-3 block">Radio Show</span>
+                   <h3 className="font-display text-2xl uppercase text-white mb-2">Chasing Sun(Sets) Radio Show</h3>
+                   <p className="text-white/82 text-xs leading-relaxed">Open the newest mix in the full Chasing Sun(Sets) Radio Show archive instead of a third-party embed.</p>
                 </div>
 
                 <div className="w-full relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 p-5 md:p-6">
@@ -197,7 +197,7 @@ export default function FeaturedCampaigns() {
                       <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#E05A3A]">Latest Audio Drop</span>
                       <h4 className="mt-3 font-display text-2xl uppercase text-white leading-none">Chasing Sun(Sets) Radio</h4>
                       <p className="mt-3 text-sm leading-relaxed text-white/78">
-                        Launch the full player, browse the recent transmissions, and listen in an accessible view without the embedded SoundCloud chrome.
+                        Launch the full player, browse recent episodes, and listen in a cleaner view without the embedded SoundCloud chrome.
                       </p>
                     </div>
                     <div className="shrink-0 rounded-full border border-white/15 bg-white/5 p-4">
@@ -208,7 +208,7 @@ export default function FeaturedCampaigns() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link href="/radio" asChild>
                       <a className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white">
-                        Open Radio
+                        Open Radio Show
                         <ArrowUpRight className="h-4 w-4" />
                       </a>
                     </Link>

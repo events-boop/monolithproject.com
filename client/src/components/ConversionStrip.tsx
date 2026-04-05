@@ -80,19 +80,19 @@ export default function ConversionStrip() {
           <div className="flex flex-col gap-6 max-w-sm">
             <div className="flex flex-wrap gap-2">
               <span className={`px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] text-black ${themeBg}`}>
-                Limited Window
+                {event.status === "on-sale" ? "Ticket Window" : "Next Event"}
               </span>
               <span className="px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] border border-white/20 text-white/60">
-                Level 01 Entry
+                Early Access
               </span>
             </div>
             <div>
               <h2 className="font-heavy text-3xl md:text-4xl uppercase tracking-tighter leading-[0.9] text-white">
-                {cta.label === CTA_LABELS.tickets ? "ACCESS OPEN" : "NEXT SIGNAL"}<br />
-                <span style={{ color: themeColor }}>{event.headline || "SYSTEM SCANNING"}</span>
+                {cta.label === CTA_LABELS.tickets ? "TICKETS LIVE" : "NEXT EVENT"}<br />
+                <span style={{ color: themeColor }}>{event.headline || "EVENT DETAILS COMING SOON"}</span>
               </h2>
               <p className="mt-4 font-sans text-sm text-white/40 leading-relaxed uppercase tracking-widest text-[10px]">
-                {event.status === 'on-sale' ? "Limited inventory available. Synchronize for Level 01 entry." : "Join the priority list for early access coordinates."}
+                {event.status === 'on-sale' ? "Limited inventory available. Book early while tickets are live." : "Join the newsletter to hear about the next ticket window before the public release."}
               </p>
             </div>
           </div>

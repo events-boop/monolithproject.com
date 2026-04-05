@@ -9,13 +9,14 @@ import SEO from "@/components/SEO";
 import { Link } from "wouter";
 import HoneypotField from "@/components/HoneypotField";
 import { submitBookingInquiry } from "@/lib/api";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 const vipSchema = z.object({
     name: z.string().min(2, "Name is required"),
     email: z.string().email("Invalid email address"),
     guests: z.string().min(1, "Guest count required"),
     phone: z.string().min(10, "Phone number required"),
-    metadata_correlation_id: z.string().optional(),
+    [honeypotFieldName]: z.string().optional(),
     honeypot: z.string().optional(),
 });
 
@@ -54,7 +55,7 @@ export default function VIP() {
                 entity: "VIP Table Request",
                 type: "general",
                 message: `Phone: ${data.phone}\nGuests: ${data.guests}\n\nInterest: VIP Table Service`,
-                metadata_correlation_id: data.metadata_correlation_id || undefined,
+                [honeypotFieldName]: data[honeypotFieldName] || undefined,
             });
             setIsSubmitted(true);
         } catch (e) {
@@ -135,7 +136,7 @@ export default function VIP() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-                                <HoneypotField {...register("metadata_correlation_id")} />
+                                <HoneypotField {...register(honeypotFieldName)} />
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <input {...register("name")} placeholder="Full Name" className={inputClass} />
                                     <input {...register("phone")} placeholder="Phone Number" className={inputClass} />
@@ -144,20 +145,28 @@ export default function VIP() {
                                     <input {...register("email")} placeholder="Email Address" className={inputClass} />
                                     <input {...register("guests")} placeholder="Number of Guests" className={inputClass} />
                                 </div>
-                                <button type="submit" disabled={isSubmitting} className="w-full py-5 bg-primary text-white font-black tracking-[0.3em] uppercase text-xs hover:bg-primary/90 transition-all rounded shadow-[0_20px_40px_rgba(224,90,58,0.2)]">
-                                    {isSubmitting ? "Processing..." : "Submit VIP Request"}
-                                </button>
-                                
-                                <div className="mt-12 flex flex-col sm:flex-row gap-8 items-center justify-center border-t border-white/10 pt-12">
-                                  <Link href="/tickets" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-primary uppercase transition-colors flex items-center gap-2 group">
-                                     Get Tickets
-                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                                  </Link>
-                                  <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-primary uppercase transition-colors flex items-center gap-2 group">
-                                     Join SMS Updates
-                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                                  </Link>
-                                </div>
+                                 <button 
+                                     type="submit" 
+                                     disabled={isSubmitting} 
+                                     className={`w-full py-5 font-black tracking-[0.3em] uppercase text-[10px] transition-all rounded-none cta-fillout ${isSubmitting ? 'opacity-50' : ''}`}
+                                 >
+                                     {isSubmitting ? "Processing..." : "Submit VIP Request"}
+                                 </button>
+                                 
+                                 <div className="mt-12 flex flex-col sm:flex-row gap-12 items-center justify-center border-t border-white/5 pt-12">
+                                   <Link href="/tickets">
+                                      <a className="cta-ghost">
+                                         Get Tickets
+                                         <ArrowUpRight className="w-3 h-3 ml-2 opacity-40 group-hover:opacity-100" />
+                                      </a>
+                                   </Link>
+                                   <Link href="/newsletter">
+                                      <a className="cta-ghost">
+                                         Join SMS Updates
+                                         <ArrowUpRight className="w-3 h-3 ml-2 opacity-40 group-hover:opacity-100" />
+                                      </a>
+                                   </Link>
+                                 </div>
 
                                 {submitError && (
                                     <div className="flex items-center gap-2 text-red-400 text-xs bg-red-400/5 p-3 rounded border border-red-400/10 mt-4">

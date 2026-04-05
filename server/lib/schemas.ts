@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 export type LeadProvider = "mailchimp" | "beehiiv" | "convertkit" | "hubspot" | "brevo" | "emailoctopus";
 
@@ -46,6 +47,11 @@ const attributionFields = {
   lastMsclkid: shortText(200),
 } as const;
 
+const honeypotFields = {
+  [honeypotFieldName]: z.string().max(10).optional(),
+  metadata_correlation_id: z.string().max(10).optional(),
+} as const;
+
 export const leadSchema = z.object({
   email: z.string().email(),
   firstName: z.string().trim().max(80).optional(),
@@ -60,7 +66,7 @@ export const leadSchema = z.object({
   eventSeries: z.string().trim().max(80).optional(),
   eventTitle: z.string().trim().max(160).optional(),
   interestTags: shortArray(12, 80),
-  metadata_correlation_id: z.string().max(10).optional(),
+  ...honeypotFields,
   ...attributionFields,
 });
 
@@ -78,12 +84,12 @@ export const bookingInquirySchema = z.object({
   type: z.enum(["partner-on-location", "artist-booking", "sponsorship", "general"]),
   location: z.string().trim().max(180).optional(),
   message: z.string().trim().min(10).max(5000),
-  metadata_correlation_id: z.string().max(10).optional(),
+  ...honeypotFields,
 });
 
 export const sponsorAccessSchema = z.object({
   password: z.string().trim().min(1).max(256),
-  metadata_correlation_id: z.string().max(10).optional(),
+  ...honeypotFields,
 });
 
 export const contactSchema = z.object({
@@ -91,7 +97,7 @@ export const contactSchema = z.object({
   email: z.string().trim().email().max(320),
   subject: z.string().trim().min(2).max(200),
   message: z.string().trim().min(2).max(5000),
-  metadata_correlation_id: z.string().max(10).optional(),
+  ...honeypotFields,
 });
 
 export const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());

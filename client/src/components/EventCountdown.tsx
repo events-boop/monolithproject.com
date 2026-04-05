@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { upcomingEvents } from "@/data/events";
+import { getPublicEvents } from "@/lib/siteData";
 
 export function getEventById(id: string) {
-  return upcomingEvents.find(e => e.id === id);
+  return getPublicEvents().find(e => e.id === id);
 }
 
 function getNextEvent(eventId?: string) {
+  const upcomingEvents = getPublicEvents();
   if (eventId) {
     const specificEvent = getEventById(eventId);
     if (specificEvent) return specificEvent;
@@ -167,7 +168,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               >
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${accentBg}`} />
                 <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
-                  Join The Inner Circle
+                  Get Updates
                 </span>
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />

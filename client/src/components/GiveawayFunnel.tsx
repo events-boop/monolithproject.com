@@ -11,6 +11,8 @@ import {
     normalizeInstagramHandle,
     splitFullName,
 } from "@/lib/leadCapture";
+import HoneypotField from "./HoneypotField";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 interface GiveawayFunnelProps {
     event?: ScheduledEvent;
@@ -54,7 +56,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                         interestTags: ["giveaway", "social-share"],
                     }),
                     utmContent: instagramHandle ? `ig:${instagramHandle}` : undefined,
-                    metadata_correlation_id: botCheck || undefined,
+                    [honeypotFieldName]: botCheck || undefined,
                 },
                 buildLeadIdempotencyKey("giveaway_funnel", email, event?.id),
             );
@@ -247,16 +249,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                         </div>
 
                                         {/* Honeypot: Bot Trap */}
-                                        <div style={{ opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, pointerEvents: 'none' }} aria-hidden="true">
-                                          <input
-                                            type="text"
-                                            name="metadata_correlation_id"
-                                            value={botCheck}
-                                            onChange={(e) => setBotCheck(e.target.value)}
-                                            tabIndex={-1}
-                                            autoComplete="off"
-                                          />
-                                        </div>
+                                        <HoneypotField value={botCheck} onChange={(e) => setBotCheck(e.target.value)} />
 
                                         <div className="space-y-4">
                                             <div className="relative group">

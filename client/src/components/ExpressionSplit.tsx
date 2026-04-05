@@ -30,9 +30,9 @@ const expressions = [
   {
     id: "radio",
     number: "03",
-    label: "Signal",
+    label: "Radio",
     title: "Radio Show",
-    tagline: "The listening chapter. Mixes, artist sessions, and signal.",
+    tagline: "Mixes, guest sets, and full replays.",
     color: "#FFFFFF",
     image: "/images/radio-show.jpg",
     href: "/radio",
@@ -42,8 +42,8 @@ const expressions = [
     id: "archive",
     number: "04",
     label: "Archive",
-    title: "Media & Insight",
-    tagline: "The captured moments and recorded history. A collective record.",
+    title: "Event Archive",
+    tagline: "Photos, recaps, and recorded history.",
     color: "#E05A3A",
     image: "/images/video-poster-1.jpg",
     href: "/archive",
@@ -138,7 +138,7 @@ export default function ExpressionSplit() {
                      </p>
                      
                      <div className="mt-8 flex items-center gap-4 text-white hover:text-white transition-colors">
-                        <span className="ui-chip">Enter Expression</span>
+                        <span className="ui-chip">Open Page</span>
                         <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300">
                            <ArrowUpRight className="h-5 w-5" />
                         </div>
@@ -149,7 +149,7 @@ export default function ExpressionSplit() {
                 {/* Mobile Interaction Signal */}
                 <div className="lg:hidden mt-6 flex items-center gap-3">
                   <div className="h-px w-6 bg-white/30" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50">Intercept Signal</span>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50">Open Page</span>
                 </div>
               </div>
 

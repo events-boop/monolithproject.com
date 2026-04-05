@@ -1,17 +1,18 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Play, Mic2, Star, BookOpen, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Play, Mic2, Star, BookOpen, Clock, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import KineticDecryption from "./KineticDecryption";
 import MagneticButton from "./MagneticButton";
 import CommunityDropdown from "./CommunityDropdown";
-import { isEventBannerVisible } from "@/lib/eventBanner";
+import { getEventBannerPayload, isEventBannerVisible } from "@/lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
 import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
+import { getEventCta } from "@/lib/cta";
 
 interface NavigationProps {
   activeSection?: string;
@@ -24,51 +25,51 @@ const navItems: {
   href: string;
   children?: { label: string; href: string }[];
 }[] = [
-  { label: "THE MONOLITH", href: "/about" },
-  { label: "SUN(SETS) & RADIO", href: "/chasing-sunsets" },
-  { label: "UNTOLD STORY", href: "/story" },
-  { label: "ARCHIVE", href: "/archive" },
-  { label: "JOURNAL", href: "/insights" },
-  {
-    label: "PARTNERS",
-    href: "/partners",
-    children: [
-      { label: "OUR PARTNERS", href: "/partners" },
-      { label: "SPONSOR ACCESS", href: "/sponsors" },
-      { label: "BOOKING", href: "/booking" },
-      { label: "ARTIST SUBMISSION", href: "/submit" },
-      { label: "PRESS & MEDIA", href: "/press" },
-    ],
-  },
-  { label: "CONTACT", href: "/contact" },
-];
+    { label: "THE MONOLITH", href: "/about" },
+    { label: "SUN(SETS) & RADIO", href: "/chasing-sunsets" },
+    { label: "UNTOLD STORY", href: "/story" },
+    { label: "ARCHIVE", href: "/archive" },
+    { label: "ARTICLES", href: "/insights" },
+    {
+      label: "PARTNERS",
+      href: "/partners",
+      children: [
+        { label: "OUR PARTNERS", href: "/partners" },
+        { label: "SPONSOR ACCESS", href: "/sponsors" },
+        { label: "BOOKING", href: "/booking" },
+        { label: "ARTIST SUBMISSION", href: "/submit" },
+        { label: "PRESS & MEDIA", href: "/press" },
+      ],
+    },
+    { label: "CONTACT", href: "/contact" },
+  ];
 
 const mobilePrimaryItems = [
-  { 
-    label: "THE MONOLITH", 
+  {
+    label: "THE MONOLITH",
     href: "/about",
     subItems: [
-      { label: "THE STORY", href: "/about#story" },
-      { label: "THE VISION", href: "/about#vision" },
-      { label: "MANIFESTO", href: "/about#manifesto" }
+      { label: "ABOUT", href: "/about#story" },
+      { label: "HOW IT WORKS", href: "/about#vision" },
+      { label: "PRINCIPLES", href: "/about#manifesto" }
     ]
   },
-  { 
-    label: "SUN(SETS) & RADIO", 
+  {
+    label: "SUN(SETS) & RADIO",
     href: "/chasing-sunsets",
     subItems: [
-      { label: "RADIO HUB", href: "/radio" },
-      { label: "LATEST SHOW", href: "/radio/autograf" },
+      { label: "RADIO SHOW", href: "/radio" },
+      { label: "LATEST SHOW", href: "/radio/ep-01-benchek" },
       { label: "SCHEDULE", href: "/schedule" }
     ]
   },
-  { 
-    label: "UNTOLD STORY", 
+  {
+    label: "UNTOLD STORY",
     href: "/story",
     subItems: [
       { label: "THE VISION", href: "/story#vision" },
       { label: "PRIVATE TABLES", href: "/vip" },
-      { label: "DRESS CODE", href: "/guide#dress" }
+      { label: "ENTRY CHECKLIST", href: "/guide#entry" }
     ]
   }
 ];
@@ -96,25 +97,15 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
   const resolvedVariant = variant ?? scene.variant;
   const resolvedBrand = brand ?? scene.brand;
   const isLight = resolvedVariant === "light";
-  const ticketHref = getPrimaryTicketUrl(getExperienceEvent("ticket"));
+  const ticketEvent = getExperienceEvent("ticket");
+  const ticketHref = getPrimaryTicketUrl(ticketEvent);
+  const cta = getEventCta(ticketEvent);
   const hasEventBanner = isEventBannerVisible(location);
+  const bannerPayload = hasEventBanner ? getEventBannerPayload() : null;
   const mobileMenuId = "nav-mobile-menu";
-
-  const { scrollY } = useScroll();
-  const navBlur = "none";
-
-  // Dynamic values for light/dark mode - Fixed: Hooks must be unconditional
-  const bgValueLight = useTransform(scrollY, [0, 50], ["rgba(251, 245, 237, 0)", "rgba(251, 245, 237, 0.85)"]);
-  const bgValueDark = useTransform(scrollY, [0, 50], ["rgba(10, 10, 10, 0)", "rgba(10, 10, 10, 0.85)"]);
-  const bgValue = isLight ? bgValueLight : bgValueDark;
-
-  const borderValueLight = useTransform(scrollY, [0, 50], ["transparent", "rgba(21, 2, 217, 0.05)"]);
-  const borderValueDark = useTransform(scrollY, [0, 50], ["transparent", "rgba(255, 255, 255, 0.08)"]);
-  const borderValue = isLight ? borderValueLight : borderValueDark;
 
   const [currentChapter, setCurrentChapter] = useState<{ number: string; label: string } | null>(null);
   const isHome = location === "/";
-  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     if (!isHome) {
@@ -125,12 +116,12 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     const sections = [
       { id: "series", number: "01", label: "SERIES" },
       { id: "season", number: "02", label: "SEASON" },
-      { id: "collective", number: "03", label: "COLLECTIVE" },
+      { id: "collective", number: "03", label: "PHILOSOPHY" },
       { id: "roster", number: "04", label: "ROSTER" },
-      { id: "journal", number: "05", label: "JOURNAL" },
+      { id: "journal", number: "05", label: "ARTICLES" },
       { id: "archive", number: "06", label: "ARCHIVE" },
-      { id: "mixes", number: "07", label: "MIXES" },
-      { id: "community", number: "08", label: "COMMUNITY" },
+      { id: "mixes", number: "07", label: "RADIO SHOW" },
+      { id: "community", number: "08", label: "NEWSLETTER" },
     ];
 
     const observer = new IntersectionObserver(
@@ -139,7 +130,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        
+
         if (visible.length > 0) {
           const matched = sections.find(s => s.id === visible[0].target.id);
           if (matched) setCurrentChapter({ number: matched.number, label: matched.label });
@@ -157,16 +148,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
     return () => observer.disconnect();
   }, [isHome, location]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show logo after scrolling past the hero section (~25vh)
-      setIsScrolled(window.scrollY > (window.innerHeight * 0.25));
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -196,13 +177,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     setMobileMenuOpen(false);
   }, [location]);
 
-  // Publish the actual shell metrics so first-screen sections can stay aligned
-  // with the fixed banner + nav stack across breakpoints.
+  // Publish the actual header shell metrics so first-screen sections stay aligned
+  // with the fixed framed header across breakpoints.
   useLayoutEffect(() => {
     const root = document.documentElement;
 
     const syncShellMetrics = () => {
-      root.style.setProperty("--shell-banner-height", hasEventBanner ? "3rem" : "0px");
+      root.style.setProperty("--shell-banner-height", "0px");
       root.style.setProperty("--shell-nav-height", `${navRef.current?.offsetHeight ?? 76}px`);
     };
 
@@ -310,13 +291,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
   const handleNavClick = (href: string) => {
     signalChirp.click();
-    
+
     // Improved deep routing for anchors and cross-page anchors
     if (href.includes("#")) {
       const [path, hash] = href.split("#");
       const normalizedPath = path === "" ? "/" : path;
       const targetId = hash;
-      
+
       if (location === normalizedPath || (location === "/" && normalizedPath === "/")) {
         // Current page, just scroll
         const element = document.getElementById(targetId);
@@ -380,11 +361,8 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
         style={{
           top: "var(--shell-nav-offset)",
-          backgroundColor: bgValue,
-          backdropFilter: navBlur,
-          borderColor: borderValue
         }}
-        className="fixed left-0 right-0 z-[10001] px-3 py-2.5 transition-colors duration-500 sm:px-4 sm:py-3 pointer-events-auto"
+        className="fixed left-0 right-0 z-[10001] px-2.5 py-2.5 sm:px-4 sm:py-3 pointer-events-none"
       >
         <a
           href="#main-content"
@@ -393,14 +371,58 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               document.getElementById("main-content")?.focus();
             }, 0);
           }}
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:px-4 focus:py-3 focus:rounded-md focus:bg-black focus:text-white focus:ring-2 focus:ring-primary/70"
+          className="pointer-events-auto sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:px-4 focus:py-3 focus:rounded-md focus:bg-black focus:text-white focus:ring-2 focus:ring-primary/70"
         >
           Skip to content
         </a>
-        <div
-          className={`mx-auto w-[98%] max-w-[1920px] rounded-[1.75rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
-        >
-          <div className="w-full px-5 sm:px-6 xl:px-8 py-2 lg:py-3 flex items-center justify-between">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-2 sm:w-[98%] sm:gap-3">
+          {bannerPayload && bannerPayload.status !== "past" ? (
+            <a
+              href={bannerPayload.ticketUrl || "/newsletter"}
+              target={bannerPayload.ticketUrl && /^https?:\/\//i.test(bannerPayload.ticketUrl) ? "_blank" : undefined}
+              rel={bannerPayload.ticketUrl && /^https?:\/\//i.test(bannerPayload.ticketUrl) ? "noopener noreferrer" : undefined}
+              aria-label={
+                bannerPayload.ticketUrl
+                  ? "Open tickets for current featured event"
+                  : "Request early access for the current featured event"
+              }
+              className="group relative block overflow-hidden rounded-[1rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80"
+            >
+              <div
+                className="relative h-10 sm:h-11"
+                style={
+                  bannerPayload.status === "live"
+                    ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
+                    : { background: "linear-gradient(100deg, #30140f 0%, #7e3622 28%, #e05a3a 62%, #f39c6b 100%)" }
+                }
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_55%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_78%_45%,rgba(255,220,180,0.28),transparent_35%)]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-transparent to-black/10" />
+                <div className="flex h-full items-center overflow-hidden whitespace-nowrap">
+                  <div className="flex animate-marquee-fast whitespace-nowrap">
+                    {Array(10)
+                      .fill(bannerPayload.text)
+                      .map((text, index) => (
+                        <span key={index} className="relative z-10 inline-flex items-center">
+                          <span className="mx-4 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-white/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
+                            {bannerPayload.status === "live" ? (
+                              <span className="mr-3 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-white align-middle" />
+                            ) : null}
+                            {text}
+                          </span>
+                          <Ticket className="mx-2 h-5 w-5 text-white/90 sm:mx-3 sm:h-6 sm:w-6" />
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          ) : null}
+
+          <div
+            className={`rounded-[1.4rem] sm:rounded-[1.75rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
+          >
+            <div className="flex min-h-[3.85rem] w-full items-center justify-between px-4 py-2 sm:min-h-[4.25rem] sm:px-6 xl:px-8 lg:py-3">
             {/* LEFT: LOGO */}
             <div className="shrink-0 mr-4 lg:mr-8 xl:mr-12 flex items-center gap-4">
               <MagneticButton strength={0.25}>
@@ -413,32 +435,29 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                   {/* The Monolith Pillar Signal */}
                   <div className="relative flex items-end justify-center w-5 h-6">
                     <div className={`w-[2px] h-full ${isLight ? "bg-stone/20" : "bg-white/10"} absolute bottom-0`} />
-                    <div 
-                      className={`w-[4px] h-[70%] relative z-10 rounded-t-[1px] group-hover:scale-y-110 transition-transform duration-500 ${
-                        resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold" : 
-                        resolvedBrand === "untold-story" ? "bg-untold-cyan" : 
-                        isLight ? "bg-clay" : "bg-primary"
-                      }`} 
+                    <div
+                      className={`w-[4px] h-[70%] relative z-10 rounded-t-[1px] group-hover:scale-y-110 transition-transform duration-500 ${resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold" :
+                        resolvedBrand === "untold-story" ? "bg-untold-cyan" :
+                          isLight ? "bg-clay" : "bg-primary"
+                        }`}
                     />
-                    <div 
-                      className={`absolute -bottom-1 w-4 h-[1px] blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                        resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold/40" : 
-                        resolvedBrand === "untold-story" ? "bg-untold-cyan/40" : 
-                        isLight ? "bg-clay/40" : "bg-primary/40"
-                      }`} 
+                    <div
+                      className={`absolute -bottom-1 w-4 h-[1px] blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold/40" :
+                        resolvedBrand === "untold-story" ? "bg-untold-cyan/40" :
+                          isLight ? "bg-clay/40" : "bg-primary/40"
+                        }`}
                     />
                   </div>
-                  
-                  <span className={`text-[clamp(1.1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${
-                    resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" : 
-                    resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" : 
-                    resolvedBrand === "radio" ? "font-radio text-rose-500" :
-                    isLight ? "font-heavy text-charcoal group-hover:text-clay" : "font-heavy text-white group-hover:text-primary"
-                  }`}>
-                    {resolvedBrand === "chasing-sunsets" ? "CHASING SUN(SETS)" : 
-                     resolvedBrand === "untold-story" ? "Untold Story" : 
-                     resolvedBrand === "radio" ? "MONOLITH RADIO" :
-                     "MONOLITH"}
+
+                  <span className={`text-[clamp(1.1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
+                    resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
+                      resolvedBrand === "radio" ? "font-radio text-rose-500" :
+                        isLight ? "font-heavy text-charcoal group-hover:text-clay" : "font-heavy text-white group-hover:text-primary"
+                    }`}>
+                    {resolvedBrand === "chasing-sunsets" ? "CHASING SUN(SETS)" :
+                      resolvedBrand === "untold-story" ? "Untold Story" :
+                        resolvedBrand === "radio" ? "MONOLITH RADIO" :
+                          "MONOLITH"}
                   </span>
                 </button>
               </MagneticButton>
@@ -452,29 +471,29 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     exit={{ opacity: 0, x: -10 }}
                     className="hidden xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none"
                   >
-                  <Link 
-            href="/" 
-            className="flex flex-col items-start gap-0.5 group pointer-events-auto"
-            onClick={() => {
-              signalChirp.click();
-              setMobileMenuOpen(false);
-            }}
-            onMouseEnter={() => signalChirp.hover()}
-          >
-            <span className={cn(
-              "font-heavy text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
-              isLight ? "text-black" : "text-white"
-            )}>
-              <KineticDecryption text="MONOLITH" />
-            </span>
-            <span className={cn(
-              "font-monolith text-[10px] md:text-[11px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
-              isLight ? "text-black/40" : "text-white/40"
-            )}>
-              <KineticDecryption text="PROJECT" />
-            </span>
-          </Link>
-  <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
+                    <Link
+                      href="/"
+                      className="flex flex-col items-start gap-0.5 group pointer-events-auto"
+                      onClick={() => {
+                        signalChirp.click();
+                        setMobileMenuOpen(false);
+                      }}
+                      onMouseEnter={() => signalChirp.hover()}
+                    >
+                      <span className={cn(
+                        "font-heavy text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
+                        isLight ? "text-black" : "text-white"
+                      )}>
+                        <KineticDecryption text="MONOLITH" />
+                      </span>
+                      <span className={cn(
+                        "font-monolith text-[10px] md:text-[11px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                        isLight ? "text-black/40" : "text-white/40"
+                      )}>
+                        <KineticDecryption text="PROJECT" />
+                      </span>
+                    </Link>
+                    <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
                       Chapter
                     </span>
                     <span className="font-heavy text-xs min-[1250px]:text-sm text-white/80 tabular-nums">
@@ -497,18 +516,18 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 onNavigate={handleNavClick}
                 megamenu={{
                   items: [
-                    { label: "THE STORY", href: "/about#story" },
-                    { label: "THE VISION", href: "/about#vision" },
-                    { label: "MANIFESTO", href: "/about#manifesto" },
+                    { label: "ABOUT", href: "/about#story" },
+                    { label: "HOW IT WORKS", href: "/about#vision" },
+                    { label: "PRINCIPLES", href: "/about#manifesto" },
                   ],
                   feature: {
-                    title: "THE MONOLITH HUB",
-                    subtitle: "Core Philosophy",
+                    title: "ABOUT MONOLITH",
+                    subtitle: "Project Overview",
                     image: "/images/hero-monolith.jpg",
                     href: "/about",
-                    ctaText: "Explore Concept",
+                    ctaText: "About Monolith",
                     icon: "arrow",
-                    badge: "STORY"
+                    badge: "ABOUT"
                   }
                 }}
               />
@@ -516,26 +535,26 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               <NavigationMegamenu
                 label="SUN(SETS) & RADIO"
                 href="/chasing-sunsets"
-                isActive={[ "/chasing-sunsets", "/radio" ].includes(location)}
+                isActive={["/chasing-sunsets", "/radio"].includes(location)}
                 isLight={isLight}
                 brand={resolvedBrand}
                 onNavigate={handleNavClick}
                 megamenu={{
                   items: [
-                    { label: "S1E1: AUTOGRAF", href: "/radio/autograf", icon: "play" },
-                    { label: "S1E2: LAZARE", href: "/radio/lazare", icon: "play" },
-                    { label: "S2E3: ERAN HERSH", href: "/radio/eran-hersh", icon: "play" },
-                    { label: "RADIO ARCHIVE", href: "/radio" },
-                    { label: "ABOUT SUN(SETS)", href: "/chasing-sunsets" },
+                    { label: "EP-01: BENCHEK", href: "/radio/ep-01-benchek", icon: "play" },
+                    { label: "EP-02: EWERSEEN", href: "/radio/ep-02-ewerseen", icon: "play" },
+                    { label: "EP-03: TERRANOVA", href: "/radio/ep-03-terranova", icon: "play" },
+                    { label: "RADIO SHOW", href: "/radio" },
+                    { label: "ABOUT THE SERIES", href: "/chasing-sunsets" },
                   ],
                   feature: {
-                    title: "LATEST TRANSMISSION",
-                    subtitle: "Chasing Sun(Sets) Radio",
+                    title: "LATEST EPISODE",
+                    subtitle: "Chasing Sun(Sets) Radio Show",
                     image: "/images/radio-show.jpg",
                     href: "/radio",
                     ctaText: "Listen Now",
                     icon: "play",
-                    badge: "STREAMS"
+                    badge: "LATEST MIX"
                   }
                 }}
               />
@@ -549,11 +568,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 onNavigate={handleNavClick}
                 megamenu={{
                   items: [
-                    { label: "THE VISION", href: "/story#vision" },
+                    { label: "ABOUT THE SERIES", href: "/story#vision" },
                     { label: "WHAT TO EXPECT", href: "/story#expect" },
-                    { label: "DRESS CODE", href: "/guide#dress" },
+                    { label: "ENTRY CHECKLIST", href: "/guide#entry" },
                     { label: "PRIVATE TABLES", href: "/vip" },
-                    { label: "STORY ARCHIVE", href: "/untold-story/season-1" },
+                    { label: "EVENT ARCHIVE", href: "/untold-story/season-1" },
                   ],
                   feature: {
                     title: "DERON B2B JUANY BRAVO",
@@ -568,26 +587,25 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 }}
               />
 
-              {navItems.filter(i => ![ "THE MONOLITH", "SUN(SETS) & RADIO", "UNTOLD STORY" ].includes(i.label)).map((item) =>
+              {navItems.filter(i => !["THE MONOLITH", "SUN(SETS) & RADIO", "UNTOLD STORY"].includes(i.label)).map((item) =>
                 item.children ? (
-                    <div 
-                      key={item.label} 
-                      className="relative shrink-0"
-                      onMouseEnter={() => { setOpenDropdownLabel(item.label); signalChirp.hover(); }}
-                      onMouseLeave={() => setOpenDropdownLabel(null)}
-                    >                      <button
-                        type="button"
-                        onClick={() => signalChirp.click()}
-                        aria-expanded={openDropdownLabel === item.label}
-                      aria-haspopup="menu"
-                      aria-controls={getDropdownMenuId(item.label)}
-                      className={`flex items-center gap-1.5 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...item.children.map(c => c.href)].includes(location))}`}
-                    >
+                  <div
+                    key={item.label}
+                    className="relative shrink-0"
+                    onMouseEnter={() => { setOpenDropdownLabel(item.label); signalChirp.hover(); }}
+                    onMouseLeave={() => setOpenDropdownLabel(null)}
+                  >                      <button
+                    type="button"
+                    onClick={() => signalChirp.click()}
+                    aria-expanded={openDropdownLabel === item.label}
+                    aria-haspopup="menu"
+                    aria-controls={getDropdownMenuId(item.label)}
+                    className={`flex items-center gap-1.5 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...item.children.map(c => c.href)].includes(location))}`}
+                  >
                       {item.label}
                       <ChevronDown
-                        className={`w-3 h-3 transition-transform duration-200 ${
-                          openDropdownLabel === item.label ? "rotate-180" : ""
-                        }`}
+                        className={`w-3 h-3 transition-transform duration-200 ${openDropdownLabel === item.label ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
                     <AnimatePresence>
@@ -627,7 +645,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <Link key={item.label} href={item.href}                    onMouseEnter={() => signalChirp.hover()}
+                  <Link key={item.label} href={item.href} onMouseEnter={() => signalChirp.hover()}
                     onClick={(e) => {
                       signalChirp.click();
                       if (handleUtilityLink(item.href)) {
@@ -638,11 +656,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     className={`group relative shrink-0 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getTopLevelClass(isActiveHref(item.href))}`}
                   >
                     <span className="relative z-10">{renderNavLabel(item.label)}</span>
-                    <motion.span 
+                    <motion.span
                       className="absolute -bottom-1 left-0 h-px bg-primary w-0 group-hover:w-full transition-all duration-500"
                       initial={false}
                     />
-                    <motion.span 
+                    <motion.span
                       className="absolute -inset-x-2 -inset-y-1 bg-white/[0.03] rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       initial={false}
                     />
@@ -654,16 +672,47 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
             {/* RIGHT: CTA & MOBILE TOGGLE */}
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0 justify-end">
+              <div className="sm:hidden">
+                <MagneticButton strength={0.16}>
+                  <a
+                    href={cta.href}
+                    target={cta.isExternal ? "_blank" : undefined}
+                    rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                    aria-label={cta.label}
+                    data-cursor-text={cta.tool === "posh" ? "RSVP" : "ACCESS"}
+                    onClick={() => signalChirp.click()}
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
+                      ? "border-transparent bg-primary text-black shadow-[0_8px_20px_rgba(224,90,58,0.24)]"
+                      : cta.tool === "laylo"
+                        ? "border-primary/35 bg-primary/10 text-primary"
+                        : "border-white/18 bg-white/[0.08] text-white"
+                      }`}
+                  >
+                    {cta.tool === "posh" ? <Ticket className="h-4 w-4" /> : cta.tool === "laylo" ? <Lock className="h-4 w-4" /> : <Zap className="h-4 w-4" />}
+                  </a>
+                </MagneticButton>
+              </div>
+
               {/* TICKETS BUTTON */}
               <div className="hidden sm:block">
                 <MagneticButton strength={0.2}>
-                  <a href={ticketHref || "/schedule"} target={ticketHref ? "_blank" : undefined} rel={ticketHref ? "noopener noreferrer" : undefined} data-cursor-text="TICKETS" onClick={() => signalChirp.click()}>
-                    <div className={`sunset-gradient-btn text-white rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-3 transition-all duration-300 flex ${isLight
-                      ? "opacity-90 hover:opacity-100 !shadow-none"
-                      : "hover:scale-[1.02] shadow-[0_0_20px_rgba(232,184,109,0.3)]"
-                      }`}>
-                      <Ticket className="h-4 w-4" />
-                      <span className="font-black text-[12px] min-[1150px]:text-[13px] xl:text-[14px] tracking-[0.18em] uppercase">Tickets</span>
+                  <a
+                    href={cta.href}
+                    target={cta.isExternal ? "_blank" : undefined}
+                    rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                    data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
+                    onClick={() => signalChirp.click()}
+                  >
+                    <div className={`
+                      rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5 
+                      transition-all duration-500 flex border uppercase font-black
+                      ${cta.tool === 'posh' ? 'cta-posh border-transparent' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}
+                      ${isLight && cta.tool === 'posh' ? 'opacity-90 hover:opacity-100 !shadow-none' : ''}
+                    `}>
+                      {cta.tool === 'posh' ? <Ticket className="h-4 w-4" /> : cta.tool === 'laylo' ? <Lock className="h-4 w-4 text-primary" /> : <Zap className="h-4 w-4" />}
+                      <span className="text-[12px] min-[1150px]:text-[13px] xl:text-[14px] tracking-[0.18em]">
+                        {cta.label}
+                      </span>
                       <ArrowUpRight className="h-3.5 w-3.5 opacity-60" />
                     </div>
                   </a>
@@ -689,6 +738,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               </div>
             </div>
           </div>
+        </div>
         </div>
       </motion.nav>
 
@@ -782,7 +832,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       {renderNavLabel(item.label, true)}
                     </button>
                     {item.subItems && (
-                      <button 
+                      <button
                         onClick={() => setExpandedMobileItem(expandedMobileItem === item.label ? null : item.label)}
                         className={`p-2 rounded-full bg-white/5 border border-white/10 transition-transform duration-300 ${expandedMobileItem === item.label ? "rotate-180" : ""}`}
                       >
@@ -835,22 +885,22 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 <ArrowUpRight className="w-4 h-4" />
               </motion.a>
 
-              <motion.div 
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-                 transition={{ delay: 0.6 }}
-                 className="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-10 pt-8 w-full border-t border-white/10"
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-10 pt-8 w-full border-t border-white/10"
               >
-                 {mobileSecondaryItems.map((item) => (
-                   <Link key={item.label} href={item.href} asChild>
-                     <a 
-                       onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
-                       className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/40 hover:text-white transition-colors cursor-pointer"
-                     >
-                       {item.label}
-                     </a>
-                   </Link>
-                 ))}
+                {mobileSecondaryItems.map((item) => (
+                  <Link key={item.label} href={item.href} asChild>
+                    <a
+                      onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
+                      className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/40 hover:text-white transition-colors cursor-pointer"
+                    >
+                      {item.label}
+                    </a>
+                  </Link>
+                ))}
               </motion.div>
             </div>
           </motion.div>

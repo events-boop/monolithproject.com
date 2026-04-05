@@ -10,7 +10,8 @@ import MagneticButton from "@/components/MagneticButton";
 import { ARTISTS } from "@/data/artists";
 import { CTA_LABELS } from "@/lib/cta";
 import { getSeriesEvents } from "@/lib/siteExperience";
-import { ScheduledEvent } from "@/data/events";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
+import type { ScheduledEvent } from "@/data/events";
 
 const LEGACY_ID_MAP: Record<string, string> = {
   "1": "haai",
@@ -29,6 +30,7 @@ function resolveArtistId(id: string | undefined) {
 }
 
 export default function ArtistProfile() {
+  usePublicSiteDataVersion();
   const { id } = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);

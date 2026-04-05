@@ -14,6 +14,7 @@ import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
+import { ensurePublicSiteData } from "./lib/siteData";
 
 // Lazy Pages
 const Tickets = lazy(() => import("./pages/Tickets"));
@@ -176,9 +177,21 @@ function AttributionSync() {
   return null;
 }
 
+function SiteDataSync() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    void ensurePublicSiteData(location).catch(() => {
+      // Keep the current route alive if the refresh fails; the initial boot path
+      // is already loaded before the app renders.
+    });
+  }, [location]);
+
+  return null;
+}
+
 const Analytics = lazy(() => import("./components/Analytics"));
 const DeferredShellChrome = lazy(() => import("./components/DeferredShellChrome"));
-const EventBanner = lazy(() => import("./components/EventBanner"));
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
@@ -195,6 +208,7 @@ function MainContentWrapper() {
 
   return (
     <>
+      <SiteDataSync />
       <SceneSync />
       <RouteMemory />
       <AttributionSync />
@@ -238,7 +252,6 @@ function App() {
               <Toaster />
               <DeferredShellChrome />
               <Analytics />
-              <EventBanner />
               <CookieConsent />
             </Suspense>
           </UIProvider>

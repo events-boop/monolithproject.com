@@ -23,11 +23,11 @@ const drawerMeta: Record<
         hrefLabel: "Full FAQ",
     },
     newsletter: {
-        eyebrow: "Inner Circle",
-        title: "Stay On Signal",
-        description: "Private drops, early access windows, and lineups before the public blast.",
+        eyebrow: "Newsletter",
+        title: "Get Updates",
+        description: "Early ticket windows, lineup drops, and radio episodes before the public post.",
         href: "/newsletter",
-        hrefLabel: "Newsletter Page",
+        hrefLabel: "Open Newsletter Page",
     },
     contact: {
         eyebrow: "Connect",

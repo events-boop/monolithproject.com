@@ -8,6 +8,7 @@ import {
     getExperienceEvent,
     getPrimaryTicketUrl,
 } from "@/lib/siteExperience";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const checklist = [
     { icon: CheckCircle, text: "Valid Government ID (21+)" },
@@ -31,6 +32,7 @@ function formatIsoTime(value?: string) {
 }
 
 export default function Guide() {
+    usePublicSiteDataVersion();
     const guideEvent = getExperienceEvent("guide");
     const ticketUrl = getPrimaryTicketUrl(guideEvent);
     const timeline = guideEvent
@@ -105,7 +107,7 @@ export default function Guide() {
                         <section className="space-y-12">
 
                             {/* Entry Requirements */}
-                            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                            <div id="entry" className="scroll-mt-32 bg-white/5 border border-white/10 rounded-xl p-6">
                                 <h3 className="font-display text-lg uppercase text-white mb-4">Entry Checklist</h3>
                                 <ul className="space-y-3">
                                     {checklist.map((item, i) => (

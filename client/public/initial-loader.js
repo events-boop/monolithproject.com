@@ -10,12 +10,7 @@
     setTimeout(() => loader.remove(), 500);
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => setTimeout(removeLoader, 100), { once: true });
-  } else {
-    setTimeout(removeLoader, 100);
-  }
-
-  window.addEventListener("load", removeLoader, { once: true });
-  setTimeout(removeLoader, 3000);
+  window.addEventListener("monolith:app-ready", removeLoader, { once: true });
+  window.addEventListener("load", () => setTimeout(removeLoader, 150), { once: true });
+  setTimeout(removeLoader, 6000);
 })();

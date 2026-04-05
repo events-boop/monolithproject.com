@@ -28,9 +28,9 @@ interface MixedMediaGalleryProps {
 
 export default function MixedMediaGallery({
   media = homeGallery,
-  title = "Captured Moments",
-  subtitle = "Visual Archives",
-  description = "A collection of fragments from our past gatherings. Immersive soundscapes and visual memories.",
+  title = "Event Archive",
+  subtitle = "Gallery",
+  description = "Photos, videos, and recaps from past Monolith nights. A clearer look at the rooms, artists, and crowd.",
   className = "bg-background border-t border-white/5 relative",
   style,
 }: MixedMediaGalleryProps) {
@@ -195,10 +195,10 @@ export default function MixedMediaGallery({
           ) : (
             <div className="rounded-none border border-white/10 bg-white/[0.03] px-6 py-12 text-center shadow-[0_18px_34px_rgba(0,0,0,0.18)]">
               <p className="font-display text-2xl uppercase text-white/90">
-                Archive In Assembly
+                Archive Coming Soon
               </p>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/55">
-                This season has been structured for the new gallery system, but the final edit is still being curated.
+                This season is being organized for the new gallery system, but the final photos and recap assets are still being prepared.
               </p>
             </div>
           )}

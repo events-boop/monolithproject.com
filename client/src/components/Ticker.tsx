@@ -1,5 +1,6 @@
 import { Ticket, ArrowRight } from "lucide-react";
-import { POSH_TICKET_URL, upcomingEvents } from "@/data/events";
+import { POSH_TICKET_URL } from "@/data/events";
+import { getPublicEvents } from "@/lib/siteData";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "text-[#E8B86D]",
@@ -8,6 +9,7 @@ const seriesAccent: Record<string, string> = {
 };
 
 export default function Ticker() {
+  const upcomingEvents = getPublicEvents();
   // Build items from real events, duplicated for seamless loop
   const baseItems = upcomingEvents.length > 0
     ? upcomingEvents.map(e => ({

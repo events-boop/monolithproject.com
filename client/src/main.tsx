@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "framer-motion";
-import App from "./App";
 import { initAttributionTracking } from "./lib/attribution";
+import { ensurePublicSiteData } from "./lib/siteData";
 import "./styles/index.css";
 
 function renderMountError(error: unknown) {
@@ -24,18 +24,26 @@ function renderMountError(error: unknown) {
   document.body.replaceChildren(wrapper);
 }
 
-try {
+async function startApp() {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("Root element not found");
 
   initAttributionTracking();
+  await ensurePublicSiteData(window.location.pathname);
+  const { default: App } = await import("./App");
 
   createRoot(rootElement).render(
     <MotionConfig reducedMotion="user">
       <App />
     </MotionConfig>
   );
-} catch (e: any) {
+
+  requestAnimationFrame(() => {
+    window.dispatchEvent(new Event("monolith:app-ready"));
+  });
+}
+
+startApp().catch((e: unknown) => {
   renderMountError(e);
   console.error("React Mount Error:", e);
-}
+});

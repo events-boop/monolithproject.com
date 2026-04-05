@@ -12,7 +12,7 @@ export default function UntoldContrast() {
           viewport={{ once: true }}
           className="font-display text-5xl md:text-7xl text-white mb-6"
         >
-          TWO SIDES
+          TWO SERIES
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -21,7 +21,7 @@ export default function UntoldContrast() {
           viewport={{ once: true }}
           className="text-white/50 text-lg max-w-xl mx-auto mb-4"
         >
-          Chasing Sun(Sets) is the warmth. Untold Story is the weight. Together they make up The Monolith Project.
+          Chasing Sun(Sets) is the open-air series. Untold Story is the late-night series. Together they make up The Monolith Project.
         </motion.p>
         <motion.p
           initial={{ opacity: 0 }}
@@ -30,7 +30,7 @@ export default function UntoldContrast() {
           viewport={{ once: true }}
           className="text-white/40 max-w-xl mx-auto mb-12"
         >
-          Same collective. Same community. Different time of night.
+          Same standard. Different time of night.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -53,7 +53,7 @@ export default function UntoldContrast() {
               <div
                 className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full bg-untold-hero-btn group flex items-center justify-center gap-2"
               >
-                BACK TO MONOLITH <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                MONOLITH HOME <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </div>
             </Link>
           </MagneticButton>

@@ -12,14 +12,12 @@ const RA_PROMOTER_PROFILE_URL: string | null = null;
 const organizationSameAs = [
   "https://instagram.com/monolithproject.events",
   "https://youtube.com/@monolithproject",
-  POSH_TICKET_URL,
 ].concat(RA_PROMOTER_PROFILE_URL ? [RA_PROMOTER_PROFILE_URL] : []);
 
 const brandSameAs = [
   "https://instagram.com/chasingsunsets.music",
   "https://soundcloud.com/chasing-sun-sets",
   "https://youtube.com/@monolithproject",
-  POSH_TICKET_URL,
 ].concat(RA_PROMOTER_PROFILE_URL ? [RA_PROMOTER_PROFILE_URL] : []);
 
 export const CHASING_BRAND_NAMES = [

@@ -56,27 +56,27 @@ const playSignal = (frequency: number) => {
 const steps = [
   {
     number: "01",
-    title: "Doors Open at 9",
-    body: "Arrive at your pace. We hold the room for the full night. No headliner pressure. No schedule printed on your wrist.",
-    detail: "No rush. No queue mentality.",
+    title: "Doors Open at 9 PM",
+    body: "Arrive early or settle in later. The room is built for the full night, not one rush at the top.",
+    detail: "No rush required.",
   },
   {
     number: "02",
-    title: "No Dress Code.",
-    body: "This is not a fashion show. The room decides nothing about what you wear. The music leads — and it doesn't care what you look like.",
-    detail: "Come as you are.",
+    title: "No Strict Dress Code",
+    body: "Dress well, stay comfortable, and come ready to move. The room should feel good, not overworked.",
+    detail: "Look good. Stay comfortable.",
   },
   {
     number: "03",
-    title: "Sound Built For This Room.",
-    body: "Every venue is selected for its acoustics. The system is set up for the set — not the venue's standard configuration. You feel the difference.",
-    detail: "Not just loud. Precise.",
+    title: "Sound Tuned For The Room",
+    body: "Each venue is chosen for how it sounds, and the system is tuned for the night instead of left on a generic setup.",
+    detail: "Clear, not just loud.",
   },
   {
     number: "04",
-    title: "Stay Until Close.",
-    body: "The best moments happen after midnight. The room thins. The music deepens. The crowd left standing is the crowd that came for the right reasons.",
-    detail: "The night rewards patience.",
+    title: "Stay For The Full Set",
+    body: "The best part of the night usually happens late. The room tightens, the music deepens, and the crowd gets better.",
+    detail: "The room gets better late.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function WhatToExpect() {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 mb-20 md:mb-28 border-b border-black/10 pb-12">
           <div>
             <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-black/40 block mb-6">
-              Culture Code
+              What To Expect
             </span>
             <h2 className="font-heavy text-[clamp(3.5rem,7vw,8rem)] leading-[0.85] tracking-tighter uppercase text-black">
               <span className="block text-black/30">What To</span>
@@ -101,7 +101,7 @@ export default function WhatToExpect() {
             </h2>
           </div>
           <p className="font-sans text-lg font-light text-black/50 max-w-sm leading-relaxed">
-            Four things that are always true, regardless of venue, series, or lineup.
+            Four things that stay true across venues, lineups, and series.
           </p>
         </div>
 

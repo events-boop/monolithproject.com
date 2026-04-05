@@ -45,7 +45,7 @@ export default function ChasingSunsetsTicketing() {
 
                     <ul className="space-y-4 mb-10 flex-1">
                         {[
-                            "Guaranteed entry to all 3 summer chapters",
+                            "Guaranteed entry to all 3 summer dates",
                             "Significant savings vs. single ticket pricing",
                             "Priority access to internal venue announcements",
                             "Skip the presale rush"
@@ -61,7 +61,7 @@ export default function ChasingSunsetsTicketing() {
                         onClick={() => openDrawer('newsletter')}
                         className="w-full py-4 border border-white/20 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-colors"
                     >
-                        Request Access
+                        Get Updates
                     </button>
                 </div>
 

@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: "What is the difference between Chasing Sun(Sets) and Untold Story?",
-    a: "Chasing Sun(Sets) is rooftop sunset energy. Untold Story is a closer late-night chapter with deeper sound and a tighter room.",
+    a: "Chasing Sun(Sets) is the open-air series. Untold Story is the late-night series with deeper sound and a tighter room.",
   },
   {
     q: "What should I wear?",
@@ -31,7 +31,7 @@ export default function FAQSection() {
         <EditorialHeader
           kicker="FAQ"
           title="Before You Go"
-          description="Quick answers before your next chapter."
+          description="Quick answers before you buy tickets or head to the event."
           dark
         />
 

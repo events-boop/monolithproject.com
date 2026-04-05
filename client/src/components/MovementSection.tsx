@@ -14,7 +14,7 @@ const movementPaths = [
     label: "Open Air",
     title: "Chasing Sun(Sets)",
     description:
-      "The warmer chapter. Open-air rooms, golden-hour pace, and music that moves from daylight into dusk with ease.",
+      "The open-air series. Golden-hour pacing, warmer rooms, and music that moves from daylight into dusk with ease.",
     toneClass: "border-clay/20 bg-clay/10 text-clay",
   },
   {
@@ -22,15 +22,15 @@ const movementPaths = [
     label: "After Dark",
     title: "Untold Story",
     description:
-      "The late-night chapter. Closer rooms, deeper sound, and a more intimate kind of tension once the light drops.",
+      "The late-night series. Closer rooms, deeper sound, and a more intimate kind of tension once the light drops.",
     toneClass: "border-primary/20 bg-primary/10 text-primary",
   },
   {
     href: "/radio",
-    label: "Signal",
+    label: "Radio",
     title: "Radio Show",
     description:
-      "The listening chapter. Mixes, artist sessions, and a recurring signal that extends the taste behind the room between nights.",
+      "The listening side of the project. Mixes and artist sessions that extend the taste behind the room between events.",
     toneClass: "border-white/15 bg-white/[0.06] text-white/76",
   },
 ] as const;
@@ -68,7 +68,7 @@ export default function MovementSection() {
           >
             <div className="flex items-center gap-4 mb-8 md:mb-12">
                <div className="h-px w-12 bg-primary/70" />
-               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold">The Collective</span>
+               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold">The Project</span>
             </div>
             
             <h2 className="font-heavy text-[clamp(4rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
@@ -83,7 +83,7 @@ export default function MovementSection() {
                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/[0.07] to-primary/0 translate-y-full group-hover:translate-y-[-20%] transition-transform duration-[1.5s] ease-out pointer-events-none" />
                
                <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light relative z-10">
-                 The Monolith Project is a cultural house built through recurring rooms, distinct series, and a collective record that stays visible after the night ends.
+                 The Monolith Project is a Chicago music project built through recurring events, clear series, and an archive that stays visible after the night ends.
                </p>
                
                <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">

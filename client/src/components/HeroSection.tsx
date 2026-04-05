@@ -1,12 +1,13 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, AudioLines, Sun, Ticket } from "lucide-react";
+import { ArrowRight, AudioLines, Sun, Ticket, Lock, Zap } from "lucide-react";
 import { useEffect, useState, memo } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { BorderBeam } from "./ui/BorderBeam";
 import JsonLd from "@/components/JsonLd";
 import MagneticButton from "@/components/MagneticButton";
+import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import KineticDecryption from "./KineticDecryption";
 import WordScrubReveal from "./ui/WordScrubReveal";
 import { getResponsiveImage } from "@/lib/responsiveImages";
@@ -76,7 +77,7 @@ const COLLECTIVE_PATHS = [
     tone: "sun",
   },
   {
-    description: "The closer chapter where the room narrows and the sound gets deeper.",
+    description: "The late-night series where the room gets tighter and the sound gets deeper.",
     href: "/story",
     icon: UntoldButterflyLogo,
     label: "After Dark",
@@ -87,7 +88,7 @@ const COLLECTIVE_PATHS = [
     description: "Mixes and artist sessions that keep the taste moving between nights.",
     href: "/radio",
     icon: AudioLines,
-    label: "Signal",
+    label: "Radio",
     title: "Radio Show",
     tone: "radio",
   },
@@ -97,12 +98,12 @@ const HERO_SUPPORT_LINES = [
   "Music nights",
   "built with taste",
   "and rooms worth returning to.",
- ] as const;
+] as const;
 
 const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
 
 const HERO_SUBHEAD =
-  "A Chicago-rooted music world built through recurring nights, distinct series, and a radio signal that keeps the taste alive between them.";
+  "Recurring music experiences, radio, and archive from Chicago.";
 
 function useCountdown(target: number) {
   const [now, setNow] = useState(Date.now());
@@ -182,22 +183,22 @@ export default function HeroSection() {
   const headline = featuredEvent?.headline || featuredEvent?.title || "The Monolith Project";
   const eyebrow = getEventEyebrow(featuredEvent);
   const venueLabel = getEventVenueLabel(featuredEvent);
-  
+
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, reduceMotion ? 0 : 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
-  
+
   const cta = getEventCta(featuredEvent);
-  
+
   const secondaryCtaLabel = hasLiveTickets ? "Event Details" : featuredEvent?.status === 'coming-soon' ? "Explore The Series" : "Event Schedule";
   const secondaryCtaHref = hasLiveTickets ? getEventDetailsHref(featuredEvent) : "/schedule";
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">
       {structuredData}
-      
+
       {/* 🌊 NEURAL DRIFT BACKGROUND (Absolute Zero) */}
       <style>{`
         @keyframes neural-drift {
@@ -223,10 +224,10 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
         {/* Scanning Line */}
-        <motion.div 
-          animate={{ top: ["-10%", "110%"] }} 
+        <motion.div
+          animate={{ top: ["-10%", "110%"] }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" 
+          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
         />
       </div>
 
@@ -238,12 +239,12 @@ export default function HeroSection() {
           transition={{ duration: 0.8 }}
           className="mb-8 lg:mb-16 relative"
         >
-          <div className="flex items-center gap-4 justify-center">
-             <div className="h-px w-8 md:w-20 bg-white/10" />
-             <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">
-               {eyebrow || "Chicago-Rooted Event World"} / System Active
-             </h2>
-             <div className="h-px w-8 md:w-20 bg-white/10" />
+            <div className="flex items-center gap-4 justify-center">
+            <div className="h-px w-8 md:w-20 bg-white/10" />
+            <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">
+              {eyebrow || "Chicago Music Project"}
+            </h2>
+            <div className="h-px w-8 md:w-20 bg-white/10" />
           </div>
         </motion.div>
 
@@ -255,121 +256,128 @@ export default function HeroSection() {
         >
           {/* Kinetic Fragmented Typography */}
           <div className="relative">
-                <motion.h1
-                  initial={{ opacity: 1, scale: 1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                  className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto"
-                >
-                  <KineticDecryption text="MONOLITH" />
-                </motion.h1>
+            <motion.h1
+              initial={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto"
+            >
+              <KineticDecryption text="MONOLITH" />
+            </motion.h1>
           </div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "120%", opacity: 1 }}
             transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" 
+            className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10"
           />
-          
+
           <span className="font-monolith text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90 pl-[0.5em]">
             PROJECT
           </span>
+          <BrandTranslatorLabel className="mt-5" tone="neutral">
+            Chicago Cultural House
+          </BrandTranslatorLabel>
         </motion.div>
 
         <motion.div
-           initial={{ opacity: 0, y: 10 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 2, delay: 1.4 }}
-           className="mt-16 flex flex-col items-center w-full px-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2, delay: 1.4 }}
+          className="mt-16 flex flex-col items-center w-full px-4"
         >
-           {/* Primary Hero Signal Box */}
-           {featuredEvent && (
-              <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.01] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
-                    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary/90">Next Open-Air Signal</span>
-                  </div>
-                  <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
-                     {headline}
-                  </h2>
-                  <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/40">
-                     <span className="text-white/70">{venueLabel}</span>
-                     <span className="hidden md:inline-block w-px h-3 bg-white/10" />
-                     <span className="text-white/70">{featuredEvent.date}</span>
-                  </div>
+          {/* Primary Hero Signal Box */}
+          {featuredEvent && (
+            <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.01] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center gap-4">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
+                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary/90">
+                  {hasLiveTickets ? "Tickets Live" : "Next Event"}
+                </span>
               </div>
-           )}
+              <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
+                {headline}
+              </h2>
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/40">
+                <span className="text-white/70">{venueLabel}</span>
+                <span className="hidden md:inline-block w-px h-3 bg-white/10" />
+                <span className="text-white/70">{featuredEvent.date}</span>
+              </div>
+            </div>
+          )}
 
-           <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
-             <WordScrubReveal text={HERO_SUBHEAD} />
-           </div>
-           
-           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
-               <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
-                 <a
-                   href={cta.href}
-                   target={cta.isExternal ? "_blank" : undefined}
-                   rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                   data-cursor-magnetic
-                   data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
-                   className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white w-full sm:w-auto"
-                 >
-                   <div className="absolute inset-0 bg-primary/90 rounded-none transition-transform duration-500 group-hover:scale-105" />
-                   <span className="relative z-10 flex items-center gap-3">
-                     <Ticket className="w-4 h-4" />
-                     {cta.label}
-                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                   </span>
-                 </a>
-               </MagneticButton>
+          <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
+            <WordScrubReveal text={HERO_SUBHEAD} />
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
+            <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
+              <a
+                href={cta.href}
+                target={cta.isExternal ? "_blank" : undefined}
+                rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                data-cursor-magnetic
+                data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
+                className={`
+                      group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] 
+                      transition-all duration-500 w-full sm:w-auto rounded-none
+                      ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}
+                   `}
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : cta.tool === 'laylo' ? <Lock className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
+                  {cta.label}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </a>
+            </MagneticButton>
 
-              <MagneticButton strength={0.25}>
-                <Link
-                  href={secondaryCtaHref}
-                  className="group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] font-black uppercase tracking-[0.28em] sm:tracking-[0.32em] text-white/82 hover:text-white transition-colors w-full sm:w-auto"
-                >
-                  <span className="relative z-10 flex items-center gap-3">
-                    {secondaryCtaLabel}
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </MagneticButton>
-           </div>
+            <MagneticButton strength={0.25}>
+              <Link
+                href={secondaryCtaHref}
+                className="cta-ghost group relative flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 w-full sm:w-auto"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  {secondaryCtaLabel}
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            </MagneticButton>
+          </div>
         </motion.div>
       </div>
 
       {/* Subtle Bottom Signal */}
       <div className="absolute inset-x-0 bottom-12 z-40 px-6 pointer-events-none">
         <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-end gap-8">
-           <motion.div 
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             transition={{ delay: 2.2 }}
-             className="hidden md:flex gap-6"
-           >
-              {COLLECTIVE_PATHS.map((path) => (
-                <Link key={path.title} href={path.href} className="group pointer-events-auto">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors">
-                    {path.title}
-                  </span>
-                </Link>
-              ))}
-           </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.2 }}
+            className="hidden md:flex gap-6"
+          >
+            {COLLECTIVE_PATHS.map((path) => (
+              <Link key={path.title} href={path.href} className="group pointer-events-auto">
+                <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors">
+                  {path.title}
+                </span>
+              </Link>
+            ))}
+          </motion.div>
 
-           <motion.div
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             transition={{ delay: 2.4 }}
-             className="hidden md:block pointer-events-auto"
-           >
-              {!isExpired && targetDate ? (
-                <div className="flex items-baseline gap-4">
-                   <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20">Sequence Timer:</span>
-                   <CountdownDisplay target={targetDate} />
-                </div>
-              ) : null}
-           </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.4 }}
+            className="hidden md:block pointer-events-auto"
+          >
+            {!isExpired && targetDate ? (
+              <div className="flex items-baseline gap-4">
+                <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20">Countdown:</span>
+                <CountdownDisplay target={targetDate} />
+              </div>
+            ) : null}
+          </motion.div>
         </div>
       </div>
     </section>

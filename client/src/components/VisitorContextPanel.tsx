@@ -37,9 +37,9 @@ const segmentContent: Record<
   "first-visit": {
     eyebrow: "Start Here",
     label: "First Visit",
-    title: "New here? Start with the next date, then the world around it.",
+    title: "New here? Start with the next event, then learn the project.",
     description:
-      "The fastest way into Monolith is the next night, a few past chapters, and the pages that explain how the music, the series, and the room fit together.",
+      "The fastest way into Monolith is the next date, the radio show, and the event archive that shows what the nights actually look like.",
     actions: () => [
       {
         label: CTA_LABELS.schedule,
@@ -59,7 +59,7 @@ const segmentContent: Record<
         label: CTA_LABELS.archive,
         href: "/archive",
         icon: LibraryBig,
-        note: "Past chapters",
+        note: "Past events",
         description: "See what the nights actually looked and felt like once the doors opened.",
       },
     ],
@@ -88,18 +88,18 @@ const segmentContent: Record<
             description: "Go directly to the upcoming calendar when there is no live ticket window yet.",
           },
       {
-        label: "Listen To Radio",
+        label: "Listen To Radio Show",
         href: "/radio",
         icon: Radio,
-        note: "Fresh signal",
+        note: "Latest mix",
         description: "Put on a mix and get back into the mood quickly.",
       },
       {
-        label: "Catch Up In Archive",
+        label: "View Event Archive",
         href: "/archive",
         icon: LibraryBig,
-        note: "Continuity",
-        description: "See what happened between the last chapter and the next one.",
+        note: "Past events",
+        description: "See what happened between the last event and the next one.",
       },
     ],
   },
@@ -175,7 +175,7 @@ export default function VisitorContextPanel() {
 
             <div className="flex flex-wrap gap-2.5">
               <span className="inline-flex items-center rounded-none border border-primary/40 bg-primary/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_10px_rgba(224,90,58,0.3)]">
-                CLEARANCE [{visitorContext.tier}]
+                VIEW [{visitorContext.tier}]
               </span>
               <div className="flex items-center h-[30px] px-2 bg-white/5 border border-white/10 gap-1.5">
                   {[0, 1, 2, 3].map((i) => (

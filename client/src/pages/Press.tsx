@@ -107,7 +107,7 @@ export default function Press() {
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
             <SEO
                 title="Press & Media Kit"
-                description="Press resources, brand assets, and media contacts for The Monolith Project — Chicago's premier immersive house music collective."
+                description="Press resources, brand assets, and media contacts for The Monolith Project, a Chicago music project."
             />
             <Navigation />
 
@@ -197,13 +197,13 @@ export default function Press() {
                             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-5">About</p>
                             <div className="space-y-4 text-white/60 leading-relaxed">
                                 <p>
-                                    The Monolith Project is a Chicago-based events collective dedicated to building immersive, community-driven music experiences. Founded in 2024, the collective operates two flagship series: <span className="text-white/80">Chasing Sun(Sets)</span> — a rooftop golden-hour experience — and <span className="text-white/80">Untold Story</span> — a late-night 360° immersive house music journey.
+                                    The Monolith Project is a Chicago-based music project focused on events, radio, and event archive. Founded in 2024, it operates two flagship series: <span className="text-white/80">Chasing Sun(Sets)</span> — an open-air golden-hour series — and <span className="text-white/80">Untold Story</span> — a late-night immersive series.
                                 </p>
                                 <p>
-                                    Rooted in Afro house, melodic house, and global rhythms, Monolith Project events are designed for people who show up early, stay late, and hold space on the dancefloor. Every event is a curated experience, not a club night.
+                                    Rooted in afro house, melodic house, and global rhythms, Monolith events are designed for people who show up early, stay late, and care about the room as much as the lineup.
                                 </p>
                                 <p>
-                                    Based at Alhambra Palace in Chicago's West Loop, the collective has built a reputation for world-class sound, intentional production, and a community-first approach to nightlife.
+                                    Based in Chicago, the project has built a reputation for strong sound, intentional production, and a music-first approach to nightlife.
                                 </p>
                             </div>
                         </motion.div>

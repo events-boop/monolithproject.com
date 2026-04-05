@@ -4,6 +4,8 @@ import { AlertCircle, CheckCircle, Lock, Mail, MapPin, Phone, User } from "lucid
 import { submitNewsletterLead } from "@/lib/api";
 import type { ScheduledEvent } from "@/data/events";
 import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
+import HoneypotField from "./HoneypotField";
+import { honeypotFieldName } from "@shared/generated/hardening";
 
 interface CoordinatesFunnelProps {
     event?: ScheduledEvent;
@@ -41,7 +43,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                         interestTags: ["coordinates", "sms", "locked-location"],
                     }),
                     utmContent: "coordinates_drop",
-                    metadata_correlation_id: botCheck || undefined,
+                    [honeypotFieldName]: botCheck || undefined,
                 },
                 buildLeadIdempotencyKey("coordinates_funnel", email, event?.id),
             );
@@ -163,16 +165,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     </div>
 
                                     {/* Honeypot: Bot Trap */}
-                                    <div style={{ opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, pointerEvents: 'none' }} aria-hidden="true">
-                                      <input
-                                        type="text"
-                                        name="metadata_correlation_id"
-                                        value={botCheck}
-                                        onChange={(e) => setBotCheck(e.target.value)}
-                                        tabIndex={-1}
-                                        autoComplete="off"
-                                      />
-                                    </div>
+                                    <HoneypotField value={botCheck} onChange={(e) => setBotCheck(e.target.value)} />
 
                                     <div className="relative">
                                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />

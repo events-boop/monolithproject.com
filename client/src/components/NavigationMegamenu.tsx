@@ -71,7 +71,7 @@ export default function NavigationMegamenu({
 
     return (
         <div
-            className="relative flex justify-center items-center shrink-0 flex-1 min-w-max h-full cursor-pointer"
+            className="relative flex h-full min-w-max shrink-0 flex-1 cursor-pointer items-center justify-center"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onFocusCapture={openMenu}
@@ -115,14 +115,15 @@ export default function NavigationMegamenu({
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.98 }}
                         transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                        className={`absolute top-[36px] -left-1/2 -ml-24 xl:-left-12 2xl:-left-24 w-[560px] p-2 rounded-3xl border shadow-[0_18px_40px_rgba(0,0,0,0.45)] ${isLight
-                            ? "bg-white/98 border-black/5"
-                            : "bg-[#0a0a0a]/98 border-white/10"
+                        className={`absolute left-1/2 top-full z-30 mt-3 w-[min(42rem,calc(100vw-3rem))] -translate-x-1/2 rounded-[1.75rem] border p-2 shadow-[0_22px_48px_rgba(0,0,0,0.38)] backdrop-blur-xl ${isLight
+                            ? "bg-white/97 border-black/6"
+                            : "bg-[#0a0a0a]/97 border-white/12"
                             }`}
                         role="menu"
                         style={{ pointerEvents: isOpen ? "auto" : "none" }}
                     >
-                        <div className="flex bg-transparent rounded-2xl overflow-hidden min-h-[240px]">
+                        <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t bg-inherit opacity-90" />
+                        <div className="flex min-h-[240px] overflow-hidden rounded-[1.2rem] bg-transparent">
                             {/* Left Column: Links */}
                             <div className="w-5/12 p-6 flex flex-col gap-5">
                                 <span

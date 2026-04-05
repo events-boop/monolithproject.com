@@ -1,6 +1,7 @@
 import { getAttributionPayload } from "./attribution";
+import type { HoneypotPayload } from "@shared/generated/hardening";
 
-export interface LeadPayload {
+export type LeadPayload = HoneypotPayload & {
   email: string;
   firstName?: string;
   lastName?: string;
@@ -50,8 +51,7 @@ export interface LeadPayload {
   lastFbclid?: string;
   lastTtclid?: string;
   lastMsclkid?: string;
-  metadata_correlation_id?: string;
-}
+};
 
 export interface TicketIntentPayload {
   source: string;
@@ -95,23 +95,21 @@ export interface TicketIntentPayload {
   lastMsclkid?: string;
 }
 
-export interface BookingInquiryPayload {
+export type BookingInquiryPayload = HoneypotPayload & {
   name: string;
   email: string;
   entity: string;
   type: "partner-on-location" | "artist-booking" | "sponsorship" | "general";
   location?: string;
   message: string;
-  metadata_correlation_id?: string;
-}
+};
 
-export interface ContactPayload {
+export type ContactPayload = HoneypotPayload & {
   name: string;
   email: string;
   subject: string;
   message: string;
-  metadata_correlation_id?: string;
-}
+};
 
 interface ApiError {
   message?: string;

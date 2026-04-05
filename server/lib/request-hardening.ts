@@ -19,10 +19,16 @@ function getRequestOrigin(req: Request) {
 export function createApiResponseHardening(): RequestHandler {
   return (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
+    res.setHeader(
+      "Content-Security-Policy",
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    );
     res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
     res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
     res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
     res.setHeader("Origin-Agent-Cluster", "?1");
+    res.setHeader("X-Frame-Options", "DENY");
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
     next();
   };
 }

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import type { SyntheticEvent } from "react";
 import { Calendar, MapPin, Clock, Users, Ticket, Star, Crown, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
+import "@/styles/themes/tickets.css";
 import Navigation from "@/components/Navigation";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { trackTicketIntent } from "@/lib/api";
@@ -22,8 +23,8 @@ import {
 } from "@/lib/siteExperience";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
-
-import { TicketTier } from "@/data/events";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
+import type { TicketTier } from "@/data/events";
 
 // Icon mapping helper
 const getTierIcon = (iconName: string) => {
@@ -50,6 +51,7 @@ const lineupVisuals = [
 const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
 
 export default function Tickets() {
+  usePublicSiteDataVersion();
   const featuredEvent = getExperienceEvent("ticket");
   const cta = getEventCta(featuredEvent);
   
@@ -122,7 +124,10 @@ export default function Tickets() {
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
                     onClick={() => void trackTicketIntent("tickets_page_header", featuredEvent?.id, cta.href)}
-                    className="btn-pill-coral flex items-center justify-center min-w-[200px]"
+                    className={`
+                      px-12 py-5 text-[12px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center justify-center min-w-[220px] rounded-none
+                      ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
+                    `}
                   >
                     {cta.label}
                     <ArrowUpRight className="w-4 h-4 ml-2" />
@@ -130,7 +135,7 @@ export default function Tickets() {
               </MagneticButton>
               <MagneticButton strength={0.22}>
                 <Link href="/schedule" asChild>
-                  <a className="btn-pill border-white/20 bg-white/[0.03] text-white/90 hover:text-white hover:border-white/40 flex items-center justify-center">
+                  <a className="cta-ghost flex items-center justify-center px-10 py-5">
                     {CTA_LABELS.schedule}
                   </a>
                 </Link>
@@ -219,20 +224,23 @@ export default function Tickets() {
                    ))}
                 </div>
 
-                <div className="pt-4">
-                   <MagneticButton strength={0.4}>
-                        <a
-                          href={cta.href}
-                          target={cta.isExternal ? "_blank" : undefined}
-                          rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                          onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, cta.href)}
-                          className="btn-pill px-12 py-6 text-xs font-bold tracking-[0.4em] bg-primary text-white border-primary shadow-[0_20px_50px_rgba(224,90,58,0.3)] min-w-[260px] flex items-center justify-center"
-                        >
-                           {cta.label === CTA_LABELS.tickets ? "EXECUTE ACCESS" : cta.label}
-                           <ArrowUpRight className="w-4 h-4 ml-3" />
-                        </a>
-                   </MagneticButton>
-                </div>
+                 <div className="pt-4">
+                    <MagneticButton strength={0.4}>
+                         <a
+                           href={cta.href}
+                           target={cta.isExternal ? "_blank" : undefined}
+                           rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                           onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, cta.href)}
+                           className={`
+                             px-12 py-6 text-xs font-black tracking-[0.4em] transition-all duration-500 min-w-[280px] flex items-center justify-center rounded-none
+                             ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
+                           `}
+                         >
+                            {cta.label === CTA_LABELS.tickets ? "GET TICKETS" : cta.label}
+                            <ArrowUpRight className="w-4 h-4 ml-3" />
+                         </a>
+                    </MagneticButton>
+                 </div>
              </div>
           </motion.div>
         </div>
@@ -245,9 +253,9 @@ export default function Tickets() {
              <div className="max-w-xl">
                 <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">Tier Logic</span>
                 <h2 className="font-display text-5xl uppercase text-white tracking-widest">Select Access</h2>
-                <p className="mt-6 text-lg text-white/40 font-light">Choose your level of engagement for the upcoming chapter. All tiers integrated through Posh.</p>
+                <p className="mt-6 text-lg text-white/40 font-light">Choose the ticket tier that fits your night. All purchases are handled through Posh.</p>
              </div>
-             <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 italic">Systems synchronized {new Date().getFullYear()}</p>
+             <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 italic">Updated for {new Date().getFullYear()}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2.5rem] overflow-hidden">
@@ -293,18 +301,24 @@ export default function Tickets() {
                 <button
                   onClick={() => handlePurchase(`tickets_page_${tier.id}`, cta.href)}
                   disabled={!tier.available}
-                  className={`w-full h-16 flex items-center justify-center gap-3 rounded-full text-[10px] font-bold uppercase tracking-[0.4em] transition-all duration-700 ${
-                    tier.highlight 
-                      ? "bg-primary text-white shadow-[0_15px_30px_rgba(224,90,58,0.2)] hover:shadow-[0_20px_40px_rgba(224,90,58,0.3)] hover:-translate-y-1" 
-                      : "border border-white/10 text-white/40 hover:text-white hover:border-primary hover:bg-primary/5"
+                  className={`w-full h-16 flex items-center justify-center gap-3 transition-all duration-700 rounded-none ${
+                    tier.available
+                      ? tier.highlight 
+                        ? "cta-posh" 
+                        : "cta-laylo !bg-white/5 border-white/10 hover:border-primary/40"
+                      : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
                   }`}
                 >
                   {tier.available ? (
                     <>
-                      {cta.label === CTA_LABELS.tickets ? `GET ${tier.name}` : cta.label}
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em]">
+                        {cta.label === CTA_LABELS.tickets ? `GET ${tier.name}` : cta.label}
+                      </span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </>
-                  ) : "Sold Out"}
+                  ) : (
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">Sold Out</span>
+                  )}
                 </button>
               </motion.div>
             ))}
@@ -312,11 +326,11 @@ export default function Tickets() {
 
           <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8">
              <p className="text-white/20 text-[9px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
-                All transmissions final. Access protocol non-refundable. Wear with intent.
+                All ticket sales are final unless the event is canceled or rescheduled.
              </p>
              <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Secure Signal Posh:2026 // Active</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Posh Checkout Active</span>
              </div>
           </div>
         </div>
