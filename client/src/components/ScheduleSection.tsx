@@ -94,7 +94,7 @@ export default function ScheduleSection() {
         <div className="mb-16 md:mb-24 flex flex-col gap-8 md:flex-row md:items-end justify-between border-b border-black/10 pb-12">
           <div className="relative">
              <span className="absolute -top-8 left-1 md:-top-12 md:left-2 font-mono text-[9px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
-             <h2 className="font-heavy text-[clamp(4.5rem,10vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
+             <h2 className="font-heavy text-[clamp(3.2rem,12vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
                SCHEDULE
              </h2>
              <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-6 max-w-sm">
@@ -102,12 +102,12 @@ export default function ScheduleSection() {
              </p>
           </div>
 
-          <div className="flex flex-wrap gap-1 p-1 bg-black/[0.03] border border-black/10 rounded-full backdrop-blur-md z-20 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
+          <div className="flex overflow-x-auto no-scrollbar max-w-full gap-1 p-1 bg-black/[0.03] border border-black/10 rounded-[2rem] md:rounded-full backdrop-blur-md z-20 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
             {months.map(month => (
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
-                className={`relative px-6 py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
+                className={`relative shrink-0 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
                   ? "text-white shadow-sm"
                   : "text-black/50 hover:text-black"
                   }`}

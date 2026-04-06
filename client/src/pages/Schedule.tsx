@@ -129,7 +129,7 @@ export default function Schedule() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
               <span className="absolute -top-12 left-2 font-mono text-[10px] tracking-[0.4em] text-primary/60 uppercase">Upcoming Events</span>
-              <h1 className="font-display text-[clamp(4.5rem,14vw,12rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
+              <h1 className="font-display text-[clamp(3.2rem,12vw,12rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
                 Schedule
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">
@@ -138,12 +138,12 @@ export default function Schedule() {
             </div>
 
             {/* Month Filters - Glassmorphic Architectural Style */}
-            <div className="flex flex-wrap gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-full backdrop-blur-xl">
+            <div className="flex overflow-x-auto no-scrollbar gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-[2rem] md:rounded-full backdrop-blur-xl max-w-full">
               {months.map(month => (
                 <button
                   key={month}
                   onClick={() => setActiveMonth(month)}
-                  className={`relative px-6 py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
+                  className={`relative shrink-0 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
                     ? "text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                     }`}
@@ -161,7 +161,7 @@ export default function Schedule() {
 
               <button
                 onClick={() => setActiveMonth("MY_LINEUP")}
-                className={`relative px-6 py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === "MY_LINEUP"
+                className={`relative shrink-0 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === "MY_LINEUP"
                   ? "text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground"
                   }`}

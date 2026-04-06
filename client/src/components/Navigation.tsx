@@ -830,7 +830,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                         handleNavClick(item.href);
                       }}
                       aria-current={isActiveHref(item.href) ? "page" : undefined}
-                      className={`group font-display text-4xl sm:text-5xl md:text-6xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
+                      className={`group font-display text-2xl sm:text-4xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer text-center ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
                     >
                       {renderNavLabel(item.label, true)}
                     </button>
@@ -861,7 +861,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                               handleNavClick(sub.href);
                               setMobileMenuOpen(false);
                             }}
-                            className="text-xs sm:text-sm font-mono tracking-[0.3em] uppercase text-white/40 hover:text-primary transition-colors py-2 px-4 rounded-full border border-white/5 bg-white/[0.02]"
+                            className="block py-3 font-mono text-[11px] sm:text-[13px] tracking-[0.2em] uppercase text-center text-white/50 hover:text-white transition-colors border border-white/5 bg-white/[0.02] w-full rounded-full"
                           >
                             {sub.label}
                           </button>
