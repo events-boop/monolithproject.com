@@ -17,6 +17,7 @@ import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import EventFunnelStack from "@/components/EventFunnelStack";
 import ConversionCTA from "@/components/ConversionCTA";
+import Section from "@/components/layout/Section";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import {
@@ -107,7 +108,7 @@ export default function ChasingSunsets() {
           {/* Overlay gradient for readability */}
           <div className="absolute inset-0 opacity-80 z-10 pointer-events-none bg-chasing-hero-overlay" />
 
-          <div className="relative z-20 container max-w-6xl mx-auto pointer-events-none">
+          <div className="relative z-20 container layout-default pointer-events-none">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -178,9 +179,8 @@ export default function ChasingSunsets() {
         <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
         {/* The Concept */}
-        <section id="chasing-concept" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
-          <div className="container max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-start">
+        <Section id="chasing-concept" scrollAnchor borderTop="sunset-border-accent border-t">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -227,8 +227,7 @@ export default function ChasingSunsets() {
                 </div>
               </motion.div>
             </div>
-          </div>
-        </section>
+        </Section>
 
         {/* NEW: Pitch / Details Section */}
         <div id="chasing-manifesto" className="scroll-shell-target">
@@ -241,7 +240,7 @@ export default function ChasingSunsets() {
         </div>
 
         {/* Season Records */}
-        <div id="chasing-records" className="scroll-shell-target container max-w-6xl mx-auto px-6 border-t sunset-border-accent">
+        <Section as="div" id="chasing-records" scrollAnchor spacing="none" borderTop="border-t sunset-border-accent">
           <EpisodeGallery
             series="chasing-sunsets"
             season="Season I"
@@ -299,13 +298,10 @@ export default function ChasingSunsets() {
               </Link>
             </div>
           </div>
-        </div>
-
-
+        </Section>
 
         {/* Upcoming Events / Residents */}
-        <section id="chasing-upcoming" className="scroll-shell-target py-16 md:py-24 px-6 sunset-warm-section sunset-border-accent border-t">
-          <div className="container max-w-5xl mx-auto">
+        <Section id="chasing-upcoming" scrollAnchor borderTop="sunset-border-accent border-t" bg="sunset-warm-section">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 gap-6 sunset-border-accent border-b">
               <div className="flex gap-8">
                 <button
@@ -401,12 +397,10 @@ export default function ChasingSunsets() {
             ) : (
               <ResidentDJCard />
             )}
-          </div>
-        </section>
+        </Section>
 
         {/* Submit DJ Set */}
-        <section id="chasing-submit" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
-          <div className="container max-w-4xl mx-auto text-center">
+        <Section id="chasing-submit" width="narrow" scrollAnchor borderTop="sunset-border-accent border-t" containerClassName="text-center">
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-4 sunset-accent">
               For The Selectors
             </span>
@@ -424,12 +418,10 @@ export default function ChasingSunsets() {
                 SUBMIT A MIX <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
             </MagneticButton>
-          </div>
-        </section>
+        </Section>
 
         {/* Chasing Sun(Sets) FAQ */}
-        <section id="chasing-faq" className="scroll-shell-target py-16 md:py-24 px-6 sunset-border-accent border-t">
-          <div className="container max-w-4xl mx-auto">
+        <Section id="chasing-faq" width="narrow" scrollAnchor borderTop="sunset-border-accent border-t">
             <button
               onClick={() => setFaqOpen(!faqOpen)}
               className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-[#FDF6E3] transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(232,184,109,0.15)] hover:shadow-[0_0_50px_rgba(232,184,109,0.3)]"
@@ -476,8 +468,7 @@ export default function ChasingSunsets() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-        </section>
+        </Section>
 
         {/* Inner Circle Pre-registration Funnel */}
         {chasingFunnelEvent ? (
@@ -489,9 +480,8 @@ export default function ChasingSunsets() {
           </div>
         ) : null}
 
-        <section id="chasing-cta" className="scroll-shell-target py-20 md:py-24 px-6 relative sunset-border-accent border-t">
+        <Section id="chasing-cta" width="narrow" scrollAnchor borderTop="sunset-border-accent border-t" className="relative" containerClassName="text-center">
           <div className="pointer-events-none absolute inset-0 bg-chasing-glow-2" />
-          <div className="container max-w-4xl mx-auto text-center">
             <h2 className="font-display text-5xl md:text-7xl mb-6 sunset-text">
               SEE WHAT'S NEXT
             </h2>
@@ -515,8 +505,7 @@ export default function ChasingSunsets() {
                 </Link>
               </MagneticButton>
             </div>
-          </div>
-        </section>
+        </Section>
       </main>
 
       <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />

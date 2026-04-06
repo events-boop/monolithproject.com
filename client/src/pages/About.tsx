@@ -175,7 +175,7 @@ export default function About() {
 
       {/* Philosophy / Story Section */}
       <section className="relative py-40 px-6 z-30" id="story">
-        <div className="max-w-5xl mx-auto">
+        <div className="layout-default">
             <div className="space-y-16">
               <div>
                 <BrandTranslatorLabel tone="neutral" className="mb-8">
@@ -206,7 +206,7 @@ export default function About() {
       <section className="relative py-32 md:py-48 px-6 md:px-12 z-30 bg-[#0a0a0a] border-y border-white/[0.05]" id="manifesto">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,83,0.03)_0%,transparent_70%)] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
+        <div className="layout-wide flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
           <div className="lg:w-1/3">
               <div className="sticky top-40">
                 <span className="ui-kicker block text-[#d4a853] mb-4">Core Principles</span>
@@ -231,7 +231,7 @@ export default function About() {
       <section className="relative px-6 py-32 md:py-48 z-30 overflow-hidden" id="vision">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(224,90,58,0.05),transparent_40%),radial-gradient(circle_at_84%_74%,rgba(139,92,246,0.05),transparent_40%)] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="layout-wide relative z-10">
           <div className="flex flex-col lg:flex-row gap-20 items-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}

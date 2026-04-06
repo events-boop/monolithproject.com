@@ -73,7 +73,7 @@ export default function ConversionStrip() {
       {/* Background Pixel Grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 0)', backgroundSize: '24px 24px' }} />
       
-      <div className="container max-w-7xl mx-auto px-6 py-10 md:py-14 relative z-10">
+      <div className="container layout-wide px-6 py-10 md:py-14 relative z-10">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-8">
           
           {/* LEFT: Signals & Headline */}

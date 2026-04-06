@@ -118,7 +118,7 @@ export default function Press() {
             </div>
 
             <main className="relative z-10 page-shell-start-loose pb-32">
-                <div className="container max-w-6xl mx-auto px-6">
+                <div className="container layout-default px-6">
 
                     {/* Header */}
                     <motion.div

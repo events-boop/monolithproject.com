@@ -90,7 +90,7 @@ export default function InstagramFeed() {
             <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.03),transparent_40%)] pointer-events-none" />
 
-            <div className="container max-w-7xl mx-auto">
+            <div className="container layout-wide">
                 <div className="flex flex-col items-center justify-center mb-16 gap-10">
                     <div className="text-center mb-2">
                         <span className="font-mono text-xs text-clay tracking-[0.2em] uppercase mb-4 block">

@@ -19,48 +19,48 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
 
     const contentMap = {
         "default": {
-            pill: "VIP Waitlist",
-            titleTop: "Unlock Exclusive",
-            titleBottom: "Pre-Sale Access",
+            pill: "Ticket Updates",
+            titleTop: "Get First",
+            titleBottom: "Updates",
             gradient: "from-[#E05A3A] to-[#E8B86D]",
-            desc: "Join the newsletter. Get notified 24 hours before the public when tables and Tier 1 tickets for the next season go live.",
+            desc: "Join the newsletter for new dates, ticket windows, and VIP table updates before public sale.",
             button: "sunset-gradient-btn",
             glow1: "bg-[#E05A3A]/10",
             glow2: "bg-[#8B5CF6]/10",
             bulletPoints: [
-                "Guaranteed lowest ticket tiers",
-                "Priority VIP table booking",
-                "Exclusive lineup drops"
+                "First ticket windows",
+                "VIP table updates",
+                "Lineup announcements"
             ]
         },
         "chasing-sunsets": {
             pill: "Newsletter",
-            titleTop: "Unlock",
-            titleBottom: "The Sunset",
+            titleTop: "Get Sunset",
+            titleBottom: "Updates",
             gradient: "from-[#C2703E] via-[#E8B86D] to-[#FBF5ED]",
-            desc: "Join the Chasing Sun(Sets) newsletter. Get first access to sunset events and destination announcements.",
+            desc: "Join the Chasing Sun(Sets) newsletter for new dates, lineup announcements, and ticket windows.",
             button: "sunset-gradient-btn",
             glow1: "bg-[#E8B86D]/10",
             glow2: "bg-[#C2703E]/10",
             bulletPoints: [
-                "Early bird ticketing access",
-                "Secret location drops",
-                "Newsletter-first updates"
+                "New date announcements",
+                "Ticket windows",
+                "Radio and lineup updates"
             ]
         },
         "untold-story": {
-            pill: "Secret Access",
-            titleTop: "Access",
-            titleBottom: "The Untold",
+            pill: "Newsletter",
+            titleTop: "Get Late-Night",
+            titleBottom: "Updates",
             gradient: "from-[#8B5CF6] via-[#22D3EE] to-[#FBF5ED]",
-            desc: "Step into the night with Untold Story. Receive encrypted coordinates, secret lineup drops, and backstage access before the masses.",
+            desc: "Join the Untold Story newsletter for late-night dates, lineup announcements, and ticket windows.",
             button: "bg-gradient-to-r from-[#8B5CF6] to-[#22D3EE]",
             glow1: "bg-[#8B5CF6]/10",
             glow2: "bg-[#22D3EE]/10",
             bulletPoints: [
-                "Encrypted location details",
-                "Deep-house unreleased cuts",
-                "Backstage and VIP entry"
+                "New late-night dates",
+                "Lineup announcements",
+                "VIP table updates"
             ]
         }
     };
@@ -111,7 +111,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
 
     const eventLabel = event?.headline || event?.title;
     const eventMeta = eventLabel ? `${eventLabel}${event?.date ? ` · ${event.date}` : ""}` : null;
-    const ctaLabel = event?.status === "on-sale" ? "Unlock Access" : "Join Waitlist";
+    const ctaLabel = "Get Updates";
 
     return (
         <div className="w-full relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
@@ -192,8 +192,8 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
                                             <h3 className="font-display text-2xl uppercase text-white mb-2">You're On The List</h3>
                                             <p className="text-white/60 text-sm">
                                                 {eventLabel
-                                                    ? `Keep an eye on your inbox. We'll reach out first when ${eventLabel} opens up.`
-                                                    : "Keep an eye on your inbox. We'll send your exclusive access link before the drop."}
+                                                    ? `Keep an eye on your inbox. We'll reach out when ${eventLabel} has ticket, lineup, or event news.`
+                                                    : "Keep an eye on your inbox. We'll send new dates, ticket windows, and lineup updates when they are ready."}
                                             </p>
                                         </motion.div>
                                     ) : (
@@ -272,7 +272,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
                                             </button>
 
                                             <p className="text-[10px] text-center text-white/40 mt-3 font-mono">
-                                                By joining, you agree to our privacy policy. No spam, ever.
+                                                By joining, you agree to receive event updates. Unsubscribe anytime.
                                             </p>
                                         </motion.form>
                                     )}

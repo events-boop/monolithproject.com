@@ -42,7 +42,7 @@ const chapters = [
 ];
 
 const radioSignal = {
-  description: "The listening chapter. Mixes, artist sessions, and a recurring signal that extends the taste behind the room between nights.",
+  description: "The radio show extends Chasing Sun(Sets) between events with mixes, guest sessions, and replayable episodes.",
   href: "/radio",
   label: "03",
   title: "CHASING SUN(SETS) RADIO SHOW",
@@ -60,7 +60,7 @@ export default function ChaptersSection() {
     >
       <div className="absolute inset-0 atmo-surface opacity-70 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_84%_76%,rgba(224,90,58,0.1),transparent_36%)] pointer-events-none" />
-      <div className="container max-w-6xl mx-auto px-6 mb-12 md:mb-14">
+      <div className="container layout-default px-6 mb-12 md:mb-14">
         <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ duration: 0.35 }}>
           <EditorialHeader
             kicker="Program"
@@ -70,7 +70,7 @@ export default function ChaptersSection() {
         </motion.div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6">
+      <div className="container layout-wide px-6">
         <div className="grid gap-6 lg:grid-cols-2">
           {chapters.map((chapter, index) => (
             <motion.div
@@ -103,7 +103,7 @@ export default function ChaptersSection() {
                   <div className="flex items-start justify-between gap-5">
                     <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-4 py-2">
                       <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
-                        Chapter
+                        Series
                       </span>
                       <span className="font-serif text-2xl italic text-white/72">
                         {chapter.number}
@@ -142,7 +142,7 @@ export default function ChaptersSection() {
                     <div className={`mt-8 inline-flex items-center gap-3 text-sm transition-colors duration-300 ${chapter.id === "untold-story" ? "group-hover:text-story" : "group-hover:text-clay"}`}>
                       <div className={`h-px bg-white/40 transition-all duration-500 ${chapter.id === "untold-story" ? "w-10 group-hover:w-16 group-hover:bg-story" : "w-10 group-hover:w-20 group-hover:bg-clay"}`} />
                       <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
-                        {chapter.id === "chasing-sunsets" ? "Explore Sun(Sets)" : "Enter Untold Story"}
+                        {chapter.id === "chasing-sunsets" ? "Explore Chasing Sun(Sets)" : "Explore Untold Story"}
                       </span>
                       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
@@ -169,7 +169,7 @@ export default function ChaptersSection() {
                   <AudioLines className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="ui-chip text-white/38">Signal</p>
+                  <p className="ui-chip text-white/38">Radio</p>
                   <span className="mt-1 block text-sm font-bold uppercase tracking-[0.18em] text-white/58">
                     {radioSignal.label}
                   </span>
@@ -187,7 +187,7 @@ export default function ChaptersSection() {
 
               <div className="inline-flex items-center gap-3 text-white/74 transition-colors group-hover:text-white">
                 <div className="h-px w-12 bg-gradient-to-r from-white/55 to-transparent" />
-                <span className="ui-chip">Listen Now</span>
+                <span className="ui-chip">Open Radio Show</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>

@@ -50,7 +50,7 @@ export default function ConnectSection({ compact = false }: { compact?: boolean 
             <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
             <div className="absolute inset-0 atmo-surface opacity-40 pointer-events-none" />
 
-            <div className="container max-w-7xl mx-auto px-6 relative z-10">
+            <div className="container layout-wide px-6 relative z-10">
                 <EditorialHeader
                     kicker="Work With Us"
                     title="Get Involved"

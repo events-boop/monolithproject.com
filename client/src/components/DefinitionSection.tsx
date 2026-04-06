@@ -9,7 +9,7 @@ export default function DefinitionSection() {
 
     return (
         <section className="py-24 bg-background relative overflow-hidden">
-            <div className="container max-w-4xl mx-auto px-6">
+            <div className="container layout-narrow px-6">
                 <motion.div
                     ref={ref}
                     initial={{ opacity: 0, y: 20 }}

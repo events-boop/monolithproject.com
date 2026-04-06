@@ -35,7 +35,7 @@ export default function ArchiveGalleryPage() {
             <Navigation variant="dark" brand={params.series as any} />
 
             <main className="page-shell-start pb-32">
-                <div className="container max-w-6xl mx-auto px-6">
+                <div className="container layout-default px-6">
                     <Link href={backLink} asChild>
                         <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white/50 hover:text-white transition-colors mb-12">
                             <ArrowLeft className="w-4 h-4" /> Back to {params.series.replace("-", " ")}

@@ -96,7 +96,7 @@ export default function Lineup() {
 
       {/* Hero */}
       <section className="page-shell-start-loose pb-12 px-6">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -120,7 +120,7 @@ export default function Lineup() {
 
       {/* Filters */}
       <section className="px-6 pb-12 sticky sticky-shell-top z-40">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <div className="flex flex-wrap gap-3 py-4 border-b border-border">
             {filters.map((f) => {
               const isActive = activeFilter === f.value;
@@ -164,7 +164,7 @@ export default function Lineup() {
 
       {/* Artist Grid */}
       <section className="px-6 pb-24">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             <AnimatePresence mode="popLayout">
               {filtered.map((artist, idx) => (

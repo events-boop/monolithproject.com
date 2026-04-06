@@ -91,7 +91,7 @@ export default function MixedMediaGallery({
         maxImages={12}
       />
 
-      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+      <div className="container layout-wide px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 md:mb-32 gap-12 lg:gap-24">
           <div className="max-w-3xl">
             {subtitle && (

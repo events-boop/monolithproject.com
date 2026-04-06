@@ -104,7 +104,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
       <div className={`absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[140px] opacity-[0.12] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-orange-500/40' : 'bg-cyan-500/40'}`} />
       <div className={`absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[140px] opacity-[0.08] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-amber-600/30' : 'bg-indigo-600/30'}`} />
 
-      <div className="container max-w-7xl mx-auto px-6 py-16 md:py-24 relative z-10 transition-opacity">
+      <div className="container layout-wide px-6 py-16 md:py-24 relative z-10 transition-opacity">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-24">
 
           {/* Left: Event context */}

@@ -40,7 +40,7 @@ export default function PastEventsSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(0,0,0,0)_35%,rgba(0,0,0,0.25)_100%)] pointer-events-none" />
       <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
 
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+      <div className="container layout-default px-6 relative z-10">
         <EditorialHeader
           kicker="Archive"
           title="Past Events"
@@ -48,7 +48,7 @@ export default function PastEventsSection() {
         />
       </div>
 
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+      <div className="container layout-default px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {pastEvents.map((event, index) => {
             const hasGallery = event.galleryUrl !== "#";

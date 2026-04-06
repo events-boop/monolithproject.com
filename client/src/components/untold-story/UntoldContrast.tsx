@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function UntoldContrast() {
   return (
     <section id="untold-contrast" className="scroll-shell-target py-16 md:py-24 px-6 border-t border-untold-violet-15">
-      <div className="container max-w-4xl mx-auto text-center">
+      <div className="container layout-narrow text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

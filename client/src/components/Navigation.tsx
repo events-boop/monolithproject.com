@@ -494,7 +494,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       </span>
                     </Link>
                     <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
-                      Chapter
+                      Section
                     </span>
                     <span className="font-heavy text-xs min-[1250px]:text-sm text-white/80 tabular-nums">
                       {currentChapter.number} / {currentChapter.label}

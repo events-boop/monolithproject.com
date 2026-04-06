@@ -66,7 +66,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
       />
 
       {/* Ordinary Content Layer */}
-      <div className="container max-w-7xl mx-auto relative z-30">
+      <div className="container layout-wide relative z-30">
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

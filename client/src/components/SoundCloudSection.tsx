@@ -69,7 +69,7 @@ export default function SoundCloudSection() {
       {/* Background Archival Texture */}
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
 
-      <div className="container max-w-6xl mx-auto px-6 relative z-10">
+      <div className="container layout-default px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,7 +126,7 @@ export default function SoundCloudSection() {
                 
                 <div className="flex items-center gap-6 mt-4 md:mt-0 md:justify-end self-end md:self-auto">
                   <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/30 group-hover:text-white transition-colors hidden sm:block">
-                    Intercept Signal
+                    Open Episode
                   </span>
                   <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 flex items-center justify-center border border-white/20 rounded-none group-hover:bg-white group-hover:border-white transition-all duration-500">
                     <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white/50 group-hover:text-black group-hover:-rotate-45 transition-all duration-500" />
@@ -145,7 +145,7 @@ export default function SoundCloudSection() {
             className="group flex items-center gap-4 text-white hover:text-white transition-all duration-500 outline-none"
           >
             <span className="font-mono tracking-[0.25em] uppercase text-xs text-white/50 group-hover:text-white transition-colors">
-              Access Full Archive
+              Open Full Archive
             </span>
             <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-2 transition-transform duration-500" />
           </a>

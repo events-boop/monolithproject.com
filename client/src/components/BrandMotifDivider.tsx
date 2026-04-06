@@ -34,7 +34,7 @@ export default function BrandMotifDivider({
 
   return (
     <div className={`px-6 ${className}`} aria-hidden="true">
-      <div className="container max-w-6xl mx-auto flex items-center gap-4 md:gap-5">
+      <div className="container layout-default flex items-center gap-4 md:gap-5">
         <div className={`h-px flex-1 bg-gradient-to-r ${ui.line}`} />
         <div className="inline-flex items-center gap-2">
           <Sun className={`w-3.5 h-3.5 ${ui.sun}`} />

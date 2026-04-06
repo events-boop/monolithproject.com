@@ -56,7 +56,7 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
         ? "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.12),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.12),transparent_34%)]"
         : "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.08),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.08),transparent_34%)]"
         }`} />
-      <div className="container max-w-6xl mx-auto relative z-10">
+      <div className="container layout-default relative z-10">
         <form action="/api/leads" method="POST" onSubmit={onSubmit} className="grid lg:grid-cols-[1.1fr_1.5fr_auto] gap-4 lg:gap-8 items-center">
           <h3 className={`font-display text-3xl md:text-5xl leading-[0.9] uppercase ${dark ? "text-white" : "text-charcoal"}`}>{title}</h3>
 

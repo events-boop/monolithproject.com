@@ -67,7 +67,7 @@ export default function Guide() {
 
             {/* Mobile-focused minimal header */}
             <main className="relative z-10 page-shell-start pb-32">
-                <div className="container max-w-4xl mx-auto px-6">
+                <div className="container layout-narrow px-6">
 
                     <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-6">
                         <div>

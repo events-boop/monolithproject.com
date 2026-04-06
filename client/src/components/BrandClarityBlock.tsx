@@ -5,16 +5,16 @@ import { Link } from "wouter";
 const clarityCards = [
   {
     label: "Live",
-    title: "Series & Chapters",
+    title: "Series & Events",
     description: "Recurring nights, distinct formats, and the next dates that define the live side of the Monolith world.",
     cta: "View Schedule",
     href: "/schedule",
     icon: CalendarRange,
   },
   {
-    label: "Signal",
-    title: "Radio & Context",
-    description: "The Chasing Sun(Sets) Radio Show, archive, and editorial context that make the booking taste easier to hear and trust.",
+    label: "Media",
+    title: "Radio, Articles & Archive",
+    description: "The Chasing Sun(Sets) Radio Show, articles, and event archive that help people understand the taste behind the room.",
     cta: "Open Radio Show",
     href: "/radio",
     icon: Radio,
@@ -28,8 +28,8 @@ const clarityCards = [
     icon: Users,
   },
   {
-    label: "Archive",
-    title: "Media & Insight",
+    label: "Photos",
+    title: "Event Archive",
     description: "The photos, recap assets, and recorded history of each room, preserved as a living record of the project.",
     cta: "View Event Archive",
     href: "/archive",
@@ -66,9 +66,9 @@ export default function BrandClarityBlock() {
               </p>
 
               <div className="mt-12 flex flex-col gap-6 border-l border-white/5 pl-8">
-                 <p className="text-xs uppercase tracking-[0.3em] text-white/20 font-mono">System Architecture v1.02</p>
+                 <p className="text-xs uppercase tracking-[0.3em] text-white/20 font-mono">Project Overview</p>
                  <div className="flex flex-wrap gap-x-8 gap-y-4">
-                    {["Curated Rooms", "Music-First", "Chicago-Rooted", "Global Signal"].map((trait) => (
+                    {["Curated Rooms", "Music-First", "Chicago-Rooted", "Consistent Standard"].map((trait) => (
                       <span key={trait} className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/50">{trait}</span>
                     ))}
                  </div>

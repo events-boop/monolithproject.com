@@ -2,10 +2,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { Check, ArrowUpRight, AlertCircle, Sparkles, Radio, MapPinned } from "lucide-react";
-import GlitchText from "./GlitchText";
 import { submitNewsletterLead } from "@/lib/api";
 import { signalChirp } from "@/lib/SignalChirpEngine";
-import KineticDecryption from "./KineticDecryption";
 import HoneypotField from "./HoneypotField";
 import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
 import { honeypotFieldName } from "@shared/generated/hardening";
@@ -45,7 +43,6 @@ export default function NewsletterSection({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitError, setSubmitError] = useState("");
-  const [residentId, setResidentId] = useState("");
   const [botCheck, setBotCheck] = useState(""); // Honeypot state
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -99,7 +96,6 @@ export default function NewsletterSection({
         },
         buildLeadIdempotencyKey(source, email)
       );
-      setResidentId(Math.random().toString(36).substring(7).toUpperCase());
       signalChirp.boot();
       setIsSubmitted(true);
     } catch (error) {
@@ -113,7 +109,7 @@ export default function NewsletterSection({
     <section id="newsletter" ref={sectionRef} className="relative py-24 md:py-32 bg-[#050505] text-white border-t border-white/10">
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
 
-      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+      <div className="container layout-wide px-6 relative z-10">
         <AnimatePresence mode="wait">
           {isSubmitted ? (
             <motion.div
@@ -130,46 +126,41 @@ export default function NewsletterSection({
                   <Check className="w-8 h-8 text-primary" />
                 </div>
                 
-                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Newsletter // Confirmed</span>
+                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Newsletter Confirmed</span>
                 <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">You're In</h3>
+                <p className="max-w-xl text-center text-base text-white/65 mb-10 leading-relaxed">
+                  We&apos;ll send new dates, ticket windows, lineup news, and radio drops when they matter.
+                </p>
                 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">First Name</span>
-                    <span className="font-heavy text-2xl text-white uppercase">
-                      <KineticDecryption text={firstName || "Anonymous"} />
-                    </span>
+                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">Name</span>
+                    <span className="font-heavy text-2xl text-white uppercase">{firstName || "You"}</span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Subscriber ID</span>
-                    <span className="font-heavy text-xl text-primary tabular-nums tracking-widest">
-                      <KineticDecryption text={`#${residentId}`} />
-                    </span>
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signed Up On</span>
+                    <span className="font-heavy text-lg text-white/80">{new Date().toLocaleDateString()}</span>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Subscription</span>
-                    <span className="font-heavy text-lg text-white/80">Monolith updates</span>
-                  </div>
-                  <div className="flex flex-col gap-2 text-right md:text-left">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signup Date</span>
-                    <span className="font-heavy text-lg text-white/80">{new Date().toLocaleDateString()}</span>
+                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">What You&apos;ll Get</span>
+                    <span className="font-heavy text-lg text-white/80">Dates, ticket windows, lineup news, and radio drops</span>
                   </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-6 w-full">
-                  <button 
-                    onClick={() => window.print()}
-                    className="flex-1 py-5 border border-white/10 font-heavy text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-all flex items-center justify-center gap-3 group"
-                  >
-                    <span>Print Confirmation</span>
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </button>
                   <a 
                     href="/schedule"
                     className="flex-1 py-5 bg-white text-black font-heavy text-xs uppercase tracking-[0.2em] hover:pr-12 transition-all relative flex items-center justify-center group"
                   >
                     <span>View Schedule</span>
                     <ArrowUpRight className="w-4 h-4 ml-3" />
+                  </a>
+                  <a 
+                    href="/"
+                    className="flex-1 py-5 border border-white/10 font-heavy text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-all flex items-center justify-center gap-3 group"
+                  >
+                    <span>Back Home</span>
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </a>
                 </div>
               </div>

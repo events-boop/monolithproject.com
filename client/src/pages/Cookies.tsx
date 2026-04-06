@@ -8,7 +8,7 @@ export default function Cookies() {
       <SEO title="Cookie Policy" description="Cookie policy for The Monolith Project website." canonicalPath="/cookies" />
       <Navigation />
       <section className="page-shell-start pb-20 px-6">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container layout-narrow">
           <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">Legal</p>
           <h1 className="font-display text-[clamp(3rem,10vw,7rem)] leading-[0.9] uppercase mb-6">Cookie Policy</h1>
           <p className="text-muted-foreground mb-10">Last updated: February 11, 2026.</p>

@@ -88,7 +88,7 @@ export default function ArtistsSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_14%,rgba(34,211,238,0.09),transparent_32%),radial-gradient(circle_at_88%_80%,rgba(224,90,58,0.12),transparent_36%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(255,255,255,0.08),transparent_32%),linear-gradient(180deg,rgba(0,0,0,0)_40%,rgba(0,0,0,0.22)_100%)] pointer-events-none" />
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
-      <div className="container max-w-6xl mx-auto px-6">
+      <div className="container layout-default px-6">
         <EditorialHeader
           kicker="Lineup"
           title="The Roster"

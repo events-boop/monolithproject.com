@@ -51,7 +51,7 @@ export default function RadioEpisode() {
         />
         <Navigation />
         <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-          <section className="container max-w-3xl mx-auto text-center">
+          <section className="container layout-narrow text-center">
             <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary mb-4">
               Legacy Link Redirect
             </p>
@@ -81,7 +81,7 @@ export default function RadioEpisode() {
         />
         <Navigation />
         <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-          <section className="container max-w-3xl mx-auto text-center">
+          <section className="container layout-narrow text-center">
             <h1 className="font-display text-[clamp(2.7rem,7vw,5rem)] uppercase mb-5">
               Episode Not Found
             </h1>
@@ -109,7 +109,7 @@ export default function RadioEpisode() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-        <motion.section className="container max-w-5xl mx-auto" {...sectionReveal}>
+        <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-4">
               {episode.shortCode} · {episode.displayDate}
@@ -137,7 +137,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-7" {...sectionReveal}>
+        <motion.section className="container layout-default mt-7" {...sectionReveal}>
           <nav
             className="season-panel-nocturne p-2.5 flex flex-wrap gap-2"
             aria-label="Episode quick navigation"
@@ -154,7 +154,7 @@ export default function RadioEpisode() {
           </nav>
         </motion.section>
 
-        <motion.section id="listen" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section id="listen" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Listen</h2>
           <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
             <iframe
@@ -169,7 +169,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section id="tracklist" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section id="tracklist" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Tracklist</h2>
           <div className="border border-border/70 rounded-xl bg-card/40 luxe-surface-dark">
             {episode.tracklist.map((track, index) => (
@@ -192,7 +192,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section id="story" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section id="story" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Episode Story</h2>
           <article className="border border-border/70 rounded-xl p-6 bg-card/40 space-y-4 text-muted-foreground leading-relaxed luxe-surface-dark">
             {episode.narrative.split("\n\n").map((paragraph) => (
@@ -201,7 +201,7 @@ export default function RadioEpisode() {
           </article>
         </motion.section>
 
-        <motion.section id="guest-links" className="container max-w-5xl mx-auto mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section id="guest-links" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
           <h2 className="font-display text-3xl uppercase mb-4">Guest Links</h2>
           <div className="flex flex-wrap gap-3">
             {episode.guestLinks.map((link) =>
@@ -227,7 +227,7 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-12" {...sectionReveal}>
+        <motion.section className="container layout-default mt-12" {...sectionReveal}>
           <h2 className="font-display text-2xl md:text-3xl uppercase mb-5">Continue Listening</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {previousEpisode ? (

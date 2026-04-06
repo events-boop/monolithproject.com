@@ -95,7 +95,7 @@ export default function SectionDivider({ id, number, label, dark, glow }: Sectio
          className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none opacity-[0.15] z-10"
       />
 
-      <div className="container max-w-7xl mx-auto px-6 relative z-10 bg-background/50 backdrop-blur-sm">
+      <div className="container layout-wide px-6 relative z-10 bg-background/50 backdrop-blur-sm">
         <div className="flex items-center justify-between py-6 md:py-8 lg:py-10">
           {/* Left: Label */}
           <div className="flex items-center gap-6">

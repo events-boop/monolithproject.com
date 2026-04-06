@@ -87,9 +87,9 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                             className="font-display text-4xl md:text-5xl uppercase tracking-widest text-white mb-4"
                         >
-                            Encrypted <br />
+                            Venue <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
-                                Coordinates Drops
+                                Update Drops
                             </span>
                         </motion.h2>
 
@@ -106,21 +106,21 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                             className="text-white/60 text-sm md:text-base mb-10 max-w-lg font-mono leading-relaxed"
                         >
-                            When the room stays classified until the last moment, this is the access list. Drop your best email and the number you actually check so we know where to reach you when the location unlocks.
+                            Some details go out close to the event. Leave your best email and phone so we can send venue info, guest list notes, and any day-of changes.
                         </motion.p>
 
                         <ul className="grid gap-4 font-mono text-xs uppercase tracking-[0.18em] text-white/45">
                             <li className="flex items-center gap-3">
                                 <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
-                                Venue details stay locked until the reveal window.
+                                Venue details go out close to the event when needed.
                             </li>
                             <li className="flex items-center gap-3">
                                 <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
-                                Event context and attribution stay attached to this lead.
+                                Your signup stays attached to this event.
                             </li>
                             <li className="flex items-center gap-3">
                                 <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
-                                Built for location drops, guestlist unlocks, and last-minute pivots.
+                                Best for venue updates, guest list notes, and late changes.
                             </li>
                         </ul>
                     </div>
@@ -143,11 +143,11 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     <div className="w-16 h-16 rounded-full bg-[#22D3EE]/10 flex items-center justify-center mb-6 border border-[#22D3EE]/20">
                                         <CheckCircle className="w-8 h-8 text-[#22D3EE]" />
                                     </div>
-                                    <h3 className="font-display text-3xl uppercase tracking-wider text-white mb-3">Drop Armed</h3>
+                                    <h3 className="font-display text-3xl uppercase tracking-wider text-white mb-3">You're On The List</h3>
                                     <p className="font-mono text-xs leading-relaxed text-white/55 uppercase tracking-[0.18em]">
                                         {eventLabel
-                                            ? `Your ${eventLabel} coordinates request is registered. Watch the inbox and phone you submitted for the unlock window.`
-                                            : "Your coordinates request is registered. Watch the inbox and phone you submitted for the unlock window."}
+                                            ? `Your ${eventLabel} venue update request is confirmed. Watch the inbox and phone you submitted for the next update.`
+                                            : "Your venue update request is confirmed. Watch the inbox and phone you submitted for the next update."}
                                     </p>
                                 </motion.div>
                             ) : (
@@ -160,8 +160,8 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-md space-y-5"
                                 >
                                     <div className="mb-2">
-                                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-white/35 mb-3">Secure Your Signal</p>
-                                        <h3 className="font-display text-3xl uppercase tracking-[0.08em] text-white">Lock The Drop</h3>
+                                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-white/35 mb-3">Venue Updates</p>
+                                        <h3 className="font-display text-3xl uppercase tracking-[0.08em] text-white">Get The Update</h3>
                                     </div>
 
                                     {/* Honeypot: Bot Trap */}
@@ -217,7 +217,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                         disabled={status === "loading"}
                                         className="w-full bg-white text-black px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                                     >
-                                        {status === "loading" ? "Syncing..." : "Arm My Drop"}
+                                        {status === "loading" ? "Submitting..." : "Get Venue Updates"}
                                         {status === "loading" ? null : <Lock className="w-4 h-4" />}
                                     </button>
 

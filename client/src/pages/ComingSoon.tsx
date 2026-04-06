@@ -121,7 +121,7 @@ export default function ComingSoon() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-        <div className="container max-w-3xl mx-auto text-center">
+        <div className="container layout-narrow text-center">
           <p className="font-mono text-xs tracking-[0.24em] uppercase text-primary/80 mb-6">Monolith Project</p>
           <h1 className="font-display text-5xl md:text-7xl tracking-tight-display mb-6">{content.headline}</h1>
           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-10">{content.description}</p>

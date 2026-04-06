@@ -6,10 +6,8 @@ import {
 } from "@/lib/runtimePerformance";
 
 const CustomCursor = lazy(() => import("./CustomCursor"));
-const MonolithKernel = lazy(() => import("./MonolithKernel"));
 const SensoryOverloadOverlay = lazy(() => import("./SensoryOverloadOverlay"));
 const SmoothScroll = lazy(() => import("./SmoothScroll"));
-const SystemHUD = lazy(() => import("./SystemHUD"));
 
 export default function DeferredShellChrome() {
   const [enableDesktopChrome, setEnableDesktopChrome] = useState(false);
@@ -30,8 +28,6 @@ export default function DeferredShellChrome() {
       {enableDesktopChrome ? (
         <>
           <CustomCursor />
-          <SystemHUD />
-          <MonolithKernel />
           <SensoryOverloadOverlay />
         </>
       ) : null}

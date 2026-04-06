@@ -80,7 +80,7 @@ export default function Partners() {
 
       {/* Hero */}
       <section className="page-shell-start-loose pb-20 relative">
-        <div className="container max-w-6xl mx-auto px-6">
+        <div className="container layout-default px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ export default function Partners() {
 
       {/* Production Crew Grid */}
       <section className="py-20">
-        <div className="container max-w-6xl mx-auto px-6">
+        <div className="container layout-default px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -166,13 +166,13 @@ export default function Partners() {
       </section>
 
       {/* Divider */}
-      <div className="container max-w-6xl mx-auto px-6">
+      <div className="container layout-default px-6">
         <div className="h-px bg-border" />
       </div>
 
       {/* Venue & Brand Partners */}
       <section className="py-20">
-        <div className="container max-w-6xl mx-auto px-6">
+        <div className="container layout-default px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

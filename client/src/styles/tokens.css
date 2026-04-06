@@ -20,6 +20,10 @@
   --shell-page-top-loose: calc(var(--shell-page-top) + clamp(0.75rem, 1vw, 1.25rem));
   --shell-sticky-top: calc(var(--shell-nav-offset) + var(--shell-nav-height) + clamp(0.5rem, 1vw, 0.875rem));
   --shell-scroll-offset: calc(var(--shell-sticky-top) + clamp(0.5rem, 1vw, 1rem));
+  /* Layout container widths */
+  --layout-narrow: 56rem;   /* 896px  - guides, FAQs, forms, legal */
+  --layout-default: 72rem;  /* 1152px - standard page sections */
+  --layout-wide: 80rem;     /* 1280px - hero, manifesto, large grids */
   /* Dark editorial — A24 Cinematic, warm deep off-black */
   --background: oklch(0.12 0.01 40);
   --foreground: oklch(0.95 0.01 40);

@@ -88,7 +88,7 @@ export default function WhatToExpect() {
         <div className="absolute left-0 right-0 top-1/2 h-px bg-black/5" />
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 py-24 md:py-40">
+      <div className="container layout-wide px-6 py-24 md:py-40">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 mb-20 md:mb-28 border-b border-black/10 pb-12">
           <div>

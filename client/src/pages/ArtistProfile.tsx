@@ -60,7 +60,7 @@ export default function ArtistProfile() {
         <SEO title="Artist Not Found" description="We couldn't find that artist profile." />
         <Navigation />
         <section className="h-[70vh] flex flex-col items-center justify-center px-6 text-center">
-          <p className="font-mono text-[10px] tracking-[0.5em] text-white/30 uppercase mb-4">404 / Missing Signal</p>
+          <p className="font-mono text-[10px] tracking-[0.5em] text-white/30 uppercase mb-4">404 / Page Not Found</p>
           <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase mb-10">Profile Not Found</h1>
           <Link href="/lineup" asChild>
             <a className="btn-pill-coral">Back to Lineup</a>
@@ -107,7 +107,7 @@ export default function ArtistProfile() {
           />
         </motion.div>
 
-        <div className="container max-w-7xl mx-auto relative z-20">
+        <div className="container layout-wide relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -142,7 +142,7 @@ export default function ArtistProfile() {
                     Headliner Status
                   </span>
                   <span className="font-mono text-[8px] md:text-[9px] tracking-[0.5em] text-white/30 uppercase">
-                    Official High Priority Artist // Signal: 001
+                    Featured booking in the Monolith roster
                   </span>
                 </div>
               ) : artist.role === "RESIDENT" ? (
@@ -154,7 +154,7 @@ export default function ArtistProfile() {
                     <div className="flex items-center gap-3 md:gap-4 mt-2">
                        <div className="h-px w-8 md:w-12 bg-white/40" />
                        <span className="font-mono text-[8px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] text-white uppercase font-bold">
-                         Core Foundation Architect
+                         Core resident
                        </span>
                     </div>
                   </div>
@@ -162,22 +162,22 @@ export default function ArtistProfile() {
                   {/* High-Prestige Residency Metadata HUD Grid */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 pt-6 border-t border-white/10 max-w-3xl">
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Tenure Status</span>
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Season 01 / Initiated</span>
+                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Residency</span>
+                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Season 01</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Residency Rank</span>
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">S-Tier / Signature Access</span>
+                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Artist Role</span>
+                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Resident</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Acoustic Signal</span>
+                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Based In</span>
                         <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase truncate">{artist.origin.split(',')[0]} / {artist.origin.split(',')[1]?.trim() || 'Global'}</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Verification</span>
+                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Status</span>
                         <div className="flex items-center gap-2">
                            <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--primary)] animate-pulse" />
-                           <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Authenticated Resident</span>
+                           <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Active resident</span>
                         </div>
                      </div>
                   </div>
@@ -192,13 +192,13 @@ export default function ArtistProfile() {
             <div className="flex flex-wrap items-center gap-10 md:gap-16">
               <div className="flex items-center gap-8">
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Coordinate</span>
+                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Based In</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <MapPin className="w-3 h-3 opacity-40" /> {artist.origin}
                    </span>
                  </div>
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Language</span>
+                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Sound</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <Music className="w-3 h-3 opacity-40" /> {artist.genre}
                    </span>
@@ -240,7 +240,7 @@ export default function ArtistProfile() {
       {/* Main Content: Bento Glass System */}
       <section className="relative py-32 px-6 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="container max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+        <div className="container layout-wide grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
           
           {/* Left Content — Story & Tracks */}
           <div className="lg:col-span-12 xl:col-span-7 space-y-32">
@@ -336,17 +336,17 @@ export default function ArtistProfile() {
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                   <Share2 className="w-4 h-4 hover:text-primary cursor-pointer transition-colors" />
                </div>
-               <span className="ui-kicker text-white/40 mb-2 block lowercase-none">Active Transmission</span>
+               <span className="ui-kicker text-white/40 mb-2 block lowercase-none">Next Event</span>
                <h4 className="font-display text-4xl uppercase tracking-widest text-white mb-10 leading-none">
-                 The Next<br/>Sequence
+                 What&apos;s<br/>Next
                </h4>
                
                <div className="space-y-8 border-y border-white/5 py-10 mb-10">
                   {[
-                    { label: "Ritual / Series", value: primarySeries === "untold-story" ? "Untold Story" : "Chasing Sun(Sets)" },
-                    { label: "Reference Date", value: nextSeriesEvent?.date || "August 2026" },
-                    { label: "Target Venue", value: nextSeriesEvent?.venue || "Reveal TBA" },
-                    { label: "Coordinate", value: nextSeriesEvent?.location || "Chicago, IL" },
+                    { label: "Series", value: primarySeries === "untold-story" ? "Untold Story" : "Chasing Sun(Sets)" },
+                    { label: "Date", value: nextSeriesEvent?.date || "August 2026" },
+                    { label: "Venue", value: nextSeriesEvent?.venue || "Reveal TBA" },
+                    { label: "City", value: nextSeriesEvent?.location || "Chicago, IL" },
                   ].map(spec => (
                     <div key={spec.label} className="flex flex-col gap-1">
                       <span className="font-mono text-[9px] tracking-[0.4em] text-white/20 uppercase lowercase-none">{spec.label}</span>
@@ -357,7 +357,7 @@ export default function ArtistProfile() {
 
                <Link href={primaryAction.href} asChild>
                  <a className={`w-full py-6 rounded-full flex items-center justify-center gap-3 font-bold text-[10px] tracking-[0.4em] uppercase transition-all duration-500 cursor-pointer overflow-hidden group bg-transparent border border-white/10 text-white hover:bg-white hover:text-black`}>
-                    Secure Access
+                    {primaryAction.label}
                     <ArrowRight className="w-4 h-4" />
                  </a>
                </Link>
@@ -365,7 +365,7 @@ export default function ArtistProfile() {
 
             {/* Connection Card */}
             <div className="p-10 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl">
-               <span className="ui-kicker text-white/40 mb-8 block lowercase-none">Connect Logic</span>
+               <span className="ui-kicker text-white/40 mb-8 block lowercase-none">Follow</span>
                <div className="grid grid-cols-2 gap-4">
                   <a href={artist.socials.instagram} target="_blank" className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white group transition-all duration-500">
                     <Instagram className="w-6 h-6 text-white/40 group-hover:text-black transition-colors mb-3" />

@@ -35,7 +35,7 @@ export default function ChasingSunsetsDetails() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(232,184,109,0.22),transparent_52%),radial-gradient(circle_at_82%_78%,rgba(194,112,62,0.18),transparent_56%)] mix-blend-multiply" />
             </div>
 
-            <div className="container max-w-6xl mx-auto relative z-10">
+            <div className="container layout-default relative z-10">
 
                 {/* Intro / Vision */}
                 <div className="grid md:grid-cols-2 gap-16 mb-24">

@@ -11,7 +11,7 @@ export default function ChasingSunsetsTicketing() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E8B86D]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#C2703E]/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="container max-w-6xl mx-auto relative z-10">
+        <div className="container layout-default relative z-10">
             <div className="text-center mb-20">
                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-4">Official Release</span>
                 <h2 className="font-display text-4xl md:text-5xl lg:text-7xl uppercase text-white tracking-widest leading-[0.85] mb-6">
@@ -100,7 +100,7 @@ export default function ChasingSunsetsTicketing() {
                         onClick={() => openDrawer('newsletter')}
                         className="w-full py-4 bg-gradient-to-r from-[#E8B86D] to-[#C2703E] rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A0F00] hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,184,109,0.3)] relative z-10"
                     >
-                        Request VIP Access
+                        Request VIP Table
                     </button>
                 </div>
             </div>

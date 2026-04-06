@@ -60,7 +60,7 @@ export default function UntoldStory() {
         ) : null}
 
         {/* Season Records */}
-        <div id="untold-records" className="scroll-shell-target relative z-20 container max-w-6xl mx-auto px-6 border-t border-white/10">
+        <div id="untold-records" className="scroll-shell-target relative z-20 container layout-default px-6 border-t border-white/10">
           <EpisodeGallery
             series="untold-story"
             season="Season I"

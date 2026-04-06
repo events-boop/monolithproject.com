@@ -16,7 +16,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
 
   return (
     <section id="untold-event" className="scroll-shell-target py-24 px-6 border-t bg-untold-card-solid border-untold-violet-15">
-      <div className="container max-w-5xl mx-auto">
+      <div className="container layout-default">
         <div className="flex items-end justify-between mb-8 pb-6 border-b border-untold-violet-20">
           <div>
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">

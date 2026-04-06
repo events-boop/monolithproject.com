@@ -116,7 +116,7 @@ export default function EntityBoostStrip({
 
   return (
     <section className={`px-4 sm:px-6 ${className}`}>
-      <div className={`container max-w-6xl mx-auto rounded-2xl p-5 sm:p-6 md:p-8 lift-hover ${ui.shell}`}>
+      <div className={`container layout-default rounded-2xl p-5 sm:p-6 md:p-8 lift-hover ${ui.shell}`}>
         {!hideMeta && (
           <>
             <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-3">{contextLabel}</p>

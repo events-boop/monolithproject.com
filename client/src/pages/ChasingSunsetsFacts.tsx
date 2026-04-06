@@ -59,7 +59,7 @@ export default function ChasingSunsetsFacts() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-        <motion.section className="container max-w-5xl mx-auto" {...sectionReveal}>
+        <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-5">
               Official Entity & Disambiguation
@@ -100,7 +100,7 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-16 grid md:grid-cols-2 gap-6" {...sectionReveal}>
+        <motion.section className="container layout-default mt-16 grid md:grid-cols-2 gap-6" {...sectionReveal}>
           <article className="luxe-surface-dark rounded-2xl p-7">
             <h2 className="font-display text-3xl mb-4 uppercase">What It Is</h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -117,7 +117,7 @@ export default function ChasingSunsetsFacts() {
           </article>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
+        <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">Official Links</h2>
             <div className="grid sm:grid-cols-2 gap-3">
@@ -139,7 +139,7 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
+        <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">Brand Names & Spellings</h2>
             <ul className="flex flex-wrap gap-2.5">
@@ -156,7 +156,7 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
+        <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">Fast Facts</h2>
             <dl className="grid md:grid-cols-2 gap-4">
@@ -184,7 +184,7 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
+        <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">FAQ</h2>
             <div className="space-y-3">
@@ -198,7 +198,7 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-5xl mx-auto mt-14" {...sectionReveal}>
+        <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-6">
             <p className="text-sm text-muted-foreground leading-loose">
               Need the short version?{" "}

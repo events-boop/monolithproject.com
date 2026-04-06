@@ -116,7 +116,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="max-w-6xl mx-auto rounded-[2.5rem] p-[1px] bg-gradient-to-b from-white/10 via-white/5 to-transparent relative shadow-[0_40px_100px_rgba(0,0,0,0.6)] bg-scanlines"
                 >
-                    {/* Inner Card: Secure Access Protocol */}
+                    {/* Inner Card */}
                     <div className="bg-[#0a0a0c]/80 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden grid lg:grid-cols-12 relative">
                         
                         {/* Header/Prize Section */}
@@ -131,12 +131,12 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                             >
                                 <div className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" />
                                 <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-primary font-bold">
-                                    Transmission: Open Entry
+                                    Open Entry
                                 </span>
                             </motion.div>
 
                             <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-[0.05em] text-white mb-10 leading-[0.9] drop-shadow-2xl">
-                                Access the <span className="text-primary italic">Decrypted</span> <br />Room
+                                Enter The <span className="text-primary italic">Guest</span> <br />List
                             </h2>
 
                             <div className="h-px w-20 bg-white/10 mb-10" />
@@ -148,15 +148,15 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                             ) : null}
 
                             <p className="text-white/50 text-base md:text-lg mb-12 max-w-lg leading-relaxed font-mono uppercase tracking-widest text-balance">
-                                The Monolith Project is an architectural response to the night. Register your signal to secure a position in the next sequence.
+                                Enter for a chance at guest list spots, private room access, and artist-connected perks for the next night.
                             </p>
 
                             <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6 font-mono text-[11px] tracking-[0.15em] uppercase">
                                 {[
-                                    { text: "Priority Guest Access", icon: Gift },
+                                    { text: "Guest list spots", icon: Gift },
                                     { text: "Private Room Entry", icon: Sparkles },
-                                    { text: "Artist Connectivity", icon: CheckCircle },
-                                    { text: "System Records", icon: Gift }
+                                    { text: "Artist-connected perks", icon: CheckCircle },
+                                    { text: "Priority event updates", icon: Gift }
                                 ].map((perk, i) => (
                                     <motion.div 
                                         key={i} 
@@ -174,7 +174,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                             </div>
                         </div>
 
-                        {/* Form Section: Entry Protocol */}
+                        {/* Form Section */}
                         <div className="lg:col-span-5 p-10 lg:p-16 relative flex flex-col justify-center bg-white/[0.01]">
                             <AnimatePresence mode="wait">
                                 {status === "success" ? (
@@ -193,18 +193,18 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                             <CheckCircle className="w-10 h-10 text-primary" />
                                         </motion.div>
 
-                                        <h3 className="font-display text-3xl uppercase text-white mb-4 tracking-widest">Signal Locked</h3>
+                                        <h3 className="font-display text-3xl uppercase text-white mb-4 tracking-widest">You're In</h3>
                                         <p className="text-[11px] text-white/40 mb-10 font-mono uppercase tracking-[0.2em] max-w-xs">
-                                            Your presence has been registered in the system.
+                                            Your entry has been recorded.
                                         </p>
 
                                         <div className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-8 text-left mb-6 relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 p-6 opacity-[0.02] pointer-events-none text-white group-hover:opacity-[0.05] transition-opacity duration-700">
                                                 <Sparkles className="w-32 h-32" />
                                             </div>
-                                            <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">Crew Signal</h4>
+                                            <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">Share Link</h4>
                                             <p className="text-white/40 text-[11px] mb-8 leading-relaxed font-mono uppercase tracking-widest">
-                                                Share the event with the people you actually want in the room. This link carries the live event context and campaign attribution.
+                                                Share the event with the people you actually want in the room. This link keeps the event context attached.
                                             </p>
 
                                             <div className="flex items-center gap-3">
@@ -244,8 +244,8 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                     >
                                         <div className="mb-8">
                                             <div className="h-px w-8 bg-primary mb-4" />
-                                            <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.05em]">Protocol <span className="text-white/30">Entry</span></h3>
-                                            <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Authorize your sequence</p>
+                                            <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.05em]">Enter Now</h3>
+                                            <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Add your details to join the entry list.</p>
                                         </div>
 
                                         {/* Honeypot: Bot Trap */}
@@ -260,7 +260,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     value={fullName}
                                                     onChange={(e) => setFullName(e.target.value)}
                                                     autoComplete="name"
-                                                    placeholder="IDENTITY / NAME"
+                                                    placeholder="Full name"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
@@ -273,7 +273,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     autoComplete="email"
-                                                    placeholder="SIGNAL / EMAIL"
+                                                    placeholder="Email address"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
@@ -284,7 +284,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     type="text"
                                                     value={handle}
                                                     onChange={(e) => setHandle(e.target.value)}
-                                                    placeholder="ORIGIN / @HANDLE"
+                                                    placeholder="Instagram handle (optional)"
                                                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
@@ -305,11 +305,11 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                 {status === "loading" ? (
                                                     <span className="flex items-center gap-3">
                                                         <div className="h-4 w-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                                        Processing...
+                                                        Submitting...
                                                     </span>
                                                 ) : (
                                                     <>
-                                                        Initialize Protocol
+                                                        Submit Entry
                                                         <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                                     </>
                                                 )}
@@ -319,7 +319,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                         <div className="flex items-center gap-3 pt-4">
                                             <div className="h-px flex-1 bg-white/5" />
                                             <p className="text-[9px] text-white/20 font-mono uppercase tracking-[0.2em] whitespace-nowrap">
-                                                Verification Required 21+
+                                                21+ only
                                             </p>
                                             <div className="h-px flex-1 bg-white/5" />
                                         </div>

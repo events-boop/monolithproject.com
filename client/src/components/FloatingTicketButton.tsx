@@ -75,9 +75,9 @@ export default function FloatingTicketButton() {
                   <span className={`animate-ping absolute inline-flex h-full w-full opacity-75 ${accentColor}`} />
                   <span className={`relative inline-flex h-2 w-2 ${accentColor}`} />
                 </span>
-                <span className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
-                  Priority Access
-                </span>
+	                <span className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] font-bold ${textAccent} group-hover:text-black/60 transition-colors`}>
+	                  Tickets Live
+	                </span>
               </div>
             )}
             <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.3em] text-white/40 group-hover:text-black/50 transition-colors mb-1.5 md:mb-2">

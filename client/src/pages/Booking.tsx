@@ -18,7 +18,7 @@ export default function Booking() {
       <Navigation />
 
       <section className="page-shell-start-loose pb-16 px-6">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container layout-narrow">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -37,7 +37,7 @@ export default function Booking() {
       </section>
 
       <section className="pb-24 px-6">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container layout-narrow">
           <ViewportLazy minHeightClassName="min-h-[640px]">
             <Suspense fallback={<div className="border border-border p-8 md:p-12 min-h-[640px]" aria-hidden="true" />}>
               <BookingFormSection />

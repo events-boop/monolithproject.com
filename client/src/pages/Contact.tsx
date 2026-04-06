@@ -61,7 +61,7 @@ export default function Contact() {
 
       <main className="relative z-10 page-shell-start-loose pb-24">
         <section className="px-6">
-          <div className="container max-w-6xl mx-auto">
+          <div className="container layout-default">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}

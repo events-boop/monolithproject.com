@@ -57,7 +57,7 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
       transition={{ duration: 0.45 }}
       className={`sticky sticky-shell-top z-40 px-6 ${className}`}
     >
-      <div className="container max-w-6xl mx-auto">
+      <div className="container layout-default">
         <nav className={`season-anchor-shell ${shellToneClass}`} aria-label="Season page sections">
           {items.map((item) => {
             const sectionId = item.href.startsWith("#") ? item.href.slice(1) : item.href;

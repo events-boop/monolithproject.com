@@ -140,7 +140,7 @@ export default function GlobalTicketButton() {
                         <div className="relative z-10 min-w-[8.5rem]">
                             <span className="ui-chip block text-white/54">{cta.label}</span>
                             <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/92 transition-colors group-hover:text-white">
-                                {featuredEvent?.headline || featuredEvent?.title || "Project Signal"}
+                                {featuredEvent?.headline || featuredEvent?.title || "Upcoming Event"}
                             </span>
                         </div>
 
@@ -159,7 +159,7 @@ export default function GlobalTicketButton() {
                 >
                     <div className="flex flex-col">
                         <span className="text-[10px] mb-0.5 tracking-[0.24em] uppercase font-bold opacity-70">{cta.label}</span>
-                        <span className="font-black text-xs tracking-[0.18em] uppercase">{featuredEvent?.headline || featuredEvent?.title || "Access"}</span>
+                        <span className="font-black text-xs tracking-[0.18em] uppercase">{featuredEvent?.headline || featuredEvent?.title || "Upcoming Event"}</span>
                     </div>
                     <ArrowRight className="w-5 h-5 transition-transform group-active:translate-x-1" />
                 </a>

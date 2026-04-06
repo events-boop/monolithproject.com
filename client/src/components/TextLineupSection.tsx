@@ -100,7 +100,7 @@ export default function TextLineupSection() {
         )}
       </AnimatePresence>
 
-      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+      <div className="container layout-wide px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-start md:items-end mb-24 gap-12 lg:gap-24">
           <div className="max-w-2xl">
             <span className="ui-kicker block text-white/45 mb-6 font-mono tracking-[0.3em] uppercase">Artist Roster</span>

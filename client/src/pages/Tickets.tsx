@@ -19,7 +19,6 @@ import {
   getEventVenueLabel,
   getEventWindowStatus,
   getExperienceEvent,
-  getPrimaryTicketUrl,
 } from "@/lib/siteExperience";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
@@ -39,7 +38,6 @@ const getTierIcon = (iconName: string) => {
 
 const eventVisuals = {
   poster: "/images/untold-story.jpg",
-  eran: "/images/artist-lazare.webp", // Replace when real art is available
 };
 
 const lineupVisuals = [
@@ -68,11 +66,6 @@ export default function Tickets() {
       : featuredEvent?.image || "/images/autograf-recap.jpg";
   const showLineupVisuals = featuredEvent?.id === "us-s3e3";
 
-  const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
-    event.currentTarget.onerror = null;
-    event.currentTarget.src = "/images/hero-monolith.jpg";
-  };
-
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
     signalChirp.boot();
@@ -96,7 +89,7 @@ export default function Tickets() {
       <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="page-shell-start-loose pb-16 px-6 relative">
-        <div className="container max-w-5xl mx-auto">
+        <div className="container layout-default">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -154,7 +147,7 @@ export default function Tickets() {
 
       {/* Featured Event Section */}
       <section className="pb-32 px-6 relative">
-        <div className="container max-w-7xl mx-auto">
+        <div className="container layout-wide">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -194,23 +187,23 @@ export default function Tickets() {
                 <div>
                    <div className="flex items-center gap-4 mb-6 text-primary">
                       {featuredEvent?.series === "untold-story" ? <UntoldButterflyLogo className="w-5 h-5" /> : <div className="h-2 w-2 rounded-full bg-primary" />}
-                      <span className="font-mono text-[10px] uppercase tracking-[0.5em]">{featuredEyebrow} / Sequence</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.5em]">{featuredEyebrow}</span>
                    </div>
                    <h2 className="font-display text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.95] text-white tracking-widest block mb-8">
                      <KineticDecryption text={featuredHeadline} />
                    </h2>
                    <div className="h-px w-20 bg-primary/40 mb-8" />
                    <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-lg font-light">
-                      {featuredEvent?.description || "High-end atmosphere meeting deep recurring sound logic."}
+                      {featuredEvent?.description || "Music-first nights with limited capacity, strong curation, and a room worth arriving for."}
                    </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-y-12 gap-x-8 border-y border-white/5 py-12">
                    {[
-                      { icon: <Calendar className="w-4 h-4" />, label: "Sequence Date", value: featuredEvent?.date || "TBA" },
-                      { icon: <Clock className="w-4 h-4" />, label: "System Start", value: featuredEvent?.time || "TBA" },
-                      { icon: <MapPin className="w-4 h-4" />, label: "Coordinate Location", value: featuredVenue },
-                      { icon: <Users className="w-4 h-4" />, label: "Access Protocol", value: "21+ · ID Required" }
+                      { icon: <Calendar className="w-4 h-4" />, label: "Date", value: featuredEvent?.date || "TBA" },
+                      { icon: <Clock className="w-4 h-4" />, label: "Start Time", value: featuredEvent?.time || "TBA" },
+                      { icon: <MapPin className="w-4 h-4" />, label: "Venue", value: featuredVenue },
+                      { icon: <Users className="w-4 h-4" />, label: "Entry", value: "21+ · ID required" }
                    ].map((item) => (
                       <div key={item.label} className="flex flex-col gap-3">
                          <div className="flex items-center gap-2 text-white/20">
@@ -248,12 +241,12 @@ export default function Tickets() {
 
       {/* Ticket Tiers — Integrated Grid */}
       <section className="pb-32 px-6 border-t border-white/5 pt-32 relative">
-        <div className="container max-w-7xl mx-auto">
+        <div className="container layout-wide">
           <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-20">
              <div className="max-w-xl">
-                <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">Tier Logic</span>
-                <h2 className="font-display text-5xl uppercase text-white tracking-widest">Select Access</h2>
-                <p className="mt-6 text-lg text-white/40 font-light">Choose the ticket tier that fits your night. All purchases are handled through Posh.</p>
+                <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">Ticket Tiers</span>
+                <h2 className="font-display text-5xl uppercase text-white tracking-widest">Choose Your Ticket</h2>
+                <p className="mt-6 text-lg text-white/40 font-light">Choose the option that fits your night. All purchases are handled through Posh.</p>
              </div>
              <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 italic">Updated for {new Date().getFullYear()}</p>
           </div>
@@ -330,7 +323,7 @@ export default function Tickets() {
              </p>
              <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Posh Checkout Active</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Secure checkout via Posh</span>
              </div>
           </div>
         </div>

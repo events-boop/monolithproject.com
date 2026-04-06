@@ -202,7 +202,7 @@ export default function FAQ() {
             </div>
 
             <main className="relative z-10 page-shell-start-loose pb-32">
-                <div className="container max-w-6xl mx-auto px-6">
+                <div className="container layout-default px-6">
 
                     {/* Header */}
                     <motion.div
@@ -230,7 +230,7 @@ export default function FAQ() {
                     </motion.div>
                     <EntityBoostStrip tone="nocturne" className="px-0 mb-10" contextLabel="FAQ + Official Identity Links" />
 
-                    <div className="max-w-4xl mx-auto space-y-4">
+                    <div className="layout-narrow space-y-4">
                         {categories.map((cat, idx) => {
                             const isCatOpen = activeCategory === idx;
                             return (

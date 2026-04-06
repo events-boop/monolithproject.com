@@ -9,11 +9,9 @@ import { buildScheduleSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { Link } from "wouter";
 import {
-  getPrimaryTicketUrl,
   getScheduledEvents,
   isTicketOnSale,
 } from "@/lib/siteExperience";
-import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 
@@ -130,7 +128,7 @@ export default function Schedule() {
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
-              <span className="absolute -top-12 left-2 font-mono text-[10px] tracking-[0.4em] text-primary/60 uppercase">The Series / 2026 Archive</span>
+              <span className="absolute -top-12 left-2 font-mono text-[10px] tracking-[0.4em] text-primary/60 uppercase">Upcoming Events</span>
               <h1 className="font-display text-[clamp(4.5rem,14vw,12rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
                 Schedule
               </h1>
@@ -175,19 +173,19 @@ export default function Schedule() {
                       transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
                     />
                   )}
-                  <span className="relative z-10">My Lineup</span>
+                  <span className="relative z-10">Saved Events</span>
               </button>
             </div>
           </div>
 
-          <EntityBoostStrip tone="light" className="mb-16 px-0 opacity-80" contextLabel="The Seasonal Record" />
+          <EntityBoostStrip tone="light" className="mb-16 px-0 opacity-80" contextLabel="Upcoming Events" />
 
           {/* List Header - HUD Style */}
           <div className="hidden md:grid grid-cols-12 gap-4 pb-6 border-b border-white/5 text-[9px] uppercase tracking-[0.25em] font-mono text-muted-foreground/50">
-            <div className="col-span-2 pl-4">Chronology / Time</div>
-            <div className="col-span-1 text-center">Protocol</div>
-            <div className="col-span-4">Experience / Series</div>
-            <div className="col-span-3">Venue / Coordinates</div>
+            <div className="col-span-2 pl-4">Date / Time</div>
+            <div className="col-span-1 text-center">Status</div>
+            <div className="col-span-4">Event / Series</div>
+            <div className="col-span-3">Venue</div>
             <div className="col-span-2 text-right pr-12">Action</div>
           </div>
 
@@ -195,8 +193,8 @@ export default function Schedule() {
           <div className="flex flex-col mb-24 rounded-3xl overflow-hidden border border-white/[0.08] bg-white/[0.01] backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.4)]">
             {filteredEvents.length === 0 ? (
               <div className="text-center py-32 border-b border-white/5">
-                <span className="block font-display text-4xl text-muted-foreground mb-4 opacity-30">Empty Archive</span>
-                <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">No matching events found for sequence {activeMonth}</p>
+                <span className="block font-display text-4xl text-muted-foreground mb-4 opacity-30">No Events Found</span>
+                <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">No matching events found for {activeMonth}</p>
               </div>
             ) : (
               filteredEvents.map((event, index) => {
@@ -318,7 +316,7 @@ export default function Schedule() {
                                     className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                  <span className="absolute bottom-4 left-4 font-mono text-[9px] tracking-widest text-white/40 uppercase">Vessel Record {event.id}</span>
+                                  <span className="absolute bottom-4 left-4 font-mono text-[9px] tracking-widest text-white/40 uppercase">Event Photo</span>
                                </div>
                             </div>
 
@@ -326,11 +324,11 @@ export default function Schedule() {
                             <div className="md:col-span-9 pr-0 md:pr-12">
                               <div className="flex items-center gap-3 mb-8">
                                  <div className="h-px w-12 bg-primary/40" />
-                                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/80 font-bold">Experience Briefing</span>
+                                 <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/80 font-bold">Event Details</span>
                               </div>
                               
                               <p className="text-2xl md:text-3xl font-display italic text-foreground/90 mb-12 max-w-3xl leading-[1.3] tracking-tight">
-                                {event.description || event.experienceIntro || "Join us for a night built on sound, architectural presence, and the record we leave behind."}
+                                {event.description || event.experienceIntro || "Event details are being finalized. Check back soon for the full lineup, timing, and ticket information."}
                               </p>
 
                               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -338,7 +336,7 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <Music className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Sonic Roster</span>
+                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Lineup</span>
                                   </div>
                                   <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">{event.lineup || "To Be Announced"}</p>
                                   <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
@@ -348,7 +346,7 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <MapPin className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Spatial Vector</span>
+                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Venue</span>
                                   </div>
                                   <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">{event.venue}</p>
                                   <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">{event.location}</p>
@@ -359,10 +357,10 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <Clock className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Timing / Logic</span>
+                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Details</span>
                                   </div>
                                   <p className="font-mono text-sm font-bold text-foreground/90 uppercase tracking-widest">{event.time}</p>
-                                  <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">{event.age} // {event.dress}</p>
+                                  <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">{[event.age, event.dress].filter(Boolean).join(" · ")}</p>
                                   <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
                                 </div>
                               </div>
@@ -394,13 +392,13 @@ export default function Schedule() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 border-t border-white/5 pt-16">
             <div className="flex flex-col gap-2">
                <p className="text-muted-foreground/40 text-[10px] font-mono tracking-[0.2em] uppercase">
-                Further sequences to be decrypted specific to seasonal windows.
+                More dates are on the way. Join the newsletter to hear about them first.
                </p>
-               <p className="text-muted-foreground/20 text-[9px] font-mono tracking-widest italic uppercase">Monolith Project Record: {new Date().getFullYear()} // v1.0.4</p>
+               <p className="text-muted-foreground/20 text-[9px] font-mono tracking-widest italic uppercase">Updated for {new Date().getFullYear()}</p>
             </div>
             <div className="flex items-center gap-8">
-               <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Join SMS Updates</Link>
-               <Link href="/vip" className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/40 hover:text-foreground uppercase transition-colors">Request VIP Access</Link>
+               <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Get Updates</Link>
+               <Link href="/vip" className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/40 hover:text-foreground uppercase transition-colors">VIP Tables</Link>
             </div>
           </div>
         </div>

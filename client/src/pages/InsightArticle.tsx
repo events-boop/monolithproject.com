@@ -58,7 +58,7 @@ export default function InsightArticle() {
         />
         <Navigation />
         <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
-          <section className="container max-w-3xl mx-auto text-center">
+          <section className="container layout-narrow text-center">
             <h1 className="font-display text-[clamp(2.8rem,7vw,5.4rem)] uppercase mb-5">
               Article Not Found
             </h1>
@@ -92,7 +92,7 @@ export default function InsightArticle() {
       </div>
 
       <main id="main-content" tabIndex={-1} className="relative z-10 page-shell-start-loose pb-24">
-        <motion.section className="container max-w-6xl mx-auto px-6" {...sectionReveal}>
+        <motion.section className="container layout-default px-6" {...sectionReveal}>
           <Link
             href="/insights"
             className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/62 transition-colors hover:text-white"
@@ -139,7 +139,7 @@ export default function InsightArticle() {
           </div>
         </motion.section>
 
-        <motion.section className="container max-w-4xl mx-auto px-6 mt-12" {...sectionReveal}>
+        <motion.section className="container layout-narrow px-6 mt-12" {...sectionReveal}>
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 md:p-8">
             <p className="text-lg leading-relaxed text-white/82 md:text-xl">{article.deck}</p>
             <div className="mt-6 flex flex-wrap gap-2.5">
@@ -155,7 +155,7 @@ export default function InsightArticle() {
           </div>
         </motion.section>
 
-        <section className="container max-w-4xl mx-auto px-6 mt-12 space-y-8">
+        <section className="container layout-narrow px-6 mt-12 space-y-8">
           {article.sections.map((section) => (
             <motion.article
               key={section.title}
@@ -172,7 +172,7 @@ export default function InsightArticle() {
           ))}
         </section>
 
-        <motion.section className="container max-w-4xl mx-auto px-6 mt-12" {...sectionReveal}>
+        <motion.section className="container layout-narrow px-6 mt-12" {...sectionReveal}>
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase text-white">Related Links</h2>
             <div className="mt-6 flex flex-wrap gap-3">

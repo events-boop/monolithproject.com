@@ -22,7 +22,7 @@ export default function Shop() {
             <Navigation />
 
             <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 page-shell-start pb-32 min-h-[80vh]">
-                <div className="container max-w-4xl mx-auto text-center">
+                <div className="container layout-narrow text-center">
 
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-white/10 bg-white/5 mb-8 md:mb-12">
                         <ShoppingBag className="w-6 h-6 text-primary" />

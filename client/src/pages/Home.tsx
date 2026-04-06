@@ -135,7 +135,7 @@ export default function Home() {
           </ViewportLazy>
         </div>
         <div className="px-6 mb-24 md:mb-32">
-          <div className="container mx-auto max-w-6xl">
+          <div className="container layout-default">
             <ViewportLazy minHeightClassName="min-h-[180px]" rootMargin="220px 0px">
               <Suspense fallback={<Skeleton className="h-[180px] w-full opacity-10" />}>
                 <ConversionStrip />

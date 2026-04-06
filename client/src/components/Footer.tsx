@@ -140,7 +140,7 @@ export default function Footer() {
     <footer className="bg-background border-t border-white/5 relative overflow-hidden pt-12 md:pt-16 pb-8 text-foreground">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(224,90,58,0.14),transparent_38%),radial-gradient(circle_at_88%_82%,rgba(194,112,62,0.1),transparent_42%),radial-gradient(circle_at_70%_30%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_30%_78%,rgba(139,92,246,0.1),transparent_36%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.16)_0%,rgba(6,6,15,0.45)_100%)]" />
-      <div className="container max-w-7xl mx-auto px-6 flex flex-col justify-between min-h-[60vh]">
+      <div className="container layout-wide px-6 flex flex-col justify-between min-h-[60vh]">
 
         {/* Top: Navigation Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-16 z-10 relative">

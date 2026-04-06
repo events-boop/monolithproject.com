@@ -52,7 +52,7 @@ function SponsorBlock({ sponsor, size }: { sponsor: Sponsor; size: "lg" | "md" |
 export default function SponsorsSection() {
   return (
     <section id="sponsors" className="section-rhythm border-t border-border">
-      <div className="container max-w-6xl mx-auto px-6">
+      <div className="container layout-default px-6">
 
         {/* Header */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">

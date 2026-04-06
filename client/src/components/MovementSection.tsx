@@ -56,7 +56,7 @@ export default function MovementSection() {
          <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/5" />
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 relative z-10">
+      <div className="container layout-wide px-6 relative z-10">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-start">
           
           {/* LEFT: Massive Bleeding Stacked Typography */}

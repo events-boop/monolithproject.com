@@ -23,7 +23,7 @@ export default function Insights() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1} className="page-shell-start-loose pb-24 px-6">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <motion.section
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}

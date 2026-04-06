@@ -217,7 +217,7 @@ export default function Radio() {
           <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black/80 to-transparent" />
         </div>
 
-        <div className="container max-w-7xl mx-auto relative z-10 w-full">
+        <div className="container layout-wide relative z-10 w-full">
           <div className="max-w-3xl">
             <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6" delay={0.1}>
               Radio Show
@@ -289,7 +289,7 @@ export default function Radio() {
           />
         </div>
 
-        <div className="container max-w-7xl mx-auto h-full relative z-20 w-full flex flex-col md:flex-row items-center justify-between px-6 pointer-events-none">
+        <div className="container layout-wide h-full relative z-20 w-full flex flex-col md:flex-row items-center justify-between px-6 pointer-events-none">
           {/* Rotating Album Cover Frame with 3D Tilt */}
           <div
             className="w-full h-full flex items-center justify-center md:justify-start pointer-events-auto"
@@ -359,7 +359,7 @@ export default function Radio() {
 
       {/* Filters with LayoutId Gliding Pill */}
       <section className="px-6 pb-8 border-t border-border pt-12 md:pt-16">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <div className="flex flex-wrap gap-3 pb-6 border-b border-border relative">
             {([
               { label: "ALL", value: "all" as Filter, icon: null },
@@ -398,7 +398,7 @@ export default function Radio() {
 
       {/* Track List */}
       <section id="radio-tracks" className="px-6 pb-16 scroll-shell-target">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <div className="border-t border-border/50">
             {filtered.map((track, index) => {
               const realIndex = tracks.indexOf(track);
@@ -460,7 +460,7 @@ export default function Radio() {
 
       {/* Map Section */}
       <section className="px-6 py-20 bg-card border-t border-border">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <div className="flex items-end justify-between mb-8 pb-4 border-b border-border">
             <div>
               <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-2" delay={0.1}>
@@ -486,7 +486,7 @@ export default function Radio() {
 
       {/* Radio FAQ - Modern Floating Button triggering Off-Canvas */}
       <section className="px-6 pb-24 border-t border-border mt-12 md:mt-0 pt-20">
-        <div className="container max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 bg-card border border-border/50 p-8 md:p-12 rounded-3xl relative overflow-hidden">
+        <div className="container layout-default flex flex-col md:flex-row items-center justify-between gap-8 bg-card border border-border/50 p-8 md:p-12 rounded-3xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2" />
 
           <div className="relative z-10 max-w-xl text-center md:text-left">
@@ -553,7 +553,7 @@ export default function Radio() {
 
       {/* CTA */}
       <section className="py-24 px-6 border-t border-border">
-        <div className="container max-w-4xl mx-auto text-center">
+        <div className="container layout-narrow text-center">
           <RevealText as="h2" className="font-display text-4xl md:text-6xl text-foreground mb-4" blurStrength={12}>
             HEAR IT LIVE
           </RevealText>

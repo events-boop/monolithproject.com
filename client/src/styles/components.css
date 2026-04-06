@@ -313,17 +313,27 @@
     isolation: isolate;
   }
 
-  /* Section styling */
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
+  /* Layout container width tiers */
+  .layout-narrow  { max-width: var(--layout-narrow);  margin-inline: auto; }
+  .layout-default { max-width: var(--layout-default); margin-inline: auto; }
+  .layout-wide    { max-width: var(--layout-wide);    margin-inline: auto; }
 
+  /* Section vertical rhythm */
   .section-rhythm {
     @apply py-16 md:py-24;
   }
 
   .section-rhythm-tight {
     @apply py-12 md:py-16;
+  }
+
+  .section-rhythm-loose {
+    @apply py-32 md:py-48;
+  }
+
+  /* @deprecated - identical to .section-rhythm, use that or <Section spacing="standard"> */
+  .section-padding {
+    @apply py-16 md:py-24;
   }
 
   /* Responsive display heading scale */

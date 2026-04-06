@@ -27,7 +27,7 @@ export default function FAQSection() {
     <section id="faq" className="section-rhythm bg-paper text-charcoal relative overflow-hidden">
       <div className="absolute inset-0 atmo-surface-soft pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(34,211,238,0.12),transparent_32%),radial-gradient(circle_at_84%_72%,rgba(224,90,58,0.12),transparent_36%)] pointer-events-none" />
-      <div className="container max-w-5xl mx-auto px-6 relative z-10">
+      <div className="container layout-default px-6 relative z-10">
         <EditorialHeader
           kicker="FAQ"
           title="Before You Go"

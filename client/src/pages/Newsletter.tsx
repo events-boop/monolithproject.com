@@ -23,7 +23,7 @@ export default function Newsletter() {
       <Navigation variant="light" />
 
       <section className="page-shell-start-loose pb-8 px-6 relative">
-        <div className="container max-w-6xl mx-auto">
+        <div className="container layout-default">
           <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Newsletter</span>
           <h1 className="font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.88] uppercase mt-4">
             GET MONOLITH UPDATES
@@ -42,7 +42,7 @@ export default function Newsletter() {
             
             <Link href="/vip" asChild>
               <a className="inline-flex items-center gap-3 text-xs font-black tracking-[0.2em] uppercase text-charcoal/70 hover:text-charcoal transition-colors group">
-                Request VIP Access
+                VIP Tables
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>

@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { Terminal, ShieldAlert, ArrowLeft, Disc } from "lucide-react";
+import { ShieldAlert, ArrowLeft, Disc } from "lucide-react";
 import SEO from "@/components/SEO";
 import GlitchText from "@/components/GlitchText";
 import * as React from "react";
@@ -22,19 +22,6 @@ export default function NotFound() {
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] bg-noise" />
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.02)_0%,transparent_70%)]" />
 
-      {/* 📟 SYSTEM TERMINAL (DECORATIVE) */}
-      <div className="absolute top-12 left-12 font-mono text-[9px] text-white/10 tracking-[0.3em] uppercase hidden lg:block select-none">
-        <div className="flex gap-4 mb-2">
-          <span>MODULE: R_004</span>
-          <span>STATUS: SIGNAL_LOST</span>
-        </div>
-        <div className="opacity-40">
-          [ ERR_NULL_REFERENCE_LOC_99X ]<br />
-          [ INITIALIZING_ENVIRONMENT_PURGE ]<br />
-          [ SCANNING_FOR_VITAL_SIGNALS... ]
-        </div>
-      </div>
-
       <div className="relative z-10 flex flex-col items-center max-w-4xl w-full">
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -48,16 +35,16 @@ export default function NotFound() {
         <h1 className="font-heavy text-[clamp(6rem,20vw,14rem)] leading-[0.75] tracking-[-0.05em] uppercase text-white mb-8 relative">
            <GlitchText active={glitchActive}>404</GlitchText>
            <span className="absolute -top-4 -right-8 font-mono text-[10px] text-white/40 tracking-widest uppercase rotate-90 origin-left">
-             Null / Zone
+             Page Not Found
            </span>
         </h1>
 
         <div className="flex flex-col items-center text-center max-w-lg">
             <h2 className="font-heavy text-4xl md:text-5xl uppercase tracking-tighter text-white/90 mb-6 font-display">
-               Lost In The Frequency
+               Page Not Found
             </h2>
             <p className="font-sans text-lg text-white/50 mb-12 font-light leading-relaxed">
-               The page you requested does not exist or has moved. Head back to the homepage and continue from there.
+               The page you were looking for does not exist or may have moved. Head back home or open the event archive.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
@@ -68,11 +55,10 @@ export default function NotFound() {
                     </button>
                 </Link>
 
-                {/* SECRET CLEARANCE LINK */}
                 <Link href="/archive" asChild>
                     <button className="px-10 py-5 border border-white/10 text-white/60 font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-white/5 hover:text-white transition-all focus:outline-none flex items-center gap-3">
                         <Disc size={12} className="opacity-40" />
-                        Enter Archive
+                        View Event Archive
                     </button>
                 </Link>
             </div>
@@ -82,7 +68,7 @@ export default function NotFound() {
       <div className="absolute bottom-12 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute bottom-6 inset-x-0 flex justify-center">
             <span className="font-mono text-[8px] text-white/20 tracking-[0.5em] uppercase">
-                ERRORCODE_0xDEADBEEF // NULLSIGNALFOUND
+                404 / Page not found
             </span>
       </div>
     </div>
