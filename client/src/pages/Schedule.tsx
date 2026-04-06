@@ -287,16 +287,22 @@ export default function Schedule() {
                         </div>
 
                         {/* Location Col - Minimal Detail */}
-                        <div className="md:col-span-3 hidden md:flex flex-col">
+                        <div className="md:col-span-2 hidden md:flex flex-col">
                           <span className="font-display text-xl leading-tight text-foreground/60 transition-colors duration-500 group-hover:text-foreground/90 uppercase tracking-wide">{event.venue}</span>
                           <span className="text-[10px] text-muted-foreground/30 font-mono mt-2 tracking-widest uppercase">{event.location}</span>
                         </div>
 
-                        {/* Action Col - Directional Arrow */}
-                        <div className="md:col-span-2 flex justify-end items-center md:pr-10">
-                          <div className={`w-12 h-12 rounded-full border border-white/5 flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-white text-black rotate-90" : "group-hover:border-primary/40 group-hover:bg-primary group-hover:text-white"}`}>
-                            <ArrowRight className="w-5 h-5" />
-                          </div>
+                        {/* Action Col - Exposed CTA & Details */}
+                        <div className="md:col-span-3 flex flex-col md:flex-row justify-end items-start md:items-center gap-4 md:pr-4 w-full mt-4 md:mt-0">
+                           <div onClick={(e) => e.stopPropagation()} className="w-full md:w-auto z-20">
+                             <ConversionCTA event={event} size="sm" showUrgency={false} className="w-full md:w-auto" />
+                           </div>
+                           <div className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-muted-foreground/50 group-hover:text-foreground"}`}>
+                              <span className="text-[9px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
+                              <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-primary text-black border-primary rotate-90" : "border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10"}`}>
+                                <ArrowRight className="w-4 h-4" />
+                              </div>
+                           </div>
                         </div>
                       </div>
                     </div>

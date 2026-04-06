@@ -6,6 +6,7 @@ import type { ScheduledEvent } from "../data/events";
 import { getPublicEvents } from "@/lib/siteData";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS } from "@/lib/cta";
+import ConversionCTA from "@/components/ConversionCTA";
 
 // --- iCal Generator Helper ---
 function downloadICS(event: ScheduledEvent) {
@@ -215,16 +216,22 @@ export default function ScheduleSection() {
                       </div>
 
                       {/* Location Col */}
-                      <div className="md:col-span-3 hidden md:flex flex-col">
+                      <div className="md:col-span-2 hidden md:flex flex-col">
                         <span className="font-serif italic text-xl md:text-2xl leading-tight text-black/70 transition-colors duration-500 group-hover:text-black">{event.venue}</span>
                         <span className="text-[9px] text-black/40 font-mono mt-1 tracking-widest uppercase">{event.location}</span>
                       </div>
 
-                      {/* Action Col */}
-                      <div className="md:col-span-2 flex justify-end items-center md:pr-6">
-                        <div className={`w-12 h-12 rounded-full border border-black/10 flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-black text-white border-black rotate-90" : "group-hover:border-black/30 group-hover:bg-black/5 group-hover:text-black bg-white"}`}>
-                          <ArrowRight className="w-5 h-5" />
-                        </div>
+                      {/* Action Col & Exposed Details */}
+                      <div className="md:col-span-3 flex flex-col md:flex-row justify-end items-start md:items-center gap-4 md:pr-4 w-full mt-4 md:mt-0">
+                         <div onClick={(e) => e.stopPropagation()} className="w-full md:w-auto z-20">
+                           <ConversionCTA event={event} size="sm" showUrgency={false} className="w-full md:w-auto" />
+                         </div>
+                         <div className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-black/50 group-hover:text-black"}`}>
+                            <span className="text-[9px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
+                            <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-black text-white border-black rotate-90" : "border-black/10 group-hover:border-black/30 bg-white group-hover:bg-black/5"}`}>
+                              <ArrowRight className="w-4 h-4" />
+                            </div>
+                         </div>
                       </div>
                     </div>
                   </div>
