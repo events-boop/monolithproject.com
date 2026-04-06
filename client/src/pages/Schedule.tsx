@@ -278,6 +278,11 @@ export default function Schedule() {
                                 TICKETS ACTIVE
                               </motion.span>
                             )}
+                            {event.startingPrice && event.status !== "sold-out" && (
+                              <span className="text-[9px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
+                                From ${event.startingPrice}
+                              </span>
+                            )}
                           </div>
                         </div>
 

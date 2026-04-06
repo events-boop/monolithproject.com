@@ -52,10 +52,30 @@ const expressions = [
 ];
 
 import { useUI } from "@/contexts/UIContext";
+import { getPublicEvents } from "@/lib/siteData";
 
 export default function ExpressionSplit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const { setHoveredExpression } = useUI();
+  const allEvents = getPublicEvents();
+
+  // Helper to find starting price for a series
+  const getStartingPrice = (expId: string) => {
+    const seriesMap: Record<string, string> = {
+      'sunsets': 'chasing-sunsets',
+      'untold': 'untold-story',
+      'radio': 'radio',
+    };
+    const seriesId = seriesMap[expId];
+    if (!seriesId) return null;
+    
+    const events = allEvents.filter(e => e.series === seriesId && e.startingPrice);
+    if (!events.length) return null;
+    
+    // Return the minimum starting price
+    const minPrice = Math.min(...events.map(e => e.startingPrice!));
+    return minPrice;
+  };
 
   const handleHoverStart = (id: string) => {
     setHoveredId(id);
@@ -102,9 +122,14 @@ export default function ExpressionSplit() {
                 <span className="font-display text-3xl lg:text-5xl text-white/20 select-none">
                   {exp.number}
                 </span>
-                <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
-                  {exp.label}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
+                    {exp.label}
+                  </span>
+                  <span className="font-mono text-[8.5px] uppercase tracking-[0.2em] px-2 py-0.5 bg-white/5 border border-white/10 text-white/30 hidden lg:inline-block">
+                    {exp.id === 'untold' ? 'Season III Active' : exp.id === 'sunsets' ? 'Summer \'26' : 'Content Engine'}
+                  </span>
+                </div>
               </div>
 
               {/* Content Holder */}
@@ -121,9 +146,16 @@ export default function ExpressionSplit() {
                      {exp.id === 'untold' ? <UntoldButterflyLogo className="h-6 w-6 lg:h-8 lg:w-8 text-primary" /> : <exp.icon className="h-6 w-6 lg:h-8 lg:w-8" style={{ color: exp.color }} />}
                    </motion.div>
 
-                   <h3 className="font-display text-3xl lg:text-5xl uppercase tracking-tight text-white leading-none">
-                     {exp.title}
-                   </h3>
+                       <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-display text-3xl lg:text-5xl uppercase tracking-tight text-white leading-none">
+                            {exp.title}
+                          </h3>
+                          {exp.id !== 'archive' && exp.id !== 'radio' && getStartingPrice(exp.id) && (
+                            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                              From <span className="text-white">${getStartingPrice(exp.id)}</span>
+                            </span>
+                          )}
+                       </div>
                    
                    <motion.div
                      initial={false}

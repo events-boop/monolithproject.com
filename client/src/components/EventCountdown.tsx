@@ -123,10 +123,24 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 {event.title}
               </h3>
               {event.venue && (
-                <p className="font-sans text-base md:text-lg text-white/50 mt-4 font-light">
-                  {event.venue} — {event.location}
+                <p className="font-sans text-base md:text-lg text-white/50 mt-4 font-light italic">
+                  {event.venue} // {event.location} // {event.dress || "Elevated Attire"}
                 </p>
               )}
+
+              {/* SS-Tier Scarcity & Dynamic Pricing */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                {event.inventoryState === "low" && (
+                  <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest animate-pulse">
+                    LAST TICKETS
+                  </div>
+                )}
+                {event.ticketTiers && event.ticketTiers.length > 0 && (
+                  <div className="font-mono text-xs uppercase tracking-widest text-white/60">
+                    Admission from <span className="text-white font-bold">${Math.min(...event.ticketTiers.map(t => t.price))}</span>
+                  </div>
+                )}
+              </div>
 
               {/* Scarcity signal */}
               <div className="mt-10 flex flex-col gap-3">
@@ -150,17 +164,27 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               </div>
             </div>
             {event.ticketUrl ? (
-              <a
-                href={event.ticketUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-between gap-12 px-8 py-5 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white/20 transition-all duration-500 self-start"
-              >
-                <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Place</span>
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
-                </svg>
-              </a>
+              <div className="flex flex-col gap-4">
+                <a
+                  href={event.ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-between gap-12 px-8 py-5 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white/20 transition-all duration-500 self-start"
+                >
+                  <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Place</span>
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </a>
+                {/* Concierge VIP pathway */}
+                <a 
+                  href="https://wa.me/message/MONOLITH" 
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-white/80 transition-colors inline-flex items-center gap-2"
+                >
+                  <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
+                  Table Inquiry & Concierge Services
+                </a>
+              </div>
             ) : (
               <a
                 href="/newsletter"
@@ -168,7 +192,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               >
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${accentBg}`} />
                 <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
-                  Get Updates
+                  Join The Waitlist
                 </span>
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />

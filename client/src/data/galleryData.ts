@@ -33,6 +33,8 @@ export interface ArchiveCollection {
   subtitle: string;
   description: string;
   accentColor: string;
+  coverImage: string;
+  date: string;
   media: MediaItem[];
 }
 
@@ -400,120 +402,104 @@ export const untoldSeason2: MediaItem[] = [
   }),
 ];
 
-// March 6 2026 - Juany Bravo B2B Deron
-export const untoldSeason3: MediaItem[] = [
-  image({
-    id: "us3-1",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_6000.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - March 6",
-    caption: "Chapter III",
-  }),
-  image({
-    id: "us3-2",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_7781.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - Vibe",
-    caption: "Vibe",
-  }),
-  image({
-    id: "us3-3",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_8258.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - Crowd",
-    caption: "Crowd",
-  }),
-  image({
-    id: "us3-4",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_8028.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - Energy",
-    caption: "Energy",
-  }),
-  image({
-    id: "us3-5",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_6055.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - Motion",
-    caption: "Motion",
-  }),
-  image({
-    id: "us3-6",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_8168.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - DJ Booth",
-    caption: "Juany x Deron",
-  }),
-  image({
-    id: "us3-7",
-    kind: "image",
-    src: "/images/archive/us-s3/JPQ_7453.jpg",
-    width: 1024,
-    height: 683,
-    alt: "Untold Story Juany Bravo x Deron - Atmosphere",
-    caption: "Underground",
-  }),
+// March 6 2026 - Juany Bravo B2B Deron — Full 121-photo gallery
+const US_S3_PORTRAITS = new Set([
+  "6036","6041","6044","6045","6049","6053","6068","6116","6121","6216",
+  "6292","6304","6305","6321","6323","6420","6425","6434","6435","6448",
+  "6449","6483","6519","6538","6548","6637","6735","6744","6752","6753",
+  "6801","7249","7265","7268","7282","7285","7286","7314","7327","7404",
+  "7453","7490","7586","7616","7672","7677","7701","8168","8188","8210",
+  "8222","8225","8256","8258","8285","8295","8312","8333","8337","8402",
+  "8405",
+]);
+
+const US_S3_NUMS = [
+  "6000","6004","6023","6033","6036","6041","6044","6045","6049","6053",
+  "6055","6068","6074","6081","6095","6098","6106","6116","6121","6216",
+  "6263","6292","6304","6305","6321","6323","6344","6352","6368","6371",
+  "6377","6378","6383","6389","6392","6420","6425","6434","6435","6448",
+  "6449","6483","6519","6538","6548","6603","6616","6637","6735","6744",
+  "6752","6753","6801","6871","7043","7068","7095","7099","7125","7236",
+  "7242","7249","7265","7268","7282","7285","7286","7314","7327","7369",
+  "7370","7404","7453","7490","7524","7557","7586","7616","7640","7672",
+  "7677","7701","7753","7768","7769","7772","7778","7781","7785","7880",
+  "7888","8010","8019","8025","8028","8037","8062","8076","8081","8092",
+  "8114","8122","8150","8168","8188","8210","8222","8225","8238","8249",
+  "8256","8258","8267","8276","8285","8295","8312","8333","8337","8402",
+  "8405",
 ];
+
+export const untoldSeason3: MediaItem[] = US_S3_NUMS.map((num) => {
+  const isPortrait = US_S3_PORTRAITS.has(num);
+  return image({
+    id: `us3-${num}`,
+    kind: "image",
+    src: `/images/archive/us-s3/JPQ_${num}.jpg`,
+    width: isPortrait ? 1667 : 2500,
+    height: isPortrait ? 2500 : 1667,
+    alt: "Untold Story S3 — Deron B2B Juany Bravo — March 6, 2026",
+  });
+});
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
   "chasing-sunsets-season-i": {
     slug: "chasing-sunsets-season-i",
-    title: "Chasing Sun(Sets) - Season I",
-    subtitle: "Archive Collection",
+    title: "Chasing Sun(Sets)",
+    subtitle: "Season I",
     description: "Golden-hour frames, artist portraits, and moving records from the first season.",
     accentColor: "#E8B86D",
+    coverImage: "/images/chasing-sunsets.jpg",
+    date: "Summer 2024",
     media: chasingSeason1,
   },
   "chasing-sunsets-season-ii": {
     slug: "chasing-sunsets-season-ii",
-    title: "Chasing Sun(Sets) - Season II",
-    subtitle: "Archive Collection",
+    title: "Chasing Sun(Sets)",
+    subtitle: "Season II",
     description: "A tighter editorial cut from the second wave of the sunset series.",
     accentColor: "#E8B86D",
+    coverImage: "/images/chasing-sunsets-1.jpg",
+    date: "Summer 2025",
     media: chasingSeason2,
   },
   "chasing-sunsets-season-iii": {
     slug: "chasing-sunsets-season-iii",
-    title: "Chasing Sun(Sets) - Season III",
-    subtitle: "Archive Collection",
-    description: "The latest wave of the shoreline series, featuring high-energy frames from the boat and beach club chapters.",
+    title: "Chasing Sun(Sets)",
+    subtitle: "Season III",
+    description: "The latest wave of the shoreline series — boat club and beach chapters.",
     accentColor: "#E8B86D",
+    coverImage: "/images/archive/chasing-sunsets/css-s3-1.jpg",
+    date: "Summer 2025",
     media: chasingSeason3,
   },
   "untold-story-season-i": {
     slug: "untold-story-season-i",
-    title: "Untold Story - Season I",
-    subtitle: "Archive Collection",
+    title: "Untold Story",
+    subtitle: "Season I",
     description: "The first chapter of Untold Story in poster, crowd, and manifesto form.",
     accentColor: "#8B5CF6",
+    coverImage: "/images/untold-story.jpg",
+    date: "2024",
     media: untoldSeason1,
   },
   "untold-story-season-ii": {
     slug: "untold-story-season-ii",
-    title: "Untold Story - Season II",
-    subtitle: "Archive Collection",
-    description: "Artist-led frames and portrait studies from the later Untold chapters.",
+    title: "Untold Story",
+    subtitle: "Season II — Lazare Sabry",
+    description: "Artist-led frames and portrait studies from the Lazare Sabry chapter.",
     accentColor: "#8B5CF6",
+    coverImage: "/images/lazare-recap.webp",
+    date: "December 12, 2025",
     media: untoldSeason2,
   },
   "untold-story-season-iii": {
     slug: "untold-story-season-iii",
-    title: "Untold Story - Season III",
-    subtitle: "Archive Collection",
-    description: "The Deron B2B Juany Bravo chapter.",
+    title: "Untold Story",
+    subtitle: "Season III — Deron B2B Juany Bravo",
+    description: "121 photos from the Deron B2B Juany Bravo chapter.",
     accentColor: "#8B5CF6",
+    coverImage: "/images/untold-story-juany-deron-v2.jpg",
+    date: "March 6, 2026",
     media: untoldSeason3,
   },
 };

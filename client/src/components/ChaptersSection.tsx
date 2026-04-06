@@ -103,7 +103,7 @@ export default function ChaptersSection() {
                   <div className="flex items-start justify-between gap-5">
                     <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-4 py-2">
                       <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
-                        Series
+                        {chapter.id === "untold-story" ? "Season III Active" : "Summer '26 Series"}
                       </span>
                       <span className="font-serif text-2xl italic text-white/72">
                         {chapter.number}
@@ -120,9 +120,14 @@ export default function ChaptersSection() {
                   </div>
 
                   <div className="max-w-xl">
-                    <p className={`mb-3 text-[10px] font-mono uppercase tracking-[0.24em] ${chapter.id === "untold-story" ? "text-story" : "text-clay"}`}>
-                      {chapter.moment}
-                    </p>
+                    <div className="flex items-center justify-between mb-3">
+                      <p className={`text-[10px] font-mono uppercase tracking-[0.24em] ${chapter.id === "untold-story" ? "text-story" : "text-clay"}`}>
+                        {chapter.moment}
+                      </p>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                        From <span className="text-white">$65</span>
+                      </span>
+                    </div>
                     <h3
                       className={`text-balance break-words text-white ${
                         chapter.id === "untold-story"

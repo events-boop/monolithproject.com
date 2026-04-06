@@ -63,6 +63,7 @@ export interface ScheduledEvent {
   description?: string;
   age?: string;
   ticketUrl?: string;
+  startingPrice?: number;
   ticketTiers?: TicketTier[];
   headline?: string;
   mainExperience?: string;

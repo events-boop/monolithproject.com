@@ -27,18 +27,16 @@ export default function ArchiveGalleryPage() {
         );
     }
 
-    const backLink = params.series === "chasing-sunsets" ? "/chasing-sunsets" : "/story";
-
     return (
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
-            <SEO title={`${gallery.title} Archive`} />
+            <SEO title={`${gallery.title} — ${gallery.subtitle}`} />
             <Navigation variant="dark" brand={params.series as any} />
 
             <main className="page-shell-start pb-32">
-                <div className="container layout-default px-6">
-                    <Link href={backLink} asChild>
+                <div className="container layout-wide px-6">
+                    <Link href="/archive" asChild>
                         <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white/50 hover:text-white transition-colors mb-12">
-                            <ArrowLeft className="w-4 h-4" /> Back to {params.series.replace("-", " ")}
+                            <ArrowLeft className="w-4 h-4" /> Back to Archive
                         </a>
                     </Link>
 
@@ -48,6 +46,7 @@ export default function ArchiveGalleryPage() {
                         description={gallery.description}
                         media={gallery.media}
                         className="bg-transparent"
+                        dense
                     />
                 </div>
             </main>

@@ -12,16 +12,18 @@ export default function Ticker() {
   const upcomingEvents = getPublicEvents();
   // Build items from real events, duplicated for seamless loop
   const baseItems = upcomingEvents.length > 0
-    ? upcomingEvents.map(e => ({
-        label: e.title,
-        date: e.date,
-        series: e.series,
-        ticketUrl: e.ticketUrl || POSH_TICKET_URL,
-      }))
+      ? upcomingEvents.map(e => ({
+          label: e.title,
+          date: e.date,
+          series: e.series,
+          status: e.status,
+          inventory: e.inventoryState,
+          ticketUrl: e.ticketUrl || POSH_TICKET_URL,
+        }))
     : [
-        { label: "Deron B2B Juany Bravo", date: "MAY 2026", series: "untold-story", ticketUrl: POSH_TICKET_URL },
-        { label: "Lazare Sabry", date: "TBD 2026", series: "untold-story", ticketUrl: POSH_TICKET_URL },
-        { label: "Autograf", date: "TBD 2026", series: "monolith-project", ticketUrl: POSH_TICKET_URL },
+        { label: "Deron B2B Juany Bravo", date: "MAY 2026", series: "untold-story", status: "on-sale", inventory: "low", ticketUrl: POSH_TICKET_URL },
+        { label: "Lazare Sabry", date: "TBD 2026", series: "untold-story", status: "coming-soon", inventory: "normal", ticketUrl: POSH_TICKET_URL },
+        { label: "Autograf", date: "TBD 2026", series: "monolith-project", status: "on-sale", inventory: "low", ticketUrl: POSH_TICKET_URL },
       ];
 
   const items = [...baseItems, ...baseItems, ...baseItems, ...baseItems];
@@ -53,10 +55,30 @@ export default function Ticker() {
                 {item.label}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/10" />
-              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
-                <Ticket className="w-3 h-3" /> Get Tickets
-              </span>
-              <ArrowRight className="w-3 h-3 text-white/55" />
+
+              {/* SS-Tier Scarcity Signals */}
+              {item.status === "sold-out" ? (
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 bg-white/10 text-white/50 border border-white/20 font-mono text-[9px] uppercase tracking-widest">
+                    SOLD OUT
+                  </span>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/40">Join Waitlist</span>
+                </div>
+              ) : item.inventory === "low" ? (
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[9px] uppercase tracking-widest animate-pulse">
+                    LAST TICKETS
+                  </span>
+                  <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                    <Ticket className="w-3 h-3" /> Get Tickets
+                  </span>
+                </div>
+              ) : (
+                <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                  <Ticket className="w-3 h-3" /> Get Tickets
+                </span>
+              )}
+              <ArrowRight className="w-3 h-3 text-white/55 transition-transform group-hover:translate-x-1" />
             </div>
           ))}
         </div>

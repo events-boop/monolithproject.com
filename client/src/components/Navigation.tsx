@@ -26,17 +26,18 @@ const navItems: {
   children?: { label: string; href: string }[];
 }[] = [
     { label: "THE MONOLITH", href: "/about" },
-    { label: "SUN(SETS) & RADIO", href: "/chasing-sunsets" },
+    { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
     { label: "UNTOLD STORY", href: "/story" },
+    { label: "SCHEDULE", href: "/schedule" },
     { label: "ARCHIVE", href: "/archive" },
-    { label: "ARTICLES", href: "/insights" },
+    { label: "JOURNAL", href: "/insights" },
     {
-      label: "PARTNERS",
+      label: "CONCIERGE",
       href: "/partners",
       children: [
-        { label: "OUR PARTNERS", href: "/partners" },
+        { label: "VIP TABLES", href: "/vip" },
         { label: "SPONSOR ACCESS", href: "/sponsors" },
-        { label: "BOOKING", href: "/booking" },
+        { label: "PARTNERSHIPS", href: "/partners" },
         { label: "ARTIST SUBMISSION", href: "/submit" },
         { label: "PRESS & MEDIA", href: "/press" },
       ],
@@ -266,7 +267,9 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
           ? "#F43F5E"
           : label === "UNTOLD STORY"
             ? "#8B5CF6"
-            : null;
+            : label === "SCHEDULE"
+              ? "#22D3EE"
+              : null;
 
     if (!accent) return label;
 
@@ -533,7 +536,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               />
 
               <NavigationMegamenu
-                label="SUN(SETS) & RADIO"
+                label="CHASING SUN(SETS)"
                 href="/chasing-sunsets"
                 isActive={["/chasing-sunsets", "/radio"].includes(location)}
                 isLight={isLight}
@@ -587,7 +590,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 }}
               />
 
-              {navItems.filter(i => !["THE MONOLITH", "SUN(SETS) & RADIO", "UNTOLD STORY"].includes(i.label)).map((item) =>
+              {navItems.filter(i => !["THE MONOLITH", "CHASING SUN(SETS)", "UNTOLD STORY"].includes(i.label)).map((item) =>
                 item.children ? (
                   <div
                     key={item.label}
