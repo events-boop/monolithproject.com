@@ -143,7 +143,7 @@
   }
 
   .animate-grain {
-    animation: grain 8s steps(10) infinite;
+    animation: grain-drift 8s steps(10) infinite;
   }
 
   @media (prefers-reduced-motion: reduce), (pointer: coarse) {

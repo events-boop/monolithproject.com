@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface SeasonAnchorItem {
   label: string;
@@ -21,30 +21,39 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
     [items],
   );
   const [activeId, setActiveId] = useState(sectionIds[0] ?? "");
+  const visibleRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (!sectionIds.length) return;
 
-    const evaluateSection = () => {
-      let currentId = sectionIds[0];
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.35) {
-          currentId = id;
-        }
-      }
-      setActiveId((prev) => (prev === currentId ? prev : currentId));
-    };
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
 
-    evaluateSection();
-    window.addEventListener("scroll", evaluateSection, { passive: true });
-    window.addEventListener("resize", evaluateSection);
-    return () => {
-      window.removeEventListener("scroll", evaluateSection);
-      window.removeEventListener("resize", evaluateSection);
-    };
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visibleRef.current.add(entry.target.id);
+          } else {
+            visibleRef.current.delete(entry.target.id);
+          }
+        }
+        // Pick the last visible section in document order
+        let picked = sectionIds[0];
+        for (const id of sectionIds) {
+          if (visibleRef.current.has(id)) picked = id;
+        }
+        setActiveId((prev) => (prev === picked ? prev : picked));
+      },
+      { rootMargin: "-35% 0px -64% 0px" },
+    );
+
+    for (const el of elements) observer.observe(el);
+
+    return () => observer.disconnect();
   }, [sectionIds]);
 
   const shellToneClass = tone === "warm" ? "season-anchor-shell-warm" : "season-anchor-shell-nocturne";

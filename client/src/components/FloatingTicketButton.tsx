@@ -18,16 +18,18 @@ export default function FloatingTicketButton() {
   const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
-    const checkScroll = () => {
-      // Hide if near the footer to avoid overlap with the massive footer typography
-      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 400;
-      setIsAtBottom(scrolledToBottom);
-    };
+    // Use a sentinel element at the bottom of the page instead of
+    // reading offsetHeight on every scroll event (layout thrashing).
+    const footer = document.querySelector("footer");
+    if (!footer) return;
 
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    checkScroll();
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsAtBottom(entry.isIntersecting),
+      { rootMargin: "400px 0px 0px 0px" },
+    );
+    observer.observe(footer);
 
-    return () => window.removeEventListener("scroll", checkScroll);
+    return () => observer.disconnect();
   }, []);
 
   if (!nextEvent || !ticketUrl) return null;

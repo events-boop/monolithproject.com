@@ -247,27 +247,7 @@
     box-shadow: 0 22px 48px rgba(3, 4, 10, 0.55);
   }
 
-  /* Smooth scroll - Lenis recommended styles */
-  html.lenis,
-  html.lenis body {
-    height: auto;
-  }
-
-  .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-  }
-
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
-
-  .lenis.lenis-scrolling iframe {
-    pointer-events: none;
-  }
+  /* Lenis styles defined in index.css — single source of truth */
 
   .bg-noise {
     position: relative;

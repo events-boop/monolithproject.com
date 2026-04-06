@@ -45,7 +45,7 @@ export default function CinematicGrain() {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-[50] pointer-events-none opacity-[0.035] mix-blend-overlay">
+        <div className="fixed inset-0 z-[50] pointer-events-none opacity-[0.035] mix-blend-overlay transform-gpu">
             {/* Using a highly optimized SVG noise filter inline rather than massive JS loop */}
             <svg className="absolute inset-0 w-full h-full opacity-100">
                 <filter id="noiseFilter">
@@ -70,7 +70,7 @@ export default function CinematicGrain() {
 
 export function KineticGrain() {
     return (
-        <div className="fixed inset-0 z-[40] pointer-events-none w-full h-full mix-blend-overlay">
+        <div className="fixed inset-0 z-[40] pointer-events-none w-full h-full mix-blend-overlay transform-gpu">
             <div className="absolute inset-0 bg-noise opacity-[0.04] w-[200%] h-[200%] animate-grain" />
         </div>
     );

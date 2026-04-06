@@ -116,19 +116,19 @@
   --shell-page-top-loose: calc(var(--shell-page-top) + clamp(0.75rem, 1vw, 1.25rem));
   --shell-sticky-top: calc(var(--shell-nav-offset) + var(--shell-nav-height) + clamp(0.5rem, 1vw, 0.875rem));
   --shell-scroll-offset: calc(var(--shell-sticky-top) + clamp(0.5rem, 1vw, 1rem));
-  /* Dark editorial — A24 Cinematic, warm deep off-black */
-  --background: oklch(0.12 0.01 40);
-  --foreground: oklch(0.95 0.01 40);
-  --card: oklch(0.14 0.01 40);
-  --card-foreground: oklch(0.95 0.01 40);
-  --popover: oklch(0.14 0.01 40);
-  --popover-foreground: oklch(0.95 0.01 40);
+  /* Dark editorial — A24 Cinematic, Matte Black (#161616 equivalent) */
+  --background: oklch(0.14 0.005 40);
+  --foreground: oklch(0.97 0.01 65); /* Soft Cinematic Cream (#FFF7E9) */
+  --card: oklch(0.16 0.01 40);
+  --card-foreground: oklch(0.97 0.01 65);
+  --popover: oklch(0.16 0.01 40);
+  --popover-foreground: oklch(0.97 0.01 65);
   --primary: oklch(0.65 0.2 25);
   --primary-foreground: oklch(0.98 0.005 85);
   --secondary: oklch(0.18 0.01 285);
   --secondary-foreground: oklch(0.85 0.005 85);
   --muted: oklch(0.22 0.01 285);
-  --muted-foreground: oklch(0.55 0.02 85);
+  --muted-foreground: oklch(0.6 0.02 65);
   --accent: oklch(0.55 0.15 30);
   --accent-foreground: oklch(0.98 0.005 85);
   --destructive: oklch(0.577 0.245 27.325);
@@ -1151,31 +1151,39 @@
   }
 
   .animate-grain {
-    animation: grain 8s steps(10) infinite;
+    animation: grain-drift 8s steps(10) infinite;
   }
 
-  /* Hard to Replicate: Analogue Film Grain Layer */
+  @keyframes grain-drift {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2%, -4%); }
+    50% { transform: translate(3%, -1%); }
+    75% { transform: translate(-1%, 3%); }
+  }
+
+  /* Film Grain Layer — Enhanced for Matte Cinematic Feel */
   .analogue-grid::before {
     content: "";
     position: fixed;
-    inset: -100% -100%;
-    width: 300%;
-    height: 300%;
+    inset: 0;
     z-index: 9999;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: 0.07;
     mix-blend-mode: overlay;
-    animation: grain-shift 1s steps(4) infinite;
+    will-change: transform;
+    animation: grain-drift 8s steps(10) infinite; /* Added subtle drift animation */
+    transform: translateZ(0);
   }
 
-  @keyframes grain-shift {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -10%); }
-    30% { transform: translate(3%, -15%); }
-    50% { transform: translate(-10%, 10%); }
-    70% { transform: translate(9%, 4%); }
-    90% { transform: translate(-1%, 7%); }
+  /* Matte Editorial Utility for high-end typography */
+  .matte-editorial {
+    @apply font-serif;
+    color: var(--foreground);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   /* Unreplicable Filter State: Liquid Melt */
