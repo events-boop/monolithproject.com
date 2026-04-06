@@ -4,6 +4,7 @@ import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
 import { getPublicEvents } from "@/lib/siteData";
+import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS } from "@/lib/cta";
 
 // --- iCal Generator Helper ---
@@ -69,6 +70,7 @@ const seriesDefaultImage: Record<string, string> = {
 
 export default function ScheduleSection() {
   const upcomingEvents = getPublicEvents();
+  const { preconnectGateway } = useIntentPrefetch();
   const [expandedId, setExpandedId] = useState<string | null>(upcomingEvents[0]?.id || null);
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
 
@@ -296,7 +298,13 @@ export default function ScheduleSection() {
                             {/* CTAs */}
                             <div className="flex flex-wrap gap-4 items-center">
                               {event.ticketUrl ? (
-                                <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-[10px] tracking-[0.25em] uppercase hover:bg-black/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                                <a 
+                                  href={event.ticketUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  onMouseEnter={() => preconnectGateway(event.ticketUrl!)}
+                                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-[10px] tracking-[0.25em] uppercase hover:bg-black/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                                >
                                   {CTA_LABELS.tickets}
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </a>

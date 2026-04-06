@@ -3,6 +3,7 @@ import { ArrowRight, Ticket, Lock, Zap, Clock, CheckCircle2 } from "lucide-react
 import { ScheduledEvent } from "@/data/events";
 import { getEventCta, FunnelTool, isEventLowInventory } from "@/lib/cta";
 import MagneticButton from "@/components/MagneticButton";
+import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 
 interface ConversionCTAProps {
   event?: ScheduledEvent | null;
@@ -20,6 +21,7 @@ export default function ConversionCTA({
   variant = "primary"
 }: ConversionCTAProps) {
   const cta = getEventCta(event);
+  const { preconnectGateway } = useIntentPrefetch();
   
   const sizeClasses = {
     sm: "px-6 py-3 text-[10px]",
@@ -52,6 +54,9 @@ export default function ConversionCTA({
         href={cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
+        onMouseEnter={() => {
+          if (cta.isExternal) preconnectGateway(cta.href);
+        }}
         className={`
           group relative flex items-center justify-center gap-4 
           transition-all duration-500 rounded-none

@@ -13,6 +13,7 @@ import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "@/lib/cta";
+import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 
 interface NavigationProps {
   activeSection?: string;
@@ -92,8 +93,12 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
-  const [location, setLocation] = useLocation();
+  const location = useLocation()[0];
+  const setLocation = useLocation()[1];
+  const { preconnectGateway } = useIntentPrefetch();
+  
   const { openDrawer } = useUI();
+  const isHome = location === "/";
   const scene = getSceneForPath(location);
   const resolvedVariant = variant ?? scene.variant;
   const resolvedBrand = brand ?? scene.brand;
@@ -106,7 +111,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
   const mobileMenuId = "nav-mobile-menu";
 
   const [currentChapter, setCurrentChapter] = useState<{ number: string; label: string } | null>(null);
-  const isHome = location === "/";
 
   useEffect(() => {
     if (!isHome) {
@@ -683,6 +687,10 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
                     aria-label={cta.label}
                     data-cursor-text={cta.tool === "posh" ? "RSVP" : "ACCESS"}
+                    onMouseEnter={() => {
+                        signalChirp.hover();
+                        if (cta.isExternal) preconnectGateway(cta.href);
+                    }}
                     onClick={() => signalChirp.click()}
                     className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
                       ? "border-transparent bg-primary text-black shadow-[0_8px_20px_rgba(224,90,58,0.24)]"
@@ -704,6 +712,10 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
                     data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
+                    onMouseEnter={() => {
+                        signalChirp.hover();
+                        if (cta.isExternal) preconnectGateway(cta.href);
+                    }}
                     onClick={() => signalChirp.click()}
                   >
                     <div className={`
