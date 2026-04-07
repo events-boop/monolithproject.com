@@ -30,6 +30,7 @@ const Booking = lazy(() => import("./pages/Booking"));
 const Partners = lazy(() => import("./pages/Partners"));
 const Lineup = lazy(() => import("./pages/Lineup"));
 const Schedule = lazy(() => import("./pages/Schedule"));
+const EventDetails = lazy(() => import("./pages/EventDetails"));
 const Newsletter = lazy(() => import("./pages/Newsletter"));
 const Contact = lazy(() => import("./pages/Contact"));
 const FAQ = lazy(() => import("./pages/FAQ"));
@@ -75,6 +76,7 @@ const BookingTransition = withTransition(Booking);
 const SubmitTransition = withTransition(Submit);
 const LineupTransition = withTransition(Lineup);
 const ScheduleTransition = withTransition(Schedule);
+const EventDetailsTransition = withTransition(EventDetails);
 const NewsletterTransition = withTransition(Newsletter);
 const ContactTransition = withTransition(Contact);
 const FAQTransition = withTransition(FAQ);
@@ -122,6 +124,7 @@ function Router() {
         <Route path="/submit" component={SubmitTransition} />
         <Route path="/lineup" component={LineupTransition} />
         <Route path="/schedule" component={ScheduleTransition} />
+        <Route path="/events/:slug" component={EventDetailsTransition} />
         <Route path="/newsletter" component={NewsletterTransition} />
         <Route path="/inner-circle" component={NewsletterTransition} />
         <Route path="/contact" component={ContactTransition} />

@@ -216,7 +216,11 @@ export default function HeroSection() {
 
       {/* Cinematic Background Layer */}
       <motion.div style={{ y, opacity, scale }} className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-        <VideoHeroSlider slides={HERO_SLIDES} />
+        {featuredEvent?.image ? (
+          <div className="absolute inset-0 bg-cover bg-center brightness-75 transition-all duration-1000" style={{ backgroundImage: `url(${featuredEvent.image})` }} />
+        ) : (
+          <VideoHeroSlider slides={HERO_SLIDES} />
+        )}
       </motion.div>
 
       {/* Architectural HUD Grid Overlay */}
@@ -233,53 +237,72 @@ export default function HeroSection() {
 
       {/* Main Impact Visuals (Center Focused) */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-[22vh] lg:pt-0 px-6 text-center w-full pointer-events-none">
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="mb-8 lg:mb-16 relative"
-        >
-            <div className="flex items-center gap-4 justify-center">
-            <div className="h-px w-8 md:w-20 bg-white/10" />
-            <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">
-              {eyebrow || "Chicago Music Project"}
-            </h2>
-            <div className="h-px w-8 md:w-20 bg-white/10" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 1, scale: 1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center justify-center text-white relative z-10"
-        >
-          {/* Kinetic Fragmented Typography */}
-          <div className="relative">
-            <motion.h1
-              initial={{ opacity: 1, scale: 1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-              className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto"
-            >
-              <KineticDecryption text="MONOLITH" />
-            </motion.h1>
-          </div>
-
+        
+        {/* ACTIVE DASH HIJACK */}
+        {featuredEvent && hasLiveTickets ? (
           <motion.div
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "120%", opacity: 1 }}
-            transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10"
-          />
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center justify-center text-white relative z-10 w-full max-w-7xl mx-auto pointer-events-auto"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse shadow-[0_0_12px_rgba(224,90,58,0.8)]" />
+              <span className="font-mono text-xs uppercase tracking-[0.5em] text-primary">Tickets Active</span>
+            </div>
+            
+            <h1 className="font-display text-[clamp(2.5rem,12vw,9rem)] leading-[0.85] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+              {headline}
+            </h1>
 
-          <span className="font-monolith text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90 pl-[0.5em]">
-            PROJECT
-          </span>
-          <BrandTranslatorLabel className="mt-5" tone="neutral">
-            Chicago Cultural House
-          </BrandTranslatorLabel>
-        </motion.div>
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-xs md:text-sm uppercase tracking-[0.4em] text-white/70 mt-8 mb-12">
+              <span>{venueLabel}</span>
+              <span className="hidden md:inline-block w-px h-3 bg-white/30" />
+              <span>{featuredEvent.date}</span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
+              <MagneticButton strength={0.4}>
+                <a
+                  href={cta.href}
+                  target={cta.isExternal ? "_blank" : undefined}
+                  rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                  className={`group relative flex items-center justify-center gap-4 px-12 py-5 md:py-6 text-[14px] md:text-[15px] font-black tracking-[0.2em] uppercase transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'bg-primary text-white hover:bg-white hover:text-black shadow-[0_0_40px_rgba(224,90,58,0.4)]' : 'bg-white text-black hover:bg-primary hover:text-white'}`}
+                >
+                  {cta.label}
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </a>
+              </MagneticButton>
+              <MagneticButton strength={0.25}>
+                <Link href={secondaryCtaHref} className="cta-ghost group relative flex items-center justify-center gap-3 px-8 py-5 md:py-6 text-[12px] md:text-[13px] font-bold uppercase tracking-[0.2em] transition-all duration-500 w-full sm:w-auto backdrop-blur-xl bg-black/40 border border-white/10 hover:bg-white/10">
+                   {secondaryCtaLabel}
+                </Link>
+              </MagneticButton>
+            </div>
+          </motion.div>
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            {/* BRAND DASH PRESERVED (when NO active event) */}
+            <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="mb-8 lg:mb-16 relative">
+              <div className="flex items-center gap-4 justify-center">
+                <div className="h-px w-8 md:w-20 bg-white/10" />
+                <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{eyebrow || "Chicago Music Project"}</h2>
+                <div className="h-px w-8 md:w-20 bg-white/10" />
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
+              <div className="relative">
+                <motion.h1 className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
+                  <KineticDecryption text="MONOLITH" />
+                </motion.h1>
+              </div>
+              <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
+              <span className="font-monolith text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90 pl-[0.5em]">PROJECT</span>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
+            </motion.div>
+          </div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -287,63 +310,32 @@ export default function HeroSection() {
           transition={{ duration: 2, delay: 1.4 }}
           className="mt-16 flex flex-col items-center w-full px-4"
         >
-          {/* Primary Hero Signal Box */}
-          {featuredEvent && (
-            <div className="mb-14 flex flex-col items-center gap-6 p-8 border border-white/5 bg-white/[0.01] rounded-none backdrop-blur-xl shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
-              <div className="flex items-center gap-4">
-                <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(224,90,58,0.8)]" />
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary/90">
-                  {hasLiveTickets ? "Tickets Live" : "Next Event"}
-                </span>
+          {!featuredEvent?.image && (
+            <>
+              <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
+                <WordScrubReveal text={HERO_SUBHEAD} />
               </div>
-              <h2 className="font-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none uppercase tracking-widest text-white drop-shadow-2xl">
-                {headline}
-              </h2>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/40">
-                <span className="text-white/70">{venueLabel}</span>
-                <span className="hidden md:inline-block w-px h-3 bg-white/10" />
-                <span className="text-white/70">{featuredEvent.date}</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
+                <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
+                  <a href={cta.href} target={cta.isExternal ? "_blank" : undefined} rel={cta.isExternal ? "noopener noreferrer" : undefined} data-cursor-magnetic data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"} className={`group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}`}>
+                    <span className="relative z-10 flex items-center gap-3">
+                      {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : cta.tool === 'laylo' ? <Lock className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
+                      {cta.label}
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </a>
+                </MagneticButton>
+                <MagneticButton strength={0.25}>
+                  <Link href={secondaryCtaHref} className="cta-ghost group relative flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 w-full sm:w-auto">
+                    <span className="relative z-10 flex items-center gap-2">
+                      {secondaryCtaLabel}
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </MagneticButton>
               </div>
-            </div>
+            </>
           )}
-
-          <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
-            <WordScrubReveal text={HERO_SUBHEAD} />
-          </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
-            <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
-              <a
-                href={cta.href}
-                target={cta.isExternal ? "_blank" : undefined}
-                rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                data-cursor-magnetic
-                data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
-                className={`
-                      group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] 
-                      transition-all duration-500 w-full sm:w-auto rounded-none
-                      ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}
-                   `}
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : cta.tool === 'laylo' ? <Lock className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
-                  {cta.label}
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </a>
-            </MagneticButton>
-
-            <MagneticButton strength={0.25}>
-              <Link
-                href={secondaryCtaHref}
-                className="cta-ghost group relative flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 w-full sm:w-auto"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  {secondaryCtaLabel}
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </MagneticButton>
-          </div>
         </motion.div>
       </div>
 

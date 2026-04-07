@@ -46,7 +46,8 @@ function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
 
 export function getEventDetailsHref(event?: ScheduledEvent | null) {
   if (!event) return "/schedule";
-  return getSeriesDetailsHref(event.series);
+  // Direct to God-Tier single event dossier
+  return `/events/${event.slug || event.id}`;
 }
 
 export function isEventLowInventory(event?: ScheduledEvent | null) {
