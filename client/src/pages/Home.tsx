@@ -94,7 +94,7 @@ export default function Home() {
           {/* Official Campaign Countdowns Stack - Now Inside Season Chapter */}
           <ViewportLazy minHeightClassName="min-h-[640px]" rootMargin="240px 0px">
             <Suspense fallback={<Skeleton className="h-[640px] w-full opacity-10" />}>
-              <div className="flex flex-col w-full bg-white/40 pb-20">
+              <div className="flex flex-col w-full pb-8">
                 <EventCountdown eventId="us-s3e3" />
                 <EventCountdown eventId="css-jul04" />
               </div>
@@ -102,8 +102,8 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#080808] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="collective" number="03" label="The Philosophy" glow="rgba(255,255,255,0.15)" />
+        <div className="bg-[#080808] border-y border-white/5 relative z-10 transition-colors duration-500 bg-[linear-gradient(to_bottom,#202020,#080808)]">
+          <SectionDivider id="collective" number="03" label="The Philosophy" glow="rgba(255,255,255,0.08)" labelOverride="font-mono text-[11px] md:text-sm uppercase tracking-[0.6em] text-white font-bold" />
           <ViewportLazy minHeightClassName="min-h-[820px]" rootMargin="260px 0px">
             <Suspense fallback={<Skeleton className="h-[820px] w-full opacity-10" />}>
               <MovementSection />

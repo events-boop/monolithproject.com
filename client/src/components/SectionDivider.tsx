@@ -8,9 +8,10 @@ interface SectionDividerProps {
   label?: string;
   dark?: boolean;
   glow?: string;
+  labelOverride?: string;
 }
 
-export default function SectionDivider({ id, number, label, dark, glow }: SectionDividerProps) {
+export default function SectionDivider({ id, number, label, dark, glow, labelOverride }: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -99,7 +100,7 @@ export default function SectionDivider({ id, number, label, dark, glow }: Sectio
         <div className="flex items-center justify-between py-6 md:py-8 lg:py-10">
           {/* Left: Label */}
           <div className="flex items-center gap-6">
-            <span className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] ${labelColor} group-hover:text-primary transition-colors duration-500`}>
+            <span className={labelOverride || `font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] ${labelColor} group-hover:text-primary transition-colors duration-500`}>
               {label || `Section ${number}`}
             </span>
           </div>
