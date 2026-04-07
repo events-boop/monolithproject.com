@@ -129,7 +129,7 @@ export default function Schedule() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
               <span className="absolute -top-12 left-2 font-mono text-[10px] tracking-[0.4em] text-primary/60 uppercase">Upcoming Events</span>
-              <h1 className="font-display text-[clamp(3.2rem,12vw,12rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
+              <h1 className="font-display text-[clamp(4.2rem,12vw,13rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
                 Schedule
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">

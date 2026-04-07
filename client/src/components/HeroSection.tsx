@@ -251,7 +251,7 @@ export default function HeroSection() {
               <span className="font-mono text-xs uppercase tracking-[0.5em] text-primary">Tickets Active</span>
             </div>
             
-            <h1 className="font-display text-[clamp(2.5rem,12vw,9rem)] leading-[0.85] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+            <h1 className="font-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
               {headline}
             </h1>
 
@@ -293,7 +293,7 @@ export default function HeroSection() {
 
             <motion.div initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
               <div className="relative">
-                <motion.h1 className="font-heavy text-[clamp(2.8rem,15vw,13rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
+                <motion.h1 className="font-heavy text-[clamp(3.8rem,15vw,14rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
                   <KineticDecryption text="MONOLITH" />
                 </motion.h1>
               </div>
