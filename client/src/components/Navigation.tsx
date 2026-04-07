@@ -476,7 +476,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -10 }}
-                    className="hidden xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none"
+                    className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
                   >
                     <Link
                       href="/"
@@ -512,7 +512,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
             </div>
 
             {/* CENTER: NAV ITEMS */}
-            <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-3 xl:gap-5 2xl:gap-8 pr-4 whitespace-nowrap">
+            <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-4 2xl:gap-8 pr-2 xl:pr-4 whitespace-nowrap">
               {/* NAVIGATION MEGAMENU INJECTIONS */}
               <NavigationMegamenu
                 label="THE MONOLITH"
@@ -601,14 +601,15 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     className="relative shrink-0"
                     onMouseEnter={() => { setOpenDropdownLabel(item.label); signalChirp.hover(); }}
                     onMouseLeave={() => setOpenDropdownLabel(null)}
-                  >                      <button
-                    type="button"
-                    onClick={() => signalChirp.click()}
-                    aria-expanded={openDropdownLabel === item.label}
-                    aria-haspopup="menu"
-                    aria-controls={getDropdownMenuId(item.label)}
-                    className={`flex items-center gap-1.5 text-[11px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...item.children.map(c => c.href)].includes(location))}`}
                   >
+                    <button
+                      type="button"
+                      onClick={() => signalChirp.click()}
+                      aria-expanded={openDropdownLabel === item.label}
+                      aria-haspopup="menu"
+                      aria-controls={getDropdownMenuId(item.label)}
+                      className={`flex items-center gap-1.5 text-[10px] min-[1150px]:text-[11px] xl:text-[12px] font-[800] tracking-[0.08em] min-[1150px]:tracking-[0.1em] xl:tracking-[0.12em] uppercase transition-all duration-300 ${getDropdownParentClass([item.href, ...(item.children?.map(c => c.href) || [])].includes(location))}`}
+                    >
                       {item.label}
                       <ChevronDown
                         className={`w-3 h-3 transition-transform duration-200 ${openDropdownLabel === item.label ? "rotate-180" : ""
