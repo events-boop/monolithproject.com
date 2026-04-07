@@ -512,7 +512,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
             </div>
 
             {/* CENTER: NAV ITEMS */}
-            <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-4 2xl:gap-8 pr-2 xl:pr-4 whitespace-nowrap">
+            <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
               {/* NAVIGATION MEGAMENU INJECTIONS */}
               <NavigationMegamenu
                 label="THE MONOLITH"
@@ -736,7 +736,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               </div>
 
               {/* Mobile Toggle */}
-              <div className="lg:hidden">
+              <div className="xl:hidden">
                 <MagneticButton>
                   <button
                     type="button"
