@@ -29,11 +29,11 @@ const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 
 const HERO_SLIDES: Slide[] = [
   {
-    type: "image",
-    src: heroPosterImage.src,
-    sources: heroPosterImage.sources,
-    sizes: heroPosterImage.sizes,
-    alt: "The Monolith Project Modern Skyline",
+    type: "video",
+    src: "/videos/hero-video-1.mp4",
+    poster: heroPosterImage.src,
+    posterSources: heroPosterImage.sources,
+    posterSizes: heroPosterImage.sizes,
     caption: "THE MONOLITH PROJECT (LIVE)",
   },
   {

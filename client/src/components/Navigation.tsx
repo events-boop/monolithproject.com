@@ -506,7 +506,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "ABOUT MONOLITH",
                       subtitle: "Project Overview",
-                      image: "/images/hero-monolith.jpg",
+                      image: "/images/hero-monolith-modern.png",
                       href: "/about",
                       ctaText: "About Monolith",
                       icon: "arrow",
