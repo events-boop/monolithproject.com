@@ -4,7 +4,7 @@ export type SceneTicketTheme = "default" | "violet" | "warm";
 export interface SceneConfig {
   id: SceneId;
   variant: "dark" | "light";
-  brand: "monolith" | "chasing-sunsets";
+  brand: "monolith" | "chasing-sunsets" | "untold-story" | "radio";
   ticketTheme: SceneTicketTheme;
   accent: string;
   glow: string;
@@ -22,7 +22,7 @@ const scenes: Record<SceneId, SceneConfig> = {
   story: {
     id: "story",
     variant: "dark",
-    brand: "monolith",
+    brand: "untold-story",
     ticketTheme: "violet",
     accent: "#8B5CF6",
     glow: "rgba(139, 92, 246, 0.38)",
@@ -38,7 +38,7 @@ const scenes: Record<SceneId, SceneConfig> = {
   radio: {
     id: "radio",
     variant: "dark",
-    brand: "monolith",
+    brand: "radio",
     ticketTheme: "default",
     accent: "#F43F5E",
     glow: "rgba(244, 63, 94, 0.3)",

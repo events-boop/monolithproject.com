@@ -24,10 +24,10 @@ export default function ConversionCTA({
   const { preconnectGateway } = useIntentPrefetch();
   
   const sizeClasses = {
-    sm: "px-6 py-3 text-[10px]",
-    md: "px-8 py-4 text-[12px]",
-    lg: "px-10 py-5 text-[14px]",
-    xl: "px-12 py-6 text-[16px]",
+    sm: "px-5 py-2.5 text-[10px]",
+    md: "px-6 py-3.5 md:px-8 md:py-4 text-[11px] md:text-[12px]",
+    lg: "px-8 py-4 md:px-10 md:py-5 text-[12px] md:text-[14px]",
+    xl: "px-10 py-5 md:px-12 md:py-6 text-[14px] md:text-[16px]",
   };
 
   const toolIcons: Record<FunnelTool, React.ReactNode> = {

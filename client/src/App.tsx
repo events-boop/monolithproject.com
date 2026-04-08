@@ -201,14 +201,16 @@ const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"))
 const AmbientAudioEngine = lazy(() => import("./components/AmbientAudioEngine"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
 const Toaster = lazy(() => import("@/components/ui/sonner").then((module) => ({ default: module.Toaster })));
+const LiquidRippleTrail = lazy(() => import("./components/LiquidRippleTrail"));
 
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);
 
-  const shellTransform = isDrawerActive ? "translateY(0) scale(0.985)" : "none";
-  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.96 : 1;
-  const shellFilter = isSensoryOverloadActive ? "blur(1px) saturate(0.98)" : "none";
+  // GPU-accelerated effects only. Filters (like blur) on the main app shell destroy Lighthouse scores.
+  const shellTransform = isDrawerActive ? "translateY(0) scale(0.985)" : isSensoryOverloadActive ? "scale(0.96) translateY(2vh)" : "none";
+  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.15 : 1;
+  const shellFilter = "none";
 
   return (
     <>
@@ -222,6 +224,7 @@ function MainContentWrapper() {
       <Suspense fallback={null}>
         <GlobalTicketButton />
         <AmbientAudioEngine />
+        <LiquidRippleTrail />
       </Suspense>
       <div
         id="app-shell"

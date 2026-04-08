@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,21 +7,21 @@
 /*
   DESIGN: The Monolith Project
   - Dark editorial aesthetic with sparse coral/orange pops
-  - Magazine-quality typography: Cormorant Garamond (serif), Bebas Neue (display), Inter (body)
+  - Magazine-quality typography: Instrument Serif (serif), Archivo Black (display), Inter (body)
   - Outlined pill-shaped CTAs, left-aligned editorial layouts
 */
 
 @theme inline {
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Archivo Black', sans-serif; 
-  --font-serif: 'Cormorant Garamond', serif;
+  --font-serif: 'Instrument Serif', serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-script: 'Cormorant Garamond', serif;
+  --font-script: 'Instrument Serif', serif;
 
   /* The 4 Distinct Brand Fonts */
   --font-heavy: 'Archivo Black', sans-serif;
   --font-monolith: 'Syncopate', sans-serif;
-  --font-sunsets: 'Cormorant Garamond', serif;
+  --font-sunsets: 'Instrument Serif', serif;
   --font-untold: 'Syne', sans-serif;
   --font-radio: 'JetBrains Mono', monospace;
 
@@ -1004,6 +1005,45 @@
   .btn-pill-coral:active {
     transform: translateY(1px) scale(0.975);
     box-shadow: 0 2px 8px rgba(224, 90, 58, 0.4), inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+ 
+  /* --- UNIVERSAL TOOL-SPECIFIC CTAs --- */
+ 
+  .cta-laylo {
+    @apply relative flex items-center justify-center gap-4 bg-[#e4e4e7] text-[#18181b] border border-white/20 transition-all duration-500 font-black tracking-widest uppercase;
+    background-image: 
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.4), transparent 60%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-blend-mode: overlay;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  }
+ 
+  .cta-laylo:hover {
+    @apply bg-white border-white;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+ 
+  .cta-posh {
+    @apply relative flex items-center justify-center gap-4 bg-primary text-white border border-transparent transition-all duration-500 font-black tracking-widest uppercase;
+    box-shadow: 0 10px 40px rgba(224, 90, 58, 0.3);
+  }
+ 
+  .cta-posh:hover {
+    @apply bg-white text-black border-white;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(224, 90, 58, 0.5);
+  }
+ 
+  .cta-fillout {
+    @apply relative flex items-center justify-center gap-4 bg-gradient-to-r from-violet-600 to-cyan-500 text-white border border-transparent transition-all duration-500 font-black tracking-widest uppercase;
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+  }
+ 
+  .cta-fillout:hover {
+    @apply brightness-110;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(139, 92, 246, 0.5);
   }
 }
 

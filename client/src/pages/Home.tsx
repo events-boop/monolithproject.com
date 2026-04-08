@@ -63,11 +63,6 @@ export default function Home() {
 
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
-        <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
-          <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
-            <FeaturedCampaigns />
-          </Suspense>
-        </ViewportLazy>
 
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
           <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" />
@@ -76,6 +71,14 @@ export default function Home() {
               <ExpressionSplit />
             </Suspense>
           </ViewportLazy>
+
+          {/* Moved from the top */}
+          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
+              <FeaturedCampaigns />
+            </Suspense>
+          </ViewportLazy>
+
           <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="260px 0px">
             <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
               <WhatToExpect />

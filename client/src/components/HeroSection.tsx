@@ -251,7 +251,7 @@ export default function HeroSection() {
               <span className="font-mono text-xs uppercase tracking-[0.5em] text-primary">Tickets Active</span>
             </div>
             
-            <h1 className="font-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+            <h1 className="font-display text-[clamp(2.8rem,10vw,10rem)] leading-[0.9] md:leading-[0.85] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
               {headline}
             </h1>
 
@@ -293,7 +293,7 @@ export default function HeroSection() {
 
             <motion.div initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
               <div className="relative">
-                <motion.h1 className="font-heavy text-[clamp(3.8rem,15vw,14rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
+                <motion.h1 className="font-heavy text-[clamp(3rem,14vw,14rem)] tracking-[-0.03em] leading-[0.85] md:leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
                   <KineticDecryption text="MONOLITH" />
                 </motion.h1>
               </div>
@@ -317,7 +317,7 @@ export default function HeroSection() {
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
                 <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
-                  <a href={cta.href} target={cta.isExternal ? "_blank" : undefined} rel={cta.isExternal ? "noopener noreferrer" : undefined} data-cursor-magnetic data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"} className={`group relative flex items-center justify-center gap-4 px-10 py-5 text-[12px] sm:text-[13px] md:text-[14px] transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}`}>
+                  <a href={cta.href} target={cta.isExternal ? "_blank" : undefined} rel={cta.isExternal ? "noopener noreferrer" : undefined} data-cursor-magnetic data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"} className={`group relative flex items-center justify-center gap-4 px-6 py-3.5 md:px-10 md:py-5 text-[11px] sm:text-[13px] md:text-[14px] transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}`}>
                     <span className="relative z-10 flex items-center gap-3">
                       {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : cta.tool === 'laylo' ? <Lock className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
                       {cta.label}

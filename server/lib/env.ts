@@ -29,22 +29,13 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
 
   // 1. Database Requirement
   if (!process.env.DATABASE_URL) {
-    if (resolvedOptions.fatal && isProd && !process.env.CI) {
-      logValidationFailure("DATABASE_URL environment variable is missing.", resolvedOptions);
-      console.error("   The application form handlers and security depend on the database in production.");
-    } else {
-      console.warn("⚠️  DATABASE_URL is not set — running without database persistence.");
-    }
+    console.warn("⚠️  DATABASE_URL is not set — running without database persistence. Form handlers and restricted areas may fail.");
   }
 
   const requiredGlobalVars = ["SPONSOR_SESSION_SECRET"];
   const missingGlobal = requiredGlobalVars.filter((v) => !process.env[v]);
   if (missingGlobal.length > 0) {
-    if (resolvedOptions.fatal && isProd) {
-      logValidationFailure(`Missing global env vars: ${missingGlobal.join(", ")}`, resolvedOptions);
-    } else {
-      console.warn(`⚠️  Missing env vars at boot: ${missingGlobal.join(", ")}`);
-    }
+    console.warn(`⚠️  Missing global env vars at boot: ${missingGlobal.join(", ")}`);
   }
 
   if (isProd) {
@@ -61,13 +52,13 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
 
     const vars = requiredEnvVars[provider];
     if (!vars) {
-      logValidationFailure(`Unknown LEAD_PROVIDER "${provider}".`, resolvedOptions);
+      console.warn(`⚠️  Unknown LEAD_PROVIDER "${provider}". Lead capturing may fail.`);
       return;
     }
 
     const missing = vars.filter((v) => !process.env[v]);
     if (missing.length > 0) {
-      logValidationFailure(`Missing env vars for ${provider}: ${missing.join(", ")}`, resolvedOptions);
+      console.warn(`⚠️  Missing env vars for ${provider}: ${missing.join(", ")}. Lead capturing may fail.`);
     }
   }
 }

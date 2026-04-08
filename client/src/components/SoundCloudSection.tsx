@@ -105,7 +105,7 @@ export default function SoundCloudSection() {
               className="group relative block border-b border-white/10 py-8 md:py-10 transition-colors hover:bg-white/[0.02] px-2 md:px-8"
             >
               <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white scale-y-0 origin-top group-hover:scale-y-100 transition-transform duration-500" />
-              
+
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12">
                 <div className="flex items-start md:items-center gap-6 md:gap-8 flex-1">
                   <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 border border-white/20 bg-[#050505] flex items-center justify-center text-white/30 group-hover:bg-white group-hover:text-black transition-all duration-500 rounded-none shadow-2xl">
@@ -123,7 +123,7 @@ export default function SoundCloudSection() {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-6 mt-4 md:mt-0 md:justify-end self-end md:self-auto">
                   <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/30 group-hover:text-white transition-colors hidden sm:block">
                     Open Episode
@@ -149,7 +149,7 @@ export default function SoundCloudSection() {
             </span>
             <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-2 transition-transform duration-500" />
           </a>
-          
+
           <a
             href={POSH_TICKET_URL}
             target="_blank"
