@@ -76,6 +76,7 @@ export interface ScheduledEvent {
   eventNotice?: string;
   activeFunnels?: ActiveFunnel[];
   primaryCta?: EventCta;
+  recentlyDropped?: boolean;
 }
 
 export type PublicSiteData = {

@@ -191,7 +191,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         location: "Chicago, IL",
         lineup: "Eran Hersh (Headliner) · Support TBA",
         status: "coming-soon",
-        image: "/images/eran-hersh-hero.png",
+        image: "/images/eran-hersh-hero-new.png",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
         sound: "Afro House · Melodic House · Peak-Hour Energy",
@@ -227,7 +227,8 @@ export const upcomingEvents: ScheduledEvent[] = [
                 available: true,
                 highlight: true,
             }
-        ]
+        ],
+        recentlyDropped: true,
     },
     {
         id: "css-jun07",
@@ -262,6 +263,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         activeFunnels: ["waitlist-chasing"],
         tableReservationEmail: "vip@chasingsunsets.music",
         startingPrice: 65,
+        recentlyDropped: true,
     },
     {
         id: "us-jul04",
@@ -377,6 +379,8 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
         experienceIntro: event.experienceIntro,
         dress: event.dress,
         tableReservationEmail: event.tableReservationEmail,
+        image: event.image,
+        recentlyDropped: event.recentlyDropped,
         primaryCta: resolveEventPrimaryCta(event),
     };
 }
@@ -410,6 +414,7 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
         ticketUrl: event.ticketUrl,
         experienceIntro: event.experienceIntro,
         tableReservationEmail: event.tableReservationEmail,
+        recentlyDropped: event.recentlyDropped,
         primaryCta: resolveEventPrimaryCta(event),
     };
 }
