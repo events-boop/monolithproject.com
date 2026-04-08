@@ -441,6 +441,27 @@ export const untoldSeason3: MediaItem[] = US_S3_NUMS.map((num) => {
   });
 });
 
+export const autografSpecial: MediaItem[] = [
+  image({
+    id: "autograf-1",
+    kind: "image",
+    src: "/images/autograf-recap.jpg",
+    width: 2500,
+    height: 1667,
+    alt: "Autograf at Alhambra Palace — March 21, 2026",
+    caption: "Live Set",
+  }),
+  image({
+    id: "autograf-portrait",
+    kind: "image",
+    src: "/images/artist-autograf.webp",
+    width: 1024,
+    height: 1024,
+    alt: "Autograf",
+    caption: "Portrait",
+  }),
+];
+
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
   "chasing-sunsets-season-i": {
     slug: "chasing-sunsets-season-i",
@@ -501,5 +522,15 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     coverImage: "/images/untold-story-juany-deron-v2.jpg",
     date: "March 6, 2026",
     media: untoldSeason3,
+  },
+  "autograf-special-event": {
+    slug: "autograf-special-event",
+    title: "The Monolith Project",
+    subtitle: "Special Event — Autograf",
+    description: "Live instrumentation and immersive energy from the Autograf Chicago night.",
+    accentColor: "#FFFFFF",
+    coverImage: "/images/autograf-recap.jpg",
+    date: "March 21, 2026",
+    media: autografSpecial,
   },
 };

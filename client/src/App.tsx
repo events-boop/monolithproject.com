@@ -51,10 +51,29 @@ const Insights = lazy(() => import("./pages/Insights"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
 
+function RouteLoadingFallback() {
+  return (
+    <div
+      className="min-h-[100svh] bg-background text-foreground flex items-center justify-center px-6"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div className="w-full max-w-sm border border-white/8 bg-black/30 px-5 py-6 backdrop-blur-sm">
+        <div className="font-mono text-[11px] uppercase tracking-[0.34em] text-white/45">
+          Loading Next Scene
+        </div>
+        <div className="mt-4 h-px overflow-hidden bg-white/8">
+          <div className="h-full w-1/3 animate-[route-loader_1.2s_var(--motion-luxe)_infinite] bg-[var(--scene-accent)]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const withTransition = (Component: React.ComponentType<any>) => {
   return (props: any) => (
     <PageTransition>
-      <Suspense fallback={null}>
+      <Suspense fallback={<RouteLoadingFallback />}>
         <Component {...props} />
       </Suspense>
     </PageTransition>

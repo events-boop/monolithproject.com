@@ -34,7 +34,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines spotlight-leak">
       <SEO
         title="Chicago Music Nights, Series, and Archive"
         description="The Monolith Project is a Chicago-rooted music world built through recurring nights, distinct series, a radio show, and an archive shaped by curation, atmosphere, and return-worthy rooms."

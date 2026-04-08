@@ -39,7 +39,7 @@ const untoldUpcomingEvent: ScheduledEvent = {
 
 describe("cta", () => {
   it("routes monolith-project live event details to the tickets page", () => {
-    expect(getEventDetailsHref(monolithLiveEvent)).toBe("/tickets");
+    expect(getEventDetailsHref(monolithLiveEvent)).toBe("/events/mp-autograf-mar21");
   });
 
   it("routes upcoming untold-story events to the onsite untold waitlist funnel", () => {

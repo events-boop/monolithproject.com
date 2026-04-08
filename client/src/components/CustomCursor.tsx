@@ -43,6 +43,10 @@ export default function CustomCursor() {
 
             mouseX.set(x);
             mouseY.set(y);
+
+            // Inject global CSS variables for atmospheric light leaks
+            document.documentElement.style.setProperty("--mouse-x", `${x}px`);
+            document.documentElement.style.setProperty("--mouse-y", `${y}px`);
         };
 
         const handleMouseDown = () => {

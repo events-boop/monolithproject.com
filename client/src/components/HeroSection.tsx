@@ -13,6 +13,7 @@ import WordScrubReveal from "./ui/WordScrubReveal";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
+import RevealText from "./RevealText";
 import {
   getEventEyebrow,
   getEventStartTimestamp,
@@ -38,18 +39,17 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: heroUntoldImage.src,
-    sources: heroUntoldImage.sources,
-    sizes: heroUntoldImage.sizes,
-    alt: "Juany Bravo x Deron",
-    caption: "JUANY BRAVO B2B DERON | UNTOLD STORY",
+    src: "/images/eran-hersh-hero-new.png",
+    alt: "Eran Hersh",
+    caption: "ERAN HERSH | MAY 16 2026",
   },
   {
     type: "image",
-    src: "/images/lazare-recap.webp",
-    alt: "Lazare at Monolith Project",
-    credit: "JP Quindara",
-    caption: "LAZARE | MONOLITH PROJECT",
+    src: heroUntoldImage.src,
+    sources: heroUntoldImage.sources,
+    sizes: heroUntoldImage.sizes,
+    alt: "Untold Story Archive",
+    caption: "ARCHIVE | UNTOLD STORY SEASON III",
   },
   {
     type: "image",
@@ -57,14 +57,13 @@ const HERO_SLIDES: Slide[] = [
     sources: heroSunsetsImage.sources,
     sizes: heroSunsetsImage.sizes,
     alt: "Chasing Sun(Sets)",
-    caption: "CHASING SUN(SETS)",
+    caption: "SUMMER '26 | CHASING SUN(SETS)",
   },
   {
     type: "image",
     src: "/images/autograf-recap.jpg",
-    alt: "Autograf live set",
-    credit: "TBA",
-    caption: "AUTOGRAF | LIVE SET",
+    alt: "Autograf Archive",
+    caption: "ARCHIVE | SPECIAL EVENT AUTOGRAF",
   },
 ];
 
@@ -193,6 +192,14 @@ export default function HeroSection() {
               <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
               <span className="font-mono text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
               <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
+              <RevealText 
+                as="p" 
+                className="mt-8 text-white/50 max-w-lg font-mono text-[10px] md:text-sm tracking-[0.4em] uppercase text-center"
+                delay={1.8}
+                stagger={0.04}
+              >
+                {HERO_SUBHEAD}
+              </RevealText>
             </motion.div>
           </div>
         )}

@@ -112,7 +112,6 @@ export default function FeaturedCampaigns() {
                   <h3
                     className="font-display text-[clamp(2rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 transition-colors"
                     style={{ ["--tw-text-opacity" as string]: 1 }}
-                    onMouseEnter={() => {}} // hover color via group
                   >
                     <span className="group-hover:text-[var(--campaign-color)] transition-colors">
                       {getSeriesLabel(event.series)}<br/>{event.title}

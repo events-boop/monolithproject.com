@@ -48,7 +48,7 @@ describe("scenes", () => {
       expect(scene).toEqual<SceneConfig>({
         id: "story",
         variant: "dark",
-        brand: "monolith",
+        brand: "untold-story",
         ticketTheme: "violet",
         accent: "#8B5CF6",
         glow: "rgba(139, 92, 246, 0.38)",
@@ -72,7 +72,7 @@ describe("scenes", () => {
       expect(scene).toEqual<SceneConfig>({
         id: "radio",
         variant: "dark",
-        brand: "monolith",
+        brand: "radio",
         ticketTheme: "default",
         accent: "#F43F5E",
         glow: "rgba(244, 63, 94, 0.3)",
@@ -101,14 +101,13 @@ describe("scenes", () => {
       }
     });
 
-    it("sunsets is the only chasing-sunsets brand scene", () => {
+    it("scene brands stay aligned with the route family", () => {
       const sunsetsScene = getSceneForPath("/chasing-sunsets");
       expect(sunsetsScene.brand).toBe("chasing-sunsets");
-
-      const monolithPaths = ["/", "/story", "/radio", "/newsletter"];
-      for (const path of monolithPaths) {
-        expect(getSceneForPath(path).brand).toBe("monolith");
-      }
+      expect(getSceneForPath("/").brand).toBe("monolith");
+      expect(getSceneForPath("/story").brand).toBe("untold-story");
+      expect(getSceneForPath("/radio").brand).toBe("radio");
+      expect(getSceneForPath("/newsletter").brand).toBe("monolith");
     });
   });
 
