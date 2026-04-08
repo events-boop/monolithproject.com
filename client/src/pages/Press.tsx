@@ -178,7 +178,7 @@ export default function Press() {
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                             {fastFacts.map((fact) => (
                                 <div key={fact.label}>
-                                    <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-white/25 mb-1">{fact.label}</p>
+                                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/25 mb-1">{fact.label}</p>
                                     <p className="text-sm text-white/75">{fact.value}</p>
                                 </div>
                             ))}
@@ -223,7 +223,7 @@ export default function Press() {
                                         className="p-5 relative overflow-hidden"
                                         style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
                                     >
-                                        <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-primary/70 mb-2">{contact.role}</p>
+                                        <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary/70 mb-2">{contact.role}</p>
                                         <a
                                             href={`mailto:${contact.email}`}
                                             className="text-sm text-white/80 hover:text-white transition-colors flex items-center gap-1.5 group mb-2"
@@ -277,20 +277,20 @@ export default function Press() {
                                             <asset.icon className="w-4 h-4" style={{ color: asset.color }} />
                                         </div>
                                         {!asset.available && (
-                                            <span className="font-mono text-[8px] tracking-widest uppercase text-white/25 border border-white/10 px-2 py-0.5">
+                                            <span className="font-mono text-[9px] tracking-widest uppercase text-white/25 border border-white/10 px-2 py-0.5">
                                                 Coming Soon
                                             </span>
                                         )}
                                     </div>
 
                                     <h3 className="font-display text-base uppercase text-white mb-1">{asset.label}</h3>
-                                    <p className="font-mono text-[9px] tracking-widest uppercase mb-2" style={{ color: asset.color }}>{asset.format}</p>
+                                    <p className="font-mono text-[10px] tracking-widest uppercase mb-2" style={{ color: asset.color }}>{asset.format}</p>
                                     <p className="text-xs text-white/40 leading-relaxed mb-4">{asset.desc}</p>
 
                                     {asset.available && (
                                         <a
                                             href="mailto:press@monolithproject.com?subject=Asset Request"
-                                            className="inline-flex items-center gap-1.5 font-mono text-[9px] tracking-widest uppercase transition-colors"
+                                            className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase transition-colors"
                                             style={{ color: `${asset.color}80` }}
                                             onMouseEnter={(e) => (e.currentTarget.style.color = asset.color)}
                                             onMouseLeave={(e) => (e.currentTarget.style.color = `${asset.color}80`)}
@@ -325,8 +325,8 @@ export default function Press() {
                                     style={{ border: "1px solid rgba(255,255,255,0.06)" }}
                                 >
                                     <div className="flex-shrink-0 w-24">
-                                        <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-primary/70">{item.outlet}</p>
-                                        <p className="font-mono text-[8px] text-white/25 mt-0.5">{item.year}</p>
+                                        <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary/70">{item.outlet}</p>
+                                        <p className="font-mono text-[9px] text-white/25 mt-0.5">{item.year}</p>
                                     </div>
                                     <p className="flex-1 text-sm text-white/55 leading-relaxed italic">
                                         "{item.headline}"

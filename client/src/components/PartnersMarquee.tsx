@@ -119,7 +119,7 @@ export default function PartnersMarquee() {
                 key={`${item.name}-${index}`}
                 className="inline-flex min-w-[15rem] items-center gap-4 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 transition-all duration-300 hover:border-white/18 hover:bg-white/[0.065]"
               >
-                <span className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-white/48">
+                <span className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/48">
                   {item.type}
                 </span>
                 <span className="font-display text-xl uppercase tracking-[0.08em] text-white/82">
@@ -138,7 +138,7 @@ export default function PartnersMarquee() {
                 key={`dup-${item.name}-${index}`}
                 className="inline-flex min-w-[15rem] items-center gap-4 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 transition-all duration-300 hover:border-white/18 hover:bg-white/[0.065]"
               >
-                <span className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-white/48">
+                <span className="rounded-full border border-white/12 bg-black/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/48">
                   {item.type}
                 </span>
                 <span className="font-display text-xl uppercase tracking-[0.08em] text-white/82">

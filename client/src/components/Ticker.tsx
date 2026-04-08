@@ -47,7 +47,7 @@ export default function Ticker() {
         <div className="flex w-max min-w-full shrink-0 animate-marquee items-center whitespace-nowrap group-hover:[animation-play-state:paused]">
           {items.map((item, i) => (
             <div key={i} className="flex shrink-0 items-center gap-4 md:gap-6 px-8 md:px-12">
-              <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white/70">
+              <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-white/70">
                 {item.date}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/10" />
@@ -59,22 +59,22 @@ export default function Ticker() {
               {/* SS-Tier Scarcity Signals */}
               {item.status === "sold-out" ? (
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-white/10 text-white/50 border border-white/20 font-mono text-[9px] uppercase tracking-widest">
+                  <span className="px-2 py-0.5 bg-white/10 text-white/50 border border-white/20 font-mono text-[10px] uppercase tracking-widest">
                     SOLD OUT
                   </span>
-                  <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/40">Join Waitlist</span>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">Join Waitlist</span>
                 </div>
               ) : item.inventory === "low" ? (
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[9px] uppercase tracking-widest motion-safe:animate-pulse">
+                  <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
                     LAST TICKETS
                   </span>
-                  <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
                     <Ticket className="w-3 h-3" /> Get Tickets
                   </span>
                 </div>
               ) : (
-                <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
                   <Ticket className="w-3 h-3" /> Get Tickets
                 </span>
               )}

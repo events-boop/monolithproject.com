@@ -110,7 +110,7 @@ export default function SpatialAudioEngine() {
                     />
                 ))}
             </div>
-            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 group-hover:text-white transition-colors mt-[1px]">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 group-hover:text-white transition-colors mt-[1px]">
                 {isPlaying ? "ATMOS: ON" : "ATMOS: OFF"}
             </span>
         </motion.button>

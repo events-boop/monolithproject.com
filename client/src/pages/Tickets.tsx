@@ -174,7 +174,7 @@ export default function Tickets() {
                          {lineupVisuals.slice(0, 3).map((artist) => (
                            <div key={artist.name} className="flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10">
                               <img src={artist.image} className="w-8 h-8 rounded-full object-cover" />
-                              <span className="font-mono text-[9px] uppercase tracking-widest text-white/80">{artist.name}</span>
+                              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">{artist.name}</span>
                            </div>
                          ))}
                       </div>
@@ -208,7 +208,7 @@ export default function Tickets() {
                       <div key={item.label} className="flex flex-col gap-3">
                          <div className="flex items-center gap-2 text-white/20">
                             {item.icon}
-                            <span className="font-mono text-[9px] uppercase tracking-[0.3em]">{item.label}</span>
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{item.label}</span>
                          </div>
                          <span className="font-display text-lg uppercase tracking-wider text-white/90">
                            <KineticDecryption text={item.value} />
@@ -248,7 +248,7 @@ export default function Tickets() {
                 <h2 className="font-display text-5xl uppercase text-white tracking-widest">Choose Your Ticket</h2>
                 <p className="mt-6 text-lg text-white/40 font-light">Choose the option that fits your night. All purchases are handled through Posh.</p>
              </div>
-             <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 italic">Updated for {new Date().getFullYear()}</p>
+             <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 italic">Updated for {new Date().getFullYear()}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2.5rem] overflow-hidden">
@@ -265,7 +265,7 @@ export default function Tickets() {
                    <div className={`w-14 h-14 rounded-full border border-white/5 flex items-center justify-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/5 ${tier.highlight ? "text-primary border-primary/20 bg-primary/10" : "text-white/20 group-hover:text-primary"}`}>
                       {getTierIcon(tier.icon)}
                    </div>
-                   {tier.highlight && <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/80 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">High Demand</span>}
+                   {tier.highlight && <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">High Demand</span>}
                 </div>
 
                 <div className="flex-1">
@@ -318,12 +318,12 @@ export default function Tickets() {
           </div>
 
           <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8">
-             <p className="text-white/20 text-[9px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
+             <p className="text-white/20 text-[10px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
                 All ticket sales are final unless the event is canceled or rescheduled.
              </p>
              <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20">Secure checkout via Posh</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20">Secure checkout via Posh</span>
              </div>
           </div>
         </div>

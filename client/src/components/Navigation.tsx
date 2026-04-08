@@ -452,7 +452,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                                   <KineticDecryption text="MONOLITH" />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[9px] md:text-[10px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                                  "font-monolith text-[10px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" />

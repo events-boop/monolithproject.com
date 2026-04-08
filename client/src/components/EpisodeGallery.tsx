@@ -91,7 +91,7 @@ export default function EpisodeGallery({
 
                             {img.label && (
                                 <div className="absolute bottom-6 left-6 right-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/50 block mb-1">
+                                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 block mb-1">
                                         Card {idx + 1}
                                     </span>
                                     <p className="font-display text-xl uppercase tracking-widest text-white drop-shadow-md">

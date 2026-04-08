@@ -154,7 +154,7 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
               {exp.id === 'story' ? <UntoldButterflyLogo className="h-3 w-3 lg:h-4 lg:w-4" /> : <Icon className="h-3 w-3 lg:h-4 lg:w-4" />}
             </div>
             <div className="flex flex-col">
-              <span className="text-[7px] lg:text-[9px] uppercase tracking-[0.2em] opacity-40 leading-none mb-1">
+              <span className="text-[8px] lg:text-[10px] uppercase tracking-[0.2em] opacity-40 leading-none mb-1">
                 {exp.label}
               </span>
               <span className="font-display text-xs lg:text-sm uppercase tracking-wider text-white whitespace-nowrap">

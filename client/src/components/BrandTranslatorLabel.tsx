@@ -24,7 +24,7 @@ export default function BrandTranslatorLabel({
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.34em] md:text-[10px]",
+        "inline-flex items-center rounded-full border px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.34em] md:text-[10px]",
         toneClasses[tone],
         className,
       )}

@@ -155,7 +155,7 @@ export default function MixedMediaGallery({
                 extras: (_, { photo }) => (
                   <>
                     {photo.kind === "video" && (
-                      <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 border border-white/20 bg-black/60 px-2 py-1 text-[9px] font-mono uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+                      <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 border border-white/20 bg-black/60 px-2 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
                         <span className="h-1.5 w-1.5 bg-primary animate-pulse" />
                         Video
                       </div>

@@ -143,7 +143,7 @@ export default function CustomCursor() {
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
-                            className="text-black font-mono text-[9px] font-bold tracking-widest uppercase absolute z-20"
+                            className="text-black font-mono text-[10px] font-bold tracking-widest uppercase absolute z-20"
                         >
                             {cursorText}
                         </motion.span>

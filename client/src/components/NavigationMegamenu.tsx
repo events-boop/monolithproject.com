@@ -169,7 +169,7 @@ export default function NavigationMegamenu({
 
                                     {megamenu.feature.badge && (
                                         <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/72 border border-white/20 flex items-center gap-1.5 shadow-lg">
-                                            <span className="text-[9px] font-bold tracking-widest text-white uppercase mt-0.5">
+                                            <span className="text-[10px] font-bold tracking-widest text-white uppercase mt-0.5">
                                                 {megamenu.feature.badge}
                                             </span>
                                         </div>

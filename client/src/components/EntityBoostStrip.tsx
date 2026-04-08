@@ -128,13 +128,13 @@ export default function EntityBoostStrip({
         )}
 
         <div className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
             Chasing Sun(Sets) Facts
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
             Official Identity
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[9px] sm:text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
             Not the fragrance — official music series
           </Link>
         </div>

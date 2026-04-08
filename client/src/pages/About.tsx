@@ -268,7 +268,7 @@ export default function About() {
                       className="w-full text-left py-10 md:py-14 flex items-center justify-between hover:bg-white/[0.01] transition-all duration-500 focus-visible:outline-none focus-visible:bg-white/[0.03]"
                     >
                       <div className="flex-1">
-                        <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary/60 mb-4 block group-hover:text-primary transition-colors">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/60 mb-4 block group-hover:text-primary transition-colors">
                           {expression.label}
                         </span>
                         <h3 className={`uppercase leading-[0.9] text-white transition-all duration-700 group-hover:translate-x-2 ${

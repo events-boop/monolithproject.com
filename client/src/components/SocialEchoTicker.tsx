@@ -128,7 +128,7 @@ export default function SocialEchoTicker() {
                                 {item.label}
                             </span>
                             {item.sub && (
-                                <span className="font-sans text-[9px] tracking-wide text-white/60 leading-none mt-0.5">
+                                <span className="font-sans text-[10px] tracking-wide text-white/60 leading-none mt-0.5">
                                     {item.sub}
                                 </span>
                             )}

@@ -47,10 +47,10 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
 
         {/* Telemetry HUD - Top Left */}
         <div className="absolute top-4 left-4 z-20 flex flex-col gap-0.5">
-          <span className="font-mono text-[7px] text-white/30 tracking-[0.3em] uppercase">Signal // {artistId}</span>
+          <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">Signal // {artistId}</span>
           <div className="flex items-center gap-1.5">
             <div className={`h-1 w-1 rounded-full animate-pulse ${accentColor === "clay" ? "bg-clay" : "bg-primary"}`} />
-            <span className="font-mono text-[8px] text-white/60 tracking-widest uppercase">{artist.role}</span>
+            <span className="font-mono text-[9px] text-white/60 tracking-widest uppercase">{artist.role}</span>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 z-20 flex flex-col">
           <div className="flex items-end justify-between mb-4">
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[9px] text-white/40 tracking-[0.4em] uppercase mb-1">Dossier // 0{delay * 10 + 1}</span>
+              <span className="font-mono text-[10px] text-white/40 tracking-[0.4em] uppercase mb-1">Dossier // 0{delay * 10 + 1}</span>
               <div className="min-h-[2.5rem] flex items-center">
                 <KineticDecryption 
                   text={artist.name} 
@@ -91,14 +91,14 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
           {/* Footer Metadata */}
           <div className="pt-4 border-t border-white/10 flex items-center gap-6">
             <div className="flex flex-col">
-              <span className="font-mono text-[7px] text-white/30 tracking-widest uppercase mb-1">Origin</span>
-              <span className="font-mono text-[9px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
+              <span className="font-mono text-[8px] text-white/30 tracking-widest uppercase mb-1">Origin</span>
+              <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <MapPin size={10} className="text-white/30" /> {artist.origin}
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="font-mono text-[7px] text-white/30 tracking-widest uppercase mb-1">Signature</span>
-              <span className="font-mono text-[9px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
+              <span className="font-mono text-[8px] text-white/30 tracking-widest uppercase mb-1">Signature</span>
+              <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <Music size={10} className="text-white/30" /> {artist.genre}
               </span>
             </div>

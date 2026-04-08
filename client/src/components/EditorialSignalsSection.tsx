@@ -81,7 +81,7 @@ export default function EditorialSignalsSection() {
             {["TELEMETRY", "ARCHIVE", "SIGNALS", "MEDIA"].map((signal, i, arr) => (
               <span
                 key={signal}
-                className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 text-right flex items-center justify-end gap-3"
+                className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 text-right flex items-center justify-end gap-3"
               >
                 {signal} <span className={`h-1 w-1 rounded-full ${i === 0 ? "bg-primary animate-pulse" : "bg-white/10"}`} />
               </span>
@@ -113,7 +113,7 @@ export default function EditorialSignalsSection() {
                     <FeaturedIcon className="h-6 w-6 text-white/60 group-hover:text-black" />
                   </div>
                   <div className="text-right">
-                    <p className="font-mono text-[8px] uppercase tracking-[0.4em] text-primary transition-colors group-hover:text-black mb-1">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.4em] text-primary transition-colors group-hover:text-black mb-1">
                       Signal // 01
                     </p>
                     <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 transition-colors group-hover:text-black/60">
@@ -134,7 +134,7 @@ export default function EditorialSignalsSection() {
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pt-8 border-t border-white/10 group-hover:border-black/10 transition-colors">
                   <div className="max-w-xs">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">Technical Context</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">Technical Context</p>
                     <p className="text-sm font-light leading-relaxed text-white/60 group-hover:text-black/70">
                       Clear articles, radio episodes, and recap surfaces make the next event feel connected to the last one.
                     </p>
@@ -174,7 +174,7 @@ export default function EditorialSignalsSection() {
                     <div className="relative z-10 flex items-start justify-between gap-4 mb-10">
                       <div>
                         <div className="flex items-center gap-2 mb-4">
-                           <span className="font-mono text-[8px] text-primary/60 tracking-[0.4em]">SIGNAL // 0{index + 2}</span>
+                           <span className="font-mono text-[9px] text-primary/60 tracking-[0.4em]">SIGNAL // 0{index + 2}</span>
                            <div className="h-[1px] w-8 bg-white/5 group-hover:bg-primary/20 transition-colors" />
                         </div>
                         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 group-hover:text-white/60 transition-colors">
@@ -194,7 +194,7 @@ export default function EditorialSignalsSection() {
                         {module.description}
                       </p>
 
-                      <div className="inline-flex items-center gap-3 font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-white/20 transition-all group-hover:text-white whitespace-nowrap">
+                      <div className="inline-flex items-center gap-3 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 transition-all group-hover:text-white whitespace-nowrap">
                         {module.cta}
                         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                       </div>

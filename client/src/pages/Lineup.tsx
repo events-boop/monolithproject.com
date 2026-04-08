@@ -212,7 +212,7 @@ export default function Lineup() {
 
                       {/* Content */}
                       <div className="absolute inset-0 p-4 md:p-5 flex flex-col justify-end">
-                        <span className={`font-mono text-[9px] tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${artist.series === "untold-story" ? "text-primary" : "text-clay"
+                        <span className={`font-mono text-[10px] tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${artist.series === "untold-story" ? "text-primary" : "text-clay"
                           }`}>
                           {artist.role}
                         </span>
@@ -220,7 +220,7 @@ export default function Lineup() {
                           }`}>
                           {artist.name}
                         </h3>
-                        <div className="flex gap-3 text-[9px] font-mono text-white/40 group-hover:text-white/70 transition-colors">
+                        <div className="flex gap-3 text-[10px] font-mono text-white/40 group-hover:text-white/70 transition-colors">
                           <span className="flex items-center gap-1">
                             <MapPin size={8} /> {artist.origin}
                           </span>

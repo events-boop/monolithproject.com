@@ -148,7 +148,7 @@ export default function SystemHUD() {
           className="group flex flex-col items-end gap-1.5 cursor-pointer"
         >
           <div className="flex items-center gap-3">
-            <span className="font-mono text-[9px] text-white/30 tracking-[0.2em] uppercase whitespace-nowrap">
+            <span className="font-mono text-[10px] text-white/30 tracking-[0.2em] uppercase whitespace-nowrap">
               System Uptime: {Math.floor(uptime/60).toString().padStart(2, "0")}:{ (uptime%60).toString().padStart(2, "0") }
             </span>
             <div className="w-1.5 h-1.5 bg-green-500 rounded-none animate-pulse" />
@@ -176,8 +176,8 @@ export default function SystemHUD() {
             exit={{ opacity: 0, x: 10, scaleY: 0 }}
             className="absolute top-24 right-8 w-64 bg-black/95 border border-white/10 p-4 font-mono z-50 origin-top shadow-2xl pointer-events-auto"
           >
-            <span className="text-[9px] text-white/40 uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">Diagnostic_Log</span>
-            <div className="flex flex-col gap-2 max-h-[300px] overflow-hidden text-[9px] text-white/70">
+            <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">Diagnostic_Log</span>
+            <div className="flex flex-col gap-2 max-h-[300px] overflow-hidden text-[10px] text-white/70">
               <p className="text-primary group-hover:text-white">[SYSTEM] BOOT_SEQUENCE: 0x4F12A</p>
               <p>[NET] LATENCY_CHECK: 12ms</p>
               <p>[OS] KERNEL_LOAD: STABLE</p>
@@ -209,7 +209,7 @@ export default function SystemHUD() {
              {timeLeft.days}D:{timeLeft.hours}H:{timeLeft.minutes}M:{timeLeft.seconds}S
            </span>
         </div>
-        <span className="font-mono text-[9px] text-white/40 tracking-[0.2em] uppercase">
+        <span className="font-mono text-[10px] text-white/40 tracking-[0.2em] uppercase">
           Client Session — 0x{requestId}
         </span>
       </div>
@@ -224,7 +224,7 @@ export default function SystemHUD() {
             transition={{ duration: 0.8 }}
             className="flex items-center gap-2"
           >
-            <span className="font-mono text-[8px] text-white/50 tracking-[0.2em] uppercase">{currentSignal}</span>
+            <span className="font-mono text-[9px] text-white/50 tracking-[0.2em] uppercase">{currentSignal}</span>
             <div className="w-1 h-1 bg-white/40 animate-pulse rounded-none" />
           </motion.div>
         </AnimatePresence>

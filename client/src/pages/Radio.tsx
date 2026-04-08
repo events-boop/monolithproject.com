@@ -310,7 +310,7 @@ export default function Radio() {
                 className="absolute top-4 right-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                <span className="font-mono text-[9px] text-white/80 tracking-widest uppercase">Live</span>
+                <span className="font-mono text-[10px] text-white/80 tracking-widest uppercase">Live</span>
               </div>
 
               <AnimatePresence mode="wait">
@@ -347,7 +347,7 @@ export default function Radio() {
                     transition={{ duration: 0.6 }}
                     className="flex flex-col gap-1 drop-shadow-lg"
                   >
-                    <span className="font-mono text-[9px] tracking-[0.3em] text-[#E8B86D] uppercase font-bold drop-shadow-md">Now Playing</span>
+                    <span className="font-mono text-[10px] tracking-[0.3em] text-[#E8B86D] uppercase font-bold drop-shadow-md">Now Playing</span>
                     <span className="font-display text-3xl md:text-4xl text-white tracking-widest uppercase drop-shadow-xl block">{(radioArtists[artistIndex] || radioArtists[0]).name}</span>
                   </motion.div>
                 </AnimatePresence>

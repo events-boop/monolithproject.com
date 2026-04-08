@@ -118,7 +118,7 @@ export default function ScheduleSection() {
         {/* Header Block */}
         <div className="mb-16 md:mb-24 flex flex-col gap-8 md:flex-row md:items-end justify-between border-b border-black/10 pb-12">
           <div className="relative">
-             <span className="absolute -top-8 left-1 md:-top-12 md:left-2 font-mono text-[9px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
+             <span className="absolute -top-8 left-1 md:-top-12 md:left-2 font-mono text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
              <h2 className="font-heavy text-[clamp(3.2rem,12vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
                <KineticDecryption text="SCHEDULE" />
              </h2>
@@ -151,7 +151,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* List Header - HUD Style mapped to light mode */}
-        <div className="hidden md:grid grid-cols-12 gap-4 pb-6 pt-4 text-[9px] uppercase tracking-[0.25em] font-mono text-black/40">
+        <div className="hidden md:grid grid-cols-12 gap-4 pb-6 pt-4 text-[10px] uppercase tracking-[0.25em] font-mono text-black/40">
           <div className="col-span-2 pl-4">Date / Time</div>
           <div className="col-span-1 text-center">Status</div>
           <div className="col-span-4 pl-4">Event / Series</div>
@@ -230,16 +230,16 @@ export default function ScheduleSection() {
                           {event.title}
                         </h3>
                         <div className="flex flex-wrap gap-2 md:mt-1">
-                          <span className={`text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-black/5 border border-black/10 rounded-full ${seriesTextAccent[event.series]}`}>
+                          <span className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-black/5 border border-black/10 rounded-full ${seriesTextAccent[event.series]}`}>
                             {seriesLabels[event.series]}
                           </span>
                           {event.status === "on-sale" && (
-                            <span className="text-[9px] font-black tracking-[0.18em] uppercase px-3 py-1 bg-black text-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.15)]">
+                            <span className="text-[10px] font-black tracking-[0.18em] uppercase px-3 py-1 bg-black text-white rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.15)]">
                               ON SALE
                             </span>
                           )}
                           {event.startingPrice && event.status !== "sold-out" && (
-                            <span className="text-[9px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-black/10 text-black/60 rounded-full">
+                            <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-black/10 text-black/60 rounded-full">
                               From ${event.startingPrice}
                             </span>
                           )}
@@ -252,7 +252,7 @@ export default function ScheduleSection() {
                           "font-serif italic text-xl md:text-2xl leading-tight transition-colors duration-500",
                           (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient !italic" : "text-black/70 group-hover:text-black"
                         )}>{event.venue}</span>
-                        <span className="text-[9px] text-black/40 font-mono mt-1 tracking-widest uppercase">{event.location}</span>
+                        <span className="text-[10px] text-black/40 font-mono mt-1 tracking-widest uppercase">{event.location}</span>
                       </div>
 
                       {/* Action Col & Exposed Details */}
@@ -261,7 +261,7 @@ export default function ScheduleSection() {
                            <ConversionCTA event={event} size="sm" showUrgency={true} className="w-full md:w-auto" />
                          </div>
                          <div className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-black/50 group-hover:text-black"}`}>
-                            <span className="text-[9px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
+                            <span className="text-[10px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
                             <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-black text-white border-black rotate-90" : "border-black/10 group-hover:border-black/30 bg-white group-hover:bg-black/5"}`}>
                               <ArrowRight className="w-4 h-4" />
                             </div>
@@ -290,7 +290,7 @@ export default function ScheduleSection() {
                                   className="w-full h-full object-cover mix-blend-multiply opacity-90 transition-transform duration-700 hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-                                <span className="absolute bottom-3 left-3 font-mono text-[9px] tracking-widest text-white/90 uppercase">Event Visual</span>
+                                <span className="absolute bottom-3 left-3 font-mono text-[10px] tracking-widest text-white/90 uppercase">Event Visual</span>
                              </div>
                           </div>
 
@@ -298,7 +298,7 @@ export default function ScheduleSection() {
                           <div className="md:col-span-9">
                             <div className="flex items-center gap-3 mb-6">
                                <div className="h-px w-12 bg-black/20" />
-                               <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-black/60 font-bold">Event Details</span>
+                               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-black/60 font-bold">Event Details</span>
                             </div>
                             
                             <p className="text-xl md:text-2xl font-serif italic text-black/80 mb-10 max-w-3xl leading-relaxed">
@@ -310,7 +310,7 @@ export default function ScheduleSection() {
                               <div className="p-6 bg-white/70 border border-black/5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-3 mb-4 text-black/40">
                                   <Music className="w-4 h-4" />
-                                  <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-black/60">Lineup</span>
+                                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/60">Lineup</span>
                                 </div>
                                 <p className="font-heavy text-xl lg:text-2xl leading-[1.1] text-black uppercase tracking-tight drop-shadow-sm">{event.lineup || "To Be Announced"}</p>
                               </div>
@@ -319,20 +319,20 @@ export default function ScheduleSection() {
                               <div className="p-6 bg-white/70 border border-black/5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-3 mb-4 text-black/40">
                                   <MapPin className="w-4 h-4" />
-                                  <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-black/60">Venue</span>
+                                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/60">Venue</span>
                                 </div>
                                 <p className="font-heavy text-xl lg:text-2xl leading-[1.1] text-black uppercase tracking-tight drop-shadow-sm">{event.venue}</p>
-                                <p className="text-[9px] text-black/50 mt-2 font-mono tracking-widest uppercase">{event.location}</p>
+                                <p className="text-[10px] text-black/50 mt-2 font-mono tracking-widest uppercase">{event.location}</p>
                               </div>
 
                               {/* Dossier Card: Time Details */}
                               <div className="p-6 bg-white/70 border border-black/5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex items-center gap-3 mb-4 text-black/40">
                                   <Clock className="w-4 h-4" />
-                                  <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-black/60">Time</span>
+                                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/60">Time</span>
                                 </div>
                                 <p className="font-mono text-sm font-bold text-black uppercase tracking-widest">{event.time}</p>
-                                <p className="text-[9px] text-black/50 mt-2 font-mono tracking-widest uppercase">{[event.age, event.dress].filter(Boolean).join(" · ")}</p>
+                                <p className="text-[10px] text-black/50 mt-2 font-mono tracking-widest uppercase">{[event.age, event.dress].filter(Boolean).join(" · ")}</p>
                               </div>
                             </div>
 
@@ -364,7 +364,7 @@ export default function ScheduleSection() {
                               </button>
 
                               {event.tableReservationEmail && (
-                                <a href={`mailto:${event.tableReservationEmail}`} className="px-6 py-4 text-[9px] font-bold uppercase tracking-[0.3em] text-black/60 hover:text-black transition-colors ml-2 underline decoration-black/20 underline-offset-[6px]">
+                                <a href={`mailto:${event.tableReservationEmail}`} className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-black/60 hover:text-black transition-colors ml-2 underline decoration-black/20 underline-offset-[6px]">
                                   Table Enquiry
                                 </a>
                               )}

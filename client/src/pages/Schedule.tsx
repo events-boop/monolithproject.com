@@ -181,7 +181,7 @@ export default function Schedule() {
           <EntityBoostStrip tone="light" className="mb-16 px-0 opacity-80" contextLabel="Upcoming Events" />
 
           {/* List Header - HUD Style */}
-          <div className="hidden md:grid grid-cols-12 gap-4 pb-6 border-b border-white/5 text-[9px] uppercase tracking-[0.25em] font-mono text-muted-foreground/50">
+          <div className="hidden md:grid grid-cols-12 gap-4 pb-6 border-b border-white/5 text-[10px] uppercase tracking-[0.25em] font-mono text-muted-foreground/50">
             <div className="col-span-2 pl-4">Date / Time</div>
             <div className="col-span-1 text-center">Status</div>
             <div className="col-span-4">Event / Series</div>
@@ -266,20 +266,20 @@ export default function Schedule() {
                             {event.title}
                           </h3>
                           <div className="flex flex-wrap gap-2 md:mt-1">
-                            <span className={`text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}>
+                            <span className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}>
                               {seriesLabels[event.series]}
                             </span>
                             {isTicketOnSale(event) && (
                               <motion.span 
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="text-[9px] font-black tracking-[0.18em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
+                                className="text-[10px] font-black tracking-[0.18em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
                               >
                                 TICKETS ACTIVE
                               </motion.span>
                             )}
                             {event.startingPrice && event.status !== "sold-out" && (
-                              <span className="text-[9px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
+                              <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
                                 From ${event.startingPrice}
                               </span>
                             )}
@@ -298,7 +298,7 @@ export default function Schedule() {
                              <ConversionCTA event={event} size="sm" showUrgency={false} className="w-full md:w-auto" />
                            </div>
                            <div className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-muted-foreground/50 group-hover:text-foreground"}`}>
-                              <span className="text-[9px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
+                              <span className="text-[10px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>
                               <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-primary text-black border-primary rotate-90" : "border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10"}`}>
                                 <ArrowRight className="w-4 h-4" />
                               </div>
@@ -327,7 +327,7 @@ export default function Schedule() {
                                     className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                  <span className="absolute bottom-4 left-4 font-mono text-[9px] tracking-widest text-white/40 uppercase">Event Photo</span>
+                                  <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-widest text-white/40 uppercase">Event Photo</span>
                                </div>
                             </div>
 
@@ -347,7 +347,7 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <Music className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Lineup</span>
+                                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Lineup</span>
                                   </div>
                                   <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">{event.lineup || "To Be Announced"}</p>
                                   <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
@@ -357,7 +357,7 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <MapPin className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Venue</span>
+                                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Venue</span>
                                   </div>
                                   <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">{event.venue}</p>
                                   <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">{event.location}</p>
@@ -368,7 +368,7 @@ export default function Schedule() {
                                 <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
                                   <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
                                     <Clock className="w-4 h-4" />
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold">Details</span>
+                                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Details</span>
                                   </div>
                                   <p className="font-mono text-sm font-bold text-foreground/90 uppercase tracking-widest">{event.time}</p>
                                   <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">{[event.age, event.dress].filter(Boolean).join(" · ")}</p>
@@ -405,7 +405,7 @@ export default function Schedule() {
                <p className="text-muted-foreground/40 text-[10px] font-mono tracking-[0.2em] uppercase">
                 More dates are on the way. Join the newsletter to hear about them first.
                </p>
-               <p className="text-muted-foreground/20 text-[9px] font-mono tracking-widest italic uppercase">Updated for {new Date().getFullYear()}</p>
+               <p className="text-muted-foreground/20 text-[10px] font-mono tracking-widest italic uppercase">Updated for {new Date().getFullYear()}</p>
             </div>
             <div className="flex items-center gap-8">
                <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Get Updates</Link>

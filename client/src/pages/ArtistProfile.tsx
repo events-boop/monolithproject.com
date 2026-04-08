@@ -118,7 +118,7 @@ export default function ArtistProfile() {
                  initial={{ opacity: 0 }}
                  animate={{ opacity: 1 }}
                  transition={{ delay: 0.7 }}
-                 className={`font-mono text-[9px] md:text-[10px] tracking-[0.5em] uppercase px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md`}
+                 className={`font-mono text-[10px] tracking-[0.5em] uppercase px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md`}
                  style={{ color: accentColor, borderColor: `${accentColor}33` }}
               >
                 {primarySeries.replace("-", " ")}
@@ -141,7 +141,7 @@ export default function ArtistProfile() {
                   <span className="font-heavy text-[clamp(1.25rem,3vw,2.5rem)] tracking-[0.3em] text-white uppercase leading-none">
                     Headliner Status
                   </span>
-                  <span className="font-mono text-[8px] md:text-[9px] tracking-[0.5em] text-white/30 uppercase">
+                  <span className="font-mono text-[9px] md:text-[10px] tracking-[0.5em] text-white/30 uppercase">
                     Featured booking in the Monolith roster
                   </span>
                 </div>
@@ -153,7 +153,7 @@ export default function ArtistProfile() {
                     </span>
                     <div className="flex items-center gap-3 md:gap-4 mt-2">
                        <div className="h-px w-8 md:w-12 bg-white/40" />
-                       <span className="font-mono text-[8px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] text-white uppercase font-bold">
+                       <span className="font-mono text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] text-white uppercase font-bold">
                          Core resident
                        </span>
                     </div>
@@ -162,22 +162,22 @@ export default function ArtistProfile() {
                   {/* High-Prestige Residency Metadata HUD Grid */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 pt-6 border-t border-white/10 max-w-3xl">
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Residency</span>
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Season 01</span>
+                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Residency</span>
+                        <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Season 01</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Artist Role</span>
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Resident</span>
+                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Artist Role</span>
+                        <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Resident</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Based In</span>
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase truncate">{artist.origin.split(',')[0]} / {artist.origin.split(',')[1]?.trim() || 'Global'}</span>
+                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Based In</span>
+                        <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase truncate">{artist.origin.split(',')[0]} / {artist.origin.split(',')[1]?.trim() || 'Global'}</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[7px] md:text-[8px] tracking-[0.3em] text-white/40 uppercase">Status</span>
+                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Status</span>
                         <div className="flex items-center gap-2">
                            <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--primary)] animate-pulse" />
-                           <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-white uppercase">Active resident</span>
+                           <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Active resident</span>
                         </div>
                      </div>
                   </div>
@@ -192,13 +192,13 @@ export default function ArtistProfile() {
             <div className="flex flex-wrap items-center gap-10 md:gap-16">
               <div className="flex items-center gap-8">
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Based In</span>
+                   <span className="font-mono text-[9px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Based In</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <MapPin className="w-3 h-3 opacity-40" /> {artist.origin}
                    </span>
                  </div>
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[8px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Sound</span>
+                   <span className="font-mono text-[9px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Sound</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <Music className="w-3 h-3 opacity-40" /> {artist.genre}
                    </span>
@@ -232,7 +232,7 @@ export default function ArtistProfile() {
           style={{ opacity: heroOpacity }}
           className="absolute bottom-10 right-10 flex flex-col items-center gap-4 hidden md:flex"
         >
-          <span className="font-mono text-[9px] tracking-[0.5em] text-white/20 uppercase vertical-rl">The Roster</span>
+          <span className="font-mono text-[10px] tracking-[0.5em] text-white/20 uppercase vertical-rl">The Roster</span>
           <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
         </motion.div>
       </section>
@@ -257,7 +257,7 @@ export default function ArtistProfile() {
                />
                <div className="flex flex-wrap gap-2 pt-6">
                  {artist.tags.map(tag => (
-                   <span key={tag} className="px-5 py-2.5 rounded-full border border-white/5 bg-white/[0.02] font-mono text-[9px] tracking-[0.2em] uppercase text-white/40 hover:text-white hover:border-white/20 transition-all cursor-default">
+                   <span key={tag} className="px-5 py-2.5 rounded-full border border-white/5 bg-white/[0.02] font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 hover:text-white hover:border-white/20 transition-all cursor-default">
                      {tag}
                    </span>
                  ))}
@@ -284,7 +284,7 @@ export default function ArtistProfile() {
                       className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all group"
                     >
                       <div className="flex justify-between items-start mb-6">
-                        <span className="font-mono text-[9px] tracking-[0.4em] text-[#E8B86D] uppercase">{set.date}</span>
+                        <span className="font-mono text-[10px] tracking-[0.4em] text-[#E8B86D] uppercase">{set.date}</span>
                         <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-white group-hover:translate-x-1 transition-all" />
                       </div>
                       <h5 className="font-display text-2xl uppercase tracking-widest text-white mb-2">{set.title}</h5>
@@ -349,7 +349,7 @@ export default function ArtistProfile() {
                     { label: "City", value: nextSeriesEvent?.location || "Chicago, IL" },
                   ].map(spec => (
                     <div key={spec.label} className="flex flex-col gap-1">
-                      <span className="font-mono text-[9px] tracking-[0.4em] text-white/20 uppercase lowercase-none">{spec.label}</span>
+                      <span className="font-mono text-[10px] tracking-[0.4em] text-white/20 uppercase lowercase-none">{spec.label}</span>
                       <span className="font-mono text-sm uppercase tracking-widest text-white/80">{spec.value}</span>
                     </div>
                   ))}
@@ -369,11 +369,11 @@ export default function ArtistProfile() {
                <div className="grid grid-cols-2 gap-4">
                   <a href={artist.socials.instagram} target="_blank" className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white group transition-all duration-500">
                     <Instagram className="w-6 h-6 text-white/40 group-hover:text-black transition-colors mb-3" />
-                    <span className="font-mono text-[9px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">Instagram</span>
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">Instagram</span>
                   </a>
                   <a href={artist.socials.website} target="_blank" className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white group transition-all duration-500">
                     <Globe className="w-6 h-6 text-white/40 group-hover:text-black transition-colors mb-3" />
-                    <span className="font-mono text-[9px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">Official Site</span>
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">Official Site</span>
                   </a>
                </div>
             </div>

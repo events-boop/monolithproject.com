@@ -67,7 +67,7 @@ export default function NotFound() {
 
       <div className="absolute bottom-12 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute bottom-6 inset-x-0 flex justify-center">
-            <span className="font-mono text-[8px] text-white/20 tracking-[0.5em] uppercase">
+            <span className="font-mono text-[9px] text-white/20 tracking-[0.5em] uppercase">
                 404 / Page not found
             </span>
       </div>

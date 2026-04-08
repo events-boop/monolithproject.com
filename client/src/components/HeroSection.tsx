@@ -84,10 +84,10 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
         { value: seconds, label: "S" },
       ].map((unit, i) => (
         <div key={unit.label} className="flex flex-row items-center gap-1.5 leading-none">
-          <span className="font-mono text-sm md:text-base font-[900] tracking-tighter text-white">
+          <span className="font-mono text-base md:text-lg font-[900] tracking-tighter text-white">
             {padCountdown(unit.value)}
           </span>
-          <span className="font-mono text-[8px] font-bold text-white/30 pt-0.5">{unit.label}</span>
+          <span className="font-mono text-[10px] font-bold text-white/30 pt-0.5">{unit.label}</span>
           {i < 3 && <span className="text-white/20 mx-0.5">:</span>}
         </div>
       ))}

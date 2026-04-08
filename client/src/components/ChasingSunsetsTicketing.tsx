@@ -69,7 +69,7 @@ export default function ChasingSunsetsTicketing() {
                 <div className="border border-[#E8B86D]/40 bg-[#1A0F00]/90 rounded-[32px] p-8 md:p-10 flex flex-col relative overflow-hidden group shadow-[0_20px_60px_rgba(232,184,109,0.1)]">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8B86D]/10 blur-[60px] rounded-full" />
                     
-                    <div className="inline-flex items-center self-start px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/30 text-[#E8B86D] text-[9px] font-mono tracking-widest uppercase rounded mb-4 gap-2">
+                    <div className="inline-flex items-center self-start px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/30 text-[#E8B86D] text-[10px] font-mono tracking-widest uppercase rounded mb-4 gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#E8B86D] animate-pulse"></span>
                         Highly Limited
                     </div>
@@ -147,7 +147,7 @@ export default function ChasingSunsetsTicketing() {
                             >
                                 Secure At $30 <ArrowRight className="w-3.5 h-3.5" />
                             </button>
-                            <p className="text-center text-white/30 mt-4 text-[9px] font-mono tracking-widest uppercase">Pricing guarantees priority entry</p>
+                            <p className="text-center text-white/30 mt-4 text-[10px] font-mono tracking-widest uppercase">Pricing guarantees priority entry</p>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@ export default function ChasingSunsetsTicketing() {
                     <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-2">Classified</span>
                     <h3 className="font-display text-2xl uppercase text-white/40 mb-4 tracking-widest">July 5th Recovery</h3>
                     
-                    <div className="px-4 py-2 border border-white/10 bg-white/5 mt-2 rounded font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 flex flex-col items-center gap-1">
+                    <div className="px-4 py-2 border border-white/10 bg-white/5 mt-2 rounded font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 flex flex-col items-center gap-1">
                         <Lock className="w-3 h-3" />
                         Decrypting: 06.20.2026
                     </div>

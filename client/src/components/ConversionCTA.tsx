@@ -85,7 +85,7 @@ export default function ConversionCTA({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className={`
-              flex items-center gap-3 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] 
+              flex items-center gap-3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] 
               px-4 py-1.5 border border-white/5 bg-white/[0.02]
               text-primary shadow-[0_4px_12px_rgba(0,0,0,0.2)]
             `}

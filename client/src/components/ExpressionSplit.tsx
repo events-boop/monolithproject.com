@@ -181,7 +181,7 @@ export default function ExpressionSplit() {
                 {/* Mobile Interaction Signal */}
                 <div className="lg:hidden mt-6 flex items-center gap-3">
                   <div className="h-px w-6 bg-white/30" />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50">Open Page</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">Open Page</span>
                 </div>
               </div>
 

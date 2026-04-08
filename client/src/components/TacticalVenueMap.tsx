@@ -30,7 +30,7 @@ export default function TacticalVenueMap() {
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                     <span className="text-[10px] tracking-[0.4em] uppercase text-white/60">Tactical Venue Blueprint // VER 1.0</span>
                 </div>
-                <span className="text-[9px] text-white/20">COORD_REF: GHQ_440</span>
+                <span className="text-[10px] text-white/20">COORD_REF: GHQ_440</span>
             </div>
 
             <div className="flex flex-col lg:grid lg:grid-cols-[1fr_300px] h-[500px]">
@@ -63,7 +63,7 @@ export default function TacticalVenueMap() {
                                     <zone.icon size={14} />
                                 </div>
                                 <div className="absolute top-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                    <span className="text-[8px] bg-black border border-white/10 px-2 py-1 rounded text-white whitespace-nowrap tracking-widest">{zone.label}</span>
+                                    <span className="text-[9px] bg-black border border-white/10 px-2 py-1 rounded text-white whitespace-nowrap tracking-widest">{zone.label}</span>
                                 </div>
                             </motion.button>
                         ))}
@@ -82,7 +82,7 @@ export default function TacticalVenueMap() {
                                 className="space-y-6"
                             >
                                 <div className="space-y-2">
-                                    <span className={`text-[9px] tracking-[0.3em] font-bold uppercase transition-colors ${activeZone.type === 'ga' ? 'text-green-400' : activeZone.type === 'vip' ? 'text-primary' : activeZone.type === 'peak' ? 'text-blue-400' : 'text-white/40'}`}>
+                                    <span className={`text-[10px] tracking-[0.3em] font-bold uppercase transition-colors ${activeZone.type === 'ga' ? 'text-green-400' : activeZone.type === 'vip' ? 'text-primary' : activeZone.type === 'peak' ? 'text-blue-400' : 'text-white/40'}`}>
                                         Zone_Identity: {activeZone.type}
                                     </span>
                                     <h3 className="text-2xl font-display uppercase text-white tracking-tight">{activeZone.label}</h3>
@@ -98,11 +98,11 @@ export default function TacticalVenueMap() {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1">
-                                        <span className="text-[8px] text-white/20 uppercase tracking-widest">Vector_X</span>
+                                        <span className="text-[9px] text-white/20 uppercase tracking-widest">Vector_X</span>
                                         <p className="text-xs text-white font-mono">{activeZone.coord.x}</p>
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="text-[8px] text-white/20 uppercase tracking-widest">Vector_Y</span>
+                                        <span className="text-[9px] text-white/20 uppercase tracking-widest">Vector_Y</span>
                                         <p className="text-xs text-white font-mono">{activeZone.coord.y}</p>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@ export default function TacticalVenueMap() {
                     </AnimatePresence>
 
                     <div className="pt-6 border-t border-white/5">
-                        <div className="flex items-center justify-between text-[8px] text-white/20 uppercase font-mono tracking-widest">
+                        <div className="flex items-center justify-between text-[9px] text-white/20 uppercase font-mono tracking-widest">
                             <span>GRID_SCAN: COMPLETED</span>
                             <span>PEAK_OCC: 88%</span>
                         </div>

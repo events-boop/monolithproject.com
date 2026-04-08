@@ -124,7 +124,7 @@ export default function MonolithKernel() {
                             ))}
                         </div>
 
-                        <div className="p-3 bg-white/[0.02] border-t border-white/5 flex items-center justify-between text-[9px] text-white/20 font-mono tracking-widest">
+                        <div className="p-3 bg-white/[0.02] border-t border-white/5 flex items-center justify-between text-[10px] text-white/20 font-mono tracking-widest">
                             <div className="flex gap-4">
                                 <span>VER 3001.0.1</span>
                                 <span>ID: KERNEL_R_01</span>

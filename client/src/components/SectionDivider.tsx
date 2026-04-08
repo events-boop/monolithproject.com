@@ -66,7 +66,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
         </span>
       </motion.div>
 
-      <div aria-hidden="true" className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[9px] truncate whitespace-nowrap overflow-hidden select-none">
+      <div aria-hidden="true" className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[10px] truncate whitespace-nowrap overflow-hidden select-none">
           {dataSegments.map((segment, i) => (
              <div key={i} className="flex gap-12 mb-1 animate-pulse" style={{ animationDelay: `${i * 0.4}s` }}>
                 {segment}

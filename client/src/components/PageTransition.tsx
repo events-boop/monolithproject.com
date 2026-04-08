@@ -67,7 +67,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                                  transition={{ duration: 0.32, ease: "easeOut" }}
                               />
                            </div>
-                           <span className="font-mono text-[9px] uppercase tracking-[0.6em] text-white/40">Resolving World</span>
+                           <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-white/40">Resolving World</span>
                         </motion.div>
                     </motion.div>
                 )}

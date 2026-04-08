@@ -65,7 +65,7 @@ export default function NightInNumbers() {
               <p className="font-heavy text-xl md:text-2xl uppercase tracking-tighter text-white group-hover:text-black transition-colors duration-500">
                 {stat.label}
               </p>
-              <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/40 transition-colors duration-500">
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 group-hover:text-black/40 transition-colors duration-500">
                 {stat.sublabel}
               </p>
             </div>
