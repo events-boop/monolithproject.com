@@ -2,13 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 const stats = [
-  { number: 12, label: "Nights Held", sublabel: "Since Season 01" },
-  { number: 47, label: "Artists Hosted", sublabel: "Across All Series" },
+  { number: 10, label: "Thousand+ People", sublabel: "And Growing", suffix: "K" },
+  { number: 2, label: "Annual July 4th", sublabel: "Chicago Tradition" },
+  { number: 22, label: "Artists Hosted", sublabel: "Across All Series" },
   { number: 4, label: "Seasons Deep", sublabel: "And Counting" },
-  { number: 1, label: "Door Policy", sublabel: "The Music Leads" },
 ];
 
-function CountUp({ target, inView, delay = 0 }: { target: number; inView: boolean; delay?: number }) {
+function CountUp({ target, inView, delay = 0, suffix }: { target: number; inView: boolean; delay?: number; suffix?: string }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function CountUp({ target, inView, delay = 0 }: { target: number; inView: boolea
     return () => clearTimeout(timer);
   }, [inView, target, delay]);
 
-  return <>{String(count).padStart(2, "0")}</>;
+  return <>{String(count).padStart(2, "0")}{suffix && <span className="text-[0.6em] align-top ml-1">{suffix}</span>}</>;
 }
 
 export default function NightInNumbers() {

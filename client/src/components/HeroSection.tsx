@@ -21,6 +21,7 @@ import {
   isTicketOnSale,
 } from "@/lib/siteExperience";
 import { getEventCta, getEventDetailsHref } from "@/lib/cta";
+import ConversionCTA from "./ConversionCTA";
 
 const heroPosterImage = getResponsiveImage("chasingSunsets");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
@@ -159,18 +160,13 @@ export default function HeroSection() {
             <h1 className="font-display text-[clamp(2.8rem,10vw,10rem)] leading-[0.9] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
               {headline}
             </h1>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full">
-              <MagneticButton strength={0.4}>
-                <a
-                  href={cta.href}
-                  target={cta.isExternal ? "_blank" : undefined}
-                  rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                  className={`group relative flex items-center justify-center gap-4 px-12 py-5 md:py-6 text-[14px] md:text-[15px] font-black tracking-[0.2em] uppercase transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'bg-primary text-white hover:bg-white hover:text-black shadow-[0_0_40px_rgba(224,90,58,0.4)]' : 'bg-white text-black hover:bg-primary hover:text-white'}`}
-                >
-                  {cta.label}
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </a>
-              </MagneticButton>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full pointer-events-auto">
+              <ConversionCTA 
+                event={featuredEvent} 
+                size="xl" 
+                showUrgency={true} 
+                className="w-full sm:w-auto"
+              />
             </div>
           </motion.div>
         ) : (
@@ -242,34 +238,13 @@ export default function HeroSection() {
             </div>
           )}
 
-          {/* RIGHT: CTA buttons */}
+          {/* RIGHT: CTA button */}
           <div className="flex items-center gap-3 shrink-0">
-            <MagneticButton strength={0.3}>
-              <a
-                href={cta.href}
-                target={cta.isExternal ? "_blank" : undefined}
-                rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                className={cn(
-                  "group flex items-center gap-2.5 px-6 py-3 text-[11px] font-black tracking-[0.2em] uppercase transition-all duration-300",
-                  cta.tool === 'laylo'
-                    ? "bg-white text-black hover:bg-white/90"
-                    : "bg-primary text-white hover:bg-white hover:text-black"
-                )}
-              >
-                {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                {cta.label}
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-              </a>
-            </MagneticButton>
-            <MagneticButton strength={0.2}>
-              <Link
-                href={secondaryCtaHref}
-                className="group flex items-center gap-2.5 px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase border border-white/12 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300"
-              >
-                {secondaryCtaLabel}
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </MagneticButton>
+            <ConversionCTA 
+              event={featuredEvent} 
+              size="md" 
+              showUrgency={true} 
+            />
           </div>
         </div>
       </motion.div>
@@ -278,12 +253,11 @@ export default function HeroSection() {
       {/* MOBILE HUD INTERFACE */}
       <div className="md:hidden absolute bottom-0 left-0 w-full p-4 z-40 bg-gradient-to-t from-black to-transparent pointer-events-none">
          <div className="flex flex-col gap-3 pointer-events-auto">
-            <a href={cta.href} className={cn("w-full py-4 text-center text-[10px] font-black tracking-[0.3em] uppercase transition-all", cta.tool === 'laylo' ? "bg-[#e4e4e7] text-black" : "bg-primary text-white")}>
-               {cta.label}
-            </a>
-            <Link href={secondaryCtaHref} className="w-full py-4 text-center text-[10px] font-bold tracking-[0.3em] uppercase border border-white/10 bg-black/60 text-white backdrop-blur-md">
-               {secondaryCtaLabel}
-            </Link>
+            <ConversionCTA 
+              event={featuredEvent} 
+              size="lg" 
+              showUrgency={true} 
+            />
          </div>
       </div>
     </section>

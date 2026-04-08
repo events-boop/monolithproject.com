@@ -1,11 +1,9 @@
 import { ArrowUpRight, PlayCircle, Calendar } from "lucide-react";
 import { Link } from "wouter";
 import { getResponsiveImage } from "@/lib/responsiveImages";
-import { getEventById } from "@/lib/siteExperience";
+import { getUpcomingEvents, getSeriesColor, getSeriesLabel, getEventEyebrow } from "@/lib/siteExperience";
 import { getEventCta } from "@/lib/cta";
 
-const untoldStoryCampaignImage = getResponsiveImage("untoldStoryPoster", "(min-width: 1024px) 50vw, 100vw");
-const chasingSunsetsCampaignImage = getResponsiveImage("chasingSunsets", "(min-width: 1024px) 50vw, 100vw");
 const heroArchiveImage = getResponsiveImage("heroMonolith", "(min-width: 1024px) 67vw, 100vw");
 
 function CampaignBackdrop({
@@ -50,17 +48,15 @@ function CampaignBackdrop({
 }
 
 export default function FeaturedCampaigns() {
-  const untoldEvent = getEventById("us-s3e3");
-  const sunsetEvent = getEventById("css-jul04");
-  
-  const untoldCta = getEventCta(untoldEvent);
-  const sunsetCta = getEventCta(sunsetEvent);
+  const campaigns = getUpcomingEvents(2);
+
+  if (campaigns.length === 0) return null;
 
   return (
     <section className="py-24 bg-black border-t border-white/10 relative overflow-hidden">
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        
+
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 block mb-4">
@@ -76,74 +72,72 @@ export default function FeaturedCampaigns() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          <Link href="/story" className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
-              <CampaignBackdrop
-                src={untoldStoryCampaignImage.src}
-                sources={untoldStoryCampaignImage.sources}
-                sizes={untoldStoryCampaignImage.sizes}
-                alt=""
-                className="absolute inset-0 opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
-              />
-              <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
-              
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 flex-wrap">
-                    <div className="px-3 py-1 bg-[#22D3EE]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-[11px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse"></span>
-                      Artist Debut
-                    </div>
-                    <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
-                        <Calendar className="w-3.5 h-3.5" /> May 16, 2026
-                    </div>
-                </div>
-                <h3 className="font-display text-[clamp(2rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#22D3EE] transition-colors">
-                  Untold Story<br/>Eran Hersh
-                </h3>
-                <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
-                  A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago for a 360° dancefloor experience.
-                </p>
-                <div className="flex items-center gap-3 text-[#22D3EE] font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]">
-                    {untoldCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </div>
-              </div>
-          </Link>
+          {campaigns.map((event) => {
+            const color = getSeriesColor(event.series);
+            const cta = getEventCta(event);
+            const eyebrow = getEventEyebrow(event);
+            const seriesHref = event.series === "untold-story" ? "/story" : event.series === "chasing-sunsets" ? "/chasing-sunsets" : "/schedule";
 
-          <Link href="/chasing-sunsets" className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
-              <CampaignBackdrop
-                src={chasingSunsetsCampaignImage.src}
-                sources={chasingSunsetsCampaignImage.sources}
-                sizes={chasingSunsetsCampaignImage.sizes}
-                alt=""
-                className="absolute inset-0 opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
-              />
-              <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
-              
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4 flex-wrap">
-                    <div className="px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/20 text-[#E8B86D] text-[11px] font-mono tracking-widest uppercase rounded flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#E8B86D] animate-pulse"></span>  
-                      Flagship Event
-                    </div>
-                    <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
-                        <Calendar className="w-3.5 h-3.5" /> July 4, 2026
-                    </div>
+            return (
+              <Link
+                key={event.id}
+                href={seriesHref}
+                className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] transition-colors"
+                style={{ "--campaign-color": color } as React.CSSProperties}
+              >
+                {event.image && (
+                  <img
+                    src={event.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
+                  />
+                )}
+                <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4 flex-wrap">
+                      <div
+                        className="px-3 py-1 text-[11px] font-mono tracking-widest uppercase rounded flex items-center gap-2 border"
+                        style={{ color, backgroundColor: `${color}18`, borderColor: `${color}33` }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full motion-safe:animate-pulse" style={{ backgroundColor: color }} />
+                        {eyebrow}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
+                          <Calendar className="w-3.5 h-3.5" /> {event.date}
+                      </div>
+                  </div>
+                  <h3
+                    className="font-display text-[clamp(2rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 transition-colors"
+                    style={{ ["--tw-text-opacity" as string]: 1 }}
+                    onMouseEnter={() => {}} // hover color via group
+                  >
+                    <span className="group-hover:text-[var(--campaign-color)] transition-colors">
+                      {getSeriesLabel(event.series)}<br/>{event.title}
+                    </span>
+                  </h3>
+                  {event.description && (
+                    <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
+                      {event.description}
+                    </p>
+                  )}
+                  <div
+                    className="flex items-center gap-3 font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]"
+                    style={{ color }}
+                  >
+                      {cta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </div>
                 </div>
-                <h3 className="font-display text-[clamp(2.1rem,6vw,3.2rem)] md:text-5xl uppercase text-white leading-[0.9] mb-4 group-hover:text-[#E8B86D] transition-colors">
-                  Chasing Sun(Sets)<br/>4th of July
-                </h3>
-                <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
-                  The summer flagship rooftop session. Start at sunset, continue after dark. Join the waitlist for priority entry before tickets go live.
-                </p>
-                <div className="flex items-center gap-3 text-[#E8B86D] font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]">
-                    {sunsetCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </div>
-              </div>
-          </Link>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Third Row: Spotify & Space Video */}
+        {/* Third Row: Archive Video & Radio */}
         <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8">
-            {/* Prominent Video Recaps */}
+            {/* Video Recap */}
             <div className="relative border border-white/10 bg-white/[0.02] p-8 md:p-12 group overflow-hidden min-h-[300px] flex flex-col justify-center border-l-4 border-l-[#E05A3A]">
                 <div className="absolute inset-0 bg-gradient-to-br from-black to-black/80 z-0" />
                 <CampaignBackdrop
@@ -154,7 +148,7 @@ export default function FeaturedCampaigns() {
                   className="absolute inset-0 z-0 opacity-10 mix-blend-overlay transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#E8B86D]/10 to-transparent mix-blend-screen pointer-events-none" />
-                
+
                 <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 h-full w-full">
                     <div className="max-w-md">
                         <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-[#E8B86D] mb-4 block">Event Archive</span>
@@ -162,7 +156,7 @@ export default function FeaturedCampaigns() {
                            Chasing Sun(Sets)<br/>4th of July 2025
                         </h3>
                         <p className="text-white/78 text-sm md:text-base leading-relaxed">
-                            Look back at our defining daytime rooftop set from last summer before reserving your spot for 2026.
+                            Look back at our defining daytime rooftop set from last summer before reserving your spot for this year.
                         </p>
                     </div>
 
@@ -179,7 +173,7 @@ export default function FeaturedCampaigns() {
                 </div>
             </div>
 
-            {/* Spotify Feature */}
+            {/* Radio Feature */}
             <div className="relative border border-white/10 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
                 <div className="mb-6">
                    <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 mb-3 block">Radio Show</span>
@@ -202,11 +196,12 @@ export default function FeaturedCampaigns() {
                   </div>
 
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link href="/radio" asChild>
-                      <a className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white">
-                        Open Radio Show
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
+                    <Link
+                      href="/radio"
+                      className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white"
+                    >
+                      Open Radio Show
+                      <ArrowUpRight className="h-4 w-4" />
                     </Link>
                     <a
                       href="https://soundcloud.com/chasing-sun-sets"

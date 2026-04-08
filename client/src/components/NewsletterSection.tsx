@@ -175,21 +175,23 @@ export default function NewsletterSection({
             >
               {/* Left — massive cinematic copy */}
               <div className="flex flex-col">
-                <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold mb-6 flex items-center gap-4">
-                  <div className="h-px w-12 bg-primary/70" />
-                  Newsletter
-                </span>
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary font-bold">
+                    Join The Circle
+                  </span>
+                  <div className="h-[1px] w-24 bg-white/10" />
+                </div>
                 
                 <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/45">GET</span>
-                  <span>UPDATES.</span>
+                  <span className="text-white/45">SECURE</span>
+                  <span>ACCESS.</span>
                 </h2>
                 
                 <p className="font-sans text-xl md:text-2xl text-white/78 leading-relaxed font-light mb-12 max-w-xl">
-                  Get first access to lineups, ticket windows, new radio drops, and Monolith updates without the generic blast-email feel.
+                  Get priority access to event windows, secret lineup drops, and the Monolith Radio archive. No generic blasts. Just the signals that matter.
                 </p>
 
-                <div className="grid gap-6 border-t border-white/10 pt-8">
+                <div className="grid gap-6 border-t border-white/5 pt-12">
                   {invitationNotes.map((item) => (
                     <div key={item.label} className="flex items-start gap-6 group">
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/10 bg-[#050505] transition-colors group-hover:border-primary">

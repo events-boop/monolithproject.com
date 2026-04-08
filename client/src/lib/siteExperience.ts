@@ -126,6 +126,23 @@ export function getSeriesLabel(series: ScheduledEvent["series"]) {
   }
 }
 
+/** Canonical series accent color used across the site. */
+export function getSeriesColor(series?: ScheduledEvent["series"]): string {
+  switch (series) {
+    case "chasing-sunsets":
+      return "#E8B86D";
+    case "untold-story":
+      return "#22D3EE";
+    default:
+      return "#E05A3A";
+  }
+}
+
+/** Return up to `limit` upcoming events, sorted chronologically. */
+export function getUpcomingEvents(limit = 2) {
+  return getScheduledEvents().slice(0, limit);
+}
+
 export function getEventEyebrow(event?: ScheduledEvent | null) {
   if (!event) return "Featured Experience";
 

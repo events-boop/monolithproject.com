@@ -66,7 +66,7 @@ export default function Ticker() {
                 </div>
               ) : item.inventory === "low" ? (
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[9px] uppercase tracking-widest animate-pulse">
+                  <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[9px] uppercase tracking-widest motion-safe:animate-pulse">
                     LAST TICKETS
                   </span>
                   <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">

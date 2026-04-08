@@ -2,11 +2,8 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
-import RevealText from "./RevealText";
 import KineticDecryption from "./KineticDecryption";
-import { getResponsiveImage } from "@/lib/responsiveImages";
-
-const lazareImage = getResponsiveImage("lazareCarbonCenter", "(min-width: 1024px) 44vw, 60vw");
+import { getPublicEvents } from "@/lib/siteData";
 
 const movementPaths = [
   {
@@ -36,6 +33,7 @@ const movementPaths = [
 ] as const;
 
 export default function MovementSection() {
+  const allEvents = getPublicEvents();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -108,19 +106,17 @@ export default function MovementSection() {
                
                <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
                  <p className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/45 mb-1">
-                   Artists scheduled for 2026:
+                   Artists on the schedule:
                  </p>
                  <div className="flex flex-wrap gap-x-6 gap-y-2">
-                    {[
-                      { name: "DERON B2B JUANY BRAVO", color: "text-[#22D3EE]" },
-                      { name: "LAZARE SABRY", color: "text-[#22D3EE]" },
-                      { name: "AUTOGRAF", color: "text-primary" },
-                      { name: "ERAN HERSH", color: "text-primary" }
-                    ].map((artist) => (
-                      <span key={artist.name} className={`font-heavy text-xl md:text-2xl uppercase tracking-tighter drop-shadow-sm ${artist.color}`}>
-                        {artist.name}
-                      </span>
-                    ))}
+                    {allEvents.slice(0, 4).map((event) => {
+                      const color = event.series === "untold-story" ? "text-[#22D3EE]" : "text-primary";
+                      return (
+                        <span key={event.id} className={`font-heavy text-xl md:text-2xl uppercase tracking-tighter drop-shadow-sm ${color}`}>
+                          {event.title}
+                        </span>
+                      );
+                    })}
                     <span className="font-heavy text-xl md:text-2xl uppercase tracking-tighter text-white/20">
                       + MORE TBA
                     </span>

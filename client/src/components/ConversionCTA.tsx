@@ -42,14 +42,12 @@ export default function ConversionCTA({
     fillout: "cta-fillout",
   };
 
-  const urgencyText = event?.status === 'on-sale' && isEventLowInventory(event)
-    ? "Final Tier — 90% Sold Out"
-    : event?.status === 'coming-soon'
-    ? "Join 12,000+ on the priority list"
+  const systemReport = event?.status === 'on-sale' && isEventLowInventory(event)
+    ? `[ CAPACITY // 94% EQUILIBRIUM ]`
     : null;
 
   const baseButton = (
-    <div className={`flex flex-col items-center gap-4 ${className}`}>
+    <div className={`flex flex-col items-center gap-0 ${className}`}>
       <a
         href={cta.href}
         target={cta.isExternal ? "_blank" : undefined}
@@ -62,6 +60,9 @@ export default function ConversionCTA({
           transition-all duration-500 rounded-none
           ${sizeClasses[size]} w-full sm:w-auto
           ${toolStyles[cta.tool]}
+          shadow-[0_20px_50px_rgba(0,0,0,0.15)]
+          hover:shadow-[0_25px_60px_rgba(0,0,0,0.25)]
+          active:scale-[0.98]
         `}
       >
         <span className="relative z-10 flex items-center gap-3">
@@ -71,15 +72,31 @@ export default function ConversionCTA({
         </span>
       </a>
 
-      {showUrgency && urgencyText && (
-        <motion.div 
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-white/40"
-        >
-          <Clock className="w-3 h-3 text-primary/60" />
-          {urgencyText}
-        </motion.div>
+      {showUrgency && systemReport && (
+        <div className="flex flex-col items-center w-full">
+           {/* Architectural Data Bridge */}
+           <motion.div 
+             initial={{ height: 0 }}
+             animate={{ height: size === 'sm' ? 12 : 16 }}
+             className="w-[1px] bg-white/10 group-hover:bg-primary/30 transition-colors"
+           />
+           
+           <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`
+              flex items-center gap-3 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.4em] 
+              px-4 py-1.5 border border-white/5 bg-white/[0.02]
+              text-primary shadow-[0_4px_12px_rgba(0,0,0,0.2)]
+            `}
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
+            </span>
+            {systemReport}
+          </motion.div>
+        </div>
       )}
     </div>
   );

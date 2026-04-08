@@ -142,12 +142,6 @@ export default function Home() {
           </div>
         </div>
 
-        <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="220px 0px">
-          <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
-            <NightInNumbers />
-          </Suspense>
-        </ViewportLazy>
-
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
           <SectionDivider id="showcase" number="06" label="Explore" glow="#D4A574" dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">

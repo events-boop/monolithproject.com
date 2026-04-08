@@ -146,7 +146,7 @@ export default function VisitorContextPanel() {
   }
 
   const content = segmentContent[visitorContext.segment];
-  const actions = content.actions(ticketUrl || "#", hasLiveTickets);
+  const actions = content.actions(ticketUrl || "/schedule", hasLiveTickets);
 
   return (
     <section className="relative z-10 px-6 py-6 md:py-8">

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { getExperienceEvent, getEventStartTimestamp } from "@/lib/siteExperience";
+import { getExperienceEvent, getEventStartTimestamp, getSeriesColor } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
 import { useCountdown } from "@/hooks/useCountdown";
@@ -27,9 +27,7 @@ export default function ConversionStrip() {
 
   if (!event) return null;
 
-  const isSunsets = event.series === "chasing-sunsets";
-  const themeColor = isSunsets ? "#E8B86D" : "#22D3EE";
-  const themeBg = isSunsets ? "bg-[#E8B86D]" : "bg-[#22D3EE]";
+  const themeColor = getSeriesColor(event.series) || "var(--primary)";
 
   return (
     <motion.div 
@@ -46,7 +44,7 @@ export default function ConversionStrip() {
           {/* LEFT: Signals & Headline */}
           <div className="flex flex-col gap-6 max-w-sm">
             <div className="flex flex-wrap gap-2">
-              <span className={`px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] text-black ${themeBg}`}>
+              <span className="px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] text-black" style={{ backgroundColor: themeColor }}>
                 {event.status === "on-sale" ? "Ticket Window" : "Next Event"}
               </span>
               <span className="px-2 py-1 rounded-none text-[11px] font-bold uppercase tracking-[0.2em] border border-white/20 text-white/60">
@@ -77,7 +75,7 @@ export default function ConversionStrip() {
           <ConversionCTA 
             event={event}
             size="lg"
-            showUrgency={false}
+            showUrgency={true}
           />
 
         </div>

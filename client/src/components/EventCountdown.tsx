@@ -93,9 +93,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
   if (!event) return null;
 
   const isSunsets = event.series === "chasing-sunsets";
-  const isUntold = event.series === "untold-story";
-  const accentBg = isSunsets ? "bg-[#E8B86D]" : isUntold ? "bg-[#22D3EE]" : "bg-primary";
-  const accentText = isSunsets ? "text-[#E8B86D]" : isUntold ? "text-[#22D3EE]" : "text-primary";
+  const seriesColor = isSunsets ? "#E8B86D" : event.series === "untold-story" ? "#22D3EE" : "#E05A3A";
   const [dateMonth, dateDay] = event.date.split(" ");
 
   return (
@@ -110,13 +108,13 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
           {/* Left: Event context */}
           <div className="flex flex-col gap-6 shrink-0">
             <div className="flex items-center gap-4">
-              <div className={`w-2 h-2 rounded-none animate-pulse ${accentBg}`} />
+              <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-white/40">
                 Next Event
               </span>
             </div>
             <div>
-              <p className={`font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] mb-4 drop-shadow-md ${accentText}`}>
+              <p className="font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] mb-4 drop-shadow-md" style={{ color: seriesColor }}>
                 {dateMonth} {dateDay}
               </p>
               <h3 className="font-heavy text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-white leading-none max-w-md drop-shadow-2xl">
@@ -131,7 +129,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               {/* SS-Tier Scarcity & Dynamic Pricing */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 {event.inventoryState === "low" && (
-                  <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest animate-pulse">
+                  <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
                     LAST TICKETS
                   </div>
                 )}
@@ -142,26 +140,11 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 )}
               </div>
 
-              {/* Scarcity signal */}
-              <div className="mt-10 flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">Capacity</span>
-                  <span className={`font-mono text-[11px] uppercase tracking-[0.3em] font-bold ${accentText}`}>73% Claimed</span>
-                </div>
-                <div className="w-full h-[4px] bg-white/5 overflow-hidden">
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                    className={`h-full origin-left ${accentBg}`}
-                    style={{ width: "73%" }}
-                  />
-                </div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-                  Limited entry · Chicago, IL
+              {event.location && (
+                <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+                  Limited entry · {event.location}
                 </p>
-              </div>
+              )}
             </div>
             {event.ticketUrl ? (
               <div className="flex flex-col gap-4">
@@ -188,9 +171,10 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
             ) : (
               <a
                 href="/newsletter"
-                className={`group inline-flex items-center justify-between gap-12 px-10 py-6 border ${isSunsets ? 'border-[#E8B86D] text-[#E8B86D]' : isUntold ? 'border-[#22D3EE] text-[#22D3EE]' : 'border-primary text-primary'} hover:bg-white hover:text-black transition-all duration-500 self-start relative overflow-hidden`}
+                className="group inline-flex items-center justify-between gap-12 px-10 py-6 border hover:bg-white hover:text-black transition-all duration-500 self-start relative overflow-hidden"
+                style={{ borderColor: seriesColor, color: seriesColor }}
               >
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${accentBg}`} />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
                 <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
                   Join The Waitlist
                 </span>
@@ -210,7 +194,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
       </div>
 
       {/* Bottom accent line */}
-      <div className={`absolute bottom-0 left-0 right-0 h-[2px] ${accentBg} opacity-20`} />
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] opacity-20" style={{ backgroundColor: seriesColor }} />
     </div>
   );
 }

@@ -258,7 +258,7 @@ export default function ScheduleSection() {
                       {/* Action Col & Exposed Details */}
                       <div className="md:col-span-3 flex flex-col md:flex-row justify-end items-start md:items-center gap-4 md:pr-4 w-full mt-4 md:mt-0">
                          <div onClick={(e) => e.stopPropagation()} className="w-full md:w-auto z-20">
-                           <ConversionCTA event={event} size="sm" showUrgency={false} className="w-full md:w-auto" />
+                           <ConversionCTA event={event} size="sm" showUrgency={true} className="w-full md:w-auto" />
                          </div>
                          <div className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-black/50 group-hover:text-black"}`}>
                             <span className="text-[9px] font-mono tracking-[0.2em] uppercase mb-1">Details</span>

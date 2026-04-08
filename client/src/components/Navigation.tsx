@@ -110,7 +110,6 @@ const mobilePrimaryItems = [
 
 export default function Navigation({ activeSection, variant, brand }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openDropdownLabel, setOpenDropdownLabel] = useState<string | null>(null);
   const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
   const mobileDialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -185,31 +184,18 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     return () => observer.disconnect();
   }, [isHome, location]);
 
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setOpenDropdownLabel(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  // Escape closes any open menus.
+  // Escape closes the mobile menu.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      setOpenDropdownLabel(null);
       setMobileMenuOpen(false);
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Close any open menus on navigation.
+  // Close mobile menu on navigation.
   useEffect(() => {
-    setOpenDropdownLabel(null);
     setMobileMenuOpen(false);
   }, [location]);
 
@@ -267,32 +253,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     if (href === "/story" && location === "/untold-story-deron-juany-bravo") return true;
     return false;
   };
-
-  const getDropdownParentClass = (isActive: boolean) => {
-    if (isLight) return "hover:text-clay text-stone";
-    if (resolvedBrand === "chasing-sunsets") {
-      return `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActive ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`;
-    }
-    return `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90"}`;
-  };
-
-  const getDropdownItemClass = (isActive: boolean) => {
-    if (isLight) return `hover:text-clay hover:bg-charcoal/5 ${isActive ? "text-clay" : "text-stone"}`;
-    if (resolvedBrand === "chasing-sunsets") {
-      return `hover:text-white hover:bg-white/5 ${isActive ? "text-white" : "text-white/80"}`;
-    }
-    return `hover:text-primary hover:bg-white/5 ${isActive ? "text-primary" : "text-white/80"}`;
-  };
-
-  const getTopLevelClass = (isActive: boolean) => {
-    if (isLight) return `hover:text-clay ${isActive ? "text-clay" : "text-stone"}`;
-    if (resolvedBrand === "chasing-sunsets") {
-      return `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActive ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`;
-    }
-    return `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`;
-  };
-
-  const getDropdownMenuId = (label: string) => `nav-menu-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   const renderNavLabel = (label: string, mobile = false) => {
     const accent =
