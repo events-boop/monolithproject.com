@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
@@ -7,6 +7,8 @@ import { getPublicEvents } from "@/lib/siteData";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
+import KineticDecryption from "./KineticDecryption";
+import { cn } from "@/lib/utils";
 
 // --- iCal Generator Helper ---
 function downloadICS(event: ScheduledEvent) {
@@ -85,8 +87,28 @@ export default function ScheduleSection() {
     ? upcomingEvents
     : upcomingEvents.filter(e => e.date.toUpperCase().startsWith(activeMonth));
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  const gridY = useTransform(scrollYProgress, [0, 1], ["0px", "50px"]);
+
   return (
-    <section id="schedule" className="relative py-24 md:py-40 bg-[#EAEAEA] overflow-hidden border-t border-black/10">
+    <section ref={sectionRef} id="schedule" className="relative py-24 md:py-40 bg-[#EAEAEA] overflow-hidden border-t border-black/10">
+      {/* 🏛️ ARCHITECTURAL GRID LAYER (PARALLAX ENABLED) */}
+      <motion.div 
+        style={{ y: gridY }}
+        className="absolute inset-0 pointer-events-none opacity-[0.05]"
+      >
+        <svg width="100%" height="100%">
+          <pattern id="blueprint-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#blueprint-grid)" />
+        </svg>
+      </motion.div>
+
       <div className="absolute inset-0 pointer-events-none opacity-40">
          <div className="absolute left-[5%] md:left-[8%] top-0 bottom-0 w-px bg-black/10" />
          <div className="absolute right-[5%] md:right-[8%] top-0 bottom-0 w-px bg-black/10" />
@@ -98,7 +120,7 @@ export default function ScheduleSection() {
           <div className="relative">
              <span className="absolute -top-8 left-1 md:-top-12 md:left-2 font-mono text-[9px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
              <h2 className="font-heavy text-[clamp(3.2rem,12vw,9.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
-               SCHEDULE
+               <KineticDecryption text="SCHEDULE" />
              </h2>
              <p className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-6 max-w-sm">
                Start with the next date. The series and the room will tell you the rest.
@@ -170,10 +192,16 @@ export default function ScheduleSection() {
                     <div className="py-8 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-6 md:items-center w-full text-left">
                       {/* Date Col */}
                       <div className="md:col-span-2 flex flex-col items-start gap-1 md:items-start md:gap-0 pl-0 md:pl-4">
-                        <span className="font-heavy text-3xl md:text-5xl text-black/80 group-hover:text-black transition-colors duration-500 whitespace-nowrap tracking-tighter">
+                        <span className={cn(
+                          "font-heavy text-3xl md:text-5xl transition-colors duration-500 whitespace-nowrap tracking-tighter",
+                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient" : "text-black/80 group-hover:text-black"
+                        )}>
                           {dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}
                         </span>
-                        <span className="font-mono text-[10px] text-black/50 md:mt-2 tracking-[0.1em] uppercase">
+                        <span className={cn(
+                          "font-mono text-[10px] md:mt-2 tracking-[0.1em] uppercase",
+                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "text-[#3366ff] opacity-100" : "text-black/50"
+                        )}>
                           {event.time.split("—")[0]}
                         </span>
                       </div>
@@ -182,20 +210,23 @@ export default function ScheduleSection() {
                       <div className="md:col-span-1 hidden md:flex flex-col items-center gap-4">
                         <div className={`w-10 h-10 rounded-full border border-black/10 flex items-center justify-center bg-white shadow-sm overflow-hidden relative group-hover:border-black/30 transition-colors duration-500`}>
                            <motion.div 
-                              className={`absolute inset-0 opacity-10 ${seriesAccent[event.series]}`}
+                              className={`absolute inset-0 opacity-10 ${(dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "bg-red-500" : seriesAccent[event.series]}`}
                               animate={{ opacity: [0.05, 0.15, 0.05] }}
                               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                            />
                           <div className="relative flex h-2 w-2">
-                            <span className={`absolute inline-flex h-full w-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full opacity-60 ${seriesAccent[event.series]}`} />
-                            <span className={`relative inline-flex rounded-full h-2 w-2 ${seriesAccent[event.series]}`} />
+                            <span className={`absolute inline-flex h-full w-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full opacity-60 ${(dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "bg-red-600" : seriesAccent[event.series]}`} />
+                            <span className={`relative inline-flex rounded-full h-2 w-2 ${(dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "bg-red-600" : seriesAccent[event.series]}`} />
                           </div>
                         </div>
                       </div>
 
                       {/* Title Col */}
                       <div className="md:col-span-4 flex flex-col gap-2 pl-0 md:pl-4">
-                        <h3 className="font-heavy text-[clamp(1.8rem,4vw,2.8rem)] uppercase leading-[0.9] text-black/80 group-hover:text-black transition-all duration-500 tracking-tight">
+                        <h3 className={cn(
+                          "font-heavy text-[clamp(1.8rem,4vw,2.8rem)] uppercase leading-[0.9] transition-all duration-500 tracking-tight",
+                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient" : "text-black/80 group-hover:text-black"
+                        )}>
                           {event.title}
                         </h3>
                         <div className="flex flex-wrap gap-2 md:mt-1">
@@ -217,7 +248,10 @@ export default function ScheduleSection() {
 
                       {/* Location Col */}
                       <div className="md:col-span-2 hidden md:flex flex-col">
-                        <span className="font-serif italic text-xl md:text-2xl leading-tight text-black/70 transition-colors duration-500 group-hover:text-black">{event.venue}</span>
+                        <span className={cn(
+                          "font-serif italic text-xl md:text-2xl leading-tight transition-colors duration-500",
+                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient !italic" : "text-black/70 group-hover:text-black"
+                        )}>{event.venue}</span>
                         <span className="text-[9px] text-black/40 font-mono mt-1 tracking-widest uppercase">{event.location}</span>
                       </div>
 

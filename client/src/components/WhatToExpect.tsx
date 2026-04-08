@@ -1,57 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
-
-// Web Audio Signal Engine
-const playSignal = (frequency: number) => {
-  if (typeof window === "undefined") return;
-  try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContextClass) return;
-    
-    const ctx = new AudioContextClass();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
-    
-    // Lo-fi texture: Noise burst
-    const bufferSize = ctx.sampleRate * 0.05;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-    
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-    
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.015, ctx.currentTime);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-    
-    // Sine beep
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(frequency, ctx.currentTime);
-    
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1000, ctx.currentTime);
-    
-    gain.gain.setValueAtTime(0.02, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-    
-    noise.connect(noiseGain);
-    noiseGain.connect(filter);
-    osc.connect(gain);
-    gain.connect(filter);
-    filter.connect(ctx.destination);
-    
-    noise.start();
-    osc.start();
-    osc.stop(ctx.currentTime + 0.15);
-    
-    // Auto-close context to save resources
-    setTimeout(() => ctx.close(), 200);
-  } catch (e) {
-    // Silent fail if audio is blocked or unsupported
-  }
-};
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const steps = [
   {
@@ -110,7 +58,7 @@ export default function WhatToExpect() {
           {steps.map((step, i) => (
             <motion.div
               key={step.number}
-              onMouseEnter={() => playSignal(120 + i * 40)}
+              onMouseEnter={() => signalChirp.hover()}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}

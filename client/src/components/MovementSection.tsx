@@ -1,8 +1,9 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import RevealText from "./RevealText";
+import KineticDecryption from "./KineticDecryption";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 
 const lazareImage = getResponsiveImage("lazareCarbonCenter", "(min-width: 1024px) 44vw, 60vw");
@@ -38,21 +39,41 @@ export default function MovementSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 0.15, 0.15, 0]);
+
   return (
     <section
       id="movement"
       ref={ref}
       className="relative py-24 md:py-40 bg-black overflow-hidden border-t border-white/10"
     >
+      {/* 🖼️ ARCHITECTURAL PARALLAX BACKDROP */}
+      <motion.div 
+        style={{ y: imageY, opacity: imageOpacity }}
+        className="absolute inset-x-0 -top-1/4 h-[150%] pointer-events-none z-0 overflow-hidden"
+      >
+        <img 
+          src="/images/lazare-carbon-center.jpg" 
+          className="w-full h-full object-cover grayscale opacity-60 mix-blend-overlay scale-110 blur-[2px]"
+          alt=""
+        />
+      </motion.div>
+
       {/* Sanjaya-style ambient glow & depth layers */}
-      <div className="absolute top-0 right-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-      <div className="absolute bottom-[-20%] left-[10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none mix-blend-screen" />
-      <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-0 right-[10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen opacity-50" />
+      <div className="absolute bottom-[-20%] left-[10%] w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none mix-blend-screen opacity-30" />
+      <div className="absolute inset-0 bg-noise opacity-[0.05] pointer-events-none" />
 
       {/* Background Grid Lines (Sanjaya structural aesthetic) */}
       <div className="absolute inset-0 pointer-events-none">
-         <div className="absolute left-[8%] md:left-[10%] top-0 bottom-0 w-px bg-white/5" />
-         <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/5" />
+         <div className="absolute left-[8%] md:left-[10%] top-0 bottom-0 w-px bg-white/10" />
+         <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/10" />
       </div>
 
       <div className="container layout-wide px-6 relative z-10">
@@ -72,7 +93,7 @@ export default function MovementSection() {
             
             <h2 className="font-heavy text-[clamp(4rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
               <span className="text-white/25">CHICAGO</span>
-              <span className="text-white">ROOTED</span>
+              <span className="text-white"><KineticDecryption text="ROOTED" /></span>
               <span className="text-primary mt-1">ROOMS.</span>
             </h2>
 

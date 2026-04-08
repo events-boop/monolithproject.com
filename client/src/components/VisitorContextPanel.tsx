@@ -194,6 +194,27 @@ export default function VisitorContextPanel() {
               const cardClasses =
                 "group relative block overflow-hidden rounded-none border border-white/8 bg-white/[0.04] p-6 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.08] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] backdrop-blur-xl";
 
+              const cardContent = (
+                <>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="ui-chip text-white/42">{action.note}</p>
+                      <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                        {action.label}
+                      </h3>
+                    </div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-none border border-primary/20 bg-primary/8 text-primary shadow-[0_0_20px_rgba(212,165,116,0.15)] group-hover:shadow-[0_0_30px_rgba(212,165,116,0.25)] transition-all">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-white/64">{action.description}</p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/72 transition-colors group-hover:text-white">
+                    Open
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </div>
+                </>
+              );
+
               return (
                 <motion.div
                   key={action.label}
@@ -203,47 +224,12 @@ export default function VisitorContextPanel() {
                   transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {action.external ? (
-                    <a
-                      href={action.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cardClasses}
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="ui-chip text-white/42">{action.note}</p>
-                          <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                            {action.label}
-                          </h3>
-                        </div>
-                        <div className="flex h-12 w-12 items-center justify-center rounded-none border border-primary/20 bg-primary/8 text-primary shadow-[0_0_20px_rgba(212,165,116,0.15)] group-hover:shadow-[0_0_30px_rgba(212,165,116,0.25)] transition-all">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                      </div>
-                      <p className="mt-4 text-sm leading-relaxed text-white/64">{action.description}</p>
-                      <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/72 transition-colors group-hover:text-white">
-                        Open
-                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </div>
+                    <a href={action.href} target="_blank" rel="noopener noreferrer" className={cardClasses}>
+                      {cardContent}
                     </a>
                   ) : (
                     <Link href={action.href} className={cardClasses}>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="ui-chip text-white/42">{action.note}</p>
-                          <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                            {action.label}
-                          </h3>
-                        </div>
-                        <div className="flex h-12 w-12 items-center justify-center rounded-none border border-primary/20 bg-primary/8 text-primary shadow-[0_0_20px_rgba(212,165,116,0.15)] group-hover:shadow-[0_0_30px_rgba(212,165,116,0.25)] transition-all">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                      </div>
-                      <p className="mt-4 text-sm leading-relaxed text-white/64">{action.description}</p>
-                      <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/72 transition-colors group-hover:text-white">
-                        Open
-                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </div>
+                      {cardContent}
                     </Link>
                   )}
                 </motion.div>

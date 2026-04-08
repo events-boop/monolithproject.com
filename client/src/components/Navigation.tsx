@@ -1,12 +1,11 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Ticket, ChevronDown, ArrowUpRight, Play, Mic2, Star, BookOpen, Clock, Lock, Zap } from "lucide-react";
+import { X, Ticket, ChevronDown, ArrowUpRight, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import KineticDecryption from "./KineticDecryption";
 import MagneticButton from "./MagneticButton";
-import CommunityDropdown from "./CommunityDropdown";
 import { getEventBannerPayload, isEventBannerVisible } from "@/lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
 import { getSceneForPath } from "@/lib/scenes";
@@ -60,31 +59,6 @@ interface NavigationProps {
   brand?: "monolith" | "chasing-sunsets" | "untold-story" | "radio";
 }
 
-const navItems: {
-  label: string;
-  href: string;
-  children?: { label: string; href: string }[];
-}[] = [
-    { label: "THE MONOLITH", href: "/about" },
-    { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
-    { label: "UNTOLD STORY", href: "/story" },
-    { label: "SCHEDULE", href: "/schedule" },
-    { label: "ARCHIVE", href: "/archive" },
-    { label: "JOURNAL", href: "/insights" },
-    {
-      label: "CONCIERGE",
-      href: "/partners",
-      children: [
-        { label: "VIP TABLES", href: "/vip" },
-        { label: "SPONSOR ACCESS", href: "/sponsors" },
-        { label: "PARTNERSHIPS", href: "/partners" },
-        { label: "ARTIST SUBMISSION", href: "/submit" },
-        { label: "PRESS & MEDIA", href: "/press" },
-      ],
-    },
-    { label: "CONTACT", href: "/contact" },
-  ];
-
 const mobilePrimaryItems = [
   {
     label: "THE MONOLITH",
@@ -96,57 +70,42 @@ const mobilePrimaryItems = [
     ]
   },
   {
-    label: "CHASING SUN(SETS)",
+    label: "SERIES",
     href: "/chasing-sunsets",
     subItems: [
-      { label: "ABOUT THE SERIES", href: "/chasing-sunsets" },
+      { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+      { label: "UNTOLD STORY", href: "/story" },
       { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
-      { label: "EVENT ARCHIVE", href: "/chasing-sunsets/season-1" }
+      { label: "ENTRY CHECKLIST", href: "/guide#entry" },
+      { label: "EVENT ARCHIVE", href: "/archive" },
     ]
   },
   {
-    label: "UNTOLD STORY",
-    href: "/story",
+    label: "EXPLORE",
+    href: "/schedule",
     subItems: [
-      { label: "THE VISION", href: "/story#vision" },
-      { label: "PRIVATE TABLES", href: "/vip" },
-      { label: "ENTRY CHECKLIST", href: "/guide#entry" }
-    ]
-  },
-  {
-    label: "CHASING SUN(SETS) RADIO",
-    href: "/radio",
-    subItems: [
-      { label: "LATEST SHOW", href: "/radio/ep-01-benchek" },
-      { label: "RADIO ARCHIVE", href: "/radio" },
-      { label: "SUBMIT YOUR MIX", href: "/submit" }
+      { label: "SEASON SCHEDULE", href: "/schedule" },
+      { label: "ARTISTS & LINEUP", href: "/lineup" },
+      { label: "EVENT ARCHIVE", href: "/archive" },
+      { label: "JOURNAL / NEWS", href: "/insights" },
+      { label: "RADIO SHOW", href: "/radio" },
+      { label: "NIGHT GUIDE", href: "/guide" },
     ]
   },
   {
     label: "CONCIERGE",
     href: "/partners",
     subItems: [
+      { label: "TICKETS", href: "/schedule" },
       { label: "VIP TABLE SERVICES", href: "/vip" },
-      { label: "BOOKING / HIRE", href: "/booking" },
       { label: "SPONSOR ACCESS", href: "/sponsors" },
       { label: "PARTNER WITH US", href: "/partners" },
-      { label: "ARTIST SUBMISSION", href: "/submit" },
+      { label: "BOOKING / HIRE", href: "/booking" },
       { label: "PRESS & MEDIA", href: "/press" },
+      { label: "ARTIST SUBMISSION", href: "/submit" },
+      { label: "CONTACT US", href: "/contact" },
     ]
   },
-  {
-    label: "DIRECTORY",
-    href: "/archive",
-    subItems: [
-      { label: "ARTISTS / LINEUP", href: "/lineup" },
-      { label: "SEASON SCHEDULE", href: "/schedule" },
-      { label: "EVENT ARCHIVE", href: "/archive" },
-      { label: "JOURNAL / NEWS", href: "/insights" },
-      { label: "NIGHT GUIDE", href: "/guide" },
-      { label: "CONTACT US", href: "/contact" },
-      { label: "PRIVACY & TERMS", href: "/privacy" },
-    ]
-  }
 ];
 
 export default function Navigation({ activeSection, variant, brand }: NavigationProps) {
@@ -194,12 +153,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     const sections = [
       { id: "series", number: "01", label: "SERIES" },
       { id: "season", number: "02", label: "SEASON" },
-      { id: "collective", number: "03", label: "PHILOSOPHY" },
-      { id: "roster", number: "04", label: "ROSTER" },
-      { id: "journal", number: "05", label: "ARTICLES" },
-      { id: "archive", number: "06", label: "ARCHIVE" },
-      { id: "mixes", number: "07", label: "RADIO SHOW" },
-      { id: "community", number: "08", label: "NEWSLETTER" },
+      { id: "expectations", number: "03", label: "EXPECTATIONS" },
+      { id: "campaigns", number: "04", label: "CAMPAIGNS" },
+      { id: "philosophy", number: "05", label: "PHILOSOPHY" },
+      { id: "showcase", number: "06", label: "EXPLORE" },
+      { id: "community", number: "07", label: "NEWSLETTER" },
     ];
 
     const observer = new IntersectionObserver(
@@ -338,15 +296,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
   const renderNavLabel = (label: string, mobile = false) => {
     const accent =
-      label === "CHASING SUN(SETS)"
+      label === "SERIES"
         ? "#C2703E"
-        : label === "RADIO"
-          ? "#F43F5E"
-          : label === "UNTOLD STORY"
+        : label === "EXPLORE"
+          ? "#22D3EE"
+          : label === "CONCIERGE"
             ? "#8B5CF6"
-            : label === "SCHEDULE"
-              ? "#22D3EE"
-              : null;
+            : null;
 
     if (!accent) return label;
 
@@ -598,7 +554,12 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
                         Section
                       </span>
-                      <span className="font-heavy text-xs min-[1250px]:text-sm text-white/80 tabular-nums">
+                      <span className={cn(
+                        "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
+                        resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
+                        resolvedBrand === "untold-story" ? "text-untold-cyan" :
+                        "text-white/80"
+                      )}>
                         {currentChapter.number} / {currentChapter.label}
                       </span>
                     </motion.div>
@@ -608,7 +569,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
               {/* CENTER: NAV ITEMS */}
               <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
-                {/* NAVIGATION MEGAMENU INJECTIONS */}
                 <NavigationMegamenu
                   label="THE MONOLITH"
                   href="/about"
@@ -635,73 +595,47 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 />
 
                 <NavigationMegamenu
-                  label="CHASING SUN(SETS)"
+                  label="SERIES"
                   href="/chasing-sunsets"
-                  isActive={location.includes("/chasing-sunsets")}
+                  isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "ABOUT THE SERIES", href: "/chasing-sunsets" },
+                      { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+                      { label: "UNTOLD STORY", href: "/story" },
                       { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
                       { label: "ENTRY CHECKLIST", href: "/guide#entry" },
-                      { label: "PRIVATE TABLES", href: "/vip" },
-                      { label: "EVENT ARCHIVE", href: "/chasing-sunsets/season-1" },
+                      { label: "EVENT ARCHIVE", href: "/archive" },
                     ],
                     feature: {
-                      title: "CHASING SUN(SETS)",
-                      subtitle: "Summer Series 2026",
-                      image: "/images/chasing-sunsets.jpg",
-                      href: "/chasing-sunsets",
-                      ctaText: "Discover Series",
-                      icon: "arrow",
-                      badge: "JULY 4"
-                    }
-                  }}
-                />
- 
-                <NavigationMegamenu
-                  label="UNTOLD STORY"
-                  href="/story"
-                  isActive={location.includes("/story")}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "ABOUT THE SERIES", href: "/story#vision" },
-                      { label: "WHAT TO EXPECT", href: "/story#expect" },
-                      { label: "ENTRY CHECKLIST", href: "/guide#entry" },
-                      { label: "PRIVATE TABLES", href: "/vip" },
-                      { label: "EVENT ARCHIVE", href: "/untold-story/season-1" },
-                    ],
-                    feature: {
-                      title: "DERON B2B JUANY BRAVO",
-                      subtitle: "Untold Story S3·E3",
-                      image: "/images/untold-story-juany-deron-v2.jpg",
-                      href: ticketHref || "/story",
-                      ctaText: ticketHref ? "Tickets Live" : "Join Waitlist",
-                      icon: "ticket",
-                      badge: "ON SALE NOW",
+                      title: ticketHref ? "DERON B2B JUANY BRAVO" : "CHASING SUN(SETS)",
+                      subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
+                      image: ticketHref ? "/images/untold-story-juany-deron-v2.jpg" : "/images/chasing-sunsets.jpg",
+                      href: ticketHref || "/chasing-sunsets",
+                      ctaText: ticketHref ? "Tickets Live" : "Discover Series",
+                      icon: ticketHref ? "ticket" : "arrow",
+                      badge: ticketHref ? "ON SALE" : "JULY 4",
                       external: !!ticketHref
                     }
                   }}
                 />
- 
+
                 <NavigationMegamenu
-                  label="CHASING SUN(SETS) RADIO"
-                  href="/radio"
-                  isActive={location.includes("/radio")}
+                  label="EXPLORE"
+                  href="/schedule"
+                  isActive={location === "/schedule" || location === "/lineup" || location === "/archive" || location.includes("/insights") || location.includes("/radio")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "LATEST SHOW", href: "/radio/ep-01-benchek", icon: "play" },
-                      { label: "EPISODE ARCHIVE", href: "/radio" },
-                      { label: "UNRELEASED IDS", href: "/radio" },
-                      { label: "SUBMIT YOUR MIX", href: "/submit" },
+                      { label: "SCHEDULE", href: "/schedule" },
+                      { label: "ARTISTS & LINEUP", href: "/lineup" },
+                      { label: "EVENT ARCHIVE", href: "/archive" },
+                      { label: "JOURNAL", href: "/insights" },
+                      { label: "RADIO SHOW", href: "/radio", icon: "play" },
                     ],
                     feature: {
                       title: "CHASING SUN(SETS) RADIO",
@@ -714,29 +648,32 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     }
                   }}
                 />
- 
+
                 <NavigationMegamenu
-                  label="THE COLLECTIVE"
-                  href="/lineup"
-                  isActive={location === "/lineup" || location === "/archive"}
+                  label="CONCIERGE"
+                  href="/partners"
+                  isActive={location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "RESIDENT ARTISTS", href: "/lineup#residents" },
-                      { label: "FULL LINEUP", href: "/lineup" },
-                      { label: "EVENT GALLERY", href: "/archive" },
-                      { label: "JOIN THE COLLECTIVE", href: "/submit" },
+                      { label: "TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
+                      { label: "VIP TABLES", href: "/vip" },
+                      { label: "SPONSOR ACCESS", href: "/sponsors" },
+                      { label: "PARTNERSHIPS", href: "/partners" },
+                      { label: "PRESS & MEDIA", href: "/press" },
+                      { label: "ARTIST SUBMISSION", href: "/submit" },
+                      { label: "CONTACT", href: "/contact" },
                     ],
                     feature: {
-                      title: "RESIDENT ARTISTS",
-                      subtitle: "Curating the Monolith Sound",
+                      title: "VIP & SPONSOR ACCESS",
+                      subtitle: "Elevated Experiences",
                       image: "/images/artists-collective.jpg",
-                      href: "/lineup",
-                      ctaText: "View Lineup",
+                      href: "/vip",
+                      ctaText: "Reserve Tables",
                       icon: "arrow",
-                      badge: "ARTISTS"
+                      badge: "VIP"
                     }
                   }}
                 />

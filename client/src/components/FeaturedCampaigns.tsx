@@ -76,8 +76,7 @@ export default function FeaturedCampaigns() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          <Link href="/story" asChild>
-            <a className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
+          <Link href="/story" className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#22D3EE]/50 transition-colors">
               <CampaignBackdrop
                 src={untoldStoryCampaignImage.src}
                 sources={untoldStoryCampaignImage.sources}
@@ -107,11 +106,9 @@ export default function FeaturedCampaigns() {
                     {untoldCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
-            </a>
           </Link>
 
-          <Link href="/chasing-sunsets" asChild>
-            <a className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
+          <Link href="/chasing-sunsets" className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] hover:border-[#E8B86D]/50 transition-colors">
               <CampaignBackdrop
                 src={chasingSunsetsCampaignImage.src}
                 sources={chasingSunsetsCampaignImage.sources}
@@ -141,7 +138,6 @@ export default function FeaturedCampaigns() {
                     {sunsetCta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </div>
               </div>
-            </a>
           </Link>
         </div>
 

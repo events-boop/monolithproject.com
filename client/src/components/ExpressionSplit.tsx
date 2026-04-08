@@ -89,7 +89,7 @@ export default function ExpressionSplit() {
   };
 
   return (
-    <section className="relative h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
+    <section className="relative min-h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
       <div className="flex flex-col lg:flex-row h-full w-full">
         {expressions.map((exp, index) => (
           <motion.div
@@ -100,7 +100,7 @@ export default function ExpressionSplit() {
               flex: hoveredId === exp.id ? 2 : hoveredId === null ? 1 : 0.8,
             }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative group h-[25vh] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0`}
+            className={`relative group min-h-[220px] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0`}
           >
             <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}
