@@ -133,8 +133,8 @@ export default function ScheduleSection() {
           <div className="col-span-2 pl-4">Date / Time</div>
           <div className="col-span-1 text-center">Status</div>
           <div className="col-span-4 pl-4">Event / Series</div>
-          <div className="col-span-3">Venue</div>
-          <div className="col-span-2 text-right pr-8">Action</div>
+          <div className="col-span-2">Venue</div>
+          <div className="col-span-3 text-right pr-8">Action</div>
         </div>
 
         {/* Polished Schedule List Component */}

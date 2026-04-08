@@ -65,50 +65,46 @@ export default function Home() {
         <HeroSection />
 
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" />
+          <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
               <ExpressionSplit />
             </Suspense>
           </ViewportLazy>
-
-          {/* Moved from the top */}
-          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
-            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
-              <FeaturedCampaigns />
-            </Suspense>
-          </ViewportLazy>
-
-          <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="260px 0px">
-            <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
-              <WhatToExpect />
-            </Suspense>
-          </ViewportLazy>
         </div>
 
-        <div className="bg-[#F8F8F8] transition-colors duration-500 border-y border-black/5">
+        <div className="bg-[#F8F8F8] transition-colors duration-500 border-y border-black/5 relative z-10">
           <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
             </Suspense>
           </ViewportLazy>
+        </div>
 
-          {/* Official Campaign Countdowns Stack - Now Inside Season Chapter */}
-          <ViewportLazy minHeightClassName="min-h-[640px]" rootMargin="240px 0px">
-            <Suspense fallback={<Skeleton className="h-[640px] w-full opacity-10" />}>
-              <div className="flex flex-col w-full pb-8">
-                <EventCountdown eventId="us-s3e3" />
-                <EventCountdown eventId="css-jul04" />
-              </div>
+        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
+          <SectionDivider id="what-to-expect" number="03" label="Expectations" glow="rgba(255,255,255,0.05)" />
+          <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="260px 0px">
+            <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
+              <WhatToExpect />
+            </Suspense>
+          </ViewportLazy>
+
+          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
+              <FeaturedCampaigns />
             </Suspense>
           </ViewportLazy>
         </div>
 
         <div className="bg-[#080808] border-y border-white/5 relative z-10 transition-colors duration-500 bg-[linear-gradient(to_bottom,#202020,#080808)]">
-          <SectionDivider id="collective" number="03" label="The Philosophy" glow="rgba(255,255,255,0.08)" labelOverride="font-mono text-[11px] md:text-sm uppercase tracking-[0.6em] text-white font-bold" />
+          <SectionDivider id="collective" number="04" label="The Philosophy" glow="rgba(255,255,255,0.08)" labelOverride="font-mono text-[11px] md:text-sm uppercase tracking-[0.6em] text-white font-bold" />
           <ViewportLazy minHeightClassName="min-h-[820px]" rootMargin="260px 0px">
             <Suspense fallback={<Skeleton className="h-[820px] w-full opacity-10" />}>
+              <div className="flex flex-col w-full pb-8">
+                <EventCountdown eventId="us-s3e3" />
+                <EventCountdown eventId="css-jul04" />
+              </div>
               <MovementSection />
             </Suspense>
           </ViewportLazy>
@@ -159,7 +155,7 @@ export default function Home() {
             <HomeShowcaseAccordion items={[
               {
                 id: "roster",
-                number: "04",
+                number: "05",
                 title: "Artists",
                 subtitle: "Roster · Guest Selectors",
                 previewImage: "/images/artists-collective.jpg",
@@ -171,7 +167,7 @@ export default function Home() {
               },
               {
                 id: "journal",
-                number: "05",
+                number: "06",
                 title: "Articles",
                 subtitle: "News · Notes · Context",
                 previewImage: "/images/editorial-bg.jpg",
@@ -183,7 +179,7 @@ export default function Home() {
               },
               {
                 id: "archive",
-                number: "06",
+                number: "07",
                 title: "Event Archive",
                 subtitle: "Gallery · Photos · Recaps",
                 previewImage: "/images/autograf-recap.jpg",
@@ -197,7 +193,7 @@ export default function Home() {
               },
               {
                 id: "mixes",
-                number: "07",
+                number: "08",
                 title: "Radio Show",
                 subtitle: "Chasing Sun(Sets) · Mixes & Replays",
                 previewImage: "/images/radio-show.jpg",
@@ -216,7 +212,7 @@ export default function Home() {
         </ViewportLazy>
 
         <div className="bg-[#0c0b0a] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="community" number="08" label="Newsletter" glow="#D4A574" />
+          <SectionDivider id="community" number="09" label="Newsletter" glow="#D4A574" />
           {funnelEvent ? (
             <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
               <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>

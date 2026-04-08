@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import RevealText from "./RevealText";
-import CircularOrbit from "./ui/CircularOrbit";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 
 const lazareImage = getResponsiveImage("lazareCarbonCenter", "(min-width: 1024px) 44vw, 60vw");

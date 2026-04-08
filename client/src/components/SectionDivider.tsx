@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef, useEffect, useMemo } from "react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import { cn } from "@/lib/utils";
 
 interface SectionDividerProps {
   id?: string;
@@ -9,9 +10,10 @@ interface SectionDividerProps {
   dark?: boolean;
   glow?: string;
   labelOverride?: string;
+  dense?: boolean;
 }
 
-export default function SectionDivider({ id, number, label, dark, glow, labelOverride }: SectionDividerProps) {
+export default function SectionDivider({ id, number, label, dark, glow, labelOverride, dense }: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -38,10 +40,9 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
     }
   }, [isInView]);
 
-  // 📡 AMBIENT DATA STREAM - Memoized to prevent re-generation on each scroll tick
-  const dataSegments = useMemo(() => 
-    Array.from({ length: 12 }).map(() => 
-      `0x${(Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase()} // NODE_${number}_DATA_SYNC_PROTOCOL_GHQ_ACCESS_GRANTED`
+  const dataSegments = useMemo(() =>
+    Array.from({ length: 12 }).map(() =>
+      `0x${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, "0").toUpperCase()}`
     ), [number]);
 
   return (
@@ -65,8 +66,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
         </span>
       </motion.div>
 
-      {/* 📡 AMBIENT DATA STREAM */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[9px] truncate whitespace-nowrap overflow-hidden select-none">
+      <div aria-hidden="true" className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[9px] truncate whitespace-nowrap overflow-hidden select-none">
           {dataSegments.map((segment, i) => (
              <div key={i} className="flex gap-12 mb-1 animate-pulse" style={{ animationDelay: `${i * 0.4}s` }}>
                 {segment}
@@ -97,7 +97,10 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
       />
 
       <div className="container layout-wide px-6 relative z-10 bg-background/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between py-6 md:py-8 lg:py-10">
+        <div className={cn(
+          "flex items-center justify-between transition-all duration-300",
+          dense ? "py-4 md:py-6 lg:py-7" : "py-6 md:py-8 lg:py-10"
+        )}>
           {/* Left: Label */}
           <div className="flex items-center gap-6">
             <span className={labelOverride || `font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] ${labelColor} group-hover:text-primary transition-colors duration-500`}>

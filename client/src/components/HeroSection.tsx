@@ -1,10 +1,10 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, AudioLines, Sun, Ticket, Lock, Zap } from "lucide-react";
+import { ArrowRight, AudioLines, Sun, Ticket, Lock } from "lucide-react";
 import { useEffect, useState, memo } from "react";
+import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { BorderBeam } from "./ui/BorderBeam";
 import JsonLd from "@/components/JsonLd";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -12,6 +12,7 @@ import KineticDecryption from "./KineticDecryption";
 import WordScrubReveal from "./ui/WordScrubReveal";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
+import { cn } from "@/lib/utils";
 import {
   getEventEyebrow,
   getEventStartTimestamp,
@@ -24,7 +25,6 @@ import { getEventCta, getEventDetailsHref } from "@/lib/cta";
 
 const heroPosterImage = getResponsiveImage("chasingSunsets");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
-const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 
 const HERO_SLIDES: Slide[] = [
   {
@@ -52,9 +52,9 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: heroSunsetsImage.src,
-    sources: heroSunsetsImage.sources,
-    sizes: heroSunsetsImage.sizes,
+    src: heroPosterImage.src,
+    sources: heroPosterImage.sources,
+    sizes: heroPosterImage.sizes,
     alt: "Chasing Sun(Sets)",
     caption: "CHASING SUN(SETS)",
   },
@@ -94,37 +94,8 @@ const COLLECTIVE_PATHS = [
   },
 ] as const;
 
-const HERO_SUPPORT_LINES = [
-  "Music nights",
-  "built with taste",
-  "and rooms worth returning to.",
-] as const;
-
-const HERO_PROOF_CHIPS = ["Chicago-rooted", "Music-first", "Room-led"] as const;
-
 const HERO_SUBHEAD =
   "Recurring music experiences, radio, and archive from Chicago.";
-
-function useCountdown(target: number) {
-  const [now, setNow] = useState(Date.now());
-
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const diff = Math.max(0, target - now);
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  return { days, hours, minutes, seconds };
-}
-
-function pad(n: number) {
-  return String(n).padStart(2, "0");
-}
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
@@ -146,7 +117,7 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
       ].map((unit) => (
         <div key={unit.label} className="flex flex-col items-center">
           <span className={`font-display text-4xl md:text-5xl font-[900] tracking-tighter tabular-nums ${unit.highlight ? "text-primary" : "text-white/90"}`}>
-            {pad(unit.value)}
+            {padCountdown(unit.value)}
           </span>
           <span className={`mt-1 font-mono text-[10px] font-bold tracking-[0.3em] ${unit.highlight ? "text-primary/80" : "text-white/60"}`}>
             {unit.label}
@@ -157,32 +128,23 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
   );
 });
 
-function useIsExpired(target: number) {
-  const [expired, setExpired] = useState(Date.now() >= target);
-
-  useEffect(() => {
-    if (expired) return;
-    const remaining = target - Date.now();
-    if (remaining <= 0) {
-      setExpired(true);
-      return;
-    }
-    const id = setTimeout(() => setExpired(true), remaining);
-    return () => clearTimeout(id);
-  }, [target, expired]);
-
-  return expired;
-}
-
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
   const targetDate = getEventStartTimestamp(featuredEvent);
   const hasLiveTickets = isTicketOnSale(featuredEvent);
-  const isExpired = useIsExpired(targetDate ?? 0);
+  const { isExpired } = useCountdown(targetDate);
   const reduceMotion = useReducedMotion();
   const headline = featuredEvent?.headline || featuredEvent?.title || "The Monolith Project";
   const eyebrow = getEventEyebrow(featuredEvent);
   const venueLabel = getEventVenueLabel(featuredEvent);
+
+  const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
+  const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
+
+  useEffect(() => {
+    // Keep it as MONOLITH as requested, but allow for programmatic changes later
+    setHeadlineCycle("MONOLITH");
+  }, []);
 
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
   const { scrollY } = useScroll();
@@ -199,19 +161,7 @@ export default function HeroSection() {
     <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden bg-black">
       {structuredData}
 
-      {/* 🌊 NEURAL DRIFT BACKGROUND (Absolute Zero) */}
-      <style>{`
-        @keyframes neural-drift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .neural-drift-gradient {
-          background: linear-gradient(-45deg, rgba(0,0,0,0), rgba(224,90,58,0.02), rgba(0,0,0,0), rgba(34,211,238,0.02));
-          background-size: 400% 400%;
-          animation: neural-drift 15s ease infinite;
-        }
-      `}</style>
+      {/* Neural Drift Background */}
       <div className="absolute inset-0 z-[1] neural-drift-gradient pointer-events-none" />
 
       {/* Cinematic Background Layer */}
@@ -234,7 +184,7 @@ export default function HeroSection() {
           className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
         />
       </div>
-
+ 
       {/* Main Impact Visuals (Center Focused) */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center h-full pt-[22vh] lg:pt-0 px-6 text-center w-full pointer-events-none">
         
@@ -293,8 +243,17 @@ export default function HeroSection() {
 
             <motion.div initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
               <div className="relative">
-                <motion.h1 className="font-heavy text-[clamp(3rem,14vw,14rem)] tracking-[-0.03em] leading-[0.85] md:leading-[0.8] text-white uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto">
-                  <KineticDecryption text="MONOLITH" />
+                <motion.h1 
+                  key={headlineCycle}
+                  initial={{ opacity: 0.5, letterSpacing: "0.2em" }}
+                  animate={{ opacity: 1, letterSpacing: "-0.03em" }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className={cn(
+                    "font-heavy text-[clamp(2.5rem,15vw,14rem)] leading-[0.8] uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto",
+                    headlineCycle === "JULY 4TH" ? "july-4th-gradient" : "text-white"
+                  )}
+                >
+                  <KineticDecryption text={headlineCycle} />
                 </motion.h1>
               </div>
               <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
@@ -311,66 +270,95 @@ export default function HeroSection() {
           className="mt-16 flex flex-col items-center w-full px-4"
         >
           {!featuredEvent?.image && (
-            <>
-              <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto mb-10 text-center px-4">
-                <WordScrubReveal text={HERO_SUBHEAD} />
-              </div>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto w-full">
-                <MagneticButton strength={typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : 0.4}>
-                  <a href={cta.href} target={cta.isExternal ? "_blank" : undefined} rel={cta.isExternal ? "noopener noreferrer" : undefined} data-cursor-magnetic data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"} className={`group relative flex items-center justify-center gap-4 px-6 py-3.5 md:px-10 md:py-5 text-[11px] sm:text-[13px] md:text-[14px] transition-all duration-500 w-full sm:w-auto rounded-none ${cta.tool === 'posh' ? 'cta-posh' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}`}>
-                    <span className="relative z-10 flex items-center gap-3">
-                      {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : cta.tool === 'laylo' ? <Lock className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
-                      {cta.label}
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </a>
-                </MagneticButton>
-                <MagneticButton strength={0.25}>
-                  <Link href={secondaryCtaHref} className="cta-ghost group relative flex items-center justify-center gap-3 px-8 py-4 transition-all duration-500 w-full sm:w-auto">
-                    <span className="relative z-10 flex items-center gap-2">
-                      {secondaryCtaLabel}
-                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </Link>
-                </MagneticButton>
-              </div>
-            </>
+            <div className="text-[11px] md:text-base uppercase tracking-[0.22em] text-white/60 leading-relaxed font-mono max-w-2xl mx-auto text-center px-4">
+              <WordScrubReveal text={HERO_SUBHEAD} />
+            </div>
           )}
         </motion.div>
       </div>
 
-      {/* Subtle Bottom Signal */}
-      <div className="absolute inset-x-0 bottom-12 z-40 px-6 pointer-events-none">
-        <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-end gap-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.2 }}
-            className="hidden md:flex gap-6"
-          >
-            {COLLECTIVE_PATHS.map((path) => (
-              <Link key={path.title} href={path.href} className="group pointer-events-auto">
-                <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors">
-                  {path.title}
-                </span>
-              </Link>
-            ))}
-          </motion.div>
+      {/* BOTTOM BANNER */}
+      <motion.div
+        initial={{ y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-0 left-0 w-full z-40 bg-black/50 backdrop-blur-2xl border-t border-white/8 hidden md:flex"
+      >
+        <div className="container mx-auto max-w-screen-2xl px-8 lg:px-12 py-4 flex items-center justify-between gap-8 pointer-events-auto">
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.4 }}
-            className="hidden md:block pointer-events-auto"
-          >
-            {!isExpired && targetDate ? (
-              <div className="flex items-baseline gap-4">
-                <span className="font-mono text-[8px] uppercase tracking-[0.4em] text-white/20">Countdown:</span>
-                <CountdownDisplay target={targetDate} />
+          {/* LEFT: Event identity */}
+          <div className="flex items-center gap-6 min-w-0">
+            <div className="w-[2px] h-10 bg-primary/50 shrink-0" />
+            <div className="flex flex-col gap-1 min-w-0">
+              <div className="flex items-center gap-3">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shrink-0" />
+                <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
+                  {featuredEvent?.date ?? "Coming Soon"}
+                </span>
               </div>
-            ) : null}
-          </motion.div>
+              <h3 className={cn(
+                "font-display text-lg lg:text-2xl font-[1000] uppercase tracking-tight leading-none truncate",
+                isJuly4thEvent ? "july-4th-gradient" : "text-white"
+              )}>
+                {headline}
+              </h3>
+              <span className="font-mono text-[10px] tracking-[0.25em] text-white/30 uppercase truncate">
+                {eyebrow} {featuredEvent?.venue ? `@${featuredEvent.venue}` : ""}
+              </span>
+            </div>
+          </div>
+
+          {/* CENTER: Countdown (desktop only) */}
+          {targetDate && !isExpired && (
+            <div className="hidden lg:flex items-center gap-6 shrink-0">
+              <div className="h-8 w-px bg-white/10" />
+              <CountdownDisplay target={targetDate} />
+              <div className="h-8 w-px bg-white/10" />
+            </div>
+          )}
+
+          {/* RIGHT: CTA buttons */}
+          <div className="flex items-center gap-3 shrink-0">
+            <MagneticButton strength={0.3}>
+              <a
+                href={cta.href}
+                target={cta.isExternal ? "_blank" : undefined}
+                rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                className={cn(
+                  "group flex items-center gap-2.5 px-6 py-3 text-[11px] font-black tracking-[0.2em] uppercase transition-all duration-300",
+                  cta.tool === 'laylo'
+                    ? "bg-white text-black hover:bg-white/90"
+                    : "bg-primary text-white hover:bg-white hover:text-black"
+                )}
+              >
+                {cta.tool === 'posh' ? <Ticket className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                {cta.label}
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </MagneticButton>
+            <MagneticButton strength={0.2}>
+              <Link
+                href={secondaryCtaHref}
+                className="group flex items-center gap-2.5 px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase border border-white/12 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300"
+              >
+                {secondaryCtaLabel}
+                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </MagneticButton>
+          </div>
         </div>
+      </motion.div>
+
+      {/* MOBILE HUD INTERFACE */}
+      <div className="md:hidden absolute bottom-0 left-0 w-full p-4 z-40 bg-gradient-to-t from-black to-transparent pointer-events-none">
+         <div className="flex flex-col gap-3 pointer-events-auto">
+            <a href={cta.href} className={cn("w-full py-4 text-center text-[10px] font-black tracking-[0.3em] uppercase transition-all", cta.tool === 'laylo' ? "bg-[#e4e4e7] text-black" : "bg-primary text-white")}>
+               {cta.label}
+            </a>
+            <Link href={secondaryCtaHref} className="w-full py-4 text-center text-[10px] font-bold tracking-[0.3em] uppercase border border-white/10 bg-black/60 text-white backdrop-blur-md">
+               {secondaryCtaLabel}
+            </Link>
+         </div>
       </div>
     </section>
   );

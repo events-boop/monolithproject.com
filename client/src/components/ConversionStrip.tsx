@@ -1,33 +1,8 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
-import { getExperienceEvent, isTicketOnSale } from "@/lib/siteExperience";
+import { motion } from "framer-motion";
+import { getExperienceEvent, getEventStartTimestamp } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
-
-function getTimeLeft(target: Date) {
-  const diff = target.getTime() - Date.now();
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff % 86400000) / 3600000),
-    minutes: Math.floor((diff % 3600000) / 60000),
-    seconds: Math.floor((diff % 60000) / 1000),
-  };
-}
-
-function parseEventDate(dateStr: string): Date {
-  const months: Record<string, number> = {
-    JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
-    JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11
-  };
-  const [monthName, day] = dateStr.split(" ");
-  const month = months[monthName?.toUpperCase()] ?? 0;
-  const year = new Date().getFullYear();
-  const d = new Date(year, month, parseInt(day) || 1, 20, 0, 0);
-  if (d < new Date()) d.setFullYear(year + 1);
-  return d;
-}
+import { useCountdown } from "@/hooks/useCountdown";
 
 function HUDDigit({ value, label }: { value: number; label: string }) {
   return (
@@ -47,18 +22,10 @@ function HUDDigit({ value, label }: { value: number; label: string }) {
 export default function ConversionStrip() {
   const event = getExperienceEvent("ticket");
   const cta = getEventCta(event);
-  const [timeLeft, setTimeLeft] = useState(() => 
-    event ? getTimeLeft(parseEventDate(event.date)) : null
-  );
+  const targetDate = getEventStartTimestamp(event);
+  const timeLeft = useCountdown(targetDate);
 
-  useEffect(() => {
-    if (!event) return;
-    const target = parseEventDate(event.date);
-    const interval = setInterval(() => setTimeLeft(getTimeLeft(target)), 1000);
-    return () => clearInterval(interval);
-  }, [event]);
-
-  if (!event || !timeLeft) return null;
+  if (!event) return null;
 
   const isSunsets = event.series === "chasing-sunsets";
   const themeColor = isSunsets ? "#E8B86D" : "#22D3EE";
