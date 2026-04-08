@@ -15,7 +15,7 @@ const chapters = [
     description:
       "A warmer Monolith expression built for rooftops, open-air settings, and the slow shift from daylight into dusk. The music stays rhythmic, the room stays social, and the atmosphere opens up before the night fully lands.",
     moment: "Afro House · Organic House · Global Rhythm",
-    image: "/images/chasing-sunsets.jpg",
+    image: "/images/chasing-sunsets-premium.png",
     icon: Sun,
     accent: "from-clay/20 to-clay/5",
     titleColor: "text-clay",
@@ -31,7 +31,7 @@ const chapters = [
     description:
       "The more intimate Monolith expression. A closer room, deeper pacing, and a tighter connection between artist and crowd. Less spectacle, more tension, more focus, and a stronger sense of where the night is going.",
     moment: "Deeper House · Tension · Late-Night Energy",
-    image: "/images/untold-story.jpg",
+    image: "/images/untold-story-moody.png",
     icon: null,
     accent: "from-primary/20 to-primary/5",
     titleColor: "accent-story",

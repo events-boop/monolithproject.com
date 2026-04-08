@@ -24,19 +24,19 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
   artistsCollective: {
     baseName: "artists-collective",
     sizes: "100vw",
-    src: "/images/artists-collective.jpg",
+    src: "/images/industrial-roster.png",
     widths: [640, 960, 1280, 1600],
   },
   chasingSunsets: {
     baseName: "chasing-sunsets",
     sizes: "100vw",
-    src: "/images/chasing-sunsets.jpg",
+    src: "/images/chasing-sunsets-premium.png",
     widths: [640, 960, 1280, 1600],
   },
   heroMonolith: {
-    baseName: "hero-monolith",
+    baseName: "hero-monolith-modern",
     sizes: "100vw",
-    src: "/images/hero-monolith.jpg",
+    src: "/images/hero-monolith-modern.png",
     widths: [640, 960, 1280, 1600],
   },
   lazareCarbonCenter: {
@@ -54,7 +54,7 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
   untoldStoryPoster: {
     baseName: "untold-story",
     sizes: "(min-width: 1280px) 960px, (min-width: 768px) 80vw, 100vw",
-    src: "/images/untold-story.jpg",
+    src: "/images/untold-story-moody.png",
     widths: [640, 960, 1280, 1600],
   },
 };

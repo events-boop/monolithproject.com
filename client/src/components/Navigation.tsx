@@ -428,23 +428,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     aria-label="Go to homepage"
                     className="flex items-center gap-4 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70 pointer-events-auto"
                   >
-                    {/* The Monolith Pillar Signal */}
-                    <div className="relative flex items-end justify-center w-5 h-6">
-                      <div className={`w-[2px] h-full ${isLight ? "bg-stone/20" : "bg-white/10"} absolute bottom-0`} />
-                      <div
-                        className={`w-[4px] h-[70%] relative z-10 rounded-t-[1px] group-hover:scale-y-110 transition-transform duration-500 ${resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold" :
-                          resolvedBrand === "untold-story" ? "bg-untold-cyan" :
-                            isLight ? "bg-clay" : "bg-primary"
-                          }`}
-                      />
-                      <div
-                        className={`absolute -bottom-1 w-4 h-[1px] blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${resolvedBrand === "chasing-sunsets" ? "bg-sunsets-gold/40" :
-                          resolvedBrand === "untold-story" ? "bg-untold-cyan/40" :
-                            isLight ? "bg-clay/40" : "bg-primary/40"
-                          }`}
-                      />
-                    </div>
-
                     <span className={`flex items-center gap-3 text-[clamp(1.1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
                         resolvedBrand === "radio" ? "font-radio text-rose-500" :
@@ -466,13 +449,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                                   "font-heavy text-lg md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
                                   isLight ? "text-black" : "text-white"
                                 )}>
-                                  MONOLITH
+                                  <KineticDecryption text="MONOLITH" />
                                 </span>
                                 <span className={cn(
                                   "font-monolith text-[9px] md:text-[10px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
-                                  PROJECT
+                                  <KineticDecryption text="PROJECT" />
                                 </span>
                               </div>
                             )}
@@ -489,28 +472,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       exit={{ opacity: 0, x: -10 }}
                       className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
                     >
-                      <Link
-                        href="/"
-                        className="flex flex-col items-start gap-0.5 group pointer-events-auto"
-                        onClick={() => {
-                          signalChirp.click();
-                          setMobileMenuOpen(false);
-                        }}
-                        onMouseEnter={() => signalChirp.hover()}
-                      >
-                        <span className={cn(
-                          "font-heavy text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
-                          isLight ? "text-black" : "text-white"
-                        )}>
-                          <KineticDecryption text="MONOLITH" />
-                        </span>
-                        <span className={cn(
-                          "font-monolith text-[10px] md:text-[11px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
-                          isLight ? "text-black/40" : "text-white/40"
-                        )}>
-                          <KineticDecryption text="PROJECT" />
-                        </span>
-                      </Link>
                       <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
                         Section
                       </span>
@@ -572,7 +533,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: ticketHref ? "DERON B2B JUANY BRAVO" : "CHASING SUN(SETS)",
                       subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
-                      image: ticketHref ? "/images/untold-story-juany-deron-v2.jpg" : "/images/chasing-sunsets.jpg",
+                      image: ticketHref ? "/images/untold-story-juany-deron-v2.jpg" : "/images/chasing-sunsets-premium.png",
                       href: ticketHref || "/chasing-sunsets",
                       ctaText: ticketHref ? "Tickets Live" : "Discover Series",
                       icon: ticketHref ? "ticket" : "arrow",
@@ -600,7 +561,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "CHASING SUN(SETS) RADIO",
                       subtitle: "Benchek Live from Monolith",
-                      image: "/images/radio-show.jpg",
+                      image: "/images/radio-show-gear.png",
                       href: "/radio/ep-01-benchek",
                       ctaText: "Listen Now",
                       icon: "play",
@@ -629,7 +590,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "VIP & SPONSOR ACCESS",
                       subtitle: "Elevated Experiences",
-                      image: "/images/artists-collective.jpg",
+                      image: "/images/industrial-roster.png",
                       href: "/vip",
                       ctaText: "Reserve Tables",
                       icon: "arrow",

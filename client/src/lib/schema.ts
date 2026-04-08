@@ -221,7 +221,7 @@ export function buildUntoldStoryEventSchema(pagePath: string) {
     startDate: "2026-05-16T21:00:00-05:00",
     endDate: "2026-05-17T03:00:00-05:00",
     image: [
-      "/images/untold-story.jpg",
+      "/images/untold-story-moody.png",
       "/images/artist-lazare.webp",
     ],
     performer: ["Eran Hersh"],
@@ -291,7 +291,7 @@ export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: strin
       event.description || event.experienceIntro || `The Monolith Project presents ${event.title}`,
     startDate,
     endDate,
-    image: event.image ? [event.image] : ["/images/chasing-sunsets.jpg"],
+    image: event.image ? [event.image] : ["/images/chasing-sunsets-premium.png"],
     performer: event.lineup
       ? event.lineup.split("·").map((segment) => segment.trim())
       : [event.title],

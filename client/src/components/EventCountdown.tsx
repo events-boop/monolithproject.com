@@ -75,13 +75,13 @@ function LiveClock({ targetDate }: { targetDate: string }) {
   if (!timeLeft) return null;
 
   return (
-    <div className="flex items-end gap-2 md:gap-8">
+    <div className="flex items-end gap-2 md:gap-8" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
       <Digit value={timeLeft.days} label="Days" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
       <Digit value={timeLeft.hours} label="Hours" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
       <Digit value={timeLeft.minutes} label="Min" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none">:</div>
+      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
       <Digit value={timeLeft.seconds} label="Sec" />
     </div>
   );

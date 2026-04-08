@@ -23,16 +23,17 @@ import {
 import { getEventCta, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
 
-const heroPosterImage = getResponsiveImage("chasingSunsets");
+const heroPosterImage = getResponsiveImage("heroMonolith");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
+const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 
 const HERO_SLIDES: Slide[] = [
   {
-    type: "video",
-    src: "/videos/hero-video-1.mp4",
-    poster: heroPosterImage.src,
-    posterSources: heroPosterImage.sources,
-    posterSizes: heroPosterImage.sizes,
+    type: "image",
+    src: heroPosterImage.src,
+    sources: heroPosterImage.sources,
+    sizes: heroPosterImage.sizes,
+    alt: "The Monolith Project Modern Skyline",
     caption: "THE MONOLITH PROJECT (LIVE)",
   },
   {
@@ -52,9 +53,9 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: heroPosterImage.src,
-    sources: heroPosterImage.sources,
-    sizes: heroPosterImage.sizes,
+    src: heroSunsetsImage.src,
+    sources: heroSunsetsImage.sources,
+    sizes: heroSunsetsImage.sizes,
     alt: "Chasing Sun(Sets)",
     caption: "CHASING SUN(SETS)",
   },

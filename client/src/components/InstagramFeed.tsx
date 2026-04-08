@@ -48,7 +48,7 @@ const MOCK_POSTS: InstagramPost[] = [
     {
         id: "mock-3",
         media_type: "IMAGE",
-        media_url: "/images/chasing-sunsets.jpg",
+        media_url: "/images/chasing-sunsets-premium.png",
         permalink: INSTAGRAM_SUNSETS,
         caption: "Chasing Sun(Sets) returns soon. Are you ready?",
         timestamp: new Date().toISOString(),

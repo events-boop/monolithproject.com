@@ -57,7 +57,7 @@ export default function MovementSection() {
         className="absolute inset-x-0 -top-1/4 h-[150%] pointer-events-none z-0 overflow-hidden"
       >
         <img 
-          src="/images/lazare-carbon-center.jpg" 
+          src="/images/movement-industrial-bg.png" 
           className="w-full h-full object-cover grayscale opacity-60 mix-blend-overlay scale-110 blur-[2px]"
           alt=""
         />

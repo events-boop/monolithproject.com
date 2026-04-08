@@ -37,13 +37,13 @@ const getTierIcon = (iconName: string) => {
 };
 
 const eventVisuals = {
-  poster: "/images/untold-story.jpg",
+  poster: "/images/untold-story-moody.png",
 };
 
 const lineupVisuals = [
   { name: "Eran Hersh", role: "Chicago debut / Headliner", image: "/images/artist-lazare.webp" },
   { name: "Hashtom", role: "Support", image: "/images/untold-story-hero-post1.webp" },
-  { name: "Local Support TBA", role: "Support", image: "/images/untold-story.jpg" },
+  { name: "Local Support TBA", role: "Support", image: "/images/untold-story-moody.png" },
 ];
 
 const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");

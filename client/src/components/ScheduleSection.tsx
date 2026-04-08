@@ -66,7 +66,7 @@ const seriesLabels: Record<string, string> = {
 };
 
 const seriesDefaultImage: Record<string, string> = {
-  "chasing-sunsets": "/images/chasing-sunsets.jpg",
+  "chasing-sunsets": "/images/chasing-sunsets-premium.png",
   "untold-story": "/images/untold-story-juany-deron-v2.jpg",
   "monolith-project": "/images/artist-autograf.webp",
 };

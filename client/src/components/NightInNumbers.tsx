@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
-const stats = [
+const stats: { number: number; label: string; sublabel: string; suffix?: string }[] = [
   { number: 10, label: "Thousand+ People", sublabel: "And Growing", suffix: "K" },
   { number: 2, label: "Annual July 4th", sublabel: "Chicago Tradition" },
   { number: 22, label: "Artists Hosted", sublabel: "Across All Series" },
@@ -57,7 +57,7 @@ export default function NightInNumbers() {
 
             <div className="relative z-10">
               <div className="font-heavy text-[clamp(5rem,10vw,10rem)] leading-none tracking-tighter text-white group-hover:text-black transition-colors duration-500 tabular-nums">
-                <CountUp target={stat.number} inView={isInView} delay={i * 120} />
+                <CountUp target={stat.number} inView={isInView} delay={i * 120} suffix={stat.suffix} />
               </div>
             </div>
 

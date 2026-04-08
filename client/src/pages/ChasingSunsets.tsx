@@ -94,7 +94,7 @@ export default function ChasingSunsets() {
       <SEO
         title="Chasing Sun(Sets)"
         description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
-        image="/images/chasing-sunsets.jpg"
+        image="/images/chasing-sunsets-premium.png"
       />
       <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1" />
       <Navigation variant="dark" brand="chasing-sunsets" />
