@@ -4,15 +4,17 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
-import { ScheduledEvent } from "@/data/events";
+import { ScheduledEvent } from "@/shared/events/types";
 import ConversionCTA from "@/components/ConversionCTA";
-
-const heroSlides = [
-  "/images/untold-story-juany-deron.webp",
-  "/images/untold-story-hero-post1.webp"
-];
+import { getResponsiveImage } from "../../lib/responsiveImages";
 
 export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
+  const heroSlides = [
+    getResponsiveImage("eranHershPortraitReal"),
+    getResponsiveImage("eranHershInternational"),
+    getResponsiveImage("untoldStoryHero"),
+  ];
+  
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
 
   useEffect(() => {
@@ -39,13 +41,18 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <img
-              src={heroSlides[heroSlideIndex]}
-              alt="Untold Story Atmosphere"
-              fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
-              loading={heroSlideIndex === 0 ? "eager" : "lazy"}
-              className="w-full h-full object-cover object-[80%_center]"
-            />
+            <picture>
+              {heroSlides[heroSlideIndex].sources?.map((source, i) => (
+                <source key={i} {...source} />
+              ))}
+              <img
+                src={heroSlides[heroSlideIndex].src}
+                alt="Untold Story Atmosphere"
+                fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
+                loading={heroSlideIndex === 0 ? "eager" : "lazy"}
+                className="w-full h-full object-cover object-[80%_center]"
+              />
+            </picture>
           </motion.div>
         </AnimatePresence>
       </div>

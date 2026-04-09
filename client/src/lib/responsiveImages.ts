@@ -9,7 +9,7 @@ type ResponsiveImageKey =
   | "artistsCollective"
   | "chasingSunsets"
   | "eranHershHero"
-  | "eranHershNew"
+  | "eranHershPortraitReal"
   | "eranHershInternational"
   | "heroMonolith"
   | "autografRecap"
@@ -45,23 +45,23 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     src: "/images/eran-hersh-live-1.png",
     widths: [640, 960, 1280, 1600],
   },
-  eranHershNew: {
-    baseName: "eran-hersh-hero-new",
+  eranHershPortraitReal: {
+    baseName: "eran-hersh-hero-real",
     sizes: "100vw",
-    src: "/images/eran-hersh-hero-new.png",
-    widths: [640, 960, 1280, 1600],
+    src: "/images/eran-hersh-live-6.png",
+    widths: [640, 960],
   },
   eranHershInternational: {
     baseName: "eran-hersh-international",
     sizes: "100vw",
     src: "/images/eran-hersh-live-5.jpg",
-    widths: [640, 960, 1280, 1600],
+    widths: [640, 960, 1024],
   },
   heroMonolith: {
     baseName: "hero-monolith-modern",
     sizes: "100vw",
     src: "/images/hero-monolith-modern.png",
-    widths: [640, 960, 1280, 1600],
+    widths: [640, 960, 1024],
   },
   autografRecap: {
     baseName: "autograf-recap",

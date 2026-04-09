@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, AudioLines, Sun, Ticket, Lock } from "lucide-react";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -28,8 +28,15 @@ import ConversionCTA from "./ConversionCTA";
 const heroPosterImage = getResponsiveImage("heroMonolith");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
 const heroSunsetsImage = getResponsiveImage("chasingSunsets");
-const heroEranNewImage = getResponsiveImage("eranHershNew");
-const heroAutografRecap = getResponsiveImage("autografRecap");
+const heroEranIntlImage = getResponsiveImage("eranHershInternational");
+const heroEranPortraitImage = getResponsiveImage("eranHershPortraitReal");
+const heroAutografImage = getResponsiveImage("autografRecap");
+
+/** Each slide maps to an optional event for the banner. null = show the primary featured event. */
+interface SlideBannerInfo {
+  eventId: string | null;
+  label: string;
+}
 
 const HERO_SLIDES: Slide[] = [
   {
@@ -42,11 +49,19 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: heroEranNewImage.src,
-    sources: heroEranNewImage.sources,
-    sizes: heroEranNewImage.sizes,
+    src: heroEranIntlImage.src,
+    sources: heroEranIntlImage.sources,
+    sizes: heroEranIntlImage.sizes,
     alt: "Eran Hersh",
     caption: "ERAN HERSH | MAY 16 2026",
+  },
+  {
+    type: "image",
+    src: heroEranPortraitImage.src,
+    sources: heroEranPortraitImage.sources,
+    sizes: heroEranPortraitImage.sizes,
+    alt: "Eran Hersh",
+    caption: "ERAN HERSH PORTRAIT",
   },
   {
     type: "image",
@@ -66,12 +81,22 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: heroAutografRecap.src,
-    sources: heroAutografRecap.sources,
-    sizes: heroAutografRecap.sizes,
+    src: heroAutografImage.src,
+    sources: heroAutografImage.sources,
+    sizes: heroAutografImage.sizes,
     alt: "Autograf Archive",
     caption: "ARCHIVE | SPECIAL EVENT AUTOGRAF",
   },
+];
+
+/** Maps each slide index to the event it represents. null = use the hero featured event. */
+const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
+  { eventId: null, label: "THE MONOLITH PROJECT" },        // 0: video
+  { eventId: "us-s3e3", label: "ERAN HERSH" },             // 1: eran hersh international
+  { eventId: "us-s3e3", label: "ERAN HERSH" },             // 2: eran hersh portrait
+  { eventId: null, label: "UNTOLD STORY" },                 // 3: untold story
+  { eventId: "css-jul04", label: "CHASING SUN(SETS)" },     // 4: chasing sunsets / july 4th
+  { eventId: null, label: "AUTOGRAF" },                     // 5: autograf archive
 ];
 
 const HERO_SUBHEAD =
@@ -79,7 +104,6 @@ const HERO_SUBHEAD =
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
-  const reduceMotion = useReducedMotion();
 
   return (
     <div className="flex items-center gap-4 tabular-nums">
@@ -103,17 +127,26 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
 
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
-  const secondaryEvent = getEventById("us-s3e3");
-  const targetDate = getEventStartTimestamp(featuredEvent);
-  const hasLiveTickets = isTicketOnSale(featuredEvent);
+  const eranEvent = getEventById("us-s3e3");
+  const july4Event = getEventById("css-jul04");
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const handleSlideChange = useCallback((index: number) => setActiveSlide(index), []);
+
+  // Resolve which event to show in the banner based on the active slide
+  const slideInfo = SLIDE_EVENT_MAP[activeSlide] ?? SLIDE_EVENT_MAP[0];
+  const bannerEvent = slideInfo.eventId
+    ? getEventById(slideInfo.eventId)
+    : featuredEvent;
+
+  const targetDate = getEventStartTimestamp(bannerEvent);
   const { isExpired } = useCountdown(targetDate);
   const reduceMotion = useReducedMotion();
-  const headline = featuredEvent?.headline || featuredEvent?.title || "The Monolith Project";
-  const eyebrow = getEventEyebrow(featuredEvent);
-  const venueLabel = getEventVenueLabel(featuredEvent);
+  const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
+  const eyebrow = getEventEyebrow(bannerEvent);
+  const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
 
   const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
-  const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
 
   useEffect(() => {
     setHeadlineCycle("MONOLITH");
@@ -125,17 +158,13 @@ export default function HeroSection() {
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
 
-  const cta = getEventCta(featuredEvent);
-  const secondaryCtaLabel = "Explore Archive";
-  const secondaryCtaHref = "/archive";
-
   return (
     <section id="hero" className="relative h-screen flex flex-col overflow-hidden bg-black">
       {structuredData}
 
       {/* Cinematic Background Layer — always video slider */}
       <motion.div style={{ y, opacity, scale }} className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-        <VideoHeroSlider slides={HERO_SLIDES} />
+        <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
       </motion.div>
 
       {/* Architectural HUD Grid Overlay */}
@@ -147,14 +176,14 @@ export default function HeroSection() {
           className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
         />
       </div>
- 
+
       {/* Main Impact Visuals (Center Focused) — always MONOLITH branding */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-6 text-center w-full pointer-events-none">
         <div className="w-full flex flex-col items-center justify-center">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-8 lg:mb-16 relative">
             <div className="flex items-center gap-4 justify-center">
               <div className="h-px w-8 md:w-20 bg-white/10" />
-              <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{eyebrow || "Chicago Music Project"}</h2>
+              <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{getEventEyebrow(featuredEvent) || "Chicago Music Project"}</h2>
               <div className="h-px w-8 md:w-20 bg-white/10" />
             </div>
           </motion.div>
@@ -184,7 +213,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* BOTTOM BANNER — persistent across all slides, dual event CTAs */}
+      {/* BOTTOM BANNER — syncs with active slide */}
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -193,14 +222,14 @@ export default function HeroSection() {
       >
         <div className="container mx-auto max-w-screen-2xl px-8 lg:px-12 py-4 flex items-center justify-between gap-8 pointer-events-auto">
 
-          {/* LEFT: Event identity */}
+          {/* LEFT: Event identity — changes with slide */}
           <div className="flex items-center gap-6 min-w-0">
             <div className="w-[2px] h-10 bg-primary/50 shrink-0" />
             <div className="flex flex-col gap-1 min-w-0">
               <div className="flex items-center gap-3">
                 <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shrink-0" />
                 <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
-                  {featuredEvent?.date ?? "Coming Soon"}
+                  {bannerEvent?.date ?? "Coming Soon"}
                 </span>
               </div>
               <h3 className={cn(
@@ -210,7 +239,7 @@ export default function HeroSection() {
                 {headline}
               </h3>
               <span className="font-mono text-[10px] tracking-[0.25em] text-white/30 uppercase truncate">
-                {eyebrow} {featuredEvent?.venue ? `@${featuredEvent.venue}` : ""}
+                {eyebrow} {bannerEvent?.venue ? `@${bannerEvent.venue}` : ""}
               </span>
             </div>
           </div>
@@ -226,19 +255,22 @@ export default function HeroSection() {
 
           {/* RIGHT: Dual event CTAs */}
           <div className="flex items-center gap-3 shrink-0">
-            {secondaryEvent && secondaryEvent.id !== featuredEvent?.id && (
+            {eranEvent && (
               <ConversionCTA
-                event={secondaryEvent}
+                event={eranEvent}
                 size="md"
                 showUrgency={true}
-                variant="outline"
+                variant={slideInfo.eventId === "us-s3e3" ? "primary" : "outline"}
               />
             )}
-            <ConversionCTA
-              event={featuredEvent}
-              size="md"
-              showUrgency={true}
-            />
+            {july4Event && (
+              <ConversionCTA
+                event={july4Event}
+                size="md"
+                showUrgency={true}
+                variant={slideInfo.eventId === "css-jul04" || !slideInfo.eventId ? "primary" : "outline"}
+              />
+            )}
           </div>
         </div>
       </motion.div>
@@ -246,19 +278,21 @@ export default function HeroSection() {
       {/* MOBILE HUD INTERFACE */}
       <div className="md:hidden absolute bottom-0 left-0 w-full p-4 z-40 bg-gradient-to-t from-black to-transparent pointer-events-none">
          <div className="flex flex-col gap-3 pointer-events-auto">
-            {secondaryEvent && secondaryEvent.id !== featuredEvent?.id && (
+            {eranEvent && (
               <ConversionCTA
-                event={secondaryEvent}
+                event={eranEvent}
                 size="lg"
                 showUrgency={true}
                 variant="outline"
               />
             )}
-            <ConversionCTA
-              event={featuredEvent}
-              size="lg"
-              showUrgency={true}
-            />
+            {july4Event && (
+              <ConversionCTA
+                event={july4Event}
+                size="lg"
+                showUrgency={true}
+              />
+            )}
          </div>
       </div>
     </section>

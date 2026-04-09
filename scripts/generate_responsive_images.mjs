@@ -28,6 +28,11 @@ const presets = [
     widths: [640, 960, 1280, 1600],
   },
   {
+    input: "eran-hersh-live-6.png",
+    baseName: "eran-hersh-hero-real",
+    widths: [640, 960],
+  },
+  {
     input: "eran-hersh-live-5.jpg",
     baseName: "eran-hersh-international",
     widths: [640, 960, 1280, 1600],

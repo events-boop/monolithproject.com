@@ -37,7 +37,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         location: "Chicago, IL",
         lineup: "Eran Hersh (Headliner) · Support TBA",
         status: "on-sale",
-        image: "/images/eran-hersh-hero-new.png",
+        image: \"/images/eran-hersh-live-5.jpg\",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
         sound: "Afro House · Melodic House · Peak-Hour Energy",
@@ -178,7 +178,7 @@ export const upcomingEvents: ScheduledEvent[] = [
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
     hero: "css-jul04",
-    banner: "us-s3e3",
+    banner: "css-jul04",
     funnel: "us-s3e3",
     ticket: "us-s3e3",
     guide: "us-s3e3",

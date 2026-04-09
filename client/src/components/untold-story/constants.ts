@@ -7,12 +7,12 @@ export const deepBg = "#06060F";
 export const cardBg = "#0C0C1A";
 
 export const eventVisuals = {
-  poster: "/images/untold-story-moody.png",
-  eran: "/images/artist-lazare.webp", // placeholder
+  poster: "/images/eran-hersh-live-5.jpg",
+  eran: "/images/eran-hersh-live-6.png",
 };
 
 export const lineupVisuals = [
-  { name: "Eran Hersh", role: "Headliner", image: "/images/artist-lazare.webp" },
+  { name: "Eran Hersh", role: "Headliner", image: "/images/eran-hersh-live-6.png" },
   { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
   { name: "Local Support TBA", role: "Support", image: "/images/chasing-sunsets-premium.png" },
 ];

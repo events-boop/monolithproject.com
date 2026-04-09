@@ -25,6 +25,7 @@ export interface Slide {
 
 interface VideoHeroSliderProps {
   slides: Slide[];
+  onSlideChange?: (index: number) => void;
 }
 
 function ResponsiveSlideImage({
@@ -69,7 +70,7 @@ function ResponsiveSlideImage({
   );
 }
 
-export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
+export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [loadVideo, setLoadVideo] = useState(false);
@@ -79,8 +80,10 @@ export default function VideoHeroSlider({ slides }: VideoHeroSliderProps) {
 
   const goTo = useCallback((index: number) => {
     if (!slides || slides.length === 0) return;
-    setCurrentSlide(((index % slides.length) + slides.length) % slides.length);
-  }, [slides]);
+    const next = ((index % slides.length) + slides.length) % slides.length;
+    setCurrentSlide(next);
+    onSlideChange?.(next);
+  }, [slides, onSlideChange]);
 
   const prev = useCallback(() => goTo(currentSlide - 1), [currentSlide, goTo]);
   const next = useCallback(() => goTo(currentSlide + 1), [currentSlide, goTo]);
