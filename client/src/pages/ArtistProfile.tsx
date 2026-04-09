@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation, useParams } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Instagram, Globe, MapPin, Music, Play, ArrowRight, Share2 } from "lucide-react";
+import { Instagram, Globe, MapPin, Music, Play, ArrowRight, Share2, Camera } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
@@ -295,11 +295,50 @@ export default function ArtistProfile() {
               </div>
             )}
 
+            {/* Gallery Section */}
+            {artist.gallery && artist.gallery.length > 0 && (
+              <div className="space-y-12">
+                <div className="flex items-center gap-4 text-white/20">
+                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                    {artist.previousSets?.length ? "03" : "02"} / Live Gallery
+                  </span>
+                  <div className="h-px w-20 bg-current" />
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {artist.gallery.map((photo, i) => (
+                    <motion.div
+                      key={photo.src}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.08 }}
+                      className={`relative overflow-hidden rounded-2xl border border-white/5 group cursor-pointer ${
+                        i === 0 ? "col-span-2 row-span-2" : ""
+                      }`}
+                    >
+                      <img
+                        src={photo.src}
+                        alt={photo.alt}
+                        className="w-full h-full object-cover aspect-square group-hover:scale-105 transition-transform duration-700 filter saturate-[0.85] group-hover:saturate-100"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span className="font-mono text-[9px] tracking-[0.3em] text-white/70 uppercase">{photo.alt}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Selected Tracks Section */}
             <div className="space-y-12">
                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4 text-white/20">
-                    <span className="font-mono text-[10px] tracking-[0.4em] uppercase">03 / Selected Records</span>
+                    <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                      {artist.gallery?.length ? (artist.previousSets?.length ? "04" : "03") : "03"} / Selected Records
+                    </span>
                     <div className="h-px w-20 bg-current" />
                   </div>
                </div>

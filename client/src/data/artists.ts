@@ -14,6 +14,7 @@ export interface ArtistData {
   socials: { instagram?: string; website?: string };
   tracks: { title: string; duration: string }[];
   previousSets?: { title: string; date: string; url?: string }[];
+  gallery?: { src: string; alt: string }[];
 }
 
 export const ARTIST_ENTRIES: ArtistData[] = [
@@ -262,6 +263,35 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Untold Story S1 E4", date: "Nov 2024", url: "https://soundcloud.com/avomusic" },
       { title: "Monolith Radio 038", date: "Aug 2024", url: "https://soundcloud.com/avomusic" }
     ]
+  },
+  {
+    id: "eran-hersh",
+    name: "ERAN HERSH",
+    role: "HEADLINER",
+    origin: "MIAMI, US",
+    genre: "AFRO HOUSE · MELODIC HOUSE",
+    image: "/images/eran-hersh-live-5.jpg",
+    series: ["untold-story"],
+    bio: "Eran Hersh is a pivotal figure in the global Afro and Melodic House movement. With a discography spanning prestigious labels like Saved Records, Enormous Tunes, and Ultra, his sound is defined by sharp percussive rhythms and immersive melodic storytelling. Known for his high-energy performances at Bazar by Sasson and major international circuits, Eran brings a sophisticated, driving energy to the Untold Story series.",
+    tags: ["Afro House", "Melodic", "Headliner"],
+    socials: { instagram: "https://instagram.com/eranhersh" },
+    tracks: [
+      { title: "Ale Ale", duration: "6:15" },
+      { title: "Always", duration: "5:42" },
+      { title: "Forbidden", duration: "6:30" },
+    ],
+    previousSets: [
+      { title: "Live at RheinRiff", date: "Sept 2025", url: "https://soundcloud.com/eranhersh" },
+      { title: "Bazar by Sasson Chapter", date: "Aug 2025", url: "https://soundcloud.com/eranhersh" },
+    ],
+    gallery: [
+      { src: "/images/eran-hersh-live-1.png", alt: "Eran Hersh live at Bazar by Sasson" },
+      { src: "/images/eran-hersh-live-2.jpg", alt: "Eran Hersh outdoor set" },
+      { src: "/images/eran-hersh-live-3.jpg", alt: "Eran Hersh crowd moment" },
+      { src: "/images/eran-hersh-live-4.jpg", alt: "Eran Hersh live crowd energy" },
+      { src: "/images/eran-hersh-live-5.jpg", alt: "Eran Hersh at RheinRiff" },
+      { src: "/images/eran-hersh-live-6.png", alt: "Eran Hersh portrait" },
+    ],
   },
 ];
 

@@ -15,6 +15,7 @@ import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import RevealText from "./RevealText";
 import {
+  getEventById,
   getEventEyebrow,
   getEventStartTimestamp,
   getEventVenueLabel,
@@ -96,6 +97,7 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
 
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
+  const secondaryEvent = getEventById("us-s3e3");
   const targetDate = getEventStartTimestamp(featuredEvent);
   const hasLiveTickets = isTicketOnSale(featuredEvent);
   const { isExpired } = useCountdown(targetDate);
@@ -125,13 +127,9 @@ export default function HeroSection() {
     <section id="hero" className="relative h-screen flex flex-col overflow-hidden bg-black">
       {structuredData}
 
-      {/* Cinematic Background Layer */}
+      {/* Cinematic Background Layer — always video slider */}
       <motion.div style={{ y, opacity, scale }} className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-        {featuredEvent?.image ? (
-          <div className="absolute inset-0 bg-cover bg-center brightness-75 transition-all duration-1000" style={{ backgroundImage: `url(${featuredEvent.image})` }} />
-        ) : (
-          <VideoHeroSlider slides={HERO_SLIDES} />
-        )}
+        <VideoHeroSlider slides={HERO_SLIDES} />
       </motion.div>
 
       {/* Architectural HUD Grid Overlay */}
@@ -144,69 +142,43 @@ export default function HeroSection() {
         />
       </div>
  
-      {/* Main Impact Visuals (Center Focused) */}
+      {/* Main Impact Visuals (Center Focused) — always MONOLITH branding */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-6 text-center w-full pointer-events-none">
-        {featuredEvent && hasLiveTickets ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center justify-center text-white relative z-10 w-full max-w-7xl mx-auto pointer-events-auto"
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse shadow-[0_0_12px_rgba(224,90,58,0.8)]" />
-              <span className="font-mono text-xs uppercase tracking-[0.5em] text-primary">Tickets Active</span>
-            </div>
-            <h1 className="font-display text-[clamp(2.8rem,10vw,10rem)] leading-[0.9] uppercase tracking-tighter text-white drop-shadow-[0_0_80px_rgba(0,0,0,0.8)]">
-              {headline}
-            </h1>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full pointer-events-auto">
-              <ConversionCTA 
-                event={featuredEvent} 
-                size="xl" 
-                showUrgency={true} 
-                className="w-full sm:w-auto"
-              />
+        <div className="w-full flex flex-col items-center justify-center">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-8 lg:mb-16 relative">
+            <div className="flex items-center gap-4 justify-center">
+              <div className="h-px w-8 md:w-20 bg-white/10" />
+              <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{eyebrow || "Chicago Music Project"}</h2>
+              <div className="h-px w-8 md:w-20 bg-white/10" />
             </div>
           </motion.div>
-        ) : (
-          <div className="w-full flex flex-col items-center justify-center">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-8 lg:mb-16 relative">
-              <div className="flex items-center gap-4 justify-center">
-                <div className="h-px w-8 md:w-20 bg-white/10" />
-                <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{eyebrow || "Chicago Music Project"}</h2>
-                <div className="h-px w-8 md:w-20 bg-white/10" />
-              </div>
-            </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
-              <motion.h1 
-                key={headlineCycle}
-                className={cn(
-                  "font-heavy text-[clamp(2.5rem,15vw,14rem)] leading-[0.8] uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto",
-                  headlineCycle === "JULY 4TH" ? "july-4th-gradient" : "text-white"
-                )}
-              >
-                <KineticDecryption text={headlineCycle} />
-              </motion.h1>
-              <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
-              <span className="font-mono text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
-              <RevealText 
-                as="p" 
-                className="mt-8 text-white/50 max-w-lg font-mono text-[10px] md:text-sm tracking-[0.4em] uppercase text-center"
-                delay={1.8}
-                stagger={0.04}
-              >
-                {HERO_SUBHEAD}
-              </RevealText>
-            </motion.div>
-          </div>
-        )}
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
+            <motion.h1
+              key={headlineCycle}
+              className={cn(
+                "font-heavy text-[clamp(2.5rem,15vw,14rem)] leading-[0.8] uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto",
+                headlineCycle === "JULY 4TH" ? "july-4th-gradient" : "text-white"
+              )}
+            >
+              <KineticDecryption text={headlineCycle} />
+            </motion.h1>
+            <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
+            <span className="font-mono text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
+            <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
+            <RevealText
+              as="p"
+              className="mt-8 text-white/50 max-w-lg font-mono text-[10px] md:text-sm tracking-[0.4em] uppercase text-center"
+              delay={1.8}
+              stagger={0.04}
+            >
+              {HERO_SUBHEAD}
+            </RevealText>
+          </motion.div>
+        </div>
       </div>
 
-      {/* BOTTOM BANNER -- hidden when hero center already shows live ticket CTAs */}
-      {!hasLiveTickets && (
+      {/* BOTTOM BANNER — persistent across all slides, dual event CTAs */}
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -246,25 +218,40 @@ export default function HeroSection() {
             </div>
           )}
 
-          {/* RIGHT: CTA button */}
+          {/* RIGHT: Dual event CTAs */}
           <div className="flex items-center gap-3 shrink-0">
-            <ConversionCTA 
-              event={featuredEvent} 
-              size="md" 
-              showUrgency={true} 
+            {secondaryEvent && secondaryEvent.id !== featuredEvent?.id && (
+              <ConversionCTA
+                event={secondaryEvent}
+                size="md"
+                showUrgency={true}
+                variant="outline"
+              />
+            )}
+            <ConversionCTA
+              event={featuredEvent}
+              size="md"
+              showUrgency={true}
             />
           </div>
         </div>
       </motion.div>
-      )}
 
       {/* MOBILE HUD INTERFACE */}
       <div className="md:hidden absolute bottom-0 left-0 w-full p-4 z-40 bg-gradient-to-t from-black to-transparent pointer-events-none">
          <div className="flex flex-col gap-3 pointer-events-auto">
-            <ConversionCTA 
-              event={featuredEvent} 
-              size="lg" 
-              showUrgency={true} 
+            {secondaryEvent && secondaryEvent.id !== featuredEvent?.id && (
+              <ConversionCTA
+                event={secondaryEvent}
+                size="lg"
+                showUrgency={true}
+                variant="outline"
+              />
+            )}
+            <ConversionCTA
+              event={featuredEvent}
+              size="lg"
+              showUrgency={true}
             />
          </div>
       </div>
