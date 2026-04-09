@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { getResponsiveImage } from "@/lib/responsiveImages";
+import { getResponsiveImage } from "../lib/responsiveImages";
 
 const expressions = [
   {
@@ -52,8 +52,8 @@ const expressions = [
   },
 ];
 
-import { useUI } from "@/contexts/UIContext";
-import { getPublicEvents } from "@/lib/siteData";
+import { useUI } from "../contexts/UIContext";
+import { getPublicEvents } from "../lib/siteData";
 
 export default function ExpressionSplit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);

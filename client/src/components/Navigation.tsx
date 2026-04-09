@@ -2,17 +2,17 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Ticket, ChevronDown, ArrowUpRight, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { cn } from "@/lib/utils";
-import { signalChirp } from "@/lib/SignalChirpEngine";
+import { cn } from "../lib/utils";
+import { signalChirp } from "../lib/SignalChirpEngine";
 import KineticDecryption from "./KineticDecryption";
 import MagneticButton from "./MagneticButton";
-import { getEventBannerPayload, isEventBannerVisible } from "@/lib/eventBanner";
-import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
-import { getSceneForPath } from "@/lib/scenes";
-import { getExperienceEvent, getPrimaryTicketUrl, getEventById } from "@/lib/siteExperience";
+import { getEventBannerPayload, isEventBannerVisible } from "../lib/eventBanner";
+import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
+import { getSceneForPath } from "../lib/scenes";
+import { getExperienceEvent, getPrimaryTicketUrl, getEventById } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
-import { getEventCta } from "@/lib/cta";
-import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
+import { getEventCta } from "../lib/cta";
+import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string }) => {
