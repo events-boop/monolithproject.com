@@ -81,8 +81,8 @@ export default function About() {
   return (
     <div ref={containerRef} className="bg-[#050505] text-white selection:bg-white/20 relative">
       <SEO
-        title="About The Monolith Project | Chicago Music World"
-        description="Learn how The Monolith Project connects recurring Chicago nights, Chasing Sun(Sets), the Chasing Sun(Sets) Radio Show, and Untold Story through one standard of curation, atmosphere, and hospitality."
+        title="About The Monolith Project | Chicago Music Ecosystem"
+        description="Chicago's premier electronic music ecosystem. Curated rooms, uncompromised sound, and a dedicated architectural standard for the night."
         canonicalPath="/about"
       />
 
@@ -155,7 +155,7 @@ export default function About() {
             </BrandTranslatorLabel>
 
             <p className="max-w-xl text-center text-[11px] uppercase tracking-[0.22em] text-white/68 md:text-base">
-              Recurring music experiences, radio, and archive from Chicago.
+              Chicago's premier electronic music ecosystem. Curated rooms. Uncompromised sound.
             </p>
           </motion.div>
 
@@ -194,7 +194,7 @@ export default function About() {
               </div>
               <div className="mt-8">
                 <WordScrubReveal 
-                  text="We built The Monolith Project to keep what usually disappears visible: curation, atmosphere, continuity, and the feeling that a night can belong to something real." 
+                  text="We built The Monolith Project as an ecosystem to keep what usually disappears visible: curation, uncompromised sound, continuity, and the architecture of a perfect night." 
                   className="font-serif text-[clamp(1.2rem,3vw,2.4rem)] leading-[1.3] text-[#D4A574] italic drop-shadow-md text-balance"
                 />
               </div>
@@ -209,8 +209,8 @@ export default function About() {
         <div className="layout-wide flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
           <div className="lg:w-1/3">
               <div className="sticky top-40">
-                <span className="ui-kicker block text-[#d4a853] mb-4">Core Principles</span>
-              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Principles</h2>
+                <span className="ui-kicker block text-[#d4a853] mb-4">The Architecture</span>
+              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">The Standard</h2>
               <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />
             </div>
           </div>

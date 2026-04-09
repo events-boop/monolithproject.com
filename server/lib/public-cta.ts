@@ -1,11 +1,11 @@
 import type { EventCta, EventSeries, ScheduledEvent } from "../../shared/events/types";
 
 const CTA_LABELS = {
-  tickets: "Get Tickets",
-  schedule: "View Schedule",
-  unlockPresale: "Unlock Presale Access",
-  joinWaitlist: "Join Waitlist",
-  claimLast: "Claim Last Tickets",
+  tickets: "Secure Access",
+  schedule: "Explore The Season",
+  unlockPresale: "Request Presale Access",
+  joinWaitlist: "Register For The Next Drop",
+  claimLast: "Secure Final Entry",
   nextSignal: "Get First Access To Next Signal",
 } as const;
 

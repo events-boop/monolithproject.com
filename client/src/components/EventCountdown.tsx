@@ -110,7 +110,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
             <div className="flex items-center gap-4">
               <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-white/40">
-                Next Event
+                Next Drop
               </span>
             </div>
             <div>
@@ -130,7 +130,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 {event.inventoryState === "low" && (
                   <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
-                    LAST TICKETS
+                    Inventory Capped // Floor Active
                   </div>
                 )}
                 {event.ticketTiers && event.ticketTiers.length > 0 && (
@@ -142,7 +142,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
               {event.location && (
                 <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-                  Limited entry · {event.location}
+                  Inventory is capped to protect the room. Secure your access before phase change.
                 </p>
               )}
             </div>
@@ -154,7 +154,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-between gap-12 px-8 py-5 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white/20 transition-all duration-500 self-start"
                 >
-                  <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Place</span>
+                  <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Entry</span>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
                   </svg>
@@ -165,7 +165,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-white/80 transition-colors inline-flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
-                  Table Inquiry & Concierge Services
+                  Table Reservations & Concierge Services
                 </a>
               </div>
             ) : (
@@ -176,7 +176,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
                 <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
-                  Join The Waitlist
+                  REGISTER FOR THE NEXT DROP →
                 </span>
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />

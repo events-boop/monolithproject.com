@@ -18,8 +18,18 @@ const presets = [
     widths: [640, 960, 1280, 1600],
   },
   {
-    input: "hero-monolith.jpg",
-    baseName: "hero-monolith",
+    input: "hero-monolith-modern.png",
+    baseName: "hero-monolith-modern",
+    widths: [640, 960, 1280, 1600],
+  },
+  {
+    input: "eran-hersh-live-1.png",
+    baseName: "eran-hersh-hero",
+    widths: [640, 960, 1280, 1600],
+  },
+  {
+    input: "eran-hersh-live-5.jpg",
+    baseName: "eran-hersh-international",
     widths: [640, 960, 1280, 1600],
   },
   {
@@ -28,7 +38,7 @@ const presets = [
     widths: [480, 768, 1080],
   },
   {
-    input: "untold-story.jpg",
+    input: "untold-story-moody.png",
     baseName: "untold-story",
     widths: [640, 960, 1280, 1600],
   },

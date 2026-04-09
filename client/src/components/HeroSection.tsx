@@ -28,6 +28,8 @@ import ConversionCTA from "./ConversionCTA";
 const heroPosterImage = getResponsiveImage("heroMonolith");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
 const heroSunsetsImage = getResponsiveImage("chasingSunsets");
+const heroEranNewImage = getResponsiveImage("eranHershNew");
+const heroAutografRecap = getResponsiveImage("autografRecap");
 
 const HERO_SLIDES: Slide[] = [
   {
@@ -40,7 +42,9 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: "/images/eran-hersh-hero-new.png",
+    src: heroEranNewImage.src,
+    sources: heroEranNewImage.sources,
+    sizes: heroEranNewImage.sizes,
     alt: "Eran Hersh",
     caption: "ERAN HERSH | MAY 16 2026",
   },
@@ -62,7 +66,9 @@ const HERO_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: "/images/autograf-recap.jpg",
+    src: heroAutografRecap.src,
+    sources: heroAutografRecap.sources,
+    sizes: heroAutografRecap.sizes,
     alt: "Autograf Archive",
     caption: "ARCHIVE | SPECIAL EVENT AUTOGRAF",
   },

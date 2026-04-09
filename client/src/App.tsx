@@ -15,6 +15,7 @@ import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
+import CoordinateHUD from "./components/CoordinateHUD";
 
 // Lazy Pages
 const Tickets = lazy(() => import("./pages/Tickets"));
@@ -272,6 +273,8 @@ function App() {
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
             <GlobalSVGFilters />
+            <div className="film-grain" />
+            <CoordinateHUD />
             <MissYouTab />
             <MainContentWrapper />
             

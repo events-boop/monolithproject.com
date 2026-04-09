@@ -121,10 +121,10 @@ export default function ScheduleSection() {
           <div className="relative">
              <span className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[9px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
              <h2 className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
-               <KineticDecryption text="SCHEDULE" />
+               <KineticDecryption text="THE 2026 SEASON" />
              </h2>
              <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-4 md:mt-6 max-w-[15rem] md:max-w-sm">
-               Start with the next date. The series and the room will tell you the rest.
+               A curated arc of open-air days and industrial nights. Inventory is strictly limited by venue capacity.
              </p>
           </div>
 
@@ -369,7 +369,7 @@ export default function ScheduleSection() {
                                 className="group inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.25em] uppercase text-black/70 hover:text-black px-6 py-4 border border-black/10 rounded-full transition-all"
                               >
                                 <CalendarPlus className="w-4 h-4" />
-                                Save Date
+                                Add To Calendar
                               </button>
                             </div>
                           </div>
@@ -392,13 +392,13 @@ export default function ScheduleSection() {
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/schedule">
               <span className="group inline-flex items-center gap-2 text-black font-black text-[10px] tracking-[0.3em] uppercase transition-all hover:text-primary cursor-pointer">
-                Full Master Schedule
+                View Full Season Arc
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
             <Link href="/newsletter">
               <span className="group inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors cursor-pointer">
-                Secure Early Pass
+                Secure Season Membership
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>

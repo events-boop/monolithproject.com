@@ -8,10 +8,16 @@ type ResponsiveImageSource = {
 type ResponsiveImageKey =
   | "artistsCollective"
   | "chasingSunsets"
+  | "eranHershHero"
+  | "eranHershNew"
+  | "eranHershInternational"
   | "heroMonolith"
+  | "autografRecap"
   | "lazareCarbonCenter"
   | "untoldStoryHero"
-  | "untoldStoryPoster";
+  | "untoldStoryPoster"
+  | "radioShowGear"
+  | "videoPoster1";
 
 interface ResponsiveImageAsset {
   baseName: string;
@@ -33,10 +39,34 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     src: "/images/chasing-sunsets-premium.png",
     widths: [640, 960, 1280, 1600],
   },
+  eranHershHero: {
+    baseName: "eran-hersh-hero",
+    sizes: "100vw",
+    src: "/images/eran-hersh-live-1.png",
+    widths: [640, 960, 1280, 1600],
+  },
+  eranHershNew: {
+    baseName: "eran-hersh-hero-new",
+    sizes: "100vw",
+    src: "/images/eran-hersh-hero-new.png",
+    widths: [640, 960, 1280, 1600],
+  },
+  eranHershInternational: {
+    baseName: "eran-hersh-international",
+    sizes: "100vw",
+    src: "/images/eran-hersh-live-5.jpg",
+    widths: [640, 960, 1280, 1600],
+  },
   heroMonolith: {
     baseName: "hero-monolith-modern",
     sizes: "100vw",
     src: "/images/hero-monolith-modern.png",
+    widths: [640, 960, 1280, 1600],
+  },
+  autografRecap: {
+    baseName: "autograf-recap",
+    sizes: "100vw",
+    src: "/images/autograf-recap.jpg",
     widths: [640, 960, 1280, 1600],
   },
   lazareCarbonCenter: {
@@ -44,6 +74,18 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     sizes: "(min-width: 1024px) 44vw, 70vw",
     src: "/images/lazare-carbon-center.png",
     widths: [480, 743],
+  },
+  radioShowGear: {
+    baseName: "radio-show-gear",
+    sizes: "100vw",
+    src: "/images/radio-show-gear.png",
+    widths: [640, 960, 1280, 1600],
+  },
+  videoPoster1: {
+    baseName: "video-poster-1",
+    sizes: "100vw",
+    src: "/images/video-poster-1.jpg",
+    widths: [640, 960, 1280, 1600],
   },
   untoldStoryHero: {
     baseName: "untold-story-juany-deron-v2",

@@ -63,10 +63,13 @@ export default function NavigationMegamenu({
                 ? Ticket
                 : ArrowUpRight;
 
-    const ItemIcon = ({ type }: { type: "play" | "ticket" | "arrow" }) => {
+    const ItemIcon = ({ type }: { type?: "play" | "ticket" | "arrow" }) => {
         if (type === "play") return <Play className="w-2.5 h-2.5 fill-current" />;
         if (type === "ticket") return <Ticket className="w-2.5 h-2.5" />;
-        return <ArrowUpRight className="w-2.5 h-2.5 opacity-50" />;
+        if (type === "arrow") return <ArrowUpRight className="w-2.5 h-2.5 opacity-50" />;
+        return (
+            <div className="w-1.5 h-1.5 rounded-full bg-current opacity-30 group-hover/item:opacity-100 transition-opacity" />
+        );
     };
 
     return (
@@ -87,11 +90,10 @@ export default function NavigationMegamenu({
                 }
             }}
         >
-            <Link
-                href={href}
+            <div
                 onClick={(e) => {
                     e.preventDefault();
-                    onNavigate(href);
+                    setIsOpen(!isOpen);
                 }}
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
@@ -106,7 +108,7 @@ export default function NavigationMegamenu({
                 <ChevronDown
                     className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                 />
-            </Link>
+            </div>
 
             <AnimatePresence>
                 {isOpen && (
@@ -142,13 +144,16 @@ export default function NavigationMegamenu({
                                                     onNavigate(item.href);
                                                 }}
                                                 role="menuitem"
-                                                className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:-translate-y-0.5 duration-200 ${isLight
-                                                    ? "text-charcoal hover:text-clay"
-                                                    : "text-white/80 hover:text-white"
+                                                className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${isLight
+                                                    ? "text-charcoal hover:text-clay hover:border-clay/30"
+                                                    : "text-white/80 hover:text-white hover:border-primary/40"
                                                     }`}
                                             >
-                                                {item.icon && <ItemIcon type={item.icon} />}
-                                                {item.label}
+                                                <div className="w-4 flex items-center justify-center shrink-0">
+                                                    <ItemIcon type={item.icon} />
+                                                </div>
+                                                <span className="flex-1">{item.label}</span>
+                                                <div className="w-px h-0 group-hover/item:h-3 bg-current opacity-20 transition-all duration-300" />
                                             </Link>
                                         </li>
                                     ))}
@@ -182,9 +187,9 @@ export default function NavigationMegamenu({
                                                     {megamenu.feature.subtitle}
                                                 </p>
                                             )}
-                                            <h4 className="text-white text-lg lg:text-xl font-display font-bold leading-tight drop-shadow-md">
+                                            <h3 className="text-white text-lg lg:text-xl font-display font-bold leading-tight drop-shadow-md">
                                                 {megamenu.feature.title}
-                                            </h4>
+                                            </h3>
                                         </div>
 
                                         {megamenu.feature.external ? (

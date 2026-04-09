@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { getResponsiveImage } from "@/lib/responsiveImages";
 
 const expressions = [
   {
@@ -105,11 +106,21 @@ export default function ExpressionSplit() {
             <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
-                <motion.img
-                  src={exp.image}
-                  alt={exp.title}
-                  className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
-                />
+                <picture className="h-full w-full">
+                  {getResponsiveImage(
+                    exp.id === 'sunsets' ? 'chasingSunsets' :
+                    exp.id === 'untold' ? 'untoldStoryPoster' :
+                    exp.id === 'radio' ? 'radioShowGear' : 'videoPoster1',
+                    "(min-width: 1024px) 25vw, 100vw"
+                  ).sources.map((source, i) => (
+                    <source key={i} {...source} />
+                  ))}
+                  <motion.img
+                    src={exp.image}
+                    alt={exp.title}
+                    className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-black/60 transition-colors duration-500 group-hover:bg-black/40" />
                 <div 
                   className="absolute inset-0 opacity-20 transition-opacity duration-700 group-hover:opacity-40"
@@ -170,7 +181,12 @@ export default function ExpressionSplit() {
                      </p>
                      
                      <div className="mt-8 flex items-center gap-4 text-white hover:text-white transition-colors">
-                        <span className="ui-chip">Open Page</span>
+                        <span className="ui-chip">
+                          {exp.id === 'sunsets' ? 'Register For Drop' : 
+                           exp.id === 'untold' ? 'Join The Story' : 
+                           exp.id === 'radio' ? 'Hear The Rooms' : 
+                           'View Archive'}
+                        </span>
                         <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300">
                            <ArrowUpRight className="h-5 w-5" />
                         </div>
@@ -181,7 +197,11 @@ export default function ExpressionSplit() {
                 {/* Mobile Interaction Signal */}
                 <div className="lg:hidden mt-6 flex items-center gap-3">
                   <div className="h-px w-6 bg-white/30" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">Open Page</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
+                    {exp.id === 'sunsets' ? 'Register For Drop' : 
+                     exp.id === 'untold' ? 'Join The Story' : 
+                     'Open View'}
+                  </span>
                 </div>
               </div>
 

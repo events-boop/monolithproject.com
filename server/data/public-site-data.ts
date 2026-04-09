@@ -57,7 +57,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         ticketTiers: [
             {
                 id: "presale",
-                name: "Early Entry Allocation",
+                name: "Early Entry Access",
                 price: 40,
                 description: "Priority entry for registered drop members.",
                 features: ["General admission", "Access to all rooms", "Sign up via Laylo"],
@@ -66,7 +66,7 @@ export const upcomingEvents: ScheduledEvent[] = [
             },
             {
                 id: "general",
-                name: "General Access Allocation",
+                name: "General Access Entry",
                 price: 60,
                 description: "Standard entry to the ecosystem.",
                 features: ["General admission", "Access to all rooms", "Welcome drink"],
@@ -178,7 +178,7 @@ export const upcomingEvents: ScheduledEvent[] = [
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
     hero: "css-jul04",
-    banner: "css-jul04",
+    banner: "us-s3e3",
     funnel: "us-s3e3",
     ticket: "us-s3e3",
     guide: "us-s3e3",

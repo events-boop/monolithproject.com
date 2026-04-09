@@ -7,20 +7,31 @@ export default function KineticDecryption({
   text, 
   className = "", 
   triggerOnce = true,
-  autoStart = true
+  autoStart = true,
+  sessionOnce = false
 }: { 
   text: string; 
   className?: string;
   triggerOnce?: boolean;
   autoStart?: boolean;
+  sessionOnce?: boolean;
 }) {
   const [displayText, setDisplayText] = useState(text);
   const [isScrambling, setIsScrambling] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: triggerOnce, margin: "-10%" });
 
-  const startScramble = () => {
+  const startScramble = (force = false) => {
     if (isScrambling) return;
+
+    if (!force && sessionOnce) {
+      const sessionKey = `kinetic_${text.replace(/\s+/g, '_')}`;
+      if (sessionStorage.getItem(sessionKey)) {
+        return;
+      }
+      sessionStorage.setItem(sessionKey, 'true');
+    }
+
     setIsScrambling(true);
 
     let iteration = 0;
@@ -54,7 +65,7 @@ export default function KineticDecryption({
   return (
     <span 
       ref={ref}
-      onMouseEnter={startScramble}
+      onMouseEnter={() => startScramble(true)}
       className={`${className} cursor-default inline-block whitespace-nowrap`}
     >
       {displayText}

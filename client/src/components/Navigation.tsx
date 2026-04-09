@@ -61,49 +61,49 @@ interface NavigationProps {
 
 const mobilePrimaryItems = [
   {
+    label: "TICKETS",
+    href: "/schedule",
+  },
+  {
     label: "THE MONOLITH",
     href: "/about",
     subItems: [
-      { label: "HOME", href: "/" },
-      { label: "ABOUT THE PROJECT", href: "/about#story" },
+      { label: "ABOUT OVERVIEW", href: "/about" },
+      { label: "THE MONOLITH STORY", href: "/about#story" },
       { label: "VISION & MANIFESTO", href: "/about#vision" },
     ]
   },
   {
     label: "SERIES",
-    href: "/chasing-sunsets",
+    href: "/projects",
     subItems: [
       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
       { label: "UNTOLD STORY", href: "/story" },
+      { label: "SERIES ARCHIVE", href: "/archive" },
       { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
-      { label: "ENTRY CHECKLIST", href: "/guide#entry" },
-      { label: "EVENT ARCHIVE", href: "/archive" },
     ]
   },
   {
-    label: "EXPLORE",
+    label: "SCHEDULE",
     href: "/schedule",
     subItems: [
-      { label: "SEASON SCHEDULE", href: "/schedule" },
-      { label: "ARTISTS & LINEUP", href: "/lineup" },
-      { label: "EVENT ARCHIVE", href: "/archive" },
-      { label: "JOURNAL / NEWS", href: "/insights" },
-      { label: "RADIO SHOW", href: "/radio" },
-      { label: "NIGHT GUIDE", href: "/guide" },
+      { label: "VIEW FULL SCHEDULE", href: "/schedule" },
+      { label: "LATEST NEWS", href: "/insights" },
+      { label: "RADIO ARCHIVE", href: "/radio" },
+      { label: "PRE-FLIGHT GUIDE", href: "/guide" },
     ]
   },
   {
-    label: "CONCIERGE",
+    label: "RESOURCES",
     href: "/partners",
     subItems: [
-      { label: "TICKETS", href: "/schedule" },
+      { label: "RESERVE ENTRY", href: "/schedule" },
       { label: "VIP TABLE SERVICES", href: "/vip" },
-      { label: "SPONSOR ACCESS", href: "/sponsors" },
       { label: "PARTNER WITH US", href: "/partners" },
       { label: "BOOKING / HIRE", href: "/booking" },
       { label: "PRESS & MEDIA", href: "/press" },
       { label: "ARTIST SUBMISSION", href: "/submit" },
-      { label: "CONTACT US", href: "/contact" },
+      { label: "CONTACT", href: "/contact" },
     ]
   },
 ];
@@ -449,13 +449,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                                   "font-heavy text-lg md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
                                   isLight ? "text-black" : "text-white"
                                 )}>
-                                  <KineticDecryption text="MONOLITH" />
+                                  <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
                                   "font-monolith text-[10px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
-                                  <KineticDecryption text="PROJECT" />
+                                  <KineticDecryption text="PROJECT" sessionOnce={true} />
                                 </span>
                               </div>
                             )}
@@ -535,7 +535,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
                       image: ticketHref ? "/images/untold-story-juany-deron-v2.jpg" : "/images/chasing-sunsets-premium.png",
                       href: ticketHref || "/chasing-sunsets",
-                      ctaText: ticketHref ? "Tickets Live" : "Discover Series",
+                      ctaText: ticketHref ? "Secure Access" : "Explore Season",
                       icon: ticketHref ? "ticket" : "arrow",
                       badge: ticketHref ? "ON SALE" : "JULY 4",
                       external: !!ticketHref
@@ -563,7 +563,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       subtitle: "Benchek Live from Monolith",
                       image: "/images/radio-show-gear.png",
                       href: "/radio/ep-01-benchek",
-                      ctaText: "Listen Now",
+                      ctaText: "Hear The Rooms",
                       icon: "play",
                       badge: "FEATURED"
                     }
@@ -592,7 +592,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       subtitle: "Elevated Experiences",
                       image: "/images/industrial-roster.png",
                       href: "/vip",
-                      ctaText: "Reserve Tables",
+                      ctaText: "Reserve Entry",
                       icon: "arrow",
                       badge: "VIP"
                     }
@@ -765,24 +765,29 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                   transition={{ delay: 0.1 + index * 0.1 }}
                   className="w-full flex flex-col items-center"
                 >
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={(e) => {
+                  <div 
+                    className="flex items-center gap-4 group cursor-pointer"
+                    onClick={() => {
+                      if (item.subItems) {
+                        setExpandedMobileItem(expandedMobileItem === item.label ? null : item.label);
                         signalChirp.click();
+                      } else {
                         handleNavClick(item.href);
-                      }}
-                      aria-current={isActiveHref(item.href) ? "page" : undefined}
-                      className={`group font-display text-2xl sm:text-4xl md:text-5xl tracking-widest uppercase hover:text-white transition-colors cursor-pointer text-center ${isActiveHref(item.href) ? "text-white" : "text-white/50"}`}
+                      }
+                    }}
+                  >
+                    <button
+                      aria-expanded={expandedMobileItem === item.label}
+                      className={`font-display text-2xl sm:text-4xl md:text-5xl tracking-widest uppercase transition-colors text-center ${isActiveHref(item.href) || expandedMobileItem === item.label ? "text-white" : "text-white/50"} group-hover:text-white`}
                     >
                       {renderNavLabel(item.label, true)}
                     </button>
                     {item.subItems && (
-                      <button
-                        onClick={() => setExpandedMobileItem(expandedMobileItem === item.label ? null : item.label)}
-                        className={`p-2 rounded-full bg-white/5 border border-white/10 transition-transform duration-300 ${expandedMobileItem === item.label ? "rotate-180" : ""}`}
+                      <div
+                        className={`p-2 rounded-full bg-white/5 border border-white/10 transition-transform duration-500 ${expandedMobileItem === item.label ? "rotate-180 bg-white/10" : ""}`}
                       >
-                        <ChevronDown size={20} className="text-white/40" />
-                      </button>
+                        <ChevronDown size={20} className={expandedMobileItem === item.label ? "text-white" : "text-white/40"} />
+                      </div>
                     )}
                   </div>
 
@@ -826,7 +831,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 className="mt-8 w-full sm:w-auto px-8 sm:px-10 py-5 sm:py-6 bg-white rounded-full text-black font-heavy text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all cursor-pointer shadow-[0_10px_40px_rgba(255,255,255,0.2)] focus-visible:outline-none"
               >
                 <Ticket className="w-4 h-4" />
-                {ticketHref ? "SECURE SECRETS / TICKETS" : "SECURE PRIORITY ENTRY"}
+                {ticketHref ? "SECURE YOUR ENTRY" : "SECURE ACCESS"}
                 <ArrowUpRight className="w-4 h-4" />
               </motion.a>
 

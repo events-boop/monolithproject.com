@@ -4,27 +4,27 @@ import { signalChirp } from "@/lib/SignalChirpEngine";
 const steps = [
   {
     number: "01",
-    title: "Doors Open at 9 PM",
-    body: "Arrive early or settle in later. The room is built for the full night, not one rush at the top.",
-    detail: "No rush required.",
+    title: "ARRIVE WHEN YOU WANT",
+    body: "We program the entire night for sustained energy, not just a single peak hour.",
+    detail: "NO RUSH REQUIRED.",
   },
   {
     number: "02",
-    title: "No Strict Dress Code",
-    body: "Dress well, stay comfortable, and come ready to move. The room should feel good, not overworked.",
-    detail: "Look good. Stay comfortable.",
+    title: "NO RIGID DRESS CODES",
+    body: "Dress for the room, dress to move, and bring the right energy.",
+    detail: "LOOK GOOD, STAY COMFORTABLE.",
   },
   {
     number: "03",
-    title: "Sound Tuned For The Room",
-    body: "Each venue is chosen for how it sounds, and the system is tuned for the night instead of left on a generic setup.",
-    detail: "Clear, not just loud.",
+    title: "UNCOMPROMISED AUDIO",
+    body: "We select venues for their acoustics and custom-tune the sound systems for every single event.",
+    detail: "CLEAR, NOT JUST LOUD.",
   },
   {
     number: "04",
-    title: "Stay For The Full Set",
-    body: "The best part of the night usually happens late. The room tightens, the music deepens, and the crowd gets better.",
-    detail: "The room gets better late.",
+    title: "STAY FOR THE CLOSE",
+    body: "The tension builds late, the sound deepens, and the room hits its peak in the final hours.",
+    detail: "THE ROOM GETS BETTER LATE.",
   },
 ];
 

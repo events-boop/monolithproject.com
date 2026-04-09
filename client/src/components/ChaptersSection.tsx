@@ -2,51 +2,56 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "wouter";
-import { AudioLines, ArrowRight, Sun, ArrowUpRight } from "lucide-react";
+import { AudioLines, ArrowRight, Sun, ArrowUpRight, Camera, Radio } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import EditorialHeader from "./EditorialHeader";
 
 const chapters = [
   {
     id: "chasing-sunsets",
-    number: "01",
     title: "CHASING SUN(SETS)",
-    tagline: "Golden hour. Open air. A room that breathes.",
-    description:
-      "A warmer Monolith expression built for rooftops, open-air settings, and the slow shift from daylight into dusk. The music stays rhythmic, the room stays social, and the atmosphere opens up before the night fully lands.",
-    moment: "Afro House · Organic House · Global Rhythm",
+    tagline: "The Open-Air Series.",
+    description: "Golden hour sets, panoramic views, and the energy of the city at dusk.",
+    moment: "Open-Air Day",
     image: "/images/chasing-sunsets-premium.png",
     icon: Sun,
-    accent: "from-clay/20 to-clay/5",
-    titleColor: "text-clay",
-    taglineColor: "text-clay",
-    borderColor: "group-hover:border-clay/40",
-    glowColor: "group-hover:shadow-[0_0_30px_rgba(194,112,62,0.15)]",
+    href: "/chasing-sunsets",
+    color: "#E8B86D",
   },
   {
     id: "untold-story",
-    number: "02",
     title: "UNTOLD STORY",
-    tagline: "When the light drops, the room changes shape.",
-    description:
-      "The more intimate Monolith expression. A closer room, deeper pacing, and a tighter connection between artist and crowd. Less spectacle, more tension, more focus, and a stronger sense of where the night is going.",
-    moment: "Deeper House · Tension · Late-Night Energy",
+    tagline: "The After-Dark Series.",
+    description: "Raw spaces, heavy sound systems, and the tension of the late night.",
+    moment: "Industrial Night",
     image: "/images/untold-story-moody.png",
     icon: null,
-    accent: "from-primary/20 to-primary/5",
-    titleColor: "accent-story",
-    taglineColor: "accent-story",
-    borderColor: "group-hover:border-primary/40",
-    glowColor: "group-hover:shadow-[0_0_30px_rgba(224,90,58,0.12)]",
+    href: "/story",
+    color: "#22D3EE",
   },
+  {
+    id: "radio-show",
+    title: "RADIO SHOW",
+    tagline: "The Sonic Archive.",
+    description: "Curated mixes, live recordings, and exclusive guest sets.",
+    moment: "Global Broadcast",
+    image: "/images/radio-promo-minimal.png", 
+    icon: Radio,
+    href: "/radio",
+    color: "#F43F5E",
+  },
+  {
+    id: "event-archive",
+    title: "EVENT ARCHIVE",
+    tagline: "The Visual Record.",
+    description: "High-resolution galleries from past rooms. Find your memory.",
+    moment: "Visual Record",
+    image: "/images/autograf-recap.jpg",
+    icon: Camera,
+    href: "/archive",
+    color: "#FFFFFF",
+  }
 ];
-
-const radioSignal = {
-  description: "The radio show extends Chasing Sun(Sets) between events with mixes, guest sessions, and replayable episodes.",
-  href: "/radio",
-  label: "03",
-  title: "CHASING SUN(SETS) RADIO SHOW",
-};
 
 export default function ChaptersSection() {
   const ref = useRef(null);
@@ -60,144 +65,79 @@ export default function ChaptersSection() {
     >
       <div className="absolute inset-0 atmo-surface opacity-70 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_84%_76%,rgba(224,90,58,0.1),transparent_36%)] pointer-events-none" />
-      <div className="container layout-default px-6 mb-12 md:mb-14">
+      <div className="container layout-default px-6 mb-16 md:mb-20 text-center relative z-10">
         <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ duration: 0.35 }}>
           <EditorialHeader
-            kicker="Program"
-            title="The Series"
-            description="Two live series, one shared standard. Distinct emotional temperatures, the same commitment to curation, atmosphere, and a room worth returning to."
+            kicker="The Ecosystem"
+            title="Curated Worlds"
+            description="Four distinct pillars built on uncompromised sound, architectural curation, and the energy of the room."
           />
         </motion.div>
       </div>
 
-      <div className="container layout-wide px-6">
-        <div className="grid gap-6 lg:grid-cols-2">
+      <div className="container layout-wide px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {chapters.map((chapter, index) => (
             <motion.div
               key={chapter.id}
-              initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.65, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className="group relative h-[480px] md:h-[560px] lg:h-[640px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-black/20"
             >
-              <Link
-                href={chapter.id === "chasing-sunsets" ? "/chasing-sunsets" : "/story"}
-                className={`relative block min-h-[420px] overflow-hidden rounded-[2.15rem] border border-white/15 bg-black/18 shadow-[0_24px_56px_rgba(0,0,0,0.28)] transition-all duration-500 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 md:min-h-[480px] ${chapter.borderColor} ${chapter.glowColor}`}
-                data-cursor-text="EXPLORE"
-              >
-                <div className="absolute inset-0 z-0">
-                  <img
-                    src={chapter.image}
-                    alt={chapter.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] will-change-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${chapter.accent} to-transparent opacity-45 transition-opacity duration-500 group-hover:opacity-65`} />
-                  <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.08),transparent_42%)] pointer-events-none" />
-                  <div className="absolute inset-0 opacity-[0.06] bg-noise mix-blend-overlay" />
-                </div>
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <img
+                  src={chapter.image}
+                  className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
+                  alt={chapter.title}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              </div>
 
-                <div className="relative z-10 flex h-full flex-col justify-between p-6 md:p-8">
-                  <div className="flex items-start justify-between gap-5">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-4 py-2">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
-                        {chapter.id === "untold-story" ? "Season III Active" : "Summer '26 Series"}
-                      </span>
-                      <span className="font-serif text-2xl italic text-white/72">
-                        {chapter.number}
-                      </span>
-                    </div>
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/20 backdrop-blur-sm">
-                      {chapter.icon ? (
-                        <chapter.icon className={`h-6 w-6 ${chapter.titleColor} opacity-90`} />
-                      ) : (
-                        <UntoldButterflyLogo className={`h-8 w-8 ${chapter.titleColor} opacity-90`} />
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="max-w-xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <p className={`text-[10px] font-mono uppercase tracking-[0.24em] ${chapter.id === "untold-story" ? "text-story" : "text-clay"}`}>
-                        {chapter.moment}
-                      </p>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-                        From <span className="text-white">$65</span>
-                      </span>
-                    </div>
-                    <h3
-                      className={`text-balance break-words text-white ${
-                        chapter.id === "untold-story"
-                          ? "font-untold text-[clamp(2.2rem,4.6vw,4.4rem)] italic tracking-tight"
-                          : "font-sunsets text-[clamp(2rem,4vw,4rem)] tracking-[0.08em]"
-                      }`}
-                    >
-                      {chapter.title}
-                    </h3>
-                    <p className={`mt-4 font-serif font-light italic text-xl md:text-2xl leading-relaxed ${chapter.taglineColor}`}>
-                      {chapter.tagline}
-                    </p>
-                    <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/72 md:text-base">
-                      {chapter.description}
-                    </p>
-
-                    <div className={`mt-8 inline-flex items-center gap-3 text-sm transition-colors duration-300 ${chapter.id === "untold-story" ? "group-hover:text-story" : "group-hover:text-clay"}`}>
-                      <div className={`h-px bg-white/40 transition-all duration-500 ${chapter.id === "untold-story" ? "w-10 group-hover:w-16 group-hover:bg-story" : "w-10 group-hover:w-20 group-hover:bg-clay"}`} />
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
-                        {chapter.id === "chasing-sunsets" ? "Explore Chasing Sun(Sets)" : "Explore Untold Story"}
-                      </span>
-                      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </div>
-                  </div>
-                </div>
+              {/* Interaction Overlay */}
+              <Link href={chapter.href} asChild>
+                <a className="absolute inset-0 z-20" onClick={() => signalChirp.click()}>
+                  <span className="sr-only">Explore {chapter.title}</span>
+                </a>
               </Link>
+
+              {/* Content */}
+              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
+                <div className="mb-6 transform transition-transform duration-500 group-hover:-translate-y-2">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md mb-8 group-hover:border-white/30 transition-colors">
+                    {chapter.icon ? (
+                      <chapter.icon className="w-5 h-5 text-white/50 group-hover:text-white transition-colors" />
+                    ) : (
+                      <UntoldButterflyLogo className="w-5 h-5 text-white/50 group-hover:text-white transition-colors" />
+                    )}
+                  </div>
+
+                  <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40 mb-3 block">
+                    {chapter.tagline}
+                  </p>
+                  <h3 className="font-heavy text-3xl uppercase tracking-tighter text-white mb-4">
+                    {chapter.title}
+                  </h3>
+                  <p className="text-sm text-white/60 leading-relaxed max-w-[240px] group-hover:text-white/90 transition-colors">
+                    {chapter.description}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-white/30 border-t border-white/10 pt-6">
+                  <div className="h-px w-6 bg-white/20" />
+                  {chapter.moment}
+                </div>
+              </div>
+
+              {/* Bottom Reveal Border */}
+              <div 
+                className="absolute inset-x-0 bottom-0 h-1 transition-transform duration-700 translate-y-full group-hover:translate-y-0"
+                style={{ backgroundColor: chapter.color || 'var(--primary)' }}
+              />
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6"
-        >
-          <Link
-            href={radioSignal.href}
-            className="group shell-frame block overflow-hidden rounded-[2rem] px-5 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 md:px-6"
-          >
-            <div className="grid gap-5 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.05] text-white/80">
-                  <AudioLines className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="ui-chip text-white/38">Radio</p>
-                  <span className="mt-1 block text-sm font-bold uppercase tracking-[0.18em] text-white/58">
-                    {radioSignal.label}
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-radio text-[clamp(1.2rem,1.8vw,1.6rem)] uppercase leading-[1.1] text-white">
-                  {radioSignal.title}
-                </h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">
-                  {radioSignal.description}
-                </p>
-              </div>
-
-              <div className="inline-flex items-center gap-3 text-white/74 transition-colors group-hover:text-white">
-                <div className="h-px w-12 bg-gradient-to-r from-white/55 to-transparent" />
-                <span className="ui-chip">Open Radio Show</span>
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </div>
-            </div>
-          </Link>
-        </motion.div>
       </div>
     </section>
   );

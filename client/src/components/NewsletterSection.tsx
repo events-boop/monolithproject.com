@@ -126,8 +126,8 @@ export default function NewsletterSection({
                   <Check className="w-8 h-8 text-primary" />
                 </div>
                 
-                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Newsletter Confirmed</span>
-                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">You're In</h3>
+                <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Membership Secured</span>
+                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Welcome To The Circle</h3>
                 <p className="max-w-xl text-center text-base text-white/65 mb-10 leading-relaxed">
                   We&apos;ll send new dates, ticket windows, lineup news, and radio drops when they matter.
                 </p>
@@ -177,18 +177,18 @@ export default function NewsletterSection({
               <div className="flex flex-col">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary font-bold">
-                    Join The Circle
+                    INVENTORY IS CAPPED TO PROTECT THE ROOM.
                   </span>
                   <div className="h-[1px] w-24 bg-white/10" />
                 </div>
                 
                 <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/45">SECURE</span>
-                  <span>ACCESS.</span>
+                  <span className="text-white/45">NEXT</span>
+                  <span>DROP.</span>
                 </h2>
                 
                 <p className="font-sans text-xl md:text-2xl text-white/78 leading-relaxed font-light mb-12 max-w-xl">
-                  Get priority access to event windows, secret lineup drops, and the Monolith Radio archive. No generic blasts. Just the signals that matter.
+                  Get ticket windows and limited drops before the general public. No generic blasts. Just world-class electronic music in spaces designed for it.
                 </p>
 
                 <div className="grid gap-6 border-t border-white/5 pt-12">
@@ -218,7 +218,7 @@ export default function NewsletterSection({
                 aria-describedby={submitError ? "newsletter-submit-error" : undefined}
               >
                 <div className="mb-4">
-                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Get Updates</h3>
+                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Join The Inner Circle</h3>
                   <p className="font-sans text-sm text-white/60 font-light">
                     Email is required. Phone is optional if you want text-first drops.
                   </p>
@@ -354,7 +354,7 @@ export default function NewsletterSection({
                   disabled={isSubmitting}
                   className="mt-6 w-full py-6 md:py-8 bg-white border border-white text-black font-heavy text-2xl md:text-3xl uppercase tracking-tighter disabled:opacity-50 transition-all duration-500 hover:bg-black hover:text-white flex items-center justify-between px-8 md:px-10 group"
                 >
-                  <span>{isSubmitting ? "TRANSMITTING..." : "SECURE ACCESS"}</span>
+                  <span>{isSubmitting ? "TRANSMITTING..." : "SECURE MEMBERSHIP"}</span>
                   {!isSubmitting && <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />}
                 </button>
               </form>

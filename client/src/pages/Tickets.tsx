@@ -99,7 +99,7 @@ export default function Tickets() {
               {featuredEyebrow}
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
-              GET TICKETS
+              SECURE ACCESS
             </h1>
             <p className="text-white/80 text-lg max-w-lg mb-4">
               Secure your spot. Limited capacity at every show.

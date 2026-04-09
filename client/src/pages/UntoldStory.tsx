@@ -34,7 +34,7 @@ export default function UntoldStory() {
     <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
         title="Untold Story"
-        description="A late-night Monolith series focused on deeper house music, immersive sound, and tighter rooms in Chicago."
+        description="The premier after-dark electronic music series in Chicago. Curated rooms, uncompromised sound, and a dedicated architectural standard for the late night."
         image={eventVisuals.poster}
       />
       {showEventSchema ? (
@@ -113,7 +113,7 @@ export default function UntoldStory() {
         </section>
       </main>
 
-      <SlimSubscribeStrip title="UNLOCK UNTOLD UPDATES" source="untold_story_strip" />
+      <SlimSubscribeStrip title="SECURE UNTOLD ACCESS" source="untold_story_strip" />
     </div>
   );
 }

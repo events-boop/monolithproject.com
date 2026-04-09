@@ -93,7 +93,7 @@ export default function ChasingSunsets() {
     <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise sunset-page">
       <SEO
         title="Chasing Sun(Sets)"
-        description="Golden hour. Good people. Great music. Rooftop shows and outdoor gatherings throughout Chicago."
+        description="The premier open-air electronic music series in Chicago. Curated rooms, panoramic views, and uncompromised sound."
         image="/images/chasing-sunsets-premium.png"
       />
       <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1" />
@@ -204,14 +204,12 @@ export default function ChasingSunsets() {
                 className="space-y-6 rounded-2xl border p-6 md:p-8 backdrop-blur-sm sunset-border-accent sunset-glass-card"
               >
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  Every Chasing Sun(Sets) show starts during golden hour. The music
-                  builds as the light changes. By the time the sun is gone, the
-                  energy is already there.
+                  Chicago's premier open-air ecosystem. Every show starts during golden hour. The music
+                  builds as the environment shifts. By the time the sun is gone, the uncompromised sound is already there.
                 </p>
                 <p className="leading-relaxed sunset-text-70">
                   Melodic house, afro house, organic downtempo — sounds that match
-                  the warmth. Rooftops, gardens, open-air spaces. No dark rooms,
-                  no strobes. Just the sky and the sound.
+                  the warmth. Rooftops, gardens, open-air spaces. No strobes, no dark rooms — just world-class electronic music in spaces designed for it.
                 </p>
 
                 {/* Tags */}

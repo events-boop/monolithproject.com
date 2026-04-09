@@ -120,9 +120,9 @@ export default function Home() {
             <CinematicBreak
               image="/images/untold-story-juany-deron-v2.jpg"
               videoSrc="/videos/hero-video-short.mp4"
-              quote="We believe music can hold a room together. We believe gathering should feel shared. We believe the strongest nights leave a record behind."
+              quote="We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music."
               attribution="The Monolith Project"
-              ctaLabel="Get Tickets"
+              ctaLabel="Secure Access"
               ctaUrl={ticketUrl}
               ctaExternal
             />

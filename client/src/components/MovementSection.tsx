@@ -101,7 +101,7 @@ export default function MovementSection() {
                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/[0.07] to-primary/0 translate-y-full group-hover:translate-y-[-20%] transition-transform duration-[1.5s] ease-out pointer-events-none" />
                
                <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light relative z-10">
-                 The Monolith Project is a Chicago music project built through recurring events, clear series, and an archive that stays visible after the night ends.
+                 We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music.
                </p>
                
                <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
@@ -177,7 +177,7 @@ export default function MovementSection() {
             <div className="mt-4 p-8 md:p-10 rounded-none border border-white/5 bg-[radial-gradient(ellipse_at_top_right,rgba(224,90,58,0.08),transparent_60%)] relative overflow-hidden">
                <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/30" />
                <p className="font-mono text-[11px] md:text-sm text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
-                 "Monolith exists to build nights that feel connected to something larger than themselves."
+                 "The Monolith Project isn't just a promoter; it's an ecosystem. We build the rooms where Chicago's best nights happen."
                </p>
             </div>
           </motion.div>

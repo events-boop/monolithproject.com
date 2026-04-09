@@ -151,13 +151,13 @@ export default function Footer() {
               {topNavRight}
             </span>
             <p className="text-white/70 text-sm leading-relaxed max-w-[220px]">
-              A Chicago-rooted music project built through recurring nights, distinct series, and rooms worth returning to.
+              Chicago's premier electronic music ecosystem. Curated rooms. Uncompromised sound. The best nights in Chicago.
             </p>
           </div>
 
           {links.map((group) => (
             <div key={group.title}>
-              <p className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/55 mb-6">{group.title}</p>
+              <h2 className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/55 mb-6">{group.title}</h2>
               <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={item.name}>
@@ -244,12 +244,12 @@ export default function Footer() {
 
         {/* Huge Edge-to-Edge Text */}
         <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full relative z-10">
-          <h1 className={`relative z-10 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
+          <div className={`relative z-10 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
             {displayTitle}
-          </h1>
+          </div>
 
           {/* Outline Overlay for Stroke Effect */}
-          <h1
+          <div
             className={`absolute inset-x-0 top-0 z-20 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
             style={{
               WebkitTextStroke: "2px rgba(255,255,255,0.3)",
@@ -257,7 +257,7 @@ export default function Footer() {
             }}
           >
             {displayTitle}
-          </h1>
+          </div>
         </motion.div>
       </div>
     </footer>

@@ -9,7 +9,7 @@ const lineupData = [
   { name: "Aaron Hibell", id: "aaron-hibell" }, { name: "Acid Pauli", id: "acid-pauli" }, { name: "Anfisa Letyago", id: "anfisa-letyago" },
   { name: "ANNA", id: "anna" }, { name: "Arodes", id: "arodes" }, { name: "ARTBAT", id: "artbat" }, { name: "Autograf", id: "autograf" },
   { name: "Benchek", series: "radio", id: "benchek" }, { name: "berlioz", id: "berlioz" }, { name: "Carlita", id: "carlita" }, { name: "Chris IDH", series: "radio", id: "chris-idh" },
-  { name: "Deer Jade", id: "deer-jade" }, { name: "Deron B2B Juany Bravo", series: "untold", id: "deron-juany-bravo" }, { name: "Enfant Sauvage", id: "enfant-sauvage" }, { name: "Eran Hersh", id: "eran-hersh" },
+  { name: "Deer Jade", id: "deer-jade" }, { name: "Deron B2B Juany Bravo", series: "untold", id: "deron-juany-bravo" }, { name: "Enfant Sauvage", id: "enfant-sauvage" }, { name: "Eran Hersh", series: "untold", id: "eran-hersh" },
   { name: "Eric Prydz", id: "eric-prydz" }, { name: "Ewerseen", series: "radio", id: "ewerseen" }, { name: "Étienne de Crécy", id: "etienne-de-crecy" }, { name: "Funk Tribu", id: "funk-tribu" },
   { name: "Ginton", id: "ginton" }, { name: "Jimi Jules", id: "jimi-jules" }, { name: "Kasablanca", id: "kasablanca" }, { name: "Kenya Grace", id: "kenya-grace" },
   { name: "Kerri Chandler", id: "kerri-chandler" }, { name: "KILIMANJARO", id: "kilimanjaro" }, { name: "Kölsch", id: "koelsch" }, { name: "Lane 8", id: "lane-8" }, { name: "Lazare Sabry", series: "untold", id: "lazare-sabry" },
@@ -26,6 +26,7 @@ const artistImageMap: Record<string, string> = {
   "Autograf": "/images/artist-autograf.webp",
   "Benchek": "/images/artist-benchek.jpg",
   "Deron B2B Juany Bravo": "/images/artist-deron-untold.webp",
+  "Eran Hersh": "/images/eran-hersh-live-1.png",
   "Lazare Sabry": "/images/artist-lazare.webp",
 };
 
