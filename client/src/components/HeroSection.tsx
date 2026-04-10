@@ -163,6 +163,12 @@ export default function HeroSection() {
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
   const venueLabel = bannerEvent ? getEventVenueLabel(bannerEvent) : slideInfo.venueLabel;
   const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
+  const mobileFallbackAction =
+    !bannerEvent && activeSlide === 3
+      ? { href: "/story", label: "Explore Untold Story" }
+      : !bannerEvent && activeSlide === 5
+        ? { href: "/archive", label: "View Archive" }
+        : undefined;
 
   const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
 
@@ -177,8 +183,11 @@ export default function HeroSection() {
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
 
   return (
-    <div className="bg-black">
-      <section id="hero" className="relative screen-shell-stable flex flex-col overflow-hidden bg-black">
+    <div className="bg-black flex min-h-[100vh] min-h-[100svh] min-h-[100dvh] flex-col md:block">
+      <section
+        id="hero"
+        className="relative min-h-[30rem] flex-1 overflow-hidden bg-black md:flex-none md:screen-shell-stable"
+      >
         {structuredData}
 
         {/* Cinematic Background Layer — always video slider */}
@@ -197,9 +206,9 @@ export default function HeroSection() {
         </div>
 
         {/* Main Impact Visuals (Center Focused) — always MONOLITH branding */}
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-6 text-center w-full pointer-events-none">
-          <div className="w-full flex flex-col items-center justify-center">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-8 lg:mb-16 relative">
+        <div className="absolute inset-0 z-30 flex w-full flex-col items-center justify-start px-6 pb-16 pt-[var(--shell-page-top-hero)] text-center pointer-events-none md:justify-center md:p-6">
+          <div className="flex w-full flex-col items-center justify-start md:justify-center">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-6 relative md:mb-16">
               <div className="flex items-center gap-4 justify-center">
                 <div className="h-px w-8 md:w-20 bg-white/10" />
                 <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{getEventEyebrow(featuredEvent) || "Chicago Music Project"}</h2>
@@ -207,7 +216,7 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center justify-center text-white relative z-10">
+            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 flex flex-col items-center justify-center text-white">
               <motion.h1
                 key={headlineCycle}
                 className={cn(
@@ -222,7 +231,7 @@ export default function HeroSection() {
               <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
               <RevealText
                 as="p"
-                className="mt-8 text-white/50 max-w-lg font-mono text-[10px] md:text-sm tracking-[0.4em] uppercase text-center"
+                className="mt-6 max-w-sm text-center font-mono text-[10px] uppercase tracking-[0.34em] text-white/50 md:mt-8 md:max-w-lg md:text-sm md:tracking-[0.4em]"
                 delay={1.8}
                 stagger={0.04}
               >
@@ -294,13 +303,10 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        <div className="md:hidden absolute inset-x-0 bottom-0 h-28 z-20 pointer-events-none bg-gradient-to-t from-black via-black/70 to-transparent" />
-      </section>
+        <div className="absolute inset-x-0 bottom-0 z-20 h-40 pointer-events-none bg-gradient-to-t from-black via-black/70 to-transparent md:hidden" />
 
-      {/* MOBILE BOTTOM DOCK */}
-      <div className="md:hidden relative z-40 border-t border-white/8 bg-black/95 px-4 pt-4 safe-bottom">
-        <div className="flex flex-col gap-3">
-          <div className="rounded-2xl border border-white/10 bg-black/60 px-4 py-4 backdrop-blur-xl">
+        <div className="absolute inset-x-0 bottom-0 z-40 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] md:hidden">
+          <div className="rounded-[1.25rem] border border-white/10 bg-black/72 px-4 py-3 backdrop-blur-2xl shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
             <div className="flex items-center gap-3">
               <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shrink-0" />
               <span className="font-mono text-[10px] tracking-[0.3em] text-white/45 uppercase">
@@ -309,39 +315,40 @@ export default function HeroSection() {
             </div>
             <h3
               className={cn(
-                "mt-3 font-display text-2xl font-[1000] uppercase tracking-tight leading-[0.92]",
+                "mt-2 font-display text-[1.5rem] font-[1000] uppercase tracking-tight leading-[0.92]",
                 isJuly4thEvent ? "july-4th-gradient" : "text-white"
               )}
             >
               {headline}
             </h3>
-            <span className="mt-2 block font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
+            <span className="mt-1 block font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
               {eyebrow} {venueLabel ? `@${venueLabel}` : ""}
             </span>
             {targetDate && !isExpired ? (
-              <div className="mt-4 border-t border-white/10 pt-4">
+              <div className="mt-3 border-t border-white/10 pt-3 hidden [@media(min-height:640px)]:block">
                 <CountdownDisplay target={targetDate} />
               </div>
             ) : null}
+            <div className="mt-3">
+              {bannerEvent ? (
+                <ConversionCTA
+                  event={bannerEvent}
+                  size="lg"
+                  showUrgency={true}
+                  variant="primary"
+                  className="w-full"
+                />
+              ) : mobileFallbackAction ? (
+                <Link href={mobileFallbackAction.href} asChild>
+                  <a className="flex h-12 w-full items-center justify-center rounded-full border border-white/15 bg-white text-[11px] font-bold uppercase tracking-[0.32em] text-black transition-colors hover:bg-primary hover:text-white">
+                    {mobileFallbackAction.label}
+                  </a>
+                </Link>
+              ) : null}
+            </div>
           </div>
-          {eranEvent && (
-            <ConversionCTA
-              event={eranEvent}
-              size="lg"
-              showUrgency={true}
-              variant={slideInfo.eventId === "us-s3e3" ? "primary" : "outline"}
-            />
-          )}
-          {july4Event && (
-            <ConversionCTA
-              event={july4Event}
-              size="lg"
-              showUrgency={true}
-              variant={slideInfo.eventId === "css-jul04" || slideInfo.fallbackToFeaturedEvent ? "primary" : "outline"}
-            />
-          )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
