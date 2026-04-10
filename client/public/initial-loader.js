@@ -5,8 +5,8 @@
   let removed = false;
   let removing = false;
   const startedAt = performance.now();
-  const MIN_VISIBLE_MS = 420;
-  const FADE_MS = 280;
+  const MIN_VISIBLE_MS = 320;
+  const FADE_MS = 220;
 
   const removeLoader = () => {
     if (removed || removing) return;
@@ -28,6 +28,6 @@
   };
 
   window.addEventListener("monolith:app-ready", removeLoader, { once: true });
-  window.addEventListener("load", removeLoader, { once: true });
-  setTimeout(removeLoader, 2500);
+  window.addEventListener("load", () => setTimeout(removeLoader, 40), { once: true });
+  setTimeout(removeLoader, 1800);
 })();
