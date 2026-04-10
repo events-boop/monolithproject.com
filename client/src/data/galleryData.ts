@@ -50,7 +50,7 @@ export const homeGallery: MediaItem[] = [
   image({
     id: "home-untold-juany-deron",
     kind: "image",
-    src: "/images/untold-story-juany-deron-v2.jpg",
+    src: "/images/untold-story-juany-deron-v2.webp",
     width: 2399,
     height: 3600,
     alt: "Untold Story with Juany Bravo and Deron",
@@ -83,7 +83,7 @@ export const homeGallery: MediaItem[] = [
   image({
     id: "home-collective",
     kind: "image",
-    src: "/images/hero-monolith.jpg",
+    src: "/images/hero-monolith.webp",
     width: 2752,
     height: 1536,
     alt: "The Monolith Project collective",
@@ -116,7 +116,7 @@ export const chasingSeason1: MediaItem[] = [
   image({
     id: "css1-overview",
     kind: "image",
-    src: "/images/chasing-sunsets-premium.png",
+    src: "/images/chasing-sunsets-premium.webp",
     width: 2752,
     height: 1536,
     alt: "Chasing Sun(Sets) overview at sunset",
@@ -327,7 +327,7 @@ export const untoldSeason1: MediaItem[] = [
   image({
     id: "untold1-overview",
     kind: "image",
-    src: "/images/untold-story-moody.png",
+    src: "/images/untold-story-moody.webp",
     width: 2752,
     height: 1536,
     alt: "Untold Story atmosphere",
@@ -469,7 +469,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     subtitle: "Season I",
     description: "Golden-hour frames, artist portraits, and moving records from the first season.",
     accentColor: "#E8B86D",
-    coverImage: "/images/chasing-sunsets-premium.png",
+    coverImage: "/images/chasing-sunsets-premium.webp",
     date: "Summer 2024",
     media: chasingSeason1,
   },
@@ -499,7 +499,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     subtitle: "Season I",
     description: "The first chapter of Untold Story in poster, crowd, and manifesto form.",
     accentColor: "#8B5CF6",
-    coverImage: "/images/untold-story-moody.png",
+    coverImage: "/images/untold-story-moody.webp",
     date: "2024",
     media: untoldSeason1,
   },
@@ -519,7 +519,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     subtitle: "Season III — Deron B2B Juany Bravo",
     description: "121 photos from the Deron B2B Juany Bravo chapter.",
     accentColor: "#8B5CF6",
-    coverImage: "/images/untold-story-juany-deron-v2.jpg",
+    coverImage: "/images/untold-story-juany-deron-v2.webp",
     date: "March 6, 2026",
     media: untoldSeason3,
   },
@@ -539,7 +539,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     subtitle: "Global Chapters",
     description: "Atmospheric studies from Eran Hersh's international circuit, featuring RheinRiff and Bazar chapters.",
     accentColor: "#22D3EE",
-    coverImage: "/images/eran-hersh-live-5.jpg",
+    coverImage: "/images/eran-hersh-live-5.webp",
     date: "2024-2025",
     media: [
       image({
@@ -563,7 +563,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
       image({
         id: "eran-global-3",
         kind: "image",
-        src: "/images/eran-hersh-live-5.jpg",
+        src: "/images/eran-hersh-live-5.webp",
         width: 2500,
         height: 1667,
         alt: "Eran Hersh at RheinRiff",

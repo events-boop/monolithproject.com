@@ -39,7 +39,7 @@ export const insightEntries: InsightEntry[] = [
       "Why EWERSEEN works in the Chasing Sun(Sets) lane: patient movement, clean structure, and rhythms that let the room open up before it peaks.",
     deck:
       "Not every guest fits an open-air chapter. The ones that do understand that the room has to breathe before it can lift. EWERSEEN is one of those bookings.",
-    image: "/images/chasing-sunsets-premium.png",
+    image: "/images/chasing-sunsets-premium.webp",
     accent: "sunsets",
     tags: ["Artist Feature", "Chasing Sun(Sets)", "Open-Air Curation"],
     relatedLinks: [
@@ -81,7 +81,7 @@ export const insightEntries: InsightEntry[] = [
       "A quick listen guide to EP-01 and the pacing choices that made it a clean entry point for the Chasing Sun(Sets) Radio Show.",
     deck:
       "The first radio drops do more than fill a feed. They tell people what standard the project is going to keep. EP-01 had to make that clear fast.",
-    image: "/images/radio-show-gear.png",
+    image: "/images/radio-show-gear.webp",
     accent: "radio",
     tags: ["Set Drop", "Radio Show", "BENCHEK"],
     relatedLinks: [
@@ -165,7 +165,7 @@ export const insightEntries: InsightEntry[] = [
       "A note on the people who make a Monolith room feel like Monolith: returning guests, first-timers with taste, and dancers who come to share the night.",
     deck:
       "Monolith is music-first, but the crowd still matters. Not in a status way. In a room way. The people inside the chapter help determine whether the night feels disposable or worth returning to.",
-    image: "/images/industrial-roster.png",
+    image: "/images/industrial-roster.webp",
     accent: "story",
     tags: ["Fan Feature", "Togetherness", "Room Culture"],
     relatedLinks: [

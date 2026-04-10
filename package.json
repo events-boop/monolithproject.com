@@ -15,6 +15,7 @@
     "check": "tsc --noEmit",
     "seo:sync": "node scripts/sync_seo_artifacts.mjs",
     "images:generate": "node scripts/generate_responsive_images.mjs",
+    "budget:check": "node scripts/check_performance_budget.mjs",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -27,6 +28,7 @@
     "test:visual": "VISUAL_TESTS=1 npm run test:e2e",
     "test:visual:update": "VISUAL_TESTS=1 npx playwright test e2e/visual.spec.ts --config=playwright.config.ts --update-snapshots",
     "bundle:report": "npm run build && node scripts/bundle_report.mjs",
+    "perf:report": "npm run build && node scripts/bundle_report.mjs && npm run budget:check",
     "pixieset:download": "node scripts/pixieset_bulk_download.mjs",
     "webhooks:replay": "tsx scripts/replay_failed_webhooks.mts",
     "lhci": "lhci autorun"

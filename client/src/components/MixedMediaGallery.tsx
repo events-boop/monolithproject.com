@@ -1,12 +1,16 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MasonryPhotoAlbum, Photo } from "react-photo-album";
-import "react-photo-album/masonry.css";
 import { MediaItem, homeGallery } from "@/data/galleryData";
 
 const GalleryLightbox = lazy(() => import("./GalleryLightbox"));
 
-type GalleryPhoto = Photo & {
+type GalleryPhoto = {
+  key: string;
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  title: string;
   media: MediaItem;
   kind: MediaItem["kind"];
   label: string;
@@ -37,6 +41,9 @@ export default function MixedMediaGallery({
   const [index, setIndex] = useState(-1);
   const isLightboxOpen = index >= 0;
   const hasMedia = media.length > 0;
+  const mediaCountLabel = media.some((item) => item.kind === "video")
+    ? `${media.length} ${media.length === 1 ? "item" : "items"}`
+    : `${media.length} ${media.length === 1 ? "photo" : "photos"}`;
 
   const photos = useMemo<GalleryPhoto[]>(() => {
     return media.map((item) => {
@@ -64,7 +71,7 @@ export default function MixedMediaGallery({
   }, [media]);
 
   return (
-    <section className={`py-16 relative ${className}`} style={style}>
+    <section className={`gallery-shell relative ${className}`} style={style}>
       <div className="container layout-wide px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
@@ -85,7 +92,7 @@ export default function MixedMediaGallery({
           </div>
           {hasMedia && (
             <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30">
-              {media.length} {media.length === 1 ? "photo" : "photos"}
+              {mediaCountLabel}
             </p>
           )}
         </div>
@@ -97,85 +104,45 @@ export default function MixedMediaGallery({
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           {hasMedia ? (
-            <MasonryPhotoAlbum
-              photos={photos}
-              columns={(containerWidth) =>
-                dense
-                  ? containerWidth < 480
-                    ? 2
-                    : containerWidth < 768
-                      ? 3
-                      : containerWidth < 1280
-                        ? 4
-                        : 5
-                  : containerWidth < 640
-                    ? 1
-                    : containerWidth < 1080
-                      ? 2
-                      : 3
-              }
-              spacing={dense ? 6 : 16}
-              padding={0}
-              sizes={{
-                size: "calc(100vw - 3rem)",
-                sizes: dense
-                  ? [
-                      { viewport: "(min-width: 1280px)", size: "240px" },
-                      { viewport: "(min-width: 768px)", size: "calc((100vw - 4rem) / 4)" },
-                      { viewport: "(min-width: 480px)", size: "calc((100vw - 3rem) / 3)" },
-                    ]
-                  : [
-                      { viewport: "(min-width: 1280px)", size: "384px" },
-                      { viewport: "(min-width: 640px)", size: "calc((100vw - 5rem) / 2)" },
-                    ],
-              }}
-              onClick={({ index: nextIndex }) => setIndex(nextIndex)}
-              componentsProps={{
-                wrapper: () => ({
-                  className: dense
-                    ? "group relative overflow-hidden cursor-pointer"
-                    : "group relative overflow-hidden border-l border-b border-white/10 bg-[#050505] transition-all duration-500 hover:border-white/25",
-                }),
-                button: ({ photo }) => ({
-                  className:
-                    "block w-full overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
-                  "aria-label": photo.label,
-                }),
-                image: ({ photo }) => ({
-                  className: dense
-                    ? `w-full h-auto object-cover transition-all duration-500 ease-out group-hover:scale-[1.03] ${
-                        photo.kind === "video" ? "opacity-90 group-hover:opacity-100" : ""
-                      }`
-                    : `w-full h-auto object-cover transition-all duration-700 ease-[0.22,1,0.36,1] opacity-80 group-hover:opacity-100 group-hover:scale-[1.04] ${
-                        photo.kind === "video" ? "opacity-90" : ""
-                      }`,
-                }),
-              }}
-              render={{
-                extras: (_, { photo }) => (
-                  <>
-                    {photo.kind === "video" && (
-                      <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 border border-white/20 bg-black/60 px-2 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
-                        <span className="h-1.5 w-1.5 bg-primary animate-pulse" />
-                        Video
+            <div className={dense ? "gallery-grid-4up" : "gallery-grid-3up"}>
+              {photos.map((photo, photoIndex) => (
+                <button
+                  key={photo.key}
+                  type="button"
+                  onClick={() => setIndex(photoIndex)}
+                  aria-label={photo.label}
+                  className="gallery-card-frame group text-left transition-all duration-500 hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.04] ${
+                      photo.kind === "video" ? "opacity-90" : ""
+                    }`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  {photo.kind === "video" && (
+                    <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1.5 border border-white/20 bg-black/60 px-2 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-white/80 backdrop-blur-sm">
+                      <span className="h-1.5 w-1.5 bg-primary animate-pulse" />
+                      Video
+                    </div>
+                  )}
+                  {(photo.caption || photo.credit) && (
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 md:p-5">
+                      <div className="translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                        {photo.caption && (
+                          <p className="font-display text-sm uppercase tracking-[0.18em] text-white drop-shadow-xl md:text-base">
+                            {photo.caption}
+                          </p>
+                        )}
                       </div>
-                    )}
-
-                    {!dense && (photo.caption || photo.credit) && (
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5">
-                        <div className="translate-y-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                          {photo.caption && (
-                            <p className="font-display text-lg uppercase tracking-wider text-white drop-shadow-xl">
-                              {photo.caption}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </>
-                ),
-              }}
-            />
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
           ) : (
             <div className="border border-white/10 bg-white/[0.03] px-6 py-12 text-center">
               <p className="font-display text-2xl uppercase text-white/90">

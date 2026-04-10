@@ -31,7 +31,7 @@ export default function UntoldStory() {
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 
   return (
-    <div className="min-h-screen text-white selection:bg-purple-500 selection:text-white bg-noise bg-untold-deep-solid">
+    <div className="min-h-screen text-white selection:bg-cyan-400/20 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
         title="Untold Story"
         description="The premier after-dark electronic music series in Chicago. Curated rooms, uncompromised sound, and a dedicated architectural standard for the late night."
@@ -68,7 +68,7 @@ export default function UntoldStory() {
             title="The Blueprint"
             subtitle="Summer Mel • Avo"
             description="The first Untold Story event. A look back at the original flyers that set the tone on June 21st at Nisos Lounge."
-            accentColor="#8B5CF6"
+            accentColor="#22D3EE"
             images={[
               { src: "/images/untold-s1e1-summer.jpg", alt: "Summer Mel - Chapter 01", label: "SUMMER MEL" },
               { src: "/images/untold-s1e1-info.jpg", alt: "What is an Untold Story", label: "THE MANIFESTO" },
@@ -80,26 +80,26 @@ export default function UntoldStory() {
           {/* Links for Season 2 and 3 Galleries */}
           <div className="py-12 flex flex-col md:flex-row gap-6 border-t border-white/10">
             <div className="flex-1 p-8 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#22D3EE]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
-                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season II</span>
+                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#22D3EE] block mb-2">Season II</span>
                 <h4 className="font-display text-2xl uppercase text-white mb-4">The Series Grows</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">360° sound. Deeper rooms. The records of 2025.</p>
                 <Link href="/untold-story/season-ii" asChild>
-                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">
+                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#22D3EE] transition-colors">
                     View Archive <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </Link>
               </div>
             </div>
             <div className="flex-1 p-8 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#22D3EE]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10">
-                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6] block mb-2">Season III</span>
+                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#22D3EE] block mb-2">Season III</span>
                 <h4 className="font-display text-2xl uppercase text-white mb-4">The Biggest Season Yet</h4>
                 <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Currently unfolding. Unforgettable artist showcases.</p>
                 <Link href="/untold-story/season-iii" asChild>
-                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#8B5CF6] transition-colors">
+                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#22D3EE] transition-colors">
                     View Archive <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </Link>

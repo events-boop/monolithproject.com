@@ -1295,23 +1295,25 @@
   isolation: isolate;
 }
 
-.spotlight-leak::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background: radial-gradient(
-    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    color-mix(in srgb, var(--scene-glow, rgba(224, 90, 58, 0.15)) 12%, transparent),
-    transparent 80%
-  );
-  opacity: 0;
-  transition: opacity 1.5s var(--motion-luxe);
-}
+@media (hover: hover) and (pointer: fine) {
+  html[data-desktop-chrome="true"] .spotlight-leak::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(
+      800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      color-mix(in srgb, var(--scene-glow, rgba(224, 90, 58, 0.15)) 12%, transparent),
+      transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 1.5s var(--motion-luxe);
+  }
 
-.spotlight-leak:hover::after {
-  opacity: 1;
+  html[data-desktop-chrome="true"] .spotlight-leak:hover::after {
+    opacity: 1;
+  }
 }
 
 /* Force global mouse variables to be available */

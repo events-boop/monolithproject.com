@@ -11,7 +11,7 @@ const panels = [
     title: "Artists",
     tagline: "The selectors and guests who shape every room.",
     color: "#D4A574",
-    image: "/images/industrial-roster.png",
+    image: "/images/industrial-roster.webp",
     href: "/lineup",
     icon: Users,
     badge: "Full Roster",
@@ -47,7 +47,7 @@ const panels = [
     title: "Radio Show",
     tagline: "Mixes, guest sets, and full replays.",
     color: "#FFFFFF",
-    image: "/images/radio-show-gear.png",
+    image: "/images/radio-show-gear.webp",
     href: "/radio",
     icon: AudioLines,
     badge: "Now Playing",
@@ -58,8 +58,8 @@ export default function ShowcaseSplit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="relative min-h-screen lg:h-[80vh] lg:min-h-[600px] w-full overflow-hidden bg-black border-y border-white/10">
-      <div className="flex flex-col lg:flex-row h-full w-full">
+    <section className="relative split-panel-shell w-full overflow-hidden bg-black border-y border-white/10">
+      <div className="split-panel-track">
         {panels.map((panel) => (
           <motion.div
             key={panel.id}
@@ -70,7 +70,7 @@ export default function ShowcaseSplit() {
               flex: hoveredId === panel.id ? 2 : hoveredId === null ? 1 : 0.8,
             }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative group min-h-[220px] lg:h-full cursor-pointer overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10 last:border-0 scroll-mt-32"
+            className="split-panel-item relative group cursor-pointer overflow-hidden border-b border-white/10 last:border-0 scroll-mt-32 lg:border-b-0 lg:border-r"
           >
             <Link href={panel.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}

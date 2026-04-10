@@ -107,7 +107,7 @@ export default function About() {
             muted
             playsInline
             className="w-full h-full object-cover scale-105"
-            poster="/images/hero-monolith.jpg"
+            poster="/images/hero-monolith.webp"
           >
             <source src="/videos/hero-video-short.mp4" type="video/mp4" />
           </video>

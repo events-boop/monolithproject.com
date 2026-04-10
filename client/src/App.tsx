@@ -6,16 +6,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
-import GlobalSVGFilters from "./components/ui/GlobalSVGFilters";
 import PageTransition from "./components/PageTransition";
-import MissYouTab from "./components/MissYouTab";
 import { useUI, UIProvider } from "./contexts/UIContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
-import CoordinateHUD from "./components/CoordinateHUD";
 
 // Lazy Pages
 const Tickets = lazy(() => import("./pages/Tickets"));
@@ -221,14 +218,12 @@ const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"))
 const AmbientAudioEngine = lazy(() => import("./components/AmbientAudioEngine"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
 const Toaster = lazy(() => import("@/components/ui/sonner").then((module) => ({ default: module.Toaster })));
-const LiquidRippleTrail = lazy(() => import("./components/LiquidRippleTrail"));
-
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);
 
   // GPU-accelerated effects only. Filters (like blur) on the main app shell destroy Lighthouse scores.
-  const shellTransform = isDrawerActive ? "translateY(0) scale(0.985)" : isSensoryOverloadActive ? "scale(0.96) translateY(2vh)" : "none";
+  const shellTransform = "none";
   const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.15 : 1;
   const shellFilter = "none";
 
@@ -244,11 +239,10 @@ function MainContentWrapper() {
       <Suspense fallback={null}>
         <GlobalTicketButton />
         <AmbientAudioEngine />
-        <LiquidRippleTrail />
       </Suspense>
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full analogue-grid"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,
@@ -272,10 +266,7 @@ function App() {
       <ErrorBoundary>
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
-            <GlobalSVGFilters />
             <div className="film-grain" />
-            <CoordinateHUD />
-            <MissYouTab />
             <MainContentWrapper />
             
             <Suspense fallback={null}>

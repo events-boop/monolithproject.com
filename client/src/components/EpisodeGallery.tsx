@@ -1,7 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
-import { useRef } from "react";
 
 interface EpisodeGalleryProps {
     series: "chasing-sunsets" | "untold-story";
@@ -25,15 +24,9 @@ export default function EpisodeGallery({
     accentColor,
 }: EpisodeGalleryProps) {
     const isChasing = series === "chasing-sunsets";
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
-    
-    // Asymmetrical scroll physics — significantly reduced on mobile to prevent content occlusion
-    const yEven = useTransform(scrollYProgress, [0, 1], [40, -40]);
-    const yOdd = useTransform(scrollYProgress, [0, 1], [-20, 20]);
 
     return (
-        <div ref={containerRef} className={`py-16 ${isChasing ? "sunset-border-accent" : "border-white/10"}`}>
+        <div className={`gallery-shell ${isChasing ? "sunset-border-accent" : "border-white/10"}`}>
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 relative z-10">
                 <div>
                     <span
@@ -69,22 +62,22 @@ export default function EpisodeGallery({
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-10">
+            <div className="gallery-grid-4up pt-10">
                 {images.map((img, idx) => {
-                    const isEven = idx % 2 === 0;
                     return (
                         <motion.div
                             key={idx}
-                            style={{ y: isEven ? yEven : yOdd }}
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true, margin: "-50px" }}
                             transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="group relative aspect-[3/4] rounded-xl overflow-hidden glass border border-white/10 grayscale-[60%] hover:grayscale-0 transition-all duration-700 hover:z-20 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+                            className="gallery-card-frame group grayscale-[60%] rounded-xl glass transition-all duration-700 hover:z-20 hover:grayscale-0 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
                         >
                             <img
                                 src={img.src}
                                 alt={img.alt}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-700" />

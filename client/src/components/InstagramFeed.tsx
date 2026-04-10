@@ -28,7 +28,7 @@ const MOCK_POSTS: InstagramPost[] = [
     {
         id: "mock-1",
         media_type: "IMAGE",
-        media_url: "/images/untold-story-juany-deron-v2.jpg",
+        media_url: "/images/untold-story-juany-deron-v2.webp",
         permalink: INSTAGRAM_MONOLITH,
         caption: "The energy in the room was unmatched. ✨ #MonolithProject #UntoldStory",
         timestamp: new Date().toISOString(),
@@ -48,7 +48,7 @@ const MOCK_POSTS: InstagramPost[] = [
     {
         id: "mock-3",
         media_type: "IMAGE",
-        media_url: "/images/chasing-sunsets-premium.png",
+        media_url: "/images/chasing-sunsets-premium.webp",
         permalink: INSTAGRAM_SUNSETS,
         caption: "Chasing Sun(Sets) returns soon. Are you ready?",
         timestamp: new Date().toISOString(),

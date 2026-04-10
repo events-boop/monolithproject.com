@@ -38,7 +38,7 @@ const hoverImages = [
   "/images/artist-deron-untold.webp",
   "/images/artist-haai.webp",
   "/images/artist-joezi.webp",
-  "/images/industrial-roster.png",
+  "/images/industrial-roster.webp",
   "/images/artist-lazare.webp"
 ];
 

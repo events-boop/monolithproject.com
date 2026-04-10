@@ -4,7 +4,7 @@
  * Intercepts HTML responses (index.html) and:
  * 1. Generates a cryptographically random nonce
  * 2. Adds nonce attribute to all <script> tags
- * 3. Replaces 'unsafe-inline' with the nonce in the CSP header
+ * 3. Replaces the static nonce placeholder in the CSP header
  */
 
 function generateNonce() {
@@ -31,13 +31,12 @@ export default async function cspNonce(request, context) {
   // Add nonce to all <script> tags (both <script src="..."> and <script>...</script>)
   html = html.replace(/<script(?=[\s>])/gi, `<script nonce="${nonce}"`);
 
-  // Rewrite CSP header: replace 'unsafe-inline' in script-src with nonce
+  // Rewrite CSP header: replace the static nonce placeholder with the per-request nonce
   const csp = response.headers.get("content-security-policy");
   if (csp) {
-    const newCsp = csp.replace(
-      /(script-src\s[^;]*)'unsafe-inline'/,
-      `$1'nonce-${nonce}' 'strict-dynamic'`
-    );
+    const newCsp = csp
+      .replace(/'nonce-__CSP_NONCE__'/g, `'nonce-${nonce}'`)
+      .replace(/__CSP_NONCE__/g, nonce);
     response.headers.set("content-security-policy", newCsp);
   }
 

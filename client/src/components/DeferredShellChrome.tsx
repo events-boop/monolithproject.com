@@ -5,7 +5,9 @@ import {
   shouldEnableSmoothScroll,
 } from "@/lib/runtimePerformance";
 
+const CoordinateHUD = lazy(() => import("./CoordinateHUD"));
 const CustomCursor = lazy(() => import("./CustomCursor"));
+const GlobalSVGFilters = lazy(() => import("./ui/GlobalSVGFilters"));
 const SensoryOverloadOverlay = lazy(() => import("./SensoryOverloadOverlay"));
 const SmoothScroll = lazy(() => import("./SmoothScroll"));
 
@@ -14,10 +16,20 @@ export default function DeferredShellChrome() {
   const [enableSmoothScroll, setEnableSmoothScroll] = useState(false);
 
   useEffect(() => {
-    return runWhenIdle(() => {
+    const syncChrome = () => {
       setEnableDesktopChrome(shouldEnableDesktopChrome());
       setEnableSmoothScroll(shouldEnableSmoothScroll());
-    }, 1800);
+    };
+
+    const cancelIdle = runWhenIdle(syncChrome, 1800);
+    window.addEventListener("resize", syncChrome, { passive: true });
+    window.addEventListener("orientationchange", syncChrome, { passive: true });
+
+    return () => {
+      cancelIdle();
+      window.removeEventListener("resize", syncChrome);
+      window.removeEventListener("orientationchange", syncChrome);
+    };
   }, []);
 
   if (!enableDesktopChrome && !enableSmoothScroll) return null;
@@ -27,6 +39,8 @@ export default function DeferredShellChrome() {
       {enableSmoothScroll ? <SmoothScroll /> : null}
       {enableDesktopChrome ? (
         <>
+          <GlobalSVGFilters />
+          <CoordinateHUD />
           <CustomCursor />
           <SensoryOverloadOverlay />
         </>

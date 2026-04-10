@@ -27,7 +27,7 @@ export default function ChasingSunsetsDetails() {
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = "/images/chasing-sunsets-premium.png";
+                        (e.currentTarget as HTMLImageElement).src = "/images/chasing-sunsets-premium.webp";
                     }}
                     className="absolute inset-0 w-full h-full object-cover object-[50%_35%] opacity-[0.6] saturate-[1.1] contrast-[1.08] brightness-[0.98]"
                 />

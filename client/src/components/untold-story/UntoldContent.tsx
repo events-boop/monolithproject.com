@@ -24,7 +24,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             </span>
             <h2 className="font-display text-4xl md:text-5xl text-white">{event?.headline || event?.title || "UNTOLD STORY"}</h2>
           </div>
-          <span className="font-mono text-xs tracking-widest text-untold-violet">{event?.episode || "Chapter"}</span>
+          <span className="font-mono text-xs tracking-widest text-untold-cyan">{event?.episode || "Chapter"}</span>
         </div>
 
         {/* Featured event card */}
@@ -36,7 +36,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
           className="relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid"
         >
           {/* Glow accent */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none bg-[#8B5CF6]" />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none bg-[#22D3EE]" />
 
           <div className="relative p-8 md:p-12">
             <div className="mb-10 overflow-hidden rounded-xl border border-untold-violet-25">

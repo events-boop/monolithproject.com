@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getPublicEvents } from "@/lib/siteData";
+import { getSeriesLabel, getEventVenueLabel } from "@/lib/siteExperience";
 
 export function getEventById(id: string) {
   return getPublicEvents().find(e => e.id === id);
@@ -43,23 +44,26 @@ function getTimeLeft(target: Date) {
   };
 }
 
-function Digit({ value, label }: { value: number; label: string }) {
+function Digit({ value, label, accentColor }: { value: number; label: string; accentColor: string }) {
   const display = String(value).padStart(2, "0");
   return (
     <div className="flex flex-col items-center gap-2 min-w-0">
       <div className="relative overflow-hidden">
-        <span className="font-heavy text-[clamp(2.5rem,8vw,8rem)] leading-none tracking-tighter text-white tabular-nums group-hover:text-primary transition-colors">
+        <span className="font-heavy text-[clamp(3rem,9vw,9rem)] leading-none tracking-[-0.05em] text-white tabular-nums transition-colors">
           {display}
         </span>
       </div>
-      <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/50">
+      <span
+        className="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.35em]"
+        style={{ color: accentColor }}
+      >
         {label}
       </span>
     </div>
   );
 }
 
-function LiveClock({ targetDate }: { targetDate: string }) {
+function LiveClock({ targetDate, accentColor }: { targetDate: string; accentColor: string }) {
   const [timeLeft, setTimeLeft] = useState(() =>
     getTimeLeft(parseEventDate(targetDate))
   );
@@ -76,13 +80,31 @@ function LiveClock({ targetDate }: { targetDate: string }) {
 
   return (
     <div className="flex items-end gap-2 md:gap-8" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
-      <Digit value={timeLeft.days} label="Days" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
-      <Digit value={timeLeft.hours} label="Hours" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
-      <Digit value={timeLeft.minutes} label="Min" />
-      <div className="font-heavy text-[clamp(2rem,6vw,7rem)] leading-none text-white/10 mb-6 md:mb-8 select-none" aria-hidden="true">:</div>
-      <Digit value={timeLeft.seconds} label="Sec" />
+      <Digit value={timeLeft.days} label="Days" accentColor={accentColor} />
+      <div
+        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        style={{ color: `${accentColor}55` }}
+        aria-hidden="true"
+      >
+        :
+      </div>
+      <Digit value={timeLeft.hours} label="Hours" accentColor={accentColor} />
+      <div
+        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        style={{ color: `${accentColor}55` }}
+        aria-hidden="true"
+      >
+        :
+      </div>
+      <Digit value={timeLeft.minutes} label="Min" accentColor={accentColor} />
+      <div
+        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        style={{ color: `${accentColor}55` }}
+        aria-hidden="true"
+      >
+        :
+      </div>
+      <Digit value={timeLeft.seconds} label="Sec" accentColor={accentColor} />
     </div>
   );
 }
@@ -94,7 +116,9 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
   const isSunsets = event.series === "chasing-sunsets";
   const seriesColor = isSunsets ? "#E8B86D" : event.series === "untold-story" ? "#22D3EE" : "#E05A3A";
-  const [dateMonth, dateDay] = event.date.split(" ");
+  const seriesLabel = getSeriesLabel(event.series);
+  const countdownTitle = event.headline || event.title;
+  const venueLabel = getEventVenueLabel(event);
 
   return (
     <div className={`relative w-full overflow-hidden transition-colors duration-700 bg-noise ${isSunsets ? 'bg-[#120f0a]' : 'bg-[#0a0f12]'}`}>
@@ -109,20 +133,29 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
           <div className="flex flex-col gap-6 shrink-0">
             <div className="flex items-center gap-4">
               <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
-              <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-white/40">
-                Next Drop
+              <span className="font-mono text-[12px] md:text-sm uppercase tracking-[0.4em] text-white/40">
+                Series Countdown
               </span>
             </div>
             <div>
-              <p className="font-mono text-[11px] md:text-sm uppercase tracking-[0.3em] mb-4 drop-shadow-md" style={{ color: seriesColor }}>
-                {dateMonth} {dateDay}
+              <p
+                className="font-heavy text-[clamp(2.6rem,7vw,5.8rem)] uppercase tracking-[0.08em] leading-[0.88] mb-3"
+                style={{ color: seriesColor }}
+              >
+                {seriesLabel}
               </p>
-              <h3 className="font-heavy text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-white leading-none max-w-md drop-shadow-2xl">
-                {event.title}
+              <h3 className="font-heavy text-[clamp(3.3rem,9vw,8.4rem)] uppercase tracking-[-0.05em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
+                {countdownTitle}
               </h3>
+              <p
+                className="mt-5 font-mono text-[clamp(1rem,2.2vw,1.65rem)] uppercase tracking-[0.34em] drop-shadow-md"
+                style={{ color: seriesColor }}
+              >
+                {event.date}
+              </p>
               {event.venue && (
-                <p className="font-sans text-base md:text-lg text-white/50 mt-4 font-light italic">
-                  {event.venue} // {event.location} // {event.dress || "Elevated Attire"}
+                <p className="font-sans text-lg md:text-xl text-white/55 mt-4 font-light italic max-w-2xl">
+                  {venueLabel} // {event.dress || "Elevated Attire"}
                 </p>
               )}
 
@@ -187,7 +220,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
           {/* Right: Live countdown */}
           <div className="flex flex-1 justify-center lg:justify-end">
-            <LiveClock targetDate={event.date} />
+            <LiveClock targetDate={event.date} accentColor={seriesColor} />
           </div>
 
         </div>

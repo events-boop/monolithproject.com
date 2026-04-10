@@ -8,18 +8,23 @@ const outputDir = path.join(sourceDir, "generated");
 
 const presets = [
   {
-    input: "artists-collective.jpg",
+    input: "artists-collective.webp",
     baseName: "artists-collective",
     widths: [640, 960, 1280, 1600],
   },
   {
-    input: "chasing-sunsets.jpg",
+    input: "chasing-sunsets.webp",
     baseName: "chasing-sunsets",
     widths: [640, 960, 1280, 1600],
   },
   {
-    input: "hero-monolith-modern.png",
+    input: "hero-monolith-modern.webp",
     baseName: "hero-monolith-modern",
+    widths: [640, 960, 1280, 1600],
+  },
+  {
+    input: "hero-video-1-poster.jpg",
+    baseName: "hero-video-1-poster",
     widths: [640, 960, 1280, 1600],
   },
   {
@@ -30,10 +35,10 @@ const presets = [
   {
     input: "eran-hersh-live-6.png",
     baseName: "eran-hersh-hero-real",
-    widths: [640, 960],
+    widths: [640, 681],
   },
   {
-    input: "eran-hersh-live-5.jpg",
+    input: "eran-hersh-live-5.webp",
     baseName: "eran-hersh-international",
     widths: [640, 960, 1280, 1600],
   },
@@ -43,13 +48,18 @@ const presets = [
     widths: [480, 768, 1080],
   },
   {
-    input: "untold-story-moody.png",
+    input: "untold-story-moody.webp",
     baseName: "untold-story",
     widths: [640, 960, 1280, 1600],
   },
   {
-    input: "untold-story-juany-deron-v2.jpg",
+    input: "untold-story-juany-deron-v2.webp",
     baseName: "untold-story-juany-deron-v2",
+    widths: [640, 960, 1280, 1600],
+  },
+  {
+    input: "radio-show-gear.webp",
+    baseName: "radio-show-gear",
     widths: [640, 960, 1280, 1600],
   },
 ];

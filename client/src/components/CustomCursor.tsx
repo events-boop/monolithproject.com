@@ -3,180 +3,163 @@ import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motio
 import { signalChirp } from "@/lib/SignalChirpEngine";
 
 export default function CustomCursor() {
-    const [isHovered, setIsHovered] = React.useState(false);
-    const [isClicking, setIsClicking] = React.useState(false);
-    const [isVisible, setIsVisible] = React.useState(false);
-    const [cursorText, setCursorText] = React.useState("");
-    const [cursorImage, setCursorImage] = React.useState("");
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isClicking, setIsClicking] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [cursorText, setCursorText] = React.useState("");
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
 
-    const [magneticTarget, setMagneticTarget] = React.useState<HTMLElement | null>(null);
-    const mouseX = useMotionValue(-100);
-    const mouseY = useMotionValue(-100);
+  const coreX = useSpring(mouseX, { damping: 28, stiffness: 420, mass: 0.35 });
+  const coreY = useSpring(mouseY, { damping: 28, stiffness: 420, mass: 0.35 });
+  const ringX = useSpring(mouseX, { damping: 32, stiffness: 260, mass: 0.5 });
+  const ringY = useSpring(mouseY, { damping: 32, stiffness: 260, mass: 0.5 });
 
-    // Ultra-smooth architectural spring physics
-    const springConfig = { damping: 30, stiffness: 400, mass: 0.5 };
-    const springX = useSpring(mouseX, springConfig);
-    const springY = useSpring(mouseY, springConfig);
+  React.useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    if (window.matchMedia("(pointer: coarse)").matches) return undefined;
 
-    React.useEffect(() => {
-        if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return;
+    const root = document.documentElement;
+    root.dataset.desktopChrome = "true";
 
-        const moveCursor = (e: MouseEvent) => {
-            if (!isVisible) setIsVisible(true);
-            
-            let x = e.clientX;
-            let y = e.clientY;
+    const updateHoverState = (target: HTMLElement | null) => {
+      if (!target) {
+        setIsHovered(false);
+        setCursorText("");
+        return;
+      }
 
-            // Magnetic Pull Logic
-            const target = e.target as HTMLElement;
-            const magneticEl = target.closest('[data-cursor-magnetic]') as HTMLElement;
-            
-            if (magneticEl) {
-                const rect = magneticEl.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                // Pull toward center by 30%
-                x = x + (centerX - x) * 0.35;
-                y = y + (centerY - y) * 0.35;
-            }
+      const textElement = target.closest("[data-cursor-text]") as HTMLElement | null;
+      const magneticElement = target.closest("[data-cursor-magnetic]") as HTMLElement | null;
+      const interactiveElement = target.closest(
+        'a, button, [role="button"], input, textarea, select, summary, [data-cursor-interactive]',
+      ) as HTMLElement | null;
 
-            mouseX.set(x);
-            mouseY.set(y);
+      const nextText = textElement?.getAttribute("data-cursor-text") || "";
+      const isInteractive = !!textElement || !!magneticElement || !!interactiveElement;
 
-            // Inject global CSS variables for atmospheric light leaks
-            document.documentElement.style.setProperty("--mouse-x", `${x}px`);
-            document.documentElement.style.setProperty("--mouse-y", `${y}px`);
-        };
+      setCursorText(nextText);
+      setIsHovered(isInteractive);
+    };
 
-        const handleMouseDown = () => {
-            setIsClicking(true);
-            signalChirp.click();
-        };
-        const handleMouseUp = () => setIsClicking(false);
+    const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      setIsVisible(true);
 
-        const handleMouseOver = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
+      const target = event.target as HTMLElement | null;
+      let x = event.clientX;
+      let y = event.clientY;
 
-            const imageElement = target.closest('[data-cursor-image]');
-            if (imageElement) {
-                setCursorImage(imageElement.getAttribute('data-cursor-image') || "");
-                if (!isHovered) signalChirp.hover();
-                setIsHovered(true);
-                return;
-            } else {
-                setCursorImage("");
-            }
+      const magneticElement = target?.closest("[data-cursor-magnetic]") as HTMLElement | null;
+      if (magneticElement) {
+        const rect = magneticElement.getBoundingClientRect();
+        x += (rect.left + rect.width / 2 - x) * 0.18;
+        y += (rect.top + rect.height / 2 - y) * 0.18;
+      }
 
-            const textElement = target.closest('[data-cursor-text]');
-            if (textElement) {
-                setCursorText(textElement.getAttribute('data-cursor-text') || "");
-                setIsHovered(true);
-                return;
-            }
+      mouseX.set(x);
+      mouseY.set(y);
+      root.style.setProperty("--mouse-x", `${x}px`);
+      root.style.setProperty("--mouse-y", `${y}px`);
+    };
 
-            const isInteractive =
-                target.tagName === "BUTTON" ||
-                target.tagName === "A" ||
-                target.closest("button") ||
-                target.closest("a") ||
-                window.getComputedStyle(target).cursor === "pointer";
+    const handlePointerOver = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      updateHoverState(event.target as HTMLElement | null);
+    };
 
-            setIsHovered(!!isInteractive);
-            setCursorText("");
-        };
+    const handlePointerDown = () => {
+      setIsClicking(true);
+      signalChirp.click();
+    };
 
-        window.addEventListener("mousemove", moveCursor);
-        window.addEventListener("mousedown", handleMouseDown);
-        window.addEventListener("mouseup", handleMouseUp);
-        window.addEventListener("mouseover", handleMouseOver);
+    const handlePointerUp = () => setIsClicking(false);
+    const handlePointerLeave = () => {
+      setIsVisible(false);
+      setIsHovered(false);
+      setCursorText("");
+    };
 
-        return () => {
-            window.removeEventListener("mousemove", moveCursor);
-            window.removeEventListener("mousedown", handleMouseDown);
-            window.removeEventListener("mouseup", handleMouseUp);
-            window.removeEventListener("mouseover", handleMouseOver);
-        };
-    }, [isVisible, mouseX, mouseY]);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerover", handlePointerOver, { passive: true });
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("blur", handlePointerLeave);
+    document.addEventListener("mouseleave", handlePointerLeave);
 
-    if (!isVisible) return null;
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerover", handlePointerOver);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("blur", handlePointerLeave);
+      document.removeEventListener("mouseleave", handlePointerLeave);
+      delete root.dataset.desktopChrome;
+    };
+  }, [mouseX, mouseY]);
 
-    const hasText = cursorText.length > 0;
-    const hasImage = cursorImage.length > 0;
-    const isExpanded = isHovered || hasText || hasImage;
+  if (!isVisible) return null;
 
-    // Architectural sizing logic
-    const size = hasImage ? 240 : hasText ? 60 : isHovered ? 40 : 10;
+  const hasText = cursorText.length > 0;
+  const ringSize = hasText ? 88 : isHovered ? 42 : 28;
 
-    return (
-        <React.Fragment>
-            <style>{`
-        @media (pointer: fine) {
-          body, a, button, [role="button"], input, textarea, select { cursor: none !important; }
-        }
-      `}</style>
-
-            <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[99999] flex items-center justify-center rounded-full overflow-hidden"
-                style={{
-                    x: springX,
-                    y: springY,
-                    translateX: "-50%",
-                    translateY: "-50%",
-                    mixBlendMode: !isExpanded ? "difference" : "normal",
-                    backdropFilter: isHovered && !hasImage ? "blur(10px) brightness(1.1)" : "none",
-                    WebkitBackdropFilter: isHovered && !hasImage ? "blur(10px) brightness(1.1)" : "none",
-                    width: size,
-                    height: size,
-                }}
-                animate={{
-                    backgroundColor: hasText || hasImage ? "white" : isHovered ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 1)",
-                    border: isHovered && !hasText && !hasImage ? "1px solid rgba(255, 255, 255, 0.3)" : "none",
-                    scale: isClicking ? 0.9 : 1,
-                }}
-                transition={{
-                    scale: { type: "spring", stiffness: 400, damping: 30 },
-                    backgroundColor: { duration: 0.15 },
-                    width: { type: "spring", stiffness: 350, damping: 28 },
-                    height: { type: "spring", stiffness: 350, damping: 28 },
-                }}
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[99998] rounded-full border"
+        style={{
+          x: ringX,
+          y: ringY,
+          width: ringSize,
+          height: ringSize,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+        animate={{
+          opacity: hasText ? 0.96 : isHovered ? 0.9 : 0.55,
+          scale: isClicking ? 0.92 : 1,
+          borderColor: hasText ? "rgba(255,255,255,0.88)" : isHovered ? "rgba(255,255,255,0.42)" : "rgba(255,255,255,0.18)",
+          backgroundColor: hasText ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.04)",
+        }}
+        transition={{
+          scale: { type: "spring", stiffness: 320, damping: 24 },
+          opacity: { duration: 0.16 },
+          backgroundColor: { duration: 0.16 },
+          borderColor: { duration: 0.16 },
+          width: { type: "spring", stiffness: 320, damping: 26 },
+          height: { type: "spring", stiffness: 320, damping: 26 },
+        }}
+      >
+        <AnimatePresence>
+          {hasText ? (
+            <motion.span
+              key={cursorText}
+              initial={{ opacity: 0, scale: 0.88 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="absolute inset-0 flex items-center justify-center px-3 text-[10px] font-mono font-bold uppercase tracking-[0.28em] text-black"
             >
-                <AnimatePresence>
-                    {hasText && !hasImage && (
-                        <motion.span
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            className="text-black font-mono text-[10px] font-bold tracking-widest uppercase absolute z-20"
-                        >
-                            {cursorText}
-                        </motion.span>
-                    )}
-                </AnimatePresence>
+              {cursorText}
+            </motion.span>
+          ) : null}
+        </AnimatePresence>
+      </motion.div>
 
-                <AnimatePresence>
-                    {hasImage && (
-                        <motion.img
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            src={cursorImage}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover rounded-full z-10"
-                        />
-                    )}
-                </AnimatePresence>
-            </motion.div>
-
-            <motion.div
-                animate={{ 
-                    scale: [1, 2],
-                    opacity: [0.15, 0]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
-                style={{ x: mouseX, y: mouseY }}
-                className="fixed top-0 left-0 w-20 h-20 border border-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[99998]"
-            />
-        </React.Fragment>
-    );
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[99999] h-2.5 w-2.5 rounded-full bg-white"
+        style={{
+          x: coreX,
+          y: coreY,
+          translateX: "-50%",
+          translateY: "-50%",
+          mixBlendMode: "difference",
+        }}
+        animate={{
+          opacity: isHovered ? 0.92 : 1,
+          scale: isClicking ? 0.7 : hasText ? 0 : isHovered ? 1.4 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 420, damping: 28 }}
+      />
+    </>
+  );
 }

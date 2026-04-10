@@ -3,12 +3,25 @@ type ConnectionInfo = {
   saveData?: boolean;
 };
 
+type NavigatorWithHints = Navigator & {
+  connection?: ConnectionInfo;
+  deviceMemory?: number;
+};
+
 function getConnection(): ConnectionInfo | undefined {
   if (typeof navigator === "undefined") return undefined;
 
-  return (navigator as Navigator & {
-    connection?: ConnectionInfo;
-  }).connection;
+  return (navigator as NavigatorWithHints).connection;
+}
+
+function getDeviceMemory() {
+  if (typeof navigator === "undefined") return undefined;
+  return (navigator as NavigatorWithHints).deviceMemory;
+}
+
+function getHardwareConcurrency() {
+  if (typeof navigator === "undefined") return undefined;
+  return navigator.hardwareConcurrency;
 }
 
 export function prefersReducedMotion() {
@@ -26,6 +39,10 @@ export function matchesMinWidth(minWidth: number) {
   return window.matchMedia(`(min-width: ${minWidth}px)`).matches;
 }
 
+export function prefersReducedData() {
+  return Boolean(getConnection()?.saveData);
+}
+
 export function hasConstrainedConnection(include3g = false) {
   const connection = getConnection();
   if (!connection) return false;
@@ -38,12 +55,24 @@ export function hasConstrainedConnection(include3g = false) {
   return Boolean(connection.effectiveType && constrainedTypes.includes(connection.effectiveType));
 }
 
+export function hasWeakDeviceProfile() {
+  const deviceMemory = getDeviceMemory();
+  const hardwareConcurrency = getHardwareConcurrency();
+
+  const lowMemory = typeof deviceMemory === "number" && deviceMemory <= 4;
+  const lowCpu = typeof hardwareConcurrency === "number" && hardwareConcurrency <= 6;
+
+  return lowMemory || lowCpu;
+}
+
 export function shouldEnableDesktopChrome() {
   return (
     !prefersReducedMotion() &&
     !hasCoarsePointer() &&
-    matchesMinWidth(1024) &&
-    !hasConstrainedConnection(true)
+    !prefersReducedData() &&
+    matchesMinWidth(1280) &&
+    !hasConstrainedConnection(true) &&
+    !hasWeakDeviceProfile()
   );
 }
 
@@ -51,8 +80,10 @@ export function shouldEnableSmoothScroll() {
   return (
     !prefersReducedMotion() &&
     !hasCoarsePointer() &&
-    matchesMinWidth(1024) &&
-    !hasConstrainedConnection()
+    !prefersReducedData() &&
+    matchesMinWidth(1200) &&
+    !hasConstrainedConnection(true) &&
+    !hasWeakDeviceProfile()
   );
 }
 
@@ -60,7 +91,8 @@ export function shouldEnablePageTransitions() {
   return (
     !prefersReducedMotion() &&
     !hasCoarsePointer() &&
-    matchesMinWidth(768) &&
+    !prefersReducedData() &&
+    matchesMinWidth(960) &&
     !hasConstrainedConnection(true)
   );
 }

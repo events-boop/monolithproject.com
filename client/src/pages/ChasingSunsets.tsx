@@ -94,14 +94,14 @@ export default function ChasingSunsets() {
       <SEO
         title="Chasing Sun(Sets)"
         description="The premier open-air electronic music series in Chicago. Curated rooms, panoramic views, and uncompromised sound."
-        image="/images/chasing-sunsets-premium.png"
+        image="/images/chasing-sunsets-premium.webp"
       />
       <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1" />
       <Navigation variant="dark" brand="chasing-sunsets" />
       <main id="main-content" tabIndex={-1}>
 
         {/* Hero — raw, warm, big type */}
-        <section id="chasing-hero" className="relative min-h-screen flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
+        <section id="chasing-hero" className="relative screen-shell-stable flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
           {/* Full-bleed background slider */}
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 

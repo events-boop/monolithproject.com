@@ -25,17 +25,21 @@ import {
 import { getEventCta, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
 
-const heroPosterImage = getResponsiveImage("heroMonolith");
+const heroPosterImage = getResponsiveImage("videoPoster1");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
 const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 const heroEranIntlImage = getResponsiveImage("eranHershInternational");
 const heroEranPortraitImage = getResponsiveImage("eranHershPortraitReal");
 const heroAutografImage = getResponsiveImage("autografRecap");
 
-/** Each slide maps to an optional event for the banner. null = show the primary featured event. */
+/** Each slide maps to banner metadata and an optional event context. */
 interface SlideBannerInfo {
-  eventId: string | null;
+  eventId?: string;
+  fallbackToFeaturedEvent?: boolean;
   label: string;
+  eyebrow?: string;
+  venueLabel?: string;
+  dateLabel?: string;
 }
 
 const HERO_SLIDES: Slide[] = [
@@ -89,14 +93,24 @@ const HERO_SLIDES: Slide[] = [
   },
 ];
 
-/** Maps each slide index to the event it represents. null = use the hero featured event. */
+/** Maps each hero slide to the banner state it should drive. */
 const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
-  { eventId: null, label: "THE MONOLITH PROJECT" },        // 0: video
-  { eventId: "us-s3e3", label: "ERAN HERSH" },             // 1: eran hersh international
-  { eventId: "us-s3e3", label: "ERAN HERSH" },             // 2: eran hersh portrait
-  { eventId: null, label: "UNTOLD STORY" },                 // 3: untold story
-  { eventId: "css-jul04", label: "CHASING SUN(SETS)" },     // 4: chasing sunsets / july 4th
-  { eventId: null, label: "AUTOGRAF" },                     // 5: autograf archive
+  { fallbackToFeaturedEvent: true, label: "THE MONOLITH PROJECT" }, // 0: video
+  { eventId: "us-s3e3", label: "ERAN HERSH" }, // 1: eran hersh international
+  { eventId: "us-s3e3", label: "ERAN HERSH" }, // 2: eran hersh portrait
+  {
+    label: "UNTOLD STORY",
+    eyebrow: "Archive Signal",
+    venueLabel: "Chicago Late-Night Series",
+    dateLabel: "Season III Archive",
+  }, // 3: untold story
+  { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
+  {
+    label: "AUTOGRAF",
+    eyebrow: "Archive Signal",
+    venueLabel: "Special Event Archive",
+    dateLabel: "Featured Archive",
+  }, // 5: autograf archive
 ];
 
 const HERO_SUBHEAD =
@@ -135,15 +149,19 @@ export default function HeroSection() {
 
   // Resolve which event to show in the banner based on the active slide
   const slideInfo = SLIDE_EVENT_MAP[activeSlide] ?? SLIDE_EVENT_MAP[0];
-  const bannerEvent = slideInfo.eventId
-    ? getEventById(slideInfo.eventId)
-    : featuredEvent;
+  const bannerEvent = slideInfo.fallbackToFeaturedEvent
+    ? featuredEvent
+    : slideInfo.eventId
+      ? getEventById(slideInfo.eventId)
+      : undefined;
 
   const targetDate = getEventStartTimestamp(bannerEvent);
   const { isExpired } = useCountdown(targetDate);
   const reduceMotion = useReducedMotion();
   const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
-  const eyebrow = getEventEyebrow(bannerEvent);
+  const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
+  const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
+  const venueLabel = bannerEvent ? getEventVenueLabel(bannerEvent) : slideInfo.venueLabel;
   const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
 
   const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
@@ -159,7 +177,7 @@ export default function HeroSection() {
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
 
   return (
-    <section id="hero" className="relative h-screen flex flex-col overflow-hidden bg-black">
+    <section id="hero" className="relative screen-shell-stable flex flex-col overflow-hidden bg-black">
       {structuredData}
 
       {/* Cinematic Background Layer — always video slider */}
@@ -229,7 +247,7 @@ export default function HeroSection() {
               <div className="flex items-center gap-3">
                 <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shrink-0" />
                 <span className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
-                  {bannerEvent?.date ?? "Coming Soon"}
+                  {dateLabel}
                 </span>
               </div>
               <h3 className={cn(
@@ -239,7 +257,7 @@ export default function HeroSection() {
                 {headline}
               </h3>
               <span className="font-mono text-[10px] tracking-[0.25em] text-white/30 uppercase truncate">
-                {eyebrow} {bannerEvent?.venue ? `@${bannerEvent.venue}` : ""}
+                {eyebrow} {venueLabel ? `@${venueLabel}` : ""}
               </span>
             </div>
           </div>
@@ -268,7 +286,7 @@ export default function HeroSection() {
                 event={july4Event}
                 size="md"
                 showUrgency={true}
-                variant={slideInfo.eventId === "css-jul04" || !slideInfo.eventId ? "primary" : "outline"}
+                variant={slideInfo.eventId === "css-jul04" || slideInfo.fallbackToFeaturedEvent ? "primary" : "outline"}
               />
             )}
           </div>
@@ -276,14 +294,38 @@ export default function HeroSection() {
       </motion.div>
 
       {/* MOBILE HUD INTERFACE */}
-      <div className="md:hidden absolute bottom-0 left-0 w-full p-4 z-40 bg-gradient-to-t from-black to-transparent pointer-events-none">
+      <div className="md:hidden absolute bottom-0 left-0 w-full p-4 safe-bottom z-40 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none">
          <div className="flex flex-col gap-3 pointer-events-auto">
+            <div className="rounded-2xl border border-white/10 bg-black/55 px-4 py-4 backdrop-blur-xl">
+              <div className="flex items-center gap-3">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse shrink-0" />
+                <span className="font-mono text-[10px] tracking-[0.3em] text-white/45 uppercase">
+                  {dateLabel}
+                </span>
+              </div>
+              <h3
+                className={cn(
+                  "mt-3 font-display text-2xl font-[1000] uppercase tracking-tight leading-[0.92]",
+                  isJuly4thEvent ? "july-4th-gradient" : "text-white"
+                )}
+              >
+                {headline}
+              </h3>
+              <span className="mt-2 block font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
+                {eyebrow} {venueLabel ? `@${venueLabel}` : ""}
+              </span>
+              {targetDate && !isExpired ? (
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  <CountdownDisplay target={targetDate} />
+                </div>
+              ) : null}
+            </div>
             {eranEvent && (
               <ConversionCTA
                 event={eranEvent}
                 size="lg"
                 showUrgency={true}
-                variant="outline"
+                variant={slideInfo.eventId === "us-s3e3" ? "primary" : "outline"}
               />
             )}
             {july4Event && (
@@ -291,6 +333,7 @@ export default function HeroSection() {
                 event={july4Event}
                 size="lg"
                 showUrgency={true}
+                variant={slideInfo.eventId === "css-jul04" || slideInfo.fallbackToFeaturedEvent ? "primary" : "outline"}
               />
             )}
          </div>

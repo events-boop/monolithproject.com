@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { AudioLines, ArrowRight, Sun, ArrowUpRight, Camera, Radio } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import EditorialHeader from "./EditorialHeader";
+import { signalChirp } from "@/lib/SignalChirpEngine";
 
 const chapters = [
   {
@@ -13,7 +14,7 @@ const chapters = [
     tagline: "The Open-Air Series.",
     description: "Golden hour sets, panoramic views, and the energy of the city at dusk.",
     moment: "Open-Air Day",
-    image: "/images/chasing-sunsets-premium.png",
+    image: "/images/chasing-sunsets-premium.webp",
     icon: Sun,
     href: "/chasing-sunsets",
     color: "#E8B86D",
@@ -24,7 +25,7 @@ const chapters = [
     tagline: "The After-Dark Series.",
     description: "Raw spaces, heavy sound systems, and the tension of the late night.",
     moment: "Industrial Night",
-    image: "/images/untold-story-moody.png",
+    image: "/images/untold-story-moody.webp",
     icon: null,
     href: "/story",
     color: "#22D3EE",

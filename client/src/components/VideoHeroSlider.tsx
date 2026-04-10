@@ -240,7 +240,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
             <button
               type="button"
               key={index}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => goTo(index)}
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === currentSlide ? "true" : undefined}
               className={`h-[2px] transition-all duration-500 ${index === currentSlide

@@ -506,7 +506,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "ABOUT MONOLITH",
                       subtitle: "Project Overview",
-                      image: "/images/hero-monolith-modern.png",
+                      image: "/images/hero-monolith-modern.webp",
                       href: "/about",
                       ctaText: "About Monolith",
                       icon: "arrow",
@@ -533,7 +533,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: ticketHref ? "DERON B2B JUANY BRAVO" : "CHASING SUN(SETS)",
                       subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
-                      image: ticketHref ? "/images/untold-story-juany-deron-v2.jpg" : "/images/chasing-sunsets-premium.png",
+                      image: ticketHref ? "/images/untold-story-juany-deron-v2.webp" : "/images/chasing-sunsets-premium.webp",
                       href: ticketHref || "/chasing-sunsets",
                       ctaText: ticketHref ? "Secure Access" : "Explore Season",
                       icon: ticketHref ? "ticket" : "arrow",
@@ -561,7 +561,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "CHASING SUN(SETS) RADIO",
                       subtitle: "Benchek Live from Monolith",
-                      image: "/images/radio-show-gear.png",
+                      image: "/images/radio-show-gear.webp",
                       href: "/radio/ep-01-benchek",
                       ctaText: "Hear The Rooms",
                       icon: "play",
@@ -590,7 +590,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     feature: {
                       title: "VIP & SPONSOR ACCESS",
                       subtitle: "Elevated Experiences",
-                      image: "/images/industrial-roster.png",
+                      image: "/images/industrial-roster.webp",
                       href: "/vip",
                       ctaText: "Reserve Entry",
                       icon: "arrow",

@@ -30,13 +30,13 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
   artistsCollective: {
     baseName: "artists-collective",
     sizes: "100vw",
-    src: "/images/industrial-roster.png",
+    src: "/images/artists-collective.webp",
     widths: [640, 960, 1280, 1600],
   },
   chasingSunsets: {
     baseName: "chasing-sunsets",
     sizes: "100vw",
-    src: "/images/chasing-sunsets-premium.png",
+    src: "/images/chasing-sunsets.webp",
     widths: [640, 960, 1280, 1600],
   },
   eranHershHero: {
@@ -49,18 +49,18 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     baseName: "eran-hersh-hero-real",
     sizes: "100vw",
     src: "/images/eran-hersh-live-6.png",
-    widths: [640, 960],
+    widths: [640, 681],
   },
   eranHershInternational: {
     baseName: "eran-hersh-international",
     sizes: "100vw",
-    src: "/images/eran-hersh-live-5.jpg",
+    src: "/images/eran-hersh-live-5.webp",
     widths: [640, 960, 1024],
   },
   heroMonolith: {
     baseName: "hero-monolith-modern",
     sizes: "100vw",
-    src: "/images/hero-monolith-modern.png",
+    src: "/images/hero-monolith-modern.webp",
     widths: [640, 960, 1024],
   },
   autografRecap: {
@@ -78,25 +78,25 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
   radioShowGear: {
     baseName: "radio-show-gear",
     sizes: "100vw",
-    src: "/images/radio-show-gear.png",
-    widths: [640, 960, 1280, 1600],
+    src: "/images/radio-show-gear.webp",
+    widths: [640, 960, 1024],
   },
   videoPoster1: {
-    baseName: "video-poster-1",
+    baseName: "hero-video-1-poster",
     sizes: "100vw",
-    src: "/images/video-poster-1.jpg",
+    src: "/images/hero-video-1-poster.jpg",
     widths: [640, 960, 1280, 1600],
   },
   untoldStoryHero: {
     baseName: "untold-story-juany-deron-v2",
     sizes: "100vw",
-    src: "/images/untold-story-juany-deron-v2.jpg",
+    src: "/images/untold-story-juany-deron-v2.webp",
     widths: [640, 960, 1280, 1600],
   },
   untoldStoryPoster: {
     baseName: "untold-story",
     sizes: "(min-width: 1280px) 960px, (min-width: 768px) 80vw, 100vw",
-    src: "/images/untold-story-moody.png",
+    src: "/images/untold-story-moody.webp",
     widths: [640, 960, 1280, 1600],
   },
 };

@@ -34,9 +34,9 @@ const widthClass: Record<SectionWidth, string> = {
 
 const spacingClass: Record<SectionSpacing, string> = {
   none: "",
-  tight: "py-12 md:py-16",
-  standard: "py-16 md:py-24",
-  loose: "py-32 md:py-48",
+  tight: "section-shell-tight",
+  standard: "section-shell",
+  loose: "section-shell-loose",
 };
 
 function resolveBorder(value: boolean | string | undefined, fallback: string) {

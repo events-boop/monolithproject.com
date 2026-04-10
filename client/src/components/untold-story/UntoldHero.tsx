@@ -4,17 +4,17 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
-import { ScheduledEvent } from "@/shared/events/types";
+import type { ScheduledEvent } from "@shared/events/types";
 import ConversionCTA from "@/components/ConversionCTA";
-import { getResponsiveImage } from "../../lib/responsiveImages";
+import { getResponsiveImage } from "@/lib/responsiveImages";
+
+const heroSlides = [
+  getResponsiveImage("eranHershPortraitReal"),
+  getResponsiveImage("eranHershInternational"),
+  getResponsiveImage("untoldStoryHero"),
+];
 
 export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
-  const heroSlides = [
-    getResponsiveImage("eranHershPortraitReal"),
-    getResponsiveImage("eranHershInternational"),
-    getResponsiveImage("untoldStoryHero"),
-  ];
-  
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
+    <section className="relative screen-shell-stable flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -63,13 +63,13 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
           animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
-          <UntoldButterflyLogo className="w-full h-full text-[#8B5CF6]/60" glow />
+          <UntoldButterflyLogo className="w-full h-full text-[#22D3EE]/60" glow />
         </motion.div>
       </div>
 
-      {/* Subtle purple glow above the mask */}
+      {/* Subtle cyan glow above the mask */}
       <div
-        className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.25] blur-[120px] pointer-events-none z-10 bg-[#8B5CF6]"
+        className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.25] blur-[120px] pointer-events-none z-10 bg-[#22D3EE]"
       />
 
       {/* Ordinary Content Layer */}
@@ -81,7 +81,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 flex flex-col"
           >
-            <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#8B5CF6]" glow />
+            <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#22D3EE]" glow />
             <div className="flex items-center gap-4 mb-6">
               <span className="font-mono text-xs tracking-[0.3em] uppercase text-untold-cyan">
                 {event?.episode || "Series 02"}
@@ -126,7 +126,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
                   <button
                     key={idx}
                     onClick={() => setHeroSlideIndex(idx)}
-                    className={`h-1 transition-all duration-500 rounded-full ${idx === heroSlideIndex ? "w-12 bg-[#8B5CF6]" : "w-4 bg-white/30 hover:bg-white/60"}`}
+                    className={`h-1 transition-all duration-500 rounded-full ${idx === heroSlideIndex ? "w-12 bg-[#22D3EE]" : "w-4 bg-white/30 hover:bg-white/60"}`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}

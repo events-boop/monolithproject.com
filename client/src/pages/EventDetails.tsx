@@ -36,7 +36,7 @@ export default function EventDetails() {
     );
   }
 
-  const bgImage = event.image || "/images/hero-monolith.jpg";
+  const bgImage = event.image || "/images/hero-monolith.webp";
   const cta = getEventCta(event);
 
   return (

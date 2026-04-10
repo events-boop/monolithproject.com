@@ -6,7 +6,7 @@ type BrandTranslatorTone = "neutral" | "warm" | "nocturne" | "radio";
 const toneClasses: Record<BrandTranslatorTone, string> = {
   neutral: "border-white/14 bg-white/[0.03] text-white/62",
   warm: "border-[#E8B86D]/28 bg-[#E8B86D]/[0.08] text-[#F3D7A0]",
-  nocturne: "border-[#8B5CF6]/28 bg-[#8B5CF6]/[0.08] text-[#D2C1FF]",
+  nocturne: "border-[#22D3EE]/28 bg-[#22D3EE]/[0.08] text-[#B7F5FD]",
   radio: "border-primary/24 bg-primary/[0.08] text-primary/90",
 };
 

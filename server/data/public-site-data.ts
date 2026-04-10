@@ -37,7 +37,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         location: "Chicago, IL",
         lineup: "Eran Hersh (Headliner) · Support TBA",
         status: "on-sale",
-        image: "/images/eran-hersh-live-5.jpg",
+        image: "/images/eran-hersh-live-5.webp",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
         sound: "Afro House · Melodic House · Peak-Hour Energy",
@@ -80,7 +80,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 price: 120,
                 description: "Premium positioning and discrete service.",
                 features: ["Guaranteed proximity to artist", "Dedicated hospitality team", "Expedited entry"],
-                icon: "shield",
+                icon: "crown",
                 available: true,
             }
         ],

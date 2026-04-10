@@ -34,7 +34,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines spotlight-leak">
+    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
         title="Chicago Music Nights, Series, and Archive"
         description="The Monolith Project is a Chicago-rooted music world built through recurring nights, distinct series, a radio show, and an archive shaped by curation, atmosphere, and return-worthy rooms."
@@ -118,7 +118,7 @@ export default function Home() {
         <ViewportLazy minHeightClassName="min-h-[60vh]">
           <Suspense fallback={<Skeleton className="w-full h-[60vh] opacity-20" />}>
             <CinematicBreak
-              image="/images/untold-story-juany-deron-v2.jpg"
+              image="/images/untold-story-juany-deron-v2.webp"
               videoSrc="/videos/hero-video-short.mp4"
               quote="We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music."
               attribution="The Monolith Project"
