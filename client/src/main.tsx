@@ -29,7 +29,7 @@ async function startApp() {
   if (!rootElement) throw new Error("Root element not found");
 
   initAttributionTracking();
-  await ensurePublicSiteData(window.location.pathname);
+  ensurePublicSiteData(window.location.pathname); // non-blocking — fetch in background
   const { default: App } = await import("./App");
 
   createRoot(rootElement).render(
