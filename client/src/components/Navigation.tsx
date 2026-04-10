@@ -40,16 +40,23 @@ const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string })
   );
 };
 
-const RotatingIcon = ({ isOpen }: { isOpen: boolean }) => (
-  <div className="relative w-5 h-5 flex items-center justify-center">
-    <motion.div
-      animate={{ rotate: isOpen ? 225 : 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute inset-0 flex items-center justify-center"
-    >
-      <div className="w-[18px] h-[1.5px] bg-current rounded-full" />
-      <div className="absolute w-[1.5px] h-[18px] bg-current rounded-full" />
-    </motion.div>
+const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
+  <div className="relative w-5 h-4 flex flex-col justify-between">
+    <motion.span
+      animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 6 : 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className="block w-full h-[1.5px] bg-current rounded-full origin-center"
+    />
+    <motion.span
+      animate={{ opacity: isOpen ? 0 : 1, scaleX: isOpen ? 0 : 1 }}
+      transition={{ duration: 0.2 }}
+      className="block w-full h-[1.5px] bg-current rounded-full"
+    />
+    <motion.span
+      animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -6 : 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className="block w-full h-[1.5px] bg-current rounded-full origin-center"
+    />
   </div>
 );
 
@@ -677,7 +684,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       )}
                     >
                       <MenuCyclingText isOpen={mobileMenuOpen} brand={resolvedBrand} />
-                      <RotatingIcon isOpen={mobileMenuOpen} />
+                      <HamburgerIcon isOpen={mobileMenuOpen} />
                     </button>
                   </MagneticButton>
                 </div>
