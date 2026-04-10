@@ -6,8 +6,10 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const rootDir = path.resolve(import.meta.dirname, "..");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.resolve(__dirname, "..");
 const sitemapPath = path.join(rootDir, "client", "public", "sitemap.xml");
 
 const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
