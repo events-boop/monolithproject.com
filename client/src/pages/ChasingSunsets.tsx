@@ -10,7 +10,6 @@ import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
 import useScrollSunset from "@/hooks/useScrollSunset";
-import ChasingSunsetsOptIn from "@/components/ChasingSunsetsOptIn";
 import { useState } from "react";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";

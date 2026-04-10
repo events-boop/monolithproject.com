@@ -74,6 +74,10 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [loadVideo, setLoadVideo] = useState(false);
+  const [canStartPrimaryVideo, setCanStartPrimaryVideo] = useState(() => {
+    if (typeof document === "undefined") return true;
+    return !document.getElementById("initial-loader");
+  });
   const reduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -120,6 +124,20 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
   const slide = slides[currentSlide];
   const slideFetchPriority = currentSlide === 0 ? "high" : "auto";
 
+  useEffect(() => {
+    if (canStartPrimaryVideo) return;
+
+    const loader = document.getElementById("initial-loader");
+    if (!loader) {
+      setCanStartPrimaryVideo(true);
+      return;
+    }
+
+    const handleLoaderExit = () => setCanStartPrimaryVideo(true);
+    window.addEventListener("monolith:loader-exit", handleLoaderExit, { once: true });
+    return () => window.removeEventListener("monolith:loader-exit", handleLoaderExit);
+  }, [canStartPrimaryVideo]);
+
   // Avoid competing with critical JS/CSS on slow connections: keep the poster image
   // until the browser is idle, and skip video entirely for Save-Data / 2g/3g.
   useEffect(() => {
@@ -127,10 +145,27 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
     if (reduceMotion) return;
     if (!slide) return;
     if (slide.type !== "video" && slide.type !== "youtube") return;
+    if (currentSlide === 0 && slide.type === "video" && !canStartPrimaryVideo) return;
 
     const id = window.setTimeout(() => setLoadVideo(true), 0);
     return () => window.clearTimeout(id);
-  }, [loadVideo, reduceMotion, slide?.type]);
+  }, [canStartPrimaryVideo, currentSlide, loadVideo, reduceMotion, slide?.type]);
+
+  useEffect(() => {
+    if (!loadVideo || reduceMotion || slide?.type !== "video") return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptPlay = async () => {
+      try {
+        await video.play();
+      } catch {
+        // Autoplay can be blocked in some environments; muted inline video is still preferred.
+      }
+    };
+
+    void attemptPlay();
+  }, [currentSlide, loadVideo, reduceMotion, slide?.type]);
 
   if (!slide) return null;
 
@@ -182,7 +217,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
                 loop={!reduceMotion}
                 muted={isMuted}
                 playsInline
-                preload="metadata"
+                preload={currentSlide === 0 ? "auto" : "metadata"}
                 className="w-full h-full object-cover object-center md:object-[80%_center]"
                 aria-hidden="true"
                 tabIndex={-1}

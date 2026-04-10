@@ -9,7 +9,7 @@
   background: #050505;
   color: #f5efe4;
   opacity: 1;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.28s ease;
 }
 
 #initial-loader.is-exiting {
@@ -32,15 +32,15 @@
     url('/images/hero-video-1-poster.jpg') center 30% / cover no-repeat;
   transform: scale(1.08);
   filter: saturate(0.8) contrast(1.04) brightness(0.5);
-  animation: loader-pan 10s ease-in-out infinite alternate;
+  animation: loader-pan 7s ease-in-out infinite alternate;
 }
 
 .initial-loader__veil {
   background:
-    radial-gradient(circle at 50% 46%, rgba(212, 164, 116, 0.16), transparent 24%),
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.14), transparent 24%),
     radial-gradient(circle at 50% 74%, rgba(255, 255, 255, 0.06), transparent 34%),
     linear-gradient(180deg, rgba(5, 5, 5, 0.22), rgba(5, 5, 5, 0.88));
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
 }
 
 .initial-loader__grain {
@@ -54,9 +54,9 @@
 
 .initial-loader__glow {
   background:
-    radial-gradient(circle at 50% 50%, rgba(232, 184, 109, 0.18), transparent 22%),
-    radial-gradient(circle at 50% 50%, rgba(224, 90, 58, 0.1), transparent 34%);
-  animation: loader-glow 2.8s ease-in-out infinite;
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.22), transparent 18%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1), transparent 32%);
+  animation: loader-glow 2s ease-in-out infinite;
 }
 
 .initial-loader__content {
@@ -65,18 +65,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  width: min(92vw, 40rem);
-  padding: 2rem 1.5rem;
+  gap: 1rem;
+  width: min(90vw, 30rem);
+  padding: 1.25rem 1rem;
   text-align: center;
 }
 
 .initial-loader__slab {
   position: relative;
-  width: min(18vw, 7rem);
-  height: min(44vw, 16rem);
-  min-width: 4.5rem;
-  min-height: 10rem;
+  width: min(14vw, 5rem);
+  height: min(34vw, 12rem);
+  min-width: 3.5rem;
+  min-height: 8rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 35%, rgba(0,0,0,0.24)),
@@ -109,14 +109,15 @@
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 4.8rem;
+  min-height: 3.1rem;
   width: 100%;
+  opacity: 0.88;
 }
 
 .initial-loader__layer {
   grid-area: 1 / 1;
   font-family: 'Archivo Black', system-ui, sans-serif;
-  font-size: clamp(2.5rem, 11vw, 6rem);
+  font-size: clamp(1.8rem, 9vw, 4.4rem);
   line-height: 0.88;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -124,20 +125,23 @@
 }
 
 .initial-loader__layer--base {
-  color: #f4efe7;
-  text-shadow: 0 0 32px rgba(255, 255, 255, 0.12);
-  animation: loader-wordmark 2.2s ease-in-out infinite;
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.38),
+    0 0 42px rgba(255, 255, 255, 0.22),
+    0 0 72px rgba(255, 255, 255, 0.12);
+  animation: loader-wordmark 1.9s ease-in-out infinite;
 }
 
 .initial-loader__layer--red {
-  color: rgba(224, 90, 58, 0.42);
+  color: rgba(255, 255, 255, 0.14);
   transform: translate3d(0, 0, 0);
   mix-blend-mode: screen;
   animation: loader-chroma-red 1.8s ease-in-out infinite;
 }
 
 .initial-loader__layer--blue {
-  color: rgba(34, 211, 238, 0.34);
+  color: rgba(255, 255, 255, 0.12);
   transform: translate3d(0, 0, 0);
   mix-blend-mode: screen;
   animation: loader-chroma-blue 1.8s ease-in-out infinite;
@@ -145,11 +149,11 @@
 
 .initial-loader__project {
   font-family: 'Archivo Black', system-ui, sans-serif;
-  font-size: clamp(0.78rem, 2vw, 1.2rem);
+  font-size: clamp(0.64rem, 1.6vw, 0.92rem);
   letter-spacing: 0.56em;
   text-transform: uppercase;
-  color: rgba(232, 184, 109, 0.86);
-  animation: loader-project 2.2s ease-in-out infinite;
+  color: rgba(255, 255, 255, 0.72);
+  animation: loader-project 1.9s ease-in-out infinite;
   padding-left: 0.56em;
 }
 
@@ -164,7 +168,7 @@
 
 @keyframes loader-glow {
   0%, 100% {
-    opacity: 0.55;
+    opacity: 0.48;
   }
   50% {
     opacity: 1;
@@ -200,12 +204,21 @@
 
 @keyframes loader-wordmark {
   0%, 100% {
-    opacity: 0.94;
+    opacity: 0.86;
     letter-spacing: 0.02em;
+    transform: scale(0.995);
+    text-shadow:
+      0 0 18px rgba(255, 255, 255, 0.32),
+      0 0 36px rgba(255, 255, 255, 0.16);
   }
   50% {
     opacity: 1;
     letter-spacing: 0.03em;
+    transform: scale(1.01);
+    text-shadow:
+      0 0 22px rgba(255, 255, 255, 0.48),
+      0 0 52px rgba(255, 255, 255, 0.26),
+      0 0 84px rgba(255, 255, 255, 0.16);
   }
 }
 
