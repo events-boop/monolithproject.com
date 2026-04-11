@@ -2,7 +2,7 @@ import { ArrowUpRight, PlayCircle, Calendar } from "lucide-react";
 import { Link } from "wouter";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { getUpcomingEvents, getSeriesColor, getSeriesLabel, getEventEyebrow } from "@/lib/siteExperience";
-import { getEventCta } from "@/lib/cta";
+import { getEventDetailsHref } from "@/lib/cta";
 
 const heroArchiveImage = getResponsiveImage("heroMonolith", "(min-width: 1024px) 67vw, 100vw");
 
@@ -74,14 +74,13 @@ export default function FeaturedCampaigns() {
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {campaigns.map((event) => {
             const color = getSeriesColor(event.series);
-            const cta = getEventCta(event);
             const eyebrow = getEventEyebrow(event);
-            const seriesHref = event.series === "untold-story" ? "/story" : event.series === "chasing-sunsets" ? "/chasing-sunsets" : "/schedule";
+            const detailsHref = getEventDetailsHref(event);
 
             return (
               <Link
                 key={event.id}
-                href={seriesHref}
+                href={detailsHref}
                 className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] transition-colors"
                 style={{ "--campaign-color": color } as React.CSSProperties}
               >
@@ -126,7 +125,7 @@ export default function FeaturedCampaigns() {
                     className="flex items-center gap-3 font-mono text-[11px] tracking-widest uppercase font-bold group-hover:underline decoration-1 underline-offset-[12px]"
                     style={{ color }}
                   >
-                      {cta.label} <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      View Event Details <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </div>
                 </div>
               </Link>

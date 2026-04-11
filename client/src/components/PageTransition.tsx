@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { shouldEnablePageTransitions } from "@/lib/runtimePerformance";
+import { shouldEnablePageTransitions } from "../lib/runtimePerformance";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
 interface PageTransitionProps {

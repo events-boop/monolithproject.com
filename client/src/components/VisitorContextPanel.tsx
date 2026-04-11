@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Link } from "wouter";
+import { getEventDetailsHref } from "@/lib/cta";
 import { getExperienceEvent, getPrimaryTicketUrl, isTicketOnSale } from "@/lib/siteExperience";
 import { useVisitorContext, type VisitorSegment } from "@/lib/visitorContext";
 
@@ -26,7 +27,7 @@ interface ContextAction {
 const segmentContent: Record<
   VisitorSegment,
   {
-    actions: (ticketUrl: string, hasLiveTickets: boolean) => ContextAction[];
+    actions: (ticketUrl: string, hasLiveTickets: boolean, nextEventHref: string) => ContextAction[];
     eyebrow: string;
     label: string;
     title: string;
@@ -36,16 +37,16 @@ const segmentContent: Record<
   "first-visit": {
     eyebrow: "Start Here",
     label: "First Visit",
-    title: "New here? Start with the next event, the radio show, or the archive.",
+    title: "New here? Start at the root, then choose the branch you want to follow.",
     description:
-      "Those three paths explain the project fastest without making you decode the whole homepage first.",
-    actions: () => [
+      "Monolith is the main project. The fastest path is the next event, the radio show, or the archive, depending on whether you want a date, a sound, or proof of the room.",
+    actions: (_ticketUrl, _hasLiveTickets, nextEventHref) => [
       {
         label: "Next Event",
-        href: "/schedule",
+        href: nextEventHref,
         icon: CalendarRange,
         note: "Upcoming Date",
-        description: "Start with the upcoming calendar and the series each night belongs to.",
+        description: "Open the active event page first, then decide whether you want tickets, context, or the full calendar.",
       },
       {
         label: "Radio Show",
@@ -66,10 +67,10 @@ const segmentContent: Record<
   returning: {
     eyebrow: "Welcome Back",
     label: "Returning Guest",
-    title: "Back again? Go straight to what is live now.",
+    title: "Back again? Re-enter through the branch that is live now.",
     description:
       "Returning guests usually want the ticket link, the next date, or something to play on the way there. We keep all three close.",
-    actions: (ticketUrl, hasLiveTickets) => [
+    actions: (ticketUrl, hasLiveTickets, nextEventHref) => [
       hasLiveTickets
         ? {
             label: "Get Tickets",
@@ -81,10 +82,10 @@ const segmentContent: Record<
           }
         : {
             label: "Next Event",
-            href: "/schedule",
+            href: nextEventHref,
             icon: CalendarRange,
             note: "Upcoming Date",
-            description: "Go directly to the upcoming calendar when there is no live ticket window yet.",
+            description: "Go directly to the active event page when there is no live ticket window yet.",
           },
       {
         label: "Radio Show",
@@ -134,18 +135,36 @@ const segmentContent: Record<
   },
 };
 
-export default function VisitorContextPanel() {
+interface VisitorContextPanelProps {
+  allowPartnerIntent?: boolean;
+  forcedSegment?: VisitorSegment;
+}
+
+export default function VisitorContextPanel({
+  allowPartnerIntent = true,
+  forcedSegment,
+}: VisitorContextPanelProps) {
   const visitorContext = useVisitorContext();
   const featuredEvent = getExperienceEvent("ticket");
   const ticketUrl = getPrimaryTicketUrl(featuredEvent);
   const hasLiveTickets = isTicketOnSale(featuredEvent);
+  const nextEventHref = getEventDetailsHref(featuredEvent);
 
   if (!visitorContext.isReady) {
     return null;
   }
 
-  const content = segmentContent[visitorContext.segment];
-  const actions = content.actions(ticketUrl || "/schedule", hasLiveTickets);
+  const resolvedSegment =
+    forcedSegment ?? (
+      !allowPartnerIntent && visitorContext.segment === "partner-intent"
+      ? visitorContext.homeVisits > 1
+        ? "returning"
+        : "first-visit"
+      : visitorContext.segment
+    );
+
+  const content = segmentContent[resolvedSegment];
+  const actions = content.actions(ticketUrl || "/schedule", hasLiveTickets, nextEventHref);
 
   return (
     <section className="relative z-10 px-6 py-6 md:py-8">

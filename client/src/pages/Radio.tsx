@@ -18,6 +18,7 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import { CTA_LABELS } from "@/lib/cta";
 
 const radioArtists = [
@@ -40,14 +41,20 @@ const radioArtists = [
     ctaLabel: "Open EWERSEEN Mix",
   },
   {
-    name: "CHRIS IDH",
-    image: "/images/chris-idh-radio.jpg",
+    name: "TERRANOVA",
+    image: "/images/artist-terranova.png",
     banner: "Chasing Sun(Sets) Radio Show",
-    eyebrow: "Radio Archive",
-    summary: "Move through the archive, guest sessions, and the mixes carrying the series between events.",
-    href: "#radio-tracks",
-    ctaLabel: CTA_LABELS.listenNow,
+    eyebrow: "Featured Episode",
+    summary: "Open the TERRANOVA guest session and move through the strongest long-form entry points in the archive.",
+    href: "/radio/ep-03-terranova",
+    ctaLabel: "Open Episode 03",
   },
+];
+
+const RADIO_ANCHORS = [
+  { label: "Episodes", href: "#radio-tracks" },
+  { label: "Map", href: "#radio-map" },
+  { label: "FAQ", href: "#radio-faq" },
 ];
 
 interface Track {
@@ -270,22 +277,24 @@ export default function Radio() {
             </RevealText>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <MagneticButton strength={0.3}>
-                <a href="#radio-tracks" className="btn-pill-coral inline-flex items-center justify-center">
-                  {CTA_LABELS.listenNow}
-                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                </a>
-              </MagneticButton>
-              <MagneticButton strength={0.22}>
                 <Link href={activeArtist.href} asChild>
-                  <a className="px-10 h-14 border border-white/20 text-white font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 bg-black/20">
+                  <a className="btn-pill-coral inline-flex items-center justify-center">
                     {activeArtist.ctaLabel}
+                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Link>
+              </MagneticButton>
+              <MagneticButton strength={0.22}>
+                <a href="#radio-tracks" className="px-10 h-14 border border-white/20 text-white font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 bg-black/20">
+                  Browse All Sets
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </a>
               </MagneticButton>
             </div>
           </div>
         </div>
       </section>
+      <SeasonAnchorNav items={RADIO_ANCHORS} tone="warm" className="-mt-7 mb-5" />
 
       {/* Massive Globe Separator with Rotating Frame */}
       <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[550px] overflow-hidden border-t border-border bg-card flex flex-col justify-center">
@@ -497,7 +506,7 @@ export default function Radio() {
       <BrandMotifDivider tone="nocturne" className="my-10" />
 
       {/* Map Section */}
-      <section className="px-6 py-20 bg-card border-t border-border">
+      <section id="radio-map" className="px-6 py-20 bg-card border-t border-border scroll-shell-target">
         <div className="container layout-default">
           <div className="flex items-end justify-between mb-8 pb-4 border-b border-border">
             <div>
@@ -523,7 +532,7 @@ export default function Radio() {
       </section>
 
       {/* Radio FAQ - Modern Floating Button triggering Off-Canvas */}
-      <section className="px-6 pb-24 border-t border-border mt-12 md:mt-0 pt-20">
+      <section id="radio-faq" className="px-6 pb-24 border-t border-border mt-12 md:mt-0 pt-20 scroll-shell-target">
         <div className="container layout-default flex flex-col md:flex-row items-center justify-between gap-8 bg-card border border-border/50 p-8 md:p-12 rounded-3xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2" />
 

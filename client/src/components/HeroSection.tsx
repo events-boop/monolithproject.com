@@ -1,15 +1,11 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, AudioLines, Sun, Ticket, Lock } from "lucide-react";
 import { useEffect, useState, memo, useCallback } from "react";
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
-import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import JsonLd from "@/components/JsonLd";
-import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import KineticDecryption from "./KineticDecryption";
-import WordScrubReveal from "./ui/WordScrubReveal";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
@@ -20,9 +16,8 @@ import {
   getEventStartTimestamp,
   getEventVenueLabel,
   getExperienceEvent,
-  isTicketOnSale,
+  getSeriesEvents,
 } from "@/lib/siteExperience";
-import { getEventCta, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
 
 const heroPosterImage = getResponsiveImage("videoPoster1");
@@ -114,7 +109,7 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_SUBHEAD =
-  "A Chicago music series, radio show, and archive. Start with the next event, then hear the rooms, then open the archive.";
+  "Monolith is the root. Chasing Sun(Sets), Untold Story, and the Radio Show are the branches. Start with the next event, then follow the branch you want to enter.";
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
@@ -141,8 +136,6 @@ const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: nu
 
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
-  const eranEvent = getEventById("us-s3e3");
-  const july4Event = getEventById("css-jul04");
 
   const [activeSlide, setActiveSlide] = useState(0);
   const handleSlideChange = useCallback((index: number) => setActiveSlide(index), []);
@@ -155,7 +148,16 @@ export default function HeroSection() {
       ? getEventById(slideInfo.eventId)
       : undefined;
 
-  const targetDate = getEventStartTimestamp(bannerEvent);
+  const sunsetsFallback = getSeriesEvents("chasing-sunsets")[0];
+  const untoldFallback = getSeriesEvents("untold-story")[0];
+  
+  const targetDateFallback = slideInfo.label.includes("SUN(SETS)") 
+    ? sunsetsFallback 
+    : slideInfo.label.includes("UNTOLD") 
+      ? untoldFallback 
+      : featuredEvent;
+
+  const targetDate = getEventStartTimestamp(bannerEvent) || getEventStartTimestamp(targetDateFallback);
   const { isExpired } = useCountdown(targetDate);
   const reduceMotion = useReducedMotion();
   const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
@@ -163,11 +165,11 @@ export default function HeroSection() {
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
   const venueLabel = bannerEvent ? getEventVenueLabel(bannerEvent) : slideInfo.venueLabel;
   const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
-  const mobileFallbackAction =
+  const contextualFallbackAction =
     !bannerEvent && activeSlide === 3
       ? { href: "/story", label: "Explore Untold Story" }
       : !bannerEvent && activeSlide === 5
-        ? { href: "/archive", label: "View Archive" }
+        ? { href: "/archive", label: "View Event Archive" }
         : undefined;
 
   const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
@@ -183,10 +185,10 @@ export default function HeroSection() {
   const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
 
   return (
-    <div className="bg-black flex min-h-[100vh] min-h-[100svh] min-h-[100dvh] flex-col md:block">
+    <div className="bg-black flex h-[100vh] h-[100svh] h-[100dvh] flex-col">
       <section
         id="hero"
-        className="relative min-h-[30rem] flex-1 overflow-hidden bg-black md:flex-none md:screen-shell-stable"
+        className="relative h-full overflow-hidden bg-black md:screen-shell-stable"
       >
         {structuredData}
 
@@ -228,7 +230,7 @@ export default function HeroSection() {
               </motion.h1>
               <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
               <span className="font-mono text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Music Series / Radio Show / Archive</BrandTranslatorLabel>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Root Project / Chasing Sun(Sets) / Untold Story / Radio Show</BrandTranslatorLabel>
               <RevealText
                 as="p"
                 className="mt-6 max-w-sm text-center font-mono text-[10px] uppercase tracking-[0.34em] text-white/50 md:mt-8 md:max-w-lg md:text-sm md:tracking-[0.4em]"
@@ -272,8 +274,8 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* CENTER: Countdown (desktop only) */}
-            {targetDate && !isExpired && (
+            {/* CENTER: Countdown (desktop only) - hide if > 1 year in the future (unscheduled fallback) */}
+            {targetDate && !isExpired && (targetDate - Date.now() < 31536000000) && (
               <div className="hidden lg:flex items-center gap-6 shrink-0">
                 <div className="h-8 w-px bg-white/10" />
                 <CountdownDisplay target={targetDate!} />
@@ -281,24 +283,22 @@ export default function HeroSection() {
               </div>
             )}
 
-            {/* RIGHT: Dual event CTAs */}
+            {/* RIGHT: Active slide CTA */}
             <div className="flex items-center gap-3 shrink-0">
-              {eranEvent && (
+              {bannerEvent ? (
                 <ConversionCTA
-                  event={eranEvent}
+                  event={bannerEvent}
                   size="md"
-                  showUrgency={true}
-                  variant={slideInfo.eventId === "us-s3e3" ? "primary" : "outline"}
+                  showUrgency={false}
+                  variant="primary"
                 />
-              )}
-              {july4Event && (
-                <ConversionCTA
-                  event={july4Event}
-                  size="md"
-                  showUrgency={true}
-                  variant={slideInfo.eventId === "css-jul04" || slideInfo.fallbackToFeaturedEvent ? "primary" : "outline"}
-                />
-              )}
+              ) : contextualFallbackAction ? (
+                <Link href={contextualFallbackAction.href} asChild>
+                  <a className="inline-flex h-12 items-center justify-center rounded-full border border-white/15 bg-white px-6 text-[11px] font-bold uppercase tracking-[0.28em] text-black transition-colors hover:bg-primary hover:text-white">
+                    {contextualFallbackAction.label}
+                  </a>
+                </Link>
+              ) : null}
             </div>
           </div>
         </motion.div>
@@ -324,7 +324,7 @@ export default function HeroSection() {
             <span className="mt-1 block font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
               {eyebrow} {venueLabel ? `@${venueLabel}` : ""}
             </span>
-            {targetDate && !isExpired ? (
+            {targetDate && !isExpired && (targetDate - Date.now() < 31536000000) ? (
               <div className="mt-3 border-t border-white/10 pt-3 hidden [@media(min-height:640px)]:block">
                 <CountdownDisplay target={targetDate} />
               </div>
@@ -334,14 +334,14 @@ export default function HeroSection() {
                 <ConversionCTA
                   event={bannerEvent}
                   size="lg"
-                  showUrgency={true}
+                  showUrgency={false}
                   variant="primary"
                   className="w-full"
                 />
-              ) : mobileFallbackAction ? (
-                <Link href={mobileFallbackAction.href} asChild>
+              ) : contextualFallbackAction ? (
+                <Link href={contextualFallbackAction.href} asChild>
                   <a className="flex h-12 w-full items-center justify-center rounded-full border border-white/15 bg-white text-[11px] font-bold uppercase tracking-[0.32em] text-black transition-colors hover:bg-primary hover:text-white">
-                    {mobileFallbackAction.label}
+                    {contextualFallbackAction.label}
                   </a>
                 </Link>
               ) : null}

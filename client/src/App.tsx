@@ -217,7 +217,7 @@ const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
 const AmbientAudioEngine = lazy(() => import("./components/AmbientAudioEngine"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
-const Toaster = lazy(() => import("@/components/ui/sonner").then((module) => ({ default: module.Toaster })));
+const Toaster = lazy(() => import("./components/ui/sonner").then((module) => ({ default: module.Toaster })));
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);

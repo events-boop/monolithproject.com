@@ -2,7 +2,7 @@ import type { EventCta, EventSeries, ScheduledEvent } from "../../shared/events/
 
 const CTA_LABELS = {
   tickets: "Secure Access",
-  schedule: "Explore The Season",
+  schedule: "View Schedule",
   unlockPresale: "Request Presale Access",
   joinWaitlist: "Register For The Next Drop",
   claimLast: "Secure Final Entry",

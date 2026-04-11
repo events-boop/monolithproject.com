@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -105,15 +105,21 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
               A Late-Night Monolith Series
             </BrandTranslatorLabel>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-10 w-full md:w-auto">
-              <ConversionCTA 
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-6 mb-10 w-full md:w-auto">
+              <ConversionCTA
                 event={event}
                 size="lg"
                 showUrgency={true}
               />
-              <span className="font-mono text-xs text-white/50 tracking-widest hidden sm:block">
-                {event?.status === 'on-sale' ? "Tickets moving fast." : "Space is extremely limited."}
-              </span>
+              <MagneticButton strength={0.22}>
+                <a
+                  href="#untold-records"
+                  className="cta-ghost flex items-center justify-center px-8 py-4"
+                >
+                  View Records
+                  <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
+                </a>
+              </MagneticButton>
             </div>
 
             <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">

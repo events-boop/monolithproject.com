@@ -9,7 +9,7 @@ const expressions = [
   {
     id: "sunsets",
     number: "01",
-    label: "Open Air",
+    label: "Branch / Open Air",
     title: "Chasing Sun(Sets)",
     tagline: "Golden hour. Open air. A room that breathes.",
     color: "#D4A574",
@@ -20,7 +20,7 @@ const expressions = [
   {
     id: "untold",
     number: "02",
-    label: "After Dark",
+    label: "Branch / After Dark",
     title: "Untold Story",
     tagline: "When the light drops, the room changes shape.",
     color: "#E05A3A",
@@ -31,7 +31,7 @@ const expressions = [
   {
     id: "radio",
     number: "03",
-    label: "Radio",
+    label: "Branch / Radio",
     title: "Radio Show",
     tagline: "Mixes, guest sets, and full replays.",
     color: "#FFFFFF",

@@ -3,6 +3,10 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ mode }) => {
   const isProd = mode === "production";
@@ -22,17 +26,17 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
+        "@": "/src",
+        "@shared": "/../shared",
       },
     },
-    envDir: path.resolve(import.meta.dirname),
-    root: path.resolve(import.meta.dirname, "client"),
+    envDir: path.resolve(__dirname),
+    root: path.resolve(__dirname, "client"),
     // This makes the shipped code slightly less "copy friendly", but it is not
     // real protection. If something must be secret, it cannot live in the client.
     esbuild: isProd ? { drop: ["console", "debugger"], legalComments: "none" } : undefined,
     build: {
-      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      outDir: path.resolve(__dirname, "dist/public"),
       emptyOutDir: true,
       // Keep this explicit so we never accidentally ship sourcemaps.
       sourcemap: false,

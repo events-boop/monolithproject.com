@@ -4,14 +4,10 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
-import { getExperienceEvent, getPrimaryTicketUrl } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
-const ConversionStrip = lazy(() => import("@/components/ConversionStrip"));
-const EventCountdown = lazy(() => import("@/components/EventCountdown"));
-const EventFunnelStack = lazy(() => import("@/components/EventFunnelStack"));
 const ExpressionSplit = lazy(() => import("@/components/ExpressionSplit"));
 const FeaturedCampaigns = lazy(() => import("@/components/FeaturedCampaigns"));
 const ShowcaseSplit = lazy(() => import("@/components/ShowcaseSplit"));
@@ -23,10 +19,6 @@ import SEO from "@/components/SEO";
 
 export default function Home() {
   usePublicSiteDataVersion();
-  const heroEvent = getExperienceEvent("hero");
-  const funnelEvent = getExperienceEvent("funnel");
-  const ticketUrl = getPrimaryTicketUrl(funnelEvent);
-  const primaryHomeEvent = funnelEvent ?? heroEvent;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,7 +28,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
         title="Chicago Music Nights, Series, and Archive"
-        description="The Monolith Project is a Chicago-rooted music world built through recurring nights, distinct series, a radio show, and an archive shaped by curation, atmosphere, and return-worthy rooms."
+        description="The Monolith Project is the root system. Chasing Sun(Sets), Untold Story, and the Radio Show are its branches, with each path leading back to the same Chicago music world."
       />
       {/* Ambient static background glows for depth */}
       <motion.div
@@ -63,18 +55,9 @@ export default function Home() {
           <div id="start-here" className="relative pt-16 md:pt-20 pb-10">
             <ViewportLazy minHeightClassName="min-h-[280px]" rootMargin="220px 0px">
               <Suspense fallback={<Skeleton className="mx-auto h-[280px] w-full max-w-6xl opacity-10" />}>
-                <VisitorContextPanel />
+                <VisitorContextPanel allowPartnerIntent={false} forcedSegment="first-visit" />
               </Suspense>
             </ViewportLazy>
-          </div>
-          <div className="px-6 pb-16 md:pb-20">
-            <div className="container layout-default">
-              <ViewportLazy minHeightClassName="min-h-[180px]" rootMargin="220px 0px">
-                <Suspense fallback={<Skeleton className="h-[180px] w-full opacity-10" />}>
-                  <ConversionStrip />
-                </Suspense>
-              </ViewportLazy>
-            </div>
           </div>
         </div>
 
@@ -87,17 +70,8 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="02" label="The Series" glow="#E05A3A" dense />
-          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
-            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
-              <ExpressionSplit />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
         <div className="bg-[#F8F8F8] transition-colors duration-500 border-y border-black/5 relative z-10">
-          <SectionDivider id="season" number="03" label="Upcoming Dates" dark={false} glow="#8B5CF6" />
+          <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
@@ -105,13 +79,14 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        {primaryHomeEvent ? (
-          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
-            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
-              <EventCountdown eventId={primaryHomeEvent.id} />
+        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
+          <SectionDivider id="series" number="03" label="The Branches" glow="#E05A3A" dense />
+          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
+            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
+              <ExpressionSplit />
             </Suspense>
           </ViewportLazy>
-        ) : null}
+        </div>
 
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
           <SectionDivider id="showcase" number="04" label="Explore" glow="#D4A574" dense />
@@ -129,23 +104,12 @@ export default function Home() {
               videoSrc="/videos/hero-video-short.mp4"
               quote="We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music."
               attribution="The Monolith Project"
-              ctaLabel="Secure Access"
-              ctaUrl={ticketUrl}
-              ctaExternal
             />
           </Suspense>
         </ViewportLazy>
 
         <div className="bg-[#0c0b0a] border-y border-white/5 relative z-10 transition-colors duration-500 pb-24 md:pb-32">
           <SectionDivider id="community" number="05" label="Newsletter" glow="#D4A574" />
-          {funnelEvent ? (
-            <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
-              <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
-                <EventFunnelStack eventId={funnelEvent.id} />
-              </Suspense>
-            </ViewportLazy>
-          ) : null}
-
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <NewsletterSection source="homepage_bottom" />

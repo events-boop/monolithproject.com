@@ -157,8 +157,8 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
     const sections = [
       { id: "campaigns", number: "01", label: "HIGHLIGHTS" },
-      { id: "series", number: "02", label: "SERIES" },
-      { id: "season", number: "03", label: "DATES" },
+      { id: "season", number: "02", label: "DATES" },
+      { id: "series", number: "03", label: "SERIES" },
       { id: "showcase", number: "04", label: "EXPLORE" },
       { id: "community", number: "05", label: "NEWSLETTER" },
     ];

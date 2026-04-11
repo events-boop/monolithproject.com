@@ -1,5 +1,5 @@
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
-import { getFeaturedEventForSlot, getPublicEvents } from "@/lib/siteData";
+import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
 
 export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
 

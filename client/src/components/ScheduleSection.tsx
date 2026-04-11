@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Clock, Music, MapPin, CalendarPlus } from "lucide-react";
+import { ArrowRight, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
 import { getPublicEvents } from "@/lib/siteData";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
-import { CTA_LABELS } from "@/lib/cta";
+import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import { cn } from "@/lib/utils";
@@ -173,6 +173,7 @@ export default function ScheduleSection() {
               const [dateMonth, dateDay] = event.date.split(" ");
               const dayNumber = parseInt(dateDay) || "";
               const shouldPing = event.recentlyDropped || event.status === "on-sale";
+              const detailsHref = getEventDetailsHref(event);
 
               return (
                 <motion.div
@@ -187,8 +188,7 @@ export default function ScheduleSection() {
 
                   {/* Main Event Row */}
                   <div
-                    className={`w-full relative z-10 transition-colors duration-500 group px-4 sm:px-6 cursor-pointer ${isExpanded ? "bg-white/40" : "hover:bg-black/[0.02]"}`}
-                    onClick={() => toggle(event.id)}
+                    className={`w-full relative z-10 transition-colors duration-500 group px-4 sm:px-6 ${isExpanded ? "bg-white/40" : "hover:bg-black/[0.02]"}`}
                   >
                     <div className="py-6 md:py-10 flex flex-col lg:grid lg:grid-cols-12 gap-5 md:gap-6 lg:items-center w-full text-left">
                       
@@ -274,16 +274,24 @@ export default function ScheduleSection() {
                         <span className="text-[9px] text-black/40 font-mono mt-0.5 tracking-widest uppercase">{event.location}</span>
                       </div>
 
-                      {/* ⚡ ACTION (Full width on mobile) */}
-                      <div className="lg:col-span-3 flex flex-row items-center justify-between lg:justify-end gap-4 lg:pr-4 w-full mt-2 lg:mt-0">
-                         <div onClick={(e) => e.stopPropagation()} className="flex-1 lg:flex-none z-20">
+                      {/* ⚡ ACTIONS (Full width on mobile) */}
+                      <div className="lg:col-span-3 flex flex-wrap items-center justify-between lg:justify-end gap-3 lg:pr-4 w-full mt-2 lg:mt-0">
+                         <div className="flex-1 min-w-[11rem] lg:flex-none z-20">
                            <ConversionCTA event={event} size="sm" showUrgency={true} className="w-full md:w-auto" />
                          </div>
-                         <div className={`flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-black/40 group-hover:text-black"}`}>
-                            <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${isExpanded ? "bg-black text-white border-black rotate-90" : "border-black/10 group-hover:border-black/30 bg-white"}`}>
-                              <ArrowRight className="w-4 h-4" />
-                            </div>
-                         </div>
+                         <button
+                           type="button"
+                           onClick={() => toggle(event.id)}
+                           aria-expanded={isExpanded}
+                           className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.24em] transition-all duration-300 ${
+                             isExpanded
+                               ? "border-black bg-black text-white"
+                               : "border-black/10 bg-white text-black/70 hover:border-black/25 hover:text-black"
+                           }`}
+                         >
+                           {isExpanded ? "Hide Preview" : "Quick View"}
+                           <ArrowRight className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-90" : ""}`} />
+                         </button>
                       </div>
 
                     </div>
@@ -360,12 +368,19 @@ export default function ScheduleSection() {
                                 </a>
                               ) : (
                                 <button className="px-8 py-4 rounded-full border border-black/10 bg-black/5 text-black/30 font-bold text-[10px] tracking-[0.25em] uppercase cursor-default">
-                                  Coordinates LockedSoon
+                                  Coordinates Locked Soon
                                 </button>
                               )}
 
+                              <Link href={detailsHref} asChild>
+                                <a className="group inline-flex items-center gap-3 px-6 py-4 border border-black/10 rounded-full text-[10px] font-bold tracking-[0.25em] uppercase text-black/70 hover:border-black/20 hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+                                  Open Event Page
+                                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </a>
+                              </Link>
+
                               <button
-                                onClick={(e) => { e.stopPropagation(); downloadICS(event); }}
+                                onClick={() => downloadICS(event)}
                                 className="group inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.25em] uppercase text-black/70 hover:text-black px-6 py-4 border border-black/10 rounded-full transition-all"
                               >
                                 <CalendarPlus className="w-4 h-4" />
@@ -392,13 +407,13 @@ export default function ScheduleSection() {
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/schedule">
               <span className="group inline-flex items-center gap-2 text-black font-black text-[10px] tracking-[0.3em] uppercase transition-all hover:text-primary cursor-pointer">
-                View Full Season Arc
+                See All Dates
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
             <Link href="/newsletter">
               <span className="group inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors cursor-pointer">
-                Secure Season Membership
+                Get Event Updates
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>

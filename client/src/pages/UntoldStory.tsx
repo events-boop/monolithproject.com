@@ -52,13 +52,6 @@ export default function UntoldStory() {
         <UntoldContent event={scheduledEvent} />
         <UntoldContrast />
 
-        {/* Dynamic Funnels for this Event */}
-        {scheduledEvent ? (
-          <section id="untold-funnel" className="scroll-shell-target">
-            <EventFunnelStack eventId={scheduledEvent.id} />
-          </section>
-        ) : null}
-
         {/* Season Records */}
         <div id="untold-records" className="scroll-shell-target relative z-20 container layout-default px-6 border-t border-white/10">
           <EpisodeGallery
@@ -107,6 +100,13 @@ export default function UntoldStory() {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Funnels for this Event */}
+        {scheduledEvent ? (
+          <section id="untold-funnel" className="scroll-shell-target">
+            <EventFunnelStack eventId={scheduledEvent.id} />
+          </section>
+        ) : null}
 
         <section id="untold-tickets" className="scroll-shell-target py-0 relative z-20">
           <TicketTicker />

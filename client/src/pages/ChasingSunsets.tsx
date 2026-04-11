@@ -154,12 +154,10 @@ export default function ChasingSunsets() {
                   />
                   
                   <MagneticButton strength={0.22}>
-                    <Link href="/radio">
-                      <a className="cta-ghost flex items-center justify-center px-10 py-5">
-                        {CTA_LABELS.radioHub}
+                    <a href="#chasing-records" className="cta-ghost flex items-center justify-center px-10 py-5">
+                        View Records
                         <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
-                      </a>
-                    </Link>
+                    </a>
                   </MagneticButton>
                 </div>
               <div className="mt-6 flex flex-wrap gap-2.5">

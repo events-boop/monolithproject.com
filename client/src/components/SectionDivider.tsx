@@ -42,7 +42,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
 
   const dataSegments = useMemo(() =>
     Array.from({ length: 12 }).map(() =>
-      `0x${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, "0").toUpperCase()}`
+      `${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, "0").toUpperCase()}`
     ), [number]);
 
   return (

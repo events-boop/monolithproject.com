@@ -4,12 +4,12 @@ export type { EventCta, FunnelTool };
 
 export const CTA_LABELS = {
   tickets: "Secure Access",
-  schedule: "Explore The Season",
+  schedule: "View Schedule",
   collective: "View Artists",
   journal: "View Articles",
-  radioHub: "Access The Archive",
+  radioHub: "Open Radio Show",
   listenNow: "Hear The Rooms",
-  archive: "Find Your Memory",
+  archive: "View Archive",
   press: "View Press",
   pressKit: "Press Kit",
   network: "Meet The Network",
@@ -34,8 +34,8 @@ export const CTA_LABELS = {
   requestVip: "Secure Stage Proximity",
   reserveEntry: "Reserve Entry",
   secureTier1: "Secure Tier 1 Access",
-  viewSeasonArc: "View Full Season Arc",
-  secureMembership: "Secure Season Membership",
+  viewSeasonArc: "See All Dates",
+  secureMembership: "Get Event Updates",
   registerDrop: "Register For Drop",
   hearTheRooms: "Hear The Rooms",
 } as const;

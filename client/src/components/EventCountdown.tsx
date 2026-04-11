@@ -13,23 +13,38 @@ function getNextEvent(eventId?: string) {
     const specificEvent = getEventById(eventId);
     if (specificEvent) return specificEvent;
   }
-  return upcomingEvents.find(e => e.ticketUrl && e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
+  return upcomingEvents.find(e => e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
 }
 
 function parseEventDate(dateStr: string): Date {
+  if (!dateStr || dateStr.toUpperCase().includes("COMING") || dateStr.toUpperCase().includes("SOON") || dateStr.toUpperCase().includes("TBA")) {
+    const farFuture = new Date();
+    farFuture.setFullYear(farFuture.getFullYear() + 10);
+    return farFuture;
+  }
+
   const months: Record<string, number> = {
     JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
     JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11
   };
-  const [monthName, dayStr] = dateStr.split(" ");
-  const day = dayStr?.replace(",", "") ?? "1"; 
-  // Use first 3 letters to match month signature
-  const monthKey = monthName ? monthName.toUpperCase().substring(0, 3) : "JAN";
+  
+  const segments = dateStr.toUpperCase().split(/[\s,]+/);
+  if (segments.length < 2) {
+    const farFuture = new Date();
+    farFuture.setFullYear(farFuture.getFullYear() + 10);
+    return farFuture;
+  }
+
+  const monthKey = segments[0].substring(0, 3);
   const month = months[monthKey] ?? 0;
-  const year = new Date().getFullYear();
-  const d = new Date(year, month, parseInt(day) || 1, 20, 0, 0);
-  // If in the past, push to next year
-  if (d < new Date()) d.setFullYear(year + 1);
+  const day = parseInt(segments[1]) || 1;
+  const yearStr = segments.find(s => s.length === 4 && !isNaN(parseInt(s)));
+  const year = yearStr ? parseInt(yearStr) : new Date().getFullYear();
+  
+  const d = new Date(year, month, day, 20, 0, 0);
+  
+  // If we parsed a date in the past but didn't have a year in the string, push to next year
+  if (!yearStr && d < new Date()) d.setFullYear(year + 1);
   return d;
 }
 
