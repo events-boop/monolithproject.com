@@ -622,7 +622,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
               {/* RIGHT: CTA & MOBILE TOGGLE */}
               <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-3 md:gap-4 shrink-0">
-                <div className="hidden min-[390px]:block sm:hidden">
+                <div className="hidden min-[370px]:flex sm:hidden">
                   <MagneticButton strength={0.16}>
                     <a
                       href={cta.href}
