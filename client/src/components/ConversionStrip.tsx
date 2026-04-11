@@ -63,7 +63,7 @@ export default function ConversionStrip({ event: providedEvent }: ConversionStri
                 <span style={{ color: themeColor }}>{event.headline || "EVENT DETAILS COMING SOON"}</span>
               </h2>
               <p className="mt-4 font-sans text-sm text-white/40 leading-relaxed uppercase tracking-widest text-[10px]">
-                {event.status === 'on-sale' ? "Inventory is capped to protect the room. Secure your access before phase change." : "Join the inner circle to hear about the next ticket window before the public release."}
+                {event.status === 'on-sale' ? "Inventory is capped to protect the room. Secure your access before phase change." : "Subscribe for early access to the next ticket window before the public release."}
               </p>
             </div>
           </div>

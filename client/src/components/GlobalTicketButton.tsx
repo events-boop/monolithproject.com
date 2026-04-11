@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { ArrowUpRight, ArrowRight, Ticket, Lock, Zap } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { getSceneForPath } from "@/lib/scenes";
-import { getEventById, getExperienceEvent } from "@/lib/siteExperience";
+import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { useUI } from "@/contexts/UIContext";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
@@ -38,9 +38,9 @@ export default function GlobalTicketButton() {
     const featuredEvent = eventDetailsSlug
         ? getPublicEvents().find((event) => event.slug === eventDetailsSlug || event.id === eventDetailsSlug)
         : sunsetsPath
-        ? getEventById("css-jul04") 
-        : untoldPath 
-            ? getEventById("us-s3e3") 
+        ? (getSeriesEvents("chasing-sunsets")[0] || getExperienceEvent("ticket"))
+        : untoldPath
+            ? (getSeriesEvents("untold-story")[0] || getExperienceEvent("ticket"))
             : getExperienceEvent("ticket");
             
     const cta = getEventCta(featuredEvent);

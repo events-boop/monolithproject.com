@@ -23,7 +23,6 @@ import Section from "@/components/layout/Section";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import {
-  getEventById,
   getEventVenueLabel,
   getPrimaryTicketUrl,
   getSeriesEvents,
@@ -78,7 +77,6 @@ export default function ChasingSunsets() {
   const chasingFunnelEvent = chasingEvents.find((event) => event.activeFunnels?.length);
   const liveChasingEvent = chasingEvents.find((event) => isTicketOnSale(event));
   const featuredChasingEvent =
-    getEventById("css-jul04") ??
     liveChasingEvent ??
     chasingEvents.find((event) => event.activeFunnels?.length) ??
     chasingEvents[0];

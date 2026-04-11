@@ -12,7 +12,7 @@ import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
-import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
+import { getSeriesEvents, getEventWindowStatus } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const UNTOLD_ANCHORS = [
@@ -24,7 +24,7 @@ const UNTOLD_ANCHORS = [
 
 export default function UntoldStory() {
   usePublicSiteDataVersion();
-  const scheduledEvent = getEventById("us-s3e3");
+  const scheduledEvent = getSeriesEvents("untold-story")[0] ?? null;
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 

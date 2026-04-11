@@ -143,7 +143,7 @@ function Router() {
         <Route path="/events/:slug" component={EventDetailsTransition} />
         <Route path="/newsletter" component={NewsletterTransition} />
         <Route path="/togetherness">
-          <Redirect to="/about#vision" />
+          <Redirect to="/about#togetherness" />
         </Route>
         <Route path="/inner-circle">
           <Redirect to="/newsletter" />

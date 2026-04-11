@@ -10,7 +10,7 @@ interface ConversionCTAProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
   showUrgency?: boolean;
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "experiential";
 }
 
 export default function ConversionCTA({ 
@@ -36,10 +36,11 @@ export default function ConversionCTA({
     fillout: <Zap className="w-4 h-4" />,
   };
 
-  const toolStyles: Record<FunnelTool, string> = {
+  const toolStyles: Record<FunnelTool | "experiential", string> = {
     posh: "cta-posh",
     laylo: "cta-laylo",
     fillout: "cta-fillout",
+    experiential: "cta-experiential",
   };
 
   const systemReport = event?.status === 'on-sale' && isEventLowInventory(event)
@@ -59,7 +60,7 @@ export default function ConversionCTA({
           group relative flex items-center justify-center gap-4 
           transition-all duration-500 rounded-none
           ${sizeClasses[size]} w-full sm:w-auto
-          ${toolStyles[cta.tool]}
+          ${variant === 'experiential' ? toolStyles.experiential : toolStyles[cta.tool]}
           shadow-[0_20px_50px_rgba(0,0,0,0.15)]
           hover:shadow-[0_25px_60px_rgba(0,0,0,0.25)]
           active:scale-[0.98]

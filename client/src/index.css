@@ -151,6 +151,23 @@
   --sidebar-ring: oklch(0.65 0.2 25);
   --atmo-blue: rgba(59, 130, 246, 0.18);
   --atmo-coral: rgba(224, 90, 58, 0.2);
+  --monolith-red: #f87171;
+  --monolith-red-glow: rgba(248, 113, 113, 0.4);
+}
+
+.cta-experiential {
+  background: var(--monolith-red);
+  color: #000000;
+  box-shadow: 0 0 30px var(--monolith-red-glow);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.cta-experiential:hover {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 45px rgba(255, 255, 255, 0.3);
 }
 
 /* FILM GRAIN TEXTURE - bespoke cinematic noise */
