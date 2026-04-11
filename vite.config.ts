@@ -26,12 +26,12 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "client/src"),
+        "@": "/src",
         "@shared": path.resolve(__dirname, "shared"),
       },
     },
     envDir: path.resolve(__dirname),
-    root: path.resolve(__dirname),
+    root: path.resolve(__dirname, "client"),
     publicDir: path.resolve(__dirname, "client/public"),
     // This makes the shipped code slightly less "copy friendly", but it is not
     // real protection. If something must be secret, it cannot live in the client.
@@ -43,7 +43,6 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       minify: "esbuild",
       rollupOptions: {
-        input: path.resolve(__dirname, "client/index.html"),
         output: {
           chunkFileNames: "assets/[hash].js",
           entryFileNames: "assets/[hash].js",
