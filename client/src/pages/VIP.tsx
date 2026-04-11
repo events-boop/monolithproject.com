@@ -156,7 +156,7 @@ export default function VIP() {
                                  <div className="mt-12 flex flex-col sm:flex-row gap-12 items-center justify-center border-t border-white/5 pt-12">
                                    <Link href="/tickets">
                                       <a className="cta-ghost">
-                                         Get Tickets
+                                         Tickets
                                          <ArrowUpRight className="w-3 h-3 ml-2 opacity-40 group-hover:opacity-100" />
                                       </a>
                                    </Link>

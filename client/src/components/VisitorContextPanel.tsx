@@ -73,7 +73,7 @@ const segmentContent: Record<
     actions: (ticketUrl, hasLiveTickets, nextEventHref) => [
       hasLiveTickets
         ? {
-            label: "Get Tickets",
+            label: "Tickets",
             href: ticketUrl,
             icon: Ticket,
             note: "Live window",

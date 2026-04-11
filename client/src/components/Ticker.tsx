@@ -70,12 +70,12 @@ export default function Ticker() {
                     LAST TICKETS
                   </span>
                   <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
-                    <Ticket className="w-3 h-3" /> Get Tickets
+                    <Ticket className="w-3 h-3" /> Tickets
                   </span>
                 </div>
               ) : (
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
-                  <Ticket className="w-3 h-3" /> Get Tickets
+                  <Ticket className="w-3 h-3" /> Tickets
                 </span>
               )}
               <ArrowRight className="w-3 h-3 text-white/55 transition-transform group-hover:translate-x-1" />

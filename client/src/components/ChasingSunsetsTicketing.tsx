@@ -145,7 +145,7 @@ export default function ChasingSunsetsTicketing() {
                                 onClick={() => openDrawer('newsletter')}
                                 className="w-full py-4 border border-[#E8B86D]/50 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#E8B86D] hover:bg-[#E8B86D]/10 transition-colors flex items-center justify-center gap-2"
                             >
-                                Secure At $30 <ArrowRight className="w-3.5 h-3.5" />
+                                Request Early Access <ArrowRight className="w-3.5 h-3.5" />
                             </button>
                             <p className="text-center text-white/30 mt-4 text-[10px] font-mono tracking-widest uppercase">Pricing guarantees priority entry</p>
                         </div>

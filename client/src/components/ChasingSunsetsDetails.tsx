@@ -13,7 +13,7 @@ const benefits = [
     { title: "What It Is", description: "A summer-long curation of outdoor rooms that start at sunset and end long after dark." },
     { title: "The July 4th Tradition", description: "Our flagship gathering. The energy of the city at its peak, soundtracked by world-class selectors." },
     { title: "Who It's For", description: "Those who prioritize the room, the music, and the people over the hype." },
-    { title: "How To Get Tickets", description: "Capacities are strict. Early access goes to the newsletter before public sale." },
+    { title: "How Tickets Work", description: "Capacities are strict. Early access goes to the newsletter before public sale." },
 ];
 
 export default function ChasingSunsetsDetails() {

@@ -3,7 +3,7 @@ import type { EventCta, FunnelTool, ScheduledEvent } from "@shared/events/types"
 export type { EventCta, FunnelTool };
 
 export const CTA_LABELS = {
-  tickets: "Secure Access",
+  tickets: "Tickets",
   schedule: "View Schedule",
   collective: "View Artists",
   journal: "View Articles",
@@ -24,11 +24,11 @@ export const CTA_LABELS = {
   contact: "Start Contact",
   viewPartners: "View Partners",
   openPressContext: "Open Press Context",
-  getTicketsNow: "Secure Access Now",
+  getTicketsNow: "Tickets Now",
   moveTogether: "Explore The Ecosystem",
-  unlockPresale: "Request Presale Access",
+  unlockPresale: "Early Tickets",
   joinWaitlist: "Register For The Next Drop",
-  reserve: "Secure Access",
+  reserve: "Tickets",
   claimLast: "Secure Final Entry",
   nextSignal: "Get First Access To Next Signal",
   requestVip: "Secure Stage Proximity",

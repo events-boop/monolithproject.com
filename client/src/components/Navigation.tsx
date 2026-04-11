@@ -548,7 +548,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
                       image: ticketHref ? "/images/untold-story-juany-deron-v2.webp" : "/images/chasing-sunsets-premium.webp",
                       href: ticketHref || "/chasing-sunsets",
-                      ctaText: ticketHref ? "Secure Access" : "Explore Season",
+                      ctaText: ticketHref ? "Tickets" : "Explore Season",
                       icon: ticketHref ? "ticket" : "arrow",
                       badge: ticketHref ? "ON SALE" : "JULY 4",
                       external: !!ticketHref

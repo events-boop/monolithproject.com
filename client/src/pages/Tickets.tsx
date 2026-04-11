@@ -229,7 +229,7 @@ export default function Tickets() {
                              ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
                            `}
                          >
-                            {cta.label === CTA_LABELS.tickets ? "GET TICKETS" : cta.label}
+                            {cta.label === CTA_LABELS.tickets ? "TICKETS" : cta.label}
                             <ArrowUpRight className="w-4 h-4 ml-3" />
                          </a>
                     </MagneticButton>
@@ -305,7 +305,7 @@ export default function Tickets() {
                   {tier.available ? (
                     <>
                       <span className="text-[10px] font-black uppercase tracking-[0.4em]">
-                        {cta.label === CTA_LABELS.tickets ? `GET ${tier.name}` : cta.label}
+                        {cta.label === CTA_LABELS.tickets ? tier.name : cta.label}
                       </span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </>
