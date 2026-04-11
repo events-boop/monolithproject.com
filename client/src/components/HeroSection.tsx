@@ -109,7 +109,7 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_SUBHEAD =
-  "Monolith is the root. Chasing Sun(Sets), Untold Story, and the Radio Show are the branches. Start with the next event, then follow the branch you want to enter.";
+  "Monolith is the primary infrastructure. Chasing Sun(Sets), Untold Story, and Radio are the core operational branches. Track project progress and enter the network via our upcoming schedule.";
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
@@ -345,7 +345,7 @@ export default function HeroSection() {
               </motion.h1>
               <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "100%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-white/30 to-transparent my-6 lg:my-8" />
               <span className="font-mono text-[clamp(0.8rem,5vw,2.5rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Roots / Branches / Radio / Ritual</BrandTranslatorLabel>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
               <RevealText
                 as="p"
                 className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.34em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]"

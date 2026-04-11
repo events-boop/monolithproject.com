@@ -7,12 +7,14 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import PageTransition from "./components/PageTransition";
-import { useUI, UIProvider } from "./contexts/UIContext";
+import { UIProvider } from "./contexts/UIContext";
+import { InquiryProvider } from "./contexts/InquiryContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
+import InquiryPortal from "./components/InquiryPortal";
 
 // Lazy Pages
 const Tickets = lazy(() => import("./pages/Tickets"));
@@ -270,15 +272,18 @@ function App() {
       <ErrorBoundary>
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
-            <div className="film-grain" />
-            <MainContentWrapper />
-            
-            <Suspense fallback={null}>
-              <Toaster />
-              <DeferredShellChrome />
-              <Analytics />
-              <CookieConsent />
-            </Suspense>
+            <InquiryProvider>
+              <div className="film-grain" />
+              <MainContentWrapper />
+              
+              <Suspense fallback={null}>
+                <InquiryPortal />
+                <Toaster />
+                <DeferredShellChrome />
+                <Analytics />
+                <CookieConsent />
+              </Suspense>
+            </InquiryProvider>
           </UIProvider>
         </ThemeProvider>
       </ErrorBoundary>

@@ -38,6 +38,9 @@ export const CTA_LABELS = {
   secureMembership: "Get Event Updates",
   registerDrop: "Register For Drop",
   hearTheRooms: "Hear The Rooms",
+  inquirySponsor: "Partner With Us",
+  inquiryVenue: "Host At Your Space",
+  inquiryArtist: "Submit Your Sound",
 } as const;
 
 function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
@@ -79,4 +82,12 @@ export function getEventCta(event?: ScheduledEvent | null): EventCta {
   };
 
   return event?.primaryCta ?? fallback;
+}
+
+export function isInquiryHref(href: string) {
+  return href.startsWith("inquiry://");
+}
+
+export function parseInquiryType(href: string) {
+  return href.replace("inquiry://", "") as any;
 }

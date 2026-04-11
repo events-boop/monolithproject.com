@@ -4,6 +4,8 @@ import { ScheduledEvent } from "@/data/events";
 import { getEventCta, FunnelTool, isEventLowInventory } from "@/lib/cta";
 import MagneticButton from "@/components/MagneticButton";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
+import { useInquiry } from "@/contexts/InquiryContext";
+import { isInquiryHref, parseInquiryType } from "@/lib/cta";
 
 interface ConversionCTAProps {
   event?: ScheduledEvent | null;
@@ -22,6 +24,7 @@ export default function ConversionCTA({
 }: ConversionCTAProps) {
   const cta = getEventCta(event);
   const { preconnectGateway } = useIntentPrefetch();
+  const { openInquiry } = useInquiry();
   
   const sizeClasses = {
     sm: "px-5 py-2.5 text-[10px]",
@@ -50,9 +53,15 @@ export default function ConversionCTA({
   const baseButton = (
     <div className={`flex flex-col items-center gap-0 ${className}`}>
       <a
-        href={cta.href}
+        href={isInquiryHref(cta.href) ? "#" : cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
+        onClick={(e) => {
+          if (isInquiryHref(cta.href)) {
+            e.preventDefault();
+            openInquiry(parseInquiryType(cta.href));
+          }
+        }}
         onMouseEnter={() => {
           if (cta.isExternal) preconnectGateway(cta.href);
         }}

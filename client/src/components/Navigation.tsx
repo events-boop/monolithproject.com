@@ -68,6 +68,10 @@ interface NavigationProps {
 
 const mobilePrimaryItems = [
   {
+    label: "HOME",
+    href: "/",
+  },
+  {
     label: "NEXT EVENT",
     href: "/schedule",
   },
