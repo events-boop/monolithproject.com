@@ -26,12 +26,13 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: {
-        "@": "/src",
-        "@shared": "/../shared",
+        "@": path.resolve(__dirname, "client/src"),
+        "@shared": path.resolve(__dirname, "shared"),
       },
     },
     envDir: path.resolve(__dirname),
-    root: path.resolve(__dirname, "client"),
+    root: path.resolve(__dirname),
+    publicDir: path.resolve(__dirname, "client/public"),
     // This makes the shipped code slightly less "copy friendly", but it is not
     // real protection. If something must be secret, it cannot live in the client.
     esbuild: isProd ? { drop: ["console", "debugger"], legalComments: "none" } : undefined,
@@ -42,6 +43,7 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       minify: "esbuild",
       rollupOptions: {
+        input: path.resolve(__dirname, "client/index.html"),
         output: {
           chunkFileNames: "assets/[hash].js",
           entryFileNames: "assets/[hash].js",
@@ -80,6 +82,7 @@ export default defineConfig(({ mode }) => {
       allowedHosts: ["localhost", "127.0.0.1"],
       fs: {
         strict: true,
+        allow: [path.resolve(__dirname, "client"), path.resolve(__dirname, "shared")],
         deny: ["**/.*"],
       },
       proxy: {
