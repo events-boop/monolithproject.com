@@ -39,10 +39,13 @@ export default function NavigationMegamenu({
 
     const openMenu = () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        setIsOpen(true);
+        timeoutRef.current = setTimeout(() => {
+            setIsOpen(true);
+        }, 200);
     };
 
     const closeMenu = () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             setIsOpen(false);
         }, 150);

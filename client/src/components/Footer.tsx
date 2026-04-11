@@ -24,11 +24,10 @@ function SpotifyIcon({ className }: { className?: string }) {
 }
 
 const socials = [
-  { name: "Chasing Sun(Sets) Instagram", icon: Instagram, url: INSTAGRAM_SUNSETS },
-  { name: "Untold Story Instagram", icon: Instagram, url: INSTAGRAM_UNTOLD },
-  { name: "Monolith Instagram", icon: Instagram, url: INSTAGRAM_MONOLITH },
-  { name: "Chasing Sun(Sets) TikTok", icon: TikTokIcon, url: "https://tiktok.com/@chasingsunsets" },
-  { name: "Monolith TikTok", icon: TikTokIcon, url: TIKTOK_URL },
+  { name: "Monolith — Instagram", icon: Instagram, url: INSTAGRAM_MONOLITH },
+  { name: "Monolith — TikTok", icon: TikTokIcon, url: TIKTOK_URL },
+  { name: "Chasing Sun(Sets) — Instagram", icon: Instagram, url: INSTAGRAM_SUNSETS },
+  { name: "Untold Story — Instagram", icon: Instagram, url: INSTAGRAM_UNTOLD },
   { name: "YouTube", icon: Youtube, url: "https://youtube.com/@monolithproject" },
   { name: "Spotify", icon: SpotifyIcon, url: SPOTIFY_URL },
   { name: "SoundCloud", icon: Headphones, url: SOUNDCLOUD_URL },
