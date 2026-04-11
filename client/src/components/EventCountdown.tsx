@@ -134,7 +134,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
             <div className="flex items-center gap-4">
               <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
               <span className="font-mono text-[12px] md:text-sm uppercase tracking-[0.4em] text-white/40">
-                Series Countdown
+                Next Event
               </span>
             </div>
             <div>
@@ -163,7 +163,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 {event.inventoryState === "low" && (
                   <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
-                    Inventory Capped // Floor Active
+                    Limited Capacity
                   </div>
                 )}
                 {event.ticketTiers && event.ticketTiers.length > 0 && (
@@ -175,7 +175,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
               {event.location && (
                 <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-                  Inventory is capped to protect the room. Secure your access before phase change.
+                  Capacity is limited to keep the room comfortable. Secure entry before pricing changes.
                 </p>
               )}
             </div>
@@ -198,7 +198,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-white/80 transition-colors inline-flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
-                  Table Reservations & Concierge Services
+                  Table Reservations & VIP
                 </a>
               </div>
             ) : (
@@ -206,11 +206,11 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 href="/newsletter"
                 className="group inline-flex items-center justify-between gap-12 px-10 py-6 border hover:bg-white hover:text-black transition-all duration-500 self-start relative overflow-hidden"
                 style={{ borderColor: seriesColor, color: seriesColor }}
-              >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
-                <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
-                  REGISTER FOR THE NEXT DROP →
-                </span>
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
+                  <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
+                    GET THE NEXT DATE →
+                  </span>
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
                 </svg>

@@ -114,7 +114,7 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_SUBHEAD =
-  "Recurring music experiences, radio, and archive from Chicago.";
+  "A Chicago music series, radio show, and archive. Start with the next event, then hear the rooms, then open the archive.";
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
@@ -228,7 +228,7 @@ export default function HeroSection() {
               </motion.h1>
               <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "120%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent my-6 lg:my-10" />
               <span className="font-mono text-[clamp(0.8rem,5vw,3rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Cultural House</BrandTranslatorLabel>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Chicago Music Series / Radio Show / Archive</BrandTranslatorLabel>
               <RevealText
                 as="p"
                 className="mt-6 max-w-sm text-center font-mono text-[10px] uppercase tracking-[0.34em] text-white/50 md:mt-8 md:max-w-lg md:text-sm md:tracking-[0.4em]"

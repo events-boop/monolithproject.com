@@ -68,48 +68,47 @@ interface NavigationProps {
 
 const mobilePrimaryItems = [
   {
-    label: "TICKETS",
+    label: "NEXT EVENT",
     href: "/schedule",
   },
   {
-    label: "THE MONOLITH",
+    label: "ABOUT",
     href: "/about",
     subItems: [
       { label: "ABOUT OVERVIEW", href: "/about" },
-      { label: "THE MONOLITH STORY", href: "/about#story" },
+      { label: "OUR STORY", href: "/about#story" },
       { label: "VISION & MANIFESTO", href: "/about#vision" },
     ]
   },
   {
-    label: "SERIES",
-    href: "/projects",
+    label: "EVENTS",
+    href: "/chasing-sunsets",
     subItems: [
       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
       { label: "UNTOLD STORY", href: "/story" },
-      { label: "SERIES ARCHIVE", href: "/archive" },
+      { label: "EVENT ARCHIVE", href: "/archive" },
       { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
     ]
   },
   {
-    label: "SCHEDULE",
-    href: "/schedule",
+    label: "RADIO + ARCHIVE",
+    href: "/radio",
     subItems: [
-      { label: "VIEW FULL SCHEDULE", href: "/schedule" },
+      { label: "RADIO SHOW", href: "/radio" },
+      { label: "FULL SCHEDULE", href: "/schedule" },
+      { label: "ARTISTS & LINEUP", href: "/lineup" },
+      { label: "EVENT ARCHIVE", href: "/archive" },
       { label: "LATEST NEWS", href: "/insights" },
-      { label: "RADIO ARCHIVE", href: "/radio" },
-      { label: "PRE-FLIGHT GUIDE", href: "/guide" },
     ]
   },
   {
-    label: "RESOURCES",
-    href: "/partners",
+    label: "PLAN YOUR NIGHT",
+    href: "/vip",
     subItems: [
-      { label: "RESERVE ENTRY", href: "/schedule" },
+      { label: "GET TICKETS", href: "/schedule" },
       { label: "VIP TABLE SERVICES", href: "/vip" },
       { label: "PARTNER WITH US", href: "/partners" },
-      { label: "BOOKING / HIRE", href: "/booking" },
       { label: "PRESS & MEDIA", href: "/press" },
-      { label: "ARTIST SUBMISSION", href: "/submit" },
       { label: "CONTACT", href: "/contact" },
     ]
   },
@@ -157,13 +156,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     }
 
     const sections = [
-      { id: "series", number: "01", label: "SERIES" },
-      { id: "season", number: "02", label: "SEASON" },
-      { id: "expectations", number: "03", label: "EXPECTATIONS" },
-      { id: "campaigns", number: "04", label: "CAMPAIGNS" },
-      { id: "philosophy", number: "05", label: "PHILOSOPHY" },
-      { id: "showcase", number: "06", label: "EXPLORE" },
-      { id: "community", number: "07", label: "NEWSLETTER" },
+      { id: "campaigns", number: "01", label: "HIGHLIGHTS" },
+      { id: "series", number: "02", label: "SERIES" },
+      { id: "season", number: "03", label: "DATES" },
+      { id: "showcase", number: "04", label: "EXPLORE" },
+      { id: "community", number: "05", label: "NEWSLETTER" },
     ];
 
     const observer = new IntersectionObserver(
@@ -263,11 +260,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
 
   const renderNavLabel = (label: string, mobile = false) => {
     const accent =
-      label === "SERIES"
+      label === "EVENTS"
         ? "#C2703E"
-        : label === "EXPLORE"
+        : label === "RADIO + ARCHIVE"
           ? "#22D3EE"
-          : label === "CONCIERGE"
+          : label === "PLAN YOUR NIGHT"
             ? "#8B5CF6"
             : null;
 
@@ -498,7 +495,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               {/* CENTER: NAV ITEMS */}
               <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="THE MONOLITH"
+                  label="ABOUT"
                   href="/about"
                   isActive={location === "/about" || location === "/togetherness"}
                   isLight={isLight}
@@ -508,11 +505,11 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     items: [
                       { label: "ABOUT", href: "/about#story" },
                       { label: "HOW IT WORKS", href: "/about#vision" },
-                      { label: "PRINCIPLES", href: "/about#manifesto" },
+                      { label: "OUR PRINCIPLES", href: "/about#manifesto" },
                     ],
                     feature: {
-                      title: "ABOUT MONOLITH",
-                      subtitle: "Project Overview",
+                      title: "WHAT MONOLITH IS",
+                      subtitle: "Chicago Music Project",
                       image: "/images/hero-monolith-modern.webp",
                       href: "/about",
                       ctaText: "About Monolith",
@@ -523,7 +520,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 />
 
                 <NavigationMegamenu
-                  label="SERIES"
+                  label="EVENTS"
                   href="/chasing-sunsets"
                   isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story")}
                   isLight={isLight}
@@ -534,7 +531,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
                       { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
-                      { label: "ENTRY CHECKLIST", href: "/guide#entry" },
+                      { label: "ENTRY GUIDE", href: "/guide#entry" },
                       { label: "EVENT ARCHIVE", href: "/archive" },
                     ],
                     feature: {
@@ -551,23 +548,23 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 />
 
                 <NavigationMegamenu
-                  label="EXPLORE"
-                  href="/schedule"
+                  label="RADIO + ARCHIVE"
+                  href="/radio"
                   isActive={location === "/schedule" || location === "/lineup" || location === "/archive" || location.includes("/insights") || location.includes("/radio")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "SCHEDULE", href: "/schedule" },
+                      { label: "RADIO SHOW", href: "/radio", icon: "play" },
+                      { label: "FULL SCHEDULE", href: "/schedule" },
                       { label: "ARTISTS & LINEUP", href: "/lineup" },
                       { label: "EVENT ARCHIVE", href: "/archive" },
                       { label: "JOURNAL", href: "/insights" },
-                      { label: "RADIO SHOW", href: "/radio", icon: "play" },
                     ],
                     feature: {
-                      title: "CHASING SUN(SETS) RADIO",
-                      subtitle: "Benchek Live from Monolith",
+                      title: "RADIO SHOW + ARCHIVE",
+                      subtitle: "Mixes, episodes, and the visual record",
                       image: "/images/radio-show-gear.webp",
                       href: "/radio/ep-01-benchek",
                       ctaText: "Hear The Rooms",
@@ -578,20 +575,19 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                 />
 
                 <NavigationMegamenu
-                  label="CONCIERGE"
-                  href="/partners"
+                  label="PLAN YOUR NIGHT"
+                  href="/vip"
                   isActive={location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
+                      { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
                       { label: "VIP TABLES", href: "/vip" },
                       { label: "SPONSOR ACCESS", href: "/sponsors" },
                       { label: "PARTNERSHIPS", href: "/partners" },
                       { label: "PRESS & MEDIA", href: "/press" },
-                      { label: "ARTIST SUBMISSION", href: "/submit" },
                       { label: "CONTACT", href: "/contact" },
                     ],
                     feature: {

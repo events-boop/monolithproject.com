@@ -15,19 +15,18 @@ const EventFunnelStack = lazy(() => import("@/components/EventFunnelStack"));
 const ExpressionSplit = lazy(() => import("@/components/ExpressionSplit"));
 const FeaturedCampaigns = lazy(() => import("@/components/FeaturedCampaigns"));
 const ShowcaseSplit = lazy(() => import("@/components/ShowcaseSplit"));
-const MovementSection = lazy(() => import("@/components/MovementSection"));
-const NightInNumbers = lazy(() => import("@/components/NightInNumbers"));
 const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
 const Ticker = lazy(() => import("@/components/Ticker"));
 const VisitorContextPanel = lazy(() => import("@/components/VisitorContextPanel"));
-const WhatToExpect = lazy(() => import("@/components/WhatToExpect"));
 import SEO from "@/components/SEO";
 
 export default function Home() {
   usePublicSiteDataVersion();
+  const heroEvent = getExperienceEvent("hero");
   const funnelEvent = getExperienceEvent("funnel");
   const ticketUrl = getPrimaryTicketUrl(funnelEvent);
+  const primaryHomeEvent = funnelEvent ?? heroEvent;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,8 +59,36 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
+        <div className="bg-[#0a0a0a] border-y border-white/5 relative z-10">
+          <div id="start-here" className="relative pt-16 md:pt-20 pb-10">
+            <ViewportLazy minHeightClassName="min-h-[280px]" rootMargin="220px 0px">
+              <Suspense fallback={<Skeleton className="mx-auto h-[280px] w-full max-w-6xl opacity-10" />}>
+                <VisitorContextPanel />
+              </Suspense>
+            </ViewportLazy>
+          </div>
+          <div className="px-6 pb-16 md:pb-20">
+            <div className="container layout-default">
+              <ViewportLazy minHeightClassName="min-h-[180px]" rootMargin="220px 0px">
+                <Suspense fallback={<Skeleton className="h-[180px] w-full opacity-10" />}>
+                  <ConversionStrip />
+                </Suspense>
+              </ViewportLazy>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#0c0c0c] border-y border-white/5 relative z-10 transition-colors duration-500">
+          <SectionDivider id="campaigns" number="01" label="Upcoming Highlights" glow="rgba(255,51,51,0.08)" />
+          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
+              <FeaturedCampaigns />
+            </Suspense>
+          </ViewportLazy>
+        </div>
+
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="01" label="The Series" glow="#E05A3A" dense />
+          <SectionDivider id="series" number="02" label="The Series" glow="#E05A3A" dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
               <ExpressionSplit />
@@ -70,7 +97,7 @@ export default function Home() {
         </div>
 
         <div className="bg-[#F8F8F8] transition-colors duration-500 border-y border-black/5 relative z-10">
-          <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
+          <SectionDivider id="season" number="03" label="Upcoming Dates" dark={false} glow="#8B5CF6" />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
@@ -78,42 +105,22 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
+        {primaryHomeEvent ? (
+          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
+            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
+              <EventCountdown eventId={primaryHomeEvent.id} />
+            </Suspense>
+          </ViewportLazy>
+        ) : null}
+
         <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="expectations" number="03" label="Expectations" glow="rgba(255,255,255,0.05)" dense />
-          <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="260px 0px">
-            <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
-              <WhatToExpect />
+          <SectionDivider id="showcase" number="04" label="Explore" glow="#D4A574" dense />
+          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
+            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
+              <ShowcaseSplit />
             </Suspense>
           </ViewportLazy>
         </div>
-
-        <div className="bg-[#0c0c0c] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="campaigns" number="04" label="Active Campaigns" glow="rgba(255,51,51,0.08)" />
-          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
-            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
-              <FeaturedCampaigns />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <div className="bg-[#080808] border-y border-white/5 relative z-10 transition-colors duration-500 bg-[linear-gradient(to_bottom,#202020,#080808)]">
-          <SectionDivider id="philosophy" number="05" label="The Philosophy" glow="rgba(255,255,255,0.08)" labelOverride="font-mono text-[11px] md:text-sm uppercase tracking-[0.6em] text-white font-bold" />
-          <ViewportLazy minHeightClassName="min-h-[820px]" rootMargin="260px 0px">
-            <Suspense fallback={<Skeleton className="h-[820px] w-full opacity-10" />}>
-              <div className="flex flex-col w-full pb-8">
-                <EventCountdown eventId="us-s3e3" />
-                <EventCountdown eventId="css-jul04" />
-              </div>
-              <MovementSection />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <ViewportLazy minHeightClassName="min-h-[520px]" rootMargin="220px 0px">
-          <Suspense fallback={<Skeleton className="h-[520px] w-full opacity-10" />}>
-            <NightInNumbers />
-          </Suspense>
-        </ViewportLazy>
 
         <ViewportLazy minHeightClassName="min-h-[60vh]">
           <Suspense fallback={<Skeleton className="w-full h-[60vh] opacity-20" />}>
@@ -129,36 +136,8 @@ export default function Home() {
           </Suspense>
         </ViewportLazy>
 
-        <div className="bg-[#0a0a0a] border-y border-white/5 relative z-10">
-          <div className="relative pt-24 md:pt-32 pb-12">
-            <ViewportLazy minHeightClassName="min-h-[280px]" rootMargin="220px 0px">
-              <Suspense fallback={<Skeleton className="mx-auto h-[280px] w-full max-w-6xl opacity-10" />}>
-                <VisitorContextPanel />
-              </Suspense>
-            </ViewportLazy>
-          </div>
-          <div className="px-6 pb-24 md:pb-32">
-            <div className="container layout-default">
-              <ViewportLazy minHeightClassName="min-h-[180px]" rootMargin="220px 0px">
-                <Suspense fallback={<Skeleton className="h-[180px] w-full opacity-10" />}>
-                  <ConversionStrip />
-                </Suspense>
-              </ViewportLazy>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
-          <SectionDivider id="showcase" number="06" label="Explore" glow="#D4A574" dense />
-          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
-            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
-              <ShowcaseSplit />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
         <div className="bg-[#0c0b0a] border-y border-white/5 relative z-10 transition-colors duration-500 pb-24 md:pb-32">
-          <SectionDivider id="community" number="07" label="Newsletter" glow="#D4A574" />
+          <SectionDivider id="community" number="05" label="Newsletter" glow="#D4A574" />
           {funnelEvent ? (
             <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="240px 0px">
               <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>

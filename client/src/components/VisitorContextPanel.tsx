@@ -13,7 +13,6 @@ import {
 import { Link } from "wouter";
 import { getExperienceEvent, getPrimaryTicketUrl, isTicketOnSale } from "@/lib/siteExperience";
 import { useVisitorContext, type VisitorSegment } from "@/lib/visitorContext";
-import { CTA_LABELS } from "@/lib/cta";
 
 interface ContextAction {
   description: string;
@@ -37,29 +36,29 @@ const segmentContent: Record<
   "first-visit": {
     eyebrow: "Start Here",
     label: "First Visit",
-    title: "New here? Start with the next event, then learn the project.",
+    title: "New here? Start with the next event, the radio show, or the archive.",
     description:
-      "The fastest way into Monolith is the next date, the radio show, and the event archive that shows what the nights actually look like.",
+      "Those three paths explain the project fastest without making you decode the whole homepage first.",
     actions: () => [
       {
-        label: CTA_LABELS.schedule,
+        label: "Next Event",
         href: "/schedule",
         icon: CalendarRange,
-        note: "Explore The Season",
+        note: "Upcoming Date",
         description: "Start with the upcoming calendar and the series each night belongs to.",
       },
       {
-        label: CTA_LABELS.radioHub,
+        label: "Radio Show",
         href: "/radio",
         icon: Radio,
         note: "Hear The Rooms",
         description: "The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive.",
       },
       {
-        label: CTA_LABELS.archive,
+        label: "Archive",
         href: "/archive",
         icon: LibraryBig,
-        note: "Find Your Memory",
+        note: "See The Nights",
         description: "See what the nights actually looked and felt like once the doors opened.",
       },
     ],
@@ -73,7 +72,7 @@ const segmentContent: Record<
     actions: (ticketUrl, hasLiveTickets) => [
       hasLiveTickets
         ? {
-            label: CTA_LABELS.tickets,
+            label: "Get Tickets",
             href: ticketUrl,
             icon: Ticket,
             note: "Live window",
@@ -81,21 +80,21 @@ const segmentContent: Record<
             external: true,
           }
         : {
-            label: CTA_LABELS.schedule,
+            label: "Next Event",
             href: "/schedule",
             icon: CalendarRange,
-            note: "Explore The Season",
+            note: "Upcoming Date",
             description: "Go directly to the upcoming calendar when there is no live ticket window yet.",
           },
       {
-        label: "Hear The Rooms",
+        label: "Radio Show",
         href: "/radio",
         icon: Radio,
-        note: "Access The Archive",
+        note: "Play Something",
         description: "Put on a mix and get back into the mood quickly.",
       },
       {
-        label: "Find Your Memory",
+        label: "Archive",
         href: "/archive",
         icon: LibraryBig,
         note: "The Visual Record",
@@ -111,21 +110,21 @@ const segmentContent: Record<
       "If you are coming in from venues, brands, media, or booking, the clearest path is partners, press, then direct contact.",
     actions: () => [
       {
-        label: CTA_LABELS.viewPartners,
+        label: "Partners",
         href: "/partners",
         icon: Handshake,
         note: "Brand and venue path",
         description: "See where venue, brand, and collaboration conversations begin.",
       },
       {
-        label: CTA_LABELS.openPressContext,
+        label: "Press Context",
         href: "/press",
         icon: FileText,
         note: "Fast facts",
         description: "Get the language, context, and assets media or collaborators usually need first.",
       },
       {
-        label: CTA_LABELS.contact,
+        label: "Contact",
         href: "/contact",
         icon: Mail,
         note: "Direct channel",
@@ -175,13 +174,8 @@ export default function VisitorContextPanel() {
 
             <div className="flex flex-wrap gap-2.5">
               <span className="inline-flex items-center rounded-none border border-primary/40 bg-primary/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_10px_rgba(224,90,58,0.3)]">
-                VIEW [{visitorContext.tier}]
+                Recommended Paths
               </span>
-              <div className="flex items-center h-[30px] px-2 bg-white/5 border border-white/10 gap-1.5">
-                  {[0, 1, 2, 3].map((i) => (
-                      <div key={i} className={`w-1.5 h-1.5 rounded-full ${i < visitorContext.achievements.length ? 'bg-primary shadow-[0_0_5px_rgba(224,90,58,1)]' : 'bg-white/10'}`} />
-                  ))}
-              </div>
               <span className="inline-flex items-center rounded-none border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/62">
                 {content.label}
               </span>
