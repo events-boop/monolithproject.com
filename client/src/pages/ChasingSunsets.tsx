@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Calendar, MapPin, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import ChasingSunsetsTicketing from "@/components/ChasingSunsetsTicketing";
 import EpisodeGallery from "@/components/EpisodeGallery";
@@ -11,6 +10,8 @@ import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
 import useScrollSunset from "@/hooks/useScrollSunset";
 import { useState } from "react";
+import FixedTicketBadge from "@/components/FixedTicketBadge";
+import Footer from "@/components/Footer";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -64,7 +65,7 @@ const CHASING_ANCHORS = [
   { label: "Records", href: "#chasing-records" },
   { label: "Upcoming", href: "#chasing-upcoming" },
   { label: "Submit", href: "#chasing-submit" },
-  { label: "Network", href: "#chasing-cta" },
+  { label: "Updates", href: "#chasing-funnel" },
 ];
 
 export default function ChasingSunsets() {
@@ -466,7 +467,7 @@ export default function ChasingSunsets() {
             </AnimatePresence>
         </Section>
 
-        {/* Inner Circle Pre-registration Funnel */}
+        {/* Chasing Sun(Sets) updates funnel */}
         {chasingFunnelEvent ? (
           <div
             id="chasing-funnel"
@@ -476,35 +477,8 @@ export default function ChasingSunsets() {
           </div>
         ) : null}
 
-        <Section id="chasing-cta" width="narrow" scrollAnchor borderTop="sunset-border-accent border-t" className="relative" containerClassName="text-center">
-          <div className="pointer-events-none absolute inset-0 bg-chasing-glow-2" />
-            <h2 className="font-display text-5xl md:text-7xl mb-6 sunset-text">
-              SEE WHAT'S NEXT
-            </h2>
-            <p className="text-lg max-w-xl mx-auto mb-12 sunset-text-70">
-              Stay close to the next date, the next venue, and new radio episodes between events.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <ConversionCTA 
-                event={liveChasingEvent || featuredChasingEvent}
-                size="lg"
-                showUrgency={true}
-              />
-              
-              <MagneticButton strength={0.3}>
-                <Link href="/radio" asChild>
-                  <a
-                    className="inline-flex items-center justify-center gap-2 px-10 py-5 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sunset-gradient-btn group border border-white/20"
-                  >
-                    {CTA_LABELS.radioHub} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Link>
-              </MagneticButton>
-            </div>
-        </Section>
       </main>
-
-      <SlimSubscribeStrip title="SUBSCRIBE FOR SUN(SETS)" source="chasing_sunsets_strip" dark={false} />
+      <FixedTicketBadge />
     </div>
   );
 }

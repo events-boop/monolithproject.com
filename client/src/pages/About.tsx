@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform, useInView } from "framer-motion";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
@@ -63,6 +63,7 @@ import { Plus } from "lucide-react";
 
 export default function About() {
   const [expandedArchitecture, setExpandedArchitecture] = useState<string | null>(null);
+  const [location] = useLocation();
 
   const toggleArchitecture = (title: string) => {
     signalChirp.click();
@@ -78,11 +79,26 @@ export default function About() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.4], [1, 1.1]);
 
+  useEffect(() => {
+    const targetId =
+      location === "/togetherness"
+        ? "togetherness"
+        : window.location.hash.replace("#", "");
+
+    if (!targetId) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location]);
+
   return (
     <div ref={containerRef} className="bg-[#050505] text-white selection:bg-white/20 relative">
       <SEO
-        title="About The Monolith Project | Chicago Music Ecosystem"
-        description="Chicago's premier electronic music ecosystem. Curated rooms, uncompromised sound, and a dedicated architectural standard for the night."
+        title="About The Monolith Project | Chicago Music Project"
+        description="Monolith is the root project. Chasing Sun(Sets), Untold Story, and the Radio Show are the branches, with Togetherness holding the vision across all of them."
         canonicalPath="/about"
       />
 
@@ -179,7 +195,7 @@ export default function About() {
             <div className="space-y-16">
               <div>
                 <BrandTranslatorLabel tone="neutral" className="mb-8">
-                  Why Monolith Exists
+                  Our Story
                 </BrandTranslatorLabel>
                 <WordScrubReveal 
                   text="We are tired of forgettable nights." 
@@ -209,8 +225,8 @@ export default function About() {
         <div className="layout-wide flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
           <div className="lg:w-1/3">
               <div className="sticky top-40">
-                <span className="ui-kicker block text-[#d4a853] mb-4">The Architecture</span>
-              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">The Standard</h2>
+                <span className="ui-kicker block text-[#d4a853] mb-4">The Standard</span>
+              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Manifesto</h2>
               <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />
             </div>
           </div>
@@ -221,6 +237,46 @@ export default function About() {
                   text={line} 
                   className="font-serif font-light italic text-[clamp(2.2rem,5vw,5rem)] text-white/90 leading-[1.1] text-balance"
                 />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative px-6 py-28 md:py-36 z-30 border-b border-white/10 bg-[#070707]" id="togetherness">
+        <div className="layout-wide">
+          <div className="max-w-5xl">
+            <BrandTranslatorLabel tone="neutral" className="mb-8">
+              Togetherness
+            </BrandTranslatorLabel>
+            <h2 className="font-display text-[clamp(2.6rem,5vw,5.4rem)] leading-[0.92] uppercase text-white mb-8">
+              Different rooms.
+              <br />
+              Same people returning.
+            </h2>
+            <p className="max-w-3xl text-lg md:text-xl leading-relaxed text-white/68 font-light">
+              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets), Untold Story, and the Radio Show are different expressions, but the point is continuity: the same city, the same standard, and a crowd that keeps finding each other across formats.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3 mt-12">
+            {[
+              {
+                label: "The Root",
+                copy: "Monolith holds the standard: curation, sound, continuity, and hospitality.",
+              },
+              {
+                label: "The Branches",
+                copy: "Each branch does a different job: open-air, late-night, and replayable audio between nights.",
+              },
+              {
+                label: "The Return",
+                copy: "The same people move between them, which is how the project becomes a real community instead of isolated drops.",
+              },
+            ].map((item) => (
+              <div key={item.label} className="border border-white/10 bg-white/[0.03] p-6 md:p-7">
+                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary/75 mb-4">{item.label}</p>
+                <p className="text-white/68 leading-relaxed">{item.copy}</p>
               </div>
             ))}
           </div>
@@ -242,7 +298,7 @@ export default function About() {
             >
               <div className="flex items-center gap-4 mb-6">
                  <div className="h-px w-8 bg-primary/50" />
-                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">How It Works</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">How It Works</span>
               </div>
               <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] uppercase text-white mb-8">
                 Four parts.<br />

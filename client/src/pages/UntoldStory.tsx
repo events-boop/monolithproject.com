@@ -2,7 +2,6 @@ import { ArrowUpRight } from "lucide-react";
 import "@/styles/themes/untold.css";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
-import TicketTicker from "@/components/TicketTicker";
 import EpisodeGallery from "@/components/EpisodeGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import SEO from "@/components/SEO";
@@ -11,7 +10,6 @@ import { eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
 import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
-import EventFunnelStack from "@/components/EventFunnelStack";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
@@ -21,7 +19,7 @@ const UNTOLD_ANCHORS = [
   { label: "Event", href: "#untold-event" },
   { label: "Contrast", href: "#untold-contrast" },
   { label: "Records", href: "#untold-records" },
-  { label: "Tickets", href: "#untold-tickets" },
+  { label: "Updates", href: "#untold-updates" },
 ];
 
 export default function UntoldStory() {
@@ -101,19 +99,10 @@ export default function UntoldStory() {
           </div>
         </div>
 
-        {/* Dynamic Funnels for this Event */}
-        {scheduledEvent ? (
-          <section id="untold-funnel" className="scroll-shell-target">
-            <EventFunnelStack eventId={scheduledEvent.id} />
-          </section>
-        ) : null}
-
-        <section id="untold-tickets" className="scroll-shell-target py-0 relative z-20">
-          <TicketTicker />
+        <section id="untold-updates" className="scroll-shell-target py-0 relative z-20">
+          <SlimSubscribeStrip title="UNTOLD UPDATES" source="untold_story_strip" />
         </section>
       </main>
-
-      <SlimSubscribeStrip title="SECURE UNTOLD ACCESS" source="untold_story_strip" />
     </div>
   );
 }

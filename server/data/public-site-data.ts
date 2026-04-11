@@ -20,6 +20,30 @@ export const POSH_TICKET_URL = "/go/tickets/featured";
 
 export const upcomingEvents: ScheduledEvent[] = [
     {
+        id: "us-s3e1",
+        series: "untold-story",
+        episode: "SEASON III · EPISODE I",
+        title: "THE OPENING",
+        date: "March 21, 2026",
+        time: "Doors Closed",
+        venue: "Alhambra Palace",
+        location: "Chicago, IL",
+        status: "past",
+        image: "/images/untold-opening-arch.webp",
+    },
+    {
+        id: "us-s3e2",
+        series: "untold-story",
+        episode: "SEASON III · EPISODE II",
+        title: "KASANGO",
+        date: "April 18, 2026",
+        time: "Doors Closed",
+        venue: "Secret Location",
+        location: "Chicago, IL",
+        status: "past",
+        image: "/images/kasango-archive.webp",
+    },
+    {
         id: "us-s3e3",
         series: "untold-story",
         episode: "SEASON III · EPISODE III",
@@ -57,18 +81,18 @@ export const upcomingEvents: ScheduledEvent[] = [
         ticketTiers: [
             {
                 id: "presale",
-                name: "Early Entry Access",
+                name: "Early Tickets",
                 price: 40,
-                description: "Priority entry for registered drop members.",
-                features: ["General admission", "Access to all rooms", "Sign up via Laylo"],
+                description: "First release for registered guests.",
+                features: ["General admission", "Access to all rooms", "Newsletter registration required"],
                 icon: "ticket",
                 available: true,
             },
             {
                 id: "general",
-                name: "General Access Entry",
+                name: "General Admission",
                 price: 60,
-                description: "Standard entry to the ecosystem.",
+                description: "Standard entry for the full room.",
                 features: ["General admission", "Access to all rooms", "Welcome drink"],
                 icon: "star",
                 available: true,
@@ -76,9 +100,9 @@ export const upcomingEvents: ScheduledEvent[] = [
             },
             {
                 id: "vip",
-                name: "Stage Proximity Access",
+                name: "VIP Table",
                 price: 120,
-                description: "Premium positioning and discrete service.",
+                description: "Premium table placement with dedicated service.",
                 features: ["Guaranteed proximity to artist", "Dedicated hospitality team", "Expedited entry"],
                 icon: "crown",
                 available: true,
@@ -118,7 +142,36 @@ export const upcomingEvents: ScheduledEvent[] = [
         description: "The flagship open-air ecosystem session. Start at sunset, continue after dark. Inventory is capped to protect the room.",
         activeFunnels: ["waitlist-chasing"],
         tableReservationEmail: "vip@chasingsunsets.music",
-        startingPrice: 65,
+        startingPrice: 30,
+        ticketTiers: [
+            {
+                id: "early-tickets",
+                name: "Early Tickets",
+                price: 30,
+                description: "First release for the July 4 opener.",
+                features: ["General admission", "Lowest release pricing", "Priority entry window"],
+                icon: "ticket",
+                available: true,
+            },
+            {
+                id: "advance-tickets",
+                name: "Advance Tickets",
+                price: 40,
+                description: "Second release once the first wave closes.",
+                features: ["General admission", "Access to all zones"],
+                icon: "star",
+                available: false,
+            },
+            {
+                id: "final-release",
+                name: "Final Release",
+                price: 70,
+                description: "Last public release before the event.",
+                features: ["General admission", "Access to all zones", "Day-of availability"],
+                icon: "crown",
+                available: false,
+            },
+        ],
         recentlyDropped: true,
     },
     {
@@ -320,6 +373,10 @@ function resolveEventsForPath(pathname: string, featuredEvents: PublicSiteData["
         return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents("chasing-sunsets")]);
     }
 
+    if (pathname.startsWith("/events/")) {
+        return upcomingEvents;
+    }
+
     return uniqueEvents(Object.values(featuredEvents));
 }
 
@@ -332,7 +389,8 @@ function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
         pathname === "/untold-story-deron-juany-bravo" ||
         pathname.startsWith("/untold-story/") ||
         pathname === "/chasing-sunsets" ||
-        pathname.startsWith("/chasing-sunsets/")
+        pathname.startsWith("/chasing-sunsets/") ||
+        pathname.startsWith("/events/")
     ) {
         return "full";
     }

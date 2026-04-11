@@ -329,8 +329,6 @@ export default function Tickets() {
         </div>
       </section>
 
-      {/* Footer / Funnel Spill */}
-      {featuredEvent?.activeFunnels?.length ? <EventFunnelStack eventId={featuredEvent.id} /> : null}
       </main>
     </div>
   );

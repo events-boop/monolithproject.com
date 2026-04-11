@@ -218,7 +218,7 @@ export default function NewsletterSection({
                 aria-describedby={submitError ? "newsletter-submit-error" : undefined}
               >
                 <div className="mb-4">
-                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Join The Inner Circle</h3>
+                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Join The Newsletter</h3>
                   <p className="font-sans text-sm text-white/60 font-light">
                     Email is required. Phone is optional if you want text-first drops.
                   </p>

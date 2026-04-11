@@ -69,7 +69,7 @@ export default function ChaptersSection() {
       <div className="container layout-default px-6 mb-16 md:mb-20 text-center relative z-10">
         <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ duration: 0.35 }}>
           <EditorialHeader
-            kicker="The Ecosystem"
+            kicker="The Branches"
             title="Curated Worlds"
             description="Four distinct pillars built on uncompromised sound, architectural curation, and the energy of the room."
           />

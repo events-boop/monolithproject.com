@@ -31,9 +31,7 @@ test.describe("responsive header", () => {
         const menu = nav?.querySelector(
           'button[aria-label="Open navigation menu"], button[aria-label="Close navigation menu"]',
         );
-        const quickCta = nav?.querySelector(
-          'a[aria-label="Secure Access"], a[aria-label="Secure Access Now"], a[aria-label="Reserve Entry"]',
-        );
+        const quickCta = nav?.querySelector('[data-mobile-quick-cta="true"]');
 
         const rect = (el: Element | null | undefined) => {
           if (!(el instanceof HTMLElement)) return undefined;

@@ -36,6 +36,8 @@ const socials = [
 const links = [
   {
     title: "Explore", items: [
+      { name: "About", href: "/about" },
+      { name: "Togetherness", href: "/about#togetherness" },
       { name: "Events", href: "/schedule" },
       { name: "Artists", href: "/lineup" },
       { name: "Event Archive", href: "/archive" },

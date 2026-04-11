@@ -1,9 +1,15 @@
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Lock, Anchor } from "lucide-react";
 import { useUI } from "@/contexts/UIContext";
+import { useLocation } from "wouter";
+import { getSeriesEvents } from "@/lib/siteExperience";
 
 export default function ChasingSunsetsTicketing() {
   const { openDrawer } = useUI();
+  const [, setLocation] = useLocation();
+  const chasingEvents = getSeriesEvents("chasing-sunsets");
+  const jul04Event = chasingEvents.find(e => e.id === "css-jul04");
+  const tiers = jul04Event?.ticketTiers ?? [];
 
   return (
     <div className="py-24 px-6 border-t border-[#E8B86D]/20 bg-black/40 backdrop-blur-3xl relative overflow-hidden">
@@ -21,11 +27,12 @@ export default function ChasingSunsetsTicketing() {
                     A three-part arc. Three distinct golden hours. Secure your place for the entire summer or lock in the July 4th flagship opener. 
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 mt-8 font-mono text-[10px] tracking-widest text-white/40 uppercase">
-                    <span>July 04</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20" />
-                    <span>August 22</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20" />
-                    <span>September 19</span>
+                    {chasingEvents.map((evt, i) => (
+                      <span key={evt.id} className="inline-flex items-center gap-4">
+                        {i > 0 && <span className="w-1 h-1 rounded-full bg-white/20" />}
+                        <span>{evt.date.replace(/, \d{4}$/, "")}</span>
+                      </span>
+                    ))}
                 </div>
             </div>
 
@@ -61,7 +68,7 @@ export default function ChasingSunsetsTicketing() {
                         onClick={() => openDrawer('newsletter')}
                         className="w-full py-4 border border-white/20 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-colors"
                     >
-                        Get Updates
+                        Season Updates
                     </button>
                 </div>
 
@@ -96,8 +103,8 @@ export default function ChasingSunsetsTicketing() {
                         ))}
                     </ul>
 
-                    <button 
-                        onClick={() => openDrawer('newsletter')}
+                    <button
+                        onClick={() => setLocation('/vip')}
                         className="w-full py-4 bg-gradient-to-r from-[#E8B86D] to-[#C2703E] rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A0F00] hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,184,109,0.3)] relative z-10"
                     >
                         Request VIP Table
@@ -126,18 +133,18 @@ export default function ChasingSunsetsTicketing() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                                <span className="text-white font-mono text-sm tracking-widest uppercase">Founders Access</span>
-                                <span className="text-[#E8B86D] font-display text-2xl tracking-tighter">$30</span>
-                            </div>
-                            <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                                <span className="text-white/50 font-mono text-sm tracking-widest uppercase">Early Bird</span>
-                                <span className="text-white/50 font-display text-2xl tracking-tighter"><Lock className="w-3.5 h-3.5 inline mr-1 opacity-50" />$40</span>
-                            </div>
-                            <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                                <span className="text-white/30 font-mono text-sm tracking-widest uppercase">Final Door</span>
-                                <span className="text-white/30 font-display text-2xl tracking-tighter line-through decoration-white/20"><Lock className="w-3.5 h-3.5 inline mr-1 opacity-50"/>$70</span>
-                            </div>
+                            {tiers.map((tier, i) => {
+                                const isActive = tier.available;
+                                const isLast = !isActive && i === tiers.length - 1;
+                                return (
+                                    <div key={tier.id} className="flex items-center justify-between pb-4 border-b border-white/5">
+                                        <span className={`font-mono text-sm tracking-widest uppercase ${isActive ? "text-white" : "text-white/50"}`}>{tier.name}</span>
+                                        <span className={`font-display text-2xl tracking-tighter ${isActive ? "text-[#E8B86D]" : isLast ? "text-white/30 line-through decoration-white/20" : "text-white/50"}`}>
+                                            {!isActive && <Lock className="w-3.5 h-3.5 inline mr-1 opacity-50" />}${tier.price}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         <div className="flex flex-col justify-end">
@@ -145,9 +152,9 @@ export default function ChasingSunsetsTicketing() {
                                 onClick={() => openDrawer('newsletter')}
                                 className="w-full py-4 border border-[#E8B86D]/50 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#E8B86D] hover:bg-[#E8B86D]/10 transition-colors flex items-center justify-center gap-2"
                             >
-                                Request Early Access <ArrowRight className="w-3.5 h-3.5" />
+                                Early Tickets <ArrowRight className="w-3.5 h-3.5" />
                             </button>
-                            <p className="text-center text-white/30 mt-4 text-[10px] font-mono tracking-widest uppercase">Pricing guarantees priority entry</p>
+                            <p className="text-center text-white/30 mt-4 text-[10px] font-mono tracking-widest uppercase">First-release pricing is limited</p>
                         </div>
                     </div>
                 </div>

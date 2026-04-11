@@ -28,12 +28,11 @@ const faqItems: Array<[string, string]> = [
 
 const officialLinks = [
   { label: "Official Chasing Sun(Sets) site", href: "/chasing-sunsets", external: false },
-  { label: "Chasing Sun(Sets) Facts", href: "/chasing-sunsets-facts", external: false },
   { label: CTA_LABELS.radioHub, href: "/radio", external: false },
   { label: "Official Tickets", href: POSH_TICKET_URL, external: true },
   { label: "Instagram", href: "https://instagram.com/chasingsunsets.music", external: true },
   { label: "SoundCloud", href: "https://soundcloud.com/chasing-sun-sets", external: true },
-  { label: "Mixcloud (show page publishing)", href: "https://mixcloud.com", external: true },
+  { label: "Mixcloud (show page publishing)", href: "https://mixcloud.com/monolithproject/", external: true },
   { label: "YouTube", href: "https://youtube.com/@monolithproject", external: true },
 ];
 
@@ -56,7 +55,7 @@ export default function ChasingSunsetsFacts() {
       />
       <JsonLd id="schema-chasing-sunsets-faq" data={buildFaqSchema(faqItems)} />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(224,90,58,0.14),transparent_34%),radial-gradient(circle_at_88%_18%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_72%_78%,rgba(139,92,246,0.11),transparent_36%)]" />
-      <Navigation />
+      <Navigation brand="chasing-sunsets" />
 
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <motion.section className="container layout-default" {...sectionReveal}>
@@ -201,24 +200,20 @@ export default function ChasingSunsetsFacts() {
         <motion.section className="container layout-default mt-14" {...sectionReveal}>
           <div className="luxe-surface-dark rounded-2xl p-6">
             <p className="text-sm text-muted-foreground leading-loose">
-              Need the short version?{" "}
-              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
-                Official Chasing Sun(Sets) Identity
-              </Link>{" "}
-              and{" "}
-              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
-                Not the fragrance — official music series
-              </Link>
-              . Listen on the{" "}
+              Chasing Sun(Sets) is a Chicago sunset house music series — not a fragrance.
+              Listen on the{" "}
               <Link href="/radio" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
                 official radio hub
               </Link>
+              {" "}or{" "}
+              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
+                tickets
+              </a>
               .
             </p>
           </div>
         </motion.section>
       </main>
-
       <EntityBoostStrip tone="dark" className="pb-16" />
     </div>
   );

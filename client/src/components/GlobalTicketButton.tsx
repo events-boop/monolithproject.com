@@ -3,10 +3,10 @@ import { useLocation } from "wouter";
 import { ArrowUpRight, ArrowRight, Ticket, Lock, Zap } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { getSceneForPath } from "@/lib/scenes";
-import { getExperienceEvent } from "@/lib/siteExperience";
+import { getEventById, getExperienceEvent } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { useUI } from "@/contexts/UIContext";
-import { usePublicSiteDataVersion } from "@/lib/siteData";
+import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
     COOKIE_CONSENT_RESOLVED_EVENT,
     getCookieConsentState,
@@ -18,7 +18,8 @@ function shouldDelayFloatingCta(pathname: string) {
         pathname === "/story" ||
         pathname === "/untold-story-deron-juany-bravo" ||
         pathname.startsWith("/untold-story/") ||
-        pathname.startsWith("/chasing-sunsets")
+        pathname.startsWith("/chasing-sunsets") ||
+        pathname.startsWith("/events/")
     );
 }
 
@@ -29,7 +30,19 @@ export default function GlobalTicketButton() {
     const [consentState, setConsentState] = useState(getCookieConsentState);
     const [showAfterHero, setShowAfterHero] = useState(() => !shouldDelayFloatingCta(location));
     const scene = getSceneForPath(location);
-    const featuredEvent = getExperienceEvent("ticket");
+    const sunsetsPath = location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
+    const untoldPath = location === "/story" || location.startsWith("/untold-story");
+    const eventDetailsSlug = location.startsWith("/events/") ? location.slice("/events/".length).split(/[?#]/)[0] : null;
+
+    // Series-aware event selection keeps the floating CTA aligned with the page the user is on.
+    const featuredEvent = eventDetailsSlug
+        ? getPublicEvents().find((event) => event.slug === eventDetailsSlug || event.id === eventDetailsSlug)
+        : sunsetsPath
+        ? getEventById("css-jul04") 
+        : untoldPath 
+            ? getEventById("us-s3e3") 
+            : getExperienceEvent("ticket");
+            
     const cta = getEventCta(featuredEvent);
 
     useEffect(() => {
@@ -106,7 +119,7 @@ export default function GlobalTicketButton() {
     };
 
     // Keep the hero and consent flows focused before adding another conversion layer.
-    if (location === "/tickets" || consentState === null || !showAfterHero) return null;
+    if (location.startsWith("/chasing-sunsets") || location === "/tickets" || consentState === null || !showAfterHero) return null;
 
     return (
         <div className="fixed bottom-0 left-0 right-0 md:bottom-12 md:right-12 md:left-auto z-[100] w-full md:w-auto">

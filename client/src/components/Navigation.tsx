@@ -9,7 +9,7 @@ import MagneticButton from "./MagneticButton";
 import { getEventBannerPayload, isEventBannerVisible } from "../lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
 import { getSceneForPath } from "../lib/scenes";
-import { getExperienceEvent, getPrimaryTicketUrl, getEventById } from "../lib/siteExperience";
+import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "../lib/cta";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
@@ -77,7 +77,7 @@ const mobilePrimaryItems = [
     subItems: [
       { label: "ABOUT OVERVIEW", href: "/about" },
       { label: "OUR STORY", href: "/about#story" },
-      { label: "VISION & MANIFESTO", href: "/about#vision" },
+      { label: "TOGETHERNESS", href: "/about#togetherness" },
     ]
   },
   {
@@ -137,8 +137,8 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
   const isUntoldPath = location === "/story" || location.startsWith("/untold-story");
   const isSunsetsPath = location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
   
-  const contextEvent = isUntoldPath ? (getEventById("us-s3e3") || ticketEvent) 
-                    : isSunsetsPath ? (getEventById("css-jul04") || ticketEvent)
+  const contextEvent = isUntoldPath ? (getSeriesEvents("untold-story")[0] || ticketEvent)
+                    : isSunsetsPath ? (getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
                     : ticketEvent;
 
   const cta = getEventCta(contextEvent);
@@ -513,7 +513,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                   megamenu={{
                     items: [
                       { label: "ABOUT", href: "/about#story" },
-                      { label: "HOW IT WORKS", href: "/about#vision" },
+                      { label: "TOGETHERNESS", href: "/about#togetherness" },
                       { label: "OUR PRINCIPLES", href: "/about#manifesto" },
                     ],
                     feature: {
@@ -543,15 +543,23 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
                       { label: "EVENT ARCHIVE", href: "/archive" },
                     ],
-                    feature: {
-                      title: ticketHref ? "DERON B2B JUANY BRAVO" : "CHASING SUN(SETS)",
-                      subtitle: ticketHref ? "Untold Story S3·E3" : "Summer Series 2026",
-                      image: ticketHref ? "/images/untold-story-juany-deron-v2.webp" : "/images/chasing-sunsets-premium.webp",
-                      href: ticketHref || "/chasing-sunsets",
-                      ctaText: ticketHref ? "Tickets" : "Explore Season",
+                    feature: ticketEvent ? {
+                      title: ticketEvent.headline || ticketEvent.title,
+                      subtitle: ticketEvent.episode || ticketEvent.subtitle || "Featured Event",
+                      image: ticketEvent.image || "/images/chasing-sunsets-premium.webp",
+                      href: ticketHref || `/events/${ticketEvent.slug || ticketEvent.id}`,
+                      ctaText: ticketHref ? "Tickets" : "View Event",
                       icon: ticketHref ? "ticket" : "arrow",
-                      badge: ticketHref ? "ON SALE" : "JULY 4",
+                      badge: ticketEvent.status === "on-sale" ? "ON SALE" : "COMING SOON",
                       external: !!ticketHref
+                    } : {
+                      title: "CHASING SUN(SETS)",
+                      subtitle: "Summer Series 2026",
+                      image: "/images/chasing-sunsets-premium.webp",
+                      href: "/chasing-sunsets",
+                      ctaText: "Explore Season",
+                      icon: "arrow",
+                      badge: "EVENTS"
                     }
                   }}
                 />
@@ -604,7 +612,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       subtitle: "Elevated Experiences",
                       image: "/images/industrial-roster.webp",
                       href: "/vip",
-                      ctaText: "Reserve Entry",
+                      ctaText: "VIP Access",
                       icon: "arrow",
                       badge: "VIP"
                     }
@@ -620,6 +628,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       href={cta.href}
                       target={cta.isExternal ? "_blank" : undefined}
                       rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                      data-mobile-quick-cta="true"
                       aria-label={cta.label}
                       data-cursor-text={cta.tool === "posh" ? "RSVP" : "ACCESS"}
                       onMouseEnter={() => {

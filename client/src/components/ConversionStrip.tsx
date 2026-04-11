@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import type { ScheduledEvent } from "@shared/events/types";
 import { getExperienceEvent, getEventStartTimestamp, getSeriesColor } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
@@ -19,8 +20,13 @@ function HUDDigit({ value, label }: { value: number; label: string }) {
   );
 }
 
-export default function ConversionStrip() {
-  const event = getExperienceEvent("ticket");
+interface ConversionStripProps {
+  event?: ScheduledEvent;
+  tone?: "warm" | "nocturne";
+}
+
+export default function ConversionStrip({ event: providedEvent }: ConversionStripProps = {}) {
+  const event = providedEvent ?? getExperienceEvent("ticket");
   const cta = getEventCta(event);
   const targetDate = getEventStartTimestamp(event);
   const timeLeft = useCountdown(targetDate);
