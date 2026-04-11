@@ -243,7 +243,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="relative px-6 py-28 md:py-36 z-30 border-b border-white/10 bg-[#070707]" id="togetherness">
+      <section className="relative px-6 py-28 md:py-36 z-30 border-b border-white/10 bg-[#070707]" id="vision">
         <div className="layout-wide">
           <div className="max-w-5xl">
             <BrandTranslatorLabel tone="neutral" className="mb-8">

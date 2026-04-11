@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation, Redirect } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -125,7 +125,6 @@ function Router() {
         <Route path="/artists/:id" component={ArtistProfileTransition} />
         <Route path="/sponsors" component={SponsorAccessTransition} />
         <Route path="/about" component={AboutTransition} />
-        <Route path="/togetherness" component={AboutTransition} />
         <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
         <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
         <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
@@ -143,7 +142,12 @@ function Router() {
         <Route path="/schedule" component={ScheduleTransition} />
         <Route path="/events/:slug" component={EventDetailsTransition} />
         <Route path="/newsletter" component={NewsletterTransition} />
-        <Route path="/inner-circle" component={NewsletterTransition} />
+        <Route path="/togetherness">
+          <Redirect to="/about#vision" />
+        </Route>
+        <Route path="/inner-circle">
+          <Redirect to="/newsletter" />
+        </Route>
         <Route path="/contact" component={ContactTransition} />
         <Route path="/faq" component={FAQTransition} />
         <Route path="/partners" component={PartnersTransition} />

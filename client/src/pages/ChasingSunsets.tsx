@@ -12,6 +12,7 @@ import useScrollSunset from "@/hooks/useScrollSunset";
 import { useState } from "react";
 import FixedTicketBadge from "@/components/FixedTicketBadge";
 import Footer from "@/components/Footer";
+import ConversionStrip from "@/components/ConversionStrip";
 import ResidentDJCard from "@/components/ResidentDJCard";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -478,6 +479,7 @@ export default function ChasingSunsets() {
         ) : null}
 
       </main>
+      <ConversionStrip event={chasingFunnelEvent || undefined} />
       <FixedTicketBadge />
     </div>
   );
