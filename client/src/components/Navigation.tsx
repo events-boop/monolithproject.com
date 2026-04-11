@@ -362,7 +362,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
         style={{
           top: "var(--shell-nav-offset)",
         }}
-        className="fixed left-0 right-0 z-[10001] px-2.5 py-2.5 sm:px-4 sm:py-3 pointer-events-none"
+        className="fixed left-0 right-0 z-[10001] px-1.5 py-1.5 sm:px-4 sm:py-3 pointer-events-none"
       >
         <a
           href="#main-content"
@@ -375,7 +375,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
         >
           Skip to content
         </a>
-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-2 sm:w-[98%] sm:gap-3">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1.5 sm:w-[98%] sm:gap-3">
           {bannerPayload && bannerPayload.status !== "past" ? (
             <a
               href={bannerPayload.ticketUrl || "/newsletter"}
@@ -386,10 +386,10 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                   ? "Open tickets for current featured event"
                   : "Request early access for the current featured event"
               }
-              className="group relative block overflow-hidden rounded-[1rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80"
+              className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-[1rem]"
             >
               <div
-                className="relative h-10 sm:h-11"
+                className="relative h-8 sm:h-11"
                 style={
                   bannerPayload.status === "live"
                     ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
@@ -398,21 +398,30 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_55%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_78%_45%,rgba(255,220,180,0.28),transparent_35%)]" />
                 <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-transparent to-black/10" />
-                <div className="flex h-full items-center overflow-hidden whitespace-nowrap">
+                <div className="hidden h-full items-center overflow-hidden whitespace-nowrap sm:flex">
                   <div className="flex animate-marquee-fast whitespace-nowrap">
                     {Array(10)
                       .fill(bannerPayload.text)
                       .map((text, index) => (
                         <span key={index} className="relative z-10 inline-flex items-center">
                           <span className="mx-4 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-white/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
-                            {bannerPayload.status === "live" ? (
-                              <span className="mr-3 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-white align-middle" />
-                            ) : null}
                             {text}
                           </span>
-                          <Ticket className="mx-2 h-5 w-5 text-white/90 sm:mx-3 sm:h-6 sm:w-6" />
+                          <Ticket className="mx-1.5 h-4.5 w-4.5 text-white/90 sm:mx-3 sm:h-6 sm:w-6" />
                         </span>
                       ))}
+                  </div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center px-3 sm:hidden">
+                  <div className="flex min-w-0 items-center gap-2.5 text-white/95">
+                    {bannerPayload.status === "live" ? (
+                      <span className="inline-flex h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-white" />
+                    ) : (
+                      <Ticket className="h-3.5 w-3.5 shrink-0 text-white/90" />
+                    )}
+                    <span className="min-w-0 truncate font-mono text-[8px] font-bold uppercase tracking-[0.14em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                      {bannerPayload.text}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -420,19 +429,19 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
           ) : null}
 
           <div
-            className={`rounded-[1.4rem] sm:rounded-[1.75rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
+            className={`rounded-[1.15rem] sm:rounded-[1.75rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
           >
-            <div className="flex min-h-[3.85rem] w-full items-center justify-between px-4 py-2 sm:min-h-[4.25rem] sm:px-6 xl:px-8 lg:py-3">
+            <div className="flex min-h-[3.25rem] w-full items-center justify-between px-2.5 py-1.5 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
               {/* LEFT: LOGO */}
-              <div className="shrink-0 mr-4 lg:mr-8 xl:mr-12 flex items-center gap-4">
+              <div className="mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
                 <MagneticButton strength={0.25}>
                   <button
                     type="button"
                     onClick={handleLogoClick}
                     aria-label="Go to homepage"
-                    className="flex items-center gap-4 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70 pointer-events-auto"
+                    className="flex items-center gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70 pointer-events-auto"
                   >
-                    <span className={`flex items-center gap-3 text-[clamp(1.1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
+                    <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
                         resolvedBrand === "radio" ? "font-radio text-rose-500" :
                           isLight ? "font-heavy text-charcoal group-hover:text-clay" : "font-heavy text-white group-hover:text-primary"
@@ -450,13 +459,13 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                             (
                               <div className="flex flex-col items-start gap-0.5">
                                 <span className={cn(
-                                  "font-heavy text-lg md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
+                                  "font-heavy text-[0.95rem] min-[360px]:text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
                                   isLight ? "text-black" : "text-white"
                                 )}>
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[10px] tracking-[0.3em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                                  "font-monolith text-[7px] min-[360px]:text-[8px] tracking-[0.22em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />
@@ -604,8 +613,8 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
               </div>
 
               {/* RIGHT: CTA & MOBILE TOGGLE */}
-              <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0 justify-end">
-                <div className="sm:hidden">
+              <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-3 md:gap-4 shrink-0">
+                <div className="hidden min-[390px]:block sm:hidden">
                   <MagneticButton strength={0.16}>
                     <a
                       href={cta.href}
@@ -618,7 +627,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                         if (cta.isExternal) preconnectGateway(cta.href);
                       }}
                       onClick={() => signalChirp.click()}
-                      className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
+                      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
                         ? "border-transparent bg-primary text-black"
                         : cta.tool === "laylo"
                           ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
@@ -674,7 +683,7 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                       aria-expanded={mobileMenuOpen}
                       aria-controls={mobileMenuId}
                       className={cn(
-                        "flex items-center gap-4 py-2.5 px-3 sm:px-4 rounded-full transition-all duration-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                        "flex items-center gap-3 py-1.5 px-2.5 sm:px-4 rounded-full transition-all duration-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
                         isLight ? "text-charcoal border-black/5" : "text-foreground border-white/5",
                         mobileMenuOpen ? "bg-white text-black" : "bg-white/5 backdrop-blur-md"
                       )}
