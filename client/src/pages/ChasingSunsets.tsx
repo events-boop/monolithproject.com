@@ -52,10 +52,9 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
   },
   {
     type: "image",
-    src: "/images/autograf-recap.jpg",
-    alt: "Autograf Live",
-    credit: "TBA",
-    caption: "AUTOGRAF | LIVE SET",
+    src: "/images/chasing-sunsets-1.jpg",
+    alt: "Rooftop Crowd at Sunset",
+    caption: "CHASING SUN(SETS) | THE CROWD",
   },
 ];
 
