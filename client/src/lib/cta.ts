@@ -1,4 +1,9 @@
-import type { EventCta, FunnelTool, ScheduledEvent } from "@shared/events/types";
+import type {
+  EventCta,
+  FunnelTool,
+  ScheduledEvent,
+} from "@shared/events/types";
+import type { InquiryType } from "@/contexts/InquiryContext";
 
 export type { EventCta, FunnelTool };
 
@@ -89,5 +94,12 @@ export function isInquiryHref(href: string) {
 }
 
 export function parseInquiryType(href: string) {
-  return href.replace("inquiry://", "") as any;
+  const value = href.replace("inquiry://", "");
+  return isInquiryType(value) ? value : "general";
+}
+
+function isInquiryType(value: string): value is InquiryType {
+  return ["sponsor", "venue", "artist", "press", "general", "booking"].includes(
+    value
+  );
 }

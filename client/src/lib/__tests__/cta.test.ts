@@ -4,6 +4,7 @@ import {
   getEventCta,
   getEventDetailsHref,
   isEventLowInventory,
+  parseInquiryType,
 } from "@/lib/cta";
 
 const monolithLiveEvent: ScheduledEvent = {
@@ -39,7 +40,9 @@ const untoldUpcomingEvent: ScheduledEvent = {
 
 describe("cta", () => {
   it("routes monolith-project live event details to the tickets page", () => {
-    expect(getEventDetailsHref(monolithLiveEvent)).toBe("/events/mp-autograf-mar21");
+    expect(getEventDetailsHref(monolithLiveEvent)).toBe(
+      "/events/mp-autograf-mar21"
+    );
   });
 
   it("routes upcoming untold-story events to the onsite untold waitlist funnel", () => {
@@ -106,5 +109,14 @@ describe("cta", () => {
       isExternal: true,
       tool: "posh",
     });
+  });
+
+  it("parses supported inquiry links into typed portal states", () => {
+    expect(parseInquiryType("inquiry://venue")).toBe("venue");
+    expect(parseInquiryType("inquiry://press")).toBe("press");
+  });
+
+  it("falls back to general for unsupported inquiry links", () => {
+    expect(parseInquiryType("inquiry://mystery")).toBe("general");
   });
 });
