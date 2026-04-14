@@ -244,9 +244,9 @@ function normalizePathname(pathname?: string | null) {
     return clean || "/";
 }
 
-function getEventById(eventId?: string | null) {
+function getEventById(events: ScheduledEvent[], eventId?: string | null) {
     if (!eventId) return undefined;
-    return upcomingEvents.find((event) => event.id === eventId);
+    return events.find((event) => event.id === eventId);
 }
 
 function uniqueEvents(events: ScheduledEvent[]) {
@@ -258,8 +258,8 @@ function uniqueEvents(events: ScheduledEvent[]) {
     });
 }
 
-function getSeriesEvents(series: EventSeries) {
-    return upcomingEvents.filter((event) => event.series === series);
+function getSeriesEvents(events: ScheduledEvent[], series: EventSeries) {
+    return events.filter((event) => event.series === series);
 }
 
 type EventPayloadProfile = "full" | "home" | "summary";
@@ -337,24 +337,28 @@ function shapeEvent(event: ScheduledEvent, profile: EventPayloadProfile) {
     };
 }
 
-function resolveFeaturedEvents(profile: EventPayloadProfile = "full") {
+function resolveFeaturedEvents(events: ScheduledEvent[], profile: EventPayloadProfile = "full") {
     return Object.fromEntries(
         Object.entries(FEATURED_EVENT_IDS)
             .map(([slot, eventId]) => {
-                const event = getEventById(eventId);
+                const event = getEventById(events, eventId);
                 return [slot, event ? shapeEvent(event, profile) : undefined];
             })
             .filter((entry): entry is [SiteExperienceSlot, ScheduledEvent] => Boolean(entry[1])),
     ) as PublicSiteData["featuredEvents"];
 }
 
-function resolveEventsForPath(pathname: string, featuredEvents: PublicSiteData["featuredEvents"]) {
+function resolveEventsForPath(
+    pathname: string,
+    featuredEvents: PublicSiteData["featuredEvents"],
+    events: ScheduledEvent[],
+) {
     if (pathname === "/") {
-        return upcomingEvents.map((event) => shapeEvent(event, "home"));
+        return events.map((event) => shapeEvent(event, "home"));
     }
 
     if (pathname === "/schedule" || pathname.startsWith("/artists/")) {
-        return upcomingEvents;
+        return events;
     }
 
     if (
@@ -362,7 +366,7 @@ function resolveEventsForPath(pathname: string, featuredEvents: PublicSiteData["
         pathname === "/untold-story-deron-juany-bravo" ||
         pathname.startsWith("/untold-story/")
     ) {
-        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents("untold-story")]);
+        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents(events, "untold-story")]);
     }
 
     if (
@@ -370,11 +374,11 @@ function resolveEventsForPath(pathname: string, featuredEvents: PublicSiteData["
         pathname === "/chasing-sunsets-facts" ||
         pathname.startsWith("/chasing-sunsets/")
     ) {
-        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents("chasing-sunsets")]);
+        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents(events, "chasing-sunsets")]);
     }
 
     if (pathname.startsWith("/events/")) {
-        return upcomingEvents;
+        return events;
     }
 
     return uniqueEvents(Object.values(featuredEvents));
@@ -398,11 +402,14 @@ function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
     return "summary";
 }
 
-export function buildPublicSiteData(pathname?: string | null): PublicSiteData {
+export function buildPublicSiteData(
+    pathname?: string | null,
+    eventsSource: ScheduledEvent[] = upcomingEvents,
+): PublicSiteData {
     const normalizedPath = normalizePathname(pathname);
     const profile = getPayloadProfileForPath(normalizedPath);
-    const featuredEvents = resolveFeaturedEvents(profile);
-    const events = resolveEventsForPath(normalizedPath, featuredEvents).map((event) =>
+    const featuredEvents = resolveFeaturedEvents(eventsSource, profile);
+    const events = resolveEventsForPath(normalizedPath, featuredEvents, eventsSource).map((event) =>
         profile === "home" ? event : shapeEvent(event, profile),
     );
 

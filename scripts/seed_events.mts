@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { scheduledEvents } from "../server/db/schema.js";
-import { upcomingEvents } from "../client/src/data/events.js";
+import { upcomingEvents } from "../server/data/public-site-data.js";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {

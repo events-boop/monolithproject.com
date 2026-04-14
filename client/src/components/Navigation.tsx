@@ -296,11 +296,36 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
   const handleNavClick = (href: string) => {
     signalChirp.click();
 
+    const drawer = getDrawerTypeForHref(href);
+    if (drawer) {
+        openDrawer(drawer);
+        setMobileMenuOpen(false);
+        return;
+    }
+
     // Improved deep routing for anchors and cross-page anchors
     if (href.includes("#")) {
       const [path, hash] = href.split("#");
       const normalizedPath = path === "" ? "/" : path;
       const targetId = hash;
+
+      // Ensure that if it has a hash but route maps to a drawer, open the drawer?
+      // Actually, if we want to scroll on the drawer.. it might not work out properly.
+      // E.g. `/about#story`. In drawerRouteMap we mapped `/about` so it might not match.
+      // But we can check `path` against drawerRouteMap too!
+      const pathDrawer = getDrawerTypeForHref(normalizedPath);
+      if (pathDrawer) {
+          openDrawer(pathDrawer);
+          setMobileMenuOpen(false);
+          // Wait for drawer to open then scroll into view inside it
+          setTimeout(() => {
+              const element = document.getElementById(targetId);
+              if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+              }
+          }, 400);
+          return;
+      }
 
       if (location === normalizedPath || (location === "/" && normalizedPath === "/")) {
         // Current page, just scroll

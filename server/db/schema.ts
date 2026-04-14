@@ -1,4 +1,4 @@
-import { integer, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { boolean, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const rateLimitBuckets = pgTable("rate_limit_buckets", {
   key: text("key").primaryKey(),
@@ -77,35 +77,51 @@ export const bookingInquiries = pgTable("booking_inquiries", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
-export const scheduledEvents = pgTable("scheduled_events", {
-  id: text("id").primaryKey(),
-  series: text("series").notNull(), // 'chasing-sunsets' | 'untold-story' | 'monolith-project'
-  episode: text("episode").notNull(),
-  title: text("title").notNull(),
-  subtitle: text("subtitle"),
-  date: text("date").notNull(),
-  time: text("time").notNull(),
-  doors: text("doors"),
-  venue: text("venue").notNull(),
-  location: text("location").notNull(),
-  lineup: text("lineup"),
-  image: text("image"),
-  status: text("status").notNull(), // 'on-sale' | 'coming-soon' | 'sold-out'
-  capacity: text("capacity"),
-  format: text("format"),
-  dress: text("dress"),
-  sound: text("sound"),
-  description: text("description"),
-  age: text("age"),
-  ticketUrl: text("ticket_url"),
-  headline: text("headline"),
-  mainExperience: text("main_experience"),
-  experienceIntro: text("experience_intro"),
-  whatToExpect: jsonb("what_to_expect").default([]),
-  tablePackages: jsonb("table_packages").default([]),
-  tableReservationEmail: text("table_reservation_email"),
-  faqs: jsonb("faqs").default([]),
-  photoNotice: text("photo_notice"),
-  eventNotice: text("event_notice"),
-  activeFunnels: jsonb("active_funnels").default([]),
-});
+export const scheduledEvents = pgTable(
+  "scheduled_events",
+  {
+    id: text("id").primaryKey(),
+    series: text("series").notNull(), // 'chasing-sunsets' | 'untold-story' | 'monolith-project'
+    episode: text("episode").notNull(),
+    title: text("title").notNull(),
+    slug: text("slug"),
+    subtitle: text("subtitle"),
+    date: text("date").notNull(),
+    time: text("time").notNull(),
+    startsAt: timestamp("starts_at", { withTimezone: true, mode: "string" }),
+    endsAt: timestamp("ends_at", { withTimezone: true, mode: "string" }),
+    doors: text("doors"),
+    venue: text("venue").notNull(),
+    location: text("location").notNull(),
+    lineup: text("lineup"),
+    image: text("image"),
+    status: text("status").notNull(), // 'on-sale' | 'coming-soon' | 'sold-out'
+    inventoryState: text("inventory_state"),
+    capacity: text("capacity"),
+    format: text("format"),
+    dress: text("dress"),
+    sound: text("sound"),
+    description: text("description"),
+    age: text("age"),
+    ticketUrl: text("ticket_url"),
+    startingPrice: integer("starting_price"),
+    ticketTiers: jsonb("ticket_tiers").default([]),
+    headline: text("headline"),
+    mainExperience: text("main_experience"),
+    experienceIntro: text("experience_intro"),
+    whatToExpect: jsonb("what_to_expect").default([]),
+    tablePackages: jsonb("table_packages").default([]),
+    tableReservationEmail: text("table_reservation_email"),
+    faqs: jsonb("faqs").default([]),
+    photoNotice: text("photo_notice"),
+    eventNotice: text("event_notice"),
+    activeFunnels: jsonb("active_funnels").default([]),
+    recentlyDropped: boolean("recently_dropped").notNull().default(false),
+  },
+  (table) => ({
+    seriesIdx: index("scheduled_events_series_idx").on(table.series),
+    statusIdx: index("scheduled_events_status_idx").on(table.status),
+    startsAtIdx: index("scheduled_events_starts_at_idx").on(table.startsAt),
+    slugIdx: uniqueIndex("scheduled_events_slug_idx").on(table.slug),
+  }),
+);

@@ -10,6 +10,7 @@ const FAQSection = lazy(() => import("../FAQSection"));
 const NewsletterSection = lazy(() => import("../NewsletterSection"));
 const ConnectSection = lazy(() => import("../ConnectSection"));
 const ExperienceGuidePanel = lazy(() => import("../ExperienceGuidePanel"));
+const AboutSection = lazy(() => import("../AboutSection"));
 
 const drawerMeta: Record<
     Exclude<DrawerType, null>,
@@ -43,6 +44,13 @@ const drawerMeta: Record<
         href: "/guide",
         hrefLabel: "Full Guide",
     },
+    about: {
+        eyebrow: "The Standard",
+        title: "About The Project",
+        description: "Four parts. One project. We build rooms worth returning to.",
+        href: "/about",
+        hrefLabel: "View Full Vision",
+    },
 };
 
 function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
@@ -55,6 +63,8 @@ function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
             return <ConnectSection compact />;
         case "guide":
             return <ExperienceGuidePanel />;
+        case "about":
+            return <AboutSection />;
         default:
             return null;
     }
