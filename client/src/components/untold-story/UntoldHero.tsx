@@ -7,6 +7,7 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import type { ScheduledEvent } from "@shared/events/types";
 import ConversionCTA from "@/components/ConversionCTA";
 import { getResponsiveImage } from "@/lib/responsiveImages";
+import SplitText from "@/components/ui/SplitText";
 
 const heroSlides = [
   getResponsiveImage("eranHershPortraitReal"),
@@ -91,16 +92,11 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </div>
 
             {/* Visible Title */}
-            <motion.h1
-              initial={{ filter: "blur(12px)", opacity: 0, y: 30 }}
-              animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-              className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]"
-            >
+            <h1 className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
               {headlineLines.map((line, i) => (
-                <span key={i} className="block">{line}</span>
+                <SplitText key={i} text={line} className="block" initialDelay={0.2 + (i * 0.15)} />
               ))}
-            </motion.h1>
+            </h1>
             <BrandTranslatorLabel className="mb-8" tone="nocturne">
               A Late-Night Monolith Series
             </BrandTranslatorLabel>

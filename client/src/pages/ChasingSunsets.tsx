@@ -29,6 +29,7 @@ import {
   isTicketOnSale,
 } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
+import SplitText from "@/components/ui/SplitText";
 
 const chasingPosterImage = getResponsiveImage("chasingSunsets");
 const chasingHeroImage = getResponsiveImage("chasingSunsets");
@@ -116,16 +117,16 @@ export default function ChasingSunsets() {
               <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-white/90">
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>
-              <motion.h1
-                initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
-                className="font-display text-[clamp(3.5rem,8vw,8rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white"
-              >
-                <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
-                  {featuredChasingEvent ? featuredChasingEvent.headline || featuredChasingEvent.title : "CHASING SUN(SETS)"}
-                </span>
-              </motion.h1>
+              <h1 className="font-display flex flex-col text-[clamp(3.5rem,8vw,8rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
+                {featuredChasingEvent ? (
+                  <SplitText text={featuredChasingEvent.headline || featuredChasingEvent.title} className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" />
+                ) : (
+                  <>
+                    <SplitText text="CHASING" className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" initialDelay={0.10} />
+                    <SplitText text="SUN(SETS)" className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" initialDelay={0.25} />
+                  </>
+                )}
+              </h1>
               <BrandTranslatorLabel className="mb-6" tone="warm">
                 An Open-Air Monolith Series
               </BrandTranslatorLabel>

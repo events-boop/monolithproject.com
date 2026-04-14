@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { archiveCollectionsBySlug, ArchiveCollection } from "@/data/galleryData";
 import { useUI } from "@/contexts/UIContext";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import SplitText from "@/components/ui/SplitText";
 
 // Newest first — static list since we have a small fixed set
 const archiveEntries: (ArchiveCollection & { href: string })[] = [
@@ -36,8 +37,8 @@ export default function ArchiveSection() {
                     <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-4">
                         Event Archive
                     </span>
-                    <h1 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.82] uppercase tracking-tight text-white mb-4">
-                        ARCHIVE
+                    <h1 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.82] uppercase tracking-tight text-white mb-4 drop-shadow-md">
+                        <SplitText text="ARCHIVE" initialDelay={0.15} />
                     </h1>
                     <p className="text-white/45 max-w-md leading-relaxed text-sm md:text-base">
                         Every season, every event, every gallery. The full history of Monolith Project events.
