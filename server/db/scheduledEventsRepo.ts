@@ -168,6 +168,7 @@ export async function readPublicScheduledEvents() {
   try {
     const rows = await db.select().from(scheduledEvents);
     const STALE_GHOST_IDS = new Set(["us-s3e2"]);
+    const publicEventIds = new Set(upcomingEvents.map((event) => event.id));
     const dbEvents = rows
       .map(mapRowToScheduledEvent)
       .filter((event): event is ScheduledEvent => {
@@ -175,12 +176,13 @@ export async function readPublicScheduledEvents() {
         return !STALE_GHOST_IDS.has(event.id);
       });
 
-
     if (dbEvents.length === 0) {
       return upcomingEvents;
     }
 
-    return mergeScheduledEvents(upcomingEvents, dbEvents);
+    const dbOverrides = dbEvents.filter((event) => publicEventIds.has(event.id));
+
+    return mergeScheduledEvents(upcomingEvents, dbOverrides);
   } catch (error) {
     console.warn(
       "[site-data] Falling back to static events because scheduled_events could not be read.",
