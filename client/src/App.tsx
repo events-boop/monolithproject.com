@@ -205,6 +205,26 @@ function AttributionSync() {
   return null;
 }
 
+function GlobalSpotlightSync() {
+  useEffect(() => {
+    let ticking = false;
+    const updateMousePosition = (e: MouseEvent) => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+          document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    // Passive true ensures it doesn't block scrolling thread
+    window.addEventListener('mousemove', updateMousePosition, { passive: true });
+    return () => window.removeEventListener('mousemove', updateMousePosition);
+  }, []);
+  return null;
+}
+
 function SiteDataSync() {
   const [location] = useLocation();
 
@@ -237,6 +257,7 @@ function MainContentWrapper() {
 
   return (
     <>
+      <GlobalSpotlightSync />
       <SiteDataSync />
       <SceneSync />
       <RouteMemory />
@@ -258,13 +279,20 @@ function MainContentWrapper() {
       </Suspense>
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] h-full relative"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,
           filter: shellFilter,
         }}
       >
+        {/* Global Cinematic Spotlight */}
+        <div 
+           className="fixed inset-0 pointer-events-none z-[1] opacity-70 mix-blend-screen transition-opacity duration-1000 hidden md:block" 
+           style={{
+             background: 'radial-gradient(1000px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), var(--scene-glow, rgba(255,255,255,0.03)), transparent 40%)'
+           }}
+        />
         <Router />
         <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
           <Suspense fallback={null}>
