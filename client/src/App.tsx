@@ -228,9 +228,9 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);
 
-  // GPU-accelerated effects only. Filters (like blur) on the main app shell destroy Lighthouse scores.
-  const shellTransform = "none";
-  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.15 : 1;
+  // GPU-accelerated effects only for the shell body to preserve frame rate
+  const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
+  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.4 : 1;
   const shellFilter = "none";
 
   return (
@@ -242,13 +242,21 @@ function MainContentWrapper() {
       <Suspense fallback={null}>
         {activeDrawer ? <OffCanvasDrawer /> : null}
       </Suspense>
+      
+      {/* Sensory Overload Cinematic Overlay vault effect */}
+      <div 
+        className="fixed inset-0 z-[90] pointer-events-none transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] bg-black/50 backdrop-blur-[12px] grayscale"
+        style={{ opacity: isSensoryOverloadActive ? 1 : 0 }}
+        aria-hidden="true"
+      />
+
       <Suspense fallback={null}>
         <GlobalTicketButton />
         <AmbientAudioEngine />
       </Suspense>
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] h-full"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,
