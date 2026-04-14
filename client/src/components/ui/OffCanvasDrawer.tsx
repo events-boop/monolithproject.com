@@ -84,17 +84,6 @@ export default function OffCanvasDrawer() {
     const { activeDrawer, closeDrawer } = useUI();
     const meta = activeDrawer ? drawerMeta[activeDrawer] : null;
 
-    useEffect(() => {
-        if (!activeDrawer) return;
-
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-
-        return () => {
-            document.body.style.overflow = previousOverflow;
-        };
-    }, [activeDrawer]);
-
     return (
         <Dialog.Root open={Boolean(activeDrawer)} onOpenChange={(open) => !open && closeDrawer()}>
             <AnimatePresence>

@@ -279,7 +279,7 @@ function MainContentWrapper() {
       </Suspense>
       <div
         id="app-shell"
-        className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] h-full relative"
+        className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen relative"
         style={{
           transform: shellTransform,
           opacity: shellOpacity,
