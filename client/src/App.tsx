@@ -187,9 +187,11 @@ function SceneSync() {
 
 function RouteMemory() {
   const [location] = useLocation();
+  const { closeDrawer } = useUI();
   useEffect(() => {
     rememberVisitedPath(location);
-  }, [location]);
+    closeDrawer(); // Ensure drawers always close when navigating to a new real page route
+  }, [location, closeDrawer]);
   return null;
 }
 
