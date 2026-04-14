@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { VitePWA } from "vite-plugin-pwa";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,6 +16,23 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.ico', 'robots.txt', 'fonts/**/*.woff2'],
+        manifest: {
+          name: 'The Monolith Project',
+          short_name: 'Monolith',
+          description: "Chicago's premier electronic music ecosystem.",
+          theme_color: '#000000',
+          background_color: '#000000',
+          display: 'standalone',
+          orientation: 'portrait'
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,avif,webp}'],
+          maximumFileSizeToCacheInBytes: 4000000, // Caches core shell up to 4MB, ignores large videos
+        }
+      }),
       ViteImageOptimizer({
         // Favor delivery size over archival fidelity for photographic assets.
         png: { quality: 78 },

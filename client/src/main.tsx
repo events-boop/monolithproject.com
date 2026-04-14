@@ -1,8 +1,11 @@
+/// <reference types="vite-plugin-pwa/client" />
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "framer-motion";
 import { initAttributionTracking } from "./lib/attribution";
 import { ensurePublicSiteData } from "./lib/siteData";
 import "./styles/index.css";
+
+import { registerSW } from 'virtual:pwa-register';
 
 function renderMountError(error: unknown) {
   const wrapper = document.createElement("div");
@@ -23,6 +26,9 @@ function renderMountError(error: unknown) {
 
   document.body.replaceChildren(wrapper);
 }
+
+// Ensure the UI shell caches instantly
+registerSW({ immediate: true });
 
 async function startApp() {
   const rootElement = document.getElementById("root");
