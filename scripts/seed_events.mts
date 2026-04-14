@@ -19,15 +19,19 @@ async function main() {
         series: e.series,
         episode: e.episode || "",
         title: e.title,
+        slug: e.slug,
         subtitle: e.subtitle,
         date: e.date,
         time: e.time,
+        startsAt: e.startsAt,
+        endsAt: e.endsAt,
         doors: e.doors,
         venue: e.venue,
         location: e.location,
         lineup: e.lineup,
         image: e.image,
         status: e.status,
+        inventoryState: e.inventoryState,
         capacity: e.capacity,
         format: e.format,
         dress: e.dress,
@@ -35,6 +39,8 @@ async function main() {
         description: e.description,
         age: e.age,
         ticketUrl: e.ticketUrl,
+        startingPrice: e.startingPrice,
+        ticketTiers: e.ticketTiers,
         headline: e.headline,
         mainExperience: e.mainExperience,
         experienceIntro: e.experienceIntro,
@@ -45,10 +51,16 @@ async function main() {
         photoNotice: e.photoNotice,
         eventNotice: e.eventNotice,
         activeFunnels: e.activeFunnels,
+        recentlyDropped: e.recentlyDropped ?? false,
     }));
 
     try {
-        await db.insert(scheduledEvents).values(records).onConflictDoNothing();
+        for (const record of records) {
+            await db.insert(scheduledEvents).values(record).onConflictDoUpdate({
+                target: scheduledEvents.id,
+                set: record,
+            });
+        }
         console.log("Seeding completed successfully!");
     } catch (e) {
         console.error(e);

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type DrawerType = "faq" | "newsletter" | "contact" | "guide" | "about" | null;
+export type DrawerType = "faq" | "newsletter" | "contact" | "guide" | "about" | "archive" | null;
 
 const drawerRouteMap = {
     "/faq": "faq",
@@ -10,6 +10,7 @@ const drawerRouteMap = {
     "/inner-circle": "newsletter",
     "/about": "about",
     "/togetherness": "about",
+    "/archive": "archive",
 } as const;
 
 export type ExpressionId = "sunsets" | "untold" | "radio" | null;

@@ -11,6 +11,7 @@ const NewsletterSection = lazy(() => import("../NewsletterSection"));
 const ConnectSection = lazy(() => import("../ConnectSection"));
 const ExperienceGuidePanel = lazy(() => import("../ExperienceGuidePanel"));
 const AboutSection = lazy(() => import("../AboutSection"));
+const ArchiveSection = lazy(() => import("../ArchiveSection"));
 
 const drawerMeta: Record<
     Exclude<DrawerType, null>,
@@ -51,6 +52,13 @@ const drawerMeta: Record<
         href: "/about",
         hrefLabel: "View Full Vision",
     },
+    archive: {
+        eyebrow: "The Record",
+        title: "Event Archive",
+        description: "Every season, every event, every gallery. The full history of Monolith Project events.",
+        href: "/archive",
+        hrefLabel: "View Full Archive",
+    },
 };
 
 function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
@@ -65,6 +73,8 @@ function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
             return <ExperienceGuidePanel />;
         case "about":
             return <AboutSection />;
+        case "archive":
+            return <ArchiveSection />;
         default:
             return null;
     }
