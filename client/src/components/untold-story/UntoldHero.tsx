@@ -30,7 +30,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
-    <section className="relative screen-shell-stable flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
+    <section className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -74,7 +74,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
       />
 
       {/* Ordinary Content Layer */}
-      <div className="container layout-wide relative z-30">
+      <div className="container layout-wide relative z-30 mt-auto">
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -82,22 +82,22 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 flex flex-col"
           >
-            <UntoldButterflyLogo className="w-20 h-20 mb-8 text-[#22D3EE]" glow />
-            <div className="flex items-center gap-4 mb-6">
-              <span className="font-mono text-xs tracking-[0.3em] uppercase text-untold-cyan">
+            <UntoldButterflyLogo className="w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 text-[#22D3EE]" glow />
+            <div className="flex items-center gap-4 mb-4 sm:mb-6">
+              <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase text-untold-cyan">
                 {event?.episode || "Series 02"}
               </span>
-              <div className="h-px w-12 bg-white/20" />
-              <span className="font-mono text-xs tracking-[0.2em] uppercase text-white/50">{event?.location || "Chicago"}</span>
+              <div className="h-px w-8 sm:w-12 bg-white/20" />
+              <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/50">{event?.location || "Chicago"}</span>
             </div>
 
             {/* Visible Title */}
-            <h1 className="font-display text-[clamp(4rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+            <h1 className="font-display text-[clamp(3.5rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-6 sm:mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
               {headlineLines.map((line, i) => (
                 <SplitText key={i} text={line} className="block" initialDelay={0.2 + (i * 0.15)} />
               ))}
             </h1>
-            <BrandTranslatorLabel className="mb-8" tone="nocturne">
+            <BrandTranslatorLabel className="mb-6 sm:mb-8" tone="nocturne">
               A Late-Night Monolith Series
             </BrandTranslatorLabel>
 

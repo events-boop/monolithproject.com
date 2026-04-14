@@ -4,8 +4,8 @@ import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SocialGrid from "@/components/SocialGrid";
 import SEO from "@/components/SEO";
-import JsonLd from "@/components/JsonLd";
 import { buildScheduleSchema } from "@/lib/schema";
+
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { Link } from "wouter";
 import {
@@ -90,8 +90,9 @@ export default function Schedule() {
         title="Chicago Event Schedule | Chasing Sun(Sets) + Monolith Project"
         description="Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links."
         canonicalPath="/schedule"
+        schemaData={buildScheduleSchema(scheduleEvents)}
       />
-      <JsonLd data={buildScheduleSchema(scheduleEvents)} />
+
       <Navigation />
 
       {/* Background Atmosphere */}

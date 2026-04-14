@@ -46,6 +46,7 @@ export function configureMiddleware(app: Express) {
       windowMs: 15 * 60 * 1000,
       limit: 200,
       message: "System capacity reached. Please try again after 15 minutes.",
+      skip: (req) => req.path === "/health",
     })
   );
   app.use("/api", express.json({ limit: "1mb" }));

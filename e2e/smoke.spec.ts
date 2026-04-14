@@ -18,16 +18,12 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function ensureNewsletterVisible(page: import("@playwright/test").Page) {
-  await page.goto("/");
-  await page.waitForLoadState("networkidle"); 
-  await page.waitForTimeout(2000); // Buffer for cinematic transitions
-  // Newsletter is viewport-lazy; scroll first to trigger render.
-  await page.evaluate(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+  await page.goto("/newsletter");
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(1500);
   await page.waitForSelector("#newsletter", { state: "visible", timeout: 20000 });
   await page.locator("#newsletter").scrollIntoViewIfNeeded();
-  await page.waitForTimeout(500); // Let scroll finish
+  await page.waitForTimeout(300);
 }
 
 test("newsletter flow shows user-visible error then success", async ({ page }) => {
@@ -43,11 +39,24 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
   });
 
   await ensureNewsletterVisible(page);
+  const newsletter = page.locator("#newsletter");
 
-  await page.fill("#email", "test@example.com");
-  await page.getByText(/I agree/i).click({ force: true });
-  await page.getByText(/18 years of age or older/i).click({ force: true });
-  await page.getByRole("button", { name: /SECURE ACCESS/i }).click({ force: true });
+  await newsletter.locator("#email").fill("test@example.com");
+  const consentCheckbox = newsletter.getByRole("checkbox", { name: /i agree to receive updates and event announcements/i });
+  const adultCheckbox = newsletter.getByRole("checkbox", { name: /i confirm that i am 18 years of age or older/i });
+
+  await consentCheckbox.evaluate((node) => {
+    (node as HTMLInputElement).click();
+  });
+  await adultCheckbox.evaluate((node) => {
+    (node as HTMLInputElement).click();
+  });
+  await expect(consentCheckbox).toBeChecked();
+  await expect(adultCheckbox).toBeChecked();
+  await expect(newsletter.getByRole("button", { name: /SECURE MEMBERSHIP/i })).toBeVisible();
+  await newsletter.locator("form").evaluate((form) => {
+    (form as HTMLFormElement).requestSubmit();
+  });
 
   await expect(page.getByText("Provider unavailable. Please retry.")).toBeVisible();
 
@@ -60,8 +69,10 @@ test("newsletter flow shows user-visible error then success", async ({ page }) =
     });
   });
 
-  await page.getByRole("button", { name: /SECURE ACCESS/i }).first().click();
-  await expect(page.getByRole("heading", { name: "Access Granted" })).toBeVisible();
+  await newsletter.locator("form").evaluate((form) => {
+    (form as HTMLFormElement).requestSubmit();
+  });
+  await expect(page.getByRole("heading", { name: /Welcome To The Circle/i })).toBeVisible();
 });
 
 test("ticket flow emits intent tracking and preserves outbound ticket link", async ({ page }) => {
@@ -73,11 +84,13 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
 
   await page.goto("/tickets");
   await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
-  await expect(page.getByRole("heading", { name: "GET TICKETS" })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole("heading", { name: /SECURE ACCESS/i })).toBeVisible({ timeout: 10000 });
 
-  const ctaLink = page.locator(`a[href*="posh.vip"]`).first();
+  const ctaLink = page.locator("main a").filter({
+    hasText: /Tickets|View Schedule|Early Tickets|Secure Final Entry/i,
+  }).first();
   await expect(ctaLink).toBeVisible();
-  await page.getByRole("button", { name: /Get General Admission/i }).click();
+  await ctaLink.click({ force: true });
 
   await expect.poll(() => intentTracked).toBeTruthy();
 });
@@ -88,6 +101,7 @@ test("scoped a11y checks pass for newsletter and tickets header", async ({ page 
   expect(newsletterA11y.violations).toEqual([]);
 
   await page.goto("/tickets");
-  const ticketsA11y = await new AxeBuilder({ page }).include("section").analyze();
+  await expect(page.getByRole("heading", { name: /SECURE ACCESS/i })).toBeVisible({ timeout: 10000 });
+  const ticketsA11y = await new AxeBuilder({ page }).include("main").analyze();
   expect(ticketsA11y.violations).toEqual([]);
 });

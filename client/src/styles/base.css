@@ -5,11 +5,14 @@
 
   html,
   body {
-    @apply bg-background text-foreground h-full;
-    height: 100%;
+    @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    overflow-x: hidden;
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip; /* clip protects width but allows vertical scrolling safely */
   }
 
   button:not(:disabled),

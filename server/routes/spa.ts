@@ -44,14 +44,27 @@ let cachedIndexHtml: string | null = null;
 
 router.use(express.static(staticPath, { index: false }));
 
+function resolvePrerenderedRoutePath(requestPath: string) {
+  const cleanPath = requestPath.split("?")[0]?.split("#")[0] || "/";
+  if (cleanPath === "/") return indexHtmlPath;
+
+  const normalized = cleanPath.replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!normalized) return indexHtmlPath;
+
+  const candidate = path.join(staticPath, normalized, "index.html");
+  return existsSync(candidate) ? candidate : indexHtmlPath;
+}
+
 router.get("*", (req, res) => {
   try {
+    const htmlPath = resolvePrerenderedRoutePath(req.path);
+    const shouldInjectPreloads = htmlPath === indexHtmlPath;
     const template =
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === "production" && htmlPath === indexHtmlPath
         ? (cachedIndexHtml ??= readFileSync(indexHtmlPath, "utf8"))
-        : readFileSync(indexHtmlPath, "utf8");
+        : readFileSync(htmlPath, "utf8");
 
-    res.type("html").send(injectHeroPreloads(template, req.path));
+    res.type("html").send(shouldInjectPreloads ? injectHeroPreloads(template, req.path) : template);
   } catch (error) {
     console.error("Failed to render app shell", error);
     res.status(500).send("Unable to render app shell.");

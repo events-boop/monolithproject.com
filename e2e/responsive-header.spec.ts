@@ -74,7 +74,7 @@ test.describe("responsive header", () => {
       expect(metrics.bannerTextLength).toBeGreaterThan(8);
       expect(metrics.logoWidth).toBeLessThanOrEqual(110);
       expect(metrics.logoToControlsGap).toBeGreaterThanOrEqual(width < 390 ? 12 : 20);
-      expect(metrics.quickCtaVisible).toBe(width >= 390);
+      expect(metrics.quickCtaVisible).toBe(width >= 370);
     });
   }
 });

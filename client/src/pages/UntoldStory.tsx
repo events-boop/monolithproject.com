@@ -3,6 +3,7 @@ import "@/styles/themes/untold.css";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import EpisodeGallery from "@/components/EpisodeGallery";
+import ArchiveSection from "@/components/ArchiveSection";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import SEO from "@/components/SEO";
 import { Link } from "wouter";
@@ -10,7 +11,6 @@ import { eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
 import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
-import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { getSeriesEvents, getEventWindowStatus } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -28,20 +28,19 @@ export default function UntoldStory() {
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 
+  const schemaData = [
+    buildFaqSchema(untoldFaqs),
+    ...(showEventSchema ? [buildScheduledEventSchema(scheduledEvent, "/story")] : [])
+  ];
+
   return (
     <div className="min-h-screen text-white selection:bg-cyan-400/20 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
         title="Untold Story"
         description="The premier after-dark electronic music series in Chicago. Curated rooms, uncompromised sound, and a dedicated architectural standard for the late night."
         image={eventVisuals.poster}
+        schemaData={schemaData}
       />
-      {showEventSchema ? (
-        <JsonLd
-          id="schema-untold-event"
-          data={buildScheduledEventSchema(scheduledEvent, "/story")}
-        />
-      ) : null}
-      <JsonLd id="schema-untold-faq" data={buildFaqSchema(untoldFaqs)} />
       <Navigation />
 
       <main id="main-content" tabIndex={-1}>
@@ -50,53 +49,28 @@ export default function UntoldStory() {
         <UntoldContent event={scheduledEvent} />
         <UntoldContrast />
 
-        {/* Season Records */}
-        <div id="untold-records" className="scroll-shell-target relative z-20 container layout-default px-6 border-t border-white/10">
-          <EpisodeGallery
-            series="untold-story"
-            season="Season I"
-            episode="Chapter 01"
-            title="The Blueprint"
-            subtitle="Summer Mel • Avo"
-            description="The first Untold Story event. A look back at the original flyers that set the tone on June 21st at Nisos Lounge."
-            accentColor="#22D3EE"
-            images={[
-              { src: "/images/untold-s1e1-summer.jpg", alt: "Summer Mel - Chapter 01", label: "SUMMER MEL" },
-              { src: "/images/untold-s1e1-info.jpg", alt: "What is an Untold Story", label: "THE MANIFESTO" },
-              { src: "/images/untold-s1e1-avo.jpg", alt: "Avo - Chapter 01", label: "AVO" },
-              { src: "/images/untold-s1e1-chapter1.jpg", alt: "Chapter 1 Lineup", label: "CHAPTER 01" },
-            ]}
-          />
-
-          {/* Links for Season 2 and 3 Galleries */}
-          <div className="py-12 flex flex-col md:flex-row gap-6 border-t border-white/10">
-            <div className="flex-1 p-8 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#22D3EE]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#22D3EE] block mb-2">Season II</span>
-                <h4 className="font-display text-2xl uppercase text-white mb-4">The Series Grows</h4>
-                <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">360° sound. Deeper rooms. The records of 2025.</p>
-                <Link href="/untold-story/season-ii" asChild>
-                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#22D3EE] transition-colors">
-                    View Archive <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="flex-1 p-8 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#22D3EE]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10">
-                <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#22D3EE] block mb-2">Season III</span>
-                <h4 className="font-display text-2xl uppercase text-white mb-4">The Biggest Season Yet</h4>
-                <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Currently unfolding. Unforgettable artist showcases.</p>
-                <Link href="/untold-story/season-iii" asChild>
-                  <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#22D3EE] transition-colors">
-                    View Archive <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </Link>
-              </div>
-            </div>
+        {/* Episode Gallery — Season III Highlights */}
+        <section className="relative z-20 py-24 px-6 border-t border-white/10">
+          <div className="layout-default">
+            <EpisodeGallery
+              series="untold-story"
+              season="Season III"
+              episode="Episode II"
+              title="THE RECORD"
+              accentColor="#8B5CF6"
+              images={[
+                { src: "/images/archive/us-s3/JPQ_6000.jpg", alt: "Untold Story S3 Crowd", label: "The Room" },
+                { src: "/images/archive/us-s3/JPQ_6044.jpg", alt: "Untold Story S3 Artist", label: "The Booth" },
+                { src: "/images/archive/us-s3/JPQ_6321.jpg", alt: "Untold Story S3 Texture", label: "Texture" },
+                { src: "/images/untold-story-juany-deron-v2.webp", alt: "Untold Story S3 Finale", label: "Finale" }
+              ]}
+            />
           </div>
+        </section>
+
+        {/* Season Records */}
+        <div id="untold-records" className="scroll-shell-target relative z-20 pt-8 border-t border-white/10">
+           <ArchiveSection />
         </div>
 
         <section id="untold-updates" className="scroll-shell-target py-0 relative z-20">

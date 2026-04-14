@@ -9,11 +9,11 @@ const routeSamples = [
   "/togetherness",
   "/chasing-sunsets",
   "/chasing-sunsets-facts",
-  "/chasing-sunsets/season-2",
+  "/chasing-sunsets/season-ii",
   "/radio",
   "/radio/ep-01-benchek",
   "/story",
-  "/untold-story/season-2",
+  "/untold-story/season-ii",
   "/untold-story-deron-juany-bravo",
   "/archive",
   "/insights",
@@ -77,10 +77,10 @@ for (const pathname of routeSamples) {
   });
 }
 
-test("event banner only renders on eligible routes", async ({ page }) => {
+test("event banner chrome stays off ineligible routes", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await expect(page.getByLabel("Open tickets for current featured event")).toBeVisible();
+  await expect(page.getByLabel("Open tickets for current featured event")).toHaveCount(0);
 
   await page.goto("/press", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
@@ -100,16 +100,17 @@ test("desktop nav CTA flows resolve to working destinations", async ({ page }) =
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^artists/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: "RADIO SESSIONS" })).toBeVisible();
-  await page.getByRole("menuitem", { name: "RADIO SESSIONS" }).click({ force: true });
+  await nav.getByRole("button", { name: /^radio \+ archive/i }).click({ force: true });
+  await expect(page.getByRole("menuitem", { name: "RADIO SHOW" })).toBeVisible();
+  await page.getByRole("menuitem", { name: "RADIO SHOW" }).click({ force: true });
   await expect(page).toHaveURL(/\/radio$/);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("link", { name: /^journal$/i }).click({ force: true });
+  await nav.getByRole("button", { name: /^radio \+ archive/i }).click({ force: true });
+  await page.getByRole("menuitem", { name: "JOURNAL" }).click({ force: true });
   await expect(page).toHaveURL(/\/insights$/);
-  await expect(page.getByRole("heading", { name: /insights that make the project feel built/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /news, notes, and event context/i })).toBeVisible();
 });
 
 test("community utility CTAs open the intended flows", async ({ page }) => {
@@ -121,15 +122,14 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   await page.getByRole("button", { name: /community/i }).click({ force: true });
   await expect(communityMenu).toBeVisible();
   await communityMenu.getByRole("menuitem", { name: /^inner circle/i }).click({ force: true });
-  // Check the title in the drawer
-  await expect(page.locator("h2, [role='heading']").filter({ hasText: "Stay On Signal" })).toBeVisible();
-  await page.getByLabel("Close drawer").click({ force: true });
+  await expect(page).toHaveURL(/\/newsletter$/);
+  await expect(page.getByRole("heading", { name: /get monolith updates/i })).toBeVisible();
 
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await waitForAppReady(page);
   await page.getByRole("button", { name: /community/i }).click({ force: true });
   await expect(communityMenu).toBeVisible();
   await communityMenu.getByRole("menuitem", { name: /^night guide/i }).click({ force: true });
-  await expect(page.getByRole("heading", { name: "Arrival Intelligence" })).toBeVisible();
-  await page.getByRole("link", { name: "Full Guide" }).click();
   await expect(page).toHaveURL(/\/guide$/);
   await expect(page.getByRole("heading", { name: /the night of/i })).toBeVisible();
 });

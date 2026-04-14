@@ -16,6 +16,8 @@ const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
 const Ticker = lazy(() => import("@/components/Ticker"));
 const VisitorContextPanel = lazy(() => import("@/components/VisitorContextPanel"));
 import SEO from "@/components/SEO";
+import { buildSitewideIdentitySchema } from "@/lib/schema";
+
 
 export default function Home() {
   usePublicSiteDataVersion();
@@ -29,7 +31,9 @@ export default function Home() {
       <SEO
         title="Chicago Music Nights, Series, and Archive"
         description="The Monolith Project is the root system. Chasing Sun(Sets), Untold Story, and the Radio Show are its branches, with each path leading back to the same Chicago music world."
+        schemaData={buildSitewideIdentitySchema()}
       />
+
       {/* Ambient static background glows for depth */}
       <motion.div
         initial={{ opacity: 0 }}

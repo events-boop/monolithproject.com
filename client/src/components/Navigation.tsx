@@ -11,6 +11,7 @@ import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
 import { getSceneForPath } from "../lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
+import CommunityDropdown from "./CommunityDropdown";
 import { getEventCta } from "../lib/cta";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -619,6 +620,8 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
                     }
                   }}
                 />
+
+                <CommunityDropdown isLight={isLight} brand={resolvedBrand} />
 
                 <NavigationMegamenu
                   label="PLAN YOUR NIGHT"

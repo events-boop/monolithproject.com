@@ -32,18 +32,6 @@ export const upcomingEvents: ScheduledEvent[] = [
         image: "/images/untold-opening-arch.webp",
     },
     {
-        id: "us-s3e2",
-        series: "untold-story",
-        episode: "SEASON III · EPISODE II",
-        title: "KASANGO",
-        date: "April 18, 2026",
-        time: "Doors Closed",
-        venue: "Secret Location",
-        location: "Chicago, IL",
-        status: "past",
-        image: "/images/kasango-archive.webp",
-    },
-    {
         id: "us-s3e3",
         series: "untold-story",
         episode: "SEASON III · EPISODE III",

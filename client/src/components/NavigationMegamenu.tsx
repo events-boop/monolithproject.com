@@ -93,13 +93,15 @@ export default function NavigationMegamenu({
                 }
             }}
         >
-            <div
+            <button
+                type="button"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen);
                 }}
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
+                aria-label={typeof label === "string" ? label : undefined}
                 className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.12em] xl:tracking-[0.16em] uppercase transition-all duration-300 py-4 ${isLight
                     ? `hover:text-clay ${isActive ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
@@ -111,7 +113,7 @@ export default function NavigationMegamenu({
                 <ChevronDown
                     className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                 />
-            </div>
+            </button>
 
             <AnimatePresence>
                 {isOpen && (

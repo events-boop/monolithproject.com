@@ -45,9 +45,23 @@ run_ab() {
   out="$(ab -n "${n}" -c "${c}" "${BASE_URL}${route}")"
   echo "${out}"
 
-  local rps p95
+  local failed non2xx rps p95
+  failed="$(echo "${out}" | awk '/Failed requests:/ && !seen {print $3; seen=1}')"
+  non2xx="$(echo "${out}" | awk '/Non-2xx responses:/ {print $3}')"
   rps="$(echo "${out}" | awk '/Requests per second:/ {print $4}')"
   p95="$(echo "${out}" | awk '$1 == "95%" {print $2}')"
+
+  failed="${failed:-0}"
+  non2xx="${non2xx:-0}"
+
+  awk -v val="${failed}" 'BEGIN { if (val+0 > 0) exit 1 }' || {
+    echo "FAIL: ${name} has ${failed} failed requests"
+    exit 1
+  }
+  awk -v val="${non2xx}" 'BEGIN { if (val+0 > 0) exit 1 }' || {
+    echo "FAIL: ${name} has ${non2xx} non-2xx responses"
+    exit 1
+  }
 
   awk -v val="${rps}" -v min="${min_rps}" 'BEGIN { if (val+0 < min+0) exit 1 }' || {
     echo "FAIL: ${name} RPS ${rps} < ${min_rps}"

@@ -32,7 +32,7 @@ const officialLinks = [
   { label: "Official Tickets", href: POSH_TICKET_URL, external: true },
   { label: "Instagram", href: "https://instagram.com/chasingsunsets.music", external: true },
   { label: "SoundCloud", href: "https://soundcloud.com/chasing-sun-sets", external: true },
-  { label: "Mixcloud (show page publishing)", href: "https://mixcloud.com/monolithproject/", external: true },
+  { label: "Monolith SoundCloud Archive", href: "https://soundcloud.com/monolithproject", external: true },
   { label: "YouTube", href: "https://youtube.com/@monolithproject", external: true },
 ];
 

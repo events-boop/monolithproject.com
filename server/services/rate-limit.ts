@@ -21,6 +21,7 @@ interface CreateRateLimitMiddlewareOptions {
   limit: number;
   message: string;
   scope: string;
+  skip?: (req: Request) => boolean;
   windowMs: number;
 }
 
@@ -169,9 +170,15 @@ export function createRateLimitMiddleware({
   limit,
   message,
   scope,
+  skip,
   windowMs,
 }: CreateRateLimitMiddlewareOptions): RequestHandler {
   return (req, res, next) => {
+    if (skip?.(req)) {
+      next();
+      return;
+    }
+
     void (async () => {
       const identifier = getClientIdentifier(req);
 

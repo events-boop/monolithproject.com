@@ -50,6 +50,10 @@ const Alerts = lazy(() => import("./pages/Alerts"));
 const Insights = lazy(() => import("./pages/Insights"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+
+const isMonolithOpsEnabled =
+  import.meta.env.DEV || import.meta.env.VITE_ENABLE_MONOLITH_OPS === "true";
 
 function RouteLoadingFallback() {
   return (
@@ -115,6 +119,15 @@ const GuideTransition = withTransition(Guide);
 const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
+const AdminDashboardTransition = withTransition(AdminDashboard);
+
+function MonolithOpsRoute() {
+  if (!isMonolithOpsEnabled) {
+    return <Redirect to="/404" />;
+  }
+
+  return <AdminDashboardTransition />;
+}
 
 function Router() {
   const [location] = useLocation();
@@ -163,7 +176,9 @@ function Router() {
         <Route path="/terms" component={TermsTransition} />
         <Route path="/privacy" component={PrivacyTransition} />
         <Route path="/cookies" component={CookiesTransition} />
+        <Route path="/monolith-ops" component={MonolithOpsRoute} />
         <Route path="/404" component={NotFoundTransition} />
+
         <Route component={NotFoundTransition} />
       </Switch>
     </AnimatePresence>

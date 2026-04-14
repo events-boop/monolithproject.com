@@ -243,7 +243,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="relative px-6 py-28 md:py-36 z-30 border-b border-white/10 bg-[#070707]" id="vision">
+      <section className="relative px-6 py-28 md:py-36 z-30 border-b border-white/10 bg-[#070707]" id="togetherness">
         <div className="layout-wide">
           <div className="max-w-5xl">
             <BrandTranslatorLabel tone="neutral" className="mb-8">
@@ -284,7 +284,7 @@ export default function About() {
       </section>
 
       {/* Four-Part Architecture */}
-      <section className="relative px-6 py-32 md:py-48 z-30 overflow-hidden" id="vision">
+      <section className="relative px-6 py-32 md:py-48 z-30 overflow-hidden" id="architecture">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(224,90,58,0.05),transparent_40%),radial-gradient(circle_at_84%_74%,rgba(139,92,246,0.05),transparent_40%)] pointer-events-none" />
 
         <div className="layout-wide relative z-10">

@@ -1,5 +1,7 @@
 import { POSH_TICKET_URL, ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
+import type { ArtistData } from "@/data/artists";
+
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
 
 export const SITE_ORIGIN = "https://monolithproject.com";
@@ -209,7 +211,30 @@ export function buildEventSchema(input: EventSchemaInput) {
   };
 }
 
+export function buildArtistSchema(artist: ArtistData, pagePath: string) {
+  const artistUrl = toAbsoluteUrl(pagePath);
+  return {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "@id": `${artistUrl}#artist`,
+    name: artist.name,
+    description: artist.bio,
+    url: artistUrl,
+    image: toAbsoluteUrl(artist.image),
+    genre: artist.genre,
+    homeLocation: {
+      "@type": "Place",
+      name: artist.origin,
+    },
+    sameAs: [
+      artist.socials.instagram,
+      artist.socials.website,
+    ].filter(Boolean),
+  };
+}
+
 export function buildUntoldStoryEventSchema(pagePath: string) {
+
   const event = getEventById("us-s3e3");
   if (event) return buildScheduledEventSchema(event, pagePath);
 

@@ -13,14 +13,18 @@ async function waitForAppReady(page: import("@playwright/test").Page) {
   await page.waitForSelector("#initial-loader", { state: "detached", timeout: 15000 });
 }
 
-test("chasing sunsets keeps July 4 banner context on mobile", async ({ page }) => {
+test("chasing sunsets keeps the next-event context on mobile", async ({ page }) => {
   await waitForAppReady(page);
 
-  await expect(page.locator("#chasing-hero")).toContainText("JULY 4TH OPEN-AIR EXPERIENCE");
-  await expect(page.locator("#chasing-hero")).toContainText("July 4, 2026");
+  await expect(page.locator("#chasing-hero")).toContainText("SUMMER '26");
+  await expect(page.locator("#chasing-hero")).toContainText("June 7, 2026");
 
-  const countdown = page.getByText("Series Countdown").locator("..").locator("..");
+  const countdown = page
+    .locator("div")
+    .filter({ has: page.getByText("Next Event", { exact: true }) })
+    .filter({ hasText: "Chasing Sun(Sets)" })
+    .filter({ hasText: "June 7, 2026" })
+    .first();
   await expect(countdown).toContainText("Chasing Sun(Sets)");
-  await expect(countdown).toContainText("JULY 4TH OPEN-AIR EXPERIENCE");
-  await expect(countdown).toContainText("July 4, 2026");
+  await expect(countdown).toContainText("June 7, 2026");
 });

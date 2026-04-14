@@ -8,6 +8,7 @@ interface SEOProps {
   noIndex?: boolean;
   canonicalPath?: string;
   absoluteTitle?: boolean;
+  schemaData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const CANONICAL_ORIGIN = "https://monolithproject.com";
@@ -48,6 +49,7 @@ export default function SEO({
   noIndex = false,
   canonicalPath,
   absoluteTitle = false,
+  schemaData,
 }: SEOProps) {
   const siteTitle = "The Monolith Project";
   const fullTitle = absoluteTitle ? title : `${title} | ${siteTitle}`;
@@ -60,6 +62,8 @@ export default function SEO({
   );
   const canonicalUrl = `${canonicalOrigin}${canonicalTarget}`;
   const resolvedImage = resolveAbsoluteUrl(image, canonicalOrigin);
+  const serializedSchema =
+    schemaData !== undefined ? JSON.stringify(schemaData).replace(/</g, "\\u003c") : null;
 
   return (
     <Helmet prioritizeSeoTags>
@@ -78,6 +82,13 @@ export default function SEO({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:image" content={resolvedImage} />
       {noIndex ? <meta name="robots" content="noindex,nofollow" /> : null}
+
+      {serializedSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializedSchema }}
+        />
+      ) : null}
     </Helmet>
   );
 }

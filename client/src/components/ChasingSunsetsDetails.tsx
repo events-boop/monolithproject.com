@@ -60,11 +60,12 @@ export default function ChasingSunsetsDetails() {
                     </motion.div>
 
                     <motion.div
+                        id="expect"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="season-panel-warm p-8"
+                        className="season-panel-warm p-8 scroll-mt-32"
                         data-cursor-text="EXPERIENCE"
                     >
                         <h3 className="font-display text-2xl mb-6 text-charcoal">WHAT TO EXPECT</h3>

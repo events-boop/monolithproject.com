@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { buildPublicSocialEchoPayload } from "../routes/social-echo";
 import { createMethodNotAllowedHandler } from "../app";
 import { createApiResponseHardening } from "../lib/request-hardening";
+import { createRateLimitMiddleware } from "../services/rate-limit";
 
 const originalPublicSocialEchoLive = process.env.PUBLIC_SOCIAL_ECHO_LIVE;
 
@@ -90,5 +91,26 @@ describe("api hardening", () => {
     expect(headers.get("strict-transport-security")).toBe(
       "max-age=31536000; includeSubDomains; preload",
     );
+  });
+
+  it("can skip rate limiting for health probes", () => {
+    const middleware = createRateLimitMiddleware({
+      scope: "api:global",
+      windowMs: 60_000,
+      limit: 1,
+      message: "Rate limited",
+      skip: (req) => req.path === "/health",
+    });
+
+    let nextCalled = false;
+    middleware(
+      { path: "/health" } as never,
+      {} as never,
+      () => {
+        nextCalled = true;
+      },
+    );
+
+    expect(nextCalled).toBe(true);
   });
 });

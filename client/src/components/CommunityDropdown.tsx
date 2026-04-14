@@ -9,7 +9,6 @@ import {
     SPOTIFY_URL,
     LAYLO_URL
 } from "@/data/events";
-import { getDrawerTypeForHref, useUI } from "@/contexts/UIContext";
 
 interface CommunityDropdownProps {
     isLight?: boolean;
@@ -56,7 +55,7 @@ const communityLinks = [
         color: "group-hover:text-[#1DB954]",
     },
     {
-        title: "Newsletter",
+        title: "Inner Circle",
         description: "Get updates first",
         href: "/newsletter",
         iconOverride: <Mail className="w-5 h-5" />,
@@ -84,7 +83,6 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
     const triggerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
     const [, setLocation] = useLocation();
-    const { openDrawer } = useUI();
     const menuId = "community-menu";
 
     const getMenuItems = () =>
@@ -127,12 +125,7 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
     const isClientRoute = (href: string) => href.startsWith("/") && !isFirstPartyRedirect(href);
 
     const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-        const drawer = getDrawerTypeForHref(href);
-
-        if (drawer) {
-            e.preventDefault();
-            openDrawer(drawer);
-        } else if (isClientRoute(href)) {
+        if (isClientRoute(href)) {
             e.preventDefault();
             setLocation(href);
         }

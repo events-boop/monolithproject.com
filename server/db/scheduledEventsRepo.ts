@@ -167,9 +167,14 @@ export async function readPublicScheduledEvents() {
 
   try {
     const rows = await db.select().from(scheduledEvents);
+    const STALE_GHOST_IDS = new Set(["us-s3e2"]);
     const dbEvents = rows
       .map(mapRowToScheduledEvent)
-      .filter((event): event is ScheduledEvent => Boolean(event));
+      .filter((event): event is ScheduledEvent => {
+        if (!event) return false;
+        return !STALE_GHOST_IDS.has(event.id);
+      });
+
 
     if (dbEvents.length === 0) {
       return upcomingEvents;

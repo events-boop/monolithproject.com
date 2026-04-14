@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import ChasingSunsetsTicketing from "@/components/ChasingSunsetsTicketing";
 import EpisodeGallery from "@/components/EpisodeGallery";
+import ArchiveSection from "@/components/ArchiveSection";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import { Link } from "wouter";
 import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
@@ -89,35 +90,35 @@ export default function ChasingSunsets() {
   ];
 
   return (
-    <div className="min-h-screen selection:text-white relative overflow-hidden bg-noise sunset-page">
+    <div className="min-h-screen selection:text-white relative bg-noise sunset-page">
       <SEO
         title="Chasing Sun(Sets)"
         description="The premier open-air electronic music series in Chicago. Curated rooms, panoramic views, and uncompromised sound."
         image="/images/chasing-sunsets-premium.webp"
       />
-      <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1" />
+      <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1 overflow-hidden" />
       <Navigation variant="dark" brand="chasing-sunsets" />
       <main id="main-content" tabIndex={-1}>
 
         {/* Hero — raw, warm, big type */}
-        <section id="chasing-hero" className="relative screen-shell-stable flex flex-col justify-end pb-32 hero-shell-start px-6 overflow-hidden">
+        <section id="chasing-hero" className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
           {/* Full-bleed background slider */}
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
           {/* Overlay gradient for readability */}
           <div className="absolute inset-0 opacity-80 z-10 pointer-events-none bg-chasing-hero-overlay" />
 
-          <div className="relative z-20 container layout-default pointer-events-none">
+          <div className="relative z-20 container layout-default pointer-events-none mt-auto">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
-              <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-6 text-white/90">
+              <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase block mb-4 sm:mb-6 text-white/90">
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>
-              <h1 className="font-display flex flex-col text-[clamp(3.5rem,8vw,8rem)] leading-[0.85] uppercase mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
+              <h1 className="font-display flex flex-col text-[clamp(2.5rem,8vw,8rem)] leading-[0.85] uppercase mb-6 sm:mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
                 {featuredChasingEvent ? (
                   <SplitText text={featuredChasingEvent.headline || featuredChasingEvent.title} className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" />
                 ) : (
@@ -127,16 +128,16 @@ export default function ChasingSunsets() {
                   </>
                 )}
               </h1>
-              <BrandTranslatorLabel className="mb-6" tone="warm">
+              <BrandTranslatorLabel className="mb-4 sm:mb-6" tone="warm">
                 An Open-Air Monolith Series
               </BrandTranslatorLabel>
               
               <div className="max-w-xl">
-                 <p className="text-lg leading-relaxed text-white/90 mb-4">
+                 <p className="text-base sm:text-lg leading-relaxed text-white/90 mb-4">
                    Open-air sunset and night sessions built for movement, warmth, and return.
                  </p>
                  {featuredChasingEvent && (
-                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-8">
+                   <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-6 sm:mb-8">
                       <span>{featuredChasingEvent.date}</span>
                       <span className="w-1 h-1 rounded-full bg-white/20" />
                       <span>{getEventVenueLabel(featuredChasingEvent)}</span>
@@ -235,65 +236,28 @@ export default function ChasingSunsets() {
           <ChasingSunsetsTicketing />
         </div>
 
+        {/* Episode Gallery — Season III Highlights */}
+        <section className="relative z-20 py-24 px-6 border-t sunset-border-accent">
+          <div className="layout-default">
+            <EpisodeGallery
+              series="chasing-sunsets"
+              season="Season III"
+              episode="Episode III"
+              title="THE SHORE"
+              accentColor="#E8B86D"
+              images={[
+                { src: "/images/archive/chasing-sunsets/css-s3-1.jpg", alt: "Chasing SunSets Shoreline", label: "Open Air" },
+                { src: "/images/archive/chasing-sunsets/css-s3-4.jpg", alt: "Chasing SunSets Booth", label: "The Booth" },
+                { src: "/images/archive/chasing-sunsets/css-s3-7.jpg", alt: "Chasing SunSets Vibe", label: "Atmosphere" },
+                { src: "/images/archive/chasing-sunsets/css-s3-9.jpg", alt: "Chasing SunSets Finale", label: "Finale" }
+              ]}
+            />
+          </div>
+        </section>
+
         {/* Season Records */}
         <Section as="div" id="chasing-records" scrollAnchor spacing="none" borderTop="border-t sunset-border-accent">
-          <EpisodeGallery
-            series="chasing-sunsets"
-            season="Season I"
-            episode="Chapter 01"
-            title="The First Sunset"
-            subtitle="Amari • Sarat • Erik"
-            description="The beginning. Rooftops, the skyline, and the golden hour. A look back at the flyers that started it all on August 9th, 2024 at The Penthouse."
-            accentColor="#E8B86D"
-            images={[
-              { src: "/images/chasing-s1e1-amari.jpg", alt: "Amari - Chapter 01", label: "AMARI" },
-              { src: "/images/chasing-s1e1-sarat.jpg", alt: "Sarat - Chapter 01", label: "SARAT" },
-              { src: "/images/chasing-s1e1-erik.jpg", alt: "Erik - Chapter 01", label: "ERIK" },
-              { src: "/images/chasing-s1e1-group.jpg", alt: "The Collective - Chapter 01", label: "THE TRINITY" },
-            ]}
-          />
-          <EpisodeGallery
-            series="chasing-sunsets"
-            season="Season I"
-            episode="July 4th"
-            title="Independence Day"
-            subtitle="The Crowd • The Energy"
-            description="A special Chasing Sun(Sets) on the 4th of July. The sights, the faces, and the open-air energy."
-            accentColor="#E8B86D"
-            images={[
-              { src: "/images/chasing-sunsets-1.jpg", alt: "July 4th Crowd 1", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-2.jpg", alt: "July 4th Crowd 2", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-3.jpg", alt: "July 4th Crowd 3", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-4.jpg", alt: "July 4th Crowd 4", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-5.jpg", alt: "July 4th Crowd 5", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-6.jpg", alt: "July 4th Crowd 6", label: "THE CROWD" },
-              { src: "/images/chasing-sunsets-7.jpg", alt: "July 4th Crowd 7", label: "THE CROWD" },
-            ]}
-          />
-
-          {/* Links for Season 2 and 3 Galleries */}
-          <div className="py-12 flex flex-col md:flex-row gap-6 border-t sunset-border-accent">
-            <div className="flex-1 p-8 border sunset-border-accent rounded-2xl glass hover:bg-white/5 transition-colors group">
-              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season II</span>
-              <h4 className="font-display text-2xl uppercase text-white mb-4">Expanded Horizons</h4>
-              <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">Bigger rooms, deeper grooves, more golden hours. 2025 Archives.</p>
-              <Link href="/chasing-sunsets/season-ii" asChild>
-                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
-                  View Archive <ArrowUpRight className="w-4 h-4" />
-                </a>
-              </Link>
-            </div>
-            <div className="flex-1 p-8 border sunset-border-accent rounded-2xl glass hover:bg-white/5 transition-colors group">
-              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D] block mb-2">Season III</span>
-              <h4 className="font-display text-2xl uppercase text-white mb-4">The Next Chapter</h4>
-              <p className="text-white/60 mb-6 font-mono text-xs uppercase tracking-widest line-clamp-2">The season is coming. Golden hour, elevated. 2026 Archives.</p>
-              <Link href="/chasing-sunsets/season-iii" asChild>
-                <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white group-hover:text-[#E8B86D] transition-colors" data-cursor-text="VIEW">
-                  View Archive <ArrowUpRight className="w-4 h-4" />
-                </a>
-              </Link>
-            </div>
-          </div>
+           <ArchiveSection />
         </Section>
 
         {/* Upcoming Events / Residents */}

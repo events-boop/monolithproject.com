@@ -12,6 +12,8 @@ import { CTA_LABELS } from "@/lib/cta";
 import { getSeriesEvents } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import type { ScheduledEvent } from "@/data/events";
+import { buildArtistSchema } from "@/lib/schema";
+
 
 const LEGACY_ID_MAP: Record<string, string> = {
   "1": "haai",
@@ -85,7 +87,13 @@ export default function ArtistProfile() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-[#050505] text-white selection:bg-white/20">
-      <SEO title={artist.name} description={artist.bio} canonicalPath={canonicalArtistPath} />
+      <SEO 
+        title={artist.name} 
+        description={artist.bio} 
+        canonicalPath={canonicalArtistPath} 
+        schemaData={buildArtistSchema(artist, canonicalArtistPath)}
+      />
+
       
       {/* Cinematic Navigation Shell */}
       <div className="fixed top-0 left-0 right-0 z-[100] transition-opacity duration-500">

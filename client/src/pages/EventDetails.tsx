@@ -7,6 +7,8 @@ import { ArrowLeft, Clock, MapPin, Ticket, Star } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
 import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
+import { buildScheduledEventSchema } from "@/lib/schema";
+
 
 export default function EventDetails() {
   const [, params] = useRoute("/events/:slug");
@@ -46,7 +48,9 @@ export default function EventDetails() {
       <SEO
         title={`${event.title} - ${event.venue}`}
         description={event.description || `Join us for ${event.title} at ${event.venue} on ${event.date}.`}
+        schemaData={buildScheduledEventSchema(event, `/events/${slug}`)}
       />
+
       <Navigation brand={navigationBrand} />
 
       <main id="main-content" tabIndex={-1}>
