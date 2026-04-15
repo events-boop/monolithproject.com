@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Ticket, ChevronDown, ArrowUpRight, Lock, Zap } from "lucide-react";
+import { Ticket, ArrowUpRight, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "../lib/utils";
 import { signalChirp } from "../lib/SignalChirpEngine";
@@ -12,6 +12,7 @@ import { getSceneForPath } from "../lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import CommunityDropdown from "./CommunityDropdown";
+import InteractiveNavigationOverlay from "./InteractiveNavigationOverlay";
 import { getEventCta } from "../lib/cta";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -67,61 +68,8 @@ interface NavigationProps {
   brand?: "monolith" | "chasing-sunsets" | "untold-story" | "radio";
 }
 
-const mobilePrimaryItems = [
-  {
-    label: "HOME",
-    href: "/",
-  },
-  {
-    label: "NEXT EVENT",
-    href: "/schedule",
-  },
-  {
-    label: "ABOUT",
-    href: "/about",
-    subItems: [
-      { label: "ABOUT OVERVIEW", href: "/about" },
-      { label: "OUR STORY", href: "/about#story" },
-      { label: "TOGETHERNESS", href: "/about#togetherness" },
-    ]
-  },
-  {
-    label: "EVENTS",
-    href: "/chasing-sunsets",
-    subItems: [
-      { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
-      { label: "UNTOLD STORY", href: "/story" },
-      { label: "EVENT ARCHIVE", href: "/archive" },
-      { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
-    ]
-  },
-  {
-    label: "RADIO + ARCHIVE",
-    href: "/radio",
-    subItems: [
-      { label: "RADIO SHOW", href: "/radio" },
-      { label: "FULL SCHEDULE", href: "/schedule" },
-      { label: "ARTISTS & LINEUP", href: "/lineup" },
-      { label: "EVENT ARCHIVE", href: "/archive" },
-      { label: "LATEST NEWS", href: "/insights" },
-    ]
-  },
-  {
-    label: "PLAN YOUR NIGHT",
-    href: "/vip",
-    subItems: [
-      { label: "GET TICKETS", href: "/schedule" },
-      { label: "VIP TABLE SERVICES", href: "/vip" },
-      { label: "PARTNER WITH US", href: "/partners" },
-      { label: "PRESS & MEDIA", href: "/press" },
-      { label: "CONTACT", href: "/contact" },
-    ]
-  },
-];
-
-export default function Navigation({ activeSection, variant, brand }: NavigationProps) {
+export default function Navigation({ variant, brand }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
   const mobileDialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -254,45 +202,6 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
     if (el && typeof el.focus === "function") el.focus();
     lastFocusedRef.current = null;
   }, [mobileMenuOpen]);
-
-  const isActiveHref = (href: string) => {
-    if (location === href) return true;
-    // Aliases kept for marketing links.
-    if (href === "/about" && location === "/togetherness") return true;
-    if (href === "/story" && location === "/untold-story-deron-juany-bravo") return true;
-    return false;
-  };
-
-  const renderNavLabel = (label: string, mobile = false) => {
-    const accent =
-      label === "EVENTS"
-        ? "#C2703E"
-        : label === "RADIO + ARCHIVE"
-          ? "#22D3EE"
-          : label === "PLAN YOUR NIGHT"
-            ? "#8B5CF6"
-            : null;
-
-    if (!accent) return label;
-
-    return (
-      <span className={`inline-flex items-center ${mobile ? "gap-3" : "gap-1.5"}`}>
-        <span
-          aria-hidden="true"
-          className={`${mobile ? "h-2 w-2" : "h-1.5 w-1.5"} rounded-full`}
-          style={{ backgroundColor: accent }}
-        />
-        <span className={`relative inline-block ${mobile ? "pb-2" : "pb-1"}`}>
-          <span>{label}</span>
-          <span
-            aria-hidden="true"
-            className="absolute -bottom-0.5 left-0 right-0 h-px opacity-80 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: `linear-gradient(to right, ${accent}, transparent)` }}
-          />
-        </span>
-      </span>
-    );
-  };
 
   const handleNavClick = (href: string) => {
     signalChirp.click();
@@ -740,156 +649,18 @@ export default function Navigation({ activeSection, variant, brand }: Navigation
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Interactive chapter-entry overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[10005] flex flex-col items-center justify-start bg-[radial-gradient(circle_at_20%_15%,rgba(224,90,58,0.16),transparent_34%),radial-gradient(circle_at_82%_82%,rgba(34,211,238,0.14),transparent_36%),linear-gradient(180deg,rgba(6,6,15,0.88),rgba(6,6,15,0.96))] px-4 pb-6 backdrop-blur-2xl md:justify-center overflow-y-auto"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-            ref={mobileDialogRef}
+          <InteractiveNavigationOverlay
+            activePath={location}
+            closeButtonRef={closeButtonRef}
+            dialogRef={mobileDialogRef}
             id={mobileMenuId}
-            style={{
-              paddingTop: "calc(var(--shell-nav-offset) + var(--shell-nav-height) + 0.75rem)",
-              paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))",
-            }}
-            onKeyDown={(e) => {
-              if (e.key !== "Tab") return;
-              const dialog = mobileDialogRef.current;
-              if (!dialog) return;
-
-              const focusable = Array.from(
-                dialog.querySelectorAll<HTMLElement>(
-                  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
-                ),
-              ).filter((el) => el.offsetParent !== null && el.getAttribute("aria-hidden") !== "true");
-
-              if (focusable.length === 0) {
-                e.preventDefault();
-                return;
-              }
-
-              const first = focusable[0];
-              const last = focusable[focusable.length - 1];
-              const active = document.activeElement as HTMLElement | null;
-
-              if (e.shiftKey) {
-                if (active === first || !active || !dialog.contains(active)) {
-                  e.preventDefault();
-                  last.focus();
-                }
-                return;
-              }
-
-              if (active === last) {
-                e.preventDefault();
-                first.focus();
-              }
-            }}
-          >
-            <div
-              className="absolute right-6 md:right-8"
-              style={{ top: "calc(var(--shell-nav-offset) + 0.125rem)" }}
-            >
-              <MagneticButton>
-                <button
-                  type="button"
-                  onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
-                  aria-label="Close navigation menu"
-                  ref={closeButtonRef}
-                  data-cursor-text="CLOSE"
-                  className="p-2.5 text-foreground/50 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-                >
-                  <X size={32} />
-                </button>
-              </MagneticButton>
-            </div>
-
-            <div className="scrollbar-hide relative z-10 flex w-full max-w-2xl flex-col items-center gap-4 px-5 py-5 sm:gap-6 sm:px-8 sm:py-8">
-              {mobilePrimaryItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.1 }}
-                  className="w-full flex flex-col items-center"
-                >
-                  <div 
-                    className="flex items-center gap-4 group cursor-pointer"
-                    onClick={() => {
-                      if (item.subItems) {
-                        setExpandedMobileItem(expandedMobileItem === item.label ? null : item.label);
-                        signalChirp.click();
-                      } else {
-                        handleNavClick(item.href);
-                      }
-                    }}
-                  >
-                    <button
-                      aria-expanded={expandedMobileItem === item.label}
-                      className={`font-display text-2xl sm:text-4xl md:text-5xl tracking-widest uppercase transition-colors text-center ${isActiveHref(item.href) || expandedMobileItem === item.label ? "text-white" : "text-white/50"} group-hover:text-white`}
-                    >
-                      {renderNavLabel(item.label, true)}
-                    </button>
-                    {item.subItems && (
-                      <div
-                        className={`p-2 rounded-full bg-white/5 border border-white/10 transition-transform duration-500 ${expandedMobileItem === item.label ? "rotate-180 bg-white/10" : ""}`}
-                      >
-                        <ChevronDown size={20} className={expandedMobileItem === item.label ? "text-white" : "text-white/40"} />
-                      </div>
-                    )}
-                  </div>
-
-                  <AnimatePresence>
-                    {expandedMobileItem === item.label && item.subItems && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden flex flex-col items-center gap-3 mt-4 w-full"
-                      >
-                        {item.subItems.map((sub) => (
-                          <button
-                            key={sub.label}
-                            onClick={() => {
-                              signalChirp.click();
-                              handleNavClick(sub.href);
-                              setMobileMenuOpen(false);
-                            }}
-                            className="block py-3 font-mono text-[11px] sm:text-[13px] tracking-[0.2em] uppercase text-center text-white/50 hover:text-white transition-colors border border-white/5 bg-white/[0.02] w-full rounded-full"
-                          >
-                            {sub.label}
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              ))}
-
-              {/* Emphasized ticket CTA */}
-              <motion.a
-                href={ticketHref || "/schedule"}
-                target={ticketHref ? "_blank" : undefined}
-                rel={ticketHref ? "noopener noreferrer" : undefined}
-                onClick={() => { signalChirp.click(); setMobileMenuOpen(false); }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="mt-8 w-full sm:w-auto px-8 sm:px-10 py-5 sm:py-6 bg-white rounded-full text-black font-heavy text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all cursor-pointer shadow-[0_10px_40px_rgba(255,255,255,0.2)] focus-visible:outline-none"
-              >
-                <Ticket className="w-4 h-4" />
-                {ticketHref ? "SECURE YOUR ENTRY" : "SECURE ACCESS"}
-                <ArrowUpRight className="w-4 h-4" />
-              </motion.a>
-
-            </div>
-          </motion.div>
+            onClose={() => setMobileMenuOpen(false)}
+            onNavigate={handleNavClick}
+            ticketHref={ticketHref}
+          />
         )}
       </AnimatePresence>
     </>
