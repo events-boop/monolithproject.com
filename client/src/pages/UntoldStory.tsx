@@ -69,6 +69,7 @@ export default function UntoldStory() {
         </section>
 
         {/* Season Records */}
+        <span id="archive" className="block scroll-mt-32" aria-hidden="true" />
         <div id="untold-records" className="scroll-shell-target relative z-20 pt-8 border-t border-white/10">
            <ArchiveSection />
         </div>

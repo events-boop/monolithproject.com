@@ -11,7 +11,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-jul04");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Early Tickets",
+      label: "Unlock Presale",
       href: "/chasing-sunsets#chasing-funnel",
       tool: "laylo",
     });
@@ -31,7 +31,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.some((event) => event.id === "us-s3e3")).toBe(true);
     expect(data.events.some((event) => event.id === "css-jul04")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
-      label: "Tickets",
+      label: "On Sale",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });
@@ -47,7 +47,7 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.sound).toBeDefined();
     expect(scheduleUntold?.lineup).toBeDefined();
     expect(scheduleUntold?.primaryCta).toMatchObject({
-      label: "Tickets",
+      label: "On Sale",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });
@@ -67,12 +67,12 @@ describe("buildPublicSiteData", () => {
     expect(featuredIds).toContain("us-s3e3");
     expect(data.events.length).toBe(2);
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Early Tickets",
+      label: "Unlock Presale",
       href: "/chasing-sunsets#chasing-funnel",
       tool: "laylo",
     });
     expect(featuredUntold?.primaryCta).toMatchObject({
-      label: "Tickets",
+      label: "On Sale",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });

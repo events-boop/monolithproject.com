@@ -31,7 +31,7 @@ const untoldUpcomingEvent: ScheduledEvent = {
   location: "Chicago, IL",
   status: "coming-soon",
   primaryCta: {
-    label: "Unlock Presale Access",
+    label: "Unlock Presale",
     href: "/story#untold-funnel",
     tool: "laylo",
     isExternal: false,
@@ -47,7 +47,7 @@ describe("cta", () => {
 
   it("routes upcoming untold-story events to the onsite untold waitlist funnel", () => {
     expect(getEventCta(untoldUpcomingEvent)).toMatchObject({
-      label: "Unlock Presale Access",
+      label: "Unlock Presale",
       href: "/story#untold-funnel",
       isExternal: false,
       tool: "laylo",

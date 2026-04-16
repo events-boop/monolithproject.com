@@ -98,7 +98,7 @@ export default function About() {
     <div ref={containerRef} className="bg-[#050505] text-white selection:bg-white/20 relative">
       <SEO
         title="About The Monolith Project | Chicago Music Project"
-        description="Monolith is the root project. Chasing Sun(Sets), Untold Story, and the Radio Show are the branches, with Togetherness holding the vision across all of them."
+        description="Monolith is the root. Chasing Sun(Sets) carries the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story carries the night. Togetherness is the vision that holds the branches together."
         canonicalPath="/about"
       />
 
@@ -255,7 +255,7 @@ export default function About() {
               Same people returning.
             </h2>
             <p className="max-w-3xl text-lg md:text-xl leading-relaxed text-white/68 font-light">
-              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets), Untold Story, and the Radio Show are different expressions, but the point is continuity: the same city, the same standard, and a crowd that keeps finding each other across formats.
+              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets) runs the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story runs the night. Different expressions, one continuity: same city, same standard, and a crowd that keeps finding each other across formats.
             </p>
           </div>
 
@@ -267,7 +267,7 @@ export default function About() {
               },
               {
                 label: "The Branches",
-                copy: "Each branch does a different job: open-air, late-night, and replayable audio between nights.",
+                copy: "Two branches, one standard: Chasing Sun(Sets) carries open-air and global radio, Untold Story carries late-night.",
               },
               {
                 label: "The Return",

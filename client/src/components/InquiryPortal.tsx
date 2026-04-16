@@ -779,10 +779,6 @@ export default function InquiryPortal() {
                           />
                         </div>
 
-                        <p className="mt-6 text-sm text-white/45">
-                          {config.successDescription}
-                        </p>
-
                         <div className="mt-8 flex flex-wrap gap-3">
                           <button
                             type="button"
@@ -910,13 +906,8 @@ export default function InquiryPortal() {
 
                       <div className="flex flex-col gap-4 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between">
                         <p className="max-w-md text-sm leading-relaxed text-white/48">
-                          This form writes into the live intake routes behind{" "}
-                          <span className="text-white/72">/api/contact</span>{" "}
-                          and{" "}
-                          <span className="text-white/72">
-                            /api/booking-inquiry
-                          </span>
-                          .
+                          Your note lands directly with the Monolith office.
+                          No auto-replies — a real person reviews every submission.
                         </p>
 
                         <MagneticButton strength={0.12}>

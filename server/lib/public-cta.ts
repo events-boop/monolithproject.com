@@ -1,12 +1,12 @@
 import type { EventCta, EventSeries, ScheduledEvent } from "../../shared/events/types";
 
 const CTA_LABELS = {
-  tickets: "Tickets",
-  schedule: "View Schedule",
-  unlockPresale: "Early Tickets",
-  joinWaitlist: "Register For The Next Drop",
-  claimLast: "Secure Final Entry",
-  nextSignal: "Get First Access To Next Signal",
+  tickets: "On Sale",
+  schedule: "See The Schedule",
+  unlockPresale: "Unlock Presale",
+  joinWaitlist: "Join The Waitlist",
+  claimLast: "Final Release",
+  nextSignal: "Get Alerts First",
 } as const;
 
 function isExternalHref(href: string) {

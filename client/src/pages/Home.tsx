@@ -30,7 +30,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
         title="Chicago Music Nights, Series, and Archive"
-        description="The Monolith Project is the root system. Chasing Sun(Sets), Untold Story, and the Radio Show are its branches, with each path leading back to the same Chicago music world."
+        description="The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project."
         schemaData={buildSitewideIdentitySchema()}
       />
 

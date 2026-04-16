@@ -109,7 +109,7 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_SUBHEAD =
-  "Monolith is the primary infrastructure. Chasing Sun(Sets), Untold Story, and Radio are the core operational branches. Track project progress and enter the network via our upcoming schedule.";
+  "Monolith is the root. Chasing Sun(Sets) runs the daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. Same city, same standard, one project.";
 
 const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
   const { days, hours, minutes, seconds } = useCountdown(target);
@@ -280,10 +280,10 @@ export default function HeroSection() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, reduceMotion ? 0 : 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
-  const scale = useTransform(scrollY, [0, 300], [1, 1.05]);
+  const scale = useTransform(scrollY, [0, 300], [1, reduceMotion ? 1 : 1.05]);
 
   return (
-    <div className="bg-black flex h-[100vh] h-[100svh] h-[100dvh] flex-col">
+    <div className="bg-black flex h-[100dvh] flex-col">
       <section
         id="hero"
         className="relative h-full overflow-hidden bg-black md:screen-shell-stable"

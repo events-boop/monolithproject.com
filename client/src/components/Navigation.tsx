@@ -11,7 +11,6 @@ import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
 import { getSceneForPath } from "../lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
-import CommunityDropdown from "./CommunityDropdown";
 import InteractiveNavigationOverlay from "./InteractiveNavigationOverlay";
 import { getEventCta } from "../lib/cta";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
@@ -338,7 +337,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_55%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_78%_45%,rgba(255,220,180,0.28),transparent_35%)]" />
                 <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-transparent to-black/10" />
                 <div className="hidden h-full items-center overflow-hidden whitespace-nowrap sm:flex">
-                  <div className="flex animate-marquee-fast whitespace-nowrap">
+                  <span className="sr-only">{bannerPayload.text}</span>
+                  <div aria-hidden="true" className="flex animate-marquee-fast whitespace-nowrap">
                     {Array(10)
                       .fill(bannerPayload.text)
                       .map((text, index) => (
@@ -470,7 +470,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <NavigationMegamenu
                   label="EVENTS"
                   href="/chasing-sunsets"
-                  isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story")}
+                  isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story") || location === "/schedule" || location === "/lineup" || location.startsWith("/events/")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
@@ -478,9 +478,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     items: [
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
-                      { label: "WHAT TO EXPECT", href: "/chasing-sunsets#expect" },
+                      { label: "FULL SCHEDULE", href: "/schedule" },
+                      { label: "ARTISTS & LINEUP", href: "/lineup" },
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
-                      { label: "EVENT ARCHIVE", href: "/archive" },
                     ],
                     feature: ticketEvent ? {
                       title: ticketEvent.headline || ticketEvent.title,
@@ -504,33 +504,55 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="RADIO + ARCHIVE"
+                  label="RADIO"
                   href="/radio"
-                  isActive={location === "/schedule" || location === "/lineup" || location === "/archive" || location.includes("/insights") || location.includes("/radio")}
+                  isActive={location.startsWith("/radio")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "RADIO SHOW", href: "/radio", icon: "play" },
-                      { label: "FULL SCHEDULE", href: "/schedule" },
-                      { label: "ARTISTS & LINEUP", href: "/lineup" },
-                      { label: "EVENT ARCHIVE", href: "/archive" },
-                      { label: "JOURNAL", href: "/insights" },
+                      { label: "THE SHOW", href: "/radio", icon: "play" },
+                      { label: "LATEST EPISODE", href: "/radio/ep-01-benchek", icon: "play" },
+                      { label: "ALL EPISODES", href: "/radio#episodes" },
                     ],
                     feature: {
-                      title: "RADIO SHOW + ARCHIVE",
-                      subtitle: "Mixes, episodes, and the visual record",
+                      title: "CHASING SUN(SETS) RADIO",
+                      subtitle: "The global connection — always on",
                       image: "/images/radio-show-gear.webp",
                       href: "/radio/ep-01-benchek",
-                      ctaText: "Hear The Rooms",
+                      ctaText: "Tune In",
                       icon: "play",
-                      badge: "FEATURED"
+                      badge: "LIVE"
                     }
                   }}
                 />
 
-                <CommunityDropdown isLight={isLight} brand={resolvedBrand} />
+                <NavigationMegamenu
+                  label="ARCHIVE"
+                  href="/archive"
+                  isActive={location === "/archive" || location.includes("/insights")}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "EVENT ARCHIVE", href: "/archive" },
+                      { label: "JOURNAL", href: "/insights" },
+                      { label: "CHASING SUN(SETS) SEASONS", href: "/chasing-sunsets#archive" },
+                      { label: "UNTOLD STORY SEASONS", href: "/story#archive" },
+                    ],
+                    feature: {
+                      title: "THE PROOF",
+                      subtitle: "Every room, every set, every season",
+                      image: "/images/untold-story-juany-deron-v2.webp",
+                      href: "/archive",
+                      ctaText: "Enter The Archive",
+                      icon: "arrow",
+                      badge: "ARCHIVE"
+                    }
+                  }}
+                />
 
                 <NavigationMegamenu
                   label="PLAN YOUR NIGHT"

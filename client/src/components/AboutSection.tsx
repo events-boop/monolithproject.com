@@ -128,7 +128,7 @@ export default function AboutSection() {
               Same people returning.
             </h2>
             <p className="max-w-2xl text-lg leading-relaxed text-white/68 font-light">
-              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets), Untold Story, and the Radio Show are different expressions, but the point is continuity: the same city, the same standard, and a crowd that keeps finding each other across formats.
+              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets) runs the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story runs the night. Different expressions, one continuity: same city, same standard, and a crowd that keeps finding each other across formats.
             </p>
           </div>
 
@@ -140,7 +140,7 @@ export default function AboutSection() {
               },
               {
                 label: "The Branches",
-                copy: "Each branch does a different job: open-air, late-night, and replayable audio between nights.",
+                copy: "Two branches, one standard: Chasing Sun(Sets) carries open-air and global radio, Untold Story carries late-night.",
               },
               {
                 label: "The Return",

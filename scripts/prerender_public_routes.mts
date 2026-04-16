@@ -203,7 +203,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Chicago Music Nights, Series, and Archive",
       description:
-        "The Monolith Project is the root system. Chasing Sun(Sets), Untold Story, and the Radio Show are its branches, with each path leading back to the same Chicago music world.",
+        "The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project.",
       schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderBaseLayout(
         "Chicago Music Project",
@@ -381,7 +381,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "About The Monolith Project | Chicago Music Project",
       description:
-        "Monolith is the root project. Chasing Sun(Sets), Untold Story, and the Radio Show are the branches, with Togetherness holding the vision across all of them.",
+        "Monolith is the root. Chasing Sun(Sets) carries the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story carries the night. Togetherness is the vision that holds the branches together.",
       bodyHtml: renderBaseLayout(
         "Project Overview",
         "About The Monolith Project",

@@ -256,6 +256,7 @@ export default function ChasingSunsets() {
         </section>
 
         {/* Season Records */}
+        <span id="archive" className="block scroll-mt-32" aria-hidden="true" />
         <Section as="div" id="chasing-records" scrollAnchor spacing="none" borderTop="border-t sunset-border-accent">
            <ArchiveSection />
         </Section>
