@@ -15,6 +15,8 @@ import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import InquiryPortal from "./components/InquiryPortal";
+import SmoothScroll from "./components/SmoothScroll";
+
 
 // Lazy Pages
 const Tickets = lazy(() => import("./pages/Tickets"));
@@ -273,7 +275,9 @@ function MainContentWrapper() {
   return (
     <>
       <GlobalSpotlightSync />
+      <SmoothScroll />
       <SiteDataSync />
+
       <SceneSync />
       <RouteMemory />
       <AttributionSync />

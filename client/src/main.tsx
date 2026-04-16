@@ -35,7 +35,11 @@ async function startApp() {
   if (!rootElement) throw new Error("Root element not found");
 
   initAttributionTracking();
-  ensurePublicSiteData(window.location.pathname); // non-blocking — fetch in background
+  void ensurePublicSiteData(window.location.pathname).catch((error) => {
+    if (import.meta.env.DEV) {
+      console.warn("[site-data] Initial preload failed.", error);
+    }
+  });
   const { default: App } = await import("./App");
 
   createRoot(rootElement).render(

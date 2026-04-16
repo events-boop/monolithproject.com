@@ -3,6 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { useUI } from "@/contexts/UIContext";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
+
+interface AuditResult {
+  code: string;
+  level: "amber" | "red" | "green";
+  message: string;
+}
 
 const SIGNALS: Record<string, string[]> = {
   DEFAULT: [
@@ -29,6 +36,7 @@ const SIGNALS: Record<string, string[]> = {
 };
 
 export default function SystemHUD() {
+  usePublicSiteDataVersion();
   const [location] = useLocation();
   const { hoveredExpression } = useUI();
   const [uptime, setUptime] = useState(0);
@@ -38,6 +46,9 @@ export default function SystemHUD() {
   const [currentSignal, setCurrentSignal] = useState(SIGNALS.DEFAULT[0]);
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 89, hours: 23, minutes: 59, seconds: 59 });
+  const [audits, setAudits] = useState<AuditResult[]>([]);
+  const [systemLevel, setSystemLevel] = useState<"green" | "amber" | "red">("green");
+  const [isVisible, setIsVisible] = useState(false);
   const signalIndexRef = useRef(0);
 
   // Global Drop Countdown
@@ -68,13 +79,38 @@ export default function SystemHUD() {
   if (activeExp === "untold") { accentColor = "rgba(34,211,238,0.35)"; textColor = "text-[#22D3EE]"; }
   if (activeExp === "radio") { accentColor = "rgba(255,255,255,0.25)"; textColor = "text-white"; }
 
-  // REQID & Uptime (Immutable per session)
+  // Secret Unlock Mechanism
   useEffect(() => {
+    const isDebugMode = localStorage.getItem("MONOLITH_DEBUG") === "true" || window.location.search.includes("monolith_debug=1");
+    if (isDebugMode) {
+      setIsVisible(true);
+      localStorage.setItem("MONOLITH_DEBUG", "true");
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Secret Combo: Shift + Alt + D
+      if (e.shiftKey && e.altKey && e.key === "D") {
+        setIsVisible(prev => {
+          const next = !prev;
+          localStorage.setItem("MONOLITH_DEBUG", next.toString());
+          if (next) signalChirp.boot();
+          return next;
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // REQID & Uptime
+  useEffect(() => {
+    if (!isVisible) return;
     signalChirp.boot();
     setRequestId(Math.random().toString(36).substring(7).toUpperCase());
     const interval = setInterval(() => setUptime(prev => prev + 1), 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   // Signal Rotator (Independent of Chapter for stability)
   useEffect(() => {
@@ -136,6 +172,71 @@ export default function SystemHUD() {
     };
   }, []); // No dependencies—observer is setup once.
 
+  // Real-Time Audit Engine
+  useEffect(() => {
+    if (!isVisible) return;
+    const runAudit = () => {
+      const results: AuditResult[] = [];
+      const now = new Date();
+      const publicEvents = getPublicEvents();
+
+      // 1. STALE DATA AUDIT
+      const staleEvents = publicEvents.filter(e => {
+        if (!e.startsAt) return false;
+        const startDate = new Date(e.startsAt);
+        return startDate < now && e.status === "on-sale";
+      });
+
+      if (staleEvents.length > 0) {
+        results.push({
+          code: "STALE_DATA",
+          level: "red",
+          message: `EVENT_${staleEvents[0].id}_STALE: CHECK STATUS`
+        });
+      }
+
+      // 2. ANCHOR / LINK AUDIT
+      const allLinks = Array.from(document.querySelectorAll('a[href*="#"]'));
+      const brokenAnchors = allLinks.filter(a => {
+        const href = a.getAttribute('href');
+        if (!href || !href.includes('#')) return false;
+        const [path, id] = href.split('#');
+        if (path && path !== location) return false; // Skip cross-page anchors for now
+        return id && !document.getElementById(id);
+      });
+
+      if (brokenAnchors.length > 0) {
+        results.push({
+          code: "BROKEN_ANCHOR",
+          level: "amber",
+          message: `LINK_TO_#${brokenAnchors[0].getAttribute('href')?.split('#')[1]}_MISSING`
+        });
+      }
+
+      // 3. DUPLICATE ID AUDIT
+      const ids = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
+      const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+      if (duplicates.length > 0) {
+        results.push({
+          code: "DUPLICATE_ID",
+          level: "red",
+          message: `DUP_ID_DETECTED: #${duplicates[0]}`
+        });
+      }
+
+      setAudits(results);
+      
+      const hasRed = results.some(r => r.level === "red");
+      const hasAmber = results.some(r => r.level === "amber");
+      setSystemLevel(hasRed ? "red" : hasAmber ? "amber" : "green");
+    };
+
+    const timeout = setTimeout(runAudit, 2000); // Wait for hydration
+    return () => clearTimeout(timeout);
+  }, [location, uptime]);
+
+  if (!isVisible) return null;
+
   return (
     <div aria-hidden="true" className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
       {/* HUD Frame Components — hidden on small screens to prevent content coverage */}
@@ -151,7 +252,7 @@ export default function SystemHUD() {
             <span className="font-mono text-[10px] text-white/30 tracking-[0.2em] uppercase whitespace-nowrap">
               System Uptime: {Math.floor(uptime/60).toString().padStart(2, "0")}:{ (uptime%60).toString().padStart(2, "0") }
             </span>
-            <div className="w-1.5 h-1.5 bg-green-500 rounded-none animate-pulse" />
+            <div className={`w-1.5 h-1.5 ${systemLevel === "red" ? "bg-red-500" : systemLevel === "amber" ? "bg-amber-500" : "bg-green-500"} rounded-none animate-pulse`} />
           </div>
           <div className="flex items-center gap-3">
             <span 
@@ -163,7 +264,7 @@ export default function SystemHUD() {
             >
               REQID: {requestId}
             </span>
-            <div className={`w-2 h-2 ${diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`} />
+            <div className={`w-2 h-2 ${systemLevel === "red" ? "bg-red-500 animate-ping" : systemLevel === "amber" ? "bg-amber-500" : diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`} />
           </div>
         </div>
       </div>
@@ -178,13 +279,20 @@ export default function SystemHUD() {
           >
             <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">Diagnostic_Log</span>
             <div className="flex flex-col gap-2 max-h-[300px] overflow-hidden text-[10px] text-white/70">
-              <p className="text-primary group-hover:text-white">[SYSTEM] BOOT_SEQUENCE: 0x4F12A</p>
+              {audits.length > 0 ? (
+                audits.map((a, i) => (
+                  <p key={i} className={a.level === "red" ? "text-red-400" : "text-amber-400"}>
+                    [{a.code}] {a.message}
+                  </p>
+                ))
+              ) : (
+                <p className="text-green-400">[SYSTEM] ALL_PATHWAYS_HEALTHY</p>
+              )}
+              <p className="text-primary group-hover:text-white mt-2">[SYSTEM] BOOT_SEQUENCE: 0x4F12A</p>
               <p>[NET] LATENCY_CHECK: 12ms</p>
               <p>[OS] KERNEL_LOAD: STABLE</p>
               <p>[CONTEXT] REGION: {Intl.DateTimeFormat().resolvedOptions().timeZone}</p>
-              <p>[SESSION] ARCH_LVL: GOD_TIER</p>
               <p className="opacity-40">[LOG] SECTION_SPY: ATTACHED</p>
-              <p className="opacity-40">[LOG] PARALLAX_ENGINE: RUNNING</p>
               <p className="text-white/30 mt-4 animate-pulse">STREAMING_SIGNALS...</p>
             </div>
           </motion.div>

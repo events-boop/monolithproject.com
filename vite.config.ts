@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const apiProxyTarget = process.env.VITE_API_TARGET || "http://127.0.0.1:5001";
 
 export default defineConfig(({ mode }) => {
   const isProd = mode === "production";
@@ -104,7 +105,7 @@ export default defineConfig(({ mode }) => {
       },
       proxy: {
         "/api": {
-          target: "http://127.0.0.1:5001",
+          target: apiProxyTarget,
           changeOrigin: true,
           secure: false,
         },
