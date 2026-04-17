@@ -133,14 +133,9 @@ export default function ExpressionSplit() {
                 <span className="font-display text-3xl lg:text-5xl text-white/20 select-none">
                   {exp.number}
                 </span>
-                <div className="flex items-center gap-3">
-                  <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
-                    {exp.label}
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] px-2 py-0.5 bg-white/5 border border-white/10 text-white/30 hidden lg:inline-block">
-                    {exp.id === 'untold' ? 'Season III Active' : exp.id === 'sunsets' ? 'Summer \'26' : 'Content Engine'}
-                  </span>
-                </div>
+                <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
+                  {exp.label}
+                </span>
               </div>
 
               {/* Content Holder */}

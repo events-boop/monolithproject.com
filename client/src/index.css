@@ -838,9 +838,9 @@
     pointer-events: none;
     z-index: 1000;
     background-color: transparent;
-    opacity: 0.12;
-    mask-image: radial-gradient(circle, #000 1px, transparent 1px);
-    mask-size: 4px 4px;
+    opacity: 0.04;
+    mask-image: radial-gradient(circle, #000 0.5px, transparent 0.5px);
+    mask-size: 6px 6px;
     background-image: none;
   }
 

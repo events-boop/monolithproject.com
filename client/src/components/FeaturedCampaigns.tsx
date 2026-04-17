@@ -1,51 +1,13 @@
-import { ArrowUpRight, PlayCircle, Calendar } from "lucide-react";
+import { ArrowUpRight, Calendar } from "lucide-react";
 import { Link } from "wouter";
-import { getResponsiveImage } from "@/lib/responsiveImages";
-import { getUpcomingEvents, getSeriesColor, getSeriesLabel, getEventEyebrow } from "@/lib/siteExperience";
+import { getUpcomingEvents, getSeriesColor, getEventEyebrow } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 
-const heroArchiveImage = getResponsiveImage("heroMonolith", "(min-width: 1024px) 67vw, 100vw");
-
-function CampaignBackdrop({
-  alt,
-  className,
-  sizes,
-  sources,
-  src,
-}: {
-  alt: string;
-  className: string;
-  sizes: string;
-  sources: {
-    srcSet: string;
-    type: string;
-    media?: string;
-    sizes?: string;
-  }[];
-  src: string;
-}) {
-  return (
-    <picture className={className}>
-      {sources.map((source) => (
-        <source
-          key={source.type}
-          media={source.media}
-          sizes={source.sizes || sizes}
-          srcSet={source.srcSet}
-          type={source.type}
-        />
-      ))}
-      <img
-        src={src}
-        alt={alt}
-        sizes={sizes}
-        loading="lazy"
-        decoding="async"
-        className="h-full w-full object-cover object-center"
-      />
-    </picture>
-  );
-}
+const seriesFallbackImage: Record<string, string> = {
+  "chasing-sunsets": "/images/chasing-sunsets-premium.webp",
+  "untold-story": "/images/untold-story-juany-deron-v2.webp",
+  "monolith-project": "/images/hero-monolith.webp",
+};
 
 export default function FeaturedCampaigns() {
   const campaigns = getUpcomingEvents(2);
@@ -59,10 +21,10 @@ export default function FeaturedCampaigns() {
 
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
             <p className="text-white/70 max-w-md text-sm md:text-base leading-relaxed">
-              Two upcoming Monolith events, the latest archive recap, and the newest radio drop — the working slice of the season.
+              The next two Monolith events.
             </p>
             <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-white/40 shrink-0">
-              {campaigns.length.toString().padStart(2, "0")} Live Campaigns
+              {campaigns.length.toString().padStart(2, "0")} Upcoming
             </span>
         </div>
 
@@ -71,6 +33,8 @@ export default function FeaturedCampaigns() {
             const color = getSeriesColor(event.series);
             const eyebrow = getEventEyebrow(event);
             const detailsHref = getEventDetailsHref(event);
+            const cardImage = event.image || seriesFallbackImage[event.series];
+            const cardHeadline = event.headline || event.episode || event.title;
 
             return (
               <Link
@@ -79,9 +43,9 @@ export default function FeaturedCampaigns() {
                 className="group relative border border-white/10 hover:border-[var(--campaign-color)]/50 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] transition-[border-color,transform] duration-500"
                 style={{ "--campaign-color": color } as React.CSSProperties}
               >
-                {event.image && (
+                {cardImage && (
                   <img
-                    src={event.image}
+                    src={cardImage}
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -112,7 +76,7 @@ export default function FeaturedCampaigns() {
                     style={{ ["--tw-text-opacity" as string]: 1 }}
                   >
                     <span className="group-hover:text-[var(--campaign-color)] transition-colors">
-                      {getSeriesLabel(event.series)}<br/>{event.title}
+                      {cardHeadline}
                     </span>
                   </h3>
                   {event.description && (
@@ -130,88 +94,6 @@ export default function FeaturedCampaigns() {
               </Link>
             );
           })}
-        </div>
-
-        {/* Third Row: Archive Video & Radio */}
-        <div className="grid lg:grid-cols-[1.5fr_1fr] gap-8">
-            {/* Video Recap */}
-            <div className="relative border border-white/10 bg-white/[0.02] p-8 md:p-12 group overflow-hidden min-h-[300px] flex flex-col justify-center border-l-4 border-l-[#E05A3A]">
-                <div className="absolute inset-0 bg-gradient-to-br from-black to-black/80 z-0" />
-                <CampaignBackdrop
-                  src={heroArchiveImage.src}
-                  sources={heroArchiveImage.sources}
-                  sizes={heroArchiveImage.sizes}
-                  alt=""
-                  className="absolute inset-0 z-0 opacity-10 mix-blend-overlay transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-[#E8B86D]/10 to-transparent mix-blend-screen pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 h-full w-full">
-                    <div className="max-w-md">
-                        <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-[#E8B86D] mb-4 block">Event Archive</span>
-                        <h3 className="font-display text-3xl md:text-5xl uppercase text-white mb-4 leading-[0.9] drop-shadow-xl">
-                           Chasing Sun(Sets)<br/>4th of July 2025
-                        </h3>
-                        <p className="text-white/80 text-sm md:text-base leading-relaxed">
-                            Look back at our defining daytime rooftop set from last summer before reserving your spot for this year.
-                        </p>
-                    </div>
-
-                    <a
-                      href="/videos/hero-video-short.mp4"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Open the Chasing Sun(Sets) 4th of July 2025 recap video"
-                      title="Open recap video"
-                      className="shrink-0 flex items-center justify-center p-6 lg:p-10 rounded-full border border-white/20 bg-black/50 backdrop-blur-md group-hover:bg-white group-hover:text-black transition-all cursor-pointer shadow-2xl group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
-                    >
-                        <PlayCircle className="w-8 h-8 md:w-12 md:h-12 text-white group-hover:text-black" />
-                    </a>
-                </div>
-            </div>
-
-            {/* Radio Feature — Sun(Sets) branch extension */}
-            <div className="relative border border-white/10 border-l-4 border-l-[#E8B86D]/70 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
-                <div className="mb-6">
-                   <span className="font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#E8B86D]/80 mb-3 block">Sun(Sets) · Radio</span>
-                   <h3 className="font-display text-2xl uppercase text-white mb-2 leading-[0.95]">The Global Connection</h3>
-                   <p className="text-white/70 text-xs leading-relaxed">Chasing Sun(Sets) goes worldwide between events. A cleaner room than the embedded SoundCloud chrome.</p>
-                </div>
-
-                <div className="w-full relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 p-5 md:p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D]">Latest Drop</span>
-                      <h4 className="mt-3 font-display text-2xl uppercase text-white leading-none">Chasing Sun(Sets) Radio</h4>
-                      <p className="mt-3 text-sm leading-relaxed text-white/70">
-                        Launch the full player, browse recent episodes, hear the room between nights.
-                      </p>
-                    </div>
-                    <div className="shrink-0 rounded-full border border-white/20 bg-white/5 p-4">
-                      <PlayCircle className="h-8 w-8 text-[#E8B86D]" />
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Link
-                      href="/radio"
-                      className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-black transition-colors hover:bg-black hover:text-white"
-                    >
-                      Open Radio Show
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                    <a
-                      href="https://soundcloud.com/chasing-sun-sets"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-white/20 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/80 transition-colors hover:border-white hover:text-white"
-                    >
-                      SoundCloud Archive
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
-            </div>
         </div>
 
       </div>

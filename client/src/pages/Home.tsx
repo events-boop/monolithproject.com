@@ -9,12 +9,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
 const ExpressionSplit = lazy(() => import("@/components/ExpressionSplit"));
-const FeaturedCampaigns = lazy(() => import("@/components/FeaturedCampaigns"));
+const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
 const ShowcaseSplit = lazy(() => import("@/components/ShowcaseSplit"));
 const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
 const Ticker = lazy(() => import("@/components/Ticker"));
-const VisitorContextPanel = lazy(() => import("@/components/VisitorContextPanel"));
+const LiveTickets = lazy(() => import("@/components/LiveTickets"));
+const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 
@@ -55,21 +56,11 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        <div className="bg-[#0a0a0a] border-y border-white/5 relative z-10">
-          <div id="start-here" className="relative pt-16 md:pt-20 pb-10">
-            <ViewportLazy minHeightClassName="min-h-[280px]" rootMargin="220px 0px">
-              <Suspense fallback={<Skeleton className="mx-auto h-[280px] w-full max-w-6xl opacity-10" />}>
-                <VisitorContextPanel allowPartnerIntent={false} forcedSegment="first-visit" />
-              </Suspense>
-            </ViewportLazy>
-          </div>
-        </div>
-
-        <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
-          <SectionDivider id="campaigns" number="01" label="Upcoming Highlights" glow="rgba(255,51,51,0.08)" />
-          <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
-            <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
-              <FeaturedCampaigns />
+        <div className="bg-[#111111] relative z-10 transition-colors duration-500">
+          <SectionDivider id="series" number="01" label="The Branches" glow="#E05A3A" dense />
+          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
+            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
+              <ExpressionSplit />
             </Suspense>
           </ViewportLazy>
         </div>
@@ -83,11 +74,19 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#111111] relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="03" label="The Branches" glow="#E05A3A" dense />
-          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
-            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
-              <ExpressionSplit />
+        <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
+          <SectionDivider id="featured" number="03" label="Featured" glow="rgba(255,51,51,0.08)" />
+          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
+              <FeaturedRecap />
+            </Suspense>
+          </ViewportLazy>
+        </div>
+
+        <div id="live" className="bg-black relative z-10">
+          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
+              <LiveTickets />
             </Suspense>
           </ViewportLazy>
         </div>
@@ -117,6 +116,14 @@ export default function Home() {
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <NewsletterSection source="homepage_bottom" />
+            </Suspense>
+          </ViewportLazy>
+        </div>
+
+        <div id="featured-sets" className="bg-black relative z-10">
+          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="220px 0px">
+            <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
+              <FeaturedSets />
             </Suspense>
           </ViewportLazy>
         </div>

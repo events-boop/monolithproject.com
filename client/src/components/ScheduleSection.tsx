@@ -154,7 +154,7 @@ export default function ScheduleSection() {
         {/* List Header - HUD Style (Hidden on Mobile) */}
         <div className="hidden lg:grid grid-cols-12 gap-4 pb-4 pt-4 text-[10px] uppercase tracking-[0.25em] font-mono text-black/40">
           <div className="col-span-2 pl-4">Date / Time</div>
-          <div className="col-span-1 text-center">Telemetry</div>
+          <div className="col-span-1 text-center">Status</div>
           <div className="col-span-4 pl-4">Event Identity</div>
           <div className="col-span-2">Venue</div>
           <div className="col-span-3 text-right pr-8">Action</div>
@@ -312,10 +312,10 @@ export default function ScheduleSection() {
                           {/* Image Visual (Mobile: small crop, Desktop: full aspect) */}
                           <div className="lg:col-span-4 order-2 lg:order-1">
                              <div className="aspect-video lg:aspect-[4/5] rounded-2xl overflow-hidden border border-black/10 relative shadow-md">
-                                <img 
-                                  src={event.image || seriesDefaultImage[event.series]} 
-                                  alt={event.title} 
-                                  className="w-full h-full object-cover mix-blend-multiply opacity-95 transition-transform duration-1000 group-hover:scale-105"
+                                <img
+                                  src={event.image || seriesDefaultImage[event.series]}
+                                  alt={event.title}
+                                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4 flex flex-col">
