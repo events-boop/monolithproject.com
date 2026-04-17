@@ -76,6 +76,7 @@ export function buildSitemapXml(entries = PUBLIC_SITEMAP_ENTRIES) {
 
       return `  <url>
     <loc>${SITE_ORIGIN}${entry.path}</loc>
+    <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
