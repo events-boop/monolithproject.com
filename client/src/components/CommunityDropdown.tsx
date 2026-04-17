@@ -193,7 +193,7 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
                 aria-controls={menuId}
-                className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.16em] uppercase transition-all duration-300 ${isLight
+                className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.15em] uppercase transition-all duration-300 ${isLight
                     ? "hover:text-clay text-stone"
                     : brand === "chasing-sunsets"
                         ? "hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] text-white/90"
@@ -214,7 +214,7 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                         transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
                         className={`absolute top-full mt-4 left-1/2 -translate-x-1/2 w-[340px] p-2 rounded-[20px] ${isLight
                             ? "bg-sand/98 border border-charcoal/10"
-                            : "bg-[#0B0C0F]/98 border border-white/6"
+                            : "bg-[#0B0C0F]/98 border border-white/10"
                             }`}
                         id={menuId}
                         role="menu"

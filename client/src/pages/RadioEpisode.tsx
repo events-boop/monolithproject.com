@@ -52,7 +52,7 @@ export default function RadioEpisode() {
         <Navigation />
         <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
           <section className="container layout-narrow text-center">
-            <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-4">
               Legacy Link Redirect
             </p>
             <h1 className="font-display text-[clamp(2.5rem,7vw,4.8rem)] uppercase mb-5">
@@ -111,13 +111,13 @@ export default function RadioEpisode() {
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
-            <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-4">
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4">
               {episode.shortCode} · {episode.displayDate}
             </p>
             <h1 className="font-display text-[clamp(2.4rem,7vw,5.1rem)] leading-[0.9] uppercase mb-4">
               {episode.title}
             </h1>
-            <p className="text-lg text-white/85">Guest: {episode.guest}</p>
+            <p className="text-lg text-white/80">Guest: {episode.guest}</p>
             <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
               For disambiguation details, review{" "}
@@ -127,10 +127,10 @@ export default function RadioEpisode() {
               .
             </p>
             <div className="mt-5 flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center rounded-full border border-white/16 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.14em] uppercase text-white/82">
+              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.15em] uppercase text-white/80">
                 Duration · {episode.duration}
               </span>
-              <span className="inline-flex items-center rounded-full border border-white/16 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.14em] uppercase text-white/82">
+              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.15em] uppercase text-white/80">
                 {episode.tracklist.length} Tracks Listed
               </span>
             </div>
@@ -179,10 +179,10 @@ export default function RadioEpisode() {
                   }`}
               >
                 <div className="flex items-center gap-3">
-                  <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/55">
+                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <p className="font-mono text-xs tracking-[0.18em] uppercase text-primary">{track.timecode}</p>
+                  <p className="font-mono text-xs tracking-[0.2em] uppercase text-primary">{track.timecode}</p>
                 </div>
                 <p className="text-sm text-white/90">
                   <span className="font-semibold">{track.artist}</span> - {track.title}
@@ -235,9 +235,9 @@ export default function RadioEpisode() {
                 href={`/radio/${previousEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/55 mb-2">Previous Episode</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Previous Episode</p>
                 <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">{previousEpisode.title}</p>
-                <p className="text-sm text-white/65 mb-3">{previousEpisode.displayDate}</p>
+                <p className="text-sm text-white/60 mb-3">{previousEpisode.displayDate}</p>
                 <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
                   <ArrowLeft className="w-4 h-4" />
                   Open Episode
@@ -245,7 +245,7 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/55 mb-2">Previous Episode</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Previous Episode</p>
                 <p className="text-sm text-white/70">This is the first available episode in the archive.</p>
               </div>
             )}
@@ -255,9 +255,9 @@ export default function RadioEpisode() {
                 href={`/radio/${nextEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/55 mb-2">Next Episode</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Next Episode</p>
                 <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">{nextEpisode.title}</p>
-                <p className="text-sm text-white/65 mb-3">{nextEpisode.displayDate}</p>
+                <p className="text-sm text-white/60 mb-3">{nextEpisode.displayDate}</p>
                 <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
                   Open Episode
                   <ArrowRight className="w-4 h-4" />
@@ -265,7 +265,7 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/55 mb-2">Next Episode</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Next Episode</p>
                 <p className="text-sm text-white/70">You are on the latest published episode.</p>
               </div>
             )}

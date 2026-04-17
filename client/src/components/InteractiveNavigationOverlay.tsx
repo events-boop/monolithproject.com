@@ -266,7 +266,7 @@ export default function InteractiveNavigationOverlay({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={reduceMotion ? undefined : { opacity: 0, y: -12, scale: 0.99 }}
         transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-        className="relative h-full min-h-[30rem] overflow-hidden rounded-[1.7rem] border border-white/10 bg-black/60 shadow-[0_34px_90px_rgba(0,0,0,0.42)]"
+        className="relative h-full min-h-[30rem] overflow-hidden rounded-[2rem] border border-white/10 bg-black/60 shadow-[0_34px_90px_rgba(0,0,0,0.42)]"
         style={accentStyle}
       >
         <img
@@ -276,24 +276,24 @@ export default function InteractiveNavigationOverlay({
           decoding="async"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,color-mix(in_srgb,var(--chapter-accent)_32%,transparent),transparent_34%),linear-gradient(90deg,rgba(0,0,0,0.82),rgba(0,0,0,0.24)),linear-gradient(0deg,rgba(0,0,0,0.92),transparent_58%)]" />
-        <div className="absolute right-8 top-8 rounded-full border border-white/14 bg-black/45 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/78 backdrop-blur-md">
+        <div className="absolute right-8 top-8 rounded-full border border-white/20 bg-black/45 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/80 backdrop-blur-md">
           {view.status}
         </div>
 
         <div className="relative z-10 flex h-full flex-col justify-end p-7 md:p-9">
-          <div className="mb-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-white/65 backdrop-blur-md">
+          <div className="mb-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur-md">
             <PrimaryIcon className="h-3.5 w-3.5" style={{ color: view.accent }} />
             {view.eyebrow}
           </div>
 
           <div className="max-w-2xl">
-            <p className="mb-4 max-w-xl font-mono text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: view.accent }}>
+            <p className="mb-4 max-w-xl font-mono text-[11px] font-bold uppercase tracking-[0.3em]" style={{ color: view.accent }}>
               {view.tagline}
             </p>
-            <h2 className="font-display text-[clamp(2.5rem,4.8vw,5.8rem)] uppercase leading-[0.82] tracking-[-0.06em] text-white">
+            <h2 className="font-display text-[clamp(2.5rem,4.8vw,5.8rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
               {view.previewTitle}
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/72 md:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
               {view.description}
             </p>
 
@@ -302,7 +302,7 @@ export default function InteractiveNavigationOverlay({
                 {view.meta.slice(0, 3).map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/12 bg-black/36 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-white/68"
+                    className="rounded-full border border-white/10 bg-black/36 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/70"
                   >
                     {item}
                   </span>
@@ -311,7 +311,7 @@ export default function InteractiveNavigationOverlay({
             )}
 
             <div className="mt-7 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/48">
+              <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
                 {view.proof}
               </p>
               <a
@@ -319,7 +319,7 @@ export default function InteractiveNavigationOverlay({
                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
                 rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
                 onClick={handleLinkClick(view.primaryHref)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[11px] font-black uppercase tracking-[0.22em] text-black transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               >
                 {view.primaryLabel}
                 <ArrowUpRight className="h-4 w-4" />
@@ -373,7 +373,7 @@ export default function InteractiveNavigationOverlay({
             aria-label="Close navigation menu"
             ref={closeButtonRef}
             data-cursor-text="CLOSE"
-            className="rounded-full border border-white/10 bg-white/[0.06] p-3 text-white/62 backdrop-blur-md transition-colors hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="rounded-full border border-white/10 bg-white/[0.06] p-3 text-white/60 backdrop-blur-md transition-colors hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
             <X size={24} />
           </button>
@@ -383,10 +383,10 @@ export default function InteractiveNavigationOverlay({
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-var(--shell-nav-height)-3rem)] w-full max-w-[1800px] flex-col px-4 py-6 sm:px-6 lg:px-10">
         <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-white/35">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/40">
               Monolith Navigation System
             </p>
-            <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.055em] text-white">
+            <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
               Choose Your Entry
             </h1>
           </div>
@@ -396,7 +396,7 @@ export default function InteractiveNavigationOverlay({
                 key={link.href}
                 href={link.href}
                 onClick={handleLinkClick(link.href)}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/54 transition-colors hover:border-white/24 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               >
                 {link.label}
               </a>
@@ -425,10 +425,10 @@ export default function InteractiveNavigationOverlay({
                   onFocus={() => setActiveChapterId(chapter.id)}
                   onClick={handleLinkClick(view.primaryHref)}
                   className={cn(
-                    "group relative overflow-hidden rounded-[1.2rem] border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+                    "group relative overflow-hidden rounded-3xl border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
                     isActive
-                      ? "border-white/18 bg-white/[0.08] shadow-[0_18px_45px_rgba(0,0,0,0.26)]"
-                      : "border-white/7 bg-white/[0.025] hover:border-white/14 hover:bg-white/[0.05]",
+                      ? "border-white/20 bg-white/[0.08] shadow-[0_18px_45px_rgba(0,0,0,0.26)]"
+                      : "border-white/10 bg-white/[0.025] hover:border-white/20 hover:bg-white/[0.05]",
                   )}
                   style={{ "--chapter-accent": chapter.accent } as CSSProperties}
                 >
@@ -442,10 +442,10 @@ export default function InteractiveNavigationOverlay({
                   />
                   <span className="flex items-center justify-between gap-4">
                     <span>
-                      <span className="mb-2 block font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-white/32">
+                      <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/30">
                         {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                       </span>
-                      <span className="block font-display text-[clamp(1.55rem,2.55vw,3.45rem)] uppercase leading-[0.8] tracking-[-0.055em] text-white">
+                      <span className="block font-display text-[clamp(1.55rem,2.55vw,3.45rem)] uppercase leading-[0.8] tracking-[-0.04em] text-white">
                         {chapter.label}
                       </span>
                     </span>
@@ -473,7 +473,7 @@ export default function InteractiveNavigationOverlay({
                 initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.06 + index * 0.04, duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden rounded-[1.3rem] border border-white/9 bg-white/[0.035]"
+                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035]"
                 style={{ "--chapter-accent": chapter.accent } as CSSProperties}
               >
                 <button
@@ -487,10 +487,10 @@ export default function InteractiveNavigationOverlay({
                   className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <span>
-                    <span className="mb-1 block font-mono text-[9px] uppercase tracking-[0.24em] text-white/34">
+                    <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
                       {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                     </span>
-                    <span className="font-display text-[clamp(2rem,9vw,3.6rem)] uppercase leading-[0.82] tracking-[-0.055em] text-white">
+                    <span className="font-display text-[clamp(2rem,9vw,3.6rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
                       {chapter.label}
                     </span>
                   </span>
@@ -507,10 +507,10 @@ export default function InteractiveNavigationOverlay({
                       className="overflow-hidden"
                     >
                       <div className="px-3 pb-3">
-                        <div className="relative overflow-hidden rounded-[1rem] border border-white/10 bg-black">
+                        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black">
                           <img src={view.image} alt="" className="h-48 w-full object-cover opacity-72" loading="lazy" decoding="async" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/28 to-transparent" />
-                          <div className="absolute left-4 top-4 rounded-full border border-white/14 bg-black/50 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/70">
+                          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                             {view.status}
                           </div>
                           <div className="relative z-10 p-4 pt-28">
@@ -520,10 +520,10 @@ export default function InteractiveNavigationOverlay({
                             <h2 className="mt-2 font-display text-3xl uppercase leading-[0.88] tracking-[-0.04em] text-white">
                               {view.previewTitle}
                             </h2>
-                            <p className="mt-3 text-sm leading-relaxed text-white/66">
+                            <p className="mt-3 text-sm leading-relaxed text-white/70">
                               {view.description}
                             </p>
-                            <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/42">
+                            <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
                               {view.proof}
                             </p>
                             <div className="mt-4 flex flex-col gap-2">
@@ -543,7 +543,7 @@ export default function InteractiveNavigationOverlay({
                                     key={link.href}
                                     href={link.href}
                                     onClick={handleLinkClick(link.href)}
-                                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2.5 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-white/58"
+                                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-white/60"
                                   >
                                     {link.label}
                                   </a>

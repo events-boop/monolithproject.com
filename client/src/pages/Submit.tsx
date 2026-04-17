@@ -85,7 +85,7 @@ const lookFor = [
 const inputClass =
     "w-full px-4 py-3.5 text-sm text-white placeholder-white/25 bg-white/[0.04] border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:outline-none transition-all duration-200";
 
-const labelClass = "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/35 mb-2";
+const labelClass = "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-2";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -177,7 +177,7 @@ ${form.bio}
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-20"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             — Join The Lineup
                         </span>
                         <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
@@ -218,15 +218,15 @@ ${form.bio}
                                 ))}
                             </ul>
 
-                            <div className="pt-8 border-t border-white/8">
-                                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25 mb-3">Response Time</p>
+                            <div className="pt-8 border-t border-white/10">
+                                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-3">Response Time</p>
                                 <p className="text-xs text-white/40 leading-relaxed">
                                     We review submissions on a rolling basis. If there's a fit, we'll reach out within 4–6 weeks. Not every submission gets a response — but every one gets listened to.
                                 </p>
                             </div>
 
-                            <div className="mt-8 pt-8 border-t border-white/8">
-                                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25 mb-3">Already Have a Booking Inquiry?</p>
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-3">Already Have a Booking Inquiry?</p>
                                 <a
                                     href="/booking"
                                     className="inline-flex items-center gap-1.5 text-xs text-primary/70 hover:text-primary transition-colors font-mono"
@@ -255,7 +255,7 @@ ${form.bio}
                                             <CheckCircle className="w-8 h-8 text-primary" />
                                         </div>
                                         <h2 className="font-display text-3xl uppercase text-white mb-4">Submitted</h2>
-                                        <p className="text-white/45 max-w-md text-sm leading-relaxed">
+                                        <p className="text-white/40 max-w-md text-sm leading-relaxed">
                                             We've got your mix. If there's a fit, we'll be in touch within 4–6 weeks. Keep creating.
                                         </p>
                                     </motion.div>

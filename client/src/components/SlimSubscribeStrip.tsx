@@ -71,7 +71,7 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
               autoComplete="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
-              className={`w-full bg-transparent border-b pb-2 outline-none ${dark ? "border-white/35 text-white placeholder:text-white/45" : "border-charcoal/30 text-charcoal placeholder:text-charcoal/50"}`}
+              className={`w-full bg-transparent border-b pb-2 outline-none ${dark ? "border-white/40 text-white placeholder:text-white/40" : "border-charcoal/30 text-charcoal placeholder:text-charcoal/50"}`}
             />
             <label className={`inline-flex items-center gap-2 text-sm ${dark ? "text-white/70" : "text-charcoal/70"}`}>
               <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="accent-primary" />

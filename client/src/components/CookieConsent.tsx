@@ -48,7 +48,7 @@ export default function CookieConsent() {
                     aria-label="Cookie consent"
                 >
                     <div
-                        className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto relative overflow-hidden rounded-[28px]"
+                        className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto relative overflow-hidden rounded-3xl"
                         style={{
                             background: "rgba(8,8,10,0.97)",
                             border: "1px solid rgba(255,255,255,0.1)",
@@ -74,11 +74,11 @@ export default function CookieConsent() {
                                 </p>
                                 <p className="text-[13px] sm:text-sm text-white/60 leading-relaxed max-w-2xl">
                                     We use cookies for analytics and site optimization. Continuing means you agree to our{" "}
-                                    <Link href="/cookies" className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
+                                    <Link href="/cookies" className="text-white/70 underline underline-offset-2 hover:text-white transition-colors">
                                         Cookie Policy
                                     </Link>
                                     {" "}and{" "}
-                                    <Link href="/privacy" className="text-white/75 underline underline-offset-2 hover:text-white transition-colors">
+                                    <Link href="/privacy" className="text-white/70 underline underline-offset-2 hover:text-white transition-colors">
                                         Privacy Policy
                                     </Link>
                                     .
@@ -89,7 +89,7 @@ export default function CookieConsent() {
                             <div className="flex items-center gap-3 flex-wrap w-full sm:w-auto">
                                 <button
                                     onClick={decline}
-                                    className="font-mono text-xs tracking-[0.2em] uppercase text-white/35 hover:text-white/60 transition-colors px-4 py-2 hover:bg-white/5 rounded-full"
+                                    className="font-mono text-xs tracking-[0.2em] uppercase text-white/40 hover:text-white/60 transition-colors px-4 py-2 hover:bg-white/5 rounded-full"
                                 >
                                     Decline
                                 </button>

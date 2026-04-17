@@ -398,7 +398,7 @@ export default function Radio() {
                     >
                       <span className="font-mono text-[10px] tracking-[0.3em] text-[#E8B86D] uppercase font-bold drop-shadow-md">Now Playing</span>
                       <span className="font-display text-3xl md:text-4xl text-white tracking-widest uppercase drop-shadow-xl block">{activeArtist.name}</span>
-                      <span className="font-mono text-[10px] tracking-[0.24em] text-white/60 uppercase">
+                      <span className="font-mono text-[10px] tracking-[0.25em] text-white/60 uppercase">
                         {activeArtist.banner}
                       </span>
                     </motion.div>

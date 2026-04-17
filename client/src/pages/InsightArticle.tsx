@@ -62,7 +62,7 @@ export default function InsightArticle() {
             <h1 className="font-display text-[clamp(2.8rem,7vw,5.4rem)] uppercase mb-5">
               Article Not Found
             </h1>
-            <p className="text-white/66 mb-8">
+            <p className="text-white/70 mb-8">
               This article is not live yet. Head back to Articles to browse the published pieces.
             </p>
             <Link href="/insights" className="btn-pill-coral">
@@ -95,7 +95,7 @@ export default function InsightArticle() {
         <motion.section className="container layout-default px-6" {...sectionReveal}>
           <Link
             href="/insights"
-            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/62 transition-colors hover:text-white"
+            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
             {CTA_LABELS.backToJournal}
@@ -104,13 +104,13 @@ export default function InsightArticle() {
           <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div className="max-w-3xl">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className={`inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] ${accent.chip}`}>
+                <span className={`inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] ${accent.chip}`}>
                   {article.category}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/56">
+                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                   {article.displayDate}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/56">
+                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                   {article.readTime}
                 </span>
               </div>
@@ -118,7 +118,7 @@ export default function InsightArticle() {
               <h1 className="mt-6 font-display text-[clamp(2.8rem,7vw,5.8rem)] leading-[0.9] uppercase text-white">
                 {article.title}
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/72">
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
                 {article.summary}
               </p>
 
@@ -141,12 +141,12 @@ export default function InsightArticle() {
 
         <motion.section className="container layout-narrow px-6 mt-12" {...sectionReveal}>
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 md:p-8">
-            <p className="text-lg leading-relaxed text-white/82 md:text-xl">{article.deck}</p>
+            <p className="text-lg leading-relaxed text-white/80 md:text-xl">{article.deck}</p>
             <div className="mt-6 flex flex-wrap gap-2.5">
               {article.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/54"
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50"
                 >
                   {tag}
                 </span>
@@ -163,7 +163,7 @@ export default function InsightArticle() {
               {...sectionReveal}
             >
               <h2 className="font-display text-3xl uppercase text-white">{section.title}</h2>
-              <div className="mt-5 space-y-4 text-base leading-relaxed text-white/68 md:text-lg">
+              <div className="mt-5 space-y-4 text-base leading-relaxed text-white/70 md:text-lg">
                 {section.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -183,7 +183,7 @@ export default function InsightArticle() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/82 transition-colors hover:border-white/22 hover:text-white"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
                   >
                     {link.label}
                     <ArrowUpRight className="h-4 w-4" />
@@ -192,7 +192,7 @@ export default function InsightArticle() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/82 transition-colors hover:border-white/22 hover:text-white"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
                   >
                     {link.label}
                     <ArrowUpRight className="h-4 w-4" />

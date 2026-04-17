@@ -34,7 +34,7 @@ function SceneMark({ scene }: { scene: SceneConfig }) {
         default:
             return (
                 <div
-                    className="font-display text-[2.25rem] leading-none tracking-[0.12em] text-white"
+                    className="font-display text-[2.25rem] leading-none tracking-[0.1em] text-white"
                     style={{ textShadow: `0 0 24px ${scene.glow}` }}
                 >
                     M
@@ -108,7 +108,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
                             >
                                 <SceneMark scene={scene} />
                                 <span
-                                    className="font-mono text-[9px] uppercase tracking-[0.8em]"
+                                    className="font-mono text-[10px] uppercase tracking-[0.8em]"
                                     style={{ color: scene.accent, opacity: 0.75 }}
                                 >
                                     {label}

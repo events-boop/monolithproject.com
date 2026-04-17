@@ -162,7 +162,7 @@ export default function About() {
               initial={{ filter: "blur(12px)", opacity: 0, scale: 0.95 }}
               animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heavy text-[clamp(2.4rem,12vw,12rem)] tracking-[-0.03em] leading-[0.8] text-white uppercase drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-[90vw] break-words"
+              className="font-heavy text-[clamp(2.4rem,12vw,12rem)] tracking-[-0.04em] leading-[0.8] text-white uppercase drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-[90vw] break-words"
             >
               MONOLITH
             </motion.h1>
@@ -170,7 +170,7 @@ export default function About() {
               Chicago Cultural House
             </BrandTranslatorLabel>
 
-            <p className="max-w-xl text-center text-[11px] uppercase tracking-[0.22em] text-white/68 md:text-base">
+            <p className="max-w-xl text-center text-[11px] uppercase tracking-[0.2em] text-white/70 md:text-base">
               Chicago's premier electronic music ecosystem. Curated rooms. Uncompromised sound.
             </p>
           </motion.div>
@@ -254,7 +254,7 @@ export default function About() {
               <br />
               Same people returning.
             </h2>
-            <p className="max-w-3xl text-lg md:text-xl leading-relaxed text-white/68 font-light">
+            <p className="max-w-3xl text-lg md:text-xl leading-relaxed text-white/70 font-light">
               Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets) runs the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story runs the night. Different expressions, one continuity: same city, same standard, and a crowd that keeps finding each other across formats.
             </p>
           </div>
@@ -275,8 +275,8 @@ export default function About() {
               },
             ].map((item) => (
               <div key={item.label} className="border border-white/10 bg-white/[0.03] p-6 md:p-7">
-                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary/75 mb-4">{item.label}</p>
-                <p className="text-white/68 leading-relaxed">{item.copy}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-4">{item.label}</p>
+                <p className="text-white/70 leading-relaxed">{item.copy}</p>
               </div>
             ))}
           </div>
@@ -404,7 +404,7 @@ export default function About() {
           >
             <MagneticButton strength={0.4}>
               <a href="/schedule" data-cursor-text="JOIN" className="group inline-block w-full max-w-[95vw]">
-                <h2 className="font-display text-[clamp(2.4rem,8vw,11rem)] tracking-[-0.03em] group-hover:tracking-normal transition-all duration-700 ease-out text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 leading-[0.8] uppercase mix-blend-screen drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] text-balance">
+                <h2 className="font-display text-[clamp(2.4rem,8vw,11rem)] tracking-[-0.04em] group-hover:tracking-normal transition-all duration-700 ease-out text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 leading-[0.8] uppercase mix-blend-screen drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] text-balance">
                   Explore
                   <br />
                   Monolith

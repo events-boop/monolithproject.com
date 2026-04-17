@@ -127,7 +127,7 @@ export default function Press() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-20"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             — Media Resources
                         </span>
                         <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
@@ -178,8 +178,8 @@ export default function Press() {
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                             {fastFacts.map((fact) => (
                                 <div key={fact.label}>
-                                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/25 mb-1">{fact.label}</p>
-                                    <p className="text-sm text-white/75">{fact.value}</p>
+                                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-1">{fact.label}</p>
+                                    <p className="text-sm text-white/70">{fact.value}</p>
                                 </div>
                             ))}
                         </div>
@@ -231,7 +231,7 @@ export default function Press() {
                                             {contact.email}
                                             <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                         </a>
-                                        <p className="text-xs text-white/35 leading-relaxed">{contact.note}</p>
+                                        <p className="text-xs text-white/40 leading-relaxed">{contact.note}</p>
                                     </div>
                                 ))}
                             </div>
@@ -277,7 +277,7 @@ export default function Press() {
                                             <asset.icon className="w-4 h-4" style={{ color: asset.color }} />
                                         </div>
                                         {!asset.available && (
-                                            <span className="font-mono text-[9px] tracking-widest uppercase text-white/25 border border-white/10 px-2 py-0.5">
+                                            <span className="font-mono text-[10px] tracking-widest uppercase text-white/30 border border-white/10 px-2 py-0.5">
                                                 Coming Soon
                                             </span>
                                         )}
@@ -326,15 +326,15 @@ export default function Press() {
                                 >
                                     <div className="flex-shrink-0 w-24">
                                         <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary/70">{item.outlet}</p>
-                                        <p className="font-mono text-[9px] text-white/25 mt-0.5">{item.year}</p>
+                                        <p className="font-mono text-[10px] text-white/30 mt-0.5">{item.year}</p>
                                     </div>
-                                    <p className="flex-1 text-sm text-white/55 leading-relaxed italic">
+                                    <p className="flex-1 text-sm text-white/50 leading-relaxed italic">
                                         "{item.headline}"
                                     </p>
                                 </motion.div>
                             ))}
                         </div>
-                        <p className="mt-4 text-xs text-white/25 font-mono italic">* Coverage examples — update with real placements as they come in.</p>
+                        <p className="mt-4 text-xs text-white/30 font-mono italic">* Coverage examples — update with real placements as they come in.</p>
                     </motion.div>
 
                     {/* Bottom press CTA */}
@@ -343,7 +343,7 @@ export default function Press() {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="pt-12 border-t border-white/8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+                        className="pt-12 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
                     >
                         <div>
                             <p className="font-display text-2xl uppercase text-white mb-1">Need Something Else?</p>

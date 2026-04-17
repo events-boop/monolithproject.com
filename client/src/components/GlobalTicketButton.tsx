@@ -108,7 +108,7 @@ export default function GlobalTicketButton() {
 
     const theme = {
         default: {
-            border: "border-white/12 hover:border-primary/35",
+            border: "border-white/10 hover:border-primary/35",
         },
         violet: {
             border: "border-violet-400/18 hover:border-violet-400/42",
@@ -163,7 +163,7 @@ export default function GlobalTicketButton() {
                         </div>
 
                         <div className="relative z-10 min-w-[8.5rem]">
-                            <span className="ui-chip flex items-center gap-1.5 text-white/54">
+                            <span className="ui-chip flex items-center gap-1.5 text-white/50">
                                 <span
                                     className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
                                     style={{ backgroundColor: stateDot.color, boxShadow: stateDot.pulse ? `0 0 8px ${stateDot.color}` : undefined }}
@@ -171,12 +171,12 @@ export default function GlobalTicketButton() {
                                 />
                                 {cta.label}
                             </span>
-                            <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/92 transition-colors group-hover:text-white">
+                            <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-white">
                                 {featuredEvent?.headline || featuredEvent?.title || "Next Night"}
                             </span>
                         </div>
 
-                        <ArrowUpRight className="relative z-10 h-4 w-4 text-white/64 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
+                        <ArrowUpRight className="relative z-10 h-4 w-4 text-white/60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
                     </a>
                 </MagneticButton>
             </div>
@@ -197,8 +197,8 @@ export default function GlobalTicketButton() {
                             aria-hidden="true"
                         />
                         <div className="flex flex-col min-w-0">
-                            <span className="text-[10px] mb-0.5 tracking-[0.24em] uppercase font-bold opacity-70">{cta.label}</span>
-                            <span className="font-black text-xs tracking-[0.18em] uppercase truncate">{featuredEvent?.headline || featuredEvent?.title || "Next Night"}</span>
+                            <span className="text-[10px] mb-0.5 tracking-[0.25em] uppercase font-bold opacity-70">{cta.label}</span>
+                            <span className="font-black text-xs tracking-[0.2em] uppercase truncate">{featuredEvent?.headline || featuredEvent?.title || "Next Night"}</span>
                         </div>
                     </div>
                     <ArrowRight className="w-5 h-5 transition-transform group-active:translate-x-1 shrink-0" />

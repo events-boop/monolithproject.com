@@ -34,13 +34,13 @@ export default function ArchiveSection() {
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     className="mb-12 border-b border-white/5 pb-8"
                 >
-                    <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-4">
+                    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-4">
                         Event Archive
                     </span>
                     <h1 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.82] uppercase tracking-tight text-white mb-4 drop-shadow-md">
                         <SplitText text="ARCHIVE" initialDelay={0.15} />
                     </h1>
-                    <p className="text-white/45 max-w-md leading-relaxed text-sm md:text-base">
+                    <p className="text-white/40 max-w-md leading-relaxed text-sm md:text-base">
                         Every season, every event, every gallery. The full history of Monolith Project events.
                     </p>
                 </motion.div>
@@ -55,7 +55,7 @@ export default function ArchiveSection() {
                             transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                             className="h-full"
                         >
-                            <Link href={entry.href} onClick={() => { signalChirp.click(); closeDrawer(); }} className="group flex flex-col h-full border border-white/8 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                            <Link href={entry.href} onClick={() => { signalChirp.click(); closeDrawer(); }} className="group flex flex-col h-full border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                                 {/* Cover Image */}
                                 <div className="aspect-[3/2] overflow-hidden relative shrink-0">
                                     <img

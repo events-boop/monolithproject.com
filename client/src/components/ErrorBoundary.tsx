@@ -41,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
                 </pre>
               </div>
             ) : (
-              <p className="mb-6 text-center text-white/65">
+              <p className="mb-6 text-center text-white/60">
                 Please refresh the page. If this keeps happening, contact support.
               </p>
             )}

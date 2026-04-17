@@ -131,7 +131,7 @@ export default function ResidentDJCard({
                                         <div className="text-2xl md:text-3xl font-display tracking-tight mb-0.5 sunset-warmGold">
                                             {s.value}
                                         </div>
-                                        <div className="text-[10px] font-mono tracking-[0.18em] uppercase sunset-text-50">
+                                        <div className="text-[10px] font-mono tracking-[0.2em] uppercase sunset-text-50">
                                             {s.label}
                                         </div>
                                     </div>

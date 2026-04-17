@@ -37,7 +37,7 @@ export default function ExperienceGuidePanel() {
     <div className="px-6 pb-10 md:px-10 md:pb-12">
       <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-primary/85">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.25em] text-primary/85">
             <Sparkles className="h-3.5 w-3.5" />
             {getEventEyebrow(event)}
           </div>
@@ -45,45 +45,45 @@ export default function ExperienceGuidePanel() {
           <h2 className="mt-5 font-display text-3xl uppercase leading-[0.92] text-white md:text-4xl">
             {headline}
           </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/58 md:text-[15px]">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/60 md:text-[15px]">
             {event.experienceIntro || event.description}
           </p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
                 Date + Time
               </p>
               <p className="mt-2 font-display text-xl uppercase text-white">
                 {event.date}
               </p>
-              <p className="mt-1 text-sm text-white/55">{event.time}</p>
+              <p className="mt-1 text-sm text-white/50">{event.time}</p>
             </div>
 
-            <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
                 Venue
               </p>
               <p className="mt-2 font-display text-xl uppercase text-white">
                 {event.venue}
               </p>
-              <p className="mt-1 text-sm text-white/55">{getEventVenueLabel(event)}</p>
+              <p className="mt-1 text-sm text-white/50">{getEventVenueLabel(event)}</p>
             </div>
 
-            <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
                 Sound
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-white/75">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 {event.sound || "House-led curation, tuned for a long room."}
               </p>
             </div>
 
-            <div className="rounded-[1.4rem] border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
                 House Rules
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-white/75">
+              <p className="mt-2 text-sm leading-relaxed text-white/70">
                 {event.age || "21+"} entry. {event.dress || "Elevated nightlife attire."}
               </p>
             </div>
@@ -101,10 +101,10 @@ export default function ExperienceGuidePanel() {
               {checklist.map((item) => (
                 <div
                   key={item}
-                  className="flex items-start gap-3 rounded-[1.1rem] border border-white/8 bg-black/15 px-4 py-3"
+                  className="flex items-start gap-3 rounded-3xl border border-white/10 bg-black/15 px-4 py-3"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <p className="text-sm leading-relaxed text-white/72">{item}</p>
+                  <p className="text-sm leading-relaxed text-white/70">{item}</p>
                 </div>
               ))}
             </div>
@@ -120,7 +120,7 @@ export default function ExperienceGuidePanel() {
               {houseNotes.map((note) => (
                 <p
                   key={note}
-                  className="rounded-[1.1rem] border border-white/8 bg-black/15 px-4 py-3 text-sm leading-relaxed text-white/68"
+                  className="rounded-3xl border border-white/10 bg-black/15 px-4 py-3 text-sm leading-relaxed text-white/70"
                 >
                   {note}
                 </p>
@@ -135,7 +135,7 @@ export default function ExperienceGuidePanel() {
           <MapPin className="mt-1 h-5 w-5 text-primary" />
           <div>
             <p className="font-display text-xl uppercase text-white">Arrival Route</p>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/62">
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">
               Use the main entrance for general admission. VIP and table guests should check in
               on the left side of the marquee. If you are coordinating a group, send everyone the
               map link in advance so the room arrives together.
@@ -149,7 +149,7 @@ export default function ExperienceGuidePanel() {
               href={ticketUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-black transition-colors hover:bg-white/90"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-black transition-colors hover:bg-white/90"
             >
               Tickets
               <ArrowUpRight className="h-4 w-4" />
@@ -160,7 +160,7 @@ export default function ExperienceGuidePanel() {
             href={venueMapHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-white/82 transition-colors hover:border-white/24 hover:text-white"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
           >
             Open Maps
             <ArrowUpRight className="h-4 w-4" />
@@ -168,7 +168,7 @@ export default function ExperienceGuidePanel() {
 
           <Link
             href="/guide"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/28 bg-primary/10 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-primary transition-colors hover:bg-primary/15"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/28 bg-primary/10 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-colors hover:bg-primary/15"
           >
             Full Guide
             <ArrowUpRight className="h-4 w-4" />

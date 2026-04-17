@@ -627,14 +627,14 @@ export default function InquiryPortal() {
             <div className="pointer-events-none absolute inset-y-0 left-[44%] hidden w-px bg-gradient-to-b from-transparent via-white/10 to-transparent lg:block" />
 
             <div className="relative grid h-full w-full lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
-              <section className="relative flex min-h-[17rem] flex-col justify-between overflow-hidden border-b border-white/8 p-6 sm:p-8 lg:border-b-0 lg:p-10 xl:p-12">
+              <section className="relative flex min-h-[17rem] flex-col justify-between overflow-hidden border-b border-white/10 p-6 sm:p-8 lg:border-b-0 lg:p-10 xl:p-12">
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_52%)]" />
                 <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent sm:inset-x-8 lg:inset-x-10 xl:inset-x-12" />
 
                 <div className="relative flex items-start justify-between gap-4">
-                  <div className="inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 shadow-[0_10px_34px_rgba(0,0,0,0.28)]">
+                  <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 shadow-[0_10px_34px_rgba(0,0,0,0.28)]">
                     <span
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-black/25"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-black/25"
                       style={{ boxShadow: `0 0 32px ${config.glow}` }}
                     >
                       <config.icon
@@ -643,10 +643,10 @@ export default function InquiryPortal() {
                       />
                     </span>
                     <div className="min-w-0">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/45">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
                         Monolith Office
                       </p>
-                      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/78">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/80">
                         {config.eyebrow}
                       </p>
                     </div>
@@ -665,7 +665,7 @@ export default function InquiryPortal() {
                 </div>
 
                 <div className="relative mt-10 max-w-xl">
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.42em] text-white/36">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
                     Direct Route To The Office
                   </p>
                   <h2
@@ -676,7 +676,7 @@ export default function InquiryPortal() {
                   </h2>
                   <RevealText
                     as="p"
-                    className="mt-5 max-w-lg text-[1.02rem] leading-relaxed text-white/64 md:text-[1.08rem]"
+                    className="mt-5 max-w-lg text-[1.02rem] leading-relaxed text-white/60 md:text-[1.08rem]"
                   >
                     {config.description}
                   </RevealText>
@@ -697,7 +697,7 @@ export default function InquiryPortal() {
                       transition={{ duration: 0.35 }}
                       className="rounded-[1.25rem] border border-white/10 bg-black/20 px-4 py-4 backdrop-blur-sm"
                     >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/46">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
                         Scope
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-white/80">
@@ -709,18 +709,18 @@ export default function InquiryPortal() {
               </section>
 
               <section className="relative flex min-h-0 flex-col">
-                <div className="sticky top-0 z-10 border-b border-white/8 bg-[linear-gradient(180deg,rgba(5,5,5,0.95),rgba(5,5,5,0.82))] px-6 py-5 backdrop-blur-xl sm:px-8 lg:px-10 xl:px-12">
+                <div className="sticky top-0 z-10 border-b border-white/10 bg-[linear-gradient(180deg,rgba(5,5,5,0.95),rgba(5,5,5,0.82))] px-6 py-5 backdrop-blur-xl sm:px-8 lg:px-10 xl:px-12">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/36">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
                         What We Need
                       </p>
-                      <p className="mt-1 text-sm text-white/62">
+                      <p className="mt-1 text-sm text-white/60">
                         Fill what's relevant. Skip what isn't. A real person reviews every note.
                       </p>
                     </div>
                     <div
-                      className="rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/75"
+                      className="rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70"
                       style={{
                         borderColor: config.accentSoft,
                         backgroundColor: "rgba(255,255,255,0.03)",
@@ -740,7 +740,7 @@ export default function InquiryPortal() {
                     >
                       <div className="max-w-xl rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-7 shadow-[0_24px_70px_rgba(0,0,0,0.26)] sm:p-9">
                         <div
-                          className="inline-flex h-16 w-16 items-center justify-center rounded-[1.4rem] border border-white/10 bg-black/20"
+                          className="inline-flex h-16 w-16 items-center justify-center rounded-3xl border border-white/10 bg-black/20"
                           style={{ boxShadow: `0 0 40px ${config.glow}` }}
                         >
                           <CheckCircle2
@@ -749,13 +749,13 @@ export default function InquiryPortal() {
                           />
                         </div>
 
-                        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.34em] text-white/42">
+                        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
                           You're In
                         </p>
                         <h3 className="mt-3 font-display text-4xl uppercase leading-none tracking-[-0.04em] text-white">
                           {config.successLabel}
                         </h3>
-                        <p className="mt-4 max-w-lg text-base leading-relaxed text-white/64">
+                        <p className="mt-4 max-w-lg text-base leading-relaxed text-white/60">
                           {submission.message || config.successDescription}
                         </p>
 
@@ -786,14 +786,14 @@ export default function InquiryPortal() {
                               setSubmitError("");
                               reset(defaults);
                             }}
-                            className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-white/12 px-5 text-[11px] font-bold uppercase tracking-[0.18em] text-white/78 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
+                            className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-white/10 px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
                           >
                             Send Another
                           </button>
                           <button
                             type="button"
                             onClick={closeInquiry}
-                            className="inline-flex min-h-[46px] items-center justify-center rounded-full px-5 text-[11px] font-bold uppercase tracking-[0.18em] text-black transition-transform hover:scale-[1.01]"
+                            className="inline-flex min-h-[46px] items-center justify-center rounded-full px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-black transition-transform hover:scale-[1.01]"
                             style={{ backgroundColor: config.accent }}
                           >
                             Close Portal
@@ -895,7 +895,7 @@ export default function InquiryPortal() {
                       </PortalField>
 
                       {submitError ? (
-                        <div className="rounded-[1.3rem] border border-red-500/30 bg-red-500/8 px-4 py-3 text-sm text-red-100 shadow-[0_12px_40px_rgba(120,0,0,0.16)]">
+                        <div className="rounded-3xl border border-red-500/30 bg-red-500/8 px-4 py-3 text-sm text-red-100 shadow-[0_12px_40px_rgba(120,0,0,0.16)]">
                           <p className="flex items-start gap-2.5">
                             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                             <span>{submitError}</span>
@@ -903,8 +903,8 @@ export default function InquiryPortal() {
                         </div>
                       ) : null}
 
-                      <div className="flex flex-col gap-4 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="max-w-md text-sm leading-relaxed text-white/48">
+                      <div className="flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="max-w-md text-sm leading-relaxed text-white/50">
                           Your note lands directly with the Monolith office.
                           No auto-replies — a real person reviews every submission.
                         </p>
@@ -913,7 +913,7 @@ export default function InquiryPortal() {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-flex min-h-[54px] items-center justify-center gap-3 rounded-full px-6 text-[11px] font-black uppercase tracking-[0.24em] text-black transition-all hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+                            className="inline-flex min-h-[54px] items-center justify-center gap-3 rounded-full px-6 text-[11px] font-black uppercase tracking-[0.25em] text-black transition-all hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
                             style={{
                               backgroundColor: config.accent,
                               boxShadow: `0 18px 48px ${config.glow}`,
@@ -947,7 +947,7 @@ export default function InquiryPortal() {
 }
 
 const portalInputClass =
-  "min-h-[54px] rounded-[1.15rem] border-white/10 bg-white/[0.04] px-4 text-[15px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm placeholder:text-white/24 focus-visible:border-white/18 focus-visible:ring-[3px] focus-visible:ring-white/8";
+  "min-h-[54px] rounded-3xl border-white/10 bg-white/[0.04] px-4 text-[15px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm placeholder:text-white/20 focus-visible:border-white/20 focus-visible:ring-[3px] focus-visible:ring-white/8";
 
 function SignalChip({
   icon: Icon,
@@ -958,8 +958,8 @@ function SignalChip({
 }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
-      <Icon className="h-3.5 w-3.5 text-white/66" />
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/68">
+      <Icon className="h-3.5 w-3.5 text-white/70" />
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
         {label}
       </span>
     </div>
@@ -968,19 +968,19 @@ function SignalChip({
 
 function SuccessMeta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-4 py-4">
-      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/38">
+    <div className="rounded-3xl border border-white/10 bg-white/[0.03] px-4 py-4">
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
         {label}
       </p>
-      <p className="mt-2 text-sm text-white/82">{value}</p>
+      <p className="mt-2 text-sm text-white/80">{value}</p>
     </div>
   );
 }
 
 function AccentNote({ config }: { config: InquiryPortalConfig }) {
   return (
-    <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white/60">
-      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/34">
+    <div className="rounded-3xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white/60">
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
         Where This Goes
       </p>
       <p className="mt-2 leading-relaxed">
@@ -1007,11 +1007,11 @@ function PortalField({
   return (
     <div className="space-y-2.5">
       <div className="flex items-center justify-between gap-4">
-        <label className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/46">
+        <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
           {label}
           {required ? <span className="ml-1 text-white/90">*</span> : null}
         </label>
-        <span className="text-[11px] text-white/28">{hint}</span>
+        <span className="text-[11px] text-white/30">{hint}</span>
       </div>
       {children}
       {error ? <p className="text-xs text-red-300">{error}</p> : null}

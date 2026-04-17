@@ -274,7 +274,7 @@ export default function Schedule() {
                               <motion.span 
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="text-[10px] font-black tracking-[0.18em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
+                                className="text-[10px] font-black tracking-[0.2em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
                               >
                                 TICKETS ACTIVE
                               </motion.span>

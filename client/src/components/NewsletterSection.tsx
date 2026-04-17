@@ -128,7 +128,7 @@ export default function NewsletterSection({
                 
                 <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Membership Secured</span>
                 <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Welcome To The Circle</h3>
-                <p className="max-w-xl text-center text-base text-white/65 mb-10 leading-relaxed">
+                <p className="max-w-xl text-center text-base text-white/60 mb-10 leading-relaxed">
                   We&apos;ll send new dates, ticket windows, lineup news, and radio drops when they matter.
                 </p>
                 
@@ -183,11 +183,11 @@ export default function NewsletterSection({
                 </div>
                 
                 <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/45">NEXT</span>
+                  <span className="text-white/40">NEXT</span>
                   <span>DROP.</span>
                 </h2>
                 
-                <p className="font-sans text-xl md:text-2xl text-white/78 leading-relaxed font-light mb-12 max-w-xl">
+                <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light mb-12 max-w-xl">
                   Get ticket windows and limited drops before the general public. No generic blasts. Just world-class electronic music in spaces designed for it.
                 </p>
 
@@ -201,7 +201,7 @@ export default function NewsletterSection({
                         <p className="font-heavy text-2xl uppercase tracking-tight text-white/90 group-hover:text-white transition-colors">
                           {item.label}
                         </p>
-                        <p className="font-sans text-sm text-white/60 mt-1 max-w-sm group-hover:text-white/78 transition-colors">
+                        <p className="font-sans text-sm text-white/60 mt-1 max-w-sm group-hover:text-white/80 transition-colors">
                           {item.copy}
                         </p>
                       </div>
@@ -233,7 +233,7 @@ export default function NewsletterSection({
                 {/* Inputs */}
                 <div className="flex flex-col gap-8">
                   <div className="relative group">
-                    <label htmlFor="firstName" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/85 transition-colors">
+                    <label htmlFor="firstName" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors">
                       First Name (Optional)
                     </label>
                     <input
@@ -242,12 +242,12 @@ export default function NewsletterSection({
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Enter name"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="email" className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/60 group-hover:text-white/85"}`}>
+                    <label htmlFor="email" className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}>
                       Email Address *
                     </label>
                     <input
@@ -269,17 +269,17 @@ export default function NewsletterSection({
                         setErrors(prev => err ? { ...prev, email: err } : (({ email: _, ...rest }) => rest)(prev));
                       }}
                       placeholder="you@email.com"
-                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
+                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
                     />
                     {touched.email && errors.email && (
-                      <p id="newsletter-email-error" className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.11em]">
+                      <p id="newsletter-email-error" className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.1em]">
                         <AlertCircle className="w-3 h-3" /> {errors.email}
                       </p>
                     )}
                   </div>
 
                   <div className="relative group">
-                    <label htmlFor="phone" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/85 transition-colors">
+                    <label htmlFor="phone" className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors">
                       Phone Number (Optional)
                     </label>
                     <input
@@ -289,7 +289,7 @@ export default function NewsletterSection({
                       autoComplete="tel"
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+1 (000) 000-0000"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/35 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export default function NewsletterSection({
                         }}
                         className="peer sr-only"
                       />
-                      <div className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${agreed ? "bg-white border-white text-black" : touched.agreed && errors.agreed ? "border-primary text-primary" : "border-white/20 group-hover:border-white/50"}`}>
+                      <div className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${agreed ? "bg-white border-white text-black" : touched.agreed && errors.agreed ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}>
                         {agreed && <Check className="w-4 h-4" />}
                       </div>
                     </div>
@@ -331,7 +331,7 @@ export default function NewsletterSection({
                         }}
                         className="peer sr-only"
                       />
-                      <div className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${isAdult ? "bg-white border-white text-black" : touched.isAdult && errors.isAdult ? "border-primary text-primary" : "border-white/20 group-hover:border-white/50"}`}>
+                      <div className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${isAdult ? "bg-white border-white text-black" : touched.isAdult && errors.isAdult ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}>
                         {isAdult && <Check className="w-4 h-4" />}
                       </div>
                     </div>

@@ -85,7 +85,7 @@ export default function MixedMediaGallery({
               {title}
             </h2>
             {description && (
-              <p className="font-sans text-base md:text-lg text-white/45 leading-relaxed max-w-xl">
+              <p className="font-sans text-base md:text-lg text-white/40 leading-relaxed max-w-xl">
                 {description}
               </p>
             )}
@@ -111,7 +111,7 @@ export default function MixedMediaGallery({
                   type="button"
                   onClick={() => setIndex(photoIndex)}
                   aria-label={photo.label}
-                  className="gallery-card-frame group text-left transition-all duration-500 hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                  className="gallery-card-frame group text-left transition-all duration-500 hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 >
                   <img
                     src={photo.src}
@@ -133,7 +133,7 @@ export default function MixedMediaGallery({
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 md:p-5">
                       <div className="translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                         {photo.caption && (
-                          <p className="font-display text-sm uppercase tracking-[0.18em] text-white drop-shadow-xl md:text-base">
+                          <p className="font-display text-sm uppercase tracking-[0.2em] text-white drop-shadow-xl md:text-base">
                             {photo.caption}
                           </p>
                         )}
@@ -148,7 +148,7 @@ export default function MixedMediaGallery({
               <p className="font-display text-2xl uppercase text-white/90">
                 Archive Coming Soon
               </p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/55">
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/50">
                 Photos are being prepared for this gallery.
               </p>
             </div>

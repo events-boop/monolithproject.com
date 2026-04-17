@@ -22,7 +22,7 @@ const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string })
                      brand === "radio" ? "text-rose-500" : "text-primary";
 
   return (
-    <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.24em] uppercase transition-colors">
+    <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
       <motion.span
         animate={{ y: isOpen ? "-100%" : "0%" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -324,7 +324,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   ? "Open tickets for current featured event"
                   : "Request early access for the current featured event"
               }
-              className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-[1rem]"
+              className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
             >
               <div
                 className="relative h-8 sm:h-11"
@@ -343,7 +343,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       .fill(bannerPayload.text)
                       .map((text, index) => (
                         <span key={index} className="relative z-10 inline-flex items-center">
-                          <span className="mx-4 text-[10px] font-mono font-bold uppercase tracking-[0.16em] text-white/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
+                          <span className="mx-4 text-[10px] font-mono font-bold uppercase tracking-[0.15em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
                             {text}
                           </span>
                           <Ticket className="mx-1.5 h-4.5 w-4.5 text-white/90 sm:mx-3 sm:h-6 sm:w-6" />
@@ -352,13 +352,13 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   </div>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center px-3 sm:hidden">
-                  <div className="flex min-w-0 items-center gap-2.5 text-white/95">
+                  <div className="flex min-w-0 items-center gap-2.5 text-white/90">
                     {bannerPayload.status === "live" ? (
                       <span className="inline-flex h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-white" />
                     ) : (
                       <Ticket className="h-3.5 w-3.5 shrink-0 text-white/90" />
                     )}
-                    <span className="min-w-0 truncate font-mono text-[8px] font-bold uppercase tracking-[0.14em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                    <span className="min-w-0 truncate font-mono text-[10px] font-bold uppercase tracking-[0.15em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
                       {bannerPayload.text}
                     </span>
                   </div>
@@ -368,7 +368,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
           ) : null}
 
           <div
-            className={`rounded-[1.15rem] sm:rounded-[1.75rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
+            className={`rounded-3xl sm:rounded-[2rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
           >
             <div className="flex min-h-[3.25rem] w-full items-center justify-between px-2.5 py-1.5 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
               {/* LEFT: LOGO */}
@@ -404,7 +404,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[7px] min-[360px]:text-[8px] tracking-[0.22em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                                  "font-monolith text-[10px] min-[360px]:text-[10px] tracking-[0.2em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />
@@ -603,7 +603,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         ? "border-transparent bg-primary text-black"
                         : cta.tool === "laylo"
                           ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
-                          : "border-white/18 bg-white/[0.08] text-white"
+                          : "border-white/20 bg-white/[0.08] text-white"
                         }`}
                     >
                       {cta.tool === "posh" ? <Ticket className="h-4 w-4" /> : cta.tool === "laylo" ? <Lock className="h-4 w-4 text-black" /> : <Zap className="h-4 w-4" />}
@@ -632,7 +632,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       ${isLight && cta.tool === 'posh' ? 'opacity-90 hover:opacity-100 !shadow-none' : ''}
                     `}>
                         {cta.tool === 'posh' ? <Ticket className="h-4 w-4" /> : cta.tool === 'laylo' ? <Lock className="h-4 w-4" /> : <Zap className="h-4 w-4" />}
-                        <span className="text-[12px] min-[1150px]:text-[13px] xl:text-[14px] tracking-[0.18em]">
+                        <span className="text-[12px] min-[1150px]:text-[13px] xl:text-[14px] tracking-[0.2em]">
                           {cta.label}
                         </span>
                         <ArrowUpRight className="h-3.5 w-3.5 opacity-60" />

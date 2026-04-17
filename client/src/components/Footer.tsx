@@ -158,7 +158,7 @@ export default function Footer() {
 
           {links.map((group) => (
             <div key={group.title}>
-              <h2 className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/55 mb-6">{group.title}</h2>
+              <h2 className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{group.title}</h2>
               <ul className="space-y-4">
                 {group.items.map((item) => (
                   <li key={item.name}>
@@ -167,7 +167,7 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.14em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
+                        className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}
@@ -177,7 +177,7 @@ export default function Footer() {
                       </a>
                     ) : (
                       <Link href={item.href} asChild>
-                        <a className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.14em] uppercase block w-max ${item.name === CTA_LABELS.tickets
+                        <a className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase block w-max ${item.name === CTA_LABELS.tickets
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}>
@@ -201,7 +201,7 @@ export default function Footer() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/20 bg-white/[0.04] text-white/50 hover:text-white hover:border-white/50 hover:bg-white/[0.1] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/20 bg-white/[0.04] text-white/50 hover:text-white hover:border-white/40 hover:bg-white/[0.1] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label={s.name}
                 title={s.name}
               >
@@ -211,10 +211,10 @@ export default function Footer() {
           </div>
 
           <div className="text-center md:text-right">
-            <p className="ui-chip text-white/55 text-[11px]">
+            <p className="ui-chip text-white/50 text-[11px]">
               © {new Date().getFullYear()} The Monolith Project
             </p>
-            <p className="ui-chip text-white/45 mt-1.5 text-[11px]">
+            <p className="ui-chip text-white/40 mt-1.5 text-[11px]">
               ENGINEERED BY STARK INDUSTRIES
             </p>
           </div>

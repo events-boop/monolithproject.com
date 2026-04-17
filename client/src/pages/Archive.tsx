@@ -44,13 +44,13 @@ export default function Archive() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-16"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             Event Archive
                         </span>
                         <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.82] uppercase tracking-tight text-white mb-6">
                             ARCHIVE
                         </h1>
-                        <p className="text-white/45 max-w-xl leading-relaxed">
+                        <p className="text-white/40 max-w-xl leading-relaxed">
                             Every season, every event, every gallery.
                         </p>
                     </motion.div>
@@ -65,7 +65,7 @@ export default function Archive() {
                                 transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                             >
                                 <Link href={entry.href} asChild>
-                                    <a className="group block border border-white/8 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04]">
+                                    <a className="group block border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04]">
                                         {/* Cover Image */}
                                         <div className="aspect-[3/2] overflow-hidden relative">
                                             <img

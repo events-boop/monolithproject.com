@@ -127,7 +127,7 @@ export default function AboutSection() {
               <br />
               Same people returning.
             </h2>
-            <p className="max-w-2xl text-lg leading-relaxed text-white/68 font-light">
+            <p className="max-w-2xl text-lg leading-relaxed text-white/70 font-light">
               Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets) runs the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story runs the night. Different expressions, one continuity: same city, same standard, and a crowd that keeps finding each other across formats.
             </p>
           </div>
@@ -148,8 +148,8 @@ export default function AboutSection() {
               },
             ].map((item) => (
               <div key={item.label} className="border border-white/10 bg-white/[0.03] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-primary/75 mb-3">{item.label}</p>
-                <p className="text-sm text-white/68 leading-relaxed">{item.copy}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-3">{item.label}</p>
+                <p className="text-sm text-white/70 leading-relaxed">{item.copy}</p>
               </div>
             ))}
           </div>

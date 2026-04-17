@@ -168,7 +168,7 @@ export default function Partners() {
               size="lg" 
               event={{ primaryCta: { href: "inquiry://general", label: "Apply to Join the Crew" } } as any}
             />
-            <p className="text-white/30 font-mono text-[9px] uppercase tracking-[0.2em] mt-8">
+            <p className="text-white/30 font-mono text-[10px] uppercase tracking-[0.2em] mt-8">
               Or Reconnect via crew@monolithproject.com
             </p>
           </motion.div>

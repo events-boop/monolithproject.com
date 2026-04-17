@@ -10,11 +10,11 @@ export default function TicketTicker({ className = "" }: TicketTickerProps) {
     // Repeating pattern for the marquee
     const items = Array.from({ length: 12 }).map((_, i) => (
         <div key={i} className="flex items-center gap-6 px-4">
-            <span className="font-mono text-[12px] tracking-[0.16em] uppercase whitespace-nowrap font-bold">
+            <span className="font-mono text-[12px] tracking-[0.15em] uppercase whitespace-nowrap font-bold">
                 {CTA_LABELS.tickets}
             </span>
             <Ticket className="w-4 h-4" />
-            <span className="font-mono text-[12px] tracking-[0.16em] uppercase whitespace-nowrap font-bold text-transparent" style={{ WebkitTextStroke: "1px currentColor" }}>
+            <span className="font-mono text-[12px] tracking-[0.15em] uppercase whitespace-nowrap font-bold text-transparent" style={{ WebkitTextStroke: "1px currentColor" }}>
                 {CTA_LABELS.moveTogether}
             </span>
             <ArrowUpRight className="w-4 h-4" />

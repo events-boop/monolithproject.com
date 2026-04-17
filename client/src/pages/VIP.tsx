@@ -82,7 +82,7 @@ export default function VIP() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-primary block mb-6">
+                            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary block mb-6">
                                 — Elevated Access
                             </span>
                             <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85] uppercase text-white mb-8">
@@ -118,7 +118,7 @@ export default function VIP() {
                                 <p className="font-display text-2xl uppercase text-white">Main Room Balcony</p>
                             </div>
                             {/* This would be a real image */}
-                            <div className="absolute inset-0 bg-neutral-900 flex items-center justify-center text-white/10 font-display text-6xl uppercase tracking-tighter">
+                            <div className="absolute inset-0 bg-neutral-900 flex items-center justify-center text-white/20 font-display text-6xl uppercase tracking-tighter">
                                 VIP VIEW
                             </div>
                         </motion.div>

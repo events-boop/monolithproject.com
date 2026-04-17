@@ -51,7 +51,7 @@ export default function Ticker() {
               rel="noopener noreferrer"
               className="flex shrink-0 items-center gap-4 md:gap-6 px-8 md:px-12 cursor-pointer hover:opacity-80 transition-opacity"
             >
-              <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-white/70">
+              <span className="font-mono text-[10px] md:text-[10px] uppercase tracking-[0.4em] text-white/70">
                 {item.date}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/10" />
@@ -66,23 +66,23 @@ export default function Ticker() {
                   <span className="px-2 py-0.5 bg-white/10 text-white/50 border border-white/20 font-mono text-[10px] uppercase tracking-widest">
                     SOLD OUT
                   </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40">Join Waitlist</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">Join Waitlist</span>
                 </div>
               ) : item.inventory === "low" ? (
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 bg-red-500/20 text-red-500 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
                     LAST TICKETS
                   </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60 inline-flex items-center gap-2">
                     <Ticket className="w-3 h-3" /> Tickets
                   </span>
                 </div>
               ) : (
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/65 inline-flex items-center gap-2">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60 inline-flex items-center gap-2">
                   <Ticket className="w-3 h-3" /> Tickets
                 </span>
               )}
-              <ArrowRight className="w-3 h-3 text-white/55" />
+              <ArrowRight className="w-3 h-3 text-white/50" />
             </a>
           ))}
         </div>

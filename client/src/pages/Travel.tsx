@@ -77,7 +77,7 @@ export default function Travel() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-24"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             — Logistics
                         </span>
                         <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-8">

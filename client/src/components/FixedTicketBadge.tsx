@@ -28,7 +28,7 @@ export default function FixedTicketBadge() {
                                 d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                             />
                         </defs>
-                        <text className="text-[11px] font-bold uppercase tracking-[0.18em] fill-white font-mono">
+                        <text className="text-[11px] font-bold uppercase tracking-[0.2em] fill-white font-mono">
                             <textPath xlinkHref="#circlePath" startOffset="0%">
                                 {`${CTA_LABELS.tickets} • The Monolith Project • ${CTA_LABELS.tickets} •`}
                             </textPath>

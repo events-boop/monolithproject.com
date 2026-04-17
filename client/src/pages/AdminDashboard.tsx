@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                                 <div className={`w-2 h-2 rounded-full ${c.status === 'active' ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : c.status === 'error' ? 'bg-red-500' : 'bg-white/20 animate-pulse'}`} />
                                 <span className="font-mono text-xs uppercase tracking-widest">{c.name}</span>
                             </div>
-                            <span className="font-mono text-[9px] text-white/30">{c.latency || "-- ms"}</span>
+                            <span className="font-mono text-[10px] text-white/30">{c.latency || "-- ms"}</span>
                         </div>
                     ))}
                 </div>

@@ -60,7 +60,7 @@ export default function ChasingSunsetsFacts() {
       <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
         <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
-            <p className="font-mono text-xs tracking-[0.28em] uppercase text-primary mb-5">
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-5">
               Official Entity & Disambiguation
             </p>
             <h1 className="font-display text-[clamp(2.6rem,7vw,5.3rem)] leading-[0.9] uppercase mb-6">
@@ -69,14 +69,14 @@ export default function ChasingSunsetsFacts() {
             <p className="text-lg md:text-xl text-white/90 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
             </p>
-            <p className="text-base md:text-lg text-white/75 mt-3 max-w-3xl">
+            <p className="text-base md:text-lg text-white/70 mt-3 max-w-3xl">
               If you&apos;re looking for the fragrance with a similar name, this page is for the music brand.
             </p>
             <div className="mt-5 flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center rounded-full border border-white/16 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/78">
+              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/80">
                 Chicago Based
               </span>
-              <span className="inline-flex items-center rounded-full border border-white/16 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/78">
+              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/80">
                 Event Series + Radio Show
               </span>
               <span className="inline-flex items-center rounded-full border border-primary/28 bg-primary/10 px-3 py-1.5 ui-chip text-primary">
@@ -126,7 +126,7 @@ export default function ChasingSunsetsFacts() {
                   href={item.href}
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
-                  className="group rounded-xl border border-white/12 bg-white/[0.03] px-4 py-3 text-white/88 hover:text-white hover:border-primary/36 transition-colors"
+                  className="group rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-white/90 hover:text-white hover:border-primary/36 transition-colors"
                 >
                   <span className="inline-flex items-center gap-2 text-sm">
                     {item.label}
@@ -142,13 +142,13 @@ export default function ChasingSunsetsFacts() {
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">Brand Names & Spellings</h2>
             <ul className="flex flex-wrap gap-2.5">
-              <li className="inline-flex items-center rounded-full border border-white/14 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/85">
+              <li className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/80">
                 Chasing Sun(Sets)
               </li>
-              <li className="inline-flex items-center rounded-full border border-white/14 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/85">
+              <li className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/80">
                 Chasing Sunsets (common search variant)
               </li>
-              <li className="inline-flex items-center rounded-full border border-white/14 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/85">
+              <li className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/80">
                 The Monolith Project Presents: Chasing Sun(Sets)
               </li>
             </ul>
@@ -160,23 +160,23 @@ export default function ChasingSunsetsFacts() {
             <h2 className="font-display text-3xl uppercase mb-5">Fast Facts</h2>
             <dl className="grid md:grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.22em] uppercase text-white/55 mb-2">Founded</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Founded</dt>
                 <dd className="text-lg">2024</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.22em] uppercase text-white/55 mb-2">Location</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Location</dt>
                 <dd className="text-lg">Chicago, IL</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.22em] uppercase text-white/55 mb-2">Format</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Format</dt>
                 <dd className="text-lg">Sunset events + radio/podcast episodes</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.22em] uppercase text-white/55 mb-2">Genres</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Genres</dt>
                 <dd className="text-lg">Afro House / Organic House / Melodic House</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 md:col-span-2">
-                <dt className="font-mono text-xs tracking-[0.22em] uppercase text-white/55 mb-2">Organizer</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Organizer</dt>
                 <dd className="text-lg">The Monolith Project</dd>
               </div>
             </dl>

@@ -58,10 +58,10 @@ export default function FeaturedCampaigns() {
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
 
         <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-            <p className="text-white/72 max-w-md text-sm md:text-base leading-relaxed">
+            <p className="text-white/70 max-w-md text-sm md:text-base leading-relaxed">
               Two upcoming Monolith events, the latest archive recap, and the newest radio drop — the working slice of the season.
             </p>
-            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-white/40 shrink-0">
+            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-white/40 shrink-0">
               {campaigns.length.toString().padStart(2, "0")} Live Campaigns
             </span>
         </div>
@@ -103,7 +103,7 @@ export default function FeaturedCampaigns() {
                         <span className="w-1.5 h-1.5 rounded-full motion-safe:animate-pulse" style={{ backgroundColor: color }} />
                         {eyebrow}
                       </div>
-                      <div className="flex items-center gap-1.5 text-white/72 text-[11px] font-mono tracking-widest uppercase">
+                      <div className="flex items-center gap-1.5 text-white/70 text-[11px] font-mono tracking-widest uppercase">
                           <Calendar className="w-3.5 h-3.5" /> {event.date}
                       </div>
                   </div>
@@ -116,7 +116,7 @@ export default function FeaturedCampaigns() {
                     </span>
                   </h3>
                   {event.description && (
-                    <p className="text-white/78 font-sans max-w-sm mb-8 text-sm md:text-base">
+                    <p className="text-white/80 font-sans max-w-sm mb-8 text-sm md:text-base">
                       {event.description}
                     </p>
                   )}
@@ -152,7 +152,7 @@ export default function FeaturedCampaigns() {
                         <h3 className="font-display text-3xl md:text-5xl uppercase text-white mb-4 leading-[0.9] drop-shadow-xl">
                            Chasing Sun(Sets)<br/>4th of July 2025
                         </h3>
-                        <p className="text-white/78 text-sm md:text-base leading-relaxed">
+                        <p className="text-white/80 text-sm md:text-base leading-relaxed">
                             Look back at our defining daytime rooftop set from last summer before reserving your spot for this year.
                         </p>
                     </div>
@@ -173,7 +173,7 @@ export default function FeaturedCampaigns() {
             {/* Radio Feature — Sun(Sets) branch extension */}
             <div className="relative border border-white/10 border-l-4 border-l-[#E8B86D]/70 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
                 <div className="mb-6">
-                   <span className="font-mono text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-[#E8B86D]/80 mb-3 block">Sun(Sets) · Radio</span>
+                   <span className="font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#E8B86D]/80 mb-3 block">Sun(Sets) · Radio</span>
                    <h3 className="font-display text-2xl uppercase text-white mb-2 leading-[0.95]">The Global Connection</h3>
                    <p className="text-white/70 text-xs leading-relaxed">Chasing Sun(Sets) goes worldwide between events. A cleaner room than the embedded SoundCloud chrome.</p>
                 </div>
@@ -183,11 +183,11 @@ export default function FeaturedCampaigns() {
                     <div>
                       <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D]">Latest Drop</span>
                       <h4 className="mt-3 font-display text-2xl uppercase text-white leading-none">Chasing Sun(Sets) Radio</h4>
-                      <p className="mt-3 text-sm leading-relaxed text-white/72">
+                      <p className="mt-3 text-sm leading-relaxed text-white/70">
                         Launch the full player, browse recent episodes, hear the room between nights.
                       </p>
                     </div>
-                    <div className="shrink-0 rounded-full border border-white/15 bg-white/5 p-4">
+                    <div className="shrink-0 rounded-full border border-white/20 bg-white/5 p-4">
                       <PlayCircle className="h-8 w-8 text-[#E8B86D]" />
                     </div>
                   </div>
@@ -195,7 +195,7 @@ export default function FeaturedCampaigns() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link
                       href="/radio"
-                      className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-black transition-colors hover:bg-black hover:text-white"
+                      className="inline-flex items-center gap-3 border border-white bg-white px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-black transition-colors hover:bg-black hover:text-white"
                     >
                       Open Radio Show
                       <ArrowUpRight className="h-4 w-4" />
@@ -204,7 +204,7 @@ export default function FeaturedCampaigns() {
                       href="https://soundcloud.com/chasing-sun-sets"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-white/20 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-white/82 transition-colors hover:border-white hover:text-white"
+                      className="inline-flex items-center gap-3 border border-white/20 px-5 py-3 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/80 transition-colors hover:border-white hover:text-white"
                     >
                       SoundCloud Archive
                       <ArrowUpRight className="h-4 w-4" />

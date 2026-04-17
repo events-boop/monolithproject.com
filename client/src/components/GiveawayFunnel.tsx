@@ -114,10 +114,10 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="max-w-6xl mx-auto rounded-[2.5rem] p-[1px] bg-gradient-to-b from-white/10 via-white/5 to-transparent relative shadow-[0_40px_100px_rgba(0,0,0,0.6)] bg-scanlines"
+                    className="max-w-6xl mx-auto rounded-[2rem] p-[1px] bg-gradient-to-b from-white/10 via-white/5 to-transparent relative shadow-[0_40px_100px_rgba(0,0,0,0.6)] bg-scanlines"
                 >
                     {/* Inner Card */}
-                    <div className="bg-[#0a0a0c]/80 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden grid lg:grid-cols-12 relative">
+                    <div className="bg-[#0a0a0c]/80 backdrop-blur-3xl rounded-[2rem] overflow-hidden grid lg:grid-cols-12 relative">
                         
                         {/* Header/Prize Section */}
                         <div className="lg:col-span-7 p-10 lg:p-20 border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden">
@@ -135,7 +135,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                 </span>
                             </motion.div>
 
-                            <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-[0.05em] text-white mb-10 leading-[0.9] drop-shadow-2xl">
+                            <h2 className="font-display text-5xl lg:text-7xl uppercase tracking-[0.1em] text-white mb-10 leading-[0.9] drop-shadow-2xl">
                                 Enter The <span className="text-primary italic">Guest</span> <br />List
                             </h2>
 
@@ -244,7 +244,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                     >
                                         <div className="mb-8">
                                             <div className="h-px w-8 bg-primary mb-4" />
-                                            <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.05em]">Enter Now</h3>
+                                            <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.1em]">Enter Now</h3>
                                             <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">Add your details to join the entry list.</p>
                                         </div>
 
@@ -261,7 +261,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     onChange={(e) => setFullName(e.target.value)}
                                                     autoComplete="name"
                                                     placeholder="Full name"
-                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
 
@@ -274,7 +274,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     onChange={(e) => setEmail(e.target.value)}
                                                     autoComplete="email"
                                                     placeholder="Email address"
-                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
 
@@ -285,7 +285,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                                     value={handle}
                                                     onChange={(e) => setHandle(e.target.value)}
                                                     placeholder="Instagram handle (optional)"
-                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/10 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                                                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                                                 />
                                             </div>
                                         </div>

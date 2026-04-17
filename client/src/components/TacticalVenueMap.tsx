@@ -63,7 +63,7 @@ export default function TacticalVenueMap() {
                                     <zone.icon size={14} />
                                 </div>
                                 <div className="absolute top-full mt-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                    <span className="text-[9px] bg-black border border-white/10 px-2 py-1 rounded text-white whitespace-nowrap tracking-widest">{zone.label}</span>
+                                    <span className="text-[10px] bg-black border border-white/10 px-2 py-1 rounded text-white whitespace-nowrap tracking-widest">{zone.label}</span>
                                 </div>
                             </motion.button>
                         ))}
@@ -98,11 +98,11 @@ export default function TacticalVenueMap() {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1">
-                                        <span className="text-[9px] text-white/20 uppercase tracking-widest">Vector_X</span>
+                                        <span className="text-[10px] text-white/20 uppercase tracking-widest">Vector_X</span>
                                         <p className="text-xs text-white font-mono">{activeZone.coord.x}</p>
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="text-[9px] text-white/20 uppercase tracking-widest">Vector_Y</span>
+                                        <span className="text-[10px] text-white/20 uppercase tracking-widest">Vector_Y</span>
                                         <p className="text-xs text-white font-mono">{activeZone.coord.y}</p>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@ export default function TacticalVenueMap() {
                     </AnimatePresence>
 
                     <div className="pt-6 border-t border-white/5">
-                        <div className="flex items-center justify-between text-[9px] text-white/20 uppercase font-mono tracking-widest">
+                        <div className="flex items-center justify-between text-[10px] text-white/20 uppercase font-mono tracking-widest">
                             <span>GRID_SCAN: COMPLETED</span>
                             <span>PEAK_OCC: 88%</span>
                         </div>

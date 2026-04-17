@@ -167,7 +167,7 @@ function FloatingEventCard({
       animate={{ y: 0, opacity: 1, scale: 1 }}
       exit={{ y: -20, opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative w-full max-w-[420px] rounded-[1.5rem] overflow-hidden border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)] group/card"
+      className="relative w-full max-w-[420px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)] group/card"
     >
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0">
@@ -183,7 +183,7 @@ function FloatingEventCard({
         {/* Status Badge */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {isLive && (
-            <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[9px] font-black uppercase tracking-[0.2em] text-white">
+            <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white">
               On Sale
             </span>
           )}
@@ -192,7 +192,7 @@ function FloatingEventCard({
         {/* Narrative Metadata */}
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] text-[var(--monolith-red)] uppercase font-bold">
+            <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-[var(--monolith-red)] uppercase font-bold">
               {eyebrow || "Latest Transmission"}
             </span>
           </div>
@@ -203,7 +203,7 @@ function FloatingEventCard({
             {headline}
           </h3>
           <div className="flex items-center gap-3 mt-1 opacity-60">
-             <span className="font-mono text-[9px] md:text-[10px] tracking-[0.2em] text-white uppercase">
+             <span className="font-mono text-[10px] md:text-[10px] tracking-[0.2em] text-white uppercase">
                {dateLabel} {venueLabel ? `// @${venueLabel}` : ""}
              </span>
           </div>
@@ -221,7 +221,7 @@ function FloatingEventCard({
             />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
-              <a className="flex h-12 w-full items-center justify-center rounded-none border border-white/15 bg-white text-[11px] font-black uppercase tracking-[0.34em] text-black transition-all hover:bg-[var(--monolith-red)] hover:border-transparent">
+              <a className="flex h-12 w-full items-center justify-center rounded-none border border-white/20 bg-white text-[11px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-[var(--monolith-red)] hover:border-transparent">
                 {contextualFallbackAction.label}
               </a>
             </Link>
@@ -352,7 +352,7 @@ export default function HeroSection() {
               <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
               <RevealText
                 as="p"
-                className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.34em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]"
+                className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]"
                 delay={1.8}
                 stagger={0.04}
               >

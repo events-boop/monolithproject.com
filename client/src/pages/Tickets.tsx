@@ -251,7 +251,7 @@ export default function Tickets() {
              <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 italic">Updated for {new Date().getFullYear()}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2.5rem] overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2rem] overflow-hidden">
             {(featuredEvent?.ticketTiers || []).map((tier: TicketTier) => (
               <motion.div
                 key={tier.id}

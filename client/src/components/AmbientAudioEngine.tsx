@@ -111,7 +111,7 @@ export default function AmbientAudioEngine() {
                     className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-700 backdrop-blur-xl ${
                         audioAllowed 
                             ? "border-primary/40 bg-primary/10 text-primary shadow-[0_0_20px_rgba(224,90,58,0.2)]" 
-                            : "border-white/10 bg-black/40 text-white/40 hover:text-white/80 hover:border-white/30"
+                            : "border-white/10 bg-black/40 text-white/40 hover:text-white/80 hover:border-white/40"
                     }`}
                 >
                     <AnimatePresence mode="wait">

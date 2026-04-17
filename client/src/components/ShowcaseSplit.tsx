@@ -96,7 +96,7 @@ export default function ShowcaseSplit() {
                   <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
                     {panel.label}
                   </span>
-                  <span className="font-mono text-[8.5px] uppercase tracking-[0.2em] px-2 py-0.5 bg-white/5 border border-white/10 text-white/30 hidden lg:inline-block">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] px-2 py-0.5 bg-white/5 border border-white/10 text-white/30 hidden lg:inline-block">
                     {panel.badge}
                   </span>
                 </div>

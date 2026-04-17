@@ -56,7 +56,7 @@ export default function CoordinateHUD() {
              </span>
           </div>
           <div className="flex items-center gap-3 pl-4">
-            <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-white/30 whitespace-nowrap">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 whitespace-nowrap">
               SECTOR: {sector}
             </span>
           </div>

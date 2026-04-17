@@ -59,7 +59,7 @@ export default function SensoryOverloadOverlay() {
                 <motion.div 
                     animate={{ scale: [1, 1.2, 0.9, 1.1, 1], opacity: [0.3, 0.7, 0.4, 0.8, 0.5] }}
                     transition={{ duration: 0.2, repeat: Infinity }}
-                    className="text-[10vw] font-bold text-white/5 font-mono select-none pointer-events-none"
+                    className="text-[10vw] font-bold text-white/20 font-mono select-none pointer-events-none"
                 >
                     SENSORY_OVERLOAD
                 </motion.div>

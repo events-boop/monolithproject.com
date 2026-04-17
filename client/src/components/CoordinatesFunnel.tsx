@@ -94,7 +94,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                         </motion.h2>
 
                         {eventLabel ? (
-                            <p className="text-[#22D3EE]/75 text-[10px] font-mono tracking-[0.35em] uppercase mb-6">
+                            <p className="text-[#22D3EE]/75 text-[10px] font-mono tracking-[0.3em] uppercase mb-6">
                                 {eventLabel}{event?.date ? ` · ${event.date}` : ""}
                             </p>
                         ) : null}
@@ -109,7 +109,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                             Some details go out close to the event. Leave your best email and phone so we can send venue info, guest list notes, and any day-of changes.
                         </motion.p>
 
-                        <ul className="grid gap-4 font-mono text-xs uppercase tracking-[0.18em] text-white/45">
+                        <ul className="grid gap-4 font-mono text-xs uppercase tracking-[0.2em] text-white/40">
                             <li className="flex items-center gap-3">
                                 <div className="h-2 w-2 rounded-full bg-[#22D3EE]" />
                                 Venue details go out close to the event when needed.
@@ -144,7 +144,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                         <CheckCircle className="w-8 h-8 text-[#22D3EE]" />
                                     </div>
                                     <h3 className="font-display text-3xl uppercase tracking-wider text-white mb-3">You're On The List</h3>
-                                    <p className="font-mono text-xs leading-relaxed text-white/55 uppercase tracking-[0.18em]">
+                                    <p className="font-mono text-xs leading-relaxed text-white/50 uppercase tracking-[0.2em]">
                                         {eventLabel
                                             ? `Your ${eventLabel} venue update request is confirmed. Watch the inbox and phone you submitted for the next update.`
                                             : "Your venue update request is confirmed. Watch the inbox and phone you submitted for the next update."}
@@ -160,27 +160,27 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-md space-y-5"
                                 >
                                     <div className="mb-2">
-                                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-white/35 mb-3">Venue Updates</p>
-                                        <h3 className="font-display text-3xl uppercase tracking-[0.08em] text-white">Get The Update</h3>
+                                        <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/40 mb-3">Venue Updates</p>
+                                        <h3 className="font-display text-3xl uppercase tracking-[0.1em] text-white">Get The Update</h3>
                                     </div>
 
                                     {/* Honeypot: Bot Trap */}
                                     <HoneypotField value={botCheck} onChange={(e) => setBotCheck(e.target.value)} />
 
                                     <div className="relative">
-                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
+                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                                         <input
                                             type="text"
                                             value={firstName}
                                             onChange={(e) => setFirstName(e.target.value)}
                                             autoComplete="given-name"
                                             placeholder="First name (optional)"
-                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
                                         />
                                     </div>
 
                                     <div className="relative">
-                                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
+                                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                                         <input
                                             required
                                             type="email"
@@ -188,12 +188,12 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                             onChange={(e) => setEmail(e.target.value)}
                                             autoComplete="email"
                                             placeholder="Email address"
-                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
                                         />
                                     </div>
 
                                     <div className="relative">
-                                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
+                                        <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                                         <input
                                             required
                                             type="tel"
@@ -201,7 +201,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                             onChange={(e) => setPhone(e.target.value)}
                                             autoComplete="tel"
                                             placeholder="Mobile number"
-                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
+                                            className="w-full rounded-xl border border-white/10 bg-black/30 py-4 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#22D3EE]/50 transition-colors"
                                         />
                                     </div>
 
@@ -215,13 +215,13 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     <button
                                         type="submit"
                                         disabled={status === "loading"}
-                                        className="w-full bg-white text-black px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.35em] hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                        className="w-full bg-white text-black px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.3em] hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                                     >
                                         {status === "loading" ? "Submitting..." : "Get Venue Updates"}
                                         {status === "loading" ? null : <Lock className="w-4 h-4" />}
                                     </button>
 
-                                    <p className="text-[10px] text-white/28 font-mono tracking-[0.18em] uppercase">
+                                    <p className="text-[10px] text-white/30 font-mono tracking-[0.2em] uppercase">
                                         We only use this for event access, location release, and critical updates.
                                     </p>
                                 </motion.form>

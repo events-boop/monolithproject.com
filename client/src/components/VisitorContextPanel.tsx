@@ -174,7 +174,7 @@ export default function VisitorContextPanel({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative overflow-hidden rounded-none border border-white/12 bg-[linear-gradient(155deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] p-8 md:p-12 shadow-[0_32px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl group"
+          className="relative overflow-hidden rounded-none border border-white/10 bg-[linear-gradient(155deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] p-8 md:p-12 shadow-[0_32px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl group"
         >
           {/* Atmospheric Glow Overlay */}
           <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-[100px] pointer-events-none group-hover:bg-primary/20 transition-colors duration-1000" />
@@ -186,16 +186,16 @@ export default function VisitorContextPanel({
               <h2 className="font-display text-[clamp(2rem,4.7vw,4.2rem)] leading-[0.94] text-white">
                 {content.title}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/68 md:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
                 {content.description}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center rounded-none border border-primary/40 bg-primary/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_10px_rgba(224,90,58,0.3)]">
+              <span className="inline-flex items-center rounded-none border border-primary/40 bg-primary/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white shadow-[0_0_10px_rgba(224,90,58,0.3)]">
                 Recommended Paths
               </span>
-              <span className="inline-flex items-center rounded-none border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/62">
+              <span className="inline-flex items-center rounded-none border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                 {content.label}
               </span>
             </div>
@@ -205,13 +205,13 @@ export default function VisitorContextPanel({
             {actions.map((action, index) => {
               const Icon = action.icon;
               const cardClasses =
-                "group relative block overflow-hidden rounded-none border border-white/8 bg-white/[0.04] p-6 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.08] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] backdrop-blur-xl";
+                "group relative block overflow-hidden rounded-none border border-white/10 bg-white/[0.04] p-6 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.08] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] backdrop-blur-xl";
 
               const cardContent = (
                 <>
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="ui-chip text-white/42">{action.note}</p>
+                      <p className="ui-chip text-white/40">{action.note}</p>
                       <h3 className="mt-3 font-display text-2xl uppercase text-white">
                         {action.label}
                       </h3>
@@ -220,8 +220,8 @@ export default function VisitorContextPanel({
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-white/64">{action.description}</p>
-                  <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white/72 transition-colors group-hover:text-white">
+                  <p className="mt-4 text-sm leading-relaxed text-white/60">{action.description}</p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition-colors group-hover:text-white">
                     Open
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </div>

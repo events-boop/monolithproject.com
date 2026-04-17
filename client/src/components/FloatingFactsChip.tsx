@@ -13,7 +13,7 @@ const toneClasses: Record<ChipTone, string> = {
   warm:
     "bg-[linear-gradient(145deg,rgba(255,255,255,0.92),rgba(255,245,229,0.78))] border-[#C2703E]/28 text-[#2C1810]",
   nocturne:
-    "bg-[linear-gradient(145deg,rgba(10,10,16,0.92),rgba(10,10,16,0.72))] border-white/16 text-white",
+    "bg-[linear-gradient(145deg,rgba(10,10,16,0.92),rgba(10,10,16,0.72))] border-white/20 text-white",
 };
 
 export default function FloatingFactsChip({
@@ -53,7 +53,7 @@ export default function FloatingFactsChip({
         <div className="flex items-center gap-2 pl-4 pr-2 py-2">
           <Link
             href="/chasing-sunsets-facts"
-            className="font-mono text-[11px] tracking-[0.12em] uppercase hover:opacity-80 transition-opacity whitespace-nowrap"
+            className="font-mono text-[11px] tracking-[0.1em] uppercase hover:opacity-80 transition-opacity whitespace-nowrap"
           >
             Chasing Sun(Sets) Facts
           </Link>

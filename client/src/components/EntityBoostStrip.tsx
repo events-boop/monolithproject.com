@@ -23,7 +23,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
   dark: {
     shell: "luxe-surface-dark",
     title: "text-white",
-    body: "text-white/65",
+    body: "text-white/60",
     line: "border-white/10",
     link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
     cta: "btn-pill-dark",
@@ -47,7 +47,7 @@ const toneClasses: Record<Tone, { shell: string; title: string; body: string; li
   nocturne: {
     shell: "luxe-surface-dark",
     title: "text-white",
-    body: "text-white/65",
+    body: "text-white/60",
     line: "border-white/10",
     link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
     cta: "btn-pill-dark",

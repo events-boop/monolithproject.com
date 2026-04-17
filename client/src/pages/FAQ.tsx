@@ -136,7 +136,7 @@ const categories = [
 function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
     return (
         <div
-            className="border-b border-white/8 last:border-0"
+            className="border-b border-white/10 last:border-0"
         >
             <button
                 onClick={onToggle}
@@ -211,7 +211,7 @@ export default function FAQ() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-16"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             — Got Questions
                         </span>
                         <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-6">
@@ -224,7 +224,7 @@ export default function FAQ() {
                             style={{ originX: 0 }}
                             className="h-[2px] w-32 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-6"
                         />
-                        <p className="text-white/45 max-w-xl leading-relaxed">
+                        <p className="text-white/40 max-w-xl leading-relaxed">
                             Everything you need to know before, during, and after an event.
                         </p>
                     </motion.div>

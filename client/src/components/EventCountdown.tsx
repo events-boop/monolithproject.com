@@ -64,12 +64,12 @@ function Digit({ value, label, accentColor }: { value: number; label: string; ac
   return (
     <div className="flex flex-col items-center gap-2 min-w-0">
       <div className="relative overflow-hidden">
-        <span className="font-heavy text-[clamp(3rem,9vw,9rem)] leading-none tracking-[-0.05em] text-white tabular-nums transition-colors">
+        <span className="font-heavy text-[clamp(3rem,9vw,9rem)] leading-none tracking-[-0.04em] text-white tabular-nums transition-colors">
           {display}
         </span>
       </div>
       <span
-        className="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.35em]"
+        className="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.3em]"
         style={{ color: accentColor }}
       >
         {label}
@@ -154,22 +154,22 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
             </div>
             <div>
               <p
-                className="font-heavy text-[clamp(2.6rem,7vw,5.8rem)] uppercase tracking-[0.08em] leading-[0.88] mb-3"
+                className="font-heavy text-[clamp(2.6rem,7vw,5.8rem)] uppercase tracking-[0.1em] leading-[0.88] mb-3"
                 style={{ color: seriesColor }}
               >
                 {seriesLabel}
               </p>
-              <h3 className="font-heavy text-[clamp(3.3rem,9vw,8.4rem)] uppercase tracking-[-0.05em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
+              <h3 className="font-heavy text-[clamp(3.3rem,9vw,8.4rem)] uppercase tracking-[-0.04em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
                 {countdownTitle}
               </h3>
               <p
-                className="mt-5 font-mono text-[clamp(1rem,2.2vw,1.65rem)] uppercase tracking-[0.34em] drop-shadow-md"
+                className="mt-5 font-mono text-[clamp(1rem,2.2vw,1.65rem)] uppercase tracking-[0.3em] drop-shadow-md"
                 style={{ color: seriesColor }}
               >
                 {event.date}
               </p>
               {event.venue && (
-                <p className="font-sans text-lg md:text-xl text-white/55 mt-4 font-light italic max-w-2xl">
+                <p className="font-sans text-lg md:text-xl text-white/50 mt-4 font-light italic max-w-2xl">
                   {venueLabel} // {event.dress || "Elevated Attire"}
                 </p>
               )}
@@ -223,7 +223,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 style={{ borderColor: seriesColor, color: seriesColor }}
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
-                  <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.35em] drop-shadow-sm">
+                  <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.3em] drop-shadow-sm">
                     GET THE NEXT DATE →
                   </span>
                 <svg className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

@@ -1,5 +1,16 @@
 @layer utilities {
 
+  /* Unified focus ring — scene-aware, respects outline-offset for clarity */
+  .focus-ring {
+    outline: none;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--scene-accent, #E05A3A);
+    outline-offset: 3px;
+    border-radius: inherit;
+  }
+
   /* Letter spacing utilities */
   .tracking-ultra-wide {
     letter-spacing: 0.3em;

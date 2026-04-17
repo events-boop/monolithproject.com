@@ -142,7 +142,7 @@ export default function ChasingSunsets() {
                    Open-air sunset and night sessions built for movement, warmth, and return.
                  </p>
                  {featuredChasingEvent && (
-                   <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-6 sm:mb-8">
+                   <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-6 sm:mb-8">
                       <span>{featuredChasingEvent.date}</span>
                       <span className="w-1 h-1 rounded-full bg-white/20" />
                       <span>{getEventVenueLabel(featuredChasingEvent)}</span>
@@ -170,7 +170,7 @@ export default function ChasingSunsets() {
                 {["Open Air", "Melodic + Afro House", "Good Crowd", "Rooftop Series"].map((pill) => (
                   <span
                     key={pill}
-                    className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.16em] uppercase border border-white/30 bg-black/20 text-white/90"
+                    className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.15em] uppercase border border-white/40 bg-black/20 text-white/90"
                   >
                     {pill}
                   </span>
@@ -306,7 +306,7 @@ export default function ChasingSunsets() {
                             <span className="text-lg font-display sunset-text">{day}</span>
                           </div>
                           <div>
-                            <p className="mb-2 font-mono text-[10px] tracking-[0.24em] uppercase sunset-accent">
+                            <p className="mb-2 font-mono text-[10px] tracking-[0.25em] uppercase sunset-accent">
                               {event.episode}
                             </p>
                             <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors sunset-text">
@@ -327,7 +327,7 @@ export default function ChasingSunsets() {
                             href={getPrimaryTicketUrl(event)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-8 py-3.5 font-black tracking-[0.18em] text-[13px] sm:text-sm uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                            className="px-8 py-3.5 font-black tracking-[0.2em] text-[13px] sm:text-sm uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
                           >
                             {CTA_LABELS.tickets} <ArrowUpRight size={14} />
                           </a>

@@ -119,11 +119,11 @@ export default function ScheduleSection() {
         {/* Header Block */}
         <div className="mb-12 md:mb-24 flex flex-col gap-8 lg:flex-row lg:items-end justify-between border-b border-black/10 pb-8 md:pb-12">
           <div className="relative">
-             <span className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[9px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
+             <span className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[10px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
              <h2 className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
                <KineticDecryption text="THE 2026 SEASON" />
              </h2>
-             <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-4 md:mt-6 max-w-[15rem] md:max-w-sm">
+             <p className="font-mono text-[10px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-4 md:mt-6 max-w-[15rem] md:max-w-sm">
                A curated arc of open-air days and industrial nights. Inventory is strictly limited by venue capacity.
              </p>
           </div>
@@ -133,7 +133,7 @@ export default function ScheduleSection() {
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
-                className={`relative shrink-0 px-4 md:px-6 py-2 md:py-3 rounded-full text-[9px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
+                className={`relative shrink-0 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
                   ? "text-white shadow-sm"
                   : "text-black/50 hover:text-black"
                   }`}
@@ -152,7 +152,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* List Header - HUD Style (Hidden on Mobile) */}
-        <div className="hidden lg:grid grid-cols-12 gap-4 pb-4 pt-4 text-[9px] uppercase tracking-[0.25em] font-mono text-black/40">
+        <div className="hidden lg:grid grid-cols-12 gap-4 pb-4 pt-4 text-[10px] uppercase tracking-[0.25em] font-mono text-black/40">
           <div className="col-span-2 pl-4">Date / Time</div>
           <div className="col-span-1 text-center">Telemetry</div>
           <div className="col-span-4 pl-4">Event Identity</div>
@@ -161,11 +161,11 @@ export default function ScheduleSection() {
         </div>
 
         {/* Schedule Wrapper */}
-        <div className="flex flex-col mb-12 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-black/10 bg-white/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
+        <div className="flex flex-col mb-12 rounded-3xl md:rounded-[2rem] overflow-hidden border border-black/10 bg-white/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
               <span className="block font-heavy text-2xl md:text-3xl text-black/30 mb-2 md:mb-4 tracking-tight uppercase">No Events Found</span>
-              <p className="font-mono text-[9px] md:text-[10px] text-black/40 uppercase tracking-widest">No matching dates for {activeMonth}</p>
+              <p className="font-mono text-[10px] md:text-[10px] text-black/40 uppercase tracking-widest">No matching dates for {activeMonth}</p>
             </div>
           ) : (
             filteredEvents.map((event, index) => {
@@ -216,7 +216,7 @@ export default function ScheduleSection() {
                               <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                               <span className={`relative inline-flex rounded-full h-2 w-2 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                             </span>
-                            <span className="font-mono text-[8px] tracking-widest text-black/40 font-bold">
+                            <span className="font-mono text-[10px] tracking-widest text-black/40 font-bold">
                               {event.recentlyDropped ? "NEW DROP" : "LIVE"}
                             </span>
                           </div>
@@ -249,16 +249,16 @@ export default function ScheduleSection() {
                           {event.title}
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          <span className={`text-[9px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 bg-black/5 border border-black/10 rounded-full ${seriesTextAccent[event.series]}`}>
+                          <span className={`text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 bg-black/5 border border-black/10 rounded-full ${seriesTextAccent[event.series]}`}>
                             {seriesLabels[event.series]}
                           </span>
                           {event.recentlyDropped && (
-                            <span className="text-[9px] font-black tracking-[0.18em] uppercase px-2.5 py-1 bg-cyan-500 text-white rounded-full shadow-sm">
+                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-cyan-500 text-white rounded-full shadow-sm">
                               NEW DROP
                             </span>
                           )}
                           {event.status === "on-sale" && !event.recentlyDropped && (
-                            <span className="text-[9px] font-black tracking-[0.18em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
+                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
                               ACTIVE
                             </span>
                           )}
@@ -271,7 +271,7 @@ export default function ScheduleSection() {
                           "font-serif italic text-xl lg:text-2xl leading-tight transition-colors duration-500",
                           (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient !italic" : "text-black/70 group-hover:text-black"
                         )}>{event.venue}</span>
-                        <span className="text-[9px] text-black/40 font-mono mt-0.5 tracking-widest uppercase">{event.location}</span>
+                        <span className="text-[10px] text-black/40 font-mono mt-0.5 tracking-widest uppercase">{event.location}</span>
                       </div>
 
                       {/* ⚡ ACTIONS (Full width on mobile) */}
@@ -283,7 +283,7 @@ export default function ScheduleSection() {
                            type="button"
                            onClick={() => toggle(event.id)}
                            aria-expanded={isExpanded}
-                           className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.24em] transition-all duration-300 ${
+                           className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-300 ${
                              isExpanded
                                ? "border-black bg-black text-white"
                                : "border-black/10 bg-white text-black/70 hover:border-black/25 hover:text-black"
@@ -319,7 +319,7 @@ export default function ScheduleSection() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4 flex flex-col">
-                                   <span className="font-mono text-[9px] tracking-widest text-white/90 uppercase mb-1">Visual Logic</span>
+                                   <span className="font-mono text-[10px] tracking-widest text-white/90 uppercase mb-1">Visual Logic</span>
                                    <span className="font-heavy text-xs text-white uppercase tracking-tighter">{event.series.replace('-', ' ')}</span>
                                 </div>
                              </div>
@@ -338,17 +338,17 @@ export default function ScheduleSection() {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-10 lg:mb-12">
                               {/* Stat Card: Personnel */}
-                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-[1.5rem] shadow-sm">
+                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-3xl shadow-sm">
                                 <span className={cn(
-                                  "font-mono text-[9px] uppercase tracking-[0.4em] mb-4 block",
+                                  "font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block",
                                   event.lineup ? "text-primary/70" : "text-black/30"
                                 )}>Lineup Detail</span>
                                 <p className="font-heavy text-xl md:text-2xl leading-tight text-black uppercase tracking-tight">{event.lineup || "Manifesting"}</p>
                               </div>
 
                               {/* Stat Card: Logistics */}
-                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-[1.5rem] shadow-sm">
-                                <span className="font-mono text-[9px] uppercase tracking-[0.4em] mb-4 block text-black/30">Architecture</span>
+                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-3xl shadow-sm">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block text-black/30">Architecture</span>
                                 <p className="font-heavy text-xl md:text-2xl leading-tight text-black uppercase tracking-tight">{event.venue}</p>
                                 <p className="text-[10px] text-black/40 mt-3 font-mono tracking-widest uppercase">{event.time} @ {event.location}</p>
                               </div>
@@ -401,7 +401,7 @@ export default function ScheduleSection() {
 
         {/* Global Action Bar */}
         <div className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 relative z-20 px-4 border-t border-black/10">
-          <p className="text-black/40 text-[9px] font-mono uppercase tracking-[0.4em]">
+          <p className="text-black/40 text-[10px] font-mono uppercase tracking-[0.4em]">
              New dates landing weekly. Stay synchronized.
           </p>
           <div className="flex flex-wrap items-center gap-6">

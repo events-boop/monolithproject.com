@@ -128,7 +128,7 @@ export default function ContactFormSection() {
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-charcoal/55">
+            <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-charcoal/55">
               Or email{" "}
               <a className="underline hover:text-charcoal transition-colors" href="mailto:events@monolithproject.com">
                 events@monolithproject.com

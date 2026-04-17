@@ -24,7 +24,7 @@ export default function Newsletter() {
 
       <section className="page-shell-start-loose pb-8 px-6 relative">
         <div className="container layout-default">
-          <span className="font-mono text-xs tracking-[0.24em] uppercase text-charcoal/50 block">Newsletter</span>
+          <span className="font-mono text-xs tracking-[0.25em] uppercase text-charcoal/50 block">Newsletter</span>
           <h1 className="font-display text-[clamp(3rem,8.5vw,7rem)] leading-[0.88] uppercase mt-4">
             GET MONOLITH UPDATES
           </h1>

@@ -79,7 +79,7 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
           className="absolute inset-0 flex items-center justify-center px-8"
         >
           <div className="max-w-4xl text-center">
-            <span className="inline-flex items-center rounded-none border border-white/15 bg-black/20 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-white/70">
+            <span className="inline-flex items-center rounded-none border border-white/20 bg-black/20 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/70">
               The Collective
             </span>
             <div className="quiet-panel mt-6 px-6 py-8 md:px-10 md:py-10">

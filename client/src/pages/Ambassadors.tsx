@@ -27,7 +27,7 @@ const inputClass = `
   transition-all duration-200
 `;
 
-const labelClass = "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/35 mb-2";
+const labelClass = "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-2";
 
 const perks = [
     {
@@ -107,7 +107,7 @@ export default function Ambassadors() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-20 text-center max-w-3xl mx-auto"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/35 block mb-5">
+                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
                             — Join The Team
                         </span>
                         <h1 className="font-display text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] uppercase tracking-tight-display text-white mb-6">
@@ -159,7 +159,7 @@ export default function Ambassadors() {
                                         <CheckCircle className="w-8 h-8" />
                                     </div>
                                     <h3 className="font-display text-2xl uppercase text-white mb-4">Application Sent</h3>
-                                    <p className="text-white/45 max-w-xs mx-auto text-sm leading-relaxed">
+                                    <p className="text-white/40 max-w-xs mx-auto text-sm leading-relaxed">
                                         Check your email in 24-48 hours. If approved, you'll receive your dashboard login and tracking link.
                                     </p>
                                 </div>

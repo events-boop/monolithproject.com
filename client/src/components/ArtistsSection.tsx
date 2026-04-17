@@ -36,7 +36,7 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
         transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="ui-card group relative h-[320px] md:h-[380px] cursor-pointer overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500"
+        className="ui-card group relative h-[320px] md:h-[380px] cursor-pointer overflow-hidden border border-white/10 hover:border-white/40 transition-all duration-500"
       >
         {/* Architectural Background Grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700">
@@ -47,10 +47,10 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
 
         {/* Telemetry HUD - Top Left */}
         <div className="absolute top-4 left-4 z-20 flex flex-col gap-0.5">
-          <span className="font-mono text-[8px] text-white/30 tracking-[0.3em] uppercase">Signal // {artistId}</span>
+          <span className="font-mono text-[10px] text-white/30 tracking-[0.3em] uppercase">Signal // {artistId}</span>
           <div className="flex items-center gap-1.5">
             <div className={`h-1 w-1 rounded-full animate-pulse ${accentColor === "clay" ? "bg-clay" : "bg-primary"}`} />
-            <span className="font-mono text-[9px] text-white/60 tracking-widest uppercase">{artist.role}</span>
+            <span className="font-mono text-[10px] text-white/60 tracking-widest uppercase">{artist.role}</span>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
                 />
               </div>
             </div>
-            <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-colors duration-500">
+            <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/40 transition-colors duration-500">
               <ArrowRight className="w-4 h-4 text-white opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-500" />
             </div>
           </div>
@@ -91,13 +91,13 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
           {/* Footer Metadata */}
           <div className="pt-4 border-t border-white/10 flex items-center gap-6">
             <div className="flex flex-col">
-              <span className="font-mono text-[8px] text-white/30 tracking-widest uppercase mb-1">Origin</span>
+              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">Origin</span>
               <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <MapPin size={10} className="text-white/30" /> {artist.origin}
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="font-mono text-[8px] text-white/30 tracking-widest uppercase mb-1">Signature</span>
+              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">Signature</span>
               <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <Music size={10} className="text-white/30" /> {artist.genre}
               </span>

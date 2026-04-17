@@ -131,7 +131,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
                         {/* Inner Border Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 pointer-events-none rounded-3xl" />
 
-                        <div className="grid lg:grid-cols-2 gap-0 lg:gap-8 rounded-[22px] overflow-hidden bg-[#0A0A0A]/50">
+                        <div className="grid lg:grid-cols-2 gap-0 lg:gap-8 rounded-xl overflow-hidden bg-[#0A0A0A]/50">
                             {/* Left Side: Copy & Value Prop */}
                             <div className="p-8 lg:p-12 flex flex-col justify-center relative">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent lg:hidden" />
@@ -152,7 +152,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
                                 </h2>
 
                                 {eventMeta ? (
-                                    <p className="mb-3 text-[10px] font-mono tracking-[0.28em] uppercase text-white/45">
+                                    <p className="mb-3 text-[10px] font-mono tracking-[0.3em] uppercase text-white/40">
                                         {eventMeta}
                                     </p>
                                 ) : null}

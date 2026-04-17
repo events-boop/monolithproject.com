@@ -39,7 +39,7 @@ export default function ChasingSunsetsTicketing() {
             {/* Season Passes Tier (The Anchor) */}
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
                 {/* GA Season Pass */}
-                <div className="border border-white/10 bg-white/[0.02] rounded-[32px] p-8 md:p-10 flex flex-col relative overflow-hidden group hover:border-white/20 transition-colors">
+                <div className="border border-white/10 bg-white/[0.02] rounded-[2rem] p-8 md:p-10 flex flex-col relative overflow-hidden group hover:border-white/20 transition-colors">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-[40px] rounded-full group-hover:bg-[#E8B86D]/10 transition-colors" />
                     
                     <span className="font-mono text-[10px] tracking-widest uppercase text-white/50 mb-2">Access All Dates</span>
@@ -73,7 +73,7 @@ export default function ChasingSunsetsTicketing() {
                 </div>
 
                 {/* VIP Season Pass */}
-                <div className="border border-[#E8B86D]/40 bg-[#1A0F00]/90 rounded-[32px] p-8 md:p-10 flex flex-col relative overflow-hidden group shadow-[0_20px_60px_rgba(232,184,109,0.1)]">
+                <div className="border border-[#E8B86D]/40 bg-[#1A0F00]/90 rounded-[2rem] p-8 md:p-10 flex flex-col relative overflow-hidden group shadow-[0_20px_60px_rgba(232,184,109,0.1)]">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8B86D]/10 blur-[60px] rounded-full" />
                     
                     <div className="inline-flex items-center self-start px-3 py-1 bg-[#E8B86D]/10 border border-[#E8B86D]/30 text-[#E8B86D] text-[10px] font-mono tracking-widest uppercase rounded mb-4 gap-2">
@@ -116,7 +116,7 @@ export default function ChasingSunsetsTicketing() {
             <div className="grid lg:grid-cols-[1fr_400px] gap-8 mt-16">
                 
                 {/* July 4 Single Release */}
-                <div className="border border-white/10 bg-white/[0.02] rounded-[32px] p-8 md:p-10 flex flex-col justify-center">
+                <div className="border border-white/10 bg-white/[0.02] rounded-[2rem] p-8 md:p-10 flex flex-col justify-center">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8 border-b border-white/10 pb-8">
                         <div>
                             <span className="font-mono text-[10px] tracking-widest uppercase text-white/50 mb-2 block">Opening Chapter</span>
@@ -160,7 +160,7 @@ export default function ChasingSunsetsTicketing() {
                 </div>
 
                 {/* The "Classified" Secret Tier */}
-                <div className="border border-white/5 bg-black/60 rounded-[32px] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                <div className="border border-white/5 bg-black/60 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden group">
                      {/* scanlines */}
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] pointer-events-none" />
                     

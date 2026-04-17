@@ -149,19 +149,19 @@ export default function ArtistProfile() {
                   <span className="font-heavy text-[clamp(1.25rem,3vw,2.5rem)] tracking-[0.3em] text-white uppercase leading-none">
                     Headliner Status
                   </span>
-                  <span className="font-mono text-[9px] md:text-[10px] tracking-[0.5em] text-white/30 uppercase">
+                  <span className="font-mono text-[10px] md:text-[10px] tracking-[0.5em] text-white/30 uppercase">
                     Featured booking in the Monolith roster
                   </span>
                 </div>
               ) : artist.role === "RESIDENT" ? (
                 <div className="flex flex-col gap-6 md:gap-8">
                   <div className="flex flex-col gap-1">
-                    <span className="font-heavy text-[clamp(1.75rem,5vw,4rem)] tracking-[0.05em] text-white uppercase leading-[0.9]">
+                    <span className="font-heavy text-[clamp(1.75rem,5vw,4rem)] tracking-[0.1em] text-white uppercase leading-[0.9]">
                       Monolith Resident Artist
                     </span>
                     <div className="flex items-center gap-3 md:gap-4 mt-2">
                        <div className="h-px w-8 md:w-12 bg-white/40" />
-                       <span className="font-mono text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] text-white uppercase font-bold">
+                       <span className="font-mono text-[10px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] text-white uppercase font-bold">
                          Core resident
                        </span>
                     </div>
@@ -170,19 +170,19 @@ export default function ArtistProfile() {
                   {/* High-Prestige Residency Metadata HUD Grid */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 pt-6 border-t border-white/10 max-w-3xl">
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Residency</span>
+                        <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">Residency</span>
                         <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Season 01</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Artist Role</span>
+                        <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">Artist Role</span>
                         <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Resident</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Based In</span>
+                        <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">Based In</span>
                         <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase truncate">{artist.origin.split(',')[0]} / {artist.origin.split(',')[1]?.trim() || 'Global'}</span>
                      </div>
                      <div className="flex flex-col gap-1.5">
-                        <span className="font-mono text-[8px] md:text-[9px] tracking-[0.3em] text-white/40 uppercase">Status</span>
+                        <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">Status</span>
                         <div className="flex items-center gap-2">
                            <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--primary)] animate-pulse" />
                            <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">Active resident</span>
@@ -200,13 +200,13 @@ export default function ArtistProfile() {
             <div className="flex flex-wrap items-center gap-10 md:gap-16">
               <div className="flex items-center gap-8">
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[9px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Based In</span>
+                   <span className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Based In</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <MapPin className="w-3 h-3 opacity-40" /> {artist.origin}
                    </span>
                  </div>
                  <div className="flex flex-col gap-1">
-                   <span className="font-mono text-[9px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Sound</span>
+                   <span className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase lowercase-none">Sound</span>
                    <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
                      <Music className="w-3 h-3 opacity-40" /> {artist.genre}
                    </span>
@@ -332,7 +332,7 @@ export default function ArtistProfile() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <span className="font-mono text-[9px] tracking-[0.3em] text-white/70 uppercase">{photo.alt}</span>
+                        <span className="font-mono text-[10px] tracking-[0.3em] text-white/70 uppercase">{photo.alt}</span>
                       </div>
                     </motion.div>
                   ))}

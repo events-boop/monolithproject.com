@@ -115,7 +115,7 @@ export default function Contact() {
                       </div>
                       <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
                       <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
-                      <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.16em] uppercase text-charcoal/70">
+                      <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase text-charcoal/70">
                         {tile.label}
                         <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                       </div>
@@ -128,7 +128,7 @@ export default function Contact() {
                         </div>
                         <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
                         <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
-                        <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.16em] uppercase text-charcoal/70">
+                        <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase text-charcoal/70">
                           {tile.label}
                           <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
                         </div>

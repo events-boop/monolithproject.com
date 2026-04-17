@@ -65,8 +65,8 @@ function RouteLoadingFallback() {
       aria-live="polite"
       aria-busy="true"
     >
-      <div className="w-full max-w-sm border border-white/8 bg-black/30 px-5 py-6 backdrop-blur-sm">
-        <div className="font-mono text-[11px] uppercase tracking-[0.34em] text-white/45">
+      <div className="w-full max-w-sm border border-white/10 bg-black/30 px-5 py-6 backdrop-blur-sm">
+        <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">
           Loading Next Scene
         </div>
         <div className="mt-4 h-px overflow-hidden bg-white/8">

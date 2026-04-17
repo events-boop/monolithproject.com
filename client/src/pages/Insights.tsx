@@ -30,7 +30,7 @@ export default function Insights() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="mb-16 md:mb-20"
           >
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-primary/80 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/80 block mb-5">
               Articles
             </span>
             <h1 className="font-display text-[clamp(3.4rem,9vw,7rem)] leading-[0.85] uppercase tracking-tight-display text-white">
@@ -38,7 +38,7 @@ export default function Insights() {
               <br />
               And Event Context
             </h1>
-            <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-white/68">
+            <p className="mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-white/70">
               Clear writing about lineups, radio episodes, series updates, and how The Monolith
               Project is being built.
             </p>
@@ -66,14 +66,14 @@ export default function Insights() {
                 <div className="flex flex-col justify-between p-8 md:p-10">
                   <div>
                     <div className="flex flex-wrap items-center gap-2.5">
-                      <span className="inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                      <span className="inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
                         Featured Article
                       </span>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/58">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                         <CalendarRange className="h-3.5 w-3.5" />
                         {featured.displayDate}
                       </span>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/58">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                         <Clock3 className="h-3.5 w-3.5" />
                         {featured.readTime}
                       </span>
@@ -90,14 +90,14 @@ export default function Insights() {
                   <div className="mt-8 flex flex-wrap gap-3">
                     <Link
                       href={`/insights/${featured.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-black transition-colors hover:bg-primary hover:text-white"
+                      className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-black transition-colors hover:bg-primary hover:text-white"
                     >
                       Read Article
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                     <Link
                       href="/radio"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white/82 transition-colors hover:border-white/22 hover:text-white"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
                     >
                       Open Radio Show
                       <ArrowUpRight className="h-4 w-4" />
@@ -116,7 +116,7 @@ export default function Insights() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.45, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden rounded-[1.7rem] border border-white/10 bg-white/[0.025]"
+                className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025]"
               >
                 <Link href={`/insights/${article.slug}`} className="block">
                   <div className="aspect-[16/10] overflow-hidden">
@@ -130,10 +130,10 @@ export default function Insights() {
                   </div>
                   <div className="p-6 md:p-7">
                     <div className="flex flex-wrap items-center gap-2.5">
-                      <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/58">
+                      <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                         {article.category}
                       </span>
-                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/48">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
                         <CalendarRange className="h-3.5 w-3.5" />
                         {article.displayDate}
                       </span>
@@ -142,11 +142,11 @@ export default function Insights() {
                     <h3 className="mt-5 font-display text-3xl uppercase leading-[0.95] text-white">
                       {article.title}
                     </h3>
-                    <p className="mt-4 text-sm leading-relaxed text-white/66 md:text-base">
+                    <p className="mt-4 text-sm leading-relaxed text-white/70 md:text-base">
                       {article.summary}
                     </p>
 
-                    <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-white/78">
+                    <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80">
                       Read Article
                       <ArrowRight className="h-4 w-4" />
                     </div>
