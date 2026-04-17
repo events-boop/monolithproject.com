@@ -62,14 +62,14 @@ function getTimeLeft(target: Date) {
 function Digit({ value, label, accentColor }: { value: number; label: string; accentColor: string }) {
   const display = String(value).padStart(2, "0");
   return (
-    <div className="flex flex-col items-center gap-2 min-w-0">
+    <div className="flex flex-col items-center gap-2 min-w-0 shrink">
       <div className="relative overflow-hidden">
-        <span className="font-heavy text-[clamp(3rem,9vw,9rem)] leading-none tracking-[-0.04em] text-white tabular-nums transition-colors">
+        <span className="font-heavy text-[clamp(2rem,8vw,9rem)] leading-none tracking-[-0.04em] text-white tabular-nums transition-colors">
           {display}
         </span>
       </div>
       <span
-        className="font-mono text-[12px] md:text-[13px] uppercase tracking-[0.3em]"
+        className="font-mono text-[10px] md:text-[13px] uppercase tracking-[0.3em]"
         style={{ color: accentColor }}
       >
         {label}
@@ -94,10 +94,10 @@ function LiveClock({ targetDate, accentColor }: { targetDate: string; accentColo
   if (!timeLeft) return null;
 
   return (
-    <div className="flex items-end gap-2 md:gap-8" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
+    <div className="flex items-end gap-1 sm:gap-3 md:gap-8 w-full max-w-full overflow-hidden" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
       <Digit value={timeLeft.days} label="Days" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -105,7 +105,7 @@ function LiveClock({ targetDate, accentColor }: { targetDate: string; accentColo
       </div>
       <Digit value={timeLeft.hours} label="Hours" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -113,7 +113,7 @@ function LiveClock({ targetDate, accentColor }: { targetDate: string; accentColo
       </div>
       <Digit value={timeLeft.minutes} label="Min" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-none mb-6 md:mb-8 select-none"
+        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -146,20 +146,21 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
           {/* Left: Event context */}
           <div className="flex flex-col gap-6 shrink-0">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
-              <span className="font-mono text-[12px] md:text-sm uppercase tracking-[0.4em] text-white/40">
+              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/40">
                 Next Event
               </span>
-            </div>
-            <div>
-              <p
-                className="font-heavy text-[clamp(2.6rem,7vw,5.8rem)] uppercase tracking-[0.1em] leading-[0.88] mb-3"
+              <span aria-hidden="true" className="h-px w-6 bg-white/15" />
+              <span
+                className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em]"
                 style={{ color: seriesColor }}
               >
                 {seriesLabel}
-              </p>
-              <h3 className="font-heavy text-[clamp(3.3rem,9vw,8.4rem)] uppercase tracking-[-0.04em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
+              </span>
+            </div>
+            <div>
+              <h3 className="font-heavy text-[clamp(2.6rem,8vw,8.4rem)] uppercase tracking-[-0.04em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
                 {countdownTitle}
               </h3>
               <p
