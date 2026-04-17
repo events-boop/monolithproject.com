@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
@@ -17,20 +17,24 @@ const heroSlides = [
 
 export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const inView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
+  const reduceMotion = useReducedMotion();
+  const idleMotion = !reduceMotion && inView;
 
   useEffect(() => {
-    if (heroSlides.length <= 1) return;
+    if (heroSlides.length <= 1 || !idleMotion) return;
     const timer = window.setInterval(() => {
       setHeroSlideIndex((prev) => (prev + 1) % heroSlides.length);
     }, 10000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [idleMotion]);
 
   const headlineLines = event ? event.title.split(" ") : ["UNTOLD", "STORY"];
   const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
-    <section className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
+    <section ref={heroRef} className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -61,8 +65,8 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
       {/* Giant Butterfly (Elements of butterfly in the background) */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none z-10 hidden lg:flex items-center justify-center opacity-40 mix-blend-screen overflow-hidden">
         <motion.div
-          animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          animate={idleMotion ? { scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] } : { scale: 1, rotate: 0 }}
+          transition={idleMotion ? { duration: 8, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
         >
           <UntoldButterflyLogo className="w-full h-full text-[#22D3EE]/60" glow />
         </motion.div>

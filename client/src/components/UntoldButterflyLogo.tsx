@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface UntoldButterflyLogoProps {
   className?: string;
@@ -26,6 +26,8 @@ export default function UntoldButterflyLogo({
   glow = false,
   animateIn = false,
 }: UntoldButterflyLogoProps) {
+  const reduceMotion = useReducedMotion();
+  const shouldAnimate = animateIn && !reduceMotion;
   const baseStyle = glow ? { filter: restGlow } : undefined;
 
   return (
@@ -35,12 +37,8 @@ export default function UntoldButterflyLogo({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       style={baseStyle}
-      initial={animateIn && glow ? { filter: restGlow } : false}
-      animate={
-        animateIn && glow
-          ? { filter: [restGlow, brightGlow, restGlow] }
-          : undefined
-      }
+      initial={shouldAnimate && glow ? { filter: restGlow } : false}
+      animate={shouldAnimate && glow ? { filter: [restGlow, brightGlow, restGlow] } : undefined}
       transition={{ duration: 1.8, ease: "easeOut", delay: 0.9, times: [0, 0.55, 1] }}
     >
       {wingPaths.map((d, i) => (
@@ -52,8 +50,8 @@ export default function UntoldButterflyLogo({
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
-          initial={animateIn ? { pathLength: 0, opacity: 0 } : false}
-          animate={animateIn ? { pathLength: 1, opacity: 1 } : undefined}
+          initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
+          animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
           transition={{
             pathLength: { duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 + i * 0.07 },
             opacity: { duration: 0.3, delay: 0.1 + i * 0.07 },
@@ -68,8 +66,8 @@ export default function UntoldButterflyLogo({
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        initial={animateIn ? { pathLength: 0, opacity: 0 } : false}
-        animate={animateIn ? { pathLength: 1, opacity: 1 } : undefined}
+        initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
+        animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
         transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
       />
       {antennaePaths.map((d, i) => (
@@ -80,8 +78,8 @@ export default function UntoldButterflyLogo({
           strokeWidth="1.5"
           strokeLinecap="round"
           fill="none"
-          initial={animateIn ? { pathLength: 0, opacity: 0 } : false}
-          animate={animateIn ? { pathLength: 1, opacity: 1 } : undefined}
+          initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
+          animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
           transition={{ duration: 0.45, delay: 0.7 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
         />
       ))}

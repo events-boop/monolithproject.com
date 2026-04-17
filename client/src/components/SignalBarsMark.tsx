@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface SignalBarsMarkProps {
   className?: string;
@@ -15,6 +15,8 @@ const BASELINE = 28;
 const BAR_WIDTH = 5;
 
 export default function SignalBarsMark({ className = "w-14 h-10" }: SignalBarsMarkProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.svg
       viewBox="0 0 48 32"
@@ -33,21 +35,23 @@ export default function SignalBarsMark({ className = "w-14 h-10" }: SignalBarsMa
           height={bar.restHeight}
           rx={1}
           fill="#E8B86D"
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{
-            scaleY: [0, bar.peak, 1],
-            opacity: [0, 1, 0.9],
-          }}
-          transition={{
-            duration: 1.4,
-            delay: 0.1 + i * 0.08,
-            ease: [0.22, 1, 0.36, 1],
-            times: [0, 0.55, 1],
-          }}
-          style={{
-            transformBox: "fill-box",
-            transformOrigin: "center bottom",
-          }}
+          initial={reduceMotion ? { scaleY: 1, opacity: 0.9 } : { scaleY: 0, opacity: 0 }}
+          animate={
+            reduceMotion
+              ? { scaleY: 1, opacity: 0.9 }
+              : { scaleY: [0, bar.peak, 1], opacity: [0, 1, 0.9] }
+          }
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : {
+                  duration: 1.4,
+                  delay: 0.1 + i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                  times: [0, 0.55, 1],
+                }
+          }
+          style={{ transformBox: "fill-box", transformOrigin: "center bottom" }}
         />
       ))}
       <motion.line
@@ -59,9 +63,9 @@ export default function SignalBarsMark({ className = "w-14 h-10" }: SignalBarsMa
         strokeWidth="0.75"
         strokeLinecap="round"
         strokeOpacity={0.45}
-        initial={{ pathLength: 0, opacity: 0 }}
+        initial={reduceMotion ? { pathLength: 1, opacity: 0.45 } : { pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 0.45 }}
-        transition={{ duration: 0.6, delay: 0.05, ease: "easeOut" }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.05, ease: "easeOut" }}
       />
     </motion.svg>
   );

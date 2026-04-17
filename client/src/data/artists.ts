@@ -285,7 +285,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Bazar by Sasson Chapter", date: "Aug 2025", url: "https://soundcloud.com/eranhersh" },
     ],
     gallery: [
-      { src: "/images/eran-hersh-live-1.png", alt: "Eran Hersh live at Bazar by Sasson" },
+      { src: "/images/eran-hersh-live-1.webp", alt: "Eran Hersh live at Bazar by Sasson" },
       { src: "/images/eran-hersh-live-2.jpg", alt: "Eran Hersh outdoor set" },
       { src: "/images/eran-hersh-live-3.jpg", alt: "Eran Hersh crowd moment" },
       { src: "/images/eran-hersh-live-4.jpg", alt: "Eran Hersh live crowd energy" },

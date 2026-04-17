@@ -121,14 +121,17 @@ export default function ChasingSunsets() {
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>
               <h1 className="font-display flex flex-col text-[clamp(2.5rem,8vw,8rem)] leading-[0.85] uppercase mb-6 sm:mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
-                {featuredChasingEvent ? (
-                  <SplitText text={featuredChasingEvent.headline || featuredChasingEvent.title} className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" />
-                ) : (
-                  <>
-                    <SplitText text="CHASING" className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" initialDelay={0.10} />
-                    <SplitText text="SUN(SETS)" className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent" initialDelay={0.25} />
-                  </>
-                )}
+                {(featuredChasingEvent
+                  ? (featuredChasingEvent.headline || featuredChasingEvent.title).split(" ")
+                  : ["CHASING", "SUN(SETS)"]
+                ).map((line, i) => (
+                  <SplitText
+                    key={`${line}-${i}`}
+                    text={line}
+                    className="block bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent"
+                    initialDelay={0.1 + i * 0.15}
+                  />
+                ))}
               </h1>
               <BrandTranslatorLabel className="mb-4 sm:mb-6" tone="warm">
                 An Open-Air Monolith Series

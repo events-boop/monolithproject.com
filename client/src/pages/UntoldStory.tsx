@@ -41,7 +41,7 @@ export default function UntoldStory() {
         image={eventVisuals.poster}
         schemaData={schemaData}
       />
-      <Navigation />
+      <Navigation brand="untold-story" />
 
       <main id="main-content" tabIndex={-1}>
         <UntoldHero event={scheduledEvent} />

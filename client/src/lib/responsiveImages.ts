@@ -42,7 +42,7 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
   eranHershHero: {
     baseName: "eran-hersh-hero",
     sizes: "100vw",
-    src: "/images/eran-hersh-live-1.png",
+    src: "/images/eran-hersh-live-1.webp",
     widths: [640, 960, 1280, 1600],
   },
   eranHershPortraitReal: {

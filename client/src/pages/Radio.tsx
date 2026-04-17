@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion, useMotionValue, useTransform, useSpring, useInView, useReducedMotion } from "framer-motion";
 import { Play, Pause, Sun, X, MapPin, Music, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
@@ -167,6 +167,9 @@ export default function Radio() {
   const [filter, setFilter] = useState<Filter>("all");
   const [faqDrawerOpen, setFaqDrawerOpen] = useState(false);
   const [artistIndex, setArtistIndex] = useState(0);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
+  const reduceMotion = useReducedMotion();
 
   // 3D Tilt calculations
   const x = useMotionValue(0);
@@ -199,11 +202,12 @@ export default function Radio() {
   };
 
   useEffect(() => {
+    if (reduceMotion || !heroInView) return;
     const timer = setInterval(() => {
       setArtistIndex((prev) => (prev + 1) % radioArtists.length);
-    }, 4000);
+    }, 7000);
     return () => clearInterval(timer);
-  }, []);
+  }, [reduceMotion, heroInView]);
 
   const filtered = filter === "all" ? tracks : tracks.filter((t) => t.series === filter);
   const activeArtist = radioArtists[artistIndex] || radioArtists[0];
@@ -222,10 +226,10 @@ export default function Radio() {
         absoluteTitle
         canonicalPath="/radio"
       />
-      <Navigation />
+      <Navigation brand="radio" />
 
       {/* Hero */}
-      <section className="relative page-shell-start-loose pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
+      <section ref={heroRef} className="relative page-shell-start-loose pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
         {/* Full Bleed Rotating Background */}
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">

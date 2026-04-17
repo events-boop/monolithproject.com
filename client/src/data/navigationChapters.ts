@@ -36,7 +36,7 @@ export const navigationChapters: NavigationChapter[] = [
     description:
       "A direct preview of the next Monolith night, ticket state, and arrival path.",
     proof: "Current event, ticket state, and room context in one step.",
-    image: "/images/eran-hersh-live-1.png",
+    image: "/images/eran-hersh-live-1.webp",
     accent: "#E05A3A",
     ctaLabel: "Get In",
     secondaryLinks: [

@@ -1,10 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface HorizonDiscMarkProps {
   className?: string;
 }
 
 export default function HorizonDiscMark({ className = "w-12 h-12 sm:w-14 sm:h-14" }: HorizonDiscMarkProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.svg
       viewBox="0 0 64 64"
@@ -23,36 +25,43 @@ export default function HorizonDiscMark({ className = "w-12 h-12 sm:w-14 sm:h-14
         stroke="#E8B86D"
         strokeWidth="1.25"
         strokeLinecap="round"
-        variants={{
-          rest: { pathLength: 0, opacity: 0 },
-          arrive: {
-            pathLength: 1,
-            opacity: [0, 0.35, 1, 0.85],
-            transition: {
-              pathLength: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-              opacity: { duration: 1.6, times: [0, 0.35, 0.7, 1], ease: "easeOut" },
-            },
-          },
-        }}
+        variants={
+          reduceMotion
+            ? {
+                rest: { pathLength: 1, opacity: 0.85 },
+                arrive: { pathLength: 1, opacity: 0.85 },
+              }
+            : {
+                rest: { pathLength: 0, opacity: 0 },
+                arrive: {
+                  pathLength: 1,
+                  opacity: [0, 0.35, 1, 0.85],
+                  transition: {
+                    pathLength: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                    opacity: { duration: 1.6, times: [0, 0.35, 0.7, 1], ease: "easeOut" },
+                  },
+                },
+              }
+        }
       />
       <motion.circle
         cx="32"
-        cy="42"
+        cy={reduceMotion ? 32 : 42}
         r="10"
         fill="url(#horizonDisc)"
-        variants={{
-          rest: { cy: 56, opacity: 0, scale: 0.9 },
-          arrive: {
-            cy: 32,
-            opacity: 1,
-            scale: 1,
-            transition: {
-              delay: 0.25,
-              duration: 1,
-              ease: [0.22, 1, 0.36, 1],
-            },
-          },
-        }}
+        variants={
+          reduceMotion
+            ? { rest: { cy: 32, opacity: 1 }, arrive: { cy: 32, opacity: 1 } }
+            : {
+                rest: { cy: 56, opacity: 0, scale: 0.9 },
+                arrive: {
+                  cy: 32,
+                  opacity: 1,
+                  scale: 1,
+                  transition: { delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] },
+                },
+              }
+        }
         style={{ transformOrigin: "32px 42px", filter: "drop-shadow(0 0 10px rgba(232,184,109,0.55))" }}
       />
       <defs>

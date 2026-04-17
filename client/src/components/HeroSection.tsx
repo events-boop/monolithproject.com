@@ -1,6 +1,6 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { useEffect, useState, memo, useCallback } from "react";
+import { useEffect, useState, memo, useCallback, useRef } from "react";
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import JsonLd from "@/components/JsonLd";
@@ -277,6 +277,9 @@ export default function HeroSection() {
   }, []);
 
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
+  const heroRef = useRef<HTMLElement | null>(null);
+  const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
+  const idleMotion = !reduceMotion && heroInView;
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, reduceMotion ? 0 : 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
@@ -285,6 +288,7 @@ export default function HeroSection() {
   return (
     <div className="bg-black flex h-[100dvh] flex-col">
       <section
+        ref={heroRef}
         id="hero"
         className="relative h-full overflow-hidden bg-black md:screen-shell-stable"
       >
@@ -299,8 +303,8 @@ export default function HeroSection() {
         <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
           <motion.div
-            animate={{ top: ["-10%", "110%"] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            animate={idleMotion ? { top: ["-10%", "110%"] } : { top: "-10%" }}
+            transition={idleMotion ? { duration: 8, repeat: Infinity, ease: "linear" } : { duration: 0 }}
             className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
           />
         </div>
