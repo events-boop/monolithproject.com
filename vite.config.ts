@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'robots.txt', 'fonts/**/*.woff2'],
+        includeAssets: ['favicon.ico', 'robots.txt', 'sitemap.xml', 'fonts/**/*.woff2'],
         manifest: {
           name: 'The Monolith Project',
           short_name: 'Monolith',
@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait'
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,avif,webp}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,avif,webp,xml}'],
           maximumFileSizeToCacheInBytes: 4000000, // Caches core shell up to 4MB, ignores large videos
         }
       }),
