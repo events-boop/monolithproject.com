@@ -31,6 +31,7 @@ import {
 } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import SplitText from "@/components/ui/SplitText";
+import HorizonDiscMark from "@/components/HorizonDiscMark";
 
 const chasingPosterImage = getResponsiveImage("chasingSunsets");
 const chasingHeroImage = getResponsiveImage("chasingSunsets");
@@ -115,6 +116,7 @@ export default function ChasingSunsets() {
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
+              <HorizonDiscMark className="w-12 h-12 sm:w-14 sm:h-14 mb-5 sm:mb-7" />
               <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase block mb-4 sm:mb-6 text-white/90">
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>

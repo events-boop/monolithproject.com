@@ -82,7 +82,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 flex flex-col"
           >
-            <UntoldButterflyLogo className="w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 text-[#22D3EE]" glow />
+            <UntoldButterflyLogo className="w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 text-[#22D3EE]" glow animateIn />
             <div className="flex items-center gap-4 mb-4 sm:mb-6">
               <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase text-untold-cyan">
                 {event?.episode || "Series 02"}

@@ -18,6 +18,7 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import SignalBarsMark from "@/components/SignalBarsMark";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import { CTA_LABELS } from "@/lib/cta";
 
@@ -251,6 +252,7 @@ export default function Radio() {
 
         <div className="container layout-wide relative z-10 w-full">
           <div className="max-w-3xl">
+            <SignalBarsMark className="w-14 h-10 sm:w-16 sm:h-12 mb-5 sm:mb-6" />
             <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6" delay={0.1}>
               {activeArtist.banner}
             </RevealText>
