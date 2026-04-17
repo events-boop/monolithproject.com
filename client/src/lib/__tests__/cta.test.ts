@@ -95,7 +95,7 @@ describe("cta", () => {
       inventoryState: "low",
       ticketUrl: "https://posh.vip/e/example",
       primaryCta: {
-        label: "Claim Last Tickets",
+        label: "Final Release",
         href: "https://posh.vip/e/example",
         tool: "posh",
         isExternal: true,
@@ -104,7 +104,7 @@ describe("cta", () => {
 
     expect(isEventLowInventory(event)).toBe(true);
     expect(getEventCta(event)).toMatchObject({
-      label: "Claim Last Tickets",
+      label: "Final Release",
       href: "https://posh.vip/e/example",
       isExternal: true,
       tool: "posh",

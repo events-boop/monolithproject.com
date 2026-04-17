@@ -112,7 +112,7 @@ const portalConfigs: Record<InquiryType, InquiryPortalConfig> = {
     description:
       "Bring us the audience, product, or energy you want to activate around. We route brand-fit opportunities into the production queue with context intact.",
     submitLabel: "Send Partnership Brief",
-    successLabel: "Partnership Brief Received",
+    successLabel: "We Got You",
     successDescription:
       "Your activation request is in the partnership queue. If the fit is there, the Monolith team will come back with next-step logistics.",
     replyWindow: "24-48h review",
@@ -147,7 +147,7 @@ const portalConfigs: Record<InquiryType, InquiryPortalConfig> = {
     description:
       "Send the essentials on your property, market, and operating constraints. We will review the space against production needs and creative fit.",
     submitLabel: "Submit Venue Details",
-    successLabel: "Venue Signal Captured",
+    successLabel: "We Got You",
     successDescription:
       "The space has been logged for review. If it aligns with the project, operations will follow up with availability and fit questions.",
     replyWindow: "48h routing",
@@ -666,7 +666,7 @@ export default function InquiryPortal() {
 
                 <div className="relative mt-10 max-w-xl">
                   <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.42em] text-white/36">
-                    Secure Intake Sequence
+                    Direct Route To The Office
                   </p>
                   <h2
                     id="inquiry-portal-title"
@@ -698,7 +698,7 @@ export default function InquiryPortal() {
                       className="rounded-[1.25rem] border border-white/10 bg-black/20 px-4 py-4 backdrop-blur-sm"
                     >
                       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/46">
-                        Signal
+                        Scope
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-white/80">
                         {highlight}
@@ -713,11 +713,10 @@ export default function InquiryPortal() {
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/36">
-                        Transmission Form
+                        What We Need
                       </p>
                       <p className="mt-1 text-sm text-white/62">
-                        Direct route into the correct queue. No dead-end modal
-                        theatrics.
+                        Fill what's relevant. Skip what isn't. A real person reviews every note.
                       </p>
                     </div>
                     <div
@@ -751,7 +750,7 @@ export default function InquiryPortal() {
                         </div>
 
                         <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.34em] text-white/42">
-                          Signal Locked
+                          You're In
                         </p>
                         <h3 className="mt-3 font-display text-4xl uppercase leading-none tracking-[-0.04em] text-white">
                           {config.successLabel}
@@ -982,12 +981,11 @@ function AccentNote({ config }: { config: InquiryPortalConfig }) {
   return (
     <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white/60">
       <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/34">
-        Signal routing
+        Where This Goes
       </p>
       <p className="mt-2 leading-relaxed">
-        This intake lands in the{" "}
-        <span style={{ color: config.accent }}>{config.title}</span> queue with
-        its own routing rules and response cadence.
+        This note lands in the{" "}
+        <span style={{ color: config.accent }}>{config.title}</span> queue, reviewed on its own cadence.
       </p>
     </div>
   );

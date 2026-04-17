@@ -58,7 +58,7 @@ export default function NotFound() {
                 <Link href="/archive" asChild>
                     <button className="px-10 py-5 border border-white/10 text-white/60 font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-white/5 hover:text-white transition-all focus:outline-none flex items-center gap-3">
                         <Disc size={12} className="opacity-40" />
-                        View Event Archive
+                        See The Archive
                     </button>
                 </Link>
             </div>

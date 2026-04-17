@@ -84,10 +84,10 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
 
   await page.goto("/tickets");
   await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
-  await expect(page.getByRole("heading", { name: /SECURE ACCESS/i })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole("heading", { name: /GET IN/i })).toBeVisible({ timeout: 10000 });
 
   const ctaLink = page.locator("main a").filter({
-    hasText: /Tickets|View Schedule|Early Tickets|Secure Final Entry/i,
+    hasText: /On Sale|See The Schedule|Unlock Presale|Final Release/i,
   }).first();
   await expect(ctaLink).toBeVisible();
   await ctaLink.click({ force: true });
@@ -101,7 +101,7 @@ test("scoped a11y checks pass for newsletter and tickets header", async ({ page 
   expect(newsletterA11y.violations).toEqual([]);
 
   await page.goto("/tickets");
-  await expect(page.getByRole("heading", { name: /SECURE ACCESS/i })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByRole("heading", { name: /GET IN/i })).toBeVisible({ timeout: 10000 });
   const ticketsA11y = await new AxeBuilder({ page }).include("main").analyze();
   expect(ticketsA11y.violations).toEqual([]);
 });

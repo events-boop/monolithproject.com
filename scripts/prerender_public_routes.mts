@@ -238,7 +238,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           : undefined,
       bodyHtml: renderBaseLayout(
         "Priority Ticket Access",
-        "Secure Access",
+        "Get In",
         [
           featuredTicketEvent
             ? `${featuredTicketEvent.headline || featuredTicketEvent.title} is the current featured Monolith event.`

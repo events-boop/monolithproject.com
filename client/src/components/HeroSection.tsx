@@ -267,7 +267,7 @@ export default function HeroSection() {
     !bannerEvent && activeSlide === 3
       ? { href: "/story", label: "Explore Untold Story" }
       : !bannerEvent && activeSlide === 5
-        ? { href: "/archive", label: "View Event Archive" }
+        ? { href: "/archive", label: "See The Archive" }
         : undefined;
 
   const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");

@@ -487,7 +487,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       subtitle: ticketEvent.episode || ticketEvent.subtitle || "Featured Event",
                       image: ticketEvent.image || "/images/chasing-sunsets-premium.webp",
                       href: ticketHref || `/events/${ticketEvent.slug || ticketEvent.id}`,
-                      ctaText: ticketHref ? "Tickets" : "View Event",
+                      ctaText: ticketHref ? "On Sale" : "See The Night",
                       icon: ticketHref ? "ticket" : "arrow",
                       badge: ticketEvent.status === "on-sale" ? "ON SALE" : "COMING SOON",
                       external: !!ticketHref

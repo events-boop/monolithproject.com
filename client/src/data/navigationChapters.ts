@@ -38,9 +38,9 @@ export const navigationChapters: NavigationChapter[] = [
     proof: "Current event, ticket state, and room context in one step.",
     image: "/images/eran-hersh-live-1.png",
     accent: "#E05A3A",
-    ctaLabel: "Secure Access",
+    ctaLabel: "Get In",
     secondaryLinks: [
-      { label: "View Event", href: "/schedule" },
+      { label: "See The Schedule", href: "/schedule" },
       { label: "Arrival Guide", href: "/guide" },
     ],
   },
@@ -55,7 +55,7 @@ export const navigationChapters: NavigationChapter[] = [
     proof: "A cleaner decision surface for every upcoming date.",
     image: "/images/autograf-recap.jpg",
     accent: "#8B5CF6",
-    ctaLabel: "View Schedule",
+    ctaLabel: "See The Schedule",
     secondaryLinks: [
       { label: "Tickets", href: "/tickets" },
       { label: "Archive", href: "/archive" },

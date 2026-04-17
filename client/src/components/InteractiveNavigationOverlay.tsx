@@ -117,7 +117,7 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
         ticketEvent?.lineup,
       ]),
       primaryHref,
-      primaryLabel: ticketHref || getPrimaryTicketUrl(ticketEvent) ? "Secure Access" : "View Event",
+      primaryLabel: ticketHref || getPrimaryTicketUrl(ticketEvent) ? "Get In" : "See The Night",
       previewTitle: ticketEvent?.headline || ticketEvent?.title || chapter.label,
       proof: ticketEvent?.capacity || chapter.proof,
       status: getStatusLabel(ticketEvent?.status),

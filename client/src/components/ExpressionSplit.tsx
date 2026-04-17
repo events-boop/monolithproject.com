@@ -182,10 +182,10 @@ export default function ExpressionSplit() {
                      
                      <div className="mt-8 flex items-center gap-4 text-white hover:text-white transition-colors">
                         <span className="ui-chip">
-                          {exp.id === 'sunsets' ? 'Register For Drop' : 
-                           exp.id === 'untold' ? 'Join The Story' : 
-                           exp.id === 'radio' ? 'Hear The Rooms' : 
-                           'View Archive'}
+                          {exp.id === 'sunsets' ? 'Get Alerts First' :
+                           exp.id === 'untold' ? 'Join The Story' :
+                           exp.id === 'radio' ? 'Hear The Rooms' :
+                           'See The Archive'}
                         </span>
                         <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300">
                            <ArrowUpRight className="h-5 w-5" />
@@ -198,8 +198,8 @@ export default function ExpressionSplit() {
                 <div className="lg:hidden mt-6 flex items-center gap-3">
                   <div className="h-px w-6 bg-white/30" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-                    {exp.id === 'sunsets' ? 'Register For Drop' : 
-                     exp.id === 'untold' ? 'Join The Story' : 
+                    {exp.id === 'sunsets' ? 'Get Alerts First' :
+                     exp.id === 'untold' ? 'Join The Story' :
                      'Open View'}
                   </span>
                 </div>

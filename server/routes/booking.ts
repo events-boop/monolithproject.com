@@ -41,7 +41,7 @@ router.post("/api/booking-inquiry", bookingLimiter, asyncHandler(async (req, res
       requestId,
       error: {
         code: "VALIDATION_ERROR",
-        message: "Please complete all required fields.",
+        message: "A couple things left to fill in.",
         retryable: false,
       },
     });
