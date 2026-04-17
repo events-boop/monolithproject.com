@@ -393,7 +393,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           </>
                         ) :
                           resolvedBrand === "radio" ? (
-                            <span className="font-radio text-rose-500">MONOLITH RADIO</span>
+                            <span className="font-radio text-rose-500">SUN(SETS) RADIO</span>
                           ) :
                             (
                               <div className="flex flex-col items-start gap-0.5">
@@ -592,14 +592,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       target={cta.isExternal ? "_blank" : undefined}
                       rel={cta.isExternal ? "noopener noreferrer" : undefined}
                       data-mobile-quick-cta="true"
-                      aria-label={cta.label}
-                      data-cursor-text={cta.tool === "posh" ? "RSVP" : "ACCESS"}
+                      aria-label={`${cta.label} — ${ticketEvent?.headline || ticketEvent?.title || "Next Night"}`}
+                      data-cursor-text={cta.tool === "posh" ? "GET IN" : cta.tool === "laylo" ? "UNLOCK" : "RSVP"}
                       onMouseEnter={() => {
                         signalChirp.hover();
                         if (cta.isExternal) preconnectGateway(cta.href);
                       }}
                       onClick={() => signalChirp.click()}
-                      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
+                      className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
                         ? "border-transparent bg-primary text-black"
                         : cta.tool === "laylo"
                           ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
@@ -618,7 +618,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       href={cta.href}
                       target={cta.isExternal ? "_blank" : undefined}
                       rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                      data-cursor-text={cta.tool === 'posh' ? "RSVP" : "ACCESS"}
+                      data-cursor-text={cta.tool === 'posh' ? "GET IN" : cta.tool === 'laylo' ? "UNLOCK" : "RSVP"}
                       onMouseEnter={() => {
                         signalChirp.hover();
                         if (cta.isExternal) preconnectGateway(cta.href);
@@ -626,7 +626,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       onClick={() => signalChirp.click()}
                     >
                       <div className={`
-                      rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5 
+                      rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
                       transition-all duration-500 flex border uppercase font-black
                       ${cta.tool === 'posh' ? 'cta-posh border-transparent' : cta.tool === 'laylo' ? 'cta-laylo border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'cta-fillout'}
                       ${isLight && cta.tool === 'posh' ? 'opacity-90 hover:opacity-100 !shadow-none' : ''}

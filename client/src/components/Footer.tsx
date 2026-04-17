@@ -110,8 +110,8 @@ export default function Footer() {
     glowColor = "rgba(34,211,238";
     fontSizeClass = "text-[13vw]";
   } else if ((resolvedBrand as string) === "radio") {
-    displayTitle = "MONOLITH RADIO";
-    topNavLeft = "MONOLITH";
+    displayTitle = "SUN(SETS) RADIO";
+    topNavLeft = "SUN(SETS)";
     topNavRight = "RADIO";
     glowColor = "rgba(244,63,94";
     fontSizeClass = "text-[11.5vw]";

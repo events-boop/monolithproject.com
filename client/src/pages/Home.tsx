@@ -65,7 +65,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-[#0c0c0c] border-y border-white/5 relative z-10 transition-colors duration-500">
+        <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
           <SectionDivider id="campaigns" number="01" label="Upcoming Highlights" glow="rgba(255,51,51,0.08)" />
           <ViewportLazy minHeightClassName="min-h-[760px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[760px] w-full opacity-10" />}>
@@ -74,7 +74,7 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#F8F8F8] transition-colors duration-500 border-y border-black/5 relative z-10">
+        <div className="bg-[#F8F8F8] transition-colors duration-500 relative z-10">
           <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
@@ -83,7 +83,7 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
+        <div className="bg-[#111111] relative z-10 transition-colors duration-500">
           <SectionDivider id="series" number="03" label="The Branches" glow="#E05A3A" dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
@@ -92,7 +92,7 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#111111] border-y border-white/5 relative z-10 transition-colors duration-500">
+        <div className="bg-[#0d0d0d] relative z-10 transition-colors duration-500">
           <SectionDivider id="showcase" number="04" label="Explore" glow="#D4A574" dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
@@ -112,7 +112,7 @@ export default function Home() {
           </Suspense>
         </ViewportLazy>
 
-        <div className="bg-[#0c0b0a] border-y border-white/5 relative z-10 transition-colors duration-500 pb-24 md:pb-32">
+        <div className="bg-[#0c0b0a] relative z-10 transition-colors duration-500 pb-24 md:pb-32">
           <SectionDivider id="community" number="05" label="Newsletter" glow="#D4A574" />
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>

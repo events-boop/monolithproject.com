@@ -9,7 +9,7 @@ export default function Alerts() {
         <div className="min-h-screen bg-[#06060F] text-white relative overflow-hidden flex flex-col items-center justify-center selection:bg-white/20">
             <SEO
                 title="Alerts | The Monolith Project"
-                description="Sign up for exclusive venue coordinates and lineup drops for Chasing Sun(Sets), Untold Story, and Monolith Radio."
+                description="Sign up for exclusive venue coordinates and lineup drops from Chasing Sun(Sets), Untold Story, and the Sun(Sets) Radio Show."
             />
 
             {/* Background cinematic glows */}
@@ -94,8 +94,8 @@ export default function Alerts() {
                                     <Headphones size={18} />
                                 </div>
                                 <div>
-                                    <h3 className="font-display text-2xl tracking-wide text-white transition-colors">MONOLITH RADIO</h3>
-                                    <p className="font-mono text-[10px] tracking-widest text-white/50 uppercase">Mixes & Tapes</p>
+                                    <h3 className="font-display text-2xl tracking-wide text-white transition-colors">SUN(SETS) RADIO</h3>
+                                    <p className="font-mono text-[10px] tracking-widest text-white/50 uppercase">The Global Connection</p>
                                 </div>
                             </div>
                             <MagneticButton strength={0.2}>

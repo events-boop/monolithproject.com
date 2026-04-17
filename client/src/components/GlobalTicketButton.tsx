@@ -45,6 +45,18 @@ export default function GlobalTicketButton() {
             
     const cta = getEventCta(featuredEvent);
 
+    const stateDot = featuredEvent?.status === "on-sale"
+        ? { color: "#10B981", label: "Live", pulse: true }
+        : featuredEvent?.status === "sold-out"
+            ? { color: "#F43F5E", label: "Waitlist", pulse: false }
+            : { color: "var(--scene-accent, #E05A3A)", label: "Upcoming", pulse: false };
+
+    const cursorTextByTool = {
+        posh: "GET IN",
+        laylo: "UNLOCK",
+        fillout: "RSVP",
+    } as const;
+
     useEffect(() => {
         const handleConsentResolved = (event: Event) => {
             const nextState = (event as CustomEvent<"accepted" | "declined">).detail;
@@ -130,7 +142,7 @@ export default function GlobalTicketButton() {
                         target={cta.isExternal ? "_blank" : undefined}
                         rel={cta.isExternal ? "noopener noreferrer" : undefined}
                         data-cursor-magnetic
-                        data-cursor-text={cta.tool === 'posh' ? "BOOK" : "ACCESS"}
+                        data-cursor-text={cursorTextByTool[cta.tool]}
                         onMouseEnter={() => setSensoryOverloadActive(true)}
                         onMouseLeave={() => setSensoryOverloadActive(false)}
                         aria-label={`${cta.label} ${featuredEvent?.headline || featuredEvent?.title || "featured event"}`}
@@ -151,9 +163,16 @@ export default function GlobalTicketButton() {
                         </div>
 
                         <div className="relative z-10 min-w-[8.5rem]">
-                            <span className="ui-chip block text-white/54">{cta.label}</span>
+                            <span className="ui-chip flex items-center gap-1.5 text-white/54">
+                                <span
+                                    className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+                                    style={{ backgroundColor: stateDot.color, boxShadow: stateDot.pulse ? `0 0 8px ${stateDot.color}` : undefined }}
+                                    aria-hidden="true"
+                                />
+                                {cta.label}
+                            </span>
                             <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/92 transition-colors group-hover:text-white">
-                                {featuredEvent?.headline || featuredEvent?.title || "Upcoming Event"}
+                                {featuredEvent?.headline || featuredEvent?.title || "Next Night"}
                             </span>
                         </div>
 
@@ -168,13 +187,21 @@ export default function GlobalTicketButton() {
                     href={cta.href}
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                    aria-label={`${cta.label} — ${featuredEvent?.headline || featuredEvent?.title || "Next Night"}`}
                     className={`flex items-center justify-between w-full h-14 px-6 text-white transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]}`}
                 >
-                    <div className="flex flex-col">
-                        <span className="text-[10px] mb-0.5 tracking-[0.24em] uppercase font-bold opacity-70">{cta.label}</span>
-                        <span className="font-black text-xs tracking-[0.18em] uppercase">{featuredEvent?.headline || featuredEvent?.title || "Upcoming Event"}</span>
+                    <div className="flex items-center gap-3 min-w-0">
+                        <span
+                            className={`h-2 w-2 shrink-0 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+                            style={{ backgroundColor: stateDot.color, boxShadow: stateDot.pulse ? `0 0 10px ${stateDot.color}` : undefined }}
+                            aria-hidden="true"
+                        />
+                        <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] mb-0.5 tracking-[0.24em] uppercase font-bold opacity-70">{cta.label}</span>
+                            <span className="font-black text-xs tracking-[0.18em] uppercase truncate">{featuredEvent?.headline || featuredEvent?.title || "Next Night"}</span>
+                        </div>
                     </div>
-                    <ArrowRight className="w-5 h-5 transition-transform group-active:translate-x-1" />
+                    <ArrowRight className="w-5 h-5 transition-transform group-active:translate-x-1 shrink-0" />
                 </a>
             </div>
         </div>

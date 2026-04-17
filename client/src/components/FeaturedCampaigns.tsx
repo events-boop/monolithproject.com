@@ -57,18 +57,13 @@ export default function FeaturedCampaigns() {
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
 
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 block mb-4">
-                Active Campaigns
-              </span>
-              <h2 className="font-display text-[clamp(1.8rem,6vw,3.5rem)] md:text-5xl uppercase text-white tracking-widest">
-                Upcoming Highlights
-              </h2>
-            </div>
-            <p className="text-white/72 max-w-sm text-sm">
-              Start with the biggest upcoming Monolith events and the latest radio release.
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
+            <p className="text-white/72 max-w-md text-sm md:text-base leading-relaxed">
+              Two upcoming Monolith events, the latest archive recap, and the newest radio drop — the working slice of the season.
             </p>
+            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-white/40 shrink-0">
+              {campaigns.length.toString().padStart(2, "0")} Live Campaigns
+            </span>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
@@ -81,7 +76,7 @@ export default function FeaturedCampaigns() {
               <Link
                 key={event.id}
                 href={detailsHref}
-                className="group relative border border-white/10 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] transition-colors"
+                className="group relative border border-white/10 hover:border-[var(--campaign-color)]/50 bg-white/[0.01] overflow-hidden flex flex-col justify-end p-8 md:p-12 min-h-[500px] transition-[border-color,transform] duration-500"
                 style={{ "--campaign-color": color } as React.CSSProperties}
               >
                 {event.image && (
@@ -90,10 +85,14 @@ export default function FeaturedCampaigns() {
                     alt=""
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover opacity-40 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40 transition-all duration-700 group-hover:scale-[1.08] group-hover:opacity-60"
                   />
                 )}
                 <div className="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-soft-light"
+                  style={{ background: `radial-gradient(120% 80% at 50% 100%, ${color}22, transparent 70%)` }}
+                />
 
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-4 flex-wrap">
@@ -171,21 +170,21 @@ export default function FeaturedCampaigns() {
                 </div>
             </div>
 
-            {/* Radio Feature */}
-            <div className="relative border border-white/10 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
+            {/* Radio Feature — Sun(Sets) branch extension */}
+            <div className="relative border border-white/10 border-l-4 border-l-[#E8B86D]/70 bg-[#060606] p-6 md:p-8 flex flex-col justify-between group">
                 <div className="mb-6">
-                   <span className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/65 mb-3 block">Radio Show</span>
-                   <h3 className="font-display text-2xl uppercase text-white mb-2">Chasing Sun(Sets) Radio Show</h3>
-                   <p className="text-white/82 text-xs leading-relaxed">Open the newest mix in the full Chasing Sun(Sets) Radio Show archive instead of a third-party embed.</p>
+                   <span className="font-mono text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-[#E8B86D]/80 mb-3 block">Sun(Sets) · Radio</span>
+                   <h3 className="font-display text-2xl uppercase text-white mb-2 leading-[0.95]">The Global Connection</h3>
+                   <p className="text-white/70 text-xs leading-relaxed">Chasing Sun(Sets) goes worldwide between events. A cleaner room than the embedded SoundCloud chrome.</p>
                 </div>
 
                 <div className="w-full relative overflow-hidden rounded-[12px] border border-white/10 bg-black/40 p-5 md:p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E05A3A]">Latest Audio Drop</span>
+                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#E8B86D]">Latest Drop</span>
                       <h4 className="mt-3 font-display text-2xl uppercase text-white leading-none">Chasing Sun(Sets) Radio</h4>
-                      <p className="mt-3 text-sm leading-relaxed text-white/78">
-                        Launch the full player, browse recent episodes, and listen in a cleaner view without the embedded SoundCloud chrome.
+                      <p className="mt-3 text-sm leading-relaxed text-white/72">
+                        Launch the full player, browse recent episodes, hear the room between nights.
                       </p>
                     </div>
                     <div className="shrink-0 rounded-full border border-white/15 bg-white/5 p-4">
