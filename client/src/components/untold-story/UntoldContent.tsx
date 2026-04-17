@@ -22,7 +22,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">
               {event?.subtitle || "Season III"}
             </span>
-            <h2 className="font-display text-4xl md:text-5xl text-white">{event?.headline || event?.title || "UNTOLD STORY"}</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-white">{event?.headline || event?.episode || "The Featured Event"}</h2>
           </div>
           <span className="font-mono text-xs tracking-widest text-untold-cyan">{event?.episode || "Chapter"}</span>
         </div>
