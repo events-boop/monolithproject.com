@@ -1,7 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "wouter";
 import { shouldEnablePageTransitions } from "../lib/runtimePerformance";
+import { getSceneForPath, type SceneConfig } from "../lib/scenes";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import HorizonDiscMark from "./HorizonDiscMark";
+import SignalBarsMark from "./SignalBarsMark";
 
 interface PageTransitionProps {
     children: React.ReactNode;
@@ -9,7 +13,39 @@ interface PageTransitionProps {
 
 let hasCompletedInitialPageLoad = false;
 
+const SCENE_COPY: Record<SceneConfig["id"], string> = {
+    monolith: "Entering Monolith",
+    story: "After Dark",
+    sunsets: "Chasing The Sun",
+    radio: "Tuning In",
+    paper: "Transmitting Scene",
+};
+
+function SceneMark({ scene }: { scene: SceneConfig }) {
+    switch (scene.id) {
+        case "sunsets":
+            return <HorizonDiscMark className="w-12 h-12" />;
+        case "story":
+            return <UntoldButterflyLogo className="w-12 h-12" glow />;
+        case "radio":
+            return <SignalBarsMark className="w-14 h-10" />;
+        case "monolith":
+        case "paper":
+        default:
+            return (
+                <div
+                    className="font-display text-[2.25rem] leading-none tracking-[0.12em] text-white"
+                    style={{ textShadow: `0 0 24px ${scene.glow}` }}
+                >
+                    M
+                </div>
+            );
+    }
+}
+
 export default function PageTransition({ children }: PageTransitionProps) {
+    const [location] = useLocation();
+    const scene = useMemo(() => getSceneForPath(location), [location]);
     const [transitionsEnabled] = useState(() => shouldEnablePageTransitions());
     const [isTransitioning, setIsTransitioning] = useState(
         transitionsEnabled && hasCompletedInitialPageLoad,
@@ -30,6 +66,8 @@ export default function PageTransition({ children }: PageTransitionProps) {
         return <div className="relative w-full bg-background min-h-screen overflow-hidden">{children}</div>;
     }
 
+    const label = SCENE_COPY[scene.id] ?? SCENE_COPY.monolith;
+
     return (
         <div className="relative w-full bg-background min-h-screen overflow-hidden">
             <motion.div
@@ -49,33 +87,43 @@ export default function PageTransition({ children }: PageTransitionProps) {
                             className="fixed inset-0 z-[999] bg-[#020202] flex items-center justify-center pointer-events-none"
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
-                            exit={{ 
+                            exit={{
                                 y: "-100%",
-                                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }
+                                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 },
                             }}
                         >
                             <div className="absolute inset-0 bg-noise opacity-[0.03] mix-blend-overlay" />
-                            <motion.div 
+                            <div
+                                className="absolute inset-0 pointer-events-none mix-blend-screen opacity-60"
+                                style={{
+                                    background: `radial-gradient(65% 50% at 50% 50%, ${scene.glow}, transparent 70%)`,
+                                }}
+                            />
+                            <motion.div
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 1.1, opacity: 0 }}
+                                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                                 className="flex flex-col items-center gap-4"
                             >
-                               <UntoldButterflyLogo className="w-12 h-12 text-white/10" />
-                               <span className="font-mono text-[9px] uppercase tracking-[0.8em] text-white/30 animate-pulse">
-                                 Transmitting Scene
-                               </span>
+                                <SceneMark scene={scene} />
+                                <span
+                                    className="font-mono text-[9px] uppercase tracking-[0.8em]"
+                                    style={{ color: scene.accent, opacity: 0.75 }}
+                                >
+                                    {label}
+                                </span>
                             </motion.div>
                         </motion.div>
-                        {/* Secondary trailing slab for depth */}
-                        <motion.div 
-                             className="fixed inset-0 z-[998] bg-primary/20 pointer-events-none"
-                             initial={{ y: "100%" }}
-                             animate={{ y: 0 }}
-                             exit={{ 
-                                 y: "-100%",
-                                 transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }
-                             }}
+                        <motion.div
+                            className="fixed inset-0 z-[998] pointer-events-none"
+                            style={{ backgroundColor: scene.accent, opacity: 0.18 }}
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{
+                                y: "-100%",
+                                transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 },
+                            }}
                         />
                     </>
                 )}

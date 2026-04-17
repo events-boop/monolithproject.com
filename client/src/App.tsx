@@ -16,6 +16,7 @@ import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import InquiryPortal from "./components/InquiryPortal";
 import SmoothScroll from "./components/SmoothScroll";
+import MonolithPreloader from "./components/MonolithPreloader";
 
 
 // Lazy Pages
@@ -331,6 +332,7 @@ function App() {
           <UIProvider>
             <InquiryProvider>
               <div className="film-grain" />
+              <MonolithPreloader />
               <MainContentWrapper />
               
               <Suspense fallback={null}>
