@@ -9,30 +9,27 @@ import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import { cn } from "@/lib/utils";
-import { getSeriesColor, getSeriesColorOnLight } from "@/lib/siteExperience";
+import { getSeriesColor, getSeriesColorOnLight, getEventWindow } from "@/lib/siteExperience";
 import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
 
-// --- iCal Generator Helper ---
-function downloadICS(event: ScheduledEvent) {
-  const parseDateToArr = (dateStr: string) => {
-    const [monthName, day] = dateStr.split(" ");
-    const months: Record<string, number> = { JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12 };
-    const month = months[monthName.toUpperCase()] || 1;
-    const year = new Date().getFullYear();
-    const finalYear = (month < new Date().getMonth() + 1) ? year + 1 : year;
-    return [finalYear, month, parseInt(day)];
-  };
+function formatIcsLocal(d: Date) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}` +
+    `T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`
+  );
+}
 
-  const [year, month, day] = parseDateToArr(event.date);
-  const pad2 = (n: number) => String(n).padStart(2, "0");
-  const dateStr = `${year}${pad2(month)}${pad2(day)}`;
+function downloadICS(event: ScheduledEvent) {
+  const { start, end } = getEventWindow(event);
+  if (!start || !end) return;
 
   const icsStr = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//The Monolith Project//EN
 BEGIN:VEVENT
-DTSTART;TZID=America/Chicago:${dateStr}T200000
-DTEND;TZID=America/Chicago:${dateStr}T235900
+DTSTART;TZID=America/Chicago:${formatIcsLocal(start)}
+DTEND;TZID=America/Chicago:${formatIcsLocal(end)}
 SUMMARY:${event.title}
 DESCRIPTION:${event.description || "The Monolith Project Event"}
 LOCATION:${event.venue} — ${event.location}

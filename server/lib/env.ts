@@ -27,19 +27,25 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   };
   const isProd = process.env.NODE_ENV === "production";
 
-  // 1. Database Requirement
+  // DATABASE_URL is degrade-gracefully: form handlers fall back to email delivery,
+  // so a missing value is a warning, not a fatal — even under fatal: true.
   if (!process.env.DATABASE_URL) {
     console.warn("⚠️  DATABASE_URL is not set — running without database persistence. Form handlers and restricted areas may fail.");
   }
 
+  // SPONSOR_SESSION_SECRET is load-bearing: sponsor-session.ts throws at runtime
+  // when it's missing, which turns a correct sponsor login into a 500. Under
+  // fatal: true we want to fail at boot instead of surviving to serve broken requests.
   const requiredGlobalVars = ["SPONSOR_SESSION_SECRET"];
   const missingGlobal = requiredGlobalVars.filter((v) => !process.env[v]);
   if (missingGlobal.length > 0) {
-    console.warn(`⚠️  Missing global env vars at boot: ${missingGlobal.join(", ")}`);
+    logValidationFailure(
+      `Missing required env vars at boot: ${missingGlobal.join(", ")}`,
+      resolvedOptions,
+    );
   }
 
   if (isProd) {
-    // 2. Email Provider Requirement
     const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
     const requiredEnvVars: Record<string, string[]> = {
       mailchimp: ["MAILCHIMP_API_KEY", "MAILCHIMP_LIST_ID"],
@@ -52,13 +58,19 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
 
     const vars = requiredEnvVars[provider];
     if (!vars) {
-      console.warn(`⚠️  Unknown LEAD_PROVIDER "${provider}". Lead capturing may fail.`);
+      logValidationFailure(
+        `Unknown LEAD_PROVIDER "${provider}". Lead capturing will fail.`,
+        resolvedOptions,
+      );
       return;
     }
 
     const missing = vars.filter((v) => !process.env[v]);
     if (missing.length > 0) {
-      console.warn(`⚠️  Missing env vars for ${provider}: ${missing.join(", ")}. Lead capturing may fail.`);
+      logValidationFailure(
+        `Missing env vars for ${provider}: ${missing.join(", ")}. Lead capturing will fail.`,
+        resolvedOptions,
+      );
     }
   }
 }

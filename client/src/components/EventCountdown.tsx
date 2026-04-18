@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getPublicEvents } from "@/lib/siteData";
-import { getSeriesLabel, getEventVenueLabel } from "@/lib/siteExperience";
+import {
+  getSeriesLabel,
+  getEventVenueLabel,
+  getEventWindow,
+  getEventById as getEventByIdShared,
+} from "@/lib/siteExperience";
 
 export function getEventById(id: string) {
-  return getPublicEvents().find(e => e.id === id);
+  return getEventByIdShared(id);
 }
 
 function getNextEvent(eventId?: string) {
@@ -16,39 +21,8 @@ function getNextEvent(eventId?: string) {
   return upcomingEvents.find(e => e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
 }
 
-function parseEventDate(dateStr: string): Date {
-  if (!dateStr || dateStr.toUpperCase().includes("COMING") || dateStr.toUpperCase().includes("SOON") || dateStr.toUpperCase().includes("TBA")) {
-    const farFuture = new Date();
-    farFuture.setFullYear(farFuture.getFullYear() + 10);
-    return farFuture;
-  }
-
-  const months: Record<string, number> = {
-    JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
-    JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11
-  };
-  
-  const segments = dateStr.toUpperCase().split(/[\s,]+/);
-  if (segments.length < 2) {
-    const farFuture = new Date();
-    farFuture.setFullYear(farFuture.getFullYear() + 10);
-    return farFuture;
-  }
-
-  const monthKey = segments[0].substring(0, 3);
-  const month = months[monthKey] ?? 0;
-  const day = parseInt(segments[1]) || 1;
-  const yearStr = segments.find(s => s.length === 4 && !isNaN(parseInt(s)));
-  const year = yearStr ? parseInt(yearStr) : new Date().getFullYear();
-  
-  const d = new Date(year, month, day, 20, 0, 0);
-  
-  // If we parsed a date in the past but didn't have a year in the string, push to next year
-  if (!yearStr && d < new Date()) d.setFullYear(year + 1);
-  return d;
-}
-
-function getTimeLeft(target: Date) {
+function getTimeLeft(target: Date | null) {
+  if (!target) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   const diff = target.getTime() - Date.now();
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
@@ -78,19 +52,19 @@ function Digit({ value, label, accentColor }: { value: number; label: string; ac
   );
 }
 
-function LiveClock({ targetDate, accentColor }: { targetDate: string; accentColor: string }) {
-  const [timeLeft, setTimeLeft] = useState(() =>
-    getTimeLeft(parseEventDate(targetDate))
-  );
+function LiveClock({ target, accentColor }: { target: Date | null; accentColor: string }) {
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target));
 
   useEffect(() => {
-    const target = parseEventDate(targetDate);
+    setTimeLeft(getTimeLeft(target));
+    if (!target) return;
     const interval = setInterval(() => {
       setTimeLeft(getTimeLeft(target));
     }, 1000);
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, [target?.getTime()]);
 
+  if (!target) return null;
   if (!timeLeft) return null;
 
   return (
@@ -236,7 +210,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
           {/* Right: Live countdown */}
           <div className="flex flex-1 justify-center lg:justify-end">
-            <LiveClock targetDate={event.date} accentColor={seriesColor} />
+            <LiveClock target={getEventWindow(event).start} accentColor={seriesColor} />
           </div>
 
         </div>
