@@ -261,7 +261,6 @@ const DeferredShellChrome = lazy(() => import("./components/DeferredShellChrome"
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
-const AmbientAudioEngine = lazy(() => import("./components/AmbientAudioEngine"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
 const Toaster = lazy(() => import("./components/ui/sonner").then((module) => ({ default: module.Toaster })));
 function MainContentWrapper() {
@@ -295,7 +294,6 @@ function MainContentWrapper() {
 
       <Suspense fallback={null}>
         <GlobalTicketButton />
-        <AmbientAudioEngine />
       </Suspense>
       <div
         id="app-shell"
