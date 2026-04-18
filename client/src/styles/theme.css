@@ -69,15 +69,17 @@
   /* Untold Story (Purple/Mag) */
   --color-story-soft: oklch(0.92 0.03 300);
 
+  /* ——— Series palette mirrors lib/brand.ts — keep these values in sync ——— */
+
   /* Untold Story sub-brand palette */
-  --color-untold-violet: #8B5CF6;
-  --color-untold-cyan: #22D3EE;
+  --color-untold-violet: #8B5CF6;   /* atmospheric only (scene glows) */
+  --color-untold-cyan: #22D3EE;     /* primary series accent */
   --color-untold-deep: #06060F;
   --color-untold-card: #0C0C1A;
 
   /* Chasing Sunsets sub-brand palette */
   --color-sunsets-auburn: #C2703E;
-  --color-sunsets-gold: #E8B86D;
+  --color-sunsets-gold: #E8B86D;    /* primary series accent (Sun(Sets) + Radio) */
   --color-sunsets-cream: #FBF5ED;
   --color-sunsets-deep: #2C1810;
 

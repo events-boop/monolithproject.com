@@ -18,6 +18,7 @@ const LiveTickets = lazy(() => import("@/components/LiveTickets"));
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
+import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD, UNTOLD_VIOLET } from "@/lib/brand";
 
 
 export default function Home() {
@@ -57,7 +58,7 @@ export default function Home() {
         <HeroSection />
 
         <div className="bg-[#111111] relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="01" label="The Branches" glow="#E05A3A" dense />
+          <SectionDivider id="series" number="01" label="The Branches" glow={MONOLITH_ORANGE} dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
               <ExpressionSplit />
@@ -66,7 +67,7 @@ export default function Home() {
         </div>
 
         <div className="bg-[#F8F8F8] transition-colors duration-500 relative z-10">
-          <SectionDivider id="season" number="02" label="The Season" dark={false} glow="#8B5CF6" />
+          <SectionDivider id="season" number="02" label="The Season" dark={false} glow={UNTOLD_VIOLET} />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
@@ -75,7 +76,7 @@ export default function Home() {
         </div>
 
         <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
-          <SectionDivider id="featured" number="03" label="Featured" glow="rgba(255,51,51,0.08)" />
+          <SectionDivider id="featured" number="03" label="Featured" glow={`${LIVE_RED}14`} />
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <FeaturedRecap />
@@ -92,7 +93,7 @@ export default function Home() {
         </div>
 
         <div className="bg-[#0d0d0d] relative z-10 transition-colors duration-500">
-          <SectionDivider id="showcase" number="04" label="Explore" glow="#D4A574" dense />
+          <SectionDivider id="showcase" number="04" label="Explore" glow={SUN_SETS_GOLD} dense />
           <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="300px 0px">
             <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
               <ShowcaseSplit />
@@ -112,7 +113,7 @@ export default function Home() {
         </ViewportLazy>
 
         <div className="bg-[#0c0b0a] relative z-10 transition-colors duration-500 pb-24 md:pb-32">
-          <SectionDivider id="community" number="05" label="Newsletter" glow="#D4A574" />
+          <SectionDivider id="community" number="05" label="Newsletter" glow={SUN_SETS_GOLD} />
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="220px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <NewsletterSection source="homepage_bottom" />

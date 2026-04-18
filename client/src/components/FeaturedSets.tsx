@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Play } from "lucide-react";
 import { Link } from "wouter";
 import { getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
+import { RADIO_ACCENT } from "@/lib/brand";
 import type { ScheduledEvent } from "@shared/events/types";
 
 interface FeaturedSet {
@@ -75,7 +76,7 @@ const SETS: FeaturedSet[] = [
 ];
 
 function getSetColor(series: FeaturedSet["series"]) {
-  if (series === "radio") return "#E8B86D";
+  if (series === "radio") return RADIO_ACCENT;
   return getSeriesColor(series);
 }
 

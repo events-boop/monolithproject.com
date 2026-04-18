@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { getResponsiveImage } from "../lib/responsiveImages";
+import { MONOLITH_ORANGE, RADIO_ACCENT, SUN_SETS_GOLD, UNTOLD_CYAN } from "../lib/brand";
 
 const expressions = [
   {
@@ -12,7 +13,7 @@ const expressions = [
     label: "Branch / Open Air",
     title: "Chasing Sun(Sets)",
     tagline: "Golden hour. Open air. A room that breathes.",
-    color: "#D4A574",
+    color: SUN_SETS_GOLD,
     image: "/images/chasing-sunsets-premium.webp",
     href: "/chasing-sunsets",
     icon: Sun,
@@ -23,7 +24,7 @@ const expressions = [
     label: "Branch / After Dark",
     title: "Untold Story",
     tagline: "When the light drops, the room changes shape.",
-    color: "#E05A3A",
+    color: UNTOLD_CYAN,
     image: "/images/untold-story-moody.webp",
     href: "/story",
     icon: UntoldButterflyLogo,
@@ -34,7 +35,7 @@ const expressions = [
     label: "Sun(Sets) · Global",
     title: "Sun(Sets) Radio",
     tagline: "Chicago, worldwide. The daytime room between nights.",
-    color: "#E8B86D",
+    color: RADIO_ACCENT,
     image: "/images/radio-show-gear.webp",
     href: "/radio",
     icon: AudioLines,
@@ -45,7 +46,7 @@ const expressions = [
     label: "Archive",
     title: "Event Archive",
     tagline: "Photos, recaps, and recorded history.",
-    color: "#E05A3A",
+    color: MONOLITH_ORANGE,
     image: "/images/hero-video-1-poster.jpg",
     href: "/archive",
     icon: ArrowUpRight,

@@ -1,5 +1,6 @@
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
 import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
+import { MONOLITH_ORANGE, SERIES_COLORS } from "./brand";
 
 export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
 
@@ -126,16 +127,10 @@ export function getSeriesLabel(series: ScheduledEvent["series"]) {
   }
 }
 
-/** Canonical series accent color used across the site. */
+/** Canonical series accent color used across the site. Reads from `brand.ts`. */
 export function getSeriesColor(series?: ScheduledEvent["series"]): string {
-  switch (series) {
-    case "chasing-sunsets":
-      return "#E8B86D";
-    case "untold-story":
-      return "#22D3EE";
-    default:
-      return "#E05A3A";
-  }
+  if (!series) return MONOLITH_ORANGE;
+  return SERIES_COLORS[series] ?? MONOLITH_ORANGE;
 }
 
 /** Return up to `limit` upcoming events, sorted chronologically. */

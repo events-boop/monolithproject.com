@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { getEventById, getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
 import { getEventDetailsHref, isEventLowInventory } from "@/lib/cta";
+import { LIVE_RED } from "@/lib/brand";
 
 interface FeaturedPick {
   eventId: string;
@@ -28,17 +29,26 @@ export default function LiveTickets() {
       <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
       <div
         className="absolute inset-x-0 top-0 h-px pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, #ff3333aa, transparent)" }}
+        style={{ background: `linear-gradient(90deg, transparent, ${LIVE_RED}aa, transparent)` }}
       />
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
         <div className="mb-8 md:mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between border-b border-white/10 pb-5">
           <div className="flex items-center gap-4">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
-              <span className="absolute inset-0 rounded-full bg-[#ff3333] motion-safe:animate-ping opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#ff3333]" />
+              <span
+                className="absolute inset-0 rounded-full motion-safe:animate-ping opacity-75"
+                style={{ backgroundColor: LIVE_RED }}
+              />
+              <span
+                className="relative inline-flex h-2.5 w-2.5 rounded-full"
+                style={{ backgroundColor: LIVE_RED }}
+              />
             </span>
-            <span className="font-mono text-[11px] md:text-[12px] tracking-[0.5em] uppercase text-[#ff3333] font-bold">
+            <span
+              className="font-mono text-[11px] md:text-[12px] tracking-[0.5em] uppercase font-bold"
+              style={{ color: LIVE_RED }}
+            >
               Featured Event
             </span>
             <span className="h-px w-8 md:w-12 bg-white/20" />
@@ -87,7 +97,10 @@ export default function LiveTickets() {
                       {label}
                     </span>
                     {lowInventory && (
-                      <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#ff3333] border border-[#ff3333]/40 px-1.5 py-0.5">
+                      <span
+                        className="font-mono text-[9px] tracking-[0.3em] uppercase border px-1.5 py-0.5"
+                        style={{ color: LIVE_RED, borderColor: `${LIVE_RED}66` }}
+                      >
                         Final Release
                       </span>
                     )}
