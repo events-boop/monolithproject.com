@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ChevronRight, Share2, Mail } from "lucide-react";
 import { Link, useParams } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { getInsightEntry } from "@/data/insights";
 import { CTA_LABELS } from "@/lib/cta";
+import MagneticButton from "@/components/MagneticButton";
 
 function isExternalLink(url: string) {
   return /^https?:\/\//i.test(url);
@@ -17,30 +18,34 @@ function getAccentClasses(accent: string) {
       return {
         chip: "text-clay border-clay/28 bg-clay/10",
         line: "from-clay/60 to-transparent",
+        glow: "rgba(232, 184, 109, 0.15)",
       };
     case "radio":
       return {
         chip: "text-rose-300 border-rose-400/28 bg-rose-400/10",
         line: "from-rose-400/60 to-transparent",
+        glow: "rgba(244, 63, 94, 0.15)",
       };
     case "story":
       return {
         chip: "text-primary border-primary/28 bg-primary/10",
         line: "from-primary/60 to-transparent",
+        glow: "rgba(139, 92, 246, 0.15)",
       };
     default:
       return {
         chip: "text-primary border-primary/28 bg-primary/10",
         line: "from-primary/60 to-transparent",
+        glow: "rgba(222, 75, 38, 0.15)",
       };
   }
 }
 
-const sectionTransition = { duration: 0.58, ease: [0.22, 1, 0.36, 1] as const };
+const sectionTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const };
 const sectionReveal = {
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
+  viewport: { once: true, margin: "-100px" },
   transition: sectionTransition,
 };
 
@@ -63,7 +68,7 @@ export default function InsightArticle() {
               Article Not Found
             </h1>
             <p className="text-white/70 mb-8">
-              This article is not live yet. Head back to Articles to browse the published pieces.
+              This article is not live yet. Head back to the Journal to browse published pieces.
             </p>
             <Link href="/insights" className="btn-pill-coral">
               {CTA_LABELS.backToJournal}
@@ -77,131 +82,171 @@ export default function InsightArticle() {
   const accent = getAccentClasses(article.accent);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-primary selection:text-white bg-scanlines relative">
       <SEO
-        title={`${article.title} | Inside Monolith`}
+        title={`${article.title} | Journal`}
         description={article.summary}
         absoluteTitle
         canonicalPath={`/insights/${article.slug}`}
       />
       <Navigation />
 
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute left-[-8vw] top-[8vh] h-[34rem] w-[34rem] rounded-full opacity-[0.12] bg-[radial-gradient(circle,rgba(224,90,58,0.22)_0%,transparent_64%)]" />
-        <div className="absolute right-[-10vw] bottom-[-8vh] h-[28rem] w-[28rem] rounded-full opacity-[0.1] bg-[radial-gradient(circle,rgba(139,92,246,0.2)_0%,transparent_66%)]" />
+      {/* Atmospheric Immersive Backdrop */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+         <motion.div 
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.15, scale: 1 }}
+            transition={{ duration: 2 }}
+            className="absolute inset-0 bg-cover bg-center blur-[120px] saturate-[1.5]"
+            style={{ backgroundImage: `url(${article.image})` }}
+         />
+         <div className="absolute inset-0 bg-black/60" />
       </div>
 
       <main id="main-content" tabIndex={-1} className="relative z-10 page-shell-start-loose pb-24">
-        <motion.section className="container layout-default px-6" {...sectionReveal}>
-          <Link
-            href="/insights"
-            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {CTA_LABELS.backToJournal}
-          </Link>
+        
+        {/* Editorial Header */}
+        <motion.section 
+          className="container layout-default px-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {/* Breadcrumbs */}
+          <nav className="flex items-center gap-2 mb-10 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40" aria-label="Breadcrumb">
+             <Link href="/" className="hover:text-white transition-colors">Root</Link>
+             <ChevronRight size={10} />
+             <Link href="/insights" className="hover:text-white transition-colors">Journal</Link>
+             <ChevronRight size={10} />
+             <span className="text-white/80">{article.category}</span>
+          </nav>
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className="max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <span className={`inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] ${accent.chip}`}>
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end mb-20 md:mb-32">
+            <div className="max-w-4xl">
+              <div className="flex flex-wrap items-center gap-4 mb-8">
+                <span className={`inline-flex items-center rounded-sm border px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.25em] ${accent.chip}`}>
                   {article.category}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
-                  {article.displayDate}
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                  {article.displayDate} // {article.readTime}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
-                  {article.readTime}
-                </span>
+                <button className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors ml-auto md:ml-0">
+                    <Share2 size={12} /> Share Signal
+                </button>
               </div>
 
-              <h1 className="mt-6 font-display text-[clamp(2.8rem,7vw,5.8rem)] leading-[0.9] uppercase text-white">
+              <h1 className="font-display text-[clamp(2.8rem,7vw,6.5rem)] leading-[0.85] uppercase text-white mb-10 text-balance drop-shadow-2xl">
                 {article.title}
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
+              
+              <div className="h-0.5 w-32 mb-10" style={{ backgroundColor: accent.glow || '#DE4B26' }} />
+
+              <p className="text-xl md:text-2xl leading-[1.4] text-white/60 font-light italic max-w-2xl">
                 {article.summary}
               </p>
-
-              <div className="mt-6 h-px w-28 bg-gradient-to-r" style={{ backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))` }}>
-                <div className={`h-px w-full bg-gradient-to-r ${accent.line}`} />
-              </div>
             </div>
 
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-black/30 shadow-[0_22px_52px_rgba(0,0,0,0.24)]">
-              <img
-                src={article.image}
-                alt={article.title}
-                loading="lazy"
-                decoding="async"
-                className="h-[300px] w-full object-cover"
-              />
+            <div className="relative group">
+               <div className="absolute -inset-4 bg-white/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+               <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-[0_32px_80px_rgba(0,0,0,0.5)]">
+                 <img
+                    src={article.image}
+                    alt={article.title}
+                    className="aspect-[4/5] md:aspect-auto h-[400px] md:h-[600px] w-full object-cover transition-transform duration-[2s] group-hover:scale-105"
+                  />
+               </div>
             </div>
           </div>
         </motion.section>
 
-        <motion.section className="container layout-narrow px-6 mt-12" {...sectionReveal}>
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 md:p-8">
-            <p className="text-lg leading-relaxed text-white/80 md:text-xl">{article.deck}</p>
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              {article.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50"
+        {/* Article Body */}
+        <div className="container layout-narrow px-6">
+          
+          <motion.div 
+            className="mb-16 border-l-2 pl-8 border-white/5"
+            {...sectionReveal}
+          >
+             <p className="text-2xl md:text-3xl font-display uppercase leading-tight text-white italic opacity-90">{article.deck}</p>
+             <div className="mt-8 flex flex-wrap gap-2">
+                {article.tags.map((tag) => (
+                    <span key={tag} className="px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-white/30 border border-white/5 rounded-sm">
+                        #{tag.replace(/\s+/g, '_').toLowerCase()}
+                    </span>
+                ))}
+             </div>
+          </motion.div>
+
+          {/* Main Content Sections */}
+          <div className="space-y-20 md:space-y-32">
+            {article.sections.map((section, sIdx) => (
+              <motion.section
+                key={section.title}
+                className="relative"
+                {...sectionReveal}
+              >
+                <div className="flex items-center gap-4 mb-8">
+                    <span className="font-mono text-[10px] text-primary">0{sIdx + 1}</span>
+                    <h2 className="font-display text-4xl uppercase text-white tracking-wide">{section.title}</h2>
+                </div>
+                
+                <div className="space-y-8 text-lg md:text-xl leading-[1.6] text-white/70 font-light">
+                  {section.paragraphs.map((paragraph, pIdx) => (
+                    <p key={pIdx}>{paragraph}</p>
+                  ))}
+                </div>
+              </motion.section>
+            ))}
+          </div>
+
+          {/* Related Actions */}
+          <motion.section className="mt-32 pt-16 border-t border-white/5" {...sectionReveal}>
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 mb-8 block text-center md:text-left">Related Transmissions</span>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {article.relatedLinks.map((link) => (
+                <Link
+                   key={link.label}
+                   href={link.href}
+                   asChild
                 >
-                  {tag}
-                </span>
+                   <a className="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all flex items-center justify-between">
+                      <span className="font-display text-xl uppercase tracking-wider">{link.label}</span>
+                      <ArrowUpRight className="text-white/20 group-hover:text-primary transition-colors" />
+                   </a>
+                </Link>
               ))}
             </div>
-          </div>
-        </motion.section>
+          </motion.section>
 
-        <section className="container layout-narrow px-6 mt-12 space-y-8">
-          {article.sections.map((section) => (
-            <motion.article
-              key={section.title}
-              className="rounded-[2rem] border border-white/10 bg-white/[0.02] p-7 md:p-8"
-              {...sectionReveal}
-            >
-              <h2 className="font-display text-3xl uppercase text-white">{section.title}</h2>
-              <div className="mt-5 space-y-4 text-base leading-relaxed text-white/70 md:text-lg">
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </motion.article>
-          ))}
-        </section>
+          {/* Contextual Conversion — driving organic drive */}
+          <motion.section 
+            className="mt-32 p-10 md:p-16 rounded-[2.5rem] bg-gradient-to-br from-white/[0.04] to-transparent border border-white/5 relative overflow-hidden"
+            {...sectionReveal}
+          >
+             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="text-center md:text-left flex-1">
+                   <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 mx-auto md:mx-0">
+                      <Mail className="text-primary" size={20} />
+                   </div>
+                   <h3 className="font-display text-3xl md:text-4xl uppercase mb-4">Signal Subscription</h3>
+                   <p className="text-white/40 font-mono text-[11px] uppercase tracking-[0.3em] leading-relaxed">
+                      Receive deeper context on lineup drops, <br className="hidden md:block"/> radio programming, and private events.
+                   </p>
+                </div>
+                
+                <MagneticButton strength={0.3}>
+                   <Link href="/newsletter" asChild>
+                      <a className="flex h-16 items-center justify-center px-12 bg-white text-black font-black uppercase text-xs tracking-[0.3em] hover:bg-white/90 active:scale-95 transition-all rounded-full whitespace-nowrap shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+                         Secure Access
+                      </a>
+                   </Link>
+                </MagneticButton>
+             </div>
+             
+             {/* Architectural Aura */}
+             <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full blur-[100px] opacity-[0.05]" style={{ backgroundColor: accent.glow || '#DE4B26' }} />
+          </motion.section>
 
-        <motion.section className="container layout-narrow px-6 mt-12" {...sectionReveal}>
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.025] p-7 md:p-8">
-            <h2 className="font-display text-3xl uppercase text-white">Related Links</h2>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {article.relatedLinks.map((link) =>
-                isExternalLink(link.href) || link.external ? (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
-                  >
-                    {link.label}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
-                ) : (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
-                  >
-                    {link.label}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                ),
-              )}
-            </div>
-          </div>
-        </motion.section>
+        </div>
       </main>
 
       <EntityBoostStrip tone="dark" className="pb-8" />

@@ -1,7 +1,6 @@
 import express from "express";
-import { readPublicScheduledEvents } from "../db/scheduledEventsRepo";
+import { siteDataService } from "../services/site-data-service";
 import { createRateLimitMiddleware } from "../services/rate-limit";
-import { buildPublicSiteData } from "../data/public-site-data";
 import { asyncHandler } from "../lib/async";
 
 const router = express.Router();
@@ -10,17 +9,22 @@ router.get(
   "/api/site-data",
   createRateLimitMiddleware({
     scope: "site_data_public",
-    limit: 120,
-    windowMs: 15 * 60_000,
+    limit: 5000, // Scaled for 1000+ stress tests
+    windowMs: 5 * 60_000,
+    preferMemory: true, // Critical: eliminate DB write overhead for this route
     message: "Too many site data requests. Please try again shortly.",
   }),
   asyncHandler(async (req, res) => {
     const path = typeof req.query.path === "string" ? req.query.path : "/";
-    const events = await readPublicScheduledEvents();
+    
+    // The service handles caching and background revalidation
+    const siteData = await siteDataService.getSiteData(path);
 
-    res.setHeader("Cache-Control", "public, max-age=120, stale-while-revalidate=300");
+    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
     res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
-    res.json(buildPublicSiteData(path, events));
+    res.setHeader("X-Data-Source", "memcached-swr");
+    
+    res.json(siteData);
   }),
 );
 

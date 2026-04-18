@@ -28,6 +28,7 @@ const generalWaitlistUrl = readHttpsEnv("LAYLO_URL", "OUTBOUND_WAITLIST_GENERAL_
 const ticketDestinations: Record<string, string> = {
   featured: featuredTicketUrl,
   "mp-autograf-mar21": readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") || featuredTicketUrl,
+  "us-s3e3": readHttpsEnv("OUTBOUND_TICKETS_US_S3E3_URL") || featuredTicketUrl,
 };
 
 const waitlistDestinations: Record<string, string> = {

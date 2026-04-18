@@ -44,8 +44,8 @@ export function configureMiddleware(app: Express) {
     createRateLimitMiddleware({
       scope: "api:global",
       windowMs: 15 * 60 * 1000,
-      limit: 200,
-      message: "System capacity reached. Please try again after 15 minutes.",
+      limit: 2000, // Scaled for 1000+ high-intensity testing
+      message: "Monolith System Capacity Reached.",
       skip: (req) => req.path === "/health",
     })
   );

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Instagram, Music, Headphones, Mail, ArrowRight, MapPinned } from "lucide-react";
+import { ChevronDown, Instagram, Music, Headphones, Mail, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import {
     INSTAGRAM_MONOLITH,
@@ -13,6 +13,7 @@ import {
 interface CommunityDropdownProps {
     isLight?: boolean;
     brand?: "monolith" | "chasing-sunsets" | "untold-story" | "radio";
+    isActive?: boolean;
 }
 
 const communityLinks = [
@@ -62,13 +63,6 @@ const communityLinks = [
         color: "group-hover:text-primary",
     },
     {
-        title: "Night Guide",
-        description: "Entry, timing, and arrival notes",
-        href: "/guide",
-        iconOverride: <MapPinned className="w-5 h-5" />,
-        color: "group-hover:text-clay",
-    },
-    {
         title: "Laylo Drops",
         description: "Text alerts & updates",
         href: LAYLO_URL,
@@ -77,7 +71,7 @@ const communityLinks = [
     },
 ];
 
-export default function CommunityDropdown({ isLight, brand }: CommunityDropdownProps) {
+export default function CommunityDropdown({ isLight, brand, isActive = false }: CommunityDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
@@ -184,7 +178,13 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
     };
 
     return (
-        <div className="relative" ref={dropdownRef}>
+        <div
+            className="relative"
+            ref={dropdownRef}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => closeMenu()}
+            onFocusCapture={() => setIsOpen(true)}
+        >
             <button
                 ref={triggerRef}
                 type="button"
@@ -193,11 +193,11 @@ export default function CommunityDropdown({ isLight, brand }: CommunityDropdownP
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
                 aria-controls={menuId}
-                className={`flex items-center gap-1 text-[12px] font-bold tracking-[0.15em] uppercase transition-all duration-300 ${isLight
-                    ? "hover:text-clay text-stone"
+                className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${isLight
+                    ? `hover:text-clay ${isActive ? "text-clay" : "text-stone"}`
                     : brand === "chasing-sunsets"
-                        ? "hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] text-white/90"
-                        : "hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] text-white/90"
+                        ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActive ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
+                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                     }`}
             >
                 COMMUNITY

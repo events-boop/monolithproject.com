@@ -264,6 +264,7 @@ function SiteDataSync() {
 const Analytics = lazy(() => import("./components/Analytics"));
 const DeferredShellChrome = lazy(() => import("./components/DeferredShellChrome"));
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
+const SoundCloudShelf = lazy(() => import("./components/SoundCloudShelf"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
@@ -317,6 +318,11 @@ function MainContentWrapper() {
            }}
         />
         <Router />
+        <ViewportLazy minHeightClassName="min-h-[24rem]" rootMargin="360px 0px">
+          <Suspense fallback={null}>
+            <SoundCloudShelf />
+          </Suspense>
+        </ViewportLazy>
         <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
           <Suspense fallback={null}>
             <Footer />

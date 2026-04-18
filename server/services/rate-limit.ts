@@ -23,6 +23,7 @@ interface CreateRateLimitMiddlewareOptions {
   scope: string;
   skip?: (req: Request) => boolean;
   windowMs: number;
+  preferMemory?: boolean; // New option for high-performance read routes
 }
 
 interface RateLimitResult {
@@ -166,13 +167,8 @@ export function getClientIdentifier(req: Request) {
   return req.ip || req.socket.remoteAddress || "unknown";
 }
 
-export function createRateLimitMiddleware({
-  limit,
-  message,
-  scope,
-  skip,
-  windowMs,
-}: CreateRateLimitMiddlewareOptions): RequestHandler {
+export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOptions): RequestHandler {
+  const { skip } = options;
   return (req, res, next) => {
     if (skip?.(req)) {
       next();
@@ -183,17 +179,38 @@ export function createRateLimitMiddleware({
       const identifier = getClientIdentifier(req);
 
       let result: RateLimitResult;
-      try {
-        result = await consumeDatabaseRateLimit({ identifier, limit, scope, windowMs });
-      } catch (error) {
-        if (Date.now() - lastStorageFailureLogAt > 60_000) {
-          lastStorageFailureLogAt = Date.now();
-          logEvent("rate_limit.storage_failed", {
-            scope,
-            message: error instanceof Error ? error.message : "Unknown error",
+      
+      // OPTIMIZATION: High-performance bypass for read routes
+      if (options.preferMemory) {
+        result = consumeInMemoryRateLimit({ 
+          identifier, 
+          limit: options.limit, 
+          scope: options.scope, 
+          windowMs: options.windowMs 
+        });
+      } else {
+        try {
+          result = await consumeDatabaseRateLimit({ 
+            identifier, 
+            limit: options.limit, 
+            scope: options.scope, 
+            windowMs: options.windowMs 
+          });
+        } catch (error) {
+          if (Date.now() - lastStorageFailureLogAt > 60_000) {
+            lastStorageFailureLogAt = Date.now();
+            logEvent("rate_limit.storage_failed", {
+              scope: options.scope,
+              message: error instanceof Error ? error.message : "Unknown error",
+            });
+          }
+          result = consumeInMemoryRateLimit({ 
+            identifier, 
+            limit: options.limit, 
+            scope: options.scope, 
+            windowMs: options.windowMs 
           });
         }
-        result = consumeInMemoryRateLimit({ identifier, limit, scope, windowMs });
       }
 
       setRateLimitHeaders(res, result);

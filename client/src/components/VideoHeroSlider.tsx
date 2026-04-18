@@ -208,31 +208,43 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
               )}
             </div>
           ) : slide.type === "video" ? (
-            loadVideo || !slide.poster ? (
-              <video
-                ref={videoRef}
-                src={slide.src}
-                poster={slide.poster}
-                autoPlay={!reduceMotion}
-                loop={!reduceMotion}
-                muted={isMuted}
-                playsInline
-                preload={currentSlide === 0 ? "auto" : "metadata"}
-                className="w-full h-full object-cover object-center md:object-[80%_center]"
-                aria-hidden="true"
-                tabIndex={-1}
-              />
-            ) : (
-              <ResponsiveSlideImage
-                src={slide.poster}
-                alt=""
-                ariaHidden
-                fetchPriority={slideFetchPriority}
-                sources={slide.posterSources}
-                sizes={slide.posterSizes}
-                className="w-full h-full object-cover object-center md:object-[80%_center]"
-              />
-            )
+            <div className="relative w-full h-full">
+              {/* Persistent Poster/Background to prevent flicker */}
+              {slide.poster && (
+                <ResponsiveSlideImage
+                  src={slide.poster}
+                  alt=""
+                  ariaHidden
+                  fetchPriority={slideFetchPriority}
+                  sources={slide.posterSources}
+                  sizes={slide.posterSizes}
+                  className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center]"
+                />
+              )}
+              
+              {/* Video Layer fades in over poster once ready */}
+              {loadVideo && (
+                <motion.video
+                  ref={videoRef}
+                  initial={{ opacity: 0 }}
+                  onCanPlay={() => {
+                    if (videoRef.current) {
+                      videoRef.current.style.opacity = "1";
+                    }
+                  }}
+                  src={slide.src}
+                  autoPlay={!reduceMotion}
+                  loop={!reduceMotion}
+                  muted={isMuted}
+                  playsInline
+                  preload={currentSlide === 0 ? "auto" : "metadata"}
+                  className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center] transition-opacity duration-1000 ease-in-out"
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  style={{ opacity: 0 }}
+                />
+              )}
+            </div>
           ) : (
             <ResponsiveSlideImage
               src={slide.src}
