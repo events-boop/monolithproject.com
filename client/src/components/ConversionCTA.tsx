@@ -7,8 +7,13 @@ import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { useInquiry } from "@/contexts/InquiryContext";
 import { isInquiryHref, parseInquiryType } from "@/lib/cta";
 
+// Callers on pages like /partners pass a synthesized minimal event whose only
+// meaningful field is `primaryCta` (the CTA-source). Accept a partial shape so
+// those call sites can type-check without `as any`.
+type ConversionCTAEvent = Partial<ScheduledEvent>;
+
 interface ConversionCTAProps {
-  event?: ScheduledEvent | null;
+  event?: ConversionCTAEvent | null;
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
   showUrgency?: boolean;

@@ -86,7 +86,7 @@ export default function AdminDashboard() {
       setConnectors([
         { name: "Posh.vip (Tickets)", status: publicEvents.some((event) => Boolean(event.ticketUrl)) ? "active" : "error", latency: "42ms" },
         { name: "Laylo (Access)", status: "active", latency: "88ms" },
-        { name: "Google Analytics (GA4)", status: (window as any).gtag ? "active" : "error", latency: "12ms" },
+        { name: "Google Analytics (GA4)", status: (window as Window & { gtag?: unknown }).gtag ? "active" : "error", latency: "12ms" },
         { name: "Neon (Reporting)", status: "active", latency: "156ms" },
       ]);
       setIssues(results);

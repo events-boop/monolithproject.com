@@ -19,6 +19,11 @@ export default function ArchiveGalleryPage() {
     const key = `${params.series}-${params.season}`;
     const gallery = archiveCollectionsBySlug[key];
 
+    const navBrand: "chasing-sunsets" | "untold-story" | "monolith" =
+      params.series === "chasing-sunsets" || params.series === "untold-story"
+        ? params.series
+        : "monolith";
+
     if (!gallery) {
         return (
             <div className="min-h-screen text-white flex items-center justify-center">
@@ -30,7 +35,7 @@ export default function ArchiveGalleryPage() {
     return (
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
             <SEO title={`${gallery.title} — ${gallery.subtitle}`} />
-            <Navigation variant="dark" brand={params.series as any} />
+            <Navigation variant="dark" brand={navBrand} />
 
             <main className="page-shell-start pb-32">
                 <div className="container layout-wide px-6">

@@ -65,7 +65,7 @@ export function getEventDetailsHref(event?: ScheduledEvent | null) {
   return `/events/${event.slug || event.id}`;
 }
 
-export function isEventLowInventory(event?: ScheduledEvent | null) {
+export function isEventLowInventory(event?: Partial<ScheduledEvent> | null) {
   if (!event) return false;
   if (event.inventoryState === "low") return true;
 
@@ -78,7 +78,7 @@ export function isEventLowInventory(event?: ScheduledEvent | null) {
 /**
  * Returns the server-resolved primary CTA configuration for an event.
  */
-export function getEventCta(event?: ScheduledEvent | null): EventCta {
+export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
   const fallback: EventCta = {
     label: CTA_LABELS.schedule,
     href: "/schedule",

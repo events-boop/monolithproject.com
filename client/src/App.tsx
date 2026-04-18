@@ -77,15 +77,20 @@ function RouteLoadingFallback() {
   );
 }
 
-const withTransition = (Component: React.ComponentType<any>) => {
-  return (props: any) => (
+type RouteParams = Record<string, string | undefined>;
+type RouteProps = { params?: RouteParams };
+
+function withTransition<P extends RouteProps>(
+  Component: React.ComponentType<P>,
+) {
+  return (props: P) => (
     <PageTransition>
       <Suspense fallback={<RouteLoadingFallback />}>
         <Component {...props} />
       </Suspense>
     </PageTransition>
   );
-};
+}
 
 // Transition Wrappers
 const HomeTransition = withTransition(Home);

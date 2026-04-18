@@ -5,8 +5,7 @@ export type InquiryType = "sponsor" | "venue" | "artist" | "press" | "general" |
 interface InquiryContextType {
   isOpen: boolean;
   type: InquiryType;
-  meta?: any;
-  openInquiry: (type: InquiryType, meta?: any) => void;
+  openInquiry: (type: InquiryType) => void;
   closeInquiry: () => void;
 }
 
@@ -15,11 +14,9 @@ const InquiryContext = createContext<InquiryContextType | undefined>(undefined);
 export function InquiryProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<InquiryType>("general");
-  const [meta, setMeta] = useState<any>(undefined);
 
-  const openInquiry = (newType: InquiryType, newMeta?: any) => {
+  const openInquiry = (newType: InquiryType) => {
     setType(newType);
-    setMeta(newMeta);
     setIsOpen(true);
   };
 
@@ -28,7 +25,7 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <InquiryContext.Provider value={{ isOpen, type, meta, openInquiry, closeInquiry }}>
+    <InquiryContext.Provider value={{ isOpen, type, openInquiry, closeInquiry }}>
       {children}
     </InquiryContext.Provider>
   );

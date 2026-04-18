@@ -166,7 +166,7 @@ export default function Partners() {
             <ConversionCTA 
               variant="experiential" 
               size="lg" 
-              event={{ primaryCta: { href: "inquiry://general", label: "Apply to Join the Crew" } } as any}
+              event={{ primaryCta: { href: "inquiry://general", label: "Apply to Join the Crew", tool: "fillout", isExternal: false } }}
             />
             <p className="text-white/30 font-mono text-[10px] uppercase tracking-[0.2em] mt-8">
               Or Reconnect via crew@monolithproject.com
@@ -217,7 +217,7 @@ export default function Partners() {
                 <ConversionCTA 
                   variant="outline" 
                   size="md" 
-                  event={{ primaryCta: { href: `inquiry://${partner.inquiryType}`, label: "Get in Touch" } } as any}
+                  event={{ primaryCta: { href: `inquiry://${partner.inquiryType}`, label: "Get in Touch", tool: "fillout", isExternal: false } }}
                 />
               </motion.div>
             ))}
