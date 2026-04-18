@@ -3,6 +3,7 @@ import { useLocation, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, AlertTriangle, CheckCircle, Database, Link as LinkIcon, RefreshCw, Radio, Activity, BarChart3, ShieldCheck, Lock, Unlock } from "lucide-react";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
+import { isTicketOnSale } from "@/lib/siteExperience";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import KineticDecryption from "@/components/KineticDecryption";
@@ -353,11 +354,6 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
-        </div>
-      </main>
-    </div>
-  );
-}
         </div>
       </main>
     </div>

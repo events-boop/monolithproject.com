@@ -40,6 +40,7 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-1.mp4",
+    mobileSrc: "/videos/hero-video-1-mobile.mp4",
     poster: chasingPosterImage.src,
     posterSources: chasingPosterImage.sources,
     posterSizes: chasingPosterImage.sizes,

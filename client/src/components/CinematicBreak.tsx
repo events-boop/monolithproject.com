@@ -1,11 +1,13 @@
 import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { runWhenIdle } from "@/lib/idle";
+import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
+import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
 
 interface CinematicBreakProps {
   image: string;
   videoSrc?: string;
+  mobileVideoSrc?: string;
   quote?: string;
   attribution?: string;
   ctaLabel?: string;
@@ -13,10 +15,21 @@ interface CinematicBreakProps {
   ctaExternal?: boolean;
 }
 
-export default function CinematicBreak({ image, videoSrc, quote, attribution, ctaLabel, ctaUrl, ctaExternal }: CinematicBreakProps) {
+export default function CinematicBreak({
+  image,
+  videoSrc,
+  mobileVideoSrc,
+  quote,
+  attribution,
+  ctaLabel,
+  ctaUrl,
+  ctaExternal,
+}: CinematicBreakProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "200px", once: true });
   const reduceMotion = useReducedMotion();
+  const enableAmbientVideo = useAmbientVideoEnabled(360);
+  const activeVideoSrc = useResponsiveVideoSource(videoSrc || "", mobileVideoSrc);
   const [loadVideo, setLoadVideo] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -31,13 +44,14 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
   // bandwidth contention and helps keep scrolling smooth.
   useEffect(() => {
     if (!videoSrc) return;
+    if (!enableAmbientVideo) return;
     if (!isInView) return;
     if (loadVideo) return;
     if (reduceMotion) return;
 
     const id = window.setTimeout(() => setLoadVideo(true), 50);
     return () => window.clearTimeout(id);
-  }, [videoSrc, isInView, loadVideo, reduceMotion]);
+  }, [enableAmbientVideo, isInView, loadVideo, reduceMotion, videoSrc]);
 
   return (
     <div ref={ref} className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
@@ -46,9 +60,9 @@ export default function CinematicBreak({ image, videoSrc, quote, attribution, ct
         style={{ y }}
         className="absolute inset-0 -top-[20%] -bottom-[20%]"
       >
-        {videoSrc && isInView && loadVideo ? (
+        {videoSrc && enableAmbientVideo && isInView && loadVideo ? (
           <video
-            src={videoSrc}
+            src={activeVideoSrc}
             autoPlay
             loop
             muted

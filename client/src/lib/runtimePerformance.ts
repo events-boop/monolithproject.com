@@ -96,3 +96,13 @@ export function shouldEnablePageTransitions() {
     !hasConstrainedConnection(true)
   );
 }
+
+export function shouldEnableAmbientVideo(minWidth = 640) {
+  return (
+    !prefersReducedMotion() &&
+    !prefersReducedData() &&
+    matchesMinWidth(minWidth) &&
+    !hasConstrainedConnection(true) &&
+    !hasWeakDeviceProfile()
+  );
+}

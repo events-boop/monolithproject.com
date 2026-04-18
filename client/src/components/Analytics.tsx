@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { queueMetaPixelPageview, scheduleMetaPixelInit } from "@/lib/metaPixel";
 import { queuePostHogPageview, schedulePostHogInit } from "@/lib/posthog";
+import { startWebVitalsReporting } from "@/lib/webVitals";
 import {
   COOKIE_CONSENT_RESOLVED_EVENT,
   getCookieConsentState,
@@ -34,6 +35,7 @@ export default function Analytics() {
 
     schedulePostHogInit();
     scheduleMetaPixelInit();
+    startWebVitalsReporting();
   }, [consentState]);
 
   useEffect(() => {

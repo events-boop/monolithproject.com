@@ -15,7 +15,6 @@ import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import InquiryPortal from "./components/InquiryPortal";
-import SmoothScroll from "./components/SmoothScroll";
 import MonolithPreloader from "./components/MonolithPreloader";
 
 
@@ -281,7 +280,6 @@ function MainContentWrapper() {
   return (
     <>
       <GlobalSpotlightSync />
-      <SmoothScroll />
       <SiteDataSync />
 
       <SceneSync />

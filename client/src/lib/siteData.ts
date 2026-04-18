@@ -12,6 +12,8 @@ const EMPTY_SITE_DATA: PublicSiteData = {
 };
 
 const listeners = new Set<() => void>();
+const pendingRequests = new Map<string, Promise<PublicSiteData>>();
+const pendingControllers = new Map<string, AbortController>();
 
 let snapshot: PublicSiteData = EMPTY_SITE_DATA;
 let version = 0;
@@ -71,26 +73,58 @@ export function hasPublicSiteData(pathname?: string | null) {
   return snapshot.path === normalizePathname(pathname);
 }
 
+function abortStaleRequests(activePath: string) {
+  pendingControllers.forEach((controller, path) => {
+    if (path === activePath) return;
+    controller.abort();
+    pendingControllers.delete(path);
+    pendingRequests.delete(path);
+  });
+}
+
 export async function ensurePublicSiteData(pathname?: string | null) {
   const normalizedPath = normalizePathname(pathname);
   if (hasPublicSiteData(normalizedPath) && getPublicEvents().length > 0) {
     return snapshot;
   }
 
-  const response = await fetch(`/api/site-data?path=${encodeURIComponent(normalizedPath)}`, {
+  const pending = pendingRequests.get(normalizedPath);
+  if (pending) return pending;
+
+  abortStaleRequests(normalizedPath);
+
+  const controller = new AbortController();
+  let request: Promise<PublicSiteData>;
+
+  request = fetch(`/api/site-data?path=${encodeURIComponent(normalizedPath)}`, {
     credentials: "same-origin",
     headers: {
       Accept: "application/json",
     },
-  });
+    signal: controller.signal,
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to load site data for ${normalizedPath}`);
+      }
 
-  if (!response.ok) {
-    throw new Error(`Failed to load site data for ${normalizedPath}`);
-  }
+      const data = (await response.json()) as PublicSiteData;
+      primePublicSiteData(data);
+      return snapshot;
+    })
+    .finally(() => {
+      if (pendingRequests.get(normalizedPath) === request) {
+        pendingRequests.delete(normalizedPath);
+      }
+      if (pendingControllers.get(normalizedPath) === controller) {
+        pendingControllers.delete(normalizedPath);
+      }
+    });
 
-  const data = (await response.json()) as PublicSiteData;
-  primePublicSiteData(data);
-  return snapshot;
+  pendingRequests.set(normalizedPath, request);
+  pendingControllers.set(normalizedPath, controller);
+
+  return request;
 }
 
 function subscribe(listener: () => void) {

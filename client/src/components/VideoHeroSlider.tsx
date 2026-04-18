@@ -2,6 +2,8 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
 import YouTubeEmbed from "./ui/YouTubeEmbed";
+import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
+import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
 
 interface SlideSource {
   srcSet: string;
@@ -13,6 +15,7 @@ interface SlideSource {
 export interface Slide {
   type: "video" | "image" | "youtube";
   src: string;
+  mobileSrc?: string;
   poster?: string;
   sources?: SlideSource[];
   sizes?: string;
@@ -26,6 +29,7 @@ export interface Slide {
 interface VideoHeroSliderProps {
   slides: Slide[];
   onSlideChange?: (index: number) => void;
+  videoMinWidth?: number;
 }
 
 function ResponsiveSlideImage({
@@ -70,7 +74,11 @@ function ResponsiveSlideImage({
   );
 }
 
-export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSliderProps) {
+export default function VideoHeroSlider({
+  slides,
+  onSlideChange,
+  videoMinWidth = 768,
+}: VideoHeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [loadVideo, setLoadVideo] = useState(false);
@@ -79,6 +87,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
     return !document.getElementById("initial-loader");
   });
   const reduceMotion = useReducedMotion();
+  const enableAmbientVideo = useAmbientVideoEnabled(videoMinWidth);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -123,6 +132,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
 
   const slide = slides[currentSlide];
   const slideFetchPriority = currentSlide === 0 ? "high" : "auto";
+  const activeVideoSrc = useResponsiveVideoSource(slide?.src || "", slide?.mobileSrc);
 
   useEffect(() => {
     if (canStartPrimaryVideo) return;
@@ -143,16 +153,17 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
   useEffect(() => {
     if (loadVideo) return;
     if (reduceMotion) return;
+    if (!enableAmbientVideo) return;
     if (!slide) return;
     if (slide.type !== "video" && slide.type !== "youtube") return;
     if (currentSlide === 0 && slide.type === "video" && !canStartPrimaryVideo) return;
 
     const id = window.setTimeout(() => setLoadVideo(true), 0);
     return () => window.clearTimeout(id);
-  }, [canStartPrimaryVideo, currentSlide, loadVideo, reduceMotion, slide?.type]);
+  }, [canStartPrimaryVideo, currentSlide, enableAmbientVideo, loadVideo, reduceMotion, slide?.type]);
 
   useEffect(() => {
-    if (!loadVideo || reduceMotion || slide?.type !== "video") return;
+    if (!loadVideo || !enableAmbientVideo || reduceMotion || slide?.type !== "video") return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -165,7 +176,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
     };
 
     void attemptPlay();
-  }, [currentSlide, loadVideo, reduceMotion, slide?.type]);
+  }, [currentSlide, enableAmbientVideo, loadVideo, reduceMotion, slide?.type]);
 
   if (!slide) return null;
 
@@ -182,7 +193,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
         >
           {slide.type === "youtube" ? (
             <div className="absolute inset-0 overflow-hidden bg-black">
-              {loadVideo || !slide.poster ? (
+              {enableAmbientVideo && (loadVideo || !slide.poster) ? (
                 <YouTubeEmbed
                   url={slide.src}
                   title={slide.alt || slide.caption || "Monolith Project video"}
@@ -195,7 +206,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
                   loading="eager"
                   className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 border-0"
                 />
-              ) : (
+              ) : slide.poster ? (
                 <ResponsiveSlideImage
                   src={slide.poster}
                   alt=""
@@ -205,6 +216,8 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
                   sizes={slide.posterSizes}
                   className="w-full h-full object-cover object-center md:object-[80%_center]"
                 />
+              ) : (
+                <div className="absolute inset-0 bg-black" aria-hidden="true" />
               )}
             </div>
           ) : slide.type === "video" ? (
@@ -223,7 +236,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
               )}
               
               {/* Video Layer fades in over poster once ready */}
-              {loadVideo && (
+              {enableAmbientVideo && loadVideo && (
                 <motion.video
                   ref={videoRef}
                   initial={{ opacity: 0 }}
@@ -232,7 +245,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
                       videoRef.current.style.opacity = "1";
                     }
                   }}
-                  src={slide.src}
+                  src={activeVideoSrc}
                   autoPlay={!reduceMotion}
                   loop={!reduceMotion}
                   muted={isMuted}
@@ -305,7 +318,7 @@ export default function VideoHeroSlider({ slides, onSlideChange }: VideoHeroSlid
               Photo: {slide.credit}
             </span>
           )}
-          {slide.type === "video" && (loadVideo || !slide.poster) && !reduceMotion && (
+          {slide.type === "video" && enableAmbientVideo && (loadVideo || !slide.poster) && !reduceMotion && (
             <button
               type="button"
               onClick={toggleMute}

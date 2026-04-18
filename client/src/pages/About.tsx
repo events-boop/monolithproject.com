@@ -11,6 +11,8 @@ import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
+import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
+import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
 
 const manifestoLines = [
   "We build rooms worth returning to.",
@@ -64,6 +66,11 @@ import { Plus } from "lucide-react";
 export default function About() {
   const [expandedArchitecture, setExpandedArchitecture] = useState<string | null>(null);
   const [location] = useLocation();
+  const enableAmbientVideo = useAmbientVideoEnabled(360);
+  const activeHeroVideo = useResponsiveVideoSource(
+    "/videos/hero-video-short.mp4",
+    "/videos/hero-video-short-mobile.mp4",
+  );
 
   const toggleArchitecture = (title: string) => {
     signalChirp.click();
@@ -117,16 +124,27 @@ export default function About() {
         >
           <div className="absolute inset-0 bg-black/50 z-10" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/30 via-transparent to-[#050505] z-20" />
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover scale-105"
-            poster="/images/hero-monolith.webp"
-          >
-            <source src="/videos/hero-video-short.mp4" type="video/mp4" />
-          </video>
+          {enableAmbientVideo ? (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              src={activeHeroVideo}
+              className="w-full h-full object-cover scale-105"
+              poster="/images/hero-monolith.webp"
+            />
+          ) : (
+            <img
+              src="/images/hero-monolith.webp"
+              alt=""
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="w-full h-full object-cover scale-105"
+            />
+          )}
         </motion.div>
 
         {/* Ambient sun/aura behind the text */}

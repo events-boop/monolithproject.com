@@ -4,7 +4,11 @@
       "startServerCommand": "npm run start",
       "url": [
         "http://localhost:3001/",
-        "http://localhost:3001/tickets"
+        "http://localhost:3001/tickets",
+        "http://localhost:3001/radio",
+        "http://localhost:3001/booking",
+        "http://localhost:3001/partners",
+        "http://localhost:3001/archive"
       ],
       "numberOfRuns": 3
     },

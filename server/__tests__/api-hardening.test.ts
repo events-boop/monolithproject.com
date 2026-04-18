@@ -6,6 +6,49 @@ import { createRateLimitMiddleware } from "../services/rate-limit";
 
 const originalPublicSocialEchoLive = process.env.PUBLIC_SOCIAL_ECHO_LIVE;
 
+async function runRateLimitMiddleware(middleware: ReturnType<typeof createRateLimitMiddleware>) {
+  const headers = new Map<string, string>();
+  let statusCode = 200;
+  let jsonBody: unknown = null;
+  let nextCalled = false;
+
+  await new Promise<void>((resolve, reject) => {
+    middleware(
+      {
+        ip: "203.0.113.10",
+        socket: { remoteAddress: "203.0.113.10" },
+        header: () => undefined,
+      } as never,
+      {
+        setHeader(name: string, value: string) {
+          headers.set(name.toLowerCase(), value);
+          return this;
+        },
+        status(code: number) {
+          statusCode = code;
+          return this;
+        },
+        json(body: unknown) {
+          jsonBody = body;
+          resolve();
+          return this;
+        },
+      } as never,
+      (error?: unknown) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        nextCalled = true;
+        resolve();
+      },
+    );
+  });
+
+  return { headers, statusCode, jsonBody, nextCalled };
+}
+
 describe("api hardening", () => {
   afterEach(() => {
     process.env.PUBLIC_SOCIAL_ECHO_LIVE = originalPublicSocialEchoLive;
@@ -112,5 +155,34 @@ describe("api hardening", () => {
     );
 
     expect(nextCalled).toBe(true);
+  });
+
+  it("returns a 429 JSON envelope when the rate limit is exceeded", async () => {
+    const middleware = createRateLimitMiddleware({
+      scope: `api:test:${Date.now()}`,
+      windowMs: 60_000,
+      limit: 1,
+      message: "Rate limited",
+      preferMemory: true,
+    });
+
+    const first = await runRateLimitMiddleware(middleware);
+    const second = await runRateLimitMiddleware(middleware);
+
+    expect(first.nextCalled).toBe(true);
+    expect(second.nextCalled).toBe(false);
+    expect(second.statusCode).toBe(429);
+    expect(second.headers.get("retry-after")).toBeTruthy();
+    expect(second.jsonBody).toMatchObject({
+      ok: false,
+      error: {
+        code: "RATE_LIMITED",
+        message: "Rate limited",
+        retryable: true,
+      },
+    });
+    expect((second.jsonBody as { requestId?: string }).requestId).toEqual(
+      expect.any(String),
+    );
   });
 });

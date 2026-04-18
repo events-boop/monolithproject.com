@@ -63,22 +63,16 @@ export default function SoundCloudShelf() {
                 className="group min-w-[78vw] bg-[#070709] text-left transition-colors hover:text-white sm:min-w-[340px] md:min-w-0"
               >
                 <div className="relative aspect-square overflow-hidden border border-white/10 bg-black">
-                  <img
-                    src={coverSrc}
-                    alt={`${episode.guest} ${episode.title} SoundCloud artwork`}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover grayscale-[28%] brightness-[0.8] transition-all duration-500 group-hover:scale-[1.03] group-hover:grayscale-[10%] group-hover:brightness-[0.58]"
-                  />
-                  <img
-                    src={coverSrc}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    aria-hidden="true"
-                    className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-500 group-hover:scale-[1.08] group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  <div className="glass-refract absolute inset-0">
+                    <img
+                      src={coverSrc}
+                      alt={`${episode.guest} ${episode.title} SoundCloud artwork`}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover brightness-[0.9] transition-[filter] duration-500 group-hover:brightness-[0.75]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                  </div>
                   <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
                     <span
                       className="rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.28em] text-white/75"

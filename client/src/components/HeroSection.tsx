@@ -41,6 +41,7 @@ const HERO_SLIDES: Slide[] = [
   {
     type: "video",
     src: "/videos/hero-video-1.mp4",
+    mobileSrc: "/videos/hero-video-1-mobile.mp4",
     poster: heroPosterImage.src,
     posterSources: heroPosterImage.sources,
     posterSizes: heroPosterImage.sizes,
@@ -378,4 +379,3 @@ export default function HeroSection() {
     </div>
   );
 }
-

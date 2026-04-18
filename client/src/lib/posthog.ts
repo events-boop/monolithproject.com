@@ -2,6 +2,11 @@ import { runWhenIdle } from "./idle";
 import { hasAnalyticsConsent } from "./cookieConsent";
 
 type PostHogClient = (typeof import("posthog-js"))["default"];
+type PostHogProperties = Record<string, string | number | boolean | null | undefined>;
+type PendingCapture = {
+  eventName: string;
+  properties?: PostHogProperties;
+};
 
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
 const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com";
@@ -10,6 +15,7 @@ let client: PostHogClient | null = null;
 let loading: Promise<PostHogClient | null> | null = null;
 let initScheduled = false;
 let pendingPageview = false;
+const pendingCaptures: PendingCapture[] = [];
 
 function isTrackingHost() {
   if (typeof window === "undefined") return false;
@@ -27,6 +33,19 @@ function isEnabled() {
   return import.meta.env.PROD && isTrackingHost() && Boolean(POSTHOG_KEY) && hasAnalyticsConsent();
 }
 
+function flushPendingCaptures(ph: PostHogClient) {
+  if (pendingPageview) {
+    ph.capture("$pageview");
+    pendingPageview = false;
+  }
+
+  while (pendingCaptures.length > 0) {
+    const capture = pendingCaptures.shift();
+    if (!capture) continue;
+    ph.capture(capture.eventName, capture.properties);
+  }
+}
+
 async function loadPostHog(): Promise<PostHogClient | null> {
   if (!isEnabled()) return null;
   if (client) return client;
@@ -41,6 +60,7 @@ async function loadPostHog(): Promise<PostHogClient | null> {
         capture_pageview: false,
       });
       client = posthog;
+      flushPendingCaptures(posthog);
       return posthog;
     })
     .catch(() => null);
@@ -56,9 +76,7 @@ export function schedulePostHogInit() {
   runWhenIdle(() => {
     void loadPostHog().then((ph) => {
       if (!ph) return;
-      if (!pendingPageview) return;
-      ph.capture("$pageview");
-      pendingPageview = false;
+      flushPendingCaptures(ph);
     });
   }, 2500);
 }
@@ -71,4 +89,16 @@ export function queuePostHogPageview() {
 
   client.capture("$pageview");
   pendingPageview = false;
+}
+
+export function capturePostHogEvent(eventName: string, properties?: PostHogProperties) {
+  if (!isEnabled()) return;
+
+  if (client) {
+    client.capture(eventName, properties);
+    return;
+  }
+
+  pendingCaptures.push({ eventName, properties });
+  schedulePostHogInit();
 }

@@ -1,7 +1,14 @@
+import { createHash } from "crypto";
 import { readPublicScheduledEvents } from "../db/scheduledEventsRepo";
 import { buildPublicSiteData } from "../data/public-site-data";
 import { logEvent } from "../lib/logging";
 import type { ScheduledEvent, PublicSiteData } from "../../shared/events/types";
+
+type CachedSiteDataResponse = {
+  etag: string;
+  payload: PublicSiteData;
+  serialized: string;
+};
 
 /**
  * SiteDataService
@@ -12,6 +19,7 @@ class SiteDataService {
   private static instance: SiteDataService;
   
   private cachedEvents: ScheduledEvent[] | null = null;
+  private cachedResponses = new Map<string, CachedSiteDataResponse>();
   private lastFetchTime: number = 0;
   private isRefreshing: boolean = false;
   
@@ -32,8 +40,23 @@ class SiteDataService {
    * Returns shaped site data for a specific path, optimized for speed.
    */
   public async getSiteData(path: string): Promise<PublicSiteData> {
+    const response = await this.getSiteDataResponse(path);
+    return response.payload;
+  }
+
+  public async getSiteDataResponse(path: string): Promise<CachedSiteDataResponse> {
     const events = await this.getEventsWithSWR();
-    return buildPublicSiteData(path, events);
+    const cachedResponse = this.cachedResponses.get(path);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    const payload = buildPublicSiteData(path, events);
+    const serialized = JSON.stringify(payload);
+    const etag = `W/"${createHash("sha1").update(serialized).digest("base64url")}"`;
+    const response = { etag, payload, serialized };
+    this.cachedResponses.set(path, response);
+    return response;
   }
 
   /**
@@ -74,6 +97,7 @@ class SiteDataService {
     try {
       const events = await readPublicScheduledEvents();
       this.cachedEvents = events;
+      this.cachedResponses.clear();
       this.lastFetchTime = Date.now();
       
       logEvent("site_data.cache_refreshed", { 
@@ -89,6 +113,8 @@ class SiteDataService {
    * Manual cache invalidation (useful for webhooks or admin updates)
    */
   public invalidate() {
+    this.cachedEvents = null;
+    this.cachedResponses.clear();
     this.lastFetchTime = 0;
     logEvent("site_data.cache_invalidated", {});
   }
