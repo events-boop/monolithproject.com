@@ -31,7 +31,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.some((event) => event.id === "us-s3e3")).toBe(true);
     expect(data.events.some((event) => event.id === "css-jul04")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
-      label: "On Sale",
+      label: "Get Tickets",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });
@@ -47,7 +47,7 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.sound).toBeDefined();
     expect(scheduleUntold?.lineup).toBeDefined();
     expect(scheduleUntold?.primaryCta).toMatchObject({
-      label: "On Sale",
+      label: "Get Tickets",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });
@@ -72,7 +72,7 @@ describe("buildPublicSiteData", () => {
       tool: "laylo",
     });
     expect(featuredUntold?.primaryCta).toMatchObject({
-      label: "On Sale",
+      label: "Get Tickets",
       href: "/go/tickets/us-s3e3",
       tool: "posh",
     });

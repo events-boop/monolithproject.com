@@ -1,7 +1,8 @@
-import { ArrowUpRight, Check, Lock } from "lucide-react";
+import { ArrowUpRight, Check, Lock, Ticket, Zap } from "lucide-react";
 import { Link } from "wouter";
 import { getEventById, getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
-import { getEventDetailsHref, isEventLowInventory } from "@/lib/cta";
+import { getEventCta, getEventDetailsHref, isEventLowInventory } from "@/lib/cta";
+import type { EventCta, FunnelTool } from "@/lib/cta";
 import { LIVE_RED } from "@/lib/brand";
 import type { ScheduledEvent } from "@shared/events/types";
 
@@ -69,19 +70,29 @@ export default function LiveTickets() {
   );
 }
 
+function toolIcon(tool: FunnelTool) {
+  if (tool === "laylo") return <Lock className="w-4 h-4 md:w-5 md:h-5" />;
+  if (tool === "fillout") return <Zap className="w-4 h-4 md:w-5 md:h-5" />;
+  return <Ticket className="w-4 h-4 md:w-5 md:h-5" />;
+}
+
+function ctaHref(cta: EventCta, fallback: string) {
+  return cta.href || fallback;
+}
+
 function TieredEventCard({ event }: { event: ScheduledEvent }) {
   const color = getSeriesColor(event.series);
-  const href = getEventDetailsHref(event);
+  const detailsHref = getEventDetailsHref(event);
   const title = event.headline || event.episode || event.title;
   const label = getSeriesLabel(event.series);
   const tiers = event.ticketTiers ?? [];
   const firstLockedIndex = tiers.findIndex((t) => !t.available);
+  const cta = getEventCta(event);
+  const href = ctaHref(cta, detailsHref);
+  const startingPrice = event.startingPrice;
 
   return (
-    <Link
-      href={href}
-      className="group relative bg-black p-6 md:p-8 flex flex-col justify-between min-h-[360px] md:min-h-[420px] lg:col-span-2 transition-colors duration-500 hover:bg-white/[0.02]"
-    >
+    <div className="group relative bg-black p-6 md:p-8 flex flex-col justify-between lg:col-span-2 transition-colors duration-500">
       <div
         className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 group-hover:w-[3px]"
         style={{ backgroundColor: color }}
@@ -93,15 +104,16 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
         }}
       />
 
-      <div className="relative grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-6 md:gap-10 items-start">
+      <div className="relative grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-6 md:gap-10 items-start mb-8">
         <div>
           <div className="flex items-center justify-between gap-3 mb-5">
-            <span
-              className="font-mono text-[10px] tracking-[0.35em] uppercase"
+            <Link
+              href={detailsHref}
+              className="font-mono text-[10px] tracking-[0.35em] uppercase hover:opacity-70 transition-opacity"
               style={{ color }}
             >
               {label}
-            </span>
+            </Link>
             <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/40">
               Tiered Release
             </span>
@@ -117,9 +129,12 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
             )}
           </div>
 
-          <h3 className="font-display text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] uppercase text-white leading-[0.9] tracking-tight mb-4">
+          <Link
+            href={detailsHref}
+            className="block font-display text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] uppercase text-white leading-[0.9] tracking-tight mb-4 hover:text-white/80 transition-colors"
+          >
             {title}
-          </h3>
+          </Link>
 
           {event.description && (
             <p className="font-serif italic text-[13px] md:text-[14px] leading-relaxed text-white/55 max-w-[42ch]">
@@ -186,48 +201,53 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
         </div>
       </div>
 
-      <div className="relative mt-8 flex items-end justify-between">
-        <div>
-          <span className="block font-mono text-[9px] tracking-[0.35em] uppercase text-white/40 mb-1">
-            From
+      {/* BRUTAL CTA SLAB */}
+      <Link
+        href={href}
+        target={cta.isExternal ? "_blank" : undefined}
+        rel={cta.isExternal ? "noopener noreferrer" : undefined}
+        className="relative group/cta flex items-center justify-between gap-4 px-5 md:px-8 py-5 md:py-7 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        style={{
+          backgroundColor: LIVE_RED,
+          boxShadow: `0 12px 40px -10px ${LIVE_RED}80`,
+        }}
+        data-cta-source="live-tickets-hero"
+        data-cta-tool={cta.tool}
+      >
+        <div className="flex items-center gap-3 md:gap-5 text-black">
+          {toolIcon(cta.tool)}
+          <span className="font-display text-[1.5rem] md:text-[2.25rem] leading-none uppercase tracking-tight">
+            {cta.label}
           </span>
-          <span
-            className="font-display text-3xl md:text-4xl leading-none"
-            style={{ color }}
-          >
-            {event.startingPrice ? `$${event.startingPrice}` : "—"}
-          </span>
+          {startingPrice ? (
+            <span className="font-display text-[1.5rem] md:text-[2.25rem] leading-none uppercase tracking-tight opacity-60">
+              · From ${startingPrice}
+            </span>
+          ) : null}
         </div>
-        <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-white group-hover:gap-3 transition-all">
-          <span className="hidden sm:inline">Secure Early</span>
-          <span
-            className="flex h-8 w-8 items-center justify-center border transition-colors group-hover:bg-white group-hover:text-black"
-            style={{ borderColor: `${color}66` }}
-          >
-            <ArrowUpRight className="w-4 h-4" />
-          </span>
-        </div>
-      </div>
-    </Link>
+        <span className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center bg-black text-white transition-transform duration-300 group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1">
+          <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6" />
+        </span>
+      </Link>
+    </div>
   );
 }
 
 function ActionCard({ event }: { event: ScheduledEvent }) {
   const color = getSeriesColor(event.series);
-  const href = getEventDetailsHref(event);
+  const detailsHref = getEventDetailsHref(event);
   const title = event.headline || event.episode || event.title;
   const label = getSeriesLabel(event.series);
   const lowInventory = isEventLowInventory(event);
   const isOnSale = event.status === "on-sale";
+  const cta = getEventCta(event);
+  const href = ctaHref(cta, detailsHref);
   const statusLabel = isOnSale
     ? lowInventory ? "Final Release" : "On Sale"
-    : event.startingPrice ? "Presale Open" : "Waitlist";
+    : event.startingPrice ? "Presale" : "Waitlist";
 
   return (
-    <Link
-      href={href}
-      className="group relative flex-1 flex items-center gap-4 md:gap-5 p-5 md:p-6 transition-colors duration-500 hover:bg-white/[0.03] min-h-[120px]"
-    >
+    <div className="group relative flex-1 flex items-center gap-4 md:gap-5 p-5 md:p-6 transition-colors duration-500 hover:bg-white/[0.03] min-h-[140px]">
       <div
         className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 group-hover:w-[3px]"
         style={{ backgroundColor: color }}
@@ -235,21 +255,25 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-2">
-          <span
-            className="font-mono text-[9px] tracking-[0.35em] uppercase"
+          <Link
+            href={detailsHref}
+            className="font-mono text-[9px] tracking-[0.35em] uppercase hover:opacity-70 transition-opacity"
             style={{ color }}
           >
             {label}
-          </span>
+          </Link>
           <span className="text-white/20">·</span>
           <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 truncate">
             {event.date}
           </span>
         </div>
 
-        <h4 className="font-display text-[1.1rem] md:text-[1.25rem] leading-[0.95] uppercase text-white tracking-tight truncate">
+        <Link
+          href={detailsHref}
+          className="block font-display text-[1.1rem] md:text-[1.25rem] leading-[0.95] uppercase text-white tracking-tight truncate hover:text-white/80 transition-colors"
+        >
           {title}
-        </h4>
+        </Link>
 
         <div className="flex items-center gap-2 mt-2">
           <span
@@ -263,18 +287,29 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
           </span>
           {event.startingPrice && (
             <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60">
-              From <span className="text-white">${event.startingPrice}</span>
+              From <span className="text-white font-bold">${event.startingPrice}</span>
             </span>
           )}
         </div>
       </div>
 
-      <span
-        className="shrink-0 flex h-9 w-9 items-center justify-center border transition-all group-hover:bg-white group-hover:text-black group-hover:scale-105"
-        style={{ borderColor: `${color}66` }}
+      {/* FILLED ACTION CHIP */}
+      <Link
+        href={href}
+        target={cta.isExternal ? "_blank" : undefined}
+        rel={cta.isExternal ? "noopener noreferrer" : undefined}
+        className="shrink-0 inline-flex items-center gap-2 px-3.5 md:px-4 py-2.5 md:py-3 font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        style={{
+          backgroundColor: isOnSale ? LIVE_RED : color,
+          color: isOnSale ? "#000" : "#000",
+        }}
+        data-cta-source="live-tickets-action"
+        data-cta-tool={cta.tool}
       >
-        <ArrowUpRight className="w-4 h-4" />
-      </span>
-    </Link>
+        <span className="hidden sm:inline">{cta.label}</span>
+        <span className="sm:hidden">{cta.tool === "laylo" ? "Notify" : "Get"}</span>
+        <ArrowUpRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
+      </Link>
+    </div>
   );
 }

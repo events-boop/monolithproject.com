@@ -178,7 +178,11 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
   setInFlight(idempotencyKey, operation);
   try {
     const result = await operation;
-    setInCache(idempotencyKey, result.status, result.body);
+    // Only cache successful responses. Caching transient provider failures (e.g. 502)
+    // would lock out a legitimate user from retrying for the full 24h TTL.
+    if (result.status >= 200 && result.status < 300) {
+      setInCache(idempotencyKey, result.status, result.body);
+    }
     return res.status(result.status).json(result.body);
   } finally {
     deleteInFlight(idempotencyKey);

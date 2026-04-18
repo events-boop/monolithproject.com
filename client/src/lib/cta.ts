@@ -8,7 +8,7 @@ import type { InquiryType } from "@/contexts/InquiryContext";
 export type { EventCta, FunnelTool };
 
 export const CTA_LABELS = {
-  tickets: "On Sale",
+  tickets: "Get Tickets",
   schedule: "See The Schedule",
   collective: "Meet The Artists",
   journal: "Read The Journal",
