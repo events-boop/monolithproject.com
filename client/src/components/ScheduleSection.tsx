@@ -9,6 +9,8 @@ import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import { cn } from "@/lib/utils";
+import { getSeriesColor, getSeriesColorOnLight } from "@/lib/siteExperience";
+import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
 
 // --- iCal Generator Helper ---
 function downloadICS(event: ScheduledEvent) {
@@ -46,18 +48,6 @@ END:VCALENDAR`;
   link.click();
   document.body.removeChild(link);
 }
-
-const seriesAccent: Record<string, string> = {
-  "chasing-sunsets": "bg-[#E8B86D]",
-  "untold-story": "bg-[#22D3EE]",
-  "monolith-project": "bg-primary",
-};
-
-const seriesTextAccent: Record<string, string> = {
-  "chasing-sunsets": "text-[#8F5B0A]",
-  "untold-story": "text-[#0E7490]",
-  "monolith-project": "text-[#7F311D]",
-};
 
 const seriesLabels: Record<string, string> = {
   "chasing-sunsets": "SUN(SETS)",
@@ -119,11 +109,22 @@ export default function ScheduleSection() {
         {/* Header Block */}
         <div className="mb-12 md:mb-24 flex flex-col gap-8 lg:flex-row lg:items-end justify-between border-b border-black/10 pb-8 md:pb-12">
           <div className="relative">
-             <span className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[10px] md:text-[10px] tracking-[0.4em] text-[#7F311D]/70 uppercase">Upcoming Series</span>
-             <h2 className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight text-[#7F311D] uppercase drop-shadow-sm">
+             <span
+               className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[10px] md:text-[10px] tracking-[0.4em] uppercase"
+               style={{ color: `${MONOLITH_ORANGE_ON_LIGHT}b3` }}
+             >
+               Upcoming Series
+             </span>
+             <h2
+               className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
+               style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
+             >
                <KineticDecryption text="THE 2026 SEASON" />
              </h2>
-             <p className="font-mono text-[10px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l border-[#7F311D]/30 mt-4 md:mt-6 max-w-[15rem] md:max-w-sm">
+             <p
+               className="font-mono text-[10px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l mt-4 md:mt-6 max-w-[15rem] md:max-w-sm"
+               style={{ borderColor: `${MONOLITH_ORANGE_ON_LIGHT}4D` }}
+             >
                A curated arc of open-air days and industrial nights. Inventory is strictly limited by venue capacity.
              </p>
           </div>
@@ -227,14 +228,27 @@ export default function ScheduleSection() {
                       <div className="lg:col-span-1 hidden lg:flex flex-col items-center gap-4">
                         {shouldPing && (
                           <div className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center bg-white shadow-sm overflow-hidden relative">
-                             <motion.div 
-                                className={`absolute inset-0 opacity-10 ${event.recentlyDropped ? "bg-cyan-500" : seriesAccent[event.series]}`}
+                             <motion.div
+                                className="absolute inset-0 opacity-10"
+                                style={{
+                                  backgroundColor: event.recentlyDropped ? "#06B6D4" : getSeriesColor(event.series),
+                                }}
                                 animate={{ opacity: [0.05, 0.15, 0.05] }}
                                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                              />
                             <div className="relative flex h-2 w-2">
-                              <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${event.recentlyDropped ? "bg-cyan-600" : seriesAccent[event.series]}`} />
-                              <span className={`relative inline-flex rounded-full h-2 w-2 ${event.recentlyDropped ? "bg-cyan-600" : seriesAccent[event.series]}`} />
+                              <span
+                                className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+                                style={{
+                                  backgroundColor: event.recentlyDropped ? "#0891B2" : getSeriesColor(event.series),
+                                }}
+                              />
+                              <span
+                                className="relative inline-flex rounded-full h-2 w-2"
+                                style={{
+                                  backgroundColor: event.recentlyDropped ? "#0891B2" : getSeriesColor(event.series),
+                                }}
+                              />
                             </div>
                           </div>
                         )}
@@ -249,7 +263,10 @@ export default function ScheduleSection() {
                           {event.title}
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          <span className={`text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 bg-black/5 border border-black/10 rounded-full ${seriesTextAccent[event.series]}`}>
+                          <span
+                            className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 bg-black/5 border border-black/10 rounded-full"
+                            style={{ color: getSeriesColorOnLight(event.series) }}
+                          >
                             {seriesLabels[event.series]}
                           </span>
                           {event.recentlyDropped && (
@@ -412,7 +429,10 @@ export default function ScheduleSection() {
               </span>
             </Link>
             <Link href="/newsletter">
-              <span className="group inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase text-[#7F311D] hover:text-black transition-colors cursor-pointer">
+              <span
+                className="group inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase hover:text-black transition-colors cursor-pointer"
+                style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
+              >
                 Get Event Updates
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>

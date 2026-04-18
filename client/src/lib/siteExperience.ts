@@ -1,6 +1,11 @@
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
 import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
-import { MONOLITH_ORANGE, SERIES_COLORS } from "./brand";
+import {
+  MONOLITH_ORANGE,
+  MONOLITH_ORANGE_ON_LIGHT,
+  SERIES_COLORS,
+  SERIES_COLORS_ON_LIGHT,
+} from "./brand";
 
 export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
 
@@ -131,6 +136,12 @@ export function getSeriesLabel(series: ScheduledEvent["series"]) {
 export function getSeriesColor(series?: ScheduledEvent["series"]): string {
   if (!series) return MONOLITH_ORANGE;
   return SERIES_COLORS[series] ?? MONOLITH_ORANGE;
+}
+
+/** Darkened series accent for use on warm cream / light backgrounds (WCAG contrast). */
+export function getSeriesColorOnLight(series?: ScheduledEvent["series"]): string {
+  if (!series) return MONOLITH_ORANGE_ON_LIGHT;
+  return SERIES_COLORS_ON_LIGHT[series] ?? MONOLITH_ORANGE_ON_LIGHT;
 }
 
 /** Return up to `limit` upcoming events, sorted chronologically. */

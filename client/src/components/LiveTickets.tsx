@@ -3,17 +3,20 @@ import { Link } from "wouter";
 import { getEventById, getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
 import { getEventDetailsHref, isEventLowInventory } from "@/lib/cta";
 import { LIVE_RED } from "@/lib/brand";
+import type { ScheduledEvent } from "@shared/events/types";
 
-const FEATURED_SINGLE_ID = "us-s3e3";
 const FEATURED_TIERED_ID = "css-jul04";
+const ACTION_EVENT_IDS = ["us-s3e3", "us-jul04", "css-aug22"];
 
 export default function LiveTickets() {
-  const singleEvent = getEventById(FEATURED_SINGLE_ID);
   const tieredEvent = getEventById(FEATURED_TIERED_ID);
+  const actionEvents = ACTION_EVENT_IDS
+    .map((id) => getEventById(id))
+    .filter((e): e is ScheduledEvent => Boolean(e));
 
-  if (!singleEvent && !tieredEvent) return null;
+  if (!tieredEvent && actionEvents.length === 0) return null;
 
-  const totalAvailable = (tieredEvent?.ticketTiers?.length ?? 0) + (singleEvent ? 1 : 0);
+  const totalReleases = (tieredEvent?.ticketTiers?.length ?? 0) + actionEvents.length;
 
   return (
     <section className="relative bg-black border-y border-white/10 py-14 md:py-20 overflow-hidden">
@@ -48,112 +51,36 @@ export default function LiveTickets() {
             </span>
           </div>
           <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 shrink-0">
-            {totalAvailable.toString().padStart(2, "0")} Releases
+            {totalReleases.toString().padStart(2, "0")} Releases
           </span>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-          {singleEvent && <SingleEventCard event={singleEvent} />}
+        <div className="grid lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
           {tieredEvent && <TieredEventCard event={tieredEvent} />}
+
+          <div className="flex flex-col divide-y divide-white/10 bg-black">
+            {actionEvents.map((event) => (
+              <ActionCard key={event.id} event={event} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function SingleEventCard({ event }: { event: NonNullable<ReturnType<typeof getEventById>> }) {
-  const color = getSeriesColor(event.series);
-  const href = getEventDetailsHref(event);
-  const title = event.headline || event.episode || event.title;
-  const lowInventory = isEventLowInventory(event);
-  const label = getSeriesLabel(event.series);
-
-  return (
-    <Link
-      href={href}
-      className="group relative bg-black p-6 md:p-8 flex flex-col justify-between min-h-[260px] md:min-h-[300px] transition-colors duration-500 hover:bg-white/[0.02]"
-    >
-      <div
-        className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 group-hover:w-[3px]"
-        style={{ backgroundColor: color }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(120% 80% at 0% 0%, ${color}14, transparent 60%)`,
-        }}
-      />
-
-      <div className="relative">
-        <div className="flex items-center justify-between gap-3 mb-5">
-          <span
-            className="font-mono text-[10px] tracking-[0.35em] uppercase"
-            style={{ color }}
-          >
-            {label}
-          </span>
-          {lowInventory && (
-            <span
-              className="font-mono text-[9px] tracking-[0.3em] uppercase border px-1.5 py-0.5"
-              style={{ color: LIVE_RED, borderColor: `${LIVE_RED}66` }}
-            >
-              Final Release
-            </span>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 mb-4">
-          <span>{event.date}</span>
-          {event.venue && (
-            <>
-              <span className="text-white/20">·</span>
-              <span className="truncate">{event.venue}</span>
-            </>
-          )}
-        </div>
-
-        <h3 className="font-display text-2xl md:text-[1.75rem] uppercase text-white leading-[0.95] tracking-tight">
-          {title}
-        </h3>
-      </div>
-
-      <div className="relative mt-8 flex items-end justify-between">
-        <div>
-          <span className="block font-mono text-[9px] tracking-[0.35em] uppercase text-white/40 mb-1">
-            From
-          </span>
-          <span
-            className="font-display text-3xl md:text-4xl leading-none"
-            style={{ color }}
-          >
-            {event.startingPrice ? `$${event.startingPrice}` : "—"}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-white group-hover:gap-3 transition-all">
-          <span className="hidden sm:inline">Secure</span>
-          <span
-            className="flex h-8 w-8 items-center justify-center border transition-colors group-hover:bg-white group-hover:text-black"
-            style={{ borderColor: `${color}66` }}
-          >
-            <ArrowUpRight className="w-4 h-4" />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function TieredEventCard({ event }: { event: NonNullable<ReturnType<typeof getEventById>> }) {
+function TieredEventCard({ event }: { event: ScheduledEvent }) {
   const color = getSeriesColor(event.series);
   const href = getEventDetailsHref(event);
   const title = event.headline || event.episode || event.title;
   const label = getSeriesLabel(event.series);
   const tiers = event.ticketTiers ?? [];
+  const firstLockedIndex = tiers.findIndex((t) => !t.available);
 
   return (
     <Link
       href={href}
-      className="group relative bg-black p-6 md:p-8 flex flex-col justify-between min-h-[260px] md:min-h-[300px] md:col-span-2 transition-colors duration-500 hover:bg-white/[0.02]"
+      className="group relative bg-black p-6 md:p-8 flex flex-col justify-between min-h-[360px] md:min-h-[420px] lg:col-span-2 transition-colors duration-500 hover:bg-white/[0.02]"
     >
       <div
         className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 group-hover:w-[3px]"
@@ -190,7 +117,7 @@ function TieredEventCard({ event }: { event: NonNullable<ReturnType<typeof getEv
             )}
           </div>
 
-          <h3 className="font-display text-2xl md:text-[1.75rem] uppercase text-white leading-[0.95] tracking-tight mb-4">
+          <h3 className="font-display text-[1.75rem] md:text-[2.25rem] lg:text-[2.5rem] uppercase text-white leading-[0.9] tracking-tight mb-4">
             {title}
           </h3>
 
@@ -204,7 +131,7 @@ function TieredEventCard({ event }: { event: NonNullable<ReturnType<typeof getEv
         <div className="flex flex-col divide-y divide-white/10 border-y border-white/10 md:border-y-0 md:border md:border-white/10">
           {tiers.map((tier, i) => {
             const isLive = tier.available;
-            const isNext = !isLive && i === tiers.findIndex((t) => !t.available);
+            const isNext = !isLive && i === firstLockedIndex;
             return (
               <div
                 key={tier.id}
@@ -281,6 +208,73 @@ function TieredEventCard({ event }: { event: NonNullable<ReturnType<typeof getEv
           </span>
         </div>
       </div>
+    </Link>
+  );
+}
+
+function ActionCard({ event }: { event: ScheduledEvent }) {
+  const color = getSeriesColor(event.series);
+  const href = getEventDetailsHref(event);
+  const title = event.headline || event.episode || event.title;
+  const label = getSeriesLabel(event.series);
+  const lowInventory = isEventLowInventory(event);
+  const isOnSale = event.status === "on-sale";
+  const statusLabel = isOnSale
+    ? lowInventory ? "Final Release" : "On Sale"
+    : event.startingPrice ? "Presale Open" : "Waitlist";
+
+  return (
+    <Link
+      href={href}
+      className="group relative flex-1 flex items-center gap-4 md:gap-5 p-5 md:p-6 transition-colors duration-500 hover:bg-white/[0.03] min-h-[120px]"
+    >
+      <div
+        className="absolute left-0 top-0 bottom-0 w-[2px] transition-all duration-500 group-hover:w-[3px]"
+        style={{ backgroundColor: color }}
+      />
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-2">
+          <span
+            className="font-mono text-[9px] tracking-[0.35em] uppercase"
+            style={{ color }}
+          >
+            {label}
+          </span>
+          <span className="text-white/20">·</span>
+          <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 truncate">
+            {event.date}
+          </span>
+        </div>
+
+        <h4 className="font-display text-[1.1rem] md:text-[1.25rem] leading-[0.95] uppercase text-white tracking-tight truncate">
+          {title}
+        </h4>
+
+        <div className="flex items-center gap-2 mt-2">
+          <span
+            className="font-mono text-[8px] tracking-[0.35em] uppercase px-1.5 py-0.5 border"
+            style={{
+              color: isOnSale ? LIVE_RED : "rgba(255,255,255,0.55)",
+              borderColor: isOnSale ? `${LIVE_RED}66` : "rgba(255,255,255,0.2)",
+            }}
+          >
+            {statusLabel}
+          </span>
+          {event.startingPrice && (
+            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60">
+              From <span className="text-white">${event.startingPrice}</span>
+            </span>
+          )}
+        </div>
+      </div>
+
+      <span
+        className="shrink-0 flex h-9 w-9 items-center justify-center border transition-all group-hover:bg-white group-hover:text-black group-hover:scale-105"
+        style={{ borderColor: `${color}66` }}
+      >
+        <ArrowUpRight className="w-4 h-4" />
+      </span>
     </Link>
   );
 }
