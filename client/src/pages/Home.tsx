@@ -18,7 +18,7 @@ const LiveTickets = lazy(() => import("@/components/LiveTickets"));
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
-import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD, UNTOLD_VIOLET } from "@/lib/brand";
+import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
 
 
 export default function Home() {
@@ -66,13 +66,25 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div className="bg-[#F8F8F8] transition-colors duration-500 relative z-10">
-          <SectionDivider id="season" number="02" label="The Season" dark={false} glow={UNTOLD_VIOLET} />
+        <div className="bg-[#F4ECD9] transition-colors duration-500 relative z-10">
+          {/* Warm top-edge fade — bleeds the dark Branches into golden-hour cream */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
+            style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
+          />
+          <SectionDivider id="season" number="02" label="The Season" dark={false} glow={SUN_SETS_GOLD} />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="280px 0px">
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
             </Suspense>
           </ViewportLazy>
+          {/* Warm bottom-edge fade — returns to Featured's near-black */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-20"
+            style={{ background: "linear-gradient(to top, rgba(12,12,12,0.4), transparent)" }}
+          />
         </div>
 
         <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
