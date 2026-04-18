@@ -13,6 +13,7 @@ import webhooksRouter from "./routes/webhooks";
 import socialEchoRouter from "./routes/social-echo";
 import sponsorRouter from "./routes/sponsor";
 import siteDataRouter from "./routes/site-data";
+import opsRouter from "./routes/ops";
 import outboundRouter from "./routes/outbound";
 import spaRouter from "./routes/spa";
 
@@ -35,6 +36,8 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/booking-inquiry", methods: ["POST"] },
   { path: "/api/ticket-intent", methods: ["POST"] },
   { path: "/api/sponsor-access", methods: ["POST"] },
+  { path: "/api/ops/cache/invalidate", methods: ["POST"] },
+  { path: "/api/ops/baseline", methods: ["GET"] },
   { path: "/api/webhooks/posh", methods: ["POST"] },
 ];
 
@@ -71,6 +74,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(socialEchoRouter);
   app.use(sponsorRouter);
   app.use(siteDataRouter);
+  app.use(opsRouter);
   app.use(outboundRouter);
 
   for (const guard of METHOD_GUARDS) {

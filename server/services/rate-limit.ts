@@ -223,7 +223,7 @@ export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOpti
       const requestId = randomUUID();
       logEvent("rate_limit.exceeded", {
         requestId,
-        scope,
+        scope: options.scope,
         identifierHash: hashIdentifier(identifier).slice(0, 12),
       });
 
@@ -232,7 +232,7 @@ export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOpti
         requestId,
         error: {
           code: "RATE_LIMITED",
-          message,
+          message: options.message,
           retryable: true,
         },
       });
