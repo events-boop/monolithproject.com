@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Camera } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import { archiveCollectionsBySlug, ArchiveCollection } from "@/data/galleryData";
 
@@ -68,11 +69,13 @@ export default function Archive() {
                                     <a className="group block border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04]">
                                         {/* Cover Image */}
                                         <div className="aspect-[3/2] overflow-hidden relative">
-                                            <img
+                                            <ResponsiveImage
                                                 src={entry.coverImage}
                                                 alt={`${entry.title} ${entry.subtitle}`}
+                                                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                                 loading="lazy"
+                                                decoding="async"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                             {/* Photo count badge */}

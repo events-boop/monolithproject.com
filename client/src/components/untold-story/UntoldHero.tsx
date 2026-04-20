@@ -8,6 +8,7 @@ import type { ScheduledEvent } from "@shared/events/types";
 import ConversionCTA from "@/components/ConversionCTA";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import SplitText from "@/components/ui/SplitText";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const heroSlides = [
   getResponsiveImage("eranHershPortraitReal"),
@@ -46,18 +47,16 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <picture>
-              {heroSlides[heroSlideIndex].sources?.map((source, i) => (
-                <source key={i} {...source} />
-              ))}
-              <img
-                src={heroSlides[heroSlideIndex].src}
-                alt="Untold Story Atmosphere"
-                fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
-                loading={heroSlideIndex === 0 ? "eager" : "lazy"}
-                className="w-full h-full object-cover object-[80%_center]"
-              />
-            </picture>
+            <ResponsiveImage
+              src={heroSlides[heroSlideIndex].src}
+              sources={heroSlides[heroSlideIndex].sources}
+              sizes={heroSlides[heroSlideIndex].sizes}
+              alt="Untold Story Atmosphere"
+              fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
+              loading={heroSlideIndex === 0 ? "eager" : "lazy"}
+              decoding="async"
+              className="w-full h-full object-cover object-[80%_center]"
+            />
           </motion.div>
         </AnimatePresence>
       </div>

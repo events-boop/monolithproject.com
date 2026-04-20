@@ -1,6 +1,7 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MediaItem, homeGallery } from "@/data/galleryData";
+import ResponsiveImage from "./ResponsiveImage";
 
 const GalleryLightbox = lazy(() => import("./GalleryLightbox"));
 
@@ -113,11 +114,12 @@ export default function MixedMediaGallery({
                   aria-label={photo.label}
                   className="gallery-card-frame group text-left transition-all duration-500 hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 >
-                  <img
+                  <ResponsiveImage
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
                     decoding="async"
+                    sizes={dense ? "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.04] ${
                       photo.kind === "video" ? "opacity-90" : ""
                     }`}

@@ -1,3 +1,5 @@
+import { buildResponsiveImageSources } from "./responsiveImagePath";
+
 type ResponsiveImageSource = {
   media?: string;
   sizes?: string;
@@ -123,10 +125,11 @@ function buildSources(asset: ResponsiveImageAsset, sizes: string): ResponsiveIma
 export function getResponsiveImage(key: ResponsiveImageKey, sizesOverride?: string) {
   const asset = responsiveImageCatalog[key];
   const sizes = sizesOverride || asset.sizes;
+  const genericSources = buildResponsiveImageSources(asset.src, sizes);
 
   return {
     sizes,
-    sources: buildSources(asset, sizes),
+    sources: genericSources.length ? genericSources : buildSources(asset, sizes),
     src: asset.src,
   };
 }

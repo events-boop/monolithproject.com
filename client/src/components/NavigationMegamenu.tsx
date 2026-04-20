@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { ChevronDown, ArrowUpRight, Play, Ticket } from "lucide-react";
+import ResponsiveImage from "./ResponsiveImage";
 
 export interface MegamenuProps {
     label: React.ReactNode;
@@ -115,13 +115,8 @@ export default function NavigationMegamenu({
                 />
             </button>
 
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                        transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            {isOpen && (
+                    <div
                         className={`absolute left-1/2 top-full z-30 mt-3 w-[min(42rem,calc(100vw-3rem))] -translate-x-1/2 rounded-[2rem] border p-2 shadow-[0_22px_48px_rgba(0,0,0,0.38)] backdrop-blur-xl ${isLight
                             ? "bg-white/97 border-black/6"
                             : "bg-[#0a0a0a]/97 border-white/10"
@@ -170,9 +165,12 @@ export default function NavigationMegamenu({
                                 <div
                                     className={`relative h-full rounded-xl overflow-hidden group/card cursor-pointer shadow-none transition-shadow hover:shadow-[0_0_20px_rgba(212,165,116,0.15)] ${megamenu.feature.icon === "ticket" ? "border border-primary/30" : ""}`}
                                 >
-                                    <img
+                                    <ResponsiveImage
                                         src={megamenu.feature.image}
                                         alt={megamenu.feature.title}
+                                        sizes="28rem"
+                                        loading="lazy"
+                                        decoding="async"
                                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-[1.03]"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
@@ -231,9 +229,8 @@ export default function NavigationMegamenu({
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 )}
-            </AnimatePresence>
         </div>
     );
 }

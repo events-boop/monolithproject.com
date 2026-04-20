@@ -8,6 +8,7 @@ import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
+import ResponsiveImage from "./ResponsiveImage";
 import { cn } from "@/lib/utils";
 import { getSeriesColor, getSeriesColorOnLight, getEventWindow } from "@/lib/siteExperience";
 import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
@@ -326,9 +327,12 @@ export default function ScheduleSection() {
                           {/* Image Visual (Mobile: small crop, Desktop: full aspect) */}
                           <div className="lg:col-span-4 order-2 lg:order-1">
                              <div className="aspect-video lg:aspect-[4/5] rounded-2xl overflow-hidden border border-black/10 relative shadow-md">
-                                <img
+                                <ResponsiveImage
                                   src={event.image || seriesDefaultImage[event.series]}
                                   alt={event.title}
+                                  sizes="(min-width: 1024px) 33vw, 100vw"
+                                  loading="lazy"
+                                  decoding="async"
                                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />

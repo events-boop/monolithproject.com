@@ -9,6 +9,7 @@ import RevealText from "@/components/RevealText";
 import TicketTicker from "@/components/TicketTicker";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 
 type Series = "all" | ArtistSeries;
@@ -181,11 +182,11 @@ export default function Lineup() {
                     <div className="group relative aspect-[3/4] cursor-pointer overflow-hidden border border-border hover:border-primary/50 transition-colors duration-500">
                       {/* Image */}
                       <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                        <img
+                        <ResponsiveImage
                           src={artist.image}
                           alt={artist.name}
-                          loading={idx < 8 ? "eager" : "lazy"}
-                          decoding="async"
+                          priority={idx < 8}
+                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />

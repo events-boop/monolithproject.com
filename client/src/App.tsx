@@ -1,12 +1,10 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Switch, useLocation, Redirect } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
-import PageTransition from "./components/PageTransition";
 import { UIProvider, useUI } from "./contexts/UIContext";
 import { InquiryProvider } from "./contexts/InquiryContext";
 import ViewportLazy from "./components/ViewportLazy";
@@ -14,11 +12,10 @@ import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
-import InquiryPortal from "./components/InquiryPortal";
-import MonolithPreloader from "./components/MonolithPreloader";
 
 
 // Lazy Pages
+const InquiryPortal = lazy(() => import("./components/InquiryPortal"));
 const Tickets = lazy(() => import("./pages/Tickets"));
 const About = lazy(() => import("./pages/About"));
 const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
@@ -83,11 +80,11 @@ function withTransition<P extends RouteProps>(
   Component: React.ComponentType<P>,
 ) {
   return (props: P) => (
-    <PageTransition>
+    <div className="relative w-full bg-background min-h-screen overflow-hidden">
       <Suspense fallback={<RouteLoadingFallback />}>
         <Component {...props} />
       </Suspense>
-    </PageTransition>
+    </div>
   );
 }
 
@@ -140,55 +137,53 @@ function Router() {
   const [location] = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
-      <Switch location={location} key={location}>
-        <Route path="/" component={HomeTransition} />
-        <Route path="/tickets" component={TicketsTransition} />
-        <Route path="/artists/:id" component={ArtistProfileTransition} />
-        <Route path="/sponsors" component={SponsorAccessTransition} />
-        <Route path="/about" component={AboutTransition} />
-        <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
-        <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
-        <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
-        <Route path="/radio" component={RadioTransition} />
-        <Route path="/radio/:slug" component={RadioEpisodeTransition} />
-        <Route path="/story" component={UntoldStoryTransition} />
-        <Route path="/untold-story/:season" component={ArchiveGalleryPageTransition} />
-        <Route path="/untold-story-deron-juany-bravo" component={UntoldStoryTransition} />
-        <Route path="/archive" component={ArchiveTransition} />
-        <Route path="/insights/:slug" component={InsightArticleTransition} />
-        <Route path="/insights" component={InsightsTransition} />
-        <Route path="/booking" component={BookingTransition} />
-        <Route path="/submit" component={SubmitTransition} />
-        <Route path="/lineup" component={LineupTransition} />
-        <Route path="/schedule" component={ScheduleTransition} />
-        <Route path="/events/:slug" component={EventDetailsTransition} />
-        <Route path="/newsletter" component={NewsletterTransition} />
-        <Route path="/togetherness">
-          <Redirect to="/about#togetherness" />
-        </Route>
-        <Route path="/inner-circle">
-          <Redirect to="/newsletter" />
-        </Route>
-        <Route path="/contact" component={ContactTransition} />
-        <Route path="/faq" component={FAQTransition} />
-        <Route path="/partners" component={PartnersTransition} />
-        <Route path="/press" component={PressTransition} />
-        <Route path="/vip" component={VIPTransition} />
-        <Route path="/travel" component={TravelTransition} />
-        <Route path="/guide" component={GuideTransition} />
-        <Route path="/shop" component={ShopTransition} />
-        <Route path="/ambassadors" component={AmbassadorsTransition} />
-        <Route path="/alerts" component={AlertsTransition} />
-        <Route path="/terms" component={TermsTransition} />
-        <Route path="/privacy" component={PrivacyTransition} />
-        <Route path="/cookies" component={CookiesTransition} />
-        <Route path="/monolith-ops" component={MonolithOpsRoute} />
-        <Route path="/404" component={NotFoundTransition} />
+    <Switch location={location} key={location}>
+      <Route path="/" component={HomeTransition} />
+      <Route path="/tickets" component={TicketsTransition} />
+      <Route path="/artists/:id" component={ArtistProfileTransition} />
+      <Route path="/sponsors" component={SponsorAccessTransition} />
+      <Route path="/about" component={AboutTransition} />
+      <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
+      <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
+      <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
+      <Route path="/radio" component={RadioTransition} />
+      <Route path="/radio/:slug" component={RadioEpisodeTransition} />
+      <Route path="/story" component={UntoldStoryTransition} />
+      <Route path="/untold-story/:season" component={ArchiveGalleryPageTransition} />
+      <Route path="/untold-story-deron-juany-bravo" component={UntoldStoryTransition} />
+      <Route path="/archive" component={ArchiveTransition} />
+      <Route path="/insights/:slug" component={InsightArticleTransition} />
+      <Route path="/insights" component={InsightsTransition} />
+      <Route path="/booking" component={BookingTransition} />
+      <Route path="/submit" component={SubmitTransition} />
+      <Route path="/lineup" component={LineupTransition} />
+      <Route path="/schedule" component={ScheduleTransition} />
+      <Route path="/events/:slug" component={EventDetailsTransition} />
+      <Route path="/newsletter" component={NewsletterTransition} />
+      <Route path="/togetherness">
+        <Redirect to="/about#togetherness" />
+      </Route>
+      <Route path="/inner-circle">
+        <Redirect to="/newsletter" />
+      </Route>
+      <Route path="/contact" component={ContactTransition} />
+      <Route path="/faq" component={FAQTransition} />
+      <Route path="/partners" component={PartnersTransition} />
+      <Route path="/press" component={PressTransition} />
+      <Route path="/vip" component={VIPTransition} />
+      <Route path="/travel" component={TravelTransition} />
+      <Route path="/guide" component={GuideTransition} />
+      <Route path="/shop" component={ShopTransition} />
+      <Route path="/ambassadors" component={AmbassadorsTransition} />
+      <Route path="/alerts" component={AlertsTransition} />
+      <Route path="/terms" component={TermsTransition} />
+      <Route path="/privacy" component={PrivacyTransition} />
+      <Route path="/cookies" component={CookiesTransition} />
+      <Route path="/monolith-ops" component={MonolithOpsRoute} />
+      <Route path="/404" component={NotFoundTransition} />
 
-        <Route component={NotFoundTransition} />
-      </Switch>
-    </AnimatePresence>
+      <Route component={NotFoundTransition} />
+    </Switch>
   );
 }
 
@@ -268,6 +263,28 @@ const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
 const Toaster = lazy(() => import("./components/ui/sonner").then((module) => ({ default: module.Toaster })));
+
+function DeferredGlobalModules() {
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setShouldLoad(true), 3000);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  if (!shouldLoad) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <InquiryPortal />
+      <Toaster />
+      <DeferredShellChrome />
+      <Analytics />
+      <CookieConsent />
+    </Suspense>
+  );
+}
+
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const isDrawerActive = Boolean(activeDrawer);
@@ -339,16 +356,9 @@ function App() {
           <UIProvider>
             <InquiryProvider>
               <div className="film-grain" />
-              <MonolithPreloader />
               <MainContentWrapper />
               
-              <Suspense fallback={null}>
-                <InquiryPortal />
-                <Toaster />
-                <DeferredShellChrome />
-                <Analytics />
-                <CookieConsent />
-              </Suspense>
+              <DeferredGlobalModules />
             </InquiryProvider>
           </UIProvider>
         </ThemeProvider>

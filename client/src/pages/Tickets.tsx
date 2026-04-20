@@ -12,6 +12,7 @@ import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import SmartImage from "@/components/SmartImage";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
 import {
@@ -173,7 +174,14 @@ export default function Tickets() {
                       <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-wrap gap-3">
                          {lineupVisuals.slice(0, 3).map((artist) => (
                            <div key={artist.name} className="flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10">
-                              <img src={artist.image} alt={artist.name} className="w-8 h-8 rounded-full object-cover" />
+                              <ResponsiveImage
+                                src={artist.image}
+                                alt={artist.name}
+                                sizes="32px"
+                                loading="lazy"
+                                decoding="async"
+                                className="w-8 h-8 rounded-full object-cover"
+                              />
                               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">{artist.name}</span>
                            </div>
                          ))}

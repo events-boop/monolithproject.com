@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Users, Music, Calendar, TrendingUp } from "lucide-react";
 import RevealText from "./RevealText";
+import ResponsiveImage from "./ResponsiveImage";
 
 const metrics = [
     { label: "Best Time", value: "Golden Hour", icon: Calendar },
@@ -21,14 +22,12 @@ export default function ChasingSunsetsDetails() {
         <section className="py-24 px-6 bg-sand text-charcoal relative overflow-hidden">
             {/* Background image wash */}
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-                <img
-                    src="/images/chasing-sunsets-tradition.jpg"
+                <ResponsiveImage
+                    src="/images/chasing-sunsets-premium.webp"
                     alt=""
                     loading="lazy"
                     decoding="async"
-                    onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = "/images/chasing-sunsets-premium.webp";
-                    }}
+                    sizes="100vw"
                     className="absolute inset-0 w-full h-full object-cover object-[50%_35%] opacity-[0.6] saturate-[1.1] contrast-[1.08] brightness-[0.98]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,245,237,0.82)_0%,rgba(251,245,237,0.62)_40%,rgba(251,245,237,0.84)_100%)]" />

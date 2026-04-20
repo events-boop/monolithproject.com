@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useInView } from "framer-motion";
 
 const CHARS = "ABCDEF0123456789!@#$%^&*()_+{}[]:;<>,.?/~";
 
@@ -18,8 +17,8 @@ export default function KineticDecryption({
 }) {
   const [displayText, setDisplayText] = useState(text);
   const [isScrambling, setIsScrambling] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: triggerOnce, margin: "-10%" });
+  const [isInView, setIsInView] = useState(false);
+  const ref = useRef<HTMLSpanElement | null>(null);
 
   const startScramble = (force = false) => {
     if (isScrambling) return;
@@ -62,13 +61,49 @@ export default function KineticDecryption({
     }
   }, [isInView, autoStart]);
 
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (triggerOnce) observer.disconnect();
+        } else if (!triggerOnce) {
+          setIsInView(false);
+        }
+      },
+      { rootMargin: "-10% 0px -10% 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [triggerOnce, text]);
+
   return (
     <span 
       ref={ref}
       onMouseEnter={() => startScramble(true)}
-      className={`${className} cursor-default inline-block whitespace-nowrap`}
+      aria-label={text}
+      className={`${className} cursor-default relative inline-block whitespace-nowrap`}
     >
-      {displayText}
+      {autoStart || isScrambling ? (
+        <>
+          <span aria-hidden="true" className="invisible">
+            {text}
+          </span>
+          <span aria-hidden="true" className="absolute inset-0">
+            {displayText}
+          </span>
+        </>
+      ) : (
+        displayText
+      )}
     </span>
   );
 }

@@ -22,6 +22,7 @@ class SiteDataService {
   private cachedResponses = new Map<string, CachedSiteDataResponse>();
   private lastFetchTime: number = 0;
   private isRefreshing: boolean = false;
+  private refreshPromise: Promise<void> | null = null;
   
   // Cache TTL: 60 seconds. Stale period: High (background refresh)
   private readonly TTL_MS = 60 * 1000;
@@ -70,7 +71,12 @@ class SiteDataService {
     // 1. If we have no data at all, we must wait for the first fetch
     if (!this.cachedEvents) {
       logEvent("site_data.cache_miss", { reason: "bootstrap" });
-      await this.refreshCache();
+      if (!this.refreshPromise) {
+        this.refreshPromise = this.refreshCache().finally(() => {
+          this.refreshPromise = null;
+        });
+      }
+      await this.refreshPromise;
       return this.cachedEvents || [];
     }
 

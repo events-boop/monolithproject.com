@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
 import YouTubeEmbed from "./ui/YouTubeEmbed";
 import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
 import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
+import { buildResponsiveImageSources } from "@/lib/responsiveImagePath";
+import { prefersReducedMotion } from "@/lib/runtimePerformance";
 
 interface SlideSource {
   srcSet: string;
@@ -21,6 +22,8 @@ export interface Slide {
   sizes?: string;
   posterSources?: SlideSource[];
   posterSizes?: string;
+  width?: number;
+  height?: number;
   alt?: string;
   credit?: string;
   caption?: string;
@@ -40,6 +43,8 @@ function ResponsiveSlideImage({
   sizes,
   sources,
   src,
+  width = 1920,
+  height = 1080,
 }: {
   alt: string;
   ariaHidden?: boolean;
@@ -48,14 +53,19 @@ function ResponsiveSlideImage({
   sizes?: string;
   sources?: SlideSource[];
   src: string;
+  width?: number;
+  height?: number;
 }) {
+  const imageSizes = sizes || "100vw";
+  const imageSources = sources?.length ? sources : buildResponsiveImageSources(src, imageSizes);
+
   return (
-    <picture>
-      {sources?.map((source, index) => (
+    <picture className="contents">
+      {imageSources.map((source, index) => (
         <source
           key={`${source.type}-${index}`}
           media={source.media}
-          sizes={source.sizes || sizes}
+          sizes={source.sizes || imageSizes}
           srcSet={source.srcSet}
           type={source.type}
         />
@@ -63,10 +73,12 @@ function ResponsiveSlideImage({
       <img
         src={src}
         alt={alt}
-        sizes={sizes}
+        sizes={imageSizes}
         loading={fetchPriority === "high" ? "eager" : "lazy"}
         decoding="async"
         fetchPriority={fetchPriority}
+        width={width}
+        height={height}
         className={className}
         aria-hidden={ariaHidden}
       />
@@ -82,11 +94,11 @@ export default function VideoHeroSlider({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [loadVideo, setLoadVideo] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
   const [canStartPrimaryVideo, setCanStartPrimaryVideo] = useState(() => {
     if (typeof document === "undefined") return true;
     return !document.getElementById("initial-loader");
   });
-  const reduceMotion = useReducedMotion();
   const enableAmbientVideo = useAmbientVideoEnabled(videoMinWidth);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -107,6 +119,14 @@ export default function VideoHeroSlider({
       setIsMuted(!isMuted);
     }
   };
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduceMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   // Auto-advance for all slides
   useEffect(() => {
@@ -158,7 +178,8 @@ export default function VideoHeroSlider({
     if (slide.type !== "video" && slide.type !== "youtube") return;
     if (currentSlide === 0 && slide.type === "video" && !canStartPrimaryVideo) return;
 
-    const id = window.setTimeout(() => setLoadVideo(true), 0);
+    const delayMs = currentSlide === 0 ? 3200 : 600;
+    const id = window.setTimeout(() => setLoadVideo(true), delayMs);
     return () => window.clearTimeout(id);
   }, [canStartPrimaryVideo, currentSlide, enableAmbientVideo, loadVideo, reduceMotion, slide?.type]);
 
@@ -182,13 +203,8 @@ export default function VideoHeroSlider({
 
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
-      <AnimatePresence initial={false}>
-        <motion.div
+      <div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0"
         >
           {slide.type === "youtube" ? (
@@ -214,6 +230,8 @@ export default function VideoHeroSlider({
                   fetchPriority={slideFetchPriority}
                   sources={slide.posterSources}
                   sizes={slide.posterSizes}
+                  width={slide.width}
+                  height={slide.height}
                   className="w-full h-full object-cover object-center md:object-[80%_center]"
                 />
               ) : (
@@ -231,15 +249,16 @@ export default function VideoHeroSlider({
                   fetchPriority={slideFetchPriority}
                   sources={slide.posterSources}
                   sizes={slide.posterSizes}
+                  width={slide.width}
+                  height={slide.height}
                   className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center]"
                 />
               )}
               
               {/* Video Layer fades in over poster once ready */}
               {enableAmbientVideo && loadVideo && (
-                <motion.video
+                <video
                   ref={videoRef}
-                  initial={{ opacity: 0 }}
                   onCanPlay={() => {
                     if (videoRef.current) {
                       videoRef.current.style.opacity = "1";
@@ -250,7 +269,7 @@ export default function VideoHeroSlider({
                   loop={!reduceMotion}
                   muted={isMuted}
                   playsInline
-                  preload={currentSlide === 0 ? "auto" : "metadata"}
+                  preload="metadata"
                   className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center] transition-opacity duration-1000 ease-in-out"
                   aria-hidden="true"
                   tabIndex={-1}
@@ -265,11 +284,12 @@ export default function VideoHeroSlider({
               fetchPriority={slideFetchPriority}
               sources={slide.sources}
               sizes={slide.sizes}
+              width={slide.width}
+              height={slide.height}
               className="w-full h-full object-cover object-center md:object-[80%_center]"
             />
           )}
-        </motion.div>
-      </AnimatePresence>
+        </div>
 
       {/* Brighter center, darker edges */}
       <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_45%,rgba(0,0,0,0.14),rgba(0,0,0,0.4)_80%,rgba(0,0,0,0.5)_100%)]" />

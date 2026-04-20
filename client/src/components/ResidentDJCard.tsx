@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Music, MapPin, Radio, Instagram, ArrowUpRight, Disc3 } from "lucide-react";
+import ResponsiveImage from "./ResponsiveImage";
 
 export interface ResidentDJ {
     name: string;
@@ -179,9 +180,12 @@ export default function ResidentDJCard({
                     <div className="lg:col-span-5 relative z-10">
                         <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border sunset-border-accent-20">
                             {dj.image ? (
-                                <img
+                                <ResponsiveImage
                                     src={dj.image}
                                     alt={dj.name}
+                                    sizes="(min-width: 1024px) 40vw, 100vw"
+                                    loading="lazy"
+                                    decoding="async"
                                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     style={{ filter: "saturate(0.85) contrast(1.05)" }}
                                     onError={(e) => {

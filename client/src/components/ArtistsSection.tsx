@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, MapPin, Music, Sun } from "lucide-react";
+import ResponsiveImage from "./ResponsiveImage";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
 import { ARTISTS } from "@/data/artists";
@@ -59,11 +60,12 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
 
         {/* Image Core */}
         <div className="absolute inset-0 transition-transform duration-1000 ease-out group-hover:scale-105">
-          <img
+          <ResponsiveImage
             src={artist.image}
             alt={artist.name}
             loading="lazy"
             decoding="async"
+            sizes="(min-width: 1024px) 25vw, 100vw"
             className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000"
           />
           {/* Gradients */}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SocialGrid from "@/components/SocialGrid";
 import SEO from "@/components/SEO";
 import { buildScheduleSchema } from "@/lib/schema";
@@ -109,9 +110,12 @@ export default function Schedule() {
             transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-0 pointer-events-none"
           >
-            <img 
+            <ResponsiveImage
               src={hoveredImage} 
               alt="Background Projection" 
+              sizes="100vw"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover opacity-60 grayscale-[60%] mix-blend-screen"
             />
             {/* Architectural Vignette Masks */}
@@ -322,9 +326,12 @@ export default function Schedule() {
                             {/* Visual Asset / Map Mock / Graphic */}
                             <div className="md:col-span-3 hidden md:block">
                                <div className="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 relative group-inner">
-                                  <img 
+                                  <ResponsiveImage
                                     src={event.image || seriesDefaultImage[event.series]} 
                                     alt={event.title} 
+                                    sizes="25vw"
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />

@@ -1,9 +1,13 @@
-import type { Express, Request, Response, NextFunction } from "express";
+import type { Express, Request, Response, NextFunction, RequestHandler } from "express";
 import express from "express";
 import helmet from "helmet";
 import { randomUUID } from "crypto";
+import { createRequire } from "module";
 import { createApiResponseHardening, createBrowserApiGuard } from "./lib/request-hardening";
 import { createRateLimitMiddleware } from "./services/rate-limit";
+
+const require = createRequire(import.meta.url);
+const compression = require("compression") as (options?: Record<string, unknown>) => RequestHandler;
 
 const apiCspDirectives = {
   defaultSrc: ["'none'"],
@@ -17,6 +21,7 @@ const apiCspDirectives = {
 
 export function configureMiddleware(app: Express) {
   app.set("trust proxy", true);
+  app.use(compression({ threshold: 0 }));
 
   // Keep the broad security headers globally, but let Netlify own the document
   // CSP. Express still serves JSON and redirects, and may serve HTML locally.

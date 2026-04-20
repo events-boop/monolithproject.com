@@ -4,6 +4,7 @@ import { Link, useLocation } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SmartImage from "@/components/SmartImage";
 import TextSpotlightReveal from "@/components/ui/TextSpotlightReveal";
 import WordScrubReveal from "@/components/ui/WordScrubReveal";
@@ -136,9 +137,11 @@ export default function About() {
               poster="/images/hero-monolith.webp"
             />
           ) : (
-            <img
+            <ResponsiveImage
               src="/images/hero-monolith.webp"
               alt=""
+              priority
+              sizes="100vw"
               loading="eager"
               decoding="async"
               fetchPriority="high"

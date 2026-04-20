@@ -1,102 +1,114 @@
 [
   {
     "name": "minScore",
-    "expected": 0.7,
-    "actual": 0.67,
+    "expected": 0.95,
+    "actual": 0.47,
     "values": [
-      0.67
+      0.47,
+      0.22,
+      0.16
     ],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
     "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/"
+    "url": "http://localhost:3001/"
   },
   {
     "name": "minScore",
-    "expected": 0.7,
-    "actual": 0.65,
+    "expected": 0.95,
+    "actual": 0.52,
     "values": [
-      0.65
+      0.51,
+      0.52,
+      0.52
     ],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
     "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/tickets"
+    "url": "http://localhost:3001/tickets"
   },
   {
     "name": "minScore",
-    "expected": 0.7,
-    "actual": 0.64,
+    "expected": 0.95,
+    "actual": 0.43,
     "values": [
-      0.64
+      0.4,
+      0.43,
+      0.43
     ],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
     "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/chasing-sunsets"
-  },
-  {
-    "name": "maxNumericValue",
-    "expected": 600000,
-    "actual": 601818,
-    "values": [
-      601818
-    ],
-    "operator": "<=",
-    "passed": false,
-    "auditProperty": "script.size",
-    "auditId": "resource-summary",
-    "level": "error",
-    "url": "http://127.0.0.1:3000/chasing-sunsets",
-    "auditTitle": "Resources Summary"
+    "url": "http://localhost:3001/radio"
   },
   {
     "name": "minScore",
-    "expected": 0.7,
-    "actual": 0.64,
+    "expected": 0.95,
+    "actual": 0.93,
     "values": [
-      0.64
+      0.93,
+      0.93,
+      0.93
     ],
     "operator": ">=",
     "passed": false,
-    "auditProperty": "performance",
+    "auditProperty": "accessibility",
     "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/radio"
+    "url": "http://localhost:3001/radio"
   },
   {
     "name": "minScore",
-    "expected": 0.7,
-    "actual": 0.63,
+    "expected": 0.95,
+    "actual": 0.54,
     "values": [
-      0.63
+      0.53,
+      0.54,
+      0.54
     ],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
     "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/contact"
+    "url": "http://localhost:3001/booking"
   },
   {
-    "name": "maxNumericValue",
-    "expected": 600000,
-    "actual": 676028,
+    "name": "minScore",
+    "expected": 0.95,
+    "actual": 0.52,
     "values": [
-      676028
+      0.52,
+      0.52,
+      0.52
     ],
-    "operator": "<=",
+    "operator": ">=",
     "passed": false,
-    "auditProperty": "script.size",
-    "auditId": "resource-summary",
+    "auditProperty": "performance",
+    "auditId": "categories",
     "level": "error",
-    "url": "http://127.0.0.1:3000/contact",
-    "auditTitle": "Resources Summary"
+    "url": "http://localhost:3001/partners"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.95,
+    "actual": 0.54,
+    "values": [
+      0.54,
+      0.54,
+      0.54
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "http://localhost:3001/archive"
   }
 ]

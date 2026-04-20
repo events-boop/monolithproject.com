@@ -1,72 +1,58 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 
 interface MagneticButtonProps {
-    children: ReactNode;
-    className?: string;
-    strength?: number; // How strong the magnetic pull is (default: 0.5)
-    onClick?: () => void;
+  children: ReactNode;
+  className?: string;
+  strength?: number;
+  onClick?: () => void;
 }
 
 export default function MagneticButton({
-    children,
-    className = "",
-    strength = 0.5,
-    onClick
+  children,
+  className = "",
+  strength = 0.5,
+  onClick,
 }: MagneticButtonProps) {
-    const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
 
-    // Smooth spring physics for the magnetic effect
-    const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
-    const springX = useSpring(x, springConfig);
-    const springY = useSpring(y, springConfig);
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
+    setOffset({
+      x: (clientX - centerX) * strength,
+      y: (clientY - centerY) * strength,
+    });
+  };
 
-        const { clientX, clientY } = e;
-        const { left, top, width, height } = ref.current.getBoundingClientRect();
+  const handleMouseLeave = () => setOffset({ x: 0, y: 0 });
 
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
+  const handleMouseEnter = () => {
+    signalChirp.hover();
+  };
 
-        const distanceX = clientX - centerX;
-        const distanceY = clientY - centerY;
+  const handleInternalClick = () => {
+    signalChirp.click();
+    onClick?.();
+  };
 
-        x.set(distanceX * strength);
-        y.set(distanceY * strength);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
-    const handleMouseEnter = () => {
-        signalChirp.hover();
-    };
-
-    const handleInternalClick = () => {
-        signalChirp.click();
-        onClick?.();
-    };
-
-    return (
-        <motion.div
-            ref={ref}
-            onMouseEnter={handleMouseEnter}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleInternalClick}
-            style={{ x: springX, y: springY }}
-            className={`cursor-pointer ${className}`}
-            whileTap={{ scale: 0.97 }}
-        >
-            {children}
-        </motion.div>
-    );
+  return (
+    <div
+      ref={ref}
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleInternalClick}
+      style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
+      className={`cursor-pointer transition-transform duration-150 ease-out active:scale-[0.97] ${className}`}
+    >
+      {children}
+    </div>
+  );
 }

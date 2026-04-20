@@ -2,6 +2,7 @@ import { ArrowUpRight, Headphones } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { radioEpisodes } from "@/data/radioEpisodes";
 import { getSceneForPath } from "@/lib/scenes";
+import ResponsiveImage from "./ResponsiveImage";
 
 const featuredEpisodes = radioEpisodes.slice(0, 4);
 
@@ -64,9 +65,10 @@ export default function SoundCloudShelf() {
               >
                 <div className="relative aspect-square overflow-hidden border border-white/10 bg-black">
                   <div className="glass-refract absolute inset-0">
-                    <img
+                    <ResponsiveImage
                       src={coverSrc}
                       alt={`${episode.guest} ${episode.title} SoundCloud artwork`}
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 78vw"
                       loading="lazy"
                       decoding="async"
                       className="absolute inset-0 h-full w-full object-cover brightness-[0.9] transition-[filter] duration-500 group-hover:brightness-[0.75]"

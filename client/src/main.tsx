@@ -1,6 +1,5 @@
 /// <reference types="vite-plugin-pwa/client" />
 import { createRoot } from "react-dom/client";
-import { MotionConfig } from "framer-motion";
 import { initAttributionTracking } from "./lib/attribution";
 import { ensurePublicSiteData } from "./lib/siteData";
 import "./styles/index.css";
@@ -27,29 +26,37 @@ function renderMountError(error: unknown) {
   document.body.replaceChildren(wrapper);
 }
 
-// Ensure the UI shell caches instantly
-registerSW({ immediate: true });
+function scheduleIdleWork(callback: () => void, timeout = 3000) {
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(callback, { timeout });
+    return;
+  }
+
+  globalThis.setTimeout(callback, Math.min(timeout, 3000));
+}
 
 async function startApp() {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("Root element not found");
 
-  initAttributionTracking();
-  void ensurePublicSiteData(window.location.pathname).catch((error) => {
-    if (import.meta.env.DEV) {
-      console.warn("[site-data] Initial preload failed.", error);
-    }
-  });
   const { default: App } = await import("./App");
 
-  createRoot(rootElement).render(
-    <MotionConfig reducedMotion="user">
-      <App />
-    </MotionConfig>
-  );
+  createRoot(rootElement).render(<App />);
 
   requestAnimationFrame(() => {
     window.dispatchEvent(new Event("monolith:app-ready"));
+  });
+
+  scheduleIdleWork(() => {
+    initAttributionTracking();
+    void ensurePublicSiteData(window.location.pathname).catch((error) => {
+      if (import.meta.env.DEV) {
+        console.warn("[site-data] Initial preload failed.", error);
+      }
+    });
+
+    // Keep PWA registration off the LCP path.
+    registerSW({ immediate: true });
   });
 }
 

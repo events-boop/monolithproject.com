@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, CalendarRange, Clock3, Tag, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { insightEntries } from "@/data/insights";
@@ -86,9 +87,11 @@ export default function Insights() {
             >
               <Link href={`/insights/${featured.slug}`} className="block relative min-h-[500px] md:min-h-[600px] overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                  <img
+                  <ResponsiveImage
                     src={featured.image}
                     alt={featured.title}
+                    priority
+                    sizes="100vw"
                     className="h-full w-full object-cover transition-transform duration-[2s] group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
@@ -134,9 +137,12 @@ export default function Insights() {
               >
                 <Link href={`/insights/${article.slug}`} className="group flex flex-col h-full rounded-[2rem] overflow-hidden border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500">
                   <div className="aspect-[4/5] overflow-hidden relative">
-                    <img
+                    <ResponsiveImage
                       src={article.image}
                       alt={article.title}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />

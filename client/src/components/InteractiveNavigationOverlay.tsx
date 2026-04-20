@@ -32,6 +32,7 @@ import { INSTAGRAM_MONOLITH, LAYLO_URL, SOUNDCLOUD_URL } from "@/data/events";
 import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import MagneticButton from "./MagneticButton";
+import ResponsiveImage from "./ResponsiveImage";
 
 interface InteractiveNavigationOverlayProps {
   activePath: string;
@@ -269,9 +270,11 @@ export default function InteractiveNavigationOverlay({
         className="relative h-full min-h-[30rem] overflow-hidden rounded-[2rem] border border-white/10 bg-black/60 shadow-[0_34px_90px_rgba(0,0,0,0.42)]"
         style={accentStyle}
       >
-        <img
+        <ResponsiveImage
           src={view.image}
           alt=""
+          sizes="(min-width: 768px) 50vw, 100vw"
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-68 transition-transform duration-700 ease-out"
           decoding="async"
         />
@@ -508,7 +511,14 @@ export default function InteractiveNavigationOverlay({
                     >
                       <div className="px-3 pb-3">
                         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black">
-                          <img src={view.image} alt="" className="h-48 w-full object-cover opacity-72" loading="lazy" decoding="async" />
+                          <ResponsiveImage
+                            src={view.image}
+                            alt=""
+                            sizes="100vw"
+                            className="h-48 w-full object-cover opacity-72"
+                            loading="lazy"
+                            decoding="async"
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/28 to-transparent" />
                           <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                             {view.status}

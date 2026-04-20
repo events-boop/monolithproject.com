@@ -1,5 +1,6 @@
 import { useState, ImgHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
+import { buildResponsiveImageSources } from "@/lib/responsiveImagePath";
 
 interface SmartImageProps extends ImgHTMLAttributes<HTMLImageElement> {
     src: string;
@@ -31,8 +32,10 @@ export default function SmartImage({
     ...props
 }: SmartImageProps) {
     const [isLoaded, setIsLoaded] = useState(false);
+    const imageSizes = sizes || "100vw";
+    const imageSources = sources?.length ? sources : buildResponsiveImageSources(src, imageSizes);
     const imageLoading = loading ?? (priority ? "eager" : "lazy");
-    const imageDecoding = decoding ?? (priority ? "sync" : "async");
+    const imageDecoding = decoding ?? "async";
     const imageFetchPriority = fetchPriority ?? (priority ? "high" : "auto");
 
     return (
@@ -40,14 +43,14 @@ export default function SmartImage({
             className={cn("relative overflow-hidden bg-white/5", containerClassName)}
             style={aspectRatio ? { aspectRatio } : undefined}
         >
-            <picture>
-                {sources?.map((source, idx) => (
+            <picture className="contents">
+                {imageSources.map((source, idx) => (
                     <source
                         key={idx}
                         srcSet={source.srcSet}
                         type={source.type}
                         media={source.media}
-                        sizes={source.sizes || sizes}
+                        sizes={source.sizes || imageSizes}
                     />
                 ))}
                 <img
@@ -56,7 +59,7 @@ export default function SmartImage({
                     loading={imageLoading}
                     decoding={imageDecoding}
                     fetchPriority={imageFetchPriority}
-                    sizes={sizes}
+                    sizes={imageSizes}
                     onLoad={() => setIsLoaded(true)}
                     className={cn(
                         "w-full h-full object-cover transition-opacity duration-700 ease-out",

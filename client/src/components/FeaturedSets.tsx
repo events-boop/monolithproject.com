@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { Link } from "wouter";
+import ResponsiveImage from "./ResponsiveImage";
 import { getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
 import { RADIO_ACCENT } from "@/lib/brand";
 import type { ScheduledEvent } from "@shared/events/types";
@@ -142,11 +143,12 @@ export default function FeaturedSets() {
                   href={set.href}
                   className="group relative block w-[300px] h-[440px] overflow-hidden border border-white/15 bg-black shadow-xl shadow-black/40"
                 >
-                  <img
+                  <ResponsiveImage
                     src={set.image}
                     alt=""
                     loading="lazy"
                     decoding="async"
+                    sizes="300px"
                     className="absolute inset-0 w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.08]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
@@ -218,11 +220,12 @@ export default function FeaturedSets() {
                 href={set.href}
                 className="snap-center shrink-0 w-[280px] h-[400px] relative overflow-hidden border border-white/15 bg-black"
               >
-                <img
+                <ResponsiveImage
                   src={set.image}
                   alt=""
                   loading="lazy"
                   decoding="async"
+                  sizes="280px"
                   className="absolute inset-0 w-full h-full object-cover grayscale-[20%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />

@@ -197,6 +197,206 @@ function renderBaseLayout(
   `;
 }
 
+function renderHomeCriticalLayout() {
+  return `
+    <main class="critical-home-shell">
+      <section class="critical-hero" aria-label="The Monolith Project">
+        <picture class="critical-hero__media">
+          <source
+            type="image/avif"
+            srcset="/images/generated/hero-video-1-poster-480.avif 480w, /images/generated/hero-video-1-poster-1024.avif 1024w, /images/generated/hero-video-1-poster-1920.avif 1920w"
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcset="/images/generated/hero-video-1-poster-480.webp 480w, /images/generated/hero-video-1-poster-1024.webp 1024w, /images/generated/hero-video-1-poster-1920.webp 1920w"
+            sizes="100vw"
+          />
+          <img
+            src="/images/hero-video-1-poster.jpg"
+            alt=""
+            width="1920"
+            height="1080"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
+        <div class="critical-hero__shade" aria-hidden="true"></div>
+        <header class="critical-hero__content">
+          <p class="critical-hero__eyebrow">Chicago Music Project</p>
+          <h1>MONOLITH</h1>
+          <div class="critical-hero__rule" aria-hidden="true"></div>
+          <p class="critical-hero__kicker">PROJECT</p>
+          <p class="critical-hero__summary">Root Architecture / Events / Radio / Research</p>
+        </header>
+      </section>
+      <section class="critical-home-content" aria-label="Monolith overview">
+        <h2>The Monolith Project</h2>
+        ${renderParagraphs([
+          "The Monolith Project is a Chicago music platform built around events, radio, and long-term cultural memory.",
+          "Chasing Sun(Sets) covers open-air and golden-hour sessions. Untold Story covers the after-dark room. The radio archive keeps the signal active between events.",
+        ])}
+      </section>
+      ${renderUpcomingEventsSection()}
+      <nav class="critical-home-content" aria-label="Primary">
+        <h2>Explore</h2>
+        ${renderLinkList([
+          { href: "/tickets", label: "See current tickets" },
+          { href: "/schedule", label: "View the Chicago schedule" },
+          { href: "/chasing-sunsets", label: "Explore Chasing Sun(Sets)" },
+          { href: "/story", label: "Explore Untold Story" },
+          { href: "/radio", label: "Listen to the radio archive" },
+          { href: INSTAGRAM_MONOLITH, label: "Instagram", external: true },
+          { href: SOUNDCLOUD_URL, label: "SoundCloud archive", external: true },
+        ])}
+      </nav>
+    </main>
+  `;
+}
+
+function renderHomeCriticalStyle() {
+  return `<style id="critical-home-hero-css">
+    #root:has(.critical-home-shell) {
+      min-height: 100svh;
+      background: #000;
+    }
+    .critical-home-shell {
+      margin: 0;
+      min-height: 100svh;
+      background: #000;
+      color: #fff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .critical-hero {
+      position: relative;
+      isolation: isolate;
+      min-height: 100svh;
+      overflow: hidden;
+      background: #000;
+    }
+    .critical-hero__media,
+    .critical-hero__media img,
+    .critical-hero__shade {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .critical-hero__media img {
+      object-fit: cover;
+      object-position: 80% center;
+    }
+    .critical-hero__shade {
+      z-index: 1;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.46) 78%, rgba(0, 0, 0, 0.62)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.18) 56%, rgba(0, 0, 0, 0.62));
+    }
+    .critical-hero__content {
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
+      display: flex;
+      min-height: 100svh;
+      width: min(100%, 1220px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 7rem 32rem 6rem 3rem;
+      text-align: left;
+    }
+    .critical-hero__eyebrow,
+    .critical-hero__kicker,
+    .critical-hero__summary {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      text-transform: uppercase;
+    }
+    .critical-hero__eyebrow {
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.52);
+      font-size: 0.78rem;
+      letter-spacing: 0.78em;
+    }
+    .critical-hero h1 {
+      margin: 0;
+      color: #fff;
+      font-family: "Archivo Black", Impact, "Arial Black", sans-serif;
+      font-size: clamp(4rem, 16.5vw, 12.5rem);
+      line-height: 0.8;
+      text-transform: uppercase;
+      text-shadow: 0 0 80px rgba(255, 255, 255, 0.08);
+    }
+    .critical-hero__rule {
+      width: min(100%, 50rem);
+      height: 1px;
+      margin: 1.6rem 0 1.8rem;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), transparent);
+    }
+    .critical-hero__kicker {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: clamp(0.8rem, 5vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: 0.5em;
+    }
+    .critical-hero__summary {
+      max-width: 30rem;
+      margin-top: 1.25rem;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      line-height: 1.8;
+    }
+    .critical-home-content,
+    .critical-home-shell > section:not(.critical-hero),
+    .critical-home-shell > nav {
+      box-sizing: border-box;
+      padding: 4rem 1.5rem;
+      background: #111;
+    }
+    .critical-home-content > *,
+    .critical-home-shell > section:not(.critical-hero) > *,
+    .critical-home-shell > nav > * {
+      max-width: 70rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 900px) {
+      .critical-hero__content {
+        align-items: center;
+        justify-content: flex-start;
+        padding: 7.5rem 1.5rem 18rem;
+        text-align: center;
+      }
+      .critical-hero__eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.5em;
+      }
+      .critical-hero h1 {
+        font-size: clamp(3rem, 16.2vw, 7rem);
+      }
+      .critical-hero__rule {
+        width: min(100%, 34rem);
+      }
+      .critical-hero__summary {
+        max-width: 22rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.24em;
+      }
+    }
+  </style>`;
+}
+
+function deferHomeAppStylesheets(html: string) {
+  return html.replace(
+    /<link rel="stylesheet" crossorigin href="([^"]+\.css)">/g,
+    (_match, href: string) =>
+      `<link rel="preload" as="style" crossorigin href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`,
+  );
+}
+
 const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/",
@@ -205,24 +405,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       description:
         "The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project.",
       schemaData: buildSitewideIdentitySchema(),
-      bodyHtml: renderBaseLayout(
-        "Chicago Music Project",
-        "The Monolith Project",
-        [
-          "The Monolith Project is a Chicago music platform built around events, radio, and long-term cultural memory.",
-          "Chasing Sun(Sets) covers open-air and golden-hour sessions. Untold Story covers the after-dark room. The radio archive keeps the signal active between events.",
-        ],
-        [
-          { href: "/tickets", label: "See current tickets" },
-          { href: "/schedule", label: "View the Chicago schedule" },
-          { href: "/chasing-sunsets", label: "Explore Chasing Sun(Sets)" },
-          { href: "/story", label: "Explore Untold Story" },
-          { href: "/radio", label: "Listen to the radio archive" },
-          { href: INSTAGRAM_MONOLITH, label: "Instagram", external: true },
-          { href: SOUNDCLOUD_URL, label: "SoundCloud archive", external: true },
-        ],
-        renderUpcomingEventsSection(),
-      ),
+      bodyHtml: renderHomeCriticalLayout(),
     },
   ],
   [
@@ -708,6 +891,11 @@ for (const route of routeDefinitions) {
     html = upsertMetaByName(html, "twitter:image", imageUrl);
   }
 
+  if (route.path === "/") {
+    html = html.replace("</head>", `${renderHomeCriticalStyle()}\n</head>`);
+    html = deferHomeAppStylesheets(html);
+  }
+
   html = upsertTag(
     html,
     /<link[^>]+rel="canonical"[^>]*>/i,
@@ -728,4 +916,3 @@ for (const route of routeDefinitions) {
   mkdirSync(path.dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, html, "utf8");
 }
-

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
 import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
+import ResponsiveImage from "./ResponsiveImage";
 
 interface CinematicBreakProps {
   image: string;
@@ -72,12 +73,13 @@ export default function CinematicBreak({
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <img
+          <ResponsiveImage
             src={image}
             alt=""
             loading={isInView ? "eager" : "lazy"}
             decoding="async"
             fetchPriority={isInView ? "high" : "auto"}
+            sizes="100vw"
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}

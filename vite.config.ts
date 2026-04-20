@@ -30,8 +30,21 @@ export default defineConfig(({ mode }) => {
           orientation: 'portrait'
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,avif,webp,xml}'],
-          maximumFileSizeToCacheInBytes: 4000000, // Caches core shell up to 4MB, ignores large videos
+          globPatterns: ['**/*.{js,css,html,ico,svg,woff2,xml,webmanifest}'],
+          maximumFileSizeToCacheInBytes: 700000,
+          runtimeCaching: [
+            {
+              urlPattern: /\.(?:png|jpg|jpeg|webp|avif|gif)$/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'monolith-images',
+                expiration: {
+                  maxEntries: 80,
+                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                },
+              },
+            },
+          ],
         }
       }),
       ViteImageOptimizer({

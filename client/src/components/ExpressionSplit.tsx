@@ -5,6 +5,7 @@ import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { getResponsiveImage } from "../lib/responsiveImages";
 import { MONOLITH_ORANGE, RADIO_ACCENT, SUN_SETS_GOLD, UNTOLD_CYAN } from "../lib/brand";
+import ResponsiveImage from "./ResponsiveImage";
 
 const expressions = [
   {
@@ -107,21 +108,20 @@ export default function ExpressionSplit() {
             <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
-                <picture className="h-full w-full">
-                  {getResponsiveImage(
+                <ResponsiveImage
+                  src={exp.image}
+                  alt={exp.title}
+                  sources={getResponsiveImage(
                     exp.id === 'sunsets' ? 'chasingSunsets' :
                     exp.id === 'untold' ? 'untoldStoryPoster' :
                     exp.id === 'radio' ? 'radioShowGear' : 'videoPoster1',
                     "(min-width: 1024px) 25vw, 100vw"
-                  ).sources.map((source, i) => (
-                    <source key={i} {...source} />
-                  ))}
-                  <motion.img
-                    src={exp.image}
-                    alt={exp.title}
-                    className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
-                  />
-                </picture>
+                  ).sources}
+                  sizes="(min-width: 1024px) 25vw, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                />
                 <div className="absolute inset-0 bg-black/60 transition-colors duration-500 group-hover:bg-black/40" />
                 <div 
                   className="absolute inset-0 opacity-20 transition-opacity duration-700 group-hover:opacity-40"

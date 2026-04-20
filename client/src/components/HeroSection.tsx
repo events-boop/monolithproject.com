@@ -1,6 +1,5 @@
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "wouter";
-import { useEffect, useState, memo, useCallback, useRef } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import JsonLd from "@/components/JsonLd";
@@ -9,7 +8,6 @@ import KineticDecryption from "./KineticDecryption";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
-import RevealText from "./RevealText";
 import {
   getEventById,
   getEventEyebrow,
@@ -18,7 +16,6 @@ import {
   getExperienceEvent,
   getSeriesEvents,
 } from "@/lib/siteExperience";
-import ConversionCTA from "./ConversionCTA";
 
 const heroPosterImage = getResponsiveImage("videoPoster1");
 const heroUntoldImage = getResponsiveImage("untoldStoryHero");
@@ -45,6 +42,8 @@ const HERO_SLIDES: Slide[] = [
     poster: heroPosterImage.src,
     posterSources: heroPosterImage.sources,
     posterSizes: heroPosterImage.sizes,
+    width: 1920,
+    height: 1080,
     caption: "THE MONOLITH PROJECT (LIVE)",
   },
   {
@@ -159,22 +158,20 @@ function FloatingEventCard({
 }) {
   const headline = event?.headline || event?.title || slideInfo.label;
   const isLive = event?.status === "on-sale";
-  const bgImage = event?.image || "/images/hero-monolith.webp";
 
   return (
-    <motion.div
+    <div
       key={headline}
-      initial={{ y: 40, opacity: 0, scale: 0.95 }}
-      animate={{ y: 0, opacity: 1, scale: 1 }}
-      exit={{ y: -20, opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="relative w-full max-w-[420px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)] group/card"
     >
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center scale-110 blur-xl opacity-40 group-hover/card:scale-125 transition-transform duration-[2s]" 
-          style={{ backgroundImage: `url(${bgImage})` }} 
+        <div
+          className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105"
+          style={{
+            background:
+              "radial-gradient(circle at 18% 18%, rgba(224, 90, 58, 0.22), transparent 36%), radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.08), transparent 34%), linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.72) 44%, rgba(0,0,0,0.92))",
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20" />
       </div>
@@ -213,13 +210,7 @@ function FloatingEventCard({
         {/* CTA Engine */}
         <div className="w-full mt-4">
           {event ? (
-            <ConversionCTA
-              event={event}
-              size="lg"
-              showUrgency={false}
-              variant="experiential"
-              className="w-full"
-            />
+            <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
               <a className="flex h-12 w-full items-center justify-center rounded-none border border-white/20 bg-white text-[11px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-[var(--monolith-red)] hover:border-transparent">
@@ -229,7 +220,27 @@ function FloatingEventCard({
           ) : null}
         </div>
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+function HeroCardCTA({ event }: { event: any }) {
+  const href =
+    event?.primaryCta?.href ||
+    event?.ticketUrl ||
+    (event?.slug || event?.id ? `/events/${event.slug || event.id}` : "/schedule");
+  const label = event?.primaryCta?.label || (event?.ticketUrl ? "Get Tickets" : "View Details");
+  const isExternal = /^https?:\/\//i.test(href);
+
+  return (
+    <a
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className="flex h-12 w-full items-center justify-center rounded-none border border-transparent bg-white text-[11px] font-black uppercase tracking-[0.3em] text-black transition-colors hover:bg-[var(--monolith-red)] hover:text-white"
+    >
+      {label}
+    </a>
   );
 }
 
@@ -258,7 +269,6 @@ export default function HeroSection() {
 
   const targetDate = getEventStartTimestamp(bannerEvent) || getEventStartTimestamp(targetDateFallback);
   const { isExpired } = useCountdown(targetDate);
-  const reduceMotion = useReducedMotion();
   const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
   const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
@@ -278,36 +288,24 @@ export default function HeroSection() {
   }, []);
 
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
-  const heroRef = useRef<HTMLElement | null>(null);
-  const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
-  const idleMotion = !reduceMotion && heroInView;
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, reduceMotion ? 0 : 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0.4]);
-  const scale = useTransform(scrollY, [0, 300], [1, reduceMotion ? 1 : 1.05]);
 
   return (
     <div className="bg-black flex h-[100dvh] flex-col">
       <section
-        ref={heroRef}
         id="hero"
         className="relative h-full overflow-hidden bg-black md:screen-shell-stable"
       >
         {structuredData}
 
         {/* Cinematic Background Layer — always video slider */}
-        <motion.div style={{ y, opacity, scale }} className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
+        <div className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
           <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
-        </motion.div>
+        </div>
 
         {/* Architectural HUD Grid Overlay */}
         <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
-          <motion.div
-            animate={idleMotion ? { top: ["-10%", "110%"] } : { top: "-10%" }}
-            transition={idleMotion ? { duration: 8, repeat: Infinity, ease: "linear" } : { duration: 0 }}
-            className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          />
+          <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
 
         {/* 
@@ -331,49 +329,41 @@ export default function HeroSection() {
         {/* Main Impact Visuals (Center Focused) — always MONOLITH branding */}
         <div className="absolute inset-0 z-30 flex w-full flex-col items-center justify-start px-6 pb-16 pt-[calc(var(--shell-page-top-hero)+2rem)] text-center pointer-events-none md:justify-center md:p-6 md:pr-[500px]">
           <div className="flex w-full flex-col items-center justify-start md:items-start md:text-left">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="mb-6 relative md:mb-12">
+            <div className="mb-6 relative md:mb-12">
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{getEventEyebrow(featuredEvent) || "Chicago Music Project"}</h2>
                 <div className="h-px w-8 md:w-20 bg-white/10" />
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 flex flex-col items-center md:items-start text-white">
-              <motion.h1
+            <div className="relative z-10 flex flex-col items-center md:items-start text-white">
+              <h1
                 key={headlineCycle}
                 className={cn(
-                  "font-heavy text-[clamp(2.5rem,15.5vw,11.5rem)] leading-[0.8] uppercase drop-shadow-[0_0_80px_rgba(255,255,255,0.08)] pointer-events-auto",
+                  "font-heavy text-[clamp(2.5rem,15.5vw,11.5rem)] leading-[0.8] uppercase pointer-events-auto",
                   headlineCycle === "JULY 4TH" ? "july-4th-gradient" : "text-white"
                 )}
               >
-                <KineticDecryption text={headlineCycle} />
-              </motion.h1>
-              <motion.div initial={{ width: 0, opacity: 0 }} animate={{ width: "100%", opacity: 1 }} transition={{ delay: 0.8, duration: 2, ease: [0.16, 1, 0.3, 1] }} className="h-px bg-gradient-to-r from-white/30 to-transparent my-6 lg:my-8" />
+                <KineticDecryption text={headlineCycle} autoStart={false} />
+              </h1>
+              <div className="h-px w-full bg-gradient-to-r from-white/30 to-transparent my-6 lg:my-8" />
               <span className="font-mono text-[clamp(0.8rem,5vw,2.5rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
               <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
-              <RevealText
-                as="p"
-                className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]"
-                delay={1.8}
-                stagger={0.04}
-              >
+              <p className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]">
                 {HERO_SUBHEAD}
-              </RevealText>
-            </motion.div>
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Countdown HUD (Persistent Desktop) */}
         {targetDate && !isExpired && (targetDate - Date.now() < 31536000000) && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.5 }}
+          <div 
             className="absolute top-40 left-12 z-40 hidden xl:flex flex-col gap-4 text-left"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase italic">Synchronization Imminent</span>
             <CountdownDisplay target={targetDate!} />
-          </motion.div>
+          </div>
         )}
       </section>
     </div>

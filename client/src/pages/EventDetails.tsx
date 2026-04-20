@@ -6,6 +6,7 @@ import { getPublicEvents } from "@/lib/siteData";
 import { ArrowLeft, Clock, MapPin, Ticket, Star } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
 import { buildScheduledEventSchema } from "@/lib/schema";
 
@@ -55,7 +56,13 @@ export default function EventDetails() {
 
       <main id="main-content" tabIndex={-1}>
         <div className="relative pt-[20vh] pb-[10vh] min-h-[70vh] flex flex-col justify-end px-6 xl:px-12 border-b border-white/10">
-          <div className="absolute inset-0 z-0 bg-cover bg-center opacity-40 transition-opacity duration-1000 blur-sm brightness-50" style={{ backgroundImage: `url(${bgImage})` }} />
+          <ResponsiveImage
+            src={bgImage}
+            alt=""
+            priority
+            sizes="100vw"
+            className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 blur-sm brightness-50 transition-opacity duration-1000"
+          />
           <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">

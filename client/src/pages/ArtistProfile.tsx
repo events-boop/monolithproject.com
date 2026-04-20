@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from "wouter";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Instagram, Globe, MapPin, Music, Play, ArrowRight, Share2, Camera } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import WordScrubReveal from "@/components/ui/WordScrubReveal";
@@ -108,9 +109,11 @@ export default function ArtistProfile() {
         >
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-black/20 z-10" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-transparent opacity-60 z-10" />
-          <img
+          <ResponsiveImage
             src={artist.image}
             alt={artist.name}
+            priority
+            sizes="100vw"
             className="w-full h-full object-cover object-center filter saturate-[0.8] brightness-[0.85]"
           />
         </motion.div>
@@ -324,11 +327,13 @@ export default function ArtistProfile() {
                         i === 0 ? "col-span-2 row-span-2" : ""
                       }`}
                     >
-                      <img
+                      <ResponsiveImage
                         src={photo.src}
                         alt={photo.alt}
+                        sizes={i === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
                         className="w-full h-full object-cover aspect-square group-hover:scale-105 transition-transform duration-700 filter saturate-[0.85] group-hover:saturate-100"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">

@@ -1,0 +1,3916 @@
+{
+  "generatedAt": "2026-04-20T18:47:46.508Z",
+  "widths": [
+    480,
+    1024,
+    1920
+  ],
+  "totals": {
+    "originalBytes": 20697473,
+    "estimatedTransferBytes": 2789973,
+    "estimatedSavingsBytes": 17907500,
+    "variantBytes": 16062045
+  },
+  "images": [
+    {
+      "source": "/images/archive/chasing-sunsets/brand_clarity_block_new_1774887097962.png",
+      "originalBytes": 233141,
+      "originalKb": 227.7,
+      "originalWidth": 1938,
+      "originalHeight": 1122,
+      "generatedBaseName": "archive-chasing-sunsets-brand-clarity-block-new-1774887097962",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 4717
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 5448
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 11490
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 14732
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 20606
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 30748
+        }
+      ],
+      "estimatedTransferBytes": 11490,
+      "estimatedTransferKb": 11.2,
+      "estimatedSavingsBytes": 221651,
+      "estimatedSavingsPct": 95
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-1.jpg",
+      "originalBytes": 259392,
+      "originalKb": 253.3,
+      "originalWidth": 1024,
+      "originalHeight": 686,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-1",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 31773
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 33862
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 99199
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 112288
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 99199
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 112288
+        }
+      ],
+      "estimatedTransferBytes": 99199,
+      "estimatedTransferKb": 96.9,
+      "estimatedSavingsBytes": 160193,
+      "estimatedSavingsPct": 62
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-2.jpg",
+      "originalBytes": 82296,
+      "originalKb": 80.4,
+      "originalWidth": 1024,
+      "originalHeight": 559,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-2",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 9066
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 10168
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 19590
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 23872
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 19590
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 23872
+        }
+      ],
+      "estimatedTransferBytes": 19590,
+      "estimatedTransferKb": 19.1,
+      "estimatedSavingsBytes": 62706,
+      "estimatedSavingsPct": 76
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-3.jpg",
+      "originalBytes": 136142,
+      "originalKb": 133,
+      "originalWidth": 1024,
+      "originalHeight": 570,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-3",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 17277
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 17738
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 41845
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 47130
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 41845
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 47130
+        }
+      ],
+      "estimatedTransferBytes": 41845,
+      "estimatedTransferKb": 40.9,
+      "estimatedSavingsBytes": 94297,
+      "estimatedSavingsPct": 69
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-4.jpg",
+      "originalBytes": 157193,
+      "originalKb": 153.5,
+      "originalWidth": 1024,
+      "originalHeight": 550,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-4",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 20066
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 19996
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 52210
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 57222
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 52210
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 57222
+        }
+      ],
+      "estimatedTransferBytes": 52210,
+      "estimatedTransferKb": 51,
+      "estimatedSavingsBytes": 104983,
+      "estimatedSavingsPct": 67
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-5.jpg",
+      "originalBytes": 100728,
+      "originalKb": 98.4,
+      "originalWidth": 1024,
+      "originalHeight": 524,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-5",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 12035
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 13686
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 25746
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 31508
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 25746
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 31508
+        }
+      ],
+      "estimatedTransferBytes": 25746,
+      "estimatedTransferKb": 25.1,
+      "estimatedSavingsBytes": 74982,
+      "estimatedSavingsPct": 74
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-6.jpg",
+      "originalBytes": 119494,
+      "originalKb": 116.7,
+      "originalWidth": 1024,
+      "originalHeight": 566,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-6",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15986
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 17182
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 32936
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 40142
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 32936
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 40142
+        }
+      ],
+      "estimatedTransferBytes": 32936,
+      "estimatedTransferKb": 32.2,
+      "estimatedSavingsBytes": 86558,
+      "estimatedSavingsPct": 72
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-7.jpg",
+      "originalBytes": 103761,
+      "originalKb": 101.3,
+      "originalWidth": 1024,
+      "originalHeight": 560,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-7",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 12207
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 13972
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 26416
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 33690
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 26416
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 33690
+        }
+      ],
+      "estimatedTransferBytes": 26416,
+      "estimatedTransferKb": 25.8,
+      "estimatedSavingsBytes": 77345,
+      "estimatedSavingsPct": 75
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-8.jpg",
+      "originalBytes": 208651,
+      "originalKb": 203.8,
+      "originalWidth": 1024,
+      "originalHeight": 573,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-8",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 27173
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26848
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 85191
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 91216
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 85191
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 91216
+        }
+      ],
+      "estimatedTransferBytes": 85191,
+      "estimatedTransferKb": 83.2,
+      "estimatedSavingsBytes": 123460,
+      "estimatedSavingsPct": 59
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/css-s3-9.jpg",
+      "originalBytes": 178191,
+      "originalKb": 174,
+      "originalWidth": 1024,
+      "originalHeight": 560,
+      "generatedBaseName": "archive-chasing-sunsets-css-s3-9",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 24807
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 25352
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 65415
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 72306
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 65415
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 72306
+        }
+      ],
+      "estimatedTransferBytes": 65415,
+      "estimatedTransferKb": 63.9,
+      "estimatedSavingsBytes": 112776,
+      "estimatedSavingsPct": 63
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774889788105.png",
+      "originalBytes": 82012,
+      "originalKb": 80.1,
+      "originalWidth": 796,
+      "originalHeight": 531,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774889788105",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 7953
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8878
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 11934
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 13526
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 11934
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 13526
+        }
+      ],
+      "estimatedTransferBytes": 11934,
+      "estimatedTransferKb": 11.7,
+      "estimatedSavingsBytes": 70078,
+      "estimatedSavingsPct": 85
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774897544277.png",
+      "originalBytes": 13315,
+      "originalKb": 13,
+      "originalWidth": 207,
+      "originalHeight": 49,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774897544277",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 1614
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 1534
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 1614
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 1534
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 1614
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1534
+        }
+      ],
+      "estimatedTransferBytes": 1534,
+      "estimatedTransferKb": 1.5,
+      "estimatedSavingsBytes": 11781,
+      "estimatedSavingsPct": 88
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774897576594.png",
+      "originalBytes": 12329,
+      "originalKb": 12,
+      "originalWidth": 234,
+      "originalHeight": 39,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774897576594",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 1729
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 1832
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 1729
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 1832
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 1729
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1832
+        }
+      ],
+      "estimatedTransferBytes": 1729,
+      "estimatedTransferKb": 1.7,
+      "estimatedSavingsBytes": 10600,
+      "estimatedSavingsPct": 86
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774897588070.png",
+      "originalBytes": 13128,
+      "originalKb": 12.8,
+      "originalWidth": 213,
+      "originalHeight": 44,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774897588070",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 1332
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 1084
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 1332
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 1084
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 1332
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1084
+        }
+      ],
+      "estimatedTransferBytes": 1084,
+      "estimatedTransferKb": 1.1,
+      "estimatedSavingsBytes": 12044,
+      "estimatedSavingsPct": 92
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774897795543.png",
+      "originalBytes": 351861,
+      "originalKb": 343.6,
+      "originalWidth": 701,
+      "originalHeight": 376,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774897795543",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5747
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 6728
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 8466
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 10300
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 8466
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 10300
+        }
+      ],
+      "estimatedTransferBytes": 8466,
+      "estimatedTransferKb": 8.3,
+      "estimatedSavingsBytes": 343395,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774915021891.png",
+      "originalBytes": 161766,
+      "originalKb": 158,
+      "originalWidth": 1024,
+      "originalHeight": 823,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774915021891",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8956
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 9956
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 16703
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 21172
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 16703
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 21172
+        }
+      ],
+      "estimatedTransferBytes": 16703,
+      "estimatedTransferKb": 16.3,
+      "estimatedSavingsBytes": 145063,
+      "estimatedSavingsPct": 90
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774915238586.png",
+      "originalBytes": 511985,
+      "originalKb": 500,
+      "originalWidth": 1024,
+      "originalHeight": 442,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774915238586",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5101
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 5576
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 12608
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 17098
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 12608
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 17098
+        }
+      ],
+      "estimatedTransferBytes": 12608,
+      "estimatedTransferKb": 12.3,
+      "estimatedSavingsBytes": 499377,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/media__1774940360363.png",
+      "originalBytes": 249212,
+      "originalKb": 243.4,
+      "originalWidth": 1024,
+      "originalHeight": 201,
+      "generatedBaseName": "archive-chasing-sunsets-media-1774940360363",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 4276
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 4494
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 10580
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 12212
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 10580
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 12212
+        }
+      ],
+      "estimatedTransferBytes": 10580,
+      "estimatedTransferKb": 10.3,
+      "estimatedSavingsBytes": 238632,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/archive/chasing-sunsets/monolith_site_load_check_1774989493273.png",
+      "originalBytes": 260727,
+      "originalKb": 254.6,
+      "originalWidth": 2144,
+      "originalHeight": 1199,
+      "generatedBaseName": "archive-chasing-sunsets-monolith-site-load-check-1774989493273",
+      "variants": [
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 890
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 936
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 2270
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 3154
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 4319
+        },
+        {
+          "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 9388
+        }
+      ],
+      "estimatedTransferBytes": 2270,
+      "estimatedTransferKb": 2.2,
+      "estimatedSavingsBytes": 258457,
+      "estimatedSavingsPct": 99
+    },
+    {
+      "source": "/images/artist-autograf.webp",
+      "originalBytes": 144488,
+      "originalKb": 141.1,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-autograf",
+      "variants": [
+        {
+          "path": "/images/generated/artist-autograf-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 34676
+        },
+        {
+          "path": "/images/generated/artist-autograf-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 38200
+        },
+        {
+          "path": "/images/generated/artist-autograf-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 97662
+        },
+        {
+          "path": "/images/generated/artist-autograf-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 117548
+        },
+        {
+          "path": "/images/generated/artist-autograf-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 97662
+        },
+        {
+          "path": "/images/generated/artist-autograf-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 117548
+        }
+      ],
+      "estimatedTransferBytes": 97662,
+      "estimatedTransferKb": 95.4,
+      "estimatedSavingsBytes": 46826,
+      "estimatedSavingsPct": 32
+    },
+    {
+      "source": "/images/artist-avo-profile.jpg",
+      "originalBytes": 314546,
+      "originalKb": 307.2,
+      "originalWidth": 695,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-avo-profile",
+      "variants": [
+        {
+          "path": "/images/generated/artist-avo-profile-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 24025
+        },
+        {
+          "path": "/images/generated/artist-avo-profile-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26848
+        },
+        {
+          "path": "/images/generated/artist-avo-profile-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 34470
+        },
+        {
+          "path": "/images/generated/artist-avo-profile-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 41924
+        },
+        {
+          "path": "/images/generated/artist-avo-profile-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 34470
+        },
+        {
+          "path": "/images/generated/artist-avo-profile-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 41924
+        }
+      ],
+      "estimatedTransferBytes": 34470,
+      "estimatedTransferKb": 33.7,
+      "estimatedSavingsBytes": 280076,
+      "estimatedSavingsPct": 89
+    },
+    {
+      "source": "/images/artist-avo-untold.webp",
+      "originalBytes": 20082,
+      "originalKb": 19.6,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-avo-untold",
+      "variants": [
+        {
+          "path": "/images/generated/artist-avo-untold-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5380
+        },
+        {
+          "path": "/images/generated/artist-avo-untold-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 6456
+        },
+        {
+          "path": "/images/generated/artist-avo-untold-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 9115
+        },
+        {
+          "path": "/images/generated/artist-avo-untold-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 13402
+        },
+        {
+          "path": "/images/generated/artist-avo-untold-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 9115
+        },
+        {
+          "path": "/images/generated/artist-avo-untold-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 13402
+        }
+      ],
+      "estimatedTransferBytes": 9115,
+      "estimatedTransferKb": 8.9,
+      "estimatedSavingsBytes": 10967,
+      "estimatedSavingsPct": 55
+    },
+    {
+      "source": "/images/artist-benchek.jpg",
+      "originalBytes": 102229,
+      "originalKb": 99.8,
+      "originalWidth": 687,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-benchek",
+      "variants": [
+        {
+          "path": "/images/generated/artist-benchek-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 20577
+        },
+        {
+          "path": "/images/generated/artist-benchek-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 25308
+        },
+        {
+          "path": "/images/generated/artist-benchek-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 30914
+        },
+        {
+          "path": "/images/generated/artist-benchek-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 40890
+        },
+        {
+          "path": "/images/generated/artist-benchek-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 30914
+        },
+        {
+          "path": "/images/generated/artist-benchek-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 40890
+        }
+      ],
+      "estimatedTransferBytes": 30914,
+      "estimatedTransferKb": 30.2,
+      "estimatedSavingsBytes": 71315,
+      "estimatedSavingsPct": 70
+    },
+    {
+      "source": "/images/artist-chus.webp",
+      "originalBytes": 115124,
+      "originalKb": 112.4,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-chus",
+      "variants": [
+        {
+          "path": "/images/generated/artist-chus-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 23079
+        },
+        {
+          "path": "/images/generated/artist-chus-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26776
+        },
+        {
+          "path": "/images/generated/artist-chus-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 63945
+        },
+        {
+          "path": "/images/generated/artist-chus-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 85578
+        },
+        {
+          "path": "/images/generated/artist-chus-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 63945
+        },
+        {
+          "path": "/images/generated/artist-chus-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 85578
+        }
+      ],
+      "estimatedTransferBytes": 63945,
+      "estimatedTransferKb": 62.4,
+      "estimatedSavingsBytes": 51179,
+      "estimatedSavingsPct": 44
+    },
+    {
+      "source": "/images/artist-deron-untold.webp",
+      "originalBytes": 24252,
+      "originalKb": 23.7,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-deron-untold",
+      "variants": [
+        {
+          "path": "/images/generated/artist-deron-untold-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5421
+        },
+        {
+          "path": "/images/generated/artist-deron-untold-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 7066
+        },
+        {
+          "path": "/images/generated/artist-deron-untold-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 10894
+        },
+        {
+          "path": "/images/generated/artist-deron-untold-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 15932
+        },
+        {
+          "path": "/images/generated/artist-deron-untold-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 10894
+        },
+        {
+          "path": "/images/generated/artist-deron-untold-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 15932
+        }
+      ],
+      "estimatedTransferBytes": 10894,
+      "estimatedTransferKb": 10.6,
+      "estimatedSavingsBytes": 13358,
+      "estimatedSavingsPct": 55
+    },
+    {
+      "source": "/images/artist-ewerseen.png",
+      "originalBytes": 28340,
+      "originalKb": 27.7,
+      "originalWidth": 3508,
+      "originalHeight": 663,
+      "generatedBaseName": "artist-ewerseen",
+      "variants": [
+        {
+          "path": "/images/generated/artist-ewerseen-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 2554
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 4524
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 4643
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 8054
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 7806
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 15184
+        }
+      ],
+      "estimatedTransferBytes": 4643,
+      "estimatedTransferKb": 4.5,
+      "estimatedSavingsBytes": 23697,
+      "estimatedSavingsPct": 84
+    },
+    {
+      "source": "/images/artist-haai.webp",
+      "originalBytes": 179538,
+      "originalKb": 175.3,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-haai",
+      "variants": [
+        {
+          "path": "/images/generated/artist-haai-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 39963
+        },
+        {
+          "path": "/images/generated/artist-haai-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 42354
+        },
+        {
+          "path": "/images/generated/artist-haai-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 119554
+        },
+        {
+          "path": "/images/generated/artist-haai-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 144616
+        },
+        {
+          "path": "/images/generated/artist-haai-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 119554
+        },
+        {
+          "path": "/images/generated/artist-haai-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 144616
+        }
+      ],
+      "estimatedTransferBytes": 119554,
+      "estimatedTransferKb": 116.8,
+      "estimatedSavingsBytes": 59984,
+      "estimatedSavingsPct": 33
+    },
+    {
+      "source": "/images/artist-joezi.webp",
+      "originalBytes": 115124,
+      "originalKb": 112.4,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-joezi",
+      "variants": [
+        {
+          "path": "/images/generated/artist-joezi-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 23079
+        },
+        {
+          "path": "/images/generated/artist-joezi-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26776
+        },
+        {
+          "path": "/images/generated/artist-joezi-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 63945
+        },
+        {
+          "path": "/images/generated/artist-joezi-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 85578
+        },
+        {
+          "path": "/images/generated/artist-joezi-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 63945
+        },
+        {
+          "path": "/images/generated/artist-joezi-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 85578
+        }
+      ],
+      "estimatedTransferBytes": 63945,
+      "estimatedTransferKb": 62.4,
+      "estimatedSavingsBytes": 51179,
+      "estimatedSavingsPct": 44
+    },
+    {
+      "source": "/images/artist-juany-bravo-untold.webp",
+      "originalBytes": 14852,
+      "originalKb": 14.5,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-juany-bravo-untold",
+      "variants": [
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 3880
+        },
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 4728
+        },
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 6840
+        },
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 10356
+        },
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 6840
+        },
+        {
+          "path": "/images/generated/artist-juany-bravo-untold-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 10356
+        }
+      ],
+      "estimatedTransferBytes": 6840,
+      "estimatedTransferKb": 6.7,
+      "estimatedSavingsBytes": 8012,
+      "estimatedSavingsPct": 54
+    },
+    {
+      "source": "/images/artist-kenbo-untold.webp",
+      "originalBytes": 14852,
+      "originalKb": 14.5,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-kenbo-untold",
+      "variants": [
+        {
+          "path": "/images/generated/artist-kenbo-untold-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 3880
+        },
+        {
+          "path": "/images/generated/artist-kenbo-untold-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 4728
+        },
+        {
+          "path": "/images/generated/artist-kenbo-untold-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 6840
+        },
+        {
+          "path": "/images/generated/artist-kenbo-untold-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 10356
+        },
+        {
+          "path": "/images/generated/artist-kenbo-untold-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 6840
+        },
+        {
+          "path": "/images/generated/artist-kenbo-untold-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 10356
+        }
+      ],
+      "estimatedTransferBytes": 6840,
+      "estimatedTransferKb": 6.7,
+      "estimatedSavingsBytes": 8012,
+      "estimatedSavingsPct": 54
+    },
+    {
+      "source": "/images/artist-lazare.webp",
+      "originalBytes": 41448,
+      "originalKb": 40.5,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "artist-lazare",
+      "variants": [
+        {
+          "path": "/images/generated/artist-lazare-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8939
+        },
+        {
+          "path": "/images/generated/artist-lazare-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 11946
+        },
+        {
+          "path": "/images/generated/artist-lazare-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21261
+        },
+        {
+          "path": "/images/generated/artist-lazare-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 31714
+        },
+        {
+          "path": "/images/generated/artist-lazare-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 21261
+        },
+        {
+          "path": "/images/generated/artist-lazare-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 31714
+        }
+      ],
+      "estimatedTransferBytes": 21261,
+      "estimatedTransferKb": 20.8,
+      "estimatedSavingsBytes": 20187,
+      "estimatedSavingsPct": 49
+    },
+    {
+      "source": "/images/artist-terranova.png",
+      "originalBytes": 1090639,
+      "originalKb": 1065.1,
+      "originalWidth": 1080,
+      "originalHeight": 1350,
+      "generatedBaseName": "artist-terranova",
+      "variants": [
+        {
+          "path": "/images/generated/artist-terranova-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 14873
+        },
+        {
+          "path": "/images/generated/artist-terranova-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 18926
+        },
+        {
+          "path": "/images/generated/artist-terranova-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 32740
+        },
+        {
+          "path": "/images/generated/artist-terranova-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 46324
+        },
+        {
+          "path": "/images/generated/artist-terranova-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 33504
+        },
+        {
+          "path": "/images/generated/artist-terranova-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 50706
+        }
+      ],
+      "estimatedTransferBytes": 32740,
+      "estimatedTransferKb": 32,
+      "estimatedSavingsBytes": 1057899,
+      "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/artists-collective.webp",
+      "originalBytes": 385300,
+      "originalKb": 376.3,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "artists-collective",
+      "variants": [
+        {
+          "path": "/images/generated/artists-collective-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13268
+        },
+        {
+          "path": "/images/generated/artists-collective-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 15494
+        },
+        {
+          "path": "/images/generated/artists-collective-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 37486
+        },
+        {
+          "path": "/images/generated/artists-collective-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 47044
+        },
+        {
+          "path": "/images/generated/artists-collective-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 82636
+        },
+        {
+          "path": "/images/generated/artists-collective-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 112712
+        }
+      ],
+      "estimatedTransferBytes": 37486,
+      "estimatedTransferKb": 36.6,
+      "estimatedSavingsBytes": 347814,
+      "estimatedSavingsPct": 90
+    },
+    {
+      "source": "/images/autograf-recap.jpg",
+      "originalBytes": 63419,
+      "originalKb": 61.9,
+      "originalWidth": 686,
+      "originalHeight": 386,
+      "generatedBaseName": "autograf-recap",
+      "variants": [
+        {
+          "path": "/images/generated/autograf-recap-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 17559
+        },
+        {
+          "path": "/images/generated/autograf-recap-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 18050
+        },
+        {
+          "path": "/images/generated/autograf-recap-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 33416
+        },
+        {
+          "path": "/images/generated/autograf-recap-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 35074
+        },
+        {
+          "path": "/images/generated/autograf-recap-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 33416
+        },
+        {
+          "path": "/images/generated/autograf-recap-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 35074
+        }
+      ],
+      "estimatedTransferBytes": 33416,
+      "estimatedTransferKb": 32.6,
+      "estimatedSavingsBytes": 30003,
+      "estimatedSavingsPct": 47
+    },
+    {
+      "source": "/images/chasing-s1e1-amari.jpg",
+      "originalBytes": 556931,
+      "originalKb": 543.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "chasing-s1e1-amari",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-s1e1-amari-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8209
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-amari-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8876
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-amari-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21389
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-amari-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25542
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-amari-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42621
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-amari-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 57156
+        }
+      ],
+      "estimatedTransferBytes": 21389,
+      "estimatedTransferKb": 20.9,
+      "estimatedSavingsBytes": 535542,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/chasing-s1e1-erik.jpg",
+      "originalBytes": 556931,
+      "originalKb": 543.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "chasing-s1e1-erik",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-s1e1-erik-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8209
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-erik-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8876
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-erik-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21389
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-erik-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25542
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-erik-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42621
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-erik-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 57156
+        }
+      ],
+      "estimatedTransferBytes": 21389,
+      "estimatedTransferKb": 20.9,
+      "estimatedSavingsBytes": 535542,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/chasing-s1e1-group.jpg",
+      "originalBytes": 556931,
+      "originalKb": 543.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "chasing-s1e1-group",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-s1e1-group-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8209
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-group-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8876
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-group-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21389
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-group-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25542
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-group-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42621
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-group-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 57156
+        }
+      ],
+      "estimatedTransferBytes": 21389,
+      "estimatedTransferKb": 20.9,
+      "estimatedSavingsBytes": 535542,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/chasing-s1e1-sarat.jpg",
+      "originalBytes": 556931,
+      "originalKb": 543.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "chasing-s1e1-sarat",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8209
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8876
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21389
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25542
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42621
+        },
+        {
+          "path": "/images/generated/chasing-s1e1-sarat-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 57156
+        }
+      ],
+      "estimatedTransferBytes": 21389,
+      "estimatedTransferKb": 20.9,
+      "estimatedSavingsBytes": 535542,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/chasing-sunsets-1.jpg",
+      "originalBytes": 134816,
+      "originalKb": 131.7,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-1",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-1-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15573
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 16648
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 34087
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 40790
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 34087
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 40790
+        }
+      ],
+      "estimatedTransferBytes": 34087,
+      "estimatedTransferKb": 33.3,
+      "estimatedSavingsBytes": 100729,
+      "estimatedSavingsPct": 75
+    },
+    {
+      "source": "/images/chasing-sunsets-2.jpg",
+      "originalBytes": 128151,
+      "originalKb": 125.1,
+      "originalWidth": 682,
+      "originalHeight": 1024,
+      "generatedBaseName": "chasing-sunsets-2",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-2-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 17051
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-2-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 22696
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-2-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 26324
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-2-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 36440
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 26324
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 36440
+        }
+      ],
+      "estimatedTransferBytes": 26324,
+      "estimatedTransferKb": 25.7,
+      "estimatedSavingsBytes": 101827,
+      "estimatedSavingsPct": 79
+    },
+    {
+      "source": "/images/chasing-sunsets-3.jpg",
+      "originalBytes": 109617,
+      "originalKb": 107,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-3",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-3-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 9911
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-3-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 10988
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-3-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 24494
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-3-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 28956
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-3-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 24494
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-3-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 28956
+        }
+      ],
+      "estimatedTransferBytes": 24494,
+      "estimatedTransferKb": 23.9,
+      "estimatedSavingsBytes": 85123,
+      "estimatedSavingsPct": 78
+    },
+    {
+      "source": "/images/chasing-sunsets-4.jpg",
+      "originalBytes": 202962,
+      "originalKb": 198.2,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-4",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-4-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15193
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-4-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 17634
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-4-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 48402
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-4-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 65294
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-4-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 48402
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-4-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 65294
+        }
+      ],
+      "estimatedTransferBytes": 48402,
+      "estimatedTransferKb": 47.3,
+      "estimatedSavingsBytes": 154560,
+      "estimatedSavingsPct": 76
+    },
+    {
+      "source": "/images/chasing-sunsets-5.jpg",
+      "originalBytes": 113082,
+      "originalKb": 110.4,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-5",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-5-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11312
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-5-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 12136
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-5-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 29086
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-5-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 34090
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-5-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 29086
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-5-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 34090
+        }
+      ],
+      "estimatedTransferBytes": 29086,
+      "estimatedTransferKb": 28.4,
+      "estimatedSavingsBytes": 83996,
+      "estimatedSavingsPct": 74
+    },
+    {
+      "source": "/images/chasing-sunsets-6.jpg",
+      "originalBytes": 152889,
+      "originalKb": 149.3,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-6",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-6-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 19553
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-6-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 21740
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-6-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 42339
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-6-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 53384
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-6-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42339
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-6-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 53384
+        }
+      ],
+      "estimatedTransferBytes": 42339,
+      "estimatedTransferKb": 41.3,
+      "estimatedSavingsBytes": 110550,
+      "estimatedSavingsPct": 72
+    },
+    {
+      "source": "/images/chasing-sunsets-7.jpg",
+      "originalBytes": 224251,
+      "originalKb": 219,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "chasing-sunsets-7",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-7-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 25329
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-7-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26488
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-7-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 75946
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-7-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 84884
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-7-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 75946
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-7-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 84884
+        }
+      ],
+      "estimatedTransferBytes": 75946,
+      "estimatedTransferKb": 74.2,
+      "estimatedSavingsBytes": 148305,
+      "estimatedSavingsPct": 66
+    },
+    {
+      "source": "/images/chasing-sunsets-premium.webp",
+      "originalBytes": 101264,
+      "originalKb": 98.9,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "chasing-sunsets-premium",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-premium-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 20093
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-premium-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 24692
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-premium-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 59348
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-premium-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 80778
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-premium-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 59348
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-premium-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 80778
+        }
+      ],
+      "estimatedTransferBytes": 59348,
+      "estimatedTransferKb": 58,
+      "estimatedSavingsBytes": 41916,
+      "estimatedSavingsPct": 41
+    },
+    {
+      "source": "/images/chasing-sunsets.webp",
+      "originalBytes": 128362,
+      "originalKb": 125.4,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "chasing-sunsets",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8045
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8672
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 20114
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 23620
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 40918
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 53170
+        }
+      ],
+      "estimatedTransferBytes": 20114,
+      "estimatedTransferKb": 19.6,
+      "estimatedSavingsBytes": 108248,
+      "estimatedSavingsPct": 84
+    },
+    {
+      "source": "/images/chris-idh-radio.jpg",
+      "originalBytes": 116639,
+      "originalKb": 113.9,
+      "originalWidth": 870,
+      "originalHeight": 894,
+      "generatedBaseName": "chris-idh-radio",
+      "variants": [
+        {
+          "path": "/images/generated/chris-idh-radio-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 2379
+        },
+        {
+          "path": "/images/generated/chris-idh-radio-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 3124
+        },
+        {
+          "path": "/images/generated/chris-idh-radio-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 5236
+        },
+        {
+          "path": "/images/generated/chris-idh-radio-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 7744
+        },
+        {
+          "path": "/images/generated/chris-idh-radio-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 5236
+        },
+        {
+          "path": "/images/generated/chris-idh-radio-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 7744
+        }
+      ],
+      "estimatedTransferBytes": 5236,
+      "estimatedTransferKb": 5.1,
+      "estimatedSavingsBytes": 111403,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/deron-press.jpg",
+      "originalBytes": 127105,
+      "originalKb": 124.1,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "deron-press",
+      "variants": [
+        {
+          "path": "/images/generated/deron-press-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8588
+        },
+        {
+          "path": "/images/generated/deron-press-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 11872
+        },
+        {
+          "path": "/images/generated/deron-press-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 22956
+        },
+        {
+          "path": "/images/generated/deron-press-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 32198
+        },
+        {
+          "path": "/images/generated/deron-press-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 22956
+        },
+        {
+          "path": "/images/generated/deron-press-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 32198
+        }
+      ],
+      "estimatedTransferBytes": 22956,
+      "estimatedTransferKb": 22.4,
+      "estimatedSavingsBytes": 104149,
+      "estimatedSavingsPct": 82
+    },
+    {
+      "source": "/images/eran-hersh-live-1.webp",
+      "originalBytes": 35776,
+      "originalKb": 34.9,
+      "originalWidth": 688,
+      "originalHeight": 1024,
+      "generatedBaseName": "eran-hersh-live-1",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-1-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 14319
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-1-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 15526
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-1-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21858
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-1-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 26486
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-1-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 21858
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-1-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 26486
+        }
+      ],
+      "estimatedTransferBytes": 21858,
+      "estimatedTransferKb": 21.3,
+      "estimatedSavingsBytes": 13918,
+      "estimatedSavingsPct": 39
+    },
+    {
+      "source": "/images/eran-hersh-live-2.jpg",
+      "originalBytes": 304272,
+      "originalKb": 297.1,
+      "originalWidth": 1024,
+      "originalHeight": 679,
+      "generatedBaseName": "eran-hersh-live-2",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-2-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 7712
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-2-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 9912
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-2-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 17324
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-2-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25980
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 17324
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 25980
+        }
+      ],
+      "estimatedTransferBytes": 17324,
+      "estimatedTransferKb": 16.9,
+      "estimatedSavingsBytes": 286948,
+      "estimatedSavingsPct": 94
+    },
+    {
+      "source": "/images/eran-hersh-live-3.jpg",
+      "originalBytes": 289419,
+      "originalKb": 282.6,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "eran-hersh-live-3",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-3-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15972
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-3-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 17484
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-3-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 39481
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-3-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 48088
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-3-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 39481
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-3-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 48088
+        }
+      ],
+      "estimatedTransferBytes": 39481,
+      "estimatedTransferKb": 38.6,
+      "estimatedSavingsBytes": 249938,
+      "estimatedSavingsPct": 86
+    },
+    {
+      "source": "/images/eran-hersh-live-4.jpg",
+      "originalBytes": 284374,
+      "originalKb": 277.7,
+      "originalWidth": 1024,
+      "originalHeight": 680,
+      "generatedBaseName": "eran-hersh-live-4",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-4-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13471
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-4-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14968
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-4-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 33890
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-4-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42848
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-4-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 33890
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-4-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 42848
+        }
+      ],
+      "estimatedTransferBytes": 33890,
+      "estimatedTransferKb": 33.1,
+      "estimatedSavingsBytes": 250484,
+      "estimatedSavingsPct": 88
+    },
+    {
+      "source": "/images/eran-hersh-live-5.webp",
+      "originalBytes": 59354,
+      "originalKb": 58,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "eran-hersh-live-5",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-5-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13486
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-5-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14812
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-5-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 37712
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-5-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 45490
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-5-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 37712
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-5-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 45490
+        }
+      ],
+      "estimatedTransferBytes": 37712,
+      "estimatedTransferKb": 36.8,
+      "estimatedSavingsBytes": 21642,
+      "estimatedSavingsPct": 36
+    },
+    {
+      "source": "/images/eran-hersh-live-6.png",
+      "originalBytes": 603958,
+      "originalKb": 589.8,
+      "originalWidth": 681,
+      "originalHeight": 1024,
+      "generatedBaseName": "eran-hersh-live-6",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-live-6-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 7538
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-6-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 9350
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-6-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 10188
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-6-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 13850
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-6-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 10188
+        },
+        {
+          "path": "/images/generated/eran-hersh-live-6-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 13850
+        }
+      ],
+      "estimatedTransferBytes": 10188,
+      "estimatedTransferKb": 9.9,
+      "estimatedSavingsBytes": 593770,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/eran-hersh-square.png",
+      "originalBytes": 308406,
+      "originalKb": 301.2,
+      "originalWidth": 551,
+      "originalHeight": 267,
+      "generatedBaseName": "eran-hersh-square",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-square-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 7907
+        },
+        {
+          "path": "/images/generated/eran-hersh-square-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 8992
+        },
+        {
+          "path": "/images/generated/eran-hersh-square-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 9726
+        },
+        {
+          "path": "/images/generated/eran-hersh-square-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 11638
+        },
+        {
+          "path": "/images/generated/eran-hersh-square-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 9726
+        },
+        {
+          "path": "/images/generated/eran-hersh-square-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 11638
+        }
+      ],
+      "estimatedTransferBytes": 9726,
+      "estimatedTransferKb": 9.5,
+      "estimatedSavingsBytes": 298680,
+      "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/hero-monolith-modern.webp",
+      "originalBytes": 196618,
+      "originalKb": 192,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "hero-monolith-modern",
+      "variants": [
+        {
+          "path": "/images/generated/hero-monolith-modern-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 45572
+        },
+        {
+          "path": "/images/generated/hero-monolith-modern-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 44460
+        },
+        {
+          "path": "/images/generated/hero-monolith-modern-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 149208
+        },
+        {
+          "path": "/images/generated/hero-monolith-modern-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 159858
+        },
+        {
+          "path": "/images/generated/hero-monolith-modern-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 149208
+        },
+        {
+          "path": "/images/generated/hero-monolith-modern-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 159858
+        }
+      ],
+      "estimatedTransferBytes": 149208,
+      "estimatedTransferKb": 145.7,
+      "estimatedSavingsBytes": 47410,
+      "estimatedSavingsPct": 24
+    },
+    {
+      "source": "/images/hero-monolith.webp",
+      "originalBytes": 349568,
+      "originalKb": 341.4,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "hero-monolith",
+      "variants": [
+        {
+          "path": "/images/generated/hero-monolith-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 14939
+        },
+        {
+          "path": "/images/generated/hero-monolith-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 16512
+        },
+        {
+          "path": "/images/generated/hero-monolith-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 53675
+        },
+        {
+          "path": "/images/generated/hero-monolith-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 62044
+        },
+        {
+          "path": "/images/generated/hero-monolith-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 124248
+        },
+        {
+          "path": "/images/generated/hero-monolith-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 149768
+        }
+      ],
+      "estimatedTransferBytes": 53675,
+      "estimatedTransferKb": 52.4,
+      "estimatedSavingsBytes": 295893,
+      "estimatedSavingsPct": 85
+    },
+    {
+      "source": "/images/hero-video-1-poster.jpg",
+      "originalBytes": 97662,
+      "originalKb": 95.4,
+      "originalWidth": 1920,
+      "originalHeight": 1080,
+      "generatedBaseName": "hero-video-1-poster",
+      "variants": [
+        {
+          "path": "/images/generated/hero-video-1-poster-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8570
+        },
+        {
+          "path": "/images/generated/hero-video-1-poster-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 10054
+        },
+        {
+          "path": "/images/generated/hero-video-1-poster-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21079
+        },
+        {
+          "path": "/images/generated/hero-video-1-poster-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 26274
+        },
+        {
+          "path": "/images/generated/hero-video-1-poster-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 42110
+        },
+        {
+          "path": "/images/generated/hero-video-1-poster-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 55968
+        }
+      ],
+      "estimatedTransferBytes": 21079,
+      "estimatedTransferKb": 20.6,
+      "estimatedSavingsBytes": 76583,
+      "estimatedSavingsPct": 78
+    },
+    {
+      "source": "/images/hero-video-short-poster.jpg",
+      "originalBytes": 65501,
+      "originalKb": 64,
+      "originalWidth": 1920,
+      "originalHeight": 1080,
+      "generatedBaseName": "hero-video-short-poster",
+      "variants": [
+        {
+          "path": "/images/generated/hero-video-short-poster-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5449
+        },
+        {
+          "path": "/images/generated/hero-video-short-poster-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 6068
+        },
+        {
+          "path": "/images/generated/hero-video-short-poster-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 12748
+        },
+        {
+          "path": "/images/generated/hero-video-short-poster-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 15850
+        },
+        {
+          "path": "/images/generated/hero-video-short-poster-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 25989
+        },
+        {
+          "path": "/images/generated/hero-video-short-poster-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 37674
+        }
+      ],
+      "estimatedTransferBytes": 12748,
+      "estimatedTransferKb": 12.4,
+      "estimatedSavingsBytes": 52753,
+      "estimatedSavingsPct": 81
+    },
+    {
+      "source": "/images/industrial-roster.webp",
+      "originalBytes": 202650,
+      "originalKb": 197.9,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "industrial-roster",
+      "variants": [
+        {
+          "path": "/images/generated/industrial-roster-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 34470
+        },
+        {
+          "path": "/images/generated/industrial-roster-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 38598
+        },
+        {
+          "path": "/images/generated/industrial-roster-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 130171
+        },
+        {
+          "path": "/images/generated/industrial-roster-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 161132
+        },
+        {
+          "path": "/images/generated/industrial-roster-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 130171
+        },
+        {
+          "path": "/images/generated/industrial-roster-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 161132
+        }
+      ],
+      "estimatedTransferBytes": 130171,
+      "estimatedTransferKb": 127.1,
+      "estimatedSavingsBytes": 72479,
+      "estimatedSavingsPct": 36
+    },
+    {
+      "source": "/images/juany-bravo-press.jpg",
+      "originalBytes": 61470,
+      "originalKb": 60,
+      "originalWidth": 720,
+      "originalHeight": 720,
+      "generatedBaseName": "juany-bravo-press",
+      "variants": [
+        {
+          "path": "/images/generated/juany-bravo-press-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5886
+        },
+        {
+          "path": "/images/generated/juany-bravo-press-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 7616
+        },
+        {
+          "path": "/images/generated/juany-bravo-press-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 9930
+        },
+        {
+          "path": "/images/generated/juany-bravo-press-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 14216
+        },
+        {
+          "path": "/images/generated/juany-bravo-press-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 9930
+        },
+        {
+          "path": "/images/generated/juany-bravo-press-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 14216
+        }
+      ],
+      "estimatedTransferBytes": 9930,
+      "estimatedTransferKb": 9.7,
+      "estimatedSavingsBytes": 51540,
+      "estimatedSavingsPct": 84
+    },
+    {
+      "source": "/images/juany-deron-flyer.png",
+      "originalBytes": 580232,
+      "originalKb": 566.6,
+      "originalWidth": 562,
+      "originalHeight": 586,
+      "generatedBaseName": "juany-deron-flyer",
+      "variants": [
+        {
+          "path": "/images/generated/juany-deron-flyer-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15750
+        },
+        {
+          "path": "/images/generated/juany-deron-flyer-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 18916
+        },
+        {
+          "path": "/images/generated/juany-deron-flyer-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 19247
+        },
+        {
+          "path": "/images/generated/juany-deron-flyer-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 23374
+        },
+        {
+          "path": "/images/generated/juany-deron-flyer-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 19247
+        },
+        {
+          "path": "/images/generated/juany-deron-flyer-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 23374
+        }
+      ],
+      "estimatedTransferBytes": 19247,
+      "estimatedTransferKb": 18.8,
+      "estimatedSavingsBytes": 560985,
+      "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/lazare-carbon-center.png",
+      "originalBytes": 851168,
+      "originalKb": 831.2,
+      "originalWidth": 743,
+      "originalHeight": 665,
+      "generatedBaseName": "lazare-carbon-center",
+      "variants": [
+        {
+          "path": "/images/generated/lazare-carbon-center-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 12143
+        },
+        {
+          "path": "/images/generated/lazare-carbon-center-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14986
+        },
+        {
+          "path": "/images/generated/lazare-carbon-center-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 19592
+        },
+        {
+          "path": "/images/generated/lazare-carbon-center-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 26484
+        },
+        {
+          "path": "/images/generated/lazare-carbon-center-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 19592
+        },
+        {
+          "path": "/images/generated/lazare-carbon-center-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 26484
+        }
+      ],
+      "estimatedTransferBytes": 19592,
+      "estimatedTransferKb": 19.1,
+      "estimatedSavingsBytes": 831576,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/lazare-recap.webp",
+      "originalBytes": 138656,
+      "originalKb": 135.4,
+      "originalWidth": 1542,
+      "originalHeight": 1161,
+      "generatedBaseName": "lazare-recap",
+      "variants": [
+        {
+          "path": "/images/generated/lazare-recap-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13391
+        },
+        {
+          "path": "/images/generated/lazare-recap-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14816
+        },
+        {
+          "path": "/images/generated/lazare-recap-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 35028
+        },
+        {
+          "path": "/images/generated/lazare-recap-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 43796
+        },
+        {
+          "path": "/images/generated/lazare-recap-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 63402
+        },
+        {
+          "path": "/images/generated/lazare-recap-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 95836
+        }
+      ],
+      "estimatedTransferBytes": 35028,
+      "estimatedTransferKb": 34.2,
+      "estimatedSavingsBytes": 103628,
+      "estimatedSavingsPct": 75
+    },
+    {
+      "source": "/images/movement-industrial-bg.png",
+      "originalBytes": 958036,
+      "originalKb": 935.6,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "movement-industrial-bg",
+      "variants": [
+        {
+          "path": "/images/generated/movement-industrial-bg-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 36039
+        },
+        {
+          "path": "/images/generated/movement-industrial-bg-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 42300
+        },
+        {
+          "path": "/images/generated/movement-industrial-bg-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 139381
+        },
+        {
+          "path": "/images/generated/movement-industrial-bg-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 172420
+        },
+        {
+          "path": "/images/generated/movement-industrial-bg-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 139381
+        },
+        {
+          "path": "/images/generated/movement-industrial-bg-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 172420
+        }
+      ],
+      "estimatedTransferBytes": 139381,
+      "estimatedTransferKb": 136.1,
+      "estimatedSavingsBytes": 818655,
+      "estimatedSavingsPct": 85
+    },
+    {
+      "source": "/images/radio-globe.webp",
+      "originalBytes": 31476,
+      "originalKb": 30.7,
+      "originalWidth": 640,
+      "originalHeight": 640,
+      "generatedBaseName": "radio-globe",
+      "variants": [
+        {
+          "path": "/images/generated/radio-globe-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 10617
+        },
+        {
+          "path": "/images/generated/radio-globe-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 11824
+        },
+        {
+          "path": "/images/generated/radio-globe-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 20687
+        },
+        {
+          "path": "/images/generated/radio-globe-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 25168
+        },
+        {
+          "path": "/images/generated/radio-globe-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 20687
+        },
+        {
+          "path": "/images/generated/radio-globe-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 25168
+        }
+      ],
+      "estimatedTransferBytes": 20687,
+      "estimatedTransferKb": 20.2,
+      "estimatedSavingsBytes": 10789,
+      "estimatedSavingsPct": 34
+    },
+    {
+      "source": "/images/radio-show-gear.webp",
+      "originalBytes": 154358,
+      "originalKb": 150.7,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "radio-show-gear",
+      "variants": [
+        {
+          "path": "/images/generated/radio-show-gear-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 23997
+        },
+        {
+          "path": "/images/generated/radio-show-gear-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 30320
+        },
+        {
+          "path": "/images/generated/radio-show-gear-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 87976
+        },
+        {
+          "path": "/images/generated/radio-show-gear-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 121946
+        },
+        {
+          "path": "/images/generated/radio-show-gear-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 87976
+        },
+        {
+          "path": "/images/generated/radio-show-gear-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 121946
+        }
+      ],
+      "estimatedTransferBytes": 87976,
+      "estimatedTransferKb": 85.9,
+      "estimatedSavingsBytes": 66382,
+      "estimatedSavingsPct": 43
+    },
+    {
+      "source": "/images/untold-s1e1-avo.jpg",
+      "originalBytes": 870338,
+      "originalKb": 849.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "untold-s1e1-avo",
+      "variants": [
+        {
+          "path": "/images/generated/untold-s1e1-avo-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11889
+        },
+        {
+          "path": "/images/generated/untold-s1e1-avo-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14198
+        },
+        {
+          "path": "/images/generated/untold-s1e1-avo-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31863
+        },
+        {
+          "path": "/images/generated/untold-s1e1-avo-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42428
+        },
+        {
+          "path": "/images/generated/untold-s1e1-avo-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 66296
+        },
+        {
+          "path": "/images/generated/untold-s1e1-avo-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 99498
+        }
+      ],
+      "estimatedTransferBytes": 31863,
+      "estimatedTransferKb": 31.1,
+      "estimatedSavingsBytes": 838475,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/untold-s1e1-chapter1.jpg",
+      "originalBytes": 870338,
+      "originalKb": 849.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "untold-s1e1-chapter1",
+      "variants": [
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11889
+        },
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14198
+        },
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31863
+        },
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42428
+        },
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 66296
+        },
+        {
+          "path": "/images/generated/untold-s1e1-chapter1-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 99498
+        }
+      ],
+      "estimatedTransferBytes": 31863,
+      "estimatedTransferKb": 31.1,
+      "estimatedSavingsBytes": 838475,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/untold-s1e1-info.jpg",
+      "originalBytes": 870338,
+      "originalKb": 849.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "untold-s1e1-info",
+      "variants": [
+        {
+          "path": "/images/generated/untold-s1e1-info-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11889
+        },
+        {
+          "path": "/images/generated/untold-s1e1-info-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14198
+        },
+        {
+          "path": "/images/generated/untold-s1e1-info-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31863
+        },
+        {
+          "path": "/images/generated/untold-s1e1-info-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42428
+        },
+        {
+          "path": "/images/generated/untold-s1e1-info-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 66296
+        },
+        {
+          "path": "/images/generated/untold-s1e1-info-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 99498
+        }
+      ],
+      "estimatedTransferBytes": 31863,
+      "estimatedTransferKb": 31.1,
+      "estimatedSavingsBytes": 838475,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/untold-s1e1-summer.jpg",
+      "originalBytes": 870338,
+      "originalKb": 849.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "untold-s1e1-summer",
+      "variants": [
+        {
+          "path": "/images/generated/untold-s1e1-summer-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11889
+        },
+        {
+          "path": "/images/generated/untold-s1e1-summer-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14198
+        },
+        {
+          "path": "/images/generated/untold-s1e1-summer-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31863
+        },
+        {
+          "path": "/images/generated/untold-s1e1-summer-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42428
+        },
+        {
+          "path": "/images/generated/untold-s1e1-summer-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 66296
+        },
+        {
+          "path": "/images/generated/untold-s1e1-summer-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 99498
+        }
+      ],
+      "estimatedTransferBytes": 31863,
+      "estimatedTransferKb": 31.1,
+      "estimatedSavingsBytes": 838475,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/untold-story-hero-post1.webp",
+      "originalBytes": 18530,
+      "originalKb": 18.1,
+      "originalWidth": 1024,
+      "originalHeight": 569,
+      "generatedBaseName": "untold-story-hero-post1",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-hero-post1-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 4439
+        },
+        {
+          "path": "/images/generated/untold-story-hero-post1-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 5182
+        },
+        {
+          "path": "/images/generated/untold-story-hero-post1-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 9970
+        },
+        {
+          "path": "/images/generated/untold-story-hero-post1-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 14306
+        },
+        {
+          "path": "/images/generated/untold-story-hero-post1-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 9970
+        },
+        {
+          "path": "/images/generated/untold-story-hero-post1-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 14306
+        }
+      ],
+      "estimatedTransferBytes": 9970,
+      "estimatedTransferKb": 9.7,
+      "estimatedSavingsBytes": 8560,
+      "estimatedSavingsPct": 46
+    },
+    {
+      "source": "/images/untold-story-juany-deron-v2.webp",
+      "originalBytes": 151804,
+      "originalKb": 148.2,
+      "originalWidth": 2399,
+      "originalHeight": 3600,
+      "generatedBaseName": "untold-story-juany-deron-v2",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8874
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 10958
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 23085
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 33476
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 48158
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-v2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 76612
+        }
+      ],
+      "estimatedTransferBytes": 23085,
+      "estimatedTransferKb": 22.5,
+      "estimatedSavingsBytes": 128719,
+      "estimatedSavingsPct": 85
+    },
+    {
+      "source": "/images/untold-story-juany-deron.webp",
+      "originalBytes": 83938,
+      "originalKb": 82,
+      "originalWidth": 1144,
+      "originalHeight": 1195,
+      "generatedBaseName": "untold-story-juany-deron",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-juany-deron-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13687
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 16094
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 37118
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 45842
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 47091
+        },
+        {
+          "path": "/images/generated/untold-story-juany-deron-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 61700
+        }
+      ],
+      "estimatedTransferBytes": 37118,
+      "estimatedTransferKb": 36.2,
+      "estimatedSavingsBytes": 46820,
+      "estimatedSavingsPct": 56
+    },
+    {
+      "source": "/images/untold-story-moody.webp",
+      "originalBytes": 100716,
+      "originalKb": 98.4,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "untold-story-moody",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-moody-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 19122
+        },
+        {
+          "path": "/images/generated/untold-story-moody-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 21732
+        },
+        {
+          "path": "/images/generated/untold-story-moody-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 58755
+        },
+        {
+          "path": "/images/generated/untold-story-moody-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 76788
+        },
+        {
+          "path": "/images/generated/untold-story-moody-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 58755
+        },
+        {
+          "path": "/images/generated/untold-story-moody-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 76788
+        }
+      ],
+      "estimatedTransferBytes": 58755,
+      "estimatedTransferKb": 57.4,
+      "estimatedSavingsBytes": 41961,
+      "estimatedSavingsPct": 42
+    },
+    {
+      "source": "/images/untold-story.jpg",
+      "originalBytes": 870338,
+      "originalKb": 849.9,
+      "originalWidth": 2752,
+      "originalHeight": 1536,
+      "generatedBaseName": "untold-story",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11889
+        },
+        {
+          "path": "/images/generated/untold-story-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14198
+        },
+        {
+          "path": "/images/generated/untold-story-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31863
+        },
+        {
+          "path": "/images/generated/untold-story-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 42428
+        },
+        {
+          "path": "/images/generated/untold-story-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 66296
+        },
+        {
+          "path": "/images/generated/untold-story-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 99498
+        }
+      ],
+      "estimatedTransferBytes": 31863,
+      "estimatedTransferKb": 31.1,
+      "estimatedSavingsBytes": 838475,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/og-image.jpg",
+      "originalBytes": 761422,
+      "originalKb": 743.6,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "og-image",
+      "variants": [
+        {
+          "path": "/images/generated/og-image-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 17481
+        },
+        {
+          "path": "/images/generated/og-image-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 20206
+        },
+        {
+          "path": "/images/generated/og-image-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 58270
+        },
+        {
+          "path": "/images/generated/og-image-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 72582
+        },
+        {
+          "path": "/images/generated/og-image-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 58270
+        },
+        {
+          "path": "/images/generated/og-image-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 72582
+        }
+      ],
+      "estimatedTransferBytes": 58270,
+      "estimatedTransferKb": 56.9,
+      "estimatedSavingsBytes": 703152,
+      "estimatedSavingsPct": 92
+    }
+  ]
+}

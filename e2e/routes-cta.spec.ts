@@ -117,19 +117,19 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  const communityMenu = page.getByRole("menu", { name: "Community links" });
+  const nav = page.getByRole("navigation").first();
 
-  await page.getByRole("button", { name: /community/i }).click({ force: true });
-  await expect(communityMenu).toBeVisible();
-  await communityMenu.getByRole("menuitem", { name: /^inner circle/i }).click({ force: true });
+  await nav.getByRole("button", { name: /^plan your night/i }).click({ force: true });
+  await expect(page.getByRole("menuitem", { name: /^inner circle/i })).toBeVisible();
+  await page.getByRole("menuitem", { name: /^inner circle/i }).click({ force: true });
   await expect(page).toHaveURL(/\/newsletter$/);
   await expect(page.getByRole("heading", { name: /get monolith updates/i })).toBeVisible();
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await page.getByRole("button", { name: /community/i }).click({ force: true });
-  await expect(communityMenu).toBeVisible();
-  await communityMenu.getByRole("menuitem", { name: /^night guide/i }).click({ force: true });
-  await expect(page).toHaveURL(/\/guide$/);
+  await nav.getByRole("button", { name: /^events/i }).click({ force: true });
+  await expect(page.getByRole("menuitem", { name: /^entry guide/i })).toBeVisible();
+  await page.getByRole("menuitem", { name: /^entry guide/i }).click({ force: true });
+  await expect(page).toHaveURL(/\/guide/);
   await expect(page.getByRole("heading", { name: /the night of/i })).toBeVisible();
 });

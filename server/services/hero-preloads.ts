@@ -20,12 +20,23 @@ export function buildGeneratedImageSrcSet(baseName: string, widths: number[], ex
 export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
   const route = normalizeAppPath(pathname);
 
-  if (route === "/" || route === "/chasing-sunsets") {
+  if (route === "/") {
     return [
       {
-        href: "/images/generated/chasing-sunsets-1280.avif",
+        href: "/images/generated/hero-video-1-poster-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("chasing-sunsets", [640, 960, 1280, 1600], "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet("hero-video-1-poster", [480, 1024, 1920], "avif"),
+        type: "image/avif",
+      },
+    ];
+  }
+
+  if (route === "/chasing-sunsets") {
+    return [
+      {
+        href: "/images/generated/chasing-sunsets-1024.avif",
+        imageSizes: "100vw",
+        imageSrcSet: buildGeneratedImageSrcSet("chasing-sunsets", [480, 1024, 1920], "avif"),
         type: "image/avif",
       },
     ];

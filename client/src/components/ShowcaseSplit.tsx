@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "wouter";
 import { Users, FileText, Images, AudioLines, ArrowUpRight } from "lucide-react";
+import ResponsiveImage from "./ResponsiveImage";
 
 const panels = [
   {
@@ -75,9 +76,12 @@ export default function ShowcaseSplit() {
             <Link href={panel.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
-                <motion.img
+                <ResponsiveImage
                   src={panel.image}
                   alt={panel.title}
+                  sizes="(min-width: 1024px) 25vw, 100vw"
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/60 transition-colors duration-500 group-hover:bg-black/40" />

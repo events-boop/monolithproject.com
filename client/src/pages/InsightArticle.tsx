@@ -7,6 +7,7 @@ import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { getInsightEntry } from "@/data/insights";
 import { CTA_LABELS } from "@/lib/cta";
 import MagneticButton from "@/components/MagneticButton";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 function isExternalLink(url: string) {
   return /^https?:\/\//i.test(url);
@@ -93,13 +94,21 @@ export default function InsightArticle() {
 
       {/* Atmospheric Immersive Backdrop */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-         <motion.div 
+         <motion.div
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 0.15, scale: 1 }}
             transition={{ duration: 2 }}
-            className="absolute inset-0 bg-cover bg-center blur-[120px] saturate-[1.5]"
-            style={{ backgroundImage: `url(${article.image})` }}
-         />
+            className="absolute inset-0 blur-[120px] saturate-[1.5]"
+         >
+            <ResponsiveImage
+              src={article.image}
+              alt=""
+              sizes="100vw"
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+         </motion.div>
          <div className="absolute inset-0 bg-black/60" />
       </div>
 
@@ -149,9 +158,11 @@ export default function InsightArticle() {
             <div className="relative group">
                <div className="absolute -inset-4 bg-white/5 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-[0_32px_80px_rgba(0,0,0,0.5)]">
-                 <img
+                 <ResponsiveImage
                     src={article.image}
                     alt={article.title}
+                    priority
+                    sizes="(min-width: 1024px) 40vw, 100vw"
                     className="aspect-[4/5] md:aspect-auto h-[400px] md:h-[600px] w-full object-cover transition-transform duration-[2s] group-hover:scale-105"
                   />
                </div>

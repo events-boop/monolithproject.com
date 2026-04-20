@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { archiveCollectionsBySlug, ArchiveCollection } from "@/data/galleryData";
 import { useUI } from "@/contexts/UIContext";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SplitText from "@/components/ui/SplitText";
 
 // Newest first — static list since we have a small fixed set
@@ -58,11 +59,13 @@ export default function ArchiveSection() {
                             <Link href={entry.href} onClick={() => { signalChirp.click(); closeDrawer(); }} className="group flex flex-col h-full border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
                                 {/* Cover Image */}
                                 <div className="aspect-[3/2] overflow-hidden relative shrink-0">
-                                    <img
+                                    <ResponsiveImage
                                         src={entry.coverImage}
                                         alt={`${entry.title} ${entry.subtitle}`}
+                                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                         loading="lazy"
+                                        decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                     {/* Photo count badge */}

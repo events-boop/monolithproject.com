@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
+import ResponsiveImage from "./ResponsiveImage";
 
 interface EpisodeGalleryProps {
     series: "chasing-sunsets" | "untold-story";
@@ -73,9 +74,10 @@ export default function EpisodeGallery({
                             transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                             className="gallery-card-frame group grayscale-[60%] rounded-xl glass transition-all duration-700 hover:z-20 hover:grayscale-0 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
                         >
-                            <img
+                            <ResponsiveImage
                                 src={img.src}
                                 alt={img.alt}
+                                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                                 loading="lazy"
                                 decoding="async"
                                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"

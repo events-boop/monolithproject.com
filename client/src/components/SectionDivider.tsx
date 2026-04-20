@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import { cn } from "@/lib/utils";
 
@@ -15,10 +14,7 @@ interface SectionDividerProps {
 
 export default function SectionDivider({ id, number, label, dark, glow, labelOverride, dense }: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+  const [isInView, setIsInView] = useState(false);
 
   const isDark = dark !== false;
   const borderColor = isDark ? "border-white/10" : "border-black/10";
@@ -26,19 +22,28 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
   const labelColor = isDark ? "text-white/40" : "text-black/40";
   const lineColor = isDark ? "bg-white/8" : "bg-black/10";
 
-  // Aggressive parallax for the large architectural number
-  const yParallax = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-  const xParallax = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
-  const glowX = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
   useEffect(() => {
-    if (isInView) {
-        signalChirp.hover();
+    const node = containerRef.current;
+    if (!node) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return;
     }
-  }, [isInView]);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsInView(true);
+        signalChirp.hover();
+        observer.disconnect();
+      },
+      { rootMargin: "-100px 0px -100px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const dataSegments = useMemo(() =>
     Array.from({ length: 12 }).map(() =>
@@ -46,25 +51,20 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
     ), [number]);
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       id={id}
-      className={`w-full relative border-t border-b ${borderColor} overflow-hidden group`}
+      className={`w-full relative border-t border-b ${borderColor} overflow-hidden group transition-opacity duration-700 ${isInView ? "opacity-100" : "opacity-0"}`}
     >
       {/* Massive bleed number — architectural background mark */}
-      <motion.div
-        style={{ y: yParallax, x: xParallax }}
+      <div
         className={`absolute -left-4 md:-left-8 top-1/2 font-heavy leading-none select-none pointer-events-none z-0 ${numColor}`}
         aria-hidden="true"
       >
         <span className="text-[clamp(8rem,28vw,24rem)] drop-shadow-[0_0_80px_rgba(255,255,255,0.02)]">
           {number}
         </span>
-      </motion.div>
+      </div>
 
       <div aria-hidden="true" className="absolute inset-0 opacity-[0.03] pointer-events-none font-mono text-[10px] truncate whitespace-nowrap overflow-hidden select-none">
           {dataSegments.map((segment, i) => (
@@ -76,9 +76,8 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
 
       {/* 🔮 ATMOSPHERIC GLOW */}
       {glow && (
-        <motion.div
-           style={{ opacity: glowOpacity, x: glowX }}
-           className="absolute inset-0 pointer-events-none z-0"
+        <div
+           className={`absolute inset-0 pointer-events-none z-0 transition-opacity duration-1000 ${isInView ? "opacity-100" : "opacity-0"}`}
         >
            <div 
              className="absolute inset-x-[-20%] inset-y-[-100%] blur-[120px] opacity-[0.14]"
@@ -86,13 +85,11 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
                background: `radial-gradient(circle at center, ${glow}, transparent 70%)`
              }}
            />
-        </motion.div>
+        </div>
       )}
 
       {/* 📟 PULSING SCANLINE */}
-      <motion.div 
-         animate={{ y: ["0%", "400%", "0%"] }}
-         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      <div
          className="absolute inset-x-0 h-32 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none opacity-[0.15] z-10"
       />
 
@@ -116,15 +113,10 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
       </div>
 
       {/* Animated reveal line at bottom */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className={`absolute bottom-0 left-0 w-full h-px origin-left ${lineColor} group-hover:bg-primary transition-colors duration-1000`}
+      <div
+        className={`absolute bottom-0 left-0 w-full h-px origin-left ${lineColor} group-hover:bg-primary transition-[transform,background-color] duration-1000 ${isInView ? "scale-x-100" : "scale-x-0"}`}
       />
-    </motion.div>
+    </div>
   );
 }
-
 

@@ -13,6 +13,7 @@ import HeroSpotlight from "@/components/ui/HeroSpotlight";
 import ShimmerButton from "@/components/ui/ShimmerButton";
 import SEO from "@/components/SEO";
 import SmartImage from "@/components/SmartImage";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import MagneticButton from "@/components/MagneticButton";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
@@ -166,6 +167,7 @@ export default function Radio() {
   const [activeTrack, setActiveTrack] = useState<number | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const [faqDrawerOpen, setFaqDrawerOpen] = useState(false);
+  const [featureClipLoaded, setFeatureClipLoaded] = useState(false);
   const [artistIndex, setArtistIndex] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
   const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
@@ -311,22 +313,42 @@ export default function Radio() {
 
         {/* Floating Autograf Video (Double size = ~320x320 sq) */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-cover bg-center bg-black/20"
-          style={{ backgroundImage: "url('/images/autograf-recap.jpg')" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/20"
         >
-          <YouTubeEmbed
-            url="https://www.youtube.com/watch?v=9R6XH7JZlJI"
-            title="Autograf live at Monolith"
-            autoplay
-            muted
-            controls={false}
-            loop
-            playsInline
-            start={3714}
-            allowFullScreen={false}
+          <ResponsiveImage
+            src="/images/autograf-recap.jpg"
+            alt=""
+            sizes="400px"
             loading="lazy"
-            className="absolute inset-0 h-full w-full scale-[1.5] border-0"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
           />
+          {featureClipLoaded ? (
+            <YouTubeEmbed
+              url="https://www.youtube.com/watch?v=9R6XH7JZlJI"
+              title="Autograf live at Monolith"
+              autoplay
+              muted
+              controls={false}
+              loop
+              playsInline
+              start={3714}
+              allowFullScreen={false}
+              loading="eager"
+              className="absolute inset-0 h-full w-full scale-[1.5] border-0"
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setFeatureClipLoaded(true)}
+              className="absolute inset-0 flex items-center justify-center bg-black/35 text-white transition-colors hover:bg-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              aria-label="Load Autograf live video"
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 backdrop-blur-sm transition-transform hover:scale-105">
+                <Play className="h-7 w-7 fill-current pl-0.5" />
+              </span>
+            </button>
+          )}
         </div>
 
         <div className="container layout-wide h-full relative z-20 w-full flex flex-col md:flex-row items-center justify-between px-6 pointer-events-none">

@@ -1,5 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { lazy, Suspense, useState, useEffect, useLayoutEffect, useRef } from "react";
 import { Ticket, ArrowUpRight, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "../lib/utils";
@@ -11,10 +10,11 @@ import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
 import { getSceneForPath } from "../lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
-import InteractiveNavigationOverlay from "./InteractiveNavigationOverlay";
 import { getEventCta } from "../lib/cta";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+
+const InteractiveNavigationOverlay = lazy(() => import("./InteractiveNavigationOverlay"));
 
 const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string }) => {
   const accentClass = brand === "chasing-sunsets" ? "text-sunsets-gold" :
@@ -23,39 +23,34 @@ const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string })
 
   return (
     <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
-      <motion.span
-        animate={{ y: isOpen ? "-100%" : "0%" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      <span
         className="h-full flex items-center justify-center"
+        style={{ transform: `translateY(${isOpen ? "-100%" : "0%"})`, transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         MENU
-      </motion.span>
-      <motion.span
-        animate={{ y: isOpen ? "-100%" : "0%" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      </span>
+      <span
         className={cn("h-full flex items-center justify-center", accentClass)}
+        style={{ transform: `translateY(${isOpen ? "-100%" : "0%"})`, transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         CLOSE
-      </motion.span>
+      </span>
     </div>
   );
 };
 
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
   <div className="relative w-5 h-4 flex flex-col justify-between">
-    <motion.span
-      animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 6 : 0 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+    <span
+      style={{ transform: `translateY(${isOpen ? 6 : 0}px) rotate(${isOpen ? 45 : 0}deg)` }}
       className="block w-full h-[1.5px] bg-current rounded-full origin-center"
     />
-    <motion.span
-      animate={{ opacity: isOpen ? 0 : 1, scaleX: isOpen ? 0 : 1 }}
-      transition={{ duration: 0.2 }}
+    <span
+      style={{ opacity: isOpen ? 0 : 1, transform: `scaleX(${isOpen ? 0 : 1})` }}
       className="block w-full h-[1.5px] bg-current rounded-full"
     />
-    <motion.span
-      animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -6 : 0 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+    <span
+      style={{ transform: `translateY(${isOpen ? -6 : 0}px) rotate(${isOpen ? -45 : 0}deg)` }}
       className="block w-full h-[1.5px] bg-current rounded-full origin-center"
     />
   </div>
@@ -292,11 +287,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   return (
     <>
       <div className="pointer-events-none fixed left-0 right-0 top-0 z-[49] h-28 bg-gradient-to-b from-black/72 to-transparent" />
-      <motion.nav
+      <nav
         ref={navRef}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
         style={{
           top: "var(--shell-nav-offset)",
         }}
@@ -416,12 +408,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 </MagneticButton>
 
                 {/* LOCATION CONTEXT SIGNAL (SCROLL-SPY) */}
-                <AnimatePresence>
-                  {isHome && currentChapter && (
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                {isHome && currentChapter && (
+                    <div
                       className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
                     >
                       <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
@@ -435,9 +423,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       )}>
                         {currentChapter.number} / {currentChapter.label}
                       </span>
-                    </motion.div>
+                    </div>
                   )}
-                </AnimatePresence>
               </div>
 
               {/* CENTER: NAV ITEMS */}
@@ -557,7 +544,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <NavigationMegamenu
                   label="PLAN YOUR NIGHT"
                   href="/vip"
-                  isActive={location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact"}
+                  isActive={location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact" || location === "/newsletter"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
@@ -565,6 +552,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     items: [
                       { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
                       { label: "VIP TABLES", href: "/vip" },
+                      { label: "INNER CIRCLE", href: "/newsletter" },
                       { label: "SPONSOR ACCESS", href: "/sponsors" },
                       { label: "PARTNERSHIPS", href: "/partners" },
                       { label: "PRESS & MEDIA", href: "/press" },
@@ -669,11 +657,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Interactive chapter-entry overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
+      {mobileMenuOpen && (
+        <Suspense fallback={null}>
           <InteractiveNavigationOverlay
             activePath={location}
             closeButtonRef={closeButtonRef}
@@ -683,8 +671,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
             onNavigate={handleNavClick}
             ticketHref={ticketHref}
           />
-        )}
-      </AnimatePresence>
+        </Suspense>
+      )}
     </>
   );
 }
