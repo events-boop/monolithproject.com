@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { useEffect, useState, memo, useCallback } from "react";
-import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import JsonLd from "@/components/JsonLd";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -110,29 +109,6 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 
 const HERO_SUBHEAD =
   "Monolith is the root. Chasing Sun(Sets) runs the daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. Same city, same standard, one project.";
-
-const CountdownDisplay = memo(function CountdownDisplay({ target }: { target: number }) {
-  const { days, hours, minutes, seconds } = useCountdown(target);
-
-  return (
-    <div className="flex items-center gap-4 tabular-nums">
-      {[
-        { value: days, label: "D" },
-        { value: hours, label: "H" },
-        { value: minutes, label: "M" },
-        { value: seconds, label: "S" },
-      ].map((unit, i) => (
-        <div key={unit.label} className="flex flex-row items-center gap-1.5 leading-none">
-          <span className="font-mono text-base md:text-lg font-[900] tracking-tighter text-white">
-            {padCountdown(unit.value)}
-          </span>
-          <span className="font-mono text-[10px] font-bold text-white/30 pt-0.5">{unit.label}</span>
-          {i < 3 && <span className="text-white/20 mx-0.5">:</span>}
-        </div>
-      ))}
-    </div>
-  );
-});
 
 /** 
  * FloatingEventCard:
@@ -267,8 +243,6 @@ export default function HeroSection() {
       ? untoldFallback 
       : featuredEvent;
 
-  const targetDate = getEventStartTimestamp(bannerEvent) || getEventStartTimestamp(targetDateFallback);
-  const { isExpired } = useCountdown(targetDate);
   const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
   const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
@@ -355,16 +329,6 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-
-        {/* Countdown HUD (Persistent Desktop) */}
-        {targetDate && !isExpired && (targetDate - Date.now() < 31536000000) && (
-          <div 
-            className="absolute top-40 left-12 z-40 hidden xl:flex flex-col gap-4 text-left"
-          >
-            <span className="font-mono text-[10px] tracking-[0.3em] text-white/30 uppercase italic">Synchronization Imminent</span>
-            <CountdownDisplay target={targetDate!} />
-          </div>
-        )}
       </section>
     </div>
   );
