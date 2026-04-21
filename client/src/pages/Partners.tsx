@@ -9,6 +9,7 @@ import EntityBoostStrip from "@/components/EntityBoostStrip";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "@/components/KineticDecryption";
 import MagneticButton from "@/components/MagneticButton";
+import { useInquiry } from "@/contexts/InquiryContext";
 
 const productionRoles = [
   {
@@ -79,6 +80,8 @@ const partnerTypes = [
 ];
 
 export default function Partners() {
+  const { openInquiry } = useInquiry();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -222,11 +225,13 @@ export default function Partners() {
               <h2 className="font-display text-4xl md:text-6xl uppercase mb-10">Crew Inquiries</h2>
               <div className="flex flex-col items-center gap-8">
                   <MagneticButton strength={0.2}>
-                    <Link href="inquiry://general" asChild>
-                        <a className="inline-flex h-16 items-center justify-center bg-white text-black px-12 font-mono text-xs uppercase tracking-[0.3em] hover:bg-white/90 active:scale-95 transition-all rounded-full shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
-                            Submit Crew Inquiry
-                        </a>
-                    </Link>
+                    <a 
+                        href="#" 
+                        onClick={(e) => { e.preventDefault(); openInquiry("general"); }} 
+                        className="inline-flex h-16 items-center justify-center bg-white text-black px-12 font-mono text-xs uppercase tracking-[0.3em] hover:bg-white/90 active:scale-95 transition-all rounded-full shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                    >
+                        Submit Crew Inquiry
+                    </a>
                   </MagneticButton>
                   <p className="text-white/20 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm mx-auto">
                     Direct inquiries via crew@monolithproject.com // Review cycles occur monthly.
