@@ -29,7 +29,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         venue: "Alhambra Palace",
         location: "Chicago, IL",
         status: "past",
-        image: "/images/untold-opening-arch.webp",
+        image: "/images/untold-story-moody.webp",
     },
     {
         id: "us-s3e3",

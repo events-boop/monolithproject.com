@@ -1,5 +1,6 @@
 import { runWhenIdle } from "./idle";
 import { hasAnalyticsConsent } from "./cookieConsent";
+import { getAttributionPayload } from "./attribution";
 
 type PostHogClient = (typeof import("posthog-js"))["default"];
 type PostHogProperties = Record<string, string | number | boolean | null | undefined>;
@@ -15,6 +16,7 @@ let client: PostHogClient | null = null;
 let loading: Promise<PostHogClient | null> | null = null;
 let initScheduled = false;
 let pendingPageview = false;
+let pendingPageviewProperties: PostHogProperties | undefined;
 const pendingCaptures: PendingCapture[] = [];
 
 function isTrackingHost() {
@@ -33,10 +35,57 @@ function isEnabled() {
   return import.meta.env.PROD && isTrackingHost() && Boolean(POSTHOG_KEY) && hasAnalyticsConsent();
 }
 
+function compactProperties(properties: PostHogProperties) {
+  return Object.fromEntries(
+    Object.entries(properties).filter(([, value]) => value !== undefined && value !== null && value !== ""),
+  ) as PostHogProperties;
+}
+
+function getPostHogAttributionProperties(): PostHogProperties {
+  const attribution = getAttributionPayload();
+
+  return compactProperties({
+    session_id: attribution.sessionId,
+    page_url: attribution.pageUrl,
+    landing_page_url: attribution.landingPageUrl,
+    referrer_domain: attribution.referrerDomain,
+    first_referrer_domain: attribution.firstReferrerDomain,
+    first_touch_at: attribution.firstTouchAt,
+    last_touch_at: attribution.lastTouchAt,
+    utm_source: attribution.utmSource,
+    utm_medium: attribution.utmMedium,
+    utm_campaign: attribution.utmCampaign,
+    utm_term: attribution.utmTerm,
+    utm_content: attribution.utmContent,
+    first_utm_source: attribution.firstUtmSource,
+    first_utm_medium: attribution.firstUtmMedium,
+    first_utm_campaign: attribution.firstUtmCampaign,
+    first_utm_term: attribution.firstUtmTerm,
+    first_utm_content: attribution.firstUtmContent,
+    last_utm_source: attribution.lastUtmSource,
+    last_utm_medium: attribution.lastUtmMedium,
+    last_utm_campaign: attribution.lastUtmCampaign,
+    last_utm_term: attribution.lastUtmTerm,
+    last_utm_content: attribution.lastUtmContent,
+    gclid: attribution.gclid,
+    fbclid: attribution.fbclid,
+    ttclid: attribution.ttclid,
+    msclkid: attribution.msclkid,
+  });
+}
+
+function withAttributionProperties(properties?: PostHogProperties) {
+  return compactProperties({
+    ...getPostHogAttributionProperties(),
+    ...compactProperties(properties || {}),
+  });
+}
+
 function flushPendingCaptures(ph: PostHogClient) {
   if (pendingPageview) {
-    ph.capture("$pageview");
+    ph.capture("$pageview", pendingPageviewProperties);
     pendingPageview = false;
+    pendingPageviewProperties = undefined;
   }
 
   while (pendingCaptures.length > 0) {
@@ -84,21 +133,25 @@ export function schedulePostHogInit() {
 // Safe to call on every route change; if PostHog hasn't loaded yet we queue one.
 export function queuePostHogPageview() {
   if (!isEnabled()) return;
+  const properties = withAttributionProperties();
   pendingPageview = true;
+  pendingPageviewProperties = properties;
   if (!client) return;
 
-  client.capture("$pageview");
+  client.capture("$pageview", properties);
   pendingPageview = false;
+  pendingPageviewProperties = undefined;
 }
 
 export function capturePostHogEvent(eventName: string, properties?: PostHogProperties) {
   if (!isEnabled()) return;
+  const enrichedProperties = withAttributionProperties(properties);
 
   if (client) {
-    client.capture(eventName, properties);
+    client.capture(eventName, enrichedProperties);
     return;
   }
 
-  pendingCaptures.push({ eventName, properties });
+  pendingCaptures.push({ eventName, properties: enrichedProperties });
   schedulePostHogInit();
 }

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
+  appendAttributionQueryParams,
   clearAttributionState,
   getAttributionPayload,
   initAttributionTracking,
@@ -70,5 +71,28 @@ describe("attribution", () => {
     expect(payload.gclid).toBe("gclid-2");
     expect(payload.firstReferrerDomain).toBe("instagram.com");
     expect(payload.referrerDomain).toBe("www.google.com");
+  });
+
+  it("decorates conversion URLs with the captured attribution query params", () => {
+    window.history.replaceState(
+      {},
+      "",
+      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
+    );
+    initAttributionTracking();
+
+    const href = appendAttributionQueryParams("/go/tickets/us-s3e3");
+    expect(href).toBe(
+      "/go/tickets/us-s3e3?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
+    );
+  });
+
+  it("keeps explicit conversion URL params when attribution is appended", () => {
+    window.history.replaceState({}, "", "/?utm_source=instagram&utm_campaign=season-launch");
+    initAttributionTracking();
+
+    const href = appendAttributionQueryParams("/go/tickets/us-s3e3?utm_source=partner");
+    expect(href).toContain("utm_source=partner");
+    expect(href).toContain("utm_campaign=season-launch");
   });
 });

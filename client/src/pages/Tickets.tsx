@@ -6,6 +6,7 @@ import "@/styles/themes/tickets.css";
 import Navigation from "@/components/Navigation";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import { trackTicketIntent } from "@/lib/api";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import KineticDecryption from "@/components/KineticDecryption";
 import SEO from "@/components/SEO";
@@ -69,11 +70,31 @@ export default function Tickets() {
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
+    const attributedUrl = appendAttributionQueryParams(destinationUrl);
     signalChirp.boot();
-    void trackTicketIntent(source, featuredEvent?.id, destinationUrl);
+    void trackTicketIntent(source, featuredEvent?.id, attributedUrl);
     
     // Immediate execution for zero-friction conversion
-    window.open(destinationUrl, "_blank", "noopener,noreferrer");
+    window.open(attributedUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleTicketLinkClick = (
+    event: SyntheticEvent<HTMLAnchorElement>,
+    source: string,
+    destinationUrl?: string,
+  ) => {
+    if (!destinationUrl) return;
+    const attributedUrl = appendAttributionQueryParams(destinationUrl);
+    void trackTicketIntent(source, featuredEvent?.id, attributedUrl);
+
+    if (attributedUrl !== destinationUrl) {
+      event.preventDefault();
+      if (event.currentTarget.target === "_blank") {
+        window.open(attributedUrl, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.assign(attributedUrl);
+      }
+    }
   };
 
   return (
@@ -117,7 +138,7 @@ export default function Tickets() {
                     href={cta.href}
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                    onClick={() => void trackTicketIntent("tickets_page_header", featuredEvent?.id, cta.href)}
+                    onClick={(event) => handleTicketLinkClick(event, "tickets_page_header", cta.href)}
                     className={`
                       px-12 py-5 text-[12px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center justify-center min-w-[220px] rounded-none
                       ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
@@ -231,7 +252,7 @@ export default function Tickets() {
                            href={cta.href}
                            target={cta.isExternal ? "_blank" : undefined}
                            rel={cta.isExternal ? "noopener noreferrer" : undefined}
-                           onClick={() => void trackTicketIntent("tickets_page_featured", featuredEvent?.id, cta.href)}
+                           onClick={(event) => handleTicketLinkClick(event, "tickets_page_featured", cta.href)}
                            className={`
                              px-12 py-6 text-xs font-black tracking-[0.4em] transition-all duration-500 min-w-[280px] flex items-center justify-center rounded-none
                              ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}

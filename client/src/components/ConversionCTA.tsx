@@ -6,6 +6,8 @@ import MagneticButton from "@/components/MagneticButton";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { useInquiry } from "@/contexts/InquiryContext";
 import { isInquiryHref, parseInquiryType } from "@/lib/cta";
+import { trackTicketIntent } from "@/lib/api";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 
 // Callers on pages like /partners pass a synthesized minimal event whose only
 // meaningful field is `primaryCta` (the CTA-source). Accept a partial shape so
@@ -54,17 +56,33 @@ export default function ConversionCTA({
   const systemReport = event?.status === 'on-sale' && isEventLowInventory(event)
     ? `[ CAPACITY // 94% EQUILIBRIUM ]`
     : null;
+  const isInquiry = isInquiryHref(cta.href);
 
   const baseButton = (
     <div className={`flex flex-col items-center gap-0 ${className}`}>
       <a
-        href={isInquiryHref(cta.href) ? "#" : cta.href}
+        href={isInquiry ? "#" : cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
         onClick={(e) => {
-          if (isInquiryHref(cta.href)) {
+          if (isInquiry) {
             e.preventDefault();
             openInquiry(parseInquiryType(cta.href));
+            return;
+          }
+
+          const attributedHref = appendAttributionQueryParams(cta.href);
+          if (cta.tool === "posh") {
+            void trackTicketIntent("conversion_cta", event?.id, attributedHref);
+          }
+
+          if (attributedHref !== cta.href) {
+            e.preventDefault();
+            if (cta.isExternal) {
+              window.open(attributedHref, "_blank", "noopener,noreferrer");
+            } else {
+              window.location.assign(attributedHref);
+            }
           }
         }}
         onMouseEnter={() => {

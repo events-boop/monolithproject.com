@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { randomUUID } from "crypto";
 import { logEvent } from "../lib/logging";
-import { resolveOutboundDestination } from "../lib/outbound";
+import { decorateOutboundDestination, resolveOutboundDestination } from "../lib/outbound";
 
 const router = Router();
 
@@ -27,6 +27,8 @@ router.get("/go/:group/:key", (req, res) => {
     });
   }
 
+  const trackedDestination = decorateOutboundDestination(destination, req.query);
+
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 
@@ -36,7 +38,7 @@ router.get("/go/:group/:key", (req, res) => {
     key: req.params.key,
   });
 
-  return res.redirect(302, destination);
+  return res.redirect(302, trackedDestination);
 });
 
 export default router;

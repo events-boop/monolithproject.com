@@ -1,8 +1,21 @@
 type OutboundGroup = "tickets" | "waitlist";
+type QueryValue = string | string[] | null | undefined;
+type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
 const FALLBACK_POSH_URL =
   "https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026";
 const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject";
+const OUTBOUND_TRACKING_PARAMS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "gclid",
+  "fbclid",
+  "ttclid",
+  "msclkid",
+] as const;
 
 function readHttpsEnv(...keys: string[]) {
   for (const key of keys) {
@@ -51,4 +64,31 @@ export function resolveOutboundDestination(group: string, key: string) {
   }
 
   return null;
+}
+
+function readQueryValue(source: QuerySource, key: string) {
+  if (source instanceof URLSearchParams) {
+    return source.get(key) || undefined;
+  }
+
+  const raw = source[key];
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return typeof value === "string" ? value : undefined;
+}
+
+export function decorateOutboundDestination(destination: string, source: QuerySource) {
+  try {
+    const url = new URL(destination);
+
+    for (const param of OUTBOUND_TRACKING_PARAMS) {
+      const value = readQueryValue(source, param)?.trim();
+      if (value && !url.searchParams.has(param)) {
+        url.searchParams.set(param, value.slice(0, 200));
+      }
+    }
+
+    return url.toString();
+  } catch {
+    return destination;
+  }
 }

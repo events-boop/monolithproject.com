@@ -33,14 +33,14 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
     console.warn("⚠️  DATABASE_URL is not set — running without database persistence. Form handlers and restricted areas may fail.");
   }
 
-  // SPONSOR_SESSION_SECRET is load-bearing: sponsor-session.ts throws at runtime
-  // when it's missing, which turns a correct sponsor login into a 500. Under
-  // fatal: true we want to fail at boot instead of surviving to serve broken requests.
-  const requiredGlobalVars = ["SPONSOR_SESSION_SECRET"];
-  const missingGlobal = requiredGlobalVars.filter((v) => !process.env[v]);
-  if (missingGlobal.length > 0) {
+  // Sponsor access is optional. If a sponsor password is configured, the
+  // matching session secret must also be configured so successful logins can
+  // issue signed cookies.
+  const sponsorPasswordConfigured = Boolean(process.env.SPONSOR_ACCESS_PASSWORD?.trim());
+  const sponsorSecretConfigured = Boolean(process.env.SPONSOR_SESSION_SECRET?.trim());
+  if (sponsorPasswordConfigured && !sponsorSecretConfigured) {
     logValidationFailure(
-      `Missing required env vars at boot: ${missingGlobal.join(", ")}`,
+      "SPONSOR_ACCESS_PASSWORD is configured but SPONSOR_SESSION_SECRET is missing. Sponsor access will fail.",
       resolvedOptions,
     );
   }

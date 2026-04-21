@@ -58,7 +58,8 @@ router.post("/api/sponsor-access", sponsorAccessLimiter, (req, res) => {
     }
 
     const configuredPassword = process.env.SPONSOR_ACCESS_PASSWORD?.trim();
-    if (!configuredPassword) {
+    const sessionSecret = process.env.SPONSOR_SESSION_SECRET?.trim();
+    if (!configuredPassword || !sessionSecret) {
         logEvent("sponsor.access_unconfigured", { requestId });
         return res.status(503).json({
             ok: false,

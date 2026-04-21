@@ -3,15 +3,16 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, CalendarPlus } from "lucide-react";
 import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
-import { getPublicEvents } from "@/lib/siteData";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import ResponsiveImage from "./ResponsiveImage";
 import { cn } from "@/lib/utils";
-import { getSeriesColor, getSeriesColorOnLight, getEventWindow } from "@/lib/siteExperience";
+import { getSeriesColor, getSeriesColorOnLight, getEventWindow, getScheduledEvents } from "@/lib/siteExperience";
 import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
+import { trackTicketIntent } from "@/lib/api";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 
 function formatIcsLocal(d: Date) {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -60,7 +61,7 @@ const seriesDefaultImage: Record<string, string> = {
 };
 
 export default function ScheduleSection() {
-  const upcomingEvents = getPublicEvents();
+  const upcomingEvents = getScheduledEvents();
   const { preconnectGateway } = useIntentPrefetch();
   const [expandedId, setExpandedId] = useState<string | null>(upcomingEvents[0]?.id || null);
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
@@ -83,11 +84,11 @@ export default function ScheduleSection() {
   const gridY = useTransform(scrollYProgress, [0, 1], ["0px", "50px"]);
 
   return (
-    <section ref={sectionRef} id="schedule" className="relative py-20 md:py-40 bg-[#EAEAEA] overflow-hidden border-t border-black/10">
+    <section ref={sectionRef} id="schedule" className="relative overflow-hidden border-t border-black/10 bg-[#ECEBE6] py-20 md:py-40">
       {/* 🏛️ ARCHITECTURAL GRID LAYER (PARALLAX ENABLED) */}
       <motion.div 
         style={{ y: gridY }}
-        className="absolute inset-0 pointer-events-none opacity-[0.05]"
+        className="absolute inset-0 pointer-events-none opacity-[0.07]"
       >
         <svg width="100%" height="100%">
           <pattern id="blueprint-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -98,20 +99,20 @@ export default function ScheduleSection() {
       </motion.div>
 
       {/* Side Guidelines */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-         <div className="absolute left-[5%] md:left-[8%] top-0 bottom-0 w-px bg-black/10" />
-         <div className="absolute right-[5%] md:right-[8%] top-0 bottom-0 w-px bg-black/10" />
+      <div className="absolute inset-0 pointer-events-none opacity-45">
+         <div className="absolute left-[5%] md:left-[8%] top-0 bottom-0 w-px bg-black/12" />
+         <div className="absolute right-[5%] md:right-[8%] top-0 bottom-0 w-px bg-black/12" />
       </div>
 
       <div className="container relative z-10 mx-auto max-w-[90rem] px-4 sm:px-6">
         {/* Header Block */}
-        <div className="mb-12 md:mb-24 flex flex-col gap-8 lg:flex-row lg:items-end justify-between border-b border-black/10 pb-8 md:pb-12">
+        <div className="mb-12 flex flex-col justify-between gap-8 border-b border-black/15 pb-8 md:mb-24 md:pb-12 lg:flex-row lg:items-end">
           <div className="relative">
              <span
-               className="absolute -top-6 left-1 md:-top-10 md:left-2 font-mono text-[10px] md:text-[10px] tracking-[0.4em] uppercase"
+               className="absolute -top-6 left-1 font-mono text-[11px] font-black uppercase tracking-[0.38em] md:-top-10 md:left-2"
                style={{ color: `${MONOLITH_ORANGE_ON_LIGHT}b3` }}
              >
-               Upcoming Series
+               Season Schedule
              </span>
              <h2
                className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
@@ -120,21 +121,21 @@ export default function ScheduleSection() {
                <KineticDecryption text="THE 2026 SEASON" />
              </h2>
              <p
-               className="font-mono text-[10px] md:text-[10px] uppercase tracking-[0.3em] text-black/50 pl-2 md:pl-6 border-l mt-4 md:mt-6 max-w-[15rem] md:max-w-sm"
+               className="mt-4 max-w-[18rem] border-l pl-3 font-mono text-[11px] font-bold uppercase leading-6 tracking-[0.24em] text-black/70 md:mt-6 md:max-w-md md:pl-6"
                style={{ borderColor: `${MONOLITH_ORANGE_ON_LIGHT}4D` }}
              >
-               A curated arc of open-air days and industrial nights. Inventory is strictly limited by venue capacity.
+               Open-air days, late rooms, and tightly capped releases across one Chicago season.
              </p>
           </div>
 
-          <div className="flex overflow-x-auto no-scrollbar max-w-full gap-1 p-1 bg-black/[0.03] border border-black/10 rounded-full backdrop-blur-md z-20 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
+          <div className="z-20 flex max-w-full gap-1 overflow-x-auto rounded-full border border-black/15 bg-white/55 p-1 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06),0_12px_32px_rgba(0,0,0,0.08)] backdrop-blur-md no-scrollbar">
             {months.map(month => (
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
                 className={`relative shrink-0 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
                   ? "text-white shadow-sm"
-                  : "text-black/50 hover:text-black"
+                  : "text-black/65 hover:text-black"
                   }`}
               >
                 {activeMonth === month && (
@@ -151,7 +152,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* List Header - HUD Style (Hidden on Mobile) */}
-        <div className="hidden lg:grid grid-cols-12 gap-4 pb-4 pt-4 text-[10px] uppercase tracking-[0.25em] font-mono text-black/40">
+        <div className="hidden grid-cols-12 gap-4 pb-4 pt-4 font-mono text-[10px] font-black uppercase tracking-[0.25em] text-black/55 lg:grid">
           <div className="col-span-2 pl-4">Date / Time</div>
           <div className="col-span-1 text-center">Status</div>
           <div className="col-span-4 pl-4">Event Identity</div>
@@ -160,11 +161,11 @@ export default function ScheduleSection() {
         </div>
 
         {/* Schedule Wrapper */}
-        <div className="flex flex-col mb-12 rounded-3xl md:rounded-[2rem] overflow-hidden border border-black/10 bg-white/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
+        <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-black/15 bg-white/75 shadow-[0_24px_70px_rgba(0,0,0,0.09),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl md:rounded-[2rem]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
-              <span className="block font-heavy text-2xl md:text-3xl text-black/30 mb-2 md:mb-4 tracking-tight uppercase">No Events Found</span>
-              <p className="font-mono text-[10px] md:text-[10px] text-black/40 uppercase tracking-widest">No matching dates for {activeMonth}</p>
+              <span className="mb-2 block font-heavy text-2xl uppercase tracking-tight text-black/45 md:mb-4 md:text-3xl">No Events Found</span>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-black/60">No matching dates for {activeMonth}</p>
             </div>
           ) : (
             filteredEvents.map((event, index) => {
@@ -173,6 +174,9 @@ export default function ScheduleSection() {
               const dayNumber = parseInt(dateDay) || "";
               const shouldPing = event.recentlyDropped || event.status === "on-sale";
               const detailsHref = getEventDetailsHref(event);
+              const isJulyHoliday =
+                dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5);
+              const seriesAccent = getSeriesColorOnLight(event.series);
 
               return (
                 <motion.div
@@ -181,13 +185,16 @@ export default function ScheduleSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: index * 0.04, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group border-b border-black/[0.08] relative last:border-b-0"
+                  className="group relative border-b border-black/10 last:border-b-0"
                 >
-                  <div className={`absolute top-0 bottom-0 left-0 w-[4px] bg-black opacity-0 transition-opacity duration-500 ${isExpanded ? 'opacity-10' : 'group-hover:opacity-10'}`} />
+                  <div
+                    className={`absolute bottom-0 left-0 top-0 w-[4px] opacity-0 transition-opacity duration-500 ${isExpanded ? "opacity-100" : "group-hover:opacity-100"}`}
+                    style={{ backgroundColor: seriesAccent }}
+                  />
 
                   {/* Main Event Row */}
                   <div
-                    className={`w-full relative z-10 transition-colors duration-500 group px-4 sm:px-6 ${isExpanded ? "bg-white/40" : "hover:bg-black/[0.02]"}`}
+                    className={`group relative z-10 w-full px-4 transition-colors duration-500 sm:px-6 ${isExpanded ? "bg-white/55" : "hover:bg-black/[0.025]"}`}
                   >
                     <div className="py-6 md:py-10 flex flex-col lg:grid lg:grid-cols-12 gap-5 md:gap-6 lg:items-center w-full text-left">
                       
@@ -195,14 +202,14 @@ export default function ScheduleSection() {
                       <div className="lg:col-span-2 flex items-center justify-between lg:justify-start lg:flex-col lg:items-start gap-2 lg:gap-1 pl-0 lg:pl-4">
                         <div className="flex flex-col">
                           <span className={cn(
-                            "font-heavy text-2xl sm:text-3xl md:text-4xl lg:text-5xl transition-colors duration-500 whitespace-nowrap tracking-tighter leading-none",
-                            (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient" : "text-black/80 group-hover:text-black"
-                          )}>
-                            {dayNumber ? `${dateMonth.substring(0, 3)} ${dayNumber}` : dateMonth}
+                            "font-heavy text-2xl font-black uppercase leading-none tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black sm:text-3xl md:text-4xl lg:text-5xl"
+                          )}
+                          style={{ color: isJulyHoliday ? seriesAccent : undefined }}
+                          >
+                            {dayNumber ? `${dateMonth.substring(0, 3).toUpperCase()} ${dayNumber}` : dateMonth.toUpperCase()}
                           </span>
                           <span className={cn(
-                            "font-mono text-[10px] mt-1 tracking-[0.1em] uppercase block lg:hidden xl:block",
-                            (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "text-[#3366ff]" : "text-black/50"
+                            "mt-1 block font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-black/65 lg:hidden xl:block"
                           )}>
                             {event.time.split("—")[0]}
                           </span>
@@ -210,12 +217,12 @@ export default function ScheduleSection() {
                         
                         {/* Mobile Ping Indicator (only on mobile) */}
                         {shouldPing && (
-                          <div className="lg:hidden flex items-center gap-2 px-2 py-1 rounded-full bg-black/[0.04] border border-black/5">
+                          <div className="flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.055] px-2 py-1 lg:hidden">
                             <span className="relative flex h-2 w-2">
                               <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                               <span className={`relative inline-flex rounded-full h-2 w-2 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                             </span>
-                            <span className="font-mono text-[10px] tracking-widest text-black/40 font-bold">
+                            <span className="font-mono text-[10px] font-black tracking-widest text-black/60">
                               {event.recentlyDropped ? "NEW DROP" : "LIVE"}
                             </span>
                           </div>
@@ -225,7 +232,7 @@ export default function ScheduleSection() {
                       {/* 📡 TELEMETRY (Desktop only) */}
                       <div className="lg:col-span-1 hidden lg:flex flex-col items-center gap-4">
                         {shouldPing && (
-                          <div className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center bg-white shadow-sm overflow-hidden relative">
+                          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white shadow-sm">
                              <motion.div
                                 className="absolute inset-0 opacity-10"
                                 style={{
@@ -255,14 +262,15 @@ export default function ScheduleSection() {
                       {/* 🎫 EVENT IDENTITY */}
                       <div className="lg:col-span-4 flex flex-col gap-2 pl-0 lg:pl-4">
                         <h3 className={cn(
-                          "font-heavy text-[clamp(1.4rem,5vw,2.5rem)] lg:text-[clamp(1.8rem,4vw,2.8rem)] uppercase leading-[0.9] transition-all duration-500 tracking-tight",
-                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient" : "text-black/80 group-hover:text-black"
-                        )}>
+                          "font-heavy text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black lg:text-[clamp(1.9rem,4vw,2.9rem)]"
+                        )}
+                        style={{ color: isJulyHoliday ? seriesAccent : undefined }}
+                        >
                           {event.title}
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           <span
-                            className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 bg-black/5 border border-black/10 rounded-full"
+                            className="rounded-full border border-black/10 bg-black/[0.055] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em]"
                             style={{ color: getSeriesColorOnLight(event.series) }}
                           >
                             {seriesLabels[event.series]}
@@ -283,16 +291,15 @@ export default function ScheduleSection() {
                       {/* 📍 VENUE (Desktop only) */}
                       <div className="lg:col-span-2 hidden lg:flex flex-col">
                         <span className={cn(
-                          "font-serif italic text-xl lg:text-2xl leading-tight transition-colors duration-500",
-                          (dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5)) ? "july-4th-gradient !italic" : "text-black/70 group-hover:text-black"
+                          "font-serif text-xl font-semibold italic leading-tight text-black/78 transition-colors duration-500 group-hover:text-black lg:text-2xl"
                         )}>{event.venue}</span>
-                        <span className="text-[10px] text-black/40 font-mono mt-0.5 tracking-widest uppercase">{event.location}</span>
+                        <span className="mt-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-black/58">{event.location}</span>
                       </div>
 
                       {/* ⚡ ACTIONS (Full width on mobile) */}
                       <div className="lg:col-span-3 flex flex-wrap items-center justify-between lg:justify-end gap-3 lg:pr-4 w-full mt-2 lg:mt-0">
                          <div className="flex-1 min-w-[11rem] lg:flex-none z-20">
-                           <ConversionCTA event={event} size="sm" showUrgency={true} className="w-full md:w-auto" />
+                           <ConversionCTA event={event} size="sm" showUrgency={true} className="schedule-section-cta w-full md:w-auto" />
                          </div>
                          <button
                            type="button"
@@ -301,7 +308,7 @@ export default function ScheduleSection() {
                            className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-300 ${
                              isExpanded
                                ? "border-black bg-black text-white"
-                               : "border-black/10 bg-white text-black/70 hover:border-black/25 hover:text-black"
+                               : "border-black/15 bg-white text-black/75 hover:border-black/30 hover:text-black"
                            }`}
                          >
                            {isExpanded ? "Hide Preview" : "Quick View"}
@@ -320,13 +327,13 @@ export default function ScheduleSection() {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.02),transparent_100%)] border-t border-black/5"
+                        className="overflow-hidden border-t border-black/10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.035),transparent_100%)]"
                       >
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 px-6 md:px-10 py-10 lg:py-16">
                           
                           {/* Image Visual (Mobile: small crop, Desktop: full aspect) */}
                           <div className="lg:col-span-4 order-2 lg:order-1">
-                             <div className="aspect-video lg:aspect-[4/5] rounded-2xl overflow-hidden border border-black/10 relative shadow-md">
+                             <div className="relative aspect-video overflow-hidden rounded-2xl border border-black/15 shadow-[0_18px_45px_rgba(0,0,0,0.16)] lg:aspect-[4/5]">
                                 <ResponsiveImage
                                   src={event.image || seriesDefaultImage[event.series]}
                                   alt={event.title}
@@ -337,7 +344,7 @@ export default function ScheduleSection() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4 flex flex-col">
-                                   <span className="font-mono text-[10px] tracking-widest text-white/90 uppercase mb-1">Visual Logic</span>
+                                   <span className="mb-1 font-mono text-[10px] font-black uppercase tracking-widest text-white/90">Visual Logic</span>
                                    <span className="font-heavy text-xs text-white uppercase tracking-tighter">{event.series.replace('-', ' ')}</span>
                                 </div>
                              </div>
@@ -346,29 +353,29 @@ export default function ScheduleSection() {
                           {/* Content Narrative */}
                           <div className="lg:col-span-8 order-1 lg:order-2 flex flex-col justify-center">
                             <div className="flex items-center gap-3 mb-6">
-                               <div className="h-px w-8 md:w-16 bg-black/20" />
-                               <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-black/60 font-black">Event Dossier</span>
+                               <div className="h-px w-8 bg-black/30 md:w-16" />
+                               <span className="font-mono text-[11px] font-black uppercase tracking-[0.28em] text-black/70">Event Dossier</span>
                             </div>
                             
-                            <p className="text-xl md:text-2xl lg:text-3xl font-serif italic text-black/80 mb-10 md:mb-12 max-w-3xl leading-snug">
+                            <p className="mb-10 max-w-3xl font-serif text-xl italic leading-snug text-black/86 md:mb-12 md:text-2xl lg:text-3xl">
                               {event.description || event.experienceIntro || "Join us for a night built on sound, intention, and proper scale."}
                             </p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-10 lg:mb-12">
                               {/* Stat Card: Personnel */}
-                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-3xl shadow-sm">
+                              <div className="rounded-3xl border border-black/10 bg-white/88 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
                                 <span className={cn(
                                   "font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block",
-                                  event.lineup ? "text-primary/70" : "text-black/30"
+                                  event.lineup ? "text-primary/85" : "text-black/60"
                                 )}>Lineup Detail</span>
-                                <p className="font-heavy text-xl md:text-2xl leading-tight text-black uppercase tracking-tight">{event.lineup || "Manifesting"}</p>
+                                <p className="font-heavy text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.lineup || "Lineup Release Pending"}</p>
                               </div>
 
                               {/* Stat Card: Logistics */}
-                              <div className="p-6 md:p-8 bg-white/80 border border-black/5 rounded-3xl shadow-sm">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block text-black/30">Architecture</span>
-                                <p className="font-heavy text-xl md:text-2xl leading-tight text-black uppercase tracking-tight">{event.venue}</p>
-                                <p className="text-[10px] text-black/40 mt-3 font-mono tracking-widest uppercase">{event.time} @ {event.location}</p>
+                              <div className="rounded-3xl border border-black/10 bg-white/88 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
+                                <span className="mb-4 block font-mono text-[10px] font-black uppercase tracking-[0.4em] text-black/62">Location Frame</span>
+                                <p className="font-heavy text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.venue}</p>
+                                <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-widest text-black/62">{event.time} @ {event.location}</p>
                               </div>
                             </div>
 
@@ -378,6 +385,15 @@ export default function ScheduleSection() {
                                   href={event.ticketUrl} 
                                   target="_blank" 
                                   rel="noopener noreferrer" 
+                                  onClick={(e) => {
+                                    const attributedHref = appendAttributionQueryParams(event.ticketUrl!);
+                                    void trackTicketIntent("schedule_quick_view", event.id, attributedHref);
+
+                                    if (attributedHref !== event.ticketUrl) {
+                                      e.preventDefault();
+                                      window.open(attributedHref, "_blank", "noopener,noreferrer");
+                                    }
+                                  }}
                                   onMouseEnter={() => preconnectGateway(event.ticketUrl!)}
                                   className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-[10px] tracking-[0.25em] uppercase hover:bg-primary transition-all duration-300"
                                 >
@@ -385,13 +401,13 @@ export default function ScheduleSection() {
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </a>
                               ) : (
-                                <button className="px-8 py-4 rounded-full border border-black/10 bg-black/5 text-black/30 font-bold text-[10px] tracking-[0.25em] uppercase cursor-default">
-                                  Coordinates Locked Soon
+                                <button className="cursor-default rounded-full border border-black/15 bg-black/[0.06] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/58">
+                                  Release Details Soon
                                 </button>
                               )}
 
                               <Link href={detailsHref} asChild>
-                                <a className="group inline-flex items-center gap-3 px-6 py-4 border border-black/10 rounded-full text-[10px] font-bold tracking-[0.25em] uppercase text-black/70 hover:border-black/20 hover:text-black transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+                                <a className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-black/15 px-6 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/76 transition-all hover:border-black/30 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
                                   Open Event Page
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>
@@ -399,7 +415,7 @@ export default function ScheduleSection() {
 
                               <button
                                 onClick={() => downloadICS(event)}
-                                className="group inline-flex items-center gap-3 text-[10px] font-bold tracking-[0.25em] uppercase text-black/70 hover:text-black px-6 py-4 border border-black/10 rounded-full transition-all"
+                                className="group inline-flex items-center gap-3 rounded-full border border-black/15 px-6 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/76 transition-all hover:border-black/30 hover:text-black"
                               >
                                 <CalendarPlus className="w-4 h-4" />
                                 Add To Calendar
@@ -418,20 +434,20 @@ export default function ScheduleSection() {
         </div>
 
         {/* Global Action Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 relative z-20 px-4 border-t border-black/10">
-          <p className="text-black/40 text-[10px] font-mono uppercase tracking-[0.4em]">
-             New dates landing weekly. Stay synchronized.
+        <div className="relative z-20 flex flex-col gap-6 border-t border-black/15 px-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-mono text-[11px] font-black uppercase tracking-[0.32em] text-black/62">
+             New dates land as rooms lock in.
           </p>
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/schedule">
-              <span className="group inline-flex items-center gap-2 text-black font-black text-[10px] tracking-[0.3em] uppercase transition-all hover:text-primary cursor-pointer">
+              <span className="group inline-flex cursor-pointer items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-black transition-all hover:text-primary">
                 See All Dates
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
             <Link href="/newsletter">
               <span
-                className="group inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase hover:text-black transition-colors cursor-pointer"
+                className="group inline-flex cursor-pointer items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] transition-colors hover:text-black"
                 style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
               >
                 Get Event Updates

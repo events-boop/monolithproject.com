@@ -62,6 +62,17 @@ interface StoredAttribution {
 
 const ATTRIBUTION_STORAGE_KEY = "monolith:attribution:v1";
 const SESSION_STORAGE_KEY = "monolith:session:v1";
+const ATTRIBUTION_QUERY_PARAMS = {
+  utm_source: "utmSource",
+  utm_medium: "utmMedium",
+  utm_campaign: "utmCampaign",
+  utm_term: "utmTerm",
+  utm_content: "utmContent",
+  gclid: "gclid",
+  fbclid: "fbclid",
+  ttclid: "ttclid",
+  msclkid: "msclkid",
+} as const satisfies Record<string, keyof AttributionPayload>;
 
 function isBrowser() {
   return typeof window !== "undefined" && typeof document !== "undefined";
@@ -294,6 +305,45 @@ export function getAttributionPayload(): AttributionPayload {
     lastTtclid: lastTouch?.ttclid,
     lastMsclkid: lastTouch?.msclkid,
   };
+}
+
+export function getAttributionQueryParams() {
+  const payload = getAttributionPayload();
+  const params = new URLSearchParams();
+
+  for (const [queryName, payloadKey] of Object.entries(ATTRIBUTION_QUERY_PARAMS)) {
+    const value = payload[payloadKey];
+    if (typeof value === "string" && value.trim()) {
+      params.set(queryName, value.trim());
+    }
+  }
+
+  return params;
+}
+
+export function appendAttributionQueryParams(href: string) {
+  const params = getAttributionQueryParams();
+  if (!Array.from(params.keys()).length) return href;
+
+  try {
+    const origin = isBrowser() ? window.location.origin : "https://monolithproject.com";
+    const url = new URL(href, origin);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return href;
+
+    params.forEach((value, key) => {
+      if (!url.searchParams.has(key)) {
+        url.searchParams.set(key, value);
+      }
+    });
+
+    if (url.origin === origin && !/^https?:\/\//i.test(href)) {
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+
+    return url.toString();
+  } catch {
+    return href;
+  }
 }
 
 export function clearAttributionState() {

@@ -35,4 +35,18 @@ describe("resolveOutboundDestination", () => {
     const { resolveOutboundDestination } = await importOutbound();
     expect(resolveOutboundDestination("spotify", "featured")).toBeNull();
   });
+
+  it("preserves UTM and click-id params on outbound redirects", async () => {
+    const { decorateOutboundDestination } = await importOutbound();
+    const destination = decorateOutboundDestination("https://tickets.example.com/event?utm_source=posh", {
+      utm_source: "instagram",
+      utm_medium: "social",
+      utm_campaign: "season-launch",
+      fbclid: "fbclid-1",
+    });
+
+    expect(destination).toBe(
+      "https://tickets.example.com/event?utm_source=posh&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
+    );
+  });
 });

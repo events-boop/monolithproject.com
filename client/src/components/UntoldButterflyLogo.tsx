@@ -1,5 +1,3 @@
-import { motion, useReducedMotion } from "framer-motion";
-
 interface UntoldButterflyLogoProps {
   className?: string;
   glow?: boolean;
@@ -19,30 +17,24 @@ const antennaePaths = [
 ];
 
 const restGlow = "drop-shadow(0 0 12px rgba(120, 200, 255, 0.6)) drop-shadow(0 0 4px rgba(120, 200, 255, 0.3))";
-const brightGlow = "drop-shadow(0 0 22px rgba(120, 200, 255, 0.85)) drop-shadow(0 0 8px rgba(120, 200, 255, 0.55))";
 
 export default function UntoldButterflyLogo({
   className = "w-16 h-16",
   glow = false,
-  animateIn = false,
+  animateIn: _animateIn = false,
 }: UntoldButterflyLogoProps) {
-  const reduceMotion = useReducedMotion();
-  const shouldAnimate = animateIn && !reduceMotion;
   const baseStyle = glow ? { filter: restGlow } : undefined;
 
   return (
-    <motion.svg
+    <svg
       viewBox="0 0 120 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       style={baseStyle}
-      initial={shouldAnimate && glow ? { filter: restGlow } : false}
-      animate={shouldAnimate && glow ? { filter: [restGlow, brightGlow, restGlow] } : undefined}
-      transition={{ duration: 1.8, ease: "easeOut", delay: 0.9, times: [0, 0.55, 1] }}
     >
       {wingPaths.map((d, i) => (
-        <motion.path
+        <path
           key={`wing-${i}`}
           d={d}
           stroke="currentColor"
@@ -50,15 +42,9 @@ export default function UntoldButterflyLogo({
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
-          initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
-          animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
-          transition={{
-            pathLength: { duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 + i * 0.07 },
-            opacity: { duration: 0.3, delay: 0.1 + i * 0.07 },
-          }}
         />
       ))}
-      <motion.line
+      <line
         x1="60"
         y1="42"
         x2="60"
@@ -66,23 +52,17 @@ export default function UntoldButterflyLogo({
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
-        animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
-        transition={{ duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
       />
       {antennaePaths.map((d, i) => (
-        <motion.path
+        <path
           key={`ant-${i}`}
           d={d}
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
           fill="none"
-          initial={shouldAnimate ? { pathLength: 0, opacity: 0 } : false}
-          animate={shouldAnimate ? { pathLength: 1, opacity: 1 } : undefined}
-          transition={{ duration: 0.45, delay: 0.7 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
         />
       ))}
-    </motion.svg>
+    </svg>
   );
 }
