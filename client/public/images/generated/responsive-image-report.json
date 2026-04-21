@@ -1,17 +1,167 @@
 {
-  "generatedAt": "2026-04-20T20:41:52.810Z",
+  "generatedAt": "2026-04-21T19:00:35.941Z",
   "widths": [
     480,
     1024,
     1920
   ],
   "totals": {
-    "originalBytes": 20697473,
-    "estimatedTransferBytes": 2789973,
-    "estimatedSavingsBytes": 17907500,
-    "variantBytes": 16062045
+    "originalBytes": 20710477,
+    "estimatedTransferBytes": 2795270,
+    "estimatedSavingsBytes": 17915207,
+    "variantBytes": 16100922
   },
   "images": [
+    {
+      "source": "/apple-touch-icon.png",
+      "originalBytes": 2871,
+      "originalKb": 2.8,
+      "originalWidth": 180,
+      "originalHeight": 180,
+      "generatedBaseName": "apple-touch-icon",
+      "variants": [
+        {
+          "path": "/images/generated/apple-touch-icon-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 1549
+        },
+        {
+          "path": "/images/generated/apple-touch-icon-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 1216
+        },
+        {
+          "path": "/images/generated/apple-touch-icon-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 1549
+        },
+        {
+          "path": "/images/generated/apple-touch-icon-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 1216
+        },
+        {
+          "path": "/images/generated/apple-touch-icon-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 1549
+        },
+        {
+          "path": "/images/generated/apple-touch-icon-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1216
+        }
+      ],
+      "estimatedTransferBytes": 1216,
+      "estimatedTransferKb": 1.2,
+      "estimatedSavingsBytes": 1655,
+      "estimatedSavingsPct": 58
+    },
+    {
+      "source": "/icon-192x192.png",
+      "originalBytes": 2635,
+      "originalKb": 2.6,
+      "originalWidth": 192,
+      "originalHeight": 192,
+      "generatedBaseName": "icon-192x192",
+      "variants": [
+        {
+          "path": "/images/generated/icon-192x192-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 1319
+        },
+        {
+          "path": "/images/generated/icon-192x192-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 1258
+        },
+        {
+          "path": "/images/generated/icon-192x192-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 1319
+        },
+        {
+          "path": "/images/generated/icon-192x192-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 1258
+        },
+        {
+          "path": "/images/generated/icon-192x192-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 1319
+        },
+        {
+          "path": "/images/generated/icon-192x192-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1258
+        }
+      ],
+      "estimatedTransferBytes": 1258,
+      "estimatedTransferKb": 1.2,
+      "estimatedSavingsBytes": 1377,
+      "estimatedSavingsPct": 52
+    },
+    {
+      "source": "/icon-512x512.png",
+      "originalBytes": 7498,
+      "originalKb": 7.3,
+      "originalWidth": 512,
+      "originalHeight": 512,
+      "generatedBaseName": "icon-512x512",
+      "variants": [
+        {
+          "path": "/images/generated/icon-512x512-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 4745
+        },
+        {
+          "path": "/images/generated/icon-512x512-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 6032
+        },
+        {
+          "path": "/images/generated/icon-512x512-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 2823
+        },
+        {
+          "path": "/images/generated/icon-512x512-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 3214
+        },
+        {
+          "path": "/images/generated/icon-512x512-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 2823
+        },
+        {
+          "path": "/images/generated/icon-512x512-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 3214
+        }
+      ],
+      "estimatedTransferBytes": 2823,
+      "estimatedTransferKb": 2.8,
+      "estimatedSavingsBytes": 4675,
+      "estimatedSavingsPct": 62
+    },
     {
       "source": "/images/archive/chasing-sunsets/brand_clarity_block_new_1774887097962.png",
       "originalBytes": 233141,

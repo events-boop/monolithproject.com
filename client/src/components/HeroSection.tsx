@@ -7,12 +7,14 @@ import KineticDecryption from "./KineticDecryption";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
+import { padCountdown, useCountdown } from "@/hooks/useCountdown";
 import {
   getEventById,
   getEventEyebrow,
   getEventStartTimestamp,
   getEventVenueLabel,
   getExperienceEvent,
+  getSeriesLabel,
   getSeriesEvents,
 } from "@/lib/siteExperience";
 
@@ -94,21 +96,56 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   { eventId: "us-s3e3", label: "ERAN HERSH" }, // 2: eran hersh portrait
   {
     label: "UNTOLD STORY",
-    eyebrow: "Archive Signal",
-    venueLabel: "Chicago Late-Night Series",
-    dateLabel: "Season III Archive",
+    eyebrow: "ARCHIVE SIGNAL",
+    venueLabel: "LATE-NIGHT SERIES",
+    dateLabel: "SEASON III ARCHIVE",
   }, // 3: untold story
   { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
   {
     label: "AUTOGRAF",
-    eyebrow: "Archive Signal",
-    venueLabel: "Special Event Archive",
-    dateLabel: "Featured Archive",
+    eyebrow: "ARCHIVE SIGNAL",
+    venueLabel: "FEATURED EVENT",
+    dateLabel: "AUTOGRAF",
   }, // 5: autograf archive
 ];
 
 const HERO_SUBHEAD =
   "Monolith is the root. Chasing Sun(Sets) runs the daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. Same city, same standard, one project.";
+
+function toSystemText(value?: string | null) {
+  return (value || "")
+    .replace(/[—·|]/g, " / ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
+
+function getEventSignalLabel(event?: any) {
+  if (!event) return "ARCHIVE SIGNAL";
+  if (event.status === "on-sale") return "ACTIVE SALE";
+  if (event.status === "sold-out") return "WAITLIST CONTROL";
+  if (event.recentlyDropped) return "SIGNAL OPEN";
+  if (event.status === "coming-soon") return "PRESALE BUILDING";
+  if (event.status === "past") return "ARCHIVE SIGNAL";
+  return "FEATURED SIGNAL";
+}
+
+function getSystemKicker(event: any | undefined, eyebrow: string | undefined, slideInfo: SlideBannerInfo) {
+  if (event) {
+    return `${toSystemText(getSeriesLabel(event.series))} / ${getEventSignalLabel(event)}`;
+  }
+
+  return toSystemText(eyebrow || slideInfo.eyebrow || "FEATURED SIGNAL");
+}
+
+function getSystemMeta(dateLabel: string, venueLabel?: string) {
+  const date = toSystemText(dateLabel);
+  const venue = toSystemText(venueLabel)
+    .replace(/,\s*CHICAGO,\s*IL/g, "")
+    .replace(/^VENUE REVEAL SOON$/, "VENUE LOCK PENDING");
+
+  return [date, venue].filter(Boolean).join(" / ");
+}
 
 /** 
  * FloatingEventCard:
@@ -134,11 +171,16 @@ function FloatingEventCard({
 }) {
   const headline = event?.headline || event?.title || slideInfo.label;
   const isLive = event?.status === "on-sale";
+  const eventStart = event ? getEventStartTimestamp(event) : null;
+  const countdown = useCountdown(isLive ? eventStart : null);
+  const showCountdown = isLive && eventStart && !countdown.isExpired;
+  const systemKicker = getSystemKicker(event, eyebrow, slideInfo);
+  const systemMeta = getSystemMeta(dateLabel, venueLabel);
 
   return (
     <div
       key={headline}
-      className="relative w-full max-w-[420px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)] group/card"
+      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
     >
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0">
@@ -153,35 +195,46 @@ function FloatingEventCard({
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
+      <div className="relative z-10 flex flex-col items-start gap-4 p-6 md:p-8">
         {/* Status Badge */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           {isLive && (
-            <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-              On Sale
+            <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
+              Active Sale
             </span>
           )}
         </div>
 
         {/* Narrative Metadata */}
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-[var(--monolith-red)] uppercase font-bold">
-              {eyebrow || "Latest Transmission"}
-            </span>
-          </div>
+        <div className="flex w-full flex-col gap-3 pr-20">
+          <span className="event-system-kicker text-[var(--monolith-red)]">
+            {systemKicker}
+          </span>
           <h3 className={cn(
-            "font-display text-2xl md:text-3xl font-[1000] uppercase tracking-tighter leading-[0.9] text-white text-balance",
+            "event-system-headline max-w-[14ch] text-[clamp(2rem,7vw,3.85rem)] text-white text-balance",
             isJuly4thEvent && "july-4th-gradient"
           )}>
-            {headline}
+            {toSystemText(headline)}
           </h3>
-          <div className="flex items-center gap-3 mt-1 opacity-60">
-             <span className="font-mono text-[10px] md:text-[10px] tracking-[0.2em] text-white uppercase">
-               {dateLabel} {venueLabel ? `// @${venueLabel}` : ""}
-             </span>
-          </div>
+          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/60">
+            {systemMeta}
+          </span>
         </div>
+
+        {showCountdown && (
+          <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
+            <span className="event-system-chip text-white/45">
+              Event Starts
+            </span>
+            <div className="event-system-chip flex items-center gap-2 text-white tabular-nums">
+              <span>{countdown.days}D</span>
+              <span className="text-white/25">/</span>
+              <span>{padCountdown(countdown.hours)}H</span>
+              <span className="text-white/25">/</span>
+              <span>{padCountdown(countdown.minutes)}M</span>
+            </div>
+          </div>
+        )}
 
         {/* CTA Engine */}
         <div className="w-full mt-4">

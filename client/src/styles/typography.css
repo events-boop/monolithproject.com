@@ -24,6 +24,41 @@
     letter-spacing: -0.02em;
   }
 
+  .event-system-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 900;
+    letter-spacing: 0.22em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .event-system-headline {
+    font-family: var(--font-heavy);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.84;
+    text-transform: uppercase;
+  }
+
+  .event-system-meta {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .event-system-chip {
+    font-family: var(--font-sans);
+    font-size: 0.5625rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
   /* KIKK-inspired schedule typography (page-scoped override). */
   .schedule-page {
     font-family: var(--font-sans);

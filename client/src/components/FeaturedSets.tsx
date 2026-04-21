@@ -96,20 +96,33 @@ export default function FeaturedSets() {
       <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
-        <div className="mb-10 md:mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between border-b border-white/10 pb-5">
-          <div className="flex items-center gap-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
-            <span className="font-mono text-[11px] md:text-[12px] tracking-[0.5em] uppercase text-white font-bold">
-              Featured Sets
-            </span>
-            <span className="h-px w-8 md:w-12 bg-white/20" />
-            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-white/50">
-              The Archive Deck
+        <div className="mb-12 border-b border-white/10 pb-7 md:mb-16 md:pb-9">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
+              <span className="event-system-kicker text-white/60">
+                Radio / Live Archive
+              </span>
+            </div>
+            <span className="event-system-chip shrink-0 text-white/40">
+              {SETS.length.toString().padStart(2, "0")} Selections
             </span>
           </div>
-          <span className="hidden md:block font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 shrink-0">
-            {SETS.length.toString().padStart(2, "0")} Selections
-          </span>
+
+          <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.34fr)] md:items-end">
+            <h2 className="event-system-headline max-w-[10ch] text-[clamp(3.4rem,9vw,8.5rem)] text-white">
+              Featured Sets
+            </h2>
+            <div className="border-l border-white/10 pl-5 md:justify-self-end">
+              <span className="event-system-meta block text-white/80">
+                The Archive Deck
+              </span>
+              <span className="mt-3 block h-px w-20 bg-white/20" />
+              <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/50">
+                Selected signals from radio rooms, rooftops, and live Monolith nights.
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Desktop fanning stack */}

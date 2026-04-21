@@ -17,12 +17,12 @@ export default function CookieConsent() {
     };
 
     useEffect(() => {
-        // Small delay so it doesn't flash on first paint
+        // Delay until the cinematic shell has had room to settle.
         const timer = setTimeout(() => {
             if (!localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY)) {
                 setVisible(true);
             }
-        }, 1800);
+        }, 3600);
         return () => clearTimeout(timer);
     }, []);
 
@@ -38,66 +38,58 @@ export default function CookieConsent() {
         <AnimatePresence>
             {visible && (
                 <motion.div
-                    initial={{ y: 48, opacity: 0 }}
+                    initial={{ y: 24, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 48, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    className="fixed bottom-0 left-0 right-0 z-[9999] px-3 pb-3 md:px-6 md:pb-6"
+                    exit={{ y: 24, opacity: 0 }}
+                    transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                    className="fixed bottom-0 left-0 z-[9999] w-full px-3 pb-3 sm:w-auto sm:max-w-[24rem] md:left-5 md:px-0 md:pb-5"
                     style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))" }}
                     role="region"
                     aria-label="Cookie consent"
                 >
                     <div
-                        className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto relative overflow-hidden rounded-3xl"
+                        className="relative overflow-hidden rounded-lg"
                         style={{
-                            background: "rgba(8,8,10,0.97)",
-                            border: "1px solid rgba(255,255,255,0.1)",
-                            boxShadow: "0 24px 60px rgba(0,0,0,0.32)",
+                            background: "rgba(8,8,10,0.86)",
+                            border: "1px solid rgba(255,255,255,0.12)",
+                            boxShadow: "0 18px 44px rgba(0,0,0,0.28)",
+                            backdropFilter: "blur(18px)",
                         }}
                     >
-                        {/* Top accent line */}
-                        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
-
                         <button
                             onClick={decline}
                             aria-label="Dismiss cookie notice"
-                            className="absolute top-3 right-3 z-10 p-1.5 text-white/30 hover:text-white/70 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/20 rounded-full"
+                            className="absolute right-2.5 top-2.5 z-10 rounded-full p-1 text-white/30 transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/20"
                         >
-                            <X className="w-4 h-4" />
+                            <X className="h-3.5 w-3.5" />
                         </button>
 
-                        <div className="flex flex-col gap-4 p-4 sm:p-6 sm:pr-14">
-                            {/* Text */}
-                            <div className="flex-1 min-w-0">
-                                <p className="hidden sm:block font-mono text-[10px] tracking-[0.3em] uppercase text-primary/70 mb-2">
-                                    Identity Verification // Cookie Notice
+                        <div className="flex flex-col gap-3 p-4 pr-10">
+                            <div className="min-w-0">
+                                <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary/75">
+                                    Analytics Consent
                                 </p>
-                                <p className="text-[13px] sm:text-sm text-white/60 leading-relaxed max-w-2xl">
-                                    We use cookies for analytics and site optimization. Continuing means you agree to our{" "}
-                                    <Link href="/cookies" className="text-white/70 underline underline-offset-2 hover:text-white transition-colors">
+                                <p className="mt-1.5 text-[12px] leading-relaxed text-white/60">
+                                    We use lightweight analytics to improve event drops.{" "}
+                                    <Link href="/cookies" className="text-white/75 underline underline-offset-2 transition-colors hover:text-white">
                                         Cookie Policy
-                                    </Link>
-                                    {" "}and{" "}
-                                    <Link href="/privacy" className="text-white/70 underline underline-offset-2 hover:text-white transition-colors">
-                                        Privacy Policy
                                     </Link>
                                     .
                                 </p>
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex items-center gap-3 flex-wrap w-full sm:w-auto">
+                            <div className="flex w-full flex-wrap items-center gap-2">
                                 <button
                                     onClick={decline}
-                                    className="font-mono text-xs tracking-[0.2em] uppercase text-white/40 hover:text-white/60 transition-colors px-4 py-2 hover:bg-white/5 rounded-full"
+                                    className="rounded-full border border-white/10 px-3 py-2 font-mono text-[9px] font-black uppercase tracking-[0.2em] text-white/45 transition-colors hover:bg-white/5 hover:text-white/70"
                                 >
-                                    Decline
+                                    No Analytics
                                 </button>
                                 <button
                                     onClick={accept}
-                                    className="font-mono text-xs tracking-[0.2em] uppercase px-8 py-3 bg-primary text-black font-black hover:bg-primary/85 transition-all duration-200 rounded-full flex-1 sm:flex-none text-center shadow-[0_4px_20px_rgba(224,90,58,0.2)]"
+                                    className="flex-1 rounded-full bg-primary px-4 py-2 font-mono text-[9px] font-black uppercase tracking-[0.22em] text-black shadow-[0_4px_20px_rgba(224,90,58,0.18)] transition-colors duration-200 hover:bg-primary/85 sm:flex-none"
                                 >
-                                    Accept All
+                                    Allow
                                 </button>
                             </div>
                         </div>

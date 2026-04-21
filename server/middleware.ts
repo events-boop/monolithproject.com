@@ -2,12 +2,9 @@ import type { Express, Request, Response, NextFunction, RequestHandler } from "e
 import express from "express";
 import helmet from "helmet";
 import { randomUUID } from "crypto";
-import { createRequire } from "module";
+import compression from "compression";
 import { createApiResponseHardening, createBrowserApiGuard } from "./lib/request-hardening";
 import { createRateLimitMiddleware } from "./services/rate-limit";
-
-const require = createRequire(import.meta.url);
-const compression = require("compression") as (options?: Record<string, unknown>) => RequestHandler;
 
 const apiCspDirectives = {
   defaultSrc: ["'none'"],
