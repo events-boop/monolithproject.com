@@ -7,13 +7,13 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import { CTA_LABELS } from "@/lib/cta";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 
-const manifestoLines = [
-  "We build rooms worth returning to.",
-  "We choose curation over noise.",
-  "We treat atmosphere as substance, not decoration.",
-  "We keep Chicago at the center.",
-  "We build seasons, not one-off hype.",
-  "We believe clarity is part of hospitality.",
+// Crowdsauce-inspired Brutalist Cascade Layout Concept
+const structuralManifesto = [
+  { heavy: "WE REJECT", light: "ONE-OFF HYPE." },
+  { heavy: "WE BUILD", light: "ENTIRE SEASONS." },
+  { heavy: "CURATION", light: "OVER NOISE." },
+  { heavy: "CHICAGO", light: "AT THE CENTER." },
+  { heavy: "FOCUSED", light: "HOSPITALITY." },
 ];
 
 const architectureExpressions = [
@@ -95,20 +95,25 @@ export default function AboutSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,83,0.03)_0%,transparent_70%)] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 relative z-10">
-          <div className="lg:w-1/3">
-            <div className="lg:sticky lg:top-24">
-              <span className="ui-kicker block text-[#d4a853] mb-3">The Standard</span>
-              <h2 className="font-display text-4xl md:text-6xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Manifesto</h2>
-              <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />
+          <div className="lg:w-1/4">
+            <div className="lg:sticky lg:top-32">
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#d4a853] block mb-4">
+                01 // THE STANDARD
+              </span>
+              <div className="w-full h-px bg-[#d4a853]/30 mb-8" />
             </div>
           </div>
-          <div className="lg:w-2/3 space-y-10 md:space-y-16">
-            {manifestoLines.map((line, i) => (
-              <div key={i} className="mb-0 overflow-hidden">
-                <WordScrubReveal
-                  text={line}
-                  className="font-serif font-light italic text-[clamp(1.8rem,4vw,4rem)] text-white/90 leading-[1.1] text-balance"
-                />
+          
+          {/* Brutalist Cascade Block */}
+          <div className="lg:w-3/4 flex flex-col pt-4 lg:pt-0">
+            {structuralManifesto.map((line, i) => (
+              <div key={i} className="mb-10 sm:mb-16 last:mb-0 flex flex-col group border-l-2 border-transparent hover:border-[#d4a853]/50 pl-0 hover:pl-6 transition-all duration-500">
+                <span className="font-heavy text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.8] tracking-tighter uppercase text-white/95 mix-blend-difference group-hover:text-white transition-colors duration-500">
+                  {line.heavy}
+                </span>
+                <span className="font-heavy text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.85] tracking-tight uppercase text-transparent transition-all duration-500" style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.4)" }}>
+                  {line.light}
+                </span>
               </div>
             ))}
           </div>
