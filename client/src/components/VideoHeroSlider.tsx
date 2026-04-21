@@ -5,6 +5,7 @@ import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
 import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
 import { buildResponsiveImageSources } from "@/lib/responsiveImagePath";
 import { prefersReducedMotion } from "@/lib/runtimePerformance";
+import { capturePostHogEvent } from "@/lib/posthog";
 
 interface SlideSource {
   srcSet: string;
@@ -102,6 +103,7 @@ export default function VideoHeroSlider({
   const enableAmbientVideo = useAmbientVideoEnabled(videoMinWidth);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const trackedProgressRef = useRef<Set<string>>(new Set());
 
   const goTo = useCallback((index: number) => {
     if (!slides || slides.length === 0) return;
@@ -262,6 +264,27 @@ export default function VideoHeroSlider({
                   onCanPlay={() => {
                     if (videoRef.current) {
                       videoRef.current.style.opacity = "1";
+                    }
+                  }}
+                  onTimeUpdate={() => {
+                    const video = videoRef.current;
+                    if (!video || !activeVideoSrc) return;
+                    
+                    const progress = video.currentTime / video.duration;
+                    const percent = Math.floor(progress * 100);
+                    
+                    const breakpoints = [25, 50, 75, 100];
+                    for (const bp of breakpoints) {
+                      if (percent >= bp && percent < bp + 10) {
+                        const key = `${activeVideoSrc}-${bp}`;
+                        if (!trackedProgressRef.current.has(key)) {
+                          trackedProgressRef.current.add(key);
+                          capturePostHogEvent("video_progress", {
+                            video_src: activeVideoSrc,
+                            progress_percent: bp,
+                          });
+                        }
+                      }
                     }
                   }}
                   src={activeVideoSrc}
