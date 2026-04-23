@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-04-23T01:16:05.431Z",
+  "generatedAt": "2026-04-23T01:32:11.422Z",
   "widths": [
     480,
     1024,
     1920
   ],
   "totals": {
-    "originalBytes": 20710477,
-    "estimatedTransferBytes": 2795270,
-    "estimatedSavingsBytes": 17915207,
-    "variantBytes": 16100922
+    "originalBytes": 20989661,
+    "estimatedTransferBytes": 2865686,
+    "estimatedSavingsBytes": 18123975,
+    "variantBytes": 16462934
   },
   "images": [
     {
@@ -3413,6 +3413,56 @@
       "estimatedSavingsPct": 75
     },
     {
+      "source": "/images/lazare-sabry-hero.jpg",
+      "originalBytes": 166102,
+      "originalKb": 162.2,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "lazare-sabry-hero",
+      "variants": [
+        {
+          "path": "/images/generated/lazare-sabry-hero-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 13614
+        },
+        {
+          "path": "/images/generated/lazare-sabry-hero-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 16322
+        },
+        {
+          "path": "/images/generated/lazare-sabry-hero-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 41330
+        },
+        {
+          "path": "/images/generated/lazare-sabry-hero-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 49808
+        },
+        {
+          "path": "/images/generated/lazare-sabry-hero-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 41330
+        },
+        {
+          "path": "/images/generated/lazare-sabry-hero-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 49808
+        }
+      ],
+      "estimatedTransferBytes": 41330,
+      "estimatedTransferKb": 40.4,
+      "estimatedSavingsBytes": 124772,
+      "estimatedSavingsPct": 75
+    },
+    {
       "source": "/images/movement-industrial-bg.png",
       "originalBytes": 958036,
       "originalKb": 935.6,
@@ -3561,6 +3611,56 @@
       "estimatedTransferKb": 85.9,
       "estimatedSavingsBytes": 66382,
       "estimatedSavingsPct": 43
+    },
+    {
+      "source": "/images/sunset-party-hero.jpg",
+      "originalBytes": 113082,
+      "originalKb": 110.4,
+      "originalWidth": 1024,
+      "originalHeight": 682,
+      "generatedBaseName": "sunset-party-hero",
+      "variants": [
+        {
+          "path": "/images/generated/sunset-party-hero-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11312
+        },
+        {
+          "path": "/images/generated/sunset-party-hero-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 12136
+        },
+        {
+          "path": "/images/generated/sunset-party-hero-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 29086
+        },
+        {
+          "path": "/images/generated/sunset-party-hero-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 34090
+        },
+        {
+          "path": "/images/generated/sunset-party-hero-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 29086
+        },
+        {
+          "path": "/images/generated/sunset-party-hero-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 34090
+        }
+      ],
+      "estimatedTransferBytes": 29086,
+      "estimatedTransferKb": 28.4,
+      "estimatedSavingsBytes": 83996,
+      "estimatedSavingsPct": 74
     },
     {
       "source": "/images/untold-s1e1-avo.jpg",
