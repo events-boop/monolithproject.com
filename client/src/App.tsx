@@ -149,6 +149,7 @@ function Router() {
       <Route path="/radio" component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path="/story" component={UntoldStoryTransition} />
+      <Route path="/untold-story" component={UntoldStoryTransition} />
       <Route path="/untold-story/:season" component={ArchiveGalleryPageTransition} />
       <Route path="/untold-story-deron-juany-bravo" component={UntoldStoryTransition} />
       <Route path="/archive" component={ArchiveTransition} />
@@ -158,6 +159,7 @@ function Router() {
       <Route path="/submit" component={SubmitTransition} />
       <Route path="/lineup" component={LineupTransition} />
       <Route path="/schedule" component={ScheduleTransition} />
+      <Route path="/events" component={ScheduleTransition} />
       <Route path="/events/:slug" component={EventDetailsTransition} />
       <Route path="/newsletter" component={NewsletterTransition} />
       <Route path="/togetherness">

@@ -42,8 +42,8 @@ export default function CookieConsent() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 24, opacity: 0 }}
                     transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    className="fixed bottom-0 left-0 z-[9999] w-full px-3 pb-3 sm:w-auto sm:max-w-[24rem] md:left-5 md:px-0 md:pb-5"
-                    style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom, 12px))" }}
+                    className="fixed bottom-4 right-4 z-[9999] w-auto max-w-[20rem] pointer-events-auto"
+                    style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
                     role="region"
                     aria-label="Cookie consent"
                 >
@@ -64,21 +64,17 @@ export default function CookieConsent() {
                             <X className="h-3.5 w-3.5" />
                         </button>
 
-                        <div className="flex flex-col gap-3 p-4 pr-10">
+                        <div className="flex flex-col gap-2.5 p-3 pr-8">
                             <div className="min-w-0">
                                 <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary/75">
                                     Analytics Consent
                                 </p>
-                                <p className="mt-1.5 text-[12px] leading-relaxed text-white/60">
-                                    We use lightweight analytics to improve event drops.{" "}
-                                    <Link href="/cookies" className="text-white/75 underline underline-offset-2 transition-colors hover:text-white">
-                                        Cookie Policy
-                                    </Link>
-                                    .
+                                <p className="mt-1 text-[11px] leading-relaxed text-white/60">
+                                    We use lightweight analytics. <Link href="/cookies" className="text-white/75 underline underline-offset-2">Policy</Link>.
                                 </p>
                             </div>
 
-                            <div className="flex w-full flex-wrap items-center gap-2">
+                            <div className="flex w-full items-center gap-2">
                                 <button
                                     onClick={decline}
                                     className="btn-pill-outline btn-pill-compact"
