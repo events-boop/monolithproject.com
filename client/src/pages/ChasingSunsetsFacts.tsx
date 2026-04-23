@@ -84,7 +84,7 @@ export default function ChasingSunsetsFacts() {
               </span>
             </div>
             <div className="mt-6 cta-stack">
-              <Link href="/radio" className="btn-pill-coral">
+              <Link href="/radio" className="btn-pill-radio">
                 {CTA_LABELS.radioHub}
               </Link>
               <a
@@ -202,11 +202,11 @@ export default function ChasingSunsetsFacts() {
             <p className="text-sm text-muted-foreground leading-loose">
               Chasing Sun(Sets) is a Chicago sunset house music series — not a fragrance.
               Listen on the{" "}
-              <Link href="/radio" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
+              <Link href="/radio" className="btn-inline-pill btn-inline-pill-radio">
                 official radio hub
               </Link>
               {" "}or{" "}
-              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
+              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="btn-inline-pill btn-inline-pill-monolith">
                 tickets
               </a>
               .

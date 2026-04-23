@@ -8,6 +8,7 @@ import { useInquiry } from "@/contexts/InquiryContext";
 import { isInquiryHref, parseInquiryType } from "@/lib/cta";
 import { trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
+import { CtaTone, getCtaToneClass, getEventCtaToneClass } from "@/lib/ctaTone";
 
 // Callers on pages like /partners pass a synthesized minimal event whose only
 // meaningful field is `primaryCta` (the CTA-source). Accept a partial shape so
@@ -20,6 +21,7 @@ interface ConversionCTAProps {
   size?: "sm" | "md" | "lg" | "xl";
   showUrgency?: boolean;
   variant?: "primary" | "secondary" | "outline" | "experiential";
+  tone?: CtaTone;
 }
 
 export default function ConversionCTA({ 
@@ -27,7 +29,8 @@ export default function ConversionCTA({
   className = "", 
   size = "md", 
   showUrgency = true,
-  variant = "primary"
+  variant = "primary",
+  tone,
 }: ConversionCTAProps) {
   const cta = getEventCta(event);
   const { preconnectGateway } = useIntentPrefetch();
@@ -57,6 +60,7 @@ export default function ConversionCTA({
     ? `[ CAPACITY // 94% EQUILIBRIUM ]`
     : null;
   const isInquiry = isInquiryHref(cta.href);
+  const toneClass = tone ? getCtaToneClass(tone) : getEventCtaToneClass(event);
 
   const baseButton = (
     <div className={`flex flex-col items-center gap-0 ${className}`}>
@@ -93,6 +97,7 @@ export default function ConversionCTA({
           transition-all duration-500 rounded-none
           ${sizeClasses[size]} w-full sm:w-auto
           ${variant === 'experiential' ? toolStyles.experiential : toolStyles[cta.tool]}
+          ${toneClass}
           shadow-[0_20px_50px_rgba(0,0,0,0.15)]
           hover:shadow-[0_25px_60px_rgba(0,0,0,0.25)]
           active:scale-[0.98]

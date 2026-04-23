@@ -58,7 +58,7 @@ export default function FAQSection() {
             href={POSH_TICKET_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-pill-coral inline-flex items-center gap-2"
+            className="btn-pill-monolith inline-flex items-center gap-2"
           >
             {CTA_LABELS.tickets}
             <ArrowUpRight className="w-3.5 h-3.5" />

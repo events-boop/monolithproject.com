@@ -34,7 +34,7 @@ export default function EventDetails() {
         <h1 className="font-display text-4xl mb-4">Event Cipher Null</h1>
         <p className="font-mono text-white/50 mb-8">The requested event data could not be located.</p>
         <MagneticButton>
-          <button onClick={() => setLocation("/schedule")} className="border border-white/20 px-8 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors">
+          <button onClick={() => setLocation("/schedule")} className="btn-pill-outline">
             Return to Schedule
           </button>
         </MagneticButton>
@@ -66,7 +66,7 @@ export default function EventDetails() {
           <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
-            <button onClick={() => setLocation("/schedule")} className="mb-12 flex items-center gap-3 text-white/50 hover:text-white transition-colors font-mono text-[10px] tracking-widest uppercase">
+            <button onClick={() => setLocation("/schedule")} className="btn-text-action mb-12">
               <ArrowLeft className="w-4 h-4" /> Schedule
             </button>
 

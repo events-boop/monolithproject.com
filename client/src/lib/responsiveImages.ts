@@ -19,7 +19,9 @@ type ResponsiveImageKey =
   | "untoldStoryHero"
   | "untoldStoryPoster"
   | "radioShowGear"
-  | "videoPoster1";
+  | "videoPoster1"
+  | "sunsetPartyHero"
+  | "lazareSabryHero";
 
 interface ResponsiveImageAsset {
   baseName: string;
@@ -71,11 +73,23 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     src: "/images/autograf-recap.jpg",
     widths: [640, 960, 1280, 1600],
   },
+  sunsetPartyHero: {
+    baseName: "sunset-party-hero",
+    sizes: "100vw",
+    src: "/images/sunset-party-hero.jpg",
+    widths: [640, 960, 1280, 1600],
+  },
   lazareCarbonCenter: {
     baseName: "lazare-carbon-center",
     sizes: "(min-width: 1024px) 44vw, 70vw",
     src: "/images/lazare-carbon-center.png",
     widths: [480, 743],
+  },
+  lazareSabryHero: {
+    baseName: "lazare-sabry-hero",
+    sizes: "100vw",
+    src: "/images/lazare-sabry-hero.jpg",
+    widths: [640, 960, 1280, 1600],
   },
   radioShowGear: {
     baseName: "radio-show-gear",

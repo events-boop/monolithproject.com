@@ -218,7 +218,7 @@ export default function Ambassadors() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full py-4 mt-4 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/90 transition-all flex items-center justify-center gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 disabled:opacity-50"
+                                        className="btn-pill-monolith btn-pill-wide mt-4 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                                     >
                                         {isSubmitting ? (
                                             <span className="animate-pulse">Sending...</span>

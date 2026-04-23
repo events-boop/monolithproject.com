@@ -82,6 +82,10 @@ export default function EntityBoostStrip({
     secondaryAction.label === primaryAction.label && secondaryAction.href === primaryAction.href
       ? []
       : [secondaryAction];
+  const factLinkClass =
+    tone === "light" || tone === "warm"
+      ? "btn-inline-pill btn-inline-pill-dark"
+      : "btn-inline-pill btn-inline-pill-sunsets";
 
   const renderAction = (action: SmartAction, className: string, withArrow = false) => {
     const isExternal = /^https?:\/\//i.test(action.href);
@@ -128,19 +132,19 @@ export default function EntityBoostStrip({
         )}
 
         <div className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
             Chasing Sun(Sets) Facts
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
             Official Identity
           </Link>
-          <Link href="/chasing-sunsets-facts" className={`inline-flex items-center justify-center rounded-full border px-3 py-1.5 text-[10px] sm:text-[11px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm ${ui.link}`}>
+          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
             Not the fragrance — official music series
           </Link>
         </div>
 
         <div className="cta-stack">
-          {renderAction(primaryAction, "btn-pill-coral w-full sm:w-auto", true)}
+          {renderAction(primaryAction, "btn-pill-monolith w-full sm:w-auto", true)}
           {secondaryActions.map((action) => renderAction(action, `${ui.cta} w-full sm:w-auto`))}
         </div>
       </div>

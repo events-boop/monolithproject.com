@@ -10,6 +10,7 @@ import WordScrubReveal from "@/components/ui/WordScrubReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { ARTISTS } from "@/data/artists";
 import { CTA_LABELS } from "@/lib/cta";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 import { getSeriesEvents } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import type { ScheduledEvent } from "@/data/events";
@@ -66,7 +67,7 @@ export default function ArtistProfile() {
           <p className="font-mono text-[10px] tracking-[0.5em] text-white/30 uppercase mb-4">404 / Page Not Found</p>
           <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase mb-10">Profile Not Found</h1>
           <Link href="/lineup" asChild>
-            <a className="btn-pill-coral">Back to Lineup</a>
+            <a className="btn-pill-monolith">Back to Lineup</a>
           </Link>
         </section>
       </div>
@@ -80,6 +81,12 @@ export default function ArtistProfile() {
   
   const mappedSeries = (primarySeries === "sunsets-radio" ? "monolith-project" : primarySeries) as ScheduledEvent["series"];
   const nextSeriesEvent = getSeriesEvents(mappedSeries)[0];
+  const primaryPillClass = getEventPillToneClass({ series: mappedSeries });
+  const outlinePillClass = isWarmSeries
+    ? "btn-pill-outline btn-pill-outline-sunsets"
+    : primarySeries === "untold-story"
+      ? "btn-pill-outline btn-pill-outline-untold"
+      : "btn-pill-outline btn-pill-outline-monolith";
 
   const primaryAction =
     primarySeries === "untold-story"
@@ -219,7 +226,7 @@ export default function ArtistProfile() {
               <div className="flex items-center gap-4">
                 <MagneticButton strength={0.25}>
                   <Link href={primaryAction.href} asChild>
-                    <a className={`px-10 py-5 rounded-full font-bold text-[10px] tracking-[0.4em] uppercase transition-all duration-500 overflow-hidden group relative flex items-center gap-3 backdrop-blur-xl bg-white text-black hover:bg-black hover:text-white border-white`}>
+                    <a className={`${primaryPillClass} group`}>
                       {primaryAction.label}
                       <Play className="w-3.5 h-3.5 fill-current" />
                     </a>
@@ -408,7 +415,7 @@ export default function ArtistProfile() {
                </div>
 
                <Link href={primaryAction.href} asChild>
-                 <a className={`w-full py-6 rounded-full flex items-center justify-center gap-3 font-bold text-[10px] tracking-[0.4em] uppercase transition-all duration-500 cursor-pointer overflow-hidden group bg-transparent border border-white/10 text-white hover:bg-white hover:text-black`}>
+                 <a className={`${outlinePillClass} btn-pill-wide group`}>
                     {primaryAction.label}
                     <ArrowRight className="w-4 h-4" />
                  </a>

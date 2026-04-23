@@ -71,7 +71,7 @@ export default function InsightArticle() {
             <p className="text-white/70 mb-8">
               This article is not live yet. Head back to the Journal to browse published pieces.
             </p>
-            <Link href="/insights" className="btn-pill-coral">
+            <Link href="/insights" className="btn-pill-monolith">
               {CTA_LABELS.backToJournal}
             </Link>
           </section>
@@ -246,7 +246,7 @@ export default function InsightArticle() {
                 
                 <MagneticButton strength={0.3}>
                    <Link href="/newsletter" asChild>
-                      <a className="flex h-16 items-center justify-center px-12 bg-white text-black font-black uppercase text-xs tracking-[0.3em] hover:bg-white/90 active:scale-95 transition-all rounded-full whitespace-nowrap shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+                      <a className="btn-pill-neutral whitespace-nowrap">
                          Secure Access
                       </a>
                    </Link>

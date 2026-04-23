@@ -227,7 +227,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                         <button
                                             type="button"
                                             onClick={() => void shareEntry()}
-                                            className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-5 py-4 text-[10px] font-mono tracking-[0.3em] uppercase text-white/70 hover:text-white hover:border-primary/40 transition-colors flex items-center justify-center gap-3"
+                                            className="btn-pill-outline btn-pill-wide group"
                                         >
                                             {shared ? "Shared / Copied" : "Share With Your Crew"}
                                             <Share2 className="w-4 h-4" />
@@ -300,7 +300,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                                             <button
                                                 type="submit"
                                                 disabled={status === "loading"}
-                                                className="w-full bg-primary text-white py-5 rounded-xl font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-white hover:text-black transition-all duration-700 flex items-center justify-center gap-4 group shadow-[0_20px_40px_rgba(224,90,58,0.2)]"
+                                                className="btn-pill-monolith btn-pill-wide group disabled:opacity-50"
                                             >
                                                 {status === "loading" ? (
                                                     <span className="flex items-center gap-3">

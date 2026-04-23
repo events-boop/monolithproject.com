@@ -81,13 +81,13 @@ export default function CookieConsent() {
                             <div className="flex w-full flex-wrap items-center gap-2">
                                 <button
                                     onClick={decline}
-                                    className="rounded-full border border-white/10 px-3 py-2 font-mono text-[9px] font-black uppercase tracking-[0.2em] text-white/45 transition-colors hover:bg-white/5 hover:text-white/70"
+                                    className="btn-pill-outline btn-pill-compact"
                                 >
                                     No Analytics
                                 </button>
                                 <button
                                     onClick={accept}
-                                    className="flex-1 rounded-full bg-primary px-4 py-2 font-mono text-[9px] font-black uppercase tracking-[0.22em] text-black shadow-[0_4px_20px_rgba(224,90,58,0.18)] transition-colors duration-200 hover:bg-primary/85 sm:flex-none"
+                                    className="btn-pill-monolith btn-pill-compact flex-1 sm:flex-none"
                                 >
                                     Allow
                                 </button>

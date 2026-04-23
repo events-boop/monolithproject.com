@@ -55,8 +55,8 @@ export default function Alerts() {
                                 </div>
                             </div>
                             <MagneticButton strength={0.2}>
-                                <button className="w-full flex items-center justify-between px-5 py-3 rounded-full border border-white/20 bg-black/50 hover:bg-white hover:text-black transition-all cursor-pointer">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-widest">Enable Alerts</span>
+                                <button className="btn-pill-sunsets btn-pill-wide btn-pill-compact justify-between">
+                                    <span>Enable Alerts</span>
                                     <ArrowUpRight size={16} className="opacity-70" />
                                 </button>
                             </MagneticButton>
@@ -77,8 +77,8 @@ export default function Alerts() {
                                 </div>
                             </div>
                             <MagneticButton strength={0.2}>
-                                <button className="w-full flex items-center justify-between px-5 py-3 rounded-full border border-white/20 bg-black/50 hover:bg-white hover:text-black transition-all cursor-pointer">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-widest">Enable Alerts</span>
+                                <button className="btn-pill-untold btn-pill-wide btn-pill-compact justify-between">
+                                    <span>Enable Alerts</span>
                                     <ArrowUpRight size={16} className="opacity-70" />
                                 </button>
                             </MagneticButton>
@@ -99,8 +99,8 @@ export default function Alerts() {
                                 </div>
                             </div>
                             <MagneticButton strength={0.2}>
-                                <button className="w-full flex items-center justify-between px-5 py-3 rounded-full border border-white/20 bg-black/50 hover:bg-white hover:text-black transition-all cursor-pointer">
-                                    <span className="font-mono text-xs font-bold uppercase tracking-widest">Enable Alerts</span>
+                                <button className="btn-pill-radio btn-pill-wide btn-pill-compact justify-between">
+                                    <span>Enable Alerts</span>
                                     <ArrowUpRight size={16} className="opacity-70" />
                                 </button>
                             </MagneticButton>

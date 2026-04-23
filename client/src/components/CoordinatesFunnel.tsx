@@ -215,7 +215,7 @@ export default function CoordinatesFunnel({ event }: CoordinatesFunnelProps) {
                                     <button
                                         type="submit"
                                         disabled={status === "loading"}
-                                        className="w-full bg-white text-black px-6 py-4 rounded-xl font-bold text-xs uppercase tracking-[0.3em] hover:bg-[#22D3EE] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                        className="btn-pill-untold btn-pill-wide disabled:cursor-not-allowed disabled:opacity-50"
                                     >
                                         {status === "loading" ? "Submitting..." : "Get Venue Updates"}
                                         {status === "loading" ? null : <Lock className="w-4 h-4" />}

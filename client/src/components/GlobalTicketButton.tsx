@@ -5,6 +5,7 @@ import MagneticButton from "./MagneticButton";
 import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
+import { getEventCtaToneClass } from "@/lib/ctaTone";
 import { useUI } from "@/contexts/UIContext";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
@@ -44,6 +45,7 @@ export default function GlobalTicketButton() {
             : getExperienceEvent("ticket");
             
     const cta = getEventCta(featuredEvent);
+    const ctaToneClass = getEventCtaToneClass(featuredEvent);
 
     const stateDot = featuredEvent?.status === "on-sale"
         ? { color: "#10B981", label: "Live", pulse: true }
@@ -125,7 +127,7 @@ export default function GlobalTicketButton() {
     };
 
     const toolMobileStyles = {
-        posh: "bg-primary cta-posh",
+        posh: "cta-posh",
         laylo: "cta-laylo py-5",
         fillout: "cta-fillout py-5"
     };
@@ -188,7 +190,7 @@ export default function GlobalTicketButton() {
                     target={cta.isExternal ? "_blank" : undefined}
                     rel={cta.isExternal ? "noopener noreferrer" : undefined}
                     aria-label={`${cta.label} — ${featuredEvent?.headline || featuredEvent?.title || "Next Night"}`}
-                    className={`flex items-center justify-between w-full h-14 px-6 text-white transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]}`}
+                    className={`flex items-center justify-between w-full h-14 px-6 transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]} ${ctaToneClass}`}
                 >
                     <div className="flex items-center gap-3 min-w-0">
                         <span

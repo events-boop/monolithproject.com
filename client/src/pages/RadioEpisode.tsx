@@ -61,7 +61,7 @@ export default function RadioEpisode() {
             <p className="text-muted-foreground mb-8">
               This older radio URL now points to the current Monolith page for that artist or series.
             </p>
-            <Link href={legacyRedirect} className="btn-pill-coral">
+            <Link href={legacyRedirect} className="btn-pill-radio">
               Continue
             </Link>
           </section>
@@ -88,7 +88,7 @@ export default function RadioEpisode() {
             <p className="text-muted-foreground mb-8">
               This radio episode URL does not exist. Visit the official radio archive for available episodes.
             </p>
-            <Link href="/radio" className="btn-pill-coral">
+            <Link href="/radio" className="btn-pill-radio">
               {CTA_LABELS.radioHub}
             </Link>
           </section>
@@ -121,7 +121,7 @@ export default function RadioEpisode() {
             <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
               For disambiguation details, review{" "}
-              <Link href="/chasing-sunsets-facts" className="inline-flex items-center justify-center rounded-full border border-primary/40 px-3 py-1 text-[10px] font-[800] tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] shadow-sm text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white mx-1 align-middle">
+              <Link href="/chasing-sunsets-facts" className="btn-inline-pill btn-inline-pill-radio">
                 Official Chasing Sun(Sets) Identity
               </Link>
               .
@@ -221,7 +221,7 @@ export default function RadioEpisode() {
                 </Link>
               ),
             )}
-            <Link href="/tickets" className="btn-pill-coral">
+            <Link href="/tickets" className="btn-pill-radio">
               {CTA_LABELS.tickets}
             </Link>
           </div>

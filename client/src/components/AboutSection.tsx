@@ -240,7 +240,7 @@ export default function AboutSection() {
                                 {expression.description}
                              </p>
                              <Link href={expression.href} asChild>
-                               <a className="inline-flex items-center gap-3 px-6 py-3 border border-white/20 hover:bg-white hover:text-black transition-all duration-300 font-mono text-[10px] tracking-widest uppercase">
+                               <a className="btn-text-action">
                                  {expression.cta}
                                  <ArrowUpRight className="w-3 h-3" />
                                </a>

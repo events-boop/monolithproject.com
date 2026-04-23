@@ -453,7 +453,7 @@ ${form.bio}
                                                 <button
                                                     type="submit"
                                                     disabled={isSubmitting}
-                                                    className="inline-flex items-center gap-2 px-9 py-4 bg-primary text-white font-bold tracking-widest uppercase text-xs hover:bg-primary/90 hover:scale-[1.03] shadow-[0_0_0_rgba(224,90,58,0)] hover:shadow-[0_0_20px_rgba(224,90,58,0.4)] rounded-full transition-all duration-300 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 group"
+                                                    className="btn-pill-monolith group disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                                                 >
                                                     {isSubmitting ? (
                                                         <span className="animate-pulse">Sending...</span>

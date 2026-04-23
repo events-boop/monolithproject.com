@@ -161,7 +161,7 @@ export default function ChasingSunsets() {
                   />
                   
                   <MagneticButton strength={0.22}>
-                    <a href="#chasing-records" className="cta-ghost flex items-center justify-center px-10 py-5">
+                    <a href="#chasing-records" className="cta-ghost group">
                         View Records
                         <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
                     </a>
@@ -328,14 +328,14 @@ export default function ChasingSunsets() {
                             href={getPrimaryTicketUrl(event)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-8 py-3.5 font-black tracking-[0.2em] text-[13px] sm:text-sm uppercase hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer text-white rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50 sensory-ticket-btn sunset-gradient-btn"
+                            className="btn-pill-sunsets btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
                           >
                             {CTA_LABELS.tickets} <ArrowUpRight size={14} />
                           </a>
                         ) : (
                           <Link href="/newsletter" asChild>
                             <a
-                              className="px-8 py-3 font-bold tracking-widest text-xs uppercase transition-colors flex items-center gap-2 cursor-pointer rounded-full border border-[#E8B86D]/35 text-[#E8B86D] hover:bg-[#E8B86D]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
+                              className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
                             >
                               {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
                             </a>
@@ -354,7 +354,7 @@ export default function ChasingSunsets() {
                       The next open-air dates are being finalized. Join the newsletter to hear about them before the public release.
                     </p>
                     <Link href="/newsletter" asChild>
-                      <a className="inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/35 px-8 py-3 font-bold tracking-widest text-xs uppercase text-[#E8B86D] transition-colors hover:bg-[#E8B86D]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50">
+                      <a className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50">
                         {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
                       </a>
                     </Link>
@@ -380,7 +380,7 @@ export default function ChasingSunsets() {
             <MagneticButton strength={0.4}>
               <a
                 href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission"
-                className="inline-flex items-center gap-2 px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full sunset-gradient-btn group"
+                className="btn-pill-sunsets group"
               >
                 SUBMIT A MIX <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>

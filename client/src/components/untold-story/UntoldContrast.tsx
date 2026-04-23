@@ -42,7 +42,7 @@ export default function UntoldContrast() {
           <MagneticButton strength={0.3}>
             <Link href="/chasing-sunsets">
               <div
-                className="px-10 py-4 text-white font-display text-lg tracking-widest uppercase hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10 hover:border-orange-500/50 cursor-pointer rounded-full border border-untold-violet-30 group flex items-center justify-center gap-2"
+                className="btn-pill-outline btn-pill-outline-sunsets group"
               >
                 CHASING SUN(SETS) <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -51,7 +51,7 @@ export default function UntoldContrast() {
           <MagneticButton strength={0.3}>
             <Link href="/">
               <div
-                className="px-10 py-4 font-display text-lg tracking-widest uppercase hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-300 cursor-pointer text-white rounded-full bg-untold-hero-btn group flex items-center justify-center gap-2"
+                className="btn-pill-untold group"
               >
                 MONOLITH HOME <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </div>

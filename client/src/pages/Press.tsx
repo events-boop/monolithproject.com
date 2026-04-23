@@ -148,15 +148,14 @@ export default function Press() {
                         <div className="mt-8 flex flex-wrap gap-3">
                             <a
                                 href="mailto:press@monolithproject.com"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-mono text-[10px] tracking-widest uppercase hover:bg-primary/85 transition-all"
+                                className="btn-pill-monolith btn-pill-compact"
                             >
                                 <Mail className="w-3.5 h-3.5" />
                                 Contact Press
                             </a>
                             <a
                                 href="#assets"
-                                className="inline-flex items-center gap-2 px-6 py-3 font-mono text-[10px] tracking-widest uppercase transition-all"
-                                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.6)" }}
+                                className="btn-pill-outline btn-pill-compact"
                             >
                                 <Download className="w-3.5 h-3.5" />
                                 Download Assets
@@ -290,10 +289,7 @@ export default function Press() {
                                     {asset.available && (
                                         <a
                                             href="mailto:press@monolithproject.com?subject=Asset Request"
-                                            className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase transition-colors"
-                                            style={{ color: `${asset.color}80` }}
-                                            onMouseEnter={(e) => (e.currentTarget.style.color = asset.color)}
-                                            onMouseLeave={(e) => (e.currentTarget.style.color = `${asset.color}80`)}
+                                            className="btn-text-action"
                                         >
                                             Request
                                             <ArrowUpRight className="w-3 h-3" />
@@ -351,7 +347,7 @@ export default function Press() {
                         </div>
                         <a
                             href="mailto:press@monolithproject.com"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-mono text-[10px] tracking-widest uppercase hover:bg-primary/85 transition-all"
+                            className="btn-pill-monolith btn-pill-compact"
                         >
                             <Mail className="w-3.5 h-3.5" />
                             press@monolithproject.com

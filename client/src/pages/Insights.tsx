@@ -116,7 +116,7 @@ export default function Insights() {
                      {featured.summary}
                    </p>
 
-                   <div className="flex h-12 items-center justify-center border border-white/10 px-10 font-mono text-[11px] uppercase tracking-[0.3em] text-white hover:bg-white hover:text-black transition-all">
+                   <div className="btn-text-action">
                       Read Full Analysis
                    </div>
                 </div>
@@ -188,7 +188,7 @@ export default function Insights() {
                 Join the inner circle for deeper context on Chicago's best nights, artist research, and early access to the schedule.
              </p>
              <Link href="/newsletter" asChild>
-                <a className="inline-flex h-14 items-center justify-center border border-white/20 px-12 font-mono text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all rounded-full">
+                <a className="btn-pill-outline">
                     Join The Newsletter
                 </a>
              </Link>

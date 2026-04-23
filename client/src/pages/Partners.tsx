@@ -228,7 +228,7 @@ export default function Partners() {
                     <a 
                         href="#" 
                         onClick={(e) => { e.preventDefault(); openInquiry("general"); }} 
-                        className="inline-flex h-16 items-center justify-center bg-white text-black px-12 font-mono text-xs uppercase tracking-[0.3em] hover:bg-white/90 active:scale-95 transition-all rounded-full shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                        className="btn-pill-neutral"
                     >
                         Submit Crew Inquiry
                     </a>

@@ -140,7 +140,18 @@
     .ui-card,
     .btn-pill,
     .btn-pill-dark,
-    .btn-pill-coral {
+    .btn-pill-coral,
+    .btn-pill-sunsets,
+    .btn-pill-radio,
+    .btn-pill-untold,
+    .btn-pill-monolith,
+    .btn-pill-neutral,
+    .btn-pill-outline,
+    .btn-pill-outline-dark,
+    .btn-pill-disabled,
+    .btn-inline-pill,
+    .btn-text-action,
+    .cta-ghost {
       transition: none !important;
     }
 
@@ -148,7 +159,18 @@
     .ui-card:hover,
     .btn-pill:hover,
     .btn-pill-dark:hover,
-    .btn-pill-coral:hover {
+    .btn-pill-coral:hover,
+    .btn-pill-sunsets:hover,
+    .btn-pill-radio:hover,
+    .btn-pill-untold:hover,
+    .btn-pill-monolith:hover,
+    .btn-pill-neutral:hover,
+    .btn-pill-outline:hover,
+    .btn-pill-outline-dark:hover,
+    .btn-pill-disabled:hover,
+    .btn-inline-pill:hover,
+    .btn-text-action:hover,
+    .cta-ghost:hover {
       transform: none !important;
     }
   }

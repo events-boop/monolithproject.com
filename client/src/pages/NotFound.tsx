@@ -49,14 +49,14 @@ export default function NotFound() {
 
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
                 <Link href="/" asChild>
-                    <button className="group relative px-10 py-5 bg-white text-black font-heavy text-xs uppercase tracking-[0.2em] overflow-hidden transition-all hover:pr-14">
+                    <button className="btn-pill-neutral group">
                         <span className="relative z-10">Back to Monolith</span>
-                        <ArrowLeft className="w-5 h-5 absolute right-6 top-1/2 -translate-y-1/2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500" />
+                        <ArrowLeft className="w-5 h-5" />
                     </button>
                 </Link>
 
                 <Link href="/archive" asChild>
-                    <button className="px-10 py-5 border border-white/10 text-white/60 font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-white/5 hover:text-white transition-all focus:outline-none flex items-center gap-3">
+                    <button className="btn-pill-outline">
                         <Disc size={12} className="opacity-40" />
                         See The Archive
                     </button>

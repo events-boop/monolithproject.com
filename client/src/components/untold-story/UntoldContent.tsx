@@ -221,11 +221,11 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                 />
                 
                 <div className="flex flex-col gap-4">
-                  <Link href="/vip" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-untold-cyan uppercase transition-colors flex items-center gap-2 group">
+                  <Link href="/vip" className="btn-text-action group">
                     Request VIP Access
                     <Users className="w-3 h-3 transition-transform group-hover:scale-110" />
                   </Link>
-                  <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.3em] text-white/40 hover:text-untold-cyan uppercase transition-colors flex items-center gap-2 group">
+                  <Link href="/newsletter" className="btn-text-action group">
                     Get Updates
                     <Clock className="w-3 h-3 transition-transform group-hover:scale-110" />
                   </Link>

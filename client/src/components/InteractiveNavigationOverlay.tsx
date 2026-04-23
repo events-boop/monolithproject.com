@@ -322,7 +322,7 @@ export default function InteractiveNavigationOverlay({
                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
                 rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
                 onClick={handleLinkClick(view.primaryHref)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                className="btn-pill-neutral btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               >
                 {view.primaryLabel}
                 <ArrowUpRight className="h-4 w-4" />
@@ -399,7 +399,7 @@ export default function InteractiveNavigationOverlay({
                 key={link.href}
                 href={link.href}
                 onClick={handleLinkClick(link.href)}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                className="btn-pill-outline btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               >
                 {link.label}
               </a>
@@ -542,7 +542,7 @@ export default function InteractiveNavigationOverlay({
                                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
                                 rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
                                 onClick={handleLinkClick(view.primaryHref)}
-                                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black"
+                                className="btn-pill-neutral btn-pill-compact"
                               >
                                 {view.primaryLabel}
                                 <ArrowUpRight className="h-4 w-4" />
@@ -553,7 +553,7 @@ export default function InteractiveNavigationOverlay({
                                     key={link.href}
                                     href={link.href}
                                     onClick={handleLinkClick(link.href)}
-                                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-white/60"
+                                    className="btn-pill-outline btn-pill-compact text-center"
                                   >
                                     {link.label}
                                   </a>

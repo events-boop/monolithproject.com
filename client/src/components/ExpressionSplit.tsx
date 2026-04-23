@@ -176,27 +176,25 @@ export default function ExpressionSplit() {
                        {exp.tagline}
                      </p>
                      
-                     <div className="mt-8 flex items-center gap-4 text-white hover:text-white transition-colors">
-                        <span className="ui-chip">
+                     <div className="btn-text-action mt-8">
+                        <span>
                           {exp.id === 'sunsets' ? 'Get Alerts First' :
                            exp.id === 'untold' ? 'Join The Story' :
                            exp.id === 'radio' ? 'Hear The Rooms' :
                            'See The Archive'}
                         </span>
-                        <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300">
-                           <ArrowUpRight className="h-5 w-5" />
-                        </div>
+                        <ArrowUpRight />
                      </div>
                    </motion.div>
                 </div>
 
                 {/* Mobile Interaction Signal */}
-                <div className="lg:hidden mt-6 flex items-center gap-3">
-                  <div className="h-px w-6 bg-white/30" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
+                <div className="lg:hidden mt-6">
+                  <span className="btn-text-action">
                     {exp.id === 'sunsets' ? 'Get Alerts First' :
                      exp.id === 'untold' ? 'Join The Story' :
                      'Open View'}
+                    <ArrowUpRight />
                   </span>
                 </div>
               </div>

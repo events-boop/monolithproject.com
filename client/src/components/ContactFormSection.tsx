@@ -137,7 +137,7 @@ export default function ContactFormSection() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-bold tracking-widest uppercase text-xs hover:bg-primary/90 transition-colors disabled:opacity-50 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              className="btn-pill-monolith btn-pill-compact disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             >
               {isSubmitting ? (
                 <span className="animate-pulse">Sending...</span>

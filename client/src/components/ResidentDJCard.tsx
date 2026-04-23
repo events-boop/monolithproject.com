@@ -147,7 +147,7 @@ export default function ResidentDJCard({
                                     href={dj.soundcloudUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-wide uppercase transition-opacity hover:opacity-80 text-[#1A0E08] sunset-gradient-btn"
+                                    className="btn-pill-sunsets btn-pill-compact"
                                 >
                                     <Radio size={13} />
                                     Listen
@@ -156,7 +156,7 @@ export default function ResidentDJCard({
                             {dj.bookingEmail && (
                                 <a
                                     href={`mailto:${dj.bookingEmail}?subject=Booking Inquiry — ${dj.name}`}
-                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-wide uppercase border transition-all hover:bg-white/5 sunset-text border-[color-mix(in_srgb,var(--sunset-text)_15%,transparent)]"
+                                    className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact"
                                 >
                                     Book
                                     <ArrowUpRight size={13} />
@@ -234,7 +234,7 @@ export default function ResidentDJCard({
                 </p>
                 <a
                     href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Resident DJ Submission"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold tracking-widest uppercase border transition-all hover:opacity-80 sunset-accent-tag"
+                    className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact"
                 >
                     Submit Your Mix
                     <ArrowUpRight size={13} />

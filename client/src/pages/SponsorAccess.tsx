@@ -85,7 +85,7 @@ export default function SponsorAccess() {
                                 <button
                                     type="submit"
                                     disabled={isVerifying}
-                                    className="w-full bg-primary text-primary-foreground font-display text-lg tracking-widest uppercase py-3 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 group rounded-full disabled:opacity-50"
+                                    className="btn-pill-monolith btn-pill-wide group disabled:opacity-50"
                                 >
                                     <span>{isVerifying ? "Checking..." : "Unlock"}</span>
                                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -126,7 +126,7 @@ export default function SponsorAccess() {
                                         </p>
                                         <a
                                             href="/api/sponsor-deck"
-                                            className="w-full py-4 border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium rounded-full"
+                                            className="btn-pill-outline-dark btn-pill-wide"
                                         >
                                             <Download className="w-4 h-4" />
                                             Download PDF
@@ -148,7 +148,7 @@ export default function SponsorAccess() {
                                             onClick={() => toast.info("Inventory Locked", {
                                                 description: "Rate card inventory is currently being revised for Q3 2026."
                                             })}
-                                            className="w-full py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors flex items-center justify-center gap-3 uppercase tracking-widest text-sm font-medium rounded-full"
+                                            className="btn-pill-monolith btn-pill-wide"
                                         >
                                             <Download className="w-4 h-4" />
                                             View Inventory

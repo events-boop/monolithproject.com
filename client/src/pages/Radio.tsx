@@ -286,14 +286,14 @@ export default function Radio() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <MagneticButton strength={0.3}>
                 <Link href={activeArtist.href} asChild>
-                  <a className="btn-pill-coral inline-flex items-center justify-center">
+                  <a className="btn-pill-radio inline-flex items-center justify-center">
                     {activeArtist.ctaLabel}
                     <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Link>
               </MagneticButton>
               <MagneticButton strength={0.22}>
-                <a href="#radio-tracks" className="px-10 h-14 border border-white/20 text-white font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 bg-black/20">
+                <a href="#radio-tracks" className="btn-pill-neutral inline-flex items-center justify-center">
                   Browse All Sets
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </a>
@@ -573,7 +573,7 @@ export default function Radio() {
             <MagneticButton strength={0.4}>
               <button
                 onClick={() => setFaqDrawerOpen(true)}
-                className="btn-pill-coral flex shadow-[0_10px_30px_rgba(224,90,58,0.25)] hover:shadow-[0_15px_40px_rgba(224,90,58,0.4)]"
+                className="btn-pill-radio flex"
               >
                 VIEW FAQ
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -639,14 +639,14 @@ export default function Radio() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <MagneticButton strength={0.4}>
               <Link href="/tickets" asChild>
-                <a className="btn-pill-coral w-full flex items-center justify-center">
+                <a className="btn-pill-radio w-full flex items-center justify-center">
                   {CTA_LABELS.tickets}
                 </a>
               </Link>
             </MagneticButton>
             <MagneticButton strength={0.4}>
               <Link href="/schedule" asChild>
-                <a className="px-10 h-14 border border-border text-foreground font-display text-lg tracking-widest uppercase hover:border-primary hover:text-primary transition-colors cursor-pointer rounded-full flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+                <a className="btn-pill-neutral w-full flex items-center justify-center">
                   {CTA_LABELS.schedule}
                 </a>
               </Link>

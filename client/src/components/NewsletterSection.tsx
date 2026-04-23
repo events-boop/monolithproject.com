@@ -150,14 +150,14 @@ export default function NewsletterSection({
                 <div className="flex flex-col md:flex-row gap-6 w-full">
                   <a 
                     href="/schedule"
-                    className="flex-1 py-5 bg-white text-black font-heavy text-xs uppercase tracking-[0.2em] hover:pr-12 transition-all relative flex items-center justify-center group"
+                    className="btn-pill-neutral btn-pill-wide group"
                   >
                     <span>View Schedule</span>
                     <ArrowUpRight className="w-4 h-4 ml-3" />
                   </a>
                   <a 
                     href="/"
-                    className="flex-1 py-5 border border-white/10 font-heavy text-xs uppercase tracking-[0.2em] hover:bg-white/5 transition-all flex items-center justify-center gap-3 group"
+                    className="btn-pill-outline btn-pill-wide group"
                   >
                     <span>Back Home</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />

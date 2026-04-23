@@ -92,7 +92,7 @@ export default function FeaturedRecap() {
 
             <Link
               href="/archive"
-              className="group inline-flex items-center gap-3 self-start font-mono text-[11px] tracking-[0.3em] uppercase text-white border border-white/20 px-5 py-3 hover:border-white hover:bg-white hover:text-black transition-colors"
+              className="btn-pill-outline btn-pill-compact group self-start"
             >
               <span>Open The Archive</span>
               <ArrowUpRight className="w-4 h-4" />

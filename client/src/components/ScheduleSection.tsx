@@ -13,6 +13,7 @@ import { getSeriesColor, getSeriesColorOnLight, getEventWindow, getScheduledEven
 import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
 import { trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 
 function formatIcsLocal(d: Date) {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -305,11 +306,7 @@ export default function ScheduleSection() {
                            type="button"
                            onClick={() => toggle(event.id)}
                            aria-expanded={isExpanded}
-                           className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-300 ${
-                             isExpanded
-                               ? "border-black bg-black text-white"
-                               : "border-black/15 bg-white text-black/75 hover:border-black/30 hover:text-black"
-                           }`}
+                           className={`${isExpanded ? "btn-pill-outline-dark" : "btn-pill-dark"} btn-pill-compact`}
                          >
                            {isExpanded ? "Hide Preview" : "Quick View"}
                            <ArrowRight className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-90" : ""}`} />
@@ -344,7 +341,6 @@ export default function ScheduleSection() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4 flex flex-col">
-                                   <span className="mb-1 font-mono text-[10px] font-black uppercase tracking-widest text-white/90">Visual Logic</span>
                                    <span className="font-heavy text-xs text-white uppercase tracking-tighter">{event.series.replace('-', ' ')}</span>
                                 </div>
                              </div>
@@ -395,19 +391,19 @@ export default function ScheduleSection() {
                                     }
                                   }}
                                   onMouseEnter={() => preconnectGateway(event.ticketUrl!)}
-                                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-black text-white font-bold text-[10px] tracking-[0.25em] uppercase hover:bg-primary transition-all duration-300"
+                                  className={`${getEventPillToneClass(event)} btn-pill-compact group`}
                                 >
                                   {CTA_LABELS.tickets}
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </a>
                               ) : (
-                                <button className="cursor-default rounded-full border border-black/15 bg-black/[0.06] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/58">
+                                <button className="btn-pill-disabled btn-pill-compact">
                                   Release Details Soon
                                 </button>
                               )}
 
                               <Link href={detailsHref} asChild>
-                                <a className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-black/15 px-6 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/76 transition-all hover:border-black/30 hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+                                <a className="btn-pill-outline-dark btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
                                   Open Event Page
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>
@@ -415,7 +411,7 @@ export default function ScheduleSection() {
 
                               <button
                                 onClick={() => downloadICS(event)}
-                                className="group inline-flex items-center gap-3 rounded-full border border-black/15 px-6 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-black/76 transition-all hover:border-black/30 hover:text-black"
+                                className="btn-pill-outline-dark btn-pill-compact group"
                               >
                                 <CalendarPlus className="w-4 h-4" />
                                 Add To Calendar
@@ -438,20 +434,17 @@ export default function ScheduleSection() {
           <p className="font-mono text-[11px] font-black uppercase tracking-[0.32em] text-black/62">
              New dates land as rooms lock in.
           </p>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap items-center gap-3">
             <Link href="/schedule">
-              <span className="group inline-flex cursor-pointer items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-black transition-all hover:text-primary">
+              <span className="btn-text-action btn-text-action-dark group cursor-pointer">
                 See All Dates
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight />
               </span>
             </Link>
             <Link href="/newsletter">
-              <span
-                className="group inline-flex cursor-pointer items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] transition-colors hover:text-black"
-                style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
-              >
+              <span className="btn-pill-neutral group cursor-pointer">
                 Get Event Updates
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>

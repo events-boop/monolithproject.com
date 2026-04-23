@@ -40,7 +40,7 @@ export default function ArchiveGalleryPage() {
             <main className="page-shell-start pb-32">
                 <div className="container layout-wide px-6">
                     <Link href="/archive" asChild>
-                        <a className="inline-flex items-center gap-2 font-mono text-xs uppercase text-white/50 hover:text-white transition-colors mb-12">
+                        <a className="btn-text-action mb-12">
                             <ArrowLeft className="w-4 h-4" /> Back to Archive
                         </a>
                     </Link>

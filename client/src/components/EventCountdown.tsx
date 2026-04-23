@@ -7,6 +7,7 @@ import {
   getEventWindow,
   getEventById as getEventByIdShared,
 } from "@/lib/siteExperience";
+import { getEventOutlinePillToneClass, getEventPillToneClass } from "@/lib/ctaTone";
 
 export function getEventById(id: string) {
   return getEventByIdShared(id);
@@ -175,7 +176,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                   href={event.ticketUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-between gap-12 px-8 py-5 bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white/20 transition-all duration-500 self-start"
+                  className={`${getEventPillToneClass(event)} group self-start`}
                 >
                   <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Entry</span>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -185,19 +186,16 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 {/* Concierge VIP pathway */}
                 <a 
                   href="https://wa.me/message/MONOLITH" 
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 hover:text-white/80 transition-colors inline-flex items-center gap-2"
+                  className="btn-text-action"
                 >
-                  <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
                   Table Reservations & VIP
                 </a>
               </div>
             ) : (
               <a
                 href="/newsletter"
-                className="group inline-flex items-center justify-between gap-12 px-10 py-6 border hover:bg-white hover:text-black transition-all duration-500 self-start relative overflow-hidden"
-                style={{ borderColor: seriesColor, color: seriesColor }}
+                className={`${getEventOutlinePillToneClass(event)} group self-start`}
                 >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style={{ backgroundColor: seriesColor }} />
                   <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.3em] drop-shadow-sm">
                     GET THE NEXT DATE →
                   </span>

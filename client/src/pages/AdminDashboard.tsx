@@ -192,7 +192,7 @@ export default function AdminDashboard() {
                       </div>
                       <button 
                         type="submit"
-                        className="w-full py-5 bg-white text-black font-black uppercase text-xs tracking-widest hover:bg-white/90 active:scale-[0.98] transition-all rounded-xl"
+                        className="btn-pill-neutral btn-pill-wide"
                       >
                         Authorize Entry
                       </button>
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                 <button
                 onClick={handleInvalidateCache}
                 disabled={isScanning}
-                className="group flex items-center gap-3 px-6 py-4 bg-primary/5 border border-primary/20 hover:bg-primary/10 transition-all rounded-full font-mono text-[10px] uppercase tracking-[0.2em] text-primary"
+                className="btn-pill-monolith btn-pill-compact group disabled:opacity-50"
                 >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScanning ? 'animate-spin' : ''}`} />
                 {isScanning ? "Purging Cache..." : "Invalidate SWR Cache"}
@@ -230,7 +230,7 @@ export default function AdminDashboard() {
                 <button
                 onClick={runFullAudit}
                 disabled={isScanning}
-                className="group flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 transition-all rounded-full font-mono text-xs uppercase tracking-[0.2em]"
+                className="btn-pill-outline btn-pill-compact group disabled:opacity-50"
                 >
                 <Activity className={`w-4 h-4 ${isScanning ? 'animate-pulse' : ''}`} />
                 System Scan

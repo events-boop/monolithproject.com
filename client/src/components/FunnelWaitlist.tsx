@@ -24,7 +24,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
             titleBottom: "Updates",
             gradient: "from-[#E05A3A] to-[#E8B86D]",
             desc: "Join the newsletter for new dates, ticket windows, and VIP table updates before public sale.",
-            button: "sunset-gradient-btn",
+            button: "btn-pill-monolith",
             glow1: "bg-[#E05A3A]/10",
             glow2: "bg-[#8B5CF6]/10",
             bulletPoints: [
@@ -39,7 +39,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
             titleBottom: "Updates",
             gradient: "from-[#C2703E] via-[#E8B86D] to-[#FBF5ED]",
             desc: "Join the Chasing Sun(Sets) newsletter for new dates, lineup announcements, and ticket windows.",
-            button: "sunset-gradient-btn",
+            button: "btn-pill-sunsets",
             glow1: "bg-[#E8B86D]/10",
             glow2: "bg-[#C2703E]/10",
             bulletPoints: [
@@ -54,7 +54,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
             titleBottom: "Updates",
             gradient: "from-[#8B5CF6] via-[#22D3EE] to-[#FBF5ED]",
             desc: "Join the Untold Story newsletter for late-night dates, lineup announcements, and ticket windows.",
-            button: "bg-gradient-to-r from-[#8B5CF6] to-[#22D3EE]",
+            button: "btn-pill-untold",
             glow1: "bg-[#8B5CF6]/10",
             glow2: "bg-[#22D3EE]/10",
             bulletPoints: [
@@ -261,7 +261,7 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
                                             <button
                                                 type="submit"
                                                 disabled={status === "loading"}
-                                                className={`w-full mt-4 ${content.button} text-white py-4 rounded-xl font-bold tracking-widest uppercase text-xs hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-300 flex items-center justify-center gap-2 group relative overflow-hidden`}
+                                                className={`${content.button} btn-pill-wide mt-4 group disabled:opacity-50`}
                                             >
                                                 <span className="relative z-10 flex items-center gap-2">
                                                     {status === "loading" ? "Processing..." : ctaLabel}

@@ -11,6 +11,7 @@ import { getSceneForPath } from "../lib/scenes";
 import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "../lib/cta";
+import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 
@@ -89,6 +90,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     : ticketEvent;
 
   const cta = getEventCta(contextEvent);
+  const ctaToneClass = getEventCtaToneClass(contextEvent);
   const ticketHref = getPrimaryTicketUrl(contextEvent);
   const hasEventBanner = isEventBannerVisible(location);
   const bannerPayload = hasEventBanner ? getEventBannerPayload() : null;
@@ -616,7 +618,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       <div className={`
                       rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
                       transition-all duration-500 flex border uppercase font-black
-                      ${cta.tool === 'posh' ? 'cta-posh border-transparent' : cta.tool === 'laylo' ? 'cta-laylo border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'cta-fillout'}
+                      ${cta.tool === 'posh' ? 'cta-posh border-transparent' : cta.tool === 'laylo' ? 'cta-laylo' : 'cta-fillout'}
+                      ${ctaToneClass}
                       ${isLight && cta.tool === 'posh' ? 'opacity-90 hover:opacity-100 !shadow-none' : ''}
                     `}>
                         {cta.tool === 'posh' ? <Ticket className="h-4 w-4" /> : cta.tool === 'laylo' ? <Lock className="h-4 w-4" /> : <Zap className="h-4 w-4" />}

@@ -24,6 +24,7 @@ import {
 } from "@/lib/siteExperience";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
+import { getEventCtaToneClass } from "@/lib/ctaTone";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import type { TicketTier } from "@/data/events";
 
@@ -54,6 +55,7 @@ export default function Tickets() {
   usePublicSiteDataVersion();
   const featuredEvent = getExperienceEvent("ticket");
   const cta = getEventCta(featuredEvent);
+  const ctaToneClass = getEventCtaToneClass(featuredEvent);
   
   const featuredEventSchema =
     featuredEvent && getEventWindowStatus(featuredEvent) !== "past"
@@ -142,6 +144,7 @@ export default function Tickets() {
                     className={`
                       px-12 py-5 text-[12px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center justify-center min-w-[220px] rounded-none
                       ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
+                      ${ctaToneClass}
                     `}
                   >
                     {cta.label}
@@ -150,7 +153,7 @@ export default function Tickets() {
               </MagneticButton>
               <MagneticButton strength={0.22}>
                 <Link href="/schedule" asChild>
-                  <a className="cta-ghost flex items-center justify-center px-10 py-5">
+                  <a className="cta-ghost">
                     {CTA_LABELS.schedule}
                   </a>
                 </Link>
@@ -256,6 +259,7 @@ export default function Tickets() {
                            className={`
                              px-12 py-6 text-xs font-black tracking-[0.4em] transition-all duration-500 min-w-[280px] flex items-center justify-center rounded-none
                              ${cta.tool === 'posh' ? 'cta-posh' : 'cta-laylo'}
+                             ${ctaToneClass}
                            `}
                          >
                             {cta.label === CTA_LABELS.tickets ? "TICKETS" : cta.label}
@@ -326,8 +330,8 @@ export default function Tickets() {
                   className={`w-full h-16 flex items-center justify-center gap-3 transition-all duration-700 rounded-none ${
                     tier.available
                       ? tier.highlight 
-                        ? "cta-posh" 
-                        : "cta-laylo !bg-white/5 border-white/10 hover:border-primary/40"
+                        ? `cta-posh ${ctaToneClass}`
+                        : `cta-laylo ${ctaToneClass} !bg-white/5 border-white/10 hover:border-primary/40`
                       : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
                   }`}
                 >

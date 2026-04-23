@@ -95,9 +95,9 @@ export default function ArchiveSection() {
                                         {entry.description}
                                     </p>
                                     <div className="mt-auto">
-                                        <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-white/50 group-hover:text-white transition-colors">
+                                        <span className="btn-text-action">
                                             View Gallery
-                                            <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                            <ArrowUpRight />
                                         </span>
                                     </div>
                                 </div>

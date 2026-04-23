@@ -391,7 +391,7 @@ export default function Schedule() {
                                   showUrgency={true}
                                 />
                                 {event.tableReservationEmail && (
-                                  <a href={`mailto:${event.tableReservationEmail}`} className="group flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 hover:text-primary transition-all duration-500 underline decoration-white/10 underline-offset-[12px] decoration-1 hover:decoration-primary/50">
+                                  <a href={`mailto:${event.tableReservationEmail}`} className="btn-text-action group">
                                     TABLE ENQUIRIES
                                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                                   </a>
@@ -416,8 +416,8 @@ export default function Schedule() {
                <p className="text-muted-foreground/20 text-[10px] font-mono tracking-widest italic uppercase">Updated for {new Date().getFullYear()}</p>
             </div>
             <div className="flex items-center gap-8">
-               <Link href="/newsletter" className="font-mono text-[10px] tracking-[0.4em] text-primary/70 hover:text-primary uppercase transition-colors">Get Updates</Link>
-               <Link href="/vip" className="font-mono text-[10px] tracking-[0.4em] text-muted-foreground/40 hover:text-foreground uppercase transition-colors">VIP Tables</Link>
+               <Link href="/newsletter" className="btn-text-action">Get Updates</Link>
+               <Link href="/vip" className="btn-text-action">VIP Tables</Link>
             </div>
           </div>
         </div>

@@ -137,19 +137,19 @@ export default function ShowcaseSplit() {
                       {panel.tagline}
                     </p>
 
-                    <div className="mt-8 flex items-center gap-4 text-white hover:text-white transition-colors">
-                      <span className="ui-chip">Open Page</span>
-                      <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300">
-                        <ArrowUpRight className="h-5 w-5" />
-                      </div>
+                    <div className="btn-text-action mt-8">
+                      <span>Open Page</span>
+                      <ArrowUpRight />
                     </div>
                   </motion.div>
                 </div>
 
                 {/* Mobile tap signal */}
-                <div className="lg:hidden mt-6 flex items-center gap-3">
-                  <div className="h-px w-6 bg-white/30" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">Open Page</span>
+                <div className="lg:hidden mt-6">
+                  <span className="btn-text-action">
+                    Open Page
+                    <ArrowUpRight />
+                  </span>
                 </div>
               </div>
 

@@ -201,7 +201,7 @@ export default function NavigationMegamenu({
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 onClick={() => setIsOpen(false)}
-                                                className={`inline-flex items-center gap-2.5 px-6 py-3 rounded-full transition-all duration-300 ${megamenu.feature.icon === "ticket" ? "bg-primary text-black hover:bg-white hover:scale-105" : "bg-white/12 hover:bg-white/20 border border-white/20 text-white"}`}
+                                                className={`${megamenu.feature.icon === "ticket" ? "btn-pill-monolith" : "btn-pill-outline"} btn-pill-compact`}
                                             >
                                                 <FeatureIcon className="w-4 h-4" />
                                                 <span className="text-[13px] lg:text-sm font-black tracking-[0.15em] uppercase">
@@ -217,7 +217,7 @@ export default function NavigationMegamenu({
                                                     onNavigate(megamenu.feature.href);
                                                 }}
                                                 role="menuitem"
-                                                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/12 hover:bg-white/20 border border-white/20 transition-all duration-300 text-white hover:scale-105"
+                                                className="btn-pill-outline btn-pill-compact"
                                             >
                                                 <FeatureIcon className="w-4 h-4" />
                                                 <span className="text-[13px] lg:text-sm font-black tracking-[0.15em] uppercase">

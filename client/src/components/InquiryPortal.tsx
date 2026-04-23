@@ -786,15 +786,14 @@ export default function InquiryPortal() {
                               setSubmitError("");
                               reset(defaults);
                             }}
-                            className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-white/10 px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
+                            className="btn-pill-outline btn-pill-compact"
                           >
                             Send Another
                           </button>
                           <button
                             type="button"
                             onClick={closeInquiry}
-                            className="inline-flex min-h-[46px] items-center justify-center rounded-full px-5 text-[11px] font-bold uppercase tracking-[0.2em] text-black transition-transform hover:scale-[1.01]"
-                            style={{ backgroundColor: config.accent }}
+                            className="btn-pill-neutral btn-pill-compact"
                           >
                             Close Portal
                           </button>
@@ -913,11 +912,7 @@ export default function InquiryPortal() {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-flex min-h-[54px] items-center justify-center gap-3 rounded-full px-6 text-[11px] font-black uppercase tracking-[0.25em] text-black transition-all hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
-                            style={{
-                              backgroundColor: config.accent,
-                              boxShadow: `0 18px 48px ${config.glow}`,
-                            }}
+                            className="btn-pill-monolith disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             {isSubmitting ? (
                               <>

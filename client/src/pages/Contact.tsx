@@ -79,14 +79,14 @@ export default function Contact() {
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href="mailto:events@monolithproject.com"
-                  className="btn-pill border-charcoal/20 bg-white/70 text-charcoal/80 hover:text-charcoal hover:border-charcoal/30 hover:bg-white/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  className="btn-pill-outline-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   Email
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
                 </a>
                 <Link href="/booking" asChild>
-                  <a className="btn-pill border-primary/35 bg-primary/10 text-primary hover:bg-primary/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+                  <a className="btn-pill-monolith focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
                     <Music className="w-3.5 h-3.5" />
                     Booking
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
@@ -115,9 +115,9 @@ export default function Contact() {
                       </div>
                       <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
                       <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
-                      <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase text-charcoal/70">
+                      <div className="btn-text-action btn-text-action-dark mt-6">
                         {tile.label}
-                        <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                        <ArrowUpRight />
                       </div>
                     </a>
                   ) : (
@@ -128,9 +128,9 @@ export default function Contact() {
                         </div>
                         <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
                         <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
-                        <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.15em] uppercase text-charcoal/70">
+                        <div className="btn-text-action btn-text-action-dark mt-6">
                           {tile.label}
-                          <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+                          <ArrowUpRight />
                         </div>
                       </a>
                     </Link>

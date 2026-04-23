@@ -66,7 +66,7 @@ export default function ChasingSunsetsTicketing() {
 
                     <button 
                         onClick={() => openDrawer('newsletter')}
-                        className="w-full py-4 border border-white/20 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-colors"
+                        className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide"
                     >
                         Season Updates
                     </button>
@@ -105,7 +105,7 @@ export default function ChasingSunsetsTicketing() {
 
                     <button
                         onClick={() => setLocation('/vip')}
-                        className="w-full py-4 bg-gradient-to-r from-[#E8B86D] to-[#C2703E] rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A0F00] hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,184,109,0.3)] relative z-10"
+                        className="btn-pill-sunsets btn-pill-wide relative z-10"
                     >
                         Request VIP Table
                     </button>
@@ -150,7 +150,7 @@ export default function ChasingSunsetsTicketing() {
                         <div className="flex flex-col justify-end">
                             <button 
                                 onClick={() => openDrawer('newsletter')}
-                                className="w-full py-4 border border-[#E8B86D]/50 rounded-full font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-[#E8B86D] hover:bg-[#E8B86D]/10 transition-colors flex items-center justify-center gap-2"
+                                className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide group"
                             >
                                 Unlock Presale <ArrowRight className="w-3.5 h-3.5" />
                             </button>

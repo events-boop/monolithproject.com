@@ -6,6 +6,7 @@ import {
   getExperienceEvent,
   getPrimaryTicketUrl,
 } from "@/lib/siteExperience";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 
 const venueMapHref =
   "https://maps.google.com/?q=1240+W+Randolph+St+Chicago+IL+60607";
@@ -149,7 +150,7 @@ export default function ExperienceGuidePanel() {
               href={ticketUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-black transition-colors hover:bg-white/90"
+              className={`${getEventPillToneClass(event)} btn-pill-compact group`}
             >
               Tickets
               <ArrowUpRight className="h-4 w-4" />
@@ -160,7 +161,7 @@ export default function ExperienceGuidePanel() {
             href={venueMapHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-white/20 hover:text-white"
+            className="btn-pill-outline btn-pill-compact group"
           >
             Open Maps
             <ArrowUpRight className="h-4 w-4" />
@@ -168,7 +169,7 @@ export default function ExperienceGuidePanel() {
 
           <Link
             href="/guide"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/28 bg-primary/10 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-colors hover:bg-primary/15"
+            className="btn-pill-outline btn-pill-outline-monolith btn-pill-compact group"
           >
             Full Guide
             <ArrowUpRight className="h-4 w-4" />

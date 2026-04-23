@@ -8,6 +8,7 @@ import {
     getExperienceEvent,
     getPrimaryTicketUrl,
 } from "@/lib/siteExperience";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const checklist = [
@@ -134,11 +135,11 @@ export default function Guide() {
                             </div>
 
                             {guideEvent && ticketUrl && (
-                                <a
-                                    href={ticketUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-colors hover:bg-primary/15"
+                            <a
+                                href={ticketUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                    className={`${getEventPillToneClass(guideEvent)} btn-pill-compact group`}
                                 >
                                     Tickets
                                     <ArrowRight className="w-4 h-4" />

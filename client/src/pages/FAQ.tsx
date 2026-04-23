@@ -311,7 +311,7 @@ export default function FAQ() {
                         <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">Still Have Questions?</p>
                         <a
                             href="mailto:events@monolithproject.com"
-                            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-mono text-[10px] tracking-[0.25em] uppercase hover:bg-white/90 transition-all"
+                            className="btn-pill-neutral"
                         >
                             <HelpCircle className="w-4 h-4" />
                             Direct Inquiry

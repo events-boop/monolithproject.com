@@ -113,7 +113,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
               <MagneticButton strength={0.22}>
                 <a
                   href="#untold-records"
-                  className="cta-ghost flex items-center justify-center px-8 py-4"
+                  className="cta-ghost group"
                 >
                   View Records
                   <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />

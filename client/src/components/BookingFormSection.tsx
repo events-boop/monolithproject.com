@@ -242,7 +242,7 @@ export default function BookingFormSection() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex min-w-[240px] items-center justify-center gap-3 rounded-full border border-primary/30 bg-primary px-8 py-4 font-mono text-[11px] uppercase tracking-[0.28em] text-black shadow-[0_24px_60px_rgba(212,165,116,0.18)] transition-all hover:-translate-y-0.5 hover:bg-[#f0d5a3] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+              className="btn-pill-monolith min-w-[240px] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
             >
               {isSubmitting ? (
                 <span className="animate-pulse">Sending...</span>

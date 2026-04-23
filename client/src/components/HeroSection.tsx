@@ -23,7 +23,8 @@ const heroUntoldImage = getResponsiveImage("untoldStoryHero");
 const heroSunsetsImage = getResponsiveImage("chasingSunsets");
 const heroEranIntlImage = getResponsiveImage("eranHershInternational");
 const heroEranPortraitImage = getResponsiveImage("eranHershPortraitReal");
-const heroAutografImage = getResponsiveImage("autografRecap");
+const heroAutografImage = getResponsiveImage("sunsetPartyHero");
+const heroLazareImage = getResponsiveImage("lazareSabryHero");
 
 /** Each slide maps to banner metadata and an optional event context. */
 interface SlideBannerInfo {
@@ -84,8 +85,16 @@ const HERO_SLIDES: Slide[] = [
     src: heroAutografImage.src,
     sources: heroAutografImage.sources,
     sizes: heroAutografImage.sizes,
-    alt: "Autograf Archive",
-    caption: "ARCHIVE | SPECIAL EVENT AUTOGRAF",
+    alt: "Chasing Sun(Sets) July 4th",
+    caption: "NEW SEASON DROP | JULY 4TH ARCHIVE",
+  },
+  {
+    type: "image",
+    src: heroLazareImage.src,
+    sources: heroLazareImage.sources,
+    sizes: heroLazareImage.sizes,
+    alt: "Lazare Sabry Event",
+    caption: "SPECIAL EVENT | LAZARE SABRY",
   },
 ];
 
@@ -102,11 +111,18 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   }, // 3: untold story
   { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
   {
-    label: "AUTOGRAF",
-    eyebrow: "ARCHIVE SIGNAL",
-    venueLabel: "FEATURED EVENT",
-    dateLabel: "AUTOGRAF",
-  }, // 5: autograf archive
+    eventId: "css-jul04",
+    label: "CHASING SUN(SETS)",
+    eyebrow: "NEW SEASON DROP",
+    venueLabel: "JULY 4TH EVENT",
+    dateLabel: "CHICAGO",
+  }, // 5: chansing sunsets new season drop
+  {
+    label: "LAZARE SABRY",
+    eyebrow: "SPECIAL EVENT",
+    venueLabel: "CHICAGO",
+    dateLabel: "COMING SOON",
+  }, // 6: lazare sabry
 ];
 
 const HERO_SUBHEAD =
@@ -242,7 +258,7 @@ function FloatingEventCard({
             <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
-              <a className="flex h-12 w-full items-center justify-center rounded-none border border-white/20 bg-white text-[11px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-[var(--monolith-red)] hover:border-transparent">
+              <a className="btn-pill-neutral btn-pill-wide">
                 {contextualFallbackAction.label}
               </a>
             </Link>
@@ -266,7 +282,7 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="flex h-12 w-full items-center justify-center rounded-none border border-transparent bg-white text-[11px] font-black uppercase tracking-[0.3em] text-black transition-colors hover:bg-[var(--monolith-red)] hover:text-white"
+      className="btn-pill-neutral btn-pill-wide"
     >
       {label}
     </a>
