@@ -74,9 +74,9 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     widths: [640, 960, 1280, 1600],
   },
   sunsetPartyHero: {
-    baseName: "sunset-party-hero",
+    baseName: "sunset-party-hero-v2",
     sizes: "100vw",
-    src: "/images/sunset-party-hero.jpg",
+    src: "/images/sunset-party-hero-v2.jpg",
     widths: [640, 960, 1280, 1600],
   },
   lazareCarbonCenter: {
@@ -86,9 +86,9 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     widths: [480, 743],
   },
   lazareSabryHero: {
-    baseName: "lazare-sabry-hero",
+    baseName: "lazare-sabry-hero-v2",
     sizes: "100vw",
-    src: "/images/lazare-sabry-hero.jpg",
+    src: "/images/lazare-sabry-hero-v2.jpg",
     widths: [640, 960, 1280, 1600],
   },
   radioShowGear: {

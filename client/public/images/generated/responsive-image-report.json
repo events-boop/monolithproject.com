@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-23T01:32:11.422Z",
+  "generatedAt": "2026-04-23T02:38:29.105Z",
   "widths": [
     480,
     1024,
@@ -3413,45 +3413,45 @@
       "estimatedSavingsPct": 75
     },
     {
-      "source": "/images/lazare-sabry-hero.jpg",
+      "source": "/images/lazare-sabry-hero-v2.jpg",
       "originalBytes": 166102,
       "originalKb": 162.2,
       "originalWidth": 1024,
       "originalHeight": 682,
-      "generatedBaseName": "lazare-sabry-hero",
+      "generatedBaseName": "lazare-sabry-hero-v2",
       "variants": [
         {
-          "path": "/images/generated/lazare-sabry-hero-480.avif",
+          "path": "/images/generated/lazare-sabry-hero-v2-480.avif",
           "width": 480,
           "format": "avif",
           "bytes": 13614
         },
         {
-          "path": "/images/generated/lazare-sabry-hero-480.webp",
+          "path": "/images/generated/lazare-sabry-hero-v2-480.webp",
           "width": 480,
           "format": "webp",
           "bytes": 16322
         },
         {
-          "path": "/images/generated/lazare-sabry-hero-1024.avif",
+          "path": "/images/generated/lazare-sabry-hero-v2-1024.avif",
           "width": 1024,
           "format": "avif",
           "bytes": 41330
         },
         {
-          "path": "/images/generated/lazare-sabry-hero-1024.webp",
+          "path": "/images/generated/lazare-sabry-hero-v2-1024.webp",
           "width": 1024,
           "format": "webp",
           "bytes": 49808
         },
         {
-          "path": "/images/generated/lazare-sabry-hero-1920.avif",
+          "path": "/images/generated/lazare-sabry-hero-v2-1920.avif",
           "width": 1920,
           "format": "avif",
           "bytes": 41330
         },
         {
-          "path": "/images/generated/lazare-sabry-hero-1920.webp",
+          "path": "/images/generated/lazare-sabry-hero-v2-1920.webp",
           "width": 1920,
           "format": "webp",
           "bytes": 49808
@@ -3613,45 +3613,45 @@
       "estimatedSavingsPct": 43
     },
     {
-      "source": "/images/sunset-party-hero.jpg",
+      "source": "/images/sunset-party-hero-v2.jpg",
       "originalBytes": 113082,
       "originalKb": 110.4,
       "originalWidth": 1024,
       "originalHeight": 682,
-      "generatedBaseName": "sunset-party-hero",
+      "generatedBaseName": "sunset-party-hero-v2",
       "variants": [
         {
-          "path": "/images/generated/sunset-party-hero-480.avif",
+          "path": "/images/generated/sunset-party-hero-v2-480.avif",
           "width": 480,
           "format": "avif",
           "bytes": 11312
         },
         {
-          "path": "/images/generated/sunset-party-hero-480.webp",
+          "path": "/images/generated/sunset-party-hero-v2-480.webp",
           "width": 480,
           "format": "webp",
           "bytes": 12136
         },
         {
-          "path": "/images/generated/sunset-party-hero-1024.avif",
+          "path": "/images/generated/sunset-party-hero-v2-1024.avif",
           "width": 1024,
           "format": "avif",
           "bytes": 29086
         },
         {
-          "path": "/images/generated/sunset-party-hero-1024.webp",
+          "path": "/images/generated/sunset-party-hero-v2-1024.webp",
           "width": 1024,
           "format": "webp",
           "bytes": 34090
         },
         {
-          "path": "/images/generated/sunset-party-hero-1920.avif",
+          "path": "/images/generated/sunset-party-hero-v2-1920.avif",
           "width": 1920,
           "format": "avif",
           "bytes": 29086
         },
         {
-          "path": "/images/generated/sunset-party-hero-1920.webp",
+          "path": "/images/generated/sunset-party-hero-v2-1920.webp",
           "width": 1920,
           "format": "webp",
           "bytes": 34090
