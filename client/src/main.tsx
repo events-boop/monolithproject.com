@@ -39,6 +39,13 @@ async function startApp() {
   const rootElement = document.getElementById("root");
   if (!rootElement) throw new Error("Root element not found");
 
+  // Start data preload IMMEDIATELY, do not wait for idle or App bundle.
+  void ensurePublicSiteData(window.location.pathname).catch((error) => {
+    if (import.meta.env.DEV) {
+      console.warn("[site-data] Initial preload failed.", error);
+    }
+  });
+
   const { default: App } = await import("./App");
 
   createRoot(rootElement).render(<App />);
@@ -49,11 +56,6 @@ async function startApp() {
 
   scheduleIdleWork(() => {
     initAttributionTracking();
-    void ensurePublicSiteData(window.location.pathname).catch((error) => {
-      if (import.meta.env.DEV) {
-        console.warn("[site-data] Initial preload failed.", error);
-      }
-    });
 
     // Keep PWA registration off the LCP path.
     registerSW({ immediate: true });

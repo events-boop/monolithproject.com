@@ -5,6 +5,9 @@
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.035em;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   /* Monospace font utility */
