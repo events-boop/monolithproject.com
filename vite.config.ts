@@ -67,11 +67,11 @@ export default defineConfig(({ mode }) => {
       }),
       ViteImageOptimizer({
         // Favor delivery size over archival fidelity for photographic assets.
-        png: { quality: 78 },
-        jpeg: { quality: 76 },
-        jpg: { quality: 76 },
-        webp: { quality: 74 },
-        avif: { quality: 52 },
+        png: { quality: 85 },
+        jpeg: { quality: 85 },
+        jpg: { quality: 85 },
+        webp: { quality: 85 },
+        avif: { quality: 65 },
       }),
     ],
     resolve: {

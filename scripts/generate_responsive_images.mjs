@@ -19,8 +19,8 @@ const sourceExtensionPreference = new Map([
   [".png", 3],
 ]);
 const formats = [
-  { ext: "avif", options: { quality: 52, effort: 4 } },
-  { ext: "webp", options: { quality: 74, effort: 4 } },
+  { ext: "avif", options: { quality: 65, effort: 6 } },
+  { ext: "webp", options: { quality: 85, effort: 6 } },
 ];
 
 async function pathExists(targetPath) {
