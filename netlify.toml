@@ -19,6 +19,30 @@
   force = true
 
 [[redirects]]
+  from = "https://monolithproject.events/*"
+  to = "https://monolithproject.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://chasingsunsets.world/*"
+  to = "https://monolithproject.com/chasing-sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://chasingsunsets.vip/*"
+  to = "https://monolithproject.com/vip"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://chasingsunsets.music/*"
+  to = "https://monolithproject.com/radio"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://www.themonolithproject.com/*"
   to = "https://monolithproject.com/:splat"
   status = 301
