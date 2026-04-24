@@ -104,8 +104,9 @@ export default function Schedule() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="Chicago Event Schedule | Chasing Sun(Sets) + Monolith Project"
-        description="Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links."
+        title="Upcoming Shows | The Monolith Project"
+        description="Browse upcoming Chicago house music events from The Monolith Project, including Chasing Sun(Sets), Untold Story, and artist-led radio."
+        absoluteTitle
         canonicalPath="/schedule"
         schemaData={buildScheduleSchema(scheduleEvents)}
       />
@@ -149,12 +150,12 @@ export default function Schedule() {
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
-              <span className="absolute -top-12 left-2 font-mono text-xs tracking-[0.24em] text-primary/60 uppercase">Upcoming Events</span>
+              <span className="absolute -top-12 left-2 font-mono text-xs tracking-[0.24em] text-primary/60 uppercase">Chicago Music Events</span>
               <h1 className="font-display text-[clamp(4.2rem,12vw,13rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
-                Schedule
+                Upcoming Shows
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">
-                Upcoming Monolith events, organized by month and series.
+                Chicago house music events from The Monolith Project, Chasing Sun(Sets), and Untold Story.
               </p>
             </div>
 

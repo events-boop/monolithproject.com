@@ -223,8 +223,8 @@ export default function Radio() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Chasing Sun(Sets) Radio Show | Episodes, Tracklists, Guest Mixes"
-        description="Official Chasing Sun(Sets) Radio Show archive from Chicago with guest mixes, episode pages, tracklists, and links to tickets and facts."
+        title="Radio | The Monolith Project"
+        description="Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community."
         absoluteTitle
         canonicalPath="/radio"
       />

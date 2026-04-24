@@ -31,7 +31,8 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
     return () => window.clearInterval(timer);
   }, [idleMotion]);
 
-  const headlineLines = event ? event.title.split(" ") : ["UNTOLD", "STORY"];
+  const headlineLines = ["UNTOLD", "STORY"];
+  const featuredHeadline = event?.headline || event?.title;
   const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
@@ -100,6 +101,11 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
                 <SplitText key={i} text={line} className="block" initialDelay={0.2 + (i * 0.15)} />
               ))}
             </h1>
+            {featuredHeadline ? (
+              <p className="max-w-2xl font-display text-[clamp(1.2rem,3vw,2.1rem)] leading-[0.98] uppercase text-[#22D3EE] mb-6 sm:mb-8 drop-shadow-[0_0_18px_rgba(0,0,0,0.75)]">
+                {featuredHeadline}
+              </p>
+            ) : null}
             <BrandTranslatorLabel className="mb-6 sm:mb-8" tone="nocturne">
               A Late-Night Monolith Series
             </BrandTranslatorLabel>

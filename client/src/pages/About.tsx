@@ -105,8 +105,9 @@ export default function About() {
   return (
     <div ref={containerRef} className="bg-[#050505] text-white selection:bg-white/20 relative">
       <SEO
-        title="About The Monolith Project | Chicago Music Project"
+        title="About | The Monolith Project"
         description="The Monolith Project is a Chicago-rooted music company producing house music shows, radio, and artist-led experiences through Chasing Sun(Sets) and Untold Story."
+        absoluteTitle
         canonicalPath="/about"
       />
 

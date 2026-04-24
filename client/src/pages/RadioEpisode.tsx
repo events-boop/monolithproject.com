@@ -101,8 +101,8 @@ export default function RadioEpisode() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title={`Chasing Sun(Sets) Radio Show ${episode.shortCode}: ${episode.title}`}
-        description={`${episode.summary} Official Chicago radio episode with guest mix details and tracklist from Chasing Sun(Sets).`}
+        title={`Chasing Sun(Sets) Radio | ${episode.shortCode} ${episode.guest}`}
+        description={`Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`}
         absoluteTitle
         canonicalPath={`/radio/${episode.slug}`}
       />

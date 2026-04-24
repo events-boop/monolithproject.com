@@ -32,6 +32,13 @@ async function pathExists(targetPath) {
   }
 }
 
+async function hasGeneratedAssets() {
+  if (!(await pathExists(outputDir))) return false;
+
+  const entries = await fs.readdir(outputDir);
+  return entries.some((entry) => entry !== "responsive-image-report.json");
+}
+
 async function listFilesRecursive(dir) {
   if (!(await pathExists(dir))) return [];
 
@@ -181,6 +188,38 @@ async function generateForImage(inputPath) {
 }
 
 async function main() {
+  const skipGeneration =
+    process.env.SKIP_IMAGE_GENERATION === "true" ||
+    process.env.GENERATE_RESPONSIVE_IMAGES === "false";
+  const isCI = process.env.CI === "true" || process.env.NETLIFY === "true";
+  const reportExists = await pathExists(reportPath);
+  const generatedAssetsExist = await hasGeneratedAssets();
+
+  if (skipGeneration) {
+    if (!generatedAssetsExist) {
+      throw new Error(
+        "SKIP_IMAGE_GENERATION=true was set, but pre-generated responsive image assets are missing.",
+      );
+    }
+
+    if (!reportExists) {
+      console.warn("⚠️ Skipping image generation without a responsive-image-report.json file.");
+    }
+
+    console.log("⏩ Skipping image generation; using pre-generated assets from repository.");
+    return;
+  }
+
+  if (isCI && generatedAssetsExist) {
+    if (!reportExists) {
+      console.warn("⚠️ Skipping image generation in CI without a responsive-image-report.json file.");
+    }
+
+    console.log("⏩ Skipping image generation in CI; using pre-generated assets from repository.");
+    return;
+  }
+
+  // Only clear the output directory if we are actually going to regenerate
   await fs.rm(outputDir, { recursive: true, force: true });
   await fs.mkdir(outputDir, { recursive: true });
 

@@ -18,6 +18,43 @@ function getStatusLabel(status: string) {
   return "PAST";
 }
 
+function getShortDateLabel(dateLabel: string) {
+  return dateLabel.replace(/,\s*\d{4}$/, "");
+}
+
+function buildEventSeoTitle(event: NonNullable<ReturnType<typeof getPublicEvents>[number]>) {
+  const shortDate = getShortDateLabel(event.date);
+
+  if (event.id === "us-s3e3") {
+    return `Eran Hersh at Hideaway Chicago | ${shortDate}`;
+  }
+
+  const headline = event.headline || event.title;
+  if (/venue reveal soon/i.test(event.venue)) {
+    return `${headline} | ${shortDate}`;
+  }
+
+  return `${headline} at ${event.venue} | ${shortDate}`;
+}
+
+function buildEventSeoDescription(event: NonNullable<ReturnType<typeof getPublicEvents>[number]>) {
+  const shortDate = getShortDateLabel(event.date);
+
+  if (event.id === "us-s3e3") {
+    return `Get tickets for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
+  }
+
+  if (event.series === "chasing-sunsets") {
+    return `${event.title} brings open-air Chicago house music to ${event.venue} on ${shortDate}. Get lineup, timing, and ticket updates.`;
+  }
+
+  if (event.series === "untold-story") {
+    return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
+  }
+
+  return `Get tickets and details for ${event.title} in Chicago on ${shortDate} from The Monolith Project.`;
+}
+
 export default function EventDetails() {
   const [, params] = useRoute("/events/:slug");
   const [, setLocation] = useLocation();
@@ -50,20 +87,16 @@ export default function EventDetails() {
   }
 
   const bgImage = event.image || "/images/hero-monolith.webp";
-  const cityLabel = event.location.replace(", IL", "").trim();
-  const isEranUntoldIv = event.id === "us-s3e3";
-  const pageTitle = isEranUntoldIv
-    ? "Untold Story IV: Eran Hersh at Hideaway Chicago | May 16, 2026"
-    : `${event.title} at ${event.venue} ${cityLabel} | ${event.date}`;
-  const pageDescription = isEranUntoldIv
-    ? "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026."
-    : `The Monolith Project presents ${event.title} at ${event.venue} ${cityLabel} on ${event.date}.`;
+  const pageTitle = buildEventSeoTitle(event);
+  const pageDescription = buildEventSeoDescription(event);
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
       <SEO
         title={pageTitle}
-        description={event.description || pageDescription}
+        description={pageDescription}
+        absoluteTitle
+        canonicalPath={`/events/${slug}`}
         schemaData={buildScheduledEventSchema(event, `/events/${slug}`)}
       />
 

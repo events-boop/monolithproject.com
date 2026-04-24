@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/update_sitemap_lastmod.mjs && CI=false npm run build"
+  command = "node scripts/update_sitemap_lastmod.mjs && SKIP_IMAGE_GENERATION=true CI=false npm run build"
   publish = "dist/public"
   functions = "netlify/functions"
 

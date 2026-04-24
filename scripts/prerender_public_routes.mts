@@ -32,6 +32,7 @@ type RouteDefinition = {
   path: string;
   title: string;
   description: string;
+  absoluteTitle?: boolean;
   image?: string;
   schemaData?: Record<string, unknown> | Array<Record<string, unknown>>;
   bodyHtml: string;
@@ -100,6 +101,51 @@ function toAbsoluteUrl(pathOrUrl: string) {
 
 function fullTitle(title: string) {
   return title.includes("The Monolith Project") ? title : `${title} | The Monolith Project`;
+}
+
+function getShortDateLabel(dateLabel: string) {
+  return dateLabel.replace(/,\s*\d{4}$/, "");
+}
+
+function buildEventSeoTitle(event: (typeof futureEvents)[number]) {
+  const shortDate = getShortDateLabel(event.date);
+
+  if (event.id === "us-s3e3") {
+    return `Eran Hersh at Hideaway Chicago | ${shortDate}`;
+  }
+
+  const headline = event.headline || event.title;
+  if (/venue reveal soon/i.test(event.venue)) {
+    return `${headline} | ${shortDate}`;
+  }
+
+  return `${headline} at ${event.venue} | ${shortDate}`;
+}
+
+function buildEventSeoDescription(event: (typeof futureEvents)[number]) {
+  const shortDate = getShortDateLabel(event.date);
+
+  if (event.id === "us-s3e3") {
+    return `Get tickets for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
+  }
+
+  if (event.series === "chasing-sunsets") {
+    return `${event.title} brings open-air Chicago house music to ${event.venue} on ${shortDate}. Get lineup, timing, and ticket updates.`;
+  }
+
+  if (event.series === "untold-story") {
+    return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
+  }
+
+  return `Get tickets and details for ${event.title} in Chicago on ${shortDate} from The Monolith Project.`;
+}
+
+function buildRadioEpisodeSeoTitle(episode: (typeof radioEpisodes)[number]) {
+  return `Chasing Sun(Sets) Radio | ${episode.shortCode} ${episode.guest}`;
+}
+
+function buildRadioEpisodeSeoDescription(episode: (typeof radioEpisodes)[number]) {
+  return `Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`;
 }
 
 function renderParagraphs(paragraphs: string[]) {
@@ -225,7 +271,7 @@ function renderHomeCriticalLayout() {
         <div class="critical-hero__shade" aria-hidden="true"></div>
         <header class="critical-hero__content">
           <p class="critical-hero__eyebrow">Chicago Music Project</p>
-          <h1>MONOLITH <span class="sr-only">Project | Chicago House & Techno</span></h1>
+          <h1>THE MONOLITH PROJECT</h1>
           <div class="critical-hero__rule" aria-hidden="true"></div>
           <p class="critical-hero__kicker">PROJECT</p>
           <p class="critical-hero__summary">Upcoming Shows / Chasing Sun(Sets) / Untold Story / Radio</p>
@@ -401,9 +447,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/",
     {
-      title: "Monolith Project | Chicago House & Techno Event Series & Radio Show",
+      title: "The Monolith Project | Chicago House Music Events",
       description:
-        "The Monolith Project is a Chicago-rooted music company producing house music events, open-air Chasing Sun(Sets) gatherings, after-dark Untold Story rooms, and artist-led radio.",
+        "The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio.",
+      absoluteTitle: true,
       schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderHomeCriticalLayout(),
     },
@@ -444,13 +491,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/schedule",
     {
-      title: "Chicago Event Schedule | Chasing Sun(Sets) + Monolith Project",
+      title: "Upcoming Shows | The Monolith Project",
       description:
-        "Official schedule for Chasing Sun(Sets) and The Monolith Project in Chicago with event dates, venues, lineup details, and ticket links.",
+        "Browse upcoming Chicago house music events from The Monolith Project, including Chasing Sun(Sets), Untold Story, and artist-led radio.",
+      absoluteTitle: true,
       schemaData: buildScheduleSchema(upcomingEvents),
       bodyHtml: renderBaseLayout(
         "Official Schedule",
-        "Chicago Event Schedule",
+        "Upcoming Shows",
         [
           "Browse upcoming Monolith, Chasing Sun(Sets), and Untold Story dates in Chicago.",
           "Each event page includes date, venue, lineup context, and ticket or RSVP access when available.",
@@ -463,9 +511,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/chasing-sunsets",
     {
-      title: "Chasing Sun(Sets)",
+      title: "Chasing Sun(Sets) | Chicago Lakefront Music Events",
       description:
-        "The premier open-air electronic music series in Chicago. Curated rooms, panoramic views, and uncompromised sound.",
+        "Chasing Sun(Sets) brings open-air house music, golden-hour energy, and lakefront gatherings to Chicago.",
+      absoluteTitle: true,
       image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
       schemaData:
         featuredChasingEvent ? buildScheduledEventSchema(featuredChasingEvent, "/chasing-sunsets") : undefined,
@@ -490,9 +539,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/story",
     {
-      title: "Untold Story",
+      title: "Untold Story | Chicago House Music Nights",
       description:
-        "The premier after-dark electronic music series in Chicago. Curated rooms, uncompromised sound, and a dedicated architectural standard for the late night.",
+        "Untold Story is The Monolith Project's after-dark house music series built for immersive Chicago dancefloors.",
+      absoluteTitle: true,
       image: featuredUntoldEvent?.image || "/images/eran-hersh-live-5.webp",
       schemaData: [
         buildFaqSchema(untoldFaqs),
@@ -519,13 +569,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/radio",
     {
-      title: "Chasing Sun(Sets) Radio Show | Episodes, Tracklists, Guest Mixes",
+      title: "Radio | The Monolith Project",
       description:
-        "Official Chasing Sun(Sets) Radio Show archive from Chicago with guest mixes, episode pages, tracklists, and links to tickets and facts.",
+        "Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community.",
+      absoluteTitle: true,
       schemaData: buildPodcastSeriesSchema(radioEpisodes),
       bodyHtml: renderBaseLayout(
-        "Chicago Radio Archive",
-        "Chasing Sun(Sets) Radio Show",
+        "Artist-Led Radio",
+        "Radio",
         [
           "The radio archive extends the Chasing Sun(Sets) brand beyond live events through mixes, guest sessions, and episode pages.",
           "Each episode page includes the guest, date, tracklist, and a direct listening link.",
@@ -540,9 +591,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/chasing-sunsets-facts",
     {
-      title: "Chasing Sun(Sets) Facts | Chicago Sunset House Music Series + Radio Show",
+      title: "Chasing Sun(Sets) Facts | The Monolith Project",
       description:
-        "Official identity and disambiguation for Chasing Sun(Sets): a Chicago sunset house music event series and radio show by The Monolith Project, not a fragrance brand.",
+        "Chasing Sun(Sets) is The Monolith Project's Chicago sunset house music series and artist-led radio brand.",
+      absoluteTitle: true,
       schemaData: buildFactsPageSchema(),
       bodyHtml: renderBaseLayout(
         "Official Identity",
@@ -562,9 +614,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/about",
     {
-      title: "About The Monolith Project | Chicago Music Project",
+      title: "About | The Monolith Project",
       description:
-        "Monolith is the root. Chasing Sun(Sets) carries the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story carries the night. Togetherness is the vision that holds the branches together.",
+        "Learn about The Monolith Project, a Chicago music company behind Chasing Sun(Sets), Untold Story, radio, and community events.",
+      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Project Overview",
         "About The Monolith Project",
@@ -619,9 +672,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/faq",
     {
-      title: "FAQ | Chasing Sun(Sets), Tickets, Venue & Radio Show",
+      title: "FAQ | The Monolith Project",
       description:
-        "Answers about tickets, venues, schedule timing, booking, and Monolith Project events in Chicago.",
+        "Answers about tickets, venues, timing, and event details for The Monolith Project, Chasing Sun(Sets), and Untold Story.",
+      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Frequently Asked Questions",
         "FAQ",
@@ -782,8 +836,9 @@ function buildArtistRoutes(): RouteDefinition[] {
 function buildRadioEpisodeRoutes(): RouteDefinition[] {
   return radioEpisodes.map((episode) => ({
     path: `/radio/${episode.slug}`,
-    title: `Chasing Sun(Sets) Radio Show ${episode.shortCode}: ${episode.title}`,
-    description: `${episode.summary} Official Chicago radio episode with guest mix details and tracklist from Chasing Sun(Sets).`,
+    title: buildRadioEpisodeSeoTitle(episode),
+    description: buildRadioEpisodeSeoDescription(episode),
+    absoluteTitle: true,
     image: episode.image,
     schemaData: buildPodcastEpisodeSchema(episode),
     bodyHtml: renderBaseLayout(
@@ -819,9 +874,9 @@ function buildEventRoutes(): RouteDefinition[] {
     const routePath = `/events/${event.slug || event.id}`;
     return {
       path: routePath,
-      title: `${event.title} - ${event.venue}`,
-      description:
-        event.description || `Join us for ${event.title} at ${event.venue} on ${event.date}.`,
+      title: buildEventSeoTitle(event),
+      description: buildEventSeoDescription(event),
+      absoluteTitle: true,
       image: event.image || "/images/hero-monolith.webp",
       schemaData: buildScheduledEventSchema(event, routePath),
       bodyHtml: renderBaseLayout(
@@ -867,6 +922,7 @@ for (const sitemapEntry of mergeSitemapEntries(buildEventSitemapEntries(upcoming
 
 for (const route of routeDefinitions) {
   const canonicalUrl = toAbsoluteUrl(route.path);
+  const resolvedTitle = route.absoluteTitle ? route.title : fullTitle(route.title);
   const schemaMarkup = route.schemaData
     ? `<script type="application/ld+json">${serializeJson(route.schemaData)}</script>`
     : "";
@@ -876,13 +932,13 @@ for (const route of routeDefinitions) {
 
   let html = template;
 
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(fullTitle(route.title))}</title>`);
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(resolvedTitle)}</title>`);
   html = upsertMetaByName(html, "description", route.description);
   html = upsertMetaByProperty(html, "og:url", canonicalUrl);
-  html = upsertMetaByProperty(html, "og:title", fullTitle(route.title));
+  html = upsertMetaByProperty(html, "og:title", resolvedTitle);
   html = upsertMetaByProperty(html, "og:description", route.description);
   html = upsertMetaByName(html, "twitter:url", canonicalUrl);
-  html = upsertMetaByName(html, "twitter:title", fullTitle(route.title));
+  html = upsertMetaByName(html, "twitter:title", resolvedTitle);
   html = upsertMetaByName(html, "twitter:description", route.description);
 
   if (route.image) {

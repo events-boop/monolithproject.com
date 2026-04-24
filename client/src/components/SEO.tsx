@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
@@ -54,7 +55,7 @@ export default function SEO({
   const siteTitle = "The Monolith Project";
   const fullTitle = absoluteTitle ? title : `${title} | ${siteTitle}`;
   const defaultDescription =
-    "Monolith Project: Chicago's premier house & techno event series, radio show, and archive. Experience open-air Chasing Sun(Sets) and after-dark Untold Story music nights.";
+    "The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio.";
   const resolvedDescription = description || defaultDescription;
   const canonicalOrigin = getCanonicalOrigin();
   const canonicalTarget = normalizePath(
@@ -65,11 +66,30 @@ export default function SEO({
   const serializedSchema =
     schemaData !== undefined ? JSON.stringify(schemaData).replace(/</g, "\\u003c") : null;
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const head = document.head;
+    const canonicalLinks = Array.from(
+      head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]'),
+    );
+    const canonicalLink = canonicalLinks[0] ?? document.createElement("link");
+
+    if (!canonicalLinks[0]) {
+      canonicalLink.setAttribute("rel", "canonical");
+      head.appendChild(canonicalLink);
+    }
+
+    canonicalLink.setAttribute("href", canonicalUrl);
+    canonicalLink.setAttribute("data-rh", "true");
+
+    canonicalLinks.slice(1).forEach((link) => link.remove());
+  }, [canonicalUrl]);
+
   return (
     <Helmet prioritizeSeoTags>
       <title>{fullTitle}</title>
       <meta name="description" content={resolvedDescription} />
-      <link rel="canonical" href={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={resolvedDescription} />
       <meta property="og:type" content={type} />

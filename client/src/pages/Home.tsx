@@ -50,8 +50,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
-        title="Monolith Project | Chicago House & Techno Event Series & Radio Show"
-        description="The Monolith Project is a Chicago-rooted music company producing house music events, open-air Chasing Sun(Sets) gatherings, after-dark Untold Story rooms, and artist-led radio."
+        title="The Monolith Project | Chicago House Music Events"
+        description="The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio."
+        absoluteTitle
+        canonicalPath="/"
         schemaData={buildSitewideIdentitySchema()}
       />
 

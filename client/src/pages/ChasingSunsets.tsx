@@ -101,8 +101,10 @@ export default function ChasingSunsets() {
   return (
     <div className="min-h-screen selection:text-white relative bg-noise sunset-page">
       <SEO
-        title="Chasing Sun(Sets)"
-        description="The premier open-air electronic music series in Chicago. Curated rooms, panoramic views, and uncompromised sound."
+        title="Chasing Sun(Sets) | Chicago Lakefront Music Events"
+        description="Chasing Sun(Sets) brings open-air house music, golden-hour energy, and lakefront gatherings to Chicago."
+        absoluteTitle
+        canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
       />
       <div className="pointer-events-none absolute inset-0 bg-chasing-glow-1 overflow-hidden" />
@@ -135,11 +137,8 @@ export default function ChasingSunsets() {
               >
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>
-              <h1 className="font-display flex flex-col text-[clamp(2.5rem,8vw,8rem)] leading-[0.85] uppercase mb-6 sm:mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
-                {(featuredChasingEvent
-                  ? (featuredChasingEvent.headline || featuredChasingEvent.title).split(" ")
-                  : ["CHASING", "SUN(SETS)"]
-                ).map((line, i) => (
+              <h1 className="font-display flex flex-col text-[clamp(2.5rem,8vw,8rem)] leading-[0.85] uppercase mb-4 sm:mb-5 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
+                {["CHASING", "SUN(SETS)"].map((line, i) => (
                   <SplitText
                     key={`${line}-${i}`}
                     text={line}
@@ -148,6 +147,11 @@ export default function ChasingSunsets() {
                   />
                 ))}
               </h1>
+              {featuredChasingEvent ? (
+                <p className="mb-6 sm:mb-7 max-w-2xl font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-[#E8B86D]">
+                  {featuredChasingEvent.headline || featuredChasingEvent.title}
+                </p>
+              ) : null}
               <BrandTranslatorLabel className="mb-4 sm:mb-6" tone="warm">
                 An Open-Air Monolith Series
               </BrandTranslatorLabel>

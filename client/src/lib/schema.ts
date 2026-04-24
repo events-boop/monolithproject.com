@@ -46,6 +46,8 @@ export function buildSitewideIdentitySchema() {
         "@id": `${SITE_ORIGIN}/#website`,
         url: SITE_ORIGIN,
         name: "The Monolith Project",
+        description:
+          "Chicago house music events, Chasing Sun(Sets), Untold Story, and artist-led radio from The Monolith Project.",
         inLanguage: "en-US",
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
       },
@@ -54,6 +56,8 @@ export function buildSitewideIdentitySchema() {
         "@id": `${SITE_ORIGIN}/#organization`,
         name: "The Monolith Project",
         url: SITE_ORIGIN,
+        description:
+          "The Monolith Project produces Chicago house music events, open-air Chasing Sun(Sets), Untold Story nights, and artist-led radio.",
         sameAs: organizationSameAs,
         brand: { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
       },
@@ -111,7 +115,7 @@ export function buildPodcastSeriesSchema(episodes: RadioEpisode[]) {
     name: "Chasing Sun(Sets) Radio Show",
     alternateName: ["Chasing Sunsets Radio Show"],
     description:
-      "Guest mixes, sunset-ready selections, and Chicago-rooted global house storytelling from The Monolith Project.",
+      "Artist-led radio, guest mixes, and Chicago house music sessions from The Monolith Project.",
     url: seriesUrl,
     inLanguage: "en-US",
     publisher: { "@id": `${SITE_ORIGIN}/#organization` },

@@ -37,8 +37,10 @@ export default function UntoldStory() {
   return (
     <div className="min-h-screen text-white selection:bg-cyan-400/20 selection:text-white bg-noise bg-untold-deep-solid">
       <SEO
-        title="Untold Story"
-        description="The premier after-dark electronic music series in Chicago. Curated rooms, uncompromised sound, and a dedicated architectural standard for the late night."
+        title="Untold Story | Chicago House Music Nights"
+        description="Untold Story is The Monolith Project's after-dark house music series built for immersive Chicago dancefloors."
+        absoluteTitle
+        canonicalPath="/story"
         image={eventVisuals.poster}
         schemaData={schemaData}
       />

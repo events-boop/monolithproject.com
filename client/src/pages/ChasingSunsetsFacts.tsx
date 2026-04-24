@@ -48,8 +48,8 @@ export default function ChasingSunsetsFacts() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="Chasing Sun(Sets) Facts | Chicago Sunset House Music Series + Radio Show"
-        description="Official identity and disambiguation for Chasing Sun(Sets): a Chicago sunset house music event series and radio show by The Monolith Project, not a fragrance brand."
+        title="Chasing Sun(Sets) Facts | The Monolith Project"
+        description="Chasing Sun(Sets) is The Monolith Project's Chicago sunset house music series and artist-led radio brand."
         absoluteTitle
         canonicalPath="/chasing-sunsets-facts"
       />

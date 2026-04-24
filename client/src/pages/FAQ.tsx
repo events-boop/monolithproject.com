@@ -188,8 +188,9 @@ export default function FAQ() {
     return (
         <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
             <SEO
-                title="FAQ | Chasing Sun(Sets), Tickets, Venue & Radio Show"
-                description="Official FAQ for Chasing Sun(Sets) and The Monolith Project in Chicago: tickets, venue, accessibility, radio show, and brand identity."
+                title="FAQ | The Monolith Project"
+                description="Answers about tickets, venues, timing, and event details for The Monolith Project, Chasing Sun(Sets), and Untold Story."
+                absoluteTitle
                 canonicalPath="/faq"
             />
             <JsonLd id="schema-main-faq" data={buildFaqSchema(faqSchemaEntries)} />
