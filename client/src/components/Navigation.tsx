@@ -433,9 +433,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* CENTER: NAV ITEMS */}
-              <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
+              <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="SHOWS"
+                  label="EVENT SERIES"
                   href="/schedule"
                   isActive={location === "/schedule" || location === "/tickets" || location.startsWith("/events/")}
                   isLight={isLight}
@@ -443,8 +443,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "UPCOMING SHOWS", href: "/schedule", icon: "arrow" },
-                      { label: "GET TICKETS", href: ticketHref || "/tickets", icon: "ticket" },
+                      { label: "ALL UPCOMING SHOWS", href: "/schedule", icon: "ticket" },
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
@@ -466,60 +465,6 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       ctaText: "View Shows",
                       icon: "arrow",
                       badge: "SHOWS"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="CHASING SUN(SETS)"
-                  href="/chasing-sunsets"
-                  isActive={location.includes("/chasing-sunsets")}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "SEASON 2026", href: "/chasing-sunsets", icon: "arrow" },
-                      { label: "SIGN UP FOR DROPS", href: "/newsletter", icon: "arrow" },
-                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
-                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
-                    ],
-                    feature: {
-                      title: featuredChasingEvent?.headline || featuredChasingEvent?.title || "Chasing Sun(Sets)",
-                      subtitle: featuredChasingEvent?.episode || "Open-air series",
-                      image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
-                      href: getPrimaryTicketUrl(featuredChasingEvent) || "/chasing-sunsets",
-                      ctaText: getPrimaryTicketUrl(featuredChasingEvent) ? "Get Tickets" : "View Season",
-                      icon: getPrimaryTicketUrl(featuredChasingEvent) ? "ticket" : "arrow",
-                      badge: featuredChasingEvent?.status === "on-sale" ? "ON SALE" : "SEASON 2026",
-                      external: !!getPrimaryTicketUrl(featuredChasingEvent)
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="UNTOLD STORY"
-                  href="/story"
-                  isActive={location.includes("/story") || location.includes("/untold-story")}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "CURRENT INDOOR EVENT", href: "/story", icon: "arrow" },
-                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
-                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
-                      { label: "CONTACT", href: "/contact", icon: "arrow" },
-                    ],
-                    feature: {
-                      title: featuredUntoldEvent?.headline || featuredUntoldEvent?.title || "Untold Story",
-                      subtitle: featuredUntoldEvent?.episode || "Indoor series",
-                      image: featuredUntoldEvent?.image || "/images/untold-story-juany-deron-v2.webp",
-                      href: getPrimaryTicketUrl(featuredUntoldEvent) || "/story",
-                      ctaText: getPrimaryTicketUrl(featuredUntoldEvent) ? "Get Tickets" : "View Story",
-                      icon: "arrow",
-                      badge: featuredUntoldEvent?.status === "on-sale" ? "ON SALE" : "UNTOLD STORY",
-                      external: !!getPrimaryTicketUrl(featuredUntoldEvent)
                     }
                   }}
                 />
@@ -550,28 +495,77 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="PARTNERS"
-                  href="/partners"
-                  isActive={location === "/partners" || location === "/sponsors" || location === "/press" || location === "/booking"}
+                  label="GALLERY"
+                  href="/archive"
+                  isActive={location === "/archive" || location.includes("/insights")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "PARTNER WITH US", href: "/partners", icon: "arrow" },
-                      { label: "PARTNERSHIPS", href: "/partners" },
-                      { label: "SPONSOR ACCESS", href: "/sponsors" },
-                      { label: "PRESS & MEDIA", href: "/press" },
-                      { label: "ABOUT MONOLITH", href: "/about" },
+                      { label: "EVENT GALLERY", href: "/archive", icon: "arrow" },
+                      { label: "JOURNAL", href: "/insights" },
+                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
                     ],
                     feature: {
-                      title: "PARTNER WITH MONOLITH",
-                      subtitle: "Brands, venues, and cultural collaborators",
-                      image: "/images/industrial-roster.webp",
-                      href: "/partners",
-                      ctaText: "Start Conversation",
+                      title: "THE PROOF",
+                      subtitle: "Every room, every set, every season",
+                      image: "/images/untold-story-juany-deron-v2.webp",
+                      href: "/archive",
+                      ctaText: "Enter Gallery",
                       icon: "arrow",
-                      badge: "PARTNERS"
+                      badge: "GALLERY"
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="ABOUT"
+                  href="/about"
+                  isActive={location === "/about"}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "THE PROJECT", href: "/about#story" },
+                      { label: "TOGETHERNESS", href: "/about#togetherness" },
+                      { label: "CONTACT", href: "/contact" },
+                    ],
+                    feature: {
+                      title: "WHAT MONOLITH IS",
+                      subtitle: "Chicago Music Project",
+                      image: "/images/hero-monolith-modern.webp",
+                      href: "/about",
+                      ctaText: "About Monolith",
+                      icon: "arrow",
+                      badge: "ABOUT"
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="PLAN YOUR NIGHT"
+                  href="/guide"
+                  isActive={location === "/guide" || location === "/vip" || location === "/newsletter"}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
+                      { label: "VIP TABLES", href: "/vip" },
+                      { label: "INNER CIRCLE", href: "/newsletter" },
+                      { label: "PARTNER WITH US", href: "/partners" },
+                    ],
+                    feature: {
+                      title: "THE NIGHT GUIDE",
+                      subtitle: "Entry, timing, and elevated access",
+                      image: "/images/industrial-roster.webp",
+                      href: "/guide",
+                      ctaText: "Open Guide",
+                      icon: "arrow",
+                      badge: "GUIDE"
                     }
                   }}
                 />
@@ -652,7 +646,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 </div>
 
                 {/* Cinematic Universal Toggle (Menu -> Close) */}
-                <div className="flex items-center">
+                <div className="flex items-center lg:hidden">
                   <MagneticButton>
                     <button
                       type="button"

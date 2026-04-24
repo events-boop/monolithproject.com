@@ -63,24 +63,20 @@ const utilityLinks = [
 ];
 
 const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
-  "next-night": Ticket,
   schedule: CalendarDays,
-  "chasing-sunsets": Sun,
-  "untold-story": Sparkles,
-  artists: UsersRound,
   radio: Radio,
+  gallery: Sparkles,
+  about: UsersRound,
   guide: MapPinned,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
   if (path === "/schedule" || path.startsWith("/events/")) return "schedule";
-  if (path.startsWith("/chasing-sunsets")) return "chasing-sunsets";
-  if (path === "/story" || path.startsWith("/untold-story")) return "untold-story";
-  if (path === "/lineup" || path.startsWith("/artists/")) return "artists";
   if (path.startsWith("/radio")) return "radio";
+  if (path === "/archive" || path === "/insights") return "gallery";
+  if (path.startsWith("/about")) return "about";
   if (path === "/guide" || path === "/faq" || path === "/travel" || path === "/vip") return "guide";
-  if (path === "/tickets") return "next-night";
-  return "next-night";
+  return "schedule";
 }
 
 function isExternalHref(href: string) {

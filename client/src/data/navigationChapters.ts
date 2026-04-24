@@ -1,10 +1,8 @@
 export type NavigationChapterId =
-  | "next-night"
   | "schedule"
-  | "chasing-sunsets"
-  | "untold-story"
-  | "artists"
   | "radio"
+  | "gallery"
+  | "about"
   | "guide";
 
 export interface NavigationChapterLink {
@@ -28,122 +26,91 @@ export interface NavigationChapter {
 
 export const navigationChapters: NavigationChapter[] = [
   {
-    id: "next-night",
-    label: "Shows",
-    eyebrow: "Tickets + Dates",
-    href: "/tickets",
-    tagline: "Start with the next Monolith show.",
+    id: "schedule",
+    label: "Event Series",
+    eyebrow: "Shows + Tickets",
+    href: "/schedule",
+    tagline: "The core Monolith experience calendar.",
     description:
-      "A direct preview of the next show, ticket state, and the fastest path in.",
-    proof: "The clearest route from interest to entry.",
+      "All upcoming Chasing Sun(Sets), Untold Story, and special Monolith drops.",
+    proof: "Direct path to tickets and season details.",
     image: "/images/eran-hersh-live-1.webp",
     accent: "#E05A3A",
-    ctaLabel: "View Shows",
+    ctaLabel: "View Schedule",
     secondaryLinks: [
-      { label: "See The Schedule", href: "/schedule" },
-      { label: "Sign Up for Drops", href: "/newsletter" },
-    ],
-  },
-  {
-    id: "schedule",
-    label: "Upcoming Shows",
-    eyebrow: "Season 2026",
-    href: "/schedule",
-    tagline: "All upcoming dates in one place.",
-    description:
-      "The live calendar for Chasing Sun(Sets), Untold Story, and upcoming Monolith drops.",
-    proof: "One place to compare dates, venues, and ticket states.",
-    image: "/images/autograf-recap.jpg",
-    accent: "#8B5CF6",
-    ctaLabel: "See Upcoming Shows",
-    secondaryLinks: [
-      { label: "Tickets", href: "/tickets" },
-      { label: "Archive", href: "/archive" },
-    ],
-  },
-  {
-    id: "chasing-sunsets",
-    label: "Chasing Sun(Sets)",
-    eyebrow: "Open-Air Series",
-    href: "/chasing-sunsets",
-    tagline: "Golden-hour house music built for movement and return.",
-    description:
-      "Open-air gatherings shaped by lakefront energy, headline moments, and community.",
-    proof: "Season drops, lineup news, and the summer archive.",
-    image: "/images/chasing-sunsets-premium.webp",
-    accent: "#E8B86D",
-    ctaLabel: "View Chasing Sun(Sets)",
-    secondaryLinks: [
-      { label: "Next Episode", href: "/schedule" },
-      { label: "Season Archive", href: "/archive" },
-    ],
-  },
-  {
-    id: "untold-story",
-    label: "Untold Story",
-    eyebrow: "Indoor Series",
-    href: "/story",
-    tagline: "After-dark rooms built for deeper sound and real dancefloors.",
-    description:
-      "Indoor nights focused on immersive dancefloors, tighter rooms, and artist-led sets.",
-    proof: "Current indoor event details, tickets, and past nights.",
-    image: "/images/untold-story-juany-deron-v2.webp",
-    accent: "#22D3EE",
-    ctaLabel: "View Untold Story",
-    secondaryLinks: [
-      { label: "Next Night", href: "/tickets" },
-      { label: "Season Archive", href: "/archive" },
-    ],
-  },
-  {
-    id: "artists",
-    label: "Lineup",
-    eyebrow: "Artists",
-    href: "/lineup",
-    tagline: "The artists behind the shows.",
-    description:
-      "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",
-    proof: "A direct view of the artists shaping the sound.",
-    image: "/images/artists-collective.webp",
-    accent: "#F2F0E8",
-    ctaLabel: "Explore Lineup",
-    secondaryLinks: [
-      { label: "Featured Artists", href: "/lineup" },
-      { label: "Radio Episodes", href: "/radio" },
+      { label: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
+      { label: "Untold Story", href: "/story" },
+      { label: "Entry Guide", href: "/guide#entry" },
     ],
   },
   {
     id: "radio",
     label: "Radio",
-    eyebrow: "Artist Content",
+    eyebrow: "Cultural Sound",
     href: "/radio",
-    tagline: "Mixes, guests, and radio episodes between shows.",
+    tagline: "The frequency of the project, delivered weekly.",
     description:
-      "Episodes, guest mixes, tracklists, and artist context that keep the sound moving between nights.",
-    proof: "A direct way to hear the artists before you are in the room.",
+      "Mixes, guest features, and conversation from the artists shaping our rooms.",
+    proof: "Tune in to the sound of Chasing Sun(Sets) and beyond.",
     image: "/images/radio-show-gear.webp",
-    accent: "#FB7185",
-    ctaLabel: "Play Radio",
+    accent: "#F43F5E",
+    ctaLabel: "Listen to Radio",
     secondaryLinks: [
       { label: "Latest Episode", href: "/radio/ep-01-benchek" },
-      { label: "Browse Episodes", href: "/radio" },
+      { label: "All Episodes", href: "/radio#episodes" },
+    ],
+  },
+  {
+    id: "gallery",
+    label: "Gallery",
+    eyebrow: "The Proof",
+    href: "/archive",
+    tagline: "Visual archives from every night and season.",
+    description:
+      "A cinematic record of past nights, crowds, and artist sets.",
+    proof: "The evidence of togetherness.",
+    image: "/images/untold-story-juany-deron-v2.webp",
+    accent: "#E8B86D",
+    ctaLabel: "Enter Gallery",
+    secondaryLinks: [
+      { label: "Past Nights", href: "/archive" },
+      { label: "Journal", href: "/insights" },
+    ],
+  },
+  {
+    id: "about",
+    label: "About",
+    eyebrow: "The Project",
+    href: "/about",
+    tagline: "Togetherness is the frequency. Music is the guide.",
+    description:
+      "Chicago-rooted music company producing open-air and after-dark experiences.",
+    proof: "Our principles and story.",
+    image: "/images/hero-monolith-modern.webp",
+    accent: "#D4A574",
+    ctaLabel: "About Monolith",
+    secondaryLinks: [
+      { label: "The Story", href: "/about#story" },
+      { label: "Togetherness", href: "/about#togetherness" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
     id: "guide",
-    label: "Plan Your Visit",
-    eyebrow: "Entry + Arrival",
+    label: "Plan Your Night",
+    eyebrow: "The Guide",
     href: "/guide",
-    tagline: "Entry, timing, arrival, and access without guesswork.",
+    tagline: "Everything you need to step into the room.",
     description:
-      "Everything you need to arrive cleanly, know the timing, and choose the right access path.",
-    proof: "A better arrival makes the show experience better.",
+      "Entry requirements, VIP tables, travel info, and community access.",
+    proof: "A seamless night starts with the guide.",
     image: "/images/industrial-roster.webp",
-    accent: "#D4A574",
-    ctaLabel: "Plan Your Night",
+    accent: "#22D3EE",
+    ctaLabel: "Open Night Guide",
     secondaryLinks: [
-      { label: "Entry Checklist", href: "/guide#entry" },
-      { label: "VIP Access", href: "/vip" },
+      { label: "VIP Tables", href: "/vip" },
+      { label: "Inner Circle", href: "/newsletter" },
+      { label: "Partner Access", href: "/partners" },
     ],
   },
 ];

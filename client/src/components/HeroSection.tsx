@@ -359,8 +359,8 @@ export default function HeroSection() {
         <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
 
-      <div className="relative z-30 flex min-h-[100dvh] flex-col px-6 pb-6 pt-[calc(var(--shell-page-top-hero)+1rem)] sm:pb-8 sm:pt-[calc(var(--shell-page-top-hero)+1.25rem)] md:px-8 md:pb-10">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-8 md:grid md:grid-cols-[minmax(0,1fr)_minmax(21rem,25rem)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(23rem,28rem)]">
+      <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-12 pt-[calc(var(--shell-page-top-hero)+2rem)] sm:pb-16 sm:pt-[calc(var(--shell-page-top-hero)+3rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+1.25rem)]">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-12 md:grid md:grid-cols-[minmax(0,1fr)_minmax(21rem,25rem)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(23rem,28rem)]">
           <div
             data-home-hero-copy="true"
             className="flex min-w-0 flex-col items-center pt-1 text-center text-white md:items-start md:justify-center md:pr-8 md:text-left lg:pr-12"
@@ -381,7 +381,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "font-heavy max-w-[14ch] text-[clamp(2.3rem,12vw,9rem)] leading-[0.84] uppercase pointer-events-auto text-balance md:max-w-none text-white"
+                  "font-heavy max-w-[14ch] text-[clamp(1.8rem,11vw,8.5rem)] leading-[0.82] uppercase pointer-events-auto text-balance md:max-w-none text-white"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
