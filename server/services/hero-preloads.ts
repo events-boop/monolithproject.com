@@ -25,7 +25,7 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
       {
         href: "/images/generated/hero-video-1-poster-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("hero-video-1-poster", [480, 1024, 1920], "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet("hero-video-1-poster", [480, 1024, 1920, 2560, 3840], "avif"),
         type: "image/avif",
       },
     ];
@@ -36,14 +36,21 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
       {
         href: "/images/generated/chasing-sunsets-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("chasing-sunsets", [480, 1024, 1920], "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet("chasing-sunsets", [480, 1024, 1920, 2560, 3840], "avif"),
         type: "image/avif",
       },
     ];
   }
 
   if (route === "/story" || route === "/untold-story-deron-juany-bravo") {
-    return [{ href: "/images/untold-story-juany-deron.webp", type: "image/webp" }];
+    return [
+      {
+        href: "/images/generated/untold-story-deron-juany-bravo-v2-1024.avif",
+        imageSizes: "100vw",
+        imageSrcSet: buildGeneratedImageSrcSet("untold-story-deron-juany-bravo-v2", [480, 1024, 1920, 2560, 3840], "avif"),
+        type: "image/avif",
+      },
+    ];
   }
 
   return [];
