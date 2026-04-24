@@ -225,7 +225,7 @@ function renderHomeCriticalLayout() {
         <div class="critical-hero__shade" aria-hidden="true"></div>
         <header class="critical-hero__content">
           <p class="critical-hero__eyebrow">Chicago Music Project</p>
-          <h1>MONOLITH</h1>
+          <h1>MONOLITH <span class="sr-only">Project | Chicago House & Techno</span></h1>
           <div class="critical-hero__rule" aria-hidden="true"></div>
           <p class="critical-hero__kicker">PROJECT</p>
           <p class="critical-hero__summary">Root Architecture / Events / Radio / Research</p>
@@ -401,7 +401,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/",
     {
-      title: "Chicago Music Nights, Series, and Archive",
+      title: "Monolith Project | Chicago House & Techno Event Series & Radio Show",
       description:
         "The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project.",
       schemaData: buildSitewideIdentitySchema(),
