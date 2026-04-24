@@ -37,9 +37,9 @@ const segmentContent: Record<
   "first-visit": {
     eyebrow: "Start Here",
     label: "First Visit",
-    title: "New here? Start at the root, then choose the branch you want to follow.",
+    title: "New here? Start with the next show, then explore the series.",
     description:
-      "Monolith is the main project. The fastest path is the next event, the radio show, or the archive, depending on whether you want a date, a sound, or proof of the room.",
+      "The fastest path is the next show, the radio page, or the archive, depending on whether you want a date, a sound, or proof of the room.",
     actions: (_ticketUrl, _hasLiveTickets, nextEventHref) => [
       {
         label: "Next Event",
@@ -67,7 +67,7 @@ const segmentContent: Record<
   returning: {
     eyebrow: "Welcome Back",
     label: "Returning Guest",
-    title: "Back again? Re-enter through the branch that is live now.",
+    title: "Back again? Jump straight to what is live now.",
     description:
       "Returning guests usually want the ticket link, the next date, or something to play on the way there. We keep all three close.",
     actions: (ticketUrl, hasLiveTickets, nextEventHref) => [

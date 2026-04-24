@@ -105,8 +105,8 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 2: eran hersh portrait
   {
     label: "UNTOLD STORY",
-    eyebrow: "ARCHIVE SIGNAL",
-    venueLabel: "LATE-NIGHT SERIES",
+    eyebrow: "PAST SHOW",
+    venueLabel: "INDOOR SERIES",
     dateLabel: "UNTOLD STORY ARCHIVE",
   }, // 3: untold story
   { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
@@ -139,13 +139,13 @@ function toSystemText(value?: string | null) {
 }
 
 function getEventSignalLabel(event?: any) {
-  if (!event) return "ARCHIVE SIGNAL";
-  if (event.status === "on-sale") return "ACTIVE SALE";
-  if (event.status === "sold-out") return "WAITLIST CONTROL";
-  if (event.recentlyDropped) return "SIGNAL OPEN";
-  if (event.status === "coming-soon") return "PRESALE BUILDING";
-  if (event.status === "past") return "ARCHIVE SIGNAL";
-  return "FEATURED SIGNAL";
+  if (!event) return "PAST SHOW";
+  if (event.status === "on-sale") return "TICKETS LIVE";
+  if (event.status === "sold-out") return "SOLD OUT";
+  if (event.recentlyDropped) return "SIGN UP OPEN";
+  if (event.status === "coming-soon") return "DROP SOON";
+  if (event.status === "past") return "PAST SHOW";
+  return "FEATURED SHOW";
 }
 
 function getEventStatusLabel(status?: string) {
@@ -161,7 +161,7 @@ function getSystemKicker(event: any | undefined, eyebrow: string | undefined, sl
     return `${toSystemText(getSeriesLabel(event.series))} / ${getEventSignalLabel(event)}`;
   }
 
-  return toSystemText(eyebrow || slideInfo.eyebrow || "FEATURED SIGNAL");
+  return toSystemText(eyebrow || slideInfo.eyebrow || "FEATURED SHOW");
 }
 
 function getSystemMeta(dateLabel: string, venueLabel?: string) {

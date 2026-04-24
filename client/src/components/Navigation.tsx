@@ -8,7 +8,7 @@ import MagneticButton from "./MagneticButton";
 import { getEventBannerPayload, isEventBannerVisible } from "../lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
 import { getSceneForPath } from "../lib/scenes";
-import { getExperienceEvent, getPrimaryTicketUrl, getSeriesEvents } from "../lib/siteExperience";
+import { getExperienceEvent, getPrimaryTicketUrl, getSeriesExperienceEvent, getSeriesEvents } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "../lib/cta";
 import { getEventCtaToneClass } from "../lib/ctaTone";
@@ -80,13 +80,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const resolvedBrand = brand ?? scene.brand;
   const isLight = resolvedVariant === "light";
   const ticketEvent = getExperienceEvent("ticket");
+  const featuredChasingEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+  const featuredUntoldEvent = getSeriesExperienceEvent("untold-story", "hero");
   
   // Contextual CTA logic: ensure we point to the right series if we're on a series-specific page
   const isUntoldPath = location === "/story" || location.startsWith("/untold-story");
   const isSunsetsPath = location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
   
-  const contextEvent = isUntoldPath ? (getSeriesEvents("untold-story")[0] || ticketEvent)
-                    : isSunsetsPath ? (getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
+  const contextEvent = isUntoldPath ? (featuredUntoldEvent || getSeriesEvents("untold-story")[0] || ticketEvent)
+                    : isSunsetsPath ? (featuredChasingEvent || getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
                     : ticketEvent;
 
   const cta = getEventCta(contextEvent);
@@ -105,11 +107,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
     }
 
     const sections = [
-      { id: "campaigns", number: "01", label: "HIGHLIGHTS" },
-      { id: "season", number: "02", label: "DATES" },
+      { id: "campaigns", number: "01", label: "NEXT SHOW" },
+      { id: "season", number: "02", label: "UPCOMING" },
       { id: "series", number: "03", label: "SERIES" },
-      { id: "showcase", number: "04", label: "EXPLORE" },
-      { id: "community", number: "05", label: "NEWSLETTER" },
+      { id: "showcase", number: "04", label: "RADIO" },
+      { id: "community", number: "05", label: "PARTNERS" },
     ];
 
     const observer = new IntersectionObserver(
@@ -433,18 +435,18 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               {/* CENTER: NAV ITEMS */}
               <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="EVENT SERIES"
-                  href="/chasing-sunsets"
-                  isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story") || location === "/schedule" || location === "/lineup" || location.startsWith("/events/")}
+                  label="SHOWS"
+                  href="/schedule"
+                  isActive={location === "/schedule" || location === "/tickets" || location.startsWith("/events/")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
+                      { label: "UPCOMING SHOWS", href: "/schedule", icon: "arrow" },
+                      { label: "GET TICKETS", href: ticketHref || "/tickets", icon: "ticket" },
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
-                      { label: "FULL SCHEDULE", href: "/schedule" },
-                      { label: "ARTISTS & LINEUP", href: "/lineup" },
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
                     ],
                     feature: ticketEvent ? {
@@ -457,13 +459,67 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       badge: ticketEvent.status === "on-sale" ? "ON SALE" : "COMING SOON",
                       external: !!ticketHref
                     } : {
-                      title: "CHASING SUN(SETS)",
-                      subtitle: "Summer Series 2026",
-                      image: "/images/chasing-sunsets-premium.webp",
-                      href: "/chasing-sunsets",
-                      ctaText: "Explore Season",
+                      title: "UPCOMING SHOWS",
+                      subtitle: "Tickets + dates",
+                      image: "/images/eran-hersh-live-1.webp",
+                      href: "/schedule",
+                      ctaText: "View Shows",
                       icon: "arrow",
-                      badge: "SERIES"
+                      badge: "SHOWS"
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="CHASING SUN(SETS)"
+                  href="/chasing-sunsets"
+                  isActive={location.includes("/chasing-sunsets")}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "SEASON 2026", href: "/chasing-sunsets", icon: "arrow" },
+                      { label: "SIGN UP FOR DROPS", href: "/newsletter", icon: "arrow" },
+                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
+                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                    ],
+                    feature: {
+                      title: featuredChasingEvent?.headline || featuredChasingEvent?.title || "Chasing Sun(Sets)",
+                      subtitle: featuredChasingEvent?.episode || "Open-air series",
+                      image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
+                      href: getPrimaryTicketUrl(featuredChasingEvent) || "/chasing-sunsets",
+                      ctaText: getPrimaryTicketUrl(featuredChasingEvent) ? "Get Tickets" : "View Season",
+                      icon: getPrimaryTicketUrl(featuredChasingEvent) ? "ticket" : "arrow",
+                      badge: featuredChasingEvent?.status === "on-sale" ? "ON SALE" : "SEASON 2026",
+                      external: !!getPrimaryTicketUrl(featuredChasingEvent)
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="UNTOLD STORY"
+                  href="/story"
+                  isActive={location.includes("/story") || location.includes("/untold-story")}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "CURRENT INDOOR EVENT", href: "/story", icon: "arrow" },
+                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
+                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                      { label: "CONTACT", href: "/contact", icon: "arrow" },
+                    ],
+                    feature: {
+                      title: featuredUntoldEvent?.headline || featuredUntoldEvent?.title || "Untold Story",
+                      subtitle: featuredUntoldEvent?.episode || "Indoor series",
+                      image: featuredUntoldEvent?.image || "/images/untold-story-juany-deron-v2.webp",
+                      href: getPrimaryTicketUrl(featuredUntoldEvent) || "/story",
+                      ctaText: getPrimaryTicketUrl(featuredUntoldEvent) ? "Get Tickets" : "View Story",
+                      icon: "arrow",
+                      badge: featuredUntoldEvent?.status === "on-sale" ? "ON SALE" : "UNTOLD STORY",
+                      external: !!getPrimaryTicketUrl(featuredUntoldEvent)
                     }
                   }}
                 />
@@ -483,95 +539,57 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     ],
                     feature: {
                       title: "CHASING SUN(SETS) RADIO",
-                      subtitle: "The global connection — always on",
+                      subtitle: "Mixes, guests, and artist content",
                       image: "/images/radio-show-gear.webp",
                       href: "/radio/ep-01-benchek",
                       ctaText: "Tune In",
                       icon: "play",
-                      badge: "LIVE"
+                      badge: "RADIO"
                     }
                   }}
                 />
 
                 <NavigationMegamenu
-                  label="GALLERY"
-                  href="/archive"
-                  isActive={location === "/archive" || location.includes("/insights")}
+                  label="PARTNERS"
+                  href="/partners"
+                  isActive={location === "/partners" || location === "/sponsors" || location === "/press" || location === "/booking"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "EVENT GALLERY", href: "/archive" },
-                      { label: "JOURNAL", href: "/insights" },
-                      { label: "CHASING SUN(SETS) SEASONS", href: "/chasing-sunsets#archive" },
-                      { label: "UNTOLD STORY SEASONS", href: "/story#archive" },
-                    ],
-                    feature: {
-                      title: "THE PROOF",
-                      subtitle: "Every room, every set, every season",
-                      image: "/images/untold-story-juany-deron-v2.webp",
-                      href: "/archive",
-                      ctaText: "Enter The Gallery",
-                      icon: "arrow",
-                      badge: "GALLERY"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="ABOUT"
-                  href="/about"
-                  isActive={location === "/about" || location === "/togetherness"}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "ABOUT", href: "/about#story" },
-                      { label: "TOGETHERNESS", href: "/about#togetherness" },
-                      { label: "OUR PRINCIPLES", href: "/about#manifesto" },
-                    ],
-                    feature: {
-                      title: "WHAT MONOLITH IS",
-                      subtitle: "Chicago Music Project",
-                      image: "/images/hero-monolith-modern.webp",
-                      href: "/about",
-                      ctaText: "About Monolith",
-                      icon: "arrow",
-                      badge: "ABOUT"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="PLAN YOUR NIGHT"
-                  href="/guide"
-                  isActive={location === "/guide" || location === "/travel" || location === "/faq" || location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact" || location === "/newsletter"}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
-                      { label: "VIP TABLES", href: "/vip" },
-                      { label: "INNER CIRCLE", href: "/newsletter" },
-                      { label: "SPONSOR ACCESS", href: "/sponsors" },
+                      { label: "PARTNER WITH US", href: "/partners", icon: "arrow" },
                       { label: "PARTNERSHIPS", href: "/partners" },
+                      { label: "SPONSOR ACCESS", href: "/sponsors" },
                       { label: "PRESS & MEDIA", href: "/press" },
-                      { label: "CONTACT", href: "/contact" },
+                      { label: "ABOUT MONOLITH", href: "/about" },
                     ],
                     feature: {
-                      title: "THE NIGHT GUIDE",
-                      subtitle: "Entry, timing, and elevated access",
+                      title: "PARTNER WITH MONOLITH",
+                      subtitle: "Brands, venues, and cultural collaborators",
                       image: "/images/industrial-roster.webp",
-                      href: "/guide",
-                      ctaText: "Open Guide",
+                      href: "/partners",
+                      ctaText: "Start Conversation",
                       icon: "arrow",
-                      badge: "GUIDE"
+                      badge: "PARTNERS"
                     }
                   }}
                 />
+
+                <Link
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick("/contact");
+                  }}
+                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
+                    isLight
+                      ? `hover:text-clay ${location === "/contact" ? "text-clay" : "text-stone"}`
+                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === "/contact" ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                  }`}
+                >
+                  Contact
+                </Link>
               </div>
 
               {/* RIGHT: CTA & MOBILE TOGGLE */}

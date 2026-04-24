@@ -31,7 +31,7 @@ export default function Insights() {
     <div className="min-h-screen bg-[#050505] text-white selection:bg-primary selection:text-white bg-scanlines">
       <SEO
         title="Journal"
-        description="News, notes, artist features, and event context from The Monolith Project. Deeper logic for the Chicago ecosystem."
+        description="News, lineup notes, artist features, and event context from The Monolith Project."
         canonicalPath="/insights"
       />
       <Navigation />
@@ -41,7 +41,7 @@ export default function Insights() {
           
           {/* Breadcrumbs for SEO Drive */}
           <nav className="flex items-center gap-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30" aria-label="Breadcrumb">
-             <Link href="/" className="hover:text-white transition-colors">Root</Link>
+             <Link href="/" className="hover:text-white transition-colors">Home</Link>
              <ChevronRight size={10} />
              <span className="text-white/60">Journal</span>
           </nav>
@@ -53,17 +53,17 @@ export default function Insights() {
             className="mb-16 md:mb-24"
           >
             <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary mb-4 block">
-               System_Pulse // Journal
+               Journal
             </span>
             <h1 className="font-display text-[clamp(3.4rem,9vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-8">
-              <SplitText text="DEEPER LOGIC" initialDelay={0.2} />
+              <SplitText text="NEWS, NOTES" initialDelay={0.2} />
               <br />
               <span className="opacity-40">& CONTEXT</span>
             </h1>
             
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
                 <p className="max-w-2xl text-lg md:text-xl leading-relaxed text-white/60 italic">
-                  Clear writing about lineups, technical standards, series updates, and how the Chicago ecosystem is being built.
+                  Clear writing about lineups, show updates, artist context, and what is happening around the next Monolith dates.
                 </p>
 
                 {/* Tag Discovery */}
@@ -183,9 +183,9 @@ export default function Insights() {
           {/* Deeper Drive CTA */}
           <section className="mt-32 p-12 md:p-20 rounded-[3rem] border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent text-center">
              <span className="font-mono text-xs tracking-[0.4em] uppercase text-primary mb-6 block">Stay Informed</span>
-             <h2 className="font-display text-4xl md:text-6xl uppercase mb-8">Never Miss A Signal</h2>
+             <h2 className="font-display text-4xl md:text-6xl uppercase mb-8">Get Show Updates</h2>
              <p className="max-w-xl mx-auto text-white/50 mb-12 italic text-lg leading-relaxed">
-                Join the inner circle for deeper context on Chicago's best nights, artist research, and early access to the schedule.
+                Join the list for artist notes, show updates, and early access to the schedule.
              </p>
              <Link href="/newsletter" asChild>
                 <a className="btn-pill-outline">

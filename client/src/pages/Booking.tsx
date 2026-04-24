@@ -14,19 +14,19 @@ const standards = [
   {
     icon: Zap,
     label: "Artistry",
-    description: "We prioritize artists who understand narrative pacing and room control over generic hype sets.",
+    description: "We look for artists who can build a room, not just spike energy for a few moments.",
     id: "01"
   },
   {
     icon: ShieldCheck,
     label: "Technicality",
-    description: "High standard for audio performance, transition logic, and equipment respect.",
+    description: "Strong transitions, clean sound, and respect for the booth matter.",
     id: "02"
   },
   {
     icon: Globe,
     label: "Community",
-    description: "Fit with the Monolith ethos: patient growth, shared experience, and local cultural drive.",
+    description: "We book people who fit the crowd, the city, and the spirit of the night.",
     id: "03"
   }
 ];
@@ -36,7 +36,7 @@ export default function Booking() {
     <div className="min-h-screen bg-[#050505] text-white selection:bg-primary selection:text-white bg-scanlines relative overflow-x-hidden">
       <SEO
         title="Booking"
-        description="Submit a mix or inquiry to play with The Monolith Project. Reviewing for fit with the Chicago ecosystem."
+        description="Submit a mix or booking inquiry to play with The Monolith Project in Chicago. We review every request for musical fit, crowd fit, and alignment with our shows."
         canonicalPath="/booking"
       />
       <Navigation />
@@ -70,7 +70,7 @@ export default function Booking() {
                 <span className="opacity-40">& INQUIRY</span>
               </h1>
               <p className="text-white/60 text-lg md:text-2xl max-w-xl font-light italic leading-relaxed">
-                Whether you represent an artist, venue, or creative partner, we review every submission for curation fit within the project.
+                Whether you represent an artist, venue, or brand partner, we review every submission for musical fit, room awareness, and alignment with the world we build.
               </p>
             </motion.div>
           </div>

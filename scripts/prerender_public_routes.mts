@@ -403,7 +403,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Monolith Project | Chicago House & Techno Event Series & Radio Show",
       description:
-        "The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project.",
+        "The Monolith Project is a Chicago-rooted music company producing house music events, open-air Chasing Sun(Sets) gatherings, after-dark Untold Story rooms, and artist-led radio.",
       schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderHomeCriticalLayout(),
     },

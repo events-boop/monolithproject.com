@@ -27,9 +27,9 @@ const manifestoLines = [
 const architectureExpressions = [
   {
     title: "The Monolith Project",
-    label: "Umbrella",
+    label: "Project",
     description:
-      "The umbrella project: Chicago-rooted, music-first, and built to connect the nights, the archive, and the people around them.",
+      "A Chicago-rooted music company connecting the shows, radio, artists, and community around them.",
     href: "/",
     cta: CTA_LABELS.viewHome,
   },
@@ -42,10 +42,10 @@ const architectureExpressions = [
     cta: CTA_LABELS.sunSets,
   },
   {
-    title: "Radio Show",
+    title: "Radio",
     label: "Radio",
     description:
-      "The Chasing Sun(Sets) Radio Show keeps the series active between events through mixes, guest sessions, and replayable episodes.",
+      "Mixes, guest sessions, and conversations that keep the music moving between shows.",
     href: "/radio",
     cta: CTA_LABELS.radioHub,
   },
@@ -106,7 +106,7 @@ export default function About() {
     <div ref={containerRef} className="bg-[#050505] text-white selection:bg-white/20 relative">
       <SEO
         title="About The Monolith Project | Chicago Music Project"
-        description="Monolith is the root. Chasing Sun(Sets) carries the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story carries the night. Togetherness is the vision that holds the branches together."
+        description="The Monolith Project is a Chicago-rooted music company producing house music shows, radio, and artist-led experiences through Chasing Sun(Sets) and Untold Story."
         canonicalPath="/about"
       />
 
@@ -140,7 +140,7 @@ export default function About() {
           ) : (
             <ResponsiveImage
               src="/images/hero-monolith.webp"
-              alt="Architectural monolith structure representing the Monolith Project identity"
+              alt="The Monolith Project hero image at dusk"
               priority
               sizes="100vw"
               loading="eager"
@@ -189,11 +189,11 @@ export default function About() {
               MONOLITH
             </motion.h1>
             <BrandTranslatorLabel className="mt-5" tone="neutral">
-              Chicago Cultural House
+              Chicago Music Company
             </BrandTranslatorLabel>
 
             <p className="max-w-xl text-center text-[11px] uppercase tracking-[0.2em] text-white/70 md:text-base">
-              Chicago's premier electronic music ecosystem. Curated rooms. Uncompromised sound.
+              Chicago-rooted house music events, radio, and artist-led experiences across open-air afternoons and after-dark rooms.
             </p>
           </motion.div>
 
@@ -232,7 +232,7 @@ export default function About() {
               </div>
               <div className="mt-8">
                 <WordScrubReveal 
-                  text="We built The Monolith Project as an ecosystem to keep what usually disappears visible: curation, uncompromised sound, continuity, and the architecture of a perfect night." 
+                  text="We built The Monolith Project to give nights more shape: stronger curation, better sound, sharper artists, and a crowd that wants more than a one-time event." 
                   className="font-serif text-[clamp(1.2rem,3vw,2.4rem)] leading-[1.3] text-[#D4A574] italic drop-shadow-md text-balance"
                 />
               </div>
@@ -277,23 +277,23 @@ export default function About() {
               Same people returning.
             </h2>
             <p className="max-w-3xl text-lg md:text-xl leading-relaxed text-white/70 font-light">
-              Togetherness is the part that makes Monolith more than separate pages. Chasing Sun(Sets) runs the daytime — rooftops in Chicago, the Radio Show worldwide. Untold Story runs the night. Different expressions, one continuity: same city, same standard, and a crowd that keeps finding each other across formats.
+              Monolith ties together the open-air show, the late-night room, and the radio archive. Chasing Sun(Sets) carries golden hour and lakefront energy. Untold Story takes the night deeper. Radio keeps the artists and community connected between shows.
             </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3 mt-12">
             {[
               {
-                label: "The Root",
-                copy: "Monolith holds the standard: curation, sound, continuity, and hospitality.",
+                label: "The Standard",
+                copy: "Monolith holds the line on curation, sound, hospitality, and follow-through.",
               },
               {
-                label: "The Branches",
-                copy: "Two branches, one standard: Chasing Sun(Sets) carries open-air and global radio, Untold Story carries late-night.",
+                label: "The Shows",
+                copy: "Chasing Sun(Sets) and Untold Story give the audience two distinct ways into the world, with Radio extending it beyond the night.",
               },
               {
-                label: "The Return",
-                copy: "The same people move between them, which is how the project becomes a real community instead of isolated drops.",
+                label: "The Community",
+                copy: "Artists, partners, and returning guests are what turn separate dates into a real scene.",
               },
             ].map((item) => (
               <div key={item.label} className="border border-white/10 bg-white/[0.03] p-6 md:p-7">
@@ -327,7 +327,7 @@ export default function About() {
                 <span className="text-white/20">One project.</span>
               </h2>
               <p className="text-lg leading-relaxed text-white/40 font-light max-w-sm">
-                The Monolith Project is the parent brand. Chasing Sun(Sets), the Radio Show, and Untold Story each play a clear role inside it.
+                One project. Three public expressions. Chasing Sun(Sets) leads the open-air season, Untold Story leads the late-night room, and Radio keeps the artists and culture moving between shows.
               </p>
             </motion.div>
 

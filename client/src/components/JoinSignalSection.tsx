@@ -48,7 +48,7 @@ export default function JoinSignalSection({
                 styles.eyebrow,
               )}
             >
-              Join The Signal
+              Join The Drop List
             </span>
             <h2
               className={cn(
@@ -60,7 +60,7 @@ export default function JoinSignalSection({
             </h2>
             <p className={cn("max-w-2xl text-sm md:text-base leading-relaxed", styles.body)}>
               Tickets, updates, and radio drops from one Chicago-rooted music company.
-              Intentional signal, no generic blast.
+              Direct updates, no generic blast.
             </p>
           </div>
 

@@ -111,7 +111,7 @@ export default function Partners() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-4 mb-8">
-                  <span className="font-mono text-[10px] text-primary tracking-[0.4em] uppercase">System_Entry // Collaboration</span>
+                  <span className="font-mono text-[10px] text-primary tracking-[0.4em] uppercase">Partner With Monolith</span>
                   <div className="h-px w-20 bg-white/10" />
               </div>
               <h1 className="font-display text-[clamp(2.8rem,9vw,8rem)] text-white mb-8 uppercase leading-[0.82] tracking-tight-display">
@@ -120,7 +120,7 @@ export default function Partners() {
                 <span className="opacity-40">& CREW</span>
               </h1>
               <p className="text-white/60 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
-                Monolith is a growing music ecosystem. We are looking for the right architects, operators, and settings to build the next chapters.
+                We work with venues, brands, crew, and creative collaborators who want to help produce strong shows and reach a real Chicago audience.
               </p>
             </motion.div>
           </div>

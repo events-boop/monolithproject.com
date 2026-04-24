@@ -94,7 +94,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     genre: "PSYCHEDELIC TECHNO",
     image: "/images/artist-haai.webp",
     series: ["untold-story"],
-    bio: "Hailing from Australia and based in London, HAAi continues to redefine the boundaries of club music. Her sets are a journey through genre-bending soundscapes that fit the Untold Story format. Known for her unpredictable, high-energy selections and deep connection to the dancefloor, HAAi is a central pillar of the Monolith headliner ecosystem.",
+    bio: "Hailing from Australia and based in London, HAAi pushes club music into psychedelic, high-energy territory. Her Untold Story sets are unpredictable, physical, and built for dancers, making her a natural fit for Monolith headline nights.",
     tags: ["Techno", "Psychedelic", "Alternative"],
     socials: { instagram: "https://instagram.com/haaihaaihaai" },
     tracks: [
@@ -251,7 +251,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     genre: "MELODIC TECHNO · AFRO",
     image: "/images/artist-avo-profile.jpg",
     series: ["untold-story"],
-    bio: "A cornerstone of the Monolith Project's residency program. AVO is known for his surgical precision in the booth, blending deep melodic techno with percussive afro-house rhythms. His sets are visceral, architectural, and built for the raw, concrete spaces of the Untold Story series. As a resident, he anchors the transition from tension to release, defining the sonic architecture of the room.",
+    bio: "A key Monolith Project resident, AVO blends deep melodic techno with percussive Afro-house rhythms. His sets are precise, physical, and built for raw late-night rooms, shaping the tension-and-release arc that defines Untold Story.",
     tags: ["Resident", "Melodic Techno", "Afro House"],
     socials: { instagram: "https://instagram.com/avomusic_" },
     tracks: [
@@ -298,4 +298,3 @@ export const ARTIST_ENTRIES: ArtistData[] = [
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(
   ARTIST_ENTRIES.map((artist) => [artist.id, artist]),
 ) as Record<string, ArtistData>;
-

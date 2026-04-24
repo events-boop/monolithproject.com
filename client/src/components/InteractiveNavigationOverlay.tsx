@@ -96,7 +96,7 @@ function getStatusLabel(status?: string) {
     case "sold-out":
       return "Sold Out";
     default:
-      return "Live Signal";
+      return "Upcoming";
   }
 }
 
@@ -387,7 +387,7 @@ export default function InteractiveNavigationOverlay({
         <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/40">
-              Monolith Navigation System
+              Explore Monolith
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
               Choose Your Entry
@@ -513,7 +513,7 @@ export default function InteractiveNavigationOverlay({
                         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black">
                           <ResponsiveImage
                             src={view.image}
-                            alt={item.title}
+                            alt={view.label}
                             sizes="100vw"
                             className="h-48 w-full object-cover opacity-72"
                             loading="lazy"

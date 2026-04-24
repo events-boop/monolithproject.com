@@ -101,7 +101,7 @@ export default function FeaturedSets() {
             <div className="flex items-center gap-3">
               <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
               <span className="event-system-kicker text-white/60">
-                Radio / Live Archive
+                Radio / Archive
               </span>
             </div>
             <span className="event-system-chip shrink-0 text-white/40">
@@ -111,15 +111,15 @@ export default function FeaturedSets() {
 
           <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.34fr)] md:items-end">
             <h2 className="event-system-headline max-w-[10ch] text-[clamp(3.4rem,9vw,8.5rem)] text-white">
-              Featured Sets
+              Radio Picks
             </h2>
             <div className="border-l border-white/10 pl-5 md:justify-self-end">
               <span className="event-system-meta block text-white/80">
-                The Archive Deck
+                Artist Content
               </span>
               <span className="mt-3 block h-px w-20 bg-white/20" />
               <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/50">
-                Selected signals from radio rooms, rooftops, and live Monolith nights.
+                Mixes, guest sessions, and past live moments from Monolith nights.
               </span>
             </div>
           </div>

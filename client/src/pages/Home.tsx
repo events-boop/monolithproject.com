@@ -8,22 +8,16 @@ import ViewportLazy from "@/components/ViewportLazy";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { Skeleton } from "@/components/ui/skeleton";
 import ConversionCTA from "@/components/ConversionCTA";
-import JoinSignalSection from "@/components/JoinSignalSection";
 import {
   getEventVenueLabel,
   getExperienceEvent,
+  getSeriesExperienceEvent,
   getSeriesLabel,
 } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 
-const CinematicBreak = lazy(() => import("@/components/CinematicBreak").catch(() => ({ default: () => <></> })));
-const ExpressionSplit = lazy(() => import("@/components/ExpressionSplit"));
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
-const ShowcaseSplit = lazy(() => import("@/components/ShowcaseSplit"));
-const NewsletterSection = lazy(() => import("@/components/NewsletterSection"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
-const Ticker = lazy(() => import("@/components/Ticker"));
-const LiveTickets = lazy(() => import("@/components/LiveTickets"));
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 const PartnershipMarquee = lazy(() => import("@/components/PartnershipMarquee"));
 import SEO from "@/components/SEO";
@@ -40,11 +34,13 @@ function getStatusLabel(status?: string) {
 export default function Home() {
   usePublicSiteDataVersion();
   const featuredMoment = getExperienceEvent("hero");
+  const chasingSeasonEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+  const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
   const featuredMomentHref = getEventDetailsHref(featuredMoment);
   const featuredMomentSummary =
     featuredMoment?.description ||
     featuredMoment?.experienceIntro ||
-    "A curated chapter built around sound quality, intentional crowd energy, and cinematic pacing.";
+    "The next Monolith show, ticket window, and venue details live here first.";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,7 +50,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
         title="Monolith Project | Chicago House & Techno Event Series & Radio Show"
-        description="The Monolith Project is the root. Chasing Sun(Sets) runs daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. One Chicago music project."
+        description="The Monolith Project is a Chicago-rooted music company producing house music events, open-air Chasing Sun(Sets) gatherings, after-dark Untold Story rooms, and artist-led radio."
         schemaData={buildSitewideIdentitySchema()}
       />
 
@@ -76,10 +72,10 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        <section className="relative z-10 border-y border-white/10 bg-[#080808] py-14 md:py-20">
+        <section id="campaigns" className="relative z-10 border-y border-white/10 bg-[#080808] py-14 md:py-20">
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
-              <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-primary">Featured Moment</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-primary">Next Show / Featured Event</span>
               {featuredMoment?.status ? (
                 <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
                   {getStatusLabel(featuredMoment.status)}
@@ -97,7 +93,7 @@ export default function Home() {
                     {featuredMoment.headline || featuredMoment.title}
                   </h2>
                   <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
-                    The sun sets. The signal rises. July 4th begins the next chapter.
+                    Tickets, date, and venue details for the next Monolith show.
                   </p>
                   <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
                     {featuredMomentSummary}
@@ -142,26 +138,113 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
-                Built for the moment. Designed to last.
+                Chasing Sun(Sets) Season 2026
+              </span>
+            </div>
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+              <div>
+                <h2 className="font-display text-[clamp(2.3rem,5vw,5rem)] leading-[0.9] uppercase tracking-tight text-white">
+                  Sign up for the next open-air drop.
+                </h2>
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
+                  Chasing Sun(Sets) is Monolith&apos;s open-air series: house music by the water, headline moments at golden hour, and a Chicago crowd that comes for the music first.
+                </p>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                  <Link href="/newsletter" className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto">
+                    Sign Up for Drops
+                  </Link>
+                  <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide w-full justify-center sm:w-auto">
+                    View Chasing Sun(Sets)
+                  </Link>
+                  <Link href="/schedule" className="btn-text-action">
+                    See Upcoming Shows
+                  </Link>
+                </div>
+              </div>
+
+              <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
+                  Season Focus
+                </span>
+                <h3 className="mt-3 font-display text-[clamp(1.9rem,4vw,3rem)] leading-[0.92] uppercase tracking-tight text-white">
+                  {chasingSeasonEvent?.headline || chasingSeasonEvent?.title || "Next Chasing Sun(Sets) Chapter"}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-white/70">
+                  {chasingSeasonEvent?.description ||
+                    chasingSeasonEvent?.experienceIntro ||
+                    "The next Chasing Sun(Sets) chapter is where the summer season starts to take shape."}
+                </p>
+                <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                  <div>
+                    <dt className="text-white/40">Date</dt>
+                    <dd className="mt-1 text-white">{chasingSeasonEvent?.date || "Coming Soon"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-white/40">Location</dt>
+                    <dd className="mt-1 text-white">
+                      {chasingSeasonEvent ? getEventVenueLabel(chasingSeasonEvent) : "Chicago"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-white/40">Status</dt>
+                    <dd className="mt-1 text-white">{getStatusLabel(chasingSeasonEvent?.status)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-white/40">Lineup</dt>
+                    <dd className="mt-1 text-white">{chasingSeasonEvent?.lineup || "Drop Pending"}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="season" className="bg-[#F4ECD9] transition-colors duration-500 relative z-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
+            style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
+          />
+          <SectionDivider number="01" label="Upcoming Shows" dark={false} glow={SUN_SETS_GOLD} />
+          <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="0px 0px">
+            <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
+              <ScheduleSection />
+            </Suspense>
+          </ViewportLazy>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-20"
+            style={{ background: "linear-gradient(to top, rgba(12,12,12,0.4), transparent)" }}
+          />
+        </div>
+
+        <section id="series" className="relative z-10 border-b border-white/10 bg-[#111111] py-14 md:py-20">
+          <div className="container layout-wide px-6">
+            <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
+                One platform, multiple series.
               </span>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <Link href="/chasing-sunsets" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Series</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Open Air</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Chasing Sun(Sets)</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
                   Open-air house music gatherings shaped by golden hour, lakefront energy, and community.
                 </p>
               </Link>
               <Link href="/story" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Series</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">After Dark</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Untold Story</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
                   After-dark rooms built for deeper sound, immersive dancefloors, and artist-led moments.
                 </p>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+                  {untoldMoment?.date || "Current indoor event details live on the story page"}
+                </p>
               </Link>
               <Link href="/radio" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Broadcast</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Radio</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Radio</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
                   Mixes, conversations, and cultural memory from the artists shaping the sound.
@@ -180,19 +263,24 @@ export default function Home() {
 
         <section className="relative z-10 border-b border-white/10 bg-[#111111] py-10 md:py-14">
           <div className="container layout-wide px-6">
+            <div className="mb-6">
+              <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-primary">
+                Past nights / Proof points
+              </span>
+            </div>
             <div className="grid gap-px border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-4">
               <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Past Signal</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">What It Is</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/80">Chicago-rooted music company</p>
               </div>
               <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Format</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Show Types</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/80">
                   Open-air, rooftop, and after-dark chapters
                 </p>
               </div>
               <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Reach</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Audience Reach</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/80">1M+ organic impressions across past event content</p>
               </div>
               <div className="bg-black/45 p-4 md:p-5">
@@ -205,38 +293,8 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="bg-[#111111] relative z-10 transition-colors duration-500">
-          <SectionDivider id="series" number="01" label="The Branches" glow={MONOLITH_ORANGE} dense />
-          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="0px 0px">
-            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
-              <ExpressionSplit />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <div className="bg-[#F4ECD9] transition-colors duration-500 relative z-10">
-          {/* Warm top-edge fade — bleeds the dark Branches into golden-hour cream */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
-            style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
-          />
-          <SectionDivider id="season" number="02" label="The Season" dark={false} glow={SUN_SETS_GOLD} />
-          <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="0px 0px">
-            <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
-              <ScheduleSection />
-            </Suspense>
-          </ViewportLazy>
-          {/* Warm bottom-edge fade — returns to Featured's near-black */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-20"
-            style={{ background: "linear-gradient(to top, rgba(12,12,12,0.4), transparent)" }}
-          />
-        </div>
-
         <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
-          <SectionDivider id="featured" number="03" label="Featured" glow={`${LIVE_RED}14`} />
+          <SectionDivider id="featured" number="02" label="Past Nights" glow={`${LIVE_RED}14`} />
           <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="0px 0px">
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <FeaturedRecap />
@@ -244,45 +302,8 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <div id="live" className="bg-black relative z-10">
-          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="0px 0px">
-            <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
-              <LiveTickets />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <div className="bg-[#0d0d0d] relative z-10 transition-colors duration-500">
-          <SectionDivider id="showcase" number="04" label="Explore" glow={SUN_SETS_GOLD} dense />
-          <ViewportLazy minHeightClassName="min-h-[900px]" rootMargin="0px 0px">
-            <Suspense fallback={<Skeleton className="h-[900px] w-full opacity-10" />}>
-              <ShowcaseSplit />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <ViewportLazy minHeightClassName="min-h-[60vh]" rootMargin="0px 0px">
-          <Suspense fallback={<Skeleton className="w-full h-[60vh] opacity-20" />}>
-            <CinematicBreak
-              image="/images/untold-story-juany-deron-v2.webp"
-              videoSrc="/videos/hero-video-short.mp4"
-              mobileVideoSrc="/videos/hero-video-short-mobile.mp4"
-              quote="We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music."
-              attribution="The Monolith Project"
-            />
-          </Suspense>
-        </ViewportLazy>
-
-        <div className="bg-[#0c0b0a] relative z-10 transition-colors duration-500 pb-24 md:pb-32">
-          <SectionDivider id="community" number="05" label="Newsletter" glow={SUN_SETS_GOLD} />
-          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="0px 0px">
-            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
-              <NewsletterSection source="homepage_bottom" />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <div id="featured-sets" className="bg-black relative z-10">
+        <div id="showcase" className="bg-black relative z-10">
+          <SectionDivider number="03" label="Radio" glow={MONOLITH_ORANGE} dense />
           <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="0px 0px">
             <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
               <FeaturedSets />
@@ -290,17 +311,38 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <JoinSignalSection />
+        <section id="community" className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-16 md:py-20">
+          <div className="container layout-wide px-6">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+              <div>
+                <span className="font-mono text-[11px] tracking-[0.35em] uppercase font-bold block mb-4 text-primary">
+                  Partners / Contact
+                </span>
+                <h2 className="font-display text-[2.3rem] leading-[0.9] tracking-tight uppercase md:text-[3.4rem] mb-4 text-white">
+                  Bring your venue, brand, or idea into the room.
+                </h2>
+                <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/70">
+                  Monolith works with venues, sponsors, artists, media, and cultural partners who want to build real audience energy around shows, content, and community.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/15 bg-white/[0.02] p-5 md:p-6">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Link href="/partners" className="btn-pill btn-pill-compact w-full justify-center">
+                    Partner With Us <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/contact" className="btn-pill-outline btn-pill-compact w-full justify-center">
+                    Contact <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="0px 0px">
           <Suspense fallback={<Skeleton className="h-[120px] w-full opacity-10" />}>
             <PartnershipMarquee />
-          </Suspense>
-        </ViewportLazy>
-
-        <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="0px 0px">
-          <Suspense fallback={<Skeleton className="h-[120px] w-full opacity-10" />}>
-            <Ticker />
           </Suspense>
         </ViewportLazy>
       </main>

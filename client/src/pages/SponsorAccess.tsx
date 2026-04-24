@@ -109,7 +109,7 @@ export default function SponsorAccess() {
                                     CHASING SUN(SETS)
                                 </h1>
                                 <p className="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
-                                    2026 Sponsorship & Partnership Framework
+                                    2026 Sponsorship & Partnership Opportunities
                                 </p>
                             </div>
 
