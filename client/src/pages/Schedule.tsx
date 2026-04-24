@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -8,6 +8,7 @@ import SEO from "@/components/SEO";
 import { buildScheduleSchema } from "@/lib/schema";
 
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import JoinSignalSection from "@/components/JoinSignalSection";
 import { Link } from "wouter";
 import {
   getScheduledEvents,
@@ -15,6 +16,7 @@ import {
 } from "@/lib/siteExperience";
 import ConversionCTA from "@/components/ConversionCTA";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
+import type { ScheduledEvent } from "@shared/events/types";
 
 const seriesAccent: Record<string, string> = {
   "chasing-sunsets": "bg-clay",
@@ -39,6 +41,20 @@ const seriesDefaultImage: Record<string, string> = {
   "untold-story": "/images/untold-story-juany-deron-v2.webp",
   "monolith-project": "/images/artist-autograf.webp",
 };
+
+function getStatusLabel(status: ScheduledEvent["status"]) {
+  if (status === "on-sale") return "ON SALE";
+  if (status === "coming-soon") return "COMING SOON";
+  if (status === "sold-out") return "SOLD OUT";
+  return "PAST";
+}
+
+function getEventSummary(event: ScheduledEvent) {
+  if (event.description) return event.description;
+  if (event.experienceIntro) return event.experienceIntro;
+  if (event.lineup) return `Lineup: ${event.lineup}.`;
+  return `${seriesLabels[event.series]} at ${event.venue}, ${event.location}.`;
+}
 
 export default function Schedule() {
   usePublicSiteDataVersion();
@@ -128,12 +144,12 @@ export default function Schedule() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(224,90,58,0.18),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.12),transparent_50%)] z-0 pointer-events-none" />
       <div className="fixed inset-0 bg-noise opacity-[0.05] mix-blend-overlay z-0 pointer-events-none" />
 
-      <main className="relative page-shell-start pb-24 z-10">
+      <main id="main-content" tabIndex={-1} className="relative page-shell-start pb-24 z-10">
         <div className="container mx-auto px-4 md:px-8 max-w-[96%]">
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
-              <span className="absolute -top-12 left-2 font-mono text-[10px] tracking-[0.4em] text-primary/60 uppercase">Upcoming Events</span>
+              <span className="absolute -top-12 left-2 font-mono text-xs tracking-[0.24em] text-primary/60 uppercase">Upcoming Events</span>
               <h1 className="font-display text-[clamp(4.2rem,12vw,13rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
                 Schedule
               </h1>
@@ -148,7 +164,8 @@ export default function Schedule() {
                 <button
                   key={month}
                   onClick={() => setActiveMonth(month)}
-                  className={`relative shrink-0 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
+                  data-schedule-filter={month}
+                  className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${activeMonth === month
                     ? "text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                     }`}
@@ -166,7 +183,8 @@ export default function Schedule() {
 
               <button
                 onClick={() => setActiveMonth("MY_LINEUP")}
-                className={`relative shrink-0 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === "MY_LINEUP"
+                data-schedule-filter="MY_LINEUP"
+                className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${activeMonth === "MY_LINEUP"
                   ? "text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground"
                   }`}
@@ -206,10 +224,22 @@ export default function Schedule() {
                 const isExpanded = expandedId === event.id;
                 const [dateMonth, dateDay] = event.date.split(" ");
                 const dayNumber = parseInt(dateDay) || "";
+                const monthLabel = dateMonth.toUpperCase();
+                const previousMonth = filteredEvents[index - 1]?.date.split(" ")[0]?.toUpperCase();
+                const showMonthHeader =
+                  (activeMonth === "ALL" || activeMonth === "MY_LINEUP") &&
+                  (index === 0 || previousMonth !== monthLabel);
 
                 return (
+                  <Fragment key={event.id}>
+                    {showMonthHeader && (
+                      <div className="px-6 md:px-10 py-4 border-b border-white/[0.05] bg-black/20">
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary/80">
+                          {monthLabel}
+                        </span>
+                      </div>
+                    )}
                   <motion.div
-                    key={event.id}
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
@@ -274,6 +304,9 @@ export default function Schedule() {
                             <span className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}>
                               {seriesLabels[event.series]}
                             </span>
+                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full text-white/80">
+                              {getStatusLabel(event.status)}
+                            </span>
                             {isTicketOnSale(event) && (
                               <motion.span 
                                 initial={{ opacity: 0, scale: 0.9 }}
@@ -289,6 +322,12 @@ export default function Schedule() {
                               </span>
                             )}
                           </div>
+                          <p className="mt-2 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/65 line-clamp-2">
+                            {getEventSummary(event)}
+                          </p>
+                          <p className="md:hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
+                            {event.time} · {event.venue} · {event.location}
+                          </p>
                         </div>
 
                         {/* Location Col - Minimal Detail */}
@@ -403,6 +442,7 @@ export default function Schedule() {
                       )}
                     </AnimatePresence>
                   </motion.div>
+                  </Fragment>
                 );
               })
             )}
@@ -422,6 +462,8 @@ export default function Schedule() {
           </div>
         </div>
       </main>
+
+      <JoinSignalSection />
 
       <SocialGrid />
     </div>

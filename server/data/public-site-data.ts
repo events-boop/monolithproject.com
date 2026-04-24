@@ -34,10 +34,10 @@ export const upcomingEvents: ScheduledEvent[] = [
     {
         id: "us-s3e3",
         series: "untold-story",
-        episode: "SEASON III · EPISODE III",
-        title: "ERAN HERSH",
-        subtitle: "Untold Story — Season III · Episode III",
-        headline: "ERAN HERSH — CHICAGO",
+        episode: "CHAPTER IV",
+        title: "UNTOLD STORY IV: ERAN HERSH",
+        subtitle: "Untold Story IV",
+        headline: "UNTOLD STORY IV: ERAN HERSH",
         slug: "untold-story-season-iii-episode-iii-eran-hersh",
         date: "May 16, 2026",
         time: "9:00 PM — Late",
@@ -45,23 +45,23 @@ export const upcomingEvents: ScheduledEvent[] = [
         endsAt: "2026-05-17T03:00:00-05:00",
         doors: "9:00 PM",
         mainExperience: "10:30 PM — Late",
-        venue: "Venue Reveal Soon",
+        venue: "Hideaway",
         location: "Chicago, IL",
-        lineup: "Eran Hersh (Headliner) · Support TBA",
+        lineup: "Eran Hersh (Headliner) · Support TBD",
         status: "on-sale",
         image: "/images/eran-hersh-live-5.webp",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
         sound: "Afro House · Melodic House · Peak-Hour Energy",
-        description: "Untold Story returns on May 16, 2026 with Eran Hersh for a late-night chapter built around immersive sound, tension, and peak-hour release.",
-        experienceIntro: "A focused after-dark room shaped for dancers first. Eran Hersh brings a high-pressure blend of Afro and melodic house into the Untold Story format: intimate scale, strong pacing, and a crowd that stays locked in from open to close.",
-        eventNotice: "THE MONOLITH PROJECT PRESENTS: UNTOLD STORY",
+        description: "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026.",
+        experienceIntro: "A focused after-dark room built for dancers first. Eran Hersh leads Untold Story IV with immersive Afro and melodic house pressure from open to late.",
+        eventNotice: "THE MONOLITH PROJECT PRESENTS: UNTOLD STORY IV",
         whatToExpect: [
-          "Late-night Untold Story chapter",
+          "Late-night Untold Story IV chapter",
           "Immersive room design and focused dancefloor energy",
           "Afro house and melodic pressure built for peak-time movement",
           "Chicago crowd with a tighter, music-first room dynamic",
-          "Support lineup and venue details announced closer to release",
+          "Support lineup reveal to follow",
         ],
         age: "21+",
         activeFunnels: ["waitlist-untold"],
@@ -120,7 +120,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         time: "3:00 PM — 10:00 PM",
         startsAt: "2026-07-04T15:00:00-05:00",
         endsAt: "2026-07-04T22:00:00-05:00",
-        venue: "Venue Reveal Soon",
+        venue: "Castaways",
         location: "Chicago, IL",
         lineup: "Lineup Drops May 15",
         status: "coming-soon",
@@ -250,6 +250,16 @@ function getSeriesEvents(events: ScheduledEvent[], series: EventSeries) {
     return events.filter((event) => event.series === series);
 }
 
+function deriveStartingPrice(event: ScheduledEvent): number | undefined {
+    if (event.startingPrice) return event.startingPrice;
+    if (!event.ticketTiers || event.ticketTiers.length === 0) return undefined;
+
+    const availableTiers = event.ticketTiers.filter((t) => t.available);
+    if (availableTiers.length === 0) return undefined;
+
+    return Math.min(...availableTiers.map((t) => t.price));
+}
+
 type EventPayloadProfile = "full" | "home" | "summary";
 
 function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
@@ -273,6 +283,7 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
         description: event.description,
         age: event.age,
         ticketUrl: event.ticketUrl,
+        startingPrice: deriveStartingPrice(event),
         experienceIntro: event.experienceIntro,
         dress: event.dress,
         tableReservationEmail: event.tableReservationEmail,
@@ -309,6 +320,7 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
         description: event.description,
         age: event.age,
         ticketUrl: event.ticketUrl,
+        startingPrice: deriveStartingPrice(event),
         experienceIntro: event.experienceIntro,
         tableReservationEmail: event.tableReservationEmail,
         recentlyDropped: event.recentlyDropped,
@@ -345,12 +357,13 @@ function resolveEventsForPath(
         return events.map((event) => shapeEvent(event, "home"));
     }
 
-    if (pathname === "/schedule" || pathname.startsWith("/artists/")) {
+    if (pathname === "/schedule" || pathname === "/events" || pathname.startsWith("/artists/")) {
         return events;
     }
 
     if (
         pathname === "/story" ||
+        pathname === "/untold-story" ||
         pathname === "/untold-story-deron-juany-bravo" ||
         pathname.startsWith("/untold-story/")
     ) {
@@ -376,8 +389,11 @@ function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
     if (pathname === "/") return "home";
 
     if (
+        pathname === "/schedule" ||
+        pathname === "/events" ||
         pathname === "/tickets" ||
         pathname === "/story" ||
+        pathname === "/untold-story" ||
         pathname === "/untold-story-deron-juany-bravo" ||
         pathname.startsWith("/untold-story/") ||
         pathname === "/chasing-sunsets" ||

@@ -20,12 +20,14 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import EventFunnelStack from "@/components/EventFunnelStack";
 import ConversionCTA from "@/components/ConversionCTA";
 import EventCountdown from "@/components/EventCountdown";
+import JoinSignalSection from "@/components/JoinSignalSection";
 import Section from "@/components/layout/Section";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import {
   getEventVenueLabel,
   getPrimaryTicketUrl,
+  getSeriesExperienceEvent,
   getSeriesEvents,
   isTicketOnSale,
 } from "@/lib/siteExperience";
@@ -71,18 +73,23 @@ const CHASING_ANCHORS = [
   { label: "Updates", href: "#chasing-funnel" },
 ];
 
+function getStatusLabel(status: string) {
+  if (status === "on-sale") return "ON SALE";
+  if (status === "coming-soon") return "COMING SOON";
+  if (status === "sold-out") return "SOLD OUT";
+  return "PAST";
+}
+
 export default function ChasingSunsets() {
   usePublicSiteDataVersion();
   useScrollSunset();
   const [activeTab, setActiveTab] = useState<'live' | 'residents'>('live');
   const [faqOpen, setFaqOpen] = useState(false);
   const chasingEvents = getSeriesEvents("chasing-sunsets");
-  const chasingFunnelEvent = chasingEvents.find((event) => event.activeFunnels?.length);
-  const liveChasingEvent = chasingEvents.find((event) => isTicketOnSale(event));
-  const featuredChasingEvent =
-    liveChasingEvent ??
-    chasingEvents.find((event) => event.activeFunnels?.length) ??
-    chasingEvents[0];
+  const featuredChasingEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+  const chasingFunnelEvent =
+    (featuredChasingEvent?.activeFunnels?.length ? featuredChasingEvent : undefined) ??
+    chasingEvents.find((event) => event.activeFunnels?.length);
 
   const chasingFaqs = [
     ["Where are the events located?", "Our events take place at various outdoor and rooftop locations across Chicago. Keep an eye on the schedule for specific venues."],
@@ -103,7 +110,11 @@ export default function ChasingSunsets() {
       <main id="main-content" tabIndex={-1}>
 
         {/* Hero — raw, warm, big type */}
-        <section id="chasing-hero" className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
+        <section
+          id="chasing-hero"
+          data-featured-event-id={featuredChasingEvent?.id}
+          className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]"
+        >
           {/* Full-bleed background slider */}
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
 
@@ -118,7 +129,10 @@ export default function ChasingSunsets() {
               className="pointer-events-auto"
             >
               <HorizonDiscMark className="w-12 h-12 sm:w-14 sm:h-14 mb-5 sm:mb-7" />
-              <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase block mb-4 sm:mb-6 text-white/90">
+              <span
+                data-chasing-episode="true"
+                className="font-mono text-xs sm:text-sm tracking-[0.22em] uppercase block mb-4 sm:mb-6 text-white/90"
+              >
                 {featuredChasingEvent ? `${featuredChasingEvent.episode}` : "Series 01"}
               </span>
               <h1 className="font-display flex flex-col text-[clamp(2.5rem,8vw,8rem)] leading-[0.85] uppercase mb-6 sm:mb-8 tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)]">
@@ -143,7 +157,10 @@ export default function ChasingSunsets() {
                    Open-air sunset and night sessions built for movement, warmth, and return.
                  </p>
                  {featuredChasingEvent && (
-                   <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[10px] uppercase tracking-[0.2em] text-[#E8B86D] mb-6 sm:mb-8">
+                   <div
+                     data-chasing-meta="true"
+                     className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 font-mono text-xs sm:text-[11px] uppercase tracking-[0.16em] text-[#E8B86D] mb-6 sm:mb-8"
+                   >
                       <span>{featuredChasingEvent.date}</span>
                       <span className="w-1 h-1 rounded-full bg-white/20" />
                       <span>{getEventVenueLabel(featuredChasingEvent)}</span>
@@ -171,7 +188,7 @@ export default function ChasingSunsets() {
                 {["Open Air", "Melodic + Afro House", "Good Crowd", "Rooftop Series"].map((pill) => (
                   <span
                     key={pill}
-                    className="px-3 py-1.5 rounded-full text-[10px] font-mono tracking-[0.15em] uppercase border border-white/40 bg-black/20 text-white/90"
+                    className="px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-mono tracking-[0.12em] uppercase border border-white/40 bg-black/20 text-white/90"
                   >
                     {pill}
                   </span>
@@ -181,7 +198,7 @@ export default function ChasingSunsets() {
           </div>
         </section>
         <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
-        {featuredChasingEvent ? <EventCountdown eventId={featuredChasingEvent.id} /> : null}
+        {featuredChasingEvent ? <EventCountdown event={featuredChasingEvent} /> : null}
 
         {/* The Concept */}
         <Section id="chasing-concept" scrollAnchor borderTop="sunset-border-accent border-t">
@@ -238,8 +255,15 @@ export default function ChasingSunsets() {
         </div>
 
         {/* NEW: Ticketing / Season Pass Release Structure */}
-        <div id="chasing-tickets" className="scroll-shell-target">
-          <ChasingSunsetsTicketing />
+        <div
+          id="chasing-tickets"
+          data-featured-event-id={featuredChasingEvent?.id}
+          className="scroll-shell-target"
+        >
+          <ChasingSunsetsTicketing
+            featuredEvent={featuredChasingEvent}
+            seasonEvents={chasingEvents}
+          />
         </div>
 
         {/* Episode Gallery — Season III Highlights */}
@@ -319,6 +343,9 @@ export default function ChasingSunsets() {
                               </span>
                               <span className="flex items-center gap-1">
                                 <Calendar size={12} /> {event.time}
+                              </span>
+                              <span className="rounded-full border border-[#E8B86D]/35 px-2 py-1 text-[10px] tracking-[0.2em] text-[#E8B86D]">
+                                {getStatusLabel(event.status)}
                               </span>
                             </div>
                           </div>
@@ -448,6 +475,7 @@ export default function ChasingSunsets() {
         ) : null}
 
       </main>
+      <JoinSignalSection tone="warm" />
       <ConversionStrip event={chasingFunnelEvent || undefined} />
       <FixedTicketBadge />
     </div>

@@ -6,10 +6,17 @@ import { getPublicEvents } from "@/lib/siteData";
 import { ArrowLeft, Clock, MapPin, Ticket, Star } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
+import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
 import { buildScheduledEventSchema } from "@/lib/schema";
 
+function getStatusLabel(status: string) {
+  if (status === "on-sale") return "ON SALE";
+  if (status === "coming-soon") return "COMING SOON";
+  if (status === "sold-out") return "SOLD OUT";
+  return "PAST";
+}
 
 export default function EventDetails() {
   const [, params] = useRoute("/events/:slug");
@@ -43,12 +50,20 @@ export default function EventDetails() {
   }
 
   const bgImage = event.image || "/images/hero-monolith.webp";
+  const cityLabel = event.location.replace(", IL", "").trim();
+  const isEranUntoldIv = event.id === "us-s3e3";
+  const pageTitle = isEranUntoldIv
+    ? "Untold Story IV: Eran Hersh at Hideaway Chicago | May 16, 2026"
+    : `${event.title} at ${event.venue} ${cityLabel} | ${event.date}`;
+  const pageDescription = isEranUntoldIv
+    ? "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026."
+    : `The Monolith Project presents ${event.title} at ${event.venue} ${cityLabel} on ${event.date}.`;
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
       <SEO
-        title={`${event.title} - ${event.venue}`}
-        description={event.description || `Join us for ${event.title} at ${event.venue} on ${event.date}.`}
+        title={pageTitle}
+        description={event.description || pageDescription}
         schemaData={buildScheduledEventSchema(event, `/events/${slug}`)}
       />
 
@@ -70,9 +85,12 @@ export default function EventDetails() {
               <ArrowLeft className="w-4 h-4" /> Schedule
             </button>
 
-            <div className="flex flex-col gap-2 mb-6">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="font-mono text-xs uppercase tracking-[0.4em]" style={{ color: getSeriesColor(event.series) }}>
                 {getSeriesLabel(event.series)}
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.28em] px-3 py-1 border border-white/20 text-white/75">
+                {getStatusLabel(event.status)}
               </span>
             </div>
 
@@ -81,8 +99,11 @@ export default function EventDetails() {
             </h1>
 
             <div className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-white/70 text-xs md:text-sm tracking-[0.2em] uppercase mb-12">
-              <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-white/40" /> {event.venue}</div>
+              <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-white/40" /> {event.venue}, {event.location}</div>
               <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-white/40" /> {event.date} // {event.time}</div>
+              {event.lineup && (
+                <div className="flex items-center gap-2"><Star className="w-4 h-4 text-white/40" /> {event.lineup}</div>
+              )}
               {event.ticketTiers && event.ticketTiers.length > 0 && (
                 <div className="flex items-center gap-2 text-white"><Ticket className="w-4 h-4" /> From ${event.ticketTiers[0].price}</div>
               )}
@@ -152,6 +173,8 @@ export default function EventDetails() {
           </div>
         </div>
       </main>
+
+      <JoinSignalSection />
     </div>
   );
 }

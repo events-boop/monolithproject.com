@@ -5,6 +5,7 @@ import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import EpisodeGallery from "@/components/EpisodeGallery";
 import ArchiveSection from "@/components/ArchiveSection";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
+import JoinSignalSection from "@/components/JoinSignalSection";
 import SEO from "@/components/SEO";
 import { Link } from "wouter";
 import { eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
@@ -73,6 +74,8 @@ export default function UntoldStory() {
         <div id="untold-records" className="scroll-shell-target relative z-20 pt-8 border-t border-white/10">
            <ArchiveSection />
         </div>
+
+        <JoinSignalSection className="mt-12" />
 
         <section id="untold-updates" className="scroll-shell-target py-0 relative z-20">
           <SlimSubscribeStrip title="UNTOLD UPDATES" source="untold_story_strip" />

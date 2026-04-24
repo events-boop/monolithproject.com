@@ -61,6 +61,13 @@ const seriesDefaultImage: Record<string, string> = {
   "monolith-project": "/images/artist-autograf.webp",
 };
 
+function getStatusLabel(status: ScheduledEvent["status"]) {
+  if (status === "on-sale") return "ON SALE";
+  if (status === "coming-soon") return "COMING SOON";
+  if (status === "sold-out") return "SOLD OUT";
+  return "PAST";
+}
+
 export default function ScheduleSection() {
   const upcomingEvents = getScheduledEvents();
   const { preconnectGateway } = useIntentPrefetch();
@@ -134,7 +141,7 @@ export default function ScheduleSection() {
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
-                className={`relative shrink-0 px-4 md:px-6 py-2 md:py-3 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ${activeMonth === month
+                className={`relative shrink-0 min-h-[var(--tap-target-min)] px-4 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${activeMonth === month
                   ? "text-white shadow-sm"
                   : "text-black/65 hover:text-black"
                   }`}
@@ -281,11 +288,9 @@ export default function ScheduleSection() {
                               NEW DROP
                             </span>
                           )}
-                          {event.status === "on-sale" && !event.recentlyDropped && (
-                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
-                              ACTIVE
-                            </span>
-                          )}
+                          <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
+                            {getStatusLabel(event.status)}
+                          </span>
                         </div>
                       </div>
 

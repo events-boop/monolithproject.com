@@ -21,7 +21,7 @@ import FloatingFactsChip from "@/components/FloatingFactsChip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import SignalBarsMark from "@/components/SignalBarsMark";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
-import { CTA_LABELS } from "@/lib/cta";
+import JoinSignalSection from "@/components/JoinSignalSection";
 
 const radioArtists = [
   {
@@ -626,34 +626,7 @@ export default function Radio() {
         </AnimatePresence>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-6 border-t border-border">
-        <div className="container layout-narrow text-center">
-          <RevealText as="h2" className="font-display text-4xl md:text-6xl text-foreground mb-4" blurStrength={12}>
-            HEAR IT LIVE
-          </RevealText>
-          <RevealText as="p" className="text-muted-foreground max-w-md mx-auto mb-12 flex" stagger={0.01} delay={0.2}>
-            Every set gets recorded and added to the archive.
-            Come to the show, hear it first.
-          </RevealText>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <MagneticButton strength={0.4}>
-              <Link href="/tickets" asChild>
-                <a className="btn-pill-radio w-full flex items-center justify-center">
-                  {CTA_LABELS.tickets}
-                </a>
-              </Link>
-            </MagneticButton>
-            <MagneticButton strength={0.4}>
-              <Link href="/schedule" asChild>
-                <a className="btn-pill-neutral w-full flex items-center justify-center">
-                  {CTA_LABELS.schedule}
-                </a>
-              </Link>
-            </MagneticButton>
-          </div>
-        </div>
-      </section>
+      <JoinSignalSection className="border-t border-border" />
 
       <FloatingFactsChip tone="nocturne" storageKey="floating-facts-chip-radio" />
     </div>
