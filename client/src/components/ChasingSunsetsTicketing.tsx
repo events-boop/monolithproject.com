@@ -1,8 +1,8 @@
 import { Check, ArrowRight, Lock, Anchor } from "lucide-react";
 import type { ScheduledEvent } from "@shared/events/types";
-import { useUI } from "@/contexts/UIContext";
 import { useLocation } from "wouter";
 import { getSeriesEvents } from "@/lib/siteExperience";
+import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
 type ChasingSunsetsTicketingProps = {
   featuredEvent?: ScheduledEvent | null;
@@ -45,7 +45,6 @@ export default function ChasingSunsetsTicketing({
   featuredEvent,
   seasonEvents,
 }: ChasingSunsetsTicketingProps) {
-  const { openDrawer } = useUI();
   const [, setLocation] = useLocation();
   const chasingEvents = seasonEvents ?? getSeriesEvents("chasing-sunsets");
   const pricingEvent = featuredEvent ?? chasingEvents[0];
@@ -99,12 +98,14 @@ export default function ChasingSunsetsTicketing({
                   ))}
                 </div>
                 <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <button
-                    onClick={() => openDrawer("newsletter")}
+                  <a
+                    href={CHASING_SUNSETS_DROP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn-pill-sunsets btn-pill-wide"
                   >
                     SIGN UP FOR THE DROP
-                  </button>
+                  </a>
                   <button
                     onClick={() => setLocation("/schedule")}
                     className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide"
@@ -143,12 +144,14 @@ export default function ChasingSunsetsTicketing({
                         ))}
                     </ul>
 
-                    <button 
-                        onClick={() => openDrawer('newsletter')}
+                    <a
+                        href={CHASING_SUNSETS_DROP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide relative z-10"
                     >
                         Season Updates
-                    </button>
+                    </a>
                 </div>
 
                 {/* VIP Season Pass */}
@@ -252,12 +255,14 @@ export default function ChasingSunsetsTicketing({
                         )}
 
                         <div className="flex flex-col justify-end">
-                            <button 
-                                onClick={() => openDrawer('newsletter')}
+                            <a
+                                href={CHASING_SUNSETS_DROP_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide group"
                             >
                                 Unlock Presale <ArrowRight className="w-3.5 h-3.5" />
-                            </button>
+                            </a>
                             <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-widest text-white/40">
                               {hasStructuredPricing
                                 ? "First-release pricing is limited"

@@ -15,6 +15,7 @@ import {
   getSeriesLabel,
 } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
+import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
@@ -150,9 +151,14 @@ export default function Home() {
                   Chasing Sun(Sets) is Monolith&apos;s open-air series: house music by the water, headline moments at golden hour, and a Chicago crowd that comes for the music first.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <Link href="/newsletter" className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto">
+                  <a
+                    href={CHASING_SUNSETS_DROP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto"
+                  >
                     Sign Up for Drops
-                  </Link>
+                  </a>
                   <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide w-full justify-center sm:w-auto">
                     View Chasing Sun(Sets)
                   </Link>
