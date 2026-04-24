@@ -433,32 +433,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               {/* CENTER: NAV ITEMS */}
               <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="ABOUT"
-                  href="/about"
-                  isActive={location === "/about" || location === "/togetherness"}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "ABOUT", href: "/about#story" },
-                      { label: "TOGETHERNESS", href: "/about#togetherness" },
-                      { label: "OUR PRINCIPLES", href: "/about#manifesto" },
-                    ],
-                    feature: {
-                      title: "WHAT MONOLITH IS",
-                      subtitle: "Chicago Music Project",
-                      image: "/images/hero-monolith-modern.webp",
-                      href: "/about",
-                      ctaText: "About Monolith",
-                      icon: "arrow",
-                      badge: "ABOUT"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="EVENTS"
+                  label="EVENT SERIES"
                   href="/chasing-sunsets"
                   isActive={location.includes("/chasing-sunsets") || location.includes("/story") || location.includes("/untold-story") || location === "/schedule" || location === "/lineup" || location.startsWith("/events/")}
                   isLight={isLight}
@@ -488,7 +463,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       href: "/chasing-sunsets",
                       ctaText: "Explore Season",
                       icon: "arrow",
-                      badge: "EVENTS"
+                      badge: "SERIES"
                     }
                   }}
                 />
@@ -519,7 +494,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="ARCHIVE"
+                  label="GALLERY"
                   href="/archive"
                   isActive={location === "/archive" || location.includes("/insights")}
                   isLight={isLight}
@@ -527,7 +502,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "EVENT ARCHIVE", href: "/archive" },
+                      { label: "EVENT GALLERY", href: "/archive" },
                       { label: "JOURNAL", href: "/insights" },
                       { label: "CHASING SUN(SETS) SEASONS", href: "/chasing-sunsets#archive" },
                       { label: "UNTOLD STORY SEASONS", href: "/story#archive" },
@@ -537,9 +512,34 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       subtitle: "Every room, every set, every season",
                       image: "/images/untold-story-juany-deron-v2.webp",
                       href: "/archive",
-                      ctaText: "Enter The Archive",
+                      ctaText: "Enter The Gallery",
                       icon: "arrow",
-                      badge: "ARCHIVE"
+                      badge: "GALLERY"
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="ABOUT"
+                  href="/about"
+                  isActive={location === "/about" || location === "/togetherness"}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "ABOUT", href: "/about#story" },
+                      { label: "TOGETHERNESS", href: "/about#togetherness" },
+                      { label: "OUR PRINCIPLES", href: "/about#manifesto" },
+                    ],
+                    feature: {
+                      title: "WHAT MONOLITH IS",
+                      subtitle: "Chicago Music Project",
+                      image: "/images/hero-monolith-modern.webp",
+                      href: "/about",
+                      ctaText: "About Monolith",
+                      icon: "arrow",
+                      badge: "ABOUT"
                     }
                   }}
                 />

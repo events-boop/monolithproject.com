@@ -152,7 +152,7 @@ export default function Footer() {
               {topNavRight}
             </span>
             <p className="text-white/70 text-sm leading-relaxed max-w-[220px]">
-              Chicago's premier electronic music ecosystem. Curated rooms. Uncompromised sound. The best nights in Chicago.
+              Chicago-rooted house music experiences. Curated rooms. Uncompromised sound. Built for people who return.
             </p>
           </div>
 

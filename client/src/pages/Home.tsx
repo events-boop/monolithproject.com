@@ -96,6 +96,9 @@ export default function Home() {
                   <h2 className="font-display text-[clamp(2.2rem,5vw,4.8rem)] leading-[0.9] uppercase tracking-tight text-white">
                     {featuredMoment.headline || featuredMoment.title}
                   </h2>
+                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
+                    The sun sets. The signal rises. July 4th begins the next chapter.
+                  </p>
                   <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
                     {featuredMomentSummary}
                   </p>
@@ -139,29 +142,36 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
-                One Platform. Multiple Frequencies.
+                Built for the moment. Designed to last.
               </span>
             </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              <Link href="/story" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Untold Story</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">After-Dark Chapters</h3>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <Link href="/chasing-sunsets" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Series</p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">Chasing Sun(Sets)</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
-                  Late-night rooms designed for pacing, intentional crowd energy, and uncompromised sound.
+                  Open-air house music gatherings shaped by golden hour, lakefront energy, and community.
                 </p>
               </Link>
-              <Link href="/chasing-sunsets" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Chasing Sun(Sets)</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Open-Air Chapters</h3>
+              <Link href="/story" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Series</p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">Untold Story</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
-                  Rooftop and outdoor sessions built around golden-hour movement and clear sonic architecture.
+                  After-dark rooms built for deeper sound, immersive dancefloors, and artist-led moments.
                 </p>
               </Link>
               <Link href="/radio" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Radio</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Broadcast Memory</h3>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Broadcast</p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">Radio</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
-                  Episode archive and curated mixes that extend each room beyond the night itself.
+                  Mixes, conversations, and cultural memory from the artists shaping the sound.
+                </p>
+              </Link>
+              <Link href="/partners" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Collaborations</p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">Partners</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                  Brand and venue collaborations built around real audience energy, content, and community.
                 </p>
               </Link>
             </div>
@@ -173,7 +183,7 @@ export default function Home() {
             <div className="grid gap-px border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-4">
               <div className="bg-black/45 p-4 md:p-5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Past Signal</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/80">Chicago-rooted music platform</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/80">Chicago-rooted music company</p>
               </div>
               <div className="bg-black/45 p-4 md:p-5">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Format</p>

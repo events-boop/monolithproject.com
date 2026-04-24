@@ -103,7 +103,7 @@ export default function ChasingSunsetsFacts() {
           <article className="luxe-surface-dark rounded-2xl p-7">
             <h2 className="font-display text-3xl mb-4 uppercase">What It Is</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Chasing Sun(Sets) is The Monolith Project&apos;s Chicago-rooted sunset series and radio platform. It includes
+              Chasing Sun(Sets) is The Monolith Project&apos;s Chicago-rooted sunset series and radio show. It includes
               in-person events, ticketed dates, and a continuing radio show featuring guest mixes and full episodes.
             </p>
           </article>

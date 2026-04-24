@@ -127,7 +127,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         inventoryState: "low",
         format: "Day into Night · Open Air",
         dress: "Sun-Kin · Golden Hour Attire",
-        description: "The flagship open-air ecosystem session. Start at sunset, continue after dark. Inventory is capped to protect the room.",
+        description: "The flagship open-air summer gathering. Start at sunset, continue after dark. Inventory is capped to protect the room.",
         activeFunnels: ["waitlist-chasing"],
         tableReservationEmail: "vip@chasingsunsets.music",
         startingPrice: 30,

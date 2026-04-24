@@ -228,13 +228,13 @@ function renderHomeCriticalLayout() {
           <h1>MONOLITH <span class="sr-only">Project | Chicago House & Techno</span></h1>
           <div class="critical-hero__rule" aria-hidden="true"></div>
           <p class="critical-hero__kicker">PROJECT</p>
-          <p class="critical-hero__summary">Root Architecture / Events / Radio / Research</p>
+          <p class="critical-hero__summary">Upcoming Shows / Chasing Sun(Sets) / Untold Story / Radio</p>
         </header>
       </section>
       <section class="critical-home-content" aria-label="Monolith overview">
         <h2>The Monolith Project</h2>
         ${renderParagraphs([
-          "The Monolith Project is a Chicago music platform built around events, radio, and long-term cultural memory.",
+          "The Monolith Project is a Chicago-rooted music company producing house music experiences across open-air lakefront gatherings, after-dark rooms, and artist-led radio.",
           "Chasing Sun(Sets) covers open-air and golden-hour sessions. Untold Story covers the after-dark room. The radio archive keeps the signal active between events.",
         ])}
       </section>
@@ -570,7 +570,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "About The Monolith Project",
         [
           "The Monolith Project is a Chicago-rooted music project designed around events, radio, and cultural continuity.",
-          "Chasing Sun(Sets), Untold Story, and the radio archive all sit inside the same ecosystem.",
+          "Chasing Sun(Sets), Untold Story, and the radio archive all belong to one Chicago music company.",
         ],
         sharedLinks,
       ),

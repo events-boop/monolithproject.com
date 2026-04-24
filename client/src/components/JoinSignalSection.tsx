@@ -59,7 +59,7 @@ export default function JoinSignalSection({
               Stay In The Loop, Not The Noise
             </h2>
             <p className={cn("max-w-2xl text-sm md:text-base leading-relaxed", styles.body)}>
-              Tickets, updates, and radio drops from one Chicago-rooted platform.
+              Tickets, updates, and radio drops from one Chicago-rooted music company.
               Intentional signal, no generic blast.
             </p>
           </div>
@@ -67,10 +67,10 @@ export default function JoinSignalSection({
           <div className={cn("rounded-2xl border p-5 md:p-6", styles.panel)}>
             <div className="grid gap-3 sm:grid-cols-3">
               <Link href="/schedule" className="btn-pill btn-pill-compact w-full justify-center">
-                View Upcoming Dates <ArrowUpRight className="w-4 h-4" />
+                View Upcoming Shows <ArrowUpRight className="w-4 h-4" />
               </Link>
               <Link href="/newsletter" className="btn-pill-outline btn-pill-compact w-full justify-center">
-                Get Updates <ArrowUpRight className="w-4 h-4" />
+                Sign Up for Drops <ArrowUpRight className="w-4 h-4" />
               </Link>
               <Link href="/radio" className="btn-pill-neutral btn-pill-compact w-full justify-center">
                 Listen to Radio <ArrowUpRight className="w-4 h-4" />

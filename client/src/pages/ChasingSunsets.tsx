@@ -226,7 +226,7 @@ export default function ChasingSunsets() {
                 className="space-y-6 rounded-2xl border p-6 md:p-8 backdrop-blur-sm sunset-border-accent sunset-glass-card"
               >
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  Chicago's premier open-air ecosystem. Every show starts during golden hour. The music
+                  Chicago's open-air house music gathering. Every show starts during golden hour. The music
                   builds as the environment shifts. By the time the sun is gone, the uncompromised sound is already there.
                 </p>
                 <p className="leading-relaxed sunset-text-70">
@@ -294,17 +294,17 @@ export default function ChasingSunsets() {
         {/* Upcoming Events / Residents */}
         <Section id="chasing-upcoming" scrollAnchor borderTop="sunset-border-accent border-t" bg="sunset-warm-section">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 gap-6 sunset-border-accent border-b">
-              <div className="flex gap-8">
+              <div className="flex flex-wrap gap-4 sm:gap-8">
                 <button
                   onClick={() => setActiveTab('live')}
-                  className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'live' ? '' : 'opacity-40 hover:opacity-70'}`}
+                  className={`font-display text-2xl sm:text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'live' ? '' : 'opacity-40 hover:opacity-70'}`}
                   data-cursor-text="LIVE"
                 >
                   LIVE EVENTS
                 </button>
                 <button
                   onClick={() => setActiveTab('residents')}
-                  className={`font-display text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'residents' ? '' : 'opacity-40 hover:opacity-70'}`}
+                  className={`font-display text-2xl sm:text-4xl md:text-5xl transition-colors sunset-text ${activeTab === 'residents' ? '' : 'opacity-40 hover:opacity-70'}`}
                   data-cursor-text="DJS"
                 >
                   RESIDENT DJS

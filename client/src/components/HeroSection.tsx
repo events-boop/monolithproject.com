@@ -128,7 +128,7 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 const HERO_TITLE = "THE MONOLITH PROJECT";
 const HERO_PRIMARY_LINE = "Togetherness is the frequency. Music is the guide.";
 const HERO_SUBHEAD =
-  "A Chicago-rooted music platform building intentional experiences across open-air sessions, after-dark rooms, radio, and cultural memory.";
+  "A Chicago-rooted music company producing house music experiences across open-air lakefront gatherings, after-dark rooms, and artist-led radio.";
 
 function toSystemText(value?: string | null) {
   return (value || "")
@@ -390,7 +390,7 @@ export default function HeroSection() {
               <p className="max-w-2xl text-balance font-display text-[clamp(1.05rem,2.8vw,2rem)] leading-[1.15] text-white/92">
                 {HERO_PRIMARY_LINE}
               </p>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Upcoming Shows / Chasing Sun(Sets) / Untold Story / Radio</BrandTranslatorLabel>
               <p
                 data-home-hero-summary="true"
                 className="mt-6 max-w-md text-center font-mono text-xs uppercase tracking-[0.12em] text-white/58 md:mt-8 md:max-w-xl md:text-left md:text-sm md:tracking-[0.2em]"
@@ -399,10 +399,10 @@ export default function HeroSection() {
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link href="/schedule" className="btn-pill-neutral btn-pill-wide">
-                  View Upcoming Dates
+                  View Upcoming Shows
                 </Link>
                 <Link href="/newsletter" className="btn-pill-outline btn-pill-wide">
-                  Get Updates
+                  Sign Up for Drops
                 </Link>
                 <Link href="/radio" className="btn-text-action">
                   Listen to Radio
