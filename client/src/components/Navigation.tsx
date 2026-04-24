@@ -321,7 +321,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
             >
               <div
-                className="relative h-8 sm:h-11"
+                className="relative h-11 sm:h-11"
                 style={
                   bannerPayload.status === "live"
                     ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
@@ -337,7 +337,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       .fill(bannerPayload.text)
                       .map((text, index) => (
                         <span key={index} className="relative z-10 inline-flex items-center">
-                          <span className="mx-4 text-[10px] font-mono font-bold uppercase tracking-[0.15em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
+                          <span className="mx-4 text-[11px] font-mono font-bold uppercase tracking-[0.12em] text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:mx-6 sm:text-[11px]">
                             {text}
                           </span>
                           <Ticket className="mx-1.5 h-4.5 w-4.5 text-white/90 sm:mx-3 sm:h-6 sm:w-6" />
@@ -352,7 +352,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     ) : (
                       <Ticket className="h-3.5 w-3.5 shrink-0 text-white/90" />
                     )}
-                    <span className="min-w-0 truncate font-mono text-[10px] font-bold uppercase tracking-[0.15em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                    <span className="min-w-0 truncate font-mono text-[11px] font-bold uppercase tracking-[0.12em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
                       {bannerPayload.text}
                     </span>
                   </div>
@@ -372,7 +372,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     type="button"
                     onClick={handleLogoClick}
                     aria-label="Go to homepage"
-                    className="flex items-center gap-3 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 rounded-sm focus-visible:ring-primary/70 pointer-events-auto"
+                    data-nav-logo="true"
+                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
                   >
                     <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
@@ -398,7 +399,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[10px] min-[360px]:text-[10px] tracking-[0.2em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />
@@ -545,8 +546,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="PLAN YOUR NIGHT"
-                  href="/vip"
-                  isActive={location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact" || location === "/newsletter"}
+                  href="/guide"
+                  isActive={location === "/guide" || location === "/travel" || location === "/faq" || location === "/partners" || location === "/vip" || location === "/sponsors" || location === "/press" || location === "/booking" || location === "/contact" || location === "/newsletter"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
@@ -561,13 +562,13 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       { label: "CONTACT", href: "/contact" },
                     ],
                     feature: {
-                      title: "VIP & SPONSOR ACCESS",
-                      subtitle: "Elevated Experiences",
+                      title: "THE NIGHT GUIDE",
+                      subtitle: "Entry, timing, and elevated access",
                       image: "/images/industrial-roster.webp",
-                      href: "/vip",
-                      ctaText: "VIP Access",
+                      href: "/guide",
+                      ctaText: "Open Guide",
                       icon: "arrow",
-                      badge: "VIP"
+                      badge: "GUIDE"
                     }
                   }}
                 />
@@ -589,7 +590,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         if (cta.isExternal) preconnectGateway(cta.href);
                       }}
                       onClick={() => signalChirp.click()}
-                      className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
+                      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 ${cta.tool === "posh"
                         ? "border-transparent bg-primary text-black"
                         : cta.tool === "laylo"
                           ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
@@ -641,12 +642,13 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.click();
                         setMobileMenuOpen(!mobileMenuOpen);
                       }}
+                      data-nav-menu-toggle="true"
                       aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                       aria-haspopup="dialog"
                       aria-expanded={mobileMenuOpen}
                       aria-controls={mobileMenuId}
                       className={cn(
-                        "flex items-center gap-3 py-1.5 px-2.5 sm:px-4 rounded-full transition-all duration-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                        "flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 px-3 sm:px-4 rounded-full transition-all duration-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
                         isLight ? "text-charcoal border-black/5" : "text-foreground border-white/5",
                         mobileMenuOpen ? "bg-white text-black" : "bg-white/5 backdrop-blur-md"
                       )}

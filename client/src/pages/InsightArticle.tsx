@@ -102,7 +102,7 @@ export default function InsightArticle() {
          >
             <ResponsiveImage
               src={article.image}
-              alt=""
+              alt={article.title}
               sizes="100vw"
               loading="lazy"
               decoding="async"

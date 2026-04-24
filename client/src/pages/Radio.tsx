@@ -317,7 +317,7 @@ export default function Radio() {
         >
           <ResponsiveImage
             src="/images/autograf-recap.jpg"
-            alt=""
+            alt="Monolith Project professional audio gear and studio setup"
             sizes="400px"
             loading="lazy"
             decoding="async"

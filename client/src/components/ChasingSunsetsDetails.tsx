@@ -24,7 +24,7 @@ export default function ChasingSunsetsDetails() {
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
                 <ResponsiveImage
                     src="/images/chasing-sunsets-premium.webp"
-                    alt=""
+                    alt="Golden hour open-air music session at Chasing Sun(Sets) Chicago"
                     loading="lazy"
                     decoding="async"
                     sizes="100vw"

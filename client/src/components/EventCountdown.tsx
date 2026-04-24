@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import type { ScheduledEvent } from "@shared/events/types";
 import { getPublicEvents } from "@/lib/siteData";
 import {
+  type EventWindowStatus,
   getSeriesLabel,
   getEventVenueLabel,
   getEventWindow,
+  getEventWindowStatus,
   getEventById as getEventByIdShared,
 } from "@/lib/siteExperience";
 import { getEventOutlinePillToneClass, getEventPillToneClass } from "@/lib/ctaTone";
@@ -20,6 +22,11 @@ function getNextEvent(eventId?: string) {
     if (specificEvent) return specificEvent;
   }
   return upcomingEvents.find(e => e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
+}
+
+function resolveCountdownEvent(event?: ScheduledEvent | null, eventId?: string) {
+  if (event) return event;
+  return getNextEvent(eventId);
 }
 
 function getTimeLeft(target: Date | null) {
@@ -44,7 +51,7 @@ function Digit({ value, label, accentColor }: { value: number; label: string; ac
         </span>
       </div>
       <span
-        className="font-mono text-[10px] md:text-[13px] uppercase tracking-[0.3em]"
+        className="font-mono text-[11px] md:text-[13px] uppercase tracking-[0.24em]"
         style={{ color: accentColor }}
       >
         {label}
@@ -53,7 +60,45 @@ function Digit({ value, label, accentColor }: { value: number; label: string; ac
   );
 }
 
-function LiveClock({ target, accentColor }: { target: Date | null; accentColor: string }) {
+function CountdownStateCard({
+  accentColor,
+  eyebrow,
+  detail,
+}: {
+  accentColor: string;
+  eyebrow: string;
+  detail: string;
+}) {
+  return (
+    <div
+      className="w-full max-w-[28rem] rounded-[1.75rem] border border-white/10 bg-black/25 p-6 shadow-[0_24px_60px_rgba(0,0,0,0.28)] ring-1 ring-inset ring-white/6 backdrop-blur-sm"
+      role="status"
+    >
+      <span
+        className="font-mono text-[11px] uppercase tracking-[0.26em]"
+        style={{ color: accentColor }}
+      >
+        {eyebrow}
+      </span>
+      <p className="mt-4 font-heavy text-[clamp(1.75rem,4vw,3rem)] uppercase leading-[0.92] text-white">
+        Countdown standby
+      </p>
+      <p className="mt-4 max-w-[28ch] text-sm leading-relaxed text-white/65">
+        {detail}
+      </p>
+    </div>
+  );
+}
+
+function LiveClock({
+  target,
+  accentColor,
+  status,
+}: {
+  target: Date | null;
+  accentColor: string;
+  status: EventWindowStatus;
+}) {
   const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target));
 
   useEffect(() => {
@@ -65,8 +110,37 @@ function LiveClock({ target, accentColor }: { target: Date | null; accentColor: 
     return () => clearInterval(interval);
   }, [target?.getTime()]);
 
-  if (!target) return null;
-  if (!timeLeft) return null;
+  if (status === "unscheduled") {
+    return (
+      <CountdownStateCard
+        accentColor={accentColor}
+        eyebrow="Schedule Locks Soon"
+        detail="The countdown activates as soon as the exact event window is published."
+      />
+    );
+  }
+
+  if (status === "live") {
+    return (
+      <CountdownStateCard
+        accentColor={accentColor}
+        eyebrow="Live Now"
+        detail="The room is active. Entry timing and on-site flow are now driving the experience."
+      />
+    );
+  }
+
+  if (status === "past") {
+    return (
+      <CountdownStateCard
+        accentColor={accentColor}
+        eyebrow="Chapter Complete"
+        detail="This window has closed. Stay on the list for the next chapter and the next pricing move."
+      />
+    );
+  }
+
+  if (!target || !timeLeft) return null;
 
   return (
     <div className="flex items-end gap-1 sm:gap-3 md:gap-8 w-full max-w-full overflow-hidden" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
@@ -99,19 +173,30 @@ function LiveClock({ target, accentColor }: { target: Date | null; accentColor: 
   );
 }
 
-export default function EventCountdown({ eventId }: { eventId?: string }) {
-  const event = getNextEvent(eventId);
+type EventCountdownProps = {
+  event?: ScheduledEvent | null;
+  eventId?: string;
+};
 
-  if (!event) return null;
+export default function EventCountdown({ event, eventId }: EventCountdownProps) {
+  const resolvedEvent = resolveCountdownEvent(event, eventId);
 
-  const isSunsets = event.series === "chasing-sunsets";
-  const seriesColor = isSunsets ? "#E8B86D" : event.series === "untold-story" ? "#22D3EE" : "#E05A3A";
-  const seriesLabel = getSeriesLabel(event.series);
-  const countdownTitle = event.headline || event.title;
-  const venueLabel = getEventVenueLabel(event);
+  if (!resolvedEvent) return null;
+
+  const isSunsets = resolvedEvent.series === "chasing-sunsets";
+  const seriesColor = isSunsets ? "#E8B86D" : resolvedEvent.series === "untold-story" ? "#22D3EE" : "#E05A3A";
+  const seriesLabel = getSeriesLabel(resolvedEvent.series);
+  const countdownTitle = resolvedEvent.headline || resolvedEvent.title;
+  const venueLabel = getEventVenueLabel(resolvedEvent);
+  const eventWindow = getEventWindow(resolvedEvent);
+  const windowStatus = getEventWindowStatus(resolvedEvent);
 
   return (
-    <div className={`relative w-full overflow-hidden transition-colors duration-700 bg-noise ${isSunsets ? 'bg-[#120f0a]' : 'bg-[#0a0f12]'}`}>
+    <div
+      data-countdown-event-id={resolvedEvent.id}
+      data-countdown-state={windowStatus}
+      className={`relative w-full overflow-hidden transition-colors duration-700 bg-noise ${isSunsets ? 'bg-[#120f0a]' : 'bg-[#0a0f12]'}`}
+    >
       {/* Dynamic Series Gradient Glow */}
       <div className={`absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full blur-[140px] opacity-[0.12] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-orange-500/40' : 'bg-cyan-500/40'}`} />
       <div className={`absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[140px] opacity-[0.08] pointer-events-none transition-all duration-1000 ${isSunsets ? 'bg-amber-600/30' : 'bg-indigo-600/30'}`} />
@@ -123,12 +208,12 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
           <div className="flex flex-col gap-6 shrink-0">
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="w-2 h-2 rounded-none motion-safe:animate-pulse" style={{ backgroundColor: seriesColor }} />
-              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/40">
+              <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.26em] text-white/45">
                 Next Event
               </span>
               <span aria-hidden="true" className="h-px w-6 bg-white/15" />
               <span
-                className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em]"
+                className="font-mono text-[11px] md:text-xs uppercase tracking-[0.24em]"
                 style={{ color: seriesColor }}
               >
                 {seriesLabel}
@@ -142,41 +227,41 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
                 className="mt-5 font-mono text-[clamp(1rem,2.2vw,1.65rem)] uppercase tracking-[0.3em] drop-shadow-md"
                 style={{ color: seriesColor }}
               >
-                {event.date}
+                {resolvedEvent.date}
               </p>
-              {event.venue && (
+              {resolvedEvent.venue && (
                 <p className="font-sans text-lg md:text-xl text-white/50 mt-4 font-light italic max-w-2xl">
-                  {venueLabel} // {event.dress || "Elevated Attire"}
+                  {venueLabel} // {resolvedEvent.dress || "Elevated Attire"}
                 </p>
               )}
 
               {/* SS-Tier Scarcity & Dynamic Pricing */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                {event.inventoryState === "low" && (
-                  <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[10px] uppercase tracking-widest motion-safe:animate-pulse">
+                {resolvedEvent.inventoryState === "low" && (
+                  <div className="bg-red-500/20 text-red-500 px-3 py-1 border border-red-500/30 font-mono text-[11px] uppercase tracking-[0.18em] motion-safe:animate-pulse">
                     Limited Capacity
                   </div>
                 )}
-                {event.ticketTiers && event.ticketTiers.length > 0 && (
+                {resolvedEvent.ticketTiers && resolvedEvent.ticketTiers.length > 0 && (
                   <div className="font-mono text-xs uppercase tracking-widest text-white/60">
-                    Admission from <span className="text-white font-bold">${Math.min(...event.ticketTiers.map(t => t.price))}</span>
+                    Admission from <span className="text-white font-bold">${Math.min(...resolvedEvent.ticketTiers.map(t => t.price))}</span>
                   </div>
                 )}
               </div>
 
-              {event.location && (
-                <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+              {resolvedEvent.location && (
+                <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-white/35">
                   Capacity is limited to keep the room comfortable. Secure entry before pricing changes.
                 </p>
               )}
             </div>
-            {event.ticketUrl ? (
+            {resolvedEvent.ticketUrl ? (
               <div className="flex flex-col gap-4">
                 <a
-                  href={event.ticketUrl}
+                  href={resolvedEvent.ticketUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${getEventPillToneClass(event)} group self-start`}
+                  className={`${getEventPillToneClass(resolvedEvent)} group self-start`}
                 >
                   <span className="font-mono font-bold text-xs uppercase tracking-[0.25em]">Secure Your Entry</span>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -194,7 +279,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
             ) : (
               <a
                 href="/newsletter"
-                className={`${getEventOutlinePillToneClass(event)} group self-start`}
+                className={`${getEventOutlinePillToneClass(resolvedEvent)} group self-start`}
                 >
                   <span className="font-mono font-black text-sm md:text-base uppercase tracking-[0.3em] drop-shadow-sm">
                     GET THE NEXT DATE →
@@ -208,7 +293,7 @@ export default function EventCountdown({ eventId }: { eventId?: string }) {
 
           {/* Right: Live countdown */}
           <div className="flex flex-1 justify-center lg:justify-end">
-            <LiveClock target={getEventWindow(event).start} accentColor={seriesColor} />
+            <LiveClock target={eventWindow.start} accentColor={seriesColor} status={windowStatus} />
           </div>
 
         </div>

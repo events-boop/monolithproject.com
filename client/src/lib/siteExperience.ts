@@ -89,6 +89,30 @@ export function getSeriesEvents(
   return getScheduledEvents(now).filter((event) => event.series === series);
 }
 
+export function getSeriesExperienceEvent(
+  series: ScheduledEvent["series"],
+  slot: SiteExperienceSlot = "hero",
+  now: Date = new Date(),
+) {
+  const configuredEvent = getFeaturedEventForSlot(slot);
+  if (
+    configuredEvent?.series === series &&
+    getEventWindowStatus(configuredEvent, now) !== "past"
+  ) {
+    return configuredEvent;
+  }
+
+  const seriesEvents = getSeriesEvents(series, now);
+  return (
+    seriesEvents.find((event) => isTicketOnSale(event, now)) ??
+    seriesEvents.find((event) => event.activeFunnels?.length) ??
+    seriesEvents[0] ??
+    [...getPublicEvents()]
+      .filter((event) => event.series === series)
+      .sort(compareEvents)[0]
+  );
+}
+
 export function getExperienceEvent(
   slot: SiteExperienceSlot,
   now: Date = new Date(),

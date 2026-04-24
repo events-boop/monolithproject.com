@@ -73,7 +73,7 @@ export default function EventDetails() {
         <div className="relative pt-[20vh] pb-[10vh] min-h-[70vh] flex flex-col justify-end px-6 xl:px-12 border-b border-white/10">
           <ResponsiveImage
             src={bgImage}
-            alt=""
+            alt={event.title}
             priority
             sizes="100vw"
             className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 blur-sm brightness-50 transition-opacity duration-1000"

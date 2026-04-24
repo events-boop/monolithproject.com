@@ -227,8 +227,8 @@ export default function VideoHeroSlider({
               ) : slide.poster ? (
                 <ResponsiveSlideImage
                   src={slide.poster}
-                  alt=""
-                  ariaHidden
+                  alt={slide.alt || "Monolith Project event preview"}
+                  ariaHidden={!slide.alt}
                   fetchPriority={slideFetchPriority}
                   sources={slide.posterSources}
                   sizes={slide.posterSizes}
@@ -246,8 +246,8 @@ export default function VideoHeroSlider({
               {slide.poster && (
                 <ResponsiveSlideImage
                   src={slide.poster}
-                  alt=""
-                  ariaHidden
+                  alt={slide.alt || "Monolith Project atmosphere preview"}
+                  ariaHidden={!slide.alt}
                   fetchPriority={slideFetchPriority}
                   sources={slide.posterSources}
                   sizes={slide.posterSizes}

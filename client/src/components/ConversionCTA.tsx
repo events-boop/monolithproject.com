@@ -37,7 +37,7 @@ export default function ConversionCTA({
   const { openInquiry } = useInquiry();
   
   const sizeClasses = {
-    sm: "px-5 py-2.5 text-[10px]",
+    sm: "px-5 py-2.5 text-[11px]",
     md: "px-6 py-3.5 md:px-8 md:py-4 text-[11px] md:text-[12px]",
     lg: "px-8 py-4 md:px-10 md:py-5 text-[12px] md:text-[14px]",
     xl: "px-10 py-5 md:px-12 md:py-6 text-[14px] md:text-[16px]",
@@ -93,7 +93,7 @@ export default function ConversionCTA({
           if (cta.isExternal) preconnectGateway(cta.href);
         }}
         className={`
-          group relative flex items-center justify-center gap-4 
+          group relative flex min-h-[var(--tap-target-min)] items-center justify-center gap-4 
           transition-all duration-500 rounded-none
           ${sizeClasses[size]} w-full sm:w-auto
           ${variant === 'experiential' ? toolStyles.experiential : toolStyles[cta.tool]}

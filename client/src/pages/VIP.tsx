@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle, Send, Crown, Wine, Users, Sparkles, AlertCircle, ArrowUpRight } from "lucide-react";
+import { CheckCircle, Crown, Wine, Users, Sparkles, AlertCircle, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import { Link } from "wouter";
@@ -41,7 +41,7 @@ export default function VIP() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState("");
 
-    const { register, handleSubmit, formState: { errors } } = useForm<VipFormValues>({
+    const { register, handleSubmit } = useForm<VipFormValues>({
         resolver: zodResolver(vipSchema)
     });
 
@@ -73,20 +73,21 @@ export default function VIP() {
             />
             <Navigation />
 
-            <main className="relative z-10 page-shell-start-loose pb-32">
-                <div className="container layout-default px-6">
+            <main id="main-content" tabIndex={-1} className="relative z-10 page-shell-start-loose pb-32">
+                <div className="container layout-default px-4 sm:px-6">
 
-                    <div className="grid lg:grid-cols-2 gap-16 mb-24">
+                    <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 mb-24">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary block mb-6">
+                            <span className="font-mono text-[10px] tracking-[0.22em] sm:tracking-[0.3em] uppercase text-primary block mb-6">
                                 — Elevated Access
                             </span>
-                            <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85] uppercase text-white mb-8">
-                                THE VIP<br />EXPERIENCE
+                            <h1 className="font-display text-[clamp(2.7rem,13vw,7rem)] leading-[0.88] uppercase text-white mb-8 max-w-[10ch] text-balance">
+                                <span className="block">The VIP</span>
+                                <span className="block">Experience</span>
                             </h1>
                             <p className="text-white/50 text-lg leading-relaxed max-w-lg mb-10">
                                 Experience the event from the best vantage point in the house.
@@ -118,7 +119,7 @@ export default function VIP() {
                                 <p className="font-display text-2xl uppercase text-white">Main Room Balcony</p>
                             </div>
                             {/* This would be a real image */}
-                            <div className="absolute inset-0 bg-neutral-900 flex items-center justify-center text-white/20 font-display text-6xl uppercase tracking-tighter">
+                            <div className="absolute inset-0 bg-neutral-900 flex items-center justify-center text-white/20 font-display text-4xl sm:text-6xl uppercase tracking-tighter">
                                 VIP VIEW
                             </div>
                         </motion.div>
@@ -153,14 +154,14 @@ export default function VIP() {
                                      {isSubmitting ? "Processing..." : "Submit VIP Request"}
                                  </button>
                                  
-                                 <div className="mt-12 flex flex-col sm:flex-row gap-12 items-center justify-center border-t border-white/5 pt-12">
-                                   <Link href="/tickets">
+                                 <div className="mt-12 flex flex-col sm:flex-row gap-6 sm:gap-12 items-center justify-center border-t border-white/5 pt-12">
+                                   <Link href="/tickets" asChild>
                                       <a className="cta-ghost group">
                                          Tickets
                                          <ArrowUpRight className="w-3 h-3 ml-2 opacity-40 group-hover:opacity-100" />
                                       </a>
                                    </Link>
-                                   <Link href="/newsletter">
+                                   <Link href="/newsletter" asChild>
                                       <a className="cta-ghost group">
                                          Join SMS Updates
                                          <ArrowUpRight className="w-3 h-3 ml-2 opacity-40 group-hover:opacity-100" />

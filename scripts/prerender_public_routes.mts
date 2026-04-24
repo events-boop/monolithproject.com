@@ -899,7 +899,7 @@ for (const route of routeDefinitions) {
   html = upsertTag(
     html,
     /<link[^>]+rel="canonical"[^>]*>/i,
-    `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`,
+    `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" data-rh="true" />`,
   );
   html = html.replace(
     /<div id="root"><\/div>/i,

@@ -54,7 +54,7 @@ export default function SEO({
   const siteTitle = "The Monolith Project";
   const fullTitle = absoluteTitle ? title : `${title} | ${siteTitle}`;
   const defaultDescription =
-    "A Chicago music project building events, radio, and archive around dance music and community.";
+    "Monolith Project: Chicago's premier house & techno event series, radio show, and archive. Experience open-air Chasing Sun(Sets) and after-dark Untold Story music nights.";
   const resolvedDescription = description || defaultDescription;
   const canonicalOrigin = getCanonicalOrigin();
   const canonicalTarget = normalizePath(

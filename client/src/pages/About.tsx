@@ -116,6 +116,7 @@ export default function About() {
       </div>
 
       <Navigation variant="dark" brand="monolith" />
+      <main id="main-content" tabIndex={-1}>
 
       {/* Hero Section */}
       <section className="relative h-[100svh] w-full flex items-center justify-center overflow-hidden">
@@ -139,7 +140,7 @@ export default function About() {
           ) : (
             <ResponsiveImage
               src="/images/hero-monolith.webp"
-              alt=""
+              alt="Architectural monolith structure representing the Monolith Project identity"
               priority
               sizes="100vw"
               loading="eager"
@@ -445,6 +446,7 @@ export default function About() {
           </motion.p>
         </div>
       </section>
+      </main>
     </div>
   );
 }

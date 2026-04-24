@@ -240,9 +240,9 @@ export function buildUntoldStoryEventSchema(pagePath: string) {
 
   return buildEventSchema({
     pagePath,
-    name: "ERAN HERSH — Untold Story Season III Episode III",
+    name: "Untold Story IV: Eran Hersh",
     description:
-      "A highly anticipated return for Untold Story. Eran Hersh brings his distinct Afro-Melodic sound to Chicago. Intimate room, deep grooves.",
+      "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026.",
     startDate: "2026-05-16T21:00:00-05:00",
     endDate: "2026-05-17T03:00:00-05:00",
     image: [
@@ -251,7 +251,7 @@ export function buildUntoldStoryEventSchema(pagePath: string) {
     ],
     performer: ["Eran Hersh"],
     ticketUrl: POSH_TICKET_URL,
-    locationName: "Venue Reveal Soon",
+    locationName: "Hideaway",
     streetAddress: "Chicago IL",
     addressLocality: "Chicago",
     addressRegion: "IL",

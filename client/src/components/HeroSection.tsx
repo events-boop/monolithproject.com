@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useEffect, useState, memo, useCallback } from "react";
+import { useState, useCallback } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import JsonLd from "@/components/JsonLd";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
@@ -54,7 +54,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroEranIntlImage.sources,
     sizes: heroEranIntlImage.sizes,
     alt: "Eran Hersh",
-    caption: "ERAN HERSH | MAY 16 2026",
+    caption: "UNTOLD STORY IV | ERAN HERSH",
   },
   {
     type: "image",
@@ -62,7 +62,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroEranPortraitImage.sources,
     sizes: heroEranPortraitImage.sizes,
     alt: "Eran Hersh",
-    caption: "ERAN HERSH PORTRAIT",
+    caption: "UNTOLD STORY IV PORTRAIT",
   },
   {
     type: "image",
@@ -70,7 +70,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroUntoldImage.sources,
     sizes: heroUntoldImage.sizes,
     alt: "Untold Story Archive",
-    caption: "ARCHIVE | UNTOLD STORY SEASON III",
+    caption: "ARCHIVE | UNTOLD STORY",
   },
   {
     type: "image",
@@ -101,13 +101,13 @@ const HERO_SLIDES: Slide[] = [
 /** Maps each hero slide to the banner state it should drive. */
 const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   { fallbackToFeaturedEvent: true, label: "THE MONOLITH PROJECT" }, // 0: video
-  { eventId: "us-s3e3", label: "ERAN HERSH" }, // 1: eran hersh international
-  { eventId: "us-s3e3", label: "ERAN HERSH" }, // 2: eran hersh portrait
+  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 1: eran hersh international
+  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 2: eran hersh portrait
   {
     label: "UNTOLD STORY",
     eyebrow: "ARCHIVE SIGNAL",
     venueLabel: "LATE-NIGHT SERIES",
-    dateLabel: "SEASON III ARCHIVE",
+    dateLabel: "UNTOLD STORY ARCHIVE",
   }, // 3: untold story
   { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
   {
@@ -125,8 +125,10 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   }, // 6: lazare sabry
 ];
 
+const HERO_TITLE = "THE MONOLITH PROJECT";
+const HERO_PRIMARY_LINE = "Togetherness is the frequency. Music is the guide.";
 const HERO_SUBHEAD =
-  "Monolith is the root. Chasing Sun(Sets) runs the daytime — rooftops in summer, the Radio Show worldwide. Untold Story runs the night. Same city, same standard, one project.";
+  "A Chicago-rooted music platform building intentional experiences across open-air sessions, after-dark rooms, radio, and cultural memory.";
 
 function toSystemText(value?: string | null) {
   return (value || "")
@@ -144,6 +146,14 @@ function getEventSignalLabel(event?: any) {
   if (event.status === "coming-soon") return "PRESALE BUILDING";
   if (event.status === "past") return "ARCHIVE SIGNAL";
   return "FEATURED SIGNAL";
+}
+
+function getEventStatusLabel(status?: string) {
+  if (status === "on-sale") return "ON SALE";
+  if (status === "coming-soon") return "COMING SOON";
+  if (status === "sold-out") return "SOLD OUT";
+  if (status === "past") return "PAST";
+  return "FEATURED";
 }
 
 function getSystemKicker(event: any | undefined, eyebrow: string | undefined, slideInfo: SlideBannerInfo) {
@@ -192,10 +202,16 @@ function FloatingEventCard({
   const showCountdown = isLive && eventStart && !countdown.isExpired;
   const systemKicker = getSystemKicker(event, eyebrow, slideInfo);
   const systemMeta = getSystemMeta(dateLabel, venueLabel);
+  const eventStatusLabel = getEventStatusLabel(event?.status);
+  const shortDescription =
+    event?.description ||
+    event?.experienceIntro ||
+    (event ? `${event.title} at ${event.venue}, ${event.location}.` : undefined);
 
   return (
     <div
       key={headline}
+      data-home-hero-card="true"
       className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)]"
     >
       {/* Immersive Background Window */}
@@ -214,20 +230,18 @@ function FloatingEventCard({
       <div className="relative z-10 flex flex-col items-start gap-4 p-6 md:p-8">
         {/* Status Badge */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
-          {isLive && (
-            <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
-              Active Sale
-            </span>
-          )}
+          <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
+            {eventStatusLabel}
+          </span>
         </div>
 
         {/* Narrative Metadata */}
-        <div className="flex w-full flex-col gap-3 pr-20">
+        <div className="flex w-full flex-col gap-3 pr-16 sm:pr-20">
           <span className="event-system-kicker text-[var(--monolith-red)]">
             {systemKicker}
           </span>
           <h3 className={cn(
-            "event-system-headline max-w-[14ch] text-[clamp(2rem,7vw,3.85rem)] text-white text-balance",
+            "event-system-headline max-w-[14ch] text-[clamp(1.75rem,8vw,3.85rem)] sm:text-[clamp(2rem,7vw,3.85rem)] text-white text-balance",
             isJuly4thEvent && "july-4th-gradient"
           )}>
             {toSystemText(headline)}
@@ -235,6 +249,16 @@ function FloatingEventCard({
           <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/60">
             {systemMeta}
           </span>
+          {event?.time ? (
+            <span className="event-system-chip text-white/45">
+              {toSystemText(event.time)}
+            </span>
+          ) : null}
+          {shortDescription ? (
+            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/70 line-clamp-3">
+              {shortDescription}
+            </p>
+          ) : null}
         </div>
 
         {showCountdown && (
@@ -303,15 +327,6 @@ export default function HeroSection() {
       ? getEventById(slideInfo.eventId)
       : undefined;
 
-  const sunsetsFallback = getSeriesEvents("chasing-sunsets")[0];
-  const untoldFallback = getSeriesEvents("untold-story")[0];
-  
-  const targetDateFallback = slideInfo.label.includes("SUN(SETS)") 
-    ? sunsetsFallback 
-    : slideInfo.label.includes("UNTOLD") 
-      ? untoldFallback 
-      : featuredEvent;
-
   const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
   const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
@@ -324,40 +339,81 @@ export default function HeroSection() {
         ? { href: "/archive", label: "See The Archive" }
         : undefined;
 
-  const [headlineCycle, setHeadlineCycle] = useState("MONOLITH");
-
-  useEffect(() => {
-    setHeadlineCycle("MONOLITH");
-  }, []);
-
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
 
   return (
-    <div className="bg-black flex h-[100dvh] flex-col">
-      <section
-        id="hero"
-        className="relative h-full overflow-hidden bg-black md:screen-shell-stable"
-      >
-        {structuredData}
+    <section
+      id="hero"
+      className="relative overflow-hidden bg-black screen-shell-stable"
+    >
+      {structuredData}
 
-        {/* Cinematic Background Layer — always video slider */}
-        <div className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-          <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
-        </div>
+      {/* Cinematic Background Layer — always video slider */}
+      <div className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
+        <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
+      </div>
 
-        {/* Architectural HUD Grid Overlay */}
-        <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
-          <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        </div>
+      {/* Architectural HUD Grid Overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
+        <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      </div>
 
-        {/* 
-            FLOATING EXPERIENTIAL CARD (The "Dope" Card) 
-            Positioned as a persistent, high-fidelity overlay.
-        */}
-        <div className="absolute inset-x-0 bottom-0 z-50 p-6 md:p-12 pointer-events-none flex justify-center md:justify-end md:bottom-auto md:top-[var(--shell-page-top-hero)] md:h-full md:items-center">
-          <div className="pointer-events-auto">
-             <FloatingEventCard 
+      <div className="relative z-30 flex min-h-[100dvh] flex-col px-6 pb-6 pt-[calc(var(--shell-page-top-hero)+1rem)] sm:pb-8 sm:pt-[calc(var(--shell-page-top-hero)+1.25rem)] md:px-8 md:pb-10">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-8 md:grid md:grid-cols-[minmax(0,1fr)_minmax(21rem,25rem)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(23rem,28rem)]">
+          <div
+            data-home-hero-copy="true"
+            className="flex min-w-0 flex-col items-center pt-1 text-center text-white md:items-start md:justify-center md:pr-8 md:text-left lg:pr-12"
+          >
+            <div className="mb-6 relative md:mb-12">
+              <div className="flex items-center gap-3 justify-center md:justify-start md:gap-4">
+                <h2
+                  data-home-hero-eyebrow="true"
+                  className="font-mono text-xs uppercase tracking-[0.32em] text-white/45 sm:text-sm sm:tracking-[0.55em]"
+                >
+                  {getEventEyebrow(featuredEvent) || "Chicago Music Project"}
+                </h2>
+                <div className="h-px w-8 bg-white/10 md:w-20" />
+              </div>
+            </div>
+
+            <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
+              <h1
+                data-home-hero-heading="true"
+                className={cn(
+                  "font-heavy max-w-[14ch] text-[clamp(2.3rem,12vw,9rem)] leading-[0.84] uppercase pointer-events-auto text-balance md:max-w-none text-white"
+                )}
+              >
+                <KineticDecryption text={HERO_TITLE} autoStart={false} />
+              </h1>
+              <div className="my-6 h-px w-full bg-gradient-to-r from-white/30 to-transparent lg:my-8" />
+              <p className="max-w-2xl text-balance font-display text-[clamp(1.05rem,2.8vw,2rem)] leading-[1.15] text-white/92">
+                {HERO_PRIMARY_LINE}
+              </p>
+              <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
+              <p
+                data-home-hero-summary="true"
+                className="mt-6 max-w-md text-center font-mono text-xs uppercase tracking-[0.12em] text-white/58 md:mt-8 md:max-w-xl md:text-left md:text-sm md:tracking-[0.2em]"
+              >
+                {HERO_SUBHEAD}
+              </p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
+                <Link href="/schedule" className="btn-pill-neutral btn-pill-wide">
+                  View Upcoming Dates
+                </Link>
+                <Link href="/newsletter" className="btn-pill-outline btn-pill-wide">
+                  Get Updates
+                </Link>
+                <Link href="/radio" className="btn-text-action">
+                  Listen to Radio
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto flex w-full justify-center md:mt-0 md:justify-end">
+            <div className="w-full max-w-[22rem] sm:max-w-[24rem] md:max-w-[26rem] lg:max-w-[28rem]">
+              <FloatingEventCard
                 event={bannerEvent}
                 slideInfo={slideInfo}
                 dateLabel={dateLabel}
@@ -365,40 +421,11 @@ export default function HeroSection() {
                 eyebrow={eyebrow}
                 isJuly4thEvent={isJuly4thEvent}
                 contextualFallbackAction={contextualFallbackAction}
-             />
-          </div>
-        </div>
-
-        {/* Main Impact Visuals (Center Focused) — always MONOLITH branding */}
-        <div className="absolute inset-0 z-30 flex w-full flex-col items-center justify-start px-6 pb-16 pt-[calc(var(--shell-page-top-hero)+2rem)] text-center pointer-events-none md:justify-center md:p-6 md:pr-[500px]">
-          <div className="flex w-full flex-col items-center justify-start md:items-start md:text-left">
-            <div className="mb-6 relative md:mb-12">
-              <div className="flex items-center gap-4 justify-center md:justify-start">
-                <h2 className="font-mono text-[11px] md:text-sm uppercase tracking-[0.8em] text-white/40">{getEventEyebrow(featuredEvent) || "Chicago Music Project"}</h2>
-                <div className="h-px w-8 md:w-20 bg-white/10" />
-              </div>
-            </div>
-
-            <div className="relative z-10 flex flex-col items-center md:items-start text-white">
-              <h1
-                key={headlineCycle}
-                className={cn(
-                  "font-heavy text-[clamp(2.5rem,15.5vw,11.5rem)] leading-[0.8] uppercase pointer-events-auto",
-                  headlineCycle === "JULY 4TH" ? "july-4th-gradient" : "text-white"
-                )}
-              >
-                <KineticDecryption text={headlineCycle} autoStart={false} />
-              </h1>
-              <div className="h-px w-full bg-gradient-to-r from-white/30 to-transparent my-6 lg:my-8" />
-              <span className="font-mono text-[clamp(0.8rem,5vw,2.5rem)] leading-[1] tracking-[0.5em] uppercase text-white/90">PROJECT</span>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Root Architecture / Events / Radio / Research</BrandTranslatorLabel>
-              <p className="mt-6 max-w-sm text-center md:text-left font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 md:mt-8 md:max-w-md md:text-sm md:tracking-[0.4em]">
-                {HERO_SUBHEAD}
-              </p>
+              />
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

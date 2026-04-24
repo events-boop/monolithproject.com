@@ -87,4 +87,11 @@
   --color-sand: oklch(0.97 0.02 85);
   --color-stone: oklch(0.35 0.03 85);
   --color-charcoal: oklch(0.15 0.02 85);
+
+  --animate-shimmer: shimmer 2s infinite linear;
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
 }
