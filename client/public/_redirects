@@ -1,5 +1,19 @@
 https://themonolithproject.com/*  https://monolithproject.com/:splat  301!
 https://www.themonolithproject.com/*  https://monolithproject.com/:splat  301!
-/api/*  /.netlify/functions/api/:splat  200!
+
+# Eran Hersh — Untold Story IV vanity redirects (campaign: eran_hersh_may16)
+/go/eran-bio        https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=bio              302
+/go/eran-story      https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=story_1          302
+/go/eran-reel       https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=reel_caption     302
+/go/eran-facebook   https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=facebook&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=facebook_event    302
+/go/eran-sms        https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=sms&utm_medium=text&utm_campaign=eran_hersh_may16&utm_content=sms_1                   302
+/go/eran-email      https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=email&utm_medium=email&utm_campaign=eran_hersh_may16&utm_content=email_1              302
+/go/eran-qr         https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=qr&utm_medium=qr&utm_campaign=eran_hersh_may16&utm_content=qr_flyer                   302
+/go/eran-ra         https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=resident_advisor&utm_medium=event_listing&utm_campaign=eran_hersh_may16&utm_content=ra_listing  302
+/go/eran-do312      https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=do312&utm_medium=event_listing&utm_campaign=eran_hersh_may16&utm_content=do312_listing 302
+/go/eran-paid-meta  https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=paid_social&utm_campaign=eran_hersh_may16&utm_content=paid_meta_1 302
+/go/eran-partner    https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=partner&utm_medium=referral&utm_campaign=eran_hersh_may16&utm_content=partner_post     302
+
 /go/*  /.netlify/functions/api/go/:splat  200!
+/api/*  /.netlify/functions/api/:splat  200!
 /*  /index.html  200

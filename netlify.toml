@@ -48,6 +48,74 @@
   status = 301
   force = true
 
+# Eran Hersh — Untold Story IV vanity redirects (campaign: eran_hersh_may16)
+# Specific rules MUST stay above the generic /go/* proxy below.
+[[redirects]]
+  from = "/go/eran-bio"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=bio"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-story"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=story_1"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-reel"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=reel_caption"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-facebook"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=facebook&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=facebook_event"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-sms"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=sms&utm_medium=text&utm_campaign=eran_hersh_may16&utm_content=sms_1"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-email"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=email&utm_medium=email&utm_campaign=eran_hersh_may16&utm_content=email_1"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-qr"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=qr&utm_medium=qr&utm_campaign=eran_hersh_may16&utm_content=qr_flyer"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-ra"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=resident_advisor&utm_medium=event_listing&utm_campaign=eran_hersh_may16&utm_content=ra_listing"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-do312"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=do312&utm_medium=event_listing&utm_campaign=eran_hersh_may16&utm_content=do312_listing"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-paid-meta"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=paid_social&utm_campaign=eran_hersh_may16&utm_content=paid_meta_1"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/eran-partner"
+  to = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=partner&utm_medium=referral&utm_campaign=eran_hersh_may16&utm_content=partner_post"
+  status = 302
+  force = true
+
 [[redirects]]
   from = "/go/*"
   to = "/.netlify/functions/api/go/:splat"
