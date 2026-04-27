@@ -16,15 +16,16 @@ async function waitForAppReady(page: import("@playwright/test").Page) {
 test("chasing sunsets keeps the next-event context on mobile", async ({ page }) => {
   await waitForAppReady(page);
 
-  await expect(page.locator("#chasing-hero")).toContainText("SUMMER '26");
-  await expect(page.locator("#chasing-hero")).toContainText("June 7, 2026");
+  await expect(page.locator("#chasing-hero")).toContainText("INDEPENDENCE DAY");
+  await expect(page.locator("#chasing-hero")).toContainText("July 4, 2026");
+  await expect(page.locator("#chasing-hero")).toContainText("Castaways");
 
   const countdown = page
     .locator("div")
     .filter({ has: page.getByText("Next Event", { exact: true }) })
     .filter({ hasText: "Chasing Sun(Sets)" })
-    .filter({ hasText: "June 7, 2026" })
+    .filter({ hasText: "July 4, 2026" })
     .first();
   await expect(countdown).toContainText("Chasing Sun(Sets)");
-  await expect(countdown).toContainText("June 7, 2026");
+  await expect(countdown).toContainText("July 4, 2026");
 });

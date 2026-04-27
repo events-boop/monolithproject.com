@@ -86,9 +86,7 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
   await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
   await expect(page.getByRole("heading", { name: /GET IN/i })).toBeVisible({ timeout: 10000 });
 
-  const ctaLink = page.locator("main a").filter({
-    hasText: /On Sale|See The Schedule|Unlock Presale|Final Release/i,
-  }).first();
+  const ctaLink = page.locator('main a[href*="/go/tickets"]').first();
   await expect(ctaLink).toBeVisible();
   await ctaLink.click({ force: true });
 

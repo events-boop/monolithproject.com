@@ -5,11 +5,19 @@ type ValidateEnvironmentOptions = {
 };
 
 export function readProvider(): LeadProvider {
-  const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
-  if (provider === "mailchimp" || provider === "beehiiv" || provider === "convertkit" || provider === "hubspot" || provider === "brevo" || provider === "emailoctopus") {
+  const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
+  if (
+    provider === "disabled" ||
+    provider === "mailchimp" ||
+    provider === "beehiiv" ||
+    provider === "convertkit" ||
+    provider === "hubspot" ||
+    provider === "brevo" ||
+    provider === "emailoctopus"
+  ) {
     return provider;
   }
-  throw new Error("Unsupported LEAD_PROVIDER. Use mailchimp, beehiiv, convertkit, hubspot, brevo, or emailoctopus.");
+  throw new Error("Unsupported LEAD_PROVIDER. Use disabled, mailchimp, beehiiv, convertkit, hubspot, brevo, or emailoctopus.");
 }
 
 function logValidationFailure(message: string, { fatal }: Required<ValidateEnvironmentOptions>) {
@@ -46,8 +54,9 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   }
 
   if (isProd) {
-    const provider = (process.env.LEAD_PROVIDER || "mailchimp").toLowerCase();
+    const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
     const requiredEnvVars: Record<string, string[]> = {
+      disabled: [],
       mailchimp: ["MAILCHIMP_API_KEY", "MAILCHIMP_LIST_ID"],
       beehiiv: ["BEEHIIV_API_KEY", "BEEHIIV_PUBLICATION_ID"],
       convertkit: ["CONVERTKIT_API_KEY", "CONVERTKIT_FORM_ID"],
@@ -62,6 +71,10 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
         `Unknown LEAD_PROVIDER "${provider}". Lead capturing will fail.`,
         resolvedOptions,
       );
+      return;
+    }
+
+    if (vars.length === 0) {
       return;
     }
 

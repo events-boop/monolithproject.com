@@ -389,8 +389,6 @@ function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
     if (pathname === "/") return "home";
 
     if (
-        pathname === "/schedule" ||
-        pathname === "/events" ||
         pathname === "/tickets" ||
         pathname === "/story" ||
         pathname === "/untold-story" ||

@@ -89,9 +89,9 @@ export default function KineticDecryption({
     <span 
       ref={ref}
       onMouseEnter={() => startScramble(true)}
-      aria-label={text}
       className={`${className} cursor-default relative inline-block whitespace-nowrap`}
     >
+      <span className="sr-only">{text}</span>
       {autoStart || isScrambling ? (
         <>
           <span aria-hidden="true" className="invisible">
@@ -102,7 +102,7 @@ export default function KineticDecryption({
           </span>
         </>
       ) : (
-        displayText
+        <span aria-hidden="true">{displayText}</span>
       )}
     </span>
   );

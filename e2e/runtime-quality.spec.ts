@@ -19,11 +19,11 @@ test.beforeEach(async ({ page }) => {
 
 test("exact route aliases resolve the intended experiences", async ({ page }) => {
   await waitForAppReady(page, "/events");
-  await expect(page.getByRole("heading", { name: /schedule/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /upcoming shows/i })).toBeVisible();
 
   await waitForAppReady(page, "/untold-story");
   await expect(page).toHaveTitle(/Untold Story/i);
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /untold/i }).first()).toBeVisible();
 });
 
 test("chasing sunsets keeps hero, countdown, and pricing aligned to one featured event", async ({ page }) => {

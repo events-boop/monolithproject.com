@@ -7,12 +7,9 @@ import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { Skeleton } from "@/components/ui/skeleton";
-import ConversionCTA from "@/components/ConversionCTA";
 import {
   getEventVenueLabel,
-  getExperienceEvent,
   getSeriesExperienceEvent,
-  getSeriesLabel,
 } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
@@ -34,14 +31,11 @@ function getStatusLabel(status?: string) {
 
 export default function Home() {
   usePublicSiteDataVersion();
-  const featuredMoment = getExperienceEvent("hero");
   const chasingSeasonEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
   const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
-  const featuredMomentHref = getEventDetailsHref(featuredMoment);
-  const featuredMomentSummary =
-    featuredMoment?.description ||
-    featuredMoment?.experienceIntro ||
-    "The next Monolith show, ticket window, and venue details live here first.";
+  const untoldMomentHref = getEventDetailsHref(untoldMoment);
+  const untoldTicketHref = untoldMoment?.ticketUrl || untoldMoment?.primaryCta?.href || untoldMomentHref;
+  const untoldTicketIsExternal = /^https?:\/\//i.test(untoldTicketHref);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,69 +69,7 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        <section id="campaigns" className="relative z-10 border-y border-white/10 bg-[#080808] py-14 md:py-20">
-          <div className="container layout-wide px-6">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
-              <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-primary">Next Show / Featured Event</span>
-              {featuredMoment?.status ? (
-                <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
-                  {getStatusLabel(featuredMoment.status)}
-                </span>
-              ) : null}
-            </div>
-
-            {featuredMoment ? (
-              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-                <div>
-                  <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
-                    {getSeriesLabel(featuredMoment.series)}
-                  </span>
-                  <h2 className="font-display text-[clamp(2.2rem,5vw,4.8rem)] leading-[0.9] uppercase tracking-tight text-white">
-                    {featuredMoment.headline || featuredMoment.title}
-                  </h2>
-                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
-                    Tickets, date, and venue details for the next Monolith show.
-                  </p>
-                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
-                    {featuredMomentSummary}
-                  </p>
-                </div>
-
-                <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
-                  <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
-                    <div>
-                      <dt className="text-white/40">Date</dt>
-                      <dd className="mt-1 text-white">{featuredMoment.date}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/40">Time</dt>
-                      <dd className="mt-1 text-white">{featuredMoment.time}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/40">Venue</dt>
-                      <dd className="mt-1 text-white">{featuredMoment.venue}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/40">City</dt>
-                      <dd className="mt-1 text-white">{featuredMoment.location}</dd>
-                    </div>
-                  </dl>
-                  <p className="mt-4 text-sm text-white/65">{getEventVenueLabel(featuredMoment)}</p>
-                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <ConversionCTA event={featuredMoment} size="md" showUrgency={false} />
-                    <Link href={featuredMomentHref} className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto">
-                      View Event Details <ArrowUpRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-sm text-white/70">Featured event details are being updated.</p>
-            )}
-          </div>
-        </section>
-
-        <section className="relative z-10 border-b border-white/10 bg-[#0d0d0d] py-14 md:py-20">
+        <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-14 md:py-20">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
@@ -147,10 +79,10 @@ export default function Home() {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
                 <h2 className="font-display text-[clamp(2.3rem,5vw,5rem)] leading-[0.9] uppercase tracking-tight text-white">
-                  Sign up for the next open-air drop.
+                  2nd Annual 4th of July @ Castaways
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
-                  Chasing Sun(Sets) is Monolith&apos;s open-air series: house music by the water, headline moments at golden hour, and a Chicago crowd that comes for the music first.
+                  Tradition begins on the lakefront. Sign up for the drop - season details, schedule, lineup, and July 4 first access coming soon.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <a
@@ -159,13 +91,13 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto"
                   >
-                    Sign Up for Drops
+                    SIGN UP FOR THE DROP
                   </a>
                   <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide w-full justify-center sm:w-auto">
-                    View Chasing Sun(Sets)
+                    View Chasing Sun(Sets) Season
                   </Link>
                   <Link href="/schedule" className="btn-text-action">
-                    See Upcoming Shows
+                    See Summer Dates
                   </Link>
                 </div>
               </div>
@@ -175,12 +107,11 @@ export default function Home() {
                   Season Focus
                 </span>
                 <h3 className="mt-3 font-display text-[clamp(1.9rem,4vw,3rem)] leading-[0.92] uppercase tracking-tight text-white">
-                  {chasingSeasonEvent?.headline || chasingSeasonEvent?.title || "Next Chasing Sun(Sets) Chapter"}
+                  {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-white/70">
                   {chasingSeasonEvent?.description ||
-                    chasingSeasonEvent?.experienceIntro ||
-                    "The next Chasing Sun(Sets) chapter is where the summer season starts to take shape."}
+                    "Chicago's open-air house music gathering returns to North Avenue Beach with golden-hour sets, special guests, and a community built around sound, sunset, and togetherness."}
                 </p>
                 <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                   <div>
@@ -199,9 +130,111 @@ export default function Home() {
                   </div>
                   <div>
                     <dt className="text-white/40">Lineup</dt>
-                    <dd className="mt-1 text-white">{chasingSeasonEvent?.lineup || "Drop Pending"}</dd>
+                    <dd className="mt-1 text-white">{chasingSeasonEvent?.lineup || "Lineup Coming Soon"}</dd>
                   </div>
                 </dl>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-14 md:py-20">
+          <div className="container layout-wide px-6">
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
+              <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-primary">Untold Story IV</span>
+              {untoldMoment?.status ? (
+                <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
+                  {getStatusLabel(untoldMoment.status)}
+                </span>
+              ) : null}
+            </div>
+
+            {untoldMoment ? (
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
+                <div>
+                  <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
+                    UNTOLD STORY IV
+                  </span>
+                  <h2 className="font-display text-[clamp(2.2rem,5vw,4.8rem)] leading-[0.9] uppercase tracking-tight text-white">
+                    Eran Hersh in Chicago
+                  </h2>
+                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
+                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
+                    Untold Story returns with Eran Hersh for an intimate after-dark chapter of house music, movement, and atmosphere.
+                  </p>
+                </div>
+
+                <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
+                  <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                    <div>
+                      <dt className="text-white/40">Date</dt>
+                      <dd className="mt-1 text-white">{untoldMoment.date}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-white/40">Time</dt>
+                      <dd className="mt-1 text-white">{untoldMoment.time}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-white/40">Venue</dt>
+                      <dd className="mt-1 text-white">{untoldMoment.venue}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-white/40">City</dt>
+                      <dd className="mt-1 text-white">{untoldMoment.location}</dd>
+                    </div>
+                  </dl>
+                  <p className="mt-4 text-sm text-white/65">{getEventVenueLabel(untoldMoment)}</p>
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <Link href={untoldMomentHref} className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto">
+                      View Event <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                    {untoldTicketIsExternal ? (
+                      <a
+                        href={untoldTicketHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-pill btn-pill-compact w-full justify-center sm:w-auto"
+                      >
+                        Get Tickets <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                    ) : (
+                      <Link href={untoldTicketHref} className="btn-pill btn-pill-compact w-full justify-center sm:w-auto">
+                        Get Tickets <ArrowUpRight className="w-4 h-4" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-white/70">Untold Story IV details are being updated.</p>
+            )}
+          </div>
+        </section>
+
+        <section className="relative z-10 border-b border-white/10 bg-[#0d0c0b] py-10 md:py-14">
+          <div className="container layout-wide px-6">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
+              <div>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
+                  Chasing Sun(Sets) Summer 2026
+                </span>
+                <h3 className="mt-3 font-display text-3xl uppercase tracking-tight text-white md:text-4xl">
+                  Season Dates
+                </h3>
+              </div>
+              <Link href="/chasing-sunsets" className="btn-text-action">
+                View Season Page
+              </Link>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
+                July 4, 2026
+              </div>
+              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
+                August 22, 2026
+              </div>
+              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
+                September 19/26, 2026
               </div>
             </div>
           </div>

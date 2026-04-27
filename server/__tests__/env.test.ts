@@ -46,6 +46,14 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
   });
 
+  it("does not throw in production when LEAD_PROVIDER is omitted (disabled default)", () => {
+    process.env.NODE_ENV = "production";
+    delete process.env.LEAD_PROVIDER;
+    delete process.env.MAILCHIMP_API_KEY;
+    delete process.env.MAILCHIMP_LIST_ID;
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+  });
+
   it("throws in production under fatal: true when provider vars are missing", () => {
     process.env.NODE_ENV = "production";
     process.env.LEAD_PROVIDER = "mailchimp";

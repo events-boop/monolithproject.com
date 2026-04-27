@@ -25,6 +25,7 @@ import {
   getEventVenueLabel,
   getExperienceEvent,
   getPrimaryTicketUrl,
+  getSeriesExperienceEvent,
   getSeriesEvents,
   getUpcomingEvents,
 } from "@/lib/siteExperience";
@@ -63,20 +64,24 @@ const utilityLinks = [
 ];
 
 const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
+  "next-night": Ticket,
   schedule: CalendarDays,
+  "chasing-sunsets": Sun,
+  "untold-story": Sparkles,
+  artists: UsersRound,
   radio: Radio,
-  gallery: Sparkles,
-  about: UsersRound,
   guide: MapPinned,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
-  if (path === "/schedule" || path.startsWith("/events/")) return "schedule";
+  if (path === "/schedule" || path === "/events" || path.startsWith("/events/")) return "schedule";
+  if (path.startsWith("/chasing-sunsets")) return "chasing-sunsets";
+  if (path === "/story" || path.startsWith("/untold-story")) return "untold-story";
+  if (path === "/lineup" || path.startsWith("/artists/")) return "artists";
   if (path.startsWith("/radio")) return "radio";
-  if (path === "/archive" || path === "/insights") return "gallery";
-  if (path.startsWith("/about")) return "about";
   if (path === "/guide" || path === "/faq" || path === "/travel" || path === "/vip") return "guide";
-  return "schedule";
+  if (path === "/tickets") return "next-night";
+  return "next-night";
 }
 
 function isExternalHref(href: string) {
@@ -134,7 +139,7 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
   }
 
   if (chapter.id === "chasing-sunsets") {
-    const event = getSeriesEvents("chasing-sunsets")[0];
+    const event = getSeriesExperienceEvent("chasing-sunsets", "hero") || getSeriesEvents("chasing-sunsets")[0];
     return {
       ...chapter,
       image: event?.image || chapter.image,
@@ -147,7 +152,7 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
   }
 
   if (chapter.id === "untold-story") {
-    const event = getSeriesEvents("untold-story")[0];
+    const event = getSeriesExperienceEvent("untold-story", "hero") || getSeriesEvents("untold-story")[0];
     return {
       ...chapter,
       image: event?.image || chapter.image,

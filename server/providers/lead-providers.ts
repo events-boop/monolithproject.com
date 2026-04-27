@@ -228,6 +228,7 @@ export async function subscribeHubSpot(lead: z.infer<typeof leadSchema>) {
 }
 
 export async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof leadSchema>) {
+  if (provider === "disabled") return;
   if (provider === "mailchimp") return subscribeMailchimp(lead);
   if (provider === "beehiiv") return subscribeBeehiiv(lead);
   if (provider === "hubspot") return subscribeHubSpot(lead);

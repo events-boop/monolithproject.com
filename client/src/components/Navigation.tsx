@@ -19,8 +19,8 @@ const InteractiveNavigationOverlay = lazy(() => import("./InteractiveNavigationO
 
 const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string }) => {
   const accentClass = brand === "chasing-sunsets" ? "text-sunsets-gold" :
-                     brand === "untold-story" ? "text-untold-cyan" :
-                     brand === "radio" ? "text-rose-500" : "text-primary";
+    brand === "untold-story" ? "text-untold-cyan" :
+      brand === "radio" ? "text-rose-500" : "text-primary";
 
   return (
     <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
@@ -82,14 +82,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const ticketEvent = getExperienceEvent("ticket");
   const featuredChasingEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
   const featuredUntoldEvent = getSeriesExperienceEvent("untold-story", "hero");
-  
+
   // Contextual CTA logic: ensure we point to the right series if we're on a series-specific page
   const isUntoldPath = location === "/story" || location.startsWith("/untold-story");
   const isSunsetsPath = location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
-  
+
   const contextEvent = isUntoldPath ? (featuredUntoldEvent || getSeriesEvents("untold-story")[0] || ticketEvent)
-                    : isSunsetsPath ? (featuredChasingEvent || getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
-                    : ticketEvent;
+    : isSunsetsPath ? (featuredChasingEvent || getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
+      : ticketEvent;
 
   const cta = getEventCta(contextEvent);
   const ctaToneClass = getEventCtaToneClass(contextEvent);
@@ -206,9 +206,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
     const drawer = getDrawerTypeForHref(href);
     if (drawer) {
-        openDrawer(drawer);
-        setMobileMenuOpen(false);
-        return;
+      openDrawer(drawer);
+      setMobileMenuOpen(false);
+      return;
     }
 
     // Improved deep routing for anchors and cross-page anchors
@@ -223,16 +223,16 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       // But we can check `path` against drawerRouteMap too!
       const pathDrawer = getDrawerTypeForHref(normalizedPath);
       if (pathDrawer) {
-          openDrawer(pathDrawer);
-          setMobileMenuOpen(false);
-          // Wait for drawer to open then scroll into view inside it
-          setTimeout(() => {
-              const element = document.getElementById(targetId);
-              if (element) {
-                  element.scrollIntoView({ behavior: "smooth" });
-              }
-          }, 400);
-          return;
+        openDrawer(pathDrawer);
+        setMobileMenuOpen(false);
+        // Wait for drawer to open then scroll into view inside it
+        setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 400);
+        return;
       }
 
       if (location === normalizedPath || (location === "/" && normalizedPath === "/")) {
@@ -296,7 +296,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
         style={{
           top: "var(--shell-nav-offset)",
         }}
-        className="fixed left-0 right-0 z-[10001] px-1.5 py-1.5 sm:px-4 sm:py-3 pointer-events-none"
+        className="fixed left-0 right-0 z-[10001] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
       >
         <a
           href="#main-content"
@@ -309,7 +309,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
         >
           Skip to content
         </a>
-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1.5 sm:w-[98%] sm:gap-3">
+        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1 sm:w-[98%] sm:gap-3">
           {bannerPayload && bannerPayload.status !== "past" ? (
             <a
               href={bannerPayload.ticketUrl || "/newsletter"}
@@ -320,10 +320,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   ? "Open tickets for current featured event"
                   : "Request early access for the current featured event"
               }
-              className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
+              className="group relative block overflow-hidden rounded-[0.72rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
             >
               <div
-                className="relative h-11 sm:h-11"
+                className="relative h-9 sm:h-11"
                 style={
                   bannerPayload.status === "live"
                     ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
@@ -347,14 +347,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       ))}
                   </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center px-3 sm:hidden">
+                <div className="absolute inset-0 flex items-center justify-center px-2.5 sm:hidden">
                   <div className="flex min-w-0 items-center gap-2.5 text-white/90">
                     {bannerPayload.status === "live" ? (
                       <span className="inline-flex h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-white" />
                     ) : (
                       <Ticket className="h-3.5 w-3.5 shrink-0 text-white/90" />
                     )}
-                    <span className="min-w-0 truncate font-mono text-[11px] font-bold uppercase tracking-[0.12em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                    <span className="min-w-0 truncate font-mono text-[10px] font-bold uppercase tracking-[0.1em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
                       {bannerPayload.text}
                     </span>
                   </div>
@@ -366,7 +366,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
           <div
             className={`rounded-3xl sm:rounded-[2rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
           >
-            <div className="flex min-h-[3.25rem] w-full items-center justify-between px-2.5 py-1.5 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
+            <div className="flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
               {/* LEFT: LOGO */}
               <div className="mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
                 <MagneticButton strength={0.25}>
@@ -375,7 +375,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     onClick={handleLogoClick}
                     aria-label="Go to homepage"
                     data-nav-logo="true"
-                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
+                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
                   >
                     <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
@@ -414,36 +414,37 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 {/* LOCATION CONTEXT SIGNAL (SCROLL-SPY) */}
                 {isHome && currentChapter && (
-                    <div
-                      className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
-                    >
-                      <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
-                        Section
-                      </span>
-                      <span className={cn(
-                        "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
-                        resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
+                  <div
+                    className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
+                  >
+                    <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
+                      Section
+                    </span>
+                    <span className={cn(
+                      "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
+                      resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
                         resolvedBrand === "untold-story" ? "text-untold-cyan" :
-                        "text-white/80"
-                      )}>
-                        {currentChapter.number} / {currentChapter.label}
-                      </span>
-                    </div>
-                  )}
+                          "text-white/80"
+                    )}>
+                      {currentChapter.number} / {currentChapter.label}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* CENTER: NAV ITEMS */}
               <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="EVENT SERIES"
+                  label="SHOWS"
                   href="/schedule"
-                  isActive={location === "/schedule" || location === "/tickets" || location.startsWith("/events/")}
+                  isActive={location === "/schedule" || location === "/events" || location === "/tickets" || location.startsWith("/events/")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "ALL UPCOMING SHOWS", href: "/schedule", icon: "ticket" },
+                      { label: "UPCOMING SHOWS", href: "/schedule", icon: "arrow" },
+                      { label: "GET TICKETS", href: ticketHref || "/tickets", icon: "ticket" },
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
@@ -465,6 +466,60 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       ctaText: "View Shows",
                       icon: "arrow",
                       badge: "SHOWS"
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="CHASING SUN(SETS)"
+                  href="/chasing-sunsets"
+                  isActive={location.includes("/chasing-sunsets")}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "SEASON 2026", href: "/chasing-sunsets", icon: "arrow" },
+                      { label: "SIGN UP FOR DROPS", href: "/newsletter", icon: "arrow" },
+                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
+                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                    ],
+                    feature: {
+                      title: featuredChasingEvent?.headline || featuredChasingEvent?.title || "Chasing Sun(Sets)",
+                      subtitle: featuredChasingEvent?.episode || "Open-air series",
+                      image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
+                      href: getPrimaryTicketUrl(featuredChasingEvent) || "/chasing-sunsets",
+                      ctaText: getPrimaryTicketUrl(featuredChasingEvent) ? "Get Tickets" : "View Season",
+                      icon: getPrimaryTicketUrl(featuredChasingEvent) ? "ticket" : "arrow",
+                      badge: featuredChasingEvent?.status === "on-sale" ? "ON SALE" : "SEASON 2026",
+                      external: !!getPrimaryTicketUrl(featuredChasingEvent)
+                    }
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="UNTOLD STORY"
+                  href="/story"
+                  isActive={location.includes("/story") || location.includes("/untold-story")}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "CURRENT INDOOR EVENT", href: "/story", icon: "arrow" },
+                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
+                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                      { label: "CONTACT", href: "/contact", icon: "arrow" },
+                    ],
+                    feature: {
+                      title: featuredUntoldEvent?.headline || featuredUntoldEvent?.title || "Untold Story",
+                      subtitle: featuredUntoldEvent?.episode || "Indoor series",
+                      image: featuredUntoldEvent?.image || "/images/untold-story-juany-deron-v2.webp",
+                      href: getPrimaryTicketUrl(featuredUntoldEvent) || "/story",
+                      ctaText: getPrimaryTicketUrl(featuredUntoldEvent) ? "Get Tickets" : "View Story",
+                      icon: "arrow",
+                      badge: featuredUntoldEvent?.status === "on-sale" ? "ON SALE" : "UNTOLD STORY",
+                      external: !!getPrimaryTicketUrl(featuredUntoldEvent)
                     }
                   }}
                 />
@@ -495,77 +550,28 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="GALLERY"
-                  href="/archive"
-                  isActive={location === "/archive" || location.includes("/insights")}
+                  label="PARTNERS"
+                  href="/partners"
+                  isActive={location === "/partners" || location === "/sponsors" || location === "/press" || location === "/booking"}
                   isLight={isLight}
                   brand={resolvedBrand}
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "EVENT GALLERY", href: "/archive", icon: "arrow" },
-                      { label: "JOURNAL", href: "/insights" },
-                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                      { label: "PARTNER WITH US", href: "/partners", icon: "arrow" },
+                      { label: "PARTNERSHIPS", href: "/partners" },
+                      { label: "SPONSOR ACCESS", href: "/sponsors" },
+                      { label: "PRESS & MEDIA", href: "/press" },
+                      { label: "ABOUT MONOLITH", href: "/about" },
                     ],
                     feature: {
-                      title: "THE PROOF",
-                      subtitle: "Every room, every set, every season",
-                      image: "/images/untold-story-juany-deron-v2.webp",
-                      href: "/archive",
-                      ctaText: "Enter Gallery",
-                      icon: "arrow",
-                      badge: "GALLERY"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="ABOUT"
-                  href="/about"
-                  isActive={location === "/about"}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "THE PROJECT", href: "/about#story" },
-                      { label: "TOGETHERNESS", href: "/about#togetherness" },
-                      { label: "CONTACT", href: "/contact" },
-                    ],
-                    feature: {
-                      title: "WHAT MONOLITH IS",
-                      subtitle: "Chicago Music Project",
-                      image: "/images/hero-monolith-modern.webp",
-                      href: "/about",
-                      ctaText: "About Monolith",
-                      icon: "arrow",
-                      badge: "ABOUT"
-                    }
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="PLAN YOUR NIGHT"
-                  href="/guide"
-                  isActive={location === "/guide" || location === "/vip" || location === "/newsletter"}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
-                      { label: "VIP TABLES", href: "/vip" },
-                      { label: "INNER CIRCLE", href: "/newsletter" },
-                      { label: "PARTNER WITH US", href: "/partners" },
-                    ],
-                    feature: {
-                      title: "THE NIGHT GUIDE",
-                      subtitle: "Entry, timing, and elevated access",
+                      title: "PARTNER WITH MONOLITH",
+                      subtitle: "Brands, venues, and cultural collaborators",
                       image: "/images/industrial-roster.webp",
-                      href: "/guide",
-                      ctaText: "Open Guide",
+                      href: "/partners",
+                      ctaText: "Start Conversation",
                       icon: "arrow",
-                      badge: "GUIDE"
+                      badge: "PARTNERS"
                     }
                   }}
                 />
@@ -576,11 +582,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     e.preventDefault();
                     handleNavClick("/contact");
                   }}
-                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
-                    isLight
+                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${isLight
                       ? `hover:text-clay ${location === "/contact" ? "text-clay" : "text-stone"}`
                       : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === "/contact" ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-                  }`}
+                    }`}
                 >
                   Contact
                 </Link>
@@ -646,7 +651,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 </div>
 
                 {/* Cinematic Universal Toggle (Menu -> Close) */}
-                <div className="flex items-center lg:hidden">
+                <div className="flex items-center">
                   <MagneticButton>
                     <button
                       type="button"
