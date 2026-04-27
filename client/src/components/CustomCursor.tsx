@@ -10,10 +10,10 @@ export default function CustomCursor() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const coreX = useSpring(mouseX, { damping: 28, stiffness: 420, mass: 0.35 });
-  const coreY = useSpring(mouseY, { damping: 28, stiffness: 420, mass: 0.35 });
-  const ringX = useSpring(mouseX, { damping: 32, stiffness: 260, mass: 0.5 });
-  const ringY = useSpring(mouseY, { damping: 32, stiffness: 260, mass: 0.5 });
+  const coreX = mouseX;
+  const coreY = mouseY;
+  const ringX = useSpring(mouseX, { damping: 34, stiffness: 450, mass: 0.2 });
+  const ringY = useSpring(mouseY, { damping: 34, stiffness: 450, mass: 0.2 });
 
   React.useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -53,8 +53,8 @@ export default function CustomCursor() {
       const magneticElement = target?.closest("[data-cursor-magnetic]") as HTMLElement | null;
       if (magneticElement) {
         const rect = magneticElement.getBoundingClientRect();
-        x += (rect.left + rect.width / 2 - x) * 0.18;
-        y += (rect.top + rect.height / 2 - y) * 0.18;
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
       }
 
       mouseX.set(x);
