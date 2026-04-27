@@ -35,7 +35,7 @@ const radioArtists = [
   },
   {
     name: "EWERSEEN",
-    image: "/images/artist-ewerseen.png",
+    image: "/images/radio-show-gear.webp",
     banner: "Chasing Sun(Sets) Radio Show",
     eyebrow: "Featured Episode",
     summary: "Jump straight into EWERSEEN's Mix Vol. 3 and the radio-show side of Chasing Sun(Sets).",
