@@ -379,7 +379,7 @@ export default function ScheduleSection() {
                                 <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-widest text-black/62">{event.time} @ {event.location}</p>
                               </div>
                             </div>
-
+ 
                             <div className="flex flex-wrap gap-4 items-center">
                               {event.ticketUrl ? (
                                 <a 
@@ -389,14 +389,14 @@ export default function ScheduleSection() {
                                   onClick={(e) => {
                                     const attributedHref = appendAttributionQueryParams(event.ticketUrl!);
                                     void trackTicketIntent("schedule_quick_view", event.id, attributedHref);
-
+ 
                                     if (attributedHref !== event.ticketUrl) {
                                       e.preventDefault();
                                       window.open(attributedHref, "_blank", "noopener,noreferrer");
                                     }
                                   }}
                                   onMouseEnter={() => preconnectGateway(event.ticketUrl!)}
-                                  className={`${getEventPillToneClass(event)} btn-pill-compact group`}
+                                  className={`${getEventPillToneClass(event)} btn-pill-monolith btn-pill-compact group`}
                                 >
                                   {CTA_LABELS.tickets}
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -406,17 +406,17 @@ export default function ScheduleSection() {
                                   Release Details Soon
                                 </button>
                               )}
-
+ 
                               <Link href={detailsHref} asChild>
-                                <a className="btn-pill-outline-dark btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+                                <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
                                   Open Event Page
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>
                               </Link>
-
+ 
                               <button
                                 onClick={() => downloadICS(event)}
-                                className="btn-pill-outline-dark btn-pill-compact group"
+                                className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group"
                               >
                                 <CalendarPlus className="w-4 h-4" />
                                 Add To Calendar

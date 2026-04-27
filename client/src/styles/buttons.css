@@ -4,12 +4,14 @@
     .btn-pill,
     .btn-pill-dark,
     .btn-pill-coral,
+    .btn-pill-primary,
     .btn-pill-sunsets,
     .btn-pill-radio,
     .btn-pill-untold,
     .btn-pill-monolith,
     .btn-pill-neutral,
     .btn-pill-outline,
+    .btn-pill-ghost,
     .btn-pill-outline-dark,
     .btn-pill-disabled,
     .btn-text-action {
@@ -102,6 +104,7 @@
 
   /* Coral accent pill - solid by default */
   .btn-pill-coral,
+  .btn-pill-primary,
   .btn-pill-sunsets,
   .btn-pill-radio,
   .btn-pill-untold,
@@ -161,18 +164,52 @@
   }
 
   .btn-pill-monolith {
-    --pill-accent-bg: linear-gradient(135deg, #e05a3a, #7f311d);
-    --pill-accent-hover-bg: linear-gradient(135deg, #f0714d, #963b22);
+    --pill-accent-bg: linear-gradient(135deg, #f87171, #ef4444);
+    --pill-accent-hover-bg: #ffffff;
     --pill-accent-text: #ffffff;
-    --pill-accent-border: rgba(255, 198, 175, 0.34);
-    --pill-accent-hover-border: rgba(255, 220, 205, 0.54);
-    --pill-accent-shadow: 0 10px 30px rgba(224, 90, 58, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.26);
-    --pill-accent-hover-shadow: 0 16px 42px rgba(224, 90, 58, 0.5), 0 0 18px rgba(224, 90, 58, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.36);
+    --pill-accent-hover-text: #000000;
+    --pill-accent-border: rgba(255, 255, 255, 0.2);
+    --pill-accent-hover-border: #ffffff;
+    --pill-accent-shadow: 0 10px 30px rgba(239, 68, 68, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    --pill-accent-hover-shadow: 0 16px 42px rgba(239, 68, 68, 0.5), 0 0 18px rgba(239, 68, 68, 0.3);
+  }
+
+  /* High-contrast secondary pill for dark backgrounds (addresses blending-in issue) */
+  .btn-pill-secondary,
+  .btn-pill-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-target-min);
+    gap: 0.6rem;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-pill-secondary:hover,
+  .btn-pill-glass:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
   }
 
   /* Neutral gray pill inspired by the reference direction: quiet surface, black type. */
   .btn-pill-neutral,
   .btn-pill-outline,
+  .btn-pill-ghost,
   .btn-pill-outline-dark,
   .btn-pill-disabled,
   .cta-ghost {
@@ -197,6 +234,7 @@
 
   .btn-pill-neutral:hover,
   .btn-pill-outline:hover,
+  .btn-pill-ghost:hover,
   .btn-pill-outline-dark:hover,
   .cta-ghost:hover {
     background: var(--pill-hover-bg, linear-gradient(180deg, #ffffff, #e8e6e1));
@@ -208,20 +246,22 @@
 
   .btn-pill-neutral:active,
   .btn-pill-outline:active,
+  .btn-pill-ghost:active,
   .btn-pill-outline-dark:active,
   .cta-ghost:active {
     transform: translateY(1px) scale(0.985);
   }
 
   .btn-pill-outline,
+  .btn-pill-ghost,
   .cta-ghost {
-    --pill-bg: rgba(255, 255, 255, 0.07);
-    --pill-border: rgba(255, 255, 255, 0.16);
-    --pill-text: rgba(255, 255, 255, 0.82);
+    --pill-bg: rgba(255, 255, 255, 0.10);
+    --pill-border: rgba(255, 255, 255, 0.28);
+    --pill-text: rgba(255, 255, 255, 0.94);
     --pill-hover-bg: #e7e5e4;
     --pill-hover-border: #e7e5e4;
     --pill-hover-text: #0a0a0a;
-    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 28px rgba(0, 0, 0, 0.16);
+    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 12px 28px rgba(0, 0, 0, 0.18);
     --pill-hover-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(14px);
   }
@@ -383,11 +423,13 @@
 
   .btn-pill-neutral svg,
   .btn-pill-outline svg,
+  .btn-pill-ghost svg,
   .btn-pill-outline-dark svg,
   .cta-ghost svg,
   .btn-pill svg,
   .btn-pill-dark svg,
   .btn-pill-coral svg,
+  .btn-pill-primary svg,
   .btn-pill-sunsets svg,
   .btn-pill-radio svg,
   .btn-pill-untold svg,
@@ -397,11 +439,13 @@
 
   .btn-pill-neutral:hover svg,
   .btn-pill-outline:hover svg,
+  .btn-pill-ghost:hover svg,
   .btn-pill-outline-dark:hover svg,
   .cta-ghost:hover svg,
   .btn-pill:hover svg,
   .btn-pill-dark:hover svg,
   .btn-pill-coral:hover svg,
+  .btn-pill-primary:hover svg,
   .btn-pill-sunsets:hover svg,
   .btn-pill-radio:hover svg,
   .btn-pill-untold:hover svg,
@@ -464,6 +508,7 @@
   }
 
   .btn-pill-coral::after,
+  .btn-pill-primary::after,
   .btn-pill-sunsets::after,
   .btn-pill-radio::after,
   .btn-pill-untold::after,
@@ -479,6 +524,7 @@
   }
 
   .btn-pill-coral:hover,
+  .btn-pill-primary:hover,
   .btn-pill-sunsets:hover,
   .btn-pill-radio:hover,
   .btn-pill-untold:hover,
@@ -490,6 +536,7 @@
   }
 
   .btn-pill-coral:hover::after,
+  .btn-pill-primary:hover::after,
   .btn-pill-sunsets:hover::after,
   .btn-pill-radio:hover::after,
   .btn-pill-untold:hover::after,
@@ -498,6 +545,7 @@
   }
 
   .btn-pill-coral:active,
+  .btn-pill-primary:active,
   .btn-pill-sunsets:active,
   .btn-pill-radio:active,
   .btn-pill-untold:active,

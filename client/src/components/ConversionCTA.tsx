@@ -93,8 +93,8 @@ export default function ConversionCTA({
           if (cta.isExternal) preconnectGateway(cta.href);
         }}
         className={`
-          group relative flex min-h-[var(--tap-target-min)] items-center justify-center gap-4 
-          transition-all duration-500 rounded-none
+          group relative flex min-h-[var(--tap-target-min)] items-center justify-center gap-4
+          transition-all duration-500 rounded-full
           ${sizeClasses[size]} w-full sm:w-auto
           ${variant === 'experiential' ? toolStyles.experiential : toolStyles[cta.tool]}
           ${toneClass}

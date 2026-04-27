@@ -477,15 +477,13 @@ export default function Lineup() {
         <div className="container layout-default border-t border-white/10 pt-12">
           <span className="ui-kicker block text-white/42">Artist Booking / Submissions</span>
           <h2 className={sectionTitleClass}>
-            BOOKING EXPERIENCE
+            WANT TO PLAY
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/68 md:text-lg">
-            If this larger heading treatment lands, it can become the shared section-title system. For now it anchors
-            the booking block so you can judge it in a real page context before we roll it through the rest of the
-            site.
+            Booking inquiries for Chasing Sun(Sets) and Untold Story rooms, plus Sun(Sets) Radio guest submissions.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/booking" className="btn-pill-neutral btn-pill-wide">
+            <Link href="/booking" className="btn-pill-primary btn-pill-wide">
               Artist Booking
             </Link>
             <Link href="/submit" className="btn-pill-outline btn-pill-wide">

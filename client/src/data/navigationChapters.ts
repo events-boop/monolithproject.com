@@ -97,8 +97,8 @@ export const navigationChapters: NavigationChapter[] = [
   },
   {
     id: "artists",
-    label: "Lineup",
-    eyebrow: "Artists",
+    label: "Artists",
+    eyebrow: "Roster",
     href: "/lineup",
     tagline: "The artists behind the shows.",
     description:
@@ -106,7 +106,7 @@ export const navigationChapters: NavigationChapter[] = [
     proof: "A direct view of the artists shaping the sound.",
     image: "/images/artists-collective.webp",
     accent: "#F2F0E8",
-    ctaLabel: "Explore Lineup",
+    ctaLabel: "Explore Artists",
     secondaryLinks: [
       { label: "Featured Artists", href: "/lineup" },
       { label: "Radio Episodes", href: "/radio" },

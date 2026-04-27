@@ -266,15 +266,15 @@ export default function Home() {
                 One platform, multiple series.
               </span>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <Link href="/chasing-sunsets" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Open Air</p>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <Link href="/chasing-sunsets" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">Open Air</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Chasing Sun(Sets)</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
                   Open-air house music gatherings shaped by golden hour, lakefront energy, and community.
                 </p>
               </Link>
-              <Link href="/story" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+              <Link href="/story" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">After Dark</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Untold Story</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
@@ -284,14 +284,14 @@ export default function Home() {
                   {untoldMoment?.date || "Current indoor event details live on the story page"}
                 </p>
               </Link>
-              <Link href="/radio" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+              <Link href="/radio" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Radio</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Radio</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
                   Mixes, conversations, and cultural memory from the artists shaping the sound.
                 </p>
               </Link>
-              <Link href="/partners" className="group border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04] md:p-6">
+              <Link href="/partners" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Collaborations</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Partners</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/65">
@@ -309,24 +309,24 @@ export default function Home() {
                 Past nights / Proof points
               </span>
             </div>
-            <div className="grid gap-px border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-4">
-              <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">What It Is</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/80">Chicago-rooted music company</p>
+            <div className="grid gap-px bg-white/5 md:grid-cols-4">
+              <div className="bg-[#111111] p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">What It Is</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">Chicago-rooted music company</p>
               </div>
-              <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Show Types</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/80">
+              <div className="bg-[#111111] p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Show Types</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">
                   Open-air, rooftop, and after-dark chapters
                 </p>
               </div>
-              <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Audience Reach</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/80">1M+ organic impressions across past event content</p>
+              <div className="bg-[#111111] p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Audience Reach</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">1M+ organic impressions across past event content</p>
               </div>
-              <div className="bg-black/45 p-4 md:p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">Attendance</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/80">
+              <div className="bg-[#111111] p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Attendance</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">
                   6,000+ community attendance across flagship open-air moments
                 </p>
               </div>
@@ -367,12 +367,12 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/15 bg-white/[0.02] p-5 md:p-6">
+              <div className="rounded-full border border-white/10 bg-white/[0.04] p-3 md:p-4 backdrop-blur-xl">
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <Link href="/partners" className="btn-pill btn-pill-compact w-full justify-center">
+                  <Link href="/partners" className="btn-pill-primary btn-pill-compact w-full">
                     Partner With Us <ArrowUpRight className="w-4 h-4" />
                   </Link>
-                  <Link href="/contact" className="btn-pill-outline btn-pill-compact w-full justify-center">
+                  <Link href="/contact" className="btn-pill-secondary btn-pill-compact w-full">
                     Contact <ArrowUpRight className="w-4 h-4" />
                   </Link>
                 </div>

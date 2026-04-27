@@ -182,7 +182,7 @@ export default function ChasingSunsets() {
                   />
                   
                   <MagneticButton strength={0.22}>
-                    <a href="#chasing-records" className="cta-ghost group">
+                    <a href="#chasing-records" className="btn-pill-secondary group">
                         View Records
                         <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
                     </a>
@@ -329,49 +329,51 @@ export default function ChasingSunsets() {
                         key={event.id}
                         className="group p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-[0_16px_40px_rgba(0,0,0,0.14)] transition-all rounded-2xl backdrop-blur-sm border sunset-border-accent-20 sunset-glass-card-solid"
                       >
-                        <div className="flex items-start gap-6">
-                          <div className="flex flex-col items-center justify-center w-16 h-16 border sunset-border-accent-30 bg-[color-mix(in_srgb,var(--sunset-accent)_3%,transparent)]">
-                            <span className="text-xs font-bold uppercase sunset-accent">{month.substring(0, 3).toUpperCase()}</span>
-                            <span className="text-lg font-display sunset-text">{day}</span>
+                        <div className="flex items-start gap-6 relative z-10">
+                          <div className="flex flex-col items-center justify-center w-16 h-16 border border-[#E8B86D]/30 bg-black/40 backdrop-blur-md">
+                            <span className="text-[10px] font-bold uppercase text-[#E8B86D] tracking-widest">{month.substring(0, 3).toUpperCase()}</span>
+                            <span className="text-xl font-display text-white">{day}</span>
                           </div>
                           <div>
-                            <p className="mb-2 font-mono text-[10px] tracking-[0.25em] uppercase sunset-accent">
+                            <p className="mb-2 font-mono text-[10px] tracking-[0.25em] uppercase text-[#E8B86D]">
                               {event.episode}
                             </p>
-                            <h3 className="text-2xl font-display tracking-wide mb-1 group-hover:transition-colors sunset-text">
+                            <h3 className="text-2xl font-display tracking-wide mb-1 text-white group-hover:text-[#E8B86D] transition-colors">
                               {eventLabel}
                             </h3>
-                            <div className="flex flex-wrap gap-4 text-sm font-mono uppercase sunset-text-60">
-                              <span className="flex items-center gap-1">
-                                <MapPin size={12} /> {getEventVenueLabel(event)}
+                            <div className="flex flex-wrap gap-4 text-xs font-mono uppercase text-white/50">
+                              <span className="flex items-center gap-1.5">
+                                <MapPin size={12} className="text-[#E8B86D]" /> {getEventVenueLabel(event)}
                               </span>
-                              <span className="flex items-center gap-1">
-                                <Calendar size={12} /> {event.time}
+                              <span className="flex items-center gap-1.5">
+                                <Calendar size={12} className="text-[#E8B86D]" /> {event.time}
                               </span>
-                              <span className="rounded-full border border-[#E8B86D]/35 px-2 py-1 text-[10px] tracking-[0.2em] text-[#E8B86D]">
+                              <span className="rounded-full border border-[#E8B86D]/35 px-3 py-1 text-[9px] font-black tracking-[0.2em] text-[#E8B86D] bg-[#E8B86D]/5">
                                 {getStatusLabel(event.status)}
                               </span>
                             </div>
                           </div>
                         </div>
-                        {isTicketOnSale(event) ? (
-                          <a
-                            href={getPrimaryTicketUrl(event)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-pill-sunsets btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
-                          >
-                            {CTA_LABELS.tickets} <ArrowUpRight size={14} />
-                          </a>
-                        ) : (
-                          <Link href="/newsletter" asChild>
+                        <div className="relative z-10 w-full md:w-auto">
+                          {isTicketOnSale(event) ? (
                             <a
-                              className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50"
+                              href={getPrimaryTicketUrl(event)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn-pill-primary btn-pill-compact w-full justify-center"
                             >
-                              {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
+                              {CTA_LABELS.tickets} <ArrowUpRight size={14} />
                             </a>
-                          </Link>
-                        )}
+                          ) : (
+                            <Link href="/newsletter" asChild>
+                              <a
+                                className="btn-pill-secondary btn-pill-compact w-full justify-center"
+                              >
+                                {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
+                              </a>
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     );
                   })
