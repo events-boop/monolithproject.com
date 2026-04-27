@@ -393,7 +393,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             <span className="font-radio text-rose-500">SUN(SETS) RADIO</span>
                           ) :
                             (
-                              <div className="flex flex-col items-start gap-0.5">
+                              <div className="flex flex-row items-baseline gap-2">
                                 <span className={cn(
                                   "font-heavy text-[0.95rem] min-[360px]:text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
                                   isLight ? "text-black" : "text-white"
@@ -401,7 +401,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors -mt-0.5 shrink-0 uppercase",
+                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors shrink-0 uppercase",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />
