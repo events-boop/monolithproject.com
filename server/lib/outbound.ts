@@ -3,7 +3,7 @@ type QueryValue = string | string[] | null | undefined;
 type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
 const FALLBACK_POSH_URL =
-  "https://posh.vip/e/untold-storyseason-iii-episode-ivautograf-alhambra-palace-west-loop-chicago-friday-march-21-2026";
+  "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project";
 const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject";
 const OUTBOUND_TRACKING_PARAMS = [
   "utm_source",
@@ -41,7 +41,7 @@ const generalWaitlistUrl = readHttpsEnv("LAYLO_URL", "OUTBOUND_WAITLIST_GENERAL_
 const ticketDestinations: Record<string, string> = {
   featured: featuredTicketUrl,
   "mp-autograf-mar21": readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") || featuredTicketUrl,
-  "us-s3e3": readHttpsEnv("OUTBOUND_TICKETS_US_S3E3_URL") || featuredTicketUrl,
+  "us-s3e3": "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project",
 };
 
 const waitlistDestinations: Record<string, string> = {
