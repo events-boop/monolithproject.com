@@ -1,0 +1,899 @@
+diff --git a/client/public/sitemap.xml b/client/public/sitemap.xml
+index 6d5470e..186b4c7 100644
+--- a/client/public/sitemap.xml
++++ b/client/public/sitemap.xml
+@@ -2,247 +2,247 @@
+ <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+     <loc>https://monolithproject.com</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>1.0</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/tickets</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.9</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/schedule</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.9</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/chasing-sunsets</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/story</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/radio</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/chasing-sunsets-facts</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/radio/ep-01-benchek</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/radio/ep-02-ewerseen</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/radio/ep-03-terranova</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/radio/ep-04-radian</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/lineup</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/about</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/contact</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/faq</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/partners</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/booking</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.6</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/newsletter</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/terms</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>yearly</changefreq>
+     <priority>0.3</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/privacy</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>yearly</changefreq>
+     <priority>0.3</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/cookies</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>yearly</changefreq>
+     <priority>0.3</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/haai</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/lazare</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/chus</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/autograf</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/deron</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/juany-bravo</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/sabry</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/summers-uk</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/chris-idh</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/benchek</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/terranova</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/ewerseen</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/artists/radian</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.8</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/untold-story-season-iii-episode-iii-eran-hersh</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>daily</changefreq>
+     <priority>0.9</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/css-jun07</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/css-jul04</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/us-jul04</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/us-aug01</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/css-aug22</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+   <url>
+     <loc>https://monolithproject.com/events/css-sep26</loc>
+-    <lastmod>2026-04-24</lastmod>
++    <lastmod>2026-04-25</lastmod>
+     <changefreq>weekly</changefreq>
+     <priority>0.7</priority>
+   </url>
+diff --git a/client/src/components/InteractiveNavigationOverlay.tsx b/client/src/components/InteractiveNavigationOverlay.tsx
+index 7a28258..42309f6 100644
+--- a/client/src/components/InteractiveNavigationOverlay.tsx
++++ b/client/src/components/InteractiveNavigationOverlay.tsx
+@@ -63,20 +63,24 @@ const utilityLinks = [
+ ];
+ 
+ const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
++  "next-night": Ticket,
+   schedule: CalendarDays,
++  "chasing-sunsets": Sun,
++  "untold-story": Sparkles,
++  artists: UsersRound,
+   radio: Radio,
+-  gallery: Sparkles,
+-  about: UsersRound,
+   guide: MapPinned,
+ };
+ 
+ function getChapterIdForPath(path: string): NavigationChapterId {
+   if (path === "/schedule" || path.startsWith("/events/")) return "schedule";
++  if (path.startsWith("/chasing-sunsets")) return "chasing-sunsets";
++  if (path === "/story" || path.startsWith("/untold-story")) return "untold-story";
++  if (path === "/lineup" || path.startsWith("/artists/")) return "artists";
+   if (path.startsWith("/radio")) return "radio";
+-  if (path === "/archive" || path === "/insights") return "gallery";
+-  if (path.startsWith("/about")) return "about";
+   if (path === "/guide" || path === "/faq" || path === "/travel" || path === "/vip") return "guide";
+-  return "schedule";
++  if (path === "/tickets") return "next-night";
++  return "next-night";
+ }
+ 
+ function isExternalHref(href: string) {
+diff --git a/client/src/components/Navigation.tsx b/client/src/components/Navigation.tsx
+index 95a2f90..3f7db72 100644
+--- a/client/src/components/Navigation.tsx
++++ b/client/src/components/Navigation.tsx
+@@ -19,8 +19,8 @@ const InteractiveNavigationOverlay = lazy(() => import("./InteractiveNavigationO
+ 
+ const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string }) => {
+   const accentClass = brand === "chasing-sunsets" ? "text-sunsets-gold" :
+-                     brand === "untold-story" ? "text-untold-cyan" :
+-                     brand === "radio" ? "text-rose-500" : "text-primary";
++    brand === "untold-story" ? "text-untold-cyan" :
++      brand === "radio" ? "text-rose-500" : "text-primary";
+ 
+   return (
+     <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
+@@ -82,14 +82,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+   const ticketEvent = getExperienceEvent("ticket");
+   const featuredChasingEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+   const featuredUntoldEvent = getSeriesExperienceEvent("untold-story", "hero");
+-  
++
+   // Contextual CTA logic: ensure we point to the right series if we're on a series-specific page
+   const isUntoldPath = location === "/story" || location.startsWith("/untold-story");
+   const isSunsetsPath = location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
+-  
++
+   const contextEvent = isUntoldPath ? (featuredUntoldEvent || getSeriesEvents("untold-story")[0] || ticketEvent)
+-                    : isSunsetsPath ? (featuredChasingEvent || getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
+-                    : ticketEvent;
++    : isSunsetsPath ? (featuredChasingEvent || getSeriesEvents("chasing-sunsets")[0] || ticketEvent)
++      : ticketEvent;
+ 
+   const cta = getEventCta(contextEvent);
+   const ctaToneClass = getEventCtaToneClass(contextEvent);
+@@ -206,9 +206,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+ 
+     const drawer = getDrawerTypeForHref(href);
+     if (drawer) {
+-        openDrawer(drawer);
+-        setMobileMenuOpen(false);
+-        return;
++      openDrawer(drawer);
++      setMobileMenuOpen(false);
++      return;
+     }
+ 
+     // Improved deep routing for anchors and cross-page anchors
+@@ -223,16 +223,16 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+       // But we can check `path` against drawerRouteMap too!
+       const pathDrawer = getDrawerTypeForHref(normalizedPath);
+       if (pathDrawer) {
+-          openDrawer(pathDrawer);
+-          setMobileMenuOpen(false);
+-          // Wait for drawer to open then scroll into view inside it
+-          setTimeout(() => {
+-              const element = document.getElementById(targetId);
+-              if (element) {
+-                  element.scrollIntoView({ behavior: "smooth" });
+-              }
+-          }, 400);
+-          return;
++        openDrawer(pathDrawer);
++        setMobileMenuOpen(false);
++        // Wait for drawer to open then scroll into view inside it
++        setTimeout(() => {
++          const element = document.getElementById(targetId);
++          if (element) {
++            element.scrollIntoView({ behavior: "smooth" });
++          }
++        }, 400);
++        return;
+       }
+ 
+       if (location === normalizedPath || (location === "/" && normalizedPath === "/")) {
+@@ -296,7 +296,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+         style={{
+           top: "var(--shell-nav-offset)",
+         }}
+-        className="fixed left-0 right-0 z-[10001] px-1.5 py-1.5 sm:px-4 sm:py-3 pointer-events-none"
++        className="fixed left-0 right-0 z-[10001] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
+       >
+         <a
+           href="#main-content"
+@@ -309,7 +309,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+         >
+           Skip to content
+         </a>
+-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1.5 sm:w-[98%] sm:gap-3">
++        <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1 sm:w-[98%] sm:gap-3">
+           {bannerPayload && bannerPayload.status !== "past" ? (
+             <a
+               href={bannerPayload.ticketUrl || "/newsletter"}
+@@ -320,10 +320,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                   ? "Open tickets for current featured event"
+                   : "Request early access for the current featured event"
+               }
+-              className="group relative block overflow-hidden rounded-[0.8rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
++              className="group relative block overflow-hidden rounded-[0.72rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
+             >
+               <div
+-                className="relative h-11 sm:h-11"
++                className="relative h-9 sm:h-11"
+                 style={
+                   bannerPayload.status === "live"
+                     ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
+@@ -347,14 +347,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                       ))}
+                   </div>
+                 </div>
+-                <div className="absolute inset-0 flex items-center justify-center px-3 sm:hidden">
++                <div className="absolute inset-0 flex items-center justify-center px-2.5 sm:hidden">
+                   <div className="flex min-w-0 items-center gap-2.5 text-white/90">
+                     {bannerPayload.status === "live" ? (
+                       <span className="inline-flex h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-white" />
+                     ) : (
+                       <Ticket className="h-3.5 w-3.5 shrink-0 text-white/90" />
+                     )}
+-                    <span className="min-w-0 truncate font-mono text-[11px] font-bold uppercase tracking-[0.12em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
++                    <span className="min-w-0 truncate font-mono text-[10px] font-bold uppercase tracking-[0.1em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+                       {bannerPayload.text}
+                     </span>
+                   </div>
+@@ -366,7 +366,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+           <div
+             className={`rounded-3xl sm:rounded-[2rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
+           >
+-            <div className="flex min-h-[3.25rem] w-full items-center justify-between px-2.5 py-1.5 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
++            <div className="flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
+               {/* LEFT: LOGO */}
+               <div className="mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
+                 <MagneticButton strength={0.25}>
+@@ -375,7 +375,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                     onClick={handleLogoClick}
+                     aria-label="Go to homepage"
+                     data-nav-logo="true"
+-                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
++                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
+                   >
+                     <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
+                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
+@@ -414,28 +414,28 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+ 
+                 {/* LOCATION CONTEXT SIGNAL (SCROLL-SPY) */}
+                 {isHome && currentChapter && (
+-                    <div
+-                      className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
+-                    >
+-                      <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
+-                        Section
+-                      </span>
+-                      <span className={cn(
+-                        "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
+-                        resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
++                  <div
++                    className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0"
++                  >
++                    <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
++                      Section
++                    </span>
++                    <span className={cn(
++                      "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
++                      resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
+                         resolvedBrand === "untold-story" ? "text-untold-cyan" :
+-                        "text-white/80"
+-                      )}>
+-                        {currentChapter.number} / {currentChapter.label}
+-                      </span>
+-                    </div>
+-                  )}
++                          "text-white/80"
++                    )}>
++                      {currentChapter.number} / {currentChapter.label}
++                    </span>
++                  </div>
++                )}
+               </div>
+ 
+               {/* CENTER: NAV ITEMS */}
+               <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
+                 <NavigationMegamenu
+-                  label="EVENT SERIES"
++                  label="SHOWS"
+                   href="/schedule"
+                   isActive={location === "/schedule" || location === "/tickets" || location.startsWith("/events/")}
+                   isLight={isLight}
+@@ -443,7 +443,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                   onNavigate={handleNavClick}
+                   megamenu={{
+                     items: [
+-                      { label: "ALL UPCOMING SHOWS", href: "/schedule", icon: "ticket" },
++                      { label: "UPCOMING SHOWS", href: "/schedule", icon: "arrow" },
++                      { label: "GET TICKETS", href: ticketHref || "/tickets", icon: "ticket" },
+                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
+                       { label: "UNTOLD STORY", href: "/story" },
+                       { label: "ENTRY GUIDE", href: "/guide#entry" },
+@@ -470,102 +471,107 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                 />
+ 
+                 <NavigationMegamenu
+-                  label="RADIO"
+-                  href="/radio"
+-                  isActive={location.startsWith("/radio")}
++                  label="CHASING SUN(SETS)"
++                  href="/chasing-sunsets"
++                  isActive={location.includes("/chasing-sunsets")}
+                   isLight={isLight}
+                   brand={resolvedBrand}
+                   onNavigate={handleNavClick}
+                   megamenu={{
+                     items: [
+-                      { label: "THE SHOW", href: "/radio", icon: "play" },
+-                      { label: "LATEST EPISODE", href: "/radio/ep-01-benchek", icon: "play" },
+-                      { label: "ALL EPISODES", href: "/radio#episodes" },
++                      { label: "SEASON 2026", href: "/chasing-sunsets", icon: "arrow" },
++                      { label: "SIGN UP FOR DROPS", href: "/newsletter", icon: "arrow" },
++                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
++                      { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
+                     ],
+                     feature: {
+-                      title: "CHASING SUN(SETS) RADIO",
+-                      subtitle: "Mixes, guests, and artist content",
+-                      image: "/images/radio-show-gear.webp",
+-                      href: "/radio/ep-01-benchek",
+-                      ctaText: "Tune In",
+-                      icon: "play",
+-                      badge: "RADIO"
++                      title: featuredChasingEvent?.headline || featuredChasingEvent?.title || "Chasing Sun(Sets)",
++                      subtitle: featuredChasingEvent?.episode || "Open-air series",
++                      image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
++                      href: getPrimaryTicketUrl(featuredChasingEvent) || "/chasing-sunsets",
++                      ctaText: getPrimaryTicketUrl(featuredChasingEvent) ? "Get Tickets" : "View Season",
++                      icon: getPrimaryTicketUrl(featuredChasingEvent) ? "ticket" : "arrow",
++                      badge: featuredChasingEvent?.status === "on-sale" ? "ON SALE" : "SEASON 2026",
++                      external: !!getPrimaryTicketUrl(featuredChasingEvent)
+                     }
+                   }}
+                 />
+ 
+                 <NavigationMegamenu
+-                  label="GALLERY"
+-                  href="/archive"
+-                  isActive={location === "/archive" || location.includes("/insights")}
++                  label="UNTOLD STORY"
++                  href="/story"
++                  isActive={location.includes("/story") || location.includes("/untold-story")}
+                   isLight={isLight}
+                   brand={resolvedBrand}
+                   onNavigate={handleNavClick}
+                   megamenu={{
+                     items: [
+-                      { label: "EVENT GALLERY", href: "/archive", icon: "arrow" },
+-                      { label: "JOURNAL", href: "/insights" },
++                      { label: "CURRENT INDOOR EVENT", href: "/story", icon: "arrow" },
++                      { label: "TICKETS + DATES", href: "/schedule", icon: "ticket" },
+                       { label: "PAST NIGHTS", href: "/archive", icon: "arrow" },
++                      { label: "CONTACT", href: "/contact", icon: "arrow" },
+                     ],
+                     feature: {
+-                      title: "THE PROOF",
+-                      subtitle: "Every room, every set, every season",
+-                      image: "/images/untold-story-juany-deron-v2.webp",
+-                      href: "/archive",
+-                      ctaText: "Enter Gallery",
++                      title: featuredUntoldEvent?.headline || featuredUntoldEvent?.title || "Untold Story",
++                      subtitle: featuredUntoldEvent?.episode || "Indoor series",
++                      image: featuredUntoldEvent?.image || "/images/untold-story-juany-deron-v2.webp",
++                      href: getPrimaryTicketUrl(featuredUntoldEvent) || "/story",
++                      ctaText: getPrimaryTicketUrl(featuredUntoldEvent) ? "Get Tickets" : "View Story",
+                       icon: "arrow",
+-                      badge: "GALLERY"
++                      badge: featuredUntoldEvent?.status === "on-sale" ? "ON SALE" : "UNTOLD STORY",
++                      external: !!getPrimaryTicketUrl(featuredUntoldEvent)
+                     }
+                   }}
+                 />
+ 
+                 <NavigationMegamenu
+-                  label="ABOUT"
+-                  href="/about"
+-                  isActive={location === "/about"}
++                  label="RADIO"
++                  href="/radio"
++                  isActive={location.startsWith("/radio")}
+                   isLight={isLight}
+                   brand={resolvedBrand}
+                   onNavigate={handleNavClick}
+                   megamenu={{
+                     items: [
+-                      { label: "THE PROJECT", href: "/about#story" },
+-                      { label: "TOGETHERNESS", href: "/about#togetherness" },
+-                      { label: "CONTACT", href: "/contact" },
++                      { label: "THE SHOW", href: "/radio", icon: "play" },
++                      { label: "LATEST EPISODE", href: "/radio/ep-01-benchek", icon: "play" },
++                      { label: "ALL EPISODES", href: "/radio#episodes" },
+                     ],
+                     feature: {
+-                      title: "WHAT MONOLITH IS",
+-                      subtitle: "Chicago Music Project",
+-                      image: "/images/hero-monolith-modern.webp",
+-                      href: "/about",
+-                      ctaText: "About Monolith",
+-                      icon: "arrow",
+-                      badge: "ABOUT"
++                      title: "CHASING SUN(SETS) RADIO",
++                      subtitle: "Mixes, guests, and artist content",
++                      image: "/images/radio-show-gear.webp",
++                      href: "/radio/ep-01-benchek",
++                      ctaText: "Tune In",
++                      icon: "play",
++                      badge: "RADIO"
+                     }
+                   }}
+                 />
+ 
+                 <NavigationMegamenu
+-                  label="PLAN YOUR NIGHT"
+-                  href="/guide"
+-                  isActive={location === "/guide" || location === "/vip" || location === "/newsletter"}
++                  label="PARTNERS"
++                  href="/partners"
++                  isActive={location === "/partners" || location === "/sponsors" || location === "/press" || location === "/booking"}
+                   isLight={isLight}
+                   brand={resolvedBrand}
+                   onNavigate={handleNavClick}
+                   megamenu={{
+                     items: [
+-                      { label: "GET TICKETS", href: ticketHref || "/schedule", icon: "ticket" },
+-                      { label: "VIP TABLES", href: "/vip" },
+-                      { label: "INNER CIRCLE", href: "/newsletter" },
+-                      { label: "PARTNER WITH US", href: "/partners" },
++                      { label: "PARTNER WITH US", href: "/partners", icon: "arrow" },
++                      { label: "PARTNERSHIPS", href: "/partners" },
++                      { label: "SPONSOR ACCESS", href: "/sponsors" },
++                      { label: "PRESS & MEDIA", href: "/press" },
++                      { label: "ABOUT MONOLITH", href: "/about" },
+                     ],
+                     feature: {
+-                      title: "THE NIGHT GUIDE",
+-                      subtitle: "Entry, timing, and elevated access",
++                      title: "PARTNER WITH MONOLITH",
++                      subtitle: "Brands, venues, and cultural collaborators",
+                       image: "/images/industrial-roster.webp",
+-                      href: "/guide",
+-                      ctaText: "Open Guide",
++                      href: "/partners",
++                      ctaText: "Start Conversation",
+                       icon: "arrow",
+-                      badge: "GUIDE"
++                      badge: "PARTNERS"
+                     }
+                   }}
+                 />
+@@ -576,11 +582,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                     e.preventDefault();
+                     handleNavClick("/contact");
+                   }}
+-                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
+-                    isLight
++                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${isLight
+                       ? `hover:text-clay ${location === "/contact" ? "text-clay" : "text-stone"}`
+                       : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === "/contact" ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+-                  }`}
++                    }`}
+                 >
+                   Contact
+                 </Link>
+@@ -646,7 +651,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
+                 </div>
+ 
+                 {/* Cinematic Universal Toggle (Menu -> Close) */}
+-                <div className="flex items-center lg:hidden">
++                <div className="flex items-center">
+                   <MagneticButton>
+                     <button
+                       type="button"
+diff --git a/client/src/data/navigationChapters.ts b/client/src/data/navigationChapters.ts
+index b446713..0cdd45d 100644
+--- a/client/src/data/navigationChapters.ts
++++ b/client/src/data/navigationChapters.ts
+@@ -1,8 +1,10 @@
+ export type NavigationChapterId =
++  | "next-night"
+   | "schedule"
++  | "chasing-sunsets"
++  | "untold-story"
++  | "artists"
+   | "radio"
+-  | "gallery"
+-  | "about"
+   | "guide";
+ 
+ export interface NavigationChapterLink {
+@@ -26,91 +28,122 @@ export interface NavigationChapter {
+ 
+ export const navigationChapters: NavigationChapter[] = [
+   {
+-    id: "schedule",
+-    label: "Event Series",
+-    eyebrow: "Shows + Tickets",
+-    href: "/schedule",
+-    tagline: "The core Monolith experience calendar.",
++    id: "next-night",
++    label: "Shows",
++    eyebrow: "Tickets + Dates",
++    href: "/tickets",
++    tagline: "Start with the next Monolith show.",
+     description:
+-      "All upcoming Chasing Sun(Sets), Untold Story, and special Monolith drops.",
+-    proof: "Direct path to tickets and season details.",
++      "A direct preview of the next show, ticket state, and the fastest path in.",
++    proof: "The clearest route from interest to entry.",
+     image: "/images/eran-hersh-live-1.webp",
+     accent: "#E05A3A",
+-    ctaLabel: "View Schedule",
++    ctaLabel: "View Shows",
+     secondaryLinks: [
+-      { label: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
+-      { label: "Untold Story", href: "/story" },
+-      { label: "Entry Guide", href: "/guide#entry" },
++      { label: "See The Schedule", href: "/schedule" },
++      { label: "Sign Up for Drops", href: "/newsletter" },
+     ],
+   },
+   {
+-    id: "radio",
+-    label: "Radio",
+-    eyebrow: "Cultural Sound",
+-    href: "/radio",
+-    tagline: "The frequency of the project, delivered weekly.",
++    id: "schedule",
++    label: "Upcoming Shows",
++    eyebrow: "Season 2026",
++    href: "/schedule",
++    tagline: "All upcoming dates in one place.",
+     description:
+-      "Mixes, guest features, and conversation from the artists shaping our rooms.",
+-    proof: "Tune in to the sound of Chasing Sun(Sets) and beyond.",
+-    image: "/images/radio-show-gear.webp",
+-    accent: "#F43F5E",
+-    ctaLabel: "Listen to Radio",
++      "The live calendar for Chasing Sun(Sets), Untold Story, and upcoming Monolith drops.",
++    proof: "One place to compare dates, venues, and ticket states.",
++    image: "/images/autograf-recap.jpg",
++    accent: "#8B5CF6",
++    ctaLabel: "See Upcoming Shows",
+     secondaryLinks: [
+-      { label: "Latest Episode", href: "/radio/ep-01-benchek" },
+-      { label: "All Episodes", href: "/radio#episodes" },
++      { label: "Tickets", href: "/tickets" },
++      { label: "Archive", href: "/archive" },
+     ],
+   },
+   {
+-    id: "gallery",
+-    label: "Gallery",
+-    eyebrow: "The Proof",
+-    href: "/archive",
+-    tagline: "Visual archives from every night and season.",
++    id: "chasing-sunsets",
++    label: "Chasing Sun(Sets)",
++    eyebrow: "Open-Air Series",
++    href: "/chasing-sunsets",
++    tagline: "Golden-hour house music built for movement and return.",
+     description:
+-      "A cinematic record of past nights, crowds, and artist sets.",
+-    proof: "The evidence of togetherness.",
+-    image: "/images/untold-story-juany-deron-v2.webp",
++      "Open-air gatherings shaped by lakefront energy, headline moments, and community.",
++    proof: "Season drops, lineup news, and the summer archive.",
++    image: "/images/chasing-sunsets-premium.webp",
+     accent: "#E8B86D",
+-    ctaLabel: "Enter Gallery",
++    ctaLabel: "View Chasing Sun(Sets)",
+     secondaryLinks: [
+-      { label: "Past Nights", href: "/archive" },
+-      { label: "Journal", href: "/insights" },
++      { label: "Next Episode", href: "/schedule" },
++      { label: "Season Archive", href: "/archive" },
+     ],
+   },
+   {
+-    id: "about",
+-    label: "About",
+-    eyebrow: "The Project",
+-    href: "/about",
+-    tagline: "Togetherness is the frequency. Music is the guide.",
++    id: "untold-story",
++    label: "Untold Story",
++    eyebrow: "Indoor Series",
++    href: "/story",
++    tagline: "After-dark rooms built for deeper sound and real dancefloors.",
+     description:
+-      "Chicago-rooted music company producing open-air and after-dark experiences.",
+-    proof: "Our principles and story.",
+-    image: "/images/hero-monolith-modern.webp",
+-    accent: "#D4A574",
+-    ctaLabel: "About Monolith",
++      "Indoor nights focused on immersive dancefloors, tighter rooms, and artist-led sets.",
++    proof: "Current indoor event details, tickets, and past nights.",
++    image: "/images/untold-story-juany-deron-v2.webp",
++    accent: "#22D3EE",
++    ctaLabel: "View Untold Story",
++    secondaryLinks: [
++      { label: "Next Night", href: "/tickets" },
++      { label: "Season Archive", href: "/archive" },
++    ],
++  },
++  {
++    id: "artists",
++    label: "Lineup",
++    eyebrow: "Artists",
++    href: "/lineup",
++    tagline: "The artists behind the shows.",
++    description:
++      "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",
++    proof: "A direct view of the artists shaping the sound.",
++    image: "/images/artists-collective.webp",
++    accent: "#F2F0E8",
++    ctaLabel: "Explore Lineup",
+     secondaryLinks: [
+-      { label: "The Story", href: "/about#story" },
+-      { label: "Togetherness", href: "/about#togetherness" },
+-      { label: "Contact", href: "/contact" },
++      { label: "Featured Artists", href: "/lineup" },
++      { label: "Radio Episodes", href: "/radio" },
++    ],
++  },
++  {
++    id: "radio",
++    label: "Radio",
++    eyebrow: "Artist Content",
++    href: "/radio",
++    tagline: "Mixes, guests, and radio episodes between shows.",
++    description:
++      "Episodes, guest mixes, tracklists, and artist context that keep the sound moving between nights.",
++    proof: "A direct way to hear the artists before you are in the room.",
++    image: "/images/radio-show-gear.webp",
++    accent: "#FB7185",
++    ctaLabel: "Play Radio",
++    secondaryLinks: [
++      { label: "Latest Episode", href: "/radio/ep-01-benchek" },
++      { label: "Browse Episodes", href: "/radio" },
+     ],
+   },
+   {
+     id: "guide",
+-    label: "Plan Your Night",
+-    eyebrow: "The Guide",
++    label: "Plan Your Visit",
++    eyebrow: "Entry + Arrival",
+     href: "/guide",
+-    tagline: "Everything you need to step into the room.",
++    tagline: "Entry, timing, arrival, and access without guesswork.",
+     description:
+-      "Entry requirements, VIP tables, travel info, and community access.",
+-    proof: "A seamless night starts with the guide.",
++      "Everything you need to arrive cleanly, know the timing, and choose the right access path.",
++    proof: "A better arrival makes the show experience better.",
+     image: "/images/industrial-roster.webp",
+-    accent: "#22D3EE",
+-    ctaLabel: "Open Night Guide",
++    accent: "#D4A574",
++    ctaLabel: "Plan Your Night",
+     secondaryLinks: [
+-      { label: "VIP Tables", href: "/vip" },
+-      { label: "Inner Circle", href: "/newsletter" },
+-      { label: "Partner Access", href: "/partners" },
++      { label: "Entry Checklist", href: "/guide#entry" },
++      { label: "VIP Access", href: "/vip" },
+     ],
+   },
+ ];

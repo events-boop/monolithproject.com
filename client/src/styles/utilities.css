@@ -24,6 +24,22 @@
     letter-spacing: -0.04em;
   }
 
+  .section-display-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.84;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  .section-display-title-compact {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
   /* Advanced Optical Glassmorphism */
   .glass {
     background: linear-gradient(145deg, rgba(35, 35, 40, 0.45), rgba(15, 15, 18, 0.7));

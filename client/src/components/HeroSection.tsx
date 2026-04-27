@@ -2,7 +2,6 @@ import { Link } from "wouter";
 import { useState, useCallback } from "react";
 import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
 import JsonLd from "@/components/JsonLd";
-import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import KineticDecryption from "./KineticDecryption";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
@@ -126,9 +125,12 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_TITLE = "MONOLITH";
-const HERO_PRIMARY_LINE = "Togetherness is the frequency. Music is the guide.";
+const HERO_EYEBROW = "MONOLITH PROJECT";
+const HERO_PRIMARY_LINE = "Togetherness is the frequency.";
 const HERO_SUBHEAD =
-  "A Chicago-rooted music company producing house music experiences across open-air lakefront gatherings, after-dark rooms, and artist-led radio.";
+  "Chicago / House Music / Events / Radio";
+const HERO_SUPPORTING_LINE =
+  "Upcoming shows, Chasing Sun(Sets), Untold Story, and artist-led radio.";
 
 function toSystemText(value?: string | null) {
   return (value || "")
@@ -359,53 +361,49 @@ export default function HeroSection() {
         <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
 
-      <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-12 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-16 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-12 md:grid md:grid-cols-[minmax(0,1fr)_minmax(21rem,25rem)] md:items-center md:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(23rem,28rem)]">
+      <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-8 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)]">
           <div
             data-home-hero-copy="true"
-            className="flex min-w-0 flex-col items-center pt-1 text-center text-white md:items-start md:justify-center md:pr-8 md:text-left lg:pr-12"
+            className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
           >
-            <div className="mb-6 relative md:mb-12">
-              <div className="flex items-center gap-3 justify-center md:justify-start md:gap-4">
-                <h2
-                  data-home-hero-eyebrow="true"
-                  className="font-mono text-xs uppercase tracking-[0.32em] text-white/45 sm:text-sm sm:tracking-[0.55em]"
-                >
-                  {getEventEyebrow(featuredEvent) || "Chicago Music Project"}
-                </h2>
-                <div className="h-px w-8 bg-white/10 md:w-20" />
-              </div>
-            </div>
+            <h2
+              data-home-hero-eyebrow="true"
+              className="mb-5 font-mono text-xs uppercase tracking-[0.32em] text-white/48 sm:text-sm sm:tracking-[0.46em]"
+            >
+              {HERO_EYEBROW}
+            </h2>
 
             <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "font-heavy text-[clamp(3rem,16vw,12rem)] leading-[0.82] uppercase pointer-events-auto text-balance text-white"
+                  "pointer-events-auto font-heavy text-[clamp(4rem,18vw,13rem)] leading-[0.78] tracking-[-0.08em] uppercase text-balance text-white"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
               </h1>
-              <div className="my-6 h-px w-full bg-gradient-to-r from-white/30 to-transparent lg:my-8" />
-              <p className="max-w-2xl text-balance font-display text-[clamp(1.05rem,2.8vw,2rem)] leading-[1.15] text-white/92">
-                {HERO_PRIMARY_LINE}
-              </p>
-              <BrandTranslatorLabel className="mt-5" tone="neutral">Upcoming Shows / Chasing Sun(Sets) / Untold Story / Radio</BrandTranslatorLabel>
+
               <p
                 data-home-hero-summary="true"
-                className="mt-6 max-w-md text-center font-mono text-xs uppercase tracking-[0.12em] text-white/58 md:mt-8 md:max-w-xl md:text-left md:text-sm md:tracking-[0.2em]"
+                className="mt-4 max-w-md text-center font-mono text-xs uppercase tracking-[0.18em] text-white/52 md:text-left sm:tracking-[0.24em]"
               >
                 {HERO_SUBHEAD}
               </p>
+              <p className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(1.2rem,3vw,2.15rem)] leading-[1.02] text-white/92">
+                {HERO_PRIMARY_LINE}
+              </p>
+
+              <p className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/64 md:text-base">
+                {HERO_SUPPORTING_LINE}
+              </p>
+
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link href="/schedule" className="btn-pill-neutral btn-pill-wide">
-                  View Upcoming Shows
+                  Upcoming Shows
                 </Link>
                 <Link href="/newsletter" className="btn-pill-outline btn-pill-wide">
-                  Sign Up for Drops
-                </Link>
-                <Link href="/radio" className="btn-text-action">
-                  Listen to Radio
+                  Get The Drop
                 </Link>
               </div>
             </div>
