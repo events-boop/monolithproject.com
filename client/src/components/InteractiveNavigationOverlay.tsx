@@ -394,13 +394,13 @@ export default function InteractiveNavigationOverlay({
               Choose Your Entry
             </h1>
           </div>
-          <nav aria-label="Utility links" className="flex flex-wrap gap-2">
+          <nav aria-label="Utility links" className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             {utilityLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={handleLinkClick(link.href)}
-                className="btn-pill-outline btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                className="btn-pill-outline btn-pill-compact flex justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               >
                 {link.label}
               </a>

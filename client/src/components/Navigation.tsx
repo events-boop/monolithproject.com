@@ -23,7 +23,7 @@ const MenuCyclingText = ({ isOpen, brand }: { isOpen: boolean; brand?: string })
       brand === "radio" ? "text-rose-500" : "text-primary";
 
   return (
-    <div className="hidden sm:flex relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
+    <div className="hidden sm:flex lg:hidden relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
       <span
         className="h-full flex items-center justify-center"
         style={{ transform: `translateY(${isOpen ? "-100%" : "0%"})`, transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}

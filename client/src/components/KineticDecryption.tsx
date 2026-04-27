@@ -89,7 +89,7 @@ export default function KineticDecryption({
     <span 
       ref={ref}
       onMouseEnter={() => startScramble(true)}
-      className={`${className} cursor-default relative inline-block whitespace-nowrap`}
+      className={`${className} cursor-default relative`}
     >
       <span className="sr-only">{text}</span>
       {autoStart || isScrambling ? (

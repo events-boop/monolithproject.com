@@ -378,7 +378,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "pointer-events-auto font-heavy text-[clamp(4rem,18vw,13rem)] leading-[0.78] tracking-[-0.08em] uppercase text-balance text-white"
+                  "font-heavy text-[clamp(2.75rem,14vw,11rem)] leading-[0.82] tracking-[-0.06em] uppercase text-balance text-white"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
@@ -386,7 +386,7 @@ export default function HeroSection() {
 
               <p
                 data-home-hero-summary="true"
-                className="mt-4 max-w-md text-center font-mono text-xs uppercase tracking-[0.18em] text-white/52 md:text-left sm:tracking-[0.24em]"
+                className="mt-4 max-w-md text-center font-mono text-[10px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/52 md:text-left"
               >
                 {HERO_SUBHEAD}
               </p>
