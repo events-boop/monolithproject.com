@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 import { readPublicScheduledEvents } from "../db/scheduledEventsRepo";
-import { buildPublicSiteData } from "../data/public-site-data";
+import { buildPublicSiteData, normalizePublicSitePath } from "../data/public-site-data";
 import { logEvent } from "../lib/logging";
 import type { ScheduledEvent, PublicSiteData } from "../../shared/events/types";
 
@@ -17,6 +17,7 @@ type CachedSiteDataResponse = {
  */
 class SiteDataService {
   private static instance: SiteDataService;
+  private readonly MAX_CACHED_RESPONSES = 64;
   
   private cachedEvents: ScheduledEvent[] | null = null;
   private cachedResponses = new Map<string, CachedSiteDataResponse>();
@@ -46,17 +47,26 @@ class SiteDataService {
   }
 
   public async getSiteDataResponse(path: string): Promise<CachedSiteDataResponse> {
+    const normalizedPath = normalizePublicSitePath(path);
     const events = await this.getEventsWithSWR();
-    const cachedResponse = this.cachedResponses.get(path);
+    const cachedResponse = this.cachedResponses.get(normalizedPath);
     if (cachedResponse) {
       return cachedResponse;
     }
 
-    const payload = buildPublicSiteData(path, events);
+    const payload = buildPublicSiteData(normalizedPath, events);
     const serialized = JSON.stringify(payload);
     const etag = `W/"${createHash("sha1").update(serialized).digest("base64url")}"`;
     const response = { etag, payload, serialized };
-    this.cachedResponses.set(path, response);
+    this.cachedResponses.set(normalizedPath, response);
+
+    if (this.cachedResponses.size > this.MAX_CACHED_RESPONSES) {
+      const oldestKey = this.cachedResponses.keys().next().value;
+      if (oldestKey) {
+        this.cachedResponses.delete(oldestKey);
+      }
+    }
+
     return response;
   }
 

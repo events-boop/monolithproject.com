@@ -86,24 +86,13 @@ export default function KineticDecryption({
   }, [triggerOnce, text]);
 
   return (
-    <span 
+    <span
       ref={ref}
       onMouseEnter={() => startScramble(true)}
-      className={`${className} cursor-default relative`}
+      className={`${className} cursor-default`}
     >
       <span className="sr-only">{text}</span>
-      {autoStart || isScrambling ? (
-        <>
-          <span aria-hidden="true" className="invisible">
-            {text}
-          </span>
-          <span aria-hidden="true" className="absolute inset-0">
-            {displayText}
-          </span>
-        </>
-      ) : (
-        <span aria-hidden="true">{displayText}</span>
-      )}
+      <span aria-hidden="true">{displayText}</span>
     </span>
   );
 }

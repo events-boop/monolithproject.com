@@ -29,4 +29,12 @@ describe("siteDataService", () => {
     expect(first.serialized).toBe(JSON.stringify(first.payload));
     expect(first.etag).toMatch(/^W\/".+"$/);
   });
+
+  it("reuses the same cached response for equivalent normalized paths", async () => {
+    const first = await siteDataService.getSiteDataResponse("radio?view=full");
+    const second = await siteDataService.getSiteDataResponse("/radio/");
+
+    expect(readPublicScheduledEvents).toHaveBeenCalledTimes(1);
+    expect(first).toBe(second);
+  });
 });

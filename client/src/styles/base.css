@@ -12,7 +12,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: clip; /* clip protects width but allows vertical scrolling safely */
+    overflow-x: clip;
+    position: relative;
   }
 
   button:not(:disabled),

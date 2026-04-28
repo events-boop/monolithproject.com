@@ -54,6 +54,12 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   }
 
   if (isProd) {
+    if (!process.env.OPS_ADMIN_SECRET?.trim()) {
+      console.warn(
+        "⚠️  OPS_ADMIN_SECRET is not set. Administrative routes will fail closed in production.",
+      );
+    }
+
     const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
     const requiredEnvVars: Record<string, string[]> = {
       disabled: [],

@@ -54,6 +54,16 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
   });
 
+  it("warns in production when OPS_ADMIN_SECRET is missing", () => {
+    process.env.NODE_ENV = "production";
+    delete process.env.OPS_ADMIN_SECRET;
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("OPS_ADMIN_SECRET"),
+    );
+  });
+
   it("throws in production under fatal: true when provider vars are missing", () => {
     process.env.NODE_ENV = "production";
     process.env.LEAD_PROVIDER = "mailchimp";

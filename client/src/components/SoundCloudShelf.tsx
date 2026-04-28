@@ -27,13 +27,13 @@ export default function SoundCloudShelf() {
               className="mb-3 block font-mono text-[10px] uppercase tracking-[0.35em]"
               style={{ color: accent }}
             >
-              SoundCloud Archive
+              Radio Archive
             </span>
             <h2 className="font-display text-[clamp(2.25rem,4.5vw,4.75rem)] uppercase leading-[0.88] tracking-tight text-white">
               Latest Covers
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/45 md:text-base">
-              Fresh artwork from the Sun(Sets) radio archive, surfaced like a closing shelf before the footer.
+              Fresh cover art from the Sun(Sets) radio archive, surfaced like a closing shelf before the footer.
             </p>
           </div>
 
@@ -56,18 +56,16 @@ export default function SoundCloudShelf() {
             const coverSrc = episode.coverImage || episode.image;
 
             return (
-              <a
+              <Link
                 key={episode.slug}
-                href={episode.audioUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/radio/${episode.slug}`}
                 className="group min-w-[78vw] bg-[#070709] text-left transition-colors hover:text-white sm:min-w-[340px] md:min-w-0"
               >
                 <div className="relative aspect-square overflow-hidden border border-white/10 bg-black">
                   <div className="glass-refract absolute inset-0">
                     <ResponsiveImage
                       src={coverSrc}
-                      alt={`${episode.guest} ${episode.title} SoundCloud artwork`}
+                      alt={`${episode.guest} ${episode.title} cover art`}
                       sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 78vw"
                       loading="lazy"
                       decoding="async"
@@ -89,7 +87,7 @@ export default function SoundCloudShelf() {
                   <div className="absolute inset-x-0 bottom-0 p-4">
                     <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/70 backdrop-blur-sm">
                       <Headphones className="h-3.5 w-3.5" />
-                      Listen on SoundCloud
+                      Open Episode Page
                     </div>
                   </div>
                 </div>
@@ -112,7 +110,7 @@ export default function SoundCloudShelf() {
                     </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>

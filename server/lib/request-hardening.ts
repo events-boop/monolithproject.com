@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import type { Request, RequestHandler } from "express";
+import { shouldTrustForwardedHeaders } from "./runtime-trust";
 
 const unsafeMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 const allowedFetchSites = new Set(["same-origin", "same-site", "none"]);
@@ -9,10 +10,16 @@ function readForwardedHeader(value?: string | null) {
 }
 
 function getRequestOrigin(req: Request) {
-  const host = readForwardedHeader(req.header("x-forwarded-host")) || req.header("host")?.trim();
+  const trustForwarded = shouldTrustForwardedHeaders();
+  const host =
+    (trustForwarded ? readForwardedHeader(req.header("x-forwarded-host")) : undefined) ||
+    req.header("host")?.trim();
   if (!host) return null;
 
-  const proto = readForwardedHeader(req.header("x-forwarded-proto")) || req.protocol || "https";
+  const proto =
+    (trustForwarded ? readForwardedHeader(req.header("x-forwarded-proto")) : undefined) ||
+    req.protocol ||
+    "https";
   return `${proto}://${host}`;
 }
 

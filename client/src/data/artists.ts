@@ -20,36 +20,19 @@ export interface ArtistData {
 export const ARTIST_ENTRIES: ArtistData[] = [
   {
     id: "lazare",
-    name: "LAZARE",
-    role: "RESIDENT",
-    origin: "PARIS, FR",
-    genre: "MELODIC HOUSE",
+    name: "LAZARE SABRY",
+    role: "HEADLINER",
+    origin: "CHICAGO, US",
+    genre: "MELODIC HOUSE · TECHNO",
     image: "/images/artist-lazare.webp",
     series: ["untold-story"],
-    bio: "A staple of the Monolith sound. Lazare brings a sophisticated blend of melodic house and progressive rhythms, with sets known for emotional depth and driving energy.",
-    tags: ["Melodic", "Progressive", "House"],
+    bio: "Over 100 million spins and counting on hit songs. Lazare Sabry is a headliner for record night at Carbon Night Club Chicago, bringing a sophisticated blend of melodic house, deep techno, and progressive rhythms.",
+    tags: ["Headliner", "Melodic", "House"],
     socials: {},
     tracks: [
       { title: "Eternal Echoes", duration: "6:15" },
       { title: "Nightfall", duration: "5:30" },
       { title: "Resonance", duration: "4:45" },
-    ],
-  },
-  {
-    id: "sabry",
-    name: "SABRY",
-    role: "RESIDENT",
-    origin: "CHICAGO, US",
-    genre: "DEEP HOUSE · TECHNO",
-    image: "/images/untold-story-moody.webp",
-    series: ["untold-story"],
-    bio: "Sabry anchors the Monolith sound with deep, hypnotic selections and long-form pacing that adapts to the room.",
-    tags: ["Deep House", "Techno", "Resident"],
-    socials: {},
-    tracks: [
-      { title: "Night Architecture", duration: "5:56" },
-      { title: "After Hours Flow", duration: "6:08" },
-      { title: "Signal Drift", duration: "4:43" },
     ],
   },
   {
@@ -159,6 +142,41 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     ],
   },
   {
+    id: "arodes",
+    name: "ARODES",
+    role: "GUEST",
+    origin: "SPAIN",
+    genre: "AFRO HOUSE",
+    image: "/images/arodes-guest.webp",
+    series: ["chasing-sunsets"],
+    bio: "Arodes brings deep, rhythmic Afro house to the sunset stage. His selections are tailored for open-air environments, building steady energy as the light fades.",
+    tags: ["Afro House", "Guest", "Open Air"],
+    socials: {},
+    tracks: [
+      { title: "Sunset Rhythm", duration: "5:45" }
+    ],
+  },
+  {
+    id: "summermel",
+    name: "SUMMERMEL",
+    role: "RESIDENT",
+    origin: "CHICAGO, US",
+    genre: "AFRO HOUSE · ORGANIC HOUSE",
+    image: "/images/summermel.jpg",
+    series: ["chasing-sunsets", "untold-story"],
+    bio: "Summermel blends energetic Afro house rhythms with deep, organic grooves. As a Resident DJ for Chasing Sun(Sets), he captures the perfect golden-hour warmth and transitions seamlessly into high-energy nightfall sessions. He was instrumental in launching the very first Untold Story and recently provided pivotal support for the defining Lazare & Sabry set.",
+    tags: ["Resident", "Afro House", "Organic House"],
+    socials: { instagram: "https://instagram.com/summermel" },
+    tracks: [
+      { title: "Golden Hour Set", duration: "60:00" },
+      { title: "Open Air Mix", duration: "55:30" }
+    ],
+    previousSets: [
+      { title: "The First Untold Story", date: "2024" },
+      { title: "Lazare x Sabry Support", date: "2025" }
+    ]
+  },
+  {
     id: "chus",
     name: "CHUS",
     role: "GUEST",
@@ -251,7 +269,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     genre: "MELODIC TECHNO · AFRO",
     image: "/images/artist-avo-profile.jpg",
     series: ["untold-story"],
-    bio: "A key Monolith Project resident, AVO blends deep melodic techno with percussive Afro-house rhythms. His sets are precise, physical, and built for raw late-night rooms, shaping the tension-and-release arc that defines Untold Story.",
+    bio: "A key Monolith Project resident, AVO blends deep melodic techno with percussive Afro-house rhythms. His sets are precise, physical, and built for raw late-night rooms, shaping the tension-and-release arc that defines Untold Story. He recently played alongside Deron and Juany Bravo, and provided direct support for Eran Hersh.",
     tags: ["Resident", "Melodic Techno", "Afro House"],
     socials: { instagram: "https://instagram.com/avomusic_" },
     tracks: [
@@ -260,6 +278,8 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Lunar Shift", duration: "7:12" },
     ],
     previousSets: [
+      { title: "Direct Support for Eran Hersh", date: "2025" },
+      { title: "Juany Bravo b2b Deron Support", date: "2025" },
       { title: "Untold Story S1 E4", date: "Nov 2024", url: "https://soundcloud.com/avomusic" },
       { title: "Monolith Radio 038", date: "Aug 2024", url: "https://soundcloud.com/avomusic" }
     ]
@@ -272,7 +292,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     genre: "AFRO HOUSE · MELODIC HOUSE",
     image: "/images/eran-hersh-live-5.webp",
     series: ["untold-story"],
-    bio: "Eran Hersh is a pivotal figure in the global Afro and Melodic House movement. With a discography spanning prestigious labels like Saved Records, Enormous Tunes, and Ultra, his sound is defined by sharp percussive rhythms and immersive melodic storytelling. Known for his high-energy performances at Bazar by Sasson and major international circuits, Eran brings a sophisticated, driving energy to the Untold Story series.",
+    bio: "Miami-based DJ and producer Eran Hersh is a rising force in America’s electronic music scene with over 100 million global spins, seamlessly blending Afro and tribal house with Middle Eastern influences. In 2023, he reached a career milestone collaborating with Madonna on 'Sorry'. His versatility shines through remix work for icons like Bob Sinclar, David Guetta, Swedish House Mafia, and Alicia Keys. With performances at major festivals like EDC, BPM, and Zamna, his music released on Insomniac Records, Armada, Spinnin’ Records, and Ultra has amassed over 90+ million Spotify streams and a dedicated following of 1.2 million monthly listeners.",
     tags: ["Afro House", "Melodic", "Headliner"],
     socials: { instagram: "https://instagram.com/eranhersh" },
     tracks: [
@@ -293,6 +313,110 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { src: "/images/eran-hersh-live-6.png", alt: "Eran Hersh portrait" },
     ],
   },
+  {
+    id: "amari",
+    name: "AMARI",
+    role: "RESIDENT",
+    origin: "CHICAGO, US",
+    genre: "AFRO HOUSE · MELODIC HOUSE",
+    image: "/images/amari.jpg",
+    series: ["chasing-sunsets", "untold-story"],
+    bio: "Amari anchors the Monolith sound across both open-air and after-dark sessions. As a Resident DJ for both Chasing Sun(Sets) and Untold Story, his sets seamlessly connect melodic groove with deep, rhythmic afro house.",
+    tags: ["Resident", "Afro House", "Melodic House"],
+    socials: { instagram: "https://instagram.com/amari.music" },
+    tracks: [
+      { title: "Golden Hour Session", duration: "6:20" },
+      { title: "After Dark Selection", duration: "5:45" },
+    ],
+  },
+  {
+    id: "jerome",
+    name: "JEROME",
+    role: "RESIDENT",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/jerome.jpg",
+    series: ["chasing-sunsets", "untold-story"],
+    bio: "Jerome is a producer, local Chicago DJ, and Resident for the Monolith ecosystem, setting the standard for opening sets across both day and night formats.",
+    tags: ["Resident", "Producer", "Local"],
+    socials: {},
+    tracks: [],
+  },
+  {
+    id: "rose",
+    name: "ROSE",
+    role: "GUEST",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/rose.jpg",
+    series: ["untold-story"],
+    bio: "Rose is a standout selector who recently played the massive Juany Bravo b2b Deron show, as well as the Autograf headline event, establishing herself as a go-to name for direct support.",
+    tags: ["Guest", "Local Support"],
+    socials: {},
+    tracks: [],
+    previousSets: [
+      { title: "Juany Bravo b2b Deron Show", date: "2025" },
+      { title: "Autograf Show", date: "2024" }
+    ]
+  },
+  {
+    id: "hashtom",
+    name: "HASHTOM",
+    role: "GUEST",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/hashtom.jpg",
+    series: ["chasing-sunsets", "untold-story"],
+    bio: "Hashtom is a local Chicago rising star, bringing fresh energy to the house music scene with sets perfectly tailored for the Monolith dancefloor.",
+    tags: ["Rising Star", "Local"],
+    socials: {},
+    tracks: [],
+  },
+  {
+    id: "kenbo-slice",
+    name: "KENBO SLICE",
+    role: "GUEST",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/kenbo-slice.jpg",
+    series: ["chasing-sunsets", "untold-story"],
+    bio: "Kenbo Slice is a dedicated local artist providing essential support and high-energy selections for Chicago's premier open-air and late-night shows.",
+    tags: ["Local Artist", "Support"],
+    socials: {},
+    tracks: [],
+  },
+  {
+    id: "jealah",
+    name: "JEALAH",
+    role: "GUEST",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/jealah.jpg",
+    series: ["untold-story", "chasing-sunsets"],
+    bio: "Jealah is a standout local artist and vibrant selector who provided essential support at the massive Autograf headline show.",
+    tags: ["Guest", "Local Support"],
+    socials: {},
+    tracks: [],
+    previousSets: [
+      { title: "Autograf Show Support", date: "2024" }
+    ]
+  },
+  {
+    id: "maximo",
+    name: "MAXIMO",
+    role: "GUEST",
+    origin: "CHICAGO, US",
+    genre: "HOUSE",
+    image: "/images/maximo.jpg",
+    series: ["untold-story", "chasing-sunsets"],
+    bio: "Maximo is a commanding presence in the late-night circuit, having notably closed out the massive Autograf show in March with an unforgettable set.",
+    tags: ["Guest", "Closer"],
+    socials: {},
+    tracks: [],
+    previousSets: [
+      { title: "Autograf Show Closing Set", date: "Mar 2024" }
+    ]
+  }
 ];
 
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(

@@ -2,8 +2,11 @@ import express from "express";
 import { siteDataService } from "../services/site-data-service";
 import { logEvent } from "../lib/logging";
 import { asyncHandler } from "../lib/async";
+import { createAdminRouteGuard } from "../lib/admin-auth";
 
 const router = express.Router();
+
+router.use("/api/ops", createAdminRouteGuard({ scope: "ops" }));
 
 /**
  * Audit Log: Manual Cache Invalidation

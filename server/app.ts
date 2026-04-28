@@ -59,6 +59,7 @@ export function createMethodNotAllowedHandler(methods: string[]) {
 
 export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   const app = express();
+  app.disable("x-powered-by");
 
   logEvent("database.mode", { provider: "neon-postgres", configured: hasDatabase() });
 

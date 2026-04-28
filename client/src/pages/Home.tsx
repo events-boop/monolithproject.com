@@ -72,13 +72,13 @@ export default function Home() {
         <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-14 md:py-20">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
-              <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
+              <span className="section-kicker block text-[#E8B86D]">
                 Chasing Sun(Sets) Season 2026
               </span>
             </div>
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
-                <h2 className="font-display text-[clamp(2.3rem,5vw,5rem)] leading-[0.9] uppercase tracking-tight text-white">
+                <h2 className="section-display-title-compact max-w-[11ch] text-white hyphens-none break-keep">
                   2nd Annual 4th of July @ Castaways
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
@@ -103,10 +103,10 @@ export default function Home() {
               </div>
 
               <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
+                <span className="section-kicker block text-[#E8B86D]">
                   Season Focus
                 </span>
-                <h3 className="mt-3 font-display text-[clamp(1.9rem,4vw,3rem)] leading-[0.92] uppercase tracking-tight text-white">
+                <h3 className="section-display-title-compact mt-3 max-w-[10ch] text-white hyphens-none break-keep">
                   {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-white/70">
@@ -141,7 +141,7 @@ export default function Home() {
         <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-14 md:py-20">
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
-              <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-primary">Untold Story IV</span>
+              <span className="section-kicker text-primary">Untold Story IV</span>
               {untoldMoment?.status ? (
                 <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
                   {getStatusLabel(untoldMoment.status)}
@@ -151,11 +151,11 @@ export default function Home() {
 
             {untoldMoment ? (
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-                <div>
-                  <span className="mb-3 block font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
+              <div>
+                  <span className="section-kicker mb-3 block text-white/60">
                     UNTOLD STORY IV
                   </span>
-                  <h2 className="font-display text-[clamp(2.2rem,5vw,4.8rem)] leading-[0.9] uppercase tracking-tight text-white">
+                  <h2 className="section-display-title-compact max-w-[10ch] text-white hyphens-none break-keep">
                     Eran Hersh in Chicago
                   </h2>
                   <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
@@ -215,10 +215,10 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
               <div>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
+                <span className="section-kicker block text-white/50">
                   Chasing Sun(Sets) Summer 2026
                 </span>
-                <h3 className="mt-3 font-display text-3xl uppercase tracking-tight text-white md:text-4xl">
+                <h3 className="section-display-title-compact mt-3 text-white">
                   Season Dates
                 </h3>
               </div>
@@ -262,7 +262,7 @@ export default function Home() {
         <section id="series" className="relative z-10 border-b border-white/10 bg-[#111111] py-14 md:py-20">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
-              <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-[#E8B86D]">
+              <span className="section-kicker block text-[#E8B86D]">
                 One platform, multiple series.
               </span>
             </div>
@@ -305,7 +305,7 @@ export default function Home() {
         <section className="relative z-10 border-b border-white/10 bg-[#111111] py-10 md:py-14">
           <div className="container layout-wide px-6">
             <div className="mb-6">
-              <span className="block font-mono text-[11px] uppercase tracking-[0.35em] text-primary">
+              <span className="section-kicker block text-primary">
                 Past nights / Proof points
               </span>
             </div>
@@ -356,10 +356,10 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
-                <span className="font-mono text-[11px] tracking-[0.35em] uppercase font-bold block mb-4 text-primary">
+                <span className="section-kicker block mb-4 text-primary">
                   Partners / Contact
                 </span>
-                <h2 className="font-display text-[2.3rem] leading-[0.9] tracking-tight uppercase md:text-[3.4rem] mb-4 text-white">
+                <h2 className="section-display-title-compact mb-4 max-w-[11ch] text-white">
                   Bring your venue, brand, or idea into the room.
                 </h2>
                 <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/70">

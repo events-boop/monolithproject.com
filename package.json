@@ -31,7 +31,9 @@
     "perf:report": "npm run build && node scripts/bundle_report.mjs && npm run budget:check",
     "pixieset:download": "node scripts/pixieset_bulk_download.mjs",
     "webhooks:replay": "tsx scripts/replay_failed_webhooks.mts",
-    "lhci": "lhci autorun"
+    "lhci": "lhci autorun",
+    "design:lint": "find docs/design -path '*/DESIGN.md' -print0 | xargs -0 -n1 npx @google/design.md lint",
+    "design:spec": "npx @google/design.md spec"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -81,6 +83,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
     "@builder.io/vite-plugin-jsx-loc": "^0.1.1",
+    "@google/design.md": "^0.1.1",
     "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/typography": "^0.5.15",

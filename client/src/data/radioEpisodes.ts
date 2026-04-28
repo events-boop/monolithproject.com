@@ -38,6 +38,52 @@ export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
 
 export const radioEpisodes: RadioEpisode[] = [
   {
+    slug: "ep-004-benchek-part-2",
+    episodeNumber: 5,
+    shortCode: "EP004",
+    title: "Live Set from Marbella Part II",
+    guest: "BENCHEK",
+    datePublished: "2026-02-15",
+    displayDate: "February 15, 2026",
+    duration: "64:17",
+    summary: "BENCHEK returns with a live open-air session from Marbella, blending deep melodic grooves with classic sunset energy.",
+    narrative: "This is BENCHEK's highly anticipated Part II. Recorded live during a golden-hour set in Marbella, the mix perfectly captures the essence of Chasing Sun(Sets). The selection moves seamlessly through percussive afro house into peak-time melodic anthems. The energy shift is palpable, reflecting the exact moment the sun dips below the horizon.",
+    image: "/images/radio-show-gear.webp",
+    coverImage: "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    audioUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+    guestLinks: [
+      { label: "BENCHEK on SoundCloud", url: "https://soundcloud.com/chasing-sun-sets" },
+    ],
+    tracklist: [
+      { timecode: "00:00", artist: "BENCHEK", title: "Marbella Intro" },
+      { timecode: "64:17", artist: "BENCHEK", title: "Marbella Outro" },
+    ],
+  },
+  {
+    slug: "ch-02-radian-no-sleep",
+    episodeNumber: 6,
+    shortCode: "CH-02",
+    title: "Chapter II — No Sleep (Berlin)",
+    guest: "RADIAN",
+    datePublished: "2026-01-25",
+    displayDate: "January 25, 2026",
+    duration: "75:00",
+    summary: "RADIAN's Chapter II session recorded in Berlin, pushing a darker, no-sleep narrative for the late-night hours.",
+    narrative: "Recorded during a late-night session in Berlin, RADIAN's Chapter II titled 'No Sleep' dives into the heavier, more hypnotic side of The Monolith Project's sound. The transitions are incredibly patient, letting the driving basslines dictate the mood. It's a masterclass in tension and release, perfect for the darkest hours of the dancefloor.",
+    image: "/images/radio-show-gear.webp",
+    coverImage: "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
+    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    audioUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+    guestLinks: [
+      { label: "RADIAN Feature", url: "https://soundcloud.com/chasing-sun-sets/radianofc-set" },
+    ],
+    tracklist: [
+      { timecode: "00:00", artist: "RADIAN", title: "No Sleep Intro" },
+      { timecode: "75:00", artist: "RADIAN", title: "Berlin Outro" },
+    ],
+  },
+  {
     slug: "ep-01-benchek",
     episodeNumber: 1,
     shortCode: "EP-01",

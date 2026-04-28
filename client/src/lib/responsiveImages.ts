@@ -98,9 +98,9 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     widths: [640, 1024, 1600, 1920],
   },
   videoPoster1: {
-    baseName: "video-poster-1",
+    baseName: "hero-video-1-poster",
     sizes: "100vw",
-    src: "/images/video-poster-1.webp",
+    src: "/images/hero-video-1-poster.jpg",
     widths: [640, 1024, 1600, 1920, 2560],
   },
   untoldStoryHero: {

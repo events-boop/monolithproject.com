@@ -4,6 +4,7 @@ import { sql } from "drizzle-orm";
 import { getDatabase } from "../db/client";
 import { rateLimitBuckets } from "../db/schema";
 import { logEvent } from "../lib/logging";
+import { shouldTrustForwardedHeaders } from "../lib/runtime-trust";
 
 interface RateLimitState {
   count: number;
@@ -158,11 +159,13 @@ async function consumeDatabaseRateLimit({
 }
 
 export function getClientIdentifier(req: Request) {
-  const netlifyIp = req.header("x-nf-client-connection-ip")?.trim();
-  if (netlifyIp) return netlifyIp;
+  if (shouldTrustForwardedHeaders()) {
+    const netlifyIp = req.header("x-nf-client-connection-ip")?.trim();
+    if (netlifyIp) return netlifyIp;
 
-  const forwardedFor = req.header("x-forwarded-for")?.split(",")[0]?.trim();
-  if (forwardedFor) return forwardedFor;
+    const forwardedFor = req.header("x-forwarded-for")?.split(",")[0]?.trim();
+    if (forwardedFor) return forwardedFor;
+  }
 
   return req.ip || req.socket.remoteAddress || "unknown";
 }

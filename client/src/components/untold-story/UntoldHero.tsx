@@ -102,7 +102,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
               ))}
             </h1>
             {featuredHeadline ? (
-              <p className="max-w-2xl font-display text-[clamp(1.2rem,3vw,2.1rem)] leading-[0.98] uppercase text-[#22D3EE] mb-6 sm:mb-8 drop-shadow-[0_0_18px_rgba(0,0,0,0.75)]">
+              <p className="max-w-2xl font-display text-[clamp(1.2rem,3vw,2.1rem)] leading-[0.98] uppercase text-[#22D3EE] mb-6 sm:mb-8 drop-shadow-[0_0_18px_rgba(0,0,0,0.75)] hyphens-none break-keep">
                 {featuredHeadline}
               </p>
             ) : null}

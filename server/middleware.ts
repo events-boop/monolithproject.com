@@ -4,6 +4,7 @@ import helmet from "helmet";
 import { randomUUID } from "crypto";
 import compression from "compression";
 import { createApiResponseHardening, createBrowserApiGuard } from "./lib/request-hardening";
+import { shouldTrustForwardedHeaders } from "./lib/runtime-trust";
 import { createRateLimitMiddleware } from "./services/rate-limit";
 
 const apiCspDirectives = {
@@ -17,7 +18,7 @@ const apiCspDirectives = {
 } as const;
 
 export function configureMiddleware(app: Express) {
-  app.set("trust proxy", true);
+  app.set("trust proxy", shouldTrustForwardedHeaders());
   app.use(compression({ threshold: 0 }));
 
   // Keep the broad security headers globally, but let Netlify own the document
@@ -51,7 +52,20 @@ export function configureMiddleware(app: Express) {
       skip: (req) => req.path === "/health",
     })
   );
-  app.use("/api", express.json({ limit: "1mb" }));
+  app.use("/api", (req, res, next) => {
+    const limit = req.path.startsWith("/webhooks/")
+      ? "128kb"
+      : req.path === "/leads" ||
+          req.path === "/contact" ||
+          req.path === "/booking-inquiry" ||
+          req.path === "/ticket-intent"
+        ? "24kb"
+        : req.path === "/sponsor-access"
+          ? "8kb"
+          : "16kb";
+
+    return express.json({ limit })(req, res, next);
+  });
 }
 
 export function configureErrorMiddleware(app: Express) {

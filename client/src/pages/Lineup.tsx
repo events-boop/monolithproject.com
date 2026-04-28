@@ -63,7 +63,7 @@ const RADIO_PREVIEW_IMAGES: Record<string, string> = {
 };
 
 const sectionTitleClass =
-  "section-display-title text-white";
+  "section-display-title max-w-[8ch] text-white";
 
 function getSeriesLabel(series: ArtistSeries) {
   switch (series) {
@@ -363,7 +363,7 @@ export default function Lineup() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Lineup"
+        title="Artists"
         description="Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio."
         canonicalPath="/lineup"
       />
@@ -371,7 +371,7 @@ export default function Lineup() {
 
       <section className="page-shell-start-loose px-6 pb-8">
         <div className="container layout-default">
-          <span className="ui-kicker block text-white/42">Monolith Project Index</span>
+          <span className="section-kicker block text-white/42">Monolith Project Index</span>
           <RevealText as="h1" className={sectionTitleClass}>
             ARTISTS
           </RevealText>
@@ -475,8 +475,8 @@ export default function Lineup() {
 
       <section className="px-6 pb-24">
         <div className="container layout-default border-t border-white/10 pt-12">
-          <span className="ui-kicker block text-white/42">Artist Booking / Submissions</span>
-          <h2 className={sectionTitleClass}>
+          <span className="section-kicker block text-white/42">Artist Booking / Submissions</span>
+          <h2 className="section-display-title-compact max-w-[8ch] text-white">
             WANT TO PLAY
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/68 md:text-lg">

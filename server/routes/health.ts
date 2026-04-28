@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { hasDatabase, getDatabase } from "../db/client";
+import { createAdminRouteGuard } from "../lib/admin-auth";
 
 const router = Router();
 
@@ -11,7 +12,7 @@ router.get("/api/health", (_req, res) => {
   res.status(200).json({ ok: true });
 });
 
-router.get("/api/ready", async (_req, res) => {
+router.get("/api/ready", createAdminRouteGuard({ scope: "ready" }), async (_req, res) => {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 

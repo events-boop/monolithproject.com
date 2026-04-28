@@ -225,11 +225,15 @@ const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
     guide: "us-s3e3",
 };
 
-function normalizePathname(pathname?: string | null) {
+export const MAX_PUBLIC_SITE_PATH_LENGTH = 160;
+
+export function normalizePublicSitePath(pathname?: string | null) {
     const raw = pathname || "/";
     const clean = raw.split("?")[0]?.split("#")[0] || "/";
-    if (clean.length > 1 && clean.endsWith("/")) return clean.slice(0, -1);
-    return clean || "/";
+    const bounded = clean.slice(0, MAX_PUBLIC_SITE_PATH_LENGTH);
+    const withLeadingSlash = bounded.startsWith("/") ? bounded : `/${bounded}`;
+    if (withLeadingSlash.length > 1 && withLeadingSlash.endsWith("/")) return withLeadingSlash.slice(0, -1);
+    return withLeadingSlash || "/";
 }
 
 function getEventById(events: ScheduledEvent[], eventId?: string | null) {
@@ -408,7 +412,7 @@ export function buildPublicSiteData(
     pathname?: string | null,
     eventsSource: ScheduledEvent[] = upcomingEvents,
 ): PublicSiteData {
-    const normalizedPath = normalizePathname(pathname);
+    const normalizedPath = normalizePublicSitePath(pathname);
     const profile = getPayloadProfileForPath(normalizedPath);
     const featuredEvents = resolveFeaturedEvents(eventsSource, profile);
     const events = resolveEventsForPath(normalizedPath, featuredEvents, eventsSource).map((event) =>

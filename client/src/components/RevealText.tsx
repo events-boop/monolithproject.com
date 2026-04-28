@@ -33,7 +33,7 @@ export default function RevealText({
     <Tag ref={ref} className={cn("inline-block leading-tight", className)} style={style}>
       <span className="sr-only">{children}</span>
       {words.map((word, i) => (
-        <span key={i} className="inline-block whitespace-pre-wrap">
+        <span key={i} aria-hidden="true" className="inline-block whitespace-pre-wrap">
           {word.split("").map((char, j) => (
             <motion.span
               key={j}

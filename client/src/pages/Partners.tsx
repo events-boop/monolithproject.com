@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Wrench, Building2, Handshake, Camera, Music, Shield, Lightbulb, Drama, Beer } from "lucide-react";
+import { Wrench, Building2, Handshake, Camera, Music, Shield, Lightbulb, Drama, Beer, ArrowUpRight, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import ConversionCTA from "@/components/ConversionCTA";
-import KineticDecryption from "@/components/KineticDecryption";
 import MagneticButton from "@/components/MagneticButton";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { useInquiry } from "@/contexts/InquiryContext";
 
 const productionRoles = [
@@ -111,14 +111,15 @@ export default function Partners() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-4 mb-8">
-                  <span className="font-mono text-[10px] text-primary tracking-[0.4em] uppercase">Partner With Monolith</span>
+                  <span className="section-kicker text-primary">Partner With Monolith</span>
                   <div className="h-px w-20 bg-white/10" />
               </div>
-              <h1 className="font-display text-[clamp(2.8rem,9vw,8rem)] text-white mb-8 uppercase leading-[0.82] tracking-tight-display">
-                <KineticDecryption text="PARTNERS" />
-                <br />
-                <span className="opacity-40">& CREW</span>
+              <h1 className="section-display-title mb-4 text-white">
+                PARTNERS
               </h1>
+              <p className="section-display-title-compact text-white/38">
+                &amp; CREW
+              </p>
               <p className="text-white/60 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
                 We work with venues, brands, crew, and creative collaborators who want to help produce strong shows and reach a real Chicago audience.
               </p>
@@ -129,6 +130,15 @@ export default function Partners() {
         {/* Partnership Types — Large Immerisve Blocks */}
         <section className="py-20 px-6 border-t border-white/5">
            <div className="container layout-default">
+              <div className="mb-12 max-w-3xl">
+                <span className="section-kicker mb-4 block text-primary">Ways We Work</span>
+                <h2 className="section-display-title-compact mb-4 text-white">
+                  Venue and brand partners inside the same Monolith system.
+                </h2>
+                <p className="text-base leading-relaxed text-white/55 md:text-lg">
+                  The pitch is direct: strong audience energy, clear creative fit, and production that protects the room.
+                </p>
+              </div>
               <div className="grid md:grid-cols-2 gap-8">
                 {partnerTypes.map((partner, index) => (
                   <motion.div
@@ -169,51 +179,133 @@ export default function Partners() {
            </div>
         </section>
 
-        {/* Production Crew Grid — Technical Cards */}
-        <section className="py-32 px-6 border-t border-white/5 bg-white/[0.01]">
+        {/* Production Crew — Editorial Asymmetric Grid */}
+        <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="container layout-default">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-20 text-center md:text-left"
+              className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 md:mb-16"
             >
-              <span className="font-mono text-[10px] text-white/30 tracking-[0.4em] uppercase mb-4 block">
-                Resource_Network
-              </span>
-              <h2 className="font-display text-5xl md:text-7xl text-white mb-6 uppercase tracking-tight">
-                JOIN THE <span className="opacity-40 font-light italic">OPERATIONS</span>
-              </h2>
+              <div className="md:w-[65%]">
+                <span className="section-kicker text-white/30 mb-4 block">
+                  Resource_Network
+                </span>
+                <h2 className="section-display-title-compact text-white">
+                  PRODUCTION <span className="opacity-40 font-light italic">CREW</span>
+                </h2>
+              </div>
+              <p className="text-sm md:text-base text-white/55 w-full md:max-w-sm border-l border-white/10 pl-4 leading-relaxed">
+                Operations, hospitality, and stage. The people behind every Monolith night — load-in to last call.
+              </p>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {productionRoles.map((role, index) => (
-                <motion.div
-                  key={role.title}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.04, duration: 0.5 }}
-                  className="group p-8 border border-white/5 bg-black hover:border-white/20 transition-all duration-500 rounded-2xl relative overflow-hidden"
-                >
-                  <div className="flex items-center justify-between mb-8">
-                     <div className="font-mono text-[9px] tracking-[0.2em] text-white/20 uppercase border border-white/5 px-2 py-1 rounded">
-                        [ ID: {role.code} ]
-                     </div>
-                     <role.icon className="w-5 h-5 text-white/10 group-hover:text-primary transition-colors" />
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 md:h-[640px]">
+              {/* LEFT — 2 stacked image cards */}
+              <div className="md:col-span-4 flex flex-col gap-4 lg:gap-6">
+                {[
+                  { ...productionRoles[7], image: "/images/autograf-recap.jpg" },
+                  { ...productionRoles[4], image: "/images/lazare-recap.webp" },
+                ].map((r) => (
+                  <motion.article
+                    key={r.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="group relative flex-1 min-h-[16rem] overflow-hidden border border-white/10 bg-zinc-950 cursor-pointer transition-colors duration-500 hover:border-white/25"
+                    onClick={() => openInquiry("general")}
+                  >
+                    <div className="absolute inset-0">
+                      <ResponsiveImage
+                        src={r.image}
+                        alt={r.title}
+                        sizes="(min-width: 1024px) 22vw, 100vw"
+                        className="w-full h-full object-cover opacity-55 transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="relative z-10 h-full flex flex-col justify-between">
+                      <div className="p-5">
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-zinc-950/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
+                          <r.icon className="w-3.5 h-3.5 text-primary" />
+                          {r.code}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-end p-5 bg-zinc-950/60 backdrop-blur-xl border-t border-white/10">
+                        <h3 className="font-display text-xl lg:text-2xl text-white uppercase leading-[0.92]">{r.title}</h3>
+                        <span aria-hidden className="w-10 h-10 border border-white/20 bg-white/5 group-hover:bg-white/15 text-white flex items-center justify-center transition-colors">
+                          <ArrowUpRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+
+              {/* CENTER — hero card */}
+              <motion.article
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.05, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="group md:col-span-5 relative h-[400px] md:h-full overflow-hidden border border-white/10 bg-zinc-950 cursor-pointer transition-colors duration-500 hover:border-white/25"
+                onClick={() => openInquiry("general")}
+              >
+                <div className="absolute inset-0">
+                  <ResponsiveImage
+                    src="/images/eran-hersh-live-5.webp"
+                    alt="Stagehands and operations"
+                    sizes="(min-width: 1024px) 30vw, 100vw"
+                    className="w-full h-full object-cover opacity-65 transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="relative z-10 h-full flex flex-col justify-between">
+                  <div className="p-6">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-zinc-950/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
+                      <Wrench className="w-3.5 h-3.5 text-primary" />
+                      {productionRoles[2].code}
+                    </span>
                   </div>
-                  <h3 className="font-display text-2xl text-white mb-3 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
-                    {role.title}
-                  </h3>
-                  <p className="text-white/40 text-sm leading-relaxed font-light">
-                    {role.description}
-                  </p>
-                  
-                  {/* Subtle hover glow */}
-                  <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                </motion.div>
-              ))}
+                  <div className="flex justify-between items-end p-6 bg-zinc-950/60 backdrop-blur-xl border-t border-white/10">
+                    <h3 className="font-display text-2xl lg:text-4xl text-white uppercase leading-[0.92] max-w-[14ch]">
+                      Stagehands<br />& Operations.
+                    </h3>
+                    <span aria-hidden className="w-12 h-12 border border-white/20 bg-white/5 group-hover:bg-white/15 text-white flex items-center justify-center transition-colors">
+                      <ArrowUpRight className="w-5 h-5" />
+                    </span>
+                  </div>
+                </div>
+              </motion.article>
+
+              {/* RIGHT — 3 info cards */}
+              <div className="md:col-span-3 flex flex-col gap-4 lg:gap-6">
+                {[productionRoles[0], productionRoles[1], productionRoles[5]].map((r, i) => (
+                  <motion.article
+                    key={r.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.05 + i * 0.05, duration: 0.5 }}
+                    className="group relative flex-1 min-h-[10rem] border border-white/10 bg-zinc-950/40 backdrop-blur-sm cursor-pointer transition-colors duration-300 hover:bg-zinc-900/50 hover:border-white/20 p-5 flex flex-col justify-between"
+                    onClick={() => openInquiry("general")}
+                  >
+                    <div>
+                      <r.icon className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors mb-3" />
+                      <h3 className="font-display text-lg lg:text-xl text-white uppercase tracking-tight leading-[0.95]">{r.title}</h3>
+                      <p className="mt-1 font-mono text-[10px] tracking-[0.24em] uppercase text-white/35">[ {r.code} ]</p>
+                    </div>
+                    <div className="flex justify-end">
+                      <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
             </div>
+
+            <p className="mt-8 font-mono text-[10px] text-white/30 tracking-[0.32em] uppercase">
+              Also looking for: Media · Musicians · Anyone with the right energy.
+            </p>
 
             {/* Global Crew CTA */}
             <motion.div
@@ -222,7 +314,8 @@ export default function Partners() {
               viewport={{ once: true }}
               className="mt-24 p-12 md:p-20 rounded-[3rem] border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent text-center"
             >
-              <h2 className="font-display text-4xl md:text-6xl uppercase mb-10">Crew Inquiries</h2>
+              <span className="section-kicker mb-4 block text-primary">Join The Build</span>
+              <h2 className="section-display-title-compact mb-10 text-white">Crew Inquiries</h2>
               <div className="flex flex-col items-center gap-8">
                   <MagneticButton strength={0.2}>
                     <a 
