@@ -45,10 +45,10 @@ export default function Archive() {
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         className="mb-16"
                     >
-                        <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+                        <span className="section-kicker text-white/40 block mb-5">
                             Event Archive
                         </span>
-                        <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.82] uppercase tracking-tight text-white mb-6">
+                        <h1 className="section-display-title text-white mb-6">
                             ARCHIVE
                         </h1>
                         <p className="text-white/40 max-w-xl leading-relaxed">

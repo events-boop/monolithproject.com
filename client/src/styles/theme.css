@@ -6,16 +6,19 @@
 /*
   DESIGN: The Monolith Project
   - Dark editorial aesthetic with sparse coral/orange pops
-  - Magazine-quality typography: Cormorant Garamond (serif), Bebas Neue (display), Instrument Sans (body)
+  - Typography per docs/design/monolith-project/DESIGN.md:
+    Archivo Black (display/heavy), Inter (body), JetBrains Mono (labels), Syncopate (wordmark)
   - Outlined pill-shaped CTAs, left-aligned editorial layouts
 */
 
 @theme inline {
-  --font-sans: 'Instrument Sans', 'Inter', system-ui, sans-serif;
-  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
-  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-script: 'Pinyon Script', cursive;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-heavy: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-monolith: 'Syncopate', 'Archivo Black', sans-serif;
+  --font-serif: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-script: 'Instrument Serif', 'Cormorant Garamond', serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

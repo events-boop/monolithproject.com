@@ -17,8 +17,19 @@
 
   /* Script font for signature touches */
   .font-script {
-    font-family: 'Pinyon Script', cursive;
+    font-family: var(--font-script);
+    font-style: italic;
     font-weight: 400;
+  }
+
+  /* Monolith wordmark — Syncopate per design spec */
+  .wordmark {
+    font-family: var(--font-monolith);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   /* Serif font for Editorial/Quote sections */
