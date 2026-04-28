@@ -113,6 +113,210 @@ export default function FunnelWaitlist({ variant = "default", event }: FunnelWai
     const eventMeta = eventLabel ? `${eventLabel}${event?.date ? ` · ${event.date}` : ""}` : null;
     const ctaLabel = "Get Updates";
 
+    if (variant === "chasing-sunsets") {
+        return (
+            <section className="relative overflow-hidden border-y border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(244,233,214,0.9),rgba(251,245,237,0.98))] py-24 lg:py-28">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(232,184,109,0.16),transparent_28%),radial-gradient(circle_at_84%_76%,rgba(194,112,62,0.12),transparent_30%)]" />
+
+                <div className="container layout-wide relative z-10 px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="grid gap-6 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
+                    >
+                        <div className="sunset-panel-editorial p-6 md:p-8">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-[#C2703E]/18 bg-white/72 px-3 py-1.5">
+                                <Sparkles className="h-3.5 w-3.5 text-[#A4592C]" />
+                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
+                                    {content.pill}
+                                </span>
+                            </div>
+
+                            {eventMeta ? (
+                                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#2C1810]/48">
+                                    {eventMeta}
+                                </p>
+                            ) : null}
+
+                            <h2 className="mt-5 font-display text-[clamp(2.8rem,5vw,5rem)] uppercase leading-[0.88] text-[#2C1810]">
+                                GET SUNSET
+                                <br />
+                                UPDATES
+                            </h2>
+                            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#2C1810]/70 md:text-lg">
+                                {content.desc}
+                            </p>
+
+                            <div className="mt-8 grid gap-3">
+                                {content.bulletPoints.map((perk, index) => (
+                                    <article
+                                        key={perk}
+                                        className="sunset-panel-editorial-soft flex items-start gap-3 p-4"
+                                    >
+                                        <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12 font-mono text-[10px] text-[#A4592C]">
+                                            0{index + 1}
+                                        </div>
+                                        <p className="text-sm leading-relaxed text-[#2C1810]/68">{perk}</p>
+                                    </article>
+                                ))}
+                            </div>
+
+                            <div className="mt-8 rounded-[1.5rem] border border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(247,234,215,0.74))] p-5">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                                    Why This Matters
+                                </span>
+                                <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/66">
+                                    The newsletter is the seasonal spine for Chasing Sun(Sets): date releases, lineup
+                                    signals, radio tie-ins, and access windows all move through one route instead of
+                                    disconnected modules.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="sunset-panel-editorial p-5 md:p-6">
+                            <AnimatePresence mode="wait">
+                                {status === "success" ? (
+                                    <motion.div
+                                        key="success-chasing"
+                                        initial={{ opacity: 0, scale: 0.96 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="flex min-h-full flex-col justify-center"
+                                    >
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                            className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12"
+                                        >
+                                            <CheckCircle className="h-8 w-8 text-[#A4592C]" />
+                                        </motion.div>
+                                        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
+                                            You&apos;re On The List
+                                        </p>
+                                        <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.2rem)] uppercase leading-[0.9] text-[#2C1810]">
+                                            DROP ACCESS LOCKED
+                                        </h3>
+                                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/68 md:text-base">
+                                            {eventLabel
+                                                ? `Watch your inbox. ${eventLabel} will come through this route first when ticket, lineup, or date updates are ready.`
+                                                : "Watch your inbox. New dates, lineup signals, and ticket windows will come through this route first."}
+                                        </p>
+                                        <div className="sunset-panel-editorial-soft mt-6 p-5">
+                                            <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                                                What lands here
+                                            </span>
+                                            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#2C1810]/64">
+                                                <li>Public date releases before the broad push.</li>
+                                                <li>Lineup signals and event radio tie-ins.</li>
+                                                <li>Ticket and access movement attached to this season.</li>
+                                            </ul>
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <motion.form
+                                        key="form-chasing"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        onSubmit={handleSubmit}
+                                        className="space-y-4"
+                                    >
+                                        <div className="mb-2">
+                                            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
+                                                Sign Up
+                                            </p>
+                                            <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.1rem)] uppercase leading-[0.9] text-[#2C1810]">
+                                                JOIN THE DROP
+                                            </h3>
+                                            <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/64 md:text-base">
+                                                Leave the details you actually check. This form feeds the seasonal
+                                                update route for Chasing Sun(Sets), not a generic blast list.
+                                            </p>
+                                        </div>
+
+                                        <div className="space-y-1.5">
+                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                                                Full Name
+                                            </label>
+                                            <div className="relative">
+                                                <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    value={fullName}
+                                                    onChange={(e) => setFullName(e.target.value)}
+                                                    autoComplete="name"
+                                                    placeholder="John Doe"
+                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-1.5">
+                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                                                Email Address
+                                            </label>
+                                            <div className="relative">
+                                                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                                                <input
+                                                    required
+                                                    type="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    autoComplete="email"
+                                                    placeholder="john@example.com"
+                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-1.5">
+                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                                                Phone Number <span className="lowercase text-[#2C1810]/32">(optional)</span>
+                                            </label>
+                                            <div className="relative">
+                                                <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                                                <input
+                                                    type="tel"
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    autoComplete="tel"
+                                                    placeholder="+1 (555) 000-0000"
+                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {status === "error" && errorMsg ? (
+                                            <p className="mt-1 flex items-center gap-2 font-mono text-xs text-[#B3392B]">
+                                                <AlertCircle className="h-3.5 w-3.5 shrink-0" /> {errorMsg}
+                                            </p>
+                                        ) : null}
+
+                                        <button
+                                            type="submit"
+                                            disabled={status === "loading"}
+                                            className="btn-pill-sunsets btn-pill-wide mt-4 disabled:opacity-50"
+                                        >
+                                            {status === "loading" ? "Processing..." : ctaLabel}
+                                            {status === "loading" ? null : <ArrowRight className="h-4 w-4" />}
+                                        </button>
+
+                                        <p className="text-center font-mono text-[10px] text-[#2C1810]/40">
+                                            By joining, you agree to receive event updates. Unsubscribe anytime.
+                                        </p>
+                                    </motion.form>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <div className="w-full relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
             {/* Background Glows */}

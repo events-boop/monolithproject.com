@@ -287,6 +287,17 @@
     --pill-hover-shadow: 0 16px 38px rgba(194, 112, 62, 0.34);
   }
 
+  .btn-pill-outline-sunsets-light {
+    --pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(247, 234, 215, 0.88));
+    --pill-border: rgba(194, 112, 62, 0.26);
+    --pill-text: #2c1810;
+    --pill-hover-bg: linear-gradient(135deg, #f4d28b, #c2703e);
+    --pill-hover-border: rgba(255, 230, 174, 0.72);
+    --pill-hover-text: #1a1008;
+    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 14px 34px rgba(44, 24, 16, 0.1);
+    --pill-hover-shadow: 0 16px 38px rgba(194, 112, 62, 0.28);
+  }
+
   .btn-pill-outline-radio {
     --pill-bg: rgba(244, 63, 94, 0.1);
     --pill-border: rgba(244, 63, 94, 0.42);
