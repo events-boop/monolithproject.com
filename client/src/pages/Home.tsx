@@ -33,7 +33,7 @@ export default function Home() {
   usePublicSiteDataVersion();
   const chasingSeasonEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
   const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
-  const untoldMomentHref = getEventDetailsHref(untoldMoment);
+  const untoldMomentHref = "/story";
   const untoldTicketHref = untoldMoment?.ticketUrl || untoldMoment?.primaryCta?.href || untoldMomentHref;
   const untoldTicketIsExternal = /^https?:\/\//i.test(untoldTicketHref);
 
@@ -81,7 +81,7 @@ export default function Home() {
                 <h2 className="section-display-title-compact max-w-[11ch] text-white hyphens-none break-keep">
                   2nd Annual 4th of July @ Castaways
                 </h2>
-                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/86 md:text-base">
                   Tradition begins on the lakefront. Sign up for the drop - season details, schedule, lineup, and July 4 first access coming soon.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
@@ -109,27 +109,27 @@ export default function Home() {
                 <h3 className="section-display-title-compact mt-3 max-w-[10ch] text-white hyphens-none break-keep">
                   {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/70">
+                <p className="mt-4 text-sm leading-relaxed text-white/84">
                   {chasingSeasonEvent?.description ||
                     "Chicago's open-air house music gathering returns to North Avenue Beach with golden-hour sets, special guests, and a community built around sound, sunset, and togetherness."}
                 </p>
-                <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
                   <div>
-                    <dt className="text-white/40">Date</dt>
+                    <dt className="text-white/66">Date</dt>
                     <dd className="mt-1 text-white">{chasingSeasonEvent?.date || "Coming Soon"}</dd>
                   </div>
                   <div>
-                    <dt className="text-white/40">Location</dt>
+                    <dt className="text-white/66">Location</dt>
                     <dd className="mt-1 text-white">
                       {chasingSeasonEvent ? getEventVenueLabel(chasingSeasonEvent) : "Chicago"}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-white/40">Status</dt>
+                    <dt className="text-white/66">Status</dt>
                     <dd className="mt-1 text-white">{getStatusLabel(chasingSeasonEvent?.status)}</dd>
                   </div>
                   <div>
-                    <dt className="text-white/40">Lineup</dt>
+                    <dt className="text-white/66">Lineup</dt>
                     <dd className="mt-1 text-white">{chasingSeasonEvent?.lineup || "Lineup Coming Soon"}</dd>
                   </div>
                 </dl>
@@ -152,38 +152,38 @@ export default function Home() {
             {untoldMoment ? (
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
-                  <span className="section-kicker mb-3 block text-white/60">
+                  <span className="section-kicker mb-3 block text-white/78">
                     UNTOLD STORY IV
                   </span>
                   <h2 className="section-display-title-compact max-w-[10ch] text-white hyphens-none break-keep">
                     Eran Hersh in Chicago
                   </h2>
                   <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
-                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/70 md:text-base">
+                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/86 md:text-base">
                     Untold Story returns with Eran Hersh for an intimate after-dark chapter of house music, movement, and atmosphere.
                   </p>
                 </div>
 
                 <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
-                  <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                  <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
                     <div>
-                      <dt className="text-white/40">Date</dt>
+                      <dt className="text-white/66">Date</dt>
                       <dd className="mt-1 text-white">{untoldMoment.date}</dd>
                     </div>
                     <div>
-                      <dt className="text-white/40">Time</dt>
+                      <dt className="text-white/66">Time</dt>
                       <dd className="mt-1 text-white">{untoldMoment.time}</dd>
                     </div>
                     <div>
-                      <dt className="text-white/40">Venue</dt>
+                      <dt className="text-white/66">Venue</dt>
                       <dd className="mt-1 text-white">{untoldMoment.venue}</dd>
                     </div>
                     <div>
-                      <dt className="text-white/40">City</dt>
+                      <dt className="text-white/66">City</dt>
                       <dd className="mt-1 text-white">{untoldMoment.location}</dd>
                     </div>
                   </dl>
-                  <p className="mt-4 text-sm text-white/65">{getEventVenueLabel(untoldMoment)}</p>
+                  <p className="mt-4 text-sm text-white/82">{getEventVenueLabel(untoldMoment)}</p>
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link href={untoldMomentHref} className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto">
                       View Event <ArrowUpRight className="w-4 h-4" />
@@ -206,7 +206,7 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-white/70">Untold Story IV details are being updated.</p>
+              <p className="text-sm text-white/84">Untold Story IV details are being updated.</p>
             )}
           </div>
         </section>
@@ -215,7 +215,7 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
               <div>
-                <span className="section-kicker block text-white/50">
+                <span className="section-kicker block text-white/74">
                   Chasing Sun(Sets) Summer 2026
                 </span>
                 <h3 className="section-display-title-compact mt-3 text-white">
@@ -270,31 +270,31 @@ export default function Home() {
               <Link href="/chasing-sunsets" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">Open Air</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Chasing Sun(Sets)</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                <p className="mt-3 text-sm leading-relaxed text-white/84">
                   Open-air house music gatherings shaped by golden hour, lakefront energy, and community.
                 </p>
               </Link>
               <Link href="/story" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">After Dark</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">After Dark</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Untold Story</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                <p className="mt-3 text-sm leading-relaxed text-white/84">
                   After-dark rooms built for deeper sound, immersive dancefloors, and artist-led moments.
                 </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/68">
                   {untoldMoment?.date || "Current indoor event details live on the story page"}
                 </p>
               </Link>
               <Link href="/radio" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Radio</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">Radio</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Radio</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                <p className="mt-3 text-sm leading-relaxed text-white/84">
                   Mixes, conversations, and cultural memory from the artists shaping the sound.
                 </p>
               </Link>
               <Link href="/partners" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">Collaborations</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">Collaborations</p>
                 <h3 className="mt-3 font-display text-2xl uppercase text-white">Partners</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/65">
+                <p className="mt-3 text-sm leading-relaxed text-white/84">
                   Brand and venue collaborations built around real audience energy, content, and community.
                 </p>
               </Link>
@@ -362,7 +362,7 @@ export default function Home() {
                 <h2 className="section-display-title-compact mb-4 max-w-[11ch] text-white">
                   Bring your venue, brand, or idea into the room.
                 </h2>
-                <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/70">
+                <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/86">
                   Monolith works with venues, sponsors, artists, media, and cultural partners who want to build real audience energy around shows, content, and community.
                 </p>
               </div>

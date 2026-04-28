@@ -13,7 +13,7 @@ import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
-import { getSeriesEvents, getEventWindowStatus } from "@/lib/siteExperience";
+import { getSeriesExperienceEvent, getEventWindowStatus } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const UNTOLD_ANCHORS = [
@@ -25,7 +25,7 @@ const UNTOLD_ANCHORS = [
 
 export default function UntoldStory() {
   usePublicSiteDataVersion();
-  const scheduledEvent = getSeriesEvents("untold-story")[0] ?? null;
+  const scheduledEvent = getSeriesExperienceEvent("untold-story", "funnel") ?? null;
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 

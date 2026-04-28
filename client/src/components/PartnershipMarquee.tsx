@@ -1,26 +1,21 @@
 import { motion } from "framer-motion";
 
 const partners = [
-  "ALHAMBRA PALACE",
-  "PRYSM NIGHTCLUB",
-  "RADIUS CHICAGO",
-  "SPYBAR",
-  "PODLASIE CLUB",
-  "HOUSE OF BLUES",
-  "SOUND-BAR",
-  "CERISE ROOFTOP",
-  "JOY DISTRICT",
-  "PRIMARY NIGHTCLUB",
-  "THE MID",
-  "EVIL OLIVE",
+  "CASTAWAYS",
+  "KASHMIR CHICAGO",
+  "LA SONESTA",
+  "HIDEAWAY CHICAGO",
+  "BASSMENT CHICAGO",
+  "MOSAIC CHICAGO",
+  "JPARKER CHICAGO",
 ];
 
 export default function PartnershipMarquee() {
   return (
     <section className="bg-black py-12 border-y border-white/5 overflow-hidden">
       <div className="container px-6 mb-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/30 text-center">
-          Trusted By Venue Partners & Global Collectives
+        <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/58 text-center">
+          Trusted Venue Partners
         </p>
       </div>
       
@@ -37,7 +32,7 @@ export default function PartnershipMarquee() {
           {[...partners, ...partners].map((partner, i) => (
             <span 
               key={i} 
-              className="font-display text-2xl md:text-3xl text-white/20 hover:text-white/60 transition-colors duration-500 uppercase tracking-widest italic"
+              className="font-display text-2xl md:text-3xl text-white/48 hover:text-white/82 transition-colors duration-500 uppercase tracking-widest italic"
             >
               {partner}
             </span>

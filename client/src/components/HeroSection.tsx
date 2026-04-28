@@ -125,10 +125,8 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_TITLE = "MONOLITH";
-const HERO_EYEBROW = "MONOLITH PROJECT";
-const HERO_PRIMARY_LINE = "Togetherness is the frequency.";
-const HERO_SUBHEAD =
-  "Chicago / House Music / Events / Radio";
+const HERO_PILLARS = "Chicago / House Music / Events / Radio";
+const HERO_TAGLINE = "Togetherness is the frequency.";
 const HERO_SUPPORTING_LINE =
   "Upcoming shows, Chasing Sun(Sets), Untold Story, and artist-led radio.";
 
@@ -248,16 +246,16 @@ function FloatingEventCard({
           )}>
             {toSystemText(headline)}
           </h3>
-          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/60">
+          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/82">
             {systemMeta}
           </span>
           {event?.time ? (
-            <span className="event-system-chip text-white/45">
+            <span className="event-system-chip text-white/70">
               {toSystemText(event.time)}
             </span>
           ) : null}
           {shortDescription ? (
-            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/70 line-clamp-3">
+            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/86 line-clamp-3">
               {shortDescription}
             </p>
           ) : null}
@@ -265,14 +263,14 @@ function FloatingEventCard({
 
         {showCountdown && (
           <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
-            <span className="event-system-chip text-white/45">
+            <span className="event-system-chip text-white/70">
               Event Starts
             </span>
             <div className="event-system-chip flex items-center gap-2 text-white tabular-nums">
               <span>{countdown.days}D</span>
-              <span className="text-white/25">/</span>
+              <span className="text-white/56">/</span>
               <span>{padCountdown(countdown.hours)}H</span>
-              <span className="text-white/25">/</span>
+              <span className="text-white/56">/</span>
               <span>{padCountdown(countdown.minutes)}M</span>
             </div>
           </div>
@@ -367,13 +365,6 @@ export default function HeroSection() {
             data-home-hero-copy="true"
             className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
           >
-            <h2
-              data-home-hero-eyebrow="true"
-              className="mb-5 font-mono text-xs uppercase tracking-[0.32em] text-white/48 sm:text-sm sm:tracking-[0.46em]"
-            >
-              {HERO_EYEBROW}
-            </h2>
-
             <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
               <h1
                 data-home-hero-heading="true"
@@ -385,16 +376,16 @@ export default function HeroSection() {
               </h1>
 
               <p
-                data-home-hero-summary="true"
-                className="mt-4 max-w-md text-center font-mono text-[10px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/52 md:text-left"
+                data-home-hero-pillars="true"
+                className="mt-4 max-w-md text-center font-mono text-[10px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/76 md:text-left"
               >
-                {HERO_SUBHEAD}
+                {HERO_PILLARS}
               </p>
               <p className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(1.2rem,3vw,2.15rem)] leading-[1.02] text-white/92">
-                {HERO_PRIMARY_LINE}
+                {HERO_TAGLINE}
               </p>
 
-              <p className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/64 md:text-base">
+              <p className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/84 md:text-base">
                 {HERO_SUPPORTING_LINE}
               </p>
 

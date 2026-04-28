@@ -19,7 +19,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
   const isDark = dark !== false;
   const borderColor = isDark ? "border-white/10" : "border-black/10";
   const numberColor = isDark ? "text-white/16" : "text-black/10";
-  const labelColor = isDark ? "text-white/40" : "text-black/40";
+  const labelColor = isDark ? "text-white/64" : "text-black/48";
   const lineColor = isDark ? "bg-white/12" : "bg-black/12";
 
   useEffect(() => {
