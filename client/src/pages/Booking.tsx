@@ -5,7 +5,6 @@ import Navigation from "@/components/Navigation";
 import ViewportLazy from "@/components/ViewportLazy";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
-import KineticDecryption from "@/components/KineticDecryption";
 import { ShieldCheck, Zap, Globe, ChevronRight } from "lucide-react";
 
 const BookingFormSection = lazy(() => import("@/components/BookingFormSection"));
@@ -64,11 +63,12 @@ export default function Booking() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="font-display text-[clamp(3rem,10.5vw,9rem)] leading-[0.82] uppercase text-white mb-8 tracking-tight-display">
-                <KineticDecryption text="BOOKING" />
-                <br />
-                <span className="opacity-40">& INQUIRY</span>
+              <h1 className="section-display-title mb-4 text-white">
+                BOOKING
               </h1>
+              <p className="section-display-title-compact text-white/38">
+                &amp; INQUIRY
+              </p>
               <p className="text-white/60 text-lg md:text-2xl max-w-xl font-light italic leading-relaxed">
                 Whether you represent an artist, venue, or brand partner, we review every submission for musical fit, room awareness, and alignment with the world we build.
               </p>
@@ -80,10 +80,10 @@ export default function Booking() {
         <section className="py-20 px-6 border-t border-white/5">
              <div className="container layout-default">
                 <div className="mb-12 max-w-2xl">
-                  <span className="font-mono text-[10px] text-primary tracking-[0.35em] uppercase mb-4 block">
+                  <span className="section-kicker text-primary mb-4 block">
                     Curation Standards
                   </span>
-                  <h2 className="font-display text-4xl md:text-6xl uppercase tracking-tight text-white mb-4">
+                  <h2 className="section-display-title-compact mb-4 text-white">
                     What We Screen For
                   </h2>
                   <p className="text-white/45 text-base md:text-lg leading-relaxed">
@@ -116,8 +116,8 @@ export default function Booking() {
         <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="container layout-narrow">
             <div className="mb-16 text-center">
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 mb-4 block">Booking Request</span>
-                <h2 className="font-display text-4xl md:text-5xl uppercase">Start The Conversation</h2>
+                <span className="section-kicker text-white/20 mb-4 block">Booking Request</span>
+                <h2 className="section-display-title-compact">Start The Conversation</h2>
             </div>
             
             <ViewportLazy minHeightClassName="min-h-[640px]">

@@ -24,9 +24,18 @@
     letter-spacing: -0.04em;
   }
 
+  .section-kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
   .section-display-title {
     font-family: var(--font-display);
-    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-size: clamp(3rem, 9vw, 6rem);
     line-height: 0.84;
     letter-spacing: -0.04em;
     text-transform: uppercase;
@@ -34,9 +43,9 @@
 
   .section-display-title-compact {
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-size: clamp(2.3rem, 5vw, 4rem);
     line-height: 0.88;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     text-transform: uppercase;
   }
 

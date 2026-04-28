@@ -68,8 +68,8 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="max-w-3xl"
             >
-              <span className="ui-kicker text-charcoal/55 block mb-5">Get In Touch</span>
-              <h1 className="font-display text-[clamp(3.2rem,9vw,7.5rem)] leading-[0.86] uppercase tracking-tight-display text-charcoal">
+              <span className="section-kicker text-charcoal/55 block mb-5">Get In Touch</span>
+              <h1 className="section-display-title text-charcoal">
                 CONTACT
               </h1>
               <p className="mt-5 text-charcoal/70 leading-relaxed max-w-2xl">
@@ -148,7 +148,7 @@ export default function Contact() {
                   transition={{ duration: 0.45, ease: "easeOut" }}
                   className="border border-charcoal/15 bg-white/70 rounded-2xl p-7"
                 >
-                  <p className="ui-kicker text-charcoal/55 mb-4">What To Include</p>
+                  <p className="section-kicker text-charcoal/55 mb-4">What To Include</p>
                   <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
                     <li>Dates + venue (if relevant)</li>
                     <li>Links: mixes, socials, decks, references</li>

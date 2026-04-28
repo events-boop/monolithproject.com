@@ -170,7 +170,7 @@ export default function About() {
             transition={{ duration: 1.5, delay: 0.2 }}
             className="absolute top-1/4"
           >
-            <h2 className="font-mono text-xs md:text-sm uppercase tracking-[0.5em] text-white/70">
+            <h2 className="section-kicker text-white/70">
               The Monolith Project
             </h2>
           </motion.div>
@@ -185,7 +185,7 @@ export default function About() {
               initial={{ filter: "blur(12px)", opacity: 0, scale: 0.95 }}
               animate={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heavy text-[clamp(2.4rem,12vw,12rem)] tracking-[-0.04em] leading-[0.8] text-white uppercase drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-[90vw] break-words"
+              className="section-display-title max-w-[10ch] break-words text-white drop-shadow-[0_0_50px_rgba(0,0,0,0.8)]"
             >
               MONOLITH
             </motion.h1>
@@ -248,8 +248,8 @@ export default function About() {
         <div className="layout-wide flex flex-col lg:flex-row gap-16 lg:gap-24 relative z-10">
           <div className="lg:w-1/3">
               <div className="sticky top-40">
-                <span className="ui-kicker block text-[#d4a853] mb-4">The Standard</span>
-              <h2 className="font-display text-5xl md:text-8xl text-white mb-6 uppercase leading-none tracking-tight drop-shadow-md">Manifesto</h2>
+                <span className="section-kicker block text-[#d4a853] mb-4">The Standard</span>
+              <h2 className="section-display-title-compact mb-6 text-white drop-shadow-md">Manifesto</h2>
               <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function About() {
             <BrandTranslatorLabel tone="neutral" className="mb-8">
               Togetherness
             </BrandTranslatorLabel>
-            <h2 className="font-display text-[clamp(2.6rem,5vw,5.4rem)] leading-[0.92] uppercase text-white mb-8">
+            <h2 className="section-display-title-compact mb-8 text-white">
               Different rooms.
               <br />
               Same people returning.
@@ -321,9 +321,9 @@ export default function About() {
             >
               <div className="flex items-center gap-4 mb-6">
                  <div className="h-px w-8 bg-primary/50" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">How It Works</span>
+                  <span className="section-kicker text-primary/80">How It Works</span>
               </div>
-              <h2 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.9] uppercase text-white mb-8">
+              <h2 className="section-display-title-compact mb-8 text-white">
                 Four parts.<br />
                 <span className="text-white/20">One project.</span>
               </h2>

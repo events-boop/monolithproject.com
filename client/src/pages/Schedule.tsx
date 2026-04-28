@@ -150,8 +150,8 @@ export default function Schedule() {
           {/* Header & Filters */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
             <div className="relative">
-              <span className="absolute -top-12 left-2 font-mono text-xs tracking-[0.24em] text-primary/60 uppercase">Chicago Music Events</span>
-              <h1 className="font-display text-[clamp(4.2rem,12vw,13rem)] leading-[0.82] tracking-tight-display text-foreground uppercase">
+              <span className="section-kicker absolute -top-12 left-2 text-primary/60">Chicago Music Events</span>
+              <h1 className="section-display-title max-w-[11ch] text-balance text-foreground">
                 Upcoming Shows
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">

@@ -44,7 +44,7 @@ export default function JoinSignalSection({
           <div>
             <span
               className={cn(
-                "font-mono text-[11px] tracking-[0.35em] uppercase font-bold block mb-4",
+                "section-kicker block mb-4",
                 styles.eyebrow,
               )}
             >
@@ -52,7 +52,7 @@ export default function JoinSignalSection({
             </span>
             <h2
               className={cn(
-                "font-display text-[2.3rem] leading-[0.9] tracking-tight uppercase md:text-[3.4rem] mb-4",
+                "section-display-title-compact mb-4 max-w-[9ch]",
                 styles.heading,
               )}
             >
