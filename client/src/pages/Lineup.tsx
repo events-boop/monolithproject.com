@@ -120,10 +120,20 @@ function getSeriesIcon(series: ArtistSeries) {
 function dedupePreviewItems(items: ArtistPreview[]) {
   const seen = new Set<string>();
   return items.filter((item) => {
-    if (seen.has(item.src)) return false;
-    seen.add(item.src);
+    const key = `${item.src}::${item.label}::${item.meta}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
     return true;
   });
+}
+
+function getArtistFallbackImage(artist: ArtistData) {
+  if (artist.series.includes("sunsets-radio")) {
+    return RADIO_PREVIEW_IMAGES[artist.name] ?? RADIO_FALLBACK_PREVIEWS[0].src;
+  }
+
+  const primarySeries = artist.series[0] as Exclude<ArtistSeries, "sunsets-radio">;
+  return EVENT_PREVIEWS[primarySeries]?.[0]?.src ?? "/images/artists-collective.webp";
 }
 
 function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
@@ -131,8 +141,8 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
     ? radioEpisodes
         .filter((episode) => episode.guest === artist.name)
         .map((episode) => ({
-          src: RADIO_PREVIEW_IMAGES[episode.guest] || artist.image,
-          fallbackSrc: artist.image,
+          src: episode.coverImage || RADIO_PREVIEW_IMAGES[episode.guest] || artist.image,
+          fallbackSrc: RADIO_PREVIEW_IMAGES[episode.guest] || artist.image,
           label: episode.shortCode,
           meta: episode.title,
         }))
@@ -141,7 +151,12 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
   if (radioPreviewItems.length) {
     return dedupePreviewItems([
       ...radioPreviewItems,
-      { src: artist.image, label: "Guest Portrait", meta: artist.name },
+      {
+        src: artist.image,
+        fallbackSrc: getArtistFallbackImage(artist),
+        label: "Guest Portrait",
+        meta: artist.name,
+      },
       ...RADIO_FALLBACK_PREVIEWS,
     ]).slice(0, 3);
   }
@@ -157,7 +172,12 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
 
   return dedupePreviewItems([
     ...galleryPreviewItems,
-    { src: artist.image, label: "Artist Portrait", meta: artist.name },
+    {
+      src: artist.image,
+      fallbackSrc: getArtistFallbackImage(artist),
+      label: "Artist Portrait",
+      meta: artist.name,
+    },
     ...eventPreviewItems,
   ]).slice(0, 3);
 }
@@ -212,6 +232,13 @@ function PreviewTile({ item, featured = false }: { item: ArtistPreview; featured
 function ArtistListRow({ artist }: { artist: ArtistData }) {
   const previews = buildArtistPreviewItems(artist);
   const primarySeries = artist.series[0];
+  const portraitFallback = getArtistFallbackImage(artist);
+  const [portraitSrc, setPortraitSrc] = useState(artist.image);
+  const handlePortraitError = () => {
+    if (portraitSrc !== portraitFallback) {
+      setPortraitSrc(portraitFallback);
+    }
+  };
 
   return (
     <Link href={`/artists/${artist.id}`} asChild>
@@ -239,9 +266,10 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
                 primarySeries === "sunsets-radio" ? "w-20 aspect-square" : "w-20 aspect-[4/5]",
               )}>
                 <ResponsiveImage
-                  src={artist.image}
+                  src={portraitSrc}
                   alt={artist.name}
                   sizes="80px"
+                  onError={handlePortraitError}
                   className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
                 />
               </div>
@@ -300,6 +328,13 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
 
 function ArtistGridCard({ artist }: { artist: ArtistData }) {
   const primarySeries = artist.series[0];
+  const portraitFallback = getArtistFallbackImage(artist);
+  const [portraitSrc, setPortraitSrc] = useState(artist.image);
+  const handlePortraitError = () => {
+    if (portraitSrc !== portraitFallback) {
+      setPortraitSrc(portraitFallback);
+    }
+  };
 
   return (
     <Link href={`/artists/${artist.id}`} asChild>
@@ -312,9 +347,10 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
         >
           <div className="aspect-[4/5] overflow-hidden">
             <ResponsiveImage
-              src={artist.image}
+              src={portraitSrc}
               alt={artist.name}
               sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
+              onError={handlePortraitError}
               className="h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
             />
           </div>

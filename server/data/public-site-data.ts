@@ -38,7 +38,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         title: "UNTOLD STORY IV: ERAN HERSH",
         subtitle: "Untold Story IV",
         headline: "UNTOLD STORY IV: ERAN HERSH",
-        slug: "untold-story-season-iii-episode-iii-eran-hersh",
+        slug: "eran-hersh-untold-story-iv",
         date: "May 16, 2026",
         time: "9:00 PM — Late",
         startsAt: "2026-05-16T21:00:00-05:00",
