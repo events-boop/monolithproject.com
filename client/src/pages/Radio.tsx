@@ -1,125 +1,29 @@
-import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion, useMotionValue, useTransform, useSpring, useInView, useReducedMotion } from "framer-motion";
-import { Play, Pause, Sun, X, MapPin, Music, ArrowRight } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowRight, Headphones, Play, Radio as RadioIcon, Sun, Waves } from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
 import RadioGlobe from "@/components/RadioGlobe";
 import Navigation from "@/components/Navigation";
-import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
-import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
-import StickyPlayer from "@/components/StickyPlayer";
-import RevealText from "@/components/RevealText";
-import HeroSpotlight from "@/components/ui/HeroSpotlight";
-import ShimmerButton from "@/components/ui/ShimmerButton";
 import SEO from "@/components/SEO";
-import SmartImage from "@/components/SmartImage";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import MagneticButton from "@/components/MagneticButton";
-import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import BrandMotifDivider from "@/components/BrandMotifDivider";
 import FloatingFactsChip from "@/components/FloatingFactsChip";
-import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import SignalBarsMark from "@/components/SignalBarsMark";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import JoinSignalSection from "@/components/JoinSignalSection";
+import { radioEpisodes, type RadioEpisode } from "@/data/radioEpisodes";
 
-const radioArtists = [
-  {
-    name: "BENCHEK",
-    image: "/images/artist-benchek.jpg",
-    banner: "Chasing Sun(Sets) Radio Show",
-    eyebrow: "Featured Episode",
-    summary: "Start with the New Year transition session that opened the radio archive.",
-    href: "/radio/ep-01-benchek",
-    ctaLabel: "Open Episode 01",
-  },
-  {
-    name: "EWERSEEN",
-    image: "/images/radio-show-gear.webp",
-    banner: "Chasing Sun(Sets) Radio Show",
-    eyebrow: "Featured Episode",
-    summary: "Jump straight into EWERSEEN's Mix Vol. 3 and the radio-show side of Chasing Sun(Sets).",
-    href: "/radio/ep-02-ewerseen",
-    ctaLabel: "Open EWERSEEN Mix",
-  },
-  {
-    name: "TERRANOVA",
-    image: "/images/artist-terranova.png",
-    banner: "Chasing Sun(Sets) Radio Show",
-    eyebrow: "Featured Episode",
-    summary: "Open the TERRANOVA guest session and move through the strongest long-form entry points in the archive.",
-    href: "/radio/ep-03-terranova",
-    ctaLabel: "Open Episode 03",
-  },
-];
+type EpisodeMode = "sunsets" | "crossovers";
+type EpisodeFilter = "all" | EpisodeMode;
 
 const RADIO_ANCHORS = [
-  { label: "Episodes", href: "#radio-tracks" },
-  { label: "Map", href: "#radio-map" },
+  { label: "Featured", href: "#radio-featured" },
+  { label: "Archive", href: "#radio-archive" },
+  { label: "Reach", href: "#radio-map" },
   { label: "FAQ", href: "#radio-faq" },
 ];
-
-interface Track {
-  title: string;
-  artist: string;
-  series: "sunsets" | "untold";
-  duration: string;
-  soundcloudUrl: string;
-  embedUrl: string;
-}
-
-const tracks: Track[] = [
-  {
-    title: "Spécial NYE",
-    artist: "BENCHEK",
-    series: "sunsets",
-    duration: "58:23",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "TERRANOVA x CHASING SUN(SETS)",
-    artist: "TERRANOVA",
-    series: "sunsets",
-    duration: "62:10",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Mix Vol.3",
-    artist: "EWERSEEN",
-    series: "sunsets",
-    duration: "55:48",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "RADIAN x UNTOLD STORY",
-    artist: "RADIAN",
-    series: "untold",
-    duration: "71:05",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Collab Mix Vol.2",
-    artist: "EWERSEEN",
-    series: "sunsets",
-    duration: "48:32",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-  {
-    title: "Live from Marbella EP02",
-    artist: "BENCHEK",
-    series: "sunsets",
-    duration: "64:17",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-  },
-];
-
-type Filter = "all" | "sunsets" | "untold";
 
 const sectionTransition = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };
 const sectionReveal = {
@@ -130,503 +34,666 @@ const sectionReveal = {
 };
 
 const radioFaqs = [
-  ["How often are new mixes released?", "We drop new mixes regularly, capturing the very best live sets from our recent events as well as exclusive guest mixes."],
-  ["Can I submit a mix for the Radio show?", "Yes, we are always looking for selectors who fit the Monolith and Chasing Sun(Sets) sound. Reach out to us via the contact page."],
-  ["Are the live recordings edited?", "We try to keep them as raw and authentic as possible to capture the true energy and imperfections of the dancefloor."]
-];
+  [
+    "How often are new mixes released?",
+    "New drops land when the archive has something worth replaying. We prioritize strong sessions over filler cadence.",
+  ],
+  [
+    "Can I submit a mix for the radio show?",
+    "Yes. The best fits already sound aligned with Monolith, Chasing Sun(Sets), or the deeper crossover lane between them.",
+  ],
+  [
+    "Are the recordings heavily edited?",
+    "No. We clean the presentation, but the goal is to keep the pacing and tension of the original room or guest session intact.",
+  ],
+] as const;
 
-// Audio Visualizer Component
-function AudioVisualizer({ isActive }: { isActive: boolean }) {
-  if (!isActive) return null;
+const episodeScenes: Record<string, { heroImage: string; signal: string; region: string; mode: EpisodeMode }> = {
+  "ep-004-benchek-part-2": {
+    heroImage: "/images/artist-benchek.jpg",
+    signal: "Marbella return",
+    region: "Open-air transmission",
+    mode: "sunsets",
+  },
+  "ch-02-radian-no-sleep": {
+    heroImage: "/images/radio-show-gear.webp",
+    signal: "Berlin chapter",
+    region: "After-hours pressure",
+    mode: "crossovers",
+  },
+  "ep-01-benchek": {
+    heroImage: "/images/artist-benchek.jpg",
+    signal: "Archive opener",
+    region: "NYE transition set",
+    mode: "sunsets",
+  },
+  "ep-02-ewerseen": {
+    heroImage: "/images/artist-ewerseen.png",
+    signal: "Guest mix",
+    region: "Peak-hour drive",
+    mode: "sunsets",
+  },
+  "ep-03-terranova": {
+    heroImage: "/images/artist-terranova.png",
+    signal: "Long-form session",
+    region: "Sunline archive",
+    mode: "sunsets",
+  },
+  "ep-04-radian": {
+    heroImage: "/images/radio-show-gear.webp",
+    signal: "Crossover cut",
+    region: "Untold bridge",
+    mode: "crossovers",
+  },
+};
 
+const featuredEpisodePool = radioEpisodes.slice(0, 4);
+
+function getEpisodeScene(episode: RadioEpisode) {
   return (
-    <div className="flex items-end gap-[3px] h-4">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <div
-          key={i}
-          className="w-1 bg-primary rounded-sm transition-all"
-          style={{
-            animation: `radioVisualizerBar ${0.5 + Math.random() * 0.5}s ease-in-out infinite alternate`,
-            animationDelay: `${Math.random() * 0.3}s`,
-            height: '20%',
-          }}
-        />
-      ))}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        @keyframes radioVisualizerBar {
-          0% { height: 20%; opacity: 0.6; }
-          100% { height: 100%; opacity: 1; }
-        }
-      `}} />
-    </div>
+    episodeScenes[episode.slug] ?? {
+      heroImage: episode.image,
+      signal: "Guest session",
+      region: "Radio archive",
+      mode: "sunsets" as EpisodeMode,
+    }
   );
 }
 
+function getCoverSrc(episode: RadioEpisode) {
+  return episode.coverImage || episode.image;
+}
+
+function getNarrativePreview(narrative: string) {
+  return narrative.split("\n\n")[0] || narrative;
+}
+
+function isExternalLink(url: string) {
+  return /^https?:\/\//i.test(url);
+}
+
+function scrollToFeaturedDeck() {
+  if (typeof document === "undefined") return;
+  document.getElementById("radio-featured")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export default function Radio() {
-  const [activeTrack, setActiveTrack] = useState<number | null>(null);
-  const [filter, setFilter] = useState<Filter>("all");
-  const [faqDrawerOpen, setFaqDrawerOpen] = useState(false);
-  const [featureClipLoaded, setFeatureClipLoaded] = useState(false);
-  const [artistIndex, setArtistIndex] = useState(0);
+  const [filter, setFilter] = useState<EpisodeFilter>("all");
+  const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(featuredEpisodePool[0]?.slug ?? radioEpisodes[0]?.slug ?? "");
   const heroRef = useRef<HTMLElement | null>(null);
   const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
   const reduceMotion = useReducedMotion();
 
-  // 3D Tilt calculations
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const activeEpisode = useMemo(
+    () => radioEpisodes.find((episode) => episode.slug === activeEpisodeSlug) ?? radioEpisodes[0],
+    [activeEpisodeSlug],
+  );
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const filteredEpisodes = useMemo(() => {
+    if (filter === "all") return radioEpisodes;
+    return radioEpisodes.filter((episode) => getEpisodeScene(episode).mode === filter);
+  }, [filter]);
 
   useEffect(() => {
-    if (reduceMotion || !heroInView) return;
+    if (reduceMotion || !heroInView || featuredEpisodePool.length < 2) return;
+
     const timer = setInterval(() => {
-      setArtistIndex((prev) => (prev + 1) % radioArtists.length);
+      setActiveEpisodeSlug((current) => {
+        const currentIndex = featuredEpisodePool.findIndex((episode) => episode.slug === current);
+        const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % featuredEpisodePool.length : 0;
+        return featuredEpisodePool[nextIndex].slug;
+      });
     }, 7000);
+
     return () => clearInterval(timer);
-  }, [reduceMotion, heroInView]);
+  }, [heroInView, reduceMotion]);
 
-  const filtered = filter === "all" ? tracks : tracks.filter((t) => t.series === filter);
-  const activeArtist = radioArtists[artistIndex] || radioArtists[0];
+  if (!activeEpisode) {
+    return null;
+  }
 
-  const handlePlay = (index: number) => {
-    const track = filtered[index];
-    const realIndex = tracks.indexOf(track);
-    setActiveTrack((current) => (current === realIndex ? null : realIndex));
+  const activeScene = getEpisodeScene(activeEpisode);
+  const heroQueue = featuredEpisodePool.filter((episode) => episode.slug !== activeEpisode.slug).slice(0, 3);
+
+  const selectEpisode = (slug: string, bringToDeck = false) => {
+    setActiveEpisodeSlug(slug);
+    if (bringToDeck) scrollToFeaturedDeck();
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen overflow-x-hidden bg-[#050505] text-white">
       <SEO
         title="Radio | The Monolith Project"
-        description="Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community."
+        description="Listen to artist-led mixes, archive episodes, and crossover sessions from The Monolith Project's Chicago music community."
         absoluteTitle
         canonicalPath="/radio"
       />
-      <Navigation brand="radio" />
+      <Navigation brand="chasing-sunsets" />
 
-      {/* Hero */}
-      <section ref={heroRef} className="relative page-shell-start-loose pb-24 px-6 overflow-hidden min-h-[75vh] flex flex-col justify-center bg-black">
-        {/* Full Bleed Rotating Background */}
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[82vh] flex-col justify-center overflow-hidden bg-[#050505] px-6 pb-24 page-shell-start-loose"
+      >
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
             <motion.div
-              key={artistIndex}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 0.6, scale: 1 }}
+              key={activeEpisode.slug}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
+              transition={{ duration: 1.1, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              <SmartImage
-                src={(radioArtists[artistIndex] || radioArtists[0]).image}
-                alt={(radioArtists[artistIndex] || radioArtists[0]).name}
+              <ResponsiveImage
+                src={activeScene.heroImage}
+                alt={`${activeEpisode.guest} radio portrait`}
                 priority
-                className="w-full h-full object-cover object-[center_30%]"
-                containerClassName="h-full w-full bg-transparent"
+                sizes="100vw"
+                className="h-full w-full object-cover object-center opacity-30"
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-          <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black/80 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(232,184,109,0.22),transparent_28%),radial-gradient(circle_at_82%_24%,rgba(194,112,62,0.16),transparent_24%),linear-gradient(180deg,rgba(6,6,6,0.1)_0%,rgba(6,6,6,0.68)_45%,rgba(5,5,5,0.96)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.94)_0%,rgba(5,5,5,0.68)_45%,rgba(5,5,5,0.88)_100%)]" />
         </div>
 
         <div className="container layout-wide relative z-10 w-full">
-          <div className="max-w-3xl">
-            <SignalBarsMark className="w-14 h-10 sm:w-16 sm:h-12 mb-5 sm:mb-6" />
-            <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-6" delay={0.1}>
-              {activeArtist.banner}
-            </RevealText>
-            <div className="mb-8 relative">
-              <HeroSpotlight className="-m-8 p-8" spotlightColor="rgba(255, 255, 255, 0.15)">
-                <motion.h1
-                  initial={{ opacity: 0, y: 30, filter: "blur(20px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-                  className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.85] uppercase tracking-tight-display drop-shadow-2xl"
-                >
-                  <span className="bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)] block mb-2 md:mb-4">
-                    CHASING SUN(SETS)
-                  </span>
-                  <span className="text-white">RADIO</span>
-                </motion.h1>
-                <BrandTranslatorLabel className="mt-2" tone="radio">
-                  {activeArtist.eyebrow}
-                </BrandTranslatorLabel>
-              </HeroSpotlight>
-            </div>
-            <RevealText as="p" className="max-w-lg text-white/80 text-lg md:text-xl leading-relaxed drop-shadow-lg font-light" delay={0.4} stagger={0.01}>
-              {activeArtist.summary}
-            </RevealText>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <MagneticButton strength={0.3}>
-                <Link href={activeArtist.href} asChild>
-                  <a className="btn-pill-radio inline-flex items-center justify-center">
-                    {activeArtist.ctaLabel}
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Link>
-              </MagneticButton>
-              <MagneticButton strength={0.22}>
-                <a href="#radio-tracks" className="btn-pill-neutral inline-flex items-center justify-center">
-                  Browse All Sets
-                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                </a>
-              </MagneticButton>
-            </div>
-          </div>
-        </div>
-      </section>
-      <SeasonAnchorNav items={RADIO_ANCHORS} tone="warm" className="-mt-7 mb-5" />
-
-      {/* Massive Globe Separator with Rotating Frame */}
-      <section className="relative w-full h-[60vh] md:h-[75vh] min-h-[550px] overflow-hidden border-t border-border bg-card flex flex-col justify-center">
-        {/* Globe */}
-        <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0 mt-[-10vh] translate-y-24 md:translate-y-12 opacity-80 mix-blend-lighten">
-          <RadioGlobe />
-        </div>
-
-        {/* Floating Autograf Video (Double size = ~320x320 sq) */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black/20"
-        >
-          <ResponsiveImage
-            src="/images/autograf-recap.jpg"
-            alt="Monolith Project professional audio gear and studio setup"
-            sizes="400px"
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          {featureClipLoaded ? (
-            <YouTubeEmbed
-              url="https://www.youtube.com/watch?v=9R6XH7JZlJI"
-              title="Autograf live at Monolith"
-              autoplay
-              muted
-              controls={false}
-              loop
-              playsInline
-              start={3714}
-              allowFullScreen={false}
-              loading="eager"
-              className="absolute inset-0 h-full w-full scale-[1.5] border-0"
-            />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setFeatureClipLoaded(true)}
-              className="absolute inset-0 flex items-center justify-center bg-black/35 text-white transition-colors hover:bg-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              aria-label="Load Autograf live video"
-            >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/50 backdrop-blur-sm transition-transform hover:scale-105">
-                <Play className="h-7 w-7 fill-current pl-0.5" />
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-end">
+            <motion.div {...sectionReveal}>
+              <SignalBarsMark className="mb-6 h-10 w-14 sm:h-12 sm:w-16" />
+              <span className="mb-5 block font-mono text-[10px] uppercase tracking-[0.38em] text-[#E8B86D]">
+                Chasing Sun(Sets) Radio Show
               </span>
-            </button>
-          )}
-        </div>
+              <h1 className="section-display-title max-w-[10ch] text-white">
+                CHASING SUN(SETS) <span className="text-white/48">RADIO</span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 md:text-xl md:leading-relaxed">
+                The between-shows archive. Guest-led mixes, crossover cuts, and long-form episodes built to move from golden hour into the darker rooms.
+              </p>
 
-        <div className="container layout-wide h-full relative z-20 w-full flex flex-col md:flex-row items-center justify-between px-6 pointer-events-none">
-          {/* Rotating Album Cover Frame with 3D Tilt */}
-          <Link href={activeArtist.href} asChild>
-            <a
-              className="w-full h-full flex items-center justify-center md:justify-start pointer-events-auto"
-              style={{ perspective: 1200 }}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              aria-label={`Open ${activeArtist.name} radio feature`}
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+                <MagneticButton strength={0.28}>
+                  <Link href={`/radio/${activeEpisode.slug}`} asChild>
+                    <a className="btn-pill-sunsets inline-flex items-center justify-center">
+                      Open Featured Episode
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </Link>
+                </MagneticButton>
+                <MagneticButton strength={0.22}>
+                  <a href="#radio-archive" className="btn-pill-glass inline-flex items-center justify-center">
+                    Browse Full Archive
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </MagneticButton>
+              </div>
+
+              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+                {[
+                  `${radioEpisodes.length.toString().padStart(2, "0")} episodes live`,
+                  "Chicago-rooted, globally replayed",
+                  "Sunset cuts and late-night bridges",
+                ].map((stat) => (
+                  <div
+                    key={stat}
+                    className="border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.28em] text-white/58 backdrop-blur-sm"
+                  >
+                    {stat}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...sectionReveal}
+              transition={{ ...sectionTransition, delay: 0.1 }}
+              className="luxe-surface-dark p-4 md:p-5"
             >
-              <motion.div
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ opacity: { duration: 1.2, delay: 0.5 }, y: { duration: 1.2, delay: 0.5, ease: "easeOut" } }}
-                className="relative w-[300px] md:w-[400px] aspect-square rounded-2xl overflow-hidden bg-background/5 border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.6)] z-20"
-              >
-                {/* Decorative Elements */}
-                <div
-                  style={{ transform: "translateZ(30px)" }}
-                  className="absolute top-4 left-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="font-mono text-[10px] text-white/80 tracking-widest uppercase">Radio Show</span>
-                </div>
-                <div
-                  style={{ transform: "translateZ(30px)" }}
-                  className="absolute top-4 right-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                  <span className="font-mono text-[10px] text-white/80 tracking-widest uppercase">Live</span>
-                </div>
-
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={artistIndex}
-                    initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="absolute inset-0 z-10"
-                    style={{ transform: "translateZ(10px)" }}
-                  >
-                    <SmartImage
-                      src={activeArtist.image}
-                      alt={activeArtist.name}
-                      className="w-full h-full object-cover"
-                      containerClassName="w-full h-full bg-black"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Artist Name Container */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 p-6 z-30"
-                  style={{ transform: "translateZ(40px)" }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={artistIndex}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.6 }}
-                      className="flex flex-col gap-1 drop-shadow-lg"
-                    >
-                      <span className="font-mono text-[10px] tracking-[0.3em] text-[#E8B86D] uppercase font-bold drop-shadow-md">Now Playing</span>
-                      <span className="font-display text-3xl md:text-4xl text-white tracking-widest uppercase drop-shadow-xl block">{activeArtist.name}</span>
-                      <span className="font-mono text-[10px] tracking-[0.25em] text-white/60 uppercase">
-                        {activeArtist.banner}
-                      </span>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            </a>
-          </Link>
-        </div>
-      </section>
-
-      {/* Filters with LayoutId Gliding Pill */}
-      <section className="px-6 pb-8 border-t border-border pt-12 md:pt-16">
-        <div className="container layout-default">
-          <div className="flex flex-wrap gap-3 pb-6 border-b border-border relative">
-            {([
-              { label: "ALL", value: "all" as Filter, icon: null },
-              { label: "SUN(SETS)", value: "sunsets" as Filter, icon: <Sun className="w-3.5 h-3.5" /> },
-              { label: "UNTOLD", value: "untold" as Filter, icon: <UntoldButterflyLogo className="w-4 h-4" /> },
-            ]).map((f) => {
-              const isActive = filter === f.value;
-              return (
+              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_220px]">
                 <button
-                  key={f.value}
                   type="button"
-                  onClick={() => setFilter(f.value)}
-                  className={`relative flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-colors outline-none z-10 ${isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
+                  onClick={() => selectEpisode(activeEpisode.slug)}
+                  className="group relative overflow-hidden border border-white/12 bg-black text-left"
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeFilter"
-                      className="absolute inset-0 bg-primary/90 border border-primary rounded-full z-0 pointer-events-none shadow-md backdrop-blur-sm"
-                      transition={{ duration: 0.4, type: "spring", stiffness: 300, damping: 25 }}
+                  <div className="relative aspect-square overflow-hidden">
+                    <ResponsiveImage
+                      src={getCoverSrc(activeEpisode)}
+                      alt={`${activeEpisode.guest} ${activeEpisode.title} cover art`}
+                      priority
+                      sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 40vw, 100vw"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                  )}
-                  <span className="relative z-10 flex items-center gap-2">
-                    {f.icon}
-                    {f.label}
-                  </span>
-                </button>
-              );
-            })}
-            <span className="ml-auto font-mono text-xs text-muted-foreground self-center">
-              {filtered.length} SET{filtered.length !== 1 ? "S" : ""}
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* Track List */}
-      <section id="radio-tracks" className="px-6 pb-16 scroll-shell-target">
-        <div className="container layout-default">
-          <div className="border-t border-border/50">
-            {filtered.map((track, index) => {
-              const realIndex = tracks.indexOf(track);
-              const isActive = activeTrack === realIndex;
-              return (
-                <motion.div
-                  key={track.soundcloudUrl}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.03 }}
-                  className={`group w-full flex items-center gap-4 md:gap-6 py-5 px-4 border-b border-border/50 transition-colors bg-transparent ${isActive ? "bg-white/5" : "hover:bg-white/[0.03]"
-                    }`}
-                >
-                  {/* Magnetic Play Button */}
-                  <MagneticButton strength={0.4} onClick={() => handlePlay(index)}>
-                    <div className={`w-12 h-12 flex items-center justify-center rounded-full transition-all flex-shrink-0 ${isActive ? "bg-primary text-primary-foreground border-transparent shadow-[0_0_15px_rgba(224,90,58,0.5)]" : "bg-black/20 border border-white/10 text-white group-hover:border-primary/50 group-hover:text-primary"}`} aria-label={`${isActive ? "Pause" : "Play"} ${track.title}`}>
-                      {isActive ? (
-                        <Pause className="w-5 h-5 fill-current" />
-                      ) : (
-                        <Play className="w-5 h-5 fill-current ml-1" />
-                      )}
-                    </div>
-                  </MagneticButton>
-
-                  {/* Info */}
-                  <div className="flex-1 min-w-0 flex flex-col justify-center cursor-pointer" onClick={() => handlePlay(index)}>
-                    <div className="flex items-center gap-3">
-                      <span className={`block text-base md:text-lg font-medium truncate transition-colors ${isActive ? "text-primary" : "text-foreground group-hover:text-primary"}`}>
-                        {track.title}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                    <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-2 border border-[#E8B86D]/30 bg-black/55 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#F7F2EA] backdrop-blur-sm">
+                        <RadioIcon className="h-3.5 w-3.5 text-[#E8B86D]" />
+                        {activeEpisode.shortCode}
                       </span>
-                      <AudioVisualizer isActive={isActive} />
+                      <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/65">
+                        {activeEpisode.duration}
+                      </span>
                     </div>
-                    <span className="block text-xs md:text-sm text-muted-foreground font-mono tracking-wide mt-1">
-                      {track.artist}
-                    </span>
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E8B86D]">
+                        Now Spinning
+                      </p>
+                      <h2 className="mt-2 max-w-[12ch] font-display text-[clamp(2rem,4vw,3.2rem)] uppercase leading-[0.88] text-white">
+                        {activeEpisode.guest}
+                      </h2>
+                      <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+                        {activeEpisode.summary}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                <div className="flex flex-col gap-3">
+                  <div className="border border-[#C2703E]/18 bg-[#120f0d]/86 p-4">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#C2703E]">
+                      Current Signal
+                    </p>
+                    <p className="mt-3 font-display text-2xl uppercase leading-[0.9] text-white">
+                      {activeScene.signal}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/58">{activeScene.region}</p>
                   </div>
 
-                  {/* Series tag & Duration */}
-                  <div className="flex flex-col items-end gap-2 shrink-0 cursor-pointer" onClick={() => handlePlay(index)}>
-                    <span className={`hidden md:inline-block px-3 py-1 text-[10px] font-mono tracking-widest uppercase border rounded-md ${track.series === "sunsets"
-                      ? "text-orange-300 border-orange-300/30 bg-orange-300/10"
-                      : "text-primary border-primary/30 bg-primary/10"
-                      }`}>
-                      {track.series === "sunsets" ? "SUN(SETS)" : "UNTOLD"}
-                    </span>
-                    <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                      {track.duration}
-                    </span>
+                  <div className="border border-white/10 bg-white/[0.02] p-3">
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/42">Queue</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/28">Next drops</p>
+                    </div>
+                    <div className="space-y-2">
+                      {heroQueue.map((episode) => {
+                        const scene = getEpisodeScene(episode);
+
+                        return (
+                          <button
+                            key={episode.slug}
+                            type="button"
+                            onClick={() => selectEpisode(episode.slug)}
+                            className="group flex w-full items-center gap-3 border border-white/8 bg-black/30 px-3 py-3 text-left transition-colors hover:border-white/18 hover:bg-white/[0.04]"
+                          >
+                            <div className="relative h-16 w-16 shrink-0 overflow-hidden border border-white/10 bg-black">
+                              <ResponsiveImage
+                                src={getCoverSrc(episode)}
+                                alt={`${episode.guest} cover art`}
+                                sizes="64px"
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                                {episode.shortCode}
+                              </p>
+                              <p className="mt-1 truncate font-display text-lg uppercase leading-none text-white">
+                                {episode.guest}
+                              </p>
+                              <p className="mt-1 truncate text-xs uppercase tracking-[0.22em] text-white/40">
+                                {scene.signal}
+                              </p>
+                            </div>
+                            <Play className="h-4 w-4 shrink-0 text-white/35 transition-colors group-hover:text-white" />
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <SeasonAnchorNav items={RADIO_ANCHORS} tone="warm" className="-mt-7 mb-6" />
+
+      <section id="radio-featured" className="px-6 pb-10 scroll-shell-target">
+        <div className="container layout-wide">
+          <motion.div className="grid gap-6 lg:grid-cols-[minmax(0,1.16fr)_minmax(320px,0.84fr)]" {...sectionReveal}>
+            <div className="luxe-surface-dark overflow-hidden p-4 md:p-6">
+              <div className="mb-5 flex flex-col gap-4 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E8B86D]">Playback Deck</span>
+                  <h2 className="section-display-title-compact mt-3 max-w-[9ch] text-white">FEATURED EPISODE</h2>
+                </div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/42">
+                  {activeEpisode.displayDate} · {activeEpisode.duration}
+                </div>
+              </div>
+
+              <div className="overflow-hidden border border-white/10 bg-black">
+                <iframe
+                  key={activeEpisode.slug}
+                  title={`${activeEpisode.title} embedded player`}
+                  width="100%"
+                  height="166"
+                  scrolling="no"
+                  frameBorder="no"
+                  allow="autoplay"
+                  src={activeEpisode.embedUrl}
+                />
+              </div>
+
+              <div className="mt-5 grid gap-3 md:grid-cols-3">
+                {activeEpisode.tracklist.slice(0, 3).map((track, index) => (
+                  <div key={`${track.timecode}-${track.title}`} className="border border-white/8 bg-white/[0.02] p-4">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
+                      {String(index + 1).padStart(2, "0")} · {track.timecode}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/82">
+                      <span className="font-semibold">{track.artist}</span> · {track.title}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <motion.article className="luxe-surface-dark p-6" {...sectionReveal}>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
+                      {activeEpisode.shortCode} · {activeScene.signal}
+                    </p>
+                    <h3 className="mt-3 font-display text-[clamp(2.1rem,4vw,3.3rem)] uppercase leading-[0.9] text-white">
+                      {activeEpisode.title}
+                    </h3>
+                  </div>
+                  <div className="hidden h-14 w-14 items-center justify-center border border-[#E8B86D]/20 bg-[#E8B86D]/8 text-[#E8B86D] md:flex">
+                    <Headphones className="h-6 w-6" />
+                  </div>
+                </div>
+
+                <p className="mt-4 text-base leading-relaxed text-white/70">{activeEpisode.summary}</p>
+                <p className="mt-4 text-sm leading-relaxed text-white/50">{getNarrativePreview(activeEpisode.narrative)}</p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href={activeEpisode.audioUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-pill-sunsets inline-flex items-center justify-center"
+                  >
+                    Listen on SoundCloud
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                  <Link href={`/radio/${activeEpisode.slug}`} className="btn-pill-glass inline-flex items-center justify-center">
+                    Open Episode Page
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
+              </motion.article>
+
+              <motion.article className="luxe-surface-dark p-6" {...sectionReveal}>
+                <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-4">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">Guest Links</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/58">
+                      Direct exits for the current guest and the wider Monolith stack.
+                    </p>
+                  </div>
+                  <Waves className="hidden h-5 w-5 text-[#E8B86D] md:block" />
+                </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {activeEpisode.guestLinks.map((link) =>
+                    isExternalLink(link.url) ? (
+                      <a
+                        key={link.label}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-pill-glass inline-flex items-center justify-center"
+                      >
+                        {link.label}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
+                    ) : (
+                      <Link key={link.label} href={link.url} className="btn-pill-glass inline-flex items-center justify-center">
+                        {link.label}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    ),
+                  )}
+                </div>
+              </motion.article>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <BrandMotifDivider tone="warm" className="my-10" />
+
+      <section id="radio-archive" className="px-6 pb-20 scroll-shell-target">
+        <div className="container layout-wide">
+          <motion.div
+            {...sectionReveal}
+            className="flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-end lg:justify-between"
+          >
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#C2703E]">Archive Grid</span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">ALL SIGNALS</h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/58 md:text-base">
+                A cleaner shelf for every radio drop. Featured episodes stay collectible, the metadata stays consistent, and the deeper cuts are easier to find.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "All", value: "all" as EpisodeFilter },
+                { label: "Sunset Cuts", value: "sunsets" as EpisodeFilter },
+                { label: "Late-Night Bridges", value: "crossovers" as EpisodeFilter },
+              ].map((option) => {
+                const isActive = filter === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setFilter(option.value)}
+                    className={`inline-flex min-h-[44px] items-center justify-center border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] transition-colors ${
+                      isActive
+                        ? "border-[#E8B86D]/38 bg-[#1b1510] text-white"
+                        : "border-white/10 bg-white/[0.03] text-white/52 hover:border-white/22 hover:text-white"
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          <div className="mt-8 grid gap-4 lg:gap-5">
+            {filteredEpisodes.map((episode, index) => {
+              const scene = getEpisodeScene(episode);
+              const isActive = episode.slug === activeEpisode.slug;
+
+              return (
+                <motion.article
+                  key={episode.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.04, duration: 0.45 }}
+                  className={`group border transition-colors ${
+                    isActive
+                      ? "border-[#E8B86D]/30 bg-[#120f0d]"
+                      : "border-white/10 bg-white/[0.02] hover:border-white/22 hover:bg-white/[0.04]"
+                  }`}
+                >
+                  <div className="grid gap-4 p-4 md:grid-cols-[108px_minmax(0,1fr)_auto] md:items-center md:gap-5 md:p-5 lg:grid-cols-[120px_minmax(0,1fr)_220px]">
+                    <button
+                      type="button"
+                      onClick={() => selectEpisode(episode.slug, true)}
+                      className="relative aspect-square overflow-hidden border border-white/10 bg-black text-left"
+                    >
+                      <ResponsiveImage
+                        src={getCoverSrc(episode)}
+                        alt={`${episode.guest} ${episode.title} cover art`}
+                        sizes="120px"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      <div className="absolute left-3 top-3 font-mono text-[9px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                        {episode.shortCode}
+                      </div>
+                    </button>
+
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                          {scene.signal}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/30">
+                          {episode.displayDate}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/30">
+                          {episode.duration}
+                        </span>
+                      </div>
+                      <h3 className="mt-3 font-display text-[clamp(1.6rem,2vw,2.4rem)] uppercase leading-[0.92] text-white">
+                        {episode.guest}
+                      </h3>
+                      <p className="mt-1 text-base uppercase tracking-[0.04em] text-white/72">{episode.title}</p>
+                      <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/54 md:text-base">
+                        {episode.summary}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col items-start gap-3 md:items-end">
+                      <button
+                        type="button"
+                        onClick={() => selectEpisode(episode.slug, true)}
+                        className="inline-flex min-h-[44px] items-center gap-2 border border-[#E8B86D]/24 bg-[#E8B86D]/8 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-white transition-colors hover:border-[#E8B86D]/46 hover:bg-[#E8B86D]/14"
+                      >
+                        <Play className="h-3.5 w-3.5 text-[#E8B86D]" />
+                        Load In Deck
+                      </button>
+                      <div className="flex flex-wrap gap-2 md:justify-end">
+                        <Link href={`/radio/${episode.slug}`} className="btn-pill-glass inline-flex items-center justify-center">
+                          Episode Page
+                        </Link>
+                        <a
+                          href={episode.audioUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-pill-glass inline-flex items-center justify-center"
+                        >
+                          SoundCloud
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
               );
             })}
           </div>
         </div>
       </section>
 
-      <BrandMotifDivider tone="nocturne" className="my-10" />
+      <section id="radio-map" className="border-y border-white/10 bg-[#080808] px-6 py-20 scroll-shell-target">
+        <div className="container layout-wide">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+            <motion.article className="relative min-h-[26rem] overflow-hidden border border-white/10 bg-black" {...sectionReveal}>
+              <div className="absolute inset-0 opacity-85">
+                <RadioGlobe />
+              </div>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.1),rgba(8,8,8,0.86)_62%,rgba(8,8,8,0.98))]" />
+              <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+                <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#E8B86D]">Signal Reach</span>
+                <h2 className="section-display-title-compact mt-3 max-w-[7ch] text-white">WHERE IT LANDS</h2>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-white/62 md:text-base">
+                  Chicago is the root. The archive pulls interest from rooftop cities, after-hours cities, and anywhere the guest mix has enough patience to stay in rotation.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {[
+                    "Chicago",
+                    "Marbella",
+                    "Berlin",
+                    "Ibiza",
+                    "Tulum",
+                    "Paris",
+                    "Dubai",
+                    "New York",
+                  ].map((city) => (
+                    <span
+                      key={city}
+                      className="border border-white/10 bg-black/35 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-white/56 backdrop-blur-sm"
+                    >
+                      {city}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
 
-      {/* Map Section */}
-      <section id="radio-map" className="px-6 py-20 bg-card border-t border-border scroll-shell-target">
-        <div className="container layout-default">
-          <div className="flex items-end justify-between mb-8 pb-4 border-b border-border">
+            <motion.article className="luxe-surface-dark p-4 md:p-6" {...sectionReveal}>
+              <div className="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#C2703E]">Listener Map</span>
+                  <h3 className="mt-3 font-display text-3xl uppercase leading-[0.9] text-white md:text-4xl">
+                    Active Cities
+                  </h3>
+                </div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/36">
+                  8 points live
+                </span>
+              </div>
+              <div className="relative overflow-hidden border border-white/10 bg-black">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none z-10" />
+                <div className="h-[320px] md:h-[430px] relative z-0">
+                  <GlobalListenerMap />
+                </div>
+              </div>
+            </motion.article>
+          </div>
+        </div>
+      </section>
+
+      <section id="radio-faq" className="px-6 py-20 scroll-shell-target">
+        <div className="container layout-wide">
+          <motion.div
+            {...sectionReveal}
+            className="flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-end lg:justify-between"
+          >
             <div>
-              <RevealText as="span" className="font-mono text-xs text-primary tracking-[0.3em] uppercase block mb-2" delay={0.1}>
-                Global Reach
-              </RevealText>
-              <RevealText as="h2" className="font-display text-4xl text-foreground" delay={0.2} blurStrength={10}>
-                WHERE PEOPLE LISTEN
-              </RevealText>
+              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#C2703E]">Transmission FAQ</span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">HOUSE RULES</h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/58 md:text-base">
+                Enough structure to make the archive useful. No extra interface theater where a direct answer works better.
+              </p>
             </div>
-            <span className="font-mono text-xs text-muted-foreground tracking-widest">
-              4 ARTISTS · 8 CITIES
-            </span>
-          </div>
+            <Link href="/contact" className="btn-pill-glass inline-flex items-center justify-center self-start lg:self-auto">
+              Submit or Ask
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </motion.div>
 
-          <div className="border border-border bg-background p-6 rounded-xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none z-10" />
-            <div className="h-[300px] md:h-[400px] relative z-0">
-              <GlobalListenerMap />
-            </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {radioFaqs.map(([question, answer], index) => (
+              <motion.article
+                key={question}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.06, duration: 0.48 }}
+                className="border border-white/10 bg-white/[0.02] p-6"
+              >
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <Sun className="h-4 w-4 text-white/22" />
+                </div>
+                <h3 className="font-display text-2xl uppercase leading-[0.92] text-white">{question}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-white/56">{answer}</p>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Radio FAQ - Modern Floating Button triggering Off-Canvas */}
-      <section id="radio-faq" className="px-6 pb-24 border-t border-border mt-12 md:mt-0 pt-20 scroll-shell-target">
-        <div className="container layout-default flex flex-col md:flex-row items-center justify-between gap-8 bg-card border border-border/50 p-8 md:p-12 rounded-3xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2" />
-
-          <div className="relative z-10 max-w-xl text-center md:text-left">
-            <h3 className="font-display text-3xl md:text-5xl uppercase tracking-wide text-foreground mb-4">Questions About The Radio Show?</h3>
-            <p className="text-muted-foreground font-light text-lg">Learn more about episode releases, mix submissions, and how the recordings are put together.</p>
-          </div>
-
-          <div className="relative z-10">
-            <MagneticButton strength={0.4}>
-              <button
-                onClick={() => setFaqDrawerOpen(true)}
-                className="btn-pill-radio flex"
-              >
-                VIEW FAQ
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-              </button>
-            </MagneticButton>
-          </div>
-        </div>
-
-        {/* Off-Canvas Drawer for FAQ */}
-        <AnimatePresence>
-          {faqDrawerOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                onClick={() => setFaqDrawerOpen(false)}
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-              />
-              <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed top-0 right-0 bottom-0 w-full md:w-[500px] lg:w-[600px] bg-background border-l border-border z-50 flex flex-col shadow-2xl"
-              >
-                <div className="p-6 md:p-8 border-b border-border flex items-center justify-between shrink-0">
-                  <h2 className="font-display text-3xl text-foreground uppercase tracking-wider">Radio FAQ</h2>
-                  <button
-                    onClick={() => setFaqDrawerOpen(false)}
-                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:bg-foreground hover:text-background hover:border-foreground transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-                <div className="p-6 md:p-8 flex-1 overflow-y-auto">
-                  <div className="space-y-6">
-                    {radioFaqs.map(([q, a], idx) => (
-                      <div key={idx} className="border border-white/5 bg-white/5 p-6 rounded-2xl">
-                        <h4 className="font-bold text-foreground mb-3 text-lg leading-tight">{q}</h4>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{a}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      </section>
-
-      <JoinSignalSection className="border-t border-border" />
+      <JoinSignalSection className="border-t border-white/10" />
 
       <FloatingFactsChip tone="nocturne" storageKey="floating-facts-chip-radio" />
     </div>
