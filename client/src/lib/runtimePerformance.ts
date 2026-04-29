@@ -77,14 +77,9 @@ export function shouldEnableDesktopChrome() {
 }
 
 export function shouldEnableSmoothScroll() {
-  return (
-    !prefersReducedMotion() &&
-    !hasCoarsePointer() &&
-    !prefersReducedData() &&
-    matchesMinWidth(1200) &&
-    !hasConstrainedConnection(true) &&
-    !hasWeakDeviceProfile()
-  );
+  // Keep wheel and trackpad input native. The site already has enough cinematic
+  // motion; scroll hijacking makes the experience feel less precise.
+  return false;
 }
 
 export function shouldEnablePageTransitions() {

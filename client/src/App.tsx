@@ -229,18 +229,11 @@ function AttributionSync() {
 
 function GlobalSpotlightSync() {
   useEffect(() => {
-    let ticking = false;
     const updateMousePosition = (e: MouseEvent) => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-          document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
     };
-    // Passive true ensures it doesn't block scrolling thread
+
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
     return () => window.removeEventListener('mousemove', updateMousePosition);
   }, []);

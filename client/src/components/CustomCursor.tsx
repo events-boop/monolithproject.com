@@ -1,5 +1,5 @@
 import * as React from "react";
-import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 
 export default function CustomCursor() {
@@ -12,8 +12,8 @@ export default function CustomCursor() {
 
   const coreX = mouseX;
   const coreY = mouseY;
-  const ringX = useSpring(mouseX, { damping: 34, stiffness: 450, mass: 0.2 });
-  const ringY = useSpring(mouseY, { damping: 34, stiffness: 450, mass: 0.2 });
+  const ringX = mouseX;
+  const ringY = mouseY;
 
   React.useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -47,15 +47,8 @@ export default function CustomCursor() {
       setIsVisible(true);
 
       const target = event.target as HTMLElement | null;
-      let x = event.clientX;
-      let y = event.clientY;
-
-      const magneticElement = target?.closest("[data-cursor-magnetic]") as HTMLElement | null;
-      if (magneticElement) {
-        const rect = magneticElement.getBoundingClientRect();
-        x = rect.left + rect.width / 2;
-        y = rect.top + rect.height / 2;
-      }
+      const x = event.clientX;
+      const y = event.clientY;
 
       mouseX.set(x);
       mouseY.set(y);
