@@ -377,7 +377,8 @@ export default function HeroSection() {
 
               <p
                 data-home-hero-pillars="true"
-                className="mt-4 max-w-md text-center font-mono text-[10px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/76 md:text-left"
+                data-home-hero-eyebrow="true"
+                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/76 md:text-left"
               >
                 {HERO_PILLARS}
               </p>
@@ -385,7 +386,10 @@ export default function HeroSection() {
                 {HERO_TAGLINE}
               </p>
 
-              <p className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/84 md:text-base">
+              <p
+                data-home-hero-summary="true"
+                className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/84 md:text-base"
+              >
                 {HERO_SUPPORTING_LINE}
               </p>
 

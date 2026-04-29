@@ -62,9 +62,9 @@ export default function UntoldStory() {
               title="THE RECORD"
               accentColor="#8B5CF6"
               images={[
-                { src: "/images/archive/us-s3/JPQ_6000.jpg", alt: "Untold Story S3 Crowd", label: "The Room" },
-                { src: "/images/archive/us-s3/JPQ_6044.jpg", alt: "Untold Story S3 Artist", label: "The Booth" },
-                { src: "/images/archive/us-s3/JPQ_6321.jpg", alt: "Untold Story S3 Texture", label: "Texture" },
+                { src: "/images/untold-story-moody.webp", alt: "Untold Story S3 Crowd", label: "The Room" },
+                { src: "/images/deron-press.jpg", alt: "Untold Story S3 Artist", label: "The Booth" },
+                { src: "/images/untold-story-hero-post1.webp", alt: "Untold Story S3 Texture", label: "Texture" },
                 { src: "/images/untold-story-juany-deron-v2.webp", alt: "Untold Story S3 Finale", label: "Finale" }
               ]}
             />

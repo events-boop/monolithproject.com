@@ -23,6 +23,8 @@ type ResponsiveImageKey =
   | "sunsetPartyHero"
   | "lazareSabryHero";
 
+const GENERATED_WIDTHS = [480, 1024, 1920];
+
 interface ResponsiveImageAsset {
   baseName: string;
   sizes: string;
@@ -35,85 +37,85 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
     baseName: "artists-collective",
     sizes: "100vw",
     src: "/images/artists-collective.webp",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   chasingSunsets: {
     baseName: "chasing-sunsets",
     sizes: "100vw",
     src: "/images/chasing-sunsets.webp",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   eranHershHero: {
-    baseName: "eran-hersh-hero",
+    baseName: "eran-hersh-live-1",
     sizes: "100vw",
     src: "/images/eran-hersh-live-1.webp",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   eranHershPortraitReal: {
-    baseName: "eran-hersh-hero-real",
+    baseName: "eran-hersh-live-6",
     sizes: "(min-width: 1024px) 50vw, 100vw",
     src: "/images/eran-hersh-live-6.png",
-    widths: [640, 1024, 1280, 1600],
+    widths: GENERATED_WIDTHS,
   },
   eranHershInternational: {
-    baseName: "eran-hersh-international",
+    baseName: "eran-hersh-live-5",
     sizes: "(min-width: 1024px) 50vw, 100vw",
     src: "/images/eran-hersh-live-5.webp",
-    widths: [640, 1024, 1600, 1920],
+    widths: GENERATED_WIDTHS,
   },
   heroMonolith: {
     baseName: "hero-monolith-modern",
     sizes: "100vw",
     src: "/images/hero-monolith-modern.webp",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   autografRecap: {
     baseName: "autograf-recap",
     sizes: "100vw",
     src: "/images/autograf-recap.jpg",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   sunsetPartyHero: {
     baseName: "sunset-party-hero-v2",
     sizes: "100vw",
     src: "/images/sunset-party-hero-v2.jpg",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   lazareCarbonCenter: {
     baseName: "lazare-carbon-center",
     sizes: "(min-width: 1024px) 44vw, 70vw",
     src: "/images/lazare-carbon-center.png",
-    widths: [480, 800, 1024, 1280],
+    widths: GENERATED_WIDTHS,
   },
   lazareSabryHero: {
     baseName: "lazare-sabry-hero-v2",
     sizes: "100vw",
     src: "/images/lazare-sabry-hero-v2.jpg",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    widths: GENERATED_WIDTHS,
   },
   radioShowGear: {
     baseName: "radio-show-gear",
     sizes: "100vw",
     src: "/images/radio-show-gear.webp",
-    widths: [640, 1024, 1600, 1920],
+    widths: GENERATED_WIDTHS,
   },
   videoPoster1: {
     baseName: "hero-video-1-poster",
     sizes: "100vw",
     src: "/images/hero-video-1-poster.jpg",
-    widths: [640, 1024, 1600, 1920, 2560],
+    widths: GENERATED_WIDTHS,
   },
   untoldStoryHero: {
-    baseName: "untold-story-deron-juany-bravo-v2",
+    baseName: "untold-story-juany-deron-v2",
     sizes: "100vw",
-    src: "/images/untold-story-deron-juany-bravo-v2.jpg",
-    widths: [640, 1024, 1600, 1920, 2560, 3840],
+    src: "/images/untold-story-juany-deron-v2.webp",
+    widths: GENERATED_WIDTHS,
   },
   untoldStoryPoster: {
-    baseName: "untold-story",
+    baseName: "untold-story-moody",
     sizes: "(min-width: 1280px) 960px, (min-width: 768px) 80vw, 100vw",
     src: "/images/untold-story-moody.webp",
-    widths: [640, 1024, 1600, 1920],
+    widths: GENERATED_WIDTHS,
   },
 };
 

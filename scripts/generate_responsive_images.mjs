@@ -9,7 +9,7 @@ const clientAssetsDir = path.join(rootDir, "client", "assets");
 const outputDir = path.join(publicImagesDir, "generated");
 const reportPath = path.join(outputDir, "responsive-image-report.json");
 
-const widths = [480, 1024, 1920, 2560, 3840];
+const widths = [480, 1024, 1920];
 const sourceExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif"]);
 const sourceExtensionPreference = new Map([
   [".avif", 0],
@@ -19,8 +19,8 @@ const sourceExtensionPreference = new Map([
   [".png", 3],
 ]);
 const formats = [
-  { ext: "avif", options: { quality: 65, effort: 4 } },
-  { ext: "webp", options: { quality: 85, effort: 4 } },
+  { ext: "avif", options: { quality: 45, effort: 4 } },
+  { ext: "webp", options: { quality: 60, effort: 4 } },
 ];
 
 async function pathExists(targetPath) {

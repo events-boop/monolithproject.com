@@ -375,7 +375,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     onClick={handleLogoClick}
                     aria-label="Go to homepage"
                     data-nav-logo="true"
-                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center gap-3 cursor-pointer rounded-sm px-2 py-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto"
+                    className="flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] max-w-[110px] sm:max-w-none items-center gap-3 cursor-pointer rounded-sm px-2 py-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 pointer-events-auto overflow-hidden"
                   >
                     <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
@@ -401,7 +401,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors shrink-0 uppercase",
+                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors shrink-0 uppercase hidden sm:inline",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />

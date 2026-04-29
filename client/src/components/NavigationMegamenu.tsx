@@ -97,6 +97,7 @@ export default function NavigationMegamenu({
                 type="button"
                 onClick={(e) => {
                     e.preventDefault();
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
                     setIsOpen(!isOpen);
                 }}
                 aria-expanded={isOpen}

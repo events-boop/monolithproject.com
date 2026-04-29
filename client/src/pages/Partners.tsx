@@ -114,12 +114,10 @@ export default function Partners() {
                   <span className="section-kicker text-primary">Partner With Monolith</span>
                   <div className="h-px w-20 bg-white/10" />
               </div>
-              <h1 className="section-display-title mb-4 text-white">
-                PARTNERS
+              <h1 className="section-display-title mb-4 text-white flex flex-col">
+                <span>PARTNERS</span>
+                <span className="text-white/38">&amp; CREW</span>
               </h1>
-              <p className="section-display-title-compact text-white/38">
-                &amp; CREW
-              </p>
               <p className="text-white/60 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
                 We work with venues, brands, crew, and creative collaborators who want to help produce strong shows and reach a real Chicago audience.
               </p>
