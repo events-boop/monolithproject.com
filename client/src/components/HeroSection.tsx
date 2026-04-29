@@ -255,7 +255,7 @@ function FloatingEventCard({
             </span>
           ) : null}
           {shortDescription ? (
-            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/86 line-clamp-3">
+            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/86 line-clamp-4">
               {shortDescription}
             </p>
           ) : null}
