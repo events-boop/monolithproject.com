@@ -227,7 +227,7 @@ function FloatingEventCard({
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 flex flex-col items-start gap-4 p-6 md:p-8">
+      <div className="relative z-10 flex flex-col items-start gap-5 p-8 md:p-10">
         {/* Status Badge */}
         <div className="absolute top-6 right-6 flex items-center gap-2">
           <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
@@ -360,7 +360,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-8 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)]">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-10 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:gap-16">
           <div
             data-home-hero-copy="true"
             className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
@@ -369,7 +369,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "font-heavy text-[clamp(2.75rem,14vw,11rem)] leading-[0.82] tracking-[-0.06em] uppercase text-balance text-white"
+                  "font-heavy text-[clamp(2.2rem,11.2vw,8.8rem)] leading-[0.82] tracking-[-0.06em] uppercase text-balance text-white [-webkit-text-stroke:clamp(1px,0.4vw,3px)_white]"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />

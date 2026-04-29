@@ -69,7 +69,7 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-14 md:py-20">
+        <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
@@ -138,7 +138,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-14 md:py-20">
+        <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker text-primary">Untold Story IV</span>
@@ -211,7 +211,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-b border-white/10 bg-[#0d0c0b] py-10 md:py-14">
+        <section className="relative z-10 border-b border-white/10 bg-[#0d0c0b] py-16 md:py-24">
           <div className="container layout-wide px-6">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
               <div>
@@ -259,7 +259,7 @@ export default function Home() {
           />
         </div>
 
-        <section id="series" className="relative z-10 border-b border-white/10 bg-[#111111] py-14 md:py-20">
+        <section id="series" className="relative z-10 border-b border-white/10 bg-[#111111] py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
@@ -302,7 +302,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-b border-white/10 bg-[#111111] py-10 md:py-14">
+        <section className="relative z-10 border-b border-white/10 bg-[#111111] py-16 md:py-24">
           <div className="container layout-wide px-6">
             <div className="mb-6">
               <span className="section-kicker block text-primary">
@@ -352,7 +352,7 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <section id="community" className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-16 md:py-20">
+        <section id="community" className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-24 md:py-32">
           <div className="container layout-wide px-6">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
