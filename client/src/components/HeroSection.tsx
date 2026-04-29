@@ -227,21 +227,21 @@ function FloatingEventCard({
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 flex flex-col items-start gap-5 p-8 md:p-10">
+      <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:gap-5 sm:p-8 md:p-10">
         {/* Status Badge */}
-        <div className="absolute top-6 right-6 flex items-center gap-2">
+        <div className="flex items-center gap-2 self-end sm:absolute sm:right-6 sm:top-6">
           <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
             {eventStatusLabel}
           </span>
         </div>
 
         {/* Narrative Metadata */}
-        <div className="flex w-full flex-col gap-3 pr-16 sm:pr-20">
+        <div className="flex w-full flex-col gap-3 sm:pr-20">
           <span className="event-system-kicker text-[var(--monolith-red)]">
             {systemKicker}
           </span>
           <h3 className={cn(
-            "event-system-headline max-w-[14ch] text-[clamp(1.75rem,8vw,3.85rem)] sm:text-[clamp(2rem,7vw,3.85rem)] text-white text-balance",
+            "event-system-headline max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)] text-white text-balance",
             isJuly4thEvent && "july-4th-gradient"
           )}>
             {toSystemText(headline)}
@@ -277,7 +277,7 @@ function FloatingEventCard({
         )}
 
         {/* CTA Engine */}
-        <div className="w-full mt-4">
+        <div className="mt-3 w-full sm:mt-4">
           {event ? (
             <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
@@ -369,7 +369,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "hero-wordmark text-[clamp(3.6rem,12vw,11rem)] text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-left text-transparent"
+                  "hero-wordmark max-w-full text-[clamp(3.35rem,9.2vw,9.25rem)] text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-left text-transparent"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
