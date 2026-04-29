@@ -15,8 +15,8 @@ export const INSTAGRAM_MONOLITH = "https://instagram.com/monolithproject.events"
 export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
-/** Active ticket link — Posh */
-export const POSH_TICKET_URL = "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project";
+/** Active ticket gateway — resolves to the configured Posh destination server-side. */
+export const POSH_TICKET_URL = "/go/tickets/us-s3e3";
 
 export const upcomingEvents: ScheduledEvent[] = [
     {
@@ -65,7 +65,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         ],
         age: "21+",
         activeFunnels: ["waitlist-untold"],
-        ticketUrl: "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project",
+        ticketUrl: "/go/tickets/us-s3e3",
         ticketTiers: [
             {
                 id: "presale",

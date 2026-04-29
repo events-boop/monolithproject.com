@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
-import { getPublicEvents } from "@/lib/siteData";
+import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import { ArrowLeft, Clock, MapPin, Ticket, Star } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
@@ -56,6 +56,7 @@ function buildEventSeoDescription(event: NonNullable<ReturnType<typeof getPublic
 }
 
 export default function EventDetails() {
+  usePublicSiteDataVersion();
   const [, params] = useRoute("/events/:slug");
   const [, setLocation] = useLocation();
   const slug = params?.slug;

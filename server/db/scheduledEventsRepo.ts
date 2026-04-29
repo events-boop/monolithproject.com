@@ -31,6 +31,10 @@ const ACTIVE_FUNNELS = new Set<ActiveFunnel>([
   "coordinates",
 ]);
 
+const TRACKED_TICKET_URLS_BY_EVENT_ID: Record<string, string> = {
+  "us-s3e3": "/go/tickets/us-s3e3",
+};
+
 function isEventSeries(value: string): value is EventSeries {
   return EVENT_SERIES.has(value as EventSeries);
 }
@@ -86,6 +90,25 @@ function toActiveFunnels(value: unknown): ActiveFunnel[] | undefined {
   return funnels.length > 0 ? funnels : undefined;
 }
 
+function isAcceptableTicketUrl(value: string) {
+  if (value.startsWith("/")) return true;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function normalizeTrackedTicketUrl(eventId: string, ticketUrl: string | null) {
+  const trackedUrl = TRACKED_TICKET_URLS_BY_EVENT_ID[eventId];
+  if (trackedUrl) {
+    if (!ticketUrl || /^https?:\/\//i.test(ticketUrl)) return trackedUrl;
+    return isAcceptableTicketUrl(ticketUrl) ? ticketUrl : trackedUrl;
+  }
+  if (!ticketUrl) return undefined;
+  return isAcceptableTicketUrl(ticketUrl) ? ticketUrl : undefined;
+}
+
 function pickDefined<T extends object>(value: T): Partial<T> {
   return Object.fromEntries(
     Object.entries(value as Record<string, unknown>).filter(
@@ -126,7 +149,7 @@ function mapRowToScheduledEvent(row: ScheduledEventRow): ScheduledEvent | null {
     sound: row.sound ?? undefined,
     description: row.description ?? undefined,
     age: row.age ?? undefined,
-    ticketUrl: row.ticketUrl ?? undefined,
+    ticketUrl: normalizeTrackedTicketUrl(row.id, row.ticketUrl),
     startingPrice: row.startingPrice ?? undefined,
     ticketTiers: isTicketTierArray(row.ticketTiers) ? row.ticketTiers : undefined,
     headline: row.headline ?? undefined,
@@ -168,7 +191,6 @@ export async function readPublicScheduledEvents() {
   try {
     const rows = await db.select().from(scheduledEvents);
     const STALE_GHOST_IDS = new Set(["us-s3e2"]);
-    const publicEventIds = new Set(upcomingEvents.map((event) => event.id));
     const dbEvents = rows
       .map(mapRowToScheduledEvent)
       .filter((event): event is ScheduledEvent => {
@@ -180,9 +202,7 @@ export async function readPublicScheduledEvents() {
       return upcomingEvents;
     }
 
-    const dbOverrides = dbEvents.filter((event) => publicEventIds.has(event.id));
-
-    return mergeScheduledEvents(upcomingEvents, dbOverrides);
+    return mergeScheduledEvents(upcomingEvents, dbEvents);
   } catch (error) {
     console.warn(
       "[site-data] Falling back to static events because scheduled_events could not be read.",

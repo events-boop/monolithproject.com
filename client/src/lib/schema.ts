@@ -177,7 +177,7 @@ export function buildEventSchema(input: EventSchemaInput) {
   const offers = input.ticketUrl
     ? {
         "@type": "Offer",
-        url: input.ticketUrl,
+        url: toAbsoluteUrl(input.ticketUrl),
         availability: input.ticketAvailability ?? "https://schema.org/InStock",
         priceCurrency: "USD",
         ...(typeof input.price === "number" ? { price: String(input.price) } : {}),

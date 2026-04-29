@@ -206,12 +206,13 @@ function renderUpcomingEventsSection() {
         ${futureEvents
           .map((event) => {
             const eventPath = `/events/${event.slug || event.id}`;
-            const ticketHref = event.ticketUrl || POSH_TICKET_URL;
+            const ctaHref = event.ticketUrl || eventPath;
+            const ctaLabel = event.ticketUrl ? "Tickets and RSVP" : "Event details";
             return `<li>
               <h3><a href="${escapeHtml(eventPath)}">${escapeHtml(event.headline || event.title)}</a></h3>
               <p>${escapeHtml(`${event.date} · ${event.time} · ${event.venue}`)}</p>
               <p>${escapeHtml(event.description || `${event.title} by The Monolith Project in Chicago.`)}</p>
-              <p><a href="${escapeHtml(ticketHref)}">Tickets and RSVP</a></p>
+              <p><a href="${escapeHtml(ctaHref)}">${escapeHtml(ctaLabel)}</a></p>
             </li>`;
           })
           .join("\n")}
@@ -436,11 +437,7 @@ function renderHomeCriticalStyle() {
 }
 
 function deferHomeAppStylesheets(html: string) {
-  return html.replace(
-    /<link rel="stylesheet" crossorigin href="([^"]+\.css)">/g,
-    (_match, href: string) =>
-      `<link rel="preload" as="style" crossorigin href="${href}" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`,
-  );
+  return html;
 }
 
 const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
@@ -872,6 +869,13 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
 function buildEventRoutes(): RouteDefinition[] {
   return futureEvents.map((event) => {
     const routePath = `/events/${event.slug || event.id}`;
+    const actionLinks = event.ticketUrl
+      ? [
+          { href: event.ticketUrl, label: "Tickets and RSVP" },
+          { href: "/schedule", label: "Back to schedule" },
+        ]
+      : [{ href: "/schedule", label: "Back to schedule" }];
+
     return {
       path: routePath,
       title: buildEventSeoTitle(event),
@@ -886,10 +890,7 @@ function buildEventRoutes(): RouteDefinition[] {
           `${event.date} · ${event.time} · ${event.venue}`,
           event.description || `Official event details for ${event.title} in Chicago.`,
         ],
-        [
-          { href: event.ticketUrl || POSH_TICKET_URL, label: "Tickets and RSVP" },
-          { href: "/schedule", label: "Back to schedule" },
-        ],
+        actionLinks,
         renderEventFacts(routePath),
       ),
     };

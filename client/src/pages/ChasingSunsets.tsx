@@ -66,10 +66,12 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
 ];
 
 const CHASING_ANCHORS = [
+  { label: "Hero", href: "#chasing-hero" },
   { label: "Format", href: "#chasing-concept" },
   { label: "Records", href: "#chasing-records" },
   { label: "Upcoming", href: "#chasing-upcoming" },
   { label: "Submit", href: "#chasing-submit" },
+  { label: "FAQ", href: "#chasing-faq" },
   { label: "Updates", href: "#chasing-funnel" },
 ];
 
@@ -139,6 +141,7 @@ export default function ChasingSunsets() {
         <section
           id="chasing-hero"
           data-featured-event-id={featuredChasingEvent?.id}
+          aria-labelledby="chasing-hero-title"
           className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-32 sm:pt-0"
         >
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
@@ -151,19 +154,31 @@ export default function ChasingSunsets() {
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
+              <div className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#E8B86D]/35 bg-black/35 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-md sm:mb-7 sm:px-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FBF5ED]">
+                  Series Hero
+                </span>
+                <span className="h-1 w-1 rounded-full bg-[#E8B86D]/70" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                  Chasing Sun(Sets)
+                </span>
+              </div>
               <HorizonDiscMark className="mb-5 h-12 w-12 sm:mb-7 sm:h-14 sm:w-14" />
               <span
                 data-chasing-episode="true"
-                className="mb-4 block font-mono text-xs uppercase tracking-[0.22em] text-white/90 sm:mb-6 sm:text-sm"
+                className="mb-3 block font-mono text-xs uppercase tracking-[0.22em] text-white/90 sm:mb-5 sm:text-sm"
               >
                 {featuredChasingEvent ? featuredChasingEvent.episode : "Series 01"}
               </span>
-              <h1 className="font-display mb-4 flex flex-col text-[clamp(2.5rem,8vw,8rem)] uppercase leading-[0.85] tracking-tight-display text-white drop-shadow-[0_14px_50px_rgba(0,0,0,0.55)] sm:mb-5">
+              <h1
+                id="chasing-hero-title"
+                className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-tight-display text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.62)] sm:mb-5"
+              >
                 {["CHASING", "SUN(SETS)"].map((line, i) => (
                   <SplitText
                     key={`${line}-${i}`}
                     text={line}
-                    className="block bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-[#FBF5ED] bg-clip-text text-transparent"
+                    className="block bg-gradient-to-r from-[#FBF5ED] via-[#E8B86D] to-[#C2703E] bg-clip-text text-transparent"
                     initialDelay={0.1 + i * 0.15}
                   />
                 ))}
@@ -177,9 +192,9 @@ export default function ChasingSunsets() {
                 An Open-Air Monolith Series
               </BrandTranslatorLabel>
 
-              <div className="max-w-xl">
+              <div className="max-w-2xl">
                 <p className="mb-4 text-base leading-relaxed text-white/90 sm:text-lg">
-                  Open-air sunset and night sessions built for movement, warmth, and return.
+                  The titled summer route for open-air sunset and night sessions built for movement, warmth, and return.
                 </p>
                 {featuredChasingEvent ? (
                   <div
@@ -198,8 +213,8 @@ export default function ChasingSunsets() {
               <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row">
                 <ConversionCTA event={featuredChasingEvent} size="lg" showUrgency={true} />
                 <MagneticButton strength={0.22}>
-                  <a href="#chasing-records" className="btn-pill-secondary group">
-                    View Records
+                  <a href="#chasing-concept" className="btn-pill-secondary group">
+                    Explore Series
                     <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
                   </a>
                 </MagneticButton>
@@ -239,7 +254,7 @@ export default function ChasingSunsets() {
                 {featuredChasingEvent?.headline || featuredChasingEvent?.title || "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
-                The next public chapter in the summer run. Dates, venue, ticket release, and archive proof all stay inside one season system instead of scattered modules.
+                Chasing Sun(Sets) is the series title. Each date below is a chapter in the same golden-hour route: release, venue, ticket structure, and archive proof stay connected.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <span className="rounded-full border border-[#C2703E]/16 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
@@ -561,14 +576,25 @@ export default function ChasingSunsets() {
                         </div>
                         <div className="w-full lg:w-auto">
                           {isTicketOnSale(event) ? (
-                            <a
-                              href={getPrimaryTicketUrl(event)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn-pill-sunsets btn-pill-compact w-full justify-center"
-                            >
-                              {CTA_LABELS.tickets} <ArrowUpRight size={14} />
-                            </a>
+                            (() => {
+                              const ticketHref = getPrimaryTicketUrl(event) || "/tickets";
+                              const ticketExternal = isExternalUrl(ticketHref);
+
+                              return ticketExternal ? (
+                                <a
+                                  href={ticketHref}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn-pill-sunsets btn-pill-compact w-full justify-center"
+                                >
+                                  {CTA_LABELS.tickets} <ArrowUpRight size={14} />
+                                </a>
+                              ) : (
+                                <Link href={ticketHref} className="btn-pill-sunsets btn-pill-compact w-full justify-center">
+                                  {CTA_LABELS.tickets} <ArrowUpRight size={14} />
+                                </Link>
+                              );
+                            })()
                           ) : (
                             <Link href="/newsletter" asChild>
                               <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact w-full justify-center">

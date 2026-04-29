@@ -10,6 +10,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const apiProxyTarget = process.env.VITE_API_TARGET || "http://127.0.0.1:5001";
 
+function cspSafeStylesheetLinks() {
+  return {
+    name: "csp-safe-stylesheet-links",
+    enforce: "post" as const,
+    transformIndexHtml(html: string) {
+      return html.replace(
+        /<link rel="preload" as="style" crossorigin href="([^"]+\.css)" onload="this\.onload=null;this\.rel='stylesheet'"><noscript><link rel="stylesheet" crossorigin href="\1"><\/noscript>/g,
+        '<link rel="stylesheet" crossorigin href="$1">',
+      );
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const isProd = mode === "production";
 
@@ -73,6 +86,7 @@ export default defineConfig(({ mode }) => {
         webp: { quality: 85 },
         avif: { quality: 65 },
       }),
+      cspSafeStylesheetLinks(),
     ],
     resolve: {
       alias: {
@@ -100,26 +114,22 @@ export default defineConfig(({ mode }) => {
           // Only pin chunks that are either core to the shell or genuinely shared.
           // Let Rollup keep route-specific libraries with their routes instead of
           // flattening everything into one preloaded fallback bundle.
+          // Isolate specific heavy vendor libraries into dedicated chunks.
           manualChunks(id) {
-            if (!id.includes("node_modules")) return;
-            if (
-              id.includes("node_modules/react/") ||
-              id.includes("node_modules/react-dom/") ||
-              id.includes("node_modules/scheduler/") ||
-              id.includes("node_modules/use-sync-external-store/") ||
-              id.includes("node_modules/react-is/")
-            )
-              return "c0";
-            if (id.includes("framer-motion")) return "c1";
-            if (id.includes("@radix-ui") || id.includes("cmdk") || id.includes("vaul")) return "c2";
-            if (id.includes("posthog-js")) return "c3";
-            if (id.includes("react-hook-form") || id.includes("@hookform/resolvers") || id.includes("input-otp")) return "c4";
-            if (id.includes("react-day-picker")) return "c5";
-            if (id.includes("recharts")) return "c6";
-            if (id.includes("cobe")) return "c7";
-            if (id.includes("react-photo-album") || id.includes("yet-another-react-lightbox")) return "c8";
-            if (id.includes("zod")) return "c9";
-            return undefined;
+            if (id.includes("node_modules")) {
+              if (id.includes("react-dom")) return "v-reactdom";
+              if (id.includes("react/")) return "v-react";
+              if (id.includes("react-router")) return "v-router";
+              if (id.includes("framer-motion")) return "v-framer";
+              if (id.includes("lucide-react")) return "v-lucide";
+              if (id.includes("@radix-ui")) return "v-radix";
+              if (id.includes("recharts")) return "v-charts";
+              if (id.includes("cobe")) return "v-cobe";
+              if (id.includes("lenis")) return "v-lenis";
+              if (id.includes("posthog-js")) return "v-posthog";
+              if (id.includes("react-photo-album")) return "v-album";
+              if (id.includes("yet-another-react-lightbox")) return "v-lightbox";
+            }
           },
         },
       },
