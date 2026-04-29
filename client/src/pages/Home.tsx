@@ -78,7 +78,7 @@ export default function Home() {
             </div>
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
-                <h2 className="section-display-title-compact max-w-[11ch] text-white hyphens-none break-keep">
+                <h2 className="section-display-title-compact max-w-[16ch] text-white hyphens-none break-keep text-balance">
                   2nd Annual 4th of July @ Castaways
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/86 md:text-base">
@@ -106,7 +106,7 @@ export default function Home() {
                 <span className="section-kicker block text-[#E8B86D]">
                   Season Focus
                 </span>
-                <h3 className="section-display-title-compact mt-3 max-w-[10ch] text-white hyphens-none break-keep">
+                <h3 className="section-display-title-compact mt-3 max-w-[14ch] text-white hyphens-none break-keep text-balance">
                   {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-white/84">
@@ -155,7 +155,7 @@ export default function Home() {
                   <span className="section-kicker mb-3 block text-white/78">
                     UNTOLD STORY IV
                   </span>
-                  <h2 className="section-display-title-compact max-w-[10ch] text-white hyphens-none break-keep">
+                  <h2 className="section-display-title-compact max-w-[14ch] text-white hyphens-none break-keep text-balance">
                     Eran Hersh in Chicago
                   </h2>
                   <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
@@ -359,7 +359,7 @@ export default function Home() {
                 <span className="section-kicker block mb-4 text-primary">
                   Partners / Contact
                 </span>
-                <h2 className="section-display-title-compact mb-4 max-w-[11ch] text-white">
+                <h2 className="section-display-title-compact mb-4 max-w-[18ch] text-white text-balance">
                   Bring your venue, brand, or idea into the room.
                 </h2>
                 <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/86">
