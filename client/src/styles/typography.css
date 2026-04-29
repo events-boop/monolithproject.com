@@ -22,13 +22,21 @@
     font-weight: 400;
   }
 
-  /* Monolith wordmark — Syncopate per design spec */
+  /* Monolith wordmark — Kanit Medium per parent design spec */
   .wordmark {
     font-family: var(--font-monolith);
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-wordmark {
+    font-family: var(--font-hero);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 0.84;
     text-transform: uppercase;
   }
 

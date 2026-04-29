@@ -14,17 +14,17 @@ colors:
   border: "#2A241E"
 typography:
   display-xl:
-    fontFamily: Archivo Black
+    fontFamily: Kanit
     fontSize: 96px
-    fontWeight: 400
-    lineHeight: 0.82
-    letterSpacing: -0.04em
+    fontWeight: 500
+    lineHeight: 0.84
+    letterSpacing: 0.01em
   display-lg:
-    fontFamily: Archivo Black
+    fontFamily: Kanit
     fontSize: 64px
-    fontWeight: 400
+    fontWeight: 500
     lineHeight: 0.88
-    letterSpacing: -0.03em
+    letterSpacing: 0
   title-md:
     fontFamily: Archivo Black
     fontSize: 40px
@@ -32,9 +32,9 @@ typography:
     lineHeight: 0.92
     letterSpacing: -0.02em
   wordmark:
-    fontFamily: Syncopate
+    fontFamily: Kanit
     fontSize: 16px
-    fontWeight: 700
+    fontWeight: 500
     lineHeight: 1
     letterSpacing: 0.08em
   body-md:
@@ -123,12 +123,12 @@ The parent palette should stay anchored in near-black surfaces, warm off-white t
 
 The core hierarchy should stay simple:
 
-- **Archivo Black** for section headlines and system-level page titles
-- **Syncopate** for the Monolith wordmark treatment and short technical branding moments
+- **Kanit Medium 500** for the parent Monolith hero treatment, wordmark, and system-level page titles
+- **Archivo Black** for secondary structural headlines that need more mass
 - **Inter** for body copy and utility explanations
 - **JetBrains Mono** for metadata, labels, timestamps, and navigation microcopy
 
-The site should not introduce extra display voices at the parent-brand layer unless they belong to a series. This is the stabilizing system, not the experimental one.
+Kanit is the in-between point for the parent identity: cleaner and less heavy than Archivo Black, but more substantial than the previous thin wordmark direction. The site should not introduce extra display voices at the parent-brand layer unless they belong to a series. This is the stabilizing system, not the experimental one.
 
 ## Layout
 

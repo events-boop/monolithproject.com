@@ -395,13 +395,13 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             (
                               <div className="flex flex-row items-baseline gap-2">
                                 <span className={cn(
-                                  "font-heavy text-[0.95rem] min-[360px]:text-base md:text-xl tracking-[-0.04em] uppercase transition-colors shrink-0",
+                                  "font-monolith text-[0.9rem] font-medium uppercase leading-none tracking-[0.08em] transition-colors min-[360px]:text-[0.98rem] md:text-[1.16rem] shrink-0",
                                   isLight ? "text-black" : "text-white"
                                 )}>
                                   <KineticDecryption text="MONOLITH" sessionOnce={true} />
                                 </span>
                                 <span className={cn(
-                                  "font-monolith text-[11px] tracking-[0.16em] leading-none transition-colors shrink-0 uppercase hidden sm:inline",
+                                  "font-monolith hidden text-[11px] font-medium uppercase leading-none tracking-[0.18em] transition-colors sm:inline shrink-0",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
                                   <KineticDecryption text="PROJECT" sessionOnce={true} />

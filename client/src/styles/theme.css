@@ -7,7 +7,7 @@
   DESIGN: The Monolith Project
   - Dark editorial aesthetic with sparse coral/orange pops
   - Typography per docs/design/monolith-project/DESIGN.md:
-    Archivo Black (display/heavy), Inter (body), JetBrains Mono (labels), Syncopate (wordmark)
+    Kanit Medium (parent hero/wordmark), Archivo Black (display/heavy), Inter (body), JetBrains Mono (labels)
   - Outlined pill-shaped CTAs, left-aligned editorial layouts
 */
 
@@ -15,8 +15,8 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Archivo Black', 'Arial Black', sans-serif;
   --font-heavy: 'Archivo Black', 'Arial Black', sans-serif;
-  --font-hero: 'Archivo Black', 'Arial Black', sans-serif;
-  --font-monolith: 'Syncopate', 'Archivo Black', sans-serif;
+  --font-hero: 'Kanit', 'Syncopate', 'Archivo Black', sans-serif;
+  --font-monolith: 'Kanit', 'Syncopate', 'Archivo Black', sans-serif;
   --font-serif: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-script: 'Instrument Serif', 'Cormorant Garamond', serif;
