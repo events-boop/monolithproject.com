@@ -4,6 +4,18 @@ type ValidateEnvironmentOptions = {
   fatal?: boolean;
 };
 
+export function getBrevoBypassReason() {
+  if (process.env.BREVO_BYPASS?.trim().toLowerCase() === "true") {
+    return "BREVO_BYPASS=true";
+  }
+
+  if (!process.env.BREVO_API_KEY?.trim()) {
+    return "BREVO_API_KEY is not set";
+  }
+
+  return null;
+}
+
 export function readProvider(): LeadProvider {
   const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
   if (
@@ -61,6 +73,16 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
     }
 
     const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
+    if (provider === "brevo") {
+      const bypassReason = getBrevoBypassReason();
+      if (bypassReason) {
+        console.warn(
+          `⚠️  Brevo lead provider is bypassed (${bypassReason}). Lead submissions will skip Brevo but still complete locally.`,
+        );
+        return;
+      }
+    }
+
     const requiredEnvVars: Record<string, string[]> = {
       disabled: [],
       mailchimp: ["MAILCHIMP_API_KEY", "MAILCHIMP_LIST_ID"],

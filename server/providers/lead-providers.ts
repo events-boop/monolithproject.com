@@ -3,6 +3,7 @@ import { z } from "zod";
 import { leadSchema, type LeadProvider } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
 import { scrubEmail } from "../lib/security";
+import { getBrevoBypassReason } from "../lib/env";
 
 function getAttributionSource(lead: z.infer<typeof leadSchema>) {
   return lead.lastUtmSource || lead.utmSource || lead.source || "website";
@@ -126,11 +127,17 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
 }
 
 export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
-    throw new Error("BREVO_API_KEY is required");
+  const bypassReason = getBrevoBypassReason();
+  if (bypassReason) {
+    logEvent("provider.brevo_bypassed", {
+      reason: bypassReason,
+      source: lead.source || "website",
+      emailHash: createHash("sha256").update(scrubEmail(lead.email)).digest("hex").slice(0, 12),
+    });
+    return;
   }
 
+  const apiKey = process.env.BREVO_API_KEY?.trim() || "";
   const endpoint = "https://api.brevo.com/v3/contacts";
   const attributionSource = getAttributionSource(lead);
   const response = await fetch(endpoint, {

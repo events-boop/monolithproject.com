@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { validateEnvironment } from "../lib/env";
+import { readProvider, validateEnvironment } from "../lib/env";
 
 describe("validateEnvironment", () => {
   const originalEnv = { ...process.env };
@@ -52,6 +52,45 @@ describe("validateEnvironment", () => {
     delete process.env.MAILCHIMP_API_KEY;
     delete process.env.MAILCHIMP_LIST_ID;
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+  });
+
+  it("bypasses Brevo in production when the API key is missing", () => {
+    process.env.NODE_ENV = "production";
+    process.env.LEAD_PROVIDER = "brevo";
+    delete process.env.BREVO_API_KEY;
+    delete process.env.BREVO_BYPASS;
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(readProvider()).toBe("brevo");
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Brevo lead provider is bypassed"),
+    );
+  });
+
+  it("bypasses Brevo in production when BREVO_BYPASS is enabled", () => {
+    process.env.NODE_ENV = "production";
+    process.env.LEAD_PROVIDER = "brevo";
+    process.env.BREVO_API_KEY = "test-key";
+    process.env.BREVO_BYPASS = "true";
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(readProvider()).toBe("brevo");
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("BREVO_BYPASS=true"),
+    );
+  });
+
+  it("allows Brevo in production when the API key is present and bypass is off", () => {
+    process.env.NODE_ENV = "production";
+    process.env.LEAD_PROVIDER = "brevo";
+    process.env.BREVO_API_KEY = "test-key";
+    process.env.BREVO_BYPASS = "false";
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(readProvider()).toBe("brevo");
+    expect(console.warn).not.toHaveBeenCalledWith(
+      expect.stringContaining("Brevo lead provider is bypassed"),
+    );
   });
 
   it("warns in production when OPS_ADMIN_SECRET is missing", () => {
