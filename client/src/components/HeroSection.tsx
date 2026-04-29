@@ -369,7 +369,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "font-hero text-[clamp(5rem,22vw,18rem)] leading-[0.8] tracking-normal uppercase text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-transparent"
+                  "font-hero text-[clamp(4rem,11vw,10rem)] leading-[0.8] tracking-normal uppercase text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-transparent text-left"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
