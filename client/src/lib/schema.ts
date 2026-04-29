@@ -160,8 +160,11 @@ interface EventSchemaInput {
   startDate: string;
   endDate: string;
   image: string[];
-  performer: string[];
-  ticketUrl: string;
+  performer?: string[];
+  ticketUrl?: string;
+  ticketAvailability?: "https://schema.org/InStock" | "https://schema.org/PreSale" | "https://schema.org/SoldOut";
+  price?: number;
+  validFrom?: string;
   locationName: string;
   streetAddress: string;
   addressLocality: string;
@@ -171,9 +174,28 @@ interface EventSchemaInput {
 }
 
 export function buildEventSchema(input: EventSchemaInput) {
+  const offers = input.ticketUrl
+    ? {
+        "@type": "Offer",
+        url: input.ticketUrl,
+        availability: input.ticketAvailability ?? "https://schema.org/InStock",
+        priceCurrency: "USD",
+        ...(typeof input.price === "number" ? { price: String(input.price) } : {}),
+        ...(input.validFrom ? { validFrom: input.validFrom } : {}),
+      }
+    : undefined;
+
+  const performer =
+    input.performer && input.performer.length > 0
+      ? input.performer.map((name) => ({
+          "@type": "MusicGroup",
+          name,
+        }))
+      : undefined;
+
   return {
     "@context": "https://schema.org",
-    "@type": "Event",
+    "@type": "MusicEvent",
     name: input.name,
     description: input.description,
     startDate: input.startDate,
@@ -194,23 +216,28 @@ export function buildEventSchema(input: EventSchemaInput) {
         addressCountry: input.addressCountry,
       },
     },
-    offers: {
-      "@type": "Offer",
-      url: input.ticketUrl,
-      price: "45",
-      availability: "https://schema.org/InStock",
-      priceCurrency: "USD",
-      validFrom: "2026-02-01T00:00:00-06:00",
-    },
+    ...(offers ? { offers } : {}),
     organizer: {
       "@type": "Organization",
       "@id": `${SITE_ORIGIN}/#organization`,
       name: "The Monolith Project",
       url: SITE_ORIGIN,
     },
-    performer: input.performer.map((name) => ({
-      "@type": "MusicGroup",
-      name,
+    ...(performer ? { performer } : {}),
+  };
+}
+
+export function buildBreadcrumbSchema(
+  trail: Array<{ name: string; path: string }>,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: toAbsoluteUrl(crumb.path),
     })),
   };
 }
@@ -312,6 +339,32 @@ export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: strin
   const startDate = event.startsAt || tryParseDate(event.date, event.time);
   const endDate = event.endsAt || startDate;
   const address = getVenueAddress(event);
+  const availableTierPrices =
+    event.ticketTiers
+      ?.filter((tier) => tier.available)
+      .map((tier) => tier.price)
+      .filter((price) => Number.isFinite(price)) ?? [];
+  const minimumAvailablePrice =
+    availableTierPrices.length > 0 ? Math.min(...availableTierPrices) : undefined;
+  const price = event.startingPrice ?? minimumAvailablePrice;
+  const ticketUrl = event.status === "on-sale" || event.status === "sold-out" ? event.ticketUrl : undefined;
+  const ticketAvailability =
+    event.status === "sold-out"
+      ? "https://schema.org/SoldOut"
+      : event.status === "on-sale"
+        ? "https://schema.org/InStock"
+        : undefined;
+
+  const performer =
+    event.lineup
+      ?.split("·")
+      .map((segment) => segment.trim())
+      .map((segment) => segment.replace(/\s*\((?:headliner|support|special guest|guest)\)\s*/gi, "").trim())
+      .filter(
+        (segment) =>
+          segment.length > 0 &&
+          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|venue reveal soon\b)/i.test(segment),
+      ) ?? [];
 
   return buildEventSchema({
     pagePath,
@@ -321,10 +374,10 @@ export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: strin
     startDate,
     endDate,
     image: event.image ? [event.image] : ["/images/chasing-sunsets-premium.webp"],
-    performer: event.lineup
-      ? event.lineup.split("·").map((segment) => segment.trim())
-      : [event.title],
-    ticketUrl: event.ticketUrl || POSH_TICKET_URL,
+    performer,
+    ticketUrl,
+    ticketAvailability,
+    price,
     locationName: event.venue,
     streetAddress: address.streetAddress,
     addressLocality: "Chicago",

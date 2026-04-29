@@ -12,6 +12,8 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/radio/ep-02-ewerseen", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-03-terranova", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-04-radian", priority: "0.8", changefreq: "weekly" },
+  { path: "/radio/ep-004-benchek-part-2", priority: "0.8", changefreq: "weekly" },
+  { path: "/radio/ch-02-radian-no-sleep", priority: "0.8", changefreq: "weekly" },
   { path: "/lineup", priority: "0.8", changefreq: "weekly" },
   { path: "/about", priority: "0.7", changefreq: "weekly" },
   { path: "/contact", priority: "0.6", changefreq: "monthly" },
@@ -35,6 +37,12 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/artists/terranova", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/ewerseen", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/radian", priority: "0.8", changefreq: "weekly" },
+  { path: "/artists/avo", priority: "0.8", changefreq: "weekly" },
+  { path: "/artists/eran-hersh", priority: "0.8", changefreq: "weekly" },
+  { path: "/archive", priority: "0.7", changefreq: "weekly" },
+  { path: "/press", priority: "0.6", changefreq: "monthly" },
+  { path: "/insights", priority: "0.6", changefreq: "weekly" },
+  { path: "/submit", priority: "0.6", changefreq: "monthly" },
 ];
 
 function normalizeSitemapPath(path = "") {

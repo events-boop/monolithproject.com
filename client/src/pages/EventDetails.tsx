@@ -9,7 +9,7 @@ import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
-import { buildScheduledEventSchema } from "@/lib/schema";
+import { buildBreadcrumbSchema, buildScheduledEventSchema } from "@/lib/schema";
 
 function getStatusLabel(status: string) {
   if (status === "on-sale") return "ON SALE";
@@ -61,6 +61,8 @@ export default function EventDetails() {
   const slug = params?.slug;
 
   const event = getPublicEvents().find((e) => e.slug === slug || e.id === slug);
+  const canonicalEventSlug = event?.slug || event?.id;
+  const canonicalEventPath = canonicalEventSlug ? `/events/${canonicalEventSlug}` : `/events/${slug}`;
   const navigationBrand =
     event?.series === "chasing-sunsets"
       ? "chasing-sunsets"
@@ -71,6 +73,11 @@ export default function EventDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    if (!event || !slug || !canonicalEventSlug || slug === canonicalEventSlug) return;
+    setLocation(canonicalEventPath, { replace: true });
+  }, [canonicalEventPath, canonicalEventSlug, event, setLocation, slug]);
 
   if (!event) {
     return (
@@ -89,6 +96,14 @@ export default function EventDetails() {
   const bgImage = event.image || "/images/hero-monolith.webp";
   const pageTitle = buildEventSeoTitle(event);
   const pageDescription = buildEventSeoDescription(event);
+  const schemaData = [
+    buildScheduledEventSchema(event, canonicalEventPath),
+    buildBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Schedule", path: "/schedule" },
+      { name: event.headline || event.title, path: canonicalEventPath },
+    ]),
+  ];
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
@@ -96,8 +111,8 @@ export default function EventDetails() {
         title={pageTitle}
         description={pageDescription}
         absoluteTitle
-        canonicalPath={`/events/${slug}`}
-        schemaData={buildScheduledEventSchema(event, `/events/${slug}`)}
+        canonicalPath={canonicalEventPath}
+        schemaData={schemaData}
       />
 
       <Navigation brand={navigationBrand} />

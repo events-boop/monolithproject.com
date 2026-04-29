@@ -178,16 +178,16 @@ function getSystemMeta(dateLabel: string, venueLabel?: string) {
  * The immersive, interactive conversion point for the hero section.
  * Syncs with the active slide to feature live shows, radio episodes, or archives.
  */
-function FloatingEventCard({ 
-  event, 
+function FloatingEventCard({
+  event,
   slideInfo,
   dateLabel,
   venueLabel,
   eyebrow,
   isJuly4thEvent,
   contextualFallbackAction
-}: { 
-  event?: any; 
+}: {
+  event?: any;
   slideInfo: SlideBannerInfo;
   dateLabel: string;
   venueLabel?: string;

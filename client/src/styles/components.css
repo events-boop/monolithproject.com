@@ -294,9 +294,20 @@
   }
 
   /* Layout container width tiers */
-  .layout-narrow  { max-width: var(--layout-narrow);  margin-inline: auto; }
-  .layout-default { max-width: var(--layout-default); margin-inline: auto; }
-  .layout-wide    { max-width: var(--layout-wide);    margin-inline: auto; }
+  .layout-narrow {
+    max-width: var(--layout-narrow);
+    margin-inline: auto;
+  }
+
+  .layout-default {
+    max-width: var(--layout-default);
+    margin-inline: auto;
+  }
+
+  .layout-wide {
+    max-width: var(--layout-wide);
+    margin-inline: auto;
+  }
 
   /* Section vertical rhythm */
   .section-rhythm {
@@ -324,13 +335,21 @@
 
   /* Hero: Neural drift ambient background */
   @keyframes neural-drift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   .neural-drift-gradient {
-    background: linear-gradient(-45deg, rgba(0,0,0,0), rgba(224,90,58,0.02), rgba(0,0,0,0), rgba(34,211,238,0.02));
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(224, 90, 58, 0.02), rgba(0, 0, 0, 0), rgba(34, 211, 238, 0.02));
     background-size: 400% 400%;
     animation: neural-drift 15s ease infinite;
   }
@@ -341,10 +360,11 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
   }
 
-  @media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  @media (prefers-reduced-motion: reduce),
+  (pointer: coarse) {
     .bg-noise::before {
       content: none;
     }

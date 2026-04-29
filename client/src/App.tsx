@@ -50,6 +50,7 @@ const Insights = lazy(() => import("./pages/Insights"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const ExperimentalHero = lazy(() => import("./pages/ExperimentalHero"));
 
 const isMonolithOpsEnabled =
   import.meta.env.DEV || import.meta.env.VITE_ENABLE_MONOLITH_OPS === "true";
@@ -124,6 +125,7 @@ const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
 const AdminDashboardTransition = withTransition(AdminDashboard);
+const ExperimentalHeroTransition = withTransition(ExperimentalHero);
 
 function MonolithOpsRoute() {
   if (!isMonolithOpsEnabled) {
@@ -183,6 +185,7 @@ function Router() {
       <Route path="/cookies" component={CookiesTransition} />
       <Route path="/monolith-ops" component={MonolithOpsRoute} />
       <Route path="/404" component={NotFoundTransition} />
+      <Route path="/sandbox/hero" component={ExperimentalHeroTransition} />
 
       <Route component={NotFoundTransition} />
     </Switch>
