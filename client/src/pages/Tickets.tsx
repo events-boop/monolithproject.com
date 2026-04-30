@@ -94,6 +94,9 @@ export default function Tickets() {
       ? eventVisuals.poster
       : featuredEvent?.image || "/images/autograf-recap.jpg";
   const showLineupVisuals = featuredEvent?.id === "us-s3e3";
+  const showTicketFunnel = Boolean(
+    featuredEvent?.activeFunnels?.length && cta.tool !== "posh"
+  );
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -194,7 +197,7 @@ export default function Tickets() {
         </section>
 
         {/* Giveaway / Viral Loop Funnel */}
-        {featuredEvent?.activeFunnels?.length ? (
+        {showTicketFunnel ? (
           <section id="tickets-funnel">
             <EventFunnelStack eventId={featuredEvent.id} />
           </section>
@@ -203,13 +206,7 @@ export default function Tickets() {
         {/* Featured Event Section */}
         <section className="pb-32 px-6 relative">
           <div className="container layout-wide">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-start"
-            >
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-start">
               {/* Left — Visual Focus */}
               <div className="lg:col-span-7 w-full">
                 <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
@@ -346,7 +343,7 @@ export default function Tickets() {
                   </MagneticButton>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -373,12 +370,8 @@ export default function Tickets() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-[2rem] overflow-hidden">
               {(featuredEvent?.ticketTiers || []).map((tier: TicketTier) => (
-                <motion.div
+                <article
                   key={tier.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.8 }}
                   className={`bg-[#050505] p-12 lg:p-16 flex flex-col h-full transition-all duration-700 hover:bg-white/[0.01] group`}
                 >
                   <div className="flex items-center justify-between mb-12">
@@ -454,7 +447,7 @@ export default function Tickets() {
                       </span>
                     )}
                   </button>
-                </motion.div>
+                </article>
               ))}
             </div>
 
