@@ -189,10 +189,6 @@ export default function ScheduleSection() {
               return (
                 <motion.div
                   key={event.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: index * 0.04, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   className="group relative border-b border-black/10 last:border-b-0"
                 >
                   <div

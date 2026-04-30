@@ -247,7 +247,7 @@ export default function Home() {
             style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
           />
           <SectionDivider number="01" label="Upcoming Shows" dark={false} glow={SUN_SETS_GOLD} />
-          <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="0px 0px">
+          <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="500px 0px" revealAfterMs={900}>
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />
             </Suspense>
@@ -336,7 +336,7 @@ export default function Home() {
 
         <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
           <SectionDivider id="featured" number="02" label="Past Nights" glow={`${LIVE_RED}14`} />
-          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="0px 0px">
+          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="500px 0px" revealAfterMs={1200}>
             <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
               <FeaturedRecap />
             </Suspense>
@@ -345,7 +345,7 @@ export default function Home() {
 
         <div id="showcase" className="bg-black relative z-10">
           <SectionDivider number="03" label="Radio" glow={MONOLITH_ORANGE} dense />
-          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="0px 0px">
+          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="500px 0px" revealAfterMs={1400}>
             <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
               <FeaturedSets />
             </Suspense>
@@ -381,7 +381,7 @@ export default function Home() {
           </div>
         </section>
 
-        <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="0px 0px">
+        <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="500px 0px" revealAfterMs={1600}>
           <Suspense fallback={<Skeleton className="h-[120px] w-full opacity-10" />}>
             <PartnershipMarquee />
           </Suspense>
