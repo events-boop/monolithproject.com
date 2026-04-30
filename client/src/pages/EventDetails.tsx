@@ -425,7 +425,7 @@ export default function EventDetails() {
               <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/40">
                 Next Step
               </p>
-              <h2 className="mt-4 max-w-[11ch] font-monolith text-[clamp(2.5rem,6vw,5.5rem)] font-medium uppercase leading-[0.86] tracking-[0.01em] text-white">
+              <h2 className="mt-4 max-w-[11ch] font-monolith text-[clamp(2.5rem,6vw,5.5rem)] font-normal uppercase leading-[0.86] tracking-[0.01em] text-white">
                 Make The Move
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/62 md:text-base">

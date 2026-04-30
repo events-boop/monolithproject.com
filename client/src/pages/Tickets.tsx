@@ -355,7 +355,7 @@ export default function Tickets() {
                 <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">
                   Ticket Tiers
                 </span>
-                <h2 className="font-monolith text-5xl font-medium uppercase tracking-[0.04em] text-white">
+                <h2 className="font-monolith text-5xl font-normal uppercase tracking-[0.04em] text-white">
                   Choose Your Ticket
                 </h2>
                 <p className="mt-6 text-lg text-white/40 font-light">
@@ -473,7 +473,7 @@ export default function Tickets() {
                 <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-primary/70">
                   Before Checkout
                 </span>
-                <h2 className="mt-5 max-w-[10ch] font-monolith text-[clamp(2.6rem,6vw,5.75rem)] font-medium uppercase leading-[0.86] tracking-[0.01em] text-white">
+                <h2 className="mt-5 max-w-[10ch] font-monolith text-[clamp(2.6rem,6vw,5.75rem)] font-normal uppercase leading-[0.86] tracking-[0.01em] text-white">
                   Know Your Night
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/58 md:text-lg">
