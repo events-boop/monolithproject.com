@@ -241,7 +241,10 @@ function FloatingEventCard({
             {systemKicker}
           </span>
           <h3 className={cn(
-            "event-system-headline max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)] text-white text-balance",
+            "event-system-headline text-white text-balance",
+            isJuly4thEvent
+              ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
+              : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
             isJuly4thEvent && "july-4th-gradient"
           )}>
             {toSystemText(headline)}
