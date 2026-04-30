@@ -102,6 +102,8 @@ This file governs the non-series route family first:
 - `/contact`
 - `/archive`
 - `/newsletter`
+- `/tickets`
+- `/events/:slug`
 
 Top fixes to prioritize:
 
@@ -109,6 +111,7 @@ Top fixes to prioritize:
 - Standardize section title scale across core pages using one display system.
 - Reduce abrupt visual mode changes on the home page between dark editorial, cream utility, and campaign blocks.
 - Keep the parent Monolith shell neutral enough that series pages can inherit it without losing their own identity.
+- Treat event detail and ticket pages as one conversion system: practical decision cards, clear checkout path, and repeated final action.
 
 ## Colors
 
@@ -138,6 +141,14 @@ The parent site follows a fixed-shell, modular-section model:
 - Campaign or featured event surface
 - Utility sections such as schedule, archive, roster, or partner pathways
 - Conversion footer or strip
+
+Event and ticket conversion pages should use the same rhythm:
+
+- scene-setting hero with one primary action
+- compact decision cards for date, arrival, entry, ticket path, and price
+- proof or fit section that explains why the event is worth acting on
+- sticky or persistent logistics surface on long detail pages
+- final action block that prevents users from having to scroll back to the hero
 
 On the home page specifically, the current flow is:
 
@@ -182,6 +193,8 @@ Core components in the parent system:
 - white primary pill and dark secondary pill CTA pair
 - feature cards for schedule, lineup, and archive pathways
 - proof blocks for attendance, audience, archive, and partnerships
+- event decision cards for ticket path, arrival, entry, and price
+- checkout close block with one primary ticket action and one schedule comparison escape hatch
 
 Component-level fixes:
 
@@ -196,6 +209,8 @@ Component-level fixes:
 - Do keep headings large, spare, and aligned to a repeatable rhythm.
 - Do let orange act as a system signal, not a background default.
 - Do treat cream sections as rare relief planes, not a second full theme.
+- Do keep ticket/event pages practical. Their job is to reduce uncertainty and move users to the correct checkout path.
 - Don't mix competing font definitions across token files.
 - Don't let campaign sections invent their own card radius, border density, or CTA hierarchy.
 - Don't add decorative effects unless they help hierarchy or reinforce a specific series identity.
+- Don't add parent-brand symbols, emblems, or motifs to solve hierarchy. Use spacing, type, framing, and copy first.

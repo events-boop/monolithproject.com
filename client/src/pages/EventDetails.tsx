@@ -22,7 +22,9 @@ function getShortDateLabel(dateLabel: string) {
   return dateLabel.replace(/,\s*\d{4}$/, "");
 }
 
-function buildEventSeoTitle(event: NonNullable<ReturnType<typeof getPublicEvents>[number]>) {
+function buildEventSeoTitle(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -37,7 +39,9 @@ function buildEventSeoTitle(event: NonNullable<ReturnType<typeof getPublicEvents
   return `${headline} at ${event.venue} | ${shortDate}`;
 }
 
-function buildEventSeoDescription(event: NonNullable<ReturnType<typeof getPublicEvents>[number]>) {
+function buildEventSeoDescription(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -55,15 +59,59 @@ function buildEventSeoDescription(event: NonNullable<ReturnType<typeof getPublic
   return `Get tickets and details for ${event.title} in Chicago on ${shortDate} from The Monolith Project.`;
 }
 
+function getTicketPathCopy(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
+  if (event.status === "on-sale")
+    return event.inventoryState === "low"
+      ? "Final inventory moving"
+      : "Tickets available now";
+  if (event.status === "coming-soon")
+    return event.recentlyDropped
+      ? "Presale list open"
+      : "Drop list before public sale";
+  if (event.status === "sold-out") return "Sold out";
+  return "Archive event";
+}
+
+function getArrivalCopy(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
+  if (event.doors) return `Doors ${event.doors}`;
+  if (event.series === "chasing-sunsets") return "Arrive for golden hour";
+  if (event.series === "untold-story") return "Arrive before peak room";
+  return event.time;
+}
+
+function getPriceCopy(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
+  const availableTier = event.ticketTiers?.find(tier => tier.available);
+  if (availableTier) return `From $${availableTier.price}`;
+  if (event.startingPrice) return `From $${event.startingPrice}`;
+  if (event.status === "coming-soon") return "Price release pending";
+  return "See event details";
+}
+
+function getEventFitCopy(
+  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
+) {
+  if (event.series === "chasing-sunsets") return "Open-air house music";
+  if (event.series === "untold-story") return "After-dark club pressure";
+  return "Chicago music gathering";
+}
+
 export default function EventDetails() {
   usePublicSiteDataVersion();
   const [, params] = useRoute("/events/:slug");
   const [, setLocation] = useLocation();
   const slug = params?.slug;
 
-  const event = getPublicEvents().find((e) => e.slug === slug || e.id === slug);
+  const event = getPublicEvents().find(e => e.slug === slug || e.id === slug);
   const canonicalEventSlug = event?.slug || event?.id;
-  const canonicalEventPath = canonicalEventSlug ? `/events/${canonicalEventSlug}` : `/events/${slug}`;
+  const canonicalEventPath = canonicalEventSlug
+    ? `/events/${canonicalEventSlug}`
+    : `/events/${slug}`;
   const navigationBrand =
     event?.series === "chasing-sunsets"
       ? "chasing-sunsets"
@@ -76,7 +124,8 @@ export default function EventDetails() {
   }, [slug]);
 
   useEffect(() => {
-    if (!event || !slug || !canonicalEventSlug || slug === canonicalEventSlug) return;
+    if (!event || !slug || !canonicalEventSlug || slug === canonicalEventSlug)
+      return;
     setLocation(canonicalEventPath, { replace: true });
   }, [canonicalEventPath, canonicalEventSlug, event, setLocation, slug]);
 
@@ -84,9 +133,14 @@ export default function EventDetails() {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
         <h1 className="font-display text-4xl mb-4">Event Cipher Null</h1>
-        <p className="font-mono text-white/50 mb-8">The requested event data could not be located.</p>
+        <p className="font-mono text-white/50 mb-8">
+          The requested event data could not be located.
+        </p>
         <MagneticButton>
-          <button onClick={() => setLocation("/schedule")} className="btn-pill-outline">
+          <button
+            onClick={() => setLocation("/schedule")}
+            className="btn-pill-outline"
+          >
             Return to Schedule
           </button>
         </MagneticButton>
@@ -105,6 +159,29 @@ export default function EventDetails() {
       { name: event.headline || event.title, path: canonicalEventPath },
     ]),
   ];
+  const decisionCards = [
+    {
+      label: "Ticket Path",
+      value: getTicketPathCopy(event),
+      icon: <Ticket className="h-4 w-4" />,
+    },
+    {
+      label: "Arrival",
+      value: getArrivalCopy(event),
+      icon: <Clock className="h-4 w-4" />,
+    },
+    {
+      label: "Entry",
+      value: event.age || "21+ / ID required",
+      icon: <Star className="h-4 w-4" />,
+    },
+    {
+      label: "Price",
+      value: getPriceCopy(event),
+      icon: <Ticket className="h-4 w-4" />,
+    },
+  ];
+  const eventFit = getEventFitCopy(event);
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
@@ -130,12 +207,18 @@ export default function EventDetails() {
           <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
-            <button onClick={() => setLocation("/schedule")} className="btn-text-action mb-12">
+            <button
+              onClick={() => setLocation("/schedule")}
+              className="btn-text-action mb-12"
+            >
               <ArrowLeft className="w-4 h-4" /> Schedule
             </button>
 
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <span className="font-mono text-xs uppercase tracking-[0.4em]" style={{ color: getSeriesColor(event.series) }}>
+              <span
+                className="font-mono text-xs uppercase tracking-[0.4em]"
+                style={{ color: getSeriesColor(event.series) }}
+              >
                 {getSeriesLabel(event.series)}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.28em] px-3 py-1 border border-white/20 text-white/75">
@@ -148,27 +231,91 @@ export default function EventDetails() {
             </h1>
 
             <div className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-white/70 text-xs md:text-sm tracking-[0.2em] uppercase mb-12">
-              <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-white/40" /> {event.venue}, {event.location}</div>
-              <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-white/40" /> {event.date} // {event.time}</div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-white/40" /> {event.venue},{" "}
+                {event.location}
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-white/40" /> {event.date} //{" "}
+                {event.time}
+              </div>
               {event.lineup && (
-                <div className="flex items-center gap-2"><Star className="w-4 h-4 text-white/40" /> {event.lineup}</div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 text-white/40" /> {event.lineup}
+                </div>
               )}
               {event.ticketTiers && event.ticketTiers.length > 0 && (
-                <div className="flex items-center gap-2 text-white"><Ticket className="w-4 h-4" /> From ${event.ticketTiers[0].price}</div>
+                <div className="flex items-center gap-2 text-white">
+                  <Ticket className="w-4 h-4" /> From $
+                  {event.ticketTiers[0].price}
+                </div>
               )}
             </div>
 
             <div className="w-full sm:w-auto">
-              <ConversionCTA event={event} size="lg" className="w-full sm:w-auto px-12 py-5 text-[15px]" showUrgency={true} />
+              <ConversionCTA
+                event={event}
+                size="lg"
+                className="w-full sm:w-auto px-12 py-5 text-[15px]"
+                showUrgency={true}
+              />
             </div>
           </div>
         </div>
 
+        <section className="relative z-10 border-b border-white/10 bg-black px-6 py-8 xl:px-12">
+          <div className="mx-auto grid w-full max-w-7xl gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-4">
+            {decisionCards.map(card => (
+              <div key={card.label} className="bg-[#050505] p-5 md:p-6">
+                <div className="mb-4 flex items-center gap-3 text-white/30">
+                  {card.icon}
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
+                    {card.label}
+                  </span>
+                </div>
+                <p className="font-display text-xl uppercase leading-[0.95] tracking-wide text-white md:text-2xl">
+                  {card.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7 flex flex-col gap-16">
+            <section>
+              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                Why This Event
+              </h3>
+              <div className="grid gap-4 md:grid-cols-3">
+                {[
+                  ["Room", event.format || eventFit],
+                  [
+                    "Sound",
+                    event.sound || "House music / event-led programming",
+                  ],
+                  ["Best Move", getTicketPathCopy(event)],
+                ].map(([label, value]) => (
+                  <article
+                    key={label}
+                    className="border border-white/8 bg-white/[0.025] p-5"
+                  >
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/35">
+                      {label}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-white/76">
+                      {value}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
             {event.description && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">Transmission</h3>
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                  Transmission
+                </h3>
                 <div className="prose prose-invert prose-p:text-white/70 prose-p:leading-relaxed prose-p:font-light text-lg">
                   <p>{event.description}</p>
                 </div>
@@ -177,10 +324,18 @@ export default function EventDetails() {
 
             {event.whatToExpect && event.whatToExpect.length > 0 && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">Atmosphere</h3>
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                  Atmosphere
+                </h3>
                 <ul className="flex flex-col gap-4">
                   {event.whatToExpect.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-4 text-white/80"><Star className="w-5 h-5 text-primary shrink-0 mt-0.5" /> {item}</li>
+                    <li
+                      key={idx}
+                      className="flex items-start gap-4 text-white/80"
+                    >
+                      <Star className="w-5 h-5 text-primary shrink-0 mt-0.5" />{" "}
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </section>
@@ -188,12 +343,21 @@ export default function EventDetails() {
 
             {event.faqs && event.faqs.length > 0 && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">Logistics</h3>
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                  Logistics
+                </h3>
                 <div className="flex flex-col gap-6">
                   {event.faqs.map((faq, idx) => (
-                    <div key={idx} className="bg-white/[0.02] border border-white/5 p-6 rounded-sm">
-                      <h4 className="font-bold text-white mb-2 font-mono tracking-wide text-sm">{faq.q}</h4>
-                      <p className="text-white/60 text-sm leading-relaxed">{faq.a}</p>
+                    <div
+                      key={idx}
+                      className="bg-white/[0.02] border border-white/5 p-6 rounded-sm"
+                    >
+                      <h4 className="font-bold text-white mb-2 font-mono tracking-wide text-sm">
+                        {faq.q}
+                      </h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        {faq.a}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -203,14 +367,47 @@ export default function EventDetails() {
 
           <div className="lg:col-span-5 flex flex-col gap-8">
             <div className="bg-white/[0.03] border border-white/10 p-8 flex flex-col gap-6 sticky top-32">
-              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase border-b border-white/10 pb-4">Dossier</h3>
+              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase border-b border-white/10 pb-4">
+                Dossier
+              </h3>
 
               <div className="flex flex-col gap-4 text-sm font-mono tracking-wide text-white/80">
-                {event.format && <div className="flex justify-between border-b border-white/5 pb-2"><span className="text-white/40">Format</span><span>{event.format}</span></div>}
-                {event.sound && <div className="flex justify-between border-b border-white/5 pb-2"><span className="text-white/40">Sound</span><span>{event.sound}</span></div>}
-                {event.dress && <div className="flex justify-between border-b border-white/5 pb-2"><span className="text-white/40">Dress</span><span>{event.dress}</span></div>}
-                {event.age && <div className="flex justify-between border-b border-white/5 pb-2"><span className="text-white/40">Age</span><span>{event.age}</span></div>}
-                <div className="flex justify-between pb-2"><span className="text-white/40">Location</span><span>{event.location}</span></div>
+                {event.format && (
+                  <div className="flex justify-between border-b border-white/5 pb-2">
+                    <span className="text-white/40">Format</span>
+                    <span>{event.format}</span>
+                  </div>
+                )}
+                {event.sound && (
+                  <div className="flex justify-between border-b border-white/5 pb-2">
+                    <span className="text-white/40">Sound</span>
+                    <span>{event.sound}</span>
+                  </div>
+                )}
+                {event.dress && (
+                  <div className="flex justify-between border-b border-white/5 pb-2">
+                    <span className="text-white/40">Dress</span>
+                    <span>{event.dress}</span>
+                  </div>
+                )}
+                {event.age && (
+                  <div className="flex justify-between border-b border-white/5 pb-2">
+                    <span className="text-white/40">Age</span>
+                    <span>{event.age}</span>
+                  </div>
+                )}
+                <div className="flex justify-between border-b border-white/5 pb-2">
+                  <span className="text-white/40">Arrival</span>
+                  <span>{getArrivalCopy(event)}</span>
+                </div>
+                <div className="flex justify-between border-b border-white/5 pb-2">
+                  <span className="text-white/40">Tickets</span>
+                  <span>{getTicketPathCopy(event)}</span>
+                </div>
+                <div className="flex justify-between pb-2">
+                  <span className="text-white/40">Location</span>
+                  <span>{event.location}</span>
+                </div>
               </div>
 
               {event.eventNotice && (
@@ -221,6 +418,32 @@ export default function EventDetails() {
             </div>
           </div>
         </div>
+
+        <section className="relative z-10 border-y border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.015))] px-6 py-14 xl:px-12">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/40">
+                Next Step
+              </p>
+              <h2 className="mt-4 max-w-[11ch] font-monolith text-[clamp(2.5rem,6vw,5.5rem)] font-medium uppercase leading-[0.86] tracking-[0.01em] text-white">
+                Make The Move
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/62 md:text-base">
+                If the date, room, and sound fit, do not route back through the
+                site. Use the primary event path and keep the confirmation
+                handy.
+              </p>
+            </div>
+            <div className="w-full md:w-auto">
+              <ConversionCTA
+                event={event}
+                size="lg"
+                className="w-full md:w-auto"
+                showUrgency={true}
+              />
+            </div>
+          </div>
+        </section>
       </main>
 
       <JoinSignalSection />

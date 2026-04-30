@@ -134,6 +134,7 @@ Preferred layout behaviors:
 - tighter content columns
 - fewer cream or relief surfaces
 - high contrast between content zones
+- shared event detail pages may inherit the Monolith conversion frame, but Untold Story should retain cyan as the functional accent and keep the room feeling dense, direct, and after-dark
 
 The anchor navigation is important here. It should feel like a chapter index.
 
@@ -174,6 +175,7 @@ Component-level fixes:
 - reduce decorative drift; every cyan or violet effect should point to structure
 - keep artist and room photography dominant over abstract texture
 - use typography and spacing to create pressure, not clutter
+- on shared event pages, preserve the parent decision-card and final-CTA structure while letting series color, venue copy, and artist content supply the Untold identity
 
 ## Do's and Don'ts
 

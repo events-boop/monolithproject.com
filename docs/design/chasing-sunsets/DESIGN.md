@@ -133,6 +133,7 @@ Key layout behaviors:
 - fewer stacked dark cards in a row
 - stronger alternation between content, image, and seasonal data
 - direct paths to schedule, archive, and join actions
+- shared event detail pages may inherit the Monolith conversion frame, but Chasing Sun(Sets) should open the copy, color, and spacing toward golden-hour clarity rather than generic dark luxury
 
 The archive and upcoming modules should feel like part of the same summer system, not separate mini-sites.
 
@@ -173,6 +174,7 @@ Component-level fixes:
 - give image-led modules more room to breathe vertically
 - keep the seasonal CTA pair consistent across all major blocks
 - use flyers and crowd frames as proof, not decoration
+- on shared event pages, preserve the parent decision-card and final-CTA structure while letting gold accents, outdoor arrival language, and seasonal proof carry the Chasing Sun(Sets) identity
 
 ## Do's and Don'ts
 
