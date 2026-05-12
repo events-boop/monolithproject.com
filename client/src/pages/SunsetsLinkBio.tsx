@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -12,13 +13,19 @@ import {
   Waves,
 } from "lucide-react";
 import SEO from "@/components/SEO";
+import { trackFunnelPageView, trackLinkClick } from "@/lib/api";
 
 type BioLink = {
   type?: "link" | "youtube" | "soundcloud";
   label: string;
+  buttonName: string;
   eyebrow: string;
   sub: string;
   href: string;
+  eventSlug?: string;
+  eventDate?: string;
+  interestType: string;
+  channel: string;
   icon: typeof Sun;
   variant?: "primary" | "warm" | "cool";
   external?: boolean;
@@ -28,8 +35,11 @@ const FIRST_ACCESS_HREF = "/go/waitlist/chasing-sunsets";
 const CHAT_HREF = "/go/waitlist/chasing-sunsets?utm_content=join_chat";
 const TICKET_HUB_HREF = "/chasing-sunsets#chasing-tickets";
 const RECAP_HREF = "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA";
-const SOUNDCLOUD_HREF = "https://soundcloud.com/chasing-sun-sets";
+const SOUNDCLOUD_HREF = "https://chasingsunsets.music";
 const GALLERY_HREF = "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/register";
+const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
+const AUGUST_22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
+const SEPTEMBER_19_EVENT_SLUG = "chasing-sunsets-september-19-2026";
 
 const schedule = [
   {
@@ -44,81 +54,135 @@ const schedule = [
 const links: BioLink[] = [
   {
     label: "Join First Access 🌅",
+    buttonName: "Join First Access",
     eyebrow: "Laylo",
     sub: "Ticket drops, lineup announcements & early access.",
     href: FIRST_ACCESS_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "first_access_click",
+    channel: "Laylo",
     icon: Sun,
     variant: "primary",
   },
   {
     label: "2026 Season Waitlist",
+    buttonName: "2026 Season Waitlist",
     eyebrow: "Posh",
     sub: "Get early access to all Chasing Sun(Sets) events this season.",
     href: FIRST_ACCESS_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "ticket_click",
+    channel: "Laylo",
     icon: Ticket,
     variant: "warm",
   },
   {
     label: "Join The Chat",
+    buttonName: "Join The Chat",
     eyebrow: "Community",
     sub: "SMS, email, and IG reminders now. Discord can plug in later.",
     href: CHAT_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "first_access_click",
+    channel: "Laylo",
     icon: Sparkles,
     variant: "cool",
   },
   {
     label: "VIP / Tables",
+    buttonName: "VIP / Tables",
     eyebrow: "Fillout",
     sub: "Groups, birthdays, tables, and elevated lakefront experiences.",
-    href: "/vip",
+    href: "https://chasingsunsets.vip",
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "vip_click",
+    channel: "Fillout",
     icon: Users,
+    external: true,
   },
   {
     type: "youtube",
     label: "View Last Year's Event",
+    buttonName: "Watch Recap",
     eyebrow: "YouTube",
     sub: "See the energy from last year's Chasing Sun(Sets).",
     href: RECAP_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "recap_click",
+    channel: "YouTube",
     icon: Play,
     external: true,
   },
   {
     type: "soundcloud",
     label: "Featured: Chris IDH",
+    buttonName: "Follow the Sound",
     eyebrow: "SoundCloud",
     sub: "Mixes, radio, and artist discovery from the Chasing archive.",
     href: SOUNDCLOUD_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "soundcloud_click",
+    channel: "SoundCloud",
     icon: Headphones,
     external: true,
     variant: "cool",
   },
   {
     label: "View The Gallery",
+    buttonName: "View Gallery",
     eyebrow: "Pic-Time",
     sub: "Photos and lakefront moments from the last chapter.",
     href: GALLERY_HREF,
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "gallery_click",
+    channel: "Pic-Time",
     icon: Camera,
     external: true,
   },
   {
     label: "Partner Inquiry",
+    buttonName: "Partner Inquiry",
     eyebrow: "Fillout",
     sub: "Venues, brands, sponsors, and city collaborations.",
     href: "/partners",
+    eventSlug: JULY_4_EVENT_SLUG,
+    eventDate: "2026-07-04",
+    interestType: "partner_form_submit",
+    channel: "Fillout",
     icon: Handshake,
   },
 ];
 
-function trackSunsetsClick(label: string, href: string) {
+function trackSunsetsClick(item: Pick<BioLink, "buttonName" | "href" | "eventSlug" | "eventDate" | "interestType" | "channel">) {
   if (typeof window === "undefined") return;
   const win = window as Window & {
     gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
   };
 
   win.gtag?.("event", "sunsets_bio_click", {
-    link_label: label,
-    link_url: href,
+    link_label: item.buttonName,
+    link_url: item.href,
     page_path: "/sunsets",
+    event_slug: item.eventSlug,
+    interest_type: item.interestType,
+  });
+
+  trackLinkClick({
+    buttonName: item.buttonName,
+    destinationUrl: item.href,
+    pagePath: "/sunsets",
+    eventSlug: item.eventSlug,
+    eventDate: item.eventDate,
+    interestType: item.interestType,
+    channel: item.channel,
+    source: "sunsets_link_bio",
   });
 }
 
@@ -138,7 +202,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-      onClick={() => trackSunsetsClick(item.label, item.href)}
+      onClick={() => trackSunsetsClick(item)}
       data-sunsets-link={item.eyebrow.toLowerCase()}
       className={`group relative flex min-h-[72px] items-center gap-4 overflow-hidden border-b border-white/5 p-4 transition duration-500 hover:-translate-y-0.5 ${
         isPrimary
@@ -172,6 +236,14 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 }
 
 export default function SunsetsLinkBio() {
+  useEffect(() => {
+    trackFunnelPageView({
+      pagePath: "/sunsets",
+      eventSlug: JULY_4_EVENT_SLUG,
+      source: "sunsets_link_bio",
+    });
+  }, []);
+
   return (
     <main className="min-h-[100dvh] w-full overflow-hidden bg-black text-stone-100 font-sans selection:bg-[#E8B86D]/30">
       <SEO
@@ -251,7 +323,14 @@ export default function SunsetsLinkBio() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                onClick={() => trackSunsetsClick("July 4th Featured", FIRST_ACCESS_HREF)}
+                onClick={() => trackSunsetsClick({
+                  buttonName: "July 4 Tickets",
+                  href: FIRST_ACCESS_HREF,
+                  eventSlug: JULY_4_EVENT_SLUG,
+                  eventDate: "2026-07-04",
+                  interestType: "ticket_click",
+                  channel: "Laylo",
+                })}
                 className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#E8B86D]/40 bg-gradient-to-br from-[#E8B86D]/20 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#E8B86D]/70 hover:shadow-[0_15px_40px_rgba(232,184,109,0.25)]"
               >
                 <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(232,184,109,0.15),transparent_60%)]" />
@@ -291,6 +370,7 @@ export default function SunsetsLinkBio() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
+                        onPointerDownCapture={() => trackSunsetsClick(item)}
                         className="my-3 overflow-hidden rounded-[1.2rem] border border-white/10 bg-black/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
                       >
                         <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
@@ -322,6 +402,7 @@ export default function SunsetsLinkBio() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
+                        onPointerDownCapture={() => trackSunsetsClick(item)}
                         className="my-3 overflow-hidden rounded-[1.2rem] border border-white/10 bg-black/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
                       >
                         <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
