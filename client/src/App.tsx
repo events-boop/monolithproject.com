@@ -290,7 +290,8 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
-  const isStandaloneLanding = location === "/sunsets";
+  const normalizedLocation = location.split("?")[0].replace(/\/$/, "") || "/";
+  const isStandaloneLanding = normalizedLocation === "/sunsets";
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -316,9 +317,11 @@ function MainContentWrapper() {
         aria-hidden="true"
       />
 
-      <Suspense fallback={null}>
-        <GlobalTicketButton />
-      </Suspense>
+      {!isStandaloneLanding && (
+        <Suspense fallback={null}>
+          <GlobalTicketButton />
+        </Suspense>
+      )}
       <div
         id="app-shell"
         className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen relative"
