@@ -15,8 +15,8 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Archivo Black', 'Arial Black', sans-serif;
   --font-heavy: 'Archivo Black', 'Arial Black', sans-serif;
-  --font-hero: 'Kanit', 'Syncopate', 'Archivo Black', sans-serif;
-  --font-monolith: 'Kanit', 'Syncopate', 'Archivo Black', sans-serif;
+  --font-hero: 'General Sans', 'Kanit', 'Syncopate', sans-serif;
+  --font-monolith: 'General Sans', 'Kanit', 'Syncopate', sans-serif;
   --font-serif: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-script: 'Instrument Serif', 'Cormorant Garamond', serif;
