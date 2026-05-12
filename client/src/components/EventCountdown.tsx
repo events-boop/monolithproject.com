@@ -46,7 +46,7 @@ function Digit({ value, label, accentColor }: { value: number; label: string; ac
   return (
     <div className="flex flex-col items-center gap-2 min-w-0 shrink">
       <div className="relative overflow-hidden">
-        <span className="font-heavy text-[clamp(2rem,8vw,9rem)] leading-none tracking-[-0.04em] text-white tabular-nums transition-colors">
+        <span className="hero-wordmark text-[clamp(2rem,8vw,9rem)] leading-none tracking-[-0.04em] text-white tabular-nums transition-colors">
           {display}
         </span>
       </div>
@@ -80,7 +80,7 @@ function CountdownStateCard({
       >
         {eyebrow}
       </span>
-      <p className="mt-4 font-heavy text-[clamp(1.75rem,4vw,3rem)] uppercase leading-[0.92] text-white">
+      <p className="mt-4 hero-wordmark text-[clamp(1.75rem,4vw,3rem)] uppercase leading-[0.92] text-white">
         Countdown standby
       </p>
       <p className="mt-4 max-w-[28ch] text-sm leading-relaxed text-white/65">
@@ -146,7 +146,7 @@ function LiveClock({
     <div className="flex items-end gap-1 sm:gap-3 md:gap-8 w-full max-w-full overflow-hidden" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
       <Digit value={timeLeft.days} label="Days" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
+        className="hero-wordmark text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -154,7 +154,7 @@ function LiveClock({
       </div>
       <Digit value={timeLeft.hours} label="Hours" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
+        className="hero-wordmark text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -162,7 +162,7 @@ function LiveClock({
       </div>
       <Digit value={timeLeft.minutes} label="Min" accentColor={accentColor} />
       <div
-        className="font-heavy text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
+        className="hero-wordmark text-[clamp(1.75rem,6vw,8rem)] leading-none mb-5 md:mb-8 select-none shrink-0"
         style={{ color: `${accentColor}55` }}
         aria-hidden="true"
       >
@@ -220,7 +220,7 @@ export default function EventCountdown({ event, eventId }: EventCountdownProps) 
               </span>
             </div>
             <div>
-              <h3 className="font-heavy text-[clamp(2.6rem,8vw,8.4rem)] uppercase tracking-[-0.04em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
+              <h3 className="hero-wordmark text-[clamp(2.6rem,8vw,8.4rem)] uppercase tracking-[-0.04em] text-white leading-[0.86] max-w-4xl drop-shadow-2xl">
                 {countdownTitle}
               </h3>
               <p

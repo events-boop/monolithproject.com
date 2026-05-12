@@ -25,12 +25,12 @@ export default function Ticker() {
               className="flex shrink-0 items-center justify-center pl-8 md:pl-16"
             >
               <span 
-                className="font-heavy text-[clamp(4rem,9vw,9rem)] uppercase leading-none tracking-tighter text-transparent mix-blend-overlay"
+                className="hero-wordmark text-[clamp(4rem,9vw,9rem)] uppercase leading-none tracking-tighter text-transparent mix-blend-overlay"
                 style={{ WebkitTextStroke: "2px rgba(255,255,255,0.4)" }}
               >
                 {word}
               </span>
-              <span className="font-heavy text-[clamp(4rem,9vw,9rem)] uppercase leading-none tracking-tighter text-[#d4a853] mx-8 md:mx-16 mix-blend-difference opacity-50">
+              <span className="hero-wordmark text-[clamp(4rem,9vw,9rem)] uppercase leading-none tracking-tighter text-[#d4a853] mx-8 md:mx-16 mix-blend-difference opacity-50">
                 //
               </span>
             </div>

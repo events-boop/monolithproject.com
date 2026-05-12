@@ -22,7 +22,7 @@ function HUDDigit({ value, label, tone }: { value: number; label: string; tone: 
           .map((digit, index) => (
             <div
               key={index}
-              className={`flex h-12 w-8 items-center justify-center border font-heavy text-xl tabular-nums md:h-20 md:w-14 md:text-4xl ${
+              className={`flex h-12 w-8 items-center justify-center border hero-wordmark text-xl tabular-nums md:h-20 md:w-14 md:text-4xl ${
                 isWarm
                   ? "border-[#C2703E]/14 bg-white/82 text-[#2C1810] shadow-[0_14px_24px_rgba(44,24,16,0.06)]"
                   : "border-white/10 bg-white/5 text-white"
@@ -106,7 +106,7 @@ export default function ConversionStrip({
             </div>
             <div>
               <h2
-                className={`font-heavy text-3xl uppercase leading-[0.9] tracking-tighter md:text-4xl ${
+                className={`hero-wordmark text-3xl uppercase leading-[0.9] tracking-tighter md:text-4xl ${
                   isWarm ? "text-[#2C1810]" : "text-white"
                 }`}
               >

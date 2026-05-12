@@ -123,7 +123,7 @@ export default function ScheduleSection() {
                Season Schedule
              </span>
              <h2
-               className="font-heavy text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
+               className="hero-wordmark text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
                style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
              >
                <KineticDecryption text="THE 2026 SEASON" />
@@ -172,7 +172,7 @@ export default function ScheduleSection() {
         <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-black/15 bg-white/75 shadow-[0_24px_70px_rgba(0,0,0,0.09),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl md:rounded-[2rem]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
-              <span className="mb-2 block font-heavy text-2xl uppercase tracking-tight text-black/45 md:mb-4 md:text-3xl">No Events Found</span>
+              <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-black/45 md:mb-4 md:text-3xl">No Events Found</span>
               <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-black/60">No matching dates for {activeMonth}</p>
             </div>
           ) : (
@@ -206,7 +206,7 @@ export default function ScheduleSection() {
                       <div className="lg:col-span-2 flex items-center justify-between lg:justify-start lg:flex-col lg:items-start gap-2 lg:gap-1 pl-0 lg:pl-4">
                         <div className="flex flex-col">
                           <span className={cn(
-                            "font-heavy text-2xl font-black uppercase leading-none tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black sm:text-3xl md:text-4xl lg:text-5xl"
+                            "hero-wordmark text-2xl font-black uppercase leading-none tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black sm:text-3xl md:text-4xl lg:text-5xl"
                           )}
                           style={{ color: isJulyHoliday ? seriesAccent : undefined }}
                           >
@@ -266,7 +266,7 @@ export default function ScheduleSection() {
                       {/* 🎫 EVENT IDENTITY */}
                       <div className="lg:col-span-4 flex flex-col gap-2 pl-0 lg:pl-4">
                         <h3 className={cn(
-                          "font-heavy text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black lg:text-[clamp(1.9rem,4vw,2.9rem)]"
+                          "hero-wordmark text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black lg:text-[clamp(1.9rem,4vw,2.9rem)]"
                         )}
                         style={{ color: isJulyHoliday ? seriesAccent : undefined }}
                         >
@@ -342,7 +342,7 @@ export default function ScheduleSection() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-4 left-4 flex flex-col">
-                                   <span className="font-heavy text-xs text-white uppercase tracking-tighter">{event.series.replace('-', ' ')}</span>
+                                   <span className="hero-wordmark text-xs text-white uppercase tracking-tighter">{event.series.replace('-', ' ')}</span>
                                 </div>
                              </div>
                           </div>
@@ -365,13 +365,13 @@ export default function ScheduleSection() {
                                   "font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block",
                                   event.lineup ? "text-primary/85" : "text-black/60"
                                 )}>Lineup Detail</span>
-                                <p className="font-heavy text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.lineup || "Lineup Release Pending"}</p>
+                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.lineup || "Lineup Release Pending"}</p>
                               </div>
 
                               {/* Stat Card: Logistics */}
                               <div className="rounded-3xl border border-black/10 bg-white/88 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
                                 <span className="mb-4 block font-mono text-[10px] font-black uppercase tracking-[0.4em] text-black/62">Location Frame</span>
-                                <p className="font-heavy text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.venue}</p>
+                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.venue}</p>
                                 <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-widest text-black/62">{event.time} @ {event.location}</p>
                               </div>
                             </div>

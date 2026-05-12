@@ -127,7 +127,7 @@ export default function NewsletterSection({
                 </div>
                 
                 <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">Membership Secured</span>
-                <h3 className="font-heavy text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Welcome To The Circle</h3>
+                <h3 className="hero-wordmark text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">Welcome To The Circle</h3>
                 <p className="max-w-xl text-center text-base text-white/60 mb-10 leading-relaxed">
                   We&apos;ll send new dates, ticket windows, lineup news, and radio drops when they matter.
                 </p>
@@ -135,15 +135,15 @@ export default function NewsletterSection({
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
                     <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">Name</span>
-                    <span className="font-heavy text-2xl text-white uppercase">{firstName || "You"}</span>
+                    <span className="hero-wordmark text-2xl text-white uppercase">{firstName || "You"}</span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
                     <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Signed Up On</span>
-                    <span className="font-heavy text-lg text-white/80">{new Date().toLocaleDateString()}</span>
+                    <span className="hero-wordmark text-lg text-white/80">{new Date().toLocaleDateString()}</span>
                   </div>
                   <div className="flex flex-col gap-2">
                     <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">What You&apos;ll Get</span>
-                    <span className="font-heavy text-lg text-white/80">Dates, ticket windows, lineup news, and radio drops</span>
+                    <span className="hero-wordmark text-lg text-white/80">Dates, ticket windows, lineup news, and radio drops</span>
                   </div>
                 </div>
 
@@ -182,7 +182,7 @@ export default function NewsletterSection({
                   <div className="h-[1px] w-24 bg-white/10" />
                 </div>
                 
-                <h2 className="font-heavy text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
+                <h2 className="hero-wordmark text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
                   <span className="text-white/40">NEXT</span>
                   <span>DROP.</span>
                 </h2>
@@ -198,7 +198,7 @@ export default function NewsletterSection({
                         <item.icon className="h-5 w-5 text-white/60 group-hover:text-primary transition-colors" />
                       </div>
                       <div className="flex flex-col justify-center">
-                        <p className="font-heavy text-2xl uppercase tracking-tight text-white/90 group-hover:text-white transition-colors">
+                        <p className="hero-wordmark text-2xl uppercase tracking-tight text-white/90 group-hover:text-white transition-colors">
                           {item.label}
                         </p>
                         <p className="font-sans text-sm text-white/60 mt-1 max-w-sm group-hover:text-white/80 transition-colors">
@@ -218,7 +218,7 @@ export default function NewsletterSection({
                 aria-describedby={submitError ? "newsletter-submit-error" : undefined}
               >
                 <div className="mb-4">
-                  <h3 className="font-heavy text-4xl uppercase tracking-tighter text-white mb-2">Join The Newsletter</h3>
+                  <h3 className="hero-wordmark text-4xl uppercase tracking-tighter text-white mb-2">Join The Newsletter</h3>
                   <p className="font-sans text-sm text-white/60 font-light">
                     Email is required. Phone is optional if you want text-first drops.
                   </p>
@@ -352,7 +352,7 @@ export default function NewsletterSection({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-6 w-full py-6 md:py-8 bg-white border border-white text-black font-heavy text-2xl md:text-3xl uppercase tracking-tighter disabled:opacity-50 transition-all duration-500 hover:bg-black hover:text-white flex items-center justify-between px-8 md:px-10 group"
+                  className="mt-6 w-full py-6 md:py-8 bg-white border border-white text-black hero-wordmark text-2xl md:text-3xl uppercase tracking-tighter disabled:opacity-50 transition-all duration-500 hover:bg-black hover:text-white flex items-center justify-between px-8 md:px-10 group"
                 >
                   <span>{isSubmitting ? "TRANSMITTING..." : "SECURE MEMBERSHIP"}</span>
                   {!isSubmitting && <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />}

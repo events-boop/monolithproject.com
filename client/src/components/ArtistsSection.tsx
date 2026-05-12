@@ -81,7 +81,7 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
               <div className="min-h-[2.5rem] flex items-center">
                 <KineticDecryption 
                   text={artist.name} 
-                  className={`font-heavy text-3xl md:text-4xl text-white uppercase tracking-tighter leading-none ${accentColor === "clay" ? "group-hover:text-clay" : "group-hover:text-primary"} transition-colors duration-500`}
+                  className={`hero-wordmark text-3xl md:text-4xl text-white uppercase tracking-tighter leading-none ${accentColor === "clay" ? "group-hover:text-clay" : "group-hover:text-primary"} transition-colors duration-500`}
                 />
               </div>
             </div>

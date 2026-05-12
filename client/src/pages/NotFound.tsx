@@ -32,7 +32,7 @@ export default function NotFound() {
             <div className="absolute inset-0 border border-white/0 group-hover:border-white/40 transition-all duration-700 scale-125 opacity-0 group-hover:opacity-100" />
         </motion.div>
 
-        <h1 className="font-heavy text-[clamp(6rem,20vw,14rem)] leading-[0.75] tracking-[-0.04em] uppercase text-white mb-8 relative">
+        <h1 className="hero-wordmark text-[clamp(6rem,20vw,14rem)] leading-[0.75] tracking-[-0.04em] uppercase text-white mb-8 relative">
            <GlitchText active={glitchActive}>404</GlitchText>
            <span className="absolute -top-4 -right-8 font-mono text-[10px] text-white/40 tracking-widest uppercase rotate-90 origin-left">
              Page Not Found
@@ -40,7 +40,7 @@ export default function NotFound() {
         </h1>
 
         <div className="flex flex-col items-center text-center max-w-lg">
-            <h2 className="font-heavy text-4xl md:text-5xl uppercase tracking-tighter text-white/90 mb-6 font-display">
+            <h2 className="hero-wordmark text-4xl md:text-5xl uppercase tracking-tighter text-white/90 mb-6 font-display">
                Page Not Found
             </h2>
             <p className="font-sans text-lg text-white/50 mb-12 font-light leading-relaxed">

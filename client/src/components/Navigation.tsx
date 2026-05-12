@@ -380,7 +380,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     <span className={`flex items-center gap-3 text-[clamp(1rem,1.4vw,1.5rem)] tracking-[0.1em] uppercase leading-none text-left whitespace-nowrap transition-all duration-700 overflow-hidden ${resolvedBrand === "chasing-sunsets" ? "font-sunsets text-sunsets-gold drop-shadow-[0_2px_10px_rgba(232,184,109,0.3)]" :
                       resolvedBrand === "untold-story" ? "font-serif italic capitalize tracking-normal text-white" :
                         resolvedBrand === "radio" ? "font-radio text-rose-500" :
-                          isLight ? "font-heavy text-charcoal group-hover:text-clay" : "font-heavy text-white group-hover:text-primary"
+                          isLight ? "hero-wordmark text-charcoal group-hover:text-clay" : "hero-wordmark text-white group-hover:text-primary"
                       }`}>
                       {resolvedBrand === "chasing-sunsets" ? "CHASING SUN(SETS)" :
                         resolvedBrand === "untold-story" ? (
@@ -421,7 +421,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       Section
                     </span>
                     <span className={cn(
-                      "font-heavy text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
+                      "hero-wordmark text-xs min-[1250px]:text-sm tabular-nums transition-colors duration-500",
                       resolvedBrand === "chasing-sunsets" ? "text-sunsets-gold" :
                         resolvedBrand === "untold-story" ? "text-untold-cyan" :
                           "text-white/80"

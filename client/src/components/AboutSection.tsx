@@ -108,10 +108,10 @@ export default function AboutSection() {
           <div className="lg:w-3/4 flex flex-col pt-4 lg:pt-0">
             {structuralManifesto.map((line, i) => (
               <div key={i} className="mb-10 sm:mb-16 last:mb-0 flex flex-col group border-l-2 border-transparent hover:border-[#d4a853]/50 pl-0 hover:pl-6 transition-all duration-500">
-                <span className="font-heavy text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.8] tracking-tighter uppercase text-white/95 mix-blend-difference group-hover:text-white transition-colors duration-500">
+                <span className="hero-wordmark text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.8] tracking-tighter uppercase text-white/95 mix-blend-difference group-hover:text-white transition-colors duration-500">
                   {line.heavy}
                 </span>
-                <span className="font-heavy text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.85] tracking-tight uppercase text-transparent transition-all duration-500" style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.4)" }}>
+                <span className="hero-wordmark text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.85] tracking-tight uppercase text-transparent transition-all duration-500" style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.4)" }}>
                   {line.light}
                 </span>
               </div>

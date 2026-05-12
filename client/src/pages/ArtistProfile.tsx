@@ -156,7 +156,7 @@ export default function ArtistProfile() {
             >
               {artist.role === "HEADLINER" ? (
                 <div className="flex flex-col gap-1">
-                  <span className="font-heavy text-[clamp(1.25rem,3vw,2.5rem)] tracking-[0.3em] text-white uppercase leading-none">
+                  <span className="hero-wordmark text-[clamp(1.25rem,3vw,2.5rem)] tracking-[0.3em] text-white uppercase leading-none">
                     Headliner Status
                   </span>
                   <span className="font-mono text-[10px] md:text-[10px] tracking-[0.5em] text-white/30 uppercase">
@@ -166,7 +166,7 @@ export default function ArtistProfile() {
               ) : artist.role === "RESIDENT" ? (
                 <div className="flex flex-col gap-6 md:gap-8">
                   <div className="flex flex-col gap-1">
-                    <span className="font-heavy text-[clamp(1.75rem,5vw,4rem)] tracking-[0.1em] text-white uppercase leading-[0.9]">
+                    <span className="hero-wordmark text-[clamp(1.75rem,5vw,4rem)] tracking-[0.1em] text-white uppercase leading-[0.9]">
                       Monolith Resident Artist
                     </span>
                     <div className="flex items-center gap-3 md:gap-4 mt-2">

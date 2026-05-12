@@ -137,7 +137,7 @@ export default function Footer() {
         {/* Top: Navigation Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-16 z-10 relative">
           <div className="col-span-2 md:col-span-1">
-            <span className="font-heavy text-3xl md:text-3xl tracking-wide block mb-6 text-white leading-none">
+            <span className="hero-wordmark text-3xl md:text-3xl tracking-wide block mb-6 text-white leading-none">
               {topNavLeft}
               <br />
               {topNavRight}
