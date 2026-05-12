@@ -35,21 +35,28 @@ const schedule = [
     date: "July 4",
     title: "Independence Day On The Lake",
     venue: "Castaways, Chicago",
-    time: "1 PM - 10 PM",
+    time: "3 PM - 10 PM",
+    href: TICKET_HUB_HREF,
+  },
+  {
+    date: "August 19",
+    title: "Late Summer Chapter",
+    venue: "Castaways, Chicago",
+    time: "Golden Hour",
     href: TICKET_HUB_HREF,
   },
   {
     date: "August 22",
-    title: "Summer Chapter",
+    title: "Late Summer Chapter",
     venue: "Castaways, Chicago",
-    time: "1 PM - 10 PM",
+    time: "Golden Hour",
     href: TICKET_HUB_HREF,
   },
   {
     date: "September 19",
-    title: "Season Finale",
+    title: "Fall Chapter",
     venue: "Castaways, Chicago",
-    time: "1 PM - 10 PM",
+    time: "Golden Hour",
     href: TICKET_HUB_HREF,
   },
 ];
@@ -138,8 +145,8 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const isPrimary = item.variant === "primary";
   const glowClass =
     item.variant === "cool"
-      ? "group-hover:border-cyan-200/35 group-hover:bg-cyan-100/[0.08]"
-      : "group-hover:border-amber-200/35 group-hover:bg-amber-100/[0.08]";
+      ? "group-hover:border-cyan-200/50 group-hover:bg-cyan-900/10"
+      : "group-hover:border-[#E8B86D]/50 group-hover:bg-[#E8B86D]/5";
 
   return (
     <motion.a
@@ -151,35 +158,30 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
       transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
       onClick={() => trackSunsetsClick(item.label, item.href)}
       data-sunsets-link={item.eyebrow.toLowerCase()}
-      className={`group relative flex min-h-[82px] items-center gap-3 overflow-hidden rounded-[1.35rem] border p-3.5 transition duration-300 ${
+      className={`group relative flex min-h-[72px] items-center gap-4 overflow-hidden border-b border-white/5 p-4 transition duration-500 hover:-translate-y-0.5 ${
         isPrimary
-          ? "border-amber-100/60 bg-[#F2C16D] text-[#150D06] shadow-[0_20px_70px_rgba(232,184,109,0.22)]"
-          : `border-white/10 bg-white/[0.055] text-stone-100 backdrop-blur-xl ${glowClass}`
+          ? "border-b-[#E8B86D]/40 bg-gradient-to-r from-[#E8B86D]/10 to-transparent"
+          : `${glowClass} bg-transparent`
       }`}
     >
       <span
-        className={`absolute inset-y-0 left-0 w-1 ${
-          item.variant === "cool" ? "bg-cyan-200" : "bg-amber-200"
-        } opacity-70`}
-      />
-      <span
-        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${
-          isPrimary ? "bg-black text-amber-100" : "bg-black/45 text-amber-100"
-        }`}
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/40 ${
+          isPrimary ? "text-[#E8B86D] border-[#E8B86D]/30" : "text-white/70"
+        } transition-transform duration-500 group-hover:scale-110`}
       >
-        <Icon className="h-5 w-5" strokeWidth={1.7} />
+        <Icon className="h-4 w-4" strokeWidth={1.2} />
       </span>
       <span className="min-w-0 flex-1">
-        <span className={`block text-[9px] font-black uppercase tracking-[0.28em] ${isPrimary ? "text-black/55" : "text-amber-100/55"}`}>
+        <span className={`block text-[9px] font-sans font-light uppercase tracking-[0.2em] ${isPrimary ? "text-[#E8B86D]" : "text-white/40"}`}>
           {item.eyebrow}
         </span>
-        <span className="mt-1 flex items-center justify-between gap-3">
-          <span className="text-[13px] font-black uppercase tracking-[0.02em]">
+        <span className="mt-0.5 flex items-center justify-between gap-3">
+          <span className="text-[14px] hero-wordmark font-light tracking-[0.05em] text-white/90 group-hover:text-white transition-colors">
             {item.label}
           </span>
-          <ArrowUpRight className="h-4 w-4 shrink-0 opacity-60 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <ArrowUpRight className={`h-4 w-4 shrink-0 transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 ${isPrimary ? "text-[#E8B86D] opacity-100" : "text-white/30 group-hover:text-white/80"}`} strokeWidth={1.5} />
         </span>
-        <span className={`mt-1 block text-xs leading-snug ${isPrimary ? "text-black/68" : "text-stone-400"}`}>
+        <span className="mt-1 block text-xs font-light text-white/50 leading-relaxed group-hover:text-white/70 transition-colors">
           {item.sub}
         </span>
       </span>
@@ -189,7 +191,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 
 export default function SunsetsLinkBio() {
   return (
-    <main className="min-h-screen w-full overflow-hidden bg-[#070705] text-stone-100">
+    <main className="min-h-[100dvh] w-full overflow-hidden bg-black text-stone-100 font-sans selection:bg-[#E8B86D]/30">
       <SEO
         title="Chasing Sun(Sets) | Chicago Lakefront House Music"
         description="Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries."
@@ -198,120 +200,130 @@ export default function SunsetsLinkBio() {
         absoluteTitle
       />
 
-      <section className="relative flex min-h-screen items-center justify-center px-4 py-6 sm:px-6">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(244,196,116,0.28),transparent_35%),radial-gradient(circle_at_18%_22%,rgba(47,213,229,0.12),transparent_28%),linear-gradient(180deg,#151007_0%,#070705_46%,#020202_100%)]" />
-        <div className="absolute inset-x-0 top-0 h-56 bg-[linear-gradient(180deg,rgba(255,232,188,0.18),transparent)]" />
-        <div className="absolute -left-28 top-40 h-56 w-56 rounded-full bg-cyan-200/10 blur-3xl" />
-        <div className="absolute -right-28 bottom-24 h-72 w-72 rounded-full bg-amber-300/15 blur-3xl" />
-
+      <section className="relative flex min-h-[100dvh] flex-col items-center justify-start px-4 py-12 sm:px-6">
+        {/* Cinematic Thin-Film Gradients */}
+        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(232,184,109,0.12),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(47,213,229,0.06),transparent_40%),linear-gradient(180deg,#0a0a0a_0%,#000000_100%)] pointer-events-none" />
+        <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay pointer-events-none" />
+        
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-          className="relative w-full max-w-[460px]"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-[480px] z-10"
         >
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/64 shadow-[0_35px_120px_rgba(0,0,0,0.58)] backdrop-blur-2xl">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_13%,rgba(255,210,128,0.30),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_38%)]" />
-            <div className="absolute left-1/2 top-8 h-36 w-36 -translate-x-1/2 rounded-full bg-amber-200/24 blur-3xl" />
-
-            <div className="relative px-4 pb-5 pt-6 sm:px-5 sm:pb-6 sm:pt-7">
+          {/* Glass Card Container */}
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/5 bg-black/40 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-3xl">
+            {/* Subtle top glare */}
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            
+            <div className="relative px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
               <header className="text-center">
-                <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-amber-100/25 bg-black/45 shadow-[0_0_80px_rgba(232,184,109,0.20)]">
-                  <Sun className="h-9 w-9 text-amber-100" strokeWidth={1.25} />
-                </div>
+                <motion.div 
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#E8B86D]/20 bg-black/60 shadow-[0_0_40px_rgba(232,184,109,0.15)]"
+                >
+                  <Sun className="h-7 w-7 text-[#E8B86D]" strokeWidth={1} />
+                </motion.div>
 
-                <p className="text-[10px] font-black uppercase tracking-[0.44em] text-amber-100/68">
+                <p className="text-[9px] font-sans font-light uppercase tracking-[0.4em] text-[#E8B86D]/80">
                   The Monolith Project Presents
                 </p>
-                <h1 className="mt-3 text-[clamp(3.15rem,17vw,5.4rem)] font-black uppercase leading-[0.78] tracking-[-0.045em] text-stone-50">
+                <h1 className="mt-4 text-[clamp(3.5rem,15vw,5rem)] hero-wordmark font-light uppercase leading-[0.8] tracking-[0.02em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 drop-shadow-[0_0_30px_rgba(232,184,109,0.3)]">
                   Chasing
                   <br />
                   Sun(Sets)
                 </h1>
-                <p className="mx-auto mt-4 max-w-xs text-sm italic text-[#F4D7A1]">
+                <p className="mx-auto mt-6 max-w-xs text-xs font-light tracking-[0.1em] uppercase text-[#E8B86D]/90">
                   Watch the sun. Stay for the (sets).
                 </p>
-                <p className="mx-auto mt-4 max-w-[21rem] text-sm leading-relaxed text-[#F4D7A1]/78">
+                <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
                   Join the Chasing Sun(Sets) circle for first access, ticket drops, VIP tables, recap video, sound, gallery, and partner inquiries.
-                </p>
-                <p className="mx-auto mt-3 w-fit rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-[10px] font-black uppercase tracking-[0.24em] text-stone-400">
-                  monolithproject.com/sunsets
                 </p>
               </header>
 
-              <div className="mt-5 grid grid-cols-3 gap-2 rounded-[1.35rem] border border-white/10 bg-white/[0.045] p-2 text-center">
-                {["Lakefront", "House", "Chicago"].map((item) => (
-                  <div key={item} className="rounded-2xl bg-black/30 px-2 py-3">
-                    <p className="text-[9px] font-black uppercase tracking-[0.22em] text-stone-500">
+              {/* Signals Grid */}
+              <div className="mt-8 grid grid-cols-3 gap-3">
+                {["Lakefront", "House", "Chicago"].map((item, i) => (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + (i * 0.1) }}
+                    key={item} 
+                    className="flex flex-col items-center justify-center rounded-xl border border-white/5 bg-white/[0.02] py-3 transition-colors hover:border-[#E8B86D]/20 hover:bg-[#E8B86D]/5"
+                  >
+                    <p className="text-[8px] font-sans font-light uppercase tracking-[0.2em] text-white/40">
                       Signal
                     </p>
-                    <p className="mt-1 text-[11px] font-black uppercase tracking-[0.08em] text-stone-100">
+                    <p className="mt-1.5 text-[10px] hero-wordmark tracking-[0.1em] text-white/80">
                       {item}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              <div className="mt-5 space-y-3">
+              {/* Links Array */}
+              <div className="mt-8 flex flex-col">
                 {links.map((item, index) => (
                   <LinkCard key={item.label} item={item} index={index} />
                 ))}
               </div>
 
-              <section className="mt-5 rounded-[1.6rem] border border-amber-200/14 bg-[#160f07]/72 p-4">
-                <div className="mb-3 flex items-center justify-between gap-3">
+              {/* Schedule Section */}
+              <section className="mt-10 border-t border-white/10 pt-8">
+                <div className="mb-6 flex items-center justify-between gap-3 px-2">
                   <div>
-                    <p className="text-[9px] font-black uppercase tracking-[0.32em] text-amber-100/55">
+                    <p className="text-[9px] font-sans font-light uppercase tracking-[0.3em] text-[#E8B86D]/80">
                       2026 Schedule
                     </p>
-                    <h2 className="mt-1 text-lg font-black uppercase tracking-[-0.025em] text-stone-50">
+                    <h2 className="mt-2 text-xl hero-wordmark font-light uppercase tracking-[0.05em] text-white/90">
                       Upcoming Chapters
                     </h2>
                   </div>
-                  <Waves className="h-5 w-5 text-cyan-100/70" />
+                  <Waves className="h-5 w-5 text-cyan-100/40" strokeWidth={1} />
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="flex flex-col border-t border-white/5">
                   {schedule.map((event, index) => (
                     <motion.a
                       key={event.date}
                       href={event.href}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.48 + index * 0.05, duration: 0.36 }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.48 + index * 0.05, duration: 0.5 }}
                       onClick={() => trackSunsetsClick(`${event.date} tickets`, event.href)}
-                      className="group block rounded-[1.1rem] border border-white/10 bg-black/34 p-3 transition hover:border-amber-200/35 hover:bg-black/48"
+                      className="group flex items-center justify-between gap-4 border-b border-white/5 py-4 px-2 transition-all duration-500 hover:bg-white/[0.02] hover:px-4"
                     >
-                      <span className="flex items-start justify-between gap-3">
-                        <span>
-                          <span className="text-xs font-black uppercase tracking-[0.22em] text-amber-100">
-                            {event.date}
-                          </span>
-                          <span className="mt-1 block text-sm font-black uppercase leading-tight text-stone-100">
-                            {event.title}
-                          </span>
-                          <span className="mt-1.5 block text-xs leading-relaxed text-stone-400">
-                            {event.venue} / {event.time}
-                          </span>
+                      <span className="flex-1">
+                        <span className="text-[10px] font-sans font-light uppercase tracking-[0.2em] text-[#E8B86D]/70 transition-colors group-hover:text-[#E8B86D]">
+                          {event.date}
                         </span>
-                        <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 text-black transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                          <ArrowUpRight className="h-4 w-4" />
+                        <span className="mt-1 block text-base hero-wordmark tracking-[0.03em] text-white/80 transition-colors group-hover:text-white">
+                          {event.title}
                         </span>
+                        <span className="mt-1 block text-[11px] font-light text-white/40">
+                          {event.venue} / {event.time}
+                        </span>
+                      </span>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-500 group-hover:border-[#E8B86D]/40 group-hover:bg-[#E8B86D]/10 group-hover:text-[#E8B86D]">
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
                       </span>
                     </motion.a>
                   ))}
                 </div>
               </section>
 
-              <footer className="mt-5 border-t border-white/10 pt-5 text-center">
-                <div className="mx-auto mb-3 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-3 py-2 text-[10px] font-black uppercase tracking-[0.24em] text-stone-400">
-                  <Sparkles className="h-3.5 w-3.5 text-amber-100" />
-                  Official Bio Link
+              {/* Footer */}
+              <footer className="mt-10 pt-4 text-center">
+                <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-[9px] font-sans font-light uppercase tracking-[0.3em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#E8B86D]/30 hover:text-[#E8B86D]/80">
+                  <Sparkles className="h-3.5 w-3.5 text-[#E8B86D]/70" strokeWidth={1.5} />
+                  monolithproject.com/sunsets
                 </div>
-                <p className="text-[11px] uppercase tracking-[0.26em] text-stone-500">
+                <p className="text-[10px] uppercase font-light tracking-[0.3em] text-white/30">
                   Togetherness is the frequency.
                 </p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.26em] text-stone-500">
+                <p className="mt-1.5 text-[10px] uppercase font-light tracking-[0.3em] text-white/30">
                   Music is the guide.
                 </p>
               </footer>
