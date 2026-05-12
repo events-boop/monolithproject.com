@@ -22,6 +22,7 @@ const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
 const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
 const ChasingSunsets = lazy(() => import("./pages/ChasingSunsets"));
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
+const SunsetsLinkBio = lazy(() => import("./pages/SunsetsLinkBio"));
 const Radio = lazy(() => import("./pages/Radio"));
 const RadioEpisode = lazy(() => import("./pages/RadioEpisode"));
 const UntoldStory = lazy(() => import("./pages/UntoldStory"));
@@ -97,6 +98,7 @@ const SponsorAccessTransition = withTransition(SponsorAccess);
 const AboutTransition = withTransition(About);
 const ChasingSunsetsTransition = withTransition(ChasingSunsets);
 const ChasingSunsetsFactsTransition = withTransition(ChasingSunsetsFacts);
+const SunsetsLinkBioTransition = withTransition(SunsetsLinkBio);
 const RadioTransition = withTransition(Radio);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
@@ -147,6 +149,7 @@ function Router() {
       <Route path="/about" component={AboutTransition} />
       <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
       <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
+      <Route path="/sunsets" component={SunsetsLinkBioTransition} />
       <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
       <Route path="/radio" component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
@@ -285,7 +288,9 @@ function DeferredGlobalModules() {
 
 function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
+  const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
+  const isStandaloneLanding = location === "/sunsets";
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -331,16 +336,20 @@ function MainContentWrapper() {
            }}
         />
         <Router />
-        <ViewportLazy minHeightClassName="min-h-[24rem]" rootMargin="360px 0px">
-          <Suspense fallback={null}>
-            <SoundCloudShelf />
-          </Suspense>
-        </ViewportLazy>
-        <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-        </ViewportLazy>
+        {!isStandaloneLanding && (
+          <>
+            <ViewportLazy minHeightClassName="min-h-[24rem]" rootMargin="360px 0px">
+              <Suspense fallback={null}>
+                <SoundCloudShelf />
+              </Suspense>
+            </ViewportLazy>
+            <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
+              <Suspense fallback={null}>
+                <Footer />
+              </Suspense>
+            </ViewportLazy>
+          </>
+        )}
       </div>
     </>
   );

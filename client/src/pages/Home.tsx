@@ -11,7 +11,6 @@ import {
   getEventVenueLabel,
   getSeriesExperienceEvent,
 } from "@/lib/siteExperience";
-import { getEventDetailsHref } from "@/lib/cta";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
@@ -28,6 +27,10 @@ function getStatusLabel(status?: string) {
   if (status === "sold-out") return "SOLD OUT";
   return "PAST";
 }
+
+const titleSubtextClass = "mt-4 max-w-3xl text-sm leading-relaxed text-[#F4D7A1]/88 md:text-base";
+const warmSubtextClass = "mt-4 text-sm leading-relaxed text-[#E8B86D]/84";
+const coolSubtextClass = "mt-4 max-w-3xl text-sm leading-relaxed text-[#B9F6FF]/82 md:text-base";
 
 export default function Home() {
   usePublicSiteDataVersion();
@@ -69,6 +72,20 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
+        <section className="relative z-10 border-y border-white/10 bg-[#10100f] py-10 md:py-12">
+          <div className="container layout-wide px-6">
+            <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+              <p className="max-w-4xl text-balance font-display text-2xl leading-[1.03] text-white md:text-3xl">
+                The Monolith Project produces <span className="text-[#E8B86D]">Chasing Sun(Sets)</span>,{" "}
+                <span className="text-[#B9F6FF]">Untold Story</span>, and artist-led radio in Chicago.
+              </p>
+              <Link href="/tickets" className="btn-pill-neutral btn-pill-wide justify-center">
+                Current Tickets
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
@@ -81,8 +98,8 @@ export default function Home() {
                 <h2 className="section-display-title-compact max-w-[16ch] text-white hyphens-none break-keep text-balance">
                   2nd Annual 4th of July @ Castaways
                 </h2>
-                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/86 md:text-base">
-                  Tradition begins on the lakefront. Sign up for the drop - season details, schedule, lineup, and July 4 first access coming soon.
+                <p className={titleSubtextClass}>
+                  This is the next Chasing Sun(Sets) drop, not the live ticketed event. Join the July 4 list for first access, lineup news, and season updates.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <a
@@ -91,13 +108,13 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto"
                   >
-                    SIGN UP FOR THE DROP
+                    July 4 Updates
                   </a>
                   <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide w-full justify-center sm:w-auto">
-                    View Chasing Sun(Sets) Season
+                    Chasing Sun(Sets)
                   </Link>
                   <Link href="/schedule" className="btn-text-action">
-                    See Summer Dates
+                    Summer Schedule
                   </Link>
                 </div>
               </div>
@@ -109,7 +126,7 @@ export default function Home() {
                 <h3 className="section-display-title-compact mt-3 max-w-[14ch] text-white hyphens-none break-keep text-balance">
                   {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/84">
+                <p className={warmSubtextClass}>
                   {chasingSeasonEvent?.description ||
                     "Chicago's open-air house music gathering returns to North Avenue Beach with golden-hour sets, special guests, and a community built around sound, sunset, and togetherness."}
                 </p>
@@ -153,14 +170,14 @@ export default function Home() {
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
                   <span className="section-kicker mb-3 block text-white/78">
-                    UNTOLD STORY IV
+                    Tickets Live Now
                   </span>
                   <h2 className="section-display-title-compact max-w-[14ch] text-white hyphens-none break-keep text-balance">
                     Eran Hersh in Chicago
                   </h2>
                   <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
-                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/86 md:text-base">
-                    Untold Story returns with Eran Hersh for an intimate after-dark chapter of house music, movement, and atmosphere.
+                  <p className={coolSubtextClass}>
+                    This is the current on-sale event. Untold Story IV brings Eran Hersh to Hideaway for a focused after-dark room.
                   </p>
                 </div>
 
@@ -195,11 +212,11 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="btn-pill btn-pill-compact w-full justify-center sm:w-auto"
                       >
-                        Get Tickets <ArrowUpRight className="w-4 h-4" />
+                        Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
                       </a>
                     ) : (
                       <Link href={untoldTicketHref} className="btn-pill btn-pill-compact w-full justify-center sm:w-auto">
-                        Get Tickets <ArrowUpRight className="w-4 h-4" />
+                        Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     )}
                   </div>
@@ -221,9 +238,12 @@ export default function Home() {
                 <h3 className="section-display-title-compact mt-3 text-white">
                   Season Dates
                 </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F4D7A1]/82">
+                  Summer dates are listed here for planning. Ticket drops and lineups release separately by chapter.
+                </p>
               </div>
               <Link href="/chasing-sunsets" className="btn-text-action">
-                View Season Page
+                Open Chasing Sun(Sets)
               </Link>
             </div>
             <div className="grid gap-3 sm:grid-cols-3">
@@ -265,6 +285,9 @@ export default function Home() {
               <span className="section-kicker block text-[#E8B86D]">
                 One platform, multiple series.
               </span>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#D9C6A5]/86">
+                Use this section as the map: Chasing Sun(Sets) is open-air, Untold Story is after dark, Radio is the archive between shows.
+              </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               <Link href="/chasing-sunsets" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">

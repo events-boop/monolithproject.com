@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Volume2, VolumeX, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import YouTubeEmbed from "./ui/YouTubeEmbed";
 import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
 import { useResponsiveVideoSource } from "@/hooks/useResponsiveVideoSource";
@@ -94,6 +95,7 @@ export default function VideoHeroSlider({
 }: VideoHeroSliderProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
   const [canStartPrimaryVideo, setCanStartPrimaryVideo] = useState(() => {
@@ -117,8 +119,10 @@ export default function VideoHeroSlider({
 
   const toggleMute = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+      const willBeMuted = !videoRef.current.muted;
+      videoRef.current.muted = willBeMuted;
+      setIsMuted(willBeMuted);
+      setIsPaused(!willBeMuted);
     }
   };
 
@@ -132,12 +136,13 @@ export default function VideoHeroSlider({
 
   // Auto-advance for all slides
   useEffect(() => {
+    if (isPaused) return;
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(next, 7000); // 7 seconds per slide
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [currentSlide, next]);
+  }, [currentSlide, next, isPaused]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -204,10 +209,29 @@ export default function VideoHeroSlider({
   if (!slide) return null;
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
-      <div
+    <div 
+      className="absolute inset-0 z-0 overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(!isMuted ? true : false)}
+    >
+      <AnimatePresence initial={false}>
+        <motion.div
           key={currentSlide}
-          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={(e, { offset, velocity }) => {
+            if (offset.x < -50 || velocity.x < -500) {
+              next();
+            } else if (offset.x > 50 || velocity.x > 500) {
+              prev();
+            }
+          }}
+          className="absolute inset-0 touch-pan-y"
         >
           {slide.type === "youtube" ? (
             <div className="absolute inset-0 overflow-hidden bg-black">
@@ -312,7 +336,8 @@ export default function VideoHeroSlider({
               className="w-full h-full object-cover object-center md:object-[80%_center]"
             />
           )}
-        </div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Brighter center, darker edges */}
       <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_45%,rgba(0,0,0,0.14),rgba(0,0,0,0.4)_80%,rgba(0,0,0,0.5)_100%)]" />
@@ -336,9 +361,9 @@ export default function VideoHeroSlider({
       </button>
 
       {/* Bottom bar: indicators + credit + mute */}
-      <div className="absolute bottom-24 md:bottom-36 left-0 right-0 z-20 px-5 md:px-8 hidden sm:flex items-end justify-between">
+      <div className="absolute bottom-24 md:bottom-36 left-0 right-0 z-20 px-5 md:px-8 flex items-end justify-between pointer-events-none">
         {/* Left: Slide indicators */}
-        <div className="flex gap-1.5 md:gap-2">
+        <div className="flex gap-1.5 md:gap-2 pointer-events-auto">
           {slides.map((_, index) => (
             <button
               type="button"
@@ -355,7 +380,7 @@ export default function VideoHeroSlider({
         </div>
 
         {/* Right: Credit + Mute */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pointer-events-auto">
           {slide.credit && (
             <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase hidden md:block">
               Photo: {slide.credit}

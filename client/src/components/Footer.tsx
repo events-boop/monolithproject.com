@@ -1,6 +1,6 @@
 import { Instagram, Headphones, Youtube, ArrowUpRight, Sun } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOLD, TIKTOK_URL, SOUNDCLOUD_URL, SPOTIFY_URL } from "@/data/events";
+import { POSH_TICKET_URL, INSTAGRAM_MONOLITH, INSTAGRAM_SUNSETS, INSTAGRAM_UNTOLD, TIKTOK_URL, SOUNDCLOUD_URL } from "@/data/events";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -15,21 +15,12 @@ function TikTokIcon({ className }: { className?: string }) {
   );
 }
 
-function SpotifyIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
-    </svg>
-  );
-}
-
 const socials = [
   { name: "Monolith — Instagram", icon: Instagram, url: INSTAGRAM_MONOLITH },
   { name: "Monolith — TikTok", icon: TikTokIcon, url: TIKTOK_URL },
   { name: "Chasing Sun(Sets) — Instagram", icon: Instagram, url: INSTAGRAM_SUNSETS },
   { name: "Untold Story — Instagram", icon: Instagram, url: INSTAGRAM_UNTOLD },
   { name: "YouTube", icon: Youtube, url: "https://youtube.com/@monolithproject" },
-  { name: "Spotify", icon: SpotifyIcon, url: SPOTIFY_URL },
   { name: "SoundCloud", icon: Headphones, url: SOUNDCLOUD_URL },
 ];
 
@@ -95,26 +86,26 @@ export default function Footer() {
   let topNavLeft = "MONOLITH";
   let topNavRight = "PROJECT";
   let glowColor = "rgba(224,90,58";
-  let fontSizeClass = "text-[18vw]";
+  let fontSizeClass = "text-[23vw]";
 
   if ((resolvedBrand as string) === "chasing-sunsets") {
     displayTitle = "CHASING SUNSETS";
     topNavLeft = "CHASING";
     topNavRight = "SUN(SETS)";
     glowColor = "rgba(232,184,109";
-    fontSizeClass = "text-[12vw]";
+    fontSizeClass = "text-[15.5vw]";
   } else if ((resolvedBrand as string) === "untold-story") {
     displayTitle = "UNTOLD STORY";
     topNavLeft = "UNTOLD";
     topNavRight = "STORY";
     glowColor = "rgba(34,211,238";
-    fontSizeClass = "text-[13vw]";
+    fontSizeClass = "text-[17vw]";
   } else if ((resolvedBrand as string) === "radio") {
     displayTitle = "SUN(SETS) RADIO";
     topNavLeft = "SUN(SETS)";
     topNavRight = "RADIO";
     glowColor = "rgba(244,63,94";
-    fontSizeClass = "text-[11.5vw]";
+    fontSizeClass = "text-[15vw]";
   }
 
   const renderItemLabel = (name: string) => {
@@ -245,13 +236,13 @@ export default function Footer() {
 
         {/* Huge Edge-to-Edge Text */}
         <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full relative z-10">
-          <div className={`relative z-10 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
+          <div className={`relative z-10 hero-wordmark ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
             {displayTitle}
           </div>
 
           {/* Outline Overlay for Stroke Effect */}
           <div
-            className={`absolute inset-x-0 top-0 z-20 font-heavy ${fontSizeClass} leading-[0.75] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
+            className={`absolute inset-x-0 top-0 z-20 hero-wordmark ${fontSizeClass} leading-[0.75] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
             style={{
               WebkitTextStroke: "2px rgba(255,255,255,0.3)",
               transform: "translateZ(0)"

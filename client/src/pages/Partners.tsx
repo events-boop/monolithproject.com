@@ -316,13 +316,13 @@ export default function Partners() {
               <h2 className="section-display-title-compact mb-10 text-white">Crew Inquiries</h2>
               <div className="flex flex-col items-center gap-8">
                   <MagneticButton strength={0.2}>
-                    <a 
-                        href="#" 
-                        onClick={(e) => { e.preventDefault(); openInquiry("general"); }} 
+                    <button
+                        type="button"
+                        onClick={() => openInquiry("general")}
                         className="btn-pill-neutral"
                     >
                         Submit Crew Inquiry
-                    </a>
+                    </button>
                   </MagneticButton>
                   <p className="text-white/20 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm mx-auto">
                     Direct inquiries via crew@monolithproject.com // Review cycles occur monthly.

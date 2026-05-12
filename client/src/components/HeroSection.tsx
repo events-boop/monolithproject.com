@@ -125,10 +125,10 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
 ];
 
 const HERO_TITLE = "MONOLITH";
-const HERO_PILLARS = "Chicago / House Music / Events / Radio";
+const HERO_PILLARS = "Chicago House Music / Events / Radio";
 const HERO_TAGLINE = "Togetherness is the frequency.";
 const HERO_SUPPORTING_LINE =
-  "Upcoming shows, Chasing Sun(Sets), Untold Story, and artist-led radio.";
+  "The Monolith Project produces Chasing Sun(Sets), Untold Story, and artist-led radio in Chicago.";
 
 function toSystemText(value?: string | null) {
   return (value || "")
@@ -372,7 +372,7 @@ export default function HeroSection() {
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "hero-wordmark max-w-full text-[clamp(3.35rem,9.2vw,9.25rem)] text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-left text-transparent"
+                  "hero-wordmark max-w-full text-[clamp(4.5rem,13vw,13rem)] text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-left text-transparent"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
@@ -381,27 +381,27 @@ export default function HeroSection() {
               <p
                 data-home-hero-pillars="true"
                 data-home-hero-eyebrow="true"
-                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/76 md:text-left"
+                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-[#F4D7A1]/86 md:text-left"
               >
                 {HERO_PILLARS}
               </p>
-              <p className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(1.2rem,3vw,2.15rem)] leading-[1.02] text-white/92">
+              <p className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(1.2rem,3vw,2.15rem)] leading-[1.02] text-white/94">
                 {HERO_TAGLINE}
               </p>
 
               <p
                 data-home-hero-summary="true"
-                className="mt-5 max-w-[32rem] text-balance text-sm leading-relaxed text-white/84 md:text-base"
+                className="mt-5 max-w-[34rem] text-balance text-sm leading-relaxed text-[#E8B86D]/88 md:text-base"
               >
                 {HERO_SUPPORTING_LINE}
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                <Link href="/schedule" className="btn-pill-neutral btn-pill-wide">
-                  Upcoming Shows
+                <Link href="/tickets" className="btn-pill-neutral btn-pill-wide">
+                  Tickets
                 </Link>
-                <Link href="/newsletter" className="btn-pill-outline btn-pill-wide">
-                  Get The Drop
+                <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide">
+                  July 4 Updates
                 </Link>
               </div>
             </div>

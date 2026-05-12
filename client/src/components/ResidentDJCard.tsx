@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, Disc3, Instagram, MapPin, Music, Radio } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Disc3, Instagram, MapPin, Music, Radio, X } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
 export interface ResidentDJ {
@@ -13,6 +14,8 @@ export interface ResidentDJ {
   soundcloudUrl?: string;
   bookingEmail?: string;
   stats?: { label: string; value: string }[];
+  artistStatement?: string;
+  works?: { title: string; meta: string; note?: string }[];
   accentColor?: string;
 }
 
@@ -23,6 +26,8 @@ const DEFAULT_DJS: ResidentDJ[] = [
     city: "Chicago, IL",
     genre: ["Afro House", "Melodic House", "Organic"],
     bio: "A cornerstone of the Chasing Sun(Sets) series since Season I. Juany brings a warm, sunrise energy to every set, weaving African rhythm with melodic house and organic textures that feel like golden hour itself.",
+    artistStatement:
+      "Juany plays like an architect of the room: patient percussion, melodic lift, and a sense for when the floor is ready to move from conversation into ceremony.",
     image: "/images/untold-story-juany-deron-v2.webp",
     instagramUrl: "https://instagram.com/juanybravo",
     soundcloudUrl: "https://soundcloud.com/juanybravo",
@@ -32,6 +37,23 @@ const DEFAULT_DJS: ResidentDJ[] = [
       { value: "12+", label: "Shows" },
       { value: "B2B", label: "Closers" },
     ],
+    works: [
+      {
+        title: "Chasing Sun(Sets) Foundation Sets",
+        meta: "Open-air resident arc",
+        note: "Warm-up to golden-hour transitions across the series.",
+      },
+      {
+        title: "Untold Story B2B Chapter",
+        meta: "After-dark room",
+        note: "Percussion-led pressure built for intimate floors.",
+      },
+      {
+        title: "Monolith Radio Selections",
+        meta: "Artist-led archive",
+        note: "Global rhythm, Afro house, and melodic house language.",
+      },
+    ],
   },
   {
     name: "DERON",
@@ -39,6 +61,8 @@ const DEFAULT_DJS: ResidentDJ[] = [
     city: "Chicago, IL",
     genre: ["Progressive House", "Latin House", "Melodic"],
     bio: "Deron is part of the Monolith foundation: deep progressive groove, Latin rhythm, and a long-form set instinct that suits the full sunset-to-night arc.",
+    artistStatement:
+      "Deron connects daylight and late-night energy with a precise, groove-forward ear. His sets carry momentum without rushing the room.",
     image: "/images/deron-press.jpg",
     instagramUrl: "https://instagram.com/deron",
     soundcloudUrl: "https://soundcloud.com/deron",
@@ -48,6 +72,23 @@ const DEFAULT_DJS: ResidentDJ[] = [
       { value: "10+", label: "Shows" },
       { value: "Late", label: "Builder" },
     ],
+    works: [
+      {
+        title: "Chasing Sun(Sets) Resident Appearances",
+        meta: "Open-air series",
+        note: "Progressive and Latin house pacing for sunset rooms.",
+      },
+      {
+        title: "Untold Story Support",
+        meta: "Late-night chapter",
+        note: "Direct support language for darker, tighter dancefloors.",
+      },
+      {
+        title: "Long-Form Club Sets",
+        meta: "Resident development",
+        note: "Built around groove, restraint, and controlled release.",
+      },
+    ],
   },
 ];
 
@@ -56,6 +97,8 @@ interface ResidentDJCardProps {
 }
 
 export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProps) {
+  const [openArtist, setOpenArtist] = useState<string | null>(null);
+
   return (
     <div className="space-y-6">
       {djs.map((dj, index) => (
@@ -167,7 +210,13 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
             </div>
           </div>
 
-          <div className="sunset-media-frame relative aspect-[4/5] min-h-[20rem]">
+          <button
+            type="button"
+            onClick={() => setOpenArtist((current) => (current === dj.name ? null : dj.name))}
+            aria-expanded={openArtist === dj.name}
+            aria-label={`Open ${dj.name} artist bio and selected works`}
+            className="sunset-media-frame group/media relative aspect-[4/5] min-h-[20rem] w-full cursor-pointer overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/70"
+          >
             {dj.image ? (
               <ResponsiveImage
                 src={dj.image}
@@ -175,8 +224,8 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
                 sizes="(min-width: 1024px) 34vw, 100vw"
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ filter: "saturate(0.92) contrast(1.04)" }}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover/media:scale-105"
+                style={{ filter: "grayscale(1) contrast(1.08)" }}
                 onError={(event) => {
                   (event.currentTarget as HTMLImageElement).style.display = "none";
                 }}
@@ -190,13 +239,88 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
             ) : null}
 
             <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(18,13,9,0.16)_46%,rgba(18,13,9,0.72))]" />
+            <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/64 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-white/82 backdrop-blur-md">
+              {openArtist === dj.name ? "Close Bio" : "Open Bio"}
+            </div>
             <div className="absolute bottom-0 left-0 right-0 p-5">
               <div className="rounded-2xl border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(246,234,215,0.8))] px-4 py-3 shadow-[0_18px_34px_rgba(18,13,9,0.16)]">
                 <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">Resident / Chasing Sun(Sets)</div>
                 <div className="mt-2 font-display text-xl uppercase leading-[0.92] text-[#2C1810]">{dj.name}</div>
+                <div className="mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/56">
+                  View Profile
+                  <ArrowUpRight size={11} />
+                </div>
               </div>
             </div>
-          </div>
+          </button>
+
+          <AnimatePresence>
+            {openArtist === dj.name ? (
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 12 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="lg:col-span-2 border border-[#2C1810]/10 bg-[#110c08] p-5 text-[#F8EFE0] shadow-[0_24px_70px_rgba(18,13,9,0.22)] md:p-7"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-5">
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.34em] text-[#E8B86D]/70">
+                      Artist Dossier
+                    </span>
+                    <h4 className="mt-3 font-display text-3xl uppercase leading-[0.9] tracking-tight text-white md:text-4xl">
+                      {dj.name}
+                    </h4>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenArtist(null)}
+                    className="inline-flex h-10 w-10 items-center justify-center border border-white/10 bg-white/[0.04] text-white/62 transition-colors hover:text-white"
+                    aria-label={`Close ${dj.name} artist bio`}
+                  >
+                    <X size={15} />
+                  </button>
+                </div>
+
+                <div className="grid gap-6 pt-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+                  <div>
+                    <p className="text-base leading-relaxed text-white/78 md:text-lg">
+                      {dj.artistStatement || dj.bio}
+                    </p>
+                    <p className="mt-5 text-sm leading-relaxed text-white/54">
+                      {dj.bio}
+                    </p>
+                  </div>
+
+                  <div className="grid gap-3">
+                    {(dj.works || []).map((work, workIndex) => (
+                      <article
+                        key={`${dj.name}-${work.title}`}
+                        className="border border-white/10 bg-white/[0.035] p-4"
+                      >
+                        <div className="flex items-start gap-4">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]/62">
+                            {(workIndex + 1).toString().padStart(2, "0")}
+                          </span>
+                          <div>
+                            <h5 className="font-display text-lg uppercase leading-[0.95] tracking-[0.02em] text-white">
+                              {work.title}
+                            </h5>
+                            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                              {work.meta}
+                            </p>
+                            {work.note ? (
+                              <p className="mt-3 text-sm leading-relaxed text-white/58">{work.note}</p>
+                            ) : null}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </motion.article>
       ))}
 

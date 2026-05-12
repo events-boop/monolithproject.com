@@ -61,7 +61,7 @@ export default function ExperimentalHero() {
 
           <div className="hidden md:flex justify-end col-span-2 gap-12 pointer-events-auto">
             <Link href="/schedule" className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors">Chapters</Link>
-            <Link href="/artists" className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors">Artists</Link>
+            <Link href="/lineup" className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors">Artists</Link>
             <Link href="/archive" className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors">Archive</Link>
           </div>
         </div>

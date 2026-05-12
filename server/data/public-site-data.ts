@@ -9,7 +9,6 @@ import { resolveEventPrimaryCta } from "../lib/public-cta";
 /** Core Socials & Links */
 export const LAYLO_URL = "/go/waitlist/general";
 export const SOUNDCLOUD_URL = "https://soundcloud.com/monolithproject";
-export const SPOTIFY_URL = "https://spotify.com/"; 
 export const TIKTOK_URL = "https://tiktok.com/@monolithproject";
 export const INSTAGRAM_MONOLITH = "https://instagram.com/monolithproject.events";
 export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";

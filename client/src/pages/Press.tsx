@@ -73,19 +73,16 @@ const pressHighlights = [
         outlet: "Chicago Scene",
         headline: "Monolith Project is redefining Chicago's underground house music experience",
         year: "2025",
-        url: "#",
     },
     {
         outlet: "Resident Advisor",
         headline: "The collectives bringing immersive dance culture back to the Midwest",
         year: "2025",
-        url: "#",
     },
     {
         outlet: "Chicago Reader",
         headline: "Untold Story: The late-night series that Chicago's house heads have been waiting for",
         year: "2024",
-        url: "#",
     },
 ];
 

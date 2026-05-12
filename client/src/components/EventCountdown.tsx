@@ -269,8 +269,8 @@ export default function EventCountdown({ event, eventId }: EventCountdownProps) 
                   </svg>
                 </a>
                 {/* Concierge VIP pathway */}
-                <a 
-                  href="https://wa.me/message/MONOLITH" 
+                <a
+                  href="/vip"
                   className="btn-text-action"
                 >
                   Table Reservations & VIP
