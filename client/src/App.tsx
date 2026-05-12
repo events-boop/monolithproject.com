@@ -149,6 +149,12 @@ function Router() {
       <Route path="/about" component={AboutTransition} />
       <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
       <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
+      <Route path="/SUNSETS">
+        <Redirect to="/sunsets" />
+      </Route>
+      <Route path="/Sunsets">
+        <Redirect to="/sunsets" />
+      </Route>
       <Route path="/sunsets" component={SunsetsLinkBioTransition} />
       <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
       <Route path="/radio" component={RadioTransition} />
@@ -290,7 +296,7 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
-  const normalizedLocation = location.split("?")[0].replace(/\/$/, "") || "/";
+  const normalizedLocation = (location.split("?")[0].replace(/\/$/, "") || "/").toLowerCase();
   const isStandaloneLanding = normalizedLocation === "/sunsets";
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
