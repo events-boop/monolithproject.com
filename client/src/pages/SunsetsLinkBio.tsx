@@ -37,29 +37,8 @@ const schedule = [
     title: "Independence Day On The Lake",
     venue: "Castaways, Chicago",
     time: "3 PM - 10 PM",
-    href: TICKET_HUB_HREF,
-  },
-  {
-    date: "August 19",
-    title: "Late Summer Chapter",
-    venue: "Castaways, Chicago",
-    time: "Golden Hour",
-    href: TICKET_HUB_HREF,
-  },
-  {
-    date: "August 22",
-    title: "Late Summer Chapter",
-    venue: "Castaways, Chicago",
-    time: "Golden Hour",
-    href: TICKET_HUB_HREF,
-  },
-  {
-    date: "September 19",
-    title: "Fall Chapter",
-    venue: "Castaways, Chicago",
-    time: "Golden Hour",
-    href: TICKET_HUB_HREF,
-  },
+    href: FIRST_ACCESS_HREF,
+  }
 ];
 
 const links: BioLink[] = [
@@ -72,10 +51,10 @@ const links: BioLink[] = [
     variant: "primary",
   },
   {
-    label: "2026 Schedule / Tickets",
+    label: "2026 Season Waitlist",
     eyebrow: "Posh",
-    sub: "The season path for July 4, August 22, and the finale.",
-    href: TICKET_HUB_HREF,
+    sub: "Get early access to all Chasing Sun(Sets) events this season.",
+    href: FIRST_ACCESS_HREF,
     icon: Ticket,
     variant: "warm",
   },
@@ -266,6 +245,42 @@ export default function SunsetsLinkBio() {
                 ))}
               </div>
 
+              {/* July 4th Featured Block */}
+              <motion.a
+                href={FIRST_ACCESS_HREF}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                onClick={() => trackSunsetsClick("July 4th Featured", FIRST_ACCESS_HREF)}
+                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#E8B86D]/40 bg-gradient-to-br from-[#E8B86D]/20 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#E8B86D]/70 hover:shadow-[0_15px_40px_rgba(232,184,109,0.25)]"
+              >
+                <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(232,184,109,0.15),transparent_60%)]" />
+                <div className="relative z-10 flex items-start justify-between">
+                  <div>
+                    <span className="inline-block rounded-full bg-[#E8B86D] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(232,184,109,0.5)]">
+                      Next Chapter
+                    </span>
+                    <h2 className="mt-3 text-3xl hero-wordmark font-light uppercase leading-[0.9] tracking-[0.02em] text-white">
+                      July 4th
+                      <br />
+                      <span className="text-[#E8B86D]">Open Air</span>
+                    </h2>
+                    <p className="mt-2 text-xs font-light text-white/70">
+                      Castaways, Chicago • 3 PM - 10 PM
+                    </p>
+                  </div>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E8B86D] text-black transition-transform duration-500 group-hover:scale-110">
+                    <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
+                  </div>
+                </div>
+                <div className="relative z-10 mt-4 border-t border-white/10 pt-3">
+                  <p className="flex items-center gap-2 text-[10px] font-light uppercase tracking-[0.2em] text-[#E8B86D]">
+                    <Sparkles className="h-3 w-3" />
+                    Join First Access Waitlist
+                  </p>
+                </div>
+              </motion.a>
+
               {/* Links Array */}
               <div className="mt-8 flex flex-col gap-1">
                 {links.map((item, index) => {
@@ -336,49 +351,7 @@ export default function SunsetsLinkBio() {
                 })}
               </div>
 
-              {/* Schedule Section */}
-              <section className="mt-10 border-t border-white/10 pt-8">
-                <div className="mb-6 flex items-center justify-between gap-3 px-2">
-                  <div>
-                    <p className="text-[9px] font-sans font-light uppercase tracking-[0.3em] text-[#E8B86D]/80">
-                      2026 Schedule
-                    </p>
-                    <h2 className="mt-2 text-xl hero-wordmark font-light uppercase tracking-[0.05em] text-white/90">
-                      Upcoming Chapters
-                    </h2>
-                  </div>
-                  <Waves className="h-5 w-5 text-cyan-100/40" strokeWidth={1} />
-                </div>
-
-                <div className="flex flex-col border-t border-white/5">
-                  {schedule.map((event, index) => (
-                    <motion.a
-                      key={event.date}
-                      href={event.href}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.48 + index * 0.05, duration: 0.5 }}
-                      onClick={() => trackSunsetsClick(`${event.date} tickets`, event.href)}
-                      className="group flex items-center justify-between gap-4 border-b border-white/5 py-4 px-2 transition-all duration-500 hover:bg-white/[0.02] hover:px-4"
-                    >
-                      <span className="flex-1">
-                        <span className="text-[10px] font-sans font-light uppercase tracking-[0.2em] text-[#E8B86D]/70 transition-colors group-hover:text-[#E8B86D]">
-                          {event.date}
-                        </span>
-                        <span className="mt-1 block text-base hero-wordmark tracking-[0.03em] text-white/80 transition-colors group-hover:text-white">
-                          {event.title}
-                        </span>
-                        <span className="mt-1 block text-[11px] font-light text-white/40">
-                          {event.venue} / {event.time}
-                        </span>
-                      </span>
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-500 group-hover:border-[#E8B86D]/40 group-hover:bg-[#E8B86D]/10 group-hover:text-[#E8B86D]">
-                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.5} />
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
-              </section>
+              {/* Removed Schedule Section */}
 
               {/* Footer */}
               <footer className="mt-10 pt-4 text-center">
