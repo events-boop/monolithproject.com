@@ -192,17 +192,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         location: "Chicago, IL",
         status: "coming-soon",
     },
-    {
-        id: "css-aug19",
-        series: "chasing-sunsets",
-        episode: "SUMMER '26",
-        title: "Chasing Sun(Sets)",
-        date: "August 19, 2026",
-        time: "Golden Hour",
-        venue: "Castaways",
-        location: "Chicago, IL",
-        status: "coming-soon",
-    },
+
     {
         id: "css-aug22",
         series: "chasing-sunsets",
