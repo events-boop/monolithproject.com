@@ -75,7 +75,7 @@ const links: BioLink[] = [
   },
   {
     type: "youtube",
-    label: "Watch The Recap",
+    label: "View Last Year's Event",
     eyebrow: "YouTube",
     sub: "See the energy from last year's Chasing Sun(Sets).",
     href: RECAP_HREF,
