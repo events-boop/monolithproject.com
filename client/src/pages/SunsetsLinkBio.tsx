@@ -14,6 +14,7 @@ import {
 import SEO from "@/components/SEO";
 
 type BioLink = {
+  type?: "link" | "youtube" | "soundcloud";
   label: string;
   eyebrow: string;
   sub: string;
@@ -94,6 +95,7 @@ const links: BioLink[] = [
     icon: Users,
   },
   {
+    type: "youtube",
     label: "Watch The Recap",
     eyebrow: "YouTube",
     sub: "See the energy from last year's Chasing Sun(Sets).",
@@ -102,7 +104,8 @@ const links: BioLink[] = [
     external: true,
   },
   {
-    label: "Follow The Sound",
+    type: "soundcloud",
+    label: "Featured: Chris IDH",
     eyebrow: "SoundCloud",
     sub: "Mixes, radio, and artist discovery from the Chasing archive.",
     href: SOUNDCLOUD_HREF,
@@ -264,10 +267,73 @@ export default function SunsetsLinkBio() {
               </div>
 
               {/* Links Array */}
-              <div className="mt-8 flex flex-col">
-                {links.map((item, index) => (
-                  <LinkCard key={item.label} item={item} index={index} />
-                ))}
+              <div className="mt-8 flex flex-col gap-1">
+                {links.map((item, index) => {
+                  if (item.type === "youtube") {
+                    return (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
+                        className="my-3 overflow-hidden rounded-[1.2rem] border border-white/10 bg-black/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+                      >
+                        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <Play className="h-3.5 w-3.5 text-[#E8B86D]" />
+                            <span className="text-[9px] font-sans font-light uppercase tracking-[0.2em] text-[#E8B86D]">
+                              {item.eyebrow}
+                            </span>
+                          </div>
+                          <span className="text-[10px] hero-wordmark tracking-[0.05em] text-white/60">
+                            {item.label}
+                          </span>
+                        </div>
+                        <iframe
+                          className="w-full aspect-video"
+                          src="https://www.youtube.com/embed/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA&controls=1&rel=0&modestbranding=1"
+                          title="YouTube video player"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </motion.div>
+                    );
+                  }
+
+                  if (item.type === "soundcloud") {
+                    return (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
+                        className="my-3 overflow-hidden rounded-[1.2rem] border border-white/10 bg-black/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+                      >
+                        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <Headphones className="h-3.5 w-3.5 text-cyan-200/80" />
+                            <span className="text-[9px] font-sans font-light uppercase tracking-[0.2em] text-cyan-200/80">
+                              {item.eyebrow}
+                            </span>
+                          </div>
+                          <span className="text-[10px] hero-wordmark tracking-[0.05em] text-white/60">
+                            {item.label}
+                          </span>
+                        </div>
+                        <iframe
+                          width="100%"
+                          height="140"
+                          scrolling="no"
+                          frameBorder="no"
+                          allow="autoplay"
+                          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chrisidh&color=%23E8B86D&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+                        />
+                      </motion.div>
+                    );
+                  }
+
+                  return <LinkCard key={item.label} item={item} index={index} />;
+                })}
               </div>
 
               {/* Schedule Section */}
