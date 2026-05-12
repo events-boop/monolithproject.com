@@ -36,7 +36,7 @@
     font-family: var(--font-hero);
     font-weight: 500;
     letter-spacing: 0.02em;
-    line-height: 0.84;
+    line-height: 0.95;
     text-transform: uppercase;
   }
 
@@ -59,7 +59,7 @@
     font-family: var(--font-heavy);
     font-weight: 400;
     letter-spacing: 0;
-    line-height: 0.84;
+    line-height: 0.95;
     text-transform: uppercase;
   }
 

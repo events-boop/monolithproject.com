@@ -212,7 +212,7 @@ export default function SunsetsLinkBio() {
                 <p className="text-[9px] font-sans font-light uppercase tracking-[0.4em] text-[#E8B86D]/80">
                   The Monolith Project Presents
                 </p>
-                <h1 className="mt-4 text-[clamp(3.5rem,15vw,5rem)] hero-wordmark font-light uppercase leading-[0.8] tracking-[0.02em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 drop-shadow-[0_0_30px_rgba(232,184,109,0.3)]">
+                <h1 className="mt-4 text-[clamp(2.75rem,11vw,4.5rem)] hero-wordmark font-light uppercase leading-[1] tracking-[0.02em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 drop-shadow-[0_0_30px_rgba(232,184,109,0.3)]">
                   Chasing
                   <br />
                   Sun(Sets)

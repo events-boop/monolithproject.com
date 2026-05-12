@@ -236,13 +236,13 @@ export default function Footer() {
 
         {/* Huge Edge-to-Edge Text */}
         <motion.div style={{ scale: textScale, y: textY, opacity: textOpacity }} className="w-full relative z-10">
-          <div className={`relative z-10 hero-wordmark ${fontSizeClass} leading-[0.75] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
+          <div className={`relative z-10 hero-wordmark ${fontSizeClass} leading-[0.95] text-center tracking-tight transition-all duration-700 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 drop-shadow-[0_0_0_${glowColor},0)] group-hover:drop-shadow-[0_0_80px_${glowColor},0.4)] mix-blend-overlay group-hover:mix-blend-normal uppercase`}>
             {displayTitle}
           </div>
 
           {/* Outline Overlay for Stroke Effect */}
           <div
-            className={`absolute inset-x-0 top-0 z-20 hero-wordmark ${fontSizeClass} leading-[0.75] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
+            className={`absolute inset-x-0 top-0 z-20 hero-wordmark ${fontSizeClass} leading-[0.95] text-center tracking-tight pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-700 text-transparent uppercase`}
             style={{
               WebkitTextStroke: "2px rgba(255,255,255,0.3)",
               transform: "translateZ(0)"
