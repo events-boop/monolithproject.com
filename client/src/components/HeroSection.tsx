@@ -212,18 +212,18 @@ function FloatingEventCard({
     <div
       key={headline}
       data-home-hero-card="true"
-      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-black/20 backdrop-blur-xl shadow-[0_32px_80px_rgba(0,0,0,0.6)] transition-colors duration-500 hover:bg-black/30"
+      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] shadow-[0_32px_80px_rgba(0,0,0,0.8)] transition-colors duration-500 hover:bg-[#111111]"
     >
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div
-          className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105 opacity-60"
+          className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105 opacity-80"
           style={{
             background:
-              "radial-gradient(circle at 18% 18%, rgba(224, 90, 58, 0.15), transparent 50%), radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.06), transparent 50%)",
+              "radial-gradient(circle at 18% 18%, rgba(224, 90, 58, 0.12), transparent 50%), radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.04), transparent 50%)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
       </div>
 
       {/* Content Layer */}

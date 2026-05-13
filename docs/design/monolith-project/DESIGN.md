@@ -14,13 +14,13 @@ colors:
   border: "#2A241E"
 typography:
   display-xl:
-    fontFamily: Kanit
+    fontFamily: General Sans
     fontSize: 96px
     fontWeight: 500
     lineHeight: 0.84
     letterSpacing: 0.01em
   display-lg:
-    fontFamily: Kanit
+    fontFamily: General Sans
     fontSize: 64px
     fontWeight: 500
     lineHeight: 0.88
@@ -32,7 +32,7 @@ typography:
     lineHeight: 0.92
     letterSpacing: -0.02em
   wordmark:
-    fontFamily: Kanit
+    fontFamily: General Sans
     fontSize: 16px
     fontWeight: 500
     lineHeight: 1
@@ -126,12 +126,12 @@ The parent palette should stay anchored in near-black surfaces, warm off-white t
 
 The core hierarchy should stay simple:
 
-- **Kanit Medium 500** for the parent Monolith hero treatment, wordmark, and system-level page titles
+- **General Sans Medium 500** for the parent Monolith hero treatment, wordmark, and system-level page titles
 - **Archivo Black** for secondary structural headlines that need more mass
 - **Inter** for body copy and utility explanations
 - **JetBrains Mono** for metadata, labels, timestamps, and navigation microcopy
 
-Kanit is the in-between point for the parent identity: cleaner and less heavy than Archivo Black, but more substantial than the previous thin wordmark direction. The site should not introduce extra display voices at the parent-brand layer unless they belong to a series. This is the stabilizing system, not the experimental one.
+General Sans is the precise, architectural point for the parent identity: cleaner and more structural than Archivo Black, but more substantial than the previous thin wordmark direction. The site should not introduce extra display voices at the parent-brand layer unless they belong to a series. This is the stabilizing system, not the experimental one.
 
 ## Layout
 
