@@ -323,7 +323,7 @@ export default function InteractiveNavigationOverlay({
                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
                 rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
                 onClick={handleLinkClick(view.primaryHref)}
-                className="btn-pill-neutral btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                className="btn-pill-monolith btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               >
                 {view.primaryLabel}
                 <ArrowUpRight className="h-4 w-4" />
@@ -543,7 +543,7 @@ export default function InteractiveNavigationOverlay({
                                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
                                 rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
                                 onClick={handleLinkClick(view.primaryHref)}
-                                className="btn-pill-neutral btn-pill-compact"
+                                className="btn-pill-monolith btn-pill-compact"
                               >
                                 {view.primaryLabel}
                                 <ArrowUpRight className="h-4 w-4" />

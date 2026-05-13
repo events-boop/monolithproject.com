@@ -9,6 +9,7 @@ export type LeadPayload = HoneypotPayload & {
   instagramHandle?: string;
   consent: true;
   source: string;
+  formType?: string;
   funnelId?: string;
   offerId?: string;
   eventInterest?: string;
@@ -93,6 +94,27 @@ export interface TicketIntentPayload {
   lastFbclid?: string;
   lastTtclid?: string;
   lastMsclkid?: string;
+}
+
+export interface LinkClickPayload {
+  contactId?: string;
+  anonymousSessionId?: string;
+  buttonName: string;
+  destinationUrl: string;
+  pagePath: string;
+  eventSlug?: string;
+  eventDate?: string;
+  interestType?: string;
+  channel?: string;
+  source?: string;
+}
+
+export interface PageViewPayload {
+  contactId?: string;
+  anonymousSessionId?: string;
+  pagePath: string;
+  eventSlug?: string;
+  source?: string;
 }
 
 export type BookingInquiryPayload = HoneypotPayload & {
@@ -220,6 +242,38 @@ export async function trackTicketIntent(source: string, eventId?: string, destin
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch(() => undefined);
+}
+
+export function trackFunnelPageView(payload: PageViewPayload) {
+  const attribution = getAttributionPayload();
+  const enrichedPayload = {
+    ...attribution,
+    ...payload,
+    anonymousSessionId: payload.anonymousSessionId || attribution.sessionId,
+  };
+
+  void fetch("/api/track/page-view", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(enrichedPayload),
+    keepalive: true,
+  }).catch(() => undefined);
+}
+
+export function trackLinkClick(payload: LinkClickPayload) {
+  const attribution = getAttributionPayload();
+  const enrichedPayload = {
+    ...attribution,
+    ...payload,
+    anonymousSessionId: payload.anonymousSessionId || attribution.sessionId,
+  };
+
+  void fetch("/api/track/link-click", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(enrichedPayload),
     keepalive: true,
   }).catch(() => undefined);
 }

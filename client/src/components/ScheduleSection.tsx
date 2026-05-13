@@ -9,8 +9,8 @@ import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import ResponsiveImage from "./ResponsiveImage";
 import { cn } from "@/lib/utils";
-import { getSeriesColor, getSeriesColorOnLight, getEventWindow, getScheduledEvents } from "@/lib/siteExperience";
-import { MONOLITH_ORANGE_ON_LIGHT } from "@/lib/brand";
+import { getSeriesColor, getEventWindow, getScheduledEvents } from "@/lib/siteExperience";
+import { MONOLITH_ORANGE } from "@/lib/brand";
 import { trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { getEventPillToneClass } from "@/lib/ctaTone";
@@ -92,7 +92,7 @@ export default function ScheduleSection() {
   const gridY = useTransform(scrollYProgress, [0, 1], ["0px", "50px"]);
 
   return (
-    <section ref={sectionRef} id="schedule" className="relative overflow-hidden border-t border-black/10 bg-[#ECEBE6] py-20 md:py-40">
+    <section ref={sectionRef} id="schedule" className="relative overflow-hidden border-t border-white/10 bg-[#050505] py-20 md:py-40">
       {/* 🏛️ ARCHITECTURAL GRID LAYER (PARALLAX ENABLED) */}
       <motion.div 
         style={{ y: gridY }}
@@ -114,36 +114,36 @@ export default function ScheduleSection() {
 
       <div className="container relative z-10 mx-auto max-w-[90rem] px-4 sm:px-6">
         {/* Header Block */}
-        <div className="mb-12 flex flex-col justify-between gap-8 border-b border-black/15 pb-8 md:mb-24 md:pb-12 lg:flex-row lg:items-end">
+        <div className="mb-12 flex flex-col justify-between gap-8 border-b border-white/15 pb-8 md:mb-24 md:pb-12 lg:flex-row lg:items-end">
           <div className="relative">
              <span
                className="absolute -top-6 left-1 font-mono text-[11px] font-black uppercase tracking-[0.38em] md:-top-10 md:left-2"
-               style={{ color: `${MONOLITH_ORANGE_ON_LIGHT}b3` }}
+               style={{ color: `${MONOLITH_ORANGE}b3` }}
              >
                Season Schedule
              </span>
              <h2
                className="hero-wordmark text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
-               style={{ color: MONOLITH_ORANGE_ON_LIGHT }}
+               style={{ color: MONOLITH_ORANGE }}
              >
                <KineticDecryption text="THE 2026 SEASON" />
              </h2>
              <p
-               className="mt-4 max-w-[18rem] border-l pl-3 font-mono text-[11px] font-bold uppercase leading-6 tracking-[0.24em] text-black/70 md:mt-6 md:max-w-md md:pl-6"
-               style={{ borderColor: `${MONOLITH_ORANGE_ON_LIGHT}4D` }}
+               className="mt-4 max-w-[18rem] border-l pl-3 font-mono text-[11px] font-bold uppercase leading-6 tracking-[0.24em] text-white/70 md:mt-6 md:max-w-md md:pl-6"
+               style={{ borderColor: `${MONOLITH_ORANGE}4D` }}
              >
                Open-air days, late rooms, and tightly capped releases across one Chicago season.
              </p>
           </div>
 
-          <div className="z-20 flex max-w-full gap-1 overflow-x-auto rounded-full border border-black/15 bg-white/55 p-1 shadow-[inset_0_1px_4px_rgba(0,0,0,0.06),0_12px_32px_rgba(0,0,0,0.08)] backdrop-blur-md no-scrollbar">
+          <div className="z-20 flex max-w-full gap-1 overflow-x-auto rounded-full border border-white/15 bg-black/[0.04] p-1 shadow-none backdrop-blur-md no-scrollbar">
             {months.map(month => (
               <button
                 key={month}
                 onClick={() => setActiveMonth(month)}
                 className={`relative shrink-0 min-h-[var(--tap-target-min)] px-4 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${activeMonth === month
                   ? "text-white shadow-sm"
-                  : "text-black/65 hover:text-black"
+                  : "text-white/65 hover:text-white"
                   }`}
               >
                 {activeMonth === month && (
@@ -160,7 +160,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* List Header - HUD Style (Hidden on Mobile) */}
-        <div className="hidden grid-cols-12 gap-4 pb-4 pt-4 font-mono text-[10px] font-black uppercase tracking-[0.25em] text-black/55 lg:grid">
+        <div className="hidden grid-cols-12 gap-4 pb-4 pt-4 font-mono text-[10px] font-black uppercase tracking-[0.25em] text-white/55 lg:grid">
           <div className="col-span-2 pl-4">Date / Time</div>
           <div className="col-span-1 text-center">Status</div>
           <div className="col-span-4 pl-4">Event Identity</div>
@@ -169,11 +169,11 @@ export default function ScheduleSection() {
         </div>
 
         {/* Schedule Wrapper */}
-        <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-black/15 bg-white/75 shadow-[0_24px_70px_rgba(0,0,0,0.09),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl md:rounded-[2rem]">
+        <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-white/15 bg-black/[0.02] shadow-[0_24px_70px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:rounded-[2rem]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
-              <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-black/45 md:mb-4 md:text-3xl">No Events Found</span>
-              <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-black/60">No matching dates for {activeMonth}</p>
+              <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-white/45 md:mb-4 md:text-3xl">No Events Found</span>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-white/60">No matching dates for {activeMonth}</p>
             </div>
           ) : (
             filteredEvents.map((event, index) => {
@@ -184,12 +184,12 @@ export default function ScheduleSection() {
               const detailsHref = getEventDetailsHref(event);
               const isJulyHoliday =
                 dateMonth.toUpperCase().startsWith("JUL") && (dayNumber === 4 || dayNumber === 5);
-              const seriesAccent = getSeriesColorOnLight(event.series);
+              const seriesAccent = getSeriesColor(event.series);
 
               return (
                 <motion.div
                   key={event.id}
-                  className="group relative border-b border-black/10 last:border-b-0"
+                  className="group relative border-b border-white/10 last:border-b-0"
                 >
                   <div
                     className={`absolute bottom-0 left-0 top-0 w-[4px] opacity-0 transition-opacity duration-500 ${isExpanded ? "opacity-100" : "group-hover:opacity-100"}`}
@@ -198,7 +198,7 @@ export default function ScheduleSection() {
 
                   {/* Main Event Row */}
                   <div
-                    className={`group relative z-10 w-full px-4 transition-colors duration-500 sm:px-6 ${isExpanded ? "bg-white/55" : "hover:bg-black/[0.025]"}`}
+                    className={`group relative z-10 w-full px-4 transition-colors duration-500 sm:px-6 ${isExpanded ? "bg-black/[0.04]" : "hover:bg-black/[0.025]"}`}
                   >
                     <div className="py-6 md:py-10 flex flex-col lg:grid lg:grid-cols-12 gap-5 md:gap-6 lg:items-center w-full text-left">
                       
@@ -206,14 +206,14 @@ export default function ScheduleSection() {
                       <div className="lg:col-span-2 flex items-center justify-between lg:justify-start lg:flex-col lg:items-start gap-2 lg:gap-1 pl-0 lg:pl-4">
                         <div className="flex flex-col">
                           <span className={cn(
-                            "hero-wordmark text-2xl font-black uppercase leading-none tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black sm:text-3xl md:text-4xl lg:text-5xl"
+                            "hero-wordmark text-2xl font-black uppercase leading-none tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white sm:text-3xl md:text-4xl lg:text-5xl"
                           )}
                           style={{ color: isJulyHoliday ? seriesAccent : undefined }}
                           >
                             {dayNumber ? `${dateMonth.substring(0, 3).toUpperCase()} ${dayNumber}` : dateMonth.toUpperCase()}
                           </span>
                           <span className={cn(
-                            "mt-1 block font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-black/65 lg:hidden xl:block"
+                            "mt-1 block font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-white/65 lg:hidden xl:block"
                           )}>
                             {event.time.split("—")[0]}
                           </span>
@@ -221,12 +221,12 @@ export default function ScheduleSection() {
                         
                         {/* Mobile Ping Indicator (only on mobile) */}
                         {shouldPing && (
-                          <div className="flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.055] px-2 py-1 lg:hidden">
+                          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/[0.055] px-2 py-1 lg:hidden">
                             <span className="relative flex h-2 w-2">
                               <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                               <span className={`relative inline-flex rounded-full h-2 w-2 ${event.recentlyDropped ? "bg-cyan-500" : "bg-primary"}`} />
                             </span>
-                            <span className="font-mono text-[10px] font-black tracking-widest text-black/60">
+                            <span className="font-mono text-[10px] font-black tracking-widest text-white/60">
                               {event.recentlyDropped ? "NEW DROP" : "LIVE"}
                             </span>
                           </div>
@@ -236,7 +236,7 @@ export default function ScheduleSection() {
                       {/* 📡 TELEMETRY (Desktop only) */}
                       <div className="lg:col-span-1 hidden lg:flex flex-col items-center gap-4">
                         {shouldPing && (
-                          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white shadow-sm">
+                          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-black shadow-sm">
                              <motion.div
                                 className="absolute inset-0 opacity-10"
                                 style={{
@@ -266,7 +266,7 @@ export default function ScheduleSection() {
                       {/* 🎫 EVENT IDENTITY */}
                       <div className="lg:col-span-4 flex flex-col gap-2 pl-0 lg:pl-4">
                         <h3 className={cn(
-                          "hero-wordmark text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-black/85 transition-colors duration-500 group-hover:text-black lg:text-[clamp(1.9rem,4vw,2.9rem)]"
+                          "hero-wordmark text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white lg:text-[clamp(1.9rem,4vw,2.9rem)]"
                         )}
                         style={{ color: isJulyHoliday ? seriesAccent : undefined }}
                         >
@@ -274,8 +274,8 @@ export default function ScheduleSection() {
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           <span
-                            className="rounded-full border border-black/10 bg-black/[0.055] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em]"
-                            style={{ color: getSeriesColorOnLight(event.series) }}
+                            className="rounded-full border border-white/10 bg-black/[0.055] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em]"
+                            style={{ color: getSeriesColor(event.series) }}
                           >
                             {seriesLabels[event.series]}
                           </span>
@@ -293,9 +293,9 @@ export default function ScheduleSection() {
                       {/* 📍 VENUE (Desktop only) */}
                       <div className="lg:col-span-2 hidden lg:flex flex-col">
                         <span className={cn(
-                          "font-serif text-xl font-semibold italic leading-tight text-black/78 transition-colors duration-500 group-hover:text-black lg:text-2xl"
+                          "font-serif text-xl font-semibold italic leading-tight text-white/78 transition-colors duration-500 group-hover:text-white lg:text-2xl"
                         )}>{event.venue}</span>
-                        <span className="mt-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-black/58">{event.location}</span>
+                        <span className="mt-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white/58">{event.location}</span>
                       </div>
 
                       {/* ⚡ ACTIONS (Full width on mobile) */}
@@ -325,13 +325,13 @@ export default function ScheduleSection() {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden border-t border-black/10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.035),transparent_100%)]"
+                        className="overflow-hidden border-t border-white/10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.035),transparent_100%)]"
                       >
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 px-6 md:px-10 py-10 lg:py-16">
                           
                           {/* Image Visual (Mobile: small crop, Desktop: full aspect) */}
                           <div className="lg:col-span-4 order-2 lg:order-1">
-                             <div className="relative aspect-video overflow-hidden rounded-2xl border border-black/15 shadow-[0_18px_45px_rgba(0,0,0,0.16)] lg:aspect-[4/5]">
+                             <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.16)] lg:aspect-[4/5]">
                                 <ResponsiveImage
                                   src={event.image || seriesDefaultImage[event.series]}
                                   alt={event.title}
@@ -351,28 +351,28 @@ export default function ScheduleSection() {
                           <div className="lg:col-span-8 order-1 lg:order-2 flex flex-col justify-center">
                             <div className="flex items-center gap-3 mb-6">
                                <div className="h-px w-8 bg-black/30 md:w-16" />
-                               <span className="font-mono text-[11px] font-black uppercase tracking-[0.28em] text-black/70">Event Dossier</span>
+                               <span className="font-mono text-[11px] font-black uppercase tracking-[0.28em] text-white/70">Event Dossier</span>
                             </div>
                             
-                            <p className="mb-10 max-w-3xl font-serif text-xl italic leading-snug text-black/86 md:mb-12 md:text-2xl lg:text-3xl">
+                            <p className="mb-10 max-w-3xl font-serif text-xl italic leading-snug text-white/86 md:mb-12 md:text-2xl lg:text-3xl">
                               {event.description || event.experienceIntro || "Join us for a night built on sound, intention, and proper scale."}
                             </p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-10 lg:mb-12">
                               {/* Stat Card: Personnel */}
-                              <div className="rounded-3xl border border-black/10 bg-white/88 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
+                              <div className="rounded-3xl border border-white/10 bg-black/[0.02] p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
                                 <span className={cn(
                                   "font-mono text-[10px] uppercase tracking-[0.4em] mb-4 block",
-                                  event.lineup ? "text-primary/85" : "text-black/60"
+                                  event.lineup ? "text-primary/85" : "text-white/60"
                                 )}>Lineup Detail</span>
-                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.lineup || "Lineup Release Pending"}</p>
+                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-white md:text-2xl">{event.lineup || "Lineup Release Pending"}</p>
                               </div>
 
                               {/* Stat Card: Logistics */}
-                              <div className="rounded-3xl border border-black/10 bg-white/88 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
-                                <span className="mb-4 block font-mono text-[10px] font-black uppercase tracking-[0.4em] text-black/62">Location Frame</span>
-                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-black md:text-2xl">{event.venue}</p>
-                                <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-widest text-black/62">{event.time} @ {event.location}</p>
+                              <div className="rounded-3xl border border-white/10 bg-black/[0.02] p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
+                                <span className="mb-4 block font-mono text-[10px] font-black uppercase tracking-[0.4em] text-white/62">Location Frame</span>
+                                <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-white md:text-2xl">{event.venue}</p>
+                                <p className="mt-3 font-mono text-[10px] font-bold uppercase tracking-widest text-white/62">{event.time} @ {event.location}</p>
                               </div>
                             </div>
  
@@ -431,8 +431,8 @@ export default function ScheduleSection() {
         </div>
 
         {/* Global Action Bar */}
-        <div className="relative z-20 flex flex-col gap-6 border-t border-black/15 px-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[11px] font-black uppercase tracking-[0.32em] text-black/62">
+        <div className="relative z-20 flex flex-col gap-6 border-t border-white/15 px-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-mono text-[11px] font-black uppercase tracking-[0.32em] text-white/62">
              New dates land as rooms lock in.
           </p>
           <div className="flex flex-wrap items-center gap-3">

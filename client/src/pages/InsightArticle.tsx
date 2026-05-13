@@ -246,7 +246,7 @@ export default function InsightArticle() {
                 
                 <MagneticButton strength={0.3}>
                    <Link href="/newsletter" asChild>
-                      <a className="btn-pill-neutral whitespace-nowrap">
+                      <a className="btn-pill-monolith whitespace-nowrap">
                          Secure Access
                       </a>
                    </Link>

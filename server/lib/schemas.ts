@@ -58,8 +58,11 @@ export const leadSchema = z.object({
   lastName: z.string().trim().max(80).optional(),
   phone: z.string().trim().max(40).optional(),
   instagramHandle: z.string().trim().max(80).optional(),
+  city: z.string().trim().max(100).optional(),
+  state: z.string().trim().max(80).optional(),
   consent: z.literal(true),
   source: z.string().trim().max(120).optional(),
+  formType: z.string().trim().max(80).optional(),
   funnelId: z.string().trim().max(120).optional(),
   offerId: z.string().trim().max(120).optional(),
   eventInterest: z.string().trim().max(120).optional(),
@@ -67,6 +70,29 @@ export const leadSchema = z.object({
   eventTitle: z.string().trim().max(160).optional(),
   interestTags: shortArray(12, 80),
   ...honeypotFields,
+  ...attributionFields,
+});
+
+export const clickCaptureSchema = z.object({
+  contactId: shortText(120),
+  anonymousSessionId: shortText(120),
+  buttonName: z.string().trim().min(1).max(120),
+  destinationUrl: z.string().trim().min(1).max(700),
+  pagePath: z.string().trim().min(1).max(240),
+  eventSlug: shortText(160),
+  eventDate: shortText(80),
+  interestType: shortText(80),
+  channel: shortText(80),
+  source: shortText(120),
+  ...attributionFields,
+});
+
+export const pageViewCaptureSchema = z.object({
+  contactId: shortText(120),
+  anonymousSessionId: shortText(120),
+  pagePath: z.string().trim().min(1).max(240),
+  eventSlug: shortText(160),
+  source: shortText(120),
   ...attributionFields,
 });
 

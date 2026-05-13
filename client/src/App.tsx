@@ -155,6 +155,7 @@ function Router() {
       <Route path="/Sunsets">
         <Redirect to="/sunsets" />
       </Route>
+      <Route path="/sunsets/" component={SunsetsLinkBioTransition} />
       <Route path="/sunsets" component={SunsetsLinkBioTransition} />
       <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
       <Route path="/radio" component={RadioTransition} />
@@ -344,7 +345,7 @@ function MainContentWrapper() {
              background: 'radial-gradient(1000px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), var(--scene-glow, rgba(255,255,255,0.03)), transparent 40%)'
            }}
         />
-        <Router />
+        {isStandaloneLanding ? <SunsetsLinkBioTransition /> : <Router />}
         {!isStandaloneLanding && (
           <>
             <ViewportLazy minHeightClassName="min-h-[24rem]" rootMargin="360px 0px">

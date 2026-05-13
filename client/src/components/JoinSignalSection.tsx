@@ -16,11 +16,11 @@ const toneStyles = {
     panel: "border-white/15 bg-white/[0.02] text-white/80",
   },
   warm: {
-    section: "bg-[#F4ECD9] border-black/10 text-[#121212]",
-    eyebrow: "text-[#A8492E]",
-    heading: "text-[#121212]",
-    body: "text-black/70",
-    panel: "border-black/10 bg-white/45 text-black/75",
+    section: "bg-[#050505] border-white/10 text-white",
+    eyebrow: "text-primary",
+    heading: "text-white",
+    body: "text-white/70",
+    panel: "border-white/10 bg-white/[0.04] text-white/75",
   },
 } as const;
 
@@ -72,7 +72,7 @@ export default function JoinSignalSection({
               <Link href="/newsletter" className="btn-pill-outline btn-pill-compact w-full justify-center">
                 Sign Up for Drops <ArrowUpRight className="w-4 h-4" />
               </Link>
-              <Link href="/radio" className="btn-pill-neutral btn-pill-compact w-full justify-center">
+              <Link href="/radio" className="btn-pill-monolith btn-pill-compact w-full justify-center">
                 Listen to Radio <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>

@@ -192,7 +192,7 @@ export default function AdminDashboard() {
                       </div>
                       <button 
                         type="submit"
-                        className="btn-pill-neutral btn-pill-wide"
+                        className="btn-pill-monolith btn-pill-wide"
                       >
                         Authorize Entry
                       </button>

@@ -150,7 +150,7 @@ export default function NewsletterSection({
                 <div className="flex flex-col md:flex-row gap-6 w-full">
                   <a 
                     href="/schedule"
-                    className="btn-pill-neutral btn-pill-wide group"
+                    className="btn-pill-monolith btn-pill-wide group"
                   >
                     <span>View Schedule</span>
                     <ArrowUpRight className="w-4 h-4 ml-3" />

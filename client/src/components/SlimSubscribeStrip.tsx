@@ -82,7 +82,7 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
           <button
             type="submit"
             disabled={submitting}
-            className={`${dark ? "btn-pill-neutral" : "btn-pill-dark"} disabled:opacity-50`}
+            className={`${dark ? "btn-pill-monolith" : "btn-pill-monolith"} disabled:opacity-50`}
           >
             {ok ? "SUBSCRIBED" : submitting ? "JOINING..." : "JOIN THE LIST"}
             <ArrowUpRight className="w-4 h-4" />

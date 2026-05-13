@@ -1,187 +1,377 @@
 ---
-version: alpha
+version: v2
 name: Chasing Sun(Sets)
-description: Reverse-engineered design system for the Chasing Sun(Sets) open-air series.
+description: The open-air Chasing Sun(Sets) design system. Warm, lakefront, golden-hour, premium, and conversion-focused without becoming beach-generic or cluttered.
+
 colors:
-  primary: "#E8B86D"
   canvas: "#0B0A09"
-  surface: "#2C1810"
-  surfaceAlt: "#18110D"
+  canvas-deep: "#050403"
+  surface: "#18110D"
+  surface-warm: "#2C1810"
+  surface-gold: "#3A2816"
   cream: "#FBF5ED"
   text: "#F8F2E8"
-  muted: "#C9B08C"
-  accentDeep: "#C2703E"
+  text-muted: "#C9B08C"
+  text-dim: "#8E7358"
+  primary: "#E8B86D"
+  primary-bright: "#FFD28A"
+  accent-deep: "#C2703E"
+  lake: "#193B3B"
   border: "#5C4331"
+  border-gold: "#A87B3F"
+
 typography:
+  display-xxl:
+    fontFamily: Archivo Black, Inter, Helvetica Neue, Arial, sans-serif
+    fontSize: 96px
+    fontWeight: 400
+    lineHeight: 0.82
+    letterSpacing: -0.04em
   display-xl:
-    fontFamily: Archivo Black
+    fontFamily: Archivo Black, Inter, Helvetica Neue, Arial, sans-serif
     fontSize: 88px
     fontWeight: 400
     lineHeight: 0.84
     letterSpacing: -0.04em
+  display-lg:
+    fontFamily: Archivo Black, Inter, Helvetica Neue, Arial, sans-serif
+    fontSize: 58px
+    fontWeight: 400
+    lineHeight: 0.9
+    letterSpacing: -0.03em
   display-accent:
-    fontFamily: Instrument Serif
+    fontFamily: Instrument Serif, Georgia, serif
     fontSize: 56px
     fontWeight: 400
     lineHeight: 0.92
     letterSpacing: -0.02em
   title-md:
-    fontFamily: Archivo Black
+    fontFamily: Archivo Black, Inter, Helvetica Neue, Arial, sans-serif
     fontSize: 36px
     fontWeight: 400
     lineHeight: 0.94
     letterSpacing: -0.02em
+  body-lg:
+    fontFamily: Inter, Helvetica Neue, Arial, sans-serif
+    fontSize: 18px
+    fontWeight: 400
+    lineHeight: 1.58
+    letterSpacing: 0
   body-md:
-    fontFamily: Inter
+    fontFamily: Inter, Helvetica Neue, Arial, sans-serif
     fontSize: 16px
     fontWeight: 400
     lineHeight: 1.65
+    letterSpacing: 0
+  body-sm:
+    fontFamily: Inter, Helvetica Neue, Arial, sans-serif
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
   label-caps:
-    fontFamily: JetBrains Mono
+    fontFamily: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace
     fontSize: 11px
     fontWeight: 500
     lineHeight: 1
     letterSpacing: 0.22em
+  button-label:
+    fontFamily: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace
+    fontSize: 12px
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: 0.12em
+
 rounded:
+  none: 0px
+  xs: 6px
   sm: 8px
   md: 18px
   lg: 28px
-  full: 999px
+  xl: 36px
+  full: 9999px
+
 spacing:
+  xxs: 2px
   xs: 4px
   sm: 8px
   md: 16px
   lg: 24px
   xl: 40px
-  xxl: 64px
-  section: 96px
+  2xl: 64px
+  3xl: 84px
+  section: 104px
+  linkbio: 20px
+
 components:
-  hero-banner:
+  hero-band:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.text}"
+    gradient: "radial warm gold over black lakefront base"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.2xl}"
+  linkbio-shell:
+    backgroundColor: "{colors.canvas-deep}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.linkbio}"
+  section-kicker:
+    textColor: "{colors.primary}"
+    typography: "{typography.label-caps}"
+  section-title:
+    textColor: "{colors.text}"
+    typography: "{typography.display-lg}"
+  poetic-line:
+    textColor: "{colors.primary-bright}"
+    typography: "{typography.display-accent}"
+  cta-primary:
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.canvas}"
+    rounded: "{rounded.full}"
+    typography: "{typography.button-label}"
+    padding: "{spacing.md} {spacing.lg}"
+  cta-gold:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.canvas}"
+    rounded: "{rounded.full}"
+    typography: "{typography.button-label}"
+    padding: "{spacing.md} {spacing.lg}"
+  cta-secondary:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.full}"
+    typography: "{typography.button-label}"
+    padding: "{spacing.md} {spacing.lg}"
+  event-card:
+    backgroundColor: "{colors.surface-warm}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border-gold}"
     rounded: "{rounded.lg}"
     padding: "{spacing.lg}"
-  cta-primary:
-    backgroundColor: "{colors.text}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.full}"
-    padding: "{spacing.sm}"
-  cta-secondary:
-    backgroundColor: "{colors.surfaceAlt}"
+  link-card:
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.text}"
-    rounded: "{rounded.full}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.md}"
+  link-card-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.canvas}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.md}"
+  proof-card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  cream-panel:
+    backgroundColor: "{colors.cream}"
+    textColor: "{colors.canvas}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  media-frame:
+    backgroundColor: "{colors.surface-gold}"
+    borderColor: "{colors.border-gold}"
+    rounded: "{rounded.lg}"
     padding: "{spacing.sm}"
-  section-kicker:
-    typography: "{typography.label-caps}"
+  signal-badge:
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.primary}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.sm}"
+    typography: "{typography.label-caps}"
+    padding: "{spacing.sm} {spacing.md}"
+
+  ex-pricing-tier:
+    description: Date-specific ticket card for July 4, August 22, or September 19.
+    backgroundColor: "{colors.surface-warm}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border-gold}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.lg}"
+  ex-pricing-tier-featured:
+    description: Featured next chapter card, usually July 4 or the most urgent on-sale date.
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.canvas}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  ex-product-selector:
+    description: Event interest selector for First Access, VIP, partner, gallery, recap, or sound.
+    backgroundColor: "{colors.surface}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.md}"
+  ex-cart-drawer:
+    description: Lightweight ticket path summary before sending users to Posh.
+    backgroundColor: "{colors.canvas-deep}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.lg}"
+  ex-app-shell-row:
+    description: Dashboard row for source, button, or event performance in the command center.
+    backgroundColor: "{colors.surface}"
+    activeIndicator: "{colors.primary}"
+    rounded: "{rounded.sm}"
+    padding: "{spacing.md}"
+  ex-data-table-cell:
+    description: Funnel dashboard cells for visits, signups, clicks, purchases, revenue, and cost metrics.
+    headerTypography: "{typography.label-caps}"
+    bodyTypography: "{typography.body-sm}"
+    rowBorder: "{colors.border}"
+    cellPadding: "{spacing.md}"
+  ex-auth-form-card:
+    description: First Access, VIP, ambassador, or partner lead capture form.
+    backgroundColor: "{colors.surface}"
+    borderColor: "{colors.border-gold}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  ex-modal-card:
+    description: Confirmation state after signup or lead submit.
+    backgroundColor: "{colors.surface-warm}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  ex-empty-state-card:
+    description: Empty gallery, no lineup yet, or ticket links coming soon state.
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-muted}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.xl}"
+  ex-toast:
+    description: Confirmation toast for tracked click or saved lead.
+    backgroundColor: "{colors.surface-gold}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border-gold}"
+    rounded: "{rounded.sm}"
+    padding: "{spacing.md} {spacing.lg}"
 ---
 
 # Chasing Sun(Sets)
 
 ## Overview
 
-Chasing Sun(Sets) is the open-air arm of Monolith. It should feel warmer, lighter, and more breathable than the parent system, but never soft or beach-generic. The right emotional target is golden hour with discipline: sunlit, social, premium, and still rooted in house music credibility.
+Chasing Sun(Sets) is the open-air arm of Monolith. It should feel warmer, lighter, and more breathable than the parent system, but never soft, generic, or beachy. The target is golden hour with discipline: sunlit, social, premium, lakefront, and still rooted in house music credibility.
 
-The route family is:
+This file governs:
 
+- `/sunsets`
 - `/chasing-sunsets`
 - `/chasing-sunsets/:season`
+- date-specific Chasing Sun(Sets) ticket and lead flows
 
-The current page architecture is already clear:
+## Design Intent
 
-1. hero
-2. concept
-3. manifesto / ticketing
-4. records / archive
-5. upcoming dates
-6. submit / join
-7. FAQ / funnel
+The page should work as a modern mini hub: Instagram bio link, ad landing page, QR destination, ticket hub, recap hub, and first-access funnel. It is allowed to be more atmospheric than the parent Monolith shell, but it still needs direct conversion paths.
 
-Top fixes to prioritize:
+Priority hierarchy:
 
-- Increase the amount of warm-light breathing room so the page feels more open-air and less like a dark site with gold text.
-- Standardize flyer, archive, and ticket modules into one family.
-- Keep the summer-premium tone without drifting into generic beige lifestyle branding.
-- Make the seasonal story easier to follow at a glance: next date, archive, lineup, join.
+1. Join First Access / Join the Chat.
+2. 2026 Schedule / Tickets.
+3. VIP / Tables.
+4. Watch Recap.
+5. Follow the Sound.
+6. Gallery.
+7. Partner Inquiry.
 
-## Colors
+## Color Rules
 
-This system is built around auburn-brown depth, sun gold accents, and cream relief surfaces.
+The system is built around auburn depth, sun gold accents, lake darkness, and cream relief.
 
-- **Accent Gold** is the main highlight for Chasing Sun(Sets) and should drive headings, lines, and active states.
-- **Auburn / Deep Brown** keeps the open-air system grounded and cinematic after sunset.
-- **Cream** is essential. Without it, the page loses the air and warmth that separate it from Untold Story.
+- Gold is the active signal. Use it for next chapters, button focus, date emphasis, and section markers.
+- Deep brown and black carry the after-sunset premium feel.
+- Cream creates air and conversion clarity. Use it for primary CTAs and occasional relief panels.
+- Lake green should be a quiet undertone, not a dominant theme.
+- Avoid purple, cyan, neon blue, or unrelated festival colors.
 
-## Typography
+## Typography Rules
 
-Chasing Sun(Sets) should use a dual-voice system:
+Use four voices only:
 
-- **Archivo Black** for the structural headline voice
-- **Instrument Serif** for select seasonal or poetic moments
-- **Inter** for body copy
-- **JetBrains Mono** for metadata and labels
+- Archivo Black for structural Chasing Sun(Sets) headlines.
+- Instrument Serif for poetic lines and seasonal moments.
+- Inter for body and explanatory copy.
+- JetBrains Mono for signal labels, dates, metadata, dashboard, and button microcopy.
 
-The serif should be used as seasoning, not as the default headline style. The series still needs structural strength.
+The serif is seasoning. Do not make the full page soft or editorial by overusing it.
 
-## Layout
+## Layout Rules
 
-This page should feel like a season deck more than a product landing page.
+The route should feel like a season deck and a conversion hub at the same time.
 
-Key layout behaviors:
+Core page architecture:
 
-- wider horizontal breathing room than the parent site
-- fewer stacked dark cards in a row
-- stronger alternation between content, image, and seasonal data
-- direct paths to schedule, archive, and join actions
-- shared event detail pages may inherit the Monolith conversion frame, but Chasing Sun(Sets) should open the copy, color, and spacing toward golden-hour clarity rather than generic dark luxury
+- Hero with name, one-liner, and primary first-access CTA.
+- Next chapter or schedule surface.
+- Link-in-bio action stack.
+- Experience proof using recap, gallery, sound, and crowd imagery.
+- VIP / partner / ambassador lead path.
+- FAQ or confidence block.
+- Final CTA.
 
-The archive and upcoming modules should feel like part of the same summer system, not separate mini-sites.
+For `/sunsets`, keep the structure tighter:
 
-## Elevation & Depth
+- Brand/title.
+- First Access as the dominant button.
+- Schedule/Tickets directly underneath.
+- Secondary links grouped by intent.
+- Confirmation copy: "You're in. Welcome to the Chasing Sun(Sets) circle. Watch the sun. Stay for the (sets)."
 
-Depth should come from warm gradients, dusk glows, framed image surfaces, and cream-vs-dark contrast. Chasing Sun(Sets) can hold more atmosphere than the parent brand, but the page should still read cleanly when color and motion are reduced.
+## Component Rules
 
-Use:
+Use the tokenized components above as the source of truth.
 
-- low, warm horizon glows
-- thin gold borders
-- framed editorial cards
-- selective white CTA contrast
+- `linkbio-shell` frames the social landing page. It can be compact, but not cramped.
+- `link-card-primary` is reserved for Join First Access / Join the Chat.
+- `event-card` is for July 4, August 22, and September 19 ticket paths.
+- `media-frame` should hold real recap, gallery, lakefront, skyline, crowd, or flyer assets.
+- `cream-panel` should appear only when the page needs a strong clarity break.
+- `signal-badge` is for Lakefront, House, Chicago, First Access, VIP, and similar metadata.
 
-## Shapes
+## Funnel Rules
 
-Chasing Sun(Sets) can be the roundest of the four systems, but only slightly. The series should still feel premium and controlled.
+The user should always understand the next click.
 
-- hero cards and media panels: rounded but architectural
-- pills: full rounded
-- gallery and archive tiles: medium radius with strong framing
+- First Access sends to Laylo.
+- Tickets send to Posh.
+- VIP / Tables sends to Fillout or a native lead form.
+- Watch Recap sends to YouTube.
+- Follow the Sound sends to SoundCloud.
+- Gallery sends to Pic-Time.
+- Partner Inquiry sends to Fillout or a native lead form.
 
-## Components
+**Action Stack & Link-in-Bio Specifics:**
+Link stacks must not be text-only lists. They must support a `gallery` component type pointing to Pic-Time. They must use dynamic external asset URLs (like SoundCloud artworks or gallery thumbnails) instead of fallback brand assets to establish immediate visual hierarchy for the cards.
 
-Core modules:
+Every link click should be trackable with button name, destination URL, page path, event slug when relevant, session id, and UTM fields.
 
-- seasonal hero with featured event
-- concept / manifesto blocks
-- ticketing surface
-- archive or records strip
-- upcoming dates grid
-- join / submit CTA block
-- FAQ and funnel surfaces
+## Responsive Rules
 
-Component-level fixes:
+Mobile is the primary viewport because this is a link-in-bio surface.
 
-- unify gold-border cards across concept, upcoming, and FAQ sections
-- give image-led modules more room to breathe vertically
-- keep the seasonal CTA pair consistent across all major blocks
-- use flyers and crowd frames as proof, not decoration
-- on shared event pages, preserve the parent decision-card and final-CTA structure while letting gold accents, outdoor arrival language, and seasonal proof carry the Chasing Sun(Sets) identity
+- The primary CTA must be visible without feeling buried under decorative copy.
+- Text inside buttons must fit at 320px width.
+- Date cards should not require horizontal scrolling.
+- Background glows should not reduce contrast.
+- The page can feel cinematic, but the action stack must stay obvious.
 
 ## Do's and Don'ts
 
-- Do let warmth and cream space carry the open-air feeling.
-- Do use gold as the active signal everywhere inside the series.
-- Do keep imagery grounded in lakefront, skyline, crowd, and sunset energy.
-- Do make the route read as a season system instead of a single event flyer.
-- Don't let the page collapse back into generic dark luxury blocks.
-- Don't use purple, cyan, or unrelated neon accents here.
+### Do
+
+- Let warmth and cream space carry the open-air feeling.
+- Use gold as the active signal everywhere inside the series.
+- Keep imagery grounded in lakefront, skyline, crowd, sound, sunset, and real event proof.
+- Make the route read as a season system, not a single flyer.
+- Keep CTA copy direct and repeated at natural decision points.
+
+### Don't
+
+- Don't let the page collapse into generic dark luxury blocks.
 - Don't overload the page with isolated card styles or one-off borders.
+- Don't use decorative glows where content clarity is needed.
+- Don't make the link-in-bio page send users to the home page before they see the CTAs.
+- Don't put a long form on the first screen if Laylo is the primary capture layer.

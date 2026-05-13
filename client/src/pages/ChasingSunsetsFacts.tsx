@@ -91,7 +91,7 @@ export default function ChasingSunsetsFacts() {
                 href={POSH_TICKET_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-pill-dark"
+                className="btn-pill-monolith"
               >
                 {CTA_LABELS.tickets}
               </a>

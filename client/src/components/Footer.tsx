@@ -39,6 +39,7 @@ const links = [
   {
     title: "Series", items: [
       { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
+      { name: "Sun(Sets) Link In Bio", href: "/sunsets" },
       { name: "Untold Story", href: "/story" },
       { name: "Radio Show", href: "/radio" },
     ]
@@ -109,7 +110,7 @@ export default function Footer() {
   }
 
   const renderItemLabel = (name: string) => {
-    if (name === "Chasing Sun(Sets)") {
+    if (name === "Chasing Sun(Sets)" || name === "Sun(Sets) Link In Bio") {
       return (
         <span className="inline-flex items-center gap-1.5">
           <Sun className="w-3.5 h-3.5 text-clay" />

@@ -15,6 +15,7 @@ import sponsorRouter from "./routes/sponsor";
 import siteDataRouter from "./routes/site-data";
 import opsRouter from "./routes/ops";
 import outboundRouter from "./routes/outbound";
+import trackingRouter from "./routes/tracking";
 import spaRouter from "./routes/spa";
 
 type CreateAppOptions = {
@@ -35,6 +36,8 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/contact", methods: ["POST"] },
   { path: "/api/booking-inquiry", methods: ["POST"] },
   { path: "/api/ticket-intent", methods: ["POST"] },
+  { path: "/api/track/page-view", methods: ["POST"] },
+  { path: "/api/track/link-click", methods: ["POST"] },
   { path: "/api/sponsor-access", methods: ["POST"] },
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },
@@ -77,6 +80,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(siteDataRouter);
   app.use(opsRouter);
   app.use(outboundRouter);
+  app.use(trackingRouter);
 
   for (const guard of METHOD_GUARDS) {
     app.all(guard.path, createMethodNotAllowedHandler(guard.methods));

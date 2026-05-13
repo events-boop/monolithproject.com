@@ -285,7 +285,7 @@ function FloatingEventCard({
             <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
-              <a className="btn-pill-neutral btn-pill-wide">
+              <a className="btn-pill-monolith btn-pill-wide">
                 {contextualFallbackAction.label}
               </a>
             </Link>
@@ -309,7 +309,7 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="btn-pill-neutral btn-pill-wide"
+      className="btn-pill-monolith btn-pill-wide"
     >
       {label}
     </a>
@@ -397,11 +397,11 @@ export default function HeroSection() {
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                <Link href="/tickets" className="btn-pill-neutral btn-pill-wide">
+                <Link href="/tickets" className="btn-pill-monolith btn-pill-wide">
                   Tickets
                 </Link>
-                <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide">
-                  July 4 Updates
+                <Link href="/sunsets" className="btn-pill-outline btn-pill-wide">
+                  Sun(Sets) Hub
                 </Link>
               </div>
             </div>

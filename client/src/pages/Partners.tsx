@@ -212,7 +212,7 @@ export default function Partners() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative flex-1 min-h-[16rem] overflow-hidden border border-white/10 bg-zinc-950 cursor-pointer transition-colors duration-500 hover:border-white/25"
+                    className="group relative flex-1 min-h-[16rem] overflow-hidden border border-white/10 bg-[#111111] cursor-pointer transition-colors duration-500 hover:border-white/25"
                     onClick={() => openInquiry("general")}
                   >
                     <div className="absolute inset-0">
@@ -225,12 +225,12 @@ export default function Partners() {
                     </div>
                     <div className="relative z-10 h-full flex flex-col justify-between">
                       <div className="p-5">
-                        <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-zinc-950/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-[#111111]/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
                           <r.icon className="w-3.5 h-3.5 text-primary" />
                           {r.code}
                         </span>
                       </div>
-                      <div className="flex justify-between items-end p-5 bg-zinc-950/60 backdrop-blur-xl border-t border-white/10">
+                      <div className="flex justify-between items-end p-5 bg-[#111111]/60 backdrop-blur-xl border-t border-white/10">
                         <h3 className="font-display text-xl lg:text-2xl text-white uppercase leading-[0.92]">{r.title}</h3>
                         <span aria-hidden className="w-10 h-10 border border-white/20 bg-white/5 group-hover:bg-white/15 text-white flex items-center justify-center transition-colors">
                           <ArrowUpRight className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function Partners() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.05, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="group md:col-span-5 relative h-[400px] md:h-full overflow-hidden border border-white/10 bg-zinc-950 cursor-pointer transition-colors duration-500 hover:border-white/25"
+                className="group md:col-span-5 relative h-[400px] md:h-full overflow-hidden border border-white/10 bg-[#111111] cursor-pointer transition-colors duration-500 hover:border-white/25"
                 onClick={() => openInquiry("general")}
               >
                 <div className="absolute inset-0">
@@ -260,12 +260,12 @@ export default function Partners() {
                 </div>
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div className="p-6">
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-zinc-950/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/15 bg-[#111111]/70 backdrop-blur-md font-mono text-[10px] tracking-[0.28em] uppercase text-white/80">
                       <Wrench className="w-3.5 h-3.5 text-primary" />
                       {productionRoles[2].code}
                     </span>
                   </div>
-                  <div className="flex justify-between items-end p-6 bg-zinc-950/60 backdrop-blur-xl border-t border-white/10">
+                  <div className="flex justify-between items-end p-6 bg-[#111111]/60 backdrop-blur-xl border-t border-white/10">
                     <h3 className="font-display text-2xl lg:text-4xl text-white uppercase leading-[0.92] max-w-[14ch]">
                       Stagehands<br />& Operations.
                     </h3>
@@ -285,7 +285,7 @@ export default function Partners() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.05 + i * 0.05, duration: 0.5 }}
-                    className="group relative flex-1 min-h-[10rem] border border-white/10 bg-zinc-950/40 backdrop-blur-sm cursor-pointer transition-colors duration-300 hover:bg-zinc-900/50 hover:border-white/20 p-5 flex flex-col justify-between"
+                    className="group relative flex-1 min-h-[10rem] border border-white/10 bg-[#111111]/40 backdrop-blur-sm cursor-pointer transition-colors duration-300 hover:bg-[#1a1a1a]/50 hover:border-white/20 p-5 flex flex-col justify-between"
                     onClick={() => openInquiry("general")}
                   >
                     <div>
@@ -319,7 +319,7 @@ export default function Partners() {
                     <button
                         type="button"
                         onClick={() => openInquiry("general")}
-                        className="btn-pill-neutral"
+                        className="btn-pill-monolith"
                     >
                         Submit Crew Inquiry
                     </button>

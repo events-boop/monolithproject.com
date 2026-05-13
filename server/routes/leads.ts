@@ -13,6 +13,7 @@ import { eq } from "drizzle-orm";
 import { sendWelcomeEmail } from "../services/email";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
+import { markLeadCaptureProviderStatus, persistLeadCapture } from "../services/crm-store";
 
 const router = Router();
 
@@ -82,6 +83,12 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
   const operation = (async () => {
     const dbLeadId = randomUUID();
     const db = getDatabase();
+    const crmCapture = await persistLeadCapture({
+      lead: parsed.data,
+      provider,
+      idempotencyKey,
+      requestId,
+    });
 
     try {
       // 1. Backup to DB first (Critical)
@@ -113,6 +120,7 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
           .where(eq(leads.id, dbLeadId))
           .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'success':`, err));
       }
+      void markLeadCaptureProviderStatus(crmCapture, "success");
 
       const body = {
         ok: true,
@@ -154,6 +162,7 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
           .where(eq(leads.id, dbLeadId))
           .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'failed':`, err));
       }
+      void markLeadCaptureProviderStatus(crmCapture, "failed", rawMessage);
 
       const body = {
         ok: false,

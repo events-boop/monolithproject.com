@@ -793,7 +793,7 @@ export default function InquiryPortal() {
                           <button
                             type="button"
                             onClick={closeInquiry}
-                            className="btn-pill-neutral btn-pill-compact"
+                            className="btn-pill-monolith btn-pill-compact"
                           >
                             Close Portal
                           </button>

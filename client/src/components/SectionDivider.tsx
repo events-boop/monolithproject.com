@@ -17,7 +17,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
   const [isInView, setIsInView] = useState(false);
 
   const isDark = dark !== false;
-  const borderColor = isDark ? "border-white/10" : "border-black/10";
+  const borderColor = isDark ? "border-white/10" : "border-white/10";
   const numberColor = isDark ? "text-white/16" : "text-black/10";
   const labelColor = isDark ? "text-white/64" : "text-black/48";
   const lineColor = isDark ? "bg-white/12" : "bg-black/12";
@@ -74,7 +74,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
       <div
         className={cn(
           "absolute inset-0 pointer-events-none",
-          isDark ? "bg-[#070707]/72" : "bg-[#F4ECD9]/90",
+          isDark ? "bg-[#070707]/72" : "bg-[#050505]/90",
         )}
       />
 

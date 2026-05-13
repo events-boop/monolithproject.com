@@ -49,7 +49,7 @@ export default function NotFound() {
 
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
                 <Link href="/" asChild>
-                    <button className="btn-pill-neutral group">
+                    <button className="btn-pill-monolith group">
                         <span className="relative z-10">Back to Monolith</span>
                         <ArrowLeft className="w-5 h-5" />
                     </button>

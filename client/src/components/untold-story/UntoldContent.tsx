@@ -162,7 +162,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             <div className="mb-10">
               <button
                 onClick={() => setFaqOpen(!faqOpen)}
-                className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-gray-100 transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
+                className="w-full flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white text-[#0B0C10] hover:bg-[#e7e5e4] transition-all duration-300 font-display text-xl md:text-2xl uppercase tracking-wide group shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
               >
                 <span>Frequently Asked Questions</span>
                 <span className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">

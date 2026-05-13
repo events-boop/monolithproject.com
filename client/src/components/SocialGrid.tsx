@@ -20,12 +20,12 @@ export default function SocialGrid() {
     const colors = [
         "bg-primary",      // Coral/Orange
         "bg-clay",         // Terracotta
-        "bg-charcoal",     // Dark
+        "bg-black",     // Dark
         "bg-stone",        // Grey
         "bg-sand",         // Light
         "bg-primary/80",   // Variatons
         "bg-clay/80",
-        "bg-charcoal/80",
+        "bg-black/80",
     ];
 
     // Generate a deterministic pattern of cells
@@ -58,23 +58,23 @@ export default function SocialGrid() {
             {/* Content Overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10 pointer-events-none">
 
-                <div className="bg-white/90 backdrop-blur-md border border-charcoal/10 p-8 md:p-12 shadow-2xl skew-x-[-2deg] pointer-events-auto hover:scale-105 transition-transform duration-500">
-                    <p className="font-mono text-sm md:text-base text-charcoal/60 uppercase tracking-[0.2em] mb-4">
+                <div className="bg-white/90 backdrop-blur-md border border-black/10 p-8 md:p-12 shadow-2xl skew-x-[-2deg] pointer-events-auto hover:scale-105 transition-transform duration-500">
+                    <p className="font-mono text-sm md:text-base text-black/60 uppercase tracking-[0.2em] mb-4">
                         Follow the frequency
                     </p>
 
-                    <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-charcoal uppercase leading-[0.8] tracking-tight mb-8">
+                    <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-black uppercase leading-[0.8] tracking-tight mb-8">
                         @MONOLITHPROJECT
                     </h2>
 
-                    <div className="flex items-center justify-center gap-4 text-charcoal">
+                    <div className="flex items-center justify-center gap-4 text-black">
                         {socials.map((s) => (
                             <a
                                 key={s.name}
                                 href={s.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-12 h-12 rounded-full border border-charcoal/20 flex items-center justify-center hover:bg-charcoal hover:text-white transition-all group bg-white"
+                                className="w-12 h-12 rounded-full border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-all group bg-white"
                                 aria-label={`Follow us on ${s.name}`}
                             >
                                 <s.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -88,7 +88,7 @@ export default function SocialGrid() {
             {/* Back to top (Visual only for now, or functional) */}
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="absolute bottom-6 right-6 bg-white border border-charcoal/10 p-3 shadow-lg hover:bg-charcoal hover:text-white transition-colors z-20"
+                className="absolute bottom-6 right-6 bg-white border border-black/10 p-3 shadow-lg hover:bg-black hover:text-white transition-colors z-20"
                 aria-label="Back to top"
             >
                 <ArrowUpRight className="w-5 h-5" />

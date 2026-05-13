@@ -211,12 +211,12 @@ export default function RadioEpisode() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-pill-dark"
+                  className="btn-pill-monolith"
                 >
                   {link.label}
                 </a>
               ) : (
-                <Link key={link.label} href={link.url} className="btn-pill-dark">
+                <Link key={link.label} href={link.url} className="btn-pill-monolith">
                   {link.label}
                 </Link>
               ),

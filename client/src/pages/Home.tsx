@@ -79,9 +79,14 @@ export default function Home() {
                 The Monolith Project produces <span className="text-[#E8B86D]">Chasing Sun(Sets)</span>,{" "}
                 <span className="text-[#B9F6FF]">Untold Story</span>, and artist-led radio in Chicago.
               </p>
-              <Link href="/tickets" className="btn-pill-neutral btn-pill-wide justify-center">
-                Current Tickets
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
+                <Link href="/tickets" className="btn-pill-monolith btn-pill-wide justify-center">
+                  Current Tickets
+                </Link>
+                <Link href="/sunsets" className="btn-pill-outline btn-pill-wide justify-center">
+                  Sun(Sets) Hub
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -96,21 +101,24 @@ export default function Home() {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
                 <h2 className="section-display-title-compact max-w-[16ch] text-white hyphens-none break-keep text-balance">
-                  2nd Annual 4th of July @ Castaways
+                  Chasing Sun(Sets) July 4 Open-Air
                 </h2>
                 <p className={titleSubtextClass}>
-                  This is the next Chasing Sun(Sets) drop, not the live ticketed event. Join the July 4 list for first access, lineup news, and season updates.
+                  The official summer hub is live. Join First Access for ticket drops, lineup announcements, VIP tables, recap video, sound, gallery, and partner inquiries.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                  <Link href="/sunsets" className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto">
+                    Open Sun(Sets) Hub
+                  </Link>
                   <a
                     href={CHASING_SUNSETS_DROP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-pill-neutral btn-pill-wide w-full justify-center sm:w-auto"
+                    className="btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
                   >
-                    July 4 Updates
+                    Join First Access
                   </a>
-                  <Link href="/chasing-sunsets" className="btn-pill-outline btn-pill-wide w-full justify-center sm:w-auto">
+                  <Link href="/chasing-sunsets" className="btn-text-action">
                     Chasing Sun(Sets)
                   </Link>
                   <Link href="/schedule" className="btn-text-action">
@@ -210,12 +218,12 @@ export default function Home() {
                         href={untoldTicketHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-pill btn-pill-compact w-full justify-center sm:w-auto"
+                        className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto"
                       >
                         Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
                       </a>
                     ) : (
-                      <Link href={untoldTicketHref} className="btn-pill btn-pill-compact w-full justify-center sm:w-auto">
+                      <Link href={untoldTicketHref} className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto">
                         Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     )}
@@ -254,13 +262,13 @@ export default function Home() {
                 August 22, 2026
               </div>
               <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
-                September 19/26, 2026
+                September 19, 2026
               </div>
             </div>
           </div>
         </section>
 
-        <div id="season" className="bg-[#F4ECD9] transition-colors duration-500 relative z-10">
+        <div id="season" className="bg-[#050505] transition-colors duration-500 relative z-10">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
@@ -392,10 +400,10 @@ export default function Home() {
 
               <div className="rounded-full border border-white/10 bg-white/[0.04] p-3 md:p-4 backdrop-blur-xl">
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <Link href="/partners" className="btn-pill-primary btn-pill-compact w-full">
+                  <Link href="/partners" className="btn-pill-monolith btn-pill-compact w-full">
                     Partner With Us <ArrowUpRight className="w-4 h-4" />
                   </Link>
-                  <Link href="/contact" className="btn-pill-secondary btn-pill-compact w-full">
+                  <Link href="/contact" className="btn-pill-outline-dark btn-pill-compact w-full text-white border-white/20 hover:bg-white/10 hover:text-white">
                     Contact <ArrowUpRight className="w-4 h-4" />
                   </Link>
                 </div>
