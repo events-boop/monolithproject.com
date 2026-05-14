@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import SEO from "@/components/SEO";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 import { trackFunnelPageView, trackLinkClick } from "@/lib/api";
 
 type BioLink = {
@@ -37,6 +38,7 @@ const TICKET_HUB_HREF = "/chasing-sunsets#chasing-tickets";
 const RECAP_HREF = "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA";
 const SOUNDCLOUD_HREF = "https://soundcloud.com/chasing-sun-sets";
 const GALLERY_HREF = "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
+const JULY_4_FIRST_ACCESS_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 const AUGUST_22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
 const SEPTEMBER_19_EVENT_SLUG = "chasing-sunsets-september-19-2026";
@@ -209,6 +211,7 @@ function trackSunsetsClick(item: Pick<BioLink, "buttonName" | "href" | "eventSlu
 
 function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const Icon = item.icon;
+  const href = appendAttributionQueryParams(item.href);
   const isPrimary = item.variant === "primary";
   const cardClass = isPrimary
     ? "border-[#E8B86D]/70 bg-[#FBF5ED] text-[#050403] shadow-[0_16px_44px_rgba(232,184,109,0.18)] hover:border-[#FFD28A] hover:bg-white"
@@ -229,13 +232,13 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 
   return (
     <motion.a
-      href={item.href}
+      href={href}
       target={item.external ? "_blank" : undefined}
       rel={item.external ? "noopener noreferrer" : undefined}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-      onClick={() => trackSunsetsClick(item)}
+      onClick={() => trackSunsetsClick({ ...item, href })}
       data-sunsets-link={item.eyebrow.toLowerCase()}
       className={`group relative flex min-h-[76px] items-center gap-4 overflow-hidden rounded-[1.1rem] border p-4 transition duration-500 hover:-translate-y-0.5 ${cardClass} ${isPrimary ? "" : glowClass}`}
     >
@@ -314,7 +317,23 @@ export default function SunsetsLinkBio() {
                   <br />
                   Sun(Sets)
                 </h1>
-                <p className="mx-auto mt-6 max-w-xs text-xs font-light tracking-[0.1em] uppercase text-[#E8B86D]/90">
+
+                <motion.div 
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25, duration: 0.6 }}
+                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#E8B86D]/20 shadow-[0_15px_40px_rgba(232,184,109,0.15)]"
+                >
+                  <img
+                    src={JULY_4_FIRST_ACCESS_IMAGE}
+                    alt="Chasing Sun(Sets) July 4 First Access artwork"
+                    className="h-full w-full object-cover"
+                    loading="eager"
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
+                </motion.div>
+
+                <p className="mx-auto mt-8 max-w-xs text-xs font-light tracking-[0.1em] uppercase text-[#E8B86D]/90">
                   Watch the sun. Stay for the (sets).
                 </p>
                 <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
@@ -344,13 +363,13 @@ export default function SunsetsLinkBio() {
 
               {/* July 4th Featured Block */}
               <motion.a
-                href={FIRST_ACCESS_HREF}
+                href={appendAttributionQueryParams(FIRST_ACCESS_HREF)}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 onClick={() => trackSunsetsClick({
                   buttonName: "July 4 Tickets",
-                  href: FIRST_ACCESS_HREF,
+                  href: appendAttributionQueryParams(FIRST_ACCESS_HREF),
                   eventSlug: JULY_4_EVENT_SLUG,
                   eventDate: "2026-07-04",
                   interestType: "ticket_click",
@@ -360,7 +379,7 @@ export default function SunsetsLinkBio() {
               >
                 <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(232,184,109,0.15),transparent_60%)]" />
                 <div className="relative z-10 flex items-start justify-between">
-                  <div>
+                  <div className="min-w-0">
                     <span className="inline-block rounded-full bg-[#E8B86D] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(232,184,109,0.5)]">
                       Next Chapter
                     </span>
@@ -373,7 +392,7 @@ export default function SunsetsLinkBio() {
                       Castaways, Chicago • 3 PM - 10 PM
                     </p>
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E8B86D] text-black transition-transform duration-500 group-hover:scale-110">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E8B86D] text-black transition-transform duration-500 group-hover:scale-110">
                     <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
                   </div>
                 </div>
@@ -391,11 +410,11 @@ export default function SunsetsLinkBio() {
                     2026 Schedule
                   </p>
                   <a
-                    href={TICKET_HUB_HREF}
+                    href={appendAttributionQueryParams(TICKET_HUB_HREF)}
                     onClick={() =>
                       trackSunsetsClick({
                         buttonName: "Schedule View",
-                        href: TICKET_HUB_HREF,
+                        href: appendAttributionQueryParams(TICKET_HUB_HREF),
                         eventSlug: JULY_4_EVENT_SLUG,
                         eventDate: "2026-07-04",
                         interestType: "schedule_view",
@@ -412,11 +431,11 @@ export default function SunsetsLinkBio() {
                   {schedule.map((event) => (
                     <a
                       key={event.eventSlug}
-                      href={event.href}
+                      href={appendAttributionQueryParams(event.href)}
                       onClick={() =>
                         trackSunsetsClick({
                           buttonName: `${event.date} Schedule`,
-                          href: event.href,
+                          href: appendAttributionQueryParams(event.href),
                           eventSlug: event.eventSlug,
                           eventDate:
                             event.eventSlug === JULY_4_EVENT_SLUG
@@ -452,6 +471,7 @@ export default function SunsetsLinkBio() {
                 {links.map((item, index) => {
                   if (item.type === "youtube" || item.type === "soundcloud" || item.type === "gallery") {
                     const Icon = item.icon;
+                    const href = appendAttributionQueryParams(item.href);
                     const actionLabel =
                       item.type === "youtube"
                         ? "Watch on YouTube"
@@ -461,13 +481,13 @@ export default function SunsetsLinkBio() {
                     return (
                       <motion.a
                         key={item.label}
-                        href={item.href}
+                        href={href}
                         target="_blank"
                         rel="noopener noreferrer"
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-                        onClick={() => trackSunsetsClick(item)}
+                        onClick={() => trackSunsetsClick({ ...item, href })}
                         className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#5C4331]/45 bg-[#18110D]/70 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#A87B3F]/70"
                       >
                         <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">

@@ -20,6 +20,7 @@ const PartnershipMarquee = lazy(() => import("@/components/PartnershipMarquee"))
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 
 function getStatusLabel(status?: string) {
   if (status === "on-sale") return "ON SALE";
@@ -111,7 +112,7 @@ export default function Home() {
                     Open Sun(Sets) Hub
                   </Link>
                   <a
-                    href={CHASING_SUNSETS_DROP_URL}
+                    href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"

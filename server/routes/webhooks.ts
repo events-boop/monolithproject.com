@@ -7,6 +7,7 @@ import { secureCompare } from "../lib/security";
 import { pickString, pickQuantity } from "../lib/payload";
 import { hasDatabase } from "../db/client";
 import { createRateLimitMiddleware } from "../services/rate-limit";
+import { persistPoshWebhookPurchase } from "../services/posh-webhook-store";
 import {
   insertSocialEchoActivity,
   readSocialEchoEventByKey,
@@ -76,12 +77,22 @@ router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, r
   const payload = parsed.data;
   const inferredEventType = pickString(payload, ["type", "event", "webhookType"]) || "unknown";
   const inferredEventId = pickString(payload, ["event.id", "eventId", "event_id", "event.slug", "eventSlug"]);
-  const inferredEventTitle = pickString(payload, ["event.name", "eventName", "event_title", "name"]);
+  const inferredEventTitle = pickString(payload, ["event.name", "eventName", "event_name", "event_title", "name"]);
   const inferredCity = pickString(payload, ["event.city", "city", "venue.city", "event.location.city"]);
-  const inferredStatus = pickString(payload, ["status", "order.status", "orderStatus"]);
+  const inferredStatus =
+    pickString(payload, ["status", "order.status", "orderStatus", "action"]) ||
+    (payload.cancelled === true
+      ? "cancelled"
+      : payload.refunded === true
+        ? "refunded"
+        : payload.disputed === true
+          ? "disputed"
+          : typeof payload.partialRefund === "number" && payload.partialRefund > 0
+            ? "refunded"
+            : null);
   const quantity = pickQuantity(payload);
   const providerEventId =
-    pickString(payload, ["id", "webhook_id", "eventWebhookId", "order.id", "orderId"]) ||
+    pickString(payload, ["id", "webhook_id", "eventWebhookId", "order.id", "orderId", "order_number", "tracking_link"]) ||
     `${inferredEventType}:${inferredEventId || inferredEventTitle || "unknown"}:${quantity}`;
 
   const eventKey = inferredEventId || inferredEventTitle || "unknown";
@@ -126,11 +137,28 @@ router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, r
   }
 
   if (!inserted) {
+    let crmPersistence: Awaited<ReturnType<typeof persistPoshWebhookPurchase>> | undefined;
+    if (hasDatabase()) {
+      try {
+        crmPersistence = await persistPoshWebhookPurchase(payload, requestId);
+      } catch (error) {
+        logEvent("posh.webhook_crm_persist_failed", {
+          requestId,
+          eventType: inferredEventType,
+          eventId: inferredEventId,
+          providerEventId,
+          duplicate: true,
+          error: error instanceof Error ? error.message : "unknown",
+        });
+      }
+    }
+
     logEvent("posh.webhook_duplicate_ignored", {
       requestId,
       activityId,
       providerEventId,
       eventType: inferredEventType,
+      crmStatus: crmPersistence?.status,
     });
     return res.status(200).json({ ok: true, requestId, duplicate: true });
   }
@@ -153,7 +181,7 @@ router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, r
 
   if (normalizedEventType.includes("pending")) {
     pendingDelta += quantity;
-  } else if (normalizedEventType.includes("updated")) {
+  } else if (normalizedEventType.includes("updated") || normalizedEventType.includes("update")) {
     if (
       normalizedStatus.includes("refund") ||
       normalizedStatus.includes("cancel") ||
@@ -197,6 +225,21 @@ router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, r
     await upsertSocialEchoEventStats(nextStats);
   }
 
+  let crmPersistence: Awaited<ReturnType<typeof persistPoshWebhookPurchase>> | undefined;
+  if (hasDatabase()) {
+    try {
+      crmPersistence = await persistPoshWebhookPurchase(payload, requestId);
+    } catch (error) {
+      logEvent("posh.webhook_crm_persist_failed", {
+        requestId,
+        eventType: inferredEventType,
+        eventId: inferredEventId,
+        providerEventId,
+        error: error instanceof Error ? error.message : "unknown",
+      });
+    }
+  }
+
   logEvent("posh.webhook_received", {
     requestId,
     eventType: inferredEventType,
@@ -207,6 +250,7 @@ router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, r
     quantity,
     goingCount: nextStats.goingCount,
     pendingCount: nextStats.pendingCount,
+    crmStatus: crmPersistence?.status,
     persistence: hasDatabase() ? "database" : "memory",
   });
 

@@ -25,6 +25,7 @@ import { archiveCollectionsBySlug } from "@/data/galleryData";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 import {
   getEventVenueLabel,
   getPrimaryTicketUrl,
@@ -309,7 +310,7 @@ export default function ChasingSunsets() {
                 kicker: "Drop List",
                 title: "Join Early",
                 body: "Get the date release before the public push.",
-                href: CHASING_SUNSETS_DROP_URL,
+                href: appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL),
                 external: true,
               },
             ].map((card, index) => (
@@ -661,7 +662,7 @@ export default function ChasingSunsets() {
                   </a>
                 </MagneticButton>
                 <a
-                  href={CHASING_SUNSETS_DROP_URL}
+                  href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center"

@@ -50,5 +50,10 @@ export function pickQuantity(payload: Record<string, unknown>) {
     return Math.min(20, tickets.length);
   }
 
+  const items = readPath(payload, ["items"]);
+  if (Array.isArray(items) && items.length > 0) {
+    return Math.min(20, items.length);
+  }
+
   return 1;
 }

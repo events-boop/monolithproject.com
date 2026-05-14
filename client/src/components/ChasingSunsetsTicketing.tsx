@@ -3,6 +3,7 @@ import type { ScheduledEvent } from "@shared/events/types";
 import { useLocation } from "wouter";
 import { getSeriesEvents } from "@/lib/siteExperience";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
+import { appendAttributionQueryParams } from "@/lib/attribution";
 
 type ChasingSunsetsTicketingProps = {
   featuredEvent?: ScheduledEvent | null;
@@ -133,7 +134,7 @@ export default function ChasingSunsetsTicketing({
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href={CHASING_SUNSETS_DROP_URL}
+                href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-pill-sunsets btn-pill-wide"
@@ -232,7 +233,7 @@ export default function ChasingSunsetsTicketing({
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <a
-                    href={CHASING_SUNSETS_DROP_URL}
+                    href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide"
@@ -269,7 +270,7 @@ export default function ChasingSunsetsTicketing({
                 ))}
               </ul>
               <a
-                href={CHASING_SUNSETS_DROP_URL}
+                href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide mt-6"

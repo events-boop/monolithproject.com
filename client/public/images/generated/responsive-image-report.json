@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-04-29T06:27:22.588Z",
+  "generatedAt": "2026-05-13T23:58:32.308Z",
   "widths": [
     480,
     1024,
     1920
   ],
   "totals": {
-    "originalBytes": 3509743,
-    "estimatedTransferBytes": 1367826,
-    "estimatedSavingsBytes": 2141917,
-    "variantBytes": 8056388
+    "originalBytes": 3862502,
+    "estimatedTransferBytes": 1379014,
+    "estimatedSavingsBytes": 2483488,
+    "variantBytes": 8132060
   },
   "images": [
     {
@@ -1561,6 +1561,56 @@
       "estimatedTransferKb": 24.3,
       "estimatedSavingsBytes": 37875,
       "estimatedSavingsPct": 60
+    },
+    {
+      "source": "/images/chasing-sunsets-july4-first-access.png",
+      "originalBytes": 352759,
+      "originalKb": 344.5,
+      "originalWidth": 400,
+      "originalHeight": 431,
+      "generatedBaseName": "chasing-sunsets-july4-first-access",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11188
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14036
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 11188
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 14036
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 11188
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-july4-first-access-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 14036
+        }
+      ],
+      "estimatedTransferBytes": 11188,
+      "estimatedTransferKb": 10.9,
+      "estimatedSavingsBytes": 341571,
+      "estimatedSavingsPct": 97
     },
     {
       "source": "/images/chasing-sunsets-premium.webp",
