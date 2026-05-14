@@ -845,14 +845,16 @@ export default function SunsetsLinkBio() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-[480px] z-10"
         >
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#F4F0EA]/10 bg-[#111111]/96 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#F4F0EA]/10 bg-[#111111] shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
             <ShareButton />
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <div className="pointer-events-none absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.18)_0%,rgba(232,184,109,0.09)_42%,transparent_72%)] blur-3xl" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.13),transparent_65%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.46)_0%,rgba(17,17,17,0.88)_30%,rgba(17,17,17,0.94)_52%,rgba(25,59,59,0.18)_73%,rgba(17,17,17,0.98)_100%)]" />
+            <div className="pointer-events-none absolute left-1/2 top-14 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.26)_0%,rgba(232,184,109,0.13)_30%,rgba(194,112,62,0.09)_50%,transparent_74%)] blur-3xl" />
+            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(232,184,109,0.13),rgba(58,40,22,0.08)_42%,transparent_72%)]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
             
-            <div className="relative px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
+            <div className="relative z-10 px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
               <header className="text-center">
                 <motion.div 
                   initial={{ scale: 0.9, opacity: 0 }}
