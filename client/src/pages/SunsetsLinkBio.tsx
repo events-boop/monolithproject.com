@@ -779,9 +779,9 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
-        style={{ background: "radial-gradient(circle, rgba(224,100,30,0.22) 0%, rgba(180,60,10,0.10) 45%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(232,184,109,0.24) 0%, rgba(194,112,62,0.12) 45%, transparent 70%)" }}
       />
-      {/* Magenta / crimson — right side */}
+      {/* Lake shadow — right side, keeps the page from going all-gold */}
       <motion.div
         animate={{
           x: ["8%", "-12%", "4%", "8%"],
@@ -790,9 +790,9 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
         className="absolute top-[30%] -right-[12%] w-[65vw] h-[65vw] rounded-full blur-[110px]"
-        style={{ background: "radial-gradient(circle, rgba(180,30,80,0.20) 0%, rgba(140,20,60,0.08) 50%, transparent 72%)" }}
+        style={{ background: "radial-gradient(circle, rgba(25,59,59,0.28) 0%, rgba(44,24,16,0.10) 50%, transparent 72%)" }}
       />
-      {/* Deep indigo / violet — bottom center */}
+      {/* Deep bronze — bottom center */}
       <motion.div
         animate={{
           x: ["-6%", "16%", "2%", "-6%"],
@@ -800,14 +800,14 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
         className="absolute -bottom-[22%] left-[15%] w-[85vw] h-[85vw] rounded-full blur-[130px]"
-        style={{ background: "radial-gradient(circle, rgba(70,30,160,0.18) 0%, rgba(40,10,120,0.07) 50%, transparent 68%)" }}
+        style={{ background: "radial-gradient(circle, rgba(58,40,22,0.30) 0%, rgba(5,4,3,0.08) 50%, transparent 68%)" }}
       />
       {/* Warm gold horizon accent — subtle strip at the bottom */}
       <motion.div
         animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
-        style={{ background: "linear-gradient(to top, rgba(200,100,20,0.14) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(232,184,109,0.16) 0%, transparent 100%)" }}
       />
       {/* Subtle grid overlay */}
       <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -849,6 +849,8 @@ export default function SunsetsLinkBio() {
             <ShareButton />
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className="pointer-events-none absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.18)_0%,rgba(232,184,109,0.09)_42%,transparent_72%)] blur-3xl" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.13),transparent_65%)]" />
             
             <div className="relative px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
               <header className="text-center">
@@ -856,25 +858,25 @@ export default function SunsetsLinkBio() {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#F4F0EA]/20 bg-black/60 shadow-[0_0_40px_rgba(244,240,234,0.14)]"
+                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#F4F0EA]/20 bg-black/60 shadow-[0_0_42px_rgba(232,184,109,0.22)]"
                 >
-                  <Sun className="h-7 w-7 text-[#F4F0EA]" strokeWidth={1} />
+                  <Sun className="h-7 w-7 text-[#FFD28A]" strokeWidth={1} />
                 </motion.div>
 
-                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#F4F0EA]/80">
+                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#FFD28A]/80">
                   The Monolith Project Presents
                 </p>
                 <div className="relative mx-auto mt-4 w-fit max-w-full">
-                  <h1 className="bg-gradient-to-b from-white to-white/48 bg-clip-text font-display text-[clamp(2.45rem,10.5vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(244,240,234,0.18)]">
+                  <h1 className="bg-gradient-to-b from-white via-[#F4F0EA] to-[#C9B08C] bg-clip-text font-display text-[clamp(2.45rem,10.5vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(232,184,109,0.20)]">
                     Chasing
                     <br />
                     <span className="whitespace-nowrap">Sun(Sets)</span>
                   </h1>
-                  <span className="absolute -right-1 top-1 inline-flex translate-x-1/4 items-center gap-1.5 rounded-full border border-[#F4F0EA]/16 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#F4F0EA]/72 backdrop-blur">
+                  <span className="absolute right-0 -top-5 inline-flex items-center gap-1.5 rounded-full border border-[#E8B86D]/30 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#FFD28A]/78 backdrop-blur sm:-right-1 sm:top-1 sm:translate-x-1/4">
                     <motion.span
                       animate={{ scale: [1, 1.5, 1], opacity: [0.9, 0.25, 0.9] }}
                       transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                      className="h-1.5 w-1.5 rounded-full bg-[#F4F0EA]"
+                      className="h-1.5 w-1.5 rounded-full bg-[#E8B86D]"
                     />
                     Official
                   </span>
@@ -884,7 +886,7 @@ export default function SunsetsLinkBio() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, duration: 0.6 }}
-                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#F4F0EA]/20 shadow-[0_15px_40px_rgba(244,240,234,0.13)]"
+                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#E8B86D]/35 shadow-[0_0_52px_rgba(232,184,109,0.18),0_18px_48px_rgba(0,0,0,0.48)]"
                 >
                   <img
                     src={JULY_4_FIRST_ACCESS_IMAGE}
@@ -892,10 +894,12 @@ export default function SunsetsLinkBio() {
                     className="h-full w-full object-cover"
                     loading="eager"
                   />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,210,138,0.34),rgba(232,184,109,0.12)_30%,transparent_58%)] mix-blend-screen opacity-80" />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(5,4,3,0.24)_100%)]" />
                   <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
                 </motion.div>
 
-                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#F4F0EA]/90">
+                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#FFD28A]/90">
                   Watch the sun. Stay for the (sets).
                 </p>
                 <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
