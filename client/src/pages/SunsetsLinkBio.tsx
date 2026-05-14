@@ -214,17 +214,17 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const href = appendAttributionQueryParams(item.href);
   const isPrimary = item.variant === "primary";
   const cardClass = isPrimary
-    ? "border-[#ef4444]/60 bg-gradient-to-br from-[#f87171] to-[#ef4444] text-white shadow-[0_16px_44px_rgba(239,68,68,0.25)] hover:border-[#fca5a5] hover:shadow-[0_20px_50px_rgba(239,68,68,0.35)]"
+    ? "border-[#F4F0EA]/70 bg-[#F4F0EA] text-[#050403] shadow-[0_16px_44px_rgba(244,240,234,0.18)] hover:border-white hover:bg-white"
     : item.variant === "cool"
       ? "border-[#193B3B]/70 bg-[#071110]/50 text-white hover:border-[#193B3B] hover:bg-[#193B3B]/25"
       : "border-[#5C4331]/40 bg-[#18110D]/52 text-white hover:border-[#F4F0EA]/45 hover:bg-[#3A2816]/30";
   const iconClass = isPrimary
-    ? "border-white/20 bg-white/10 text-white"
+    ? "border-[#050403]/12 bg-[#050403] text-[#F4F0EA]"
     : "border-white/10 bg-black/40 text-white/70";
-  const eyebrowClass = isPrimary ? "text-white/80" : "text-white/40";
-  const titleClass = isPrimary ? "text-white font-semibold" : "text-white/90 group-hover:text-white";
-  const subClass = isPrimary ? "text-white/85" : "text-white/50 group-hover:text-white/70";
-  const arrowClass = isPrimary ? "text-white opacity-100 group-hover:text-white" : "text-white/30 group-hover:text-white/80";
+  const eyebrowClass = isPrimary ? "text-[#050403]/60" : "text-white/40";
+  const titleClass = isPrimary ? "text-[#050403] font-semibold" : "text-white/90 group-hover:text-white";
+  const subClass = isPrimary ? "text-[#050403]/75" : "text-white/50 group-hover:text-white/70";
+  const arrowClass = isPrimary ? "text-[#050403] opacity-100" : "text-white/30 group-hover:text-white/80";
   const glowClass =
     item.variant === "cool"
       ? "group-hover:border-[#193B3B]/80 group-hover:bg-[#193B3B]/25"
