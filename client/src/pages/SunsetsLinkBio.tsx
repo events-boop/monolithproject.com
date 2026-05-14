@@ -535,9 +535,9 @@ function InlineCaptureForm() {
       noValidate
     >
       <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="text-[9px] font-black uppercase tracking-[0.24em] text-[#F4F0EA]/55">First access</p>
-        <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#F4F0EA] shadow-[0_0_14px_rgba(244,240,234,0.7)]" />
+        <p className="text-[9px] font-black uppercase tracking-[0.24em] text-white/60">First access</p>
+        <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.18em] text-white/80">
+          <span className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_14px_rgba(255,255,255,0.7)]" />
           Waitlist Open
         </span>
       </div>
@@ -552,13 +552,13 @@ function InlineCaptureForm() {
             if (status === "error") setStatus("idle");
           }}
           placeholder="phone or email"
-          className="h-12 min-w-0 flex-1 rounded-none border-0 border-b border-[#F4F0EA]/24 bg-transparent px-0 text-base text-[#F4F0EA] outline-none transition placeholder:text-[#F4F0EA]/30 focus:border-[#F4F0EA]/80"
+          className="h-12 min-w-0 flex-1 rounded-none border-0 border-b border-white/20 bg-transparent px-0 text-base text-white outline-none transition placeholder:text-white/40 focus:border-white/80"
         />
         <button
           type="submit"
           disabled={status === "submitting"}
           aria-label="Join First Access"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#F4F0EA]/18 bg-[#F4F0EA] text-[#111111] transition hover:scale-105 disabled:cursor-wait disabled:opacity-65"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white text-[#111111] transition hover:scale-105 disabled:cursor-wait disabled:opacity-65"
         >
           {status === "submitting" ? (
             <span className="h-3 w-3 animate-pulse rounded-full bg-[#111111]" />
@@ -569,7 +569,7 @@ function InlineCaptureForm() {
       </div>
 
       {status === "error" && (
-        <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#F4F0EA]/70">
+        <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80">
           {error}
         </p>
       )}
