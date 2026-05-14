@@ -217,7 +217,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
     ? "border-[#ef4444]/60 bg-gradient-to-br from-[#f87171] to-[#ef4444] text-white shadow-[0_16px_44px_rgba(239,68,68,0.25)] hover:border-[#fca5a5] hover:shadow-[0_20px_50px_rgba(239,68,68,0.35)]"
     : item.variant === "cool"
       ? "border-[#193B3B]/70 bg-[#071110]/50 text-white hover:border-[#193B3B] hover:bg-[#193B3B]/25"
-      : "border-[#5C4331]/40 bg-[#18110D]/52 text-white hover:border-[#E35D30]/45 hover:bg-[#3A2816]/30";
+      : "border-[#5C4331]/40 bg-[#18110D]/52 text-white hover:border-[#F4F0EA]/45 hover:bg-[#3A2816]/30";
   const iconClass = isPrimary
     ? "border-white/20 bg-white/10 text-white"
     : "border-white/10 bg-black/40 text-white/70";
@@ -228,7 +228,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const glowClass =
     item.variant === "cool"
       ? "group-hover:border-[#193B3B]/80 group-hover:bg-[#193B3B]/25"
-      : "group-hover:border-[#E35D30]/50 group-hover:bg-[#E35D30]/5";
+      : "group-hover:border-[#F4F0EA]/50 group-hover:bg-[#F4F0EA]/5";
 
   return (
     <motion.a
@@ -275,7 +275,7 @@ export default function SunsetsLinkBio() {
   }, []);
 
   return (
-    <main className="min-h-[100dvh] w-full overflow-hidden bg-[#0B0A09] text-white/90 font-sans selection:bg-[#E35D30]/30">
+    <main className="min-h-[100dvh] w-full overflow-hidden bg-[#0B0A09] text-white/90 font-sans selection:bg-[#F4F0EA]/30">
       <SEO
         title="Chasing Sun(Sets) | Chicago Lakefront House Music"
         description="Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries."
@@ -304,12 +304,12 @@ export default function SunsetsLinkBio() {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#E35D30]/20 bg-black/60 shadow-[0_0_40px_rgba(232,184,109,0.15)]"
+                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#F4F0EA]/20 bg-black/60 shadow-[0_0_40px_rgba(232,184,109,0.15)]"
                 >
-                  <Sun className="h-7 w-7 text-[#E35D30]" strokeWidth={1} />
+                  <Sun className="h-7 w-7 text-[#F4F0EA]" strokeWidth={1} />
                 </motion.div>
 
-                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#E35D30]/80">
+                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#F4F0EA]/80">
                   The Monolith Project Presents
                 </p>
                 <h1 className="mt-4 bg-gradient-to-b from-white to-white/48 bg-clip-text font-display text-[clamp(2.75rem,11vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(232,184,109,0.3)]">
@@ -322,7 +322,7 @@ export default function SunsetsLinkBio() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, duration: 0.6 }}
-                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#E35D30]/20 shadow-[0_15px_40px_rgba(232,184,109,0.15)]"
+                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#F4F0EA]/20 shadow-[0_15px_40px_rgba(232,184,109,0.15)]"
                 >
                   <img
                     src={JULY_4_FIRST_ACCESS_IMAGE}
@@ -333,7 +333,7 @@ export default function SunsetsLinkBio() {
                   <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
                 </motion.div>
 
-                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#E35D30]/90">
+                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#F4F0EA]/90">
                   Watch the sun. Stay for the (sets).
                 </p>
                 <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
@@ -349,7 +349,7 @@ export default function SunsetsLinkBio() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + (i * 0.1) }}
                     key={item} 
-                    className="flex flex-col items-center justify-center rounded-lg border border-[#5C4331]/40 bg-[#18110D]/55 py-3 transition-colors hover:border-[#E35D30]/30 hover:bg-[#E35D30]/5"
+                    className="flex flex-col items-center justify-center rounded-lg border border-[#5C4331]/40 bg-[#18110D]/55 py-3 transition-colors hover:border-[#F4F0EA]/30 hover:bg-[#F4F0EA]/5"
                   >
                     <p className="text-[14px] font-sans font-light uppercase tracking-[0.2em] text-white/40">
                       Signal
@@ -375,29 +375,29 @@ export default function SunsetsLinkBio() {
                   interestType: "ticket_click",
                   channel: "Laylo",
                 })}
-                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#E35D30]/40 bg-gradient-to-br from-[#E35D30]/20 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#E35D30]/70 hover:shadow-[0_15px_40px_rgba(232,184,109,0.25)]"
+                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#F4F0EA]/40 bg-gradient-to-br from-[#F4F0EA]/20 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#F4F0EA]/70 hover:shadow-[0_15px_40px_rgba(232,184,109,0.25)]"
               >
                 <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(232,184,109,0.15),transparent_60%)]" />
                 <div className="relative z-10 flex items-start justify-between">
                   <div className="min-w-0">
-                    <span className="inline-block rounded-full bg-[#E35D30] px-2.5 py-1 text-[13px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(232,184,109,0.5)]">
+                    <span className="inline-block rounded-full bg-[#F4F0EA] px-2.5 py-1 text-[13px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(232,184,109,0.5)]">
                       Next Chapter
                     </span>
                     <h2 className="mt-3 font-display text-3xl uppercase leading-[0.9] tracking-[-0.02em] text-white">
                       July 4th
                       <br />
-                      <span className="text-[#E35D30]">Open Air</span>
+                      <span className="text-[#F4F0EA]">Open Air</span>
                     </h2>
                     <p className="mt-2 text-sm font-light text-white/70">
                       Castaways, Chicago • 3 PM - 10 PM
                     </p>
                   </div>
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E35D30] text-black transition-transform duration-500 group-hover:scale-110">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F0EA] text-black transition-transform duration-500 group-hover:scale-110">
                     <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
                   </div>
                 </div>
                 <div className="relative z-10 mt-4 border-t border-white/10 pt-3">
-                  <p className="flex items-center gap-2 text-[14px] font-light uppercase tracking-[0.2em] text-[#E35D30]">
+                  <p className="flex items-center gap-2 text-[14px] font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
                     <Sparkles className="h-3 w-3" />
                     Join First Access Waitlist
                   </p>
@@ -406,7 +406,7 @@ export default function SunsetsLinkBio() {
 
               <div className="mt-5 rounded-[1.25rem] border border-[#5C4331]/45 bg-[#18110D]/70 p-3">
                 <div className="flex items-center justify-between gap-3 px-1 pb-2">
-                  <p className="text-[13px] font-sans font-light uppercase tracking-[0.26em] text-[#E35D30]/80">
+                  <p className="text-[13px] font-sans font-light uppercase tracking-[0.26em] text-[#F4F0EA]/80">
                     2026 Schedule
                   </p>
                   <a
@@ -421,7 +421,7 @@ export default function SunsetsLinkBio() {
                         channel: "Posh",
                       })
                     }
-                    className="inline-flex items-center gap-1 text-[13px] font-black uppercase tracking-[0.16em] text-[#FBF5ED] transition hover:text-[#E35D30]"
+                    className="inline-flex items-center gap-1 text-[13px] font-black uppercase tracking-[0.16em] text-[#FBF5ED] transition hover:text-[#F4F0EA]"
                   >
                     Tickets
                     <ArrowUpRight className="h-3 w-3" />
@@ -447,9 +447,9 @@ export default function SunsetsLinkBio() {
                           channel: "Posh",
                         })
                       }
-                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-white/5 bg-black/22 px-3 py-3 transition hover:border-[#A83E1A]/55 hover:bg-[#3A2816]/45"
+                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-white/5 bg-black/22 px-3 py-3 transition hover:border-[#D1D1C7]/55 hover:bg-[#3A2816]/45"
                     >
-                      <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FF8A5B]">
+                      <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FFFFFF]">
                         {event.date}
                       </span>
                       <span className="min-w-0">
@@ -460,7 +460,7 @@ export default function SunsetsLinkBio() {
                           {event.venue} · {event.time}
                         </span>
                       </span>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#E35D30]" />
+                      <ArrowUpRight className="h-3.5 w-3.5 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#F4F0EA]" />
                     </a>
                   ))}
                 </div>
@@ -488,12 +488,12 @@ export default function SunsetsLinkBio() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
                         onClick={() => trackSunsetsClick({ ...item, href })}
-                        className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#5C4331]/45 bg-[#18110D]/70 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#A83E1A]/70"
+                        className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#5C4331]/45 bg-[#18110D]/70 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#D1D1C7]/70"
                       >
                         <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <Icon className="h-3.5 w-3.5 text-[#E35D30]" />
-                            <span className="text-[13px] font-sans font-light uppercase tracking-[0.2em] text-[#E35D30]">
+                            <Icon className="h-3.5 w-3.5 text-[#F4F0EA]" />
+                            <span className="text-[13px] font-sans font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
                               {item.eyebrow}
                             </span>
                           </div>
@@ -512,7 +512,7 @@ export default function SunsetsLinkBio() {
                           ) : null}
                           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,4,3,0.18)_0%,rgba(5,4,3,0.88)_100%)]" />
                           <div className="relative flex min-h-[156px] flex-col justify-end p-4">
-                            <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#E35D30] text-[#050403] shadow-[0_0_24px_rgba(232,184,109,0.35)] transition group-hover:scale-105">
+                            <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#F4F0EA] text-[#050403] shadow-[0_0_24px_rgba(232,184,109,0.35)] transition group-hover:scale-105">
                               <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
                             </div>
                             <p className="max-w-[15rem] text-sm font-semibold leading-snug text-white/90">
@@ -520,7 +520,7 @@ export default function SunsetsLinkBio() {
                             </p>
                           </div>
                         </div>
-                        <span className="flex items-center justify-between border-t border-white/5 px-4 py-3 text-[14px] font-black uppercase tracking-[0.18em] text-[#FBF5ED] transition group-hover:text-[#E35D30]">
+                        <span className="flex items-center justify-between border-t border-white/5 px-4 py-3 text-[14px] font-black uppercase tracking-[0.18em] text-[#FBF5ED] transition group-hover:text-[#F4F0EA]">
                           {actionLabel}
                           <ArrowUpRight className="h-3.5 w-3.5" />
                         </span>
@@ -536,8 +536,8 @@ export default function SunsetsLinkBio() {
 
               {/* Footer */}
               <footer className="mt-10 pt-4 text-center">
-                <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-[13px] font-sans font-light uppercase tracking-[0.3em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#E35D30]/30 hover:text-[#E35D30]/80">
-                  <Sparkles className="h-3.5 w-3.5 text-[#E35D30]/70" strokeWidth={1.5} />
+                <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-[13px] font-sans font-light uppercase tracking-[0.3em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#F4F0EA]/30 hover:text-[#F4F0EA]/80">
+                  <Sparkles className="h-3.5 w-3.5 text-[#F4F0EA]/70" strokeWidth={1.5} />
                   monolithproject.com/sunsets
                 </div>
                 <p className="text-[14px] uppercase font-light tracking-[0.3em] text-white/30">
