@@ -31,9 +31,19 @@ describe("resolveOutboundDestination", () => {
     expect(resolveOutboundDestination("waitlist", "untold-story")).toMatch(/^https:\/\//);
   });
 
+  it("resolves Sunsets media, gallery, form, and social redirects", async () => {
+    const { resolveOutboundDestination } = await importOutbound();
+
+    expect(resolveOutboundDestination("media", "sunsets-recap")).toContain("youtu");
+    expect(resolveOutboundDestination("media", "sunsets-soundcloud")).toContain("soundcloud.com");
+    expect(resolveOutboundDestination("gallery", "chasing-sunsets")).toContain("pic-time.com");
+    expect(resolveOutboundDestination("forms", "sunsets-vip")).toContain("chasingsunsets.vip");
+    expect(resolveOutboundDestination("social", "instagram-sunsets")).toContain("instagram.com");
+  });
+
   it("rejects unsupported outbound groups", async () => {
     const { resolveOutboundDestination } = await importOutbound();
-    expect(resolveOutboundDestination("spotify", "featured")).toBeNull();
+    expect(resolveOutboundDestination("unknown", "featured")).toBeNull();
   });
 
   it("preserves UTM and click-id params on outbound redirects", async () => {

@@ -1,10 +1,18 @@
-type OutboundGroup = "tickets" | "waitlist";
+type OutboundGroup = "tickets" | "waitlist" | "media" | "gallery" | "forms" | "social";
 type QueryValue = string | string[] | null | undefined;
 type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
 const FALLBACK_POSH_URL =
   "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project";
 const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject";
+const FALLBACK_SUNSETS_RECAP_URL = "https://youtu.be/9R6XH7JZlJI";
+const FALLBACK_SUNSETS_SOUNDCLOUD_URL = "https://soundcloud.com/chasing-sun-sets";
+const FALLBACK_SUNSETS_GALLERY_URL = "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
+const FALLBACK_SUNSETS_VIP_URL = "https://chasingsunsets.vip";
+const FALLBACK_INSTAGRAM_SUNSETS_URL = "https://instagram.com/chasingsunsets.music";
+const FALLBACK_TIKTOK_URL = "https://tiktok.com/@monolithproject";
+const FALLBACK_SPOTIFY_URL = "https://open.spotify.com/search/chasing%20sunsets";
+const FALLBACK_X_URL = "https://x.com/monolithproject";
 const OUTBOUND_TRACKING_PARAMS = [
   "utm_source",
   "utm_medium",
@@ -51,6 +59,32 @@ const waitlistDestinations: Record<string, string> = {
   "untold-story": readHttpsEnv("OUTBOUND_WAITLIST_UNTOLD_STORY_URL") || generalWaitlistUrl,
 };
 
+const mediaDestinations: Record<string, string> = {
+  "sunsets-recap":
+    readHttpsEnv("OUTBOUND_MEDIA_SUNSETS_RECAP_URL", "YOUTUBE_RECAP_URL") || FALLBACK_SUNSETS_RECAP_URL,
+  "sunsets-soundcloud":
+    readHttpsEnv("OUTBOUND_MEDIA_SUNSETS_SOUNDCLOUD_URL", "SOUNDCLOUD_SUNSETS_URL") ||
+    FALLBACK_SUNSETS_SOUNDCLOUD_URL,
+};
+
+const galleryDestinations: Record<string, string> = {
+  "chasing-sunsets":
+    readHttpsEnv("OUTBOUND_GALLERY_CHASING_SUNSETS_URL", "PICTIME_CHASING_SUNSETS_URL") ||
+    FALLBACK_SUNSETS_GALLERY_URL,
+};
+
+const formDestinations: Record<string, string> = {
+  "sunsets-vip": readHttpsEnv("OUTBOUND_FORMS_SUNSETS_VIP_URL", "FILLOUT_SUNSETS_VIP_URL") || FALLBACK_SUNSETS_VIP_URL,
+};
+
+const socialDestinations: Record<string, string> = {
+  "instagram-sunsets":
+    readHttpsEnv("OUTBOUND_SOCIAL_INSTAGRAM_SUNSETS_URL", "INSTAGRAM_SUNSETS_URL") || FALLBACK_INSTAGRAM_SUNSETS_URL,
+  tiktok: readHttpsEnv("OUTBOUND_SOCIAL_TIKTOK_URL", "TIKTOK_URL") || FALLBACK_TIKTOK_URL,
+  spotify: readHttpsEnv("OUTBOUND_SOCIAL_SPOTIFY_URL", "SPOTIFY_URL") || FALLBACK_SPOTIFY_URL,
+  x: readHttpsEnv("OUTBOUND_SOCIAL_X_URL", "X_URL") || FALLBACK_X_URL,
+};
+
 export function resolveOutboundDestination(group: string, key: string) {
   const normalizedGroup = group.trim().toLowerCase() as OutboundGroup;
   const normalizedKey = key.trim().toLowerCase();
@@ -61,6 +95,22 @@ export function resolveOutboundDestination(group: string, key: string) {
 
   if (normalizedGroup === "waitlist") {
     return waitlistDestinations[normalizedKey] || waitlistDestinations.general || null;
+  }
+
+  if (normalizedGroup === "media") {
+    return mediaDestinations[normalizedKey] || null;
+  }
+
+  if (normalizedGroup === "gallery") {
+    return galleryDestinations[normalizedKey] || null;
+  }
+
+  if (normalizedGroup === "forms") {
+    return formDestinations[normalizedKey] || null;
+  }
+
+  if (normalizedGroup === "social") {
+    return socialDestinations[normalizedKey] || null;
   }
 
   return null;

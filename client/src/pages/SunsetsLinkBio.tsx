@@ -20,8 +20,6 @@ import SEO from "@/components/SEO";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { submitNewsletterLead, trackFunnelPageView, trackLinkClick } from "@/lib/api";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
-import { INSTAGRAM_SUNSETS } from "@/data/events";
-
 type BioLink = {
   type?: "link" | "youtube" | "soundcloud" | "gallery";
   label: string;
@@ -42,15 +40,18 @@ type BioLink = {
 type EventDate = "2026-07-04" | "2026-08-22" | "2026-09-19";
 
 const TICKET_HUB_HREF = "/chasing-sunsets#chasing-tickets";
-const RECAP_HREF = "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA";
-const SOUNDCLOUD_HREF = "https://soundcloud.com/chasing-sun-sets";
-const GALLERY_HREF = "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
+const RECAP_HREF = "/go/media/sunsets-recap";
+const SOUNDCLOUD_HREF = "/go/media/sunsets-soundcloud";
+const GALLERY_HREF = "/go/gallery/chasing-sunsets";
+const SUNSETS_SOUNDCLOUD_EMBED_HREF = "https://soundcloud.com/chasing-sun-sets";
 const JULY_4_FIRST_ACCESS_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 const AUGUST_22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
 const SEPTEMBER_19_EVENT_SLUG = "chasing-sunsets-september-19-2026";
-const SPOTIFY_HREF = "https://open.spotify.com/search/chasing%20sunsets";
-const X_HREF = "https://x.com/monolithproject";
+const INSTAGRAM_SUNSETS_HREF = "/go/social/instagram-sunsets";
+const TIKTOK_HREF = "/go/social/tiktok";
+const SPOTIFY_HREF = "/go/social/spotify";
+const X_HREF = "/go/social/x";
 
 const capturePromises = ["Ticket drops", "Lineup alerts", "VIP access"] as const;
 const funnelSteps = [
@@ -100,13 +101,13 @@ function XIcon({ className }: { className?: string }) {
 const socialLinks = [
   {
     label: "Instagram",
-    href: INSTAGRAM_SUNSETS,
+    href: INSTAGRAM_SUNSETS_HREF,
     icon: Instagram,
     channel: "Instagram",
   },
   {
     label: "TikTok",
-    href: "https://tiktok.com/@monolithproject",
+    href: TIKTOK_HREF,
     icon: TikTokIcon,
     channel: "TikTok",
   },
@@ -176,7 +177,7 @@ const links: BioLink[] = [
     buttonName: "VIP / Tables",
     eyebrow: "Fillout",
     sub: "Groups, birthdays, tables, and elevated lakefront experiences.",
-    href: "https://chasingsunsets.vip",
+    href: "/go/forms/sunsets-vip",
     eventSlug: JULY_4_EVENT_SLUG,
     eventDate: "2026-07-04",
     interestType: "vip_click",
@@ -623,7 +624,7 @@ function MediaAccordion({
   const isYouTube = item.type === "youtube";
   const embedSrc = isYouTube
     ? "https://www.youtube-nocookie.com/embed/9R6XH7JZlJI?rel=0&modestbranding=1"
-    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(SOUNDCLOUD_HREF)}&color=%23f4f0ea&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true`;
+    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(SUNSETS_SOUNDCLOUD_EMBED_HREF)}&color=%23f4f0ea&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true`;
 
   return (
     <motion.div
@@ -769,33 +770,47 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 function AmbientFluidBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none bg-[#050505] z-0">
+      {/* Amber / deep orange — top left, primary sunset tone */}
       <motion.div
         animate={{
-          x: ["-10%", "10%", "-5%", "-10%"],
-          y: ["-10%", "5%", "15%", "-10%"],
-          scale: [1, 1.1, 0.9, 1],
+          x: ["-10%", "12%", "-4%", "-10%"],
+          y: ["-12%", "6%", "18%", "-12%"],
+          scale: [1, 1.15, 0.92, 1],
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.035)_0%,transparent_70%)] blur-[80px]"
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
+        style={{ background: "radial-gradient(circle, rgba(224,100,30,0.22) 0%, rgba(180,60,10,0.10) 45%, transparent 70%)" }}
       />
+      {/* Magenta / crimson — right side */}
       <motion.div
         animate={{
-          x: ["10%", "-10%", "5%", "10%"],
-          y: ["10%", "-5%", "-15%", "10%"],
-          scale: [0.9, 1, 1.1, 0.9],
+          x: ["8%", "-12%", "4%", "8%"],
+          y: ["8%", "-6%", "-18%", "8%"],
+          scale: [0.88, 1.05, 1.18, 0.88],
         }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[40%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.045)_0%,transparent_70%)] blur-[100px]"
+        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[30%] -right-[12%] w-[65vw] h-[65vw] rounded-full blur-[110px]"
+        style={{ background: "radial-gradient(circle, rgba(180,30,80,0.20) 0%, rgba(140,20,60,0.08) 50%, transparent 72%)" }}
       />
+      {/* Deep indigo / violet — bottom center */}
       <motion.div
         animate={{
-          x: ["-5%", "15%", "0%", "-5%"],
-          y: ["15%", "0%", "-10%", "15%"],
+          x: ["-6%", "16%", "2%", "-6%"],
+          y: ["16%", "2%", "-12%", "16%"],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute -bottom-[20%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.025)_0%,transparent_60%)] blur-[120px]"
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        className="absolute -bottom-[22%] left-[15%] w-[85vw] h-[85vw] rounded-full blur-[130px]"
+        style={{ background: "radial-gradient(circle, rgba(70,30,160,0.18) 0%, rgba(40,10,120,0.07) 50%, transparent 68%)" }}
       />
-      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
+      {/* Warm gold horizon accent — subtle strip at the bottom */}
+      <motion.div
+        animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
+        style={{ background: "linear-gradient(to top, rgba(200,100,20,0.14) 0%, transparent 100%)" }}
+      />
+      {/* Subtle grid overlay */}
+      <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
     </div>
   );
 }
