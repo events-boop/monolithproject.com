@@ -18,7 +18,8 @@ import {
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { trackFunnelPageView, trackLinkClick } from "@/lib/api";
+import { submitNewsletterLead, trackFunnelPageView, trackLinkClick } from "@/lib/api";
+import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
 import { INSTAGRAM_SUNSETS } from "@/data/events";
 
 type BioLink = {
@@ -57,6 +58,11 @@ const funnelSteps = [
   "First Access",
   "Ticket Drop",
 ] as const;
+
+function triggerHaptic(pattern: number | number[] = 12) {
+  if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
+  navigator.vibrate(pattern);
+}
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -269,6 +275,7 @@ function ShareButton() {
 
   const handleShare = async () => {
     if (typeof window === "undefined") return;
+    triggerHaptic(10);
 
     const shareUrl = new URL("/sunsets/", window.location.origin);
     shareUrl.searchParams.set("utm_source", "share");
@@ -327,6 +334,63 @@ function ShareButton() {
   );
 }
 
+function StickyActionDock() {
+  const firstAccessHref = "#first-access";
+  const ticketHref = appendAttributionQueryParams(TICKET_HUB_HREF);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.7, type: "spring", stiffness: 220, damping: 24 }}
+      className="sticky bottom-3 z-30 mx-3 mt-8 rounded-full border border-[#F4F0EA]/12 bg-[#090909]/86 p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl"
+    >
+      <div className="grid grid-cols-[1.05fr_.95fr] gap-1.5">
+        <a
+          href={firstAccessHref}
+          onClick={() =>
+            {
+              triggerHaptic(12);
+              trackSunsetsClick({
+                buttonName: "Sticky Join First Access",
+                href: firstAccessHref,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: "2026-07-04",
+                interestType: "first_access_click",
+                channel: "Sticky CTA",
+              });
+            }
+          }
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#F4F0EA] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#111111] transition hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/70"
+        >
+          <Bell className="h-3.5 w-3.5" strokeWidth={2} />
+          First Access
+        </a>
+        <a
+          href={ticketHref}
+          onClick={() =>
+            {
+              triggerHaptic(12);
+              trackSunsetsClick({
+                buttonName: "Sticky Tickets",
+                href: ticketHref,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: "2026-07-04",
+                interestType: "ticket_click",
+                channel: "Sticky CTA",
+              });
+            }
+          }
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#F4F0EA]/16 bg-[#F4F0EA]/[0.04] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/82 transition hover:border-[#F4F0EA]/42 hover:text-[#F4F0EA] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/60"
+        >
+          <Ticket className="h-3.5 w-3.5" strokeWidth={2} />
+          Tickets
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
 function SocialUtilityRow() {
   return (
     <div className="mb-5 flex items-center justify-center gap-2">
@@ -340,7 +404,8 @@ function SocialUtilityRow() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.label}
-            onClick={() =>
+            onClick={() => {
+              triggerHaptic(8);
               trackSunsetsClick({
                 buttonName: item.label,
                 href,
@@ -348,8 +413,8 @@ function SocialUtilityRow() {
                 eventDate: "2026-07-04",
                 interestType: `${item.label.toLowerCase()}_click`,
                 channel: item.channel,
-              })
-            }
+              });
+            }}
             className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.025] text-[#F4F0EA]/50 transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40 hover:bg-[#F4F0EA]/8 hover:text-[#F4F0EA] hover:shadow-[0_0_24px_rgba(244,240,234,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/60"
           >
             <Icon className="h-4 w-4" strokeWidth={1.6} />
@@ -379,6 +444,7 @@ function InlineCaptureForm() {
 
     setStatus("submitting");
     setError("");
+    triggerHaptic(12);
 
     trackSunsetsClick({
       buttonName: "Inline First Access Capture",
@@ -389,7 +455,48 @@ function InlineCaptureForm() {
       channel: "Inline Capture",
     });
 
+    if (looksLikeEmail) {
+      try {
+        await submitNewsletterLead(
+          {
+            email: trimmedValue,
+            consent: true,
+            source: "sunsets_link_bio_inline_capture",
+            formType: "first_access_signup",
+            funnelId: "chasing-sunsets-link-bio",
+            offerId: "first-access",
+            eventInterest: JULY_4_EVENT_SLUG,
+            eventSeries: "chasing-sunsets",
+            eventTitle: "Chasing Sun(Sets) July 4 2026",
+            interestTags: [
+              "chasing_sunsets",
+              "laylo",
+              "first_access_signup",
+              "july4_interest",
+              "sunsets_link_bio",
+            ],
+          },
+          buildLeadIdempotencyKey("sunsets-link-bio", trimmedValue, JULY_4_EVENT_SLUG),
+        );
+      } catch {
+        setError("Could not add you. Try again.");
+        setStatus("error");
+        triggerHaptic([20, 40, 20]);
+        return;
+      }
+    } else {
+      window.localStorage?.setItem(
+        "sunsets_phone_capture_pending",
+        JSON.stringify({
+          phone: trimmedValue,
+          eventSlug: JULY_4_EVENT_SLUG,
+          capturedAt: new Date().toISOString(),
+        }),
+      );
+    }
+
     window.setTimeout(() => {
+      triggerHaptic(18);
       setStatus("submitted");
     }, 520);
   };
@@ -423,7 +530,7 @@ function InlineCaptureForm() {
     <form
       onSubmit={submit}
       id="first-access"
-      className="mt-6 rounded-[1.15rem] border border-[#F4F0EA]/12 bg-[#111111]/72 px-4 py-4 text-left"
+      className="mt-6 rounded-[1.15rem] border border-[#F4F0EA]/16 bg-[#111111]/78 px-4 py-4 text-left shadow-[0_16px_50px_rgba(0,0,0,0.38)]"
       noValidate
     >
       <div className="mb-2 flex items-center justify-between gap-3">
@@ -465,7 +572,39 @@ function InlineCaptureForm() {
           {error}
         </p>
       )}
+
+      <div className="mt-4 grid grid-cols-3 gap-1.5 border-t border-[#F4F0EA]/8 pt-3">
+        {capturePromises.map((item) => (
+          <span
+            key={item}
+            className="rounded-full border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.025] px-2 py-1.5 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/58"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
     </form>
+  );
+}
+
+function FunnelCue() {
+  return (
+    <div className="mt-5 grid grid-cols-3 gap-1.5">
+      {funnelSteps.map((step, index) => (
+        <div
+          key={step}
+          className="relative rounded-lg border border-[#F4F0EA]/8 bg-black/18 px-2 py-2 text-center"
+        >
+          {index > 0 ? <span className="absolute -left-1 top-1/2 h-px w-2 -translate-y-1/2 bg-[#F4F0EA]/18" /> : null}
+          <p className="text-[8px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/48">
+            Step {index + 1}
+          </p>
+          <p className="mt-1 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] text-[#F4F0EA]/76">
+            {step}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -552,6 +691,21 @@ function MediaAccordion({
               loading="lazy"
             />
           </div>
+          {isYouTube ? (
+            <a
+              href={appendAttributionQueryParams(item.href)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                triggerHaptic(10);
+                trackSunsetsClick({ ...item, href: appendAttributionQueryParams(item.href) });
+              }}
+              className="mt-2 flex items-center justify-between rounded-lg border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.035] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]/72 transition hover:border-[#F4F0EA]/34 hover:text-[#F4F0EA]"
+            >
+              Open recap on YouTube
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          ) : null}
         </div>
       </motion.div>
     </motion.div>
@@ -582,7 +736,10 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-      onClick={() => trackSunsetsClick({ ...item, href })}
+      onClick={() => {
+        triggerHaptic(item.variant === "primary" ? 14 : 8);
+        trackSunsetsClick({ ...item, href });
+      }}
       data-sunsets-link={item.eyebrow.toLowerCase()}
       className={`group relative flex min-h-[76px] items-center gap-4 overflow-hidden rounded-[1.1rem] border p-4 transition duration-500 hover:-translate-y-0.5 ${cardClass} ${isPrimary ? "" : glowClass}`}
     >
@@ -698,22 +855,23 @@ export default function SunsetsLinkBio() {
                 </p>
 
                 <InlineCaptureForm />
+                <FunnelCue />
               </header>
 
               {/* Signals Grid */}
-              <div className="mt-8 grid grid-cols-3 gap-3">
+              <div className="mt-8 grid grid-cols-3 gap-2.5">
                 {["Lakefront", "House", "Chicago"].map((item, i) => (
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + (i * 0.1) }}
                     key={item} 
-                    className="flex flex-col items-center justify-center rounded-lg border border-[#F4F0EA]/10 bg-[#111111]/70 py-3 transition-colors hover:border-[#F4F0EA]/30 hover:bg-[#F4F0EA]/5"
+                    className="flex min-h-[68px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#F4F0EA]/10 bg-[#111111]/70 px-1.5 py-3 transition-colors hover:border-[#F4F0EA]/30 hover:bg-[#F4F0EA]/5"
                   >
-                    <p className="text-[14px] font-sans font-light uppercase tracking-[0.2em] text-white/40">
+                    <p className="text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40">
                       Signal
                     </p>
-                    <p className="mt-1.5 text-[14px] font-display tracking-[0.08em] text-white/80">
+                    <p className="mt-1.5 max-w-full truncate text-[11px] font-display uppercase tracking-[0.04em] text-white/80 sm:text-[12px]">
                       {item}
                     </p>
                   </motion.div>
@@ -726,14 +884,17 @@ export default function SunsetsLinkBio() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                onClick={() => trackSunsetsClick({
-                  buttonName: "July 4 Tickets",
-                  href: appendAttributionQueryParams(TICKET_HUB_HREF),
-                  eventSlug: JULY_4_EVENT_SLUG,
-                  eventDate: "2026-07-04",
-                  interestType: "ticket_click",
-                  channel: "Posh",
-                })}
+                onClick={() => {
+                  triggerHaptic(14);
+                  trackSunsetsClick({
+                    buttonName: "July 4 Tickets",
+                    href: appendAttributionQueryParams(TICKET_HUB_HREF),
+                    eventSlug: JULY_4_EVENT_SLUG,
+                    eventDate: "2026-07-04",
+                    interestType: "ticket_click",
+                    channel: "Posh",
+                  });
+                }}
                 className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#F4F0EA]/40 bg-gradient-to-br from-[#F4F0EA]/16 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#F4F0EA]/70 hover:shadow-[0_15px_40px_rgba(244,240,234,0.18)]"
               >
                 <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(244,240,234,0.12),transparent_60%)]" />
@@ -750,6 +911,16 @@ export default function SunsetsLinkBio() {
                     <p className="mt-2 text-sm font-light text-white/70">
                       Castaways, Chicago • 3 PM - 10 PM
                     </p>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {["Official Hub", "July 4", "Tickets Live Soon"].map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-[#F4F0EA]/14 bg-[#111111]/70 px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[#F4F0EA]/68"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F0EA] text-black transition-transform duration-500 group-hover:scale-110">
                     <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
@@ -770,7 +941,8 @@ export default function SunsetsLinkBio() {
                   </p>
                   <a
                     href={appendAttributionQueryParams(TICKET_HUB_HREF)}
-                    onClick={() =>
+                    onClick={() => {
+                      triggerHaptic(8);
                       trackSunsetsClick({
                         buttonName: "Schedule View",
                         href: appendAttributionQueryParams(TICKET_HUB_HREF),
@@ -778,8 +950,8 @@ export default function SunsetsLinkBio() {
                         eventDate: "2026-07-04",
                         interestType: "schedule_view",
                         channel: "Posh",
-                      })
-                    }
+                      });
+                    }}
                     className="inline-flex items-center gap-1 text-[13px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]/82 transition hover:text-[#F4F0EA]"
                   >
                     Tickets
@@ -791,29 +963,30 @@ export default function SunsetsLinkBio() {
                     <a
                       key={event.eventSlug}
                       href={appendAttributionQueryParams(event.href)}
-                      onClick={() =>
+                      onClick={() => {
+                        triggerHaptic(8);
                         trackSunsetsClick({
                           buttonName: `${event.date} Schedule`,
                           href: appendAttributionQueryParams(event.href),
                           eventSlug: event.eventSlug,
-                          eventDate:
-                            event.eventSlug === JULY_4_EVENT_SLUG
-                              ? "2026-07-04"
-                              : event.eventSlug === AUGUST_22_EVENT_SLUG
-                                ? "2026-08-22"
-                                : "2026-09-19",
+                          eventDate: event.eventDate,
                           interestType: "schedule_view",
                           channel: "Posh",
-                        })
-                      }
+                        });
+                      }}
                       className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#F4F0EA]/8 bg-black/22 px-3 py-3 transition hover:border-[#F4F0EA]/40 hover:bg-[#F4F0EA]/6"
                     >
                       <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FFFFFF]">
                         {event.date}
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-[14px] font-semibold uppercase leading-snug tracking-[0.06em] text-white/88">
-                          {event.title}
+                        <span className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-[14px] font-semibold uppercase leading-snug tracking-[0.06em] text-white/88">
+                            {event.title}
+                          </span>
+                          <span className="rounded-full border border-[#F4F0EA]/12 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-[0.1em] text-[#F4F0EA]/58">
+                            {event.status}
+                          </span>
                         </span>
                         <span className="mt-1 block text-[13px] leading-snug text-white/45">
                           {event.venue} · {event.time}
@@ -836,6 +1009,7 @@ export default function SunsetsLinkBio() {
                         index={index}
                         expanded={expandedMedia === item.type}
                         onToggle={() => {
+                          triggerHaptic(10);
                           const href = appendAttributionQueryParams(item.href);
                           trackSunsetsClick({ ...item, href });
                           const mediaType = item.type === "youtube" ? "youtube" : "soundcloud";
@@ -857,7 +1031,10 @@ export default function SunsetsLinkBio() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-                        onClick={() => trackSunsetsClick({ ...item, href })}
+                        onClick={() => {
+                          triggerHaptic(8);
+                          trackSunsetsClick({ ...item, href });
+                        }}
                         className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#F4F0EA]/12 bg-[#111111]/72 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40"
                       >
                         <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
@@ -902,14 +1079,16 @@ export default function SunsetsLinkBio() {
                 })}
               </div>
 
+              <StickyActionDock />
+
               {/* Removed Schedule Section */}
 
               {/* Footer */}
               <footer className="mt-10 pt-4 text-center">
                 <SocialUtilityRow />
-                <div className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-[13px] font-sans font-light uppercase tracking-[0.3em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#F4F0EA]/30 hover:text-[#F4F0EA]/80">
+                <div className="mx-auto mb-4 flex max-w-full w-fit items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/[0.02] px-3 py-2 text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#F4F0EA]/30 hover:text-[#F4F0EA]/80 sm:text-[12px] sm:tracking-[0.24em]">
                   <Sparkles className="h-3.5 w-3.5 text-[#F4F0EA]/70" strokeWidth={1.5} />
-                  monolithproject.com/sunsets
+                  <span className="truncate">monolithproject.com/sunsets</span>
                 </div>
                 <p className="text-[14px] uppercase font-light tracking-[0.3em] text-white/30">
                   Togetherness is the frequency.
