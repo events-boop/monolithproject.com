@@ -294,7 +294,7 @@ export default function SunsetsLinkBio() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-[480px] z-10"
         >
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#5C4331]/45 bg-[#050403]/82 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#5C4331]/60 bg-[#25180F]/85 shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             
