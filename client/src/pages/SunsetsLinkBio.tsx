@@ -766,6 +766,40 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   );
 }
 
+function AmbientFluidBackground() {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none bg-[#050505] z-0">
+      <motion.div
+        animate={{
+          x: ["-10%", "10%", "-5%", "-10%"],
+          y: ["-10%", "5%", "15%", "-10%"],
+          scale: [1, 1.1, 0.9, 1],
+        }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.035)_0%,transparent_70%)] blur-[80px]"
+      />
+      <motion.div
+        animate={{
+          x: ["10%", "-10%", "5%", "10%"],
+          y: ["10%", "-5%", "-15%", "10%"],
+          scale: [0.9, 1, 1.1, 0.9],
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[40%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.045)_0%,transparent_70%)] blur-[100px]"
+      />
+      <motion.div
+        animate={{
+          x: ["-5%", "15%", "0%", "-5%"],
+          y: ["15%", "0%", "-10%", "15%"],
+        }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        className="absolute -bottom-[20%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-[radial-gradient(circle,rgba(244,240,234,0.025)_0%,transparent_60%)] blur-[120px]"
+      />
+      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
+    </div>
+  );
+}
+
 export default function SunsetsLinkBio() {
   const [expandedMedia, setExpandedMedia] = useState<"youtube" | "soundcloud" | null>(null);
 
@@ -788,8 +822,7 @@ export default function SunsetsLinkBio() {
       />
 
       <section className="relative flex min-h-[100dvh] flex-col items-center justify-start px-4 py-12 sm:px-6">
-        <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(244,240,234,0.08),transparent_50%),linear-gradient(180deg,#050505_0%,#0A0A0A_100%)] pointer-events-none" />
-        <div className="fixed inset-0 opacity-[0.08] pointer-events-none [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
+        <AmbientFluidBackground />
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
