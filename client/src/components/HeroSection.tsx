@@ -369,10 +369,12 @@ export default function HeroSection() {
             className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
           >
             <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
+              <div className="pointer-events-none absolute left-1/2 top-0 h-[18rem] w-[120vw] -translate-x-1/2 -translate-y-[22%] bg-[radial-gradient(ellipse_at_center,rgba(255,210,138,0.30)_0%,rgba(232,184,109,0.18)_22%,rgba(194,112,62,0.10)_42%,transparent_72%)] blur-3xl md:left-[34%] md:h-[24rem] md:w-[48rem] md:-translate-x-1/3 md:-translate-y-[28%]" />
+              <div className="pointer-events-none absolute left-1/2 top-[3.75rem] h-28 w-[112vw] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(232,184,109,0.20)_32%,rgba(255,210,138,0.24)_50%,rgba(25,59,59,0.16)_68%,transparent)] blur-2xl md:left-[40%] md:top-[6.25rem] md:w-[44rem] md:-translate-x-1/3" />
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "hero-wordmark max-w-full text-[clamp(3rem,7vw,9rem)] text-balance bg-gradient-to-b from-white to-white/30 bg-clip-text text-left text-transparent"
+                  "relative hero-wordmark max-w-full text-[clamp(3rem,7vw,9rem)] text-balance bg-gradient-to-b from-white via-[#F4F0EA] to-white/30 bg-clip-text text-left text-transparent drop-shadow-[0_0_34px_rgba(232,184,109,0.22)]"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />

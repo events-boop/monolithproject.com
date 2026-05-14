@@ -849,8 +849,9 @@ export default function SunsetsLinkBio() {
             <ShareButton />
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.46)_0%,rgba(17,17,17,0.88)_30%,rgba(17,17,17,0.94)_52%,rgba(25,59,59,0.18)_73%,rgba(17,17,17,0.98)_100%)]" />
-            <div className="pointer-events-none absolute left-1/2 top-14 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.26)_0%,rgba(232,184,109,0.13)_30%,rgba(194,112,62,0.09)_50%,transparent_74%)] blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.58)_0%,rgba(17,17,17,0.82)_26%,rgba(17,17,17,0.94)_50%,rgba(25,59,59,0.22)_73%,rgba(17,17,17,0.98)_100%)]" />
+            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.34)_0%,rgba(232,184,109,0.18)_27%,rgba(194,112,62,0.10)_50%,transparent_74%)] blur-3xl" />
+            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(232,184,109,0.18)_30%,rgba(255,210,138,0.24)_50%,rgba(25,59,59,0.14)_70%,transparent)] blur-2xl" />
             <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(232,184,109,0.13),rgba(58,40,22,0.08)_42%,transparent_72%)]" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
             
