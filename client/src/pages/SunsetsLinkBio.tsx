@@ -353,7 +353,7 @@ function StickyActionDock() {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.7, type: "spring", stiffness: 220, damping: 24 }}
-      className="sticky bottom-3 z-30 mx-3 mt-8 rounded-full border border-[#F4F0EA]/12 bg-[#090909]/86 p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-2xl"
+      className="sticky bottom-3 z-30 mx-3 mt-8 rounded-full border border-[#A4592C]/16 bg-[#F8FAF8]/94 p-1.5 shadow-[0_18px_50px_rgba(44,24,16,0.28)] backdrop-blur-2xl"
     >
       <div className="grid grid-cols-[1.05fr_.95fr] gap-1.5">
         <a
@@ -371,7 +371,7 @@ function StickyActionDock() {
               });
             }
           }
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#F4F0EA] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#111111] transition hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/70"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#A4592C] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-[0_10px_24px_rgba(164,89,44,0.28)] transition hover:bg-[#8F4427] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/45"
         >
           <Bell className="h-3.5 w-3.5" strokeWidth={2} />
           First Access
@@ -391,7 +391,7 @@ function StickyActionDock() {
               });
             }
           }
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#F4F0EA]/16 bg-[#F4F0EA]/[0.04] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/82 transition hover:border-[#F4F0EA]/42 hover:text-[#F4F0EA] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/60"
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#A4592C]/18 bg-white px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#5A2B19]/82 transition hover:border-[#A4592C]/42 hover:bg-[#FFF7F2] hover:text-[#5A2B19] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/40"
         >
           <Ticket className="h-3.5 w-3.5" strokeWidth={2} />
           Tickets
@@ -769,7 +769,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const isPrimary = item.variant === "primary";
   const cardClass = isPrimary
     ? "border-[#14B8A6]/65 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_46%,#dffdfa_100%)] text-[#050403] shadow-[0_16px_44px_rgba(20,184,166,0.18)] hover:border-[#69F3E3] hover:bg-white"
-    : "border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.82),rgba(24,19,31,0.76)_50%,rgba(7,38,42,0.72))] text-white hover:border-[#EC4899]/48 hover:bg-[#F4F0EA]/6";
+    : "border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.82),rgba(12,30,34,0.76)_50%,rgba(14,24,48,0.72))] text-white hover:border-[#8B5CF6]/44 hover:bg-[#F4F0EA]/6";
   const iconClass = isPrimary
     ? "border-[#050403]/12 bg-[#050403] text-[#69F3E3]"
     : "border-[#14B8A6]/18 bg-black/40 text-[#69F3E3]/78";
@@ -777,7 +777,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const titleClass = isPrimary ? "text-[#050403] font-semibold" : "text-white/90 group-hover:text-white";
   const subClass = isPrimary ? "text-[#050403]/75" : "text-white/50 group-hover:text-white/70";
   const arrowClass = isPrimary ? "text-[#050403] opacity-100" : "text-white/30 group-hover:text-white/80";
-  const glowClass = "group-hover:border-[#EC4899]/50 group-hover:shadow-[0_14px_38px_rgba(236,72,153,0.18)]";
+  const glowClass = "group-hover:border-[#8B5CF6]/48 group-hover:shadow-[0_14px_38px_rgba(20,184,166,0.16)]";
 
   return (
     <motion.a
@@ -829,7 +829,7 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
-        style={{ background: "radial-gradient(circle, rgba(255,79,62,0.26) 0%, rgba(236,72,153,0.15) 45%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(20,184,166,0.24) 0%, rgba(139,92,246,0.12) 45%, transparent 70%)" }}
       />
       {/* Lake shadow contrast on the right side. */}
       <motion.div
@@ -857,7 +857,7 @@ function AmbientFluidBackground() {
         animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
-        style={{ background: "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(236,72,153,0.08) 45%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(139,92,246,0.08) 45%, transparent 100%)" }}
       />
       {/* Subtle grid overlay */}
       <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -900,9 +900,9 @@ export default function SunsetsLinkBio() {
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.58)_0%,rgba(17,17,17,0.82)_26%,rgba(17,17,17,0.94)_50%,rgba(25,59,59,0.22)_73%,rgba(17,17,17,0.98)_100%)]" />
-            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,79,62,0.28)_0%,rgba(236,72,153,0.18)_28%,rgba(20,184,166,0.10)_52%,transparent_74%)] blur-3xl" />
-            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,79,62,0.18)_28%,rgba(236,72,153,0.24)_50%,rgba(20,184,166,0.16)_72%,transparent)] blur-2xl" />
-            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.13),rgba(236,72,153,0.08)_42%,transparent_72%)]" />
+            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.24)_0%,rgba(56,189,248,0.14)_28%,rgba(139,92,246,0.10)_52%,transparent_74%)] blur-3xl" />
+            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(20,184,166,0.18)_28%,rgba(56,189,248,0.18)_50%,rgba(139,92,246,0.14)_72%,transparent)] blur-2xl" />
+            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.13),rgba(139,92,246,0.08)_42%,transparent_72%)]" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
             
             <div className="relative z-10 px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
@@ -947,7 +947,7 @@ export default function SunsetsLinkBio() {
                     className="h-full w-full object-cover"
                     loading="eager"
                   />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(20,184,166,0.28),rgba(236,72,153,0.14)_32%,transparent_58%)] mix-blend-screen opacity-80" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(20,184,166,0.26),rgba(56,189,248,0.14)_32%,transparent_58%)] mix-blend-screen opacity-80" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(5,4,3,0.24)_100%)]" />
                   <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
                 </motion.div>
@@ -1000,7 +1000,7 @@ export default function SunsetsLinkBio() {
                     channel: "Posh",
                   });
                 }}
-                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#14B8A6]/40 bg-[linear-gradient(135deg,rgba(255,79,62,0.16),rgba(236,72,153,0.12)_44%,rgba(20,184,166,0.16)_100%)] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#69F3E3]/70 hover:shadow-[0_15px_40px_rgba(20,184,166,0.18)]"
+                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#14B8A6]/40 bg-[linear-gradient(135deg,rgba(20,184,166,0.16),rgba(56,189,248,0.12)_44%,rgba(139,92,246,0.14)_100%)] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#69F3E3]/70 hover:shadow-[0_15px_40px_rgba(20,184,166,0.18)]"
               >
                 <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(20,184,166,0.18),transparent_60%)]" />
                 <div className="relative z-10 flex items-start justify-between">
@@ -1079,7 +1079,7 @@ export default function SunsetsLinkBio() {
                           channel: "Posh",
                         });
                       }}
-                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#14B8A6]/12 bg-black/24 px-3 py-3 transition hover:border-[#EC4899]/44 hover:bg-[#EC4899]/8"
+                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#14B8A6]/12 bg-black/24 px-3 py-3 transition hover:border-[#8B5CF6]/38 hover:bg-[#14B8A6]/8"
                     >
                       <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FFFFFF]">
                         {event.date}
