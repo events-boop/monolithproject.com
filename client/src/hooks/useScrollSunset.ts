@@ -40,14 +40,14 @@ function sample(stops: Stop[], t: number): string {
 
 /* ── colour journeys (scroll 0 → 1) ── */
 
-// Background: cream → warm sand → amber → deep rust → near-black
+// Background: off-white → vivid blush → coral → deep teal → near-black
 const BG: Stop[] = [
-  { at: 0.0, rgb: hex2rgb("#FBF5ED") },
-  { at: 0.18, rgb: hex2rgb("#FBF5ED") },
-  { at: 0.42, rgb: hex2rgb("#F0D8B8") },
-  { at: 0.62, rgb: hex2rgb("#C4805A") },
-  { at: 0.82, rgb: hex2rgb("#5C2A18") },
-  { at: 1.0, rgb: hex2rgb("#1A0E08") },
+  { at: 0.0, rgb: hex2rgb("#FAFAF7") },
+  { at: 0.18, rgb: hex2rgb("#FAFAF7") },
+  { at: 0.42, rgb: hex2rgb("#F7E7EF") },
+  { at: 0.62, rgb: hex2rgb("#E85D4F") },
+  { at: 0.82, rgb: hex2rgb("#123E46") },
+  { at: 1.0, rgb: hex2rgb("#071014") },
 ];
 
 // Text: dark → light (flips for contrast as bg darkens)
@@ -58,12 +58,12 @@ const TEXT: Stop[] = [
   { at: 1.0, rgb: hex2rgb("#FBF5ED") },
 ];
 
-// Accent: auburn → brightens toward gold in the dark sections
+// Accent: coral → fuchsia → cyan-teal in the dark sections
 const ACCENT: Stop[] = [
-  { at: 0.0, rgb: hex2rgb("#C2703E") },
-  { at: 0.55, rgb: hex2rgb("#D4884E") },
-  { at: 0.8, rgb: hex2rgb("#E8B86D") },
-  { at: 1.0, rgb: hex2rgb("#E8B86D") },
+  { at: 0.0, rgb: hex2rgb("#E05A3A") },
+  { at: 0.55, rgb: hex2rgb("#EC4899") },
+  { at: 0.8, rgb: hex2rgb("#14B8A6") },
+  { at: 1.0, rgb: hex2rgb("#14B8A6") },
 ];
 
 // Glass panels: white glass → dark glass
@@ -84,10 +84,10 @@ export interface SunsetPalette {
 }
 
 const INITIAL: SunsetPalette = {
-  bg: "var(--sunset-bg, #FBF5ED)",
+  bg: "var(--sunset-bg, #FAFAF7)",
   text: "var(--sunset-text, #2C1810)",
   accent: "var(--sunset-accent, #C2703E)",
-  warmGold: "var(--sunset-warmGold, #E8B86D)",
+  warmGold: "var(--sunset-warmGold, #14B8A6)",
   glass: "var(--sunset-glass, #FFFFFF)",
   progress: 0,
 };
@@ -108,7 +108,7 @@ export default function useScrollSunset(): SunsetPalette {
         root.style.setProperty("--sunset-bg", sample(BG, t));
         root.style.setProperty("--sunset-text", sample(TEXT, t));
         root.style.setProperty("--sunset-accent", sample(ACCENT, t));
-        root.style.setProperty("--sunset-warmGold", "#E8B86D");
+        root.style.setProperty("--sunset-warmGold", "#14B8A6");
         root.style.setProperty("--sunset-glass", sample(GLASS, t));
       }
       rafRef = 0;

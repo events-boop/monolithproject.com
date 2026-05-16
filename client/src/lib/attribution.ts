@@ -63,6 +63,7 @@ interface StoredAttribution {
 const ATTRIBUTION_STORAGE_KEY = "monolith:attribution:v1";
 const SESSION_STORAGE_KEY = "monolith:session:v1";
 const ATTRIBUTION_QUERY_PARAMS = {
+  session_id: "sessionId",
   utm_source: "utmSource",
   utm_medium: "utmMedium",
   utm_campaign: "utmCampaign",

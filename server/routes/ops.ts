@@ -3,6 +3,7 @@ import { siteDataService } from "../services/site-data-service";
 import { logEvent } from "../lib/logging";
 import { asyncHandler } from "../lib/async";
 import { createAdminRouteGuard } from "../lib/admin-auth";
+import { readSunsetsAnalytics } from "../services/sunsets-analytics";
 
 const router = express.Router();
 
@@ -47,6 +48,16 @@ router.get(
         img_limit: "400KB",
         render: "Edge Hybrid"
       }
+    });
+  })
+);
+
+router.get(
+  "/api/ops/sunsets-analytics",
+  asyncHandler(async (_req, res) => {
+    res.json({
+      ok: true,
+      analytics: await readSunsetsAnalytics(),
     });
   })
 );

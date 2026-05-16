@@ -61,6 +61,18 @@
   force = true
 
 [[redirects]]
+  from = "/SUNSET"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/SUNSET/"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/Sunsets"
   to = "/sunsets"
   status = 301
@@ -68,6 +80,30 @@
 
 [[redirects]]
   from = "/Sunsets/"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Sunset"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Sunset/"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sunset"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sunset/"
   to = "/sunsets"
   status = 301
   force = true

@@ -14,6 +14,8 @@ const FALLBACK_TIKTOK_URL = "https://tiktok.com/@monolithproject";
 const FALLBACK_SPOTIFY_URL = "https://open.spotify.com/search/chasing%20sunsets";
 const FALLBACK_X_URL = "https://x.com/monolithproject";
 const OUTBOUND_TRACKING_PARAMS = [
+  "session_id",
+  "event_slug",
   "utm_source",
   "utm_medium",
   "utm_campaign",

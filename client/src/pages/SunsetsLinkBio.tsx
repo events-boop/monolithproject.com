@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -273,6 +274,13 @@ function trackSunsetsClick(item: Pick<BioLink, "buttonName" | "href" | "eventSlu
 
 function ShareButton() {
   const [shareState, setShareState] = useState<"idle" | "shared" | "copied">("idle");
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
+    };
+  }, []);
 
   const handleShare = async () => {
     if (typeof window === "undefined") return;
@@ -309,7 +317,8 @@ function ShareButton() {
       return;
     }
 
-    window.setTimeout(() => setShareState("idle"), 2200);
+    if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = setTimeout(() => setShareState("idle"), 2200);
   };
 
   return (
@@ -430,6 +439,13 @@ function InlineCaptureForm() {
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "submitted" | "error">("idle");
   const [error, setError] = useState("");
+  const submitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (submitTimerRef.current !== null) clearTimeout(submitTimerRef.current);
+    };
+  }, []);
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -496,7 +512,8 @@ function InlineCaptureForm() {
       );
     }
 
-    window.setTimeout(() => {
+    if (submitTimerRef.current !== null) clearTimeout(submitTimerRef.current);
+    submitTimerRef.current = setTimeout(() => {
       triggerHaptic(18);
       setStatus("submitted");
     }, 520);
@@ -528,63 +545,82 @@ function InlineCaptureForm() {
   }
 
   return (
-    <form
-      onSubmit={submit}
-      id="first-access"
-      className="mt-6 rounded-[1.15rem] border border-[#F4F0EA]/16 bg-[#111111]/78 px-4 py-4 text-left shadow-[0_16px_50px_rgba(0,0,0,0.38)]"
-      noValidate
-    >
-      <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="text-[9px] font-black uppercase tracking-[0.24em] text-white/60">First access</p>
-        <span className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.18em] text-white/80">
-          <span className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_14px_rgba(255,255,255,0.7)]" />
-          Waitlist Open
-        </span>
-      </div>
-      <div className="flex items-end gap-3">
-        <input
-          type="text"
-          value={value}
-          autoComplete="email tel"
-          inputMode="email"
-          onChange={(event) => {
-            setValue(event.target.value);
-            if (status === "error") setStatus("idle");
-          }}
-          placeholder="phone or email"
-          className="h-12 min-w-0 flex-1 rounded-none border-0 border-b border-white/20 bg-transparent px-0 text-base text-white outline-none transition placeholder:text-white/40 focus:border-white/80"
-        />
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          aria-label="Join First Access"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white text-[#111111] transition hover:scale-105 disabled:cursor-wait disabled:opacity-65"
-        >
-          {status === "submitting" ? (
-            <span className="h-3 w-3 animate-pulse rounded-full bg-[#111111]" />
-          ) : (
-            <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+    <div className="relative mt-6">
+      {/* Warm amber glow behind the form */}
+      <div className="pointer-events-none absolute inset-0 -inset-x-4 rounded-[1.5rem] blur-2xl bg-[radial-gradient(ellipse_at_50%_0%,rgba(232,184,109,0.22)_0%,transparent_70%)]" />
+      <form
+        onSubmit={submit}
+        id="first-access"
+        className="relative overflow-hidden rounded-[1.25rem] border border-[#E8B86D]/28 bg-[linear-gradient(135deg,rgba(30,22,12,0.95)_0%,rgba(17,17,17,0.92)_50%,rgba(20,25,28,0.94)_100%)] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(232,184,109,0.08),0_20px_60px_rgba(0,0,0,0.55)]"
+        noValidate
+      >
+        {/* Subtle top glare */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#E8B86D]/40 to-transparent" />
+        {/* Inner ambient glow */}
+        <div className="pointer-events-none absolute left-1/2 top-0 h-24 w-48 -translate-x-1/2 rounded-full blur-3xl bg-[rgba(232,184,109,0.10)]" />
+
+        <div className="relative">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Bell className="h-3 w-3 text-[#E8B86D]/70" strokeWidth={2} />
+              <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#E8B86D]/80">First Access</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E8B86D]/20 bg-[#E8B86D]/8 px-2.5 py-1 text-[8px] font-black uppercase tracking-[0.18em] text-[#E8B86D]/90">
+              <motion.span
+                animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                className="h-1.5 w-1.5 rounded-full bg-[#E8B86D] shadow-[0_0_8px_rgba(232,184,109,0.8)]"
+              />
+              Waitlist Open
+            </span>
+          </div>
+
+          <div className="flex items-end gap-3">
+            <input
+              type="text"
+              value={value}
+              autoComplete="email"
+              inputMode={/^\d/.test(value) ? "tel" : "email"}
+              onChange={(event) => {
+                setValue(event.target.value);
+                if (status === "error") setStatus("idle");
+              }}
+              placeholder="phone or email"
+              className="h-12 min-w-0 flex-1 rounded-none border-0 border-b border-[#E8B86D]/25 bg-transparent px-0 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[#E8B86D]/70"
+            />
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              aria-label="Join First Access"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#E8B86D]/30 bg-[#E8B86D] text-[#111111] shadow-[0_0_20px_rgba(232,184,109,0.35)] transition hover:scale-105 hover:bg-[#FFD28A] hover:shadow-[0_0_28px_rgba(232,184,109,0.55)] disabled:cursor-wait disabled:opacity-65"
+            >
+              {status === "submitting" ? (
+                <span className="h-3 w-3 animate-pulse rounded-full bg-[#3A2810]" />
+              ) : (
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
+              )}
+            </button>
+          </div>
+
+          {status === "error" && (
+            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FFD28A]/80">
+              {error}
+            </p>
           )}
-        </button>
-      </div>
 
-      {status === "error" && (
-        <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80">
-          {error}
-        </p>
-      )}
-
-      <div className="mt-4 grid grid-cols-3 gap-1.5 border-t border-[#F4F0EA]/8 pt-3">
-        {capturePromises.map((item) => (
-          <span
-            key={item}
-            className="rounded-full border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.025] px-2 py-1.5 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/58"
-          >
-            {item}
-          </span>
-        ))}
-      </div>
-    </form>
+          <div className="mt-4 grid grid-cols-3 gap-1.5 border-t border-[#E8B86D]/10 pt-3">
+            {capturePromises.map((promise) => (
+              <span
+                key={promise}
+                className="rounded-full border border-[#E8B86D]/14 bg-[#E8B86D]/[0.05] px-2 py-1.5 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#E8B86D]/60"
+              >
+                {promise}
+              </span>
+            ))}
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 
@@ -622,9 +658,10 @@ function MediaAccordion({
 }) {
   const Icon = item.icon;
   const isYouTube = item.type === "youtube";
+  // Autoplay triggers on expand (user gesture = browser allows it). mute=0 keeps audio on.
   const embedSrc = isYouTube
-    ? "https://www.youtube-nocookie.com/embed/9R6XH7JZlJI?rel=0&modestbranding=1"
-    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(SUNSETS_SOUNDCLOUD_EMBED_HREF)}&color=%23f4f0ea&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=true`;
+    ? `https://www.youtube-nocookie.com/embed/9R6XH7JZlJI?rel=0&modestbranding=1${expanded ? "&autoplay=1" : ""}`
+    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(SUNSETS_SOUNDCLOUD_EMBED_HREF)}&color=%23f4f0ea&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false`;
 
   return (
     <motion.div
@@ -638,6 +675,7 @@ function MediaAccordion({
         onClick={onToggle}
         className="block w-full text-left"
         aria-expanded={expanded}
+        aria-label={expanded ? `Close ${item.label}` : `Expand ${item.label}`}
       >
         <div className="flex items-center justify-between border-b border-[#F4F0EA]/8 bg-[#F4F0EA]/[0.025] px-4 py-3">
           <div className="flex items-center gap-2">
@@ -650,17 +688,28 @@ function MediaAccordion({
             {expanded ? "Close" : item.label}
           </span>
         </div>
-        <div className="relative min-h-[132px] overflow-hidden">
+        {/* Thumbnail — YouTube gets full brightness, SoundCloud keeps its dark overlay */}
+        <div className={`relative overflow-hidden ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}>
           {item.image ? (
             <img
               src={item.image}
               alt=""
-              className="absolute inset-0 h-full w-full object-cover opacity-45 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-62"
+              className={`absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03] ${
+                isYouTube
+                  ? "opacity-100 group-hover:opacity-100"
+                  : "opacity-45 group-hover:opacity-62"
+              }`}
               loading="lazy"
             />
           ) : null}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.08)_0%,rgba(17,17,17,0.92)_100%)]" />
-          <div className="relative flex min-h-[132px] flex-col justify-end p-4">
+          {/* No overlay for YouTube — show raw, bright thumbnail */}
+          {!isYouTube && (
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.08)_0%,rgba(17,17,17,0.92)_100%)]" />
+          )}
+          {isYouTube && (
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(10,8,6,0.72)_100%)]" />
+          )}
+          <div className={`relative flex flex-col justify-end p-4 ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}>
             <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111] shadow-[0_0_22px_rgba(244,240,234,0.22)]">
               <Icon className="h-4 w-4" strokeWidth={1.8} />
             </div>
@@ -684,6 +733,7 @@ function MediaAccordion({
         <div className="border-t border-[#F4F0EA]/8 p-3">
           <div className="overflow-hidden rounded-xl border border-[#F4F0EA]/10 bg-black">
             <iframe
+              key={expanded ? "expanded" : "collapsed"}
               title={isYouTube ? "Chasing Sun(Sets) recap video" : "Chasing Sun(Sets) SoundCloud player"}
               src={embedSrc}
               className={isYouTube ? "aspect-video w-full" : "h-[180px] w-full"}
@@ -718,16 +768,16 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
   const href = appendAttributionQueryParams(item.href);
   const isPrimary = item.variant === "primary";
   const cardClass = isPrimary
-    ? "border-[#F4F0EA]/70 bg-[#F4F0EA] text-[#050403] shadow-[0_16px_44px_rgba(244,240,234,0.18)] hover:border-white hover:bg-white"
-    : "border-[#F4F0EA]/12 bg-[#111111]/72 text-white hover:border-[#F4F0EA]/36 hover:bg-[#F4F0EA]/6";
+    ? "border-[#14B8A6]/65 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_46%,#dffdfa_100%)] text-[#050403] shadow-[0_16px_44px_rgba(20,184,166,0.18)] hover:border-[#69F3E3] hover:bg-white"
+    : "border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.82),rgba(24,19,31,0.76)_50%,rgba(7,38,42,0.72))] text-white hover:border-[#EC4899]/48 hover:bg-[#F4F0EA]/6";
   const iconClass = isPrimary
-    ? "border-[#050403]/12 bg-[#050403] text-[#F4F0EA]"
-    : "border-white/10 bg-black/40 text-white/70";
+    ? "border-[#050403]/12 bg-[#050403] text-[#69F3E3]"
+    : "border-[#14B8A6]/18 bg-black/40 text-[#69F3E3]/78";
   const eyebrowClass = isPrimary ? "text-[#050403]/60" : "text-white/40";
   const titleClass = isPrimary ? "text-[#050403] font-semibold" : "text-white/90 group-hover:text-white";
   const subClass = isPrimary ? "text-[#050403]/75" : "text-white/50 group-hover:text-white/70";
   const arrowClass = isPrimary ? "text-[#050403] opacity-100" : "text-white/30 group-hover:text-white/80";
-  const glowClass = "group-hover:border-[#F4F0EA]/40 group-hover:bg-[#F4F0EA]/5";
+  const glowClass = "group-hover:border-[#EC4899]/50 group-hover:shadow-[0_14px_38px_rgba(236,72,153,0.18)]";
 
   return (
     <motion.a
@@ -770,7 +820,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 function AmbientFluidBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none bg-[#050505] z-0">
-      {/* Amber / deep orange — top left, primary sunset tone */}
+      {/* Coral and fuchsia energy, with cyan-teal contrast. */}
       <motion.div
         animate={{
           x: ["-10%", "12%", "-4%", "-10%"],
@@ -779,9 +829,9 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
-        style={{ background: "radial-gradient(circle, rgba(232,184,109,0.24) 0%, rgba(194,112,62,0.12) 45%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(255,79,62,0.26) 0%, rgba(236,72,153,0.15) 45%, transparent 70%)" }}
       />
-      {/* Lake shadow — right side, keeps the page from going all-gold */}
+      {/* Lake shadow contrast on the right side. */}
       <motion.div
         animate={{
           x: ["8%", "-12%", "4%", "8%"],
@@ -802,12 +852,12 @@ function AmbientFluidBackground() {
         className="absolute -bottom-[22%] left-[15%] w-[85vw] h-[85vw] rounded-full blur-[130px]"
         style={{ background: "radial-gradient(circle, rgba(58,40,22,0.30) 0%, rgba(5,4,3,0.08) 50%, transparent 68%)" }}
       />
-      {/* Warm gold horizon accent — subtle strip at the bottom */}
+      {/* Vivid horizon accent at the bottom */}
       <motion.div
         animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
-        style={{ background: "linear-gradient(to top, rgba(232,184,109,0.16) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(236,72,153,0.08) 45%, transparent 100%)" }}
       />
       {/* Subtle grid overlay */}
       <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -850,9 +900,9 @@ export default function SunsetsLinkBio() {
             {/* Subtle top glare */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.58)_0%,rgba(17,17,17,0.82)_26%,rgba(17,17,17,0.94)_50%,rgba(25,59,59,0.22)_73%,rgba(17,17,17,0.98)_100%)]" />
-            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,210,138,0.34)_0%,rgba(232,184,109,0.18)_27%,rgba(194,112,62,0.10)_50%,transparent_74%)] blur-3xl" />
-            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(232,184,109,0.18)_30%,rgba(255,210,138,0.24)_50%,rgba(25,59,59,0.14)_70%,transparent)] blur-2xl" />
-            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(232,184,109,0.13),rgba(58,40,22,0.08)_42%,transparent_72%)]" />
+            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,79,62,0.28)_0%,rgba(236,72,153,0.18)_28%,rgba(20,184,166,0.10)_52%,transparent_74%)] blur-3xl" />
+            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,79,62,0.18)_28%,rgba(236,72,153,0.24)_50%,rgba(20,184,166,0.16)_72%,transparent)] blur-2xl" />
+            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.13),rgba(236,72,153,0.08)_42%,transparent_72%)]" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
             
             <div className="relative z-10 px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
@@ -861,25 +911,25 @@ export default function SunsetsLinkBio() {
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#F4F0EA]/20 bg-black/60 shadow-[0_0_42px_rgba(232,184,109,0.22)]"
+                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#14B8A6]/28 bg-black/60 shadow-[0_0_42px_rgba(20,184,166,0.22)]"
                 >
-                  <Sun className="h-7 w-7 text-[#FFD28A]" strokeWidth={1} />
+                  <Sun className="h-7 w-7 text-[#69F3E3]" strokeWidth={1} />
                 </motion.div>
 
-                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#FFD28A]/80">
+                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#69F3E3]/80">
                   The Monolith Project Presents
                 </p>
                 <div className="relative mx-auto mt-4 w-fit max-w-full">
-                  <h1 className="bg-gradient-to-b from-white via-[#F4F0EA] to-[#C9B08C] bg-clip-text font-display text-[clamp(2.45rem,10.5vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(232,184,109,0.20)]">
+                  <h1 className="bg-gradient-to-b from-white via-[#F4F0EA] to-[#8EF7EC] bg-clip-text font-display text-[clamp(2.45rem,10.5vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(20,184,166,0.20)]">
                     Chasing
                     <br />
                     <span className="whitespace-nowrap">Sun(Sets)</span>
                   </h1>
-                  <span className="absolute right-0 -top-5 inline-flex items-center gap-1.5 rounded-full border border-[#E8B86D]/30 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#FFD28A]/78 backdrop-blur sm:-right-1 sm:top-1 sm:translate-x-1/4">
+                  <span className="absolute right-0 -top-5 inline-flex items-center gap-1.5 rounded-full border border-[#14B8A6]/34 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#69F3E3]/82 backdrop-blur sm:-right-1 sm:top-1 sm:translate-x-1/4">
                     <motion.span
                       animate={{ scale: [1, 1.5, 1], opacity: [0.9, 0.25, 0.9] }}
                       transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                      className="h-1.5 w-1.5 rounded-full bg-[#E8B86D]"
+                      className="h-1.5 w-1.5 rounded-full bg-[#14B8A6]"
                     />
                     Official
                   </span>
@@ -889,7 +939,7 @@ export default function SunsetsLinkBio() {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, duration: 0.6 }}
-                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#E8B86D]/35 shadow-[0_0_52px_rgba(232,184,109,0.18),0_18px_48px_rgba(0,0,0,0.48)]"
+                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#14B8A6]/35 shadow-[0_0_52px_rgba(20,184,166,0.18),0_18px_48px_rgba(0,0,0,0.48)]"
                 >
                   <img
                     src={JULY_4_FIRST_ACCESS_IMAGE}
@@ -897,12 +947,12 @@ export default function SunsetsLinkBio() {
                     className="h-full w-full object-cover"
                     loading="eager"
                   />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,210,138,0.34),rgba(232,184,109,0.12)_30%,transparent_58%)] mix-blend-screen opacity-80" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(20,184,166,0.28),rgba(236,72,153,0.14)_32%,transparent_58%)] mix-blend-screen opacity-80" />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(5,4,3,0.24)_100%)]" />
                   <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
                 </motion.div>
 
-                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#FFD28A]/90">
+                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#69F3E3]/90">
                   Watch the sun. Stay for the (sets).
                 </p>
                 <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
@@ -950,18 +1000,18 @@ export default function SunsetsLinkBio() {
                     channel: "Posh",
                   });
                 }}
-                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#F4F0EA]/40 bg-gradient-to-br from-[#F4F0EA]/16 to-black/60 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#F4F0EA]/70 hover:shadow-[0_15px_40px_rgba(244,240,234,0.18)]"
+                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#14B8A6]/40 bg-[linear-gradient(135deg,rgba(255,79,62,0.16),rgba(236,72,153,0.12)_44%,rgba(20,184,166,0.16)_100%)] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#69F3E3]/70 hover:shadow-[0_15px_40px_rgba(20,184,166,0.18)]"
               >
-                <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(244,240,234,0.12),transparent_60%)]" />
+                <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(20,184,166,0.18),transparent_60%)]" />
                 <div className="relative z-10 flex items-start justify-between">
                   <div className="min-w-0">
-                    <span className="inline-block rounded-full bg-[#F4F0EA] px-2.5 py-1 text-[13px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(244,240,234,0.35)]">
+                    <span className="inline-block rounded-full bg-[#69F3E3] px-2.5 py-1 text-[13px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(20,184,166,0.35)]">
                       Next Chapter
                     </span>
                     <h2 className="mt-3 font-display text-3xl uppercase leading-[0.9] tracking-[-0.02em] text-white">
                       July 4th
                       <br />
-                      <span className="text-[#F4F0EA]">Open Air</span>
+                      <span className="text-[#69F3E3]">Open Air</span>
                     </h2>
                     <p className="mt-2 text-sm font-light text-white/70">
                       Castaways, Chicago • 3 PM - 10 PM
@@ -977,7 +1027,7 @@ export default function SunsetsLinkBio() {
                       ))}
                     </div>
                   </div>
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F4F0EA] text-black transition-transform duration-500 group-hover:scale-110">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#69F3E3] text-black transition-transform duration-500 group-hover:scale-110">
                     <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
                   </div>
                 </div>
@@ -989,7 +1039,7 @@ export default function SunsetsLinkBio() {
                 </div>
               </motion.a>
 
-              <div className="mt-5 rounded-[1.25rem] border border-[#F4F0EA]/12 bg-[#111111]/72 p-3">
+              <div className="mt-5 rounded-[1.25rem] border border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.8),rgba(33,18,36,0.7)_48%,rgba(6,42,46,0.72))] p-3 shadow-[0_16px_48px_rgba(20,184,166,0.08)]">
                 <div className="flex items-center justify-between gap-3 px-1 pb-2">
                   <p className="text-[13px] font-sans font-light uppercase tracking-[0.26em] text-[#F4F0EA]/80">
                     2026 Schedule
@@ -1029,7 +1079,7 @@ export default function SunsetsLinkBio() {
                           channel: "Posh",
                         });
                       }}
-                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#F4F0EA]/8 bg-black/22 px-3 py-3 transition hover:border-[#F4F0EA]/40 hover:bg-[#F4F0EA]/6"
+                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#14B8A6]/12 bg-black/24 px-3 py-3 transition hover:border-[#EC4899]/44 hover:bg-[#EC4899]/8"
                     >
                       <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FFFFFF]">
                         {event.date}
@@ -1039,7 +1089,7 @@ export default function SunsetsLinkBio() {
                           <span className="text-[14px] font-semibold uppercase leading-snug tracking-[0.06em] text-white/88">
                             {event.title}
                           </span>
-                          <span className="rounded-full border border-[#F4F0EA]/12 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-[0.1em] text-[#F4F0EA]/58">
+                          <span className="rounded-full border border-[#14B8A6]/22 bg-[#14B8A6]/8 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-[0.1em] text-[#69F3E3]/78">
                             {event.status}
                           </span>
                         </span>
@@ -1047,7 +1097,7 @@ export default function SunsetsLinkBio() {
                           {event.venue} · {event.time}
                         </span>
                       </span>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#F4F0EA]" />
+                      <ArrowUpRight className="h-3.5 w-3.5 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#69F3E3]" />
                     </a>
                   ))}
                 </div>
@@ -1134,10 +1184,6 @@ export default function SunsetsLinkBio() {
                 })}
               </div>
 
-              <StickyActionDock />
-
-              {/* Removed Schedule Section */}
-
               {/* Footer */}
               <footer className="mt-10 pt-4 text-center">
                 <SocialUtilityRow />
@@ -1155,6 +1201,9 @@ export default function SunsetsLinkBio() {
             </div>
           </div>
         </motion.div>
+
+        {/* StickyActionDock — outside overflow-hidden card so position:sticky works */}
+        <StickyActionDock />
       </section>
     </main>
   );

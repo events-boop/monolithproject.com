@@ -41,6 +41,7 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/sponsor-access", methods: ["POST"] },
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },
+  { path: "/api/ops/sunsets-analytics", methods: ["GET"] },
   { path: "/api/webhooks/posh", methods: ["POST"] },
 ];
 

@@ -46,6 +46,26 @@ function cleanBoolean(value: unknown) {
   return false;
 }
 
+function readTrackingQueryParam(payload: PoshWebhookPayload, key: string) {
+  const direct = cleanString(payload[key]);
+  if (direct) return direct;
+
+  for (const field of ["tracking_link", "tracking_url", "source_url", "landing_page_url", "referrer"]) {
+    const raw = cleanString(payload[field]);
+    if (!raw || !raw.includes("?")) continue;
+
+    try {
+      const url = new URL(raw, "https://posh.invalid");
+      const value = url.searchParams.get(key)?.trim();
+      if (value) return value;
+    } catch {
+      continue;
+    }
+  }
+
+  return undefined;
+}
+
 function isoDate(value: unknown) {
   const text = cleanString(value);
   if (!text) return undefined;
@@ -180,8 +200,13 @@ export async function persistPoshWebhookPurchase(
     ? Math.max(0, subtotalCents - refundCents)
     : 0;
   const promoCode = cleanString(payload.promo_code);
-  const utmSource = cleanString(payload.utm_source);
-  const utmCampaign = cleanString(payload.utm_campaign);
+  const utmSource = readTrackingQueryParam(payload, "utm_source");
+  const utmMedium = readTrackingQueryParam(payload, "utm_medium");
+  const utmCampaign = readTrackingQueryParam(payload, "utm_campaign");
+  const utmContent = readTrackingQueryParam(payload, "utm_content");
+  const utmTerm = readTrackingQueryParam(payload, "utm_term");
+  const anonymousSessionId = readTrackingQueryParam(payload, "session_id");
+  const inboundEventSlug = readTrackingQueryParam(payload, "event_slug");
 
   let contactId: string | undefined;
   if (normalizedEmail) {
@@ -203,7 +228,7 @@ export async function persistPoshWebhookPurchase(
         consentEmail: true,
         consentSms: Boolean(phone),
         tags: ["posh", "buyer"],
-        metadata: { requestId, lastPoshWebhookType: type },
+        metadata: { requestId, lastPoshWebhookType: type, attribution: { anonymousSessionId, utmMedium, utmContent, utmTerm } },
       })
       .onConflictDoUpdate({
         target: contacts.emailNormalized,
@@ -223,6 +248,7 @@ export async function persistPoshWebhookPurchase(
             lastRequestId: requestId,
             lastPoshWebhookType: type,
             lastPoshWebhookStatus: status,
+            attribution: { anonymousSessionId, utmMedium, utmContent, utmTerm },
           })}::jsonb`,
         },
       })
@@ -273,8 +299,14 @@ export async function persistPoshWebhookPurchase(
     normalized: {
       requestId,
       status,
-      eventSlug,
+      eventSlug: inboundEventSlug || eventSlug,
       orderKey,
+      anonymousSessionId,
+      utmSource,
+      utmMedium,
+      utmCampaign,
+      utmContent,
+      utmTerm,
       grossRevenueCents: grossRevenue,
       feesCents,
       netRevenueCents: netRevenue,
@@ -286,7 +318,7 @@ export async function persistPoshWebhookPurchase(
     .values({
       id: ticketOrderId,
       contactId: contactId || null,
-      eventSlug,
+      eventSlug: inboundEventSlug || eventSlug,
       poshOrderId: orderNumber || trackingLink || null,
       ticketType: ticketType || null,
       quantity,

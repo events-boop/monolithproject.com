@@ -155,12 +155,12 @@ export default function ChasingSunsets() {
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
-              <div className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#E8B86D]/35 bg-black/35 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-md sm:mb-7 sm:px-4">
+              <div className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#14B8A6]/35 bg-black/35 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-md sm:mb-7 sm:px-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FBF5ED]">
                   Series Hero
                 </span>
-                <span className="h-1 w-1 rounded-full bg-[#E8B86D]/70" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
+                <span className="h-1 w-1 rounded-full bg-[#14B8A6]/70" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#69F3E3]">
                   Chasing Sun(Sets)
                 </span>
               </div>
@@ -179,13 +179,13 @@ export default function ChasingSunsets() {
                   <SplitText
                     key={`${line}-${i}`}
                     text={line}
-                    className="block bg-gradient-to-r from-[#FBF5ED] via-[#E8B86D] to-[#C2703E] bg-clip-text text-transparent"
+                    className="block bg-gradient-to-r from-white via-[#EC4899] to-[#14B8A6] bg-clip-text text-transparent"
                     initialDelay={0.1 + i * 0.15}
                   />
                 ))}
               </h1>
               {featuredChasingEvent ? (
-                <p className="mb-6 max-w-2xl font-mono text-xs uppercase tracking-[0.2em] text-[#E8B86D] sm:mb-7 sm:text-sm">
+                <p className="mb-6 max-w-2xl font-mono text-xs uppercase tracking-[0.2em] text-[#69F3E3] sm:mb-7 sm:text-sm">
                   {featuredChasingEvent.headline || featuredChasingEvent.title}
                 </p>
               ) : null}
@@ -200,7 +200,7 @@ export default function ChasingSunsets() {
                 {featuredChasingEvent ? (
                   <div
                     data-chasing-meta="true"
-                    className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-[#E8B86D] sm:mb-8 sm:gap-x-6 sm:text-[11px]"
+                    className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-[#69F3E3] sm:mb-8 sm:gap-x-6 sm:text-[11px]"
                   >
                     <span>{featuredChasingEvent.date}</span>
                     <span className="h-1 w-1 rounded-full bg-white/20" />
@@ -240,31 +240,31 @@ export default function ChasingSunsets() {
         <Section
           width="wide"
           spacing="tight"
-          borderTop="border-t border-[#C2703E]/14"
-          bg="bg-[linear-gradient(180deg,rgba(251,245,237,0.95),rgba(244,233,214,0.92))]"
+          borderTop="border-t border-[#14B8A6]/18"
+          bg="sunset-lively-strip"
         >
           <div className="grid gap-4 lg:grid-cols-12">
             <motion.article
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-6 border border-[#C2703E]/16 bg-white/68 p-6 shadow-[0_24px_60px_rgba(44,24,16,0.08)] backdrop-blur-sm md:p-8"
+              className="sunset-lively-card sunset-lively-card-feature lg:col-span-6 p-6 backdrop-blur-sm md:p-8"
             >
               <span className="font-mono text-[10px] uppercase tracking-[0.34em] sunset-accent">Next Chapter</span>
-              <h2 className="mt-4 font-display text-[clamp(2.6rem,5vw,4.8rem)] uppercase leading-[0.88] sunset-text">
+              <h2 className="mt-4 font-display text-[clamp(2.6rem,4.45vw,4.15rem)] uppercase leading-[0.88] sunset-text">
                 {featuredChasingEvent?.headline || featuredChasingEvent?.title || "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
                 Chasing Sun(Sets) is the series title. Each date below is a chapter in the same golden-hour route: release, venue, ticket structure, and archive proof stay connected.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <span className="rounded-full border border-[#C2703E]/16 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
+                <span className="rounded-full border border-[#FF4F3E]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
                   {featuredChasingEvent?.date || "Date TBA"}
                 </span>
-                <span className="rounded-full border border-[#C2703E]/16 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
+                <span className="rounded-full border border-[#14B8A6]/22 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
                   {featuredChasingEvent ? getEventVenueLabel(featuredChasingEvent) : "Chicago"}
                 </span>
-                <span className="rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#A4592C]">
+                <span className="sunset-coral-chip rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em]">
                   {featuredChasingEvent ? getStatusLabel(featuredChasingEvent.status) : "Season Tracking"}
                 </span>
               </div>
@@ -320,10 +320,10 @@ export default function ChasingSunsets() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
-                className="lg:col-span-2 border border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(255,248,240,0.7))] p-5 shadow-[0_18px_44px_rgba(44,24,16,0.06)]"
+                className="sunset-lively-card lg:col-span-2 p-5"
               >
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">{card.kicker}</span>
-                <h3 className="mt-4 font-display text-[clamp(1.7rem,2vw,2.6rem)] uppercase leading-[0.92] sunset-text">
+                <h3 className="mt-4 font-display text-[clamp(1.45rem,1.45vw,1.9rem)] uppercase leading-[0.92] sunset-text">
                   {card.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed sunset-text-60">{card.body}</p>
@@ -385,8 +385,8 @@ export default function ChasingSunsets() {
                 </p>
               </article>
 
-              <article className="border border-[#E8B86D]/26 bg-[linear-gradient(180deg,rgba(232,184,109,0.16),rgba(255,255,255,0.84))] p-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">Season Logic</span>
+              <article className="border border-[#14B8A6]/24 bg-[linear-gradient(135deg,rgba(20,184,166,0.12),rgba(255,255,255,0.9)_52%,rgba(236,72,153,0.08))] p-6">
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#174F52]">Season Logic</span>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
                   <li>Next date is visible first.</li>
                   <li>Archive proof stays one section away.</li>
@@ -419,7 +419,7 @@ export default function ChasingSunsets() {
               title="THE SHORE"
               subtitle="Boat club and beach chapters"
               description="The latest visual cut from the shoreline run. Proof of crowd, booth, horizon, and the final push into night."
-              accentColor="#E8B86D"
+              accentColor="#14B8A6"
               images={[
                 { src: "/images/archive/chasing-sunsets/css-s3-1.jpg", alt: "Chasing SunSets Shoreline", label: "Open Air" },
                 { src: "/images/archive/chasing-sunsets/css-s3-4.jpg", alt: "Chasing SunSets Booth", label: "The Booth" },
@@ -569,7 +569,7 @@ export default function ChasingSunsets() {
                               <span className="flex items-center gap-1.5">
                                 <Calendar size={12} className="text-[#A4592C]" /> {event.time}
                               </span>
-                              <span className="rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/10 px-3 py-1 text-[9px] font-black tracking-[0.2em] text-[#A4592C]">
+                              <span className="sunset-teal-chip rounded-full border px-3 py-1 text-[9px] font-black tracking-[0.2em]">
                                 {getStatusLabel(event.status)}
                               </span>
                             </div>
@@ -616,7 +616,7 @@ export default function ChasingSunsets() {
                     The next open-air dates are being finalized. Join the newsletter to hear about them before the public release.
                   </p>
                   <Link href="/newsletter" asChild>
-                    <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8B86D]/50">
+                    <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14B8A6]/50">
                       {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
                     </a>
                   </Link>

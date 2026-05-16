@@ -152,7 +152,19 @@ function Router() {
       <Route path="/SUNSETS">
         <Redirect to="/sunsets" />
       </Route>
+      <Route path="/SUNSET">
+        <Redirect to="/sunsets" />
+      </Route>
       <Route path="/Sunsets">
+        <Redirect to="/sunsets" />
+      </Route>
+      <Route path="/Sunset">
+        <Redirect to="/sunsets" />
+      </Route>
+      <Route path="/sunset/">
+        <Redirect to="/sunsets" />
+      </Route>
+      <Route path="/sunset">
         <Redirect to="/sunsets" />
       </Route>
       <Route path="/sunsets/" component={SunsetsLinkBioTransition} />

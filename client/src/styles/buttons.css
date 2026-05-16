@@ -132,13 +132,13 @@
   }
 
   .btn-pill-sunsets {
-    --pill-accent-bg: linear-gradient(135deg, #f4d28b, #c2703e);
-    --pill-accent-hover-bg: linear-gradient(135deg, #ffe2a3, #d27c43);
-    --pill-accent-text: #1a1008;
-    --pill-accent-border: rgba(255, 230, 174, 0.52);
-    --pill-accent-hover-border: rgba(255, 230, 174, 0.76);
-    --pill-accent-shadow: 0 10px 28px rgba(194, 112, 62, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-    --pill-accent-hover-shadow: 0 16px 40px rgba(194, 112, 62, 0.46), 0 0 16px rgba(232, 184, 109, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    --pill-accent-bg: linear-gradient(135deg, #ff4f3e, #ec4899 58%, #14b8a6);
+    --pill-accent-hover-bg: linear-gradient(135deg, #ff6a5b, #f43f8f 54%, #20d6c2);
+    --pill-accent-text: #ffffff;
+    --pill-accent-border: rgba(255, 79, 62, 0.42);
+    --pill-accent-hover-border: rgba(20, 184, 166, 0.58);
+    --pill-accent-shadow: 0 10px 28px rgba(236, 72, 153, 0.26), 0 0 18px rgba(20, 184, 166, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.24);
+    --pill-accent-hover-shadow: 0 16px 42px rgba(255, 79, 62, 0.34), 0 0 22px rgba(20, 184, 166, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.34);
     --pill-accent-text-shadow: none;
   }
 
@@ -278,24 +278,24 @@
   }
 
   .btn-pill-outline-sunsets {
-    --pill-bg: rgba(232, 184, 109, 0.1);
-    --pill-border: rgba(232, 184, 109, 0.42);
-    --pill-text: #f3d7a0;
-    --pill-hover-bg: linear-gradient(135deg, #f4d28b, #c2703e);
-    --pill-hover-border: rgba(255, 230, 174, 0.7);
-    --pill-hover-text: #1a1008;
-    --pill-hover-shadow: 0 16px 38px rgba(194, 112, 62, 0.34);
+    --pill-bg: rgba(20, 184, 166, 0.1);
+    --pill-border: rgba(20, 184, 166, 0.42);
+    --pill-text: #69f3e3;
+    --pill-hover-bg: linear-gradient(135deg, #ff4f3e, #ec4899 58%, #14b8a6);
+    --pill-hover-border: rgba(20, 184, 166, 0.66);
+    --pill-hover-text: #ffffff;
+    --pill-hover-shadow: 0 16px 38px rgba(236, 72, 153, 0.3), 0 0 18px rgba(20, 184, 166, 0.24);
   }
 
   .btn-pill-outline-sunsets-light {
-    --pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(247, 234, 215, 0.88));
-    --pill-border: rgba(194, 112, 62, 0.26);
-    --pill-text: #2c1810;
-    --pill-hover-bg: linear-gradient(135deg, #f4d28b, #c2703e);
-    --pill-hover-border: rgba(255, 230, 174, 0.72);
-    --pill-hover-text: #1a1008;
+    --pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9));
+    --pill-border: rgba(20, 184, 166, 0.26);
+    --pill-text: #102326;
+    --pill-hover-bg: linear-gradient(135deg, #ff4f3e, #ec4899 58%, #14b8a6);
+    --pill-hover-border: rgba(20, 184, 166, 0.7);
+    --pill-hover-text: #ffffff;
     --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 14px 34px rgba(44, 24, 16, 0.1);
-    --pill-hover-shadow: 0 16px 38px rgba(194, 112, 62, 0.28);
+    --pill-hover-shadow: 0 16px 38px rgba(236, 72, 153, 0.26), 0 0 18px rgba(20, 184, 166, 0.2);
   }
 
   .btn-pill-outline-radio {
@@ -391,11 +391,11 @@
   }
 
   .btn-inline-pill-sunsets {
-    --inline-pill-border: rgba(232, 184, 109, 0.4);
-    --inline-pill-bg: rgba(232, 184, 109, 0.1);
-    --inline-pill-text: #f3d7a0;
-    --inline-pill-hover-border: rgba(232, 184, 109, 0.7);
-    --inline-pill-hover-bg: rgba(232, 184, 109, 0.18);
+    --inline-pill-border: rgba(20, 184, 166, 0.42);
+    --inline-pill-bg: rgba(20, 184, 166, 0.1);
+    --inline-pill-text: #69f3e3;
+    --inline-pill-hover-border: rgba(236, 72, 153, 0.58);
+    --inline-pill-hover-bg: rgba(236, 72, 153, 0.14);
   }
 
   .btn-inline-pill-dark {
@@ -590,18 +590,18 @@
   }
 
   .cta-series-sunsets {
-    --cta-accent: #e8b86d;
-    --cta-accent-deep: #c2703e;
-    --cta-solid-text: #1a1008;
-    --cta-neutral-border: rgba(232, 184, 109, 0.45);
-    --cta-glow: rgba(232, 184, 109, 0.28);
-    --cta-glow-strong: rgba(194, 112, 62, 0.44);
-    --cta-schedule-bg: linear-gradient(135deg, #f4d28b, #c2703e);
-    --cta-schedule-border: rgba(44, 24, 16, 0.34);
-    --cta-schedule-text: #1a1008;
-    --cta-schedule-hover-bg: #2c1810;
-    --cta-schedule-hover-border: #2c1810;
-    --cta-schedule-hover-text: #fff4df;
+    --cta-accent: #ff4f3e;
+    --cta-accent-deep: #14b8a6;
+    --cta-solid-text: #ffffff;
+    --cta-neutral-border: rgba(20, 184, 166, 0.42);
+    --cta-glow: rgba(236, 72, 153, 0.24);
+    --cta-glow-strong: rgba(20, 184, 166, 0.38);
+    --cta-schedule-bg: linear-gradient(135deg, #ff4f3e, #ec4899 58%, #14b8a6);
+    --cta-schedule-border: rgba(20, 184, 166, 0.34);
+    --cta-schedule-text: #ffffff;
+    --cta-schedule-hover-bg: #071014;
+    --cta-schedule-hover-border: #14b8a6;
+    --cta-schedule-hover-text: #ffffff;
   }
 
   .cta-series-radio {
