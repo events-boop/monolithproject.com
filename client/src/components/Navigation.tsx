@@ -320,18 +320,18 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   ? "Open tickets for current featured event"
                   : "Request early access for the current featured event"
               }
-              className="group relative block overflow-hidden rounded-[0.72rem] border border-primary/30 shadow-[0_12px_30px_rgba(224,90,58,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/80 sm:rounded-2xl"
+              className="group relative block overflow-hidden rounded-[0.72rem] border border-white/10 shadow-[0_16px_34px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:rounded-2xl"
             >
               <div
                 className="relative h-9 sm:h-11"
                 style={
                   bannerPayload.status === "live"
-                    ? { background: "linear-gradient(100deg, #ef4444 0%, #f97316 35%, #dc2626 70%, #fb7185 100%)" }
-                    : { background: "linear-gradient(100deg, #30140f 0%, #7e3622 28%, #e05a3a 62%, #f39c6b 100%)" }
+                    ? { background: "linear-gradient(100deg, #262626 0%, #3A3A36 42%, #1A1A18 100%)" }
+                    : { background: "linear-gradient(100deg, #20201E 0%, #343430 44%, #111110 100%)" }
                 }
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_55%,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_78%_45%,rgba(255,220,180,0.28),transparent_35%)]" />
-                <div className="absolute inset-0 bg-gradient-to-b from-white/12 via-transparent to-black/10" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_55%,rgba(255,255,255,0.16),transparent_30%),radial-gradient(circle_at_78%_45%,rgba(170,170,160,0.16),transparent_35%)]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/18" />
                 <div className="hidden h-full items-center overflow-hidden whitespace-nowrap sm:flex">
                   <span className="sr-only">{bannerPayload.text}</span>
                   <div aria-hidden="true" className="flex animate-marquee-fast whitespace-nowrap">

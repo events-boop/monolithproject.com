@@ -229,7 +229,7 @@ function FloatingEventCard({
     <div
       key={headline}
       data-home-hero-card="true"
-      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[#10100f]/84 shadow-[0_28px_70px_rgba(0,0,0,0.72)] backdrop-blur-md transition-colors duration-500"
+      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500"
     >
       <div
         aria-hidden="true"
@@ -260,11 +260,11 @@ function FloatingEventCard({
 
         {/* Narrative Metadata */}
         <div className="flex w-full flex-col gap-3 sm:pr-20">
-          <span className="event-system-kicker text-[#E8B86D]/82">
+          <span className="event-system-kicker text-white/58">
             {systemKicker}
           </span>
           <h3 className={cn(
-            "event-system-headline text-white text-balance",
+            "event-system-headline text-white text-balance drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)]",
             isJuly4thEvent
               ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
               : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
@@ -332,7 +332,7 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-[#A4592C]/22 bg-[#A4592C] px-6 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[0_14px_32px_rgba(164,89,44,0.24)] transition hover:bg-[#8F4427] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/40"
+      className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/78 bg-white px-6 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_36px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.8)] transition hover:-translate-y-0.5 hover:bg-[#E7E7E2] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/62"
     >
       {label}
     </a>
@@ -398,12 +398,12 @@ export default function HeroSection() {
             className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
           >
             <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
-              <div className="pointer-events-none absolute left-1/2 top-0 h-[18rem] w-[120vw] -translate-x-1/2 -translate-y-[22%] bg-[radial-gradient(ellipse_at_center,rgba(255,210,138,0.30)_0%,rgba(232,184,109,0.18)_22%,rgba(194,112,62,0.10)_42%,transparent_72%)] blur-3xl md:left-[34%] md:h-[24rem] md:w-[48rem] md:-translate-x-1/3 md:-translate-y-[28%]" />
-              <div className="pointer-events-none absolute left-1/2 top-[3.75rem] h-28 w-[112vw] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(232,184,109,0.20)_32%,rgba(255,210,138,0.24)_50%,rgba(25,59,59,0.16)_68%,transparent)] blur-2xl md:left-[40%] md:top-[6.25rem] md:w-[44rem] md:-translate-x-1/3" />
+              <div className="pointer-events-none absolute left-1/2 top-0 h-[18rem] w-[120vw] -translate-x-1/2 -translate-y-[22%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.16)_0%,rgba(168,168,160,0.10)_28%,rgba(52,52,48,0.10)_48%,transparent_74%)] blur-3xl md:left-[34%] md:h-[24rem] md:w-[48rem] md:-translate-x-1/3 md:-translate-y-[28%]" />
+              <div className="pointer-events-none absolute left-1/2 top-[3.75rem] h-28 w-[112vw] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.10)_34%,rgba(178,178,170,0.12)_50%,rgba(72,72,68,0.10)_68%,transparent)] blur-2xl md:left-[40%] md:top-[6.25rem] md:w-[44rem] md:-translate-x-1/3" />
               <h1
                 data-home-hero-heading="true"
                 className={cn(
-                  "relative hero-wordmark max-w-full text-[clamp(3rem,7vw,9rem)] text-balance bg-gradient-to-b from-white via-[#F4F0EA] to-white/30 bg-clip-text text-left text-transparent drop-shadow-[0_0_34px_rgba(232,184,109,0.22)]"
+                  "relative hero-wordmark max-w-full text-[clamp(3rem,7vw,9rem)] text-balance bg-gradient-to-b from-white via-[#ECECE8] to-white/28 bg-clip-text text-left text-transparent drop-shadow-[0_22px_42px_rgba(0,0,0,0.62)]"
                 )}
               >
                 <KineticDecryption text={HERO_TITLE} autoStart={false} />
@@ -412,7 +412,7 @@ export default function HeroSection() {
               <p
                 data-home-hero-pillars="true"
                 data-home-hero-eyebrow="true"
-                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-[#F4D7A1]/86 md:text-left"
+                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/62 md:text-left"
               >
                 {HERO_PILLARS}
               </p>
@@ -422,7 +422,7 @@ export default function HeroSection() {
 
               <p
                 data-home-hero-summary="true"
-                className="mt-5 max-w-[34rem] text-balance text-sm leading-relaxed text-[#E8B86D]/88 md:text-base"
+                className="mt-5 max-w-[34rem] text-balance text-sm leading-relaxed text-white/70 drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)] md:text-base"
               >
                 {HERO_SUPPORTING_LINE}
               </p>
