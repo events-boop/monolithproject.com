@@ -82,7 +82,7 @@ function withTransition<P extends RouteProps>(
   Component: React.ComponentType<P>,
 ) {
   return (props: P) => (
-    <div className="relative w-full bg-background min-h-screen overflow-hidden">
+    <div className="relative w-full bg-background min-h-screen overflow-x-clip">
       <Suspense fallback={<RouteLoadingFallback />}>
         <Component {...props} />
       </Suspense>

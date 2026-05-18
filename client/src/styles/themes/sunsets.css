@@ -4,7 +4,7 @@
 :root {
   --sunset-bg: #FAFAF7;
   --sunset-text: #2C1810;
-  --sunset-accent: #E05A3A;
+  --sunset-accent: #1F8A8D;
   --sunset-warmGold: #1F6F72;
   --sunset-glass: #FFFFFF;
 }
@@ -107,18 +107,18 @@
 }
 
 .sunset-gradient-btn {
-  background: linear-gradient(135deg, #E05A3A, #1F6F72);
+  background: linear-gradient(135deg, #14B8A6, #8B5CF6);
 }
 
 .sunset-lively-strip {
   background:
-    radial-gradient(circle at 8% 12%, rgba(224, 90, 58, 0.16), transparent 32%),
-    radial-gradient(circle at 82% 18%, rgba(31, 111, 114, 0.16), transparent 34%),
-    linear-gradient(135deg, #ffffff 0%, #fafaf7 42%, #f5f7f4 100%);
+    radial-gradient(circle at 8% 12%, rgba(20, 184, 166, 0.16), transparent 32%),
+    radial-gradient(circle at 82% 18%, rgba(139, 92, 246, 0.12), transparent 34%),
+    linear-gradient(135deg, #ffffff 0%, #f8fbfb 46%, #eef7f5 100%);
 }
 
 .sunset-lively-card {
-  border: 1px solid rgba(224, 90, 58, 0.18);
+  border: 1px solid rgba(20, 184, 166, 0.2);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(250, 250, 247, 0.84)),
     radial-gradient(circle at 100% 0%, rgba(31, 111, 114, 0.12), transparent 44%);
@@ -129,14 +129,14 @@
   border-color: rgba(31, 111, 114, 0.24);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(247, 249, 247, 0.86)),
-    radial-gradient(circle at 0% 0%, rgba(224, 90, 58, 0.14), transparent 42%),
-    radial-gradient(circle at 100% 20%, rgba(31, 111, 114, 0.13), transparent 44%);
+    radial-gradient(circle at 0% 0%, rgba(20, 184, 166, 0.13), transparent 42%),
+    radial-gradient(circle at 100% 20%, rgba(139, 92, 246, 0.1), transparent 44%);
 }
 
 .sunset-coral-chip {
-  border-color: rgba(224, 90, 58, 0.22);
-  background: rgba(224, 90, 58, 0.08);
-  color: #8F2F1E;
+  border-color: rgba(20, 184, 166, 0.24);
+  background: rgba(20, 184, 166, 0.08);
+  color: #174F52;
 }
 
 .sunset-teal-chip {
@@ -162,13 +162,13 @@
 
 .bg-chasing-glow-1 {
   background-image:
-    radial-gradient(circle at 12% 16%, rgba(255, 79, 62, 0.2), transparent 34%),
-    radial-gradient(circle at 84% 18%, rgba(20, 184, 166, 0.18), transparent 32%),
-    radial-gradient(circle at 75% 84%, rgba(236, 72, 153, 0.12), transparent 36%);
+    radial-gradient(circle at 12% 16%, rgba(20, 184, 166, 0.2), transparent 34%),
+    radial-gradient(circle at 84% 18%, rgba(139, 92, 246, 0.16), transparent 32%),
+    radial-gradient(circle at 75% 84%, rgba(56, 189, 248, 0.1), transparent 36%);
 }
 
 .bg-chasing-glow-2 {
   background-image:
-    radial-gradient(circle at 18% 18%, rgba(255, 79, 62, 0.18), transparent 32%),
-    radial-gradient(circle at 82% 76%, rgba(20, 184, 166, 0.2), transparent 34%);
+    radial-gradient(circle at 18% 18%, rgba(20, 184, 166, 0.18), transparent 32%),
+    radial-gradient(circle at 82% 76%, rgba(139, 92, 246, 0.16), transparent 34%);
 }

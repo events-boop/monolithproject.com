@@ -40,12 +40,12 @@ function sample(stops: Stop[], t: number): string {
 
 /* ── colour journeys (scroll 0 → 1) ── */
 
-// Background: off-white → vivid blush → coral → deep teal → near-black
+// Background: off-white → cool mist → teal → deep teal → near-black
 const BG: Stop[] = [
   { at: 0.0, rgb: hex2rgb("#FAFAF7") },
   { at: 0.18, rgb: hex2rgb("#FAFAF7") },
-  { at: 0.42, rgb: hex2rgb("#F7E7EF") },
-  { at: 0.62, rgb: hex2rgb("#E85D4F") },
+  { at: 0.42, rgb: hex2rgb("#E8F7F5") },
+  { at: 0.62, rgb: hex2rgb("#52B8B0") },
   { at: 0.82, rgb: hex2rgb("#123E46") },
   { at: 1.0, rgb: hex2rgb("#071014") },
 ];
@@ -58,12 +58,12 @@ const TEXT: Stop[] = [
   { at: 1.0, rgb: hex2rgb("#FBF5ED") },
 ];
 
-// Accent: coral → fuchsia → cyan-teal in the dark sections
+// Accent: teal → cyan → violet in the dark sections
 const ACCENT: Stop[] = [
-  { at: 0.0, rgb: hex2rgb("#E05A3A") },
-  { at: 0.55, rgb: hex2rgb("#EC4899") },
-  { at: 0.8, rgb: hex2rgb("#14B8A6") },
-  { at: 1.0, rgb: hex2rgb("#14B8A6") },
+  { at: 0.0, rgb: hex2rgb("#1F8A8D") },
+  { at: 0.55, rgb: hex2rgb("#14B8A6") },
+  { at: 0.8, rgb: hex2rgb("#8B5CF6") },
+  { at: 1.0, rgb: hex2rgb("#8B5CF6") },
 ];
 
 // Glass panels: white glass → dark glass
@@ -86,7 +86,7 @@ export interface SunsetPalette {
 const INITIAL: SunsetPalette = {
   bg: "var(--sunset-bg, #FAFAF7)",
   text: "var(--sunset-text, #2C1810)",
-  accent: "var(--sunset-accent, #C2703E)",
+  accent: "var(--sunset-accent, #1F8A8D)",
   warmGold: "var(--sunset-warmGold, #14B8A6)",
   glass: "var(--sunset-glass, #FFFFFF)",
   progress: 0,

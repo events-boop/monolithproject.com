@@ -173,6 +173,23 @@ function getSystemMeta(dateLabel: string, venueLabel?: string) {
   return [date, venue].filter(Boolean).join(" / ");
 }
 
+function HomeHeroUtilityRow() {
+  return (
+    <div className="relative z-40 mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 px-6 pt-4 font-mono text-[9px] font-black uppercase tracking-[0.12em] text-white/42 md:px-8 md:text-[10px]">
+      <div className="flex min-w-0 items-center gap-3">
+        <span className="text-white/62">MONOLITH</span>
+        <span className="hidden h-px w-8 bg-white/24 sm:block" />
+        <span>Chicago</span>
+      </div>
+      <div className="flex shrink-0 items-center gap-3">
+        <span>Events</span>
+        <span className="h-1 w-1 rounded-full bg-[#E8B86D]" />
+        <span>Radio</span>
+      </div>
+    </div>
+  );
+}
+
 /** 
  * FloatingEventCard:
  * The immersive, interactive conversion point for the hero section.
@@ -212,32 +229,38 @@ function FloatingEventCard({
     <div
       key={headline}
       data-home-hero-card="true"
-      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] shadow-[0_32px_80px_rgba(0,0,0,0.8)] transition-colors duration-500 hover:bg-[#111111]"
+      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[#10100f]/84 shadow-[0_28px_70px_rgba(0,0,0,0.72)] backdrop-blur-md transition-colors duration-500"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-8 top-8 z-0 text-[4.25rem] font-black uppercase leading-none tracking-[0] text-white/[0.025]"
+      >
+        LIVE
+      </div>
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div
           className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105 opacity-80"
           style={{
             background:
-              "radial-gradient(circle at 18% 18%, rgba(224, 90, 58, 0.12), transparent 50%), radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.04), transparent 50%)",
+              "radial-gradient(circle at 18% 18%, rgba(164, 89, 44, 0.12), transparent 52%), radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.06), transparent 54%)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-white/[0.03]" />
       </div>
 
       {/* Content Layer */}
       <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:gap-5 sm:p-8 md:p-10">
         {/* Status Badge */}
         <div className="flex items-center gap-2 self-end sm:absolute sm:right-6 sm:top-6">
-          <span className="event-system-chip rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-white backdrop-blur-md">
+          <span className="event-system-chip rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-white/76 backdrop-blur-md">
             {eventStatusLabel}
           </span>
         </div>
 
         {/* Narrative Metadata */}
         <div className="flex w-full flex-col gap-3 sm:pr-20">
-          <span className="event-system-kicker text-[var(--monolith-red)]">
+          <span className="event-system-kicker text-[#E8B86D]/82">
             {systemKicker}
           </span>
           <h3 className={cn(
@@ -249,16 +272,16 @@ function FloatingEventCard({
           )}>
             {toSystemText(headline)}
           </h3>
-          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/82">
+          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/72">
             {systemMeta}
           </span>
           {event?.time ? (
-            <span className="event-system-chip text-white/70">
+            <span className="event-system-chip text-white/54">
               {toSystemText(event.time)}
             </span>
           ) : null}
           {shortDescription ? (
-            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/86 line-clamp-4">
+            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/72 line-clamp-4">
               {shortDescription}
             </p>
           ) : null}
@@ -266,14 +289,14 @@ function FloatingEventCard({
 
         {showCountdown && (
           <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
-            <span className="event-system-chip text-white/70">
+            <span className="event-system-chip text-white/54">
               Event Starts
             </span>
-            <div className="event-system-chip flex items-center gap-2 text-white tabular-nums">
+            <div className="event-system-chip flex items-center gap-2 text-white/82 tabular-nums">
               <span>{countdown.days}D</span>
-              <span className="text-white/56">/</span>
+              <span className="text-white/34">/</span>
               <span>{padCountdown(countdown.hours)}H</span>
-              <span className="text-white/56">/</span>
+              <span className="text-white/34">/</span>
               <span>{padCountdown(countdown.minutes)}M</span>
             </div>
           </div>
@@ -309,7 +332,7 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="btn-pill-monolith btn-pill-wide"
+      className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-[#A4592C]/22 bg-[#A4592C] px-6 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[0_14px_32px_rgba(164,89,44,0.24)] transition hover:bg-[#8F4427] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/40"
     >
       {label}
     </a>
@@ -361,8 +384,14 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
         <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
+      <div className="pointer-events-none absolute inset-x-0 top-[14vh] z-20 hidden overflow-hidden text-center md:block">
+        <span className="hero-wordmark block text-[clamp(5rem,17vw,17rem)] uppercase leading-none tracking-[0] text-white/[0.026]">
+          MONOLITH
+        </span>
+      </div>
 
       <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
+        <HomeHeroUtilityRow />
         <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-10 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:gap-16">
           <div
             data-home-hero-copy="true"
@@ -399,10 +428,16 @@ export default function HeroSection() {
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                <Link href="/tickets" className="btn-pill-monolith btn-pill-wide">
+                <Link
+                  href="/tickets"
+                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/75 bg-white px-8 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-[#F8FAF8] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[15rem]"
+                >
                   Tickets
                 </Link>
-                <Link href="/sunsets" className="btn-pill-outline btn-pill-wide">
+                <Link
+                  href="/sunsets"
+                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/26 bg-white/[0.08] px-8 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/48 hover:bg-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/55 sm:w-auto sm:min-w-[15rem]"
+                >
                   Sun(Sets) Hub
                 </Link>
               </div>

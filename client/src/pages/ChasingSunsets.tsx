@@ -179,7 +179,7 @@ export default function ChasingSunsets() {
                   <SplitText
                     key={`${line}-${i}`}
                     text={line}
-                    className="block bg-gradient-to-r from-white via-[#EC4899] to-[#14B8A6] bg-clip-text text-transparent"
+                    className="block bg-gradient-to-r from-white via-[#69F3E3] to-[#8B5CF6] bg-clip-text text-transparent"
                     initialDelay={0.1 + i * 0.15}
                   />
                 ))}
@@ -258,7 +258,7 @@ export default function ChasingSunsets() {
                 Chasing Sun(Sets) is the series title. Each date below is a chapter in the same golden-hour route: release, venue, ticket structure, and archive proof stay connected.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <span className="rounded-full border border-[#FF4F3E]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
+                <span className="rounded-full border border-[#14B8A6]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
                   {featuredChasingEvent?.date || "Date TBA"}
                 </span>
                 <span className="rounded-full border border-[#14B8A6]/22 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
@@ -385,7 +385,7 @@ export default function ChasingSunsets() {
                 </p>
               </article>
 
-              <article className="border border-[#14B8A6]/24 bg-[linear-gradient(135deg,rgba(20,184,166,0.12),rgba(255,255,255,0.9)_52%,rgba(236,72,153,0.08))] p-6">
+              <article className="border border-[#14B8A6]/24 bg-[linear-gradient(135deg,rgba(20,184,166,0.12),rgba(255,255,255,0.9)_52%,rgba(139,92,246,0.08))] p-6">
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#174F52]">Season Logic</span>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
                   <li>Next date is visible first.</li>

@@ -11,6 +11,7 @@ import {
   Handshake,
   Instagram,
   Play,
+  QrCode,
   Share2,
   Sparkles,
   Sun,
@@ -55,12 +56,6 @@ const SPOTIFY_HREF = "/go/social/spotify";
 const X_HREF = "/go/social/x";
 
 const capturePromises = ["Ticket drops", "Lineup alerts", "VIP access"] as const;
-const funnelSteps = [
-  "Instagram / QR",
-  "First Access",
-  "Ticket Drop",
-] as const;
-
 function triggerHaptic(pattern: number | number[] = 12) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
   navigator.vibrate(pattern);
@@ -353,9 +348,15 @@ function StickyActionDock() {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.7, type: "spring", stiffness: 220, damping: 24 }}
-      className="sticky bottom-3 z-30 mx-3 mt-8 rounded-full border border-[#A4592C]/16 bg-[#F8FAF8]/94 p-1.5 shadow-[0_18px_50px_rgba(44,24,16,0.28)] backdrop-blur-2xl"
+      className="sticky bottom-3 z-30 mx-3 mt-8 overflow-hidden rounded-[1.55rem] border border-white/85 bg-[linear-gradient(135deg,#ffffff_0%,#fffaf6_54%,#eefbf8_100%)] p-2 shadow-[0_18px_50px_rgba(44,24,16,0.24)] backdrop-blur-2xl"
     >
-      <div className="grid grid-cols-[1.05fr_.95fr] gap-1.5">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[2rem] font-black uppercase leading-none tracking-[0] text-[#2C1810]/[0.045]"
+      >
+        SUN(SETS)
+      </span>
+      <div className="relative z-10 grid grid-cols-[1.05fr_.95fr] gap-2">
         <a
           href={firstAccessHref}
           onClick={() =>
@@ -546,30 +547,37 @@ function InlineCaptureForm() {
 
   return (
     <div className="relative mt-6">
-      {/* Warm amber glow behind the form */}
-      <div className="pointer-events-none absolute inset-0 -inset-x-4 rounded-[1.5rem] blur-2xl bg-[radial-gradient(ellipse_at_50%_0%,rgba(232,184,109,0.22)_0%,transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 -inset-x-5 rounded-[1.75rem] bg-[radial-gradient(ellipse_at_50%_0%,rgba(164,89,44,0.24)_0%,rgba(20,184,166,0.10)_48%,transparent_74%)] blur-2xl" />
       <form
         onSubmit={submit}
         id="first-access"
-        className="relative overflow-hidden rounded-[1.25rem] border border-[#E8B86D]/28 bg-[linear-gradient(135deg,rgba(30,22,12,0.95)_0%,rgba(17,17,17,0.92)_50%,rgba(20,25,28,0.94)_100%)] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(232,184,109,0.08),0_20px_60px_rgba(0,0,0,0.55)]"
+        className="relative overflow-hidden rounded-[1.45rem] border border-[#A4592C]/34 bg-[linear-gradient(135deg,#ffffff_0%,#fffaf6_48%,#eefbf8_100%)] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(164,89,44,0.10),0_24px_58px_rgba(0,0,0,0.28)] sm:px-6 sm:py-6"
         noValidate
       >
-        {/* Subtle top glare */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#E8B86D]/40 to-transparent" />
-        {/* Inner ambient glow */}
-        <div className="pointer-events-none absolute left-1/2 top-0 h-24 w-48 -translate-x-1/2 rounded-full blur-3xl bg-[rgba(232,184,109,0.10)]" />
+        <div className="pointer-events-none absolute -right-3 top-6 text-[4.4rem] font-black uppercase leading-none tracking-[0] text-[#2C1810]/[0.035]">
+          JULY 4
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A4592C]/50 to-transparent" />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-28 w-56 -translate-x-1/2 rounded-full bg-[rgba(164,89,44,0.10)] blur-3xl" />
 
         <div className="relative">
-          <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="mb-4 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <Bell className="h-3 w-3 text-[#E8B86D]/70" strokeWidth={2} />
-              <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#E8B86D]/80">First Access</p>
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#A4592C]/10 text-[#7A3A22]">
+                <Bell className="h-3.5 w-3.5" strokeWidth={2} />
+              </span>
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#5A2B19]">First Access</p>
+                <p className="mt-1 text-[8px] font-black uppercase tracking-[0.18em] text-[#2C1810]/38">
+                  Castaways Chicago
+                </p>
+              </div>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E8B86D]/20 bg-[#E8B86D]/8 px-2.5 py-1 text-[8px] font-black uppercase tracking-[0.18em] text-[#E8B86D]/90">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A4592C]/24 bg-white px-3 py-1.5 text-[8px] font-black uppercase tracking-[0.16em] text-[#5A2B19] shadow-[0_8px_18px_rgba(44,24,16,0.12)]">
               <motion.span
                 animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                className="h-1.5 w-1.5 rounded-full bg-[#E8B86D] shadow-[0_0_8px_rgba(232,184,109,0.8)]"
+                className="h-1.5 w-1.5 rounded-full bg-[#A4592C] shadow-[0_0_8px_rgba(164,89,44,0.7)]"
               />
               Waitlist Open
             </span>
@@ -586,33 +594,33 @@ function InlineCaptureForm() {
                 if (status === "error") setStatus("idle");
               }}
               placeholder="phone or email"
-              className="h-12 min-w-0 flex-1 rounded-none border-0 border-b border-[#E8B86D]/25 bg-transparent px-0 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[#E8B86D]/70"
+              className="h-14 min-w-0 flex-1 rounded-none border-0 border-b border-[#A4592C]/28 bg-transparent px-0 text-lg text-[#2C1810] outline-none transition placeholder:text-[#2C1810]/42 focus:border-[#A4592C]/72"
             />
             <button
               type="submit"
               disabled={status === "submitting"}
               aria-label="Join First Access"
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#E8B86D]/30 bg-[#E8B86D] text-[#111111] shadow-[0_0_20px_rgba(232,184,109,0.35)] transition hover:scale-105 hover:bg-[#FFD28A] hover:shadow-[0_0_28px_rgba(232,184,109,0.55)] disabled:cursor-wait disabled:opacity-65"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#A4592C]/30 bg-[#A4592C] text-white shadow-[0_0_24px_rgba(164,89,44,0.36)] transition hover:scale-105 hover:bg-[#8F4427] hover:shadow-[0_0_30px_rgba(164,89,44,0.48)] disabled:cursor-wait disabled:opacity-65"
             >
               {status === "submitting" ? (
-                <span className="h-3 w-3 animate-pulse rounded-full bg-[#3A2810]" />
+                <span className="h-3 w-3 animate-pulse rounded-full bg-white" />
               ) : (
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
+                <ArrowUpRight className="h-5 w-5" strokeWidth={2.2} />
               )}
             </button>
           </div>
 
           {status === "error" && (
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FFD28A]/80">
+            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7A3A22]/80">
               {error}
             </p>
           )}
 
-          <div className="mt-4 grid grid-cols-3 gap-1.5 border-t border-[#E8B86D]/10 pt-3">
+          <div className="mt-5 grid grid-cols-3 gap-2 border-t border-[#A4592C]/12 pt-4">
             {capturePromises.map((promise) => (
               <span
                 key={promise}
-                className="rounded-full border border-[#E8B86D]/14 bg-[#E8B86D]/[0.05] px-2 py-1.5 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#E8B86D]/60"
+                className="rounded-full border border-[#A4592C]/18 bg-white px-2 py-2 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#7A3A22]/66 shadow-[0_8px_18px_rgba(44,24,16,0.06)]"
               >
                 {promise}
               </span>
@@ -624,24 +632,41 @@ function InlineCaptureForm() {
   );
 }
 
-function FunnelCue() {
+function QrShareCard() {
+  const qrHref = appendAttributionQueryParams("/sunsets?utm_source=qr&utm_medium=offline&utm_campaign=chasing-sunsets");
+
   return (
-    <div className="mt-5 grid grid-cols-3 gap-1.5">
-      {funnelSteps.map((step, index) => (
-        <div
-          key={step}
-          className="relative rounded-lg border border-[#F4F0EA]/8 bg-black/18 px-2 py-2 text-center"
-        >
-          {index > 0 ? <span className="absolute -left-1 top-1/2 h-px w-2 -translate-y-1/2 bg-[#F4F0EA]/18" /> : null}
-          <p className="text-[8px] font-black uppercase tracking-[0.12em] text-[#F4F0EA]/48">
-            Step {index + 1}
-          </p>
-          <p className="mt-1 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] text-[#F4F0EA]/76">
-            {step}
-          </p>
-        </div>
-      ))}
-    </div>
+    <a
+      href={qrHref}
+      onClick={() => {
+        triggerHaptic(8);
+        trackSunsetsClick({
+          buttonName: "QR Code",
+          href: qrHref,
+          eventSlug: JULY_4_EVENT_SLUG,
+          eventDate: "2026-07-04",
+          interestType: "qr_click",
+          channel: "QR",
+        });
+      }}
+      className="group mt-3 grid grid-cols-[4.5rem_1fr_auto] items-center gap-4 rounded-[1.2rem] border border-[#A4592C]/18 bg-[#F8FAF8]/95 p-4 text-left shadow-[0_14px_40px_rgba(5,15,18,0.18)] transition hover:-translate-y-0.5 hover:border-[#A4592C]/36"
+    >
+      <span className="grid h-16 w-16 place-items-center rounded-xl border border-[#A4592C]/18 bg-white text-[#A4592C] shadow-inner">
+        <QrCode className="h-8 w-8" strokeWidth={1.7} />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[10px] font-black uppercase tracking-[0.24em] text-[#7A3A22]/64">
+          Instagram / QR
+        </span>
+        <span className="mt-1 block text-base font-black uppercase leading-tight tracking-[0.04em] text-[#2C1810]">
+          Scan to share
+        </span>
+        <span className="mt-1 block text-sm leading-snug text-[#2C1810]/58">
+          Use this path on flyers, stories, and at the door.
+        </span>
+      </span>
+      <ArrowUpRight className="h-4 w-4 text-[#7A3A22]/52 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#A4592C]" />
+    </a>
   );
 }
 
@@ -820,7 +845,7 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
 function AmbientFluidBackground() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none bg-[#050505] z-0">
-      {/* Coral and fuchsia energy, with cyan-teal contrast. */}
+      {/* Cool sunset energy with teal, cyan, and restrained violet contrast. */}
       <motion.div
         animate={{
           x: ["-10%", "12%", "-4%", "-10%"],
@@ -867,6 +892,8 @@ function AmbientFluidBackground() {
 
 export default function SunsetsLinkBio() {
   const [expandedMedia, setExpandedMedia] = useState<"youtube" | "soundcloud" | null>(null);
+  const featuredVideoLink = links.find((item) => item.type === "youtube");
+  const featuredVideoIndex = links.findIndex((item) => item.type === "youtube");
 
   useEffect(() => {
     trackFunnelPageView({
@@ -877,7 +904,7 @@ export default function SunsetsLinkBio() {
   }, []);
 
   return (
-    <main className="min-h-[100dvh] w-full overflow-hidden bg-[#050505] text-white/90 font-sans selection:bg-[#F4F0EA]/30">
+    <main className="min-h-[100dvh] w-full overflow-x-clip bg-[#050505] text-white/90 font-sans selection:bg-[#F4F0EA]/30">
       <SEO
         title="Chasing Sun(Sets) | Chicago Lakefront House Music"
         description="Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries."
@@ -960,7 +987,6 @@ export default function SunsetsLinkBio() {
                 </p>
 
                 <InlineCaptureForm />
-                <FunnelCue />
               </header>
 
               {/* Signals Grid */}
@@ -1039,6 +1065,20 @@ export default function SunsetsLinkBio() {
                 </div>
               </motion.a>
 
+              {featuredVideoLink ? (
+                <MediaAccordion
+                  item={featuredVideoLink}
+                  index={featuredVideoIndex >= 0 ? featuredVideoIndex : 0}
+                  expanded={expandedMedia === "youtube"}
+                  onToggle={() => {
+                    triggerHaptic(10);
+                    const href = appendAttributionQueryParams(featuredVideoLink.href);
+                    trackSunsetsClick({ ...featuredVideoLink, href });
+                    setExpandedMedia((current) => (current === "youtube" ? null : "youtube"));
+                  }}
+                />
+              ) : null}
+
               <div className="mt-5 rounded-[1.25rem] border border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.8),rgba(33,18,36,0.7)_48%,rgba(6,42,46,0.72))] p-3 shadow-[0_16px_48px_rgba(20,184,166,0.08)]">
                 <div className="flex items-center justify-between gap-3 px-1 pb-2">
                   <p className="text-[13px] font-sans font-light uppercase tracking-[0.26em] text-[#F4F0EA]/80">
@@ -1105,7 +1145,7 @@ export default function SunsetsLinkBio() {
 
               {/* Links Array */}
               <div className="mt-8 flex flex-col gap-2">
-                {links.map((item, index) => {
+                {links.filter((item) => item.type !== "youtube").map((item, index) => {
                   if (item.type === "youtube" || item.type === "soundcloud") {
                     return (
                       <MediaAccordion
@@ -1182,6 +1222,7 @@ export default function SunsetsLinkBio() {
 
                   return <LinkCard key={item.label} item={item} index={index} />;
                 })}
+                <QrShareCard />
               </div>
 
               {/* Footer */}
