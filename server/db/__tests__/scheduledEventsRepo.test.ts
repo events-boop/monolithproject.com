@@ -5,7 +5,34 @@ import type { ScheduledEvent } from "../../../shared/events/types";
 
 describe("mergeScheduledEvents", () => {
   it("overlays database-backed event fields without dropping static-only metadata", () => {
-    const merged = mergeScheduledEvents(upcomingEvents, [
+    const mockBaseEvents: ScheduledEvent[] = [
+      {
+        id: "us-s3e3",
+        series: "untold-story",
+        episode: "SEASON III · EPISODE III",
+        title: "ERAN HERSH (STATIC)",
+        date: "May 16, 2026",
+        time: "9:00 PM — Late",
+        startsAt: "2026-05-16T21:00:00-05:00",
+        venue: "Hideaway",
+        location: "Chicago, IL",
+        status: "coming-soon",
+        activeFunnels: ["waitlist-untold"],
+        ticketTiers: [
+          {
+            id: "presale",
+            name: "Early Tickets",
+            price: 40,
+            description: "First release.",
+            features: [],
+            icon: "ticket",
+            available: true,
+          },
+        ],
+      },
+    ];
+
+    const merged = mergeScheduledEvents(mockBaseEvents, [
       {
         id: "us-s3e3",
         series: "untold-story",
@@ -21,7 +48,7 @@ describe("mergeScheduledEvents", () => {
       },
     ]);
 
-    const event = merged.find((item) => item.id === "us-s3e3");
+    const event = merged.find(item => item.id === "us-s3e3");
 
     expect(event?.date).toBe("May 17, 2026");
     expect(event?.venue).toBe("Neon Venue");
@@ -46,7 +73,7 @@ describe("mergeScheduledEvents", () => {
 
     const merged = mergeScheduledEvents(upcomingEvents, [dbOnlyEvent]);
 
-    expect(merged.find((item) => item.id === "mp-dec31")).toMatchObject({
+    expect(merged.find(item => item.id === "mp-dec31")).toMatchObject({
       id: "mp-dec31",
       title: "MONOLITH NEW YEAR",
       series: "monolith-project",

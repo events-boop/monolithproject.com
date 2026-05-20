@@ -209,7 +209,7 @@ export default function SeasonChapterCards() {
 
         {/* Bottom pillars */}
         <div className="mt-12 grid grid-cols-2 gap-px border border-white/8 bg-white/[0.04] md:grid-cols-4 md:mt-16">
-          {PILLARS.map((p) => (
+          {PILLARS.map(p => (
             <div
               key={p.label}
               className="flex flex-col items-center gap-2 bg-[#070707] px-6 py-7 text-center"

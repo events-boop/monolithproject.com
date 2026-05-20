@@ -45,8 +45,11 @@ function EventFeatureCard({ event }: { event?: ScheduledEvent | null }) {
   const cta = getEventCta(event);
   const ctaIsExternal = /^https?:\/\//i.test(cta.href);
   const venueLabel = getEventVenueLabel(event);
-  const eventTitle = event?.headline || event?.title || "July 4th Open-Air Experience";
-  const eventSeries = event ? getSeriesLabel(event.series) : "Chasing Sun(Sets)";
+  const eventTitle =
+    event?.headline || event?.title || "July 4th Open-Air Experience";
+  const eventSeries = event
+    ? getSeriesLabel(event.series)
+    : "Chasing Sun(Sets)";
   const eventDate = event?.date || "July 4, 2026";
   const eventTime = event?.time || "3:00 PM - 10:00 PM";
   const eventEpisode = event?.episode || "Independence Day";
@@ -124,7 +127,9 @@ function EventFeatureCard({ event }: { event?: ScheduledEvent | null }) {
 
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
-  const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
+  const structuredData = featuredEvent ? (
+    <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} />
+  ) : null;
 
   return (
     <section
@@ -221,13 +226,14 @@ export default function HeroSection() {
             <Radio size={22} className="shrink-0" />
             <span className="truncate">Listen Live: Monolith Radio</span>
           </div>
-          <div className="hidden md:block">24/7 Chicago House Music & Culture</div>
+          <div className="hidden md:block">
+            24/7 Chicago House Music & Culture
+          </div>
           <div className="hidden shrink-0 items-center gap-3 sm:flex">
             Tune In <ArrowUpRight size={14} />
           </div>
         </Link>
       </div>
-
     </section>
   );
 }

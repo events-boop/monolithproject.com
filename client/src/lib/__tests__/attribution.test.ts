@@ -26,7 +26,7 @@ describe("attribution", () => {
     window.history.replaceState(
       {},
       "",
-      "/tickets?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&utm_content=story-1&gclid=gclid-123",
+      "/tickets?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&utm_content=story-1&gclid=gclid-123"
     );
 
     initAttributionTracking();
@@ -42,7 +42,11 @@ describe("attribution", () => {
 
   it("preserves acquisition fields across SPA navigation without new query params", () => {
     setReferrer("https://instagram.com/monolith");
-    window.history.replaceState({}, "", "/?utm_source=instagram&utm_medium=social&utm_campaign=season-launch");
+    window.history.replaceState(
+      {},
+      "",
+      "/?utm_source=instagram&utm_medium=social&utm_campaign=season-launch"
+    );
     initAttributionTracking();
 
     window.history.replaceState({}, "", "/newsletter");
@@ -57,11 +61,19 @@ describe("attribution", () => {
 
   it("keeps first touch while updating last touch when a new campaign arrives", () => {
     setReferrer("https://instagram.com/monolith");
-    window.history.replaceState({}, "", "/?utm_source=instagram&utm_campaign=launch");
+    window.history.replaceState(
+      {},
+      "",
+      "/?utm_source=instagram&utm_campaign=launch"
+    );
     initAttributionTracking();
 
     setReferrer("https://www.google.com/search?q=monolith");
-    window.history.replaceState({}, "", "/tickets?utm_source=google&utm_medium=cpc&utm_campaign=retarget&gclid=gclid-2");
+    window.history.replaceState(
+      {},
+      "",
+      "/tickets?utm_source=google&utm_medium=cpc&utm_campaign=retarget&gclid=gclid-2"
+    );
     syncAttributionForNavigation();
 
     const payload = getAttributionPayload();
@@ -77,21 +89,30 @@ describe("attribution", () => {
     window.history.replaceState(
       {},
       "",
-      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
+      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1"
     );
     initAttributionTracking();
 
     const href = appendAttributionQueryParams("/go/tickets/us-s3e3");
-    expect(href).toBe(
-      "/go/tickets/us-s3e3?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
-    );
+    const url = new URL(href, "https://monolithproject.com");
+    expect(url.searchParams.get("utm_source")).toBe("instagram");
+    expect(url.searchParams.get("utm_medium")).toBe("social");
+    expect(url.searchParams.get("utm_campaign")).toBe("season-launch");
+    expect(url.searchParams.get("fbclid")).toBe("fbclid-1");
+    expect(url.searchParams.get("session_id")).toBeTruthy();
   });
 
   it("keeps explicit conversion URL params when attribution is appended", () => {
-    window.history.replaceState({}, "", "/?utm_source=instagram&utm_campaign=season-launch");
+    window.history.replaceState(
+      {},
+      "",
+      "/?utm_source=instagram&utm_campaign=season-launch"
+    );
     initAttributionTracking();
 
-    const href = appendAttributionQueryParams("/go/tickets/us-s3e3?utm_source=partner");
+    const href = appendAttributionQueryParams(
+      "/go/tickets/us-s3e3?utm_source=partner"
+    );
     expect(href).toContain("utm_source=partner");
     expect(href).toContain("utm_campaign=season-launch");
   });
