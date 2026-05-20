@@ -15,6 +15,7 @@ import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
+const SeasonChapterCards = lazy(() => import("@/components/SeasonChapterCards"));
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 const PartnershipMarquee = lazy(() => import("@/components/PartnershipMarquee"));
 import SEO from "@/components/SEO";
@@ -278,7 +279,12 @@ export default function Home() {
             className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
             style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
           />
-          <SectionDivider number="01" label="Upcoming Shows" dark={false} glow={SUN_SETS_GOLD} />
+          <ViewportLazy minHeightClassName="min-h-[560px]" rootMargin="400px 0px">
+            <Suspense fallback={<Skeleton className="h-[560px] w-full opacity-10" />}>
+              <SeasonChapterCards />
+            </Suspense>
+          </ViewportLazy>
+          <SectionDivider number="01" label="Full Schedule" dark={false} glow={SUN_SETS_GOLD} />
           <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="500px 0px" revealAfterMs={900}>
             <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
               <ScheduleSection />

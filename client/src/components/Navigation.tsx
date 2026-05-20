@@ -3,7 +3,6 @@ import { Ticket, ArrowUpRight, Lock, Zap } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "../lib/utils";
 import { signalChirp } from "../lib/SignalChirpEngine";
-import KineticDecryption from "./KineticDecryption";
 import MagneticButton from "./MagneticButton";
 import { getEventBannerPayload, isEventBannerVisible } from "../lib/eventBanner";
 import { getDrawerTypeForHref, useUI } from "../contexts/UIContext";
@@ -398,13 +397,13 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                   "font-monolith text-[0.9rem] font-medium uppercase leading-none tracking-[0.08em] transition-colors min-[360px]:text-[0.98rem] md:text-[1.16rem] shrink-0",
                                   isLight ? "text-black" : "text-white"
                                 )}>
-                                  <KineticDecryption text="MONOLITH" sessionOnce={true} />
+                                  MONOLITH
                                 </span>
                                 <span className={cn(
                                   "font-monolith hidden text-[11px] font-medium uppercase leading-none tracking-[0.18em] transition-colors sm:inline shrink-0",
                                   isLight ? "text-black/40" : "text-white/40"
                                 )}>
-                                  <KineticDecryption text="PROJECT" sessionOnce={true} />
+                                  PROJECT
                                 </span>
                               </div>
                             )}
