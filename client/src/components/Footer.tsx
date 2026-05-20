@@ -24,7 +24,16 @@ const socials = [
   { name: "SoundCloud", icon: Headphones, url: SOUNDCLOUD_URL },
 ];
 
-const links = [
+type FooterLinkGroup = {
+  title: string;
+  items: Array<{
+    name: string;
+    href: string;
+    external?: boolean;
+  }>;
+};
+
+const links: FooterLinkGroup[] = [
   {
     title: "Explore", items: [
       { name: "About", href: "/about" },
@@ -58,7 +67,7 @@ const links = [
       { name: "Newsletter", href: "/newsletter" },
       { name: "Night Guide", href: "/guide" },
       { name: "FAQ", href: "/faq" },
-      { name: CTA_LABELS.tickets, href: POSH_TICKET_URL, external: true },
+      { name: "First Access", href: POSH_TICKET_URL },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Cookie Policy", href: "/cookies" },
@@ -159,7 +168,7 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase flex items-center gap-1 group w-max ${item.name === CTA_LABELS.tickets
+                        className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase flex items-center gap-1 group w-max ${item.href === POSH_TICKET_URL
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}
@@ -169,7 +178,7 @@ export default function Footer() {
                       </a>
                     ) : (
                       <Link href={item.href} asChild>
-                        <a className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase block w-max ${item.name === CTA_LABELS.tickets
+                        <a className={`transition-colors font-bold text-[12px] md:text-[11px] tracking-[0.15em] uppercase block w-max ${item.href === POSH_TICKET_URL
                           ? "px-3 py-1.5 rounded-none bg-primary/18 border border-primary/40 text-primary hover:text-primary hover:bg-primary/25"
                           : "text-white/80 hover:text-white"
                           }`}>

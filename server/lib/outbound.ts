@@ -3,8 +3,8 @@ type QueryValue = string | string[] | null | undefined;
 type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
 const FALLBACK_POSH_URL =
-  "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project";
-const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject";
+  "https://posh.vip/owner/groups/6531870aeffdea89e97f7642/events/6a0b9cd3ad1a25534c3beed7/visuals";
+const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject/luYXPr/details";
 const FALLBACK_SUNSETS_RECAP_URL = "https://youtu.be/9R6XH7JZlJI";
 const FALLBACK_SUNSETS_SOUNDCLOUD_URL = "https://soundcloud.com/chasing-sun-sets";
 const FALLBACK_SUNSETS_GALLERY_URL = "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
@@ -50,6 +50,7 @@ const generalWaitlistUrl = readHttpsEnv("LAYLO_URL", "OUTBOUND_WAITLIST_GENERAL_
 
 const ticketDestinations: Record<string, string> = {
   featured: featuredTicketUrl,
+  "css-jul04": readHttpsEnv("OUTBOUND_TICKETS_CSS_JUL04_URL") || featuredTicketUrl,
   "mp-autograf-mar21": readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") || featuredTicketUrl,
   "us-s3e3": readHttpsEnv("OUTBOUND_TICKETS_US_S3E3_URL") || featuredTicketUrl,
 };

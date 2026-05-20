@@ -7,14 +7,14 @@ export const deepBg = "#06060F";
 export const cardBg = "#0C0C1A";
 
 export const eventVisuals = {
-  poster: "/images/eran-hersh-live-5.webp",
-  eran: "/images/eran-hersh-live-6.png",
+  poster: "/images/untold-story-moody.webp",
+  eran: "/images/untold-story-hero-post1.webp",
 };
 
 export const lineupVisuals = [
-  { name: "Eran Hersh", role: "Headliner", image: "/images/eran-hersh-live-6.png" },
-  { name: "Hashtom", role: "Support", image: "/images/artist-haai.webp" },
-  { name: "Local Support TBA", role: "Support", image: "/images/chasing-sunsets-premium.webp" },
+  { name: "Next Guest", role: "Headliner", image: "/images/untold-story-moody.webp" },
+  { name: "Monolith Residents", role: "Support", image: "/images/untold-story-hero-post1.webp" },
+  { name: "Local Support TBA", role: "Support", image: "/images/untold-story-juany-deron-v2.webp" },
 ];
 
 export const untoldFaqs: Array<[string, string]> = [

@@ -36,7 +36,7 @@ export const navigationChapters: NavigationChapter[] = [
     description:
       "A direct preview of the next show, ticket state, and the fastest path in.",
     proof: "The clearest route from interest to entry.",
-    image: "/images/eran-hersh-live-1.webp",
+    image: "/images/chasing-sunsets-july4-first-access.png",
     accent: "#E05A3A",
     ctaLabel: "View Shows",
     secondaryLinks: [

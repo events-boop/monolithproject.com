@@ -177,9 +177,9 @@ export default function ArtistsSection() {
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>
-            <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer">
+            <a href={POSH_TICKET_URL}>
               <div className="btn-pill-untold group">
-                <span>See Them Live</span>
+                <span>First Access</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </div>
             </a>

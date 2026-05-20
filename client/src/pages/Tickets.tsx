@@ -22,7 +22,6 @@ import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import SmartImage from "@/components/SmartImage";
-import ResponsiveImage from "@/components/ResponsiveImage";
 import MagneticButton from "@/components/MagneticButton";
 import EventFunnelStack from "@/components/EventFunnelStack";
 import {
@@ -31,7 +30,6 @@ import {
   getEventWindowStatus,
   getExperienceEvent,
 } from "@/lib/siteExperience";
-import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { getEventCtaToneClass } from "@/lib/ctaTone";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -50,30 +48,6 @@ const getTierIcon = (iconName: string) => {
   }
 };
 
-const eventVisuals = {
-  poster: "/images/untold-story-moody.webp",
-};
-
-const lineupVisuals = [
-  {
-    name: "Eran Hersh",
-    role: "Chicago debut / Headliner",
-    image: "/images/artist-lazare.webp",
-  },
-  {
-    name: "Hashtom",
-    role: "Support",
-    image: "/images/untold-story-hero-post1.webp",
-  },
-  {
-    name: "Local Support TBA",
-    role: "Support",
-    image: "/images/untold-story-moody.webp",
-  },
-];
-
-const untoldTicketPoster = getResponsiveImage("untoldStoryPoster");
-
 export default function Tickets() {
   usePublicSiteDataVersion();
   const featuredEvent = getExperienceEvent("ticket");
@@ -90,10 +64,7 @@ export default function Tickets() {
     featuredEvent?.subtitle || getEventEyebrow(featuredEvent);
   const featuredVenue = getEventVenueLabel(featuredEvent);
   const featuredPoster =
-    featuredEvent?.id === "us-s3e3"
-      ? eventVisuals.poster
-      : featuredEvent?.image || "/images/autograf-recap.jpg";
-  const showLineupVisuals = featuredEvent?.id === "us-s3e3";
+    featuredEvent?.image || "/images/chasing-sunsets-july4-first-access.png";
   const showTicketFunnel = Boolean(
     featuredEvent?.activeFunnels?.length && cta.tool !== "posh"
   );
@@ -105,7 +76,11 @@ export default function Tickets() {
     void trackTicketIntent(source, featuredEvent?.id, attributedUrl);
 
     // Immediate execution for zero-friction conversion
-    window.open(attributedUrl, "_blank", "noopener,noreferrer");
+    if (/^https?:\/\//i.test(attributedUrl)) {
+      window.open(attributedUrl, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.assign(attributedUrl);
+    }
   };
 
   const handleTicketLinkClick = (
@@ -151,16 +126,16 @@ export default function Tickets() {
                 {featuredEyebrow}
               </span>
               <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
-                GET IN
+                FIRST ACCESS
               </h1>
               <p className="text-white/80 text-lg max-w-lg mb-4">
-                Every Monolith night is capacity-capped. Grab your spot before
-                the room fills.
+                July 4 is moving through first access before the public ticket
+                drop. Join the list to get the earliest release signal.
               </p>
               <div className="flex items-center gap-3">
                 <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
                 <span className="font-mono text-xs text-primary tracking-widest uppercase">
-                  Tickets selling fast — Limited availability
+                  First access open — Release timing follows
                 </span>
               </div>
               <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
@@ -211,50 +186,12 @@ export default function Tickets() {
               <div className="lg:col-span-7 w-full">
                 <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
                   <SmartImage
-                    src={
-                      featuredEvent?.id === "us-s3e3"
-                        ? untoldTicketPoster.src
-                        : featuredPoster
-                    }
+                    src={featuredPoster}
                     alt={featuredHeadline}
-                    sources={
-                      featuredEvent?.id === "us-s3e3"
-                        ? untoldTicketPoster.sources
-                        : undefined
-                    }
-                    sizes={
-                      featuredEvent?.id === "us-s3e3"
-                        ? untoldTicketPoster.sizes
-                        : undefined
-                    }
                     priority
                     className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-
-                  {/* Lineup Overlay (If US S3E2) */}
-                  {showLineupVisuals && (
-                    <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-wrap gap-3">
-                      {lineupVisuals.slice(0, 3).map(artist => (
-                        <div
-                          key={artist.name}
-                          className="flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10"
-                        >
-                          <ResponsiveImage
-                            src={artist.image}
-                            alt={artist.name}
-                            sizes="32px"
-                            loading="lazy"
-                            decoding="async"
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                          <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">
-                            {artist.name}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -347,20 +284,20 @@ export default function Tickets() {
           </div>
         </section>
 
-        {/* Ticket Tiers — Integrated Grid */}
+        {/* Release Tiers — Integrated Grid */}
         <section className="pb-32 px-6 border-t border-white/5 pt-32 relative">
           <div className="container layout-wide">
             <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-20">
               <div className="max-w-xl">
                 <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">
-                  Ticket Tiers
+                  Release Preview
                 </span>
                 <h2 className="font-monolith text-5xl font-normal uppercase tracking-[0.04em] text-white">
-                  Choose Your Ticket
+                  First Access Releases
                 </h2>
                 <p className="mt-6 text-lg text-white/40 font-light">
-                  Choose the option that fits your night. All purchases are
-                  handled through Posh.
+                  Public checkout opens by release. First Access gets the
+                  signal before each wave goes wide.
                 </p>
               </div>
               <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 italic">
@@ -443,7 +380,7 @@ export default function Tickets() {
                       </>
                     ) : (
                       <span className="text-[10px] font-black uppercase tracking-[0.4em]">
-                        Sold Out
+                        Coming Soon
                       </span>
                     )}
                   </button>
@@ -453,13 +390,12 @@ export default function Tickets() {
 
             <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8">
               <p className="text-white/20 text-[10px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
-                All ticket sales are final unless the event is canceled or
-                rescheduled.
+                Release details can change before public checkout opens.
               </p>
               <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20">
-                  Secure checkout via Posh
+                  {cta.tool === "posh" ? "Secure checkout via Posh" : "First access before public release"}
                 </span>
               </div>
             </div>
@@ -477,8 +413,8 @@ export default function Tickets() {
                   Know Your Night
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/58 md:text-lg">
-                  Tickets should answer the practical questions before someone
-                  leaves the site. Date, venue, entry, and the checkout path
+                  First Access should answer the practical questions before
+                  someone leaves the site. Date, venue, entry, and the drop path
                   stay visible all the way through the page.
                 </p>
                 <div className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
@@ -489,7 +425,7 @@ export default function Tickets() {
                       "Checkout",
                       cta.tool === "posh"
                         ? "Secure via Posh"
-                        : "Drop list / updates",
+                        : "First Access / updates",
                     ],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-black/70 p-5">
@@ -509,8 +445,8 @@ export default function Tickets() {
                   Primary Action
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-white/58">
-                  If this is the right event, use the live checkout path. If
-                  not, return to schedule and choose by date.
+                  If this is the right event, join First Access now. If not,
+                  return to schedule and choose by date.
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
                   <a

@@ -5,9 +5,9 @@ import {
   getEventVenueLabel,
   getExperienceEvent,
   getEventWindowStatus,
-  getPrimaryTicketUrl,
   isTicketOnSale,
 } from "@/lib/siteExperience";
+import { getEventCta } from "@/lib/cta";
 
 const BANNER_ENABLED_PATHS = new Set([
   "/",
@@ -59,11 +59,13 @@ export function getEventBannerPayload(now: Date = new Date()) {
     `${event.date.toUpperCase()} — ${venue} — ${headline} — ${eyebrow} — ` +
     `${isTicketOnSale(event, now) ? "TICKETS ON SALE NOW" : "SAVE THE DATE"}`;
   const liveMessage = `LIVE NOW — ${headline} — ${venue}`;
+  const cta = getEventCta(event);
 
   return {
     event,
     status,
     text: status === "live" ? liveMessage : message,
-    ticketUrl: getPrimaryTicketUrl(event),
+    ticketUrl: cta.href,
+    ticketLabel: cta.label,
   };
 }

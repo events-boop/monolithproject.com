@@ -7,15 +7,15 @@ import type {
 import { resolveEventPrimaryCta } from "../lib/public-cta";
 
 /** Core Socials & Links */
-export const LAYLO_URL = "/go/waitlist/general";
+export const LAYLO_URL = "/go/waitlist/chasing-sunsets";
 export const SOUNDCLOUD_URL = "https://soundcloud.com/monolithproject";
 export const TIKTOK_URL = "https://tiktok.com/@monolithproject";
 export const INSTAGRAM_MONOLITH = "https://instagram.com/monolithproject.events";
 export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
-/** Active ticket gateway — resolves to the configured Posh destination server-side. */
-export const POSH_TICKET_URL = "/go/tickets/us-s3e3";
+/** Active audience gateway for the next public drop. */
+export const POSH_TICKET_URL = "/go/tickets/css-jul04";
 
 export const upcomingEvents: ScheduledEvent[] = [
     {
@@ -47,7 +47,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         venue: "Hideaway",
         location: "Chicago, IL",
         lineup: "Eran Hersh (Headliner) · Support TBD",
-        status: "on-sale",
+        status: "past",
         image: "/images/eran-hersh-live-5.webp",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
@@ -63,8 +63,7 @@ export const upcomingEvents: ScheduledEvent[] = [
           "Support lineup reveal to follow",
         ],
         age: "21+",
-        activeFunnels: ["waitlist-untold"],
-        ticketUrl: "/go/tickets/us-s3e3",
+        activeFunnels: [],
         ticketTiers: [
             {
                 id: "presale",
@@ -73,7 +72,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 description: "First release for registered guests.",
                 features: ["General admission", "Access to all rooms", "Newsletter registration required"],
                 icon: "ticket",
-                available: true,
+                available: false,
             },
             {
                 id: "general",
@@ -82,7 +81,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 description: "Standard entry for the full room.",
                 features: ["General admission", "Access to all rooms", "Welcome drink"],
                 icon: "star",
-                available: true,
+                available: false,
                 highlight: true,
             },
             {
@@ -92,10 +91,10 @@ export const upcomingEvents: ScheduledEvent[] = [
                 description: "Premium table placement with dedicated service.",
                 features: ["Guaranteed proximity to artist", "Dedicated hospitality team", "Expedited entry"],
                 icon: "crown",
-                available: true,
+                available: false,
             }
         ],
-        recentlyDropped: true,
+        recentlyDropped: false,
     },
     {
         id: "css-sep19",
@@ -121,12 +120,14 @@ export const upcomingEvents: ScheduledEvent[] = [
         endsAt: "2026-07-04T22:00:00-05:00",
         venue: "Castaways",
         location: "Chicago, IL",
-        lineup: "Lineup Drops May 15",
+        lineup: "Lineup Reveals Through First Access",
         status: "coming-soon",
         inventoryState: "low",
         format: "Day into Night · Open Air",
         dress: "Sun-Kin · Golden Hour Attire",
-        description: "The flagship open-air summer gathering. Start at sunset, continue after dark. Inventory is capped to protect the room.",
+        description: "Chasing Sun(Sets) returns July 4 for an open-air Castaways session built around golden hour, house music, and a capped first-access list before the public ticket window.",
+        experienceIntro: "A day-into-night Independence Day gathering on the lakefront. Join the Laylo first-access list for lineup, table, and ticket-window updates before they move public.",
+        layloDropId: "luYXPr",
         activeFunnels: ["waitlist-chasing"],
         tableReservationEmail: "vip@chasingsunsets.music",
         startingPrice: 30,
@@ -135,7 +136,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 id: "early-tickets",
                 name: "Early Tickets",
                 price: 30,
-                description: "First release for the July 4 opener.",
+                description: "First-access release for the July 4 Castaways opener.",
                 features: ["General admission", "Lowest release pricing", "Priority entry window"],
                 icon: "ticket",
                 available: true,
@@ -144,7 +145,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 id: "advance-tickets",
                 name: "Advance Tickets",
                 price: 40,
-                description: "Second release once the first wave closes.",
+                description: "Second wave after the first-access window closes.",
                 features: ["General admission", "Access to all zones"],
                 icon: "star",
                 available: false,
@@ -153,7 +154,7 @@ export const upcomingEvents: ScheduledEvent[] = [
                 id: "final-release",
                 name: "Final Release",
                 price: 70,
-                description: "Last public release before the event.",
+                description: "Final public release before gates open.",
                 features: ["General admission", "Access to all zones", "Day-of availability"],
                 icon: "crown",
                 available: false,
@@ -177,7 +178,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         lineup: "Secret Guest B2B",
         status: "coming-soon",
         format: "Dark Room · Intimate",
-        description: "The official July 4th after-party. When the sun sets, the story continues.",
+        description: "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
         activeFunnels: ["waitlist-untold"],
         startingPrice: 45,
     },
@@ -220,9 +221,9 @@ export const upcomingEvents: ScheduledEvent[] = [
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
     hero: "css-jul04",
     banner: "css-jul04",
-    funnel: "us-s3e3",
-    ticket: "us-s3e3",
-    guide: "us-s3e3",
+    funnel: "css-jul04",
+    ticket: "css-jul04",
+    guide: "css-jul04",
 };
 
 export const MAX_PUBLIC_SITE_PATH_LENGTH = 160;

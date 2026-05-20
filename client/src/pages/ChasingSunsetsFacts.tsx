@@ -19,7 +19,7 @@ const faqItems: Array<[string, string]> = [
     "Where do I listen to the radio show?",
     "Listen on the official radio hub and SoundCloud episodes published by The Monolith Project.",
   ],
-  ["Where do I buy tickets?", "Tickets are available on the official Tickets page and the official Posh event listing."],
+  ["Where do I get access?", "First Access is available through the official Chasing Sun(Sets) hub before the public ticket drop."],
   [
     "What’s the difference between Chasing Sunsets and Chasing Sun(Sets)?",
     "They refer to the same music brand. Chasing Sun(Sets) is the official styling; Chasing Sunsets is a common search variation.",
@@ -29,7 +29,7 @@ const faqItems: Array<[string, string]> = [
 const officialLinks = [
   { label: "Official Chasing Sun(Sets) site", href: "/chasing-sunsets", external: false },
   { label: CTA_LABELS.radioHub, href: "/radio", external: false },
-  { label: "Official Tickets", href: POSH_TICKET_URL, external: true },
+  { label: "First Access", href: POSH_TICKET_URL, external: false },
   { label: "Instagram", href: "https://instagram.com/chasingsunsets.music", external: true },
   { label: "SoundCloud", href: "https://soundcloud.com/chasing-sun-sets", external: true },
   { label: "Monolith SoundCloud Archive", href: "https://soundcloud.com/monolithproject", external: true },
@@ -89,11 +89,9 @@ export default function ChasingSunsetsFacts() {
               </Link>
               <a
                 href={POSH_TICKET_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="btn-pill-monolith"
               >
-                {CTA_LABELS.tickets}
+                First Access
               </a>
             </div>
           </div>
@@ -206,8 +204,8 @@ export default function ChasingSunsetsFacts() {
                 official radio hub
               </Link>
               {" "}or{" "}
-              <a href={POSH_TICKET_URL} target="_blank" rel="noopener noreferrer" className="btn-inline-pill btn-inline-pill-monolith">
-                tickets
+              <a href={POSH_TICKET_URL} className="btn-inline-pill btn-inline-pill-monolith">
+                first access
               </a>
               .
             </p>

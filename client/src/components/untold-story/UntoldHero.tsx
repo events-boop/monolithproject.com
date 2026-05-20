@@ -11,8 +11,7 @@ import SplitText from "@/components/ui/SplitText";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const heroSlides = [
-  getResponsiveImage("eranHershPortraitReal"),
-  getResponsiveImage("eranHershInternational"),
+  getResponsiveImage("untoldStoryPoster"),
   getResponsiveImage("untoldStoryHero"),
 ];
 
@@ -33,7 +32,6 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
 
   const headlineLines = ["UNTOLD", "STORY"];
   const featuredHeadline = event?.headline || event?.title;
-  const hasTickets = !!event?.ticketUrl && event?.status === "on-sale";
 
   return (
     <section ref={heroRef} className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">

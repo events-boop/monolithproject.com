@@ -45,7 +45,7 @@ function buildEventSeoDescription(
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
-    return `Get tickets for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
+    return `Archive details for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
   }
 
   if (event.series === "chasing-sunsets") {

@@ -11,7 +11,7 @@ import {
   Handshake,
   Instagram,
   Play,
-  QrCode,
+
   Share2,
   Sparkles,
   Sun,
@@ -632,41 +632,57 @@ function InlineCaptureForm() {
   );
 }
 
-function QrShareCard() {
-  const qrHref = appendAttributionQueryParams("/sunsets?utm_source=qr&utm_medium=offline&utm_campaign=chasing-sunsets");
+const FIRST_ACCESS_FLYER = "/images/chasing-sunsets-firstaccess-flyer.png";
+
+function FlyerCard() {
+  const href = "#first-access";
 
   return (
-    <a
-      href={qrHref}
+    <motion.a
+      href={href}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 26 }}
       onClick={() => {
-        triggerHaptic(8);
+        triggerHaptic(14);
         trackSunsetsClick({
-          buttonName: "QR Code",
-          href: qrHref,
+          buttonName: "Flyer Card – First Access",
+          href,
           eventSlug: JULY_4_EVENT_SLUG,
           eventDate: "2026-07-04",
-          interestType: "qr_click",
-          channel: "QR",
+          interestType: "first_access_click",
+          channel: "Flyer Card",
         });
       }}
-      className="group mt-3 grid grid-cols-[4.5rem_1fr_auto] items-center gap-4 rounded-[1.2rem] border border-[#A4592C]/18 bg-[#F8FAF8]/95 p-4 text-left shadow-[0_14px_40px_rgba(5,15,18,0.18)] transition hover:-translate-y-0.5 hover:border-[#A4592C]/36"
+      className="group relative mt-3 block w-full overflow-hidden rounded-[1.4rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.65)]"
+      aria-label="Join First Access — July 4"
     >
-      <span className="grid h-16 w-16 place-items-center rounded-xl border border-[#A4592C]/18 bg-white text-[#A4592C] shadow-inner">
-        <QrCode className="h-8 w-8" strokeWidth={1.7} />
-      </span>
-      <span className="min-w-0">
-        <span className="block text-[10px] font-black uppercase tracking-[0.24em] text-[#7A3A22]/64">
-          Instagram / QR
+      {/* Flyer image — full bleed */}
+      <img
+        src={FIRST_ACCESS_FLYER}
+        alt="Chasing Sun(Sets) First Access — July 4, Castaways Chicago"
+        className="w-full object-cover"
+        loading="lazy"
+      />
+
+      {/* Bottom CTA overlay */}
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-[linear-gradient(to_top,rgba(5,4,3,0.88)_0%,rgba(5,4,3,0.5)_60%,transparent_100%)] px-5 pb-5 pt-12">
+        <div>
+          <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#F4F0EA]/55">
+            July 4 · Castaways · Chicago
+          </p>
+          <p className="mt-1 text-[14px] font-black uppercase tracking-[0.06em] text-[#F4F0EA]">
+            Join First Access
+          </p>
+        </div>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111] shadow-[0_0_20px_rgba(244,240,234,0.25)] transition-transform duration-500 group-hover:scale-110">
+          <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
         </span>
-        <span className="mt-1 block text-base font-black uppercase leading-tight tracking-[0.04em] text-[#2C1810]">
-          Scan to share
-        </span>
-        <span className="mt-1 block text-sm leading-snug text-[#2C1810]/58">
-          Use this path on flyers, stories, and at the door.
-        </span>
-      </span>
-      <ArrowUpRight className="h-4 w-4 text-[#7A3A22]/52 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#A4592C]" />
-    </a>
+      </div>
+
+      {/* Subtle hover border glow */}
+      <div className="pointer-events-none absolute inset-0 rounded-[1.4rem] ring-1 ring-inset ring-white/10 transition duration-500 group-hover:ring-white/22" />
+    </motion.a>
   );
 }
 
@@ -986,6 +1002,20 @@ export default function SunsetsLinkBio() {
                   Join the Chasing Sun(Sets) circle for first access, ticket drops, VIP tables, recap video, sound, gallery, and partner inquiries.
                 </p>
 
+                {featuredVideoLink ? (
+                  <MediaAccordion
+                    item={featuredVideoLink}
+                    index={featuredVideoIndex >= 0 ? featuredVideoIndex : 0}
+                    expanded={expandedMedia === "youtube"}
+                    onToggle={() => {
+                      triggerHaptic(10);
+                      const href = appendAttributionQueryParams(featuredVideoLink.href);
+                      trackSunsetsClick({ ...featuredVideoLink, href });
+                      setExpandedMedia((current) => (current === "youtube" ? null : "youtube"));
+                    }}
+                  />
+                ) : null}
+
                 <InlineCaptureForm />
               </header>
 
@@ -1065,19 +1095,6 @@ export default function SunsetsLinkBio() {
                 </div>
               </motion.a>
 
-              {featuredVideoLink ? (
-                <MediaAccordion
-                  item={featuredVideoLink}
-                  index={featuredVideoIndex >= 0 ? featuredVideoIndex : 0}
-                  expanded={expandedMedia === "youtube"}
-                  onToggle={() => {
-                    triggerHaptic(10);
-                    const href = appendAttributionQueryParams(featuredVideoLink.href);
-                    trackSunsetsClick({ ...featuredVideoLink, href });
-                    setExpandedMedia((current) => (current === "youtube" ? null : "youtube"));
-                  }}
-                />
-              ) : null}
 
               <div className="mt-5 rounded-[1.25rem] border border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.8),rgba(33,18,36,0.7)_48%,rgba(6,42,46,0.72))] p-3 shadow-[0_16px_48px_rgba(20,184,166,0.08)]">
                 <div className="flex items-center justify-between gap-3 px-1 pb-2">
@@ -1222,7 +1239,7 @@ export default function SunsetsLinkBio() {
 
                   return <LinkCard key={item.label} item={item} index={index} />;
                 })}
-                <QrShareCard />
+                <FlyerCard />
               </div>
 
               {/* Footer */}

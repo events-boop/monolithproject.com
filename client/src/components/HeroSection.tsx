@@ -1,464 +1,233 @@
+import {
+  ArrowUpRight,
+  CalendarDays,
+  Clock3,
+  MapPin,
+  Radio,
+} from "lucide-react";
 import { Link } from "wouter";
-import { useState, useCallback } from "react";
-import VideoHeroSlider, { Slide } from "./VideoHeroSlider";
+
 import JsonLd from "@/components/JsonLd";
 import KineticDecryption from "./KineticDecryption";
-import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
-import { cn } from "@/lib/utils";
-import { padCountdown, useCountdown } from "@/hooks/useCountdown";
+import { getEventCta } from "@/lib/cta";
 import {
-  getEventById,
-  getEventEyebrow,
-  getEventStartTimestamp,
   getEventVenueLabel,
   getExperienceEvent,
   getSeriesLabel,
-  getSeriesEvents,
 } from "@/lib/siteExperience";
+import type { ScheduledEvent } from "@shared/events/types";
 
-const heroPosterImage = getResponsiveImage("videoPoster1");
-const heroUntoldImage = getResponsiveImage("untoldStoryHero");
-const heroSunsetsImage = getResponsiveImage("chasingSunsets");
-const heroEranIntlImage = getResponsiveImage("eranHershInternational");
-const heroEranPortraitImage = getResponsiveImage("eranHershPortraitReal");
-const heroAutografImage = getResponsiveImage("sunsetPartyHero");
-const heroLazareImage = getResponsiveImage("lazareSabryHero");
-
-/** Each slide maps to banner metadata and an optional event context. */
-interface SlideBannerInfo {
-  eventId?: string;
-  fallbackToFeaturedEvent?: boolean;
-  label: string;
-  eyebrow?: string;
-  venueLabel?: string;
-  dateLabel?: string;
-}
-
-const HERO_SLIDES: Slide[] = [
-  {
-    type: "video",
-    src: "/videos/hero-video-1.mp4",
-    mobileSrc: "/videos/hero-video-1-mobile.mp4",
-    poster: heroPosterImage.src,
-    posterSources: heroPosterImage.sources,
-    posterSizes: heroPosterImage.sizes,
-    width: 1920,
-    height: 1080,
-    caption: "THE MONOLITH PROJECT (LIVE)",
-  },
-  {
-    type: "image",
-    src: heroEranIntlImage.src,
-    sources: heroEranIntlImage.sources,
-    sizes: heroEranIntlImage.sizes,
-    alt: "Eran Hersh",
-    caption: "UNTOLD STORY IV | ERAN HERSH",
-  },
-  {
-    type: "image",
-    src: heroEranPortraitImage.src,
-    sources: heroEranPortraitImage.sources,
-    sizes: heroEranPortraitImage.sizes,
-    alt: "Eran Hersh",
-    caption: "UNTOLD STORY IV PORTRAIT",
-  },
-  {
-    type: "image",
-    src: heroUntoldImage.src,
-    sources: heroUntoldImage.sources,
-    sizes: heroUntoldImage.sizes,
-    alt: "Untold Story Archive",
-    caption: "ARCHIVE | UNTOLD STORY",
-  },
-  {
-    type: "image",
-    src: heroSunsetsImage.src,
-    sources: heroSunsetsImage.sources,
-    sizes: heroSunsetsImage.sizes,
-    alt: "Chasing Sun(Sets)",
-    caption: "SUMMER '26 | CHASING SUN(SETS)",
-  },
-  {
-    type: "image",
-    src: heroAutografImage.src,
-    sources: heroAutografImage.sources,
-    sizes: heroAutografImage.sizes,
-    alt: "Chasing Sun(Sets) July 4th",
-    caption: "NEW SEASON DROP | JULY 4TH ARCHIVE",
-  },
-  {
-    type: "image",
-    src: heroLazareImage.src,
-    sources: heroLazareImage.sources,
-    sizes: heroLazareImage.sizes,
-    alt: "Lazare Sabry Event",
-    caption: "SPECIAL EVENT | LAZARE SABRY",
-  },
-];
-
-/** Maps each hero slide to the banner state it should drive. */
-const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
-  { fallbackToFeaturedEvent: true, label: "THE MONOLITH PROJECT" }, // 0: video
-  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 1: eran hersh international
-  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 2: eran hersh portrait
-  {
-    label: "UNTOLD STORY",
-    eyebrow: "PAST SHOW",
-    venueLabel: "INDOOR SERIES",
-    dateLabel: "UNTOLD STORY ARCHIVE",
-  }, // 3: untold story
-  { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
-  {
-    eventId: "css-jul04",
-    label: "CHASING SUN(SETS)",
-    eyebrow: "NEW SEASON DROP",
-    venueLabel: "JULY 4TH EVENT",
-    dateLabel: "CHICAGO",
-  }, // 5: chansing sunsets new season drop
-  {
-    label: "LAZARE SABRY",
-    eyebrow: "SPECIAL EVENT",
-    venueLabel: "CHICAGO",
-    dateLabel: "COMING SOON",
-  }, // 6: lazare sabry
-];
-
+const CASTAWAYS_HERO_IMAGE = "/images/sunsets-castaways-hero.jpg";
+const HERO_FALLBACK_IMAGE = "/images/chasing-sunsets.webp";
 const HERO_TITLE = "MONOLITH";
 const HERO_PILLARS = "Chicago House Music / Events / Radio";
 const HERO_TAGLINE = "Togetherness is the frequency.";
 const HERO_SUPPORTING_LINE =
   "The Monolith Project produces Chasing Sun(Sets), Untold Story, and artist-led radio in Chicago.";
 
-function toSystemText(value?: string | null) {
-  return (value || "")
-    .replace(/[—·|]/g, " / ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toUpperCase();
+function getStatusLabel(status?: ScheduledEvent["status"]) {
+  if (status === "on-sale") return "On Sale";
+  if (status === "sold-out") return "Sold Out";
+  if (status === "past") return "Archive";
+  return "Coming Soon";
 }
 
-function getEventSignalLabel(event?: any) {
-  if (!event) return "PAST SHOW";
-  if (event.status === "on-sale") return "TICKETS LIVE";
-  if (event.status === "sold-out") return "SOLD OUT";
-  if (event.recentlyDropped) return "SIGN UP OPEN";
-  if (event.status === "coming-soon") return "DROP SOON";
-  if (event.status === "past") return "PAST SHOW";
-  return "FEATURED SHOW";
-}
-
-function getEventStatusLabel(status?: string) {
-  if (status === "on-sale") return "ON SALE";
-  if (status === "coming-soon") return "COMING SOON";
-  if (status === "sold-out") return "SOLD OUT";
-  if (status === "past") return "PAST";
-  return "FEATURED";
-}
-
-function getSystemKicker(event: any | undefined, eyebrow: string | undefined, slideInfo: SlideBannerInfo) {
-  if (event) {
-    return `${toSystemText(getSeriesLabel(event.series))} / ${getEventSignalLabel(event)}`;
-  }
-
-  return toSystemText(eyebrow || slideInfo.eyebrow || "FEATURED SHOW");
-}
-
-function getSystemMeta(dateLabel: string, venueLabel?: string) {
-  const date = toSystemText(dateLabel);
-  const venue = toSystemText(venueLabel)
-    .replace(/,\s*CHICAGO,\s*IL/g, "")
-    .replace(/^VENUE REVEAL SOON$/, "VENUE LOCK PENDING");
-
-  return [date, venue].filter(Boolean).join(" / ");
-}
-
-function HomeHeroUtilityRow() {
+function getFeaturedCopy(event?: ScheduledEvent | null) {
   return (
-    <div className="relative z-40 mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 px-6 pt-4 font-mono text-[9px] font-black uppercase tracking-[0.12em] text-white/42 md:px-8 md:text-[10px]">
-      <div className="flex min-w-0 items-center gap-3">
-        <span className="text-white/62">MONOLITH</span>
-        <span className="hidden h-px w-8 bg-white/24 sm:block" />
-        <span>Chicago</span>
-      </div>
-      <div className="flex shrink-0 items-center gap-3">
-        <span>Events</span>
-        <span className="h-1 w-1 rounded-full bg-[#E8B86D]" />
-        <span>Radio</span>
-      </div>
-    </div>
+    event?.experienceIntro ||
+    event?.description ||
+    "The July 4 open-air Chasing Sun(Sets) chapter at Castaways. Join first access for lineup, table, and ticket-window updates before they move public."
   );
 }
 
-/** 
- * FloatingEventCard:
- * The immersive, interactive conversion point for the hero section.
- * Syncs with the active slide to feature live shows, radio episodes, or archives.
- */
-function FloatingEventCard({
-  event,
-  slideInfo,
-  dateLabel,
-  venueLabel,
-  eyebrow,
-  isJuly4thEvent,
-  contextualFallbackAction
-}: {
-  event?: any;
-  slideInfo: SlideBannerInfo;
-  dateLabel: string;
-  venueLabel?: string;
-  eyebrow?: string;
-  isJuly4thEvent: boolean;
-  contextualFallbackAction?: { href: string; label: string };
-}) {
-  const headline = event?.headline || event?.title || slideInfo.label;
-  const isLive = event?.status === "on-sale";
-  const eventStart = event ? getEventStartTimestamp(event) : null;
-  const countdown = useCountdown(isLive ? eventStart : null);
-  const showCountdown = isLive && eventStart && !countdown.isExpired;
-  const systemKicker = getSystemKicker(event, eyebrow, slideInfo);
-  const systemMeta = getSystemMeta(dateLabel, venueLabel);
-  const eventStatusLabel = getEventStatusLabel(event?.status);
-  const shortDescription =
-    event?.description ||
-    event?.experienceIntro ||
-    (event ? `${event.title} at ${event.venue}, ${event.location}.` : undefined);
+function EventFeatureCard({ event }: { event?: ScheduledEvent | null }) {
+  const cta = getEventCta(event);
+  const ctaIsExternal = /^https?:\/\//i.test(cta.href);
+  const venueLabel = getEventVenueLabel(event);
+  const eventTitle = event?.headline || event?.title || "July 4th Open-Air Experience";
+  const eventSeries = event ? getSeriesLabel(event.series) : "Chasing Sun(Sets)";
+  const eventDate = event?.date || "July 4, 2026";
+  const eventTime = event?.time || "3:00 PM - 10:00 PM";
+  const eventEpisode = event?.episode || "Independence Day";
 
   return (
-    <div
-      key={headline}
+    <aside
       data-home-hero-card="true"
-      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500"
+      className="relative w-full max-w-[29rem] overflow-hidden rounded-[1.35rem] border border-white/16 bg-[#090909]/76 p-6 shadow-[0_35px_90px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-2xl sm:p-7 lg:p-8"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-8 top-8 z-0 text-[4.25rem] font-black uppercase leading-none tracking-[0] text-white/[0.025]"
+        className="pointer-events-none absolute -right-8 -top-10 text-[9rem] font-black uppercase leading-none tracking-[0] text-white/[0.035]"
       >
-        LIVE
+        SUN
       </div>
-      {/* Immersive Background Window */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105 opacity-80"
-          style={{
-            background:
-              "radial-gradient(circle at 18% 18%, rgba(164, 89, 44, 0.12), transparent 52%), radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.06), transparent 54%)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-white/[0.03]" />
-      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(232,184,109,0.13),transparent_34%),radial-gradient(circle_at_90%_100%,rgba(164,89,44,0.14),transparent_38%)]"
+      />
 
-      {/* Content Layer */}
-      <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:gap-5 sm:p-8 md:p-10">
-        {/* Status Badge */}
-        <div className="flex items-center gap-2 self-end sm:absolute sm:right-6 sm:top-6">
-          <span className="event-system-chip rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-white/76 backdrop-blur-md">
-            {eventStatusLabel}
-          </span>
-        </div>
-
-        {/* Narrative Metadata */}
-        <div className="flex w-full flex-col gap-3 sm:pr-20">
-          <span className="event-system-kicker text-white/58">
-            {systemKicker}
-          </span>
-          <h3 className={cn(
-            "event-system-headline text-white text-balance drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)]",
-            isJuly4thEvent
-              ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
-              : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
-            isJuly4thEvent && "july-4th-gradient"
-          )}>
-            {toSystemText(headline)}
-          </h3>
-          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/72">
-            {systemMeta}
-          </span>
-          {event?.time ? (
-            <span className="event-system-chip text-white/54">
-              {toSystemText(event.time)}
-            </span>
-          ) : null}
-          {shortDescription ? (
-            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/72 line-clamp-4">
-              {shortDescription}
-            </p>
-          ) : null}
-        </div>
-
-        {showCountdown && (
-          <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
-            <span className="event-system-chip text-white/54">
-              Event Starts
-            </span>
-            <div className="event-system-chip flex items-center gap-2 text-white/82 tabular-nums">
-              <span>{countdown.days}D</span>
-              <span className="text-white/34">/</span>
-              <span>{padCountdown(countdown.hours)}H</span>
-              <span className="text-white/34">/</span>
-              <span>{padCountdown(countdown.minutes)}M</span>
-            </div>
+      <div className="relative z-10">
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <div className="font-mono text-[10px] font-black uppercase tracking-[0.24em] text-white/58">
+            {eventSeries}
           </div>
-        )}
+          <div className="rounded-full border border-white/10 bg-white/12 px-3 py-1.5 font-mono text-[9px] font-black uppercase tracking-[0.16em] text-white/72">
+            {getStatusLabel(event?.status)}
+          </div>
+        </div>
 
-        {/* CTA Engine */}
-        <div className="mt-3 w-full sm:mt-4">
-          {event ? (
-            <HeroCardCTA event={event} />
-          ) : contextualFallbackAction ? (
-            <Link href={contextualFallbackAction.href} asChild>
-              <a className="btn-pill-monolith btn-pill-wide">
-                {contextualFallbackAction.label}
-              </a>
-            </Link>
-          ) : null}
+        <h2 className="max-w-[10.5ch] text-balance hero-wordmark text-[clamp(2.35rem,4.2vw,4.25rem)] uppercase leading-[0.9] tracking-[0] text-white">
+          {eventTitle}
+        </h2>
+
+        <div className="mt-5 font-mono text-[11px] font-black uppercase tracking-[0.28em] text-[#d8b782]">
+          {eventEpisode}
+        </div>
+
+        <div className="mt-6 space-y-4 border-b border-white/12 pb-6 text-sm text-white/78">
+          <div className="flex items-center gap-4">
+            <CalendarDays size={17} className="shrink-0 text-white/60" />
+            {eventDate}
+          </div>
+          <div className="flex items-center gap-4">
+            <MapPin size={17} className="shrink-0 text-white/60" />
+            {venueLabel}
+          </div>
+          <div className="flex items-center gap-4">
+            <Clock3 size={17} className="shrink-0 text-white/60" />
+            {eventTime}
+          </div>
+        </div>
+
+        <p className="mt-6 text-[15px] leading-7 text-white/82">
+          {getFeaturedCopy(event)}
+        </p>
+
+        <a
+          href={cta.href}
+          target={ctaIsExternal ? "_blank" : undefined}
+          rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+          className="mt-7 inline-flex min-h-[3.65rem] w-full items-center justify-center rounded-full bg-[#f4f0ea] px-7 text-[11px] font-black uppercase tracking-[0.22em] text-black shadow-[0_18px_42px_rgba(0,0,0,0.34)] transition hover:-translate-y-0.5 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+        >
+          {cta.label}
+          <ArrowUpRight className="ml-4 h-4 w-4" strokeWidth={2.5} />
+        </a>
+
+        <div className="mt-5 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-[#b89a6b]">
+          First Access / Limited Inventory
         </div>
       </div>
-    </div>
-  );
-}
-
-function HeroCardCTA({ event }: { event: any }) {
-  const href =
-    event?.primaryCta?.href ||
-    event?.ticketUrl ||
-    (event?.slug || event?.id ? `/events/${event.slug || event.id}` : "/schedule");
-  const label = event?.primaryCta?.label || (event?.ticketUrl ? "Get Tickets" : "View Details");
-  const isExternal = /^https?:\/\//i.test(href);
-
-  return (
-    <a
-      href={href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-      className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/78 bg-white px-6 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_36px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.8)] transition hover:-translate-y-0.5 hover:bg-[#E7E7E2] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/62"
-    >
-      {label}
-    </a>
+    </aside>
   );
 }
 
 export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
-
-  const [activeSlide, setActiveSlide] = useState(0);
-  const handleSlideChange = useCallback((index: number) => setActiveSlide(index), []);
-
-  // Resolve which event to show in the banner based on the active slide
-  const slideInfo = SLIDE_EVENT_MAP[activeSlide] ?? SLIDE_EVENT_MAP[0];
-  const bannerEvent = slideInfo.fallbackToFeaturedEvent
-    ? featuredEvent
-    : slideInfo.eventId
-      ? getEventById(slideInfo.eventId)
-      : undefined;
-
-  const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
-  const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
-  const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
-  const venueLabel = bannerEvent ? getEventVenueLabel(bannerEvent) : slideInfo.venueLabel;
-  const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
-  const contextualFallbackAction =
-    !bannerEvent && activeSlide === 3
-      ? { href: "/story", label: "Explore Untold Story" }
-      : !bannerEvent && activeSlide === 5
-        ? { href: "/archive", label: "See The Archive" }
-        : undefined;
-
   const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
 
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-black screen-shell-stable"
+      className="relative min-h-[100dvh] overflow-hidden bg-[#080808] text-white screen-shell-stable"
     >
       {structuredData}
 
-      {/* Cinematic Background Layer — always video slider */}
-      <div className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-        <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
-      </div>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 scale-[1.02] bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${CASTAWAYS_HERO_IMAGE}), url(${HERO_FALLBACK_IMAGE})`,
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/88 via-black/42 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-black/54" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_55%,rgba(255,190,104,0.2),transparent_32%)]" />
+      <div className="absolute inset-0 opacity-[0.11] bg-[linear-gradient(rgba(255,255,255,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
-      {/* Architectural HUD Grid Overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4vw_4vw]" />
-        <div className="absolute left-0 right-0 top-[-10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-      </div>
-      <div className="pointer-events-none absolute inset-x-0 top-[14vh] z-20 hidden overflow-hidden text-center md:block">
-        <span className="hero-wordmark block text-[clamp(5rem,17vw,17rem)] uppercase leading-none tracking-[0] text-white/[0.026]">
-          MONOLITH
-        </span>
-      </div>
+      <div className="relative z-10 flex min-h-[100dvh] flex-col px-6 pb-5 pt-[var(--shell-page-top-hero)] sm:px-8 lg:px-14">
+        <div className="grid flex-1 items-end gap-10 pb-6 pt-12 lg:grid-cols-[1.12fr_0.88fr] lg:gap-14 lg:pt-16 xl:gap-20">
+          <div className="max-w-4xl">
+            <div className="mb-12 hidden items-center gap-5 font-mono text-[10px] font-black uppercase tracking-[0.3em] text-white/58 md:flex lg:mb-20">
+              <span>Monolith</span>
+              <span className="h-px w-14 bg-white/28" />
+              <span>Chicago</span>
+            </div>
 
-      <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
-        <HomeHeroUtilityRow />
-        <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-10 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:gap-16">
-          <div
-            data-home-hero-copy="true"
-            className="flex min-w-0 flex-col items-center justify-center pt-1 text-center text-white md:items-start md:pr-8 md:text-left lg:pr-12"
-          >
-            <div className="relative z-10 flex min-w-0 flex-col items-center md:items-start">
-              <div className="pointer-events-none absolute left-1/2 top-0 h-[18rem] w-[120vw] -translate-x-1/2 -translate-y-[22%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.16)_0%,rgba(168,168,160,0.10)_28%,rgba(52,52,48,0.10)_48%,transparent_74%)] blur-3xl md:left-[34%] md:h-[24rem] md:w-[48rem] md:-translate-x-1/3 md:-translate-y-[28%]" />
-              <div className="pointer-events-none absolute left-1/2 top-[3.75rem] h-28 w-[112vw] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.10)_34%,rgba(178,178,170,0.12)_50%,rgba(72,72,68,0.10)_68%,transparent)] blur-2xl md:left-[40%] md:top-[6.25rem] md:w-[44rem] md:-translate-x-1/3" />
-              <h1
-                data-home-hero-heading="true"
-                className={cn(
-                  "relative hero-wordmark max-w-full text-[clamp(3rem,7vw,9rem)] text-balance bg-gradient-to-b from-white via-[#ECECE8] to-white/28 bg-clip-text text-left text-transparent drop-shadow-[0_22px_42px_rgba(0,0,0,0.62)]"
-                )}
+            <h1
+              data-home-hero-heading="true"
+              className="hero-wordmark text-[clamp(4.2rem,10vw,10.25rem)] uppercase leading-[0.82] tracking-[0] text-white drop-shadow-[0_22px_48px_rgba(0,0,0,0.62)]"
+            >
+              <KineticDecryption text={HERO_TITLE} autoStart={false} />
+            </h1>
+
+            <div
+              data-home-hero-eyebrow="true"
+              className="mt-3 font-mono text-[12px] uppercase tracking-[0.18em] text-white/62 sm:tracking-[0.3em]"
+            >
+              {HERO_PILLARS}
+            </div>
+
+            <h2 className="mt-7 max-w-2xl text-balance font-display text-[clamp(2rem,4.1vw,4.25rem)] uppercase leading-[0.9] tracking-[0] text-white">
+              {HERO_TAGLINE}
+            </h2>
+
+            <p
+              data-home-hero-summary="true"
+              className="mt-6 max-w-xl text-base leading-7 text-white/78 md:text-lg"
+            >
+              {HERO_SUPPORTING_LINE}
+            </p>
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+              <Link
+                href="/sunsets"
+                className="inline-flex min-h-[4rem] items-center justify-center rounded-full bg-[#f4f0ea] px-10 text-[11px] font-black uppercase tracking-[0.2em] text-black shadow-[0_18px_42px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 sm:text-[12px]"
               >
-                <KineticDecryption text={HERO_TITLE} autoStart={false} />
-              </h1>
+                Sun(Sets) Events
+                <ArrowUpRight className="ml-4 h-4 w-4" strokeWidth={2.5} />
+              </Link>
 
-              <p
-                data-home-hero-pillars="true"
-                data-home-hero-eyebrow="true"
-                className="mt-4 max-w-md text-center font-mono text-[12px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.24em] text-white/62 md:text-left"
+              <Link
+                href="/story"
+                className="inline-flex min-h-[4rem] items-center justify-center rounded-full border border-white/38 bg-white/[0.07] px-10 text-[11px] font-black uppercase tracking-[0.2em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/55 sm:text-[12px]"
               >
-                {HERO_PILLARS}
-              </p>
-              <p className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(1.2rem,3vw,2.15rem)] leading-[1.02] text-white/94">
-                {HERO_TAGLINE}
-              </p>
+                Untold Story
+                <ArrowUpRight className="ml-4 h-4 w-4" strokeWidth={2.5} />
+              </Link>
+            </div>
 
-              <p
-                data-home-hero-summary="true"
-                className="mt-5 max-w-[34rem] text-balance text-sm leading-relaxed text-white/70 drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)] md:text-base"
-              >
-                {HERO_SUPPORTING_LINE}
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                <Link
-                  href="/tickets"
-                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/75 bg-white px-8 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-[#F8FAF8] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[15rem]"
-                >
-                  Tickets
-                </Link>
-                <Link
-                  href="/sunsets"
-                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/26 bg-white/[0.08] px-8 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/48 hover:bg-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/55 sm:w-auto sm:min-w-[15rem]"
-                >
-                  Sun(Sets) Hub
-                </Link>
+            <div className="mt-12 hidden font-mono text-[10px] uppercase tracking-[0.24em] text-white/50 md:block">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="h-[2px] w-20 bg-white/20" />
+                <span className="h-[2px] w-10 bg-[#d8b782]" />
+                <span className="h-[2px] w-16 bg-white/20" />
               </div>
+              <div>41.8781 N, 87.6298 W</div>
+              <div className="mt-1">Sector: Primary_Core</div>
             </div>
           </div>
 
-          <div className="mt-auto flex w-full justify-center md:mt-0 md:justify-end">
-            <div className="w-full max-w-[22rem] sm:max-w-[24rem] md:max-w-[26rem] lg:max-w-[28rem]">
-              <FloatingEventCard
-                event={bannerEvent}
-                slideInfo={slideInfo}
-                dateLabel={dateLabel}
-                venueLabel={venueLabel}
-                eyebrow={eyebrow}
-                isJuly4thEvent={isJuly4thEvent}
-                contextualFallbackAction={contextualFallbackAction}
-              />
-            </div>
+          <div className="flex w-full justify-center lg:justify-end">
+            <EventFeatureCard event={featuredEvent} />
           </div>
         </div>
+
+        <Link
+          href="/radio"
+          className="relative z-20 flex min-h-16 items-center justify-between gap-4 rounded-[1.35rem] border border-white/14 bg-black/56 px-5 py-4 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-white/68 backdrop-blur-xl transition hover:border-white/28 hover:bg-black/68 sm:px-6 sm:text-[11px]"
+        >
+          <div className="flex min-w-0 items-center gap-4">
+            <Radio size={22} className="shrink-0" />
+            <span className="truncate">Listen Live: Monolith Radio</span>
+          </div>
+          <div className="hidden md:block">24/7 Chicago House Music & Culture</div>
+          <div className="hidden shrink-0 items-center gap-3 sm:flex">
+            Tune In <ArrowUpRight size={14} />
+          </div>
+        </Link>
       </div>
+
     </section>
   );
 }

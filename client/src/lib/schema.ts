@@ -1,4 +1,4 @@
-import { POSH_TICKET_URL, ScheduledEvent } from "@/data/events";
+import { ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
 import type { ArtistData } from "@/data/artists";
 
@@ -266,23 +266,22 @@ export function buildArtistSchema(artist: ArtistData, pagePath: string) {
 
 export function buildUntoldStoryEventSchema(pagePath: string) {
 
-  const event = getEventById("us-s3e3");
+  const event = getEventById("us-jul04");
   if (event) return buildScheduledEventSchema(event, pagePath);
 
   return buildEventSchema({
     pagePath,
-    name: "Untold Story IV: Eran Hersh",
+    name: "Untold Story: Late Night Continuation",
     description:
-      "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026.",
-    startDate: "2026-05-16T21:00:00-05:00",
-    endDate: "2026-05-17T03:00:00-05:00",
+      "The Monolith Project presents the next Untold Story late-night chapter in Chicago.",
+    startDate: "2026-07-04T22:30:00-05:00",
+    endDate: "2026-07-05T04:00:00-05:00",
     image: [
       "/images/untold-story-moody.webp",
-      "/images/artist-lazare.webp",
+      "/images/untold-story-hero-post1.webp",
     ],
-    performer: ["Eran Hersh"],
-    ticketUrl: POSH_TICKET_URL,
-    locationName: "Hideaway",
+    performer: ["The Monolith Project"],
+    locationName: "Venue Reveal Soon",
     streetAddress: "Chicago IL",
     addressLocality: "Chicago",
     addressRegion: "IL",

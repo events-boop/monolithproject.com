@@ -39,6 +39,7 @@ export default function Home() {
   const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
   const untoldMomentHref = "/story";
   const untoldTicketHref = untoldMoment?.ticketUrl || untoldMoment?.primaryCta?.href || untoldMomentHref;
+  const untoldCtaLabel = untoldMoment?.primaryCta?.label || "Open Untold Story";
   const untoldTicketIsExternal = /^https?:\/\//i.test(untoldTicketHref);
 
   useEffect(() => {
@@ -167,7 +168,7 @@ export default function Home() {
         <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
-              <span className="section-kicker text-primary">Untold Story IV</span>
+              <span className="section-kicker text-primary">Untold Story</span>
               {untoldMoment?.status ? (
                 <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
                   {getStatusLabel(untoldMoment.status)}
@@ -179,14 +180,16 @@ export default function Home() {
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
                   <span className="section-kicker mb-3 block text-white/78">
-                    Tickets Live Now
+                    Archive closed / next chapter
                   </span>
                   <h2 className="section-display-title-compact max-w-[14ch] text-white hyphens-none break-keep text-balance">
-                    Eran Hersh in Chicago
+                    {untoldMoment.headline || untoldMoment.title}
                   </h2>
-                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">May 16 at Hideaway</p>
+                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
+                    {untoldMoment.date} at {untoldMoment.venue}
+                  </p>
                   <p className={coolSubtextClass}>
-                    This is the current on-sale event. Untold Story IV brings Eran Hersh to Hideaway for a focused after-dark room.
+                    The next late-night chapter is moving into first-access mode. Join the list for the reveal, table path, and ticket-window updates.
                   </p>
                 </div>
 
@@ -212,7 +215,7 @@ export default function Home() {
                   <p className="mt-4 text-sm text-white/82">{getEventVenueLabel(untoldMoment)}</p>
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link href={untoldMomentHref} className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto">
-                      View Event <ArrowUpRight className="w-4 h-4" />
+                      View Untold Story <ArrowUpRight className="w-4 h-4" />
                     </Link>
                     {untoldTicketIsExternal ? (
                       <a
@@ -221,18 +224,18 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto"
                       >
-                        Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
+                        {untoldCtaLabel} <ArrowUpRight className="w-4 h-4" />
                       </a>
                     ) : (
                       <Link href={untoldTicketHref} className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto">
-                        Buy Eran Hersh Tickets <ArrowUpRight className="w-4 h-4" />
+                        {untoldCtaLabel} <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     )}
                   </div>
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-white/84">Untold Story IV details are being updated.</p>
+              <p className="text-sm text-white/84">The next Untold Story chapter is being updated.</p>
             )}
           </div>
         </section>

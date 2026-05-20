@@ -16,7 +16,7 @@ function isExternalHref(href: string) {
 function getSeriesFunnelHref(series: EventSeries) {
   switch (series) {
     case "chasing-sunsets":
-      return "/chasing-sunsets#chasing-funnel";
+      return "/go/waitlist/chasing-sunsets";
     case "untold-story":
       return "/story#untold-funnel";
     default:

@@ -317,7 +317,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               rel={bannerPayload.ticketUrl && /^https?:\/\//i.test(bannerPayload.ticketUrl) ? "noopener noreferrer" : undefined}
               aria-label={
                 bannerPayload.ticketUrl
-                  ? "Open tickets for current featured event"
+                  ? `Open ${bannerPayload.ticketLabel || "current featured event"}`
                   : "Request early access for the current featured event"
               }
               className="group relative block overflow-hidden rounded-[0.72rem] border border-white/10 shadow-[0_16px_34px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:rounded-2xl"
@@ -444,7 +444,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   megamenu={{
                     items: [
                       { label: "UPCOMING SHOWS", href: "/schedule", icon: "arrow" },
-                      { label: "GET TICKETS", href: ticketHref || "/tickets", icon: "ticket" },
+                      { label: ticketHref ? "GET TICKETS" : "FIRST ACCESS", href: ticketHref || "/tickets", icon: "ticket" },
                       { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
                       { label: "UNTOLD STORY", href: "/story" },
                       { label: "ENTRY GUIDE", href: "/guide#entry" },
@@ -454,14 +454,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       subtitle: ticketEvent.episode || ticketEvent.subtitle || "Featured Event",
                       image: ticketEvent.image || "/images/chasing-sunsets-premium.webp",
                       href: ticketHref || `/events/${ticketEvent.slug || ticketEvent.id}`,
-                      ctaText: ticketHref ? "On Sale" : "See The Night",
+                      ctaText: ticketHref ? "On Sale" : "First Access",
                       icon: ticketHref ? "ticket" : "arrow",
                       badge: ticketEvent.status === "on-sale" ? "ON SALE" : "COMING SOON",
                       external: !!ticketHref
                     } : {
                       title: "UPCOMING SHOWS",
                       subtitle: "Tickets + dates",
-                      image: "/images/eran-hersh-live-1.webp",
+                      image: "/images/chasing-sunsets-premium.webp",
                       href: "/schedule",
                       ctaText: "View Shows",
                       icon: "arrow",

@@ -12,7 +12,7 @@ describe("buildPublicSiteData", () => {
     expect(data.featuredEvents.hero?.id).toBe("css-jul04");
     expect(featuredSunsets?.primaryCta).toMatchObject({
       label: "Unlock Presale",
-      href: "/chasing-sunsets#chasing-funnel",
+      href: "/go/waitlist/chasing-sunsets",
       tool: "laylo",
     });
     expect(featuredUntold?.ticketTiers).toBeUndefined();
@@ -21,6 +21,8 @@ describe("buildPublicSiteData", () => {
     expect(featuredUntold?.faqs).toBeUndefined();
     expect(featuredUntold?.activeFunnels).toBeUndefined();
     expect(featuredUntold?.lineup).toBeDefined();
+    expect(featuredUntold?.status).toBe("past");
+    expect(featuredUntold?.ticketUrl).toBeUndefined();
   });
 
   it("limits untold pages to the featured payload plus untold events", () => {
@@ -31,10 +33,11 @@ describe("buildPublicSiteData", () => {
     expect(data.events.some((event) => event.id === "us-s3e3")).toBe(true);
     expect(data.events.some((event) => event.id === "css-jul04")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
-      label: "Get Tickets",
-      href: "/go/tickets/us-s3e3",
-      tool: "posh",
+      label: "Get Alerts First",
+      href: "/story#untold-funnel",
+      tool: "laylo",
     });
+    expect(untoldEvent?.ticketUrl).toBeUndefined();
     expect(untoldEvent?.ticketTiers?.length).toBeGreaterThan(0);
     expect(untoldEvent?.whatToExpect?.length).toBeGreaterThan(0);
   });
@@ -47,10 +50,11 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.sound).toBeDefined();
     expect(scheduleUntold?.lineup).toBeDefined();
     expect(scheduleUntold?.primaryCta).toMatchObject({
-      label: "Get Tickets",
-      href: "/go/tickets/us-s3e3",
-      tool: "posh",
+      label: "Get Alerts First",
+      href: "/story#untold-funnel",
+      tool: "laylo",
     });
+    expect(scheduleUntold?.ticketUrl).toBeUndefined();
     expect(scheduleUntold?.ticketTiers).toBeUndefined();
     expect(scheduleUntold?.faqs).toBeUndefined();
     expect(scheduleUntold?.tablePackages).toBeUndefined();
@@ -61,23 +65,16 @@ describe("buildPublicSiteData", () => {
     const data = buildPublicSiteData("/vip");
     const featuredIds = data.events.map((event) => event.id);
     const featuredSunsets = data.events.find((event) => event.id === "css-jul04");
-    const featuredUntold = data.events.find((event) => event.id === "us-s3e3");
 
     expect(featuredIds).toContain("css-jul04");
-    expect(featuredIds).toContain("us-s3e3");
-    expect(data.events.length).toBe(2);
+    expect(featuredIds).not.toContain("us-s3e3");
+    expect(data.events.length).toBe(1);
     expect(featuredSunsets?.primaryCta).toMatchObject({
       label: "Unlock Presale",
-      href: "/chasing-sunsets#chasing-funnel",
+      href: "/go/waitlist/chasing-sunsets",
       tool: "laylo",
     });
-    expect(featuredUntold?.primaryCta).toMatchObject({
-      label: "Get Tickets",
-      href: "/go/tickets/us-s3e3",
-      tool: "posh",
-    });
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
-    expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });
 });

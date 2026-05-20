@@ -11,10 +11,8 @@ export default function FixedTicketBadge() {
         <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
             <a
                 href={POSH_TICKET_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group relative flex items-center justify-center w-32 h-32 rounded-full cursor-pointer"
-                aria-label={CTA_LABELS.tickets}
+                aria-label="First Access"
             >
                 {/* Rotating Text Ring */}
                 <motion.div
@@ -30,7 +28,7 @@ export default function FixedTicketBadge() {
                         </defs>
                         <text className="text-[11px] font-bold uppercase tracking-[0.2em] fill-white font-mono">
                             <textPath xlinkHref="#circlePath" startOffset="0%">
-                                {`${CTA_LABELS.tickets} • The Monolith Project • ${CTA_LABELS.tickets} •`}
+                                {"First Access • The Monolith Project • First Access •"}
                             </textPath>
                         </text>
                     </svg>

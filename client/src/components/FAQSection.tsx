@@ -56,11 +56,9 @@ export default function FAQSection() {
           <p className="text-sm text-stone">Still have questions? Reach out and we’ll help before the event.</p>
           <a
             href={POSH_TICKET_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             className="btn-pill-monolith inline-flex items-center gap-2"
           >
-            {CTA_LABELS.tickets}
+            First Access
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>

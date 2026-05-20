@@ -7,7 +7,7 @@ import { LIVE_RED } from "@/lib/brand";
 import type { ScheduledEvent } from "@shared/events/types";
 
 const FEATURED_TIERED_ID = "css-jul04";
-const ACTION_EVENT_IDS = ["us-s3e3", "us-jul04", "css-aug22"];
+const ACTION_EVENT_IDS = ["us-jul04", "css-aug22"];
 
 export default function LiveTickets() {
   const tieredEvent = getEventById(FEATURED_TIERED_ID);
