@@ -6,6 +6,7 @@ import ConversionCTA from "@/components/ConversionCTA";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 
 const CHAPTER_LABELS = ["SUN(SETS) I", "SUN(SETS) II", "SUN(SETS) III"];
+const CHAPTER_NUMBERS = ["01", "02", "03"];
 const CHAPTER_SUBTITLES = [
   "Independence Day · Open-Air Experience",
   "The Summer Return",
@@ -84,6 +85,13 @@ export default function SeasonChapterCards() {
             />
 
             <div className="relative z-10 flex h-full flex-col p-6 sm:p-8">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-4 top-12 z-0 font-display text-[10rem] font-black leading-none tracking-tight text-white/[0.045] sm:-right-6 sm:text-[12rem]"
+              >
+                {CHAPTER_NUMBERS[0]}
+              </span>
+
               {/* Top row */}
               <div className="mb-6 flex items-start justify-between gap-3">
                 <span
@@ -98,7 +106,7 @@ export default function SeasonChapterCards() {
               </div>
 
               {/* Date — hero-sized */}
-              <p className="font-display text-[clamp(3.2rem,7vw,5.5rem)] font-black uppercase leading-[0.85] tracking-tight text-white">
+              <p className="relative z-10 font-display text-[clamp(3.2rem,7vw,5.5rem)] font-black uppercase leading-[0.85] tracking-tight text-white">
                 {featured.date}
               </p>
 
@@ -156,6 +164,13 @@ export default function SeasonChapterCards() {
                 className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0c0c0c] shadow-[0_18px_48px_rgba(0,0,0,0.38)] transition-colors hover:border-white/20"
               >
                 <div className="relative z-10 flex h-full flex-col p-6 sm:p-8">
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-4 top-12 z-0 font-display text-[8.5rem] font-black leading-none tracking-tight text-white/[0.04] sm:-right-6 sm:text-[10rem]"
+                  >
+                    {CHAPTER_NUMBERS[i + 1]}
+                  </span>
+
                   {/* Top row */}
                   <div className="mb-6 flex items-start justify-between gap-3">
                     <span
@@ -167,7 +182,7 @@ export default function SeasonChapterCards() {
                   </div>
 
                   {/* Date */}
-                  <p className="font-display text-[clamp(2rem,4.5vw,3.25rem)] font-black uppercase leading-[0.88] tracking-tight text-white/82">
+                  <p className="relative z-10 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-black uppercase leading-[0.88] tracking-tight text-white/82">
                     {event.date}
                   </p>
 

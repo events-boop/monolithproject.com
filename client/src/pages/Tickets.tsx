@@ -296,8 +296,8 @@ export default function Tickets() {
                   First Access Releases
                 </h2>
                 <p className="mt-6 text-lg text-white/40 font-light">
-                  Public checkout opens by release. First Access gets the
-                  signal before each wave goes wide.
+                  Public checkout opens by release. First Access gets the signal
+                  before each wave goes wide.
                 </p>
               </div>
               <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 italic">
@@ -347,7 +347,7 @@ export default function Tickets() {
                       {tier.features.map((feature: string, i: number) => (
                         <li
                           key={i}
-                          className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/30 group-hover:text-white/60 transition-colors"
+                          className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-[0.2em] text-white/46 group-hover:text-white/60 transition-colors"
                         >
                           <div className="h-px w-3 bg-white/10 group-hover:bg-primary transition-colors" />
                           {feature}
@@ -395,7 +395,9 @@ export default function Tickets() {
               <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20">
-                  {cta.tool === "posh" ? "Secure checkout via Posh" : "First access before public release"}
+                  {cta.tool === "posh"
+                    ? "Secure checkout via Posh"
+                    : "First access before public release"}
                 </span>
               </div>
             </div>
@@ -429,7 +431,7 @@ export default function Tickets() {
                     ],
                   ].map(([label, value]) => (
                     <div key={label} className="bg-black/70 p-5">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/30">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/46">
                         {label}
                       </p>
                       <p className="mt-3 font-display text-xl uppercase leading-none text-white/88">
