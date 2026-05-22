@@ -1,15 +1,25 @@
 import { useEffect } from "react";
-import { useLocation, useRoute } from "wouter";
+import { Link, useLocation, useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
-import { ArrowLeft, Clock, MapPin, Ticket, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Camera,
+  Clock,
+  Headphones,
+  MapPin,
+  Ticket,
+  Star,
+} from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
 import { buildBreadcrumbSchema, buildScheduledEventSchema } from "@/lib/schema";
+import { trackAccessEvent } from "@/lib/api";
 
 function getStatusLabel(status: string) {
   if (status === "on-sale") return "ON SALE";
@@ -101,6 +111,22 @@ function getEventFitCopy(
   return "Chicago music gathering";
 }
 
+function getSeriesHref(
+  series: NonNullable<ReturnType<typeof getPublicEvents>[number]>["series"]
+) {
+  if (series === "chasing-sunsets") return "/chasing-sunsets";
+  if (series === "untold-story") return "/story";
+  return "/about";
+}
+
+function getSeriesContextCopy(
+  series: NonNullable<ReturnType<typeof getPublicEvents>[number]>["series"]
+) {
+  if (series === "chasing-sunsets") return "Open-air season context";
+  if (series === "untold-story") return "After-dark chapter context";
+  return "Monolith world context";
+}
+
 export default function EventDetails() {
   usePublicSiteDataVersion();
   const [, params] = useRoute("/events/:slug");
@@ -182,6 +208,44 @@ export default function EventDetails() {
     },
   ];
   const eventFit = getEventFitCopy(event);
+  const contextPaths = [
+    {
+      href: getSeriesHref(event.series),
+      label: getSeriesLabel(event.series),
+      note: getSeriesContextCopy(event.series),
+      icon: <Star className="h-4 w-4" />,
+    },
+    {
+      href: "/radio",
+      label: "Radio",
+      note: "Hear the taste behind the room",
+      icon: <Headphones className="h-4 w-4" />,
+      onClick: () =>
+        trackAccessEvent("radio_click", {
+          buttonName: "Event Detail Radio",
+          destinationUrl: "/radio",
+          eventSlug: event.slug || event.id,
+          eventDate: event.date,
+          channel: "site",
+          source: "event_details_context",
+        }),
+    },
+    {
+      href: "/archive",
+      label: "Archive",
+      note: "See the proof before the next move",
+      icon: <Camera className="h-4 w-4" />,
+      onClick: () =>
+        trackAccessEvent("archive_click", {
+          buttonName: "Event Detail Archive",
+          destinationUrl: "/archive",
+          eventSlug: event.slug || event.id,
+          eventDate: event.date,
+          channel: "site",
+          source: "event_details_context",
+        }),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
@@ -415,6 +479,42 @@ export default function EventDetails() {
                   {event.eventNotice}
                 </div>
               )}
+
+              <div className="border-t border-white/10 pt-6">
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/40">
+                    Read The Room
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/24">
+                    Context
+                  </span>
+                </div>
+                <div className="grid gap-3">
+                  {contextPaths.map(path => (
+                    <Link
+                      key={path.label}
+                      href={path.href}
+                      onClick={path.onClick}
+                      className="group flex items-center justify-between gap-4 border border-white/8 bg-white/[0.025] px-4 py-3 transition-colors hover:border-white/18 hover:bg-white/[0.055]"
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/10 text-white/55 transition-colors group-hover:border-primary/35 group-hover:text-primary">
+                          {path.icon}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-display text-base uppercase tracking-wide text-white">
+                            {path.label}
+                          </span>
+                          <span className="mt-1 block text-xs leading-relaxed text-white/45">
+                            {path.note}
+                          </span>
+                        </span>
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-white/28 transition-colors group-hover:text-white/75" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -434,13 +534,31 @@ export default function EventDetails() {
                 handy.
               </p>
             </div>
-            <div className="w-full md:w-auto">
+            <div className="flex w-full flex-col items-start gap-5 md:w-auto md:items-end">
               <ConversionCTA
                 event={event}
                 size="lg"
                 className="w-full md:w-auto"
                 showUrgency={true}
               />
+              {event.tableReservationEmail ? (
+                <a
+                  href={`mailto:${event.tableReservationEmail}`}
+                  onClick={() =>
+                    trackAccessEvent("vip_inquiry_click", {
+                      buttonName: "VIP / Table Enquiry",
+                      destinationUrl: `mailto:${event.tableReservationEmail}`,
+                      eventSlug: event.slug || event.id,
+                      eventDate: event.date,
+                      channel: "email",
+                      source: "event_details_next_step",
+                    })
+                  }
+                  className="btn-text-action"
+                >
+                  VIP / Table Enquiry
+                </a>
+              ) : null}
             </div>
           </div>
         </section>

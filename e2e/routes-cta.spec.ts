@@ -138,3 +138,16 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   await expect(page).toHaveURL(/\/partners$/);
   await expect(page.getByRole("heading", { name: /partners & crew/i })).toBeVisible();
 });
+
+test("schedule quick view hands off to the event dossier and context rail", async ({
+  page,
+}) => {
+  await page.goto("/schedule", { waitUntil: "domcontentloaded" });
+  await waitForAppReady(page);
+
+  await page.getByRole("link", { name: /full dossier/i }).click();
+  await expect(page).toHaveURL(/\/events\/css-jul04$/);
+  await expect(page.getByText("Read The Room", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: /radio hear the taste behind the room/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /archive see the proof before the next move/i })).toBeVisible();
+});

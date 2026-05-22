@@ -31,7 +31,7 @@ export const CTA_LABELS = {
   openPressContext: "Open Press Context",
   getTicketsNow: "On Sale",
   moveTogether: "Our Network",
-  unlockPresale: "Unlock Presale",
+  unlockPresale: "Get First Access",
   joinWaitlist: "Join The Waitlist",
   reserve: "Get In",
   claimLast: "Final Release",

@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import { archiveCollectionsBySlug, ArchiveCollection } from "@/data/galleryData";
+import { trackAccessEvent } from "@/lib/api";
 
 // Newest first — static list since we have a small fixed set
 const archiveEntries: (ArchiveCollection & { href: string })[] = [
@@ -66,7 +67,20 @@ export default function Archive() {
                                 transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                             >
                                 <Link href={entry.href} asChild>
-                                    <a className="group block border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04]">
+                                    <a
+                                        onClick={() =>
+                                            trackAccessEvent("archive_click", {
+                                                buttonName: "View Gallery",
+                                                destinationUrl: entry.href,
+                                                pagePath: "/archive",
+                                                eventSlug: entry.slug,
+                                                eventDate: entry.date,
+                                                channel: "site",
+                                                source: "archive_collection_card",
+                                            })
+                                        }
+                                        className="group block border border-white/10 hover:border-white/20 transition-all duration-500 bg-white/[0.02] hover:bg-white/[0.04]"
+                                    >
                                         {/* Cover Image */}
                                         <div className="aspect-[3/2] overflow-hidden relative">
                                             <ResponsiveImage

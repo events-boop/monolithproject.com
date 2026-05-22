@@ -14,6 +14,7 @@ import SignalBarsMark from "@/components/SignalBarsMark";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import { radioEpisodes, type RadioEpisode } from "@/data/radioEpisodes";
+import { trackAccessEvent } from "@/lib/api";
 
 type EpisodeMode = "sunsets" | "crossovers";
 type EpisodeFilter = "all" | EpisodeMode;
@@ -214,7 +215,19 @@ export default function Radio() {
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <MagneticButton strength={0.28}>
                   <Link href={`/radio/${activeEpisode.slug}`} asChild>
-                    <a className="btn-pill-sunsets inline-flex items-center justify-center">
+                    <a
+                      onClick={() =>
+                        trackAccessEvent("radio_click", {
+                          buttonName: "Open Featured Episode",
+                          destinationUrl: `/radio/${activeEpisode.slug}`,
+                          eventSlug: activeEpisode.slug,
+                          eventDate: activeEpisode.displayDate,
+                          channel: "site",
+                          source: "radio_featured_episode",
+                        })
+                      }
+                      className="btn-pill-sunsets inline-flex items-center justify-center"
+                    >
                       Open Featured Episode
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>

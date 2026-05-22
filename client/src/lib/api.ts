@@ -1,4 +1,5 @@
 import { getAttributionPayload } from "./attribution";
+import { capturePostHogEvent } from "./posthog";
 import type { HoneypotPayload } from "@shared/generated/hardening";
 
 export type LeadPayload = HoneypotPayload & {
@@ -105,6 +106,27 @@ export interface LinkClickPayload {
   eventSlug?: string;
   eventDate?: string;
   interestType?: string;
+  channel?: string;
+  source?: string;
+}
+
+export type AccessEventName =
+  | "first_access_click"
+  | "ticket_click"
+  | "vip_inquiry_click"
+  | "partner_inquiry_click"
+  | "radio_click"
+  | "archive_click"
+  | "event_card_click"
+  | "outbound_posh_click"
+  | "outbound_laylo_click";
+
+export interface AccessEventPayload {
+  buttonName: string;
+  destinationUrl: string;
+  pagePath?: string;
+  eventSlug?: string;
+  eventDate?: string;
   channel?: string;
   source?: string;
 }
@@ -276,4 +298,29 @@ export function trackLinkClick(payload: LinkClickPayload) {
     body: JSON.stringify(enrichedPayload),
     keepalive: true,
   }).catch(() => undefined);
+}
+
+export function trackAccessEvent(
+  eventName: AccessEventName,
+  payload: AccessEventPayload
+) {
+  const pagePath =
+    payload.pagePath ||
+    (typeof window !== "undefined" ? window.location.pathname : "/");
+
+  trackLinkClick({
+    ...payload,
+    pagePath,
+    interestType: eventName,
+  });
+
+  capturePostHogEvent(eventName, {
+    button_name: payload.buttonName,
+    destination_url: payload.destinationUrl,
+    page_path: pagePath,
+    event_slug: payload.eventSlug,
+    event_date: payload.eventDate,
+    channel: payload.channel,
+    source: payload.source,
+  });
 }

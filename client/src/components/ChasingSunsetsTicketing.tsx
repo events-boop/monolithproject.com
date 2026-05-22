@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import { getSeriesEvents } from "@/lib/siteExperience";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 import { appendAttributionQueryParams } from "@/lib/attribution";
+import { trackAccessEvent } from "@/lib/api";
 
 type ChasingSunsetsTicketingProps = {
   featuredEvent?: ScheduledEvent | null;
@@ -302,7 +303,20 @@ export default function ChasingSunsetsTicketing({
                   </li>
                 ))}
               </ul>
-              <button onClick={() => setLocation("/vip")} className="btn-pill-sunsets btn-pill-wide mt-6">
+              <button
+                onClick={() => {
+                  trackAccessEvent("vip_inquiry_click", {
+                    buttonName: "Request VIP Table",
+                    destinationUrl: "/vip",
+                    eventSlug: pricingEvent?.slug || pricingEvent?.id,
+                    eventDate: pricingEvent?.date,
+                    channel: "site",
+                    source: "chasing_sunsets_ticketing",
+                  });
+                  setLocation("/vip");
+                }}
+                className="btn-pill-sunsets btn-pill-wide mt-6"
+              >
                 Request VIP Table
               </button>
             </article>

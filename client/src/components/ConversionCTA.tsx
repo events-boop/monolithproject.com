@@ -6,7 +6,7 @@ import MagneticButton from "@/components/MagneticButton";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { useInquiry } from "@/contexts/InquiryContext";
 import { isInquiryHref, parseInquiryType } from "@/lib/cta";
-import { trackTicketIntent } from "@/lib/api";
+import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { CtaTone, getCtaToneClass, getEventCtaToneClass } from "@/lib/ctaTone";
 
@@ -61,6 +61,35 @@ export default function ConversionCTA({
     : null;
   const isInquiry = isInquiryHref(cta.href);
   const toneClass = tone ? getCtaToneClass(tone) : getEventCtaToneClass(event);
+  const eventSlug = event?.slug || event?.id;
+  const tracksViaOutboundRedirect = cta.href.startsWith("/go/");
+
+  const trackCtaClick = () => {
+    if (tracksViaOutboundRedirect) return;
+
+    if (cta.tool === "laylo") {
+      trackAccessEvent("first_access_click", {
+        buttonName: cta.label,
+        destinationUrl: cta.href,
+        eventSlug,
+        eventDate: event?.date,
+        channel: "Laylo",
+        source: "conversion_cta",
+      });
+      return;
+    }
+
+    if (cta.tool === "posh" && cta.href !== "/schedule") {
+      trackAccessEvent("ticket_click", {
+        buttonName: cta.label,
+        destinationUrl: cta.href,
+        eventSlug,
+        eventDate: event?.date,
+        channel: "Posh",
+        source: "conversion_cta",
+      });
+    }
+  };
 
   const baseButton = (
     <div className={`flex flex-col items-center gap-0 ${className}`}>
@@ -71,11 +100,25 @@ export default function ConversionCTA({
         onClick={(e) => {
           if (isInquiry) {
             e.preventDefault();
-            openInquiry(parseInquiryType(cta.href));
+            const inquiryType = parseInquiryType(cta.href);
+            if (inquiryType === "sponsor" || inquiryType === "venue") {
+              trackAccessEvent("partner_inquiry_click", {
+                buttonName: cta.label,
+                destinationUrl: cta.href,
+                pagePath:
+                  typeof window !== "undefined"
+                    ? window.location.pathname
+                    : "/partners",
+                channel: "Fillout",
+                source: `conversion_cta_${inquiryType}`,
+              });
+            }
+            openInquiry(inquiryType);
             return;
           }
 
           const attributedHref = appendAttributionQueryParams(cta.href);
+          trackCtaClick();
           if (cta.tool === "posh") {
             void trackTicketIntent("conversion_cta", event?.id, attributedHref);
           }

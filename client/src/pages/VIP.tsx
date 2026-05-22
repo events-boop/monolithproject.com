@@ -8,7 +8,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import { Link } from "wouter";
 import HoneypotField from "@/components/HoneypotField";
-import { submitBookingInquiry } from "@/lib/api";
+import { submitBookingInquiry, trackAccessEvent } from "@/lib/api";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
 const vipSchema = z.object({
@@ -48,6 +48,13 @@ export default function VIP() {
     const onSubmit = async (data: VipFormValues) => {
         setIsSubmitting(true);
         setSubmitError("");
+        trackAccessEvent("vip_inquiry_click", {
+            buttonName: "Submit VIP Request",
+            destinationUrl: "/vip#vip-request",
+            pagePath: "/vip",
+            channel: "native",
+            source: "vip_request_form",
+        });
         try {
             await submitBookingInquiry({
                 name: data.name,
@@ -126,7 +133,7 @@ export default function VIP() {
                     </div>
 
                     {/* Request Form */}
-                    <section className="max-w-xl mx-auto text-center border-t border-white/10 pt-20">
+                    <section id="vip-request" className="max-w-xl mx-auto text-center border-t border-white/10 pt-20">
                         <h2 className="font-display text-3xl uppercase text-white mb-8">Request A Table</h2>
 
                         {isSubmitted ? (

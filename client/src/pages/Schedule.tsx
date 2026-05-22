@@ -14,8 +14,10 @@ import {
   getScheduledEvents,
   isTicketOnSale,
 } from "@/lib/siteExperience";
+import { getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
+import { trackAccessEvent } from "@/lib/api";
 import type { ScheduledEvent } from "@shared/events/types";
 
 const seriesAccent: Record<string, string> = {
@@ -82,8 +84,20 @@ export default function Schedule() {
     window.scrollTo(0, 0);
   }, []);
 
-  const toggle = (id: string) => {
-    setExpandedId((prev) => (prev === id ? null : id));
+  const toggle = (event: ScheduledEvent) => {
+    if (expandedId !== event.id) {
+      trackAccessEvent("event_card_click", {
+        buttonName: "Schedule Event Card",
+        destinationUrl: "/schedule",
+        pagePath: "/schedule",
+        eventSlug: event.slug || event.id,
+        eventDate: event.date,
+        channel: "site",
+        source: "schedule_event_row",
+      });
+    }
+
+    setExpandedId((prev) => (prev === event.id ? null : event.id));
   };
 
   // Group events by month for the filter
@@ -255,11 +269,11 @@ export default function Schedule() {
                       data-cursor-image={event.image || seriesDefaultImage[event.series]}
                       onMouseEnter={() => setHoveredImage(event.image || seriesDefaultImage[event.series] || null)}
                       onMouseLeave={() => setHoveredImage(null)}
-                      onClick={() => toggle(event.id)}
+                      onClick={() => toggle(event)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.key === " ") {
                           e.preventDefault();
-                          toggle(event.id);
+                          toggle(event);
                         }
                       }}
                     >
@@ -430,6 +444,24 @@ export default function Schedule() {
                                   size="lg"
                                   showUrgency={true}
                                 />
+                                <Link
+                                  href={getEventDetailsHref(event)}
+                                  onClick={() =>
+                                    trackAccessEvent("event_card_click", {
+                                      buttonName: "Open Full Dossier",
+                                      destinationUrl: getEventDetailsHref(event),
+                                      pagePath: "/schedule",
+                                      eventSlug: event.slug || event.id,
+                                      eventDate: event.date,
+                                      channel: "site",
+                                      source: "schedule_quick_view",
+                                    })
+                                  }
+                                  className="btn-text-action group"
+                                >
+                                  FULL DOSSIER
+                                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                                </Link>
                                 {event.tableReservationEmail && (
                                   <a href={`mailto:${event.tableReservationEmail}`} className="btn-text-action group">
                                     TABLE ENQUIRIES

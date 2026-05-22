@@ -11,7 +11,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-jul04");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Unlock Presale",
+      label: "Get First Access",
       href: "/go/waitlist/chasing-sunsets",
       tool: "laylo",
     });
@@ -70,7 +70,7 @@ describe("buildPublicSiteData", () => {
     expect(featuredIds).not.toContain("us-s3e3");
     expect(data.events.length).toBe(1);
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Unlock Presale",
+      label: "Get First Access",
       href: "/go/waitlist/chasing-sunsets",
       tool: "laylo",
     });
