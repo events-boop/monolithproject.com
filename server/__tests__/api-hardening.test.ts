@@ -3,10 +3,15 @@ import { buildPublicSocialEchoPayload } from "../routes/social-echo";
 import { createMethodNotAllowedHandler } from "../app";
 import { createApiResponseHardening } from "../lib/request-hardening";
 import { createRateLimitMiddleware } from "../services/rate-limit";
+import { createWebhookAuthMiddleware } from "../middleware";
+import { createAdminRouteGuard } from "../lib/admin-auth";
+import { resolveOutboundDestination } from "../lib/outbound";
 
 const originalPublicSocialEchoLive = process.env.PUBLIC_SOCIAL_ECHO_LIVE;
 
-async function runRateLimitMiddleware(middleware: ReturnType<typeof createRateLimitMiddleware>) {
+async function runRateLimitMiddleware(
+  middleware: ReturnType<typeof createRateLimitMiddleware>
+) {
   const headers = new Map<string, string>();
   let statusCode = 200;
   let jsonBody: unknown = null;
@@ -42,7 +47,57 @@ async function runRateLimitMiddleware(middleware: ReturnType<typeof createRateLi
 
         nextCalled = true;
         resolve();
+      }
+    );
+  });
+
+  return { headers, statusCode, jsonBody, nextCalled };
+}
+
+async function runMiddleware(
+  middleware: any,
+  reqOpts: { path: string; headers: Record<string, string>; method?: string }
+) {
+  const headers = new Map<string, string>();
+  let statusCode = 200;
+  let jsonBody: unknown = null;
+  let nextCalled = false;
+
+  await new Promise<void>((resolve) => {
+    const req = {
+      path: reqOpts.path,
+      method: reqOpts.method || "POST",
+      header: (name: string) => reqOpts.headers[name.toLowerCase()] || reqOpts.headers[name],
+      headers: reqOpts.headers,
+    };
+
+    const res = {
+      setHeader(name: string, value: string) {
+        headers.set(name.toLowerCase(), value);
+        return this;
       },
+      status(code: number) {
+        statusCode = code;
+        return this;
+      },
+      json(body: unknown) {
+        jsonBody = body;
+        resolve();
+        return this;
+      },
+    };
+
+    middleware(
+      req as any,
+      res as any,
+      (error?: any) => {
+        if (error) {
+          resolve();
+          return;
+        }
+        nextCalled = true;
+        resolve();
+      }
     );
   });
 
@@ -124,15 +179,15 @@ describe("api hardening", () => {
           headers.set(name.toLowerCase(), value);
         },
       } as never,
-      () => undefined,
+      () => undefined
     );
 
     expect(headers.get("content-security-policy")).toBe(
-      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
     );
     expect(headers.get("x-frame-options")).toBe("DENY");
     expect(headers.get("strict-transport-security")).toBe(
-      "max-age=31536000; includeSubDomains; preload",
+      "max-age=31536000; includeSubDomains; preload"
     );
   });
 
@@ -142,17 +197,13 @@ describe("api hardening", () => {
       windowMs: 60_000,
       limit: 1,
       message: "Rate limited",
-      skip: (req) => req.path === "/health",
+      skip: req => req.path === "/health",
     });
 
     let nextCalled = false;
-    middleware(
-      { path: "/health" } as never,
-      {} as never,
-      () => {
-        nextCalled = true;
-      },
-    );
+    middleware({ path: "/health" } as never, {} as never, () => {
+      nextCalled = true;
+    });
 
     expect(nextCalled).toBe(true);
   });
@@ -182,7 +233,168 @@ describe("api hardening", () => {
       },
     });
     expect((second.jsonBody as { requestId?: string }).requestId).toEqual(
-      expect.any(String),
+      expect.any(String)
     );
+  });
+
+  describe("Webhook Pre-Parser Authentication", () => {
+    const originalWebhookSecret = process.env.POSH_WEBHOOK_SECRET;
+
+    afterEach(() => {
+      process.env.POSH_WEBHOOK_SECRET = originalWebhookSecret;
+    });
+
+    it("rejects webhook request with 503 if secret is not configured", async () => {
+      delete process.env.POSH_WEBHOOK_SECRET;
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/posh",
+        headers: { "Posh-Secret": "any-key" },
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(503);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "UNAVAILABLE" },
+      });
+    });
+
+    it("rejects webhook request with 401 if signature is missing", async () => {
+      process.env.POSH_WEBHOOK_SECRET = "super-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/posh",
+        headers: {},
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(401);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "INVALID_CREDENTIALS" },
+      });
+    });
+
+    it("rejects webhook request with 401 if signature is invalid", async () => {
+      process.env.POSH_WEBHOOK_SECRET = "super-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/posh",
+        headers: { "Posh-Secret": "wrong-secret" },
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(401);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "INVALID_CREDENTIALS" },
+      });
+    });
+
+    it("accepts webhook request and passes to next if signature is valid", async () => {
+      process.env.POSH_WEBHOOK_SECRET = "super-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/posh",
+        headers: { "Posh-Secret": "super-secret" },
+      });
+
+      expect(result.nextCalled).toBe(true);
+    });
+
+    it("ignores paths that are not Posh webhooks", async () => {
+      process.env.POSH_WEBHOOK_SECRET = "super-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/leads",
+        headers: {},
+      });
+
+      expect(result.nextCalled).toBe(true);
+    });
+  });
+
+  describe("Outbound redirect prototype lookup protection", () => {
+    it("returns null or fallback for prototype property lookups like toString, __proto__, constructor", () => {
+      expect(resolveOutboundDestination("tickets", "__proto__")).toBeNull();
+      expect(resolveOutboundDestination("tickets", "toString")).toBeNull();
+      expect(resolveOutboundDestination("tickets", "constructor")).toBeNull();
+      expect(resolveOutboundDestination("media", "toString")).toBeNull();
+      expect(resolveOutboundDestination("social", "valueOf")).toBeNull();
+    });
+  });
+
+  describe("Admin / Auth boundaries", () => {
+    const originalAdminSecret = process.env.OPS_ADMIN_SECRET;
+    const originalNodeEnv = process.env.NODE_ENV;
+
+    afterEach(() => {
+      process.env.OPS_ADMIN_SECRET = originalAdminSecret;
+      process.env.NODE_ENV = originalNodeEnv;
+    });
+
+    it("rejects unauthenticated admin requests in production with 503 if secret is not set", async () => {
+      delete process.env.OPS_ADMIN_SECRET;
+      process.env.NODE_ENV = "production";
+      const guard = createAdminRouteGuard({ scope: "ops" });
+      const result = await runMiddleware(guard, {
+        path: "/ops/baseline",
+        headers: {},
+        method: "GET",
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(503);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "UNAVAILABLE" },
+      });
+    });
+
+    it("rejects unauthenticated admin requests in production with 401 if secret is set but missing in request", async () => {
+      process.env.OPS_ADMIN_SECRET = "admin-secret";
+      process.env.NODE_ENV = "production";
+      const guard = createAdminRouteGuard({ scope: "ops" });
+      const result = await runMiddleware(guard, {
+        path: "/ops/baseline",
+        headers: {},
+        method: "GET",
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(401);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "INVALID_CREDENTIALS" },
+      });
+    });
+
+    it("rejects unauthenticated admin requests with 401 if secret is incorrect", async () => {
+      process.env.OPS_ADMIN_SECRET = "admin-secret";
+      process.env.NODE_ENV = "production";
+      const guard = createAdminRouteGuard({ scope: "ops" });
+      const result = await runMiddleware(guard, {
+        path: "/ops/baseline",
+        headers: { "x-admin-secret": "wrong-secret" },
+        method: "GET",
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(401);
+    });
+
+    it("accepts admin requests with correct secret via header", async () => {
+      process.env.OPS_ADMIN_SECRET = "admin-secret";
+      process.env.NODE_ENV = "production";
+      const guard = createAdminRouteGuard({ scope: "ops" });
+      const result = await runMiddleware(guard, {
+        path: "/ops/baseline",
+        headers: { "x-admin-secret": "admin-secret" },
+        method: "GET",
+      });
+
+      expect(result.nextCalled).toBe(true);
+    });
   });
 });
