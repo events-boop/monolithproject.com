@@ -48,7 +48,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         location: "Chicago, IL",
         lineup: "Eran Hersh (Headliner) · Support TBD",
         status: "past",
-        image: "/images/eran-hersh-live-5.webp",
+        image: "/images/eran-hersh-untold-story-iv.jpg",
         format: "Late Night · Immersive · Intimate",
         dress: "Elevated nightlife attire",
         sound: "Afro House · Melodic House · Peak-Hour Energy",

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-24T17:37:03.276Z",
+  "generatedAt": "2026-05-27T04:12:24.516Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 3910197,
-    "estimatedTransferBytes": 1436914,
-    "estimatedSavingsBytes": 2473283,
-    "variantBytes": 5253580
+    "originalBytes": 4154350,
+    "estimatedTransferBytes": 1451353,
+    "estimatedSavingsBytes": 2702997,
+    "variantBytes": 5310930
   },
   "images": [
     {
@@ -1516,6 +1516,44 @@
       "estimatedTransferKb": 7.8,
       "estimatedSavingsBytes": 81118,
       "estimatedSavingsPct": 91
+    },
+    {
+      "source": "/images/eran-hersh-untold-story-iv.jpg",
+      "originalBytes": 244153,
+      "originalKb": 238.4,
+      "originalWidth": 819,
+      "originalHeight": 1024,
+      "generatedBaseName": "eran-hersh-untold-story-iv",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8659
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 11876
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 14439
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 22376
+        }
+      ],
+      "estimatedTransferBytes": 14439,
+      "estimatedTransferKb": 14.1,
+      "estimatedSavingsBytes": 229714,
+      "estimatedSavingsPct": 94
     },
     {
       "source": "/images/hero-monolith-modern.webp",

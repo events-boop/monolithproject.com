@@ -304,7 +304,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     role: "HEADLINER",
     origin: "MIAMI, US",
     genre: "AFRO HOUSE · MELODIC HOUSE",
-    image: "/images/eran-hersh-live-5.webp",
+    image: "/images/eran-hersh-untold-story-iv.jpg",
     series: ["untold-story"],
     bio: "Miami-based DJ and producer Eran Hersh is a rising force in America’s electronic music scene with over 100 million global spins, seamlessly blending Afro and tribal house with Middle Eastern influences. In 2023, he reached a career milestone collaborating with Madonna on 'Sorry'. His versatility shines through remix work for icons like Bob Sinclar, David Guetta, Swedish House Mafia, and Alicia Keys. With performances at major festivals like EDC, BPM, and Zamna, his music released on Insomniac Records, Armada, Spinnin’ Records, and Ultra has amassed over 90+ million Spotify streams and a dedicated following of 1.2 million monthly listeners.",
     tags: ["Afro House", "Melodic", "Headliner"],
@@ -327,6 +327,10 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       },
     ],
     gallery: [
+      {
+        src: "/images/eran-hersh-untold-story-iv.jpg",
+        alt: "Eran Hersh Untold Story IV Flyer",
+      },
       {
         src: "/images/eran-hersh-live-1.webp",
         alt: "Eran Hersh live at Bazar by Sasson",
