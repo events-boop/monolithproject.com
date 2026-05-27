@@ -198,12 +198,19 @@ export default function ChasingSunsets() {
                 className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-tight-display text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.62)] sm:mb-5"
               >
                 {["CHASING", "SUN(SETS)"].map((line, i) => (
-                  <SplitText
+                  <motion.span
                     key={`${line}-${i}`}
-                    text={line}
+                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 1.0,
+                      delay: 0.1 + i * 0.15,
+                      ease: [0.22, 1, 0.36, 1], // luxe ease
+                    }}
                     className="block bg-gradient-to-r from-white via-[#69F3E3] to-[#8B5CF6] bg-clip-text text-transparent"
-                    initialDelay={0.1 + i * 0.15}
-                  />
+                  >
+                    {line}
+                  </motion.span>
                 ))}
               </h1>
               {featuredChasingEvent ? (
