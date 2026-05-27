@@ -99,7 +99,7 @@ function getChapterIdForPath(path: string): NavigationChapterId {
 }
 
 function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
+  return /^https?:\/\//i.test(href) || href.startsWith("/go/");
 }
 
 function getStatusLabel(status?: string) {

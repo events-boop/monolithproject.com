@@ -13,7 +13,7 @@ import {
 import { CTA_LABELS } from "@/lib/cta";
 
 function isExternalLink(url: string) {
-  return /^https?:\/\//i.test(url);
+  return /^https?:\/\//i.test(url) || url.startsWith("/go/");
 }
 
 const sectionTransition = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };

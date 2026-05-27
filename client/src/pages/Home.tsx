@@ -53,7 +53,9 @@ export default function Home() {
     untoldMoment?.primaryCta?.href ||
     untoldMomentHref;
   const untoldCtaLabel = untoldMoment?.primaryCta?.label || "Open Untold Story";
-  const untoldTicketIsExternal = /^https?:\/\//i.test(untoldTicketHref);
+  const untoldTicketIsExternal =
+    /^https?:\/\//i.test(untoldTicketHref) ||
+    untoldTicketHref.startsWith("/go/");
 
   useEffect(() => {
     window.scrollTo(0, 0);

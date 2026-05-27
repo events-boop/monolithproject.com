@@ -267,6 +267,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       return;
     }
 
+    if (href.startsWith("/go/")) {
+      window.location.href = href;
+      return;
+    }
+
     // Improved deep routing for anchors and cross-page anchors
     if (href.includes("#")) {
       const [path, hash] = href.split("#");

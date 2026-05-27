@@ -193,30 +193,54 @@ export default function NavigationMegamenu({
                 {leftColumnTitle}
               </span>
               <ul className="flex flex-col gap-3">
-                {leftColumnItems.map((item, i) => (
-                  <li key={i}>
-                    <Link
-                      href={item.href}
-                      onClick={e => {
-                        e.preventDefault();
-                        setIsOpen(false);
-                        onNavigate(item.href);
-                      }}
-                      role="menuitem"
-                      className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
-                        isLight
-                          ? "text-charcoal hover:text-clay hover:border-clay/30"
-                          : "text-white/80 hover:text-white hover:border-primary/40"
-                      }`}
-                    >
-                      <div className="w-4 flex items-center justify-center shrink-0">
-                        <ItemIcon type={item.icon} />
-                      </div>
-                      <span className="flex-1">{item.label}</span>
-                      <div className="w-px h-0 group-hover/item:h-3 bg-current opacity-20 transition-all duration-300" />
-                    </Link>
-                  </li>
-                ))}
+                {leftColumnItems.map((item, i) => {
+                  const isGoRoute = item.href.startsWith("/go/");
+                  return (
+                    <li key={i}>
+                      {isGoRoute ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsOpen(false)}
+                          role="menuitem"
+                          className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
+                            isLight
+                              ? "text-charcoal hover:text-clay hover:border-clay/30"
+                              : "text-white/80 hover:text-white hover:border-primary/40"
+                          }`}
+                        >
+                          <div className="w-4 flex items-center justify-center shrink-0">
+                            <ItemIcon type={item.icon} />
+                          </div>
+                          <span className="flex-1">{item.label}</span>
+                          <div className="w-px h-0 group-hover/item:h-3 bg-current opacity-20 transition-all duration-300" />
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={e => {
+                            e.preventDefault();
+                            setIsOpen(false);
+                            onNavigate(item.href);
+                          }}
+                          role="menuitem"
+                          className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
+                            isLight
+                              ? "text-charcoal hover:text-clay hover:border-clay/30"
+                              : "text-white/80 hover:text-white hover:border-primary/40"
+                          }`}
+                        >
+                          <div className="w-4 flex items-center justify-center shrink-0">
+                            <ItemIcon type={item.icon} />
+                          </div>
+                          <span className="flex-1">{item.label}</span>
+                          <div className="w-px h-0 group-hover/item:h-3 bg-current opacity-20 transition-all duration-300" />
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

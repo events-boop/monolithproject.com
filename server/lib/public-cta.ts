@@ -10,7 +10,7 @@ const CTA_LABELS = {
 } as const;
 
 function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
+  return /^https?:\/\//i.test(href) || href.startsWith("/go/");
 }
 
 function getSeriesFunnelHref(series: EventSeries) {

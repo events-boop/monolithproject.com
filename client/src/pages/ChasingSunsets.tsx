@@ -105,7 +105,7 @@ function getStatusLabel(status: string) {
 }
 
 function isExternalUrl(url?: string | null) {
-  return !!url && /^https?:\/\//i.test(url);
+  return !!url && (/^https?:\/\//i.test(url) || url.startsWith("/go/"));
 }
 
 export default function ChasingSunsets() {

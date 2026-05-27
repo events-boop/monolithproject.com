@@ -125,7 +125,7 @@ function getNarrativePreview(narrative: string) {
 }
 
 function isExternalLink(url: string) {
-  return /^https?:\/\//i.test(url);
+  return /^https?:\/\//i.test(url) || url.startsWith("/go/");
 }
 
 function scrollToFeaturedDeck() {
