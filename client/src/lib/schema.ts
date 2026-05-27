@@ -124,7 +124,7 @@ export function buildPodcastSeriesSchema(episodes: RadioEpisode[]) {
       "https://soundcloud.com/chasing-sun-sets",
       "https://youtube.com/@monolithproject",
     ],
-    hasPart: episodes.map((episode) => ({
+    hasPart: episodes.map(episode => ({
       "@id": `${toAbsoluteUrl(`${RADIO_HUB_PATH}/${episode.slug}`)}#podcast-episode`,
     })),
   };
@@ -162,7 +162,10 @@ interface EventSchemaInput {
   image: string[];
   performer?: string[];
   ticketUrl?: string;
-  ticketAvailability?: "https://schema.org/InStock" | "https://schema.org/PreSale" | "https://schema.org/SoldOut";
+  ticketAvailability?:
+    | "https://schema.org/InStock"
+    | "https://schema.org/PreSale"
+    | "https://schema.org/SoldOut";
   price?: number;
   validFrom?: string;
   locationName: string;
@@ -180,14 +183,16 @@ export function buildEventSchema(input: EventSchemaInput) {
         url: toAbsoluteUrl(input.ticketUrl),
         availability: input.ticketAvailability ?? "https://schema.org/InStock",
         priceCurrency: "USD",
-        ...(typeof input.price === "number" ? { price: String(input.price) } : {}),
+        ...(typeof input.price === "number"
+          ? { price: String(input.price) }
+          : {}),
         ...(input.validFrom ? { validFrom: input.validFrom } : {}),
       }
     : undefined;
 
   const performer =
     input.performer && input.performer.length > 0
-      ? input.performer.map((name) => ({
+      ? input.performer.map(name => ({
           "@type": "MusicGroup",
           name,
         }))
@@ -203,7 +208,7 @@ export function buildEventSchema(input: EventSchemaInput) {
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     url: toAbsoluteUrl(input.pagePath),
-    image: input.image.map((img) => toAbsoluteUrl(img)),
+    image: input.image.map(img => toAbsoluteUrl(img)),
     location: {
       "@type": "Place",
       name: input.locationName,
@@ -228,7 +233,7 @@ export function buildEventSchema(input: EventSchemaInput) {
 }
 
 export function buildBreadcrumbSchema(
-  trail: Array<{ name: string; path: string }>,
+  trail: Array<{ name: string; path: string }>
 ) {
   return {
     "@context": "https://schema.org",
@@ -257,15 +262,11 @@ export function buildArtistSchema(artist: ArtistData, pagePath: string) {
       "@type": "Place",
       name: artist.origin,
     },
-    sameAs: [
-      artist.socials.instagram,
-      artist.socials.website,
-    ].filter(Boolean),
+    sameAs: [artist.socials.instagram, artist.socials.website].filter(Boolean),
   };
 }
 
 export function buildUntoldStoryEventSchema(pagePath: string) {
-
   const event = getEventById("us-jul04");
   if (event) return buildScheduledEventSchema(event, pagePath);
 
@@ -311,12 +312,12 @@ function tryParseDate(dateStr: string, timeStr: string) {
   try {
     const d = new Date(`${dateStr} ${cleanTime}`);
     if (!isNaN(d.getTime())) return d.toISOString();
-  } catch { }
+  } catch {}
 
   try {
     const d = new Date(dateStr);
     if (!isNaN(d.getTime())) return d.toISOString();
-  } catch { }
+  } catch {}
   return new Date().toISOString();
 }
 
@@ -334,19 +335,27 @@ function getVenueAddress(event: ScheduledEvent) {
   };
 }
 
-export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: string) {
+export function buildScheduledEventSchema(
+  event: ScheduledEvent,
+  pagePath: string
+) {
   const startDate = event.startsAt || tryParseDate(event.date, event.time);
   const endDate = event.endsAt || startDate;
   const address = getVenueAddress(event);
   const availableTierPrices =
     event.ticketTiers
-      ?.filter((tier) => tier.available)
-      .map((tier) => tier.price)
-      .filter((price) => Number.isFinite(price)) ?? [];
+      ?.filter(tier => tier.available)
+      .map(tier => tier.price)
+      .filter(price => Number.isFinite(price)) ?? [];
   const minimumAvailablePrice =
-    availableTierPrices.length > 0 ? Math.min(...availableTierPrices) : undefined;
+    availableTierPrices.length > 0
+      ? Math.min(...availableTierPrices)
+      : undefined;
   const price = event.startingPrice ?? minimumAvailablePrice;
-  const ticketUrl = event.status === "on-sale" || event.status === "sold-out" ? event.ticketUrl : undefined;
+  const ticketUrl =
+    event.status === "on-sale" || event.status === "sold-out"
+      ? event.ticketUrl
+      : undefined;
   const ticketAvailability =
     event.status === "sold-out"
       ? "https://schema.org/SoldOut"
@@ -357,22 +366,32 @@ export function buildScheduledEventSchema(event: ScheduledEvent, pagePath: strin
   const performer =
     event.lineup
       ?.split("·")
-      .map((segment) => segment.trim())
-      .map((segment) => segment.replace(/\s*\((?:headliner|support|special guest|guest)\)\s*/gi, "").trim())
+      .map(segment => segment.trim())
+      .map(segment =>
+        segment
+          .replace(/\s*\((?:headliner|support|special guest|guest)\)\s*/gi, "")
+          .trim()
+      )
       .filter(
-        (segment) =>
+        segment =>
           segment.length > 0 &&
-          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|venue reveal soon\b)/i.test(segment),
+          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|venue reveal soon\b)/i.test(
+            segment
+          )
       ) ?? [];
 
   return buildEventSchema({
     pagePath,
     name: event.headline || event.title,
     description:
-      event.description || event.experienceIntro || `The Monolith Project presents ${event.title}`,
+      event.description ||
+      event.experienceIntro ||
+      `The Monolith Project presents ${event.title}`,
     startDate,
     endDate,
-    image: event.image ? [event.image] : ["/images/chasing-sunsets-premium.webp"],
+    image: event.image
+      ? [event.image]
+      : ["/images/chasing-sunsets-premium.webp"],
     performer,
     ticketUrl,
     ticketAvailability,
@@ -390,7 +409,7 @@ export function buildScheduleSchema(events: ScheduledEvent[]) {
   return {
     "@context": "https://schema.org",
     "@graph": events
-      .filter((event) => getEventWindowStatus(event) !== "past")
-      .map((event) => buildScheduledEventSchema(event, "/schedule")),
+      .filter(event => getEventWindowStatus(event) !== "past")
+      .map(event => buildScheduledEventSchema(event, "/schedule")),
   };
 }

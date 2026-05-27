@@ -39,11 +39,15 @@ export default function MovementSection() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
-  
+
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 0.15, 0.15, 0]);
+  const imageOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0, 0.15, 0.15, 0]
+  );
 
   return (
     <section
@@ -52,12 +56,12 @@ export default function MovementSection() {
       className="relative py-24 md:py-40 bg-black overflow-hidden border-t border-white/10"
     >
       {/* 🖼️ ARCHITECTURAL PARALLAX BACKDROP */}
-      <motion.div 
+      <motion.div
         style={{ y: imageY, opacity: imageOpacity }}
         className="absolute inset-x-0 -top-1/4 h-[150%] pointer-events-none z-0 overflow-hidden"
       >
-        <img 
-          src="/images/movement-industrial-bg.png" 
+        <img
+          src="/images/movement-industrial-bg.png"
           className="w-full h-full object-cover grayscale opacity-60 mix-blend-overlay scale-110 blur-[2px]"
           alt=""
         />
@@ -70,13 +74,12 @@ export default function MovementSection() {
 
       {/* Background Grid Lines (Sanjaya structural aesthetic) */}
       <div className="absolute inset-0 pointer-events-none">
-         <div className="absolute left-[8%] md:left-[10%] top-0 bottom-0 w-px bg-white/10" />
-         <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/10" />
+        <div className="absolute left-[8%] md:left-[10%] top-0 bottom-0 w-px bg-white/10" />
+        <div className="absolute right-[8%] md:right-[10%] top-0 bottom-0 w-px bg-white/10" />
       </div>
 
       <div className="container layout-wide px-6 relative z-10">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-start">
-          
           {/* LEFT: Massive Bleeding Stacked Typography */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -85,43 +88,55 @@ export default function MovementSection() {
             className="flex flex-col"
           >
             <div className="flex items-center gap-4 mb-8 md:mb-12">
-               <div className="h-px w-12 bg-primary/70" />
-               <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold">The Project</span>
+              <div className="h-px w-12 bg-primary/70" />
+              <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.4em] text-primary/95 font-bold">
+                The Project
+              </span>
             </div>
-            
+
             <h2 className="font-heavy text-[clamp(4rem,9.5vw,9.5rem)] leading-[0.8] tracking-tight uppercase text-white flex flex-col mb-12">
               <span className="text-white/25">CHICAGO</span>
-              <span className="text-white"><KineticDecryption text="ROOTED" /></span>
+              <span className="text-white">
+                <KineticDecryption text="ROOTED" />
+              </span>
               <span className="text-primary mt-1">ROOMS.</span>
             </h2>
 
             {/* Glass Information Panel */}
             <div className="backdrop-blur-md bg-white/[0.02] border border-white/10 p-8 md:p-10 rounded-none relative overflow-hidden group">
-               {/* Subtle Holo gradient reveal on hover */}
-               <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/[0.07] to-primary/0 translate-y-full group-hover:translate-y-[-20%] transition-transform duration-[1.5s] ease-out pointer-events-none" />
-               
-               <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light relative z-10">
-                 We don't just book artists; we build rooms. We believe the best nights in Chicago happen when the sound is flawless, the crowd is intentional, and the space is designed for the music.
-               </p>
-               
-               <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
-                 <p className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/45 mb-1">
-                   Artists on the schedule:
-                 </p>
-                 <div className="flex flex-wrap gap-x-6 gap-y-2">
-                    {allEvents.slice(0, 4).map((event) => {
-                      const color = event.series === "untold-story" ? "text-[#22D3EE]" : "text-primary";
-                      return (
-                        <span key={event.id} className={`font-heavy text-xl md:text-2xl uppercase tracking-tighter drop-shadow-sm ${color}`}>
-                          {event.title}
-                        </span>
-                      );
-                    })}
-                    <span className="font-heavy text-xl md:text-2xl uppercase tracking-tighter text-white/20">
-                      + MORE TBA
-                    </span>
-                 </div>
-               </div>
+              {/* Subtle Holo gradient reveal on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/[0.07] to-primary/0 translate-y-full group-hover:translate-y-[-20%] transition-transform duration-[1.5s] ease-out pointer-events-none" />
+
+              <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light relative z-10">
+                We don't just book artists; we build rooms. We believe the best
+                nights in Chicago happen when the sound is flawless, the crowd
+                is intentional, and the space is designed for the music.
+              </p>
+
+              <div className="mt-8 pt-8 border-t border-white/10 relative z-10 flex flex-col gap-4">
+                <p className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase text-white/45 mb-1">
+                  Artists on the schedule:
+                </p>
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {allEvents.slice(0, 4).map(event => {
+                    const color =
+                      event.series === "untold-story"
+                        ? "text-[#22D3EE]"
+                        : "text-primary";
+                    return (
+                      <span
+                        key={event.id}
+                        className={`font-heavy text-xl md:text-2xl uppercase tracking-tighter drop-shadow-sm ${color}`}
+                      >
+                        {event.title}
+                      </span>
+                    );
+                  })}
+                  <span className="font-heavy text-xl md:text-2xl uppercase tracking-tighter text-white/20">
+                    + MORE TBA
+                  </span>
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -133,55 +148,66 @@ export default function MovementSection() {
             className="flex flex-col gap-6"
           >
             {movementPaths.map((path, index) => {
-               // Determine specific holo glow based on the series
-               const isSunsets = path.title.includes("Sun(Sets)");
-               const isStory = path.title.includes("Story");
-               const glowClass = isSunsets 
-                  ? "bg-sunsets-gold shadow-[0_0_20px_rgba(232,184,109,0.5)]" 
-                  : isStory 
-                     ? "bg-untold-cyan shadow-[0_0_20px_rgba(34,211,238,0.5)]" 
-                     : "bg-white shadow-[0_0_20px_rgba(255,255,255,0.5)]";
-               const accentText = isSunsets ? "text-sunsets-gold" : isStory ? "text-untold-cyan" : "text-white";
+              // Determine specific holo glow based on the series
+              const isSunsets = path.title.includes("Sun(Sets)");
+              const isStory = path.title.includes("Story");
+              const glowClass = isSunsets
+                ? "bg-sunsets-gold shadow-[0_0_20px_rgba(232,184,109,0.5)]"
+                : isStory
+                  ? "bg-untold-cyan shadow-[0_0_20px_rgba(34,211,238,0.5)]"
+                  : "bg-white shadow-[0_0_20px_rgba(255,255,255,0.5)]";
+              const accentText = isSunsets
+                ? "text-sunsets-gold"
+                : isStory
+                  ? "text-untold-cyan"
+                  : "text-white";
 
-               return (
-                  <Link key={path.title} href={path.href} className="group relative block outline-none">
-                     {/* Glass container with holo border edge */}
-                     <div className="relative p-8 md:p-10 rounded-none border border-white/5 bg-white/[0.015] backdrop-blur-md overflow-hidden transition-all duration-500 hover:bg-white/[0.04] hover:border-white/15">
-                        
-                        {/* Kinetic Holo Top Edge */}
-                        <div className={`absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${glowClass}`} />
+              return (
+                <Link
+                  key={path.title}
+                  href={path.href}
+                  className="group relative block outline-none"
+                >
+                  {/* Glass container with holo border edge */}
+                  <div className="relative p-8 md:p-10 rounded-none border border-white/5 bg-white/[0.015] backdrop-blur-md overflow-hidden transition-all duration-500 hover:bg-white/[0.04] hover:border-white/15">
+                    {/* Kinetic Holo Top Edge */}
+                    <div
+                      className={`absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${glowClass}`}
+                    />
 
-                        <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
-                           <div className="flex flex-col gap-4 max-w-[85%]">
-                              <span className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.3em] font-bold text-white/35 group-hover:${accentText} transition-colors duration-500`}>
-                                 {path.label}
-                              </span>
-                              <h3 className="font-heavy text-3xl md:text-[2.5rem] tracking-tight uppercase leading-none text-white drop-shadow-md">
-                                 {path.title}
-                              </h3>
-                              <p className="font-sans text-sm md:text-base text-white/50 leading-relaxed mt-2 blend-luminosity transition-colors group-hover:text-white/70">
-                                 {path.description}
-                              </p>
-                           </div>
-                           
-                           <div className="shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-none border border-white/10 group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-500">
-                              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white/30 group-hover:text-primary transition-all duration-500 transform group-hover:-rotate-45 group-hover:scale-110" />
-                           </div>
-                        </div>
-                     </div>
-                  </Link>
-               );
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+                      <div className="flex flex-col gap-4 max-w-[85%]">
+                        <span
+                          className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.3em] font-bold text-white/35 group-hover:${accentText} transition-colors duration-500`}
+                        >
+                          {path.label}
+                        </span>
+                        <h3 className="font-heavy text-3xl md:text-[2.5rem] tracking-tight uppercase leading-none text-white drop-shadow-md">
+                          {path.title}
+                        </h3>
+                        <p className="font-sans text-sm md:text-base text-white/50 leading-relaxed mt-2 blend-luminosity transition-colors group-hover:text-white/70">
+                          {path.description}
+                        </p>
+                      </div>
+
+                      <div className="shrink-0 flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-none border border-white/10 group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-500">
+                        <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-white/30 group-hover:text-primary transition-all duration-500 transform group-hover:-rotate-45 group-hover:scale-110" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
             })}
-            
+
             {/* Ambient Signoff block */}
             <div className="mt-4 p-8 md:p-10 rounded-none border border-white/5 bg-[radial-gradient(ellipse_at_top_right,rgba(224,90,58,0.08),transparent_60%)] relative overflow-hidden">
-               <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/30" />
-               <p className="font-mono text-[11px] md:text-sm text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
-                 "The Monolith Project isn't just a promoter; it's an ecosystem. We build the rooms where Chicago's best nights happen."
-               </p>
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/30" />
+              <p className="font-mono text-[11px] md:text-sm text-white/50 leading-loose uppercase tracking-[0.25em] pl-4">
+                "The Monolith Project isn't just a promoter; it's an ecosystem.
+                We build the rooms where Chicago's best nights happen."
+              </p>
             </div>
           </motion.div>
-          
         </div>
       </div>
     </section>

@@ -3,8 +3,10 @@ import { getDatabase } from "../server/db/client";
 import { bookingInquiries, contactSubmissions } from "../server/db/schema";
 
 const WEBHOOK_TIMEOUT_MS = 8_000;
-const kindArg = process.argv.find((arg) => arg.startsWith("--kind="))?.split("=")[1] ?? "all";
-const limitArg = process.argv.find((arg) => arg.startsWith("--limit="))?.split("=")[1] ?? "50";
+const kindArg =
+  process.argv.find(arg => arg.startsWith("--kind="))?.split("=")[1] ?? "all";
+const limitArg =
+  process.argv.find(arg => arg.startsWith("--limit="))?.split("=")[1] ?? "50";
 const limit = Number.parseInt(limitArg, 10);
 
 function readLimit() {
@@ -27,9 +29,14 @@ async function postJson(url: string, body: unknown) {
 
 async function replayContactSubmissions() {
   const db = getDatabase();
-  const webhookUrl = process.env.CONTACT_WEBHOOK_URL || process.env.BOOKING_WEBHOOK_URL;
-  if (!db) throw new Error("DATABASE_URL is required to replay contact submissions.");
-  if (!webhookUrl) throw new Error("CONTACT_WEBHOOK_URL or BOOKING_WEBHOOK_URL is required to replay contact submissions.");
+  const webhookUrl =
+    process.env.CONTACT_WEBHOOK_URL || process.env.BOOKING_WEBHOOK_URL;
+  if (!db)
+    throw new Error("DATABASE_URL is required to replay contact submissions.");
+  if (!webhookUrl)
+    throw new Error(
+      "CONTACT_WEBHOOK_URL or BOOKING_WEBHOOK_URL is required to replay contact submissions."
+    );
 
   const rows = await db
     .select()
@@ -42,9 +49,14 @@ async function replayContactSubmissions() {
 
   for (const row of rows) {
     const metadata = (row.metadata || {}) as Record<string, unknown>;
-    const receivedAt = typeof metadata.receivedAt === "string" ? metadata.receivedAt : row.createdAt;
+    const receivedAt =
+      typeof metadata.receivedAt === "string"
+        ? metadata.receivedAt
+        : row.createdAt;
     const requestId =
-      typeof metadata.requestId === "string" ? metadata.requestId : `replay-contact-${row.id}`;
+      typeof metadata.requestId === "string"
+        ? metadata.requestId
+        : `replay-contact-${row.id}`;
 
     try {
       await postJson(webhookUrl, {
@@ -80,7 +92,8 @@ async function replayContactSubmissions() {
             ...metadata,
             deliveryState: "queued",
             lastReplayAt: new Date().toISOString(),
-            lastReplayError: error instanceof Error ? error.message : "Unknown error",
+            lastReplayError:
+              error instanceof Error ? error.message : "Unknown error",
           },
         })
         .where(eq(contactSubmissions.id, row.id));
@@ -93,8 +106,12 @@ async function replayContactSubmissions() {
 async function replayBookingInquiries() {
   const db = getDatabase();
   const webhookUrl = process.env.BOOKING_WEBHOOK_URL;
-  if (!db) throw new Error("DATABASE_URL is required to replay booking inquiries.");
-  if (!webhookUrl) throw new Error("BOOKING_WEBHOOK_URL is required to replay booking inquiries.");
+  if (!db)
+    throw new Error("DATABASE_URL is required to replay booking inquiries.");
+  if (!webhookUrl)
+    throw new Error(
+      "BOOKING_WEBHOOK_URL is required to replay booking inquiries."
+    );
 
   const rows = await db
     .select()
@@ -107,9 +124,14 @@ async function replayBookingInquiries() {
 
   for (const row of rows) {
     const metadata = (row.metadata || {}) as Record<string, unknown>;
-    const receivedAt = typeof metadata.receivedAt === "string" ? metadata.receivedAt : row.createdAt;
+    const receivedAt =
+      typeof metadata.receivedAt === "string"
+        ? metadata.receivedAt
+        : row.createdAt;
     const requestId =
-      typeof metadata.requestId === "string" ? metadata.requestId : `replay-booking-${row.id}`;
+      typeof metadata.requestId === "string"
+        ? metadata.requestId
+        : `replay-booking-${row.id}`;
 
     try {
       await postJson(webhookUrl, {
@@ -146,7 +168,8 @@ async function replayBookingInquiries() {
             ...metadata,
             deliveryState: "queued",
             lastReplayAt: new Date().toISOString(),
-            lastReplayError: error instanceof Error ? error.message : "Unknown error",
+            lastReplayError:
+              error instanceof Error ? error.message : "Unknown error",
           },
         })
         .where(eq(bookingInquiries.id, row.id));
@@ -166,7 +189,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error);
   process.exit(1);
 });

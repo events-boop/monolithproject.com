@@ -17,7 +17,7 @@ function cspSafeStylesheetLinks() {
     transformIndexHtml(html: string) {
       return html.replace(
         /<link rel="preload" as="style" crossorigin href="([^"]+\.css)" onload="this\.onload=null;this\.rel='stylesheet'"><noscript><link rel="stylesheet" crossorigin href="\1"><\/noscript>/g,
-        '<link rel="stylesheet" crossorigin href="$1">',
+        '<link rel="stylesheet" crossorigin href="$1">'
       );
     },
   };
@@ -31,44 +31,49 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
       VitePWA({
-        registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'robots.txt', 'sitemap.xml', 'fonts/**/*.woff2'],
+        registerType: "autoUpdate",
+        includeAssets: [
+          "favicon.ico",
+          "robots.txt",
+          "sitemap.xml",
+          "fonts/**/*.woff2",
+        ],
         manifest: {
-          name: 'The Monolith Project',
-          short_name: 'Monolith',
+          name: "The Monolith Project",
+          short_name: "Monolith",
           description: "Chicago's premier electronic music ecosystem.",
-          theme_color: '#000000',
-          background_color: '#000000',
-          display: 'standalone',
-          orientation: 'portrait',
+          theme_color: "#000000",
+          background_color: "#000000",
+          display: "standalone",
+          orientation: "portrait",
           icons: [
             {
-              src: '/icon-192x192.png',
-              sizes: '192x192',
-              type: 'image/png'
+              src: "/icon-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
             },
             {
-              src: '/icon-512x512.png',
-              sizes: '512x512',
-              type: 'image/png'
+              src: "/icon-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
             },
             {
-              src: '/icon-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any maskable'
-            }
-          ]
+              src: "/icon-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "any maskable",
+            },
+          ],
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,svg,woff2,xml,webmanifest}'],
+          globPatterns: ["**/*.{js,css,html,ico,svg,woff2,xml,webmanifest}"],
           maximumFileSizeToCacheInBytes: 700000,
           runtimeCaching: [
             {
               urlPattern: /\.(?:png|jpg|jpeg|webp|avif|gif)$/i,
-              handler: 'CacheFirst',
+              handler: "CacheFirst",
               options: {
-                cacheName: 'monolith-images',
+                cacheName: "monolith-images",
                 expiration: {
                   maxEntries: 80,
                   maxAgeSeconds: 60 * 60 * 24 * 30,
@@ -76,7 +81,7 @@ export default defineConfig(({ mode }) => {
               },
             },
           ],
-        }
+        },
       }),
       ViteImageOptimizer({
         // Favor delivery size over archival fidelity for photographic assets.
@@ -99,7 +104,9 @@ export default defineConfig(({ mode }) => {
     publicDir: path.resolve(__dirname, "client/public"),
     // This makes the shipped code slightly less "copy friendly", but it is not
     // real protection. If something must be secret, it cannot live in the client.
-    esbuild: isProd ? { drop: ["console", "debugger"], legalComments: "none" } : undefined,
+    esbuild: isProd
+      ? { drop: ["console", "debugger"], legalComments: "none" }
+      : undefined,
     build: {
       outDir: path.resolve(__dirname, "dist/public"),
       emptyOutDir: true,
@@ -128,7 +135,8 @@ export default defineConfig(({ mode }) => {
               if (id.includes("lenis")) return "v-lenis";
               if (id.includes("posthog-js")) return "v-posthog";
               if (id.includes("react-photo-album")) return "v-album";
-              if (id.includes("yet-another-react-lightbox")) return "v-lightbox";
+              if (id.includes("yet-another-react-lightbox"))
+                return "v-lightbox";
             }
           },
         },
@@ -141,7 +149,10 @@ export default defineConfig(({ mode }) => {
       allowedHosts: ["localhost", "127.0.0.1"],
       fs: {
         strict: true,
-        allow: [path.resolve(__dirname, "client"), path.resolve(__dirname, "shared")],
+        allow: [
+          path.resolve(__dirname, "client"),
+          path.resolve(__dirname, "shared"),
+        ],
         deny: ["**/.*"],
       },
       proxy: {

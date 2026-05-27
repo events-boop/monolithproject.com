@@ -29,7 +29,7 @@ function compareEvents(a: ScheduledEvent, b: ScheduledEvent) {
 
 export function getEventById(eventId?: string | null) {
   if (!eventId) return undefined;
-  return getPublicEvents().find((event) => event.id === eventId);
+  return getPublicEvents().find(event => event.id === eventId);
 }
 
 export function getEventWindow(event?: ScheduledEvent | null) {
@@ -58,7 +58,7 @@ export function getEventStartTimestamp(event?: ScheduledEvent | null) {
 
 export function getEventWindowStatus(
   event?: ScheduledEvent | null,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): EventWindowStatus {
   const { start, end } = getEventWindow(event);
 
@@ -68,7 +68,10 @@ export function getEventWindowStatus(
   return "upcoming";
 }
 
-export function isTicketOnSale(event?: ScheduledEvent | null, now: Date = new Date()) {
+export function isTicketOnSale(
+  event?: ScheduledEvent | null,
+  now: Date = new Date()
+) {
   if (!event?.ticketUrl) return false;
   if (event.status !== "on-sale") return false;
 
@@ -78,21 +81,21 @@ export function isTicketOnSale(event?: ScheduledEvent | null, now: Date = new Da
 
 export function getScheduledEvents(now: Date = new Date()) {
   return [...getPublicEvents()]
-    .filter((event) => getEventWindowStatus(event, now) !== "past")
+    .filter(event => getEventWindowStatus(event, now) !== "past")
     .sort(compareEvents);
 }
 
 export function getSeriesEvents(
   series: ScheduledEvent["series"],
-  now: Date = new Date(),
+  now: Date = new Date()
 ) {
-  return getScheduledEvents(now).filter((event) => event.series === series);
+  return getScheduledEvents(now).filter(event => event.series === series);
 }
 
 export function getSeriesExperienceEvent(
   series: ScheduledEvent["series"],
   slot: SiteExperienceSlot = "hero",
-  now: Date = new Date(),
+  now: Date = new Date()
 ) {
   const configuredEvent = getFeaturedEventForSlot(slot);
   if (
@@ -104,27 +107,30 @@ export function getSeriesExperienceEvent(
 
   const seriesEvents = getSeriesEvents(series, now);
   return (
-    seriesEvents.find((event) => isTicketOnSale(event, now)) ??
-    seriesEvents.find((event) => event.activeFunnels?.length) ??
+    seriesEvents.find(event => isTicketOnSale(event, now)) ??
+    seriesEvents.find(event => event.activeFunnels?.length) ??
     seriesEvents[0] ??
     [...getPublicEvents()]
-      .filter((event) => event.series === series)
+      .filter(event => event.series === series)
       .sort(compareEvents)[0]
   );
 }
 
 export function getExperienceEvent(
   slot: SiteExperienceSlot,
-  now: Date = new Date(),
+  now: Date = new Date()
 ) {
   const configuredEvent = getFeaturedEventForSlot(slot);
-  if (configuredEvent && getEventWindowStatus(configuredEvent, now) !== "past") {
+  if (
+    configuredEvent &&
+    getEventWindowStatus(configuredEvent, now) !== "past"
+  ) {
     return configuredEvent;
   }
 
   const scheduledEvents = getScheduledEvents(now);
   return (
-    scheduledEvents.find((event) => isTicketOnSale(event, now)) ??
+    scheduledEvents.find(event => isTicketOnSale(event, now)) ??
     scheduledEvents[0] ??
     [...getPublicEvents()].sort(compareEvents)[0]
   );
@@ -163,7 +169,9 @@ export function getSeriesColor(series?: ScheduledEvent["series"]): string {
 }
 
 /** Darkened series accent for use on warm cream / light backgrounds (WCAG contrast). */
-export function getSeriesColorOnLight(series?: ScheduledEvent["series"]): string {
+export function getSeriesColorOnLight(
+  series?: ScheduledEvent["series"]
+): string {
   if (!series) return MONOLITH_ORANGE_ON_LIGHT;
   return SERIES_COLORS_ON_LIGHT[series] ?? MONOLITH_ORANGE_ON_LIGHT;
 }

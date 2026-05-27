@@ -27,11 +27,17 @@ const sponsors: Sponsor[] = [
   { name: "DEFECTED", tier: "supporter" },
 ];
 
-const headlines = sponsors.filter((s) => s.tier === "headline");
-const partners = sponsors.filter((s) => s.tier === "partner");
-const supporters = sponsors.filter((s) => s.tier === "supporter");
+const headlines = sponsors.filter(s => s.tier === "headline");
+const partners = sponsors.filter(s => s.tier === "partner");
+const supporters = sponsors.filter(s => s.tier === "supporter");
 
-function SponsorBlock({ sponsor, size }: { sponsor: Sponsor; size: "lg" | "md" | "sm" }) {
+function SponsorBlock({
+  sponsor,
+  size,
+}: {
+  sponsor: Sponsor;
+  size: "lg" | "md" | "sm";
+}) {
   const sizeClasses = {
     lg: "h-28 md:h-36 text-2xl md:text-3xl",
     md: "h-20 md:h-24 text-lg md:text-xl",
@@ -53,7 +59,6 @@ export default function SponsorsSection() {
   return (
     <section id="sponsors" className="section-rhythm border-t border-border">
       <div className="container layout-default px-6">
-
         {/* Header */}
         <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
@@ -134,7 +139,6 @@ export default function SponsorsSection() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

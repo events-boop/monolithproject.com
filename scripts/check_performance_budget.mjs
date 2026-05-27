@@ -7,7 +7,15 @@ const budgetPath = path.join(process.cwd(), "performance-budget.json");
 
 const JS_EXTENSIONS = new Set([".js"]);
 const CSS_EXTENSIONS = new Set([".css"]);
-const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg"]);
+const IMAGE_EXTENSIONS = new Set([
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".webp",
+  ".avif",
+  ".gif",
+  ".svg",
+]);
 const VIDEO_EXTENSIONS = new Set([".mp4", ".webm", ".mov"]);
 
 async function pathExists(targetPath) {
@@ -55,8 +63,9 @@ function sumBytes(records) {
 
 function getLargest(records) {
   return records.reduce(
-    (largest, record) => (!largest || record.bytes > largest.bytes ? record : largest),
-    null,
+    (largest, record) =>
+      !largest || record.bytes > largest.bytes ? record : largest,
+    null
   );
 }
 
@@ -69,7 +78,9 @@ function printCheck({ actual, budget, label }) {
 }
 
 if (!(await pathExists(distPublicDir))) {
-  console.error(`ERROR: ${distPublicDir} not found. Run "npm run build" first.`);
+  console.error(
+    `ERROR: ${distPublicDir} not found. Run "npm run build" first.`
+  );
   process.exit(1);
 }
 
@@ -83,20 +94,23 @@ const budgets = budgetFile.budgets;
 
 const files = await listFilesRecursive(distPublicDir);
 const records = await Promise.all(
-  files.map(async (absolutePath) => {
+  files.map(async absolutePath => {
     const stat = await fs.stat(absolutePath);
     return {
-      path: path.relative(distPublicDir, absolutePath).split(path.sep).join("/"),
+      path: path
+        .relative(distPublicDir, absolutePath)
+        .split(path.sep)
+        .join("/"),
       ext: path.extname(absolutePath).toLowerCase(),
       bytes: stat.size,
     };
-  }),
+  })
 );
 
-const jsFiles = records.filter((record) => JS_EXTENSIONS.has(record.ext));
-const cssFiles = records.filter((record) => CSS_EXTENSIONS.has(record.ext));
-const imageFiles = records.filter((record) => IMAGE_EXTENSIONS.has(record.ext));
-const videoFiles = records.filter((record) => VIDEO_EXTENSIONS.has(record.ext));
+const jsFiles = records.filter(record => JS_EXTENSIONS.has(record.ext));
+const cssFiles = records.filter(record => CSS_EXTENSIONS.has(record.ext));
+const imageFiles = records.filter(record => IMAGE_EXTENSIONS.has(record.ext));
+const videoFiles = records.filter(record => VIDEO_EXTENSIONS.has(record.ext));
 
 const totalDistBytes = sumBytes(records);
 const jsTotalBytes = sumBytes(jsFiles);
@@ -114,20 +128,58 @@ console.log(`Dist root: ${path.relative(process.cwd(), distPublicDir)}`);
 console.log("");
 
 const checks = [
-  printCheck({ label: "dist/public total", actual: totalDistBytes, budget: budgets.totalDistBytes }),
-  printCheck({ label: "all JS", actual: jsTotalBytes, budget: budgets.jsTotalBytes }),
-  printCheck({ label: "all CSS", actual: cssTotalBytes, budget: budgets.cssTotalBytes }),
-  printCheck({ label: "all images", actual: imageTotalBytes, budget: budgets.imageTotalBytes }),
-  printCheck({ label: "all videos", actual: videoTotalBytes, budget: budgets.videoTotalBytes }),
-  printCheck({ label: "largest JS chunk", actual: maxJsChunk?.bytes ?? 0, budget: budgets.maxJsChunkBytes }),
-  printCheck({ label: "largest CSS chunk", actual: maxCssChunk?.bytes ?? 0, budget: budgets.maxCssChunkBytes }),
-  printCheck({ label: "largest image", actual: maxImage?.bytes ?? 0, budget: budgets.maxImageBytes }),
-  printCheck({ label: "largest video", actual: maxVideo?.bytes ?? 0, budget: budgets.maxVideoBytes }),
+  printCheck({
+    label: "dist/public total",
+    actual: totalDistBytes,
+    budget: budgets.totalDistBytes,
+  }),
+  printCheck({
+    label: "all JS",
+    actual: jsTotalBytes,
+    budget: budgets.jsTotalBytes,
+  }),
+  printCheck({
+    label: "all CSS",
+    actual: cssTotalBytes,
+    budget: budgets.cssTotalBytes,
+  }),
+  printCheck({
+    label: "all images",
+    actual: imageTotalBytes,
+    budget: budgets.imageTotalBytes,
+  }),
+  printCheck({
+    label: "all videos",
+    actual: videoTotalBytes,
+    budget: budgets.videoTotalBytes,
+  }),
+  printCheck({
+    label: "largest JS chunk",
+    actual: maxJsChunk?.bytes ?? 0,
+    budget: budgets.maxJsChunkBytes,
+  }),
+  printCheck({
+    label: "largest CSS chunk",
+    actual: maxCssChunk?.bytes ?? 0,
+    budget: budgets.maxCssChunkBytes,
+  }),
+  printCheck({
+    label: "largest image",
+    actual: maxImage?.bytes ?? 0,
+    budget: budgets.maxImageBytes,
+  }),
+  printCheck({
+    label: "largest video",
+    actual: maxVideo?.bytes ?? 0,
+    budget: budgets.maxVideoBytes,
+  }),
 ];
 
 console.log("");
 console.log("Largest assets");
-for (const item of [maxVideo, maxImage, maxJsChunk, maxCssChunk].filter(Boolean)) {
+for (const item of [maxVideo, maxImage, maxJsChunk, maxCssChunk].filter(
+  Boolean
+)) {
   console.log(`- ${formatBytes(item.bytes).padStart(8)}  ${item.path}`);
 }
 

@@ -49,15 +49,17 @@ describe("siteData refresh", () => {
 
     act(() => {
       primePublicSiteData(
-        buildSiteData([{ ...eranEvent, venue: "Updated Venue" }, julyOpenAir]),
+        buildSiteData([{ ...eranEvent, venue: "Updated Venue" }, julyOpenAir])
       );
     });
 
     expect(result.current).not.toBe(initialVersion);
     expect(getPublicSiteData().path).toBe("/events/us-s3e3");
-    expect(getPublicEvents().find((event) => event.id === "us-s3e3")?.venue).toBe(
-      "Updated Venue",
+    expect(getPublicEvents().find(event => event.id === "us-s3e3")?.venue).toBe(
+      "Updated Venue"
     );
-    expect(getPublicEvents().some((event) => event.id === "css-jul04")).toBe(true);
+    expect(getPublicEvents().some(event => event.id === "css-jul04")).toBe(
+      true
+    );
   });
 });

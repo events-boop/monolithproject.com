@@ -12,7 +12,7 @@ import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
-
+import MetaPixelGate from "./components/MetaPixelGate";
 
 // Lazy Pages
 const InquiryPortal = lazy(() => import("./components/InquiryPortal"));
@@ -41,6 +41,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
+const Monolith = lazy(() => import("./pages/Monolith"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Ambassadors = lazy(() => import("./pages/Ambassadors"));
 const Travel = lazy(() => import("./pages/Travel"));
@@ -50,11 +51,15 @@ const Alerts = lazy(() => import("./pages/Alerts"));
 const Insights = lazy(() => import("./pages/Insights"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const ExperimentalHero = lazy(() => import("./pages/ExperimentalHero"));
 
 const isMonolithOpsEnabled =
   import.meta.env.DEV || import.meta.env.VITE_ENABLE_MONOLITH_OPS === "true";
+const AdminDashboard = isMonolithOpsEnabled
+  ? lazy(() => import("./pages/AdminDashboard"))
+  : null;
+const ExperimentalHero = isMonolithOpsEnabled
+  ? lazy(() => import("./pages/ExperimentalHero"))
+  : null;
 
 function RouteLoadingFallback() {
   return (
@@ -79,7 +84,7 @@ type RouteParams = Record<string, string | undefined>;
 type RouteProps = { params?: RouteParams };
 
 function withTransition<P extends RouteProps>(
-  Component: React.ComponentType<P>,
+  Component: React.ComponentType<P>
 ) {
   return (props: P) => (
     <div className="relative w-full bg-background min-h-screen overflow-x-clip">
@@ -119,6 +124,7 @@ const TermsTransition = withTransition(Terms);
 const PrivacyTransition = withTransition(Privacy);
 const CookiesTransition = withTransition(Cookies);
 const NotFoundTransition = withTransition(NotFoundLazy);
+const MonolithTransition = withTransition(Monolith);
 const ShopTransition = withTransition(Shop);
 const AmbassadorsTransition = withTransition(Ambassadors);
 const TravelTransition = withTransition(Travel);
@@ -126,15 +132,27 @@ const GuideTransition = withTransition(Guide);
 const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
-const AdminDashboardTransition = withTransition(AdminDashboard);
-const ExperimentalHeroTransition = withTransition(ExperimentalHero);
+const AdminDashboardTransition = AdminDashboard
+  ? withTransition(AdminDashboard)
+  : null;
+const ExperimentalHeroTransition = ExperimentalHero
+  ? withTransition(ExperimentalHero)
+  : null;
 
 function MonolithOpsRoute() {
-  if (!isMonolithOpsEnabled) {
+  if (!isMonolithOpsEnabled || !AdminDashboardTransition) {
     return <Redirect to="/404" />;
   }
 
   return <AdminDashboardTransition />;
+}
+
+function SandboxHeroRoute() {
+  if (!isMonolithOpsEnabled || !ExperimentalHeroTransition) {
+    return <Redirect to="/404" />;
+  }
+
+  return <ExperimentalHeroTransition />;
 }
 
 function Router() {
@@ -148,7 +166,10 @@ function Router() {
       <Route path="/sponsors" component={SponsorAccessTransition} />
       <Route path="/about" component={AboutTransition} />
       <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
-      <Route path="/chasing-sunsets-facts" component={ChasingSunsetsFactsTransition} />
+      <Route
+        path="/chasing-sunsets-facts"
+        component={ChasingSunsetsFactsTransition}
+      />
       <Route path="/SUNSETS">
         <Redirect to="/sunsets" />
       </Route>
@@ -169,13 +190,22 @@ function Router() {
       </Route>
       <Route path="/sunsets/" component={SunsetsLinkBioTransition} />
       <Route path="/sunsets" component={SunsetsLinkBioTransition} />
-      <Route path="/chasing-sunsets/:season" component={ArchiveGalleryPageTransition} />
+      <Route
+        path="/chasing-sunsets/:season"
+        component={ArchiveGalleryPageTransition}
+      />
       <Route path="/radio" component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path="/story" component={UntoldStoryTransition} />
       <Route path="/untold-story" component={UntoldStoryTransition} />
-      <Route path="/untold-story/:season" component={ArchiveGalleryPageTransition} />
-      <Route path="/untold-story-deron-juany-bravo" component={UntoldStoryTransition} />
+      <Route
+        path="/untold-story/:season"
+        component={ArchiveGalleryPageTransition}
+      />
+      <Route
+        path="/untold-story-deron-juany-bravo"
+        component={UntoldStoryTransition}
+      />
       <Route path="/archive" component={ArchiveTransition} />
       <Route path="/insights/:slug" component={InsightArticleTransition} />
       <Route path="/insights" component={InsightsTransition} />
@@ -205,9 +235,16 @@ function Router() {
       <Route path="/terms" component={TermsTransition} />
       <Route path="/privacy" component={PrivacyTransition} />
       <Route path="/cookies" component={CookiesTransition} />
+      <Route path="/monolith" component={MonolithTransition} />
+      <Route path="/the-monolith">
+        <Redirect to="/monolith" />
+      </Route>
+      <Route path="/collective">
+        <Redirect to="/monolith" />
+      </Route>
       <Route path="/monolith-ops" component={MonolithOpsRoute} />
       <Route path="/404" component={NotFoundTransition} />
-      <Route path="/sandbox/hero" component={ExperimentalHeroTransition} />
+      <Route path="/sandbox/hero" component={SandboxHeroRoute} />
 
       <Route component={NotFoundTransition} />
     </Switch>
@@ -252,12 +289,14 @@ function AttributionSync() {
 function GlobalSpotlightSync() {
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+      document.documentElement.style.setProperty("--mouse-x", `${e.clientX}px`);
+      document.documentElement.style.setProperty("--mouse-y", `${e.clientY}px`);
     };
 
-    window.addEventListener('mousemove', updateMousePosition, { passive: true });
-    return () => window.removeEventListener('mousemove', updateMousePosition);
+    window.addEventListener("mousemove", updateMousePosition, {
+      passive: true,
+    });
+    return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
   return null;
 }
@@ -276,13 +315,19 @@ function SiteDataSync() {
 }
 
 const Analytics = lazy(() => import("./components/Analytics"));
-const DeferredShellChrome = lazy(() => import("./components/DeferredShellChrome"));
+const DeferredShellChrome = lazy(
+  () => import("./components/DeferredShellChrome")
+);
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const SoundCloudShelf = lazy(() => import("./components/SoundCloudShelf"));
 const Footer = lazy(() => import("./components/Footer"));
-const GlobalTicketButton = lazy(() => import("./components/GlobalTicketButton"));
+const GlobalTicketButton = lazy(
+  () => import("./components/GlobalTicketButton")
+);
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
-const Toaster = lazy(() => import("./components/ui/sonner").then((module) => ({ default: module.Toaster })));
+const Toaster = lazy(() =>
+  import("./components/ui/sonner").then(module => ({ default: module.Toaster }))
+);
 
 function DeferredGlobalModules() {
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -309,18 +354,25 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
-  const normalizedLocation = (location.split("?")[0].replace(/\/$/, "") || "/").toLowerCase();
+  const normalizedLocation = (
+    location.split("?")[0].replace(/\/$/, "") || "/"
+  ).toLowerCase();
   const isStandaloneLanding = normalizedLocation === "/sunsets";
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
-  const shellOpacity = isDrawerActive ? 0.35 : isSensoryOverloadActive ? 0.4 : 1;
+  const shellOpacity = isDrawerActive
+    ? 0.35
+    : isSensoryOverloadActive
+      ? 0.4
+      : 1;
   const shellFilter = "none";
 
   return (
     <>
       <GlobalSpotlightSync />
       <SiteDataSync />
+      <MetaPixelGate />
 
       <SceneSync />
       <RouteMemory />
@@ -328,9 +380,9 @@ function MainContentWrapper() {
       <Suspense fallback={null}>
         {activeDrawer ? <OffCanvasDrawer /> : null}
       </Suspense>
-      
+
       {/* Sensory Overload Cinematic Overlay vault effect */}
-      <div 
+      <div
         className="fixed inset-0 z-[90] pointer-events-none transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] bg-black/50 backdrop-blur-[12px] grayscale"
         style={{ opacity: isSensoryOverloadActive ? 1 : 0 }}
         aria-hidden="true"
@@ -351,21 +403,28 @@ function MainContentWrapper() {
         }}
       >
         {/* Global Cinematic Spotlight */}
-        <div 
-           className="fixed inset-0 pointer-events-none z-[1] opacity-70 mix-blend-screen transition-opacity duration-1000 hidden md:block" 
-           style={{
-             background: 'radial-gradient(1000px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), var(--scene-glow, rgba(255,255,255,0.03)), transparent 40%)'
-           }}
+        <div
+          className="fixed inset-0 pointer-events-none z-[1] opacity-70 mix-blend-screen transition-opacity duration-1000 hidden md:block"
+          style={{
+            background:
+              "radial-gradient(1000px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), var(--scene-glow, rgba(255,255,255,0.03)), transparent 40%)",
+          }}
         />
         {isStandaloneLanding ? <SunsetsLinkBioTransition /> : <Router />}
         {!isStandaloneLanding && (
           <>
-            <ViewportLazy minHeightClassName="min-h-[24rem]" rootMargin="360px 0px">
+            <ViewportLazy
+              minHeightClassName="min-h-[24rem]"
+              rootMargin="360px 0px"
+            >
               <Suspense fallback={null}>
                 <SoundCloudShelf />
               </Suspense>
             </ViewportLazy>
-            <ViewportLazy minHeightClassName="min-h-[40rem]" rootMargin="420px 0px">
+            <ViewportLazy
+              minHeightClassName="min-h-[40rem]"
+              rootMargin="420px 0px"
+            >
               <Suspense fallback={null}>
                 <Footer />
               </Suspense>
@@ -386,7 +445,7 @@ function App() {
             <InquiryProvider>
               <div className="film-grain" />
               <MainContentWrapper />
-              
+
               <DeferredGlobalModules />
             </InquiryProvider>
           </UIProvider>

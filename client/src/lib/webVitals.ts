@@ -93,7 +93,7 @@ function startLcpObserver(path: string) {
   let reported = false;
   let flushTimer: number | null = null;
 
-  const observer = new PerformanceObserver((list) => {
+  const observer = new PerformanceObserver(list => {
     const entries = list.getEntries();
     latest = entries[entries.length - 1] || latest;
 
@@ -131,7 +131,7 @@ function startClsObserver(path: string) {
 
   let cls = 0;
   let reported = false;
-  const observer = new PerformanceObserver((list) => {
+  const observer = new PerformanceObserver(list => {
     for (const entry of list.getEntries() as LayoutShiftEntry[]) {
       if (entry.hadRecentInput) continue;
       cls += entry.value;
@@ -159,7 +159,7 @@ function startInpObserver(path: string) {
 
   let worstInteraction = 0;
   let reported = false;
-  const observer = new PerformanceObserver((list) => {
+  const observer = new PerformanceObserver(list => {
     for (const entry of list.getEntries() as EventTimingEntry[]) {
       worstInteraction = Math.max(worstInteraction, entry.duration);
     }

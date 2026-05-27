@@ -26,7 +26,8 @@ const SETS: FeaturedSet[] = [
     title: "Chapter III · Special NYE",
     shortCode: "EP-01",
     duration: "58:23",
-    image: "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
+    image:
+      "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
     href: "/radio/ep-01-benchek",
     cta: "Listen Now",
   },
@@ -37,7 +38,8 @@ const SETS: FeaturedSet[] = [
     title: "Mix Vol. 3",
     shortCode: "EP-02",
     duration: "55:48",
-    image: "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
+    image:
+      "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
     href: "/radio/ep-02-ewerseen",
     cta: "Listen Now",
   },
@@ -48,7 +50,8 @@ const SETS: FeaturedSet[] = [
     title: "Guest Session",
     shortCode: "EP-03",
     duration: "62:10",
-    image: "https://i1.sndcdn.com/artworks-yrdlfcJnVQdyx9ZE-uV4tLw-t500x500.jpg",
+    image:
+      "https://i1.sndcdn.com/artworks-yrdlfcJnVQdyx9ZE-uV4tLw-t500x500.jpg",
     href: "/radio/ep-03-terranova",
     cta: "Listen Now",
   },
@@ -59,7 +62,8 @@ const SETS: FeaturedSet[] = [
     title: "Untold Crossover",
     shortCode: "EP-04",
     duration: "71:05",
-    image: "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
+    image:
+      "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
     href: "/radio/ep-04-radian",
     cta: "Listen Now",
   },
@@ -119,7 +123,8 @@ export default function FeaturedSets() {
               </span>
               <span className="mt-3 block h-px w-20 bg-white/20" />
               <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/50">
-                Mixes, guest sessions, and past live moments from Monolith nights.
+                Mixes, guest sessions, and past live moments from Monolith
+                nights.
               </span>
             </div>
           </div>
@@ -148,7 +153,9 @@ export default function FeaturedSets() {
                 className="absolute motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
                   transform: `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${scale})`,
-                  zIndex: isHovered ? 40 : 10 + (SETS.length - Math.abs(offset)),
+                  zIndex: isHovered
+                    ? 40
+                    : 10 + (SETS.length - Math.abs(offset)),
                   willChange: "transform",
                 }}
               >
@@ -223,7 +230,7 @@ export default function FeaturedSets() {
 
         {/* Mobile scroll-snap row */}
         <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 scrollbar-none">
-          {SETS.map((set) => {
+          {SETS.map(set => {
             const color = getSetColor(set.series);
             const label = getSetLabel(set.series);
 

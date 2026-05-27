@@ -12,7 +12,12 @@ const bookingSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
   entity: z.string().min(2, "Company or Artist name is required"),
-  type: z.enum(["partner-on-location", "artist-booking", "sponsorship", "general"]),
+  type: z.enum([
+    "partner-on-location",
+    "artist-booking",
+    "sponsorship",
+    "general",
+  ]),
   location: z.string().optional(),
   message: z.string().min(10, "Please provide more details"),
   [honeypotFieldName]: z.string().optional(),
@@ -77,7 +82,11 @@ export default function BookingFormSection() {
       });
       setIsSubmitted(true);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Unable to submit inquiry right now.");
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit inquiry right now."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -102,13 +111,20 @@ export default function BookingFormSection() {
           <span className="mb-4 font-mono text-[10px] uppercase tracking-[0.35em] text-primary/70">
             Submission Received
           </span>
-          <h3 className="font-display text-3xl mb-4 uppercase text-white">Received</h3>
+          <h3 className="font-display text-3xl mb-4 uppercase text-white">
+            Received
+          </h3>
           <p className="text-white/55 max-w-md leading-relaxed">
             We'll review your inquiry and get back to you if there's a fit.
           </p>
         </div>
       ) : (
-        <form action="/api/booking-inquiry" method="POST" onSubmit={handleSubmit(onSubmit)} className="relative space-y-10">
+        <form
+          action="/api/booking-inquiry"
+          method="POST"
+          onSubmit={handleSubmit(onSubmit)}
+          className="relative space-y-10"
+        >
           <HoneypotField {...register(honeypotFieldName)} />
 
           <div className="flex flex-col gap-6 border-b border-white/8 pb-8 lg:flex-row lg:items-end lg:justify-between">
@@ -120,7 +136,9 @@ export default function BookingFormSection() {
                 Tell Us What You Are Building
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-white/55 md:text-base">
-                Use the form below for artist bookings, venue partnerships, sponsor interest, or broader collaboration ideas. Location is only required for venue inquiries.
+                Use the form below for artist bookings, venue partnerships,
+                sponsor interest, or broader collaboration ideas. Location is
+                only required for venue inquiries.
               </p>
             </div>
             <div className="inline-flex items-center gap-3 self-start rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
@@ -134,19 +152,29 @@ export default function BookingFormSection() {
               Inquiry Type
             </label>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              {inquiryTypes.map((type) => (
+              {inquiryTypes.map(type => (
                 <label
                   key={type.id}
-                  className={`group cursor-pointer rounded-[1.5rem] border px-4 py-5 transition-all duration-300 ${selectedType === type.id
+                  className={`group cursor-pointer rounded-[1.5rem] border px-4 py-5 transition-all duration-300 ${
+                    selectedType === type.id
                       ? "border-primary/40 bg-primary/[0.08] text-white shadow-[0_18px_50px_rgba(212,165,116,0.12)]"
                       : "border-white/8 bg-white/[0.02] text-white/65 hover:border-white/20 hover:bg-white/[0.04]"
-                    }`}
+                  }`}
                 >
-                  <input type="radio" value={type.id} {...register("type")} className="sr-only" />
-                  <span className={`mb-4 inline-flex rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.28em] ${selectedType === type.id ? "border-primary/40 text-primary" : "border-white/10 text-white/35"}`}>
+                  <input
+                    type="radio"
+                    value={type.id}
+                    {...register("type")}
+                    className="sr-only"
+                  />
+                  <span
+                    className={`mb-4 inline-flex rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.28em] ${selectedType === type.id ? "border-primary/40 text-primary" : "border-white/10 text-white/35"}`}
+                  >
                     {type.code}
                   </span>
-                  <span className="block text-sm font-semibold uppercase tracking-[0.16em]">{type.label}</span>
+                  <span className="block text-sm font-semibold uppercase tracking-[0.16em]">
+                    {type.label}
+                  </span>
                   <span className="mt-2 block text-xs leading-relaxed text-white/45">
                     {type.description}
                   </span>
@@ -166,18 +194,26 @@ export default function BookingFormSection() {
                 </p>
               </div>
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">Name</label>
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                  Name
+                </label>
                 <input
                   {...register("name")}
                   autoComplete="name"
                   className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="Full name"
                 />
-                {errors.name && <span className="text-rose-400 text-xs mt-2 block">{errors.name.message}</span>}
+                {errors.name && (
+                  <span className="text-rose-400 text-xs mt-2 block">
+                    {errors.name.message}
+                  </span>
+                )}
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">Email</label>
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                  Email
+                </label>
                 <input
                   {...register("email")}
                   type="email"
@@ -185,7 +221,11 @@ export default function BookingFormSection() {
                   className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="email@address.com"
                 />
-                {errors.email && <span className="text-rose-400 text-xs mt-2 block">{errors.email.message}</span>}
+                {errors.email && (
+                  <span className="text-rose-400 text-xs mt-2 block">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -199,45 +239,69 @@ export default function BookingFormSection() {
                 </p>
               </div>
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">Organization</label>
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                  Organization
+                </label>
                 <input
                   {...register("entity")}
                   autoComplete="organization"
                   className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="Company, venue, or artist name"
                 />
-                {errors.entity && <span className="text-rose-400 text-xs mt-2 block">{errors.entity.message}</span>}
+                {errors.entity && (
+                  <span className="text-rose-400 text-xs mt-2 block">
+                    {errors.entity.message}
+                  </span>
+                )}
               </div>
 
-              <motion.div animate={{ opacity: selectedType === "partner-on-location" ? 1 : 0.5 }}>
+              <motion.div
+                animate={{
+                  opacity: selectedType === "partner-on-location" ? 1 : 0.5,
+                }}
+              >
                 <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3 flex items-center gap-2">
                   <MapPin className="w-3 h-3" /> Location / Venue
                 </label>
                 <input
                   {...register("location")}
                   disabled={selectedType !== "partner-on-location"}
-                  className={`w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${selectedType !== "partner-on-location" ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
-                  placeholder={selectedType === "partner-on-location" ? "City, State, or Venue Name" : "N/A"}
+                  className={`w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${
+                    selectedType !== "partner-on-location"
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+                  placeholder={
+                    selectedType === "partner-on-location"
+                      ? "City, State, or Venue Name"
+                      : "N/A"
+                  }
                 />
               </motion.div>
             </div>
           </div>
 
           <div className="border-t border-white/8 pt-10">
-            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/40 mb-3">Details</label>
+            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/40 mb-3">
+              Details
+            </label>
             <textarea
               {...register("message")}
               rows={6}
               className="min-h-[180px] w-full rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
               placeholder="Tell us about your proposal, dates, or vision..."
             />
-            {errors.message && <span className="text-rose-400 text-xs mt-2 block">{errors.message.message}</span>}
+            {errors.message && (
+              <span className="text-rose-400 text-xs mt-2 block">
+                {errors.message.message}
+              </span>
+            )}
           </div>
 
           <div className="flex flex-col gap-5 border-t border-white/8 pt-8 md:flex-row md:items-center md:justify-between">
             <p className="max-w-md text-xs leading-relaxed text-white/35">
-              Venue location is only required for on-site partnership requests. Everything else should live in the brief.
+              Venue location is only required for on-site partnership requests.
+              Everything else should live in the brief.
             </p>
             <button
               type="submit"
@@ -256,7 +320,11 @@ export default function BookingFormSection() {
           </div>
 
           {submitError && (
-            <p className="flex items-center gap-1.5 text-rose-400 text-xs font-mono" role="alert" aria-live="polite">
+            <p
+              className="flex items-center gap-1.5 text-rose-400 text-xs font-mono"
+              role="alert"
+              aria-live="polite"
+            >
               <AlertCircle className="w-3 h-3" />
               {submitError}
             </p>

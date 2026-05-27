@@ -1,6 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowRight, Headphones, Play, Radio as RadioIcon, Sun, Waves } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  ArrowRight,
+  Headphones,
+  Play,
+  Radio as RadioIcon,
+  Sun,
+  Waves,
+} from "lucide-react";
 import { Link } from "wouter";
 import GlobalListenerMap from "@/components/GlobalListenerMap";
 import RadioGlobe from "@/components/RadioGlobe";
@@ -49,7 +61,10 @@ const radioFaqs = [
   ],
 ] as const;
 
-const episodeScenes: Record<string, { heroImage: string; signal: string; region: string; mode: EpisodeMode }> = {
+const episodeScenes: Record<
+  string,
+  { heroImage: string; signal: string; region: string; mode: EpisodeMode }
+> = {
   "ep-004-benchek-part-2": {
     heroImage: "/images/artist-benchek.jpg",
     signal: "Marbella return",
@@ -115,33 +130,46 @@ function isExternalLink(url: string) {
 
 function scrollToFeaturedDeck() {
   if (typeof document === "undefined") return;
-  document.getElementById("radio-featured")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document
+    .getElementById("radio-featured")
+    ?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export default function Radio() {
   const [filter, setFilter] = useState<EpisodeFilter>("all");
-  const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(featuredEpisodePool[0]?.slug ?? radioEpisodes[0]?.slug ?? "");
+  const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(
+    featuredEpisodePool[0]?.slug ?? radioEpisodes[0]?.slug ?? ""
+  );
   const heroRef = useRef<HTMLElement | null>(null);
   const heroInView = useInView(heroRef, { margin: "-20% 0px -20% 0px" });
   const reduceMotion = useReducedMotion();
 
   const activeEpisode = useMemo(
-    () => radioEpisodes.find((episode) => episode.slug === activeEpisodeSlug) ?? radioEpisodes[0],
-    [activeEpisodeSlug],
+    () =>
+      radioEpisodes.find(episode => episode.slug === activeEpisodeSlug) ??
+      radioEpisodes[0],
+    [activeEpisodeSlug]
   );
 
   const filteredEpisodes = useMemo(() => {
     if (filter === "all") return radioEpisodes;
-    return radioEpisodes.filter((episode) => getEpisodeScene(episode).mode === filter);
+    return radioEpisodes.filter(
+      episode => getEpisodeScene(episode).mode === filter
+    );
   }, [filter]);
 
   useEffect(() => {
     if (reduceMotion || !heroInView || featuredEpisodePool.length < 2) return;
 
     const timer = setInterval(() => {
-      setActiveEpisodeSlug((current) => {
-        const currentIndex = featuredEpisodePool.findIndex((episode) => episode.slug === current);
-        const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % featuredEpisodePool.length : 0;
+      setActiveEpisodeSlug(current => {
+        const currentIndex = featuredEpisodePool.findIndex(
+          episode => episode.slug === current
+        );
+        const nextIndex =
+          currentIndex >= 0
+            ? (currentIndex + 1) % featuredEpisodePool.length
+            : 0;
         return featuredEpisodePool[nextIndex].slug;
       });
     }, 7000);
@@ -154,7 +182,9 @@ export default function Radio() {
   }
 
   const activeScene = getEpisodeScene(activeEpisode);
-  const heroQueue = featuredEpisodePool.filter((episode) => episode.slug !== activeEpisode.slug).slice(0, 3);
+  const heroQueue = featuredEpisodePool
+    .filter(episode => episode.slug !== activeEpisode.slug)
+    .slice(0, 3);
 
   const selectEpisode = (slug: string, bringToDeck = false) => {
     setActiveEpisodeSlug(slug);
@@ -209,7 +239,9 @@ export default function Radio() {
                 CHASING SUN(SETS) <span className="text-white/48">RADIO</span>
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 md:text-xl md:leading-relaxed">
-                The between-shows archive. Guest-led mixes, crossover cuts, and long-form episodes built to move from golden hour into the darker rooms.
+                The between-shows archive. Guest-led mixes, crossover cuts, and
+                long-form episodes built to move from golden hour into the
+                darker rooms.
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -234,7 +266,10 @@ export default function Radio() {
                   </Link>
                 </MagneticButton>
                 <MagneticButton strength={0.22}>
-                  <a href="#radio-archive" className="btn-pill-glass inline-flex items-center justify-center">
+                  <a
+                    href="#radio-archive"
+                    className="btn-pill-glass inline-flex items-center justify-center"
+                  >
                     Browse Full Archive
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
@@ -246,7 +281,7 @@ export default function Radio() {
                   `${radioEpisodes.length.toString().padStart(2, "0")} episodes live`,
                   "Chicago-rooted, globally replayed",
                   "Sunset cuts and late-night bridges",
-                ].map((stat) => (
+                ].map(stat => (
                   <div
                     key={stat}
                     className="border border-white/10 bg-white/[0.03] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.28em] text-white/58 backdrop-blur-sm"
@@ -308,16 +343,22 @@ export default function Radio() {
                     <p className="mt-3 font-display text-2xl uppercase leading-[0.9] text-white">
                       {activeScene.signal}
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/58">{activeScene.region}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/58">
+                      {activeScene.region}
+                    </p>
                   </div>
 
                   <div className="border border-white/10 bg-white/[0.02] p-3">
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/42">Queue</p>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/28">Next drops</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/42">
+                        Queue
+                      </p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/28">
+                        Next drops
+                      </p>
                     </div>
                     <div className="space-y-2">
-                      {heroQueue.map((episode) => {
+                      {heroQueue.map(episode => {
                         const scene = getEpisodeScene(episode);
 
                         return (
@@ -359,16 +400,27 @@ export default function Radio() {
         </div>
       </section>
 
-      <SeasonAnchorNav items={RADIO_ANCHORS} tone="warm" className="-mt-7 mb-6" />
+      <SeasonAnchorNav
+        items={RADIO_ANCHORS}
+        tone="warm"
+        className="-mt-7 mb-6"
+      />
 
       <section id="radio-featured" className="px-6 pb-10 scroll-shell-target">
         <div className="container layout-wide">
-          <motion.div className="grid gap-6 lg:grid-cols-[minmax(0,1.16fr)_minmax(320px,0.84fr)]" {...sectionReveal}>
+          <motion.div
+            className="grid gap-6 lg:grid-cols-[minmax(0,1.16fr)_minmax(320px,0.84fr)]"
+            {...sectionReveal}
+          >
             <div className="luxe-surface-dark overflow-hidden p-4 md:p-6">
               <div className="mb-5 flex flex-col gap-4 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E8B86D]">Playback Deck</span>
-                  <h2 className="section-display-title-compact mt-3 max-w-[9ch] text-white">FEATURED EPISODE</h2>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#E8B86D]">
+                    Playback Deck
+                  </span>
+                  <h2 className="section-display-title-compact mt-3 max-w-[9ch] text-white">
+                    FEATURED EPISODE
+                  </h2>
                 </div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/42">
                   {activeEpisode.displayDate} · {activeEpisode.duration}
@@ -390,12 +442,16 @@ export default function Radio() {
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
                 {activeEpisode.tracklist.slice(0, 3).map((track, index) => (
-                  <div key={`${track.timecode}-${track.title}`} className="border border-white/8 bg-white/[0.02] p-4">
+                  <div
+                    key={`${track.timecode}-${track.title}`}
+                    className="border border-white/8 bg-white/[0.02] p-4"
+                  >
                     <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
                       {String(index + 1).padStart(2, "0")} · {track.timecode}
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-white/82">
-                      <span className="font-semibold">{track.artist}</span> · {track.title}
+                      <span className="font-semibold">{track.artist}</span> ·{" "}
+                      {track.title}
                     </p>
                   </div>
                 ))}
@@ -403,7 +459,10 @@ export default function Radio() {
             </div>
 
             <div className="space-y-6">
-              <motion.article className="luxe-surface-dark p-6" {...sectionReveal}>
+              <motion.article
+                className="luxe-surface-dark p-6"
+                {...sectionReveal}
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
@@ -418,8 +477,12 @@ export default function Radio() {
                   </div>
                 </div>
 
-                <p className="mt-4 text-base leading-relaxed text-white/70">{activeEpisode.summary}</p>
-                <p className="mt-4 text-sm leading-relaxed text-white/50">{getNarrativePreview(activeEpisode.narrative)}</p>
+                <p className="mt-4 text-base leading-relaxed text-white/70">
+                  {activeEpisode.summary}
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-white/50">
+                  {getNarrativePreview(activeEpisode.narrative)}
+                </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
@@ -431,25 +494,34 @@ export default function Radio() {
                     Listen on SoundCloud
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
-                  <Link href={`/radio/${activeEpisode.slug}`} className="btn-pill-glass inline-flex items-center justify-center">
+                  <Link
+                    href={`/radio/${activeEpisode.slug}`}
+                    className="btn-pill-glass inline-flex items-center justify-center"
+                  >
                     Open Episode Page
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </div>
               </motion.article>
 
-              <motion.article className="luxe-surface-dark p-6" {...sectionReveal}>
+              <motion.article
+                className="luxe-surface-dark p-6"
+                {...sectionReveal}
+              >
                 <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-4">
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">Guest Links</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/38">
+                      Guest Links
+                    </p>
                     <p className="mt-2 text-sm leading-relaxed text-white/58">
-                      Direct exits for the current guest and the wider Monolith stack.
+                      Direct exits for the current guest and the wider Monolith
+                      stack.
                     </p>
                   </div>
                   <Waves className="hidden h-5 w-5 text-[#E8B86D] md:block" />
                 </div>
                 <div className="mt-4 flex flex-wrap gap-3">
-                  {activeEpisode.guestLinks.map((link) =>
+                  {activeEpisode.guestLinks.map(link =>
                     isExternalLink(link.url) ? (
                       <a
                         key={link.label}
@@ -462,11 +534,15 @@ export default function Radio() {
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
                     ) : (
-                      <Link key={link.label} href={link.url} className="btn-pill-glass inline-flex items-center justify-center">
+                      <Link
+                        key={link.label}
+                        href={link.url}
+                        className="btn-pill-glass inline-flex items-center justify-center"
+                      >
                         {link.label}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
-                    ),
+                    )
                   )}
                 </div>
               </motion.article>
@@ -484,10 +560,16 @@ export default function Radio() {
             className="flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-end lg:justify-between"
           >
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#C2703E]">Archive Grid</span>
-              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">ALL SIGNALS</h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#C2703E]">
+                Archive Grid
+              </span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">
+                ALL SIGNALS
+              </h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/58 md:text-base">
-                A cleaner shelf for every radio drop. Featured episodes stay collectible, the metadata stays consistent, and the deeper cuts are easier to find.
+                A cleaner shelf for every radio drop. Featured episodes stay
+                collectible, the metadata stays consistent, and the deeper cuts
+                are easier to find.
               </p>
             </div>
 
@@ -495,8 +577,11 @@ export default function Radio() {
               {[
                 { label: "All", value: "all" as EpisodeFilter },
                 { label: "Sunset Cuts", value: "sunsets" as EpisodeFilter },
-                { label: "Late-Night Bridges", value: "crossovers" as EpisodeFilter },
-              ].map((option) => {
+                {
+                  label: "Late-Night Bridges",
+                  value: "crossovers" as EpisodeFilter,
+                },
+              ].map(option => {
                 const isActive = filter === option.value;
                 return (
                   <button
@@ -567,7 +652,9 @@ export default function Radio() {
                       <h3 className="mt-3 font-display text-[clamp(1.6rem,2vw,2.4rem)] uppercase leading-[0.92] text-white">
                         {episode.guest}
                       </h3>
-                      <p className="mt-1 text-base uppercase tracking-[0.04em] text-white/72">{episode.title}</p>
+                      <p className="mt-1 text-base uppercase tracking-[0.04em] text-white/72">
+                        {episode.title}
+                      </p>
                       <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/54 md:text-base">
                         {episode.summary}
                       </p>
@@ -583,7 +670,10 @@ export default function Radio() {
                         Load In Deck
                       </button>
                       <div className="flex flex-wrap gap-2 md:justify-end">
-                        <Link href={`/radio/${episode.slug}`} className="btn-pill-glass inline-flex items-center justify-center">
+                        <Link
+                          href={`/radio/${episode.slug}`}
+                          className="btn-pill-glass inline-flex items-center justify-center"
+                        >
                           Episode Page
                         </Link>
                         <a
@@ -604,19 +694,31 @@ export default function Radio() {
         </div>
       </section>
 
-      <section id="radio-map" className="border-y border-white/10 bg-[#080808] px-6 py-20 scroll-shell-target">
+      <section
+        id="radio-map"
+        className="border-y border-white/10 bg-[#080808] px-6 py-20 scroll-shell-target"
+      >
         <div className="container layout-wide">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
-            <motion.article className="relative min-h-[26rem] overflow-hidden border border-white/10 bg-black" {...sectionReveal}>
+            <motion.article
+              className="relative min-h-[26rem] overflow-hidden border border-white/10 bg-black"
+              {...sectionReveal}
+            >
               <div className="absolute inset-0 opacity-85">
                 <RadioGlobe />
               </div>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,8,0.1),rgba(8,8,8,0.86)_62%,rgba(8,8,8,0.98))]" />
               <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
-                <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#E8B86D]">Signal Reach</span>
-                <h2 className="section-display-title-compact mt-3 max-w-[7ch] text-white">WHERE IT LANDS</h2>
+                <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#E8B86D]">
+                  Signal Reach
+                </span>
+                <h2 className="section-display-title-compact mt-3 max-w-[7ch] text-white">
+                  WHERE IT LANDS
+                </h2>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-white/62 md:text-base">
-                  Chicago is the root. The archive pulls interest from rooftop cities, after-hours cities, and anywhere the guest mix has enough patience to stay in rotation.
+                  Chicago is the root. The archive pulls interest from rooftop
+                  cities, after-hours cities, and anywhere the guest mix has
+                  enough patience to stay in rotation.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
                   {[
@@ -628,7 +730,7 @@ export default function Radio() {
                     "Paris",
                     "Dubai",
                     "New York",
-                  ].map((city) => (
+                  ].map(city => (
                     <span
                       key={city}
                       className="border border-white/10 bg-black/35 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-white/56 backdrop-blur-sm"
@@ -640,10 +742,15 @@ export default function Radio() {
               </div>
             </motion.article>
 
-            <motion.article className="luxe-surface-dark p-4 md:p-6" {...sectionReveal}>
+            <motion.article
+              className="luxe-surface-dark p-4 md:p-6"
+              {...sectionReveal}
+            >
               <div className="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-4">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#C2703E]">Listener Map</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#C2703E]">
+                    Listener Map
+                  </span>
                   <h3 className="mt-3 font-display text-3xl uppercase leading-[0.9] text-white md:text-4xl">
                     Active Cities
                   </h3>
@@ -670,13 +777,21 @@ export default function Radio() {
             className="flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-end lg:justify-between"
           >
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#C2703E]">Transmission FAQ</span>
-              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">HOUSE RULES</h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#C2703E]">
+                Transmission FAQ
+              </span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] text-white">
+                HOUSE RULES
+              </h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/58 md:text-base">
-                Enough structure to make the archive useful. No extra interface theater where a direct answer works better.
+                Enough structure to make the archive useful. No extra interface
+                theater where a direct answer works better.
               </p>
             </div>
-            <Link href="/contact" className="btn-pill-glass inline-flex items-center justify-center self-start lg:self-auto">
+            <Link
+              href="/contact"
+              className="btn-pill-glass inline-flex items-center justify-center self-start lg:self-auto"
+            >
               Submit or Ask
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
@@ -698,8 +813,12 @@ export default function Radio() {
                   </span>
                   <Sun className="h-4 w-4 text-white/22" />
                 </div>
-                <h3 className="font-display text-2xl uppercase leading-[0.92] text-white">{question}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/56">{answer}</p>
+                <h3 className="font-display text-2xl uppercase leading-[0.92] text-white">
+                  {question}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-white/56">
+                  {answer}
+                </p>
               </motion.article>
             ))}
           </div>
@@ -708,7 +827,10 @@ export default function Radio() {
 
       <JoinSignalSection className="border-t border-white/10" />
 
-      <FloatingFactsChip tone="nocturne" storageKey="floating-facts-chip-radio" />
+      <FloatingFactsChip
+        tone="nocturne"
+        storageKey="floating-facts-chip-radio"
+      />
     </div>
   );
 }

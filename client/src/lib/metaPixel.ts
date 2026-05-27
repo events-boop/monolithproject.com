@@ -1,5 +1,5 @@
 import { runWhenIdle } from "./idle";
-import { hasAnalyticsConsent } from "./cookieConsent";
+import { getCookieConsentState } from "./cookieConsent";
 
 declare global {
   interface Window {
@@ -29,7 +29,12 @@ function isTrackingHost() {
 
 function isEnabled() {
   // Avoid penalizing Lighthouse / previews with third-party tags.
-  return import.meta.env.PROD && isTrackingHost() && Boolean(PIXEL_ID) && hasAnalyticsConsent();
+  return (
+    import.meta.env.PROD &&
+    isTrackingHost() &&
+    Boolean(PIXEL_ID) &&
+    getCookieConsentState() !== "declined"
+  );
 }
 
 function ensureFbq(pixelId: string) {
@@ -55,7 +60,8 @@ function ensureFbq(pixelId: string) {
   script.src = "https://connect.facebook.net/en_US/fbevents.js";
 
   const firstScript = document.getElementsByTagName("script")[0];
-  if (firstScript?.parentNode) firstScript.parentNode.insertBefore(script, firstScript);
+  if (firstScript?.parentNode)
+    firstScript.parentNode.insertBefore(script, firstScript);
   else document.head.appendChild(script);
 
   fbq("init", pixelId);
@@ -82,4 +88,20 @@ export function queueMetaPixelPageview() {
 
   window.fbq("track", "PageView");
   pendingPageview = false;
+}
+
+export function trackMetaPixelLead(payload?: Record<string, unknown>) {
+  if (!isEnabled()) return false;
+
+  ensureFbq(PIXEL_ID as string);
+  window.fbq?.("track", "Lead", {
+    content_name: "First Access Signup - Chasing Sun(Sets)",
+    content_category: "Waitlist",
+    content_ids: ["laylo-sunsets-2026-07-04"],
+    currency: "USD",
+    value: 0,
+    ...payload,
+  });
+
+  return true;
 }

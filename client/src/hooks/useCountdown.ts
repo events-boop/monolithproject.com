@@ -8,7 +8,13 @@ export interface CountdownValues {
   isExpired: boolean;
 }
 
-const ZERO: CountdownValues = { days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: true };
+const ZERO: CountdownValues = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  isExpired: true,
+};
 
 function calc(target: number): CountdownValues {
   const diff = Math.max(0, target - Date.now());
@@ -26,7 +32,9 @@ function calc(target: number): CountdownValues {
  * Shared countdown hook. Accepts a target timestamp (ms) and ticks every second.
  * Returns zeroed values with isExpired=true when target is null/undefined or in the past.
  */
-export function useCountdown(target: number | null | undefined): CountdownValues {
+export function useCountdown(
+  target: number | null | undefined
+): CountdownValues {
   const [value, setValue] = useState<CountdownValues>(() =>
     target ? calc(target) : ZERO
   );

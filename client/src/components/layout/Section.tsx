@@ -61,7 +61,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(
       children,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const outer = [
       spacingClass[spacing],
@@ -92,7 +92,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(
         <div className={inner}>{children}</div>
       </Tag>
     );
-  },
+  }
 );
 
 Section.displayName = "Section";

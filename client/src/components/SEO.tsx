@@ -59,19 +59,22 @@ export default function SEO({
   const resolvedDescription = description || defaultDescription;
   const canonicalOrigin = getCanonicalOrigin();
   const canonicalTarget = normalizePath(
-    canonicalPath || (typeof window !== "undefined" ? window.location.pathname : "/"),
+    canonicalPath ||
+      (typeof window !== "undefined" ? window.location.pathname : "/")
   );
   const canonicalUrl = `${canonicalOrigin}${canonicalTarget}`;
   const resolvedImage = resolveAbsoluteUrl(image, canonicalOrigin);
   const serializedSchema =
-    schemaData !== undefined ? JSON.stringify(schemaData).replace(/</g, "\\u003c") : null;
+    schemaData !== undefined
+      ? JSON.stringify(schemaData).replace(/</g, "\\u003c")
+      : null;
 
   useEffect(() => {
     if (typeof document === "undefined") return;
 
     const head = document.head;
     const canonicalLinks = Array.from(
-      head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]'),
+      head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]')
     );
     const canonicalLink = canonicalLinks[0] ?? document.createElement("link");
 
@@ -83,7 +86,7 @@ export default function SEO({
     canonicalLink.setAttribute("href", canonicalUrl);
     canonicalLink.setAttribute("data-rh", "true");
 
-    canonicalLinks.slice(1).forEach((link) => link.remove());
+    canonicalLinks.slice(1).forEach(link => link.remove());
   }, [canonicalUrl]);
 
   return (

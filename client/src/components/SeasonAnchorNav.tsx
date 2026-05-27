@@ -12,13 +12,19 @@ interface SeasonAnchorNavProps {
   className?: string;
 }
 
-export default function SeasonAnchorNav({ items, tone = "warm", className = "" }: SeasonAnchorNavProps) {
+export default function SeasonAnchorNav({
+  items,
+  tone = "warm",
+  className = "",
+}: SeasonAnchorNavProps) {
   const sectionIds = useMemo(
     () =>
       items
-        .map((item) => (item.href.startsWith("#") ? item.href.slice(1) : item.href))
+        .map(item =>
+          item.href.startsWith("#") ? item.href.slice(1) : item.href
+        )
         .filter(Boolean),
-    [items],
+    [items]
   );
   const [activeId, setActiveId] = useState(sectionIds[0] ?? "");
   const visibleRef = useRef<Set<string>>(new Set());
@@ -27,13 +33,13 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
     if (!sectionIds.length) return;
 
     const elements = sectionIds
-      .map((id) => document.getElementById(id))
+      .map(id => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
 
     if (!elements.length) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      entries => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             visibleRef.current.add(entry.target.id);
@@ -46,9 +52,9 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
         for (const id of sectionIds) {
           if (visibleRef.current.has(id)) picked = id;
         }
-        setActiveId((prev) => (prev === picked ? prev : picked));
+        setActiveId(prev => (prev === picked ? prev : picked));
       },
-      { rootMargin: "-35% 0px -64% 0px" },
+      { rootMargin: "-35% 0px -64% 0px" }
     );
 
     for (const el of elements) observer.observe(el);
@@ -56,7 +62,10 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
     return () => observer.disconnect();
   }, [sectionIds]);
 
-  const shellToneClass = tone === "warm" ? "season-anchor-shell-warm" : "season-anchor-shell-nocturne";
+  const shellToneClass =
+    tone === "warm"
+      ? "season-anchor-shell-warm"
+      : "season-anchor-shell-nocturne";
 
   return (
     <motion.div
@@ -67,18 +76,25 @@ export default function SeasonAnchorNav({ items, tone = "warm", className = "" }
       className={`sticky sticky-shell-top z-40 px-6 ${className}`}
     >
       <div className="container layout-default">
-        <nav className={`season-anchor-shell ${shellToneClass}`} aria-label="Season page sections">
-          {items.map((item) => {
-            const sectionId = item.href.startsWith("#") ? item.href.slice(1) : item.href;
+        <nav
+          className={`season-anchor-shell ${shellToneClass}`}
+          aria-label="Season page sections"
+        >
+          {items.map(item => {
+            const sectionId = item.href.startsWith("#")
+              ? item.href.slice(1)
+              : item.href;
             const isActive = sectionId === activeId;
             const activeClass =
-              tone === "warm" ? "season-anchor-link-active-warm" : "season-anchor-link-active-nocturne";
+              tone === "warm"
+                ? "season-anchor-link-active-warm"
+                : "season-anchor-link-active-nocturne";
 
             return (
               <a
                 key={item.href}
                 href={item.href}
-                onClick={(e) => {
+                onClick={e => {
                   if (!item.href.startsWith("#")) return;
                   const target = document.getElementById(sectionId);
                   if (!target) return;

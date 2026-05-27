@@ -9,7 +9,15 @@ const clientAssetsDir = path.join(rootDir, "client", "assets");
 const outputDir = path.join(publicImagesDir, "generated");
 const reportPath = path.join(outputDir, "responsive-image-report.json");
 
-const widths = [480, 1024, 1920];
+const defaultWidths = [480, 1024];
+const desktopWidthsByBaseName = new Map([
+  ["hero-monolith", [480, 1024, 1920]],
+  ["hero-video-1-poster", [480, 1024, 1920]],
+  ["artists-collective", [480, 1024, 1600]],
+  ["chasing-sunsets", [480, 1024, 1600]],
+  ["untold-story-juany-deron-v2", [480, 1024, 1600]],
+  ["lazare-recap", [480, 1024, 1542]],
+]);
 const sourceExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif"]);
 const sourceExtensionPreference = new Map([
   [".avif", 0],
@@ -36,7 +44,7 @@ async function hasGeneratedAssets() {
   if (!(await pathExists(outputDir))) return false;
 
   const entries = await fs.readdir(outputDir);
-  return entries.some((entry) => entry !== "responsive-image-report.json");
+  return entries.some(entry => entry !== "responsive-image-report.json");
 }
 
 async function listFilesRecursive(dir) {
@@ -64,7 +72,11 @@ function toPosixPath(value) {
 
 function isInside(child, parent) {
   const relative = path.relative(parent, child);
-  return Boolean(relative) && !relative.startsWith("..") && !path.isAbsolute(relative);
+  return (
+    Boolean(relative) &&
+    !relative.startsWith("..") &&
+    !path.isAbsolute(relative)
+  );
 }
 
 function getPublicPath(absolutePath) {
@@ -93,6 +105,10 @@ function toKb(bytes) {
   return Number((bytes / 1024).toFixed(1));
 }
 
+function getWidthsForImage(baseName) {
+  return desktopWidthsByBaseName.get(baseName) || defaultWidths;
+}
+
 async function getSourceImages() {
   const candidates = [
     ...(await listFilesRecursive(publicDir)),
@@ -100,7 +116,7 @@ async function getSourceImages() {
   ];
 
   const imageCandidates = candidates
-    .filter((filePath) => {
+    .filter(filePath => {
       const ext = path.extname(filePath).toLowerCase();
       if (!sourceExtensions.has(ext)) return false;
       if (isInside(filePath, outputDir) || filePath === outputDir) return false;
@@ -121,14 +137,18 @@ async function getSourceImages() {
       continue;
     }
 
-    const currentRank = sourceExtensionPreference.get(path.extname(current).toLowerCase()) ?? 99;
-    const nextRank = sourceExtensionPreference.get(path.extname(filePath).toLowerCase()) ?? 99;
+    const currentRank =
+      sourceExtensionPreference.get(path.extname(current).toLowerCase()) ?? 99;
+    const nextRank =
+      sourceExtensionPreference.get(path.extname(filePath).toLowerCase()) ?? 99;
     if (nextRank < currentRank) {
       byGeneratedName.set(baseName, filePath);
     }
   }
 
-  return Array.from(byGeneratedName.values()).sort((a, b) => a.localeCompare(b));
+  return Array.from(byGeneratedName.values()).sort((a, b) =>
+    a.localeCompare(b)
+  );
 }
 
 async function generateForImage(inputPath) {
@@ -145,11 +165,15 @@ async function generateForImage(inputPath) {
     throw new Error(`Missing image metadata for ${inputPath}`);
   }
 
+  const widths = getWidthsForImage(baseName);
   const variants = [];
 
   for (const width of widths) {
     for (const format of formats) {
-      const outputPath = path.join(outputDir, `${baseName}-${width}.${format.ext}`);
+      const outputPath = path.join(
+        outputDir,
+        `${baseName}-${width}.${format.ext}`
+      );
       await sharp(inputPath)
         .rotate()
         .resize({ width, withoutEnlargement: true })
@@ -166,9 +190,11 @@ async function generateForImage(inputPath) {
     }
   }
 
-  const smallestUseful = variants
-    .filter((variant) => variant.width === 1024)
-    .sort((a, b) => a.bytes - b.bytes)[0] || variants.sort((a, b) => a.bytes - b.bytes)[0];
+  const smallestUseful =
+    variants
+      .filter(variant => variant.width === 1024)
+      .sort((a, b) => a.bytes - b.bytes)[0] ||
+    variants.sort((a, b) => a.bytes - b.bytes)[0];
 
   return {
     source: publicPath,
@@ -182,7 +208,10 @@ async function generateForImage(inputPath) {
     estimatedTransferKb: toKb(smallestUseful.bytes),
     estimatedSavingsBytes: Math.max(0, originalBytes - smallestUseful.bytes),
     estimatedSavingsPct: originalBytes
-      ? Math.round((Math.max(0, originalBytes - smallestUseful.bytes) / originalBytes) * 100)
+      ? Math.round(
+          (Math.max(0, originalBytes - smallestUseful.bytes) / originalBytes) *
+            100
+        )
       : 0,
   };
 }
@@ -198,24 +227,32 @@ async function main() {
   if (skipGeneration) {
     if (!generatedAssetsExist) {
       throw new Error(
-        "SKIP_IMAGE_GENERATION=true was set, but pre-generated responsive image assets are missing.",
+        "SKIP_IMAGE_GENERATION=true was set, but pre-generated responsive image assets are missing."
       );
     }
 
     if (!reportExists) {
-      console.warn("⚠️ Skipping image generation without a responsive-image-report.json file.");
+      console.warn(
+        "⚠️ Skipping image generation without a responsive-image-report.json file."
+      );
     }
 
-    console.log("⏩ Skipping image generation; using pre-generated assets from repository.");
+    console.log(
+      "⏩ Skipping image generation; using pre-generated assets from repository."
+    );
     return;
   }
 
   if (isCI && generatedAssetsExist) {
     if (!reportExists) {
-      console.warn("⚠️ Skipping image generation in CI without a responsive-image-report.json file.");
+      console.warn(
+        "⚠️ Skipping image generation in CI without a responsive-image-report.json file."
+      );
     }
 
-    console.log("⏩ Skipping image generation in CI; using pre-generated assets from repository.");
+    console.log(
+      "⏩ Skipping image generation in CI; using pre-generated assets from repository."
+    );
     return;
   }
 
@@ -236,15 +273,23 @@ async function main() {
       acc.originalBytes += report.originalBytes;
       acc.estimatedTransferBytes += report.estimatedTransferBytes;
       acc.estimatedSavingsBytes += report.estimatedSavingsBytes;
-      acc.variantBytes += report.variants.reduce((sum, variant) => sum + variant.bytes, 0);
+      acc.variantBytes += report.variants.reduce(
+        (sum, variant) => sum + variant.bytes,
+        0
+      );
       return acc;
     },
-    { originalBytes: 0, estimatedTransferBytes: 0, estimatedSavingsBytes: 0, variantBytes: 0 },
+    {
+      originalBytes: 0,
+      estimatedTransferBytes: 0,
+      estimatedSavingsBytes: 0,
+      variantBytes: 0,
+    }
   );
 
   await fs.writeFile(
     reportPath,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), widths, totals, images: reports }, null, 2)}\n`,
+    `${JSON.stringify({ generatedAt: new Date().toISOString(), defaultWidths, totals, images: reports }, null, 2)}\n`
   );
 
   const savingsPct = totals.originalBytes
@@ -253,13 +298,13 @@ async function main() {
 
   console.log(`generated responsive variants for ${reports.length} images`);
   console.log(
-    `estimated 1024w AVIF/WebP transfer: ${formatBytes(totals.estimatedTransferBytes)} vs ${formatBytes(totals.originalBytes)} originals (${savingsPct}% savings)`,
+    `estimated 1024w AVIF/WebP transfer: ${formatBytes(totals.estimatedTransferBytes)} vs ${formatBytes(totals.originalBytes)} originals (${savingsPct}% savings)`
   );
   console.log(`variant bytes written: ${formatBytes(totals.variantBytes)}`);
   console.log(`report written: ${path.relative(rootDir, reportPath)}`);
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });

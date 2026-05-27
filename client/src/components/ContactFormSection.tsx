@@ -9,10 +9,26 @@ import HoneypotField from "@/components/HoneypotField";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2, "Name is required").max(120, "Name is too long"),
-  email: z.string().trim().email("Invalid email address").max(320, "Email is too long"),
-  subject: z.string().trim().min(2, "Subject is required").max(160, "Subject is too long"),
-  message: z.string().trim().min(10, "Please provide more details").max(5000, "Message is too long"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name is required")
+    .max(120, "Name is too long"),
+  email: z
+    .string()
+    .trim()
+    .email("Invalid email address")
+    .max(320, "Email is too long"),
+  subject: z
+    .string()
+    .trim()
+    .min(2, "Subject is required")
+    .max(160, "Subject is too long"),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Please provide more details")
+    .max(5000, "Message is too long"),
   [honeypotFieldName]: z.string().optional(),
 });
 
@@ -44,7 +60,11 @@ export default function ContactFormSection() {
       });
       setIsSubmitted(true);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Unable to submit message right now.");
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit message right now."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -63,7 +83,9 @@ export default function ContactFormSection() {
           <div className="w-16 h-16 border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 text-primary rounded-2xl">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <h3 className="font-display text-3xl mb-4 uppercase text-charcoal">Message Received</h3>
+          <h3 className="font-display text-3xl mb-4 uppercase text-charcoal">
+            Message Received
+          </h3>
           <p className="text-charcoal/70 max-w-md">
             We read everything. If it needs a reply, we will get back to you.
           </p>
@@ -73,7 +95,12 @@ export default function ContactFormSection() {
           <HoneypotField {...register(honeypotFieldName)} />
 
           <div>
-            <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Name</label>
+            <label
+              htmlFor="contact-name"
+              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+            >
+              Name
+            </label>
             <input
               id="contact-name"
               {...register("name")}
@@ -82,11 +109,20 @@ export default function ContactFormSection() {
               className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="Full name"
             />
-            {errors.name && <span className="text-red-600 text-xs mt-1 block">{errors.name.message}</span>}
+            {errors.name && (
+              <span className="text-red-600 text-xs mt-1 block">
+                {errors.name.message}
+              </span>
+            )}
           </div>
 
           <div>
-            <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Email</label>
+            <label
+              htmlFor="contact-email"
+              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+            >
+              Email
+            </label>
             <input
               id="contact-email"
               type="email"
@@ -97,11 +133,20 @@ export default function ContactFormSection() {
               className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="email@address.com"
             />
-            {errors.email && <span className="text-red-600 text-xs mt-1 block">{errors.email.message}</span>}
+            {errors.email && (
+              <span className="text-red-600 text-xs mt-1 block">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           <div>
-            <label htmlFor="contact-subject" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Subject</label>
+            <label
+              htmlFor="contact-subject"
+              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+            >
+              Subject
+            </label>
             <input
               id="contact-subject"
               {...register("subject")}
@@ -110,11 +155,20 @@ export default function ContactFormSection() {
               className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
               placeholder="What is this about?"
             />
-            {errors.subject && <span className="text-red-600 text-xs mt-1 block">{errors.subject.message}</span>}
+            {errors.subject && (
+              <span className="text-red-600 text-xs mt-1 block">
+                {errors.subject.message}
+              </span>
+            )}
           </div>
 
           <div>
-            <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2">Message</label>
+            <label
+              htmlFor="contact-message"
+              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+            >
+              Message
+            </label>
             <textarea
               id="contact-message"
               {...register("message")}
@@ -124,13 +178,20 @@ export default function ContactFormSection() {
               className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors resize-none rounded-xl"
               placeholder="Tell us what you need, with dates/links if relevant..."
             />
-            {errors.message && <span className="text-red-600 text-xs mt-1 block">{errors.message.message}</span>}
+            {errors.message && (
+              <span className="text-red-600 text-xs mt-1 block">
+                {errors.message.message}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-charcoal/55">
               Or email{" "}
-              <a className="underline hover:text-charcoal transition-colors" href="mailto:events@monolithproject.com">
+              <a
+                className="underline hover:text-charcoal transition-colors"
+                href="mailto:events@monolithproject.com"
+              >
                 events@monolithproject.com
               </a>
             </p>
@@ -151,7 +212,11 @@ export default function ContactFormSection() {
           </div>
 
           {submitError && (
-            <p className="flex items-center gap-1.5 text-red-600 text-xs font-mono" role="alert" aria-live="polite">
+            <p
+              className="flex items-center gap-1.5 text-red-600 text-xs font-mono"
+              role="alert"
+              aria-live="polite"
+            >
               <AlertCircle className="w-3 h-3" />
               {submitError}
             </p>

@@ -19,7 +19,10 @@ const faqItems: Array<[string, string]> = [
     "Where do I listen to the radio show?",
     "Listen on the official radio hub and SoundCloud episodes published by The Monolith Project.",
   ],
-  ["Where do I get access?", "First Access is available through the official Chasing Sun(Sets) hub before the public ticket drop."],
+  [
+    "Where do I get access?",
+    "First Access is available through the official Chasing Sun(Sets) hub before the public ticket drop.",
+  ],
   [
     "What’s the difference between Chasing Sunsets and Chasing Sun(Sets)?",
     "They refer to the same music brand. Chasing Sun(Sets) is the official styling; Chasing Sunsets is a common search variation.",
@@ -27,13 +30,33 @@ const faqItems: Array<[string, string]> = [
 ];
 
 const officialLinks = [
-  { label: "Official Chasing Sun(Sets) site", href: "/chasing-sunsets", external: false },
+  {
+    label: "Official Chasing Sun(Sets) site",
+    href: "/chasing-sunsets",
+    external: false,
+  },
   { label: CTA_LABELS.radioHub, href: "/radio", external: false },
   { label: "First Access", href: POSH_TICKET_URL, external: false },
-  { label: "Instagram", href: "https://instagram.com/chasingsunsets.music", external: true },
-  { label: "SoundCloud", href: "https://soundcloud.com/chasing-sun-sets", external: true },
-  { label: "Monolith SoundCloud Archive", href: "https://soundcloud.com/monolithproject", external: true },
-  { label: "YouTube", href: "https://youtube.com/@monolithproject", external: true },
+  {
+    label: "Instagram",
+    href: "https://instagram.com/chasingsunsets.music",
+    external: true,
+  },
+  {
+    label: "SoundCloud",
+    href: "https://soundcloud.com/chasing-sun-sets",
+    external: true,
+  },
+  {
+    label: "Monolith SoundCloud Archive",
+    href: "https://soundcloud.com/monolithproject",
+    external: true,
+  },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@monolithproject",
+    external: true,
+  },
 ];
 
 const sectionTransition = { duration: 0.56, ease: [0.22, 1, 0.36, 1] as const };
@@ -57,7 +80,11 @@ export default function ChasingSunsetsFacts() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(224,90,58,0.14),transparent_34%),radial-gradient(circle_at_88%_18%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_72%_78%,rgba(139,92,246,0.11),transparent_36%)]" />
       <Navigation brand="chasing-sunsets" />
 
-      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-24 px-6"
+      >
         <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-5">
@@ -67,10 +94,12 @@ export default function ChasingSunsetsFacts() {
               Chasing Sun(Sets) — Official Facts & Identity
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl">
-              Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
+              Chasing Sun(Sets) is a Chicago-based sunset house music event
+              series and radio show by The Monolith Project.
             </p>
             <p className="text-base md:text-lg text-white/70 mt-3 max-w-3xl">
-              If you&apos;re looking for the fragrance with a similar name, this page is for the music brand.
+              If you&apos;re looking for the fragrance with a similar name, this
+              page is for the music brand.
             </p>
             <div className="mt-5 flex flex-wrap gap-2.5">
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/80">
@@ -87,38 +116,48 @@ export default function ChasingSunsetsFacts() {
               <Link href="/radio" className="btn-pill-radio">
                 {CTA_LABELS.radioHub}
               </Link>
-              <a
-                href={POSH_TICKET_URL}
-                className="btn-pill-monolith"
-              >
+              <a href={POSH_TICKET_URL} className="btn-pill-monolith">
                 First Access
               </a>
             </div>
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-16 grid md:grid-cols-2 gap-6" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-16 grid md:grid-cols-2 gap-6"
+          {...sectionReveal}
+        >
           <article className="luxe-surface-dark rounded-2xl p-7">
             <h2 className="font-display text-3xl mb-4 uppercase">What It Is</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Chasing Sun(Sets) is The Monolith Project&apos;s Chicago-rooted sunset series and radio show. It includes
-              in-person events, ticketed dates, and a continuing radio show featuring guest mixes and full episodes.
+              Chasing Sun(Sets) is The Monolith Project&apos;s Chicago-rooted
+              sunset series and radio show. It includes in-person events,
+              ticketed dates, and a continuing radio show featuring guest mixes
+              and full episodes.
             </p>
           </article>
           <article className="luxe-surface-dark rounded-2xl p-7">
-            <h2 className="font-display text-3xl mb-4 uppercase">What It Isn&apos;t</h2>
+            <h2 className="font-display text-3xl mb-4 uppercase">
+              What It Isn&apos;t
+            </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Chasing Sun(Sets) is not a perfume, cosmetic, or fragrance product line. This brand is strictly a music identity:
-              events, tickets, and radio episodes presented by The Monolith Project.
+              Chasing Sun(Sets) is not a perfume, cosmetic, or fragrance product
+              line. This brand is strictly a music identity: events, tickets,
+              and radio episodes presented by The Monolith Project.
             </p>
           </article>
         </motion.section>
 
-        <motion.section className="container layout-default mt-14" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-14"
+          {...sectionReveal}
+        >
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
-            <h2 className="font-display text-3xl uppercase mb-5">Official Links</h2>
+            <h2 className="font-display text-3xl uppercase mb-5">
+              Official Links
+            </h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              {officialLinks.map((item) => (
+              {officialLinks.map(item => (
                 <a
                   key={item.label}
                   href={item.href}
@@ -128,7 +167,9 @@ export default function ChasingSunsetsFacts() {
                 >
                   <span className="inline-flex items-center gap-2 text-sm">
                     {item.label}
-                    {item.external && <ArrowUpRight className="w-3.5 h-3.5 text-primary/85" />}
+                    {item.external && (
+                      <ArrowUpRight className="w-3.5 h-3.5 text-primary/85" />
+                    )}
                   </span>
                 </a>
               ))}
@@ -136,9 +177,14 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-14" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-14"
+          {...sectionReveal}
+        >
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
-            <h2 className="font-display text-3xl uppercase mb-5">Brand Names & Spellings</h2>
+            <h2 className="font-display text-3xl uppercase mb-5">
+              Brand Names & Spellings
+            </h2>
             <ul className="flex flex-wrap gap-2.5">
               <li className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.03] px-3 py-1.5 ui-chip text-white/80">
                 Chasing Sun(Sets)
@@ -153,40 +199,63 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-14" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-14"
+          {...sectionReveal}
+        >
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">Fast Facts</h2>
             <dl className="grid md:grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Founded</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Founded
+                </dt>
                 <dd className="text-lg">2024</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Location</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Location
+                </dt>
                 <dd className="text-lg">Chicago, IL</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Format</dt>
-                <dd className="text-lg">Sunset events + radio/podcast episodes</dd>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Format
+                </dt>
+                <dd className="text-lg">
+                  Sunset events + radio/podcast episodes
+                </dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Genres</dt>
-                <dd className="text-lg">Afro House / Organic House / Melodic House</dd>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Genres
+                </dt>
+                <dd className="text-lg">
+                  Afro House / Organic House / Melodic House
+                </dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 md:col-span-2">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">Organizer</dt>
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Organizer
+                </dt>
                 <dd className="text-lg">The Monolith Project</dd>
               </div>
             </dl>
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-14" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-14"
+          {...sectionReveal}
+        >
           <div className="luxe-surface-dark rounded-2xl p-7 md:p-8">
             <h2 className="font-display text-3xl uppercase mb-5">FAQ</h2>
             <div className="space-y-3">
               {faqItems.map(([question, answer]) => (
-                <article key={question} className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-4">
+                <article
+                  key={question}
+                  className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-4"
+                >
                   <h3 className="font-semibold text-lg mb-2">{question}</h3>
                   <p className="text-muted-foreground">{answer}</p>
                 </article>
@@ -195,16 +264,25 @@ export default function ChasingSunsetsFacts() {
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-14" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-14"
+          {...sectionReveal}
+        >
           <div className="luxe-surface-dark rounded-2xl p-6">
             <p className="text-sm text-muted-foreground leading-loose">
-              Chasing Sun(Sets) is a Chicago sunset house music series — not a fragrance.
-              Listen on the{" "}
-              <Link href="/radio" className="btn-inline-pill btn-inline-pill-radio">
+              Chasing Sun(Sets) is a Chicago sunset house music series — not a
+              fragrance. Listen on the{" "}
+              <Link
+                href="/radio"
+                className="btn-inline-pill btn-inline-pill-radio"
+              >
                 official radio hub
-              </Link>
-              {" "}or{" "}
-              <a href={POSH_TICKET_URL} className="btn-inline-pill btn-inline-pill-monolith">
+              </Link>{" "}
+              or{" "}
+              <a
+                href={POSH_TICKET_URL}
+                className="btn-inline-pill btn-inline-pill-monolith"
+              >
                 first access
               </a>
               .

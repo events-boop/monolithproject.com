@@ -1,6 +1,10 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import type { MediaItem, GalleryImageItem, GalleryVideoItem } from "@/data/galleryData";
+import type {
+  MediaItem,
+  GalleryImageItem,
+  GalleryVideoItem,
+} from "@/data/galleryData";
 
 // ---------------------------------------------------------------------------
 // Mocks
@@ -53,7 +57,9 @@ vi.mock("yet-another-react-lightbox/plugins/thumbnails.css", () => ({}));
 // Fixtures
 // ---------------------------------------------------------------------------
 
-function makeImage(overrides: Partial<GalleryImageItem> = {}): GalleryImageItem {
+function makeImage(
+  overrides: Partial<GalleryImageItem> = {}
+): GalleryImageItem {
   return {
     id: "img-1",
     kind: "image",
@@ -68,7 +74,9 @@ function makeImage(overrides: Partial<GalleryImageItem> = {}): GalleryImageItem 
   };
 }
 
-function makeVideo(overrides: Partial<GalleryVideoItem> = {}): GalleryVideoItem {
+function makeVideo(
+  overrides: Partial<GalleryVideoItem> = {}
+): GalleryVideoItem {
   return {
     id: "vid-1",
     kind: "video",
@@ -268,7 +276,7 @@ describe("GalleryLightbox", () => {
     it("passes index and onClose through to the Lightbox component", () => {
       const onClose = vi.fn();
       render(
-        <GalleryLightbox media={[makeImage()]} index={3} onClose={onClose} />,
+        <GalleryLightbox media={[makeImage()]} index={3} onClose={onClose} />
       );
 
       expect(capturedProps.index).toBe(3);
@@ -277,14 +285,14 @@ describe("GalleryLightbox", () => {
 
     it("sets open to true when index >= 0", () => {
       render(
-        <GalleryLightbox media={[makeImage()]} index={0} onClose={noop} />,
+        <GalleryLightbox media={[makeImage()]} index={0} onClose={noop} />
       );
       expect(capturedProps.open).toBe(true);
     });
 
     it("sets open to false when index is -1", () => {
       render(
-        <GalleryLightbox media={[makeImage()]} index={-1} onClose={noop} />,
+        <GalleryLightbox media={[makeImage()]} index={-1} onClose={noop} />
       );
       expect(capturedProps.open).toBe(false);
     });

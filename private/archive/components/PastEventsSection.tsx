@@ -35,7 +35,10 @@ const pastEvents: PastEvent[] = [
 
 export default function PastEventsSection() {
   return (
-    <section id="recaps" className="section-rhythm bg-background relative overflow-hidden">
+    <section
+      id="recaps"
+      className="section-rhythm bg-background relative overflow-hidden"
+    >
       <div className="absolute inset-0 atmo-surface opacity-80 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.08),transparent_34%),linear-gradient(180deg,rgba(0,0,0,0)_35%,rgba(0,0,0,0.25)_100%)] pointer-events-none" />
       <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />

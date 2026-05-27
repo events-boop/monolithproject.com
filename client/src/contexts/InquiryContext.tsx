@@ -1,6 +1,12 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type InquiryType = "sponsor" | "venue" | "artist" | "press" | "general" | "booking";
+export type InquiryType =
+  | "sponsor"
+  | "venue"
+  | "artist"
+  | "press"
+  | "general"
+  | "booking";
 
 interface InquiryContextType {
   isOpen: boolean;
@@ -25,7 +31,9 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <InquiryContext.Provider value={{ isOpen, type, openInquiry, closeInquiry }}>
+    <InquiryContext.Provider
+      value={{ isOpen, type, openInquiry, closeInquiry }}
+    >
       {children}
     </InquiryContext.Provider>
   );

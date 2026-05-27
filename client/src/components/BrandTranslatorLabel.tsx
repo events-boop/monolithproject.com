@@ -26,7 +26,7 @@ export default function BrandTranslatorLabel({
       className={cn(
         "inline-flex min-h-[var(--tap-target-min)] items-center rounded-full border px-3.5 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.24em] sm:text-xs",
         toneClasses[tone],
-        className,
+        className
       )}
     >
       {children}

@@ -86,9 +86,17 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Lights Out", duration: "6:03" },
     ],
     previousSets: [
-      { title: "Untold Story S1 E2", date: "June 2024", url: "https://soundcloud.com/haaihaaihaai/untold-story-exclusive" },
-      { title: "Monolith Radio 044", date: "Oct 2024", url: "https://soundcloud.com/haaihaaihaai/monolith-radio-session" }
-    ]
+      {
+        title: "Untold Story S1 E2",
+        date: "June 2024",
+        url: "https://soundcloud.com/haaihaaihaai/untold-story-exclusive",
+      },
+      {
+        title: "Monolith Radio 044",
+        date: "Oct 2024",
+        url: "https://soundcloud.com/haaihaaihaai/monolith-radio-session",
+      },
+    ],
   },
   {
     id: "autograf",
@@ -152,9 +160,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     bio: "Arodes brings deep, rhythmic Afro house to the sunset stage. His selections are tailored for open-air environments, building steady energy as the light fades.",
     tags: ["Afro House", "Guest", "Open Air"],
     socials: {},
-    tracks: [
-      { title: "Sunset Rhythm", duration: "5:45" }
-    ],
+    tracks: [{ title: "Sunset Rhythm", duration: "5:45" }],
   },
   {
     id: "summermel",
@@ -169,12 +175,12 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     socials: { instagram: "https://instagram.com/summermel" },
     tracks: [
       { title: "Golden Hour Set", duration: "60:00" },
-      { title: "Open Air Mix", duration: "55:30" }
+      { title: "Open Air Mix", duration: "55:30" },
     ],
     previousSets: [
       { title: "The First Untold Story", date: "2024" },
-      { title: "Lazare x Sabry Support", date: "2025" }
-    ]
+      { title: "Lazare x Sabry Support", date: "2025" },
+    ],
   },
   {
     id: "chus",
@@ -280,9 +286,17 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     previousSets: [
       { title: "Direct Support for Eran Hersh", date: "2025" },
       { title: "Juany Bravo b2b Deron Support", date: "2025" },
-      { title: "Untold Story S1 E4", date: "Nov 2024", url: "https://soundcloud.com/avomusic" },
-      { title: "Monolith Radio 038", date: "Aug 2024", url: "https://soundcloud.com/avomusic" }
-    ]
+      {
+        title: "Untold Story S1 E4",
+        date: "Nov 2024",
+        url: "https://soundcloud.com/avomusic",
+      },
+      {
+        title: "Monolith Radio 038",
+        date: "Aug 2024",
+        url: "https://soundcloud.com/avomusic",
+      },
+    ],
   },
   {
     id: "eran-hersh",
@@ -301,11 +315,22 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Forbidden", duration: "6:30" },
     ],
     previousSets: [
-      { title: "Live at RheinRiff", date: "Sept 2025", url: "https://soundcloud.com/eranhersh" },
-      { title: "Bazar by Sasson Chapter", date: "Aug 2025", url: "https://soundcloud.com/eranhersh" },
+      {
+        title: "Live at RheinRiff",
+        date: "Sept 2025",
+        url: "https://soundcloud.com/eranhersh",
+      },
+      {
+        title: "Bazar by Sasson Chapter",
+        date: "Aug 2025",
+        url: "https://soundcloud.com/eranhersh",
+      },
     ],
     gallery: [
-      { src: "/images/eran-hersh-live-1.webp", alt: "Eran Hersh live at Bazar by Sasson" },
+      {
+        src: "/images/eran-hersh-live-1.webp",
+        alt: "Eran Hersh live at Bazar by Sasson",
+      },
       { src: "/images/eran-hersh-live-5.webp", alt: "Eran Hersh at RheinRiff" },
       { src: "/images/eran-hersh-live-6.png", alt: "Eran Hersh portrait" },
     ],
@@ -353,8 +378,8 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     tracks: [],
     previousSets: [
       { title: "Juany Bravo b2b Deron Show", date: "2025" },
-      { title: "Autograf Show", date: "2024" }
-    ]
+      { title: "Autograf Show", date: "2024" },
+    ],
   },
   {
     id: "hashtom",
@@ -394,9 +419,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     tags: ["Guest", "Local Support"],
     socials: {},
     tracks: [],
-    previousSets: [
-      { title: "Autograf Show Support", date: "2024" }
-    ]
+    previousSets: [{ title: "Autograf Show Support", date: "2024" }],
   },
   {
     id: "maximo",
@@ -410,12 +433,10 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     tags: ["Guest", "Closer"],
     socials: {},
     tracks: [],
-    previousSets: [
-      { title: "Autograf Show Closing Set", date: "Mar 2024" }
-    ]
-  }
+    previousSets: [{ title: "Autograf Show Closing Set", date: "Mar 2024" }],
+  },
 ];
 
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(
-  ARTIST_ENTRIES.map((artist) => [artist.id, artist]),
+  ARTIST_ENTRIES.map(artist => [artist.id, artist])
 ) as Record<string, ArtistData>;

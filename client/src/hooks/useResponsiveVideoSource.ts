@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 export function useResponsiveVideoSource(
   desktopSrc: string,
   mobileSrc?: string,
-  breakpoint = 768,
+  breakpoint = 768
 ) {
   const [src, setSrc] = useState(() => {
-    if (typeof window !== "undefined" && mobileSrc && window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches) {
+    if (
+      typeof window !== "undefined" &&
+      mobileSrc &&
+      window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches
+    ) {
       return mobileSrc;
     }
     return desktopSrc;

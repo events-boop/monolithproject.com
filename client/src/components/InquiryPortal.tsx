@@ -716,7 +716,8 @@ export default function InquiryPortal() {
                         What We Need
                       </p>
                       <p className="mt-1 text-sm text-white/60">
-                        Fill what's relevant. Skip what isn't. A real person reviews every note.
+                        Fill what's relevant. Skip what isn't. A real person
+                        reviews every note.
                       </p>
                     </div>
                     <div
@@ -904,8 +905,8 @@ export default function InquiryPortal() {
 
                       <div className="flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
                         <p className="max-w-md text-sm leading-relaxed text-white/50">
-                          Your note lands directly with the Monolith office.
-                          No auto-replies — a real person reviews every submission.
+                          Your note lands directly with the Monolith office. No
+                          auto-replies — a real person reviews every submission.
                         </p>
 
                         <MagneticButton strength={0.12}>
@@ -980,7 +981,8 @@ function AccentNote({ config }: { config: InquiryPortalConfig }) {
       </p>
       <p className="mt-2 leading-relaxed">
         This note lands in the{" "}
-        <span style={{ color: config.accent }}>{config.title}</span> queue, reviewed on its own cadence.
+        <span style={{ color: config.accent }}>{config.title}</span> queue,
+        reviewed on its own cadence.
       </p>
     </div>
   );

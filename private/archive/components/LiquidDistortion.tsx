@@ -1,6 +1,14 @@
 export default function LiquidDistortion() {
   return (
-    <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }} aria-hidden="true">
+    <svg
+      style={{
+        position: "absolute",
+        width: 0,
+        height: 0,
+        pointerEvents: "none",
+      }}
+      aria-hidden="true"
+    >
       <defs>
         <filter id="liquid-distortion" colorInterpolationFilters="sRGB">
           <feTurbulence

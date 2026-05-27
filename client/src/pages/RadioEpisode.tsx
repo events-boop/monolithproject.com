@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
-import { getLegacyRadioRedirect, getRadioEpisode, radioEpisodes } from "@/data/radioEpisodes";
+import {
+  getLegacyRadioRedirect,
+  getRadioEpisode,
+  radioEpisodes,
+} from "@/data/radioEpisodes";
 import { CTA_LABELS } from "@/lib/cta";
 
 function isExternalLink(url: string) {
@@ -25,10 +29,15 @@ export default function RadioEpisode() {
   const [, setLocation] = useLocation();
   const episode = slug ? getRadioEpisode(slug) : undefined;
   const legacyRedirect = slug ? getLegacyRadioRedirect(slug) : undefined;
-  const episodeIndex = episode ? radioEpisodes.findIndex((entry) => entry.slug === episode.slug) : -1;
-  const previousEpisode = episodeIndex > 0 ? radioEpisodes[episodeIndex - 1] : undefined;
+  const episodeIndex = episode
+    ? radioEpisodes.findIndex(entry => entry.slug === episode.slug)
+    : -1;
+  const previousEpisode =
+    episodeIndex > 0 ? radioEpisodes[episodeIndex - 1] : undefined;
   const nextEpisode =
-    episodeIndex >= 0 && episodeIndex < radioEpisodes.length - 1 ? radioEpisodes[episodeIndex + 1] : undefined;
+    episodeIndex >= 0 && episodeIndex < radioEpisodes.length - 1
+      ? radioEpisodes[episodeIndex + 1]
+      : undefined;
   const episodeJumpLinks = [
     { href: "#listen", label: "Listen" },
     { href: "#tracklist", label: "Tracklist" },
@@ -50,7 +59,11 @@ export default function RadioEpisode() {
           canonicalPath={legacyRedirect}
         />
         <Navigation />
-        <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="page-shell-start pb-24 px-6"
+        >
           <section className="container layout-narrow text-center">
             <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-4">
               Legacy Link Redirect
@@ -59,7 +72,8 @@ export default function RadioEpisode() {
               Redirecting
             </h1>
             <p className="text-muted-foreground mb-8">
-              This older radio URL now points to the current Monolith page for that artist or series.
+              This older radio URL now points to the current Monolith page for
+              that artist or series.
             </p>
             <Link href={legacyRedirect} className="btn-pill-radio">
               Continue
@@ -80,13 +94,18 @@ export default function RadioEpisode() {
           canonicalPath="/radio"
         />
         <Navigation />
-        <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="page-shell-start pb-24 px-6"
+        >
           <section className="container layout-narrow text-center">
             <h1 className="font-display text-[clamp(2.7rem,7vw,5rem)] uppercase mb-5">
               Episode Not Found
             </h1>
             <p className="text-muted-foreground mb-8">
-              This radio episode URL does not exist. Visit the official radio archive for available episodes.
+              This radio episode URL does not exist. Visit the official radio
+              archive for available episodes.
             </p>
             <Link href="/radio" className="btn-pill-radio">
               {CTA_LABELS.radioHub}
@@ -108,7 +127,11 @@ export default function RadioEpisode() {
       />
       <Navigation />
 
-      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-24 px-6"
+      >
         <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4">
@@ -119,9 +142,13 @@ export default function RadioEpisode() {
             </h1>
             <p className="text-lg text-white/80">Guest: {episode.guest}</p>
             <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
-              Chasing Sun(Sets) is a Chicago-based sunset house music event series and radio show by The Monolith Project.
-              For disambiguation details, review{" "}
-              <Link href="/chasing-sunsets-facts" className="btn-inline-pill btn-inline-pill-radio">
+              Chasing Sun(Sets) is a Chicago-based sunset house music event
+              series and radio show by The Monolith Project. For disambiguation
+              details, review{" "}
+              <Link
+                href="/chasing-sunsets-facts"
+                className="btn-inline-pill btn-inline-pill-radio"
+              >
                 Official Chasing Sun(Sets) Identity
               </Link>
               .
@@ -137,12 +164,15 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-7" {...sectionReveal}>
+        <motion.section
+          className="container layout-default mt-7"
+          {...sectionReveal}
+        >
           <nav
             className="season-panel-nocturne p-2.5 flex flex-wrap gap-2"
             aria-label="Episode quick navigation"
           >
-            {episodeJumpLinks.map((item) => (
+            {episodeJumpLinks.map(item => (
               <a
                 key={item.href}
                 href={item.href}
@@ -154,7 +184,11 @@ export default function RadioEpisode() {
           </nav>
         </motion.section>
 
-        <motion.section id="listen" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section
+          id="listen"
+          className="container layout-default mt-10 scroll-shell-target"
+          {...sectionReveal}
+        >
           <h2 className="font-display text-3xl uppercase mb-4">Listen</h2>
           <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
             <iframe
@@ -169,42 +203,60 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section id="tracklist" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section
+          id="tracklist"
+          className="container layout-default mt-10 scroll-shell-target"
+          {...sectionReveal}
+        >
           <h2 className="font-display text-3xl uppercase mb-4">Tracklist</h2>
           <div className="border border-border/70 rounded-xl bg-card/40 luxe-surface-dark">
             {episode.tracklist.map((track, index) => (
               <div
                 key={`${track.timecode}-${track.artist}-${track.title}`}
-                className={`px-5 py-4 border-b border-border/40 last:border-b-0 flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-white/[0.03] transition-colors ${index % 2 === 0 ? "bg-white/[0.015]" : ""
-                  }`}
+                className={`px-5 py-4 border-b border-border/40 last:border-b-0 flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-white/[0.03] transition-colors ${
+                  index % 2 === 0 ? "bg-white/[0.015]" : ""
+                }`}
               >
                 <div className="flex items-center gap-3">
                   <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <p className="font-mono text-xs tracking-[0.2em] uppercase text-primary">{track.timecode}</p>
+                  <p className="font-mono text-xs tracking-[0.2em] uppercase text-primary">
+                    {track.timecode}
+                  </p>
                 </div>
                 <p className="text-sm text-white/90">
-                  <span className="font-semibold">{track.artist}</span> - {track.title}
+                  <span className="font-semibold">{track.artist}</span> -{" "}
+                  {track.title}
                 </p>
               </div>
             ))}
           </div>
         </motion.section>
 
-        <motion.section id="story" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
-          <h2 className="font-display text-3xl uppercase mb-4">Episode Story</h2>
+        <motion.section
+          id="story"
+          className="container layout-default mt-10 scroll-shell-target"
+          {...sectionReveal}
+        >
+          <h2 className="font-display text-3xl uppercase mb-4">
+            Episode Story
+          </h2>
           <article className="border border-border/70 rounded-xl p-6 bg-card/40 space-y-4 text-muted-foreground leading-relaxed luxe-surface-dark">
-            {episode.narrative.split("\n\n").map((paragraph) => (
+            {episode.narrative.split("\n\n").map(paragraph => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </article>
         </motion.section>
 
-        <motion.section id="guest-links" className="container layout-default mt-10 scroll-shell-target" {...sectionReveal}>
+        <motion.section
+          id="guest-links"
+          className="container layout-default mt-10 scroll-shell-target"
+          {...sectionReveal}
+        >
           <h2 className="font-display text-3xl uppercase mb-4">Guest Links</h2>
           <div className="flex flex-wrap gap-3">
-            {episode.guestLinks.map((link) =>
+            {episode.guestLinks.map(link =>
               isExternalLink(link.url) ? (
                 <a
                   key={link.label}
@@ -216,10 +268,14 @@ export default function RadioEpisode() {
                   {link.label}
                 </a>
               ) : (
-                <Link key={link.label} href={link.url} className="btn-pill-monolith">
+                <Link
+                  key={link.label}
+                  href={link.url}
+                  className="btn-pill-monolith"
+                >
                   {link.label}
                 </Link>
-              ),
+              )
             )}
             <Link href="/tickets" className="btn-pill-radio">
               {CTA_LABELS.tickets}
@@ -227,17 +283,28 @@ export default function RadioEpisode() {
           </div>
         </motion.section>
 
-        <motion.section className="container layout-default mt-12" {...sectionReveal}>
-          <h2 className="font-display text-2xl md:text-3xl uppercase mb-5">Continue Listening</h2>
+        <motion.section
+          className="container layout-default mt-12"
+          {...sectionReveal}
+        >
+          <h2 className="font-display text-2xl md:text-3xl uppercase mb-5">
+            Continue Listening
+          </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {previousEpisode ? (
               <Link
                 href={`/radio/${previousEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Previous Episode</p>
-                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">{previousEpisode.title}</p>
-                <p className="text-sm text-white/60 mb-3">{previousEpisode.displayDate}</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Previous Episode
+                </p>
+                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
+                  {previousEpisode.title}
+                </p>
+                <p className="text-sm text-white/60 mb-3">
+                  {previousEpisode.displayDate}
+                </p>
                 <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
                   <ArrowLeft className="w-4 h-4" />
                   Open Episode
@@ -245,8 +312,12 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Previous Episode</p>
-                <p className="text-sm text-white/70">This is the first available episode in the archive.</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Previous Episode
+                </p>
+                <p className="text-sm text-white/70">
+                  This is the first available episode in the archive.
+                </p>
               </div>
             )}
 
@@ -255,9 +326,15 @@ export default function RadioEpisode() {
                 href={`/radio/${nextEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Next Episode</p>
-                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">{nextEpisode.title}</p>
-                <p className="text-sm text-white/60 mb-3">{nextEpisode.displayDate}</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Next Episode
+                </p>
+                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
+                  {nextEpisode.title}
+                </p>
+                <p className="text-sm text-white/60 mb-3">
+                  {nextEpisode.displayDate}
+                </p>
                 <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
                   Open Episode
                   <ArrowRight className="w-4 h-4" />
@@ -265,15 +342,24 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">Next Episode</p>
-                <p className="text-sm text-white/70">You are on the latest published episode.</p>
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                  Next Episode
+                </p>
+                <p className="text-sm text-white/70">
+                  You are on the latest published episode.
+                </p>
               </div>
             )}
           </div>
         </motion.section>
       </main>
 
-      <EntityBoostStrip tone="dark" className="pb-8" intent="listen-episode" episodeHref="#listen" />
+      <EntityBoostStrip
+        tone="dark"
+        className="pb-8"
+        intent="listen-episode"
+        episodeHref="#listen"
+      />
     </div>
   );
 }

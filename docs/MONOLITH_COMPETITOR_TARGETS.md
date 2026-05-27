@@ -227,22 +227,22 @@ Reason:
 
 Use this table when assigning work.
 
-| Brand | Primary Lens | Secondary Lens | Watch Out For |
-| --- | --- | --- | --- |
-| ARC | Chicago authority | lineup + conversion structure | over-indexing on festival scale |
-| Cercle | artistic movement | heritage + visual narrative | becoming too cinematic and abstract |
-| Circoloco | scene myth | brand shorthand | assuming Monolith already has this level of lore |
-| Scorpios | ritual + hospitality | lifestyle world-building | soft, vague spiritual language |
-| Playa Padre | atmosphere + party lifestyle | recurring signature events | generic beach-club cliches |
-| Rosa Negra Beach | Latin energy + hospitality | proof and testimonial usage | over-staged “luxury experience” language |
-| Tomorrowland | mythology at scale | retention and expansion | fantasy overload |
-| Coachella | utility and modularity | brand commerce integration | flattening Monolith into generic festival UX |
-| Sónar | ideas + culture + music | program architecture | over-intellectualizing Monolith |
-| Burning Man | movement language | values framework | ideology replacing conversion clarity |
-| Hï Ibiza | venue authority | residency ecosystem | generic “world-class” language |
-| Ushuaïa Ibiza | spectacle and residency | day-to-night magic language | copying big-room theatrics blindly |
-| Pacha Ibiza | iconic shorthand | prestige cues | leaning too legacy-luxury |
-| DC-10 | underground authority | venue myth | becoming too insider-coded |
+| Brand            | Primary Lens                 | Secondary Lens                | Watch Out For                                    |
+| ---------------- | ---------------------------- | ----------------------------- | ------------------------------------------------ |
+| ARC              | Chicago authority            | lineup + conversion structure | over-indexing on festival scale                  |
+| Cercle           | artistic movement            | heritage + visual narrative   | becoming too cinematic and abstract              |
+| Circoloco        | scene myth                   | brand shorthand               | assuming Monolith already has this level of lore |
+| Scorpios         | ritual + hospitality         | lifestyle world-building      | soft, vague spiritual language                   |
+| Playa Padre      | atmosphere + party lifestyle | recurring signature events    | generic beach-club cliches                       |
+| Rosa Negra Beach | Latin energy + hospitality   | proof and testimonial usage   | over-staged “luxury experience” language         |
+| Tomorrowland     | mythology at scale           | retention and expansion       | fantasy overload                                 |
+| Coachella        | utility and modularity       | brand commerce integration    | flattening Monolith into generic festival UX     |
+| Sónar            | ideas + culture + music      | program architecture          | over-intellectualizing Monolith                  |
+| Burning Man      | movement language            | values framework              | ideology replacing conversion clarity            |
+| Hï Ibiza         | venue authority              | residency ecosystem           | generic “world-class” language                   |
+| Ushuaïa Ibiza    | spectacle and residency      | day-to-night magic language   | copying big-room theatrics blindly               |
+| Pacha Ibiza      | iconic shorthand             | prestige cues                 | leaning too legacy-luxury                        |
+| DC-10            | underground authority        | venue myth                    | becoming too insider-coded                       |
 
 ## 5. Prompt Assignment Plan
 

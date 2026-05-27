@@ -20,8 +20,8 @@ export default function ViewportLazy({
     const node = ref.current;
     if (!node) return;
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
           setVisible(true);
           observer.disconnect();
         }
@@ -38,5 +38,9 @@ export default function ViewportLazy({
     return () => window.clearTimeout(timeoutId);
   }, [revealAfterMs, visible]);
 
-  return <div ref={ref} className={visible ? undefined : minHeightClassName}>{visible ? children : null}</div>;
+  return (
+    <div ref={ref} className={visible ? undefined : minHeightClassName}>
+      {visible ? children : null}
+    </div>
+  );
 }

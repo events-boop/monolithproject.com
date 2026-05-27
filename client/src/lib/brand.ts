@@ -35,11 +35,12 @@ export const SERIES_COLORS: Record<ScheduledEvent["series"], string> = {
   "monolith-project": MONOLITH_ORANGE,
 };
 
-export const SERIES_COLORS_ON_LIGHT: Record<ScheduledEvent["series"], string> = {
-  "chasing-sunsets": SUN_SETS_GOLD_ON_LIGHT,
-  "untold-story": UNTOLD_CYAN_ON_LIGHT,
-  "monolith-project": MONOLITH_ORANGE_ON_LIGHT,
-};
+export const SERIES_COLORS_ON_LIGHT: Record<ScheduledEvent["series"], string> =
+  {
+    "chasing-sunsets": SUN_SETS_GOLD_ON_LIGHT,
+    "untold-story": UNTOLD_CYAN_ON_LIGHT,
+    "monolith-project": MONOLITH_ORANGE_ON_LIGHT,
+  };
 
 /** Sun(Sets) Radio is a global extension of Sun(Sets) — same gold. */
 export const RADIO_ACCENT = SUN_SETS_GOLD;

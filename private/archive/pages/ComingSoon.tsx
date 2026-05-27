@@ -28,7 +28,8 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     headline: "VIP & Tables",
     description: "Table bookings and elevated experiences are opening soon.",
     primaryCtaLabel: "Request VIP Access",
-    primaryCtaHref: "mailto:events@monolithproject.com?subject=VIP%20%26%20Tables%20Inquiry",
+    primaryCtaHref:
+      "mailto:events@monolithproject.com?subject=VIP%20%26%20Tables%20Inquiry",
     secondaryCtaLabel: CTA_LABELS.tickets,
     secondaryCtaHref: "/tickets",
   },
@@ -44,7 +45,8 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
   "/travel": {
     title: "Travel & Hotels",
     headline: "Travel & Hotels",
-    description: "Preferred hotel blocks and travel guidance are being finalized.",
+    description:
+      "Preferred hotel blocks and travel guidance are being finalized.",
     primaryCtaLabel: "Get Travel Updates",
     primaryCtaHref: "/newsletter",
     secondaryCtaLabel: CTA_LABELS.schedule,
@@ -53,7 +55,8 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
   "/guide": {
     title: "Arrival Guide",
     headline: "Arrival Guide",
-    description: "Venue entry, timing, and check-in guidance will be published soon.",
+    description:
+      "Venue entry, timing, and check-in guidance will be published soon.",
     primaryCtaLabel: CTA_LABELS.tickets,
     primaryCtaHref: "/tickets",
     secondaryCtaLabel: "Contact Team",
@@ -62,9 +65,11 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
   "/submit": {
     title: "Artist Submission",
     headline: "Artist Submission",
-    description: "Submissions will open soon for upcoming Monolith programming.",
+    description:
+      "Submissions will open soon for upcoming Monolith programming.",
     primaryCtaLabel: "Artist Inquiry",
-    primaryCtaHref: "mailto:booking@monolithproject.com?subject=Artist%20Submission%20Inquiry",
+    primaryCtaHref:
+      "mailto:booking@monolithproject.com?subject=Artist%20Submission%20Inquiry",
     secondaryCtaLabel: "View Lineup",
     secondaryCtaHref: "/lineup",
   },
@@ -73,14 +78,16 @@ const CONTENT_BY_PATH: Record<string, ComingSoonConfig> = {
     headline: "Press & Media",
     description: "Press kits and media inquiry workflows are being prepared.",
     primaryCtaLabel: "Press Inquiry",
-    primaryCtaHref: "mailto:events@monolithproject.com?subject=Press%20%26%20Media%20Inquiry",
+    primaryCtaHref:
+      "mailto:events@monolithproject.com?subject=Press%20%26%20Media%20Inquiry",
     secondaryCtaLabel: "Contact Team",
     secondaryCtaHref: "/contact",
   },
   "/archive": {
     title: "Archive",
     headline: "Archive",
-    description: "A full archive of events, visuals, and stories is coming soon.",
+    description:
+      "A full archive of events, visuals, and stories is coming soon.",
     primaryCtaLabel: CTA_LABELS.radioHub,
     primaryCtaHref: "/radio",
     secondaryCtaLabel: "View Gallery",
@@ -108,7 +115,11 @@ const FALLBACK_CONTENT: ComingSoonConfig = {
 };
 
 function isExternalHref(href: string) {
-  return href.startsWith("mailto:") || href.startsWith("http://") || href.startsWith("https://");
+  return (
+    href.startsWith("mailto:") ||
+    href.startsWith("http://") ||
+    href.startsWith("https://")
+  );
 }
 
 export default function ComingSoon() {
@@ -120,11 +131,21 @@ export default function ComingSoon() {
       <SEO title={content.title} description={content.description} noIndex />
       <Navigation />
 
-      <main id="main-content" tabIndex={-1} className="page-shell-start pb-24 px-6">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-24 px-6"
+      >
         <div className="container layout-narrow text-center">
-          <p className="font-mono text-xs tracking-[0.24em] uppercase text-primary/80 mb-6">Monolith Project</p>
-          <h1 className="font-display text-5xl md:text-7xl tracking-tight-display mb-6">{content.headline}</h1>
-          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-10">{content.description}</p>
+          <p className="font-mono text-xs tracking-[0.24em] uppercase text-primary/80 mb-6">
+            Monolith Project
+          </p>
+          <h1 className="font-display text-5xl md:text-7xl tracking-tight-display mb-6">
+            {content.headline}
+          </h1>
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-10">
+            {content.description}
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {isExternalHref(content.primaryCtaHref) ? (

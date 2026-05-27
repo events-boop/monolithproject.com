@@ -16,11 +16,11 @@ This is meant to guide implementation on the current site, not a redesign.
 
 ## Tool Ownership
 
-| Tool | Role | Use It For | Do Not Use It For |
-| --- | --- | --- | --- |
-| `Laylo` | intent capture | waitlist, presale, lineup drop, SMS updates, post-event comeback | VIP qualification, long intake forms, final checkout |
-| `Fillout` | qualification | VIP tables, concierge, ambassadors, sponsor/partner intake, high-intent applications | low-friction mass signup, final checkout |
-| `Posh` | transaction | ticket purchase, tiered access, hidden ticket tiers, final conversion | early funnel capture, long-form qualification |
+| Tool      | Role           | Use It For                                                                           | Do Not Use It For                                    |
+| --------- | -------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| `Laylo`   | intent capture | waitlist, presale, lineup drop, SMS updates, post-event comeback                     | VIP qualification, long intake forms, final checkout |
+| `Fillout` | qualification  | VIP tables, concierge, ambassadors, sponsor/partner intake, high-intent applications | low-friction mass signup, final checkout             |
+| `Posh`    | transaction    | ticket purchase, tiered access, hidden ticket tiers, final conversion                | early funnel capture, long-form qualification        |
 
 ## Global Rules
 
@@ -35,66 +35,69 @@ This is meant to guide implementation on the current site, not a redesign.
 ## CTA Hierarchy
 
 Primary CTA:
+
 - the main business action for the page
 
 Secondary CTA:
+
 - the strongest adjacent action for users not ready for the primary
 
 Fallback CTA:
+
 - the lowest-friction capture or continuation action
 
 ## Event State Rules
 
-| Event State | Primary CTA | Tool | Secondary CTA | Tool | Fallback CTA | Tool |
-| --- | --- | --- | --- | --- | --- | --- |
-| `upcoming` | `Unlock Presale Access` | `Laylo` | `View Schedule` | site | `Request VIP Access` | `Fillout` |
-| `on-sale` | `Get Tickets` | `Posh` | `Request VIP Access` | `Fillout` | `Join SMS Updates` | `Laylo` |
-| `low-inventory` | `Claim Last Tickets` | `Posh` | `Request VIP Access` | `Fillout` | `Get Restock Alerts` | `Laylo` |
-| `sold-out` | `Join Waitlist` | `Laylo` | `Request VIP Access` | `Fillout` | `Get First Access To The Next Signal` | `Laylo` |
-| `post-event` | `Get First Access To The Next Signal` | `Laylo` | `Watch Recap` | site | `Explore Archive` | site |
+| Event State     | Primary CTA                           | Tool    | Secondary CTA        | Tool      | Fallback CTA                          | Tool      |
+| --------------- | ------------------------------------- | ------- | -------------------- | --------- | ------------------------------------- | --------- |
+| `upcoming`      | `Unlock Presale Access`               | `Laylo` | `View Schedule`      | site      | `Request VIP Access`                  | `Fillout` |
+| `on-sale`       | `Get Tickets`                         | `Posh`  | `Request VIP Access` | `Fillout` | `Join SMS Updates`                    | `Laylo`   |
+| `low-inventory` | `Claim Last Tickets`                  | `Posh`  | `Request VIP Access` | `Fillout` | `Get Restock Alerts`                  | `Laylo`   |
+| `sold-out`      | `Join Waitlist`                       | `Laylo` | `Request VIP Access` | `Fillout` | `Get First Access To The Next Signal` | `Laylo`   |
+| `post-event`    | `Get First Access To The Next Signal` | `Laylo` | `Watch Recap`        | site      | `Explore Archive`                     | site      |
 
 ## Page Matrix
 
 ### Tier 1 Pages
 
-| Page | Route | Primary CTA | Tool | Secondary CTA | Tool | Fallback CTA | Tool |
-| --- | --- | --- | --- | --- | --- | --- | --- | 
-| Home | `/` | `Get Tickets` if a live event exists, otherwise `Unlock Presale Access` | `Posh` or `Laylo` by state | `View Schedule` | site | `Join SMS Updates` | `Laylo` |
-| Tickets | `/tickets` | state-based event CTA | `Posh` or `Laylo` by state | `Request VIP Access` | `Fillout` | `Join SMS Updates` | `Laylo` |
-| Schedule | `/schedule` | `Get Tickets` if any live event exists, otherwise `Unlock Presale Access` | `Posh` or `Laylo` | `Join SMS Updates` | `Laylo` | `Request VIP Access` | `Fillout` |
-| Untold Story | `/story` | `Get Tickets` if on sale, otherwise `Unlock Presale Access` | `Posh` or `Laylo` | `Request VIP Access` | `Fillout` | `View Schedule` | site |
-| Chasing Sunsets | `/chasing-sunsets` | `Get Tickets` if on sale, otherwise `Join Waitlist` | `Posh` or `Laylo` | `View Schedule` | site | `Join SMS Updates` | `Laylo` |
-| VIP | `/vip` | `Request VIP Access` | `Fillout` | `Get Tickets` | `Posh` | `Join SMS Updates` | `Laylo` |
-| Newsletter / Inner Circle | `/newsletter` `/inner-circle` | `Join SMS Updates` | `Laylo` | `View Schedule` | site | `Request VIP Access` | `Fillout` |
+| Page                      | Route                         | Primary CTA                                                               | Tool                       | Secondary CTA        | Tool      | Fallback CTA         | Tool      |
+| ------------------------- | ----------------------------- | ------------------------------------------------------------------------- | -------------------------- | -------------------- | --------- | -------------------- | --------- |
+| Home                      | `/`                           | `Get Tickets` if a live event exists, otherwise `Unlock Presale Access`   | `Posh` or `Laylo` by state | `View Schedule`      | site      | `Join SMS Updates`   | `Laylo`   |
+| Tickets                   | `/tickets`                    | state-based event CTA                                                     | `Posh` or `Laylo` by state | `Request VIP Access` | `Fillout` | `Join SMS Updates`   | `Laylo`   |
+| Schedule                  | `/schedule`                   | `Get Tickets` if any live event exists, otherwise `Unlock Presale Access` | `Posh` or `Laylo`          | `Join SMS Updates`   | `Laylo`   | `Request VIP Access` | `Fillout` |
+| Untold Story              | `/story`                      | `Get Tickets` if on sale, otherwise `Unlock Presale Access`               | `Posh` or `Laylo`          | `Request VIP Access` | `Fillout` | `View Schedule`      | site      |
+| Chasing Sunsets           | `/chasing-sunsets`            | `Get Tickets` if on sale, otherwise `Join Waitlist`                       | `Posh` or `Laylo`          | `View Schedule`      | site      | `Join SMS Updates`   | `Laylo`   |
+| VIP                       | `/vip`                        | `Request VIP Access`                                                      | `Fillout`                  | `Get Tickets`        | `Posh`    | `Join SMS Updates`   | `Laylo`   |
+| Newsletter / Inner Circle | `/newsletter` `/inner-circle` | `Join SMS Updates`                                                        | `Laylo`                    | `View Schedule`      | site      | `Request VIP Access` | `Fillout` |
 
 ### Tier 2 Pages
 
-| Page | Route | Primary CTA | Tool | Secondary CTA | Tool | Fallback CTA | Tool |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Contact | `/contact` | `Start Contact` | site or `Fillout` if upgraded | `Join SMS Updates` | `Laylo` | `View Schedule` | site |
-| Booking | `/booking` | `Submit Booking Inquiry` | site or `Fillout` if upgraded | `View Press Context` | site | `Join SMS Updates` | `Laylo` |
-| Ambassadors | `/ambassadors` | `Apply Now` | `Fillout` | `Get Tickets` | `Posh` | `Join SMS Updates` | `Laylo` |
-| Sponsors | `/sponsors` | `Request Access` | `Fillout` | `View Partners` | site | `Start Contact` | site |
-| Guide | `/guide` | `Get Tickets` | `Posh` | `View Schedule` | site | `Join SMS Updates` | `Laylo` |
-| Radio | `/radio` | `Get Tickets` | `Posh` | `Join SMS Updates` | `Laylo` | `Browse Archive` | site |
-| Radio Episode | `/radio/:slug` | `Get Tickets` | `Posh` | `Join SMS Updates` | `Laylo` | `Open Radio Show` | site |
-| Archive | `/archive` | `Get First Access To The Next Signal` | `Laylo` | `View Schedule` | site | `Browse Events` | site |
-| About | `/about` `/togetherness` | `View Schedule` | site | `Join SMS Updates` | `Laylo` | `Request VIP Access` | `Fillout` |
-| Insights | `/insights` | `View Schedule` | site | `Join SMS Updates` | `Laylo` | `Get Tickets` | `Posh` |
-| Artist Profile | `/artists/:id` | `Get Tickets` | `Posh` | `View Lineup` | site | `Join SMS Updates` | `Laylo` |
+| Page           | Route                    | Primary CTA                           | Tool                          | Secondary CTA        | Tool    | Fallback CTA         | Tool      |
+| -------------- | ------------------------ | ------------------------------------- | ----------------------------- | -------------------- | ------- | -------------------- | --------- |
+| Contact        | `/contact`               | `Start Contact`                       | site or `Fillout` if upgraded | `Join SMS Updates`   | `Laylo` | `View Schedule`      | site      |
+| Booking        | `/booking`               | `Submit Booking Inquiry`              | site or `Fillout` if upgraded | `View Press Context` | site    | `Join SMS Updates`   | `Laylo`   |
+| Ambassadors    | `/ambassadors`           | `Apply Now`                           | `Fillout`                     | `Get Tickets`        | `Posh`  | `Join SMS Updates`   | `Laylo`   |
+| Sponsors       | `/sponsors`              | `Request Access`                      | `Fillout`                     | `View Partners`      | site    | `Start Contact`      | site      |
+| Guide          | `/guide`                 | `Get Tickets`                         | `Posh`                        | `View Schedule`      | site    | `Join SMS Updates`   | `Laylo`   |
+| Radio          | `/radio`                 | `Get Tickets`                         | `Posh`                        | `Join SMS Updates`   | `Laylo` | `Browse Archive`     | site      |
+| Radio Episode  | `/radio/:slug`           | `Get Tickets`                         | `Posh`                        | `Join SMS Updates`   | `Laylo` | `Open Radio Show`    | site      |
+| Archive        | `/archive`               | `Get First Access To The Next Signal` | `Laylo`                       | `View Schedule`      | site    | `Browse Events`      | site      |
+| About          | `/about` `/togetherness` | `View Schedule`                       | site                          | `Join SMS Updates`   | `Laylo` | `Request VIP Access` | `Fillout` |
+| Insights       | `/insights`              | `View Schedule`                       | site                          | `Join SMS Updates`   | `Laylo` | `Get Tickets`        | `Posh`    |
+| Artist Profile | `/artists/:id`           | `Get Tickets`                         | `Posh`                        | `View Lineup`        | site    | `Join SMS Updates`   | `Laylo`   |
 
 ## Homepage Section Map
 
 This is the most important page for conversion consistency.
 
-| Section | Primary CTA | Tool | Notes |
-| --- | --- | --- | --- |
-| Hero | `Get Tickets` if live, otherwise `Unlock Presale Access` | `Posh` or `Laylo` | strongest CTA on page |
-| Featured Campaigns | state-based event CTA | `Posh` or `Laylo` | keep one event-led ask |
-| Series / Philosophy sections | none dominant beyond page CTA | n/a | support the page primary, do not add new competing asks |
-| Countdown / Conversion strip | mirror page primary CTA | same as hero | urgency surface |
-| Event funnel stack | `Join Waitlist`, `Giveaway`, or `Coordinates` depending on event | mostly `Laylo`-style capture logic | this is the low-friction capture layer |
-| Newsletter / Inner Circle | `Join SMS Updates` | `Laylo` | should remain the fallback conversion block |
+| Section                      | Primary CTA                                                      | Tool                               | Notes                                                   |
+| ---------------------------- | ---------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------- |
+| Hero                         | `Get Tickets` if live, otherwise `Unlock Presale Access`         | `Posh` or `Laylo`                  | strongest CTA on page                                   |
+| Featured Campaigns           | state-based event CTA                                            | `Posh` or `Laylo`                  | keep one event-led ask                                  |
+| Series / Philosophy sections | none dominant beyond page CTA                                    | n/a                                | support the page primary, do not add new competing asks |
+| Countdown / Conversion strip | mirror page primary CTA                                          | same as hero                       | urgency surface                                         |
+| Event funnel stack           | `Join Waitlist`, `Giveaway`, or `Coordinates` depending on event | mostly `Laylo`-style capture logic | this is the low-friction capture layer                  |
+| Newsletter / Inner Circle    | `Join SMS Updates`                                               | `Laylo`                            | should remain the fallback conversion block             |
 
 ## Button Copy Library
 

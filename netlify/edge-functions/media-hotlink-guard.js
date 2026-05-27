@@ -10,7 +10,8 @@ const allowedHosts = new Set([
 function buildDenyHeaders(contentType = "text/plain; charset=utf-8") {
   return {
     "Cache-Control": "public, max-age=300",
-    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Content-Security-Policy":
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
     "Content-Type": contentType,
     "Cross-Origin-Resource-Policy": "same-origin",
     "Referrer-Policy": "no-referrer",
@@ -39,7 +40,8 @@ function isAllowedSourceHost(sourceHost, requestHost) {
 export default async function mediaHotlinkGuard(request, context) {
   const requestHost = new URL(request.url).hostname.toLowerCase();
   const sourceHost =
-    getSourceHost(request.headers.get("referer")) || getSourceHost(request.headers.get("origin"));
+    getSourceHost(request.headers.get("referer")) ||
+    getSourceHost(request.headers.get("origin"));
 
   if (!sourceHost || isAllowedSourceHost(sourceHost, requestHost)) {
     return context.next();

@@ -19,7 +19,11 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { navigationChapters, type NavigationChapter, type NavigationChapterId } from "@/data/navigationChapters";
+import {
+  navigationChapters,
+  type NavigationChapter,
+  type NavigationChapterId,
+} from "@/data/navigationChapters";
 import { getEventDetailsHref } from "@/lib/cta";
 import {
   getEventVenueLabel,
@@ -71,15 +75,25 @@ const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
   artists: UsersRound,
   radio: Radio,
   guide: MapPinned,
+  monolith: Disc3,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
-  if (path === "/schedule" || path === "/events" || path.startsWith("/events/")) return "schedule";
+  if (path === "/monolith" || path.startsWith("/monolith")) return "monolith";
+  if (path === "/schedule" || path === "/events" || path.startsWith("/events/"))
+    return "schedule";
   if (path.startsWith("/chasing-sunsets")) return "chasing-sunsets";
-  if (path === "/story" || path.startsWith("/untold-story")) return "untold-story";
+  if (path === "/story" || path.startsWith("/untold-story"))
+    return "untold-story";
   if (path === "/lineup" || path.startsWith("/artists/")) return "artists";
   if (path.startsWith("/radio")) return "radio";
-  if (path === "/guide" || path === "/faq" || path === "/travel" || path === "/vip") return "guide";
+  if (
+    path === "/guide" ||
+    path === "/faq" ||
+    path === "/travel" ||
+    path === "/vip"
+  )
+    return "guide";
   if (path === "/tickets") return "next-night";
   return "next-night";
 }
@@ -105,11 +119,17 @@ function compactMeta(values: Array<string | null | undefined>) {
   return values.filter((value): value is string => Boolean(value));
 }
 
-function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | null): ChapterView {
+function resolveChapterView(
+  chapter: NavigationChapter,
+  ticketHref?: string | null
+): ChapterView {
   const ticketEvent = getExperienceEvent("ticket");
 
   if (chapter.id === "next-night") {
-    const primaryHref = ticketHref || getPrimaryTicketUrl(ticketEvent) || getEventDetailsHref(ticketEvent);
+    const primaryHref =
+      ticketHref ||
+      getPrimaryTicketUrl(ticketEvent) ||
+      getEventDetailsHref(ticketEvent);
     return {
       ...chapter,
       image: ticketEvent?.image || chapter.image,
@@ -119,8 +139,12 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
         ticketEvent?.lineup,
       ]),
       primaryHref,
-      primaryLabel: ticketHref || getPrimaryTicketUrl(ticketEvent) ? "Get In" : "See The Night",
-      previewTitle: ticketEvent?.headline || ticketEvent?.title || chapter.label,
+      primaryLabel:
+        ticketHref || getPrimaryTicketUrl(ticketEvent)
+          ? "Get In"
+          : "See The Night",
+      previewTitle:
+        ticketEvent?.headline || ticketEvent?.title || chapter.label,
       proof: ticketEvent?.capacity || chapter.proof,
       status: getStatusLabel(ticketEvent?.status),
     };
@@ -130,7 +154,7 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
     const events = getUpcomingEvents(3);
     return {
       ...chapter,
-      meta: events.map((event) => `${event.date} / ${event.title}`),
+      meta: events.map(event => `${event.date} / ${event.title}`),
       primaryHref: chapter.href,
       primaryLabel: chapter.ctaLabel,
       previewTitle: "Season Map",
@@ -139,7 +163,9 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
   }
 
   if (chapter.id === "chasing-sunsets") {
-    const event = getSeriesExperienceEvent("chasing-sunsets", "hero") || getSeriesEvents("chasing-sunsets")[0];
+    const event =
+      getSeriesExperienceEvent("chasing-sunsets", "hero") ||
+      getSeriesEvents("chasing-sunsets")[0];
     return {
       ...chapter,
       image: event?.image || chapter.image,
@@ -152,7 +178,9 @@ function resolveChapterView(chapter: NavigationChapter, ticketHref?: string | nu
   }
 
   if (chapter.id === "untold-story") {
-    const event = getSeriesExperienceEvent("untold-story", "hero") || getSeriesEvents("untold-story")[0];
+    const event =
+      getSeriesExperienceEvent("untold-story", "hero") ||
+      getSeriesEvents("untold-story")[0];
     return {
       ...chapter,
       image: event?.image || chapter.image,
@@ -200,8 +228,11 @@ export default function InteractiveNavigationOverlay({
   ticketHref,
 }: InteractiveNavigationOverlayProps) {
   const reduceMotion = useReducedMotion();
-  const [activeChapterId, setActiveChapterId] = useState<NavigationChapterId>(() => getChapterIdForPath(activePath));
-  const [expandedChapterId, setExpandedChapterId] = useState<NavigationChapterId | null>(() => getChapterIdForPath(activePath));
+  const [activeChapterId, setActiveChapterId] = useState<NavigationChapterId>(
+    () => getChapterIdForPath(activePath)
+  );
+  const [expandedChapterId, setExpandedChapterId] =
+    useState<NavigationChapterId | null>(() => getChapterIdForPath(activePath));
 
   useEffect(() => {
     const nextId = getChapterIdForPath(activePath);
@@ -210,9 +241,12 @@ export default function InteractiveNavigationOverlay({
   }, [activePath]);
 
   const activeChapter =
-    navigationChapters.find((chapter) => chapter.id === activeChapterId) ?? navigationChapters[0];
+    navigationChapters.find(chapter => chapter.id === activeChapterId) ??
+    navigationChapters[0];
   const activeView = resolveChapterView(activeChapter, ticketHref);
-  const accentStyle = { "--chapter-accent": activeView.accent } as CSSProperties;
+  const accentStyle = {
+    "--chapter-accent": activeView.accent,
+  } as CSSProperties;
 
   const handleDialogKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
@@ -221,9 +255,12 @@ export default function InteractiveNavigationOverlay({
 
     const focusable = Array.from(
       dialog.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
-      ),
-    ).filter((el) => el.offsetParent !== null && el.getAttribute("aria-hidden") !== "true");
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(
+      el =>
+        el.offsetParent !== null && el.getAttribute("aria-hidden") !== "true"
+    );
 
     if (focusable.length === 0) {
       e.preventDefault();
@@ -248,15 +285,16 @@ export default function InteractiveNavigationOverlay({
     }
   };
 
-  const handleLinkClick = (href: string) => (event: ReactMouseEvent<HTMLAnchorElement>) => {
-    signalChirp.click();
-    onClose();
+  const handleLinkClick =
+    (href: string) => (event: ReactMouseEvent<HTMLAnchorElement>) => {
+      signalChirp.click();
+      onClose();
 
-    if (!isExternalHref(href)) {
-      event.preventDefault();
-      onNavigate(href);
-    }
-  };
+      if (!isExternalHref(href)) {
+        event.preventDefault();
+        onNavigate(href);
+      }
+    };
 
   const renderPreview = (view: ChapterView) => {
     const PrimaryIcon = chapterIconMap[view.id] ?? Sparkles;
@@ -286,12 +324,18 @@ export default function InteractiveNavigationOverlay({
 
         <div className="relative z-10 flex h-full flex-col justify-end p-7 md:p-9">
           <div className="mb-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur-md">
-            <PrimaryIcon className="h-3.5 w-3.5" style={{ color: view.accent }} />
+            <PrimaryIcon
+              className="h-3.5 w-3.5"
+              style={{ color: view.accent }}
+            />
             {view.eyebrow}
           </div>
 
           <div className="max-w-2xl">
-            <p className="mb-4 max-w-xl font-mono text-[11px] font-bold uppercase tracking-[0.3em]" style={{ color: view.accent }}>
+            <p
+              className="mb-4 max-w-xl font-mono text-[11px] font-bold uppercase tracking-[0.3em]"
+              style={{ color: view.accent }}
+            >
               {view.tagline}
             </p>
             <h2 className="font-display text-[clamp(2.5rem,4.8vw,5.8rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
@@ -303,7 +347,7 @@ export default function InteractiveNavigationOverlay({
 
             {view.meta.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
-                {view.meta.slice(0, 3).map((item) => (
+                {view.meta.slice(0, 3).map(item => (
                   <span
                     key={item}
                     className="rounded-full border border-white/10 bg-black/36 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/70"
@@ -321,7 +365,11 @@ export default function InteractiveNavigationOverlay({
               <a
                 href={view.primaryHref}
                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
-                rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
+                rel={
+                  isExternalHref(view.primaryHref)
+                    ? "noopener noreferrer"
+                    : undefined
+                }
                 onClick={handleLinkClick(view.primaryHref)}
                 className="btn-pill-monolith btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               >
@@ -351,7 +399,8 @@ export default function InteractiveNavigationOverlay({
       style={{
         background:
           "radial-gradient(circle at 16% 12%, rgba(224,90,58,0.14), transparent 30%), radial-gradient(circle at 82% 20%, rgba(34,211,238,0.12), transparent 32%), linear-gradient(135deg, rgba(3,3,5,0.995), rgba(7,7,11,0.998) 45%, rgba(1,1,3,1))",
-        paddingTop: "calc(var(--shell-nav-offset) + var(--shell-nav-height) + 0.75rem)",
+        paddingTop:
+          "calc(var(--shell-nav-offset) + var(--shell-nav-height) + 0.75rem)",
         paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))",
       }}
     >
@@ -394,8 +443,11 @@ export default function InteractiveNavigationOverlay({
               Choose Your Entry
             </h1>
           </div>
-          <nav aria-label="Utility links" className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-            {utilityLinks.map((link) => (
+          <nav
+            aria-label="Utility links"
+            className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap"
+          >
+            {utilityLinks.map(link => (
               <a
                 key={link.href}
                 href={link.href}
@@ -409,7 +461,10 @@ export default function InteractiveNavigationOverlay({
         </header>
 
         <div className="hidden min-h-[30rem] flex-1 grid-cols-[minmax(18rem,0.68fr)_minmax(0,1.32fr)] gap-6 lg:grid 2xl:gap-8">
-          <nav aria-label="Primary worlds" className="flex flex-col justify-center gap-1.5">
+          <nav
+            aria-label="Primary worlds"
+            className="flex flex-col justify-center gap-1.5"
+          >
             {navigationChapters.map((chapter, index) => {
               const isActive = chapter.id === activeChapterId;
               const Icon = chapterIconMap[chapter.id] ?? Disc3;
@@ -421,7 +476,11 @@ export default function InteractiveNavigationOverlay({
                   href={view.primaryHref}
                   initial={reduceMotion ? false : { opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.08 + index * 0.045, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    delay: 0.08 + index * 0.045,
+                    duration: 0.42,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   onMouseEnter={() => {
                     setActiveChapterId(chapter.id);
                     signalChirp.hover();
@@ -432,15 +491,19 @@ export default function InteractiveNavigationOverlay({
                     "group relative overflow-hidden rounded-3xl border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
                     isActive
                       ? "border-white/20 bg-white/[0.08] shadow-[0_18px_45px_rgba(0,0,0,0.26)]"
-                      : "border-white/10 bg-white/[0.025] hover:border-white/20 hover:bg-white/[0.05]",
+                      : "border-white/10 bg-white/[0.025] hover:border-white/20 hover:bg-white/[0.05]"
                   )}
-                  style={{ "--chapter-accent": chapter.accent } as CSSProperties}
+                  style={
+                    { "--chapter-accent": chapter.accent } as CSSProperties
+                  }
                 >
                   <span
                     aria-hidden="true"
                     className={cn(
                       "absolute inset-y-3 left-0 w-[3px] rounded-full transition-opacity duration-300",
-                      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-60",
+                      isActive
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-60"
                     )}
                     style={{ background: chapter.accent }}
                   />
@@ -453,7 +516,10 @@ export default function InteractiveNavigationOverlay({
                         {chapter.label}
                       </span>
                     </span>
-                    <Icon className="h-5 w-5 shrink-0 opacity-45 transition-opacity group-hover:opacity-90" style={{ color: chapter.accent }} />
+                    <Icon
+                      className="h-5 w-5 shrink-0 opacity-45 transition-opacity group-hover:opacity-90"
+                      style={{ color: chapter.accent }}
+                    />
                   </span>
                 </motion.a>
               );
@@ -461,7 +527,9 @@ export default function InteractiveNavigationOverlay({
           </nav>
 
           <div className="relative">
-            <AnimatePresence mode="wait">{renderPreview(activeView)}</AnimatePresence>
+            <AnimatePresence mode="wait">
+              {renderPreview(activeView)}
+            </AnimatePresence>
           </div>
         </div>
 
@@ -476,7 +544,11 @@ export default function InteractiveNavigationOverlay({
                 key={chapter.id}
                 initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.06 + index * 0.04, duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  delay: 0.06 + index * 0.04,
+                  duration: 0.34,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035]"
                 style={{ "--chapter-accent": chapter.accent } as CSSProperties}
               >
@@ -498,7 +570,10 @@ export default function InteractiveNavigationOverlay({
                       {chapter.label}
                     </span>
                   </span>
-                  <Icon className="h-5 w-5 shrink-0" style={{ color: chapter.accent }} />
+                  <Icon
+                    className="h-5 w-5 shrink-0"
+                    style={{ color: chapter.accent }}
+                  />
                 </button>
 
                 <AnimatePresence initial={false}>
@@ -506,7 +581,9 @@ export default function InteractiveNavigationOverlay({
                     <motion.div
                       initial={reduceMotion ? false : { height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
-                      exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                      exit={
+                        reduceMotion ? undefined : { height: 0, opacity: 0 }
+                      }
                       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
@@ -525,7 +602,10 @@ export default function InteractiveNavigationOverlay({
                             {view.status}
                           </div>
                           <div className="relative z-10 p-4 pt-28">
-                            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: view.accent }}>
+                            <p
+                              className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]"
+                              style={{ color: view.accent }}
+                            >
                               {view.tagline}
                             </p>
                             <h2 className="mt-2 font-display text-3xl uppercase leading-[0.88] tracking-[-0.04em] text-white">
@@ -540,8 +620,16 @@ export default function InteractiveNavigationOverlay({
                             <div className="mt-4 flex flex-col gap-2">
                               <a
                                 href={view.primaryHref}
-                                target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
-                                rel={isExternalHref(view.primaryHref) ? "noopener noreferrer" : undefined}
+                                target={
+                                  isExternalHref(view.primaryHref)
+                                    ? "_blank"
+                                    : undefined
+                                }
+                                rel={
+                                  isExternalHref(view.primaryHref)
+                                    ? "noopener noreferrer"
+                                    : undefined
+                                }
                                 onClick={handleLinkClick(view.primaryHref)}
                                 className="btn-pill-monolith btn-pill-compact"
                               >
@@ -549,7 +637,7 @@ export default function InteractiveNavigationOverlay({
                                 <ArrowUpRight className="h-4 w-4" />
                               </a>
                               <div className="grid grid-cols-2 gap-2">
-                                {view.secondaryLinks.slice(0, 2).map((link) => (
+                                {view.secondaryLinks.slice(0, 2).map(link => (
                                   <a
                                     key={link.href}
                                     href={link.href}

@@ -48,20 +48,38 @@ export default function GlobalListenerMap() {
         {Array.from({ length: 13 }, (_, i) => (
           <line
             key={`h${i}`}
-            x1={0} y1={i * (500 / 12)} x2={1000} y2={i * (500 / 12)}
-            stroke="currentColor" strokeOpacity={0.06} strokeWidth={0.5}
+            x1={0}
+            y1={i * (500 / 12)}
+            x2={1000}
+            y2={i * (500 / 12)}
+            stroke="currentColor"
+            strokeOpacity={0.06}
+            strokeWidth={0.5}
           />
         ))}
         {Array.from({ length: 25 }, (_, i) => (
           <line
             key={`v${i}`}
-            x1={i * (1000 / 24)} y1={0} x2={i * (1000 / 24)} y2={500}
-            stroke="currentColor" strokeOpacity={0.06} strokeWidth={0.5}
+            x1={i * (1000 / 24)}
+            y1={0}
+            x2={i * (1000 / 24)}
+            y2={500}
+            stroke="currentColor"
+            strokeOpacity={0.06}
+            strokeWidth={0.5}
           />
         ))}
 
         {/* Equator */}
-        <line x1={0} y1={250} x2={1000} y2={250} stroke="currentColor" strokeOpacity={0.1} strokeWidth={1} />
+        <line
+          x1={0}
+          y1={250}
+          x2={1000}
+          y2={250}
+          stroke="currentColor"
+          strokeOpacity={0.1}
+          strokeWidth={1}
+        />
 
         {/* Location pins */}
         {locations.map((loc, i) => {
@@ -72,7 +90,9 @@ export default function GlobalListenerMap() {
               {/* Pulse ring for artists */}
               {isArtist && (
                 <motion.circle
-                  cx={x} cy={y} r={12}
+                  cx={x}
+                  cy={y}
+                  r={12}
                   fill="none"
                   stroke="var(--primary)"
                   strokeWidth={1}
@@ -83,7 +103,8 @@ export default function GlobalListenerMap() {
               )}
               {/* Dot */}
               <circle
-                cx={x} cy={y}
+                cx={x}
+                cy={y}
                 r={isArtist ? 4 : 2}
                 fill={isArtist ? "var(--primary)" : "currentColor"}
                 opacity={isArtist ? 1 : 0.3}
@@ -91,7 +112,8 @@ export default function GlobalListenerMap() {
               {/* Label for artists */}
               {isArtist && (
                 <text
-                  x={x + 8} y={y + 4}
+                  x={x + 8}
+                  y={y + 4}
                   className="fill-current"
                   fontSize={10}
                   fontFamily="monospace"

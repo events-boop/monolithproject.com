@@ -4,7 +4,7 @@ import { initAttributionTracking } from "./lib/attribution";
 import { ensurePublicSiteData } from "./lib/siteData";
 import "./styles/index.css";
 
-import { registerSW } from 'virtual:pwa-register';
+import { registerSW } from "virtual:pwa-register";
 
 function renderMountError(error: unknown) {
   const wrapper = document.createElement("div");
@@ -40,7 +40,7 @@ async function startApp() {
   if (!rootElement) throw new Error("Root element not found");
 
   // Start data preload IMMEDIATELY, do not wait for idle or App bundle.
-  void ensurePublicSiteData(window.location.pathname).catch((error) => {
+  void ensurePublicSiteData(window.location.pathname).catch(error => {
     if (import.meta.env.DEV) {
       console.warn("[site-data] Initial preload failed.", error);
     }

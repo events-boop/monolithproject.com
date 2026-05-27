@@ -9,7 +9,9 @@ export default function FeaturedRecap() {
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
       <div
         className="absolute inset-x-0 top-0 h-px pointer-events-none"
-        style={{ background: `linear-gradient(90deg, transparent, ${MONOLITH_ORANGE}55, transparent)` }}
+        style={{
+          background: `linear-gradient(90deg, transparent, ${MONOLITH_ORANGE}55, transparent)`,
+        }}
       />
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
@@ -66,8 +68,8 @@ export default function FeaturedRecap() {
               </p>
 
               <p className="font-serif italic text-lg md:text-xl leading-relaxed text-white/75 max-w-[38ch] mb-8">
-                One of the rooms we built. Captured in full — no edits, no overlays,
-                just the set as it happened.
+                One of the rooms we built. Captured in full — no edits, no
+                overlays, just the set as it happened.
               </p>
 
               <dl className="grid grid-cols-2 gap-y-4 gap-x-6 font-mono text-[10px] tracking-[0.3em] uppercase border-y border-white/10 py-5 mb-8">

@@ -1,491 +1,560 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, User, Sparkles, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  User,
+  Sparkles,
+  CheckCircle,
+  ArrowRight,
+  AlertCircle,
+} from "lucide-react";
 import { submitNewsletterLead } from "@/lib/api";
 import type { ScheduledEvent } from "@/data/events";
-import { buildFunnelLeadFields, buildLeadIdempotencyKey, splitFullName } from "@/lib/leadCapture";
+import {
+  buildFunnelLeadFields,
+  buildLeadIdempotencyKey,
+  splitFullName,
+} from "@/lib/leadCapture";
 
 interface FunnelWaitlistProps {
-    variant?: "default" | "chasing-sunsets" | "untold-story";
-    event?: ScheduledEvent;
+  variant?: "default" | "chasing-sunsets" | "untold-story";
+  event?: ScheduledEvent;
 }
 
-export default function FunnelWaitlist({ variant = "default", event }: FunnelWaitlistProps) {
-    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
+export default function FunnelWaitlist({
+  variant = "default",
+  event,
+}: FunnelWaitlistProps) {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-    const contentMap = {
-        "default": {
-            pill: "Ticket Updates",
-            titleTop: "Get First",
-            titleBottom: "Updates",
-            gradient: "from-[#E05A3A] to-[#E8B86D]",
-            desc: "Join the newsletter for new dates, ticket windows, and VIP table updates before public sale.",
-            button: "btn-pill-monolith",
-            glow1: "bg-[#E05A3A]/10",
-            glow2: "bg-[#8B5CF6]/10",
-            bulletPoints: [
-                "First ticket windows",
-                "VIP table updates",
-                "Lineup announcements"
-            ]
+  const contentMap = {
+    default: {
+      pill: "Ticket Updates",
+      titleTop: "Get First",
+      titleBottom: "Updates",
+      gradient: "from-[#E05A3A] to-[#E8B86D]",
+      desc: "Join the newsletter for new dates, ticket windows, and VIP table updates before public sale.",
+      button: "btn-pill-monolith",
+      glow1: "bg-[#E05A3A]/10",
+      glow2: "bg-[#8B5CF6]/10",
+      bulletPoints: [
+        "First ticket windows",
+        "VIP table updates",
+        "Lineup announcements",
+      ],
+    },
+    "chasing-sunsets": {
+      pill: "Newsletter",
+      titleTop: "Get Sunset",
+      titleBottom: "Updates",
+      gradient: "from-[#C2703E] via-[#E8B86D] to-[#FBF5ED]",
+      desc: "Join the Chasing Sun(Sets) newsletter for new dates, lineup announcements, and ticket windows.",
+      button: "btn-pill-sunsets",
+      glow1: "bg-[#E8B86D]/10",
+      glow2: "bg-[#C2703E]/10",
+      bulletPoints: [
+        "New date announcements",
+        "Ticket windows",
+        "Radio and lineup updates",
+      ],
+    },
+    "untold-story": {
+      pill: "Newsletter",
+      titleTop: "Get Late-Night",
+      titleBottom: "Updates",
+      gradient: "from-[#8B5CF6] via-[#22D3EE] to-[#FBF5ED]",
+      desc: "Join the Untold Story newsletter for late-night dates, lineup announcements, and ticket windows.",
+      button: "btn-pill-untold",
+      glow1: "bg-[#8B5CF6]/10",
+      glow2: "bg-[#22D3EE]/10",
+      bulletPoints: [
+        "New late-night dates",
+        "Lineup announcements",
+        "VIP table updates",
+      ],
+    },
+  };
+
+  const content = contentMap[variant];
+
+  const sourceMap = {
+    default: "funnel_waitlist",
+    "chasing-sunsets": "funnel_waitlist_chasing",
+    "untold-story": "funnel_waitlist_untold",
+  } as const;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus("loading");
+    setErrorMsg("");
+
+    const { firstName, lastName } = splitFullName(fullName);
+    const phoneValue = phone.trim() || undefined;
+    const source = sourceMap[variant];
+
+    try {
+      await submitNewsletterLead(
+        {
+          email: email.trim(),
+          firstName: firstName || undefined,
+          lastName,
+          phone: phoneValue,
+          consent: true,
+          source,
+          ...buildFunnelLeadFields({
+            funnelId: `waitlist_${variant.replace(/-/g, "_")}`,
+            offerId:
+              variant === "default" ? "priority_presale" : "priority_access",
+            event,
+            interestTags: ["waitlist", variant],
+          }),
+          utmContent: phoneValue ? "sms_interest" : undefined,
         },
-        "chasing-sunsets": {
-            pill: "Newsletter",
-            titleTop: "Get Sunset",
-            titleBottom: "Updates",
-            gradient: "from-[#C2703E] via-[#E8B86D] to-[#FBF5ED]",
-            desc: "Join the Chasing Sun(Sets) newsletter for new dates, lineup announcements, and ticket windows.",
-            button: "btn-pill-sunsets",
-            glow1: "bg-[#E8B86D]/10",
-            glow2: "bg-[#C2703E]/10",
-            bulletPoints: [
-                "New date announcements",
-                "Ticket windows",
-                "Radio and lineup updates"
-            ]
-        },
-        "untold-story": {
-            pill: "Newsletter",
-            titleTop: "Get Late-Night",
-            titleBottom: "Updates",
-            gradient: "from-[#8B5CF6] via-[#22D3EE] to-[#FBF5ED]",
-            desc: "Join the Untold Story newsletter for late-night dates, lineup announcements, and ticket windows.",
-            button: "btn-pill-untold",
-            glow1: "bg-[#8B5CF6]/10",
-            glow2: "bg-[#22D3EE]/10",
-            bulletPoints: [
-                "New late-night dates",
-                "Lineup announcements",
-                "VIP table updates"
-            ]
-        }
-    };
-
-    const content = contentMap[variant];
-
-    const sourceMap = {
-        "default": "funnel_waitlist",
-        "chasing-sunsets": "funnel_waitlist_chasing",
-        "untold-story": "funnel_waitlist_untold",
-    } as const;
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email.trim()) return;
-        setStatus("loading");
-        setErrorMsg("");
-
-        const { firstName, lastName } = splitFullName(fullName);
-        const phoneValue = phone.trim() || undefined;
-        const source = sourceMap[variant];
-
-        try {
-            await submitNewsletterLead(
-                {
-                    email: email.trim(),
-                    firstName: firstName || undefined,
-                    lastName,
-                    phone: phoneValue,
-                    consent: true,
-                    source,
-                    ...buildFunnelLeadFields({
-                        funnelId: `waitlist_${variant.replace(/-/g, "_")}`,
-                        offerId: variant === "default" ? "priority_presale" : "priority_access",
-                        event,
-                        interestTags: ["waitlist", variant],
-                    }),
-                    utmContent: phoneValue ? "sms_interest" : undefined,
-                },
-                buildLeadIdempotencyKey(source, email, event?.id),
-            );
-            setStatus("success");
-        } catch (err) {
-            setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-            setStatus("error");
-        }
-    };
-
-    const eventLabel = event?.headline || event?.title;
-    const eventMeta = eventLabel ? `${eventLabel}${event?.date ? ` · ${event.date}` : ""}` : null;
-    const ctaLabel = "Get Updates";
-
-    if (variant === "chasing-sunsets") {
-        return (
-            <section className="relative overflow-hidden border-y border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(244,233,214,0.9),rgba(251,245,237,0.98))] py-24 lg:py-28">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(232,184,109,0.16),transparent_28%),radial-gradient(circle_at_84%_76%,rgba(194,112,62,0.12),transparent_30%)]" />
-
-                <div className="container layout-wide relative z-10 px-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="grid gap-6 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
-                    >
-                        <div className="sunset-panel-editorial p-6 md:p-8">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-[#C2703E]/18 bg-white/72 px-3 py-1.5">
-                                <Sparkles className="h-3.5 w-3.5 text-[#A4592C]" />
-                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                                    {content.pill}
-                                </span>
-                            </div>
-
-                            {eventMeta ? (
-                                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#2C1810]/48">
-                                    {eventMeta}
-                                </p>
-                            ) : null}
-
-                            <h2 className="mt-5 font-display text-[clamp(2.8rem,5vw,5rem)] uppercase leading-[0.88] text-[#2C1810]">
-                                GET SUNSET
-                                <br />
-                                UPDATES
-                            </h2>
-                            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#2C1810]/70 md:text-lg">
-                                {content.desc}
-                            </p>
-
-                            <div className="mt-8 grid gap-3">
-                                {content.bulletPoints.map((perk, index) => (
-                                    <article
-                                        key={perk}
-                                        className="sunset-panel-editorial-soft flex items-start gap-3 p-4"
-                                    >
-                                        <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12 font-mono text-[10px] text-[#A4592C]">
-                                            0{index + 1}
-                                        </div>
-                                        <p className="text-sm leading-relaxed text-[#2C1810]/68">{perk}</p>
-                                    </article>
-                                ))}
-                            </div>
-
-                            <div className="mt-8 rounded-[1.5rem] border border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(247,234,215,0.74))] p-5">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                                    Why This Matters
-                                </span>
-                                <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/66">
-                                    The newsletter is the seasonal spine for Chasing Sun(Sets): date releases, lineup
-                                    signals, radio tie-ins, and access windows all move through one route instead of
-                                    disconnected modules.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="sunset-panel-editorial p-5 md:p-6">
-                            <AnimatePresence mode="wait">
-                                {status === "success" ? (
-                                    <motion.div
-                                        key="success-chasing"
-                                        initial={{ opacity: 0, scale: 0.96 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="flex min-h-full flex-col justify-center"
-                                    >
-                                        <motion.div
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                                            className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12"
-                                        >
-                                            <CheckCircle className="h-8 w-8 text-[#A4592C]" />
-                                        </motion.div>
-                                        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
-                                            You&apos;re On The List
-                                        </p>
-                                        <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.2rem)] uppercase leading-[0.9] text-[#2C1810]">
-                                            DROP ACCESS LOCKED
-                                        </h3>
-                                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/68 md:text-base">
-                                            {eventLabel
-                                                ? `Watch your inbox. ${eventLabel} will come through this route first when ticket, lineup, or date updates are ready.`
-                                                : "Watch your inbox. New dates, lineup signals, and ticket windows will come through this route first."}
-                                        </p>
-                                        <div className="sunset-panel-editorial-soft mt-6 p-5">
-                                            <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
-                                                What lands here
-                                            </span>
-                                            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#2C1810]/64">
-                                                <li>Public date releases before the broad push.</li>
-                                                <li>Lineup signals and event radio tie-ins.</li>
-                                                <li>Ticket and access movement attached to this season.</li>
-                                            </ul>
-                                        </div>
-                                    </motion.div>
-                                ) : (
-                                    <motion.form
-                                        key="form-chasing"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        onSubmit={handleSubmit}
-                                        className="space-y-4"
-                                    >
-                                        <div className="mb-2">
-                                            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
-                                                Sign Up
-                                            </p>
-                                            <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.1rem)] uppercase leading-[0.9] text-[#2C1810]">
-                                                JOIN THE DROP
-                                            </h3>
-                                            <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/64 md:text-base">
-                                                Leave the details you actually check. This form feeds the seasonal
-                                                update route for Chasing Sun(Sets), not a generic blast list.
-                                            </p>
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
-                                                Full Name
-                                            </label>
-                                            <div className="relative">
-                                                <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    value={fullName}
-                                                    onChange={(e) => setFullName(e.target.value)}
-                                                    autoComplete="name"
-                                                    placeholder="John Doe"
-                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
-                                                Email Address
-                                            </label>
-                                            <div className="relative">
-                                                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
-                                                <input
-                                                    required
-                                                    type="email"
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    autoComplete="email"
-                                                    placeholder="john@example.com"
-                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
-                                                Phone Number <span className="lowercase text-[#2C1810]/32">(optional)</span>
-                                            </label>
-                                            <div className="relative">
-                                                <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
-                                                <input
-                                                    type="tel"
-                                                    value={phone}
-                                                    onChange={(e) => setPhone(e.target.value)}
-                                                    autoComplete="tel"
-                                                    placeholder="+1 (555) 000-0000"
-                                                    className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {status === "error" && errorMsg ? (
-                                            <p className="mt-1 flex items-center gap-2 font-mono text-xs text-[#B3392B]">
-                                                <AlertCircle className="h-3.5 w-3.5 shrink-0" /> {errorMsg}
-                                            </p>
-                                        ) : null}
-
-                                        <button
-                                            type="submit"
-                                            disabled={status === "loading"}
-                                            className="btn-pill-sunsets btn-pill-wide mt-4 disabled:opacity-50"
-                                        >
-                                            {status === "loading" ? "Processing..." : ctaLabel}
-                                            {status === "loading" ? null : <ArrowRight className="h-4 w-4" />}
-                                        </button>
-
-                                        <p className="text-center font-mono text-[10px] text-[#2C1810]/40">
-                                            By joining, you agree to receive event updates. Unsubscribe anytime.
-                                        </p>
-                                    </motion.form>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
-        );
+        buildLeadIdempotencyKey(source, email, event?.id)
+      );
+      setStatus("success");
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+      setStatus("error");
     }
+  };
 
+  const eventLabel = event?.headline || event?.title;
+  const eventMeta = eventLabel
+    ? `${eventLabel}${event?.date ? ` · ${event.date}` : ""}`
+    : null;
+  const ctaLabel = "Get Updates";
+
+  if (variant === "chasing-sunsets") {
     return (
-        <div className="w-full relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
-            {/* Background Glows */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] ${content.glow1} rounded-full blur-[120px] pointer-events-none`} />
-            <div className={`absolute bottom-0 right-0 w-[500px] h-[500px] ${content.glow2} rounded-full blur-[100px] pointer-events-none`} />
+      <section className="relative overflow-hidden border-y border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(244,233,214,0.9),rgba(251,245,237,0.98))] py-24 lg:py-28">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(232,184,109,0.16),transparent_28%),radial-gradient(circle_at_84%_76%,rgba(194,112,62,0.12),transparent_30%)]" />
 
-            <div className="container relative z-10 px-4 md:px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="max-w-4xl mx-auto"
-                >
-                    <div className="glass rounded-3xl p-1 md:p-2 border border-white/10 bg-black/40 backdrop-blur-2xl overflow-hidden relative shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                        {/* Inner Border Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 pointer-events-none rounded-3xl" />
+        <div className="container layout-wide relative z-10 px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="grid gap-6 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]"
+          >
+            <div className="sunset-panel-editorial p-6 md:p-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#C2703E]/18 bg-white/72 px-3 py-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-[#A4592C]" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
+                  {content.pill}
+                </span>
+              </div>
 
-                        <div className="grid lg:grid-cols-2 gap-0 lg:gap-8 rounded-xl overflow-hidden bg-[#0A0A0A]/50">
-                            {/* Left Side: Copy & Value Prop */}
-                            <div className="p-8 lg:p-12 flex flex-col justify-center relative">
-                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent lg:hidden" />
-                                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#C2703E] via-[#E8B86D] to-transparent hidden lg:block" />
+              {eventMeta ? (
+                <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#2C1810]/48">
+                  {eventMeta}
+                </p>
+              ) : null}
 
-                                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/20 bg-white/5 w-fit">
-                                    <Sparkles className="w-3.5 h-3.5 text-[#E8B86D]" />
-                                    <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase text-white/80">
-                                        {content.pill}
-                                    </span>
-                                </div>
+              <h2 className="mt-5 font-display text-[clamp(2.8rem,5vw,5rem)] uppercase leading-[0.88] text-[#2C1810]">
+                GET SUNSET
+                <br />
+                UPDATES
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-[#2C1810]/70 md:text-lg">
+                {content.desc}
+              </p>
 
-                                <h2 className="font-display text-4xl lg:text-5xl uppercase tracking-wide text-white mb-4 leading-[1.1]">
-                                    {content.titleTop} <br />
-                                    <span className={`bg-clip-text text-transparent bg-gradient-to-r ${content.gradient}`}>
-                                        {content.titleBottom}
-                                    </span>
-                                </h2>
-
-                                {eventMeta ? (
-                                    <p className="mb-3 text-[10px] font-mono tracking-[0.3em] uppercase text-white/40">
-                                        {eventMeta}
-                                    </p>
-                                ) : null}
-
-                                <p className="text-white/60 text-sm md:text-base mb-8 max-w-md">
-                                    {content.desc}
-                                </p>
-
-                                <ul className="space-y-4 mb-2">
-                                    {content.bulletPoints.map((perk, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-sm text-white/80 font-mono">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-[#E05A3A]" />
-                                            {perk}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* Right Side: The Funnel Form */}
-                            <div className="p-8 lg:p-12 flex flex-col justify-center bg-black/20 border-t lg:border-t-0 lg:border-l border-white/5 relative z-10">
-                                <AnimatePresence mode="wait">
-                                    {status === "success" ? (
-                                        <motion.div
-                                            key="success"
-                                            initial={{ opacity: 0, scale: 0.95 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            className="flex flex-col items-center justify-center text-center py-10"
-                                        >
-                                            <motion.div
-                                                initial={{ scale: 0 }}
-                                                animate={{ scale: 1 }}
-                                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                                                className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.3)]"
-                                            >
-                                                <CheckCircle className="w-10 h-10 text-green-400" />
-                                            </motion.div>
-                                            <h3 className="font-display text-2xl uppercase text-white mb-2">You're On The List</h3>
-                                            <p className="text-white/60 text-sm">
-                                                {eventLabel
-                                                    ? `Keep an eye on your inbox. We'll reach out when ${eventLabel} has ticket, lineup, or event news.`
-                                                    : "Keep an eye on your inbox. We'll send new dates, ticket windows, and lineup updates when they are ready."}
-                                            </p>
-                                        </motion.div>
-                                    ) : (
-                                        <motion.form
-                                            key="form"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0, y: -20 }}
-                                            onSubmit={handleSubmit}
-                                            className="space-y-4"
-                                        >
-                                            <div className="space-y-1">
-                                                <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">Full Name</label>
-                                                <div className="relative">
-                                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                                                    <input
-                                                        required
-                                                        type="text"
-                                                        value={fullName}
-                                                        onChange={(e) => setFullName(e.target.value)}
-                                                        autoComplete="name"
-                                                        placeholder="John Doe"
-                                                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-1">
-                                                <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">Email Address</label>
-                                                <div className="relative">
-                                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                                                    <input
-                                                        required
-                                                        type="email"
-                                                        value={email}
-                                                        onChange={(e) => setEmail(e.target.value)}
-                                                        autoComplete="email"
-                                                        placeholder="john@example.com"
-                                                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-1">
-                                                <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">Phone Number <span className="text-white/30 lowercase">(Optional)</span></label>
-                                                <div className="relative">
-                                                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                                                    <input
-                                                        type="tel"
-                                                        value={phone}
-                                                        onChange={(e) => setPhone(e.target.value)}
-                                                        autoComplete="tel"
-                                                        placeholder="+1 (555) 000-0000"
-                                                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {status === "error" && errorMsg && (
-                                                <p className="flex items-center gap-2 text-red-400 text-xs font-mono mt-1">
-                                                    <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errorMsg}
-                                                </p>
-                                            )}
-
-                                            <button
-                                                type="submit"
-                                                disabled={status === "loading"}
-                                                className={`${content.button} btn-pill-wide mt-4 group disabled:opacity-50`}
-                                            >
-                                                <span className="relative z-10 flex items-center gap-2">
-                                                    {status === "loading" ? "Processing..." : ctaLabel}
-                                                    {status !== "loading" && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-                                                </span>
-                                                {/* Shimmer effect */}
-                                                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
-                                            </button>
-
-                                            <p className="text-[10px] text-center text-white/40 mt-3 font-mono">
-                                                By joining, you agree to receive event updates. Unsubscribe anytime.
-                                            </p>
-                                        </motion.form>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        </div>
+              <div className="mt-8 grid gap-3">
+                {content.bulletPoints.map((perk, index) => (
+                  <article
+                    key={perk}
+                    className="sunset-panel-editorial-soft flex items-start gap-3 p-4"
+                  >
+                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12 font-mono text-[10px] text-[#A4592C]">
+                      0{index + 1}
                     </div>
-                </motion.div>
+                    <p className="text-sm leading-relaxed text-[#2C1810]/68">
+                      {perk}
+                    </p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="mt-8 rounded-[1.5rem] border border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(247,234,215,0.74))] p-5">
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                  Why This Matters
+                </span>
+                <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/66">
+                  The newsletter is the seasonal spine for Chasing Sun(Sets):
+                  date releases, lineup signals, radio tie-ins, and access
+                  windows all move through one route instead of disconnected
+                  modules.
+                </p>
+              </div>
             </div>
+
+            <div className="sunset-panel-editorial p-5 md:p-6">
+              <AnimatePresence mode="wait">
+                {status === "success" ? (
+                  <motion.div
+                    key="success-chasing"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex min-h-full flex-col justify-center"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 15,
+                      }}
+                      className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#E8B86D]/28 bg-[#E8B86D]/12"
+                    >
+                      <CheckCircle className="h-8 w-8 text-[#A4592C]" />
+                    </motion.div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
+                      You&apos;re On The List
+                    </p>
+                    <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.2rem)] uppercase leading-[0.9] text-[#2C1810]">
+                      DROP ACCESS LOCKED
+                    </h3>
+                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/68 md:text-base">
+                      {eventLabel
+                        ? `Watch your inbox. ${eventLabel} will come through this route first when ticket, lineup, or date updates are ready.`
+                        : "Watch your inbox. New dates, lineup signals, and ticket windows will come through this route first."}
+                    </p>
+                    <div className="sunset-panel-editorial-soft mt-6 p-5">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                        What lands here
+                      </span>
+                      <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#2C1810]/64">
+                        <li>Public date releases before the broad push.</li>
+                        <li>Lineup signals and event radio tie-ins.</li>
+                        <li>
+                          Ticket and access movement attached to this season.
+                        </li>
+                      </ul>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form-chasing"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                  >
+                    <div className="mb-2">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#A4592C]">
+                        Sign Up
+                      </p>
+                      <h3 className="mt-4 font-display text-[clamp(2rem,4vw,3.1rem)] uppercase leading-[0.9] text-[#2C1810]">
+                        JOIN THE DROP
+                      </h3>
+                      <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#2C1810]/64 md:text-base">
+                        Leave the details you actually check. This form feeds
+                        the seasonal update route for Chasing Sun(Sets), not a
+                        generic blast list.
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                        Full Name
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                        <input
+                          required
+                          type="text"
+                          value={fullName}
+                          onChange={e => setFullName(e.target.value)}
+                          autoComplete="name"
+                          placeholder="John Doe"
+                          className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                        Email Address
+                      </label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                        <input
+                          required
+                          type="email"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
+                          autoComplete="email"
+                          placeholder="john@example.com"
+                          className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="ml-1 font-mono text-[10px] uppercase tracking-[0.24em] text-[#2C1810]/48">
+                        Phone Number{" "}
+                        <span className="lowercase text-[#2C1810]/32">
+                          (optional)
+                        </span>
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#2C1810]/34" />
+                        <input
+                          type="tel"
+                          value={phone}
+                          onChange={e => setPhone(e.target.value)}
+                          autoComplete="tel"
+                          placeholder="+1 (555) 000-0000"
+                          className="w-full rounded-[1.1rem] border border-[#C2703E]/16 bg-white/80 py-3.5 pl-11 pr-4 text-[#2C1810] placeholder:text-[#2C1810]/30 focus:border-[#E8B86D]/60 focus:bg-white focus:outline-none transition-all text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    {status === "error" && errorMsg ? (
+                      <p className="mt-1 flex items-center gap-2 font-mono text-xs text-[#B3392B]">
+                        <AlertCircle className="h-3.5 w-3.5 shrink-0" />{" "}
+                        {errorMsg}
+                      </p>
+                    ) : null}
+
+                    <button
+                      type="submit"
+                      disabled={status === "loading"}
+                      className="btn-pill-sunsets btn-pill-wide mt-4 disabled:opacity-50"
+                    >
+                      {status === "loading" ? "Processing..." : ctaLabel}
+                      {status === "loading" ? null : (
+                        <ArrowRight className="h-4 w-4" />
+                      )}
+                    </button>
+
+                    <p className="text-center font-mono text-[10px] text-[#2C1810]/40">
+                      By joining, you agree to receive event updates.
+                      Unsubscribe anytime.
+                    </p>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
         </div>
+      </section>
     );
+  }
+
+  return (
+    <div className="w-full relative py-20 lg:py-32 overflow-hidden flex items-center justify-center">
+      {/* Background Glows */}
+      <div
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] ${content.glow1} rounded-full blur-[120px] pointer-events-none`}
+      />
+      <div
+        className={`absolute bottom-0 right-0 w-[500px] h-[500px] ${content.glow2} rounded-full blur-[100px] pointer-events-none`}
+      />
+
+      <div className="container relative z-10 px-4 md:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto"
+        >
+          <div className="glass rounded-3xl p-1 md:p-2 border border-white/10 bg-black/40 backdrop-blur-2xl overflow-hidden relative shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+            {/* Inner Border Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 pointer-events-none rounded-3xl" />
+
+            <div className="grid lg:grid-cols-2 gap-0 lg:gap-8 rounded-xl overflow-hidden bg-[#0A0A0A]/50">
+              {/* Left Side: Copy & Value Prop */}
+              <div className="p-8 lg:p-12 flex flex-col justify-center relative">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C2703E] via-[#E8B86D] to-transparent lg:hidden" />
+                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#C2703E] via-[#E8B86D] to-transparent hidden lg:block" />
+
+                <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-white/20 bg-white/5 w-fit">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E8B86D]" />
+                  <span className="text-[10px] sm:text-xs font-mono tracking-widest uppercase text-white/80">
+                    {content.pill}
+                  </span>
+                </div>
+
+                <h2 className="font-display text-4xl lg:text-5xl uppercase tracking-wide text-white mb-4 leading-[1.1]">
+                  {content.titleTop} <br />
+                  <span
+                    className={`bg-clip-text text-transparent bg-gradient-to-r ${content.gradient}`}
+                  >
+                    {content.titleBottom}
+                  </span>
+                </h2>
+
+                {eventMeta ? (
+                  <p className="mb-3 text-[10px] font-mono tracking-[0.3em] uppercase text-white/40">
+                    {eventMeta}
+                  </p>
+                ) : null}
+
+                <p className="text-white/60 text-sm md:text-base mb-8 max-w-md">
+                  {content.desc}
+                </p>
+
+                <ul className="space-y-4 mb-2">
+                  {content.bulletPoints.map((perk, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-3 text-sm text-white/80 font-mono"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#E05A3A]" />
+                      {perk}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Right Side: The Funnel Form */}
+              <div className="p-8 lg:p-12 flex flex-col justify-center bg-black/20 border-t lg:border-t-0 lg:border-l border-white/5 relative z-10">
+                <AnimatePresence mode="wait">
+                  {status === "success" ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="flex flex-col items-center justify-center text-center py-10"
+                    >
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 15,
+                        }}
+                        className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.3)]"
+                      >
+                        <CheckCircle className="w-10 h-10 text-green-400" />
+                      </motion.div>
+                      <h3 className="font-display text-2xl uppercase text-white mb-2">
+                        You're On The List
+                      </h3>
+                      <p className="text-white/60 text-sm">
+                        {eventLabel
+                          ? `Keep an eye on your inbox. We'll reach out when ${eventLabel} has ticket, lineup, or event news.`
+                          : "Keep an eye on your inbox. We'll send new dates, ticket windows, and lineup updates when they are ready."}
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <motion.form
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      onSubmit={handleSubmit}
+                      className="space-y-4"
+                    >
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                          Full Name
+                        </label>
+                        <div className="relative">
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <input
+                            required
+                            type="text"
+                            value={fullName}
+                            onChange={e => setFullName(e.target.value)}
+                            autoComplete="name"
+                            placeholder="John Doe"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <input
+                            required
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            autoComplete="email"
+                            placeholder="john@example.com"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                          Phone Number{" "}
+                          <span className="text-white/30 lowercase">
+                            (Optional)
+                          </span>
+                        </label>
+                        <div className="relative">
+                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <input
+                            type="tel"
+                            value={phone}
+                            onChange={e => setPhone(e.target.value)}
+                            autoComplete="tel"
+                            placeholder="+1 (555) 000-0000"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {status === "error" && errorMsg && (
+                        <p className="flex items-center gap-2 text-red-400 text-xs font-mono mt-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />{" "}
+                          {errorMsg}
+                        </p>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={status === "loading"}
+                        className={`${content.button} btn-pill-wide mt-4 group disabled:opacity-50`}
+                      >
+                        <span className="relative z-10 flex items-center gap-2">
+                          {status === "loading" ? "Processing..." : ctaLabel}
+                          {status !== "loading" && (
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          )}
+                        </span>
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
+                      </button>
+
+                      <p className="text-[10px] text-center text-white/40 mt-3 font-mono">
+                        By joining, you agree to receive event updates.
+                        Unsubscribe anytime.
+                      </p>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
 }

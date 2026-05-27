@@ -12,7 +12,15 @@ interface SectionDividerProps {
   dense?: boolean;
 }
 
-export default function SectionDivider({ id, number, label, dark, glow, labelOverride, dense }: SectionDividerProps) {
+export default function SectionDivider({
+  id,
+  number,
+  label,
+  dark,
+  glow,
+  labelOverride,
+  dense,
+}: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
@@ -38,7 +46,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
         signalChirp.hover();
         observer.disconnect();
       },
-      { rootMargin: "-100px 0px -100px 0px" },
+      { rootMargin: "-100px 0px -100px 0px" }
     );
 
     observer.observe(node);
@@ -52,14 +60,14 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
       className={cn(
         "group relative w-full overflow-hidden border-y transition-opacity duration-700",
         borderColor,
-        isInView ? "opacity-100" : "opacity-0",
+        isInView ? "opacity-100" : "opacity-0"
       )}
     >
       {glow && (
         <div
           className={cn(
             "absolute inset-0 pointer-events-none z-0 transition-opacity duration-1000",
-            isInView ? "opacity-100" : "opacity-0",
+            isInView ? "opacity-100" : "opacity-0"
           )}
         >
           <div
@@ -74,7 +82,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
       <div
         className={cn(
           "absolute inset-0 pointer-events-none",
-          isDark ? "bg-[#070707]/72" : "bg-[#050505]/90",
+          isDark ? "bg-[#070707]/72" : "bg-[#050505]/90"
         )}
       />
 
@@ -82,7 +90,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
         <div
           className={cn(
             "flex items-end justify-between gap-6 transition-all duration-300",
-            dense ? "py-4 md:py-6" : "py-6 md:py-8 lg:py-9",
+            dense ? "py-4 md:py-6" : "py-6 md:py-8 lg:py-9"
           )}
         >
           <div className="min-w-0">
@@ -90,7 +98,7 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
               className={cn(
                 labelOverride || "section-kicker",
                 labelColor,
-                "group-hover:text-primary transition-colors duration-500",
+                "group-hover:text-primary transition-colors duration-500"
               )}
             >
               {label || `Section ${number}`}
@@ -103,12 +111,14 @@ export default function SectionDivider({ id, number, label, dark, glow, labelOve
               aria-hidden="true"
               className={cn(
                 "font-display text-[clamp(3rem,9vw,5.75rem)] leading-[0.82] tracking-[-0.05em]",
-                numberColor,
+                numberColor
               )}
             >
               {number}
             </span>
-            <span className={cn("section-kicker hidden pb-2 sm:block", labelColor)}>
+            <span
+              className={cn("section-kicker hidden pb-2 sm:block", labelColor)}
+            >
               MONOLITH
             </span>
           </div>

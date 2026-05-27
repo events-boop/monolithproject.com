@@ -20,7 +20,9 @@ const BANNER_ENABLED_PATHS = new Set([
   "/radio",
 ]);
 
-export function getEventBannerStatus(now: Date = new Date()): EventBannerStatus {
+export function getEventBannerStatus(
+  now: Date = new Date()
+): EventBannerStatus {
   const event = getExperienceEvent("banner");
   const status = getEventWindowStatus(event, now);
 
@@ -38,7 +40,10 @@ export function isEventBannerRouteEligible(pathname: string) {
   return BANNER_ENABLED_PATHS.has(normalizePathname(pathname));
 }
 
-export function isEventBannerVisible(pathname?: string, now: Date = new Date()) {
+export function isEventBannerVisible(
+  pathname?: string,
+  now: Date = new Date()
+) {
   if (getEventBannerStatus(now) === "past") return false;
   if (!pathname) return true;
   return isEventBannerRouteEligible(pathname);

@@ -33,19 +33,23 @@ const metrics = [
 const seasonNotes = [
   {
     title: "What It Is",
-    description: "A summer chapter system built around daylight, transition, and the final push into night.",
+    description:
+      "A summer chapter system built around daylight, transition, and the final push into night.",
   },
   {
     title: "Why It Works",
-    description: "The room starts with horizon and atmosphere instead of peak-hour pressure too early.",
+    description:
+      "The room starts with horizon and atmosphere instead of peak-hour pressure too early.",
   },
   {
     title: "How Tickets Move",
-    description: "Drop list first, public push second. Capacity stays controlled on purpose.",
+    description:
+      "Drop list first, public push second. Capacity stays controlled on purpose.",
   },
   {
     title: "Who It Protects",
-    description: "The people there for melodic, organic, afro, and properly paced house music.",
+    description:
+      "The people there for melodic, organic, afro, and properly paced house music.",
   },
 ];
 
@@ -76,12 +80,14 @@ export default function ChasingSunsetsDetails() {
               </RevealText>
             </div>
             <p className="mt-6 text-lg leading-relaxed text-charcoal/82">
-              Chasing Sun(Sets) is not a beach-theme shortcut. It is a paced summer room that starts in the light,
-              lets the skyline change around the crowd, and earns its way into the night.
+              Chasing Sun(Sets) is not a beach-theme shortcut. It is a paced
+              summer room that starts in the light, lets the skyline change
+              around the crowd, and earns its way into the night.
             </p>
             <p className="mt-5 text-base leading-relaxed text-charcoal/68 md:text-lg">
-              Rooftops, shoreline spaces, and open-air Chicago rooms programmed for melodic, organic, and afro house
-              without losing structural strength.
+              Rooftops, shoreline spaces, and open-air Chicago rooms programmed
+              for melodic, organic, and afro house without losing structural
+              strength.
             </p>
           </motion.div>
 
@@ -119,18 +125,24 @@ export default function ChasingSunsetsDetails() {
                     What To Expect
                   </span>
                   <p className="mt-4 text-sm leading-relaxed text-charcoal/72 md:text-base">
-                    A run of summer dates built around atmosphere, strong bookings, and a room that stays grounded in
-                    house music credibility.
+                    A run of summer dates built around atmosphere, strong
+                    bookings, and a room that stays grounded in house music
+                    credibility.
                   </p>
                 </div>
 
                 <div className="grid gap-3">
-                  {seasonNotes.map((note) => (
-                    <article key={note.title} className="sunset-panel-editorial-soft p-5">
+                  {seasonNotes.map(note => (
+                    <article
+                      key={note.title}
+                      className="sunset-panel-editorial-soft p-5"
+                    >
                       <h3 className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
                         {note.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-charcoal/68">{note.description}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-charcoal/68">
+                        {note.description}
+                      </p>
                     </article>
                   ))}
                 </div>
@@ -156,7 +168,9 @@ export default function ChasingSunsetsDetails() {
               <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.25em] text-charcoal/56">
                 {metric.label}
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-charcoal/62">{metric.note}</p>
+              <p className="mt-4 text-sm leading-relaxed text-charcoal/62">
+                {metric.note}
+              </p>
             </motion.article>
           ))}
         </div>

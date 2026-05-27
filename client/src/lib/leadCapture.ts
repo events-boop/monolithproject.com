@@ -10,11 +10,16 @@ interface FunnelLeadFieldsOptions {
 }
 
 function uniqueStrings(values: Array<string | undefined>) {
-  return Array.from(new Set(values.map((value) => value?.trim()).filter(Boolean) as string[]));
+  return Array.from(
+    new Set(values.map(value => value?.trim()).filter(Boolean) as string[])
+  );
 }
 
 export function splitFullName(fullName: string) {
-  const [firstName, ...lastParts] = fullName.trim().split(/\s+/).filter(Boolean);
+  const [firstName, ...lastParts] = fullName
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
 
   return {
     firstName: firstName || undefined,
@@ -26,7 +31,11 @@ export function normalizeInstagramHandle(value: string) {
   return value.trim().replace(/^@+/, "");
 }
 
-export function buildLeadIdempotencyKey(source: string, email: string, eventId?: string) {
+export function buildLeadIdempotencyKey(
+  source: string,
+  email: string,
+  eventId?: string
+) {
   return `${source}:${eventId || "site"}:${email.trim().toLowerCase()}`;
 }
 
@@ -56,7 +65,10 @@ export function buildFunnelLeadFields({
   };
 }
 
-export function buildCommunityShareUrl(event?: ScheduledEvent, pathname = "/tickets") {
+export function buildCommunityShareUrl(
+  event?: ScheduledEvent,
+  pathname = "/tickets"
+) {
   const baseUrl =
     typeof window !== "undefined"
       ? new URL(pathname, window.location.origin)

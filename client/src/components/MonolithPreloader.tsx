@@ -37,7 +37,10 @@ export default function MonolithPreloader() {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020202]"
           initial={{ y: 0 }}
           animate={{ y: 0 }}
-          exit={{ y: "-100%", transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } }}
+          exit={{
+            y: "-100%",
+            transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+          }}
         >
           <div className="absolute inset-0 bg-noise opacity-[0.04] mix-blend-overlay" />
           <div
@@ -74,7 +77,11 @@ export default function MonolithPreloader() {
                 className="h-full bg-[#E05A3A]"
                 initial={{ scaleX: 0, transformOrigin: "left center" }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                transition={{
+                  duration: 0.95,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.15,
+                }}
               />
             </div>
           </motion.div>

@@ -60,7 +60,11 @@ export default function LayloDropEmbed({
       : `w-full border border-white/10 bg-black/40 p-5 md:p-6 ${className ?? ""}`;
 
   return (
-    <div className={containerClass} data-cta-source="laylo-embed" data-cta-tool="laylo">
+    <div
+      className={containerClass}
+      data-cta-source="laylo-embed"
+      data-cta-tool="laylo"
+    >
       <div id={`laylo-drop-${dropId}`} />
     </div>
   );

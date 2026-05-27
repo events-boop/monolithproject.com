@@ -10,7 +10,7 @@ const COORDINATES: Record<string, string> = {
   "/radio": "41.8919° N, 87.6051° W",
   "/story": "41.8800° N, 87.6400° W",
   "/chasing-sunsets": "41.8842° N, 87.6214° W",
-  "fallback": "41.8781° N, 87.6298° W"
+  fallback: "41.8781° N, 87.6298° W",
 };
 
 const SECTOR_IDS: Record<string, string> = {
@@ -21,7 +21,7 @@ const SECTOR_IDS: Record<string, string> = {
   "/radio": "SIGNAL_RELAY",
   "/story": "GHOST_CIRCUIT",
   "/chasing-sunsets": "SOLAR_STATION",
-  "fallback": "MONOLITH_OPS"
+  fallback: "MONOLITH_OPS",
 };
 
 export default function CoordinateHUD() {
@@ -33,7 +33,7 @@ export default function CoordinateHUD() {
     // Exact match or fallback to closest parent or default
     const currentCoords = COORDINATES[location] || COORDINATES["fallback"];
     const currentSector = SECTOR_IDS[location] || SECTOR_IDS["fallback"];
-    
+
     setCoords(currentCoords);
     setSector(currentSector);
   }, [location]);
@@ -50,10 +50,10 @@ export default function CoordinateHUD() {
           className="flex flex-col gap-1"
         >
           <div className="flex items-center gap-3">
-             <div className="w-1 h-3 bg-white/40" />
-             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white">
-               {coords}
-             </span>
+            <div className="w-1 h-3 bg-white/40" />
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white">
+              {coords}
+            </span>
           </div>
           <div className="flex items-center gap-3 pl-4">
             <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 whitespace-nowrap">

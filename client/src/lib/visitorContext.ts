@@ -4,7 +4,13 @@ const PROFILE_STORAGE_KEY = "monolith-visitor-profile-v1";
 const ROUTE_HISTORY_STORAGE_KEY = "monolith-route-history-v1";
 const MAX_ROUTE_HISTORY = 12;
 
-const PARTNER_PATH_PREFIXES = ["/partners", "/press", "/booking", "/contact", "/submit"];
+const PARTNER_PATH_PREFIXES = [
+  "/partners",
+  "/press",
+  "/booking",
+  "/contact",
+  "/submit",
+];
 const PARTNER_AUDIENCE_VALUES = [
   "partner",
   "partners",
@@ -47,7 +53,11 @@ interface StoredRouteHistory {
   paths: string[];
 }
 
-export type ClearanceTier = "CITIZEN" | "INITIATE" | "OPERATOR" | "ABSOLUTE_ZERO";
+export type ClearanceTier =
+  | "CITIZEN"
+  | "INITIATE"
+  | "OPERATOR"
+  | "ABSOLUTE_ZERO";
 
 export interface VisitorContextState {
   explicitAudience: VisitorAudience | null;
@@ -109,17 +119,25 @@ function readRouteHistory(): StoredRouteHistory {
   }
 
   return {
-    lastUpdatedAt: typeof stored.lastUpdatedAt === "string" ? stored.lastUpdatedAt : "",
-    paths: stored.paths.map((path) => normalizePath(path)).slice(0, MAX_ROUTE_HISTORY),
+    lastUpdatedAt:
+      typeof stored.lastUpdatedAt === "string" ? stored.lastUpdatedAt : "",
+    paths: stored.paths
+      .map(path => normalizePath(path))
+      .slice(0, MAX_ROUTE_HISTORY),
   };
 }
 
 function matchesAudienceValue(
   rawValue: string,
-  allowedValues: readonly string[],
+  allowedValues: readonly string[]
 ) {
-  const normalized = rawValue.toLowerCase().trim().replace(/[_\s]+/g, "-");
-  return allowedValues.some((value) => normalized === value || normalized.includes(value));
+  const normalized = rawValue
+    .toLowerCase()
+    .trim()
+    .replace(/[_\s]+/g, "-");
+  return allowedValues.some(
+    value => normalized === value || normalized.includes(value)
+  );
 }
 
 function inferExplicitAudience(search: string): VisitorAudience | null {
@@ -147,7 +165,9 @@ function inferExplicitAudience(search: string): VisitorAudience | null {
 }
 
 function isPartnerRoute(path: string) {
-  return PARTNER_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+  return PARTNER_PATH_PREFIXES.some(
+    prefix => path === prefix || path.startsWith(`${prefix}/`)
+  );
 }
 
 function resolveSegment({
@@ -185,7 +205,7 @@ export function rememberVisitedPath(path: string) {
   const routeHistory = readRouteHistory();
   const paths = [
     normalizedPath,
-    ...routeHistory.paths.filter((storedPath) => storedPath !== normalizedPath),
+    ...routeHistory.paths.filter(storedPath => storedPath !== normalizedPath),
   ].slice(0, MAX_ROUTE_HISTORY);
 
   writeJson(ROUTE_HISTORY_STORAGE_KEY, {
@@ -208,7 +228,9 @@ export function useVisitorContext() {
     const nextProfile: VisitorProfile = {
       explicitAudience: explicitAudience ?? profile?.explicitAudience ?? null,
       firstSeenAt: profile?.firstSeenAt ?? new Date().toISOString(),
-      homeVisits: isHome ? (profile?.homeVisits ?? 0) + 1 : (profile?.homeVisits ?? 0),
+      homeVisits: isHome
+        ? (profile?.homeVisits ?? 0) + 1
+        : (profile?.homeVisits ?? 0),
       lastSeenAt: new Date().toISOString(),
       lastSegment: segment,
     };
@@ -217,11 +239,15 @@ export function useVisitorContext() {
 
     // Calculate Achievements & Tier
     const achievements: string[] = [];
-    if (localStorage.getItem("monolith-starred-rites")) achievements.push("STARRED_RITE");
-    if (routeHistory.paths.includes("/insights")) achievements.push("VIEWED_INSIGHTS");
-    if (routeHistory.paths.includes("/archive")) achievements.push("VIEWED_ARCHIVE");
-    if (routeHistory.paths.includes("/radio")) achievements.push("VIEWED_RADIO");
-    
+    if (localStorage.getItem("monolith-starred-rites"))
+      achievements.push("STARRED_RITE");
+    if (routeHistory.paths.includes("/insights"))
+      achievements.push("VIEWED_INSIGHTS");
+    if (routeHistory.paths.includes("/archive"))
+      achievements.push("VIEWED_ARCHIVE");
+    if (routeHistory.paths.includes("/radio"))
+      achievements.push("VIEWED_RADIO");
+
     let tier: ClearanceTier = "CITIZEN";
     if (achievements.length >= 4) tier = "ABSOLUTE_ZERO";
     else if (achievements.length >= 2) tier = "OPERATOR";

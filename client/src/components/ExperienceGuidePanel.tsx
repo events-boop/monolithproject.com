@@ -1,4 +1,11 @@
-import { ArrowUpRight, CheckCircle2, Clock3, MapPin, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Clock3,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { Link } from "wouter";
 import {
   getEventEyebrow,
@@ -68,7 +75,9 @@ export default function ExperienceGuidePanel() {
               <p className="mt-2 font-display text-xl uppercase text-white">
                 {event.venue}
               </p>
-              <p className="mt-1 text-sm text-white/50">{getEventVenueLabel(event)}</p>
+              <p className="mt-1 text-sm text-white/50">
+                {getEventVenueLabel(event)}
+              </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
@@ -85,7 +94,8 @@ export default function ExperienceGuidePanel() {
                 House Rules
               </p>
               <p className="mt-2 text-sm leading-relaxed text-white/70">
-                {event.age || "21+"} entry. {event.dress || "Elevated nightlife attire."}
+                {event.age || "21+"} entry.{" "}
+                {event.dress || "Elevated nightlife attire."}
               </p>
             </div>
           </div>
@@ -95,17 +105,21 @@ export default function ExperienceGuidePanel() {
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
             <div className="flex items-center gap-3">
               <Clock3 className="h-5 w-5 text-primary" />
-              <h3 className="font-display text-xl uppercase text-white">Entry Checklist</h3>
+              <h3 className="font-display text-xl uppercase text-white">
+                Entry Checklist
+              </h3>
             </div>
 
             <div className="mt-5 space-y-3">
-              {checklist.map((item) => (
+              {checklist.map(item => (
                 <div
                   key={item}
                   className="flex items-start gap-3 rounded-3xl border border-white/10 bg-black/15 px-4 py-3"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <p className="text-sm leading-relaxed text-white/70">{item}</p>
+                  <p className="text-sm leading-relaxed text-white/70">
+                    {item}
+                  </p>
                 </div>
               ))}
             </div>
@@ -114,11 +128,13 @@ export default function ExperienceGuidePanel() {
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-5 w-5 text-primary" />
-              <h3 className="font-display text-xl uppercase text-white">Room Notes</h3>
+              <h3 className="font-display text-xl uppercase text-white">
+                Room Notes
+              </h3>
             </div>
 
             <div className="mt-5 space-y-3">
-              {houseNotes.map((note) => (
+              {houseNotes.map(note => (
                 <p
                   key={note}
                   className="rounded-3xl border border-white/10 bg-black/15 px-4 py-3 text-sm leading-relaxed text-white/70"
@@ -135,11 +151,14 @@ export default function ExperienceGuidePanel() {
         <div className="flex items-start gap-3">
           <MapPin className="mt-1 h-5 w-5 text-primary" />
           <div>
-            <p className="font-display text-xl uppercase text-white">Arrival Route</p>
+            <p className="font-display text-xl uppercase text-white">
+              Arrival Route
+            </p>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">
-              Use the main entrance for general admission. VIP and table guests should check in
-              on the left side of the marquee. If you are coordinating a group, send everyone the
-              map link in advance so the room arrives together.
+              Use the main entrance for general admission. VIP and table guests
+              should check in on the left side of the marquee. If you are
+              coordinating a group, send everyone the map link in advance so the
+              room arrives together.
             </p>
           </div>
         </div>

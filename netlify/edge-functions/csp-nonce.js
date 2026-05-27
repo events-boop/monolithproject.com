@@ -49,5 +49,20 @@ export default async function cspNonce(request, context) {
 export const config = {
   onError: "bypass",
   path: ["/*"],
-  excludedPath: ["/api/*", "/go/*", "/assets/*", "/images/*", "/videos/*", "/fonts/*", "/*.js", "/*.css", "/*.svg", "/*.ico", "/*.json", "/*.xml", "/*.txt", "/*.woff2"],
+  excludedPath: [
+    "/api/*",
+    "/go/*",
+    "/assets/*",
+    "/images/*",
+    "/videos/*",
+    "/fonts/*",
+    "/*.js",
+    "/*.css",
+    "/*.svg",
+    "/*.ico",
+    "/*.json",
+    "/*.xml",
+    "/*.txt",
+    "/*.woff2",
+  ],
 };

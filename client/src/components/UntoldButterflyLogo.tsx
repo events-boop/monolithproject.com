@@ -16,7 +16,8 @@ const antennaePaths = [
   "M60 42 C62 36, 68 30, 72 26",
 ];
 
-const restGlow = "drop-shadow(0 0 12px rgba(120, 200, 255, 0.6)) drop-shadow(0 0 4px rgba(120, 200, 255, 0.3))";
+const restGlow =
+  "drop-shadow(0 0 12px rgba(120, 200, 255, 0.6)) drop-shadow(0 0 4px rgba(120, 200, 255, 0.3))";
 
 export default function UntoldButterflyLogo({
   className = "w-16 h-16",

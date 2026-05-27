@@ -28,7 +28,7 @@ export default function GalleryLightbox({
   index,
   onClose,
 }: GalleryLightboxProps) {
-  const slides: Slide[] = media.map((item) => {
+  const slides: Slide[] = media.map(item => {
     if (item.kind === "video") {
       return {
         type: "video",
@@ -62,9 +62,18 @@ export default function GalleryLightbox({
       captions={{ descriptionTextAlign: "center", descriptionMaxLines: 3 }}
       video={{ controls: true, playsInline: true, preload: "metadata" }}
       zoom={{ maxZoomPixelRatio: 2.5, scrollToZoom: true }}
-      thumbnails={{ position: "bottom", width: 96, height: 72, gap: 12, border: 0 }}
+      thumbnails={{
+        position: "bottom",
+        width: 96,
+        height: 72,
+        gap: 12,
+        border: 0,
+      }}
       styles={{
-        container: { backgroundColor: "rgba(4, 4, 6, 0.96)", backdropFilter: "blur(18px)" },
+        container: {
+          backgroundColor: "rgba(4, 4, 6, 0.96)",
+          backdropFilter: "blur(18px)",
+        },
       }}
     />
   );

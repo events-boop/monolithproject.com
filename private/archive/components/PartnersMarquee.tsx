@@ -48,13 +48,15 @@ export default function PartnersMarquee() {
       <div className="container relative z-10 mx-auto mb-8 max-w-6xl px-6">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <span className="ui-kicker scene-kicker mb-4 block">Who We Work With</span>
+            <span className="ui-kicker scene-kicker mb-4 block">
+              Who We Work With
+            </span>
             <h2 className="font-display text-[clamp(2rem,4.8vw,4.25rem)] leading-[0.92] text-white">
               The rooms, tools, and outlets around the project matter.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/66 md:text-base">
-              These names help people understand the scale of the room without taking over the
-              story.
+              These names help people understand the scale of the room without
+              taking over the story.
             </p>
           </div>
 
@@ -79,7 +81,7 @@ export default function PartnersMarquee() {
 
       <div className="container relative z-10 mx-auto mb-8 max-w-6xl px-6">
         <div className="grid gap-4 lg:grid-cols-3">
-          {credibilityLanes.map((lane) => {
+          {credibilityLanes.map(lane => {
             const Icon = lane.icon;
 
             return (
@@ -90,13 +92,17 @@ export default function PartnersMarquee() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="ui-chip text-white/42">{lane.eyebrow}</p>
-                    <h3 className="mt-3 font-display text-2xl uppercase text-white">{lane.title}</h3>
+                    <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                      {lane.title}
+                    </h3>
                   </div>
                   <div className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/22 bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-white/62">{lane.description}</p>
+                <p className="mt-4 text-sm leading-relaxed text-white/62">
+                  {lane.description}
+                </p>
               </div>
             );
           })}
@@ -106,10 +112,15 @@ export default function PartnersMarquee() {
       <div className="relative z-10">
         <div className="container mx-auto mb-4 flex max-w-6xl items-center justify-between gap-4 px-6">
           <span className="ui-chip text-white/42">Hover to pause</span>
-          <span className="ui-chip text-white/34">Venue hosts · production gear · cultural outlets</span>
+          <span className="ui-chip text-white/34">
+            Venue hosts · production gear · cultural outlets
+          </span>
         </div>
 
-        <div className="group relative overflow-hidden" aria-label="Partner and affiliation carousel">
+        <div
+          className="group relative overflow-hidden"
+          aria-label="Partner and affiliation carousel"
+        >
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
 

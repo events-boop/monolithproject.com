@@ -2,7 +2,14 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "wouter";
-import { AudioLines, ArrowRight, Sun, ArrowUpRight, Camera, Radio } from "lucide-react";
+import {
+  AudioLines,
+  ArrowRight,
+  Sun,
+  ArrowUpRight,
+  Camera,
+  Radio,
+} from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import EditorialHeader from "./EditorialHeader";
 import { signalChirp } from "@/lib/SignalChirpEngine";
@@ -12,7 +19,8 @@ const chapters = [
     id: "chasing-sunsets",
     title: "CHASING SUN(SETS)",
     tagline: "The Open-Air Series.",
-    description: "Golden hour sets, panoramic views, and the energy of the city at dusk.",
+    description:
+      "Golden hour sets, panoramic views, and the energy of the city at dusk.",
     moment: "Open-Air Day",
     image: "/images/chasing-sunsets-premium.webp",
     icon: Sun,
@@ -23,7 +31,8 @@ const chapters = [
     id: "untold-story",
     title: "UNTOLD STORY",
     tagline: "The After-Dark Series.",
-    description: "Raw spaces, heavy sound systems, and the tension of the late night.",
+    description:
+      "Raw spaces, heavy sound systems, and the tension of the late night.",
     moment: "Industrial Night",
     image: "/images/untold-story-moody.webp",
     icon: null,
@@ -36,7 +45,7 @@ const chapters = [
     tagline: "The Sonic Archive.",
     description: "Curated mixes, live recordings, and exclusive guest sets.",
     moment: "Global Broadcast",
-    image: "/images/radio-promo-minimal.png", 
+    image: "/images/radio-promo-minimal.png",
     icon: Radio,
     href: "/radio",
     color: "#F43F5E",
@@ -51,7 +60,7 @@ const chapters = [
     icon: Camera,
     href: "/archive",
     color: "#FFFFFF",
-  }
+  },
 ];
 
 export default function ChaptersSection() {
@@ -67,7 +76,11 @@ export default function ChaptersSection() {
       <div className="absolute inset-0 atmo-surface opacity-70 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_84%_76%,rgba(224,90,58,0.1),transparent_36%)] pointer-events-none" />
       <div className="container layout-default px-6 mb-16 md:mb-20 text-center relative z-10">
-        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ duration: 0.35 }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.35 }}
+        >
           <EditorialHeader
             kicker="The Branches"
             title="Curated Worlds"
@@ -98,7 +111,10 @@ export default function ChaptersSection() {
 
               {/* Interaction Overlay */}
               <Link href={chapter.href} asChild>
-                <a className="absolute inset-0 z-20" onClick={() => signalChirp.click()}>
+                <a
+                  className="absolute inset-0 z-20"
+                  onClick={() => signalChirp.click()}
+                >
                   <span className="sr-only">Explore {chapter.title}</span>
                 </a>
               </Link>
@@ -132,9 +148,9 @@ export default function ChaptersSection() {
               </div>
 
               {/* Bottom Reveal Border */}
-              <div 
+              <div
                 className="absolute inset-x-0 bottom-0 h-1 transition-transform duration-700 translate-y-full group-hover:translate-y-0"
-                style={{ backgroundColor: chapter.color || 'var(--primary)' }}
+                style={{ backgroundColor: chapter.color || "var(--primary)" }}
               />
             </motion.div>
           ))}

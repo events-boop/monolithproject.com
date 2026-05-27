@@ -13,7 +13,7 @@ const expressions = [
     icon: Sun,
     color: "#D4A574",
     orbit: 180,
-    speed: 0.2, 
+    speed: 0.2,
     initialAngle: 45,
   },
   {
@@ -60,7 +60,9 @@ export default function CircularOrbit() {
   const [scale, setScale] = useState(1);
   useEffect(() => {
     const handleResize = () => {
-      setScale(window.innerWidth < 768 ? 0.6 : window.innerWidth < 1024 ? 0.75 : 1);
+      setScale(
+        window.innerWidth < 768 ? 0.6 : window.innerWidth < 1024 ? 0.75 : 1
+      );
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -74,7 +76,13 @@ export default function CircularOrbit() {
     >
       <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-0">
         <defs>
-          <linearGradient id="orbit-gradient-shared" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="orbit-gradient-shared"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="white" stopOpacity="0" />
             <stop offset="50%" stopColor="white" stopOpacity="0.5" />
             <stop offset="100%" stopColor="white" stopOpacity="0" />
@@ -86,20 +94,26 @@ export default function CircularOrbit() {
 
       <div className="relative z-20 flex flex-col items-center justify-center">
         <motion.div
-           animate={{ 
-             boxShadow: ["0 0 20px rgba(255,255,255,0.05)", "0 0 40px rgba(255,255,255,0.15)", "0 0 20px rgba(255,255,255,0.05)"]
-           }}
-           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-           className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-[#080808] border border-white/10 flex items-center justify-center relative overflow-hidden group"
+          animate={{
+            boxShadow: [
+              "0 0 20px rgba(255,255,255,0.05)",
+              "0 0 40px rgba(255,255,255,0.15)",
+              "0 0 20px rgba(255,255,255,0.05)",
+            ],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-[#080808] border border-white/10 flex items-center justify-center relative overflow-hidden group"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-          <span className="font-display text-4xl text-white tracking-tighter">M</span>
+          <span className="font-display text-4xl text-white tracking-tighter">
+            M
+          </span>
         </motion.div>
         <span className="ui-kicker mt-6 text-white/40">The Monolith</span>
       </div>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {expressions.map((exp) => (
+        {expressions.map(exp => (
           <OrbitCircle
             key={exp.id}
             expression={exp}
@@ -112,11 +126,22 @@ export default function CircularOrbit() {
   );
 }
 
-function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: any; scrollRotation: any; scale: number }) {
-  const angle = useTransform(scrollRotation, (v: number) => v * exp.speed + exp.initialAngle);
+function OrbitCircle({
+  expression: exp,
+  scrollRotation,
+  scale,
+}: {
+  expression: any;
+  scrollRotation: any;
+  scale: number;
+}) {
+  const angle = useTransform(
+    scrollRotation,
+    (v: number) => v * exp.speed + exp.initialAngle
+  );
   const radius = exp.orbit * scale;
-  const x = useTransform(angle, (a) => Math.cos((a * Math.PI) / 180) * radius);
-  const y = useTransform(angle, (a) => Math.sin((a * Math.PI) / 180) * radius);
+  const x = useTransform(angle, a => Math.cos((a * Math.PI) / 180) * radius);
+  const y = useTransform(angle, a => Math.sin((a * Math.PI) / 180) * radius);
   const Icon = exp.icon;
   const { setHoveredExpression } = useUI();
 
@@ -138,20 +163,26 @@ function OrbitCircle({ expression: exp, scrollRotation, scale }: { expression: a
       <motion.div
         style={{ x, y }}
         className="absolute z-10 flex items-center gap-3 p-2 group pointer-events-auto"
-        onMouseEnter={() => setHoveredExpression(exp.id === 'story' ? 'untold' : exp.id)}
+        onMouseEnter={() =>
+          setHoveredExpression(exp.id === "story" ? "untold" : exp.id)
+        }
         onMouseLeave={() => setHoveredExpression(null)}
       >
-        <Link 
-          href={`/${exp.id === 'story' ? 'story' : exp.id}`} 
+        <Link
+          href={`/${exp.id === "story" ? "story" : exp.id}`}
           className="cursor-pointer"
           data-cursor-text="EXPLORE"
         >
           <div className="flex items-center gap-3 rounded-full border border-white/12 bg-black/40 backdrop-blur-md px-4 py-2.5 shadow-xl transition-all hover:border-white/20 hover:bg-black/80 hover:scale-105 active:scale-95 liquid-hover">
-            <div 
+            <div
               className="flex h-6 w-6 lg:h-8 lg:w-8 items-center justify-center rounded-full border border-white/10"
               style={{ backgroundColor: `${exp.color}15`, color: exp.color }}
             >
-              {exp.id === 'story' ? <UntoldButterflyLogo className="h-3 w-3 lg:h-4 lg:w-4" /> : <Icon className="h-3 w-3 lg:h-4 lg:w-4" />}
+              {exp.id === "story" ? (
+                <UntoldButterflyLogo className="h-3 w-3 lg:h-4 lg:w-4" />
+              ) : (
+                <Icon className="h-3 w-3 lg:h-4 lg:w-4" />
+              )}
             </div>
             <div className="flex flex-col">
               <span className="text-[8px] lg:text-[10px] uppercase tracking-[0.2em] opacity-40 leading-none mb-1">

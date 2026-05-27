@@ -10,10 +10,15 @@ test.beforeEach(async ({ page }) => {
 
 async function waitForAppReady(page: import("@playwright/test").Page) {
   await page.goto("/chasing-sunsets", { waitUntil: "networkidle" });
-  await page.waitForSelector("#initial-loader", { state: "detached", timeout: 15000 });
+  await page.waitForSelector("#initial-loader", {
+    state: "detached",
+    timeout: 15000,
+  });
 }
 
-test("chasing sunsets keeps the next-event context on mobile", async ({ page }) => {
+test("chasing sunsets keeps the next-event context on mobile", async ({
+  page,
+}) => {
   await waitForAppReady(page);
 
   await expect(page.locator("#chasing-hero")).toContainText("INDEPENDENCE DAY");

@@ -39,7 +39,9 @@ export default function EpisodeGallery({
               {title}
             </h3>
             {subtitle ? (
-              <p className="mt-3 font-serif text-[clamp(1.3rem,2vw,1.8rem)] italic text-[#A4592C]">{subtitle}</p>
+              <p className="mt-3 font-serif text-[clamp(1.3rem,2vw,1.8rem)] italic text-[#A4592C]">
+                {subtitle}
+              </p>
             ) : null}
             {description ? (
               <p className="mt-4 max-w-2xl border-l-2 border-[#E8B86D]/55 pl-4 text-sm leading-relaxed text-[#2C1810]/68 md:text-base">
@@ -48,7 +50,10 @@ export default function EpisodeGallery({
             ) : null}
           </div>
 
-          <Link href={seasonHref} className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center self-start md:self-auto">
+          <Link
+            href={seasonHref}
+            className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center self-start md:self-auto"
+          >
             View Full Gallery
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
@@ -61,7 +66,11 @@ export default function EpisodeGallery({
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ delay: idx * 0.08, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                delay: idx * 0.08,
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="group"
             >
               <div className="sunset-media-frame relative aspect-[4/5] transition-transform duration-500 group-hover:-translate-y-1">
@@ -80,8 +89,12 @@ export default function EpisodeGallery({
                 {img.label ? (
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="rounded-2xl border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(246,234,215,0.78))] px-4 py-3 shadow-[0_18px_34px_rgba(18,13,9,0.18)]">
-                      <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">Season Proof</span>
-                      <p className="mt-2 font-display text-xl uppercase leading-[0.92] text-[#2C1810]">{img.label}</p>
+                      <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
+                        Season Proof
+                      </span>
+                      <p className="mt-2 font-display text-xl uppercase leading-[0.92] text-[#2C1810]">
+                        {img.label}
+                      </p>
                     </div>
                   </div>
                 ) : null}
@@ -103,19 +116,29 @@ export default function EpisodeGallery({
           >
             {season} {episode && `- ${episode}`}
           </span>
-          <h3 className="mb-2 font-display text-4xl uppercase text-white md:text-5xl">{title}</h3>
+          <h3 className="mb-2 font-display text-4xl uppercase text-white md:text-5xl">
+            {title}
+          </h3>
           {subtitle ? (
-            <p className="mb-4 font-display text-xl uppercase tracking-widest text-white/70">{subtitle}</p>
+            <p className="mb-4 font-display text-xl uppercase tracking-widest text-white/70">
+              {subtitle}
+            </p>
           ) : null}
           {description ? (
-            <p className="max-w-xl border-l-2 pl-4 text-sm leading-relaxed text-white/50" style={{ borderColor: accentColor }}>
+            <p
+              className="max-w-xl border-l-2 pl-4 text-sm leading-relaxed text-white/50"
+              style={{ borderColor: accentColor }}
+            >
               {description}
             </p>
           ) : null}
         </div>
         <div className="flex items-center gap-3">
           <Link href={seasonHref} asChild>
-            <a className="btn-pill-outline btn-pill-compact group" style={{ borderColor: `${accentColor}40` }}>
+            <a
+              className="btn-pill-outline btn-pill-compact group"
+              style={{ borderColor: `${accentColor}40` }}
+            >
               View Full Gallery
               <ArrowUpRight className="h-3 w-3" />
             </a>
@@ -130,7 +153,11 @@ export default function EpisodeGallery({
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              delay: idx * 0.1,
+              duration: 0.8,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className="gallery-card-frame glass group rounded-xl grayscale-[60%] transition-all duration-700 hover:z-20 hover:grayscale-0 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
           >
             <ResponsiveImage
@@ -148,7 +175,9 @@ export default function EpisodeGallery({
                 <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
                   Card {idx + 1}
                 </span>
-                <p className="font-display text-xl uppercase tracking-widest text-white drop-shadow-md">{img.label}</p>
+                <p className="font-display text-xl uppercase tracking-widest text-white drop-shadow-md">
+                  {img.label}
+                </p>
               </div>
             ) : null}
 

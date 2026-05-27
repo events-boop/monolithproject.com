@@ -15,7 +15,10 @@ const sitemapPath = path.join(rootDir, "client", "public", "sitemap.xml");
 const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
 const original = await fs.readFile(sitemapPath, "utf8");
-const updated = original.replace(/<lastmod>[^<]+<\/lastmod>/g, `<lastmod>${today}</lastmod>`);
+const updated = original.replace(
+  /<lastmod>[^<]+<\/lastmod>/g,
+  `<lastmod>${today}</lastmod>`
+);
 
 await fs.writeFile(sitemapPath, updated, "utf8");
 

@@ -55,7 +55,8 @@ export const homeGallery: MediaItem[] = [
     height: 3600,
     alt: "Untold Story with Juany Bravo and Deron",
     caption: "Untold Story",
-    description: "Juany Bravo and Deron leading the room through a late-night chapter.",
+    description:
+      "Juany Bravo and Deron leading the room through a late-night chapter.",
   }),
   video({
     id: "home-highlight-film",
@@ -88,7 +89,8 @@ export const homeGallery: MediaItem[] = [
     height: 1536,
     alt: "The Monolith Project collective",
     caption: "The Collective",
-    description: "A wider frame of the community and the scale of the experience.",
+    description:
+      "A wider frame of the community and the scale of the experience.",
   }),
   image({
     id: "home-lazare",
@@ -469,7 +471,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "chasing-sunsets-season-i",
     title: "Chasing Sun(Sets)",
     subtitle: "Season I",
-    description: "Golden-hour frames, artist portraits, and moving records from the first season.",
+    description:
+      "Golden-hour frames, artist portraits, and moving records from the first season.",
     accentColor: "#E8B86D",
     coverImage: "/images/chasing-sunsets-premium.webp",
     date: "Summer 2024",
@@ -479,7 +482,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "chasing-sunsets-season-ii",
     title: "Chasing Sun(Sets)",
     subtitle: "Season II",
-    description: "A tighter editorial cut from the second wave of the sunset series.",
+    description:
+      "A tighter editorial cut from the second wave of the sunset series.",
     accentColor: "#E8B86D",
     coverImage: "/images/chasing-sunsets-1.jpg",
     date: "Summer 2025",
@@ -489,7 +493,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "chasing-sunsets-season-iii",
     title: "Chasing Sun(Sets)",
     subtitle: "Season III",
-    description: "The latest wave of the shoreline series — boat club and beach chapters.",
+    description:
+      "The latest wave of the shoreline series — boat club and beach chapters.",
     accentColor: "#E8B86D",
     coverImage: "/images/archive/chasing-sunsets/css-s3-1.jpg",
     date: "Summer 2025",
@@ -499,7 +504,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "untold-story-season-i",
     title: "Untold Story",
     subtitle: "Season I",
-    description: "The first chapter of Untold Story in poster, crowd, and manifesto form.",
+    description:
+      "The first chapter of Untold Story in poster, crowd, and manifesto form.",
     accentColor: "#8B5CF6",
     coverImage: "/images/untold-story-moody.webp",
     date: "2024",
@@ -509,7 +515,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "untold-story-season-ii",
     title: "Untold Story",
     subtitle: "Season II — Lazare Sabry",
-    description: "Artist-led frames and portrait studies from the Lazare Sabry chapter.",
+    description:
+      "Artist-led frames and portrait studies from the Lazare Sabry chapter.",
     accentColor: "#8B5CF6",
     coverImage: "/images/lazare-recap.webp",
     date: "December 12, 2025",
@@ -519,7 +526,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "untold-story-season-iii",
     title: "Untold Story",
     subtitle: "Season III — Deron B2B Juany Bravo",
-    description: "Optimized editorial selects from the Deron B2B Juany Bravo chapter.",
+    description:
+      "Optimized editorial selects from the Deron B2B Juany Bravo chapter.",
     accentColor: "#8B5CF6",
     coverImage: "/images/untold-story-juany-deron-v2.webp",
     date: "March 6, 2026",
@@ -529,7 +537,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "autograf-special-event",
     title: "The Monolith Project",
     subtitle: "Special Event — Autograf",
-    description: "Live instrumentation and immersive energy from the Autograf Chicago night.",
+    description:
+      "Live instrumentation and immersive energy from the Autograf Chicago night.",
     accentColor: "#FFFFFF",
     coverImage: "/images/autograf-recap.jpg",
     date: "March 21, 2026",
@@ -539,7 +548,8 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "eran-hersh-international",
     title: "Eran Hersh",
     subtitle: "Global Chapters",
-    description: "Atmospheric studies from Eran Hersh's international circuit, featuring RheinRiff and Bazar chapters.",
+    description:
+      "Atmospheric studies from Eran Hersh's international circuit, featuring RheinRiff and Bazar chapters.",
     accentColor: "#22D3EE",
     coverImage: "/images/eran-hersh-live-5.webp",
     date: "2024-2025",

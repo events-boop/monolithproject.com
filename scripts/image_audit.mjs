@@ -20,7 +20,9 @@ async function scanReferences(dir, extSet) {
 
     if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase();
-      if ([".ts", ".tsx", ".js", ".jsx", ".json", ".mts", ".mjs"].includes(ext)) {
+      if (
+        [".ts", ".tsx", ".js", ".jsx", ".json", ".mts", ".mjs"].includes(ext)
+      ) {
         const content = await fs.readFile(fullPath, "utf8");
         // Match strings that look like image paths or image basenames
         const matches = content.match(/[\w-]+\.(png|jpg|jpeg|webp|avif|gif)/g);
@@ -59,7 +61,10 @@ async function run() {
 
   const clientRefs = await scanReferences(path.join(rootDir, "client"), extSet);
   const serverRefs = await scanReferences(path.join(rootDir, "server"), extSet);
-  const privateArchiveRefs = await scanReferences(path.join(rootDir, "private"), extSet);
+  const privateArchiveRefs = await scanReferences(
+    path.join(rootDir, "private"),
+    extSet
+  );
 
   for (const ref of clientRefs) refSet.add(ref);
   for (const ref of serverRefs) refSet.add(ref);
@@ -122,7 +127,9 @@ async function run() {
     // Resize using sharp
     const metadata = await sharp(filePath).metadata();
     if (metadata.width > targetWidth) {
-      console.log(`[RESIZE] ${baseName} (${metadata.width}px -> ${targetWidth}px)`);
+      console.log(
+        `[RESIZE] ${baseName} (${metadata.width}px -> ${targetWidth}px)`
+      );
       const buffer = await sharp(filePath)
         .resize({ width: targetWidth, withoutEnlargement: true })
         .toBuffer();
@@ -133,7 +140,9 @@ async function run() {
     }
   }
 
-  console.log(`Audit complete. Deleted: ${deletedCount}, Resized: ${resizedCount}`);
+  console.log(
+    `Audit complete. Deleted: ${deletedCount}, Resized: ${resizedCount}`
+  );
 }
 
 run().catch(console.error);

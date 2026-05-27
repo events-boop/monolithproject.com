@@ -4,7 +4,10 @@ const phoneWidths = [320, 340, 360, 375, 390, 430];
 
 async function waitForAppReady(page: import("@playwright/test").Page) {
   await page.goto("/", { waitUntil: "networkidle" });
-  await page.waitForSelector("#initial-loader", { state: "detached", timeout: 15000 });
+  await page.waitForSelector("#initial-loader", {
+    state: "detached",
+    timeout: 15000,
+  });
   await page.waitForTimeout(800);
 }
 
@@ -25,11 +28,11 @@ test.describe("responsive header", () => {
       const metrics = await page.evaluate(() => {
         const nav = document.querySelector("nav");
         const shell = nav?.querySelector(".shell-frame, .shell-frame-light");
-        const banner = nav?.querySelector('a[aria-label*="current featured event"], a[aria-label*="early access"]');
+        const banner = nav?.querySelector('a[data-nav-event-banner="true"]');
         const bannerText = banner?.querySelector(".truncate");
         const logo = nav?.querySelector('button[aria-label="Go to homepage"]');
         const menu = nav?.querySelector(
-          'button[aria-label="Open navigation menu"], button[aria-label="Close navigation menu"]',
+          'button[aria-label="Open navigation menu"], button[aria-label="Close navigation menu"]'
         );
         const quickCta = nav?.querySelector('[data-mobile-quick-cta="true"]');
 
@@ -47,14 +50,15 @@ test.describe("responsive header", () => {
         const quickRect = rect(quickCta);
         const controlsLeft = Math.min(
           menuRect?.left ?? Number.POSITIVE_INFINITY,
-          quickRect?.left ?? Number.POSITIVE_INFINITY,
+          quickRect?.left ?? Number.POSITIVE_INFINITY
         );
 
         return {
           clientWidth: document.documentElement.clientWidth,
           scrollWidth: document.documentElement.scrollWidth,
           totalHeaderHeight:
-            (banner?.getBoundingClientRect().height ?? 0) + (shell?.getBoundingClientRect().height ?? 0),
+            (banner?.getBoundingClientRect().height ?? 0) +
+            (shell?.getBoundingClientRect().height ?? 0),
           shellHeight: shellRect?.height ?? 0,
           bannerHeight: bannerRect?.height ?? 0,
           bannerTextLength: bannerText?.textContent?.trim().length ?? 0,
@@ -73,7 +77,9 @@ test.describe("responsive header", () => {
       expect(metrics.bannerHeight).toBeLessThanOrEqual(38);
       expect(metrics.bannerTextLength).toBeGreaterThan(8);
       expect(metrics.logoWidth).toBeLessThanOrEqual(110);
-      expect(metrics.logoToControlsGap).toBeGreaterThanOrEqual(width < 390 ? 12 : 20);
+      expect(metrics.logoToControlsGap).toBeGreaterThanOrEqual(
+        width < 390 ? 12 : 20
+      );
       expect(metrics.quickCtaVisible).toBe(width >= 370);
     });
   }

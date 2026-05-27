@@ -5,7 +5,10 @@ export function runWhenIdle(fn: () => void, timeoutMs = 2000): () => void {
   if (typeof window === "undefined") return () => {};
 
   const w = window as unknown as {
-    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => IdleHandle;
+    requestIdleCallback?: (
+      cb: () => void,
+      opts?: { timeout: number }
+    ) => IdleHandle;
     cancelIdleCallback?: (handle: IdleHandle) => void;
   };
 
@@ -17,4 +20,3 @@ export function runWhenIdle(fn: () => void, timeoutMs = 2000): () => void {
   const handle = window.setTimeout(fn, timeoutMs);
   return () => window.clearTimeout(handle);
 }
-

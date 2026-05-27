@@ -52,7 +52,9 @@ const architectureExpressions = [
 ];
 
 export default function AboutSection() {
-  const [expandedArchitecture, setExpandedArchitecture] = useState<string | null>(null);
+  const [expandedArchitecture, setExpandedArchitecture] = useState<
+    string | null
+  >(null);
 
   const toggleArchitecture = (title: string) => {
     signalChirp.click();
@@ -91,7 +93,10 @@ export default function AboutSection() {
       </section>
 
       {/* The Manifesto */}
-      <section className="relative py-24 px-6 md:px-12 z-30 bg-[#0a0a0a] border-y border-white/[0.05]" id="manifesto">
+      <section
+        className="relative py-24 px-6 md:px-12 z-30 bg-[#0a0a0a] border-y border-white/[0.05]"
+        id="manifesto"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,83,0.03)_0%,transparent_70%)] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 relative z-10">
@@ -103,15 +108,21 @@ export default function AboutSection() {
               <div className="w-full h-px bg-[#d4a853]/30 mb-8" />
             </div>
           </div>
-          
+
           {/* Brutalist Cascade Block */}
           <div className="lg:w-3/4 flex flex-col pt-4 lg:pt-0">
             {structuralManifesto.map((line, i) => (
-              <div key={i} className="mb-10 sm:mb-16 last:mb-0 flex flex-col group border-l-2 border-transparent hover:border-[#d4a853]/50 pl-0 hover:pl-6 transition-all duration-500">
+              <div
+                key={i}
+                className="mb-10 sm:mb-16 last:mb-0 flex flex-col group border-l-2 border-transparent hover:border-[#d4a853]/50 pl-0 hover:pl-6 transition-all duration-500"
+              >
                 <span className="hero-wordmark text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.8] tracking-tighter uppercase text-white/95 mix-blend-difference group-hover:text-white transition-colors duration-500">
                   {line.heavy}
                 </span>
-                <span className="hero-wordmark text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.85] tracking-tight uppercase text-transparent transition-all duration-500" style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.4)" }}>
+                <span
+                  className="hero-wordmark text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.85] tracking-tight uppercase text-transparent transition-all duration-500"
+                  style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.4)" }}
+                >
                   {line.light}
                 </span>
               </div>
@@ -121,7 +132,10 @@ export default function AboutSection() {
       </section>
 
       {/* Vision & Togetherness */}
-      <section className="relative px-6 py-24 z-30 border-b border-white/10 bg-[#070707]" id="vision">
+      <section
+        className="relative px-6 py-24 z-30 border-b border-white/10 bg-[#070707]"
+        id="vision"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="max-w-4xl">
             <BrandTranslatorLabel tone="neutral" className="mb-6">
@@ -133,7 +147,10 @@ export default function AboutSection() {
               Same people returning.
             </h2>
             <p className="max-w-2xl text-lg leading-relaxed text-white/70 font-light">
-              Monolith ties together the open-air show, the late-night room, and the radio archive. Chasing Sun(Sets) carries golden hour and lakefront energy. Untold Story takes the night deeper. Radio keeps the artists and community connected between shows.
+              Monolith ties together the open-air show, the late-night room, and
+              the radio archive. Chasing Sun(Sets) carries golden hour and
+              lakefront energy. Untold Story takes the night deeper. Radio keeps
+              the artists and community connected between shows.
             </p>
           </div>
 
@@ -151,10 +168,17 @@ export default function AboutSection() {
                 label: "The Community",
                 copy: "Artists, partners, and returning guests are what turn separate dates into a real scene.",
               },
-            ].map((item) => (
-              <div key={item.label} className="border border-white/10 bg-white/[0.03] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-3">{item.label}</p>
-                <p className="text-sm text-white/70 leading-relaxed">{item.copy}</p>
+            ].map(item => (
+              <div
+                key={item.label}
+                className="border border-white/10 bg-white/[0.03] p-6"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-3">
+                  {item.label}
+                </p>
+                <p className="text-sm text-white/70 leading-relaxed">
+                  {item.copy}
+                </p>
               </div>
             ))}
           </div>
@@ -162,7 +186,10 @@ export default function AboutSection() {
       </section>
 
       {/* Four-Part Architecture */}
-      <section className="relative px-6 py-24 z-30 overflow-hidden" id="architecture">
+      <section
+        className="relative px-6 py-24 z-30 overflow-hidden"
+        id="architecture"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(224,90,58,0.05),transparent_40%),radial-gradient(circle_at_84%_74%,rgba(139,92,246,0.05),transparent_40%)] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto relative z-10">
@@ -176,19 +203,24 @@ export default function AboutSection() {
             >
               <div className="flex items-center gap-3 mb-5">
                 <div className="h-px w-6 bg-primary/50" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">How It Works</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">
+                  How It Works
+                </span>
               </div>
               <h2 className="font-display text-[clamp(2.2rem,4vw,4rem)] leading-[0.9] uppercase text-white mb-6">
-                Four parts.<br />
+                Four parts.
+                <br />
                 <span className="text-white/20">One project.</span>
               </h2>
               <p className="text-base leading-relaxed text-white/40 font-light max-w-sm">
-                One project. Three public expressions. Chasing Sun(Sets) leads the open-air season, Untold Story leads the late-night room, and Radio keeps the artists and culture moving between shows.
+                One project. Three public expressions. Chasing Sun(Sets) leads
+                the open-air season, Untold Story leads the late-night room, and
+                Radio keeps the artists and culture moving between shows.
               </p>
             </motion.div>
 
             <div className="lg:w-2/3 flex flex-col border-t border-white/10 w-full">
-              {architectureExpressions.map((expression) => {
+              {architectureExpressions.map(expression => {
                 const isExpanded = expandedArchitecture === expression.title;
                 return (
                   <div
@@ -205,12 +237,17 @@ export default function AboutSection() {
                         <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/60 mb-3 block group-hover:text-primary transition-colors">
                           {expression.label}
                         </span>
-                        <h3 className={`uppercase leading-[0.9] text-white transition-all duration-700 group-hover:translate-x-2 ${
-                            expression.label === "Open Air" ? "font-sunsets text-2xl md:text-4xl" :
-                            expression.label === "Late Night" ? "font-untold text-2xl md:text-4xl" :
-                            expression.label === "Signal" ? "font-radio text-2xl md:text-4xl" :
-                            "font-monolith text-2xl md:text-4xl"
-                        }`}>
+                        <h3
+                          className={`uppercase leading-[0.9] text-white transition-all duration-700 group-hover:translate-x-2 ${
+                            expression.label === "Open Air"
+                              ? "font-sunsets text-2xl md:text-4xl"
+                              : expression.label === "Late Night"
+                                ? "font-untold text-2xl md:text-4xl"
+                                : expression.label === "Signal"
+                                  ? "font-radio text-2xl md:text-4xl"
+                                  : "font-monolith text-2xl md:text-4xl"
+                          }`}
+                        >
                           {expression.title}
                         </h3>
                       </div>
@@ -218,7 +255,10 @@ export default function AboutSection() {
                       <div className="h-10 w-10 shrink-0 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
                         <motion.div
                           animate={{ rotate: isExpanded ? 45 : 0 }}
-                          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{
+                            duration: 0.5,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
                         >
                           <Plus className="w-4 h-4 text-white/40 group-hover:text-black transition-colors" />
                         </motion.div>
@@ -232,19 +272,22 @@ export default function AboutSection() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
                           className="overflow-hidden"
                         >
                           <div className="pb-10 pt-2">
-                             <p className="text-lg md:text-xl leading-relaxed text-white/60 font-light max-w-xl mb-8">
-                                {expression.description}
-                             </p>
-                             <Link href={expression.href} asChild>
-                               <a className="btn-text-action">
-                                 {expression.cta}
-                                 <ArrowUpRight className="w-3 h-3" />
-                               </a>
-                             </Link>
+                            <p className="text-lg md:text-xl leading-relaxed text-white/60 font-light max-w-xl mb-8">
+                              {expression.description}
+                            </p>
+                            <Link href={expression.href} asChild>
+                              <a className="btn-text-action">
+                                {expression.cta}
+                                <ArrowUpRight className="w-3 h-3" />
+                              </a>
+                            </Link>
                           </div>
                         </motion.div>
                       )}

@@ -11,7 +11,6 @@ import {
   Handshake,
   Instagram,
   Play,
-
   Share2,
   Sparkles,
   Sun,
@@ -19,8 +18,13 @@ import {
   Users,
 } from "lucide-react";
 import SEO from "@/components/SEO";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { submitNewsletterLead, trackFunnelPageView, trackLinkClick } from "@/lib/api";
+import {
+  submitNewsletterLead,
+  trackFunnelPageView,
+  trackLinkClick,
+} from "@/lib/api";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
 type BioLink = {
   type?: "link" | "youtube" | "soundcloud" | "gallery";
@@ -46,7 +50,8 @@ const RECAP_HREF = "/go/media/sunsets-recap";
 const SOUNDCLOUD_HREF = "/go/media/sunsets-soundcloud";
 const GALLERY_HREF = "/go/gallery/chasing-sunsets";
 const SUNSETS_SOUNDCLOUD_EMBED_HREF = "https://soundcloud.com/chasing-sun-sets";
-const JULY_4_FIRST_ACCESS_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
+const JULY_4_FIRST_ACCESS_IMAGE =
+  "/images/chasing-sunsets-july4-first-access.png";
 const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 const AUGUST_22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
 const SEPTEMBER_19_EVENT_SLUG = "chasing-sunsets-september-19-2026";
@@ -55,7 +60,11 @@ const TIKTOK_HREF = "/go/social/tiktok";
 const SPOTIFY_HREF = "/go/social/spotify";
 const X_HREF = "/go/social/x";
 
-const capturePromises = ["Ticket drops", "Lineup alerts", "VIP access"] as const;
+const capturePromises = [
+  "Ticket drops",
+  "Lineup alerts",
+  "VIP access",
+] as const;
 function triggerHaptic(pattern: number | number[] = 12) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
   navigator.vibrate(pattern);
@@ -63,7 +72,12 @@ function triggerHaptic(pattern: number | number[] = 12) {
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M14.4 3.5v10.1a4.9 4.9 0 1 1-4.9-4.9c.3 0 .6 0 .9.1v2.8a2.1 2.1 0 1 0 1.2 1.9V3.5h2.8Zm0 0c.5 2.4 1.9 3.8 4.1 4.2v2.8c-1.6-.1-3-.7-4.1-1.7"
         stroke="currentColor"
@@ -77,19 +91,49 @@ function TikTokIcon({ className }: { className?: string }) {
 
 function SpotifyIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M7.8 10.1c3.1-1 6.1-.7 8.6.7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M8.6 12.7c2.2-.6 4.6-.4 6.4.7" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" />
-      <path d="M9.2 15.1c1.6-.4 3.2-.2 4.5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <path
+        d="M7.8 10.1c3.1-1 6.1-.7 8.6.7"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8.6 12.7c2.2-.6 4.6-.4 6.4.7"
+        stroke="currentColor"
+        strokeWidth="1.45"
+        strokeLinecap="round"
+      />
+      <path
+        d="M9.2 15.1c1.6-.4 3.2-.2 4.5.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 function XIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="m5.5 5.5 13 13M18.5 5.5l-13 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="m5.5 5.5 13 13M18.5 5.5l-13 13"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -208,7 +252,8 @@ const links: BioLink[] = [
     interestType: "soundcloud_click",
     channel: "SoundCloud",
     icon: Headphones,
-    image: "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
+    image:
+      "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
     external: true,
     variant: "cool",
   },
@@ -241,10 +286,24 @@ const links: BioLink[] = [
   },
 ];
 
-function trackSunsetsClick(item: Pick<BioLink, "buttonName" | "href" | "eventSlug" | "eventDate" | "interestType" | "channel">) {
+function trackSunsetsClick(
+  item: Pick<
+    BioLink,
+    | "buttonName"
+    | "href"
+    | "eventSlug"
+    | "eventDate"
+    | "interestType"
+    | "channel"
+  >
+) {
   if (typeof window === "undefined") return;
   const win = window as Window & {
-    gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
+    gtag?: (
+      command: string,
+      eventName: string,
+      params?: Record<string, unknown>
+    ) => void;
   };
 
   win.gtag?.("event", "sunsets_bio_click", {
@@ -268,7 +327,9 @@ function trackSunsetsClick(item: Pick<BioLink, "buttonName" | "href" | "eventSlu
 }
 
 function ShareButton() {
-  const [shareState, setShareState] = useState<"idle" | "shared" | "copied">("idle");
+  const [shareState, setShareState] = useState<"idle" | "shared" | "copied">(
+    "idle"
+  );
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -359,19 +420,17 @@ function StickyActionDock() {
       <div className="relative z-10 grid grid-cols-[1.05fr_.95fr] gap-2">
         <a
           href={firstAccessHref}
-          onClick={() =>
-            {
-              triggerHaptic(12);
-              trackSunsetsClick({
-                buttonName: "Sticky Join First Access",
-                href: firstAccessHref,
-                eventSlug: JULY_4_EVENT_SLUG,
-                eventDate: "2026-07-04",
-                interestType: "first_access_click",
-                channel: "Sticky CTA",
-              });
-            }
-          }
+          onClick={() => {
+            triggerHaptic(12);
+            trackSunsetsClick({
+              buttonName: "Sticky Join First Access",
+              href: firstAccessHref,
+              eventSlug: JULY_4_EVENT_SLUG,
+              eventDate: "2026-07-04",
+              interestType: "first_access_click",
+              channel: "Sticky CTA",
+            });
+          }}
           className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#A4592C] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-[0_10px_24px_rgba(164,89,44,0.28)] transition hover:bg-[#8F4427] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/45"
         >
           <Bell className="h-3.5 w-3.5" strokeWidth={2} />
@@ -379,19 +438,17 @@ function StickyActionDock() {
         </a>
         <a
           href={ticketHref}
-          onClick={() =>
-            {
-              triggerHaptic(12);
-              trackSunsetsClick({
-                buttonName: "Sticky Tickets",
-                href: ticketHref,
-                eventSlug: JULY_4_EVENT_SLUG,
-                eventDate: "2026-07-04",
-                interestType: "ticket_click",
-                channel: "Sticky CTA",
-              });
-            }
-          }
+          onClick={() => {
+            triggerHaptic(12);
+            trackSunsetsClick({
+              buttonName: "Sticky Tickets",
+              href: ticketHref,
+              eventSlug: JULY_4_EVENT_SLUG,
+              eventDate: "2026-07-04",
+              interestType: "ticket_click",
+              channel: "Sticky CTA",
+            });
+          }}
           className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#A4592C]/18 bg-white px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#5A2B19]/82 transition hover:border-[#A4592C]/42 hover:bg-[#FFF7F2] hover:text-[#5A2B19] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/40"
         >
           <Ticket className="h-3.5 w-3.5" strokeWidth={2} />
@@ -405,7 +462,7 @@ function StickyActionDock() {
 function SocialUtilityRow() {
   return (
     <div className="mb-5 flex items-center justify-center gap-2">
-      {socialLinks.map((item) => {
+      {socialLinks.map(item => {
         const Icon = item.icon;
         const href = appendAttributionQueryParams(item.href);
         return (
@@ -438,7 +495,9 @@ function SocialUtilityRow() {
 
 function InlineCaptureForm() {
   const [value, setValue] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "submitted" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "submitted" | "error"
+  >("idle");
   const [error, setError] = useState("");
   const submitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -469,7 +528,9 @@ function InlineCaptureForm() {
       href: "/sunsets#first-access",
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: "2026-07-04",
-      interestType: looksLikePhone ? "inline_sms_capture" : "inline_email_capture",
+      interestType: looksLikePhone
+        ? "inline_sms_capture"
+        : "inline_email_capture",
       channel: "Inline Capture",
     });
 
@@ -494,7 +555,11 @@ function InlineCaptureForm() {
               "sunsets_link_bio",
             ],
           },
-          buildLeadIdempotencyKey("sunsets-link-bio", trimmedValue, JULY_4_EVENT_SLUG),
+          buildLeadIdempotencyKey(
+            "sunsets-link-bio",
+            trimmedValue,
+            JULY_4_EVENT_SLUG
+          )
         );
       } catch {
         setError("Could not add you. Try again.");
@@ -509,7 +574,7 @@ function InlineCaptureForm() {
           phone: trimmedValue,
           eventSlug: JULY_4_EVENT_SLUG,
           capturedAt: new Date().toISOString(),
-        }),
+        })
       );
     }
 
@@ -567,7 +632,9 @@ function InlineCaptureForm() {
                 <Bell className="h-3.5 w-3.5" strokeWidth={2} />
               </span>
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#5A2B19]">First Access</p>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#5A2B19]">
+                  First Access
+                </p>
                 <p className="mt-1 text-[8px] font-black uppercase tracking-[0.18em] text-[#2C1810]/38">
                   Castaways Chicago
                 </p>
@@ -576,7 +643,11 @@ function InlineCaptureForm() {
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A4592C]/24 bg-white px-3 py-1.5 text-[8px] font-black uppercase tracking-[0.16em] text-[#5A2B19] shadow-[0_8px_18px_rgba(44,24,16,0.12)]">
               <motion.span
                 animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="h-1.5 w-1.5 rounded-full bg-[#A4592C] shadow-[0_0_8px_rgba(164,89,44,0.7)]"
               />
               Waitlist Open
@@ -589,7 +660,7 @@ function InlineCaptureForm() {
               value={value}
               autoComplete="email"
               inputMode={/^\d/.test(value) ? "tel" : "email"}
-              onChange={(event) => {
+              onChange={event => {
                 setValue(event.target.value);
                 if (status === "error") setStatus("idle");
               }}
@@ -617,7 +688,7 @@ function InlineCaptureForm() {
           )}
 
           <div className="mt-5 grid grid-cols-3 gap-2 border-t border-[#A4592C]/12 pt-4">
-            {capturePromises.map((promise) => (
+            {capturePromises.map(promise => (
               <span
                 key={promise}
                 className="rounded-full border border-[#A4592C]/18 bg-white px-2 py-2 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#7A3A22]/66 shadow-[0_8px_18px_rgba(44,24,16,0.06)]"
@@ -658,11 +729,12 @@ function FlyerCard() {
       aria-label="Join First Access — July 4"
     >
       {/* Flyer image — full bleed */}
-      <img
+      <ResponsiveImage
         src={FIRST_ACCESS_FLYER}
         alt="Chasing Sun(Sets) First Access — July 4, Castaways Chicago"
         className="w-full object-cover"
         loading="lazy"
+        sizes="(min-width: 768px) 420px, calc(100vw - 2rem)"
       />
 
       {/* Bottom CTA overlay */}
@@ -708,7 +780,12 @@ function MediaAccordion({
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.18 + index * 0.045, type: "spring", stiffness: 210, damping: 24 }}
+      transition={{
+        delay: 0.18 + index * 0.045,
+        type: "spring",
+        stiffness: 210,
+        damping: 24,
+      }}
       className="group my-3 overflow-hidden rounded-[1.15rem] border border-[#F4F0EA]/12 bg-[#111111]/78 shadow-[0_10px_40px_rgba(0,0,0,0.45)] transition hover:border-[#F4F0EA]/34"
     >
       <button
@@ -730,7 +807,9 @@ function MediaAccordion({
           </span>
         </div>
         {/* Thumbnail — YouTube gets full brightness, SoundCloud keeps its dark overlay */}
-        <div className={`relative overflow-hidden ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}>
+        <div
+          className={`relative overflow-hidden ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}
+        >
           {item.image ? (
             <img
               src={item.image}
@@ -750,7 +829,9 @@ function MediaAccordion({
           {isYouTube && (
             <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(10,8,6,0.72)_100%)]" />
           )}
-          <div className={`relative flex flex-col justify-end p-4 ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}>
+          <div
+            className={`relative flex flex-col justify-end p-4 ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}
+          >
             <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111] shadow-[0_0_22px_rgba(244,240,234,0.22)]">
               <Icon className="h-4 w-4" strokeWidth={1.8} />
             </div>
@@ -760,8 +841,14 @@ function MediaAccordion({
           </div>
         </div>
         <span className="flex items-center justify-between border-t border-[#F4F0EA]/8 px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/80 transition group-hover:text-[#F4F0EA]">
-          {expanded ? "Now Playing Inline" : isYouTube ? "Watch Recap" : "Play Mix"}
-          <ArrowUpRight className={`h-3.5 w-3.5 transition ${expanded ? "rotate-90" : ""}`} />
+          {expanded
+            ? "Now Playing Inline"
+            : isYouTube
+              ? "Watch Recap"
+              : "Play Mix"}
+          <ArrowUpRight
+            className={`h-3.5 w-3.5 transition ${expanded ? "rotate-90" : ""}`}
+          />
         </span>
       </button>
 
@@ -775,10 +862,18 @@ function MediaAccordion({
           <div className="overflow-hidden rounded-xl border border-[#F4F0EA]/10 bg-black">
             <iframe
               key={expanded ? "expanded" : "collapsed"}
-              title={isYouTube ? "Chasing Sun(Sets) recap video" : "Chasing Sun(Sets) SoundCloud player"}
+              title={
+                isYouTube
+                  ? "Chasing Sun(Sets) recap video"
+                  : "Chasing Sun(Sets) SoundCloud player"
+              }
               src={embedSrc}
               className={isYouTube ? "aspect-video w-full" : "h-[180px] w-full"}
-              allow={isYouTube ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" : "autoplay"}
+              allow={
+                isYouTube
+                  ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  : "autoplay"
+              }
               allowFullScreen={isYouTube}
               loading="lazy"
             />
@@ -790,7 +885,10 @@ function MediaAccordion({
               rel="noopener noreferrer"
               onClick={() => {
                 triggerHaptic(10);
-                trackSunsetsClick({ ...item, href: appendAttributionQueryParams(item.href) });
+                trackSunsetsClick({
+                  ...item,
+                  href: appendAttributionQueryParams(item.href),
+                });
               }}
               className="mt-2 flex items-center justify-between rounded-lg border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.035] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]/72 transition hover:border-[#F4F0EA]/34 hover:text-[#F4F0EA]"
             >
@@ -815,10 +913,17 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
     ? "border-[#050403]/12 bg-[#050403] text-[#69F3E3]"
     : "border-[#14B8A6]/18 bg-black/40 text-[#69F3E3]/78";
   const eyebrowClass = isPrimary ? "text-[#050403]/60" : "text-white/40";
-  const titleClass = isPrimary ? "text-[#050403] font-semibold" : "text-white/90 group-hover:text-white";
-  const subClass = isPrimary ? "text-[#050403]/75" : "text-white/50 group-hover:text-white/70";
-  const arrowClass = isPrimary ? "text-[#050403] opacity-100" : "text-white/30 group-hover:text-white/80";
-  const glowClass = "group-hover:border-[#8B5CF6]/48 group-hover:shadow-[0_14px_38px_rgba(20,184,166,0.16)]";
+  const titleClass = isPrimary
+    ? "text-[#050403] font-semibold"
+    : "text-white/90 group-hover:text-white";
+  const subClass = isPrimary
+    ? "text-[#050403]/75"
+    : "text-white/50 group-hover:text-white/70";
+  const arrowClass = isPrimary
+    ? "text-[#050403] opacity-100"
+    : "text-white/30 group-hover:text-white/80";
+  const glowClass =
+    "group-hover:border-[#8B5CF6]/48 group-hover:shadow-[0_14px_38px_rgba(20,184,166,0.16)]";
 
   return (
     <motion.a
@@ -841,16 +946,25 @@ function LinkCard({ item, index }: { item: BioLink; index: number }) {
         <Icon className="h-4 w-4" strokeWidth={1.2} />
       </span>
       <span className="min-w-0 flex-1">
-        <span className={`block text-[13px] font-sans font-semibold uppercase tracking-[0.2em] ${eyebrowClass}`}>
+        <span
+          className={`block text-[13px] font-sans font-semibold uppercase tracking-[0.2em] ${eyebrowClass}`}
+        >
           {item.eyebrow}
         </span>
         <span className="mt-0.5 flex items-center justify-between gap-3">
-          <span className={`text-[14px] font-display tracking-[0.03em] transition-colors ${titleClass}`}>
+          <span
+            className={`text-[14px] font-display tracking-[0.03em] transition-colors ${titleClass}`}
+          >
             {item.label}
           </span>
-          <ArrowUpRight className={`h-4 w-4 shrink-0 transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 ${arrowClass}`} strokeWidth={1.5} />
+          <ArrowUpRight
+            className={`h-4 w-4 shrink-0 transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 ${arrowClass}`}
+            strokeWidth={1.5}
+          />
         </span>
-        <span className={`mt-1 block text-sm font-light leading-relaxed transition-colors ${subClass}`}>
+        <span
+          className={`mt-1 block text-sm font-light leading-relaxed transition-colors ${subClass}`}
+        >
           {item.sub}
         </span>
       </span>
@@ -870,7 +984,10 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
-        style={{ background: "radial-gradient(circle, rgba(20,184,166,0.24) 0%, rgba(139,92,246,0.12) 45%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(20,184,166,0.24) 0%, rgba(139,92,246,0.12) 45%, transparent 70%)",
+        }}
       />
       {/* Lake shadow contrast on the right side. */}
       <motion.div
@@ -881,7 +998,10 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
         className="absolute top-[30%] -right-[12%] w-[65vw] h-[65vw] rounded-full blur-[110px]"
-        style={{ background: "radial-gradient(circle, rgba(25,59,59,0.28) 0%, rgba(44,24,16,0.10) 50%, transparent 72%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(25,59,59,0.28) 0%, rgba(44,24,16,0.10) 50%, transparent 72%)",
+        }}
       />
       {/* Deep bronze — bottom center */}
       <motion.div
@@ -891,14 +1011,20 @@ function AmbientFluidBackground() {
         }}
         transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
         className="absolute -bottom-[22%] left-[15%] w-[85vw] h-[85vw] rounded-full blur-[130px]"
-        style={{ background: "radial-gradient(circle, rgba(58,40,22,0.30) 0%, rgba(5,4,3,0.08) 50%, transparent 68%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(58,40,22,0.30) 0%, rgba(5,4,3,0.08) 50%, transparent 68%)",
+        }}
       />
       {/* Vivid horizon accent at the bottom */}
       <motion.div
         animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
-        style={{ background: "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(139,92,246,0.08) 45%, transparent 100%)" }}
+        style={{
+          background:
+            "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(139,92,246,0.08) 45%, transparent 100%)",
+        }}
       />
       {/* Subtle grid overlay */}
       <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -907,9 +1033,11 @@ function AmbientFluidBackground() {
 }
 
 export default function SunsetsLinkBio() {
-  const [expandedMedia, setExpandedMedia] = useState<"youtube" | "soundcloud" | null>(null);
-  const featuredVideoLink = links.find((item) => item.type === "youtube");
-  const featuredVideoIndex = links.findIndex((item) => item.type === "youtube");
+  const [expandedMedia, setExpandedMedia] = useState<
+    "youtube" | "soundcloud" | null
+  >(null);
+  const featuredVideoLink = links.find(item => item.type === "youtube");
+  const featuredVideoIndex = links.findIndex(item => item.type === "youtube");
 
   useEffect(() => {
     trackFunnelPageView({
@@ -931,7 +1059,7 @@ export default function SunsetsLinkBio() {
 
       <section className="relative flex min-h-[100dvh] flex-col items-center justify-start px-4 py-12 sm:px-6">
         <AmbientFluidBackground />
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -947,10 +1075,10 @@ export default function SunsetsLinkBio() {
             <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(20,184,166,0.18)_28%,rgba(56,189,248,0.18)_50%,rgba(139,92,246,0.14)_72%,transparent)] blur-2xl" />
             <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.13),rgba(139,92,246,0.08)_42%,transparent_72%)]" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
-            
+
             <div className="relative z-10 px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
               <header className="text-center">
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
@@ -970,15 +1098,22 @@ export default function SunsetsLinkBio() {
                   </h1>
                   <span className="absolute right-0 -top-5 inline-flex items-center gap-1.5 rounded-full border border-[#14B8A6]/34 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#69F3E3]/82 backdrop-blur sm:-right-1 sm:top-1 sm:translate-x-1/4">
                     <motion.span
-                      animate={{ scale: [1, 1.5, 1], opacity: [0.9, 0.25, 0.9] }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                      animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.9, 0.25, 0.9],
+                      }}
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       className="h-1.5 w-1.5 rounded-full bg-[#14B8A6]"
                     />
                     Official
                   </span>
                 </div>
 
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25, duration: 0.6 }}
@@ -999,7 +1134,9 @@ export default function SunsetsLinkBio() {
                   Watch the sun. Stay for the (sets).
                 </p>
                 <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
-                  Join the Chasing Sun(Sets) circle for first access, ticket drops, VIP tables, recap video, sound, gallery, and partner inquiries.
+                  Join the Chasing Sun(Sets) circle for first access, ticket
+                  drops, VIP tables, recap video, sound, gallery, and partner
+                  inquiries.
                 </p>
 
                 {featuredVideoLink ? (
@@ -1009,9 +1146,13 @@ export default function SunsetsLinkBio() {
                     expanded={expandedMedia === "youtube"}
                     onToggle={() => {
                       triggerHaptic(10);
-                      const href = appendAttributionQueryParams(featuredVideoLink.href);
+                      const href = appendAttributionQueryParams(
+                        featuredVideoLink.href
+                      );
                       trackSunsetsClick({ ...featuredVideoLink, href });
-                      setExpandedMedia((current) => (current === "youtube" ? null : "youtube"));
+                      setExpandedMedia(current =>
+                        current === "youtube" ? null : "youtube"
+                      );
                     }}
                   />
                 ) : null}
@@ -1022,11 +1163,11 @@ export default function SunsetsLinkBio() {
               {/* Signals Grid */}
               <div className="mt-8 grid grid-cols-3 gap-2.5">
                 {["Lakefront", "House", "Chicago"].map((item, i) => (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + (i * 0.1) }}
-                    key={item} 
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    key={item}
                     className="flex min-h-[68px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#F4F0EA]/10 bg-[#111111]/70 px-1.5 py-3 transition-colors hover:border-[#F4F0EA]/30 hover:bg-[#F4F0EA]/5"
                   >
                     <p className="text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40">
@@ -1073,14 +1214,16 @@ export default function SunsetsLinkBio() {
                       Castaways, Chicago • 3 PM - 10 PM
                     </p>
                     <div className="mt-3 flex flex-wrap gap-1.5">
-                      {["Official Hub", "July 4", "Tickets Live Soon"].map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-[#F4F0EA]/14 bg-[#111111]/70 px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[#F4F0EA]/68"
-                        >
-                          {item}
-                        </span>
-                      ))}
+                      {["Official Hub", "July 4", "Tickets Live Soon"].map(
+                        item => (
+                          <span
+                            key={item}
+                            className="rounded-full border border-[#F4F0EA]/14 bg-[#111111]/70 px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[#F4F0EA]/68"
+                          >
+                            {item}
+                          </span>
+                        )
+                      )}
                     </div>
                   </div>
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#69F3E3] text-black transition-transform duration-500 group-hover:scale-110">
@@ -1094,7 +1237,6 @@ export default function SunsetsLinkBio() {
                   </p>
                 </div>
               </motion.a>
-
 
               <div className="mt-5 rounded-[1.25rem] border border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.8),rgba(33,18,36,0.7)_48%,rgba(6,42,46,0.72))] p-3 shadow-[0_16px_48px_rgba(20,184,166,0.08)]">
                 <div className="flex items-center justify-between gap-3 px-1 pb-2">
@@ -1121,7 +1263,7 @@ export default function SunsetsLinkBio() {
                   </a>
                 </div>
                 <div className="grid gap-2">
-                  {schedule.map((event) => (
+                  {schedule.map(event => (
                     <a
                       key={event.eventSlug}
                       href={appendAttributionQueryParams(event.href)}
@@ -1162,83 +1304,100 @@ export default function SunsetsLinkBio() {
 
               {/* Links Array */}
               <div className="mt-8 flex flex-col gap-2">
-                {links.filter((item) => item.type !== "youtube").map((item, index) => {
-                  if (item.type === "youtube" || item.type === "soundcloud") {
-                    return (
-                      <MediaAccordion
-                        key={item.label}
-                        item={item}
-                        index={index}
-                        expanded={expandedMedia === item.type}
-                        onToggle={() => {
-                          triggerHaptic(10);
-                          const href = appendAttributionQueryParams(item.href);
-                          trackSunsetsClick({ ...item, href });
-                          const mediaType = item.type === "youtube" ? "youtube" : "soundcloud";
-                          setExpandedMedia((current) => (current === mediaType ? null : mediaType));
-                        }}
-                      />
-                    );
-                  }
+                {links
+                  .filter(item => item.type !== "youtube")
+                  .map((item, index) => {
+                    if (item.type === "youtube" || item.type === "soundcloud") {
+                      return (
+                        <MediaAccordion
+                          key={item.label}
+                          item={item}
+                          index={index}
+                          expanded={expandedMedia === item.type}
+                          onToggle={() => {
+                            triggerHaptic(10);
+                            const href = appendAttributionQueryParams(
+                              item.href
+                            );
+                            trackSunsetsClick({ ...item, href });
+                            const mediaType =
+                              item.type === "youtube"
+                                ? "youtube"
+                                : "soundcloud";
+                            setExpandedMedia(current =>
+                              current === mediaType ? null : mediaType
+                            );
+                          }}
+                        />
+                      );
+                    }
 
-                  if (item.type === "gallery") {
-                    const Icon = item.icon;
-                    const href = appendAttributionQueryParams(item.href);
-                    return (
-                      <motion.a
-                        key={item.label}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-                        onClick={() => {
-                          triggerHaptic(8);
-                          trackSunsetsClick({ ...item, href });
-                        }}
-                        className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#F4F0EA]/12 bg-[#111111]/72 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40"
-                      >
-                        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <Icon className="h-3.5 w-3.5 text-[#F4F0EA]" />
-                            <span className="text-[13px] font-sans font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
-                              {item.eyebrow}
+                    if (item.type === "gallery") {
+                      const Icon = item.icon;
+                      const href = appendAttributionQueryParams(item.href);
+                      return (
+                        <motion.a
+                          key={item.label}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          initial={{ opacity: 0, y: 16 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: 0.18 + index * 0.045,
+                            duration: 0.42,
+                          }}
+                          onClick={() => {
+                            triggerHaptic(8);
+                            trackSunsetsClick({ ...item, href });
+                          }}
+                          className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#F4F0EA]/12 bg-[#111111]/72 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40"
+                        >
+                          <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
+                            <div className="flex items-center gap-2">
+                              <Icon className="h-3.5 w-3.5 text-[#F4F0EA]" />
+                              <span className="text-[13px] font-sans font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
+                                {item.eyebrow}
+                              </span>
+                            </div>
+                            <span className="text-[14px] font-display tracking-[0.05em] text-white/60">
+                              {item.label}
                             </span>
                           </div>
-                          <span className="text-[14px] font-display tracking-[0.05em] text-white/60">
-                            {item.label}
-                          </span>
-                        </div>
-                        <div className="relative min-h-[156px] overflow-hidden">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt=""
-                              className="absolute inset-0 h-full w-full object-cover opacity-58 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-72"
-                              loading="lazy"
-                            />
-                          ) : null}
-                          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,4,3,0.18)_0%,rgba(5,4,3,0.88)_100%)]" />
-                          <div className="relative flex min-h-[156px] flex-col justify-end p-4">
-                            <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#F4F0EA] text-[#050403] shadow-[0_0_24px_rgba(244,240,234,0.22)] transition group-hover:scale-105">
-                              <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
+                          <div className="relative min-h-[156px] overflow-hidden">
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt=""
+                                className="absolute inset-0 h-full w-full object-cover opacity-58 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-72"
+                                loading="lazy"
+                              />
+                            ) : null}
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,4,3,0.18)_0%,rgba(5,4,3,0.88)_100%)]" />
+                            <div className="relative flex min-h-[156px] flex-col justify-end p-4">
+                              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#F4F0EA] text-[#050403] shadow-[0_0_24px_rgba(244,240,234,0.22)] transition group-hover:scale-105">
+                                <Icon
+                                  className="h-4.5 w-4.5"
+                                  strokeWidth={1.8}
+                                />
+                              </div>
+                              <p className="max-w-[15rem] text-sm font-semibold leading-snug text-white/90">
+                                {item.sub}
+                              </p>
                             </div>
-                            <p className="max-w-[15rem] text-sm font-semibold leading-snug text-white/90">
-                              {item.sub}
-                            </p>
                           </div>
-                        </div>
-                        <span className="flex items-center justify-between border-t border-white/5 px-4 py-3 text-[14px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/82 transition group-hover:text-[#F4F0EA]">
-                          Open Gallery
-                          <ArrowUpRight className="h-3.5 w-3.5" />
-                        </span>
-                      </motion.a>
-                    );
-                  }
+                          <span className="flex items-center justify-between border-t border-white/5 px-4 py-3 text-[14px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/82 transition group-hover:text-[#F4F0EA]">
+                            Open Gallery
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </span>
+                        </motion.a>
+                      );
+                    }
 
-                  return <LinkCard key={item.label} item={item} index={index} />;
-                })}
+                    return (
+                      <LinkCard key={item.label} item={item} index={index} />
+                    );
+                  })}
                 <FlyerCard />
               </div>
 
@@ -1246,7 +1405,10 @@ export default function SunsetsLinkBio() {
               <footer className="mt-10 pt-4 text-center">
                 <SocialUtilityRow />
                 <div className="mx-auto mb-4 flex max-w-full w-fit items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/[0.02] px-3 py-2 text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#F4F0EA]/30 hover:text-[#F4F0EA]/80 sm:text-[12px] sm:tracking-[0.24em]">
-                  <Sparkles className="h-3.5 w-3.5 text-[#F4F0EA]/70" strokeWidth={1.5} />
+                  <Sparkles
+                    className="h-3.5 w-3.5 text-[#F4F0EA]/70"
+                    strokeWidth={1.5}
+                  />
                   <span className="truncate">monolithproject.com/sunsets</span>
                 </div>
                 <p className="text-[14px] uppercase font-light tracking-[0.3em] text-white/30">

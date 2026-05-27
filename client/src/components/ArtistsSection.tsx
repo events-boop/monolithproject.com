@@ -21,13 +21,21 @@ interface Artist {
 const SUNSETS_ROSTER_IDS = ["autograf", "chus"] as const;
 const UNTOLD_ROSTER_IDS = ["haai", "lazare"] as const;
 
-const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map((id) => ARTISTS[id]);
-const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map((id) => ARTISTS[id]);
+const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map(id => ARTISTS[id]);
+const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map(id => ARTISTS[id]);
 
-function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColor: string; delay: number }) {
+function ArtistCard({
+  artist,
+  accentColor,
+  delay,
+}: {
+  artist: Artist;
+  accentColor: string;
+  delay: number;
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const artistId = artist.id.toUpperCase().substring(0, 3);
-  
+
   return (
     <Link href={`/artists/${artist.id}`}>
       <motion.div
@@ -41,17 +49,32 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
       >
         {/* Architectural Background Grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700">
-           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-             <path d="M0 25H100M0 50H100M0 75H100M25 0V100M50 0V100M75 0V100" stroke="white" strokeWidth="0.1" fill="none" />
-           </svg>
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 25H100M0 50H100M0 75H100M25 0V100M50 0V100M75 0V100"
+              stroke="white"
+              strokeWidth="0.1"
+              fill="none"
+            />
+          </svg>
         </div>
 
         {/* Telemetry HUD - Top Left */}
         <div className="absolute top-4 left-4 z-20 flex flex-col gap-0.5">
-          <span className="font-mono text-[10px] text-white/30 tracking-[0.3em] uppercase">Signal // {artistId}</span>
+          <span className="font-mono text-[10px] text-white/30 tracking-[0.3em] uppercase">
+            Signal // {artistId}
+          </span>
           <div className="flex items-center gap-1.5">
-            <div className={`h-1 w-1 rounded-full animate-pulse ${accentColor === "clay" ? "bg-clay" : "bg-primary"}`} />
-            <span className="font-mono text-[10px] text-white/60 tracking-widest uppercase">{artist.role}</span>
+            <div
+              className={`h-1 w-1 rounded-full animate-pulse ${accentColor === "clay" ? "bg-clay" : "bg-primary"}`}
+            />
+            <span className="font-mono text-[10px] text-white/60 tracking-widest uppercase">
+              {artist.role}
+            </span>
           </div>
         </div>
 
@@ -70,17 +93,21 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
           />
           {/* Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
-          <div className={`absolute inset-0 opacity-20 ${accentColor === "clay" ? "bg-[radial-gradient(circle_at_18%_18%,#E8B86D,transparent_40%)]" : "bg-[radial-gradient(circle_at_82%_18%,#22D3EE,transparent_40%)]"}`} />
+          <div
+            className={`absolute inset-0 opacity-20 ${accentColor === "clay" ? "bg-[radial-gradient(circle_at_18%_18%,#E8B86D,transparent_40%)]" : "bg-[radial-gradient(circle_at_82%_18%,#22D3EE,transparent_40%)]"}`}
+          />
         </div>
 
         {/* Content HUD - Bottom */}
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 z-20 flex flex-col">
           <div className="flex items-end justify-between mb-4">
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[10px] text-white/40 tracking-[0.4em] uppercase mb-1">Dossier // 0{delay * 10 + 1}</span>
+              <span className="font-mono text-[10px] text-white/40 tracking-[0.4em] uppercase mb-1">
+                Dossier // 0{delay * 10 + 1}
+              </span>
               <div className="min-h-[2.5rem] flex items-center">
-                <KineticDecryption 
-                  text={artist.name} 
+                <KineticDecryption
+                  text={artist.name}
                   className={`hero-wordmark text-3xl md:text-4xl text-white uppercase tracking-tighter leading-none ${accentColor === "clay" ? "group-hover:text-clay" : "group-hover:text-primary"} transition-colors duration-500`}
                 />
               </div>
@@ -93,13 +120,17 @@ function ArtistCard({ artist, accentColor, delay }: { artist: Artist; accentColo
           {/* Footer Metadata */}
           <div className="pt-4 border-t border-white/10 flex items-center gap-6">
             <div className="flex flex-col">
-              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">Origin</span>
+              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">
+                Origin
+              </span>
               <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <MapPin size={10} className="text-white/30" /> {artist.origin}
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">Signature</span>
+              <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase mb-1">
+                Signature
+              </span>
               <span className="font-mono text-[10px] text-white/70 uppercase flex items-center gap-1.5 tracking-tighter">
                 <Music size={10} className="text-white/30" /> {artist.genre}
               </span>
@@ -148,7 +179,12 @@ export default function ArtistsSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {SUNSETS_ROSTER.map((artist, i) => (
-              <ArtistCard key={artist.id} artist={artist} accentColor="clay" delay={0.1 * i} />
+              <ArtistCard
+                key={artist.id}
+                artist={artist}
+                accentColor="clay"
+                delay={0.1 * i}
+              />
             ))}
           </div>
         </div>
@@ -163,12 +199,17 @@ export default function ArtistsSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {UNTOLD_ROSTER.map((artist, i) => (
-              <ArtistCard key={artist.id} artist={artist} accentColor="primary" delay={0.1 * i} />
+              <ArtistCard
+                key={artist.id}
+                artist={artist}
+                accentColor="primary"
+                delay={0.1 * i}
+              />
             ))}
           </div>
         </div>
 
-          {/* CTAs — consumer + artist */}
+        {/* CTAs — consumer + artist */}
         <div className="border-t border-border pt-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="/lineup" asChild>
@@ -186,7 +227,9 @@ export default function ArtistsSection() {
           </div>
           <Link href="/booking" asChild>
             <a className="group flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
-              <span className="font-mono tracking-widest uppercase text-xs">Artist? Send Us Your Mix</span>
+              <span className="font-mono tracking-widest uppercase text-xs">
+                Artist? Send Us Your Mix
+              </span>
               <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
             </a>
           </Link>

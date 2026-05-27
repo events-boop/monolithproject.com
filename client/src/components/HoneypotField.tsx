@@ -11,7 +11,13 @@ export default function HoneypotField(props: HoneypotFieldProps) {
       aria-hidden="true"
       className="pointer-events-none absolute left-[-10000px] top-auto h-px w-px overflow-hidden opacity-0"
     >
-      <input type="text" name={name} tabIndex={-1} autoComplete="off" {...rest} />
+      <input
+        type="text"
+        name={name}
+        tabIndex={-1}
+        autoComplete="off"
+        {...rest}
+      />
     </div>
   );
 }

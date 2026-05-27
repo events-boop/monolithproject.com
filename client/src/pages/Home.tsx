@@ -15,9 +15,13 @@ import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
-const SeasonChapterCards = lazy(() => import("@/components/SeasonChapterCards"));
+const SeasonChapterCards = lazy(
+  () => import("@/components/SeasonChapterCards")
+);
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
-const PartnershipMarquee = lazy(() => import("@/components/PartnershipMarquee"));
+const PartnershipMarquee = lazy(
+  () => import("@/components/PartnershipMarquee")
+);
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
@@ -30,16 +34,24 @@ function getStatusLabel(status?: string) {
   return "PAST";
 }
 
-const titleSubtextClass = "mt-4 max-w-3xl text-sm leading-relaxed text-[#F4D7A1]/88 md:text-base";
+const titleSubtextClass =
+  "mt-4 max-w-3xl text-sm leading-relaxed text-[#F4D7A1]/88 md:text-base";
 const warmSubtextClass = "mt-4 text-sm leading-relaxed text-[#E8B86D]/84";
-const coolSubtextClass = "mt-4 max-w-3xl text-sm leading-relaxed text-[#B9F6FF]/82 md:text-base";
+const coolSubtextClass =
+  "mt-4 max-w-3xl text-sm leading-relaxed text-[#B9F6FF]/82 md:text-base";
 
 export default function Home() {
   usePublicSiteDataVersion();
-  const chasingSeasonEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+  const chasingSeasonEvent = getSeriesExperienceEvent(
+    "chasing-sunsets",
+    "hero"
+  );
   const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
   const untoldMomentHref = "/story";
-  const untoldTicketHref = untoldMoment?.ticketUrl || untoldMoment?.primaryCta?.href || untoldMomentHref;
+  const untoldTicketHref =
+    untoldMoment?.ticketUrl ||
+    untoldMoment?.primaryCta?.href ||
+    untoldMomentHref;
   const untoldCtaLabel = untoldMoment?.primaryCta?.label || "Open Untold Story";
   const untoldTicketIsExternal = /^https?:\/\//i.test(untoldTicketHref);
 
@@ -58,16 +70,20 @@ export default function Home() {
       />
 
       {/* Ambient static background glows for depth */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-      >
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div
           className="absolute -left-[8vw] -top-[10vh] h-[42rem] w-[42rem] rounded-full opacity-[0.12]"
-          style={{ background: "radial-gradient(circle, var(--scene-glow) 0%, transparent 62%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, var(--scene-glow) 0%, transparent 62%)",
+          }}
         />
         <div
           className="absolute -right-[8vw] bottom-[-16vh] h-[34rem] w-[34rem] rounded-full opacity-[0.08]"
-          style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 68%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 68%)",
+          }}
         />
       </div>
       <Navigation />
@@ -79,14 +95,22 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
               <p className="max-w-4xl text-balance font-display text-2xl leading-[1.03] text-white md:text-3xl">
-                The Monolith Project produces <span className="text-[#E8B86D]">Chasing Sun(Sets)</span>,{" "}
-                <span className="text-[#B9F6FF]">Untold Story</span>, and artist-led radio in Chicago.
+                The Monolith Project produces{" "}
+                <span className="text-[#E8B86D]">Chasing Sun(Sets)</span>,{" "}
+                <span className="text-[#B9F6FF]">Untold Story</span>, and
+                artist-led radio in Chicago.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
-                <Link href="/tickets" className="btn-pill-monolith btn-pill-wide justify-center">
+                <Link
+                  href="/tickets"
+                  className="btn-pill-monolith btn-pill-wide justify-center"
+                >
                   Current Tickets
                 </Link>
-                <Link href="/sunsets" className="btn-pill-outline btn-pill-wide justify-center">
+                <Link
+                  href="/sunsets"
+                  className="btn-pill-outline btn-pill-wide justify-center"
+                >
                   Sun(Sets) Hub
                 </Link>
               </div>
@@ -107,14 +131,21 @@ export default function Home() {
                   Chasing Sun(Sets) July 4 Open-Air
                 </h2>
                 <p className={titleSubtextClass}>
-                  The official summer hub is live. Join First Access for ticket drops, lineup announcements, VIP tables, recap video, sound, gallery, and partner inquiries.
+                  The official summer hub is live. Join First Access for ticket
+                  drops, lineup announcements, VIP tables, recap video, sound,
+                  gallery, and partner inquiries.
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <Link href="/sunsets" className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto">
+                  <Link
+                    href="/sunsets"
+                    className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
+                  >
                     Open Sun(Sets) Hub
                   </Link>
                   <a
-                    href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
+                    href={appendAttributionQueryParams(
+                      CHASING_SUNSETS_DROP_URL
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
@@ -135,7 +166,8 @@ export default function Home() {
                   Season Focus
                 </span>
                 <h3 className="section-display-title-compact mt-3 max-w-[14ch] text-white hyphens-none break-keep text-balance">
-                  {chasingSeasonEvent?.headline || "July 4th Open-Air Homecoming"}
+                  {chasingSeasonEvent?.headline ||
+                    "July 4th Open-Air Homecoming"}
                 </h3>
                 <p className={warmSubtextClass}>
                   {chasingSeasonEvent?.description ||
@@ -144,21 +176,29 @@ export default function Home() {
                 <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
                   <div>
                     <dt className="text-white/66">Date</dt>
-                    <dd className="mt-1 text-white">{chasingSeasonEvent?.date || "Coming Soon"}</dd>
+                    <dd className="mt-1 text-white">
+                      {chasingSeasonEvent?.date || "Coming Soon"}
+                    </dd>
                   </div>
                   <div>
                     <dt className="text-white/66">Location</dt>
                     <dd className="mt-1 text-white">
-                      {chasingSeasonEvent ? getEventVenueLabel(chasingSeasonEvent) : "Chicago"}
+                      {chasingSeasonEvent
+                        ? getEventVenueLabel(chasingSeasonEvent)
+                        : "Chicago"}
                     </dd>
                   </div>
                   <div>
                     <dt className="text-white/66">Status</dt>
-                    <dd className="mt-1 text-white">{getStatusLabel(chasingSeasonEvent?.status)}</dd>
+                    <dd className="mt-1 text-white">
+                      {getStatusLabel(chasingSeasonEvent?.status)}
+                    </dd>
                   </div>
                   <div>
                     <dt className="text-white/66">Lineup</dt>
-                    <dd className="mt-1 text-white">{chasingSeasonEvent?.lineup || "Lineup Coming Soon"}</dd>
+                    <dd className="mt-1 text-white">
+                      {chasingSeasonEvent?.lineup || "Lineup Coming Soon"}
+                    </dd>
                   </div>
                 </dl>
               </div>
@@ -166,7 +206,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="campaigns" className="relative z-10 border-b border-white/10 bg-[#080808] py-20 md:py-28">
+        <section
+          id="campaigns"
+          className="relative z-10 border-b border-white/10 bg-[#080808] py-20 md:py-28"
+        >
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker text-primary">Untold Story</span>
@@ -179,7 +222,7 @@ export default function Home() {
 
             {untoldMoment ? (
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-              <div>
+                <div>
                   <span className="section-kicker mb-3 block text-white/78">
                     Archive closed / next chapter
                   </span>
@@ -190,7 +233,9 @@ export default function Home() {
                     {untoldMoment.date} at {untoldMoment.venue}
                   </p>
                   <p className={coolSubtextClass}>
-                    The next late-night chapter is moving into first-access mode. Join the list for the reveal, table path, and ticket-window updates.
+                    The next late-night chapter is moving into first-access
+                    mode. Join the list for the reveal, table path, and
+                    ticket-window updates.
                   </p>
                 </div>
 
@@ -210,12 +255,19 @@ export default function Home() {
                     </div>
                     <div>
                       <dt className="text-white/66">City</dt>
-                      <dd className="mt-1 text-white">{untoldMoment.location}</dd>
+                      <dd className="mt-1 text-white">
+                        {untoldMoment.location}
+                      </dd>
                     </div>
                   </dl>
-                  <p className="mt-4 text-sm text-white/82">{getEventVenueLabel(untoldMoment)}</p>
+                  <p className="mt-4 text-sm text-white/82">
+                    {getEventVenueLabel(untoldMoment)}
+                  </p>
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <Link href={untoldMomentHref} className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto">
+                    <Link
+                      href={untoldMomentHref}
+                      className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto"
+                    >
                       View Untold Story <ArrowUpRight className="w-4 h-4" />
                     </Link>
                     {untoldTicketIsExternal ? (
@@ -228,7 +280,10 @@ export default function Home() {
                         {untoldCtaLabel} <ArrowUpRight className="w-4 h-4" />
                       </a>
                     ) : (
-                      <Link href={untoldTicketHref} className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto">
+                      <Link
+                        href={untoldTicketHref}
+                        className="btn-pill-untold btn-pill-compact w-full justify-center sm:w-auto"
+                      >
                         {untoldCtaLabel} <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     )}
@@ -236,7 +291,9 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-white/84">The next Untold Story chapter is being updated.</p>
+              <p className="text-sm text-white/84">
+                The next Untold Story chapter is being updated.
+              </p>
             )}
           </div>
         </section>
@@ -252,7 +309,8 @@ export default function Home() {
                   Season Dates
                 </h3>
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F4D7A1]/82">
-                  Summer dates are listed here for planning. Ticket drops and lineups release separately by chapter.
+                  Summer dates are listed here for planning. Ticket drops and
+                  lineups release separately by chapter.
                 </p>
               </div>
               <Link href="/chasing-sunsets" className="btn-text-action">
@@ -273,70 +331,132 @@ export default function Home() {
           </div>
         </section>
 
-        <div id="season" className="bg-[#050505] transition-colors duration-500 relative z-10">
+        <div
+          id="season"
+          className="bg-[#050505] transition-colors duration-500 relative z-10"
+        >
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-24 z-20"
-            style={{ background: "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)" }}
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)",
+            }}
           />
-          <ViewportLazy minHeightClassName="min-h-[560px]" rootMargin="400px 0px">
-            <Suspense fallback={<Skeleton className="h-[560px] w-full opacity-10" />}>
+          <ViewportLazy
+            minHeightClassName="min-h-[560px]"
+            rootMargin="400px 0px"
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[560px] w-full opacity-10" />}
+            >
               <SeasonChapterCards />
             </Suspense>
           </ViewportLazy>
-          <SectionDivider number="01" label="Full Schedule" dark={false} glow={SUN_SETS_GOLD} />
-          <ViewportLazy minHeightClassName="min-h-[780px]" rootMargin="500px 0px" revealAfterMs={900}>
-            <Suspense fallback={<Skeleton className="h-[780px] w-full opacity-10" />}>
+          <SectionDivider
+            number="01"
+            label="Full Schedule"
+            dark={false}
+            glow={SUN_SETS_GOLD}
+          />
+          <ViewportLazy
+            minHeightClassName="min-h-[780px]"
+            rootMargin="500px 0px"
+            revealAfterMs={900}
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[780px] w-full opacity-10" />}
+            >
               <ScheduleSection />
             </Suspense>
           </ViewportLazy>
           <div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-20"
-            style={{ background: "linear-gradient(to top, rgba(12,12,12,0.4), transparent)" }}
+            style={{
+              background:
+                "linear-gradient(to top, rgba(12,12,12,0.4), transparent)",
+            }}
           />
         </div>
 
-        <section id="series" className="relative z-10 border-b border-white/10 bg-[#111111] py-20 md:py-28">
+        <section
+          id="series"
+          className="relative z-10 border-b border-white/10 bg-[#111111] py-20 md:py-28"
+        >
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
                 One platform, multiple series.
               </span>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#D9C6A5]/86">
-                Use this section as the map: Chasing Sun(Sets) is open-air, Untold Story is after dark, Radio is the archive between shows.
+                Use this section as the map: Chasing Sun(Sets) is open-air,
+                Untold Story is after dark, Radio is the archive between shows.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              <Link href="/chasing-sunsets" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">Open Air</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Chasing Sun(Sets)</h3>
+              <Link
+                href="/chasing-sunsets"
+                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">
+                  Open Air
+                </p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                  Chasing Sun(Sets)
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  Open-air house music gatherings shaped by golden hour, lakefront energy, and community.
+                  Open-air house music gatherings shaped by golden hour,
+                  lakefront energy, and community.
                 </p>
               </Link>
-              <Link href="/story" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">After Dark</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Untold Story</h3>
+              <Link
+                href="/story"
+                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
+                  After Dark
+                </p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                  Untold Story
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  After-dark rooms built for deeper sound, immersive dancefloors, and artist-led moments.
+                  After-dark rooms built for deeper sound, immersive
+                  dancefloors, and artist-led moments.
                 </p>
                 <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/68">
-                  {untoldMoment?.date || "Current indoor event details live on the story page"}
+                  {untoldMoment?.date ||
+                    "Current indoor event details live on the story page"}
                 </p>
               </Link>
-              <Link href="/radio" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">Radio</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Radio</h3>
+              <Link
+                href="/radio"
+                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
+                  Radio
+                </p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                  Radio
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  Mixes, conversations, and cultural memory from the artists shaping the sound.
+                  Mixes, conversations, and cultural memory from the artists
+                  shaping the sound.
                 </p>
               </Link>
-              <Link href="/partners" className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">Collaborations</p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">Partners</h3>
+              <Link
+                href="/partners"
+                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
+                  Collaborations
+                </p>
+                <h3 className="mt-3 font-display text-2xl uppercase text-white">
+                  Partners
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  Brand and venue collaborations built around real audience energy, content, and community.
+                  Brand and venue collaborations built around real audience
+                  energy, content, and community.
                 </p>
               </Link>
             </div>
@@ -352,21 +472,33 @@ export default function Home() {
             </div>
             <div className="grid gap-px bg-white/5 md:grid-cols-4">
               <div className="bg-[#111111] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">What It Is</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">Chicago-rooted music company</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                  What It Is
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                  Chicago-rooted music company
+                </p>
               </div>
               <div className="bg-[#111111] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Show Types</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                  Show Types
+                </p>
                 <p className="mt-3 text-sm leading-relaxed text-white/90">
                   Open-air, rooftop, and after-dark chapters
                 </p>
               </div>
               <div className="bg-[#111111] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Audience Reach</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">1M+ organic impressions across past event content</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                  Audience Reach
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                  1M+ organic impressions across past event content
+                </p>
               </div>
               <div className="bg-[#111111] p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Attendance</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                  Attendance
+                </p>
                 <p className="mt-3 text-sm leading-relaxed text-white/90">
                   6,000+ community attendance across flagship open-air moments
                 </p>
@@ -376,24 +508,49 @@ export default function Home() {
         </section>
 
         <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
-          <SectionDivider id="featured" number="02" label="Past Nights" glow={`${LIVE_RED}14`} />
-          <ViewportLazy minHeightClassName="min-h-[620px]" rootMargin="500px 0px" revealAfterMs={1200}>
-            <Suspense fallback={<Skeleton className="h-[620px] w-full opacity-10" />}>
+          <SectionDivider
+            id="featured"
+            number="02"
+            label="Past Nights"
+            glow={`${LIVE_RED}14`}
+          />
+          <ViewportLazy
+            minHeightClassName="min-h-[620px]"
+            rootMargin="500px 0px"
+            revealAfterMs={1200}
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[620px] w-full opacity-10" />}
+            >
               <FeaturedRecap />
             </Suspense>
           </ViewportLazy>
         </div>
 
         <div id="showcase" className="bg-black relative z-10">
-          <SectionDivider number="03" label="Radio" glow={MONOLITH_ORANGE} dense />
-          <ViewportLazy minHeightClassName="min-h-[420px]" rootMargin="500px 0px" revealAfterMs={1400}>
-            <Suspense fallback={<Skeleton className="h-[420px] w-full opacity-10" />}>
+          <SectionDivider
+            number="03"
+            label="Radio"
+            glow={MONOLITH_ORANGE}
+            dense
+          />
+          <ViewportLazy
+            minHeightClassName="min-h-[420px]"
+            rootMargin="500px 0px"
+            revealAfterMs={1400}
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[420px] w-full opacity-10" />}
+            >
               <FeaturedSets />
             </Suspense>
           </ViewportLazy>
         </div>
 
-        <section id="community" className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-24 md:py-32">
+        <section
+          id="community"
+          className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-24 md:py-32"
+        >
           <div className="container layout-wide px-6">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
@@ -404,16 +561,24 @@ export default function Home() {
                   Bring your venue, brand, or idea into the room.
                 </h2>
                 <p className="max-w-2xl text-sm md:text-base leading-relaxed text-white/86">
-                  Monolith works with venues, sponsors, artists, media, and cultural partners who want to build real audience energy around shows, content, and community.
+                  Monolith works with venues, sponsors, artists, media, and
+                  cultural partners who want to build real audience energy
+                  around shows, content, and community.
                 </p>
               </div>
 
               <div className="rounded-full border border-white/10 bg-white/[0.04] p-3 md:p-4 backdrop-blur-xl">
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <Link href="/partners" className="btn-pill-monolith btn-pill-compact w-full">
+                  <Link
+                    href="/partners"
+                    className="btn-pill-monolith btn-pill-compact w-full"
+                  >
                     Partner With Us <ArrowUpRight className="w-4 h-4" />
                   </Link>
-                  <Link href="/contact" className="btn-pill-outline-dark btn-pill-compact w-full text-white border-white/20 hover:bg-white/10 hover:text-white">
+                  <Link
+                    href="/contact"
+                    className="btn-pill-outline-dark btn-pill-compact w-full text-white border-white/20 hover:bg-white/10 hover:text-white"
+                  >
                     Contact <ArrowUpRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -422,8 +587,14 @@ export default function Home() {
           </div>
         </section>
 
-        <ViewportLazy minHeightClassName="min-h-[120px]" rootMargin="500px 0px" revealAfterMs={1600}>
-          <Suspense fallback={<Skeleton className="h-[120px] w-full opacity-10" />}>
+        <ViewportLazy
+          minHeightClassName="min-h-[120px]"
+          rootMargin="500px 0px"
+          revealAfterMs={1600}
+        >
+          <Suspense
+            fallback={<Skeleton className="h-[120px] w-full opacity-10" />}
+          >
             <PartnershipMarquee />
           </Suspense>
         </ViewportLazy>

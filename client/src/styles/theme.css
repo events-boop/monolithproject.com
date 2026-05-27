@@ -12,14 +12,15 @@
 */
 
 @theme inline {
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
-  --font-heavy: 'Archivo Black', 'Arial Black', sans-serif;
-  --font-hero: 'General Sans', 'Kanit', 'Syncopate', sans-serif;
-  --font-monolith: 'General Sans', 'Kanit', 'Syncopate', sans-serif;
-  --font-serif: 'Instrument Serif', 'Cormorant Garamond', 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --font-script: 'Instrument Serif', 'Cormorant Garamond', serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-heavy: "Archivo Black", "Arial Black", sans-serif;
+  --font-hero: "General Sans", "Kanit", "Syncopate", sans-serif;
+  --font-monolith: "General Sans", "Kanit", "Syncopate", sans-serif;
+  --font-serif:
+    "Instrument Serif", "Cormorant Garamond", "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-script: "Instrument Serif", "Cormorant Garamond", serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -76,16 +77,16 @@
   /* ——— Series palette mirrors lib/brand.ts — keep these values in sync ——— */
 
   /* Untold Story sub-brand palette */
-  --color-untold-violet: #8B5CF6;   /* atmospheric only (scene glows) */
-  --color-untold-cyan: #22D3EE;     /* primary series accent */
-  --color-untold-deep: #06060F;
-  --color-untold-card: #0C0C1A;
+  --color-untold-violet: #8b5cf6; /* atmospheric only (scene glows) */
+  --color-untold-cyan: #22d3ee; /* primary series accent */
+  --color-untold-deep: #06060f;
+  --color-untold-card: #0c0c1a;
 
   /* Chasing Sunsets sub-brand palette */
-  --color-sunsets-auburn: #C2703E;
-  --color-sunsets-gold: #E8B86D;    /* primary series accent (Sun(Sets) + Radio) */
-  --color-sunsets-cream: #FBF5ED;
-  --color-sunsets-deep: #2C1810;
+  --color-sunsets-auburn: #c2703e;
+  --color-sunsets-gold: #e8b86d; /* primary series accent (Sun(Sets) + Radio) */
+  --color-sunsets-cream: #fbf5ed;
+  --color-sunsets-deep: #2c1810;
 
   /* Scorpios Inspiration - Earth & Nature */
   --color-sand: oklch(0.97 0.02 85);
@@ -95,7 +96,11 @@
   --animate-shimmer: shimmer 2s infinite linear;
 
   @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
   }
 }

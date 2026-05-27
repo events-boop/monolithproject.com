@@ -7,7 +7,13 @@ describe("scenes", () => {
   // Scene config completeness
   // ---------------------------------------------------------------------------
   describe("scene configs", () => {
-    const allSceneIds: SceneId[] = ["monolith", "story", "sunsets", "radio", "paper"];
+    const allSceneIds: SceneId[] = [
+      "monolith",
+      "story",
+      "sunsets",
+      "radio",
+      "paper",
+    ];
 
     it("getSceneForPath always returns an object with all required properties", () => {
       const scene = getSceneForPath("/");
@@ -19,17 +25,20 @@ describe("scenes", () => {
       expect(scene).toHaveProperty("glow");
     });
 
-    it.each(allSceneIds)("scene '%s' is reachable via at least one path", (sceneId) => {
-      const pathMap: Record<SceneId, string> = {
-        monolith: "/",
-        story: "/story",
-        sunsets: "/chasing-sunsets",
-        radio: "/radio",
-        paper: "/newsletter",
-      };
-      const scene = getSceneForPath(pathMap[sceneId]);
-      expect(scene.id).toBe(sceneId);
-    });
+    it.each(allSceneIds)(
+      "scene '%s' is reachable via at least one path",
+      sceneId => {
+        const pathMap: Record<SceneId, string> = {
+          monolith: "/",
+          story: "/story",
+          sunsets: "/chasing-sunsets",
+          radio: "/radio",
+          paper: "/newsletter",
+        };
+        const scene = getSceneForPath(pathMap[sceneId]);
+        expect(scene.id).toBe(sceneId);
+      }
+    );
 
     it("monolith scene has correct properties", () => {
       const scene = getSceneForPath("/");

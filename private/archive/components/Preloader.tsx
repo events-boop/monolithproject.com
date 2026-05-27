@@ -26,7 +26,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       return;
     }
 
-    // Hyper-fast boot sequence for zero-latency entry 
+    // Hyper-fast boot sequence for zero-latency entry
     let currentLog = 0;
     const interval = setInterval(() => {
       currentLog += 1;
@@ -87,7 +87,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: i <= logIndex ? 1 : 0, x: i <= logIndex ? 0 : -10 }}
+                  animate={{
+                    opacity: i <= logIndex ? 1 : 0,
+                    x: i <= logIndex ? 0 : -10,
+                  }}
                   transition={{ duration: 0.2 }}
                 >
                   &gt; {log}
@@ -128,7 +131,9 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                       className="absolute inset-x-0 top-0 text-red-500 font-heavy text-[clamp(2.5rem,6vw,8rem)] tracking-[-0.04em] uppercase mix-blend-screen translate-x-1 sm:translate-x-2 blur-[2px] z-0 flex flex-col"
                     >
                       <span>MONOLITH</span>
-                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">PROJECT</span>
+                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">
+                        PROJECT
+                      </span>
                     </motion.div>
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -137,7 +142,9 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                       className="absolute inset-x-0 top-0 text-blue-500 font-heavy text-[clamp(2.5rem,6vw,8rem)] tracking-[-0.04em] uppercase mix-blend-screen -translate-x-1 sm:-translate-x-2 blur-[2px] z-0 flex flex-col"
                     >
                       <span>MONOLITH</span>
-                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">PROJECT</span>
+                      <span className="font-monolith text-[clamp(1rem,3vw,3rem)] tracking-[0.3em] leading-none opacity-50 mt-[-1%]">
+                        PROJECT
+                      </span>
                     </motion.div>
                   </>
                 )}

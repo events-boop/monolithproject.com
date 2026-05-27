@@ -44,23 +44,36 @@ export default function HomeShowcaseAccordion({ items }: Props) {
             initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, mass: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 100,
+              damping: 20,
+              mass: 1,
+            }}
             className="fixed pointer-events-none z-[100] w-64 h-64 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
             style={{
               left: mousePos.x - 128,
               top: mousePos.y - 128,
             }}
           >
-            <img src={hoveredImage} alt="Preview" className="w-full h-full object-cover scale-110" />
+            <img
+              src={hoveredImage}
+              alt="Preview"
+              className="w-full h-full object-cover scale-110"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {items.map((item) => {
+      {items.map(item => {
         const isOpen = openId === item.id;
         return (
-          <div key={item.id} id={item.id} className="w-full border-b border-white/10 flex flex-col group scroll-mt-32">
+          <div
+            key={item.id}
+            id={item.id}
+            className="w-full border-b border-white/10 flex flex-col group scroll-mt-32"
+          >
             {/* Header / Trigger */}
             <button
               onClick={() => toggle(item.id)}
@@ -105,14 +118,12 @@ export default function HomeShowcaseAccordion({ items }: Props) {
                   exit="collapsed"
                   variants={{
                     open: { opacity: 1, height: "auto" },
-                    collapsed: { opacity: 0, height: 0 }
+                    collapsed: { opacity: 0, height: 0 },
                   }}
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <div className="pb-16 w-full">
-                    {item.content}
-                  </div>
+                  <div className="pb-16 w-full">{item.content}</div>
                 </motion.div>
               )}
             </AnimatePresence>

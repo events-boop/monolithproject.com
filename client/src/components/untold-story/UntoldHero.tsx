@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import MagneticButton from "@/components/MagneticButton";
@@ -25,7 +30,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   useEffect(() => {
     if (heroSlides.length <= 1 || !idleMotion) return;
     const timer = window.setInterval(() => {
-      setHeroSlideIndex((prev) => (prev + 1) % heroSlides.length);
+      setHeroSlideIndex(prev => (prev + 1) % heroSlides.length);
     }, 10000);
     return () => window.clearInterval(timer);
   }, [idleMotion]);
@@ -34,7 +39,10 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   const featuredHeadline = event?.headline || event?.title;
 
   return (
-    <section ref={heroRef} className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]">
+    <section
+      ref={heroRef}
+      className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]"
+    >
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
@@ -63,17 +71,26 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
       {/* Giant Butterfly (Elements of butterfly in the background) */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none z-10 hidden lg:flex items-center justify-center opacity-40 mix-blend-screen overflow-hidden">
         <motion.div
-          animate={idleMotion ? { scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] } : { scale: 1, rotate: 0 }}
-          transition={idleMotion ? { duration: 8, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+          animate={
+            idleMotion
+              ? { scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }
+              : { scale: 1, rotate: 0 }
+          }
+          transition={
+            idleMotion
+              ? { duration: 8, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0 }
+          }
         >
-          <UntoldButterflyLogo className="w-full h-full text-[#22D3EE]/60" glow />
+          <UntoldButterflyLogo
+            className="w-full h-full text-[#22D3EE]/60"
+            glow
+          />
         </motion.div>
       </div>
 
       {/* Subtle cyan glow above the mask */}
-      <div
-        className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.25] blur-[120px] pointer-events-none z-10 bg-[#22D3EE]"
-      />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.25] blur-[120px] pointer-events-none z-10 bg-[#22D3EE]" />
 
       {/* Ordinary Content Layer */}
       <div className="container layout-wide relative z-30 mt-auto">
@@ -84,19 +101,30 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-8 flex flex-col"
           >
-            <UntoldButterflyLogo className="w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 text-[#22D3EE]" glow animateIn />
+            <UntoldButterflyLogo
+              className="w-16 h-16 sm:w-20 sm:h-20 mb-6 sm:mb-8 text-[#22D3EE]"
+              glow
+              animateIn
+            />
             <div className="flex items-center gap-4 mb-4 sm:mb-6">
               <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase text-untold-cyan">
                 {event?.episode || "Series 02"}
               </span>
               <div className="h-px w-8 sm:w-12 bg-white/20" />
-              <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/50">{event?.location || "Chicago"}</span>
+              <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/50">
+                {event?.location || "Chicago"}
+              </span>
             </div>
 
             {/* Visible Title */}
             <h1 className="font-display text-[clamp(3.5rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-6 sm:mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
               {headlineLines.map((line, i) => (
-                <SplitText key={i} text={line} className="block" initialDelay={0.2 + (i * 0.15)} />
+                <SplitText
+                  key={i}
+                  text={line}
+                  className="block"
+                  initialDelay={0.2 + i * 0.15}
+                />
               ))}
             </h1>
             {featuredHeadline ? (
@@ -109,24 +137,21 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </BrandTranslatorLabel>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-6 mb-10 w-full md:w-auto">
-              <ConversionCTA
-                event={event}
-                size="lg"
-                showUrgency={true}
-              />
+              <ConversionCTA event={event} size="lg" showUrgency={true} />
               <MagneticButton strength={0.22}>
-                <a
-                  href="#untold-records"
-                  className="cta-ghost group"
-                >
+                <a href="#untold-records" className="cta-ghost group">
                   View Records
-                  <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight
+                    size={14}
+                    className="ml-2 transition-transform group-hover:translate-x-1"
+                  />
                 </a>
               </MagneticButton>
             </div>
 
             <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-              A late-night series built for deeper house music, tighter energy, and a more immersive dancefloor.
+              A late-night series built for deeper house music, tighter energy,
+              and a more immersive dancefloor.
             </p>
 
             {heroSlides.length > 1 && (

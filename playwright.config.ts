@@ -10,7 +10,8 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: "NODE_ENV=production PORT=5001 HOST=127.0.0.1 node dist/index.js",
+      command:
+        "NODE_ENV=production PORT=5001 HOST=127.0.0.1 node dist/index.js",
       port: 5001,
       reuseExistingServer: !process.env.CI,
       timeout: 120000,

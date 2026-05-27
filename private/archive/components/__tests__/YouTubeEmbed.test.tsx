@@ -17,9 +17,7 @@ describe("YouTubeEmbed", () => {
 
   /** Returns the iframe element when one was rendered, or null otherwise. */
   function renderAndGetIframe(url: string) {
-    const { container } = render(
-      <YouTubeEmbed url={url} title="Test video" />,
-    );
+    const { container } = render(<YouTubeEmbed url={url} title="Test video" />);
     return container.querySelector("iframe");
   }
 
@@ -30,50 +28,40 @@ describe("YouTubeEmbed", () => {
   describe("getYouTubeVideoId (via render)", () => {
     it("extracts the ID from a standard watch URL", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       );
       expect(iframe).not.toBeNull();
-      expect(iframe!.src).toContain(
-        "youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      );
+      expect(iframe!.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ");
     });
 
     it("extracts the ID from a short youtu.be URL", () => {
       const iframe = renderAndGetIframe("https://youtu.be/dQw4w9WgXcQ");
       expect(iframe).not.toBeNull();
-      expect(iframe!.src).toContain(
-        "youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      );
+      expect(iframe!.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ");
     });
 
     it("extracts the ID from an embed URL", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "https://www.youtube.com/embed/dQw4w9WgXcQ"
       );
       expect(iframe).not.toBeNull();
-      expect(iframe!.src).toContain(
-        "youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      );
+      expect(iframe!.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ");
     });
 
     it("extracts the ID from a shorts URL", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/shorts/dQw4w9WgXcQ",
+        "https://www.youtube.com/shorts/dQw4w9WgXcQ"
       );
       expect(iframe).not.toBeNull();
-      expect(iframe!.src).toContain(
-        "youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      );
+      expect(iframe!.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ");
     });
 
     it("extracts the ID when extra query params are present", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=30",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=30"
       );
       expect(iframe).not.toBeNull();
-      expect(iframe!.src).toContain(
-        "youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      );
+      expect(iframe!.src).toContain("youtube-nocookie.com/embed/dQw4w9WgXcQ");
     });
 
     it("returns null for an invalid URL", () => {
@@ -99,7 +87,7 @@ describe("YouTubeEmbed", () => {
   describe("embed URL parameters", () => {
     it("applies default parameters correctly", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       );
       expect(iframe).not.toBeNull();
 
@@ -122,7 +110,7 @@ describe("YouTubeEmbed", () => {
           title="Test"
           autoplay
           muted
-        />,
+        />
       );
       const iframe = container.querySelector("iframe")!;
       const src = new URL(iframe.src);
@@ -137,7 +125,7 @@ describe("YouTubeEmbed", () => {
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="Test"
           loop
-        />,
+        />
       );
       const iframe = container.querySelector("iframe")!;
       const src = new URL(iframe.src);
@@ -148,7 +136,7 @@ describe("YouTubeEmbed", () => {
 
     it("does not include loop param when loop is false (default)", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       );
       const src = new URL(iframe!.src);
       expect(src.searchParams.has("loop")).toBe(false);
@@ -160,7 +148,7 @@ describe("YouTubeEmbed", () => {
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="Test"
           start={42}
-        />,
+        />
       );
       const iframe = container.querySelector("iframe")!;
       const src = new URL(iframe.src);
@@ -174,7 +162,7 @@ describe("YouTubeEmbed", () => {
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="Test"
           start={42.7}
-        />,
+        />
       );
       const iframe = container.querySelector("iframe")!;
       const src = new URL(iframe.src);
@@ -188,7 +176,7 @@ describe("YouTubeEmbed", () => {
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="Test"
           start={0}
-        />,
+        />
       );
       const iframe = container.querySelector("iframe")!;
       const src = new URL(iframe.src);
@@ -207,14 +195,14 @@ describe("YouTubeEmbed", () => {
         <YouTubeEmbed
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="My video title"
-        />,
+        />
       );
       expect(screen.getByTitle("My video title")).toBeTruthy();
     });
 
     it("uses lazy loading by default", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       );
       expect(iframe!.getAttribute("loading")).toBe("lazy");
     });
@@ -225,14 +213,16 @@ describe("YouTubeEmbed", () => {
           url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           title="Test"
           className="my-custom-class"
-        />,
+        />
       );
-      expect(container.querySelector("iframe")!.classList.contains("my-custom-class")).toBe(true);
+      expect(
+        container.querySelector("iframe")!.classList.contains("my-custom-class")
+      ).toBe(true);
     });
 
     it("sets allowFullScreen to true by default", () => {
       const iframe = renderAndGetIframe(
-        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       );
       expect(iframe!.allowFullscreen).toBe(true);
     });

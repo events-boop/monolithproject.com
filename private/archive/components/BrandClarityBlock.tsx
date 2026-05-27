@@ -6,7 +6,8 @@ const clarityCards = [
   {
     label: "Live",
     title: "Series & Events",
-    description: "Recurring nights, distinct formats, and the next dates that define the live side of the Monolith world.",
+    description:
+      "Recurring nights, distinct formats, and the next dates that define the live side of the Monolith world.",
     cta: "View Schedule",
     href: "/schedule",
     icon: CalendarRange,
@@ -14,7 +15,8 @@ const clarityCards = [
   {
     label: "Media",
     title: "Radio, Articles & Archive",
-    description: "The Chasing Sun(Sets) Radio Show, articles, and event archive that help people understand the taste behind the room.",
+    description:
+      "The Chasing Sun(Sets) Radio Show, articles, and event archive that help people understand the taste behind the room.",
     cta: "Open Radio Show",
     href: "/radio",
     icon: Radio,
@@ -22,7 +24,8 @@ const clarityCards = [
   {
     label: "People",
     title: "Partners & Crowd",
-    description: "Artists, venues, collaborators, and returning guests connected by the same standard and the same room logic.",
+    description:
+      "Artists, venues, collaborators, and returning guests connected by the same standard and the same room logic.",
     cta: "Meet The Network",
     href: "/partners",
     icon: Users,
@@ -30,7 +33,8 @@ const clarityCards = [
   {
     label: "Photos",
     title: "Event Archive",
-    description: "The photos, recap assets, and recorded history of each room, preserved as a living record of the project.",
+    description:
+      "The photos, recap assets, and recorded history of each room, preserved as a living record of the project.",
     cta: "View Event Archive",
     href: "/archive",
     icon: ArrowUpRight,
@@ -52,26 +56,46 @@ export default function BrandClarityBlock() {
               className="max-w-2xl"
             >
               <div className="flex items-center gap-4 mb-8">
-                 <div className="h-[2px] w-12 bg-primary/40 shadow-[0_0_15px_rgba(224,90,58,0.3)]" />
-                 <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] text-primary/90">Project Clarity</span>
+                <div className="h-[2px] w-12 bg-primary/40 shadow-[0_0_15px_rgba(224,90,58,0.3)]" />
+                <span className="font-mono text-[11px] md:text-sm uppercase tracking-[0.5em] text-primary/90">
+                  Project Clarity
+                </span>
               </div>
-              
+
               <h2 className="font-display text-[clamp(2.5rem,7vw,6.5rem)] leading-[0.85] uppercase text-white drop-shadow-2xl mb-10">
-                ONE HOUSE.<br />
-                <span className="text-white/20 font-serif italic tracking-wider">FOUR EXPRESSIONS.</span>
+                ONE HOUSE.
+                <br />
+                <span className="text-white/20 font-serif italic tracking-wider">
+                  FOUR EXPRESSIONS.
+                </span>
               </h2>
-              
+
               <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-xl font-light">
-                Monolith works because the parts are distinct yet connected by a shared standard of curation. From the warmth of the sunset to the depth of the untold night, the logic remains the same: <span className="text-white">rooms worth returning to.</span>
+                Monolith works because the parts are distinct yet connected by a
+                shared standard of curation. From the warmth of the sunset to
+                the depth of the untold night, the logic remains the same:{" "}
+                <span className="text-white">rooms worth returning to.</span>
               </p>
 
               <div className="mt-12 flex flex-col gap-6 border-l border-white/5 pl-8">
-                 <p className="text-xs uppercase tracking-[0.3em] text-white/20 font-mono">Project Overview</p>
-                 <div className="flex flex-wrap gap-x-8 gap-y-4">
-                    {["Curated Rooms", "Music-First", "Chicago-Rooted", "Consistent Standard"].map((trait) => (
-                      <span key={trait} className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/50">{trait}</span>
-                    ))}
-                 </div>
+                <p className="text-xs uppercase tracking-[0.3em] text-white/20 font-mono">
+                  Project Overview
+                </p>
+                <div className="flex flex-wrap gap-x-8 gap-y-4">
+                  {[
+                    "Curated Rooms",
+                    "Music-First",
+                    "Chicago-Rooted",
+                    "Consistent Standard",
+                  ].map(trait => (
+                    <span
+                      key={trait}
+                      className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/50"
+                    >
+                      {trait}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
@@ -86,7 +110,11 @@ export default function BrandClarityBlock() {
                   initial={{ opacity: 0, x: 25 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.8, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{
+                    duration: 0.8,
+                    delay: index * 0.12,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                 >
                   <Link
                     href={card.href}
@@ -95,10 +123,12 @@ export default function BrandClarityBlock() {
                     {/* Architectural Underlay */}
                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-white/5 via-white/20 to-transparent group-hover:via-primary/40 transition-all duration-700" />
                     <div className="absolute inset-0 bg-white/[0.01] group-hover:bg-white/[0.03] transition-all duration-700 -z-10" />
-                    
+
                     <div className="flex items-start justify-between gap-8 mb-6">
                       <div className="flex flex-col gap-2">
-                        <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/35 group-hover:text-primary transition-colors">{card.label}</span>
+                        <span className="font-mono text-[11px] md:text-xs uppercase tracking-[0.4em] text-white/35 group-hover:text-primary transition-colors">
+                          {card.label}
+                        </span>
                         <h3 className="font-display text-3xl md:text-4xl lg:text-5xl uppercase text-white group-hover:tracking-wider transition-all duration-700">
                           {card.title}
                         </h3>
@@ -107,7 +137,7 @@ export default function BrandClarityBlock() {
                         <Icon className="h-6 w-6" />
                       </div>
                     </div>
-                    
+
                     <p className="text-sm md:text-base leading-relaxed text-white/40 group-hover:text-white/70 transition-all duration-700 max-w-lg">
                       {card.description}
                     </p>

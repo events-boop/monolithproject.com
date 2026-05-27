@@ -33,7 +33,8 @@ export default function SoundCloudShelf() {
               Latest Covers
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/45 md:text-base">
-              Fresh cover art from the Sun(Sets) radio archive, surfaced like a closing shelf before the footer.
+              Fresh cover art from the Sun(Sets) radio archive, surfaced like a
+              closing shelf before the footer.
             </p>
           </div>
 
@@ -52,7 +53,7 @@ export default function SoundCloudShelf() {
         </div>
 
         <div className="mt-6 flex gap-px overflow-x-auto bg-white/8 pb-2 scrollbar-none md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-4">
-          {featuredEpisodes.map((episode) => {
+          {featuredEpisodes.map(episode => {
             const coverSrc = episode.coverImage || episode.image;
 
             return (

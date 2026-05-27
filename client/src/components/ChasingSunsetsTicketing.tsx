@@ -1,4 +1,11 @@
-import { Anchor, ArrowRight, Calendar, Check, Lock, MapPin } from "lucide-react";
+import {
+  Anchor,
+  ArrowRight,
+  Calendar,
+  Check,
+  Lock,
+  MapPin,
+} from "lucide-react";
 import type { ScheduledEvent } from "@shared/events/types";
 import { useLocation } from "wouter";
 import { getSeriesEvents } from "@/lib/siteExperience";
@@ -66,7 +73,8 @@ export default function ChasingSunsetsTicketing({
   const pricingEvent = featuredEvent ?? chasingEvents[0];
   const tiers = pricingEvent?.ticketTiers ?? [];
   const releaseStatus = getReleaseStatus(pricingEvent);
-  const releaseTitle = pricingEvent?.headline || pricingEvent?.title || "Featured Release";
+  const releaseTitle =
+    pricingEvent?.headline || pricingEvent?.title || "Featured Release";
   const releaseEpisode = pricingEvent?.episode || "Featured Chapter";
   const releaseDate = pricingEvent?.date || "Date TBA";
   const releaseVenue = pricingEvent?.venue || "Castaways";
@@ -97,8 +105,9 @@ export default function ChasingSunsetsTicketing({
               Tradition begins on the lakefront.
             </p>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#2C1810]/70 md:text-lg">
-              This block now carries the same season language as the rest of the page: featured chapter,
-              access logic, pass options, and early-drop routing in one place instead of a separate dark promo wall.
+              This block now carries the same season language as the rest of the
+              page: featured chapter, access logic, pass options, and early-drop
+              routing in one place instead of a separate dark promo wall.
             </p>
           </div>
 
@@ -110,25 +119,40 @@ export default function ChasingSunsetsTicketing({
               <span className="rounded-full border border-[#C2703E]/16 bg-white/72 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/70">
                 {seasonEventCount} tracked dates
               </span>
-              <span className={`inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/24 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] ${releaseStatus.labelClassName}`}>
-                <span className={`h-1.5 w-1.5 rounded-full ${releaseStatus.dotClassName}`} />
+              <span
+                className={`inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/24 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] ${releaseStatus.labelClassName}`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${releaseStatus.dotClassName}`}
+                />
                 {releaseStatus.label}
               </span>
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">Featured Date</span>
-                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">{releaseDate}</p>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                  Featured Date
+                </span>
+                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">
+                  {releaseDate}
+                </p>
               </div>
               <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">Episode</span>
-                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">{releaseEpisode}</p>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                  Episode
+                </span>
+                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">
+                  {releaseEpisode}
+                </p>
               </div>
               <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">Drop Route</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                  Drop Route
+                </span>
                 <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/64">
-                  Release details, lineup, and access signals land here before the public push.
+                  Release details, lineup, and access signals land here before
+                  the public push.
                 </p>
               </div>
             </div>
@@ -156,7 +180,9 @@ export default function ChasingSunsetsTicketing({
           <article className="sunset-panel-editorial p-6 md:p-8">
             <div className="flex flex-col gap-6 border-b border-[#C2703E]/12 pb-6 md:flex-row md:items-end md:justify-between">
               <div>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">{releaseEpisode}</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                  {releaseEpisode}
+                </span>
                 <h3 className="mt-3 font-display text-[clamp(2.3rem,4vw,4rem)] uppercase leading-[0.88] text-[#2C1810]">
                   {releaseTitle}
                 </h3>
@@ -167,7 +193,9 @@ export default function ChasingSunsetsTicketing({
                   <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
                     <Calendar className="h-3.5 w-3.5" /> Date
                   </span>
-                  <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#2C1810]/72">{releaseDate}</p>
+                  <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#2C1810]/72">
+                    {releaseDate}
+                  </p>
                 </div>
                 <div className="rounded-[1.25rem] border border-[#C2703E]/14 bg-white/72 px-4 py-3">
                   <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
@@ -197,11 +225,17 @@ export default function ChasingSunsetsTicketing({
                           key={tier.id}
                           className={`flex items-center justify-between border-[#C2703E]/10 ${isLast ? "" : "border-b pb-3"}`}
                         >
-                          <span className={`font-mono text-xs uppercase tracking-[0.22em] ${isActive ? "text-[#2C1810]/78" : "text-[#2C1810]/42"}`}>
+                          <span
+                            className={`font-mono text-xs uppercase tracking-[0.22em] ${isActive ? "text-[#2C1810]/78" : "text-[#2C1810]/42"}`}
+                          >
                             {tier.name}
                           </span>
-                          <span className={`font-display text-[1.7rem] uppercase leading-none ${isActive ? "text-[#A4592C]" : "text-[#2C1810]/32 line-through decoration-[#2C1810]/20"}`}>
-                            {!isActive ? <Lock className="mr-1 inline h-3.5 w-3.5 opacity-50" /> : null}
+                          <span
+                            className={`font-display text-[1.7rem] uppercase leading-none ${isActive ? "text-[#A4592C]" : "text-[#2C1810]/32 line-through decoration-[#2C1810]/20"}`}
+                          >
+                            {!isActive ? (
+                              <Lock className="mr-1 inline h-3.5 w-3.5 opacity-50" />
+                            ) : null}
                             ${tier.price}
                           </span>
                         </div>
@@ -211,11 +245,14 @@ export default function ChasingSunsetsTicketing({
                 ) : (
                   <div className="mt-4 rounded-[1.25rem] border border-[#C2703E]/12 bg-white/72 p-5">
                     <p className="text-sm leading-relaxed text-[#2C1810]/68">
-                      The next pricing move for this chapter has not been published yet. The drop list remains the first place where new access tiers land.
+                      The next pricing move for this chapter has not been
+                      published yet. The drop list remains the first place where
+                      new access tiers land.
                     </p>
                     {typeof pricingEvent?.startingPrice === "number" ? (
                       <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                        First public tier starts from ${pricingEvent.startingPrice}
+                        First public tier starts from $
+                        {pricingEvent.startingPrice}
                       </p>
                     ) : null}
                   </div>
@@ -224,24 +261,41 @@ export default function ChasingSunsetsTicketing({
 
               <div className="grid gap-4">
                 <div className="sunset-panel-editorial-soft p-5 md:p-6">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">Release Route</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                    Release Route
+                  </span>
                   <ul className="mt-4 space-y-3 text-sm leading-relaxed text-[#2C1810]/66">
-                    <li>Season updates move through one drop route instead of fragmented links.</li>
-                    <li>Featured release, pricing logic, and pass access stay tied to the same chapter system.</li>
-                    <li>{hasStructuredPricing ? "Early tiers are visible now. Later phases close out fast." : "Pricing is still staging. Join now if you want the first public move."}</li>
+                    <li>
+                      Season updates move through one drop route instead of
+                      fragmented links.
+                    </li>
+                    <li>
+                      Featured release, pricing logic, and pass access stay tied
+                      to the same chapter system.
+                    </li>
+                    <li>
+                      {hasStructuredPricing
+                        ? "Early tiers are visible now. Later phases close out fast."
+                        : "Pricing is still staging. Join now if you want the first public move."}
+                    </li>
                   </ul>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <a
-                    href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
+                    href={appendAttributionQueryParams(
+                      CHASING_SUNSETS_DROP_URL
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide"
                   >
                     Unlock Presale <ArrowRight className="h-3.5 w-3.5" />
                   </a>
-                  <button onClick={() => setLocation("/schedule")} className="btn-pill-sunsets btn-pill-wide">
+                  <button
+                    onClick={() => setLocation("/schedule")}
+                    className="btn-pill-sunsets btn-pill-wide"
+                  >
                     See All Dates
                   </button>
                 </div>
@@ -251,20 +305,34 @@ export default function ChasingSunsetsTicketing({
 
           <div className="grid gap-6">
             <article className="sunset-panel-editorial-soft p-6 md:p-7">
-              <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">Access All Dates</span>
+              <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                Access All Dates
+              </span>
               <div className="mt-4 flex items-end justify-between gap-4 border-b border-[#C2703E]/12 pb-5">
                 <div>
-                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">Season Pass</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">For the people treating Chasing as a full summer run, not a one-off ticket.</p>
+                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">
+                    Season Pass
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">
+                    For the people treating Chasing as a full summer run, not a
+                    one-off ticket.
+                  </p>
                 </div>
                 <div className="text-right">
-                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">$119</span>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">GA Tier</p>
+                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">
+                    $119
+                  </span>
+                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">
+                    GA Tier
+                  </p>
                 </div>
               </div>
               <ul className="mt-5 space-y-3">
-                {SEASON_PASS_PERKS.map((perk) => (
-                  <li key={perk} className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68">
+                {SEASON_PASS_PERKS.map(perk => (
+                  <li
+                    key={perk}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68"
+                  >
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#A4592C]" />
                     <span>{perk}</span>
                   </li>
@@ -287,17 +355,29 @@ export default function ChasingSunsetsTicketing({
               </div>
               <div className="mt-5 flex items-end justify-between gap-4 border-b border-[#C2703E]/12 pb-5">
                 <div>
-                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">VIP Pass</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">Higher-touch entry, cleaner movement, and better positioning inside the room.</p>
+                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">
+                    VIP Pass
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">
+                    Higher-touch entry, cleaner movement, and better positioning
+                    inside the room.
+                  </p>
                 </div>
                 <div className="text-right">
-                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">$249</span>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">VIP Tier</p>
+                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">
+                    $249
+                  </span>
+                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">
+                    VIP Tier
+                  </p>
                 </div>
               </div>
               <ul className="mt-5 space-y-3">
-                {VIP_PASS_PERKS.map((perk) => (
-                  <li key={perk} className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68">
+                {VIP_PASS_PERKS.map(perk => (
+                  <li
+                    key={perk}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68"
+                  >
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#A4592C]" />
                     <span>{perk}</span>
                   </li>
@@ -325,9 +405,13 @@ export default function ChasingSunsetsTicketing({
               <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
                 <Anchor className="h-3.5 w-3.5" /> July 5 Recovery
               </span>
-              <h3 className="mt-4 font-display text-[1.9rem] uppercase leading-[0.92] text-[#2C1810]">Recovery Signal</h3>
+              <h3 className="mt-4 font-display text-[1.9rem] uppercase leading-[0.92] text-[#2C1810]">
+                Recovery Signal
+              </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/64">
-                The follow-up chapter stays intentionally quiet until the primary release window clears. This stays here as season context, not a separate mini-site tease.
+                The follow-up chapter stays intentionally quiet until the
+                primary release window clears. This stays here as season
+                context, not a separate mini-site tease.
               </p>
               <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#C2703E]/18 bg-white/72 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/56">
                 <Lock className="h-3.5 w-3.5" /> Decrypting 06.20.2026

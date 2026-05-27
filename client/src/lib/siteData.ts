@@ -26,7 +26,7 @@ declare global {
 
 function notify() {
   version += 1;
-  listeners.forEach((listener) => listener());
+  listeners.forEach(listener => listener());
 }
 
 function normalizePathname(pathname?: string | null) {
@@ -38,7 +38,7 @@ function normalizePathname(pathname?: string | null) {
 
 function uniqueEvents(events: ScheduledEvent[]) {
   const seen = new Set<string>();
-  return events.filter((event) => {
+  return events.filter(event => {
     if (seen.has(event.id)) return false;
     seen.add(event.id);
     return true;
@@ -103,7 +103,7 @@ export async function ensurePublicSiteData(pathname?: string | null) {
     },
     signal: controller.signal,
   })
-    .then(async (response) => {
+    .then(async response => {
       if (!response.ok) {
         throw new Error(`Failed to load site data for ${normalizedPath}`);
       }
@@ -137,7 +137,11 @@ function getVersionSnapshot() {
 }
 
 export function usePublicSiteDataVersion() {
-  return useSyncExternalStore(subscribe, getVersionSnapshot, getVersionSnapshot);
+  return useSyncExternalStore(
+    subscribe,
+    getVersionSnapshot,
+    getVersionSnapshot
+  );
 }
 
 if (typeof window !== "undefined" && window.__MONOLITH_SITE_DATA__) {

@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("visual regression", () => {
-  test.skip(process.env.VISUAL_TESTS !== "1", "Set VISUAL_TESTS=1 to run visual regression tests.");
+  test.skip(
+    process.env.VISUAL_TESTS !== "1",
+    "Set VISUAL_TESTS=1 to run visual regression tests."
+  );
 
   test.beforeEach(async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -12,7 +15,10 @@ test.describe("visual regression", () => {
 
   async function waitForAppReady(page: import("@playwright/test").Page) {
     // The index.html loader is removed on window load.
-    await page.waitForSelector("#initial-loader", { state: "detached", timeout: 15000 });
+    await page.waitForSelector("#initial-loader", {
+      state: "detached",
+      timeout: 15000,
+    });
   }
 
   test("home hero - desktop", async ({ page }) => {
@@ -73,4 +79,3 @@ test.describe("visual regression", () => {
     });
   });
 });
-

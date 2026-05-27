@@ -29,14 +29,19 @@ export default function CustomCursor() {
         return;
       }
 
-      const textElement = target.closest("[data-cursor-text]") as HTMLElement | null;
-      const magneticElement = target.closest("[data-cursor-magnetic]") as HTMLElement | null;
+      const textElement = target.closest(
+        "[data-cursor-text]"
+      ) as HTMLElement | null;
+      const magneticElement = target.closest(
+        "[data-cursor-magnetic]"
+      ) as HTMLElement | null;
       const interactiveElement = target.closest(
-        'a, button, [role="button"], input, textarea, select, summary, [data-cursor-interactive]',
+        'a, button, [role="button"], input, textarea, select, summary, [data-cursor-interactive]'
       ) as HTMLElement | null;
 
       const nextText = textElement?.getAttribute("data-cursor-text") || "";
-      const isInteractive = !!textElement || !!magneticElement || !!interactiveElement;
+      const isInteractive =
+        !!textElement || !!magneticElement || !!interactiveElement;
 
       setCursorText(nextText);
       setIsHovered(isInteractive);
@@ -73,8 +78,12 @@ export default function CustomCursor() {
       setCursorText("");
     };
 
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerover", handlePointerOver, { passive: true });
+    window.addEventListener("pointermove", handlePointerMove, {
+      passive: true,
+    });
+    window.addEventListener("pointerover", handlePointerOver, {
+      passive: true,
+    });
     window.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointerup", handlePointerUp);
     window.addEventListener("blur", handlePointerLeave);
@@ -111,8 +120,14 @@ export default function CustomCursor() {
         animate={{
           opacity: hasText ? 0.96 : isHovered ? 0.9 : 0.55,
           scale: isClicking ? 0.92 : 1,
-          borderColor: hasText ? "rgba(255,255,255,0.88)" : isHovered ? "rgba(255,255,255,0.42)" : "rgba(255,255,255,0.18)",
-          backgroundColor: hasText ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.04)",
+          borderColor: hasText
+            ? "rgba(255,255,255,0.88)"
+            : isHovered
+              ? "rgba(255,255,255,0.42)"
+              : "rgba(255,255,255,0.18)",
+          backgroundColor: hasText
+            ? "rgba(255,255,255,0.92)"
+            : "rgba(255,255,255,0.04)",
         }}
         transition={{
           scale: { type: "spring", stiffness: 320, damping: 24 },

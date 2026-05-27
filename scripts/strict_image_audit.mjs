@@ -36,9 +36,15 @@ async function run() {
   console.log("Scanning strict references...");
   const refSet = new Set();
 
-  const componentsRefs = await scanReferences(path.join(rootDir, "client", "src", "components"));
-  const pagesRefs = await scanReferences(path.join(rootDir, "client", "src", "pages"));
-  const libRefs = await scanReferences(path.join(rootDir, "client", "src", "lib"));
+  const componentsRefs = await scanReferences(
+    path.join(rootDir, "client", "src", "components")
+  );
+  const pagesRefs = await scanReferences(
+    path.join(rootDir, "client", "src", "pages")
+  );
+  const libRefs = await scanReferences(
+    path.join(rootDir, "client", "src", "lib")
+  );
   const dataRefs = await scanReferences(path.join(rootDir, "server", "data"));
 
   for (const ref of componentsRefs) refSet.add(ref);
@@ -48,20 +54,26 @@ async function run() {
 
   console.log(`Found ${refSet.size} strict image references.`);
 
-  const originalFiles = await fs.readdir(publicImagesDir, { withFileTypes: true });
+  const originalFiles = await fs.readdir(publicImagesDir, {
+    withFileTypes: true,
+  });
   let deletedOriginals = 0;
   let deletedVariants = 0;
 
   for (const entry of originalFiles) {
     if (entry.isDirectory()) continue; // generated or archive
-    
+
     const baseName = entry.name;
     const ext = path.extname(baseName).toLowerCase();
     if (![".png", ".jpg", ".jpeg", ".webp", ".avif"].includes(ext)) continue;
 
     let isUsed = false;
     for (const ref of refSet) {
-      if (ref === baseName || baseName.includes(ref) || ref.includes(baseName)) {
+      if (
+        ref === baseName ||
+        baseName.includes(ref) ||
+        ref.includes(baseName)
+      ) {
         isUsed = true;
         break;
       }
@@ -75,7 +87,9 @@ async function run() {
 
       // Delete its generated variants
       const baseWithoutExt = baseName.replace(ext, "");
-      const generatedFiles = await fs.readdir(path.join(publicImagesDir, "generated"));
+      const generatedFiles = await fs.readdir(
+        path.join(publicImagesDir, "generated")
+      );
       for (const genFile of generatedFiles) {
         if (genFile.startsWith(baseWithoutExt + "-")) {
           await fs.unlink(path.join(publicImagesDir, "generated", genFile));
@@ -85,7 +99,9 @@ async function run() {
     }
   }
 
-  console.log(`Strict audit complete. Deleted ${deletedOriginals} originals and ${deletedVariants} variants.`);
+  console.log(
+    `Strict audit complete. Deleted ${deletedOriginals} originals and ${deletedVariants} variants.`
+  );
 }
 
 run().catch(console.error);

@@ -19,7 +19,7 @@ const SITE_URLS = [
   "/contact",
   "/travel",
   "/ambassadors",
-].map((path) => `${SITE_ORIGIN}${path}`);
+].map(path => `${SITE_ORIGIN}${path}`);
 
 export default async function handler(req: Request, context: Context) {
   // Allow GET (manual trigger) or POST (deploy hook)
@@ -48,19 +48,19 @@ export default async function handler(req: Request, context: Context) {
           submitted: SITE_URLS.length,
           urls: SITE_URLS,
         }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
+        { status: 200, headers: { "Content-Type": "application/json" } }
       );
     }
 
     return new Response(
       JSON.stringify({ ok: false, status, message: "IndexNow API error" }),
-      { status: 502, headers: { "Content-Type": "application/json" } },
+      { status: 502, headers: { "Content-Type": "application/json" } }
     );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ ok: false, message: String(err) }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
+    return new Response(JSON.stringify({ ok: false, message: String(err) }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 

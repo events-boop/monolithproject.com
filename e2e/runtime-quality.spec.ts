@@ -2,9 +2,15 @@ import { expect, test } from "@playwright/test";
 
 const phoneWidths = [320, 360, 390];
 
-async function waitForAppReady(page: import("@playwright/test").Page, pathname = "/") {
+async function waitForAppReady(
+  page: import("@playwright/test").Page,
+  pathname = "/"
+) {
   await page.goto(pathname, { waitUntil: "networkidle" });
-  await page.waitForSelector("#initial-loader", { state: "detached", timeout: 15000 });
+  await page.waitForSelector("#initial-loader", {
+    state: "detached",
+    timeout: 15000,
+  });
   await page.waitForTimeout(800);
 }
 
@@ -17,20 +23,30 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("exact route aliases resolve the intended experiences", async ({ page }) => {
+test("exact route aliases resolve the intended experiences", async ({
+  page,
+}) => {
   await waitForAppReady(page, "/events");
-  await expect(page.getByRole("heading", { name: /upcoming shows/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /upcoming shows/i })
+  ).toBeVisible();
 
   await waitForAppReady(page, "/untold-story");
   await expect(page).toHaveTitle(/Untold Story/i);
-  await expect(page.getByRole("heading", { name: /untold/i }).first()).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /untold/i }).first()
+  ).toBeVisible();
 });
 
-test("chasing sunsets keeps hero, countdown, and pricing aligned to one featured event", async ({ page }) => {
+test("chasing sunsets keeps hero, countdown, and pricing aligned to one featured event", async ({
+  page,
+}) => {
   await waitForAppReady(page, "/chasing-sunsets");
 
   const ids = await page.evaluate(() => ({
-    hero: document.querySelector("#chasing-hero")?.getAttribute("data-featured-event-id"),
+    hero: document
+      .querySelector("#chasing-hero")
+      ?.getAttribute("data-featured-event-id"),
     countdown: document
       .querySelector("[data-countdown-event-id]")
       ?.getAttribute("data-countdown-event-id"),
@@ -45,7 +61,9 @@ test("chasing sunsets keeps hero, countdown, and pricing aligned to one featured
 });
 
 for (const width of phoneWidths) {
-  test(`home hero copy and conversion card stay separated at ${width}px`, async ({ page }) => {
+  test(`home hero copy and conversion card stay separated at ${width}px`, async ({
+    page,
+  }) => {
     await page.setViewportSize({ width, height: 844 });
     await waitForAppReady(page, "/");
 
@@ -75,7 +93,7 @@ for (const width of phoneWidths) {
 
 test("vip route loads without browser console errors", async ({ page }) => {
   const consoleErrors: string[] = [];
-  page.on("console", (message) => {
+  page.on("console", message => {
     if (message.type() === "error") {
       consoleErrors.push(message.text());
     }
@@ -136,7 +154,10 @@ test("mobile shells keep primary tap targets and hero copy above minimum usabili
     return {
       episode: getFontSize("[data-chasing-episode='true']"),
       meta: getFontSize("[data-chasing-meta='true']"),
-      formatLinkHeight: (document.querySelector(".season-anchor-link") as HTMLElement | null)?.getBoundingClientRect().height ?? 0,
+      formatLinkHeight:
+        (
+          document.querySelector(".season-anchor-link") as HTMLElement | null
+        )?.getBoundingClientRect().height ?? 0,
     };
   });
 

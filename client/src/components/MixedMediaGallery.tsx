@@ -42,15 +42,19 @@ export default function MixedMediaGallery({
   const [index, setIndex] = useState(-1);
   const isLightboxOpen = index >= 0;
   const hasMedia = media.length > 0;
-  const mediaCountLabel = media.some((item) => item.kind === "video")
+  const mediaCountLabel = media.some(item => item.kind === "video")
     ? `${media.length} ${media.length === 1 ? "item" : "items"}`
     : `${media.length} ${media.length === 1 ? "photo" : "photos"}`;
 
   const photos = useMemo<GalleryPhoto[]>(() => {
-    return media.map((item) => {
+    return media.map(item => {
       const base =
         item.kind === "video"
-          ? { src: item.poster, width: item.posterWidth, height: item.posterHeight }
+          ? {
+              src: item.poster,
+              width: item.posterWidth,
+              height: item.posterHeight,
+            }
           : { src: item.src, width: item.width, height: item.height };
 
       return {
@@ -119,7 +123,11 @@ export default function MixedMediaGallery({
                     alt={photo.alt}
                     loading="lazy"
                     decoding="async"
-                    sizes={dense ? "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
+                    sizes={
+                      dense
+                        ? "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    }
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.04] ${
                       photo.kind === "video" ? "opacity-90" : ""
                     }`}
@@ -160,7 +168,11 @@ export default function MixedMediaGallery({
 
       {isLightboxOpen && hasMedia ? (
         <Suspense fallback={null}>
-          <GalleryLightbox media={media} index={index} onClose={() => setIndex(-1)} />
+          <GalleryLightbox
+            media={media}
+            index={index}
+            onClose={() => setIndex(-1)}
+          />
         </Suspense>
       ) : null}
     </section>

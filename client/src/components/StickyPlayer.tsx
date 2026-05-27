@@ -39,7 +39,10 @@ export default function StickyPlayer({ track, onClose }: StickyPlayerProps) {
                 scrolling="no"
                 frameBorder="no"
                 allow="autoplay"
-                src={track.embedUrl + "&auto_play=true&show_artwork=false&visual=false"}
+                src={
+                  track.embedUrl +
+                  "&auto_play=true&show_artwork=false&visual=false"
+                }
                 title={track.title}
                 className="w-full opacity-80"
               />

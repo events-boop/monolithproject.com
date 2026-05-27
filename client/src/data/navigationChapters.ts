@@ -5,7 +5,8 @@ export type NavigationChapterId =
   | "untold-story"
   | "artists"
   | "radio"
-  | "guide";
+  | "guide"
+  | "monolith";
 
 export interface NavigationChapterLink {
   label: string;
@@ -144,6 +145,23 @@ export const navigationChapters: NavigationChapter[] = [
     secondaryLinks: [
       { label: "Entry Checklist", href: "/guide#entry" },
       { label: "VIP Access", href: "/vip" },
+    ],
+  },
+  {
+    id: "monolith",
+    label: "The Monolith",
+    eyebrow: "Manifesto",
+    href: "/monolith",
+    tagline: "The overarching collective and digital temple.",
+    description:
+      "Explore the core concept, story, and manifesto behind our movement.",
+    proof: "Our commitment to music-first curation.",
+    image: "/images/hero-monolith.webp",
+    accent: "#E05A3A",
+    ctaLabel: "View Manifesto",
+    secondaryLinks: [
+      { label: "Manifesto", href: "/monolith#manifesto" },
+      { label: "The Story", href: "/monolith#story" },
     ],
   },
 ];

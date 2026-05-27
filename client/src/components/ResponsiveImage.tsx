@@ -1,5 +1,8 @@
 import type { ImgHTMLAttributes } from "react";
-import { buildResponsiveImageSources, type ResponsiveImageSource } from "@/lib/responsiveImagePath";
+import {
+  buildResponsiveImageSources,
+  type ResponsiveImageSource,
+} from "@/lib/responsiveImagePath";
 
 interface ResponsiveImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
@@ -19,7 +22,9 @@ export default function ResponsiveImage({
   src,
   ...props
 }: ResponsiveImageProps) {
-  const imageSources = sources?.length ? sources : buildResponsiveImageSources(src, sizes);
+  const imageSources = sources?.length
+    ? sources
+    : buildResponsiveImageSources(src, sizes);
   const imageLoading = loading ?? (priority ? "eager" : "lazy");
   const imageDecoding = decoding ?? "async";
   const imageFetchPriority = fetchPriority ?? (priority ? "high" : "auto");

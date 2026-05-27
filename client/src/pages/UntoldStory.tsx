@@ -13,7 +13,10 @@ import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
-import { getSeriesExperienceEvent, getEventWindowStatus } from "@/lib/siteExperience";
+import {
+  getSeriesExperienceEvent,
+  getEventWindowStatus,
+} from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 
 const UNTOLD_ANCHORS = [
@@ -25,13 +28,16 @@ const UNTOLD_ANCHORS = [
 
 export default function UntoldStory() {
   usePublicSiteDataVersion();
-  const scheduledEvent = getSeriesExperienceEvent("untold-story", "funnel") ?? null;
+  const scheduledEvent =
+    getSeriesExperienceEvent("untold-story", "funnel") ?? null;
   const showEventSchema =
     scheduledEvent && getEventWindowStatus(scheduledEvent) !== "past";
 
   const schemaData = [
     buildFaqSchema(untoldFaqs),
-    ...(showEventSchema ? [buildScheduledEventSchema(scheduledEvent, "/story")] : [])
+    ...(showEventSchema
+      ? [buildScheduledEventSchema(scheduledEvent, "/story")]
+      : []),
   ];
 
   return (
@@ -48,7 +54,11 @@ export default function UntoldStory() {
 
       <main id="main-content" tabIndex={-1}>
         <UntoldHero event={scheduledEvent} />
-        <SeasonAnchorNav items={UNTOLD_ANCHORS} tone="nocturne" className="-mt-7 mb-5 relative z-30" />
+        <SeasonAnchorNav
+          items={UNTOLD_ANCHORS}
+          tone="nocturne"
+          className="-mt-7 mb-5 relative z-30"
+        />
         <UntoldContent event={scheduledEvent} />
         <UntoldContrast />
 
@@ -62,10 +72,26 @@ export default function UntoldStory() {
               title="THE RECORD"
               accentColor="#8B5CF6"
               images={[
-                { src: "/images/untold-story-moody.webp", alt: "Untold Story S3 Crowd", label: "The Room" },
-                { src: "/images/deron-press.jpg", alt: "Untold Story S3 Artist", label: "The Booth" },
-                { src: "/images/untold-story-hero-post1.webp", alt: "Untold Story S3 Texture", label: "Texture" },
-                { src: "/images/untold-story-juany-deron-v2.webp", alt: "Untold Story S3 Finale", label: "Finale" }
+                {
+                  src: "/images/untold-story-moody.webp",
+                  alt: "Untold Story S3 Crowd",
+                  label: "The Room",
+                },
+                {
+                  src: "/images/deron-press.jpg",
+                  alt: "Untold Story S3 Artist",
+                  label: "The Booth",
+                },
+                {
+                  src: "/images/untold-story-hero-post1.webp",
+                  alt: "Untold Story S3 Texture",
+                  label: "Texture",
+                },
+                {
+                  src: "/images/untold-story-juany-deron-v2.webp",
+                  alt: "Untold Story S3 Finale",
+                  label: "Finale",
+                },
               ]}
             />
           </div>
@@ -73,14 +99,23 @@ export default function UntoldStory() {
 
         {/* Season Records */}
         <span id="archive" className="block scroll-mt-32" aria-hidden="true" />
-        <div id="untold-records" className="scroll-shell-target relative z-20 pt-8 border-t border-white/10">
-           <ArchiveSection />
+        <div
+          id="untold-records"
+          className="scroll-shell-target relative z-20 pt-8 border-t border-white/10"
+        >
+          <ArchiveSection />
         </div>
 
         <JoinSignalSection className="mt-12" />
 
-        <section id="untold-updates" className="scroll-shell-target py-0 relative z-20">
-          <SlimSubscribeStrip title="UNTOLD UPDATES" source="untold_story_strip" />
+        <section
+          id="untold-updates"
+          className="scroll-shell-target py-0 relative z-20"
+        >
+          <SlimSubscribeStrip
+            title="UNTOLD UPDATES"
+            source="untold_story_strip"
+          />
         </section>
       </main>
     </div>

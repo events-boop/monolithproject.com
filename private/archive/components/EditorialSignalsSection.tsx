@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, AudioLines, FileText, LibraryBig, Radar } from "lucide-react";
+import {
+  ArrowUpRight,
+  AudioLines,
+  FileText,
+  LibraryBig,
+  Radar,
+} from "lucide-react";
 import { Link } from "wouter";
 import { CTA_LABELS } from "@/lib/cta";
 
@@ -52,9 +58,18 @@ export default function EditorialSignalsSection() {
       {/* Background Archival Texture */}
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-           <path d="M0 20H100M0 40H100M0 60H100M0 80H100M20 0V100M40 0V100M60 0V100M80 0V100" stroke="white" strokeWidth="0.05" fill="none" />
-         </svg>
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 20H100M0 40H100M0 60H100M0 80H100M20 0V100M40 0V100M60 0V100M80 0V100"
+            stroke="white"
+            strokeWidth="0.05"
+            fill="none"
+          />
+        </svg>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -67,25 +82,33 @@ export default function EditorialSignalsSection() {
               <div className="h-[1px] w-24 bg-white/10" />
             </div>
             <h2 className="font-heavy text-[clamp(2.5rem,7vw,8rem)] leading-[0.85] tracking-tighter uppercase text-white mb-6">
-              <span className="text-white/30 block shrink-0">A project should</span>
+              <span className="text-white/30 block shrink-0">
+                A project should
+              </span>
               <span className="block shrink-0">be easy to</span>
               <span className="block shrink-0">follow.</span>
             </h2>
             <p className="mt-4 max-w-xl text-lg font-light leading-relaxed text-white/50">
-              Articles, radio, and the event archive make it easier to understand who Monolith
-              books, what each series sounds like, and what happened after the night ends.
+              Articles, radio, and the event archive make it easier to
+              understand who Monolith books, what each series sounds like, and
+              what happened after the night ends.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            {["TELEMETRY", "ARCHIVE", "SIGNALS", "MEDIA"].map((signal, i, arr) => (
-              <span
-                key={signal}
-                className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 text-right flex items-center justify-end gap-3"
-              >
-                {signal} <span className={`h-1 w-1 rounded-full ${i === 0 ? "bg-primary animate-pulse" : "bg-white/10"}`} />
-              </span>
-            ))}
+            {["TELEMETRY", "ARCHIVE", "SIGNALS", "MEDIA"].map(
+              (signal, i, arr) => (
+                <span
+                  key={signal}
+                  className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 text-right flex items-center justify-end gap-3"
+                >
+                  {signal}{" "}
+                  <span
+                    className={`h-1 w-1 rounded-full ${i === 0 ? "bg-primary animate-pulse" : "bg-white/10"}`}
+                  />
+                </span>
+              )
+            )}
           </div>
         </div>
 
@@ -93,7 +116,7 @@ export default function EditorialSignalsSection() {
         <div className="grid lg:grid-cols-[1.3fr_1fr] border border-white/10 bg-[#050505] relative">
           {/* Intersection Points */}
           <div className="absolute top-0 left-[1.3fr] bottom-0 w-[1px] bg-white/5 hidden lg:block" />
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -106,7 +129,7 @@ export default function EditorialSignalsSection() {
             >
               {/* Scanline Effect on Hover */}
               <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%]" />
-              
+
               <div className="relative z-10">
                 <div className="flex items-start justify-between gap-4 mb-16">
                   <div className="flex h-16 w-16 items-center justify-center border border-white/10 bg-[#050505] transition-colors group-hover:border-black group-hover:bg-black/5">
@@ -132,11 +155,14 @@ export default function EditorialSignalsSection() {
                   {featured.description}
                 </p>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pt-8 border-t border-white/10 group-hover:border-black/10 transition-colors">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 pt-8 border-t border-white/10 group-hover:border-black/10 transition-colors">
                   <div className="max-w-xs">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">Technical Context</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 group-hover:text-black/40 mb-2">
+                      Technical Context
+                    </p>
                     <p className="text-sm font-light leading-relaxed text-white/60 group-hover:text-black/70">
-                      Clear articles, radio episodes, and recap surfaces make the next event feel connected to the last one.
+                      Clear articles, radio episodes, and recap surfaces make
+                      the next event feel connected to the last one.
                     </p>
                   </div>
                   <div className="inline-flex items-center justify-center h-14 w-14 border border-white/10 group-hover:border-black group-hover:bg-black transition-colors rounded-none shrink-0">
@@ -170,12 +196,14 @@ export default function EditorialSignalsSection() {
                   >
                     {/* Scanline Effect on Hover */}
                     <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%]" />
-                    
+
                     <div className="relative z-10 flex items-start justify-between gap-4 mb-10">
                       <div>
                         <div className="flex items-center gap-2 mb-4">
-                           <span className="font-mono text-[9px] text-primary/60 tracking-[0.4em]">SIGNAL // 0{index + 2}</span>
-                           <div className="h-[1px] w-8 bg-white/5 group-hover:bg-primary/20 transition-colors" />
+                          <span className="font-mono text-[9px] text-primary/60 tracking-[0.4em]">
+                            SIGNAL // 0{index + 2}
+                          </span>
+                          <div className="h-[1px] w-8 bg-white/5 group-hover:bg-primary/20 transition-colors" />
                         </div>
                         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30 group-hover:text-white/60 transition-colors">
                           {module.eyebrow}

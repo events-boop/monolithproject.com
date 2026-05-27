@@ -1,5 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Calendar, Camera, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  Camera,
+  MapPin,
+} from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
@@ -77,9 +83,18 @@ const CHASING_ANCHORS = [
 ];
 
 const CHASING_ARCHIVE_ENTRIES = [
-  { ...archiveCollectionsBySlug["chasing-sunsets-season-iii"], href: "/chasing-sunsets/season-iii" },
-  { ...archiveCollectionsBySlug["chasing-sunsets-season-ii"], href: "/chasing-sunsets/season-ii" },
-  { ...archiveCollectionsBySlug["chasing-sunsets-season-i"], href: "/chasing-sunsets/season-i" },
+  {
+    ...archiveCollectionsBySlug["chasing-sunsets-season-iii"],
+    href: "/chasing-sunsets/season-iii",
+  },
+  {
+    ...archiveCollectionsBySlug["chasing-sunsets-season-ii"],
+    href: "/chasing-sunsets/season-ii",
+  },
+  {
+    ...archiveCollectionsBySlug["chasing-sunsets-season-i"],
+    href: "/chasing-sunsets/season-i",
+  },
 ];
 
 function getStatusLabel(status: string) {
@@ -99,12 +114,17 @@ export default function ChasingSunsets() {
   const [activeTab, setActiveTab] = useState<"live" | "residents">("live");
   const [faqOpen, setFaqOpen] = useState(false);
   const chasingEvents = getSeriesEvents("chasing-sunsets");
-  const featuredChasingEvent = getSeriesExperienceEvent("chasing-sunsets", "hero");
+  const featuredChasingEvent = getSeriesExperienceEvent(
+    "chasing-sunsets",
+    "hero"
+  );
   const chasingFunnelEvent =
-    (featuredChasingEvent?.activeFunnels?.length ? featuredChasingEvent : undefined) ??
-    chasingEvents.find((event) => event.activeFunnels?.length);
+    (featuredChasingEvent?.activeFunnels?.length
+      ? featuredChasingEvent
+      : undefined) ?? chasingEvents.find(event => event.activeFunnels?.length);
   const featuredArchive = CHASING_ARCHIVE_ENTRIES[0];
-  const primarySeasonHref = getPrimaryTicketUrl(featuredChasingEvent) || "/schedule";
+  const primarySeasonHref =
+    getPrimaryTicketUrl(featuredChasingEvent) || "/schedule";
   const primarySeasonExternal = isExternalUrl(primarySeasonHref);
 
   const chasingFaqs = [
@@ -169,7 +189,9 @@ export default function ChasingSunsets() {
                 data-chasing-episode="true"
                 className="mb-3 block font-mono text-xs uppercase tracking-[0.22em] text-white/90 sm:mb-5 sm:text-sm"
               >
-                {featuredChasingEvent ? featuredChasingEvent.episode : "Series 01"}
+                {featuredChasingEvent
+                  ? featuredChasingEvent.episode
+                  : "Series 01"}
               </span>
               <h1
                 id="chasing-hero-title"
@@ -195,7 +217,8 @@ export default function ChasingSunsets() {
 
               <div className="max-w-2xl">
                 <p className="mb-4 text-base leading-relaxed text-white/90 sm:text-lg">
-                  The titled summer route for open-air sunset and night sessions built for movement, warmth, and return.
+                  The titled summer route for open-air sunset and night sessions
+                  built for movement, warmth, and return.
                 </p>
                 {featuredChasingEvent ? (
                   <div
@@ -212,16 +235,31 @@ export default function ChasingSunsets() {
               </div>
 
               <div className="mt-8 flex flex-col items-center gap-6 sm:flex-row">
-                <ConversionCTA event={featuredChasingEvent} size="lg" showUrgency={true} />
+                <ConversionCTA
+                  event={featuredChasingEvent}
+                  size="lg"
+                  showUrgency={true}
+                />
                 <MagneticButton strength={0.22}>
-                  <a href="#chasing-concept" className="btn-pill-secondary group">
+                  <a
+                    href="#chasing-concept"
+                    className="btn-pill-secondary group"
+                  >
                     Explore Series
-                    <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight
+                      size={14}
+                      className="ml-2 transition-transform group-hover:translate-x-1"
+                    />
                   </a>
                 </MagneticButton>
               </div>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                {["Open Air", "Melodic + Afro House", "Good Crowd", "Rooftop Series"].map((pill) => (
+                {[
+                  "Open Air",
+                  "Melodic + Afro House",
+                  "Good Crowd",
+                  "Rooftop Series",
+                ].map(pill => (
                   <span
                     key={pill}
                     className="rounded-full border border-white/40 bg-black/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-white/90 sm:text-xs"
@@ -234,8 +272,14 @@ export default function ChasingSunsets() {
           </div>
         </section>
 
-        <SeasonAnchorNav items={CHASING_ANCHORS} tone="warm" className="-mt-7 mb-5" />
-        {featuredChasingEvent ? <EventCountdown event={featuredChasingEvent} /> : null}
+        <SeasonAnchorNav
+          items={CHASING_ANCHORS}
+          tone="warm"
+          className="-mt-7 mb-5"
+        />
+        {featuredChasingEvent ? (
+          <EventCountdown event={featuredChasingEvent} />
+        ) : null}
 
         <Section
           width="wide"
@@ -250,22 +294,32 @@ export default function ChasingSunsets() {
               viewport={{ once: true }}
               className="sunset-lively-card sunset-lively-card-feature lg:col-span-6 p-6 backdrop-blur-sm md:p-8"
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.34em] sunset-accent">Next Chapter</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] sunset-accent">
+                Next Chapter
+              </span>
               <h2 className="mt-4 font-display text-[clamp(2.6rem,4.45vw,4.15rem)] uppercase leading-[0.88] sunset-text">
-                {featuredChasingEvent?.headline || featuredChasingEvent?.title || "Season 2026"}
+                {featuredChasingEvent?.headline ||
+                  featuredChasingEvent?.title ||
+                  "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
-                Chasing Sun(Sets) is the series title. Each date below is a chapter in the same golden-hour route: release, venue, ticket structure, and archive proof stay connected.
+                Chasing Sun(Sets) is the series title. Each date below is a
+                chapter in the same golden-hour route: release, venue, ticket
+                structure, and archive proof stay connected.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <span className="rounded-full border border-[#14B8A6]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
                   {featuredChasingEvent?.date || "Date TBA"}
                 </span>
                 <span className="rounded-full border border-[#14B8A6]/22 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
-                  {featuredChasingEvent ? getEventVenueLabel(featuredChasingEvent) : "Chicago"}
+                  {featuredChasingEvent
+                    ? getEventVenueLabel(featuredChasingEvent)
+                    : "Chicago"}
                 </span>
                 <span className="sunset-coral-chip rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em]">
-                  {featuredChasingEvent ? getStatusLabel(featuredChasingEvent.status) : "Season Tracking"}
+                  {featuredChasingEvent
+                    ? getStatusLabel(featuredChasingEvent.status)
+                    : "Season Tracking"}
                 </span>
               </div>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -276,16 +330,26 @@ export default function ChasingSunsets() {
                     rel="noopener noreferrer"
                     className="btn-pill-sunsets inline-flex items-center justify-center"
                   >
-                    {isTicketOnSale(featuredChasingEvent) ? CTA_LABELS.tickets : "Open Featured Chapter"}
+                    {isTicketOnSale(featuredChasingEvent)
+                      ? CTA_LABELS.tickets
+                      : "Open Featured Chapter"}
                     <ArrowUpRight className="ml-2 h-4 w-4" />
                   </a>
                 ) : (
-                  <Link href={primarySeasonHref} className="btn-pill-sunsets inline-flex items-center justify-center">
-                    {isTicketOnSale(featuredChasingEvent) ? CTA_LABELS.tickets : "Open Featured Chapter"}
+                  <Link
+                    href={primarySeasonHref}
+                    className="btn-pill-sunsets inline-flex items-center justify-center"
+                  >
+                    {isTicketOnSale(featuredChasingEvent)
+                      ? CTA_LABELS.tickets
+                      : "Open Featured Chapter"}
                     <ArrowUpRight className="ml-2 h-4 w-4" />
                   </Link>
                 )}
-                <a href="#chasing-tickets" className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center">
+                <a
+                  href="#chasing-tickets"
+                  className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center"
+                >
                   Season Release Structure
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
@@ -322,11 +386,15 @@ export default function ChasingSunsets() {
                 transition={{ delay: index * 0.06 }}
                 className="sunset-lively-card lg:col-span-2 p-5"
               >
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">{card.kicker}</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">
+                  {card.kicker}
+                </span>
                 <h3 className="mt-4 font-display text-[clamp(1.45rem,1.45vw,1.9rem)] uppercase leading-[0.92] sunset-text">
                   {card.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed sunset-text-60">{card.body}</p>
+                <p className="mt-3 text-sm leading-relaxed sunset-text-60">
+                  {card.body}
+                </p>
                 {card.external ? (
                   <a
                     href={card.href}
@@ -360,12 +428,20 @@ export default function ChasingSunsets() {
           bg="bg-[#FBF5ED]"
         >
           <div className="grid items-start gap-12 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <span className="font-mono text-xs uppercase tracking-[0.3em] sunset-accent block mb-4">The Format</span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.3em] sunset-accent block mb-4">
+                The Format
+              </span>
               <h2 className="font-display text-[clamp(3rem,6vw,6rem)] leading-[0.86] sunset-text uppercase">
                 Sunset To
                 <br />
-                <span className="font-serif italic normal-case text-[#A4592C]">city glow</span>
+                <span className="font-serif italic normal-case text-[#A4592C]">
+                  city glow
+                </span>
               </h2>
             </motion.div>
 
@@ -378,15 +454,22 @@ export default function ChasingSunsets() {
             >
               <article className="border border-[#C2703E]/16 bg-white/72 p-6 shadow-[0_20px_48px_rgba(44,24,16,0.06)] md:p-8">
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  Chicago&apos;s open-air house music gathering. Every show starts in the last light, builds with the room, and reaches full pressure only after the skyline has already changed.
+                  Chicago&apos;s open-air house music gathering. Every show
+                  starts in the last light, builds with the room, and reaches
+                  full pressure only after the skyline has already changed.
                 </p>
                 <p className="mt-5 leading-relaxed sunset-text-70">
-                  Melodic house, afro house, and organic movement in rooftops, gardens, and shoreline rooms. No fake beach branding. No dark-club energy too early. Just properly paced summer programming.
+                  Melodic house, afro house, and organic movement in rooftops,
+                  gardens, and shoreline rooms. No fake beach branding. No
+                  dark-club energy too early. Just properly paced summer
+                  programming.
                 </p>
               </article>
 
               <article className="border border-[#14B8A6]/24 bg-[linear-gradient(135deg,rgba(20,184,166,0.12),rgba(255,255,255,0.9)_52%,rgba(139,92,246,0.08))] p-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#174F52]">Season Logic</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#174F52]">
+                  Season Logic
+                </span>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
                   <li>Next date is visible first.</li>
                   <li>Archive proof stays one section away.</li>
@@ -407,7 +490,10 @@ export default function ChasingSunsets() {
           data-featured-event-id={featuredChasingEvent?.id}
           className="scroll-shell-target"
         >
-          <ChasingSunsetsTicketing featuredEvent={featuredChasingEvent} seasonEvents={chasingEvents} />
+          <ChasingSunsetsTicketing
+            featuredEvent={featuredChasingEvent}
+            seasonEvents={chasingEvents}
+          />
         </div>
 
         <section className="relative z-20 border-t border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(251,245,237,0.98),rgba(244,233,214,0.94))] px-6 py-24">
@@ -421,10 +507,26 @@ export default function ChasingSunsets() {
               description="The latest visual cut from the shoreline run. Proof of crowd, booth, horizon, and the final push into night."
               accentColor="#14B8A6"
               images={[
-                { src: "/images/archive/chasing-sunsets/css-s3-1.jpg", alt: "Chasing SunSets Shoreline", label: "Open Air" },
-                { src: "/images/archive/chasing-sunsets/css-s3-4.jpg", alt: "Chasing SunSets Booth", label: "The Booth" },
-                { src: "/images/archive/chasing-sunsets/css-s3-7.jpg", alt: "Chasing SunSets Vibe", label: "Atmosphere" },
-                { src: "/images/archive/chasing-sunsets/css-s3-9.jpg", alt: "Chasing SunSets Finale", label: "Finale" },
+                {
+                  src: "/images/archive/chasing-sunsets/css-s3-1.jpg",
+                  alt: "Chasing SunSets Shoreline",
+                  label: "Open Air",
+                },
+                {
+                  src: "/images/archive/chasing-sunsets/css-s3-4.jpg",
+                  alt: "Chasing SunSets Booth",
+                  label: "The Booth",
+                },
+                {
+                  src: "/images/archive/chasing-sunsets/css-s3-7.jpg",
+                  alt: "Chasing SunSets Vibe",
+                  label: "Atmosphere",
+                },
+                {
+                  src: "/images/archive/chasing-sunsets/css-s3-9.jpg",
+                  alt: "Chasing SunSets Finale",
+                  label: "Finale",
+                },
               ]}
             />
           </div>
@@ -440,13 +542,21 @@ export default function ChasingSunsets() {
         >
           <div className="flex flex-col gap-6 border-b border-[#C2703E]/14 pb-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#A4592C]">Season Records</span>
-              <h2 className="section-display-title-compact mt-3 max-w-[8ch] sunset-text">SUMMER ARCHIVE</h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-[#A4592C]">
+                Season Records
+              </span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] sunset-text">
+                SUMMER ARCHIVE
+              </h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed sunset-text-60 md:text-base">
-                Chasing-only galleries, newest first. The archive now reads like a continuing season deck instead of a mixed Monolith shelf.
+                Chasing-only galleries, newest first. The archive now reads like
+                a continuing season deck instead of a mixed Monolith shelf.
               </p>
             </div>
-            <Link href="/archive" className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center self-start md:self-auto">
+            <Link
+              href="/archive"
+              className="btn-pill-outline btn-pill-outline-sunsets-light inline-flex items-center justify-center self-start md:self-auto"
+            >
               View Full Archive
               <ArrowUpRight className="ml-2 h-4 w-4" />
             </Link>
@@ -484,11 +594,15 @@ export default function ChasingSunsets() {
                     </div>
                   </div>
                   <div className="p-5 md:p-6">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">{entry.subtitle}</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                      {entry.subtitle}
+                    </p>
                     <h3 className="mt-3 font-display text-[clamp(2rem,3vw,2.8rem)] uppercase leading-[0.92] sunset-text">
                       {entry.title}
                     </h3>
-                    <p className="mt-4 text-sm leading-relaxed sunset-text-60 md:text-base">{entry.description}</p>
+                    <p className="mt-4 text-sm leading-relaxed sunset-text-60 md:text-base">
+                      {entry.description}
+                    </p>
                     <div className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] sunset-text transition-colors group-hover:text-[#A4592C]">
                       Open Gallery
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -532,15 +646,18 @@ export default function ChasingSunsets() {
                 RESIDENT DJS
               </button>
             </div>
-            <span className="font-mono text-xs tracking-widest sunset-accent">SEASON 2026</span>
+            <span className="font-mono text-xs tracking-widest sunset-accent">
+              SEASON 2026
+            </span>
           </div>
 
           {activeTab === "live" ? (
             <div className="space-y-4">
               {chasingEvents.length > 0 ? (
-                chasingEvents.map((event) => {
+                chasingEvents.map(event => {
                   const [month, day] = event.date.replace(",", "").split(" ");
-                  const eventLabel = event.headline || `${event.title} · ${event.episode}`;
+                  const eventLabel =
+                    event.headline || `${event.title} · ${event.episode}`;
 
                   return (
                     <div
@@ -553,7 +670,9 @@ export default function ChasingSunsets() {
                             <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#A4592C]">
                               {month.substring(0, 3).toUpperCase()}
                             </span>
-                            <span className="font-display text-xl sunset-text">{day}</span>
+                            <span className="font-display text-xl sunset-text">
+                              {day}
+                            </span>
                           </div>
                           <div>
                             <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#A4592C]">
@@ -564,10 +683,15 @@ export default function ChasingSunsets() {
                             </h3>
                             <div className="flex flex-wrap gap-4 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-60">
                               <span className="flex items-center gap-1.5">
-                                <MapPin size={12} className="text-[#A4592C]" /> {getEventVenueLabel(event)}
+                                <MapPin size={12} className="text-[#A4592C]" />{" "}
+                                {getEventVenueLabel(event)}
                               </span>
                               <span className="flex items-center gap-1.5">
-                                <Calendar size={12} className="text-[#A4592C]" /> {event.time}
+                                <Calendar
+                                  size={12}
+                                  className="text-[#A4592C]"
+                                />{" "}
+                                {event.time}
                               </span>
                               <span className="sunset-teal-chip rounded-full border px-3 py-1 text-[9px] font-black tracking-[0.2em]">
                                 {getStatusLabel(event.status)}
@@ -578,7 +702,8 @@ export default function ChasingSunsets() {
                         <div className="w-full lg:w-auto">
                           {isTicketOnSale(event) ? (
                             (() => {
-                              const ticketHref = getPrimaryTicketUrl(event) || "/tickets";
+                              const ticketHref =
+                                getPrimaryTicketUrl(event) || "/tickets";
                               const ticketExternal = isExternalUrl(ticketHref);
 
                               return ticketExternal ? (
@@ -588,18 +713,24 @@ export default function ChasingSunsets() {
                                   rel="noopener noreferrer"
                                   className="btn-pill-sunsets btn-pill-compact w-full justify-center"
                                 >
-                                  {CTA_LABELS.tickets} <ArrowUpRight size={14} />
+                                  {CTA_LABELS.tickets}{" "}
+                                  <ArrowUpRight size={14} />
                                 </a>
                               ) : (
-                                <Link href={ticketHref} className="btn-pill-sunsets btn-pill-compact w-full justify-center">
-                                  {CTA_LABELS.tickets} <ArrowUpRight size={14} />
+                                <Link
+                                  href={ticketHref}
+                                  className="btn-pill-sunsets btn-pill-compact w-full justify-center"
+                                >
+                                  {CTA_LABELS.tickets}{" "}
+                                  <ArrowUpRight size={14} />
                                 </Link>
                               );
                             })()
                           ) : (
                             <Link href="/newsletter" asChild>
                               <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact w-full justify-center">
-                                {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
+                                {CTA_LABELS.innerCircle}{" "}
+                                <ArrowUpRight size={14} />
                               </a>
                             </Link>
                           )}
@@ -610,10 +741,15 @@ export default function ChasingSunsets() {
                 })
               ) : (
                 <div className="rounded-[1.75rem] border border-[#C2703E]/16 bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,247,236,0.72))] p-10 text-center shadow-[0_20px_48px_rgba(44,24,16,0.06)]">
-                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">Season 2026</p>
-                  <h3 className="mb-4 font-display text-3xl sunset-text">Season Dates Incoming</h3>
+                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">
+                    Season 2026
+                  </p>
+                  <h3 className="mb-4 font-display text-3xl sunset-text">
+                    Season Dates Incoming
+                  </h3>
                   <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed sunset-text-70">
-                    The next open-air dates are being finalized. Join the newsletter to hear about them before the public release.
+                    The next open-air dates are being finalized. Join the
+                    newsletter to hear about them before the public release.
                   </p>
                   <Link href="/newsletter" asChild>
                     <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14B8A6]/50">
@@ -637,20 +773,32 @@ export default function ChasingSunsets() {
         >
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
             <div>
-              <span className="font-mono text-xs uppercase tracking-[0.3em] sunset-accent block mb-4">For The Selectors</span>
+              <span className="font-mono text-xs uppercase tracking-[0.3em] sunset-accent block mb-4">
+                For The Selectors
+              </span>
               <h2 className="font-display text-[clamp(3rem,6vw,6rem)] uppercase leading-[0.88] sunset-text">
-                SUBMIT YOUR <span className="font-serif italic normal-case text-[#A4592C]">set</span>
+                SUBMIT YOUR{" "}
+                <span className="font-serif italic normal-case text-[#A4592C]">
+                  set
+                </span>
               </h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed sunset-text-80">
-                Chasing Sun(Sets) is built for golden-hour pacing. If your mix fits melodic, organic, or afro house in an open-air setting, send it through.
+                Chasing Sun(Sets) is built for golden-hour pacing. If your mix
+                fits melodic, organic, or afro house in an open-air setting,
+                send it through.
               </p>
             </div>
             <div className="border border-[#C2703E]/16 bg-white/72 p-6 shadow-[0_18px_44px_rgba(44,24,16,0.06)] md:p-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">What Helps</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
+                What Helps
+              </p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
                 <li>Share a mix that already sounds right at sunset.</li>
                 <li>Include where you have played and what rooms fit you.</li>
-                <li>Keep the pacing patient. This series is not built for all-peak-all-night energy.</li>
+                <li>
+                  Keep the pacing patient. This series is not built for
+                  all-peak-all-night energy.
+                </li>
               </ul>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <MagneticButton strength={0.4}>
@@ -658,7 +806,8 @@ export default function ChasingSunsets() {
                     href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Submission"
                     className="btn-pill-sunsets group inline-flex items-center justify-center"
                   >
-                    Submit A Mix <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    Submit A Mix{" "}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </MagneticButton>
                 <a
@@ -684,10 +833,15 @@ export default function ChasingSunsets() {
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#A4592C]">House Rules</span>
-              <h2 className="section-display-title-compact mt-3 max-w-[8ch] sunset-text">FAQ / ACCESS</h2>
+              <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#A4592C]">
+                House Rules
+              </span>
+              <h2 className="section-display-title-compact mt-3 max-w-[8ch] sunset-text">
+                FAQ / ACCESS
+              </h2>
               <p className="mt-4 max-w-xl text-sm leading-relaxed sunset-text-60 md:text-base">
-                The route closes with the practical layer: venue logic, arrival, tickets, and what kind of room this actually is.
+                The route closes with the practical layer: venue logic, arrival,
+                tickets, and what kind of room this actually is.
               </p>
             </div>
 
@@ -700,9 +854,13 @@ export default function ChasingSunsets() {
                   Frequently Asked Questions
                 </span>
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C2703E]/18 bg-[#F6E7D1] transition-transform duration-500 group-hover:scale-110">
-                  <div className={`relative h-4 w-4 origin-center transition-transform duration-500 ${faqOpen ? "rotate-180" : "rotate-0"}`}>
+                  <div
+                    className={`relative h-4 w-4 origin-center transition-transform duration-500 ${faqOpen ? "rotate-180" : "rotate-0"}`}
+                  >
                     <span className="absolute left-0 top-1/2 h-[2px] w-4 -translate-y-1/2 bg-[#C2703E]" />
-                    <span className={`absolute left-1/2 top-0 h-4 w-[2px] -translate-x-1/2 bg-[#C2703E] transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
+                    <span
+                      className={`absolute left-1/2 top-0 h-4 w-[2px] -translate-x-1/2 bg-[#C2703E] transition-transform duration-500 ${faqOpen ? "rotate-90 scale-0" : "rotate-0 scale-100"}`}
+                    />
                   </div>
                 </span>
               </button>
@@ -721,7 +879,10 @@ export default function ChasingSunsets() {
                         <motion.details
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.08 + idx * 0.04, duration: 0.35 }}
+                          transition={{
+                            delay: 0.08 + idx * 0.04,
+                            duration: 0.35,
+                          }}
                           key={question}
                           className="group border border-[#C2703E]/14 bg-white/72 px-6 py-5 shadow-[0_14px_34px_rgba(44,24,16,0.05)]"
                         >

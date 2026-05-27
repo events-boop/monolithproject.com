@@ -8,7 +8,10 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 
 const apiHost = process.env.API_HOST || "127.0.0.1";
-const apiPort = Number.parseInt(process.env.API_PORT || process.env.PORT || "5001", 10);
+const apiPort = Number.parseInt(
+  process.env.API_PORT || process.env.PORT || "5001",
+  10
+);
 const apiTarget = `http://${apiHost}:${apiPort}`;
 const viteBin = path.join(rootDir, "node_modules", "vite", "bin", "vite.js");
 
@@ -16,7 +19,7 @@ const children = new Set();
 let shuttingDown = false;
 
 function isPortOpen(host, port) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const socket = net.connect({ host, port });
     socket.once("connect", () => {
       socket.end();
@@ -35,7 +38,7 @@ async function waitForPort(host, port, timeoutMs = 15_000) {
 
   while (Date.now() < deadline) {
     if (await isPortOpen(host, port)) return;
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    await new Promise(resolve => setTimeout(resolve, 150));
   }
 
   throw new Error(`Timed out waiting for ${host}:${port}`);
@@ -80,21 +83,28 @@ process.once("SIGTERM", () => {
 });
 
 if (!Number.isFinite(apiPort)) {
-  throw new Error(`Invalid API port: ${process.env.API_PORT || process.env.PORT}`);
+  throw new Error(
+    `Invalid API port: ${process.env.API_PORT || process.env.PORT}`
+  );
 }
 
 if (await isPortOpen(apiHost, apiPort)) {
   console.log(`[dev] Reusing API server at ${apiTarget}`);
 } else {
   console.log(`[dev] Starting API server at ${apiTarget}`);
-  spawnService("api", process.execPath, ["--import", "tsx/esm", path.join(rootDir, "server/index.ts")], {
-    env: {
-      ...process.env,
-      NODE_ENV: process.env.NODE_ENV || "development",
-      HOST: apiHost,
-      PORT: String(apiPort),
-    },
-  });
+  spawnService(
+    "api",
+    process.execPath,
+    ["--import", "tsx/esm", path.join(rootDir, "server/index.ts")],
+    {
+      env: {
+        ...process.env,
+        NODE_ENV: process.env.NODE_ENV || "development",
+        HOST: apiHost,
+        PORT: String(apiPort),
+      },
+    }
+  );
   await waitForPort(apiHost, apiPort);
 }
 

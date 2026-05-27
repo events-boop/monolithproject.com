@@ -12,14 +12,14 @@ export default function SmoothScroll() {
     if (!shouldEnableSmoothScroll()) return;
 
     const lenis = new Lenis({
-        duration: 0.95,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 1,
-        infinite: false,
+      duration: 0.95,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+      infinite: false,
     });
 
     lenisRef.current = lenis;
@@ -47,9 +47,9 @@ export default function SmoothScroll() {
     }
 
     if (lenisRef.current) {
-        lenisRef.current.scrollTo(0, { immediate: true });
+      lenisRef.current.scrollTo(0, { immediate: true });
     } else {
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }
   }, [location]);
 

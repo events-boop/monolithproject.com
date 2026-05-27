@@ -19,7 +19,17 @@ interface EntityBoostStripProps {
   hideMeta?: boolean;
 }
 
-const toneClasses: Record<Tone, { shell: string; title: string; body: string; line: string; link: string; cta: string }> = {
+const toneClasses: Record<
+  Tone,
+  {
+    shell: string;
+    title: string;
+    body: string;
+    line: string;
+    link: string;
+    cta: string;
+  }
+> = {
   dark: {
     shell: "luxe-surface-dark",
     title: "text-white",
@@ -65,21 +75,31 @@ export default function EntityBoostStrip({
   const ui = toneClasses[tone];
   const intentPrimary: Record<Intent, SmartAction> = {
     default: { label: CTA_LABELS.radioHub, href: "/radio" },
-    "watch-recap": { label: "Watch Recap", href: "/chasing-sunsets#chasing-july-2025-recap" },
-    "listen-episode": { label: CTA_LABELS.listenNow, href: episodeHref || "/radio" },
+    "watch-recap": {
+      label: "Watch Recap",
+      href: "/chasing-sunsets#chasing-july-2025-recap",
+    },
+    "listen-episode": {
+      label: CTA_LABELS.listenNow,
+      href: episodeHref || "/radio",
+    },
     tickets: { label: CTA_LABELS.tickets, href: "/tickets" },
   };
   const intentSecondary: Record<Intent, SmartAction> = {
     default: { label: CTA_LABELS.tickets, href: "/tickets" },
     "watch-recap": { label: CTA_LABELS.tickets, href: "/tickets" },
     "listen-episode": { label: CTA_LABELS.radioHub, href: "/radio" },
-    tickets: { label: "Watch Recap", href: "/chasing-sunsets#chasing-july-2025-recap" },
+    tickets: {
+      label: "Watch Recap",
+      href: "/chasing-sunsets#chasing-july-2025-recap",
+    },
   };
 
   const primaryAction = intentPrimary[intent];
   const secondaryAction = intentSecondary[intent];
   const secondaryActions: SmartAction[] =
-    secondaryAction.label === primaryAction.label && secondaryAction.href === primaryAction.href
+    secondaryAction.label === primaryAction.label &&
+    secondaryAction.href === primaryAction.href
       ? []
       : [secondaryAction];
   const factLinkClass =
@@ -87,7 +107,11 @@ export default function EntityBoostStrip({
       ? "btn-inline-pill btn-inline-pill-dark"
       : "btn-inline-pill btn-inline-pill-sunsets";
 
-  const renderAction = (action: SmartAction, className: string, withArrow = false) => {
+  const renderAction = (
+    action: SmartAction,
+    className: string,
+    withArrow = false
+  ) => {
     const isExternal = /^https?:\/\//i.test(action.href);
     const isAnchor = action.href.startsWith("#") || action.href.includes("#");
     const content = (
@@ -112,7 +136,11 @@ export default function EntityBoostStrip({
     }
 
     return (
-      <Link key={`${action.label}-${action.href}`} href={action.href} className={className}>
+      <Link
+        key={`${action.label}-${action.href}`}
+        href={action.href}
+        className={className}
+      >
         {content}
       </Link>
     );
@@ -120,18 +148,29 @@ export default function EntityBoostStrip({
 
   return (
     <section className={`px-4 sm:px-6 ${className}`}>
-      <div className={`container layout-default rounded-2xl p-5 sm:p-6 md:p-8 lift-hover ${ui.shell}`}>
+      <div
+        className={`container layout-default rounded-2xl p-5 sm:p-6 md:p-8 lift-hover ${ui.shell}`}
+      >
         {!hideMeta && (
           <>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-3">{contextLabel}</p>
-            <h2 className={`font-display text-2xl md:text-3xl uppercase mb-3 ${ui.title}`}>Brand Defense Stack</h2>
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
+              {contextLabel}
+            </p>
+            <h2
+              className={`font-display text-2xl md:text-3xl uppercase mb-3 ${ui.title}`}
+            >
+              Brand Defense Stack
+            </h2>
             <p className={`text-sm md:text-base mb-5 read-width ${ui.body}`}>
-              Keep the entity graph explicit across pages with consistent identity links and next actions.
+              Keep the entity graph explicit across pages with consistent
+              identity links and next actions.
             </p>
           </>
         )}
 
-        <div className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}>
+        <div
+          className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}
+        >
           <Link href="/chasing-sunsets-facts" className={factLinkClass}>
             Chasing Sun(Sets) Facts
           </Link>
@@ -144,8 +183,14 @@ export default function EntityBoostStrip({
         </div>
 
         <div className="cta-stack">
-          {renderAction(primaryAction, "btn-pill-monolith w-full sm:w-auto", true)}
-          {secondaryActions.map((action) => renderAction(action, `${ui.cta} w-full sm:w-auto`))}
+          {renderAction(
+            primaryAction,
+            "btn-pill-monolith w-full sm:w-auto",
+            true
+          )}
+          {secondaryActions.map(action =>
+            renderAction(action, `${ui.cta} w-full sm:w-auto`)
+          )}
         </div>
       </div>
     </section>

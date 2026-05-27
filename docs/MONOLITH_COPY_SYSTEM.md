@@ -427,18 +427,18 @@ Use the same narrative order across the site:
 
 These are the priority pages to rewrite first.
 
-| Page | Route | Main Job | Primary Audience | Primary CTA |
-| --- | --- | --- | --- | --- |
-| Home | `/` | Define the world and route people correctly | First-time and returning guests | Tickets / Schedule / Explore |
-| Tickets | `/tickets` | Convert event intent into ticket action | Ready-to-buy guests | Buy tickets |
-| Chasing Sun(Sets) | `/chasing-sunsets` | Sell the series identity | Series-curious guest | Explore / Tickets / Join |
-| Untold Story | `/story` | Sell the series identity and tone | Series-curious guest | Explore / Tickets / Join |
-| Schedule | `/schedule` | Make active and upcoming events legible | All event-seeking users | Open event / Buy tickets |
-| About | `/about` | Explain Monolith as a brand | Curious guest / press / partner | Explore world / contact |
-| Insights | `/insights` | Extend editorial authority | Returning guests / press | Open archive / radio / facts |
-| Partners | `/partners` | Establish trust and collaboration value | Partner / sponsor / venue | Inquire / sponsor access |
-| Booking | `/booking` | Convert collaboration demand | Artist / manager / brand / venue | Submit inquiry |
-| Newsletter | `/newsletter` | Convert curiosity into retention | Interested guests | Join inner circle |
+| Page              | Route              | Main Job                                    | Primary Audience                 | Primary CTA                  |
+| ----------------- | ------------------ | ------------------------------------------- | -------------------------------- | ---------------------------- |
+| Home              | `/`                | Define the world and route people correctly | First-time and returning guests  | Tickets / Schedule / Explore |
+| Tickets           | `/tickets`         | Convert event intent into ticket action     | Ready-to-buy guests              | Buy tickets                  |
+| Chasing Sun(Sets) | `/chasing-sunsets` | Sell the series identity                    | Series-curious guest             | Explore / Tickets / Join     |
+| Untold Story      | `/story`           | Sell the series identity and tone           | Series-curious guest             | Explore / Tickets / Join     |
+| Schedule          | `/schedule`        | Make active and upcoming events legible     | All event-seeking users          | Open event / Buy tickets     |
+| About             | `/about`           | Explain Monolith as a brand                 | Curious guest / press / partner  | Explore world / contact      |
+| Insights          | `/insights`        | Extend editorial authority                  | Returning guests / press         | Open archive / radio / facts |
+| Partners          | `/partners`        | Establish trust and collaboration value     | Partner / sponsor / venue        | Inquire / sponsor access     |
+| Booking           | `/booking`         | Convert collaboration demand                | Artist / manager / brand / venue | Submit inquiry               |
+| Newsletter        | `/newsletter`      | Convert curiosity into retention            | Interested guests                | Join inner circle            |
 
 ## 8. Plug-and-Play Page Brief Template
 

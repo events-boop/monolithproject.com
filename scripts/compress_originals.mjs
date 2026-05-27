@@ -46,14 +46,14 @@ async function run() {
         .jpeg({ quality: 75, mozjpeg: true })
         .toBuffer();
     } else if (ext === ".webp") {
-      buffer = await sharp(filePath)
-        .webp({ quality: 75 })
-        .toBuffer();
+      buffer = await sharp(filePath).webp({ quality: 75 }).toBuffer();
     }
 
     if (buffer && buffer.length < originalSize) {
       await fs.writeFile(filePath, buffer);
-      console.log(`[COMPRESSED] ${baseName} (${(originalSize/1024).toFixed(1)}KB -> ${(buffer.length/1024).toFixed(1)}KB)`);
+      console.log(
+        `[COMPRESSED] ${baseName} (${(originalSize / 1024).toFixed(1)}KB -> ${(buffer.length / 1024).toFixed(1)}KB)`
+      );
       compressedCount++;
     } else {
       console.log(`[SKIP] ${baseName} (already optimized or larger)`);

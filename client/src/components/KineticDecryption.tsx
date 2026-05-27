@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from "react";
 
 const CHARS = "ABCDEF0123456789!@#$%^&*()_+{}[]:;<>,.?/~";
 
-export default function KineticDecryption({ 
-  text, 
-  className = "", 
+export default function KineticDecryption({
+  text,
+  className = "",
   triggerOnce = true,
   autoStart = true,
-  sessionOnce = false
-}: { 
-  text: string; 
+  sessionOnce = false,
+}: {
+  text: string;
   className?: string;
   triggerOnce?: boolean;
   autoStart?: boolean;
@@ -24,11 +24,11 @@ export default function KineticDecryption({
     if (isScrambling) return;
 
     if (!force && sessionOnce) {
-      const sessionKey = `kinetic_${text.replace(/\s+/g, '_')}`;
+      const sessionKey = `kinetic_${text.replace(/\s+/g, "_")}`;
       if (sessionStorage.getItem(sessionKey)) {
         return;
       }
-      sessionStorage.setItem(sessionKey, 'true');
+      sessionStorage.setItem(sessionKey, "true");
     }
 
     setIsScrambling(true);
@@ -78,7 +78,7 @@ export default function KineticDecryption({
           setIsInView(false);
         }
       },
-      { rootMargin: "-10% 0px -10% 0px" },
+      { rootMargin: "-10% 0px -10% 0px" }
     );
 
     observer.observe(node);

@@ -8,7 +8,10 @@ interface BrandMotifDividerProps {
   className?: string;
 }
 
-const toneMap: Record<DividerTone, { line: string; sun: string; butterfly: string }> = {
+const toneMap: Record<
+  DividerTone,
+  { line: string; sun: string; butterfly: string }
+> = {
   warm: {
     line: "from-transparent via-[#C2703E]/45 to-transparent",
     sun: "text-[#C2703E]",

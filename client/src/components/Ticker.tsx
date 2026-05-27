@@ -24,7 +24,7 @@ export default function Ticker() {
               key={i}
               className="flex shrink-0 items-center justify-center pl-8 md:pl-16"
             >
-              <span 
+              <span
                 className="hero-wordmark text-[clamp(4rem,9vw,9rem)] uppercase leading-none tracking-tighter text-transparent mix-blend-overlay"
                 style={{ WebkitTextStroke: "2px rgba(255,255,255,0.4)" }}
               >

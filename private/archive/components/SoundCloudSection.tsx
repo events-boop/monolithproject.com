@@ -18,8 +18,10 @@ const tracks: Track[] = [
     artist: "BENCHEK",
     series: "sunsets",
     duration: "58:23",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    soundcloudUrl:
+      "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
   {
     title: "TERRANOVA x CHASING SUN(SETS)",
@@ -27,15 +29,18 @@ const tracks: Track[] = [
     series: "sunsets",
     duration: "62:10",
     soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
   {
     title: "Mix Vol.3",
     artist: "EWERSEEN",
     series: "sunsets",
     duration: "55:48",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    soundcloudUrl:
+      "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
   {
     title: "RADIAN x UNTOLD STORY",
@@ -43,29 +48,37 @@ const tracks: Track[] = [
     series: "untold",
     duration: "71:05",
     soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
   {
     title: "Collab Mix Vol.2",
     artist: "EWERSEEN",
     series: "sunsets",
     duration: "48:32",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    soundcloudUrl:
+      "https://soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-x-chasing-sunsets-collab-mix-vol2&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
   {
     title: "Live from Marbella EP02",
     artist: "BENCHEK",
     series: "sunsets",
     duration: "64:17",
-    soundcloudUrl: "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
-    embedUrl: "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    soundcloudUrl:
+      "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+    embedUrl:
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
   },
 ];
 
 export default function SoundCloudSection() {
   return (
-    <section id="listen" className="relative py-24 md:py-32 bg-[#050505] text-white">
+    <section
+      id="listen"
+      className="relative py-24 md:py-32 bg-[#050505] text-white"
+    >
       {/* Background Archival Texture */}
       <div className="absolute inset-0 bg-noise opacity-[0.03] pointer-events-none" />
 
@@ -87,7 +100,8 @@ export default function SoundCloudSection() {
             </h2>
           </div>
           <p className="font-sans text-lg text-white/50 leading-relaxed font-light max-w-md pb-4">
-            CHASING SUN(SETS) RADIO SHOW. Every recorded set and studio mix compiled into a singular broadcast archive.
+            CHASING SUN(SETS) RADIO SHOW. Every recorded set and studio mix
+            compiled into a singular broadcast archive.
           </p>
         </motion.div>
 
@@ -113,7 +127,8 @@ export default function SoundCloudSection() {
                   </div>
                   <div className="flex flex-col">
                     <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 mb-3 group-hover:text-white/70 transition-colors">
-                      EPISODE {String(index + 1).padStart(2, "0")} • {podcast.duration}
+                      EPISODE {String(index + 1).padStart(2, "0")} •{" "}
+                      {podcast.duration}
                     </span>
                     <h4 className="font-heavy text-3xl md:text-5xl uppercase tracking-tighter text-white group-hover:text-white transition-colors leading-none drop-shadow-md">
                       {podcast.artist}

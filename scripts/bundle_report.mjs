@@ -26,7 +26,9 @@ function formatBytes(bytes) {
 }
 
 function shouldGzip(ext) {
-  return [".js", ".css", ".html", ".json", ".svg", ".txt", ".map"].includes(ext);
+  return [".js", ".css", ".html", ".json", ".svg", ".txt", ".map"].includes(
+    ext
+  );
 }
 
 async function listFilesRecursive(dir) {
@@ -44,7 +46,9 @@ async function listFilesRecursive(dir) {
 }
 
 if (!(await pathExists(distPublicDir))) {
-  console.error(`ERROR: ${distPublicDir} not found. Run "npm run build" first.`);
+  console.error(
+    `ERROR: ${distPublicDir} not found. Run "npm run build" first.`
+  );
   process.exit(1);
 }
 
@@ -63,7 +67,10 @@ for (const bucket of buckets) {
 
 const records = [];
 for (const absolutePath of allFiles) {
-  const rel = path.relative(distPublicDir, absolutePath).split(path.sep).join("/");
+  const rel = path
+    .relative(distPublicDir, absolutePath)
+    .split(path.sep)
+    .join("/");
   const ext = path.extname(rel).toLowerCase();
   const stat = await fs.stat(absolutePath);
   const sizeBytes = stat.size;
@@ -104,7 +111,7 @@ await fs.writeFile(reportJsonPath, JSON.stringify(report, null, 2));
 
 const maxTopBytes = top[0]?.bytes || 1;
 const rowsHtml = top
-  .map((r) => {
+  .map(r => {
     const widthPct = Math.max(2, Math.round((r.bytes / maxTopBytes) * 100));
     const gzip = r.gzipBytes != null ? formatBytes(r.gzipBytes) : "—";
     return `
@@ -120,7 +127,10 @@ const rowsHtml = top
 
 const totalsRowsHtml = Object.entries(totalsByExt)
   .sort((a, b) => b[1] - a[1])
-  .map(([ext, bytes]) => `<tr><td>${ext}</td><td class="num">${formatBytes(bytes)}</td></tr>`)
+  .map(
+    ([ext, bytes]) =>
+      `<tr><td>${ext}</td><td class="num">${formatBytes(bytes)}</td></tr>`
+  )
   .join("\n");
 
 const html = `<!doctype html>
@@ -196,7 +206,9 @@ const html = `<!doctype html>
 const reportHtmlPath = path.join(distPublicDir, "bundle-report.html");
 await fs.writeFile(reportHtmlPath, html);
 
-console.log(`Bundle report written: ${path.relative(process.cwd(), reportHtmlPath)}`);
+console.log(
+  `Bundle report written: ${path.relative(process.cwd(), reportHtmlPath)}`
+);
 console.log(`Total dist/public: ${formatBytes(totalBytes)}`);
 console.log("Top files:");
 for (const r of top.slice(0, 8)) {

@@ -1,14 +1,34 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
-const stats: { number: number; label: string; sublabel: string; suffix?: string }[] = [
-  { number: 10, label: "Thousand+ People", sublabel: "And Growing", suffix: "K" },
+const stats: {
+  number: number;
+  label: string;
+  sublabel: string;
+  suffix?: string;
+}[] = [
+  {
+    number: 10,
+    label: "Thousand+ People",
+    sublabel: "And Growing",
+    suffix: "K",
+  },
   { number: 2, label: "Annual July 4th", sublabel: "Chicago Tradition" },
   { number: 22, label: "Artists Hosted", sublabel: "Across All Series" },
   { number: 4, label: "Seasons Deep", sublabel: "And Counting" },
 ];
 
-function CountUp({ target, inView, delay = 0, suffix }: { target: number; inView: boolean; delay?: number; suffix?: string }) {
+function CountUp({
+  target,
+  inView,
+  delay = 0,
+  suffix,
+}: {
+  target: number;
+  inView: boolean;
+  delay?: number;
+  suffix?: string;
+}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -28,7 +48,12 @@ function CountUp({ target, inView, delay = 0, suffix }: { target: number; inView
     return () => clearTimeout(timer);
   }, [inView, target, delay]);
 
-  return <>{String(count).padStart(2, "0")}{suffix && <span className="text-[0.6em] align-top ml-1">{suffix}</span>}</>;
+  return (
+    <>
+      {String(count).padStart(2, "0")}
+      {suffix && <span className="text-[0.6em] align-top ml-1">{suffix}</span>}
+    </>
+  );
 }
 
 export default function NightInNumbers() {
@@ -36,7 +61,10 @@ export default function NightInNumbers() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="relative bg-[#050505] border-t border-white/10 overflow-hidden">
+    <section
+      ref={ref}
+      className="relative bg-[#050505] border-t border-white/10 overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute left-1/4 top-0 bottom-0 w-px bg-white/[0.03]" />
         <div className="absolute left-2/4 top-0 bottom-0 w-px bg-white/[0.03]" />
@@ -49,7 +77,11 @@ export default function NightInNumbers() {
             key={stat.label}
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.8,
+              delay: i * 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="relative flex flex-col justify-between p-8 md:p-12 lg:p-16 group overflow-hidden cursor-default"
           >
             {/* Hover white flood from bottom */}
@@ -57,7 +89,12 @@ export default function NightInNumbers() {
 
             <div className="relative z-10">
               <div className="font-heavy text-[clamp(5rem,10vw,10rem)] leading-none tracking-tighter text-white group-hover:text-black transition-colors duration-500 tabular-nums">
-                <CountUp target={stat.number} inView={isInView} delay={i * 120} suffix={stat.suffix} />
+                <CountUp
+                  target={stat.number}
+                  inView={isInView}
+                  delay={i * 120}
+                  suffix={stat.suffix}
+                />
               </div>
             </div>
 

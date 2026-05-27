@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { ArrowUpRight, AlertCircle } from "lucide-react";
 import { submitNewsletterLead } from "@/lib/api";
-import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
+import {
+  buildFunnelLeadFields,
+  buildLeadIdempotencyKey,
+} from "@/lib/leadCapture";
 
 interface SlimSubscribeStripProps {
   title: string;
@@ -9,7 +12,11 @@ interface SlimSubscribeStripProps {
   dark?: boolean;
 }
 
-export default function SlimSubscribeStrip({ title, source, dark = true }: SlimSubscribeStripProps) {
+export default function SlimSubscribeStrip({
+  title,
+  source,
+  dark = true,
+}: SlimSubscribeStripProps) {
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -30,38 +37,60 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
 
     setSubmitting(true);
     try {
-      await submitNewsletterLead({
-        email,
-        consent: true,
-        source,
-        ...buildFunnelLeadFields({
-          funnelId: "slim_subscribe_strip",
-          offerId: "always_on_subscribe",
-          interestTags: ["newsletter", "strip"],
-        }),
-      }, buildLeadIdempotencyKey(source, email));
+      await submitNewsletterLead(
+        {
+          email,
+          consent: true,
+          source,
+          ...buildFunnelLeadFields({
+            funnelId: "slim_subscribe_strip",
+            offerId: "always_on_subscribe",
+            interestTags: ["newsletter", "strip"],
+          }),
+        },
+        buildLeadIdempotencyKey(source, email)
+      );
       setOk(true);
       setEmail("");
       setAgreed(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not subscribe right now.");
+      setError(
+        err instanceof Error ? err.message : "Could not subscribe right now."
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <section className={`relative py-8 md:py-10 px-6 border-t ${dark ? "border-white/10 bg-background text-white" : "border-charcoal/15 bg-paper text-charcoal"}`}>
-      <div className={`pointer-events-none absolute inset-0 ${dark
-        ? "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.12),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.12),transparent_34%)]"
-        : "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.08),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.08),transparent_34%)]"
-        }`} />
+    <section
+      className={`relative py-8 md:py-10 px-6 border-t ${dark ? "border-white/10 bg-background text-white" : "border-charcoal/15 bg-paper text-charcoal"}`}
+    >
+      <div
+        className={`pointer-events-none absolute inset-0 ${
+          dark
+            ? "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.12),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.12),transparent_34%)]"
+            : "bg-[radial-gradient(circle_at_18%_40%,rgba(34,211,238,0.08),transparent_36%),radial-gradient(circle_at_82%_60%,rgba(224,90,58,0.08),transparent_34%)]"
+        }`}
+      />
       <div className="container layout-default relative z-10">
-        <form action="/api/leads" method="POST" onSubmit={onSubmit} className="grid lg:grid-cols-[1.1fr_1.5fr_auto] gap-4 lg:gap-8 items-center">
-          <h3 className={`font-display text-3xl md:text-5xl leading-[0.9] uppercase ${dark ? "text-white" : "text-charcoal"}`}>{title}</h3>
+        <form
+          action="/api/leads"
+          method="POST"
+          onSubmit={onSubmit}
+          className="grid lg:grid-cols-[1.1fr_1.5fr_auto] gap-4 lg:gap-8 items-center"
+        >
+          <h3
+            className={`font-display text-3xl md:text-5xl leading-[0.9] uppercase ${dark ? "text-white" : "text-charcoal"}`}
+          >
+            {title}
+          </h3>
 
           <div className="space-y-3">
-            <label htmlFor={`strip-email-${source}`} className={`${dark ? "text-white/80" : "text-charcoal/80"} text-lg`}>
+            <label
+              htmlFor={`strip-email-${source}`}
+              className={`${dark ? "text-white/80" : "text-charcoal/80"} text-lg`}
+            >
               Enter Your Email Address
             </label>
             <input
@@ -69,12 +98,19 @@ export default function SlimSubscribeStrip({ title, source, dark = true }: SlimS
               type="email"
               value={email}
               autoComplete="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               placeholder="you@email.com"
               className={`w-full bg-transparent border-b pb-2 outline-none ${dark ? "border-white/40 text-white placeholder:text-white/40" : "border-charcoal/30 text-charcoal placeholder:text-charcoal/50"}`}
             />
-            <label className={`inline-flex items-center gap-2 text-sm ${dark ? "text-white/70" : "text-charcoal/70"}`}>
-              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="accent-primary" />
+            <label
+              className={`inline-flex items-center gap-2 text-sm ${dark ? "text-white/70" : "text-charcoal/70"}`}
+            >
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={e => setAgreed(e.target.checked)}
+                className="accent-primary"
+              />
               I agree to the <span className="underline">Privacy Policy</span>.
             </label>
           </div>

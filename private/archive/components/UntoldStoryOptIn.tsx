@@ -3,283 +3,338 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { submitNewsletterLead } from "@/lib/api";
-import { buildFunnelLeadFields, buildLeadIdempotencyKey } from "@/lib/leadCapture";
+import {
+  buildFunnelLeadFields,
+  buildLeadIdempotencyKey,
+} from "@/lib/leadCapture";
 
 const SESSION_KEY = "us-optin-dismissed";
 const COOKIE_CONSENT_KEY = "monolith_cookie_consent";
 
 export default function UntoldStoryOptIn() {
-    const [visible, setVisible] = useState(false);
-    const [email, setEmail] = useState("");
-    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-    const [errorMsg, setErrorMsg] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-    // Show after a short delay, once per session
-    useEffect(() => {
-        if (sessionStorage.getItem(SESSION_KEY)) return;
+  // Show after a short delay, once per session
+  useEffect(() => {
+    if (sessionStorage.getItem(SESSION_KEY)) return;
 
-        let timeoutId: number | null = null;
+    let timeoutId: number | null = null;
 
-        const queueOpen = (delay: number) => {
-            if (timeoutId) {
-                window.clearTimeout(timeoutId);
-            }
-            timeoutId = window.setTimeout(() => setVisible(true), delay);
-        };
-
-        if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
-            queueOpen(900);
-        } else {
-            const handleConsentResolved = () => queueOpen(420);
-            window.addEventListener("monolith:cookie-consent-resolved", handleConsentResolved, { once: true });
-
-            return () => {
-                window.removeEventListener("monolith:cookie-consent-resolved", handleConsentResolved);
-                if (timeoutId) {
-                    window.clearTimeout(timeoutId);
-                }
-            };
-        }
-
-        return () => {
-            if (timeoutId) {
-                window.clearTimeout(timeoutId);
-            }
-        };
-    }, []);
-
-    const dismiss = () => {
-        sessionStorage.setItem(SESSION_KEY, "1");
-        setVisible(false);
+    const queueOpen = (delay: number) => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(() => setVisible(true), delay);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email.trim()) return;
-        setStatus("loading");
-        setErrorMsg("");
+    if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+      queueOpen(900);
+    } else {
+      const handleConsentResolved = () => queueOpen(420);
+      window.addEventListener(
+        "monolith:cookie-consent-resolved",
+        handleConsentResolved,
+        { once: true }
+      );
 
-        try {
-            await submitNewsletterLead({
-                email: email.trim(),
-                consent: true,
-                source: "untold-story-optin",
-                ...buildFunnelLeadFields({
-                    funnelId: "untold_story_modal",
-                    offerId: "priority_access",
-                    eventSeries: "untold-story",
-                    eventTitle: "Untold Story Season III",
-                    interestTags: ["modal", "seasonal-optin", "untold-story"],
-                }),
-            }, buildLeadIdempotencyKey("untold-story-optin", email, "untold-story"));
-            setStatus("success");
-            sessionStorage.setItem(SESSION_KEY, "1");
-        } catch (err) {
-            setErrorMsg(err instanceof Error ? err.message : "Network error. Please try again.");
-            setStatus("error");
+      return () => {
+        window.removeEventListener(
+          "monolith:cookie-consent-resolved",
+          handleConsentResolved
+        );
+        if (timeoutId) {
+          window.clearTimeout(timeoutId);
         }
-    };
+      };
+    }
 
-    return (
-        <AnimatePresence>
-            {visible && (
-                <>
-                    {/* Backdrop */}
-                    <motion.div
-                        key="backdrop"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.35 }}
-                        className="fixed inset-0 z-[90] bg-black/72"
-                        onClick={dismiss}
-                        aria-hidden="true"
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
+  const dismiss = () => {
+    sessionStorage.setItem(SESSION_KEY, "1");
+    setVisible(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      await submitNewsletterLead(
+        {
+          email: email.trim(),
+          consent: true,
+          source: "untold-story-optin",
+          ...buildFunnelLeadFields({
+            funnelId: "untold_story_modal",
+            offerId: "priority_access",
+            eventSeries: "untold-story",
+            eventTitle: "Untold Story Season III",
+            interestTags: ["modal", "seasonal-optin", "untold-story"],
+          }),
+        },
+        buildLeadIdempotencyKey("untold-story-optin", email, "untold-story")
+      );
+      setStatus("success");
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : "Network error. Please try again."
+      );
+      setStatus("error");
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            key="backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-[90] bg-black/72"
+            onClick={dismiss}
+            aria-hidden="true"
+          />
+
+          {/* Modal */}
+          <motion.div
+            key="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="us-optin-title"
+            initial={{ opacity: 0, y: 32, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[91] flex items-center justify-center p-4 pointer-events-none"
+          >
+            <div
+              className="relative w-full max-w-md pointer-events-auto overflow-hidden"
+              style={{
+                background:
+                  "linear-gradient(145deg, #06060F 0%, #0D0820 60%, #06060F 100%)",
+                border: "1px solid rgba(139,92,246,0.25)",
+                boxShadow:
+                  "0 0 80px rgba(139,92,246,0.15), 0 32px 64px rgba(0,0,0,0.7)",
+              }}
+            >
+              {/* Top violet glow bar */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#8B5CF6] to-transparent opacity-80" />
+
+              {/* Background texture */}
+              <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
+
+              {/* Radial glow */}
+              <div
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full blur-[100px] pointer-events-none"
+                style={{ background: "rgba(139,92,246,0.12)" }}
+              />
+
+              {/* Close button */}
+              <button
+                onClick={dismiss}
+                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center text-white/40 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/50"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="relative px-8 pt-10 pb-8">
+                {status === "success" ? (
+                  /* Success state */
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center py-6"
+                  >
+                    <div
+                      className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                      style={{
+                        background: "rgba(139,92,246,0.12)",
+                        border: "1px solid rgba(139,92,246,0.35)",
+                      }}
+                    >
+                      <UntoldButterflyLogo className="w-7 h-7 text-violet-400" />
+                    </div>
+                    <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">
+                      YOU'RE ON THE LIST
+                    </h2>
+                    <p className="text-white/50 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
+                      Watch your inbox for late-night dates, lineup drops, and
+                      ticket windows.
+                    </p>
+                    <a
+                      href="https://instagram.com/untoldstory.music"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-4 text-[10px] md:text-xs font-mono tracking-widest uppercase font-bold transition-all transition-colors"
+                      style={{
+                        border: "1px solid rgba(139,92,246,0.5)",
+                        color: "#fff",
+                        background: "rgba(139,92,246,0.1)",
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.background =
+                          "rgba(139,92,246,0.9)";
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.background =
+                          "rgba(139,92,246,0.1)";
+                      }}
+                    >
+                      Follow On Instagram <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                    <button
+                      onClick={dismiss}
+                      className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#8B5CF6]/50 hover:text-[#8B5CF6] transition-colors"
+                    >
+                      Close
+                    </button>
+                  </motion.div>
+                ) : (
+                  <>
+                    {/* Icon + kicker */}
+                    <div className="flex items-center gap-3 mb-6">
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center"
+                        style={{
+                          background: "rgba(139,92,246,0.12)",
+                          border: "1px solid rgba(139,92,246,0.3)",
+                        }}
+                      >
+                        <UntoldButterflyLogo className="w-5 h-5 text-violet-400" />
+                      </div>
+                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6]/70">
+                        Untold Story · Season III
+                      </span>
+                    </div>
+
+                    {/* Headline */}
+                    <h2
+                      id="us-optin-title"
+                      className="font-serif italic text-3xl md:text-4xl text-white leading-[1.05] mb-3"
+                    >
+                      Get Untold Story
+                      <br />
+                      <span style={{ color: "#8B5CF6" }}>Updates</span>
+                    </h2>
+
+                    <p className="text-white/55 text-sm leading-relaxed mb-2">
+                      Join the newsletter for early access to late-night dates,
+                      lineup announcements, and ticket windows.
+                    </p>
+                    <p className="text-white/35 text-[10px] font-mono tracking-widest uppercase mb-7">
+                      Early Access · New Dates · New Mixes
+                    </p>
+
+                    {/* Divider */}
+                    <div
+                      className="h-px mb-6"
+                      style={{
+                        background:
+                          "linear-gradient(to right, rgba(139,92,246,0.3), transparent)",
+                      }}
                     />
 
-                    {/* Modal */}
-                    <motion.div
-                        key="modal"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-labelledby="us-optin-title"
-                        initial={{ opacity: 0, y: 32, scale: 0.97 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 16, scale: 0.98 }}
-                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 z-[91] flex items-center justify-center p-4 pointer-events-none"
+                    {/* Form */}
+                    <form
+                      action="/api/leads"
+                      method="POST"
+                      onSubmit={handleSubmit}
+                      className="space-y-3"
                     >
-                        <div
-                            className="relative w-full max-w-md pointer-events-auto overflow-hidden"
-                            style={{
-                                background: "linear-gradient(145deg, #06060F 0%, #0D0820 60%, #06060F 100%)",
-                                border: "1px solid rgba(139,92,246,0.25)",
-                                boxShadow: "0 0 80px rgba(139,92,246,0.15), 0 32px 64px rgba(0,0,0,0.7)",
-                            }}
-                        >
-                            {/* Top violet glow bar */}
-                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#8B5CF6] to-transparent opacity-80" />
+                      <input
+                        type="email"
+                        value={email}
+                        autoComplete="email"
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="your@email.com"
+                        required
+                        className="w-full px-4 py-3 text-sm text-white placeholder-white/25 bg-white/5 border transition-all focus-visible:outline-none"
+                        style={{
+                          borderColor: "rgba(139,92,246,0.2)",
+                          borderRadius: 0,
+                        }}
+                        onFocus={e =>
+                          (e.currentTarget.style.borderColor =
+                            "rgba(139,92,246,0.6)")
+                        }
+                        onBlur={e =>
+                          (e.currentTarget.style.borderColor =
+                            "rgba(139,92,246,0.2)")
+                        }
+                      />
 
-                            {/* Background texture */}
-                            <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
+                      {status === "error" && (
+                        <p className="text-red-400 text-xs font-mono">
+                          {errorMsg}
+                        </p>
+                      )}
 
-                            {/* Radial glow */}
-                            <div
-                                className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full blur-[100px] pointer-events-none"
-                                style={{ background: "rgba(139,92,246,0.12)" }}
-                            />
+                      <button
+                        type="submit"
+                        disabled={status === "loading"}
+                        className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold tracking-widest uppercase transition-all duration-300 disabled:opacity-60"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #8B5CF6, #6D28D9)",
+                          color: "#ffffff",
+                        }}
+                        onMouseEnter={e =>
+                          (e.currentTarget.style.opacity = "0.88")
+                        }
+                        onMouseLeave={e =>
+                          (e.currentTarget.style.opacity = "1")
+                        }
+                      >
+                        {status === "loading" ? (
+                          <span className="animate-pulse">Requesting...</span>
+                        ) : (
+                          <>
+                            Get Updates
+                            <ArrowRight className="w-4 h-4" />
+                          </>
+                        )}
+                      </button>
+                    </form>
 
-                            {/* Close button */}
-                            <button
-                                onClick={dismiss}
-                                className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center text-white/40 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]/50"
-                                aria-label="Close"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
+                    <p className="mt-4 text-center text-white/20 text-[10px] font-mono tracking-widest uppercase">
+                      Curated Signals Only · Opt out anytime
+                    </p>
 
-                            <div className="relative px-8 pt-10 pb-8">
-                                {status === "success" ? (
-                                    /* Success state */
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            className="text-center py-6"
-                                        >
-                                            <div
-                                                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
-                                                style={{
-                                                    background: "rgba(139,92,246,0.12)",
-                                                    border: "1px solid rgba(139,92,246,0.35)",
-                                                }}
-                                            >
-                                                <UntoldButterflyLogo className="w-7 h-7 text-violet-400" />
-                                            </div>
-                                            <h2 className="font-display text-2xl md:text-3xl text-white mb-2 tracking-wide">YOU'RE ON THE LIST</h2>
-                                            <p className="text-white/50 text-xs md:text-sm font-mono tracking-widest uppercase mb-6 mt-3">
-                                                Watch your inbox for late-night dates, lineup drops, and ticket windows.
-                                            </p>
-                                            <a 
-                                                href="https://instagram.com/untoldstory.music" 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="flex items-center justify-center gap-2 w-full py-4 text-[10px] md:text-xs font-mono tracking-widest uppercase font-bold transition-all transition-colors"
-                                                style={{ border: "1px solid rgba(139,92,246,0.5)", color: "#fff", background: "rgba(139,92,246,0.1)" }}
-                                                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.9)"; }}
-                                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(139,92,246,0.1)"; }}
-                                            >
-                                                Follow On Instagram <ArrowRight className="w-3.5 h-3.5" />
-                                            </a>
-                                            <button
-                                                onClick={dismiss}
-                                                className="mt-6 text-[10px] font-mono tracking-widest uppercase text-[#8B5CF6]/50 hover:text-[#8B5CF6] transition-colors"
-                                            >
-                                                Close
-                                            </button>
-                                        </motion.div>
-                                ) : (
-                                    <>
-                                        {/* Icon + kicker */}
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <div
-                                                className="w-10 h-10 rounded-full flex items-center justify-center"
-                                                style={{
-                                                    background: "rgba(139,92,246,0.12)",
-                                                    border: "1px solid rgba(139,92,246,0.3)",
-                                                }}
-                                            >
-                                                <UntoldButterflyLogo className="w-5 h-5 text-violet-400" />
-                                            </div>
-                                            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#8B5CF6]/70">
-                                                Untold Story · Season III
-                                            </span>
-                                        </div>
+                    <button
+                      onClick={dismiss}
+                      className="mt-3 w-full text-center text-white/25 text-[10px] font-mono tracking-widest uppercase hover:text-white/45 transition-colors"
+                    >
+                      Maybe later
+                    </button>
+                  </>
+                )}
+              </div>
 
-                                        {/* Headline */}
-                                        <h2
-                                            id="us-optin-title"
-                                            className="font-serif italic text-3xl md:text-4xl text-white leading-[1.05] mb-3"
-                                        >
-                                            Get Untold Story
-                                            <br />
-                                            <span style={{ color: "#8B5CF6" }}>Updates</span>
-                                        </h2>
-
-                                        <p className="text-white/55 text-sm leading-relaxed mb-2">
-                                            Join the newsletter for early access to late-night dates, lineup announcements, and ticket windows.
-                                        </p>
-                                        <p className="text-white/35 text-[10px] font-mono tracking-widest uppercase mb-7">
-                                            Early Access · New Dates · New Mixes
-                                        </p>
-
-                                        {/* Divider */}
-                                        <div
-                                            className="h-px mb-6"
-                                            style={{
-                                                background: "linear-gradient(to right, rgba(139,92,246,0.3), transparent)",
-                                            }}
-                                        />
-
-                                        {/* Form */}
-                                        <form action="/api/leads" method="POST" onSubmit={handleSubmit} className="space-y-3">
-                                            <input
-                                                type="email"
-                                                value={email}
-                                                autoComplete="email"
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder="your@email.com"
-                                                required
-                                                className="w-full px-4 py-3 text-sm text-white placeholder-white/25 bg-white/5 border transition-all focus-visible:outline-none"
-                                                style={{ borderColor: "rgba(139,92,246,0.2)", borderRadius: 0 }}
-                                                onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(139,92,246,0.6)")}
-                                                onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(139,92,246,0.2)")}
-                                            />
-
-                                            {status === "error" && (
-                                                <p className="text-red-400 text-xs font-mono">{errorMsg}</p>
-                                            )}
-
-                                            <button
-                                                type="submit"
-                                                disabled={status === "loading"}
-                                                className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold tracking-widest uppercase transition-all duration-300 disabled:opacity-60"
-                                                style={{
-                                                    background: "linear-gradient(135deg, #8B5CF6, #6D28D9)",
-                                                    color: "#ffffff",
-                                                }}
-                                                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-                                                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                                            >
-                                                {status === "loading" ? (
-                                                    <span className="animate-pulse">Requesting...</span>
-                                                ) : (
-                                                    <>
-                                                        Get Updates
-                                                        <ArrowRight className="w-4 h-4" />
-                                                    </>
-                                                )}
-                                            </button>
-                                        </form>
-
-                                        <p className="mt-4 text-center text-white/20 text-[10px] font-mono tracking-widest uppercase">
-                                            Curated Signals Only · Opt out anytime
-                                        </p>
-
-                                        <button
-                                            onClick={dismiss}
-                                            className="mt-3 w-full text-center text-white/25 text-[10px] font-mono tracking-widest uppercase hover:text-white/45 transition-colors"
-                                        >
-                                            Maybe later
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-
-                            {/* Bottom violet glow bar */}
-                            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#8B5CF6]/30 to-transparent" />
-                        </div>
-                    </motion.div>
-                </>
-            )}
-        </AnimatePresence>
-    );
+              {/* Bottom violet glow bar */}
+              <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#8B5CF6]/30 to-transparent" />
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
 }

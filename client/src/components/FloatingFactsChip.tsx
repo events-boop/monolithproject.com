@@ -10,8 +10,7 @@ interface FloatingFactsChipProps {
 }
 
 const toneClasses: Record<ChipTone, string> = {
-  warm:
-    "bg-[linear-gradient(145deg,rgba(255,255,255,0.92),rgba(255,245,229,0.78))] border-[#C2703E]/28 text-[#2C1810]",
+  warm: "bg-[linear-gradient(145deg,rgba(255,255,255,0.92),rgba(255,245,229,0.78))] border-[#C2703E]/28 text-[#2C1810]",
   nocturne:
     "bg-[linear-gradient(145deg,rgba(10,10,16,0.92),rgba(10,10,16,0.72))] border-white/20 text-white",
 };

@@ -52,7 +52,10 @@ export function hasConstrainedConnection(include3g = false) {
     ? ["slow-2g", "2g", "3g"]
     : ["slow-2g", "2g"];
 
-  return Boolean(connection.effectiveType && constrainedTypes.includes(connection.effectiveType));
+  return Boolean(
+    connection.effectiveType &&
+    constrainedTypes.includes(connection.effectiveType)
+  );
 }
 
 export function hasWeakDeviceProfile() {
@@ -60,7 +63,8 @@ export function hasWeakDeviceProfile() {
   const hardwareConcurrency = getHardwareConcurrency();
 
   const lowMemory = typeof deviceMemory === "number" && deviceMemory <= 4;
-  const lowCpu = typeof hardwareConcurrency === "number" && hardwareConcurrency <= 6;
+  const lowCpu =
+    typeof hardwareConcurrency === "number" && hardwareConcurrency <= 6;
 
   return lowMemory || lowCpu;
 }

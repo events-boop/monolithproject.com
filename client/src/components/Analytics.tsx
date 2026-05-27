@@ -21,11 +21,17 @@ export default function Analytics() {
       setConsentState(getCookieConsentState());
     };
 
-    window.addEventListener(COOKIE_CONSENT_RESOLVED_EVENT, handleConsentResolved as EventListener);
+    window.addEventListener(
+      COOKIE_CONSENT_RESOLVED_EVENT,
+      handleConsentResolved as EventListener
+    );
     window.addEventListener("storage", handleStorage);
 
     return () => {
-      window.removeEventListener(COOKIE_CONSENT_RESOLVED_EVENT, handleConsentResolved as EventListener);
+      window.removeEventListener(
+        COOKIE_CONSENT_RESOLVED_EVENT,
+        handleConsentResolved as EventListener
+      );
       window.removeEventListener("storage", handleStorage);
     };
   }, []);

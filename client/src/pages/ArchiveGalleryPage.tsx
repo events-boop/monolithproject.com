@@ -8,53 +8,58 @@ import { ArrowLeft } from "lucide-react";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 
 export default function ArchiveGalleryPage() {
-    const [match, params] = useRoute("/:series/:season");
+  const [match, params] = useRoute("/:series/:season");
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    if (!match || !params?.series || !params?.season) return null;
+  if (!match || !params?.series || !params?.season) return null;
 
-    const key = `${params.series}-${params.season}`;
-    const gallery = archiveCollectionsBySlug[key];
+  const key = `${params.series}-${params.season}`;
+  const gallery = archiveCollectionsBySlug[key];
 
-    const navBrand: "chasing-sunsets" | "untold-story" | "monolith" =
-      params.series === "chasing-sunsets" || params.series === "untold-story"
-        ? params.series
-        : "monolith";
+  const navBrand: "chasing-sunsets" | "untold-story" | "monolith" =
+    params.series === "chasing-sunsets" || params.series === "untold-story"
+      ? params.series
+      : "monolith";
 
-    if (!gallery) {
-        return (
-            <div className="min-h-screen text-white flex items-center justify-center">
-                <p className="font-mono uppercase tracking-widest text-white/50">Gallery not found</p>
-            </div>
-        );
-    }
-
+  if (!gallery) {
     return (
-        <div className="min-h-screen text-white relative overflow-hidden" style={{ background: "#050505" }}>
-            <SEO title={`${gallery.title} — ${gallery.subtitle}`} />
-            <Navigation variant="dark" brand={navBrand} />
-
-            <main className="page-shell-start pb-32">
-                <div className="container layout-wide px-6">
-                    <Link href="/archive" asChild>
-                        <a className="btn-text-action mb-12">
-                            <ArrowLeft className="w-4 h-4" /> Back to Archive
-                        </a>
-                    </Link>
-
-                    <MixedMediaGallery
-                        title={gallery.title}
-                        subtitle={gallery.subtitle}
-                        description={gallery.description}
-                        media={gallery.media}
-                        className="bg-transparent"
-                        dense
-                    />
-                </div>
-            </main>
-        </div>
+      <div className="min-h-screen text-white flex items-center justify-center">
+        <p className="font-mono uppercase tracking-widest text-white/50">
+          Gallery not found
+        </p>
+      </div>
     );
+  }
+
+  return (
+    <div
+      className="min-h-screen text-white relative overflow-hidden"
+      style={{ background: "#050505" }}
+    >
+      <SEO title={`${gallery.title} — ${gallery.subtitle}`} />
+      <Navigation variant="dark" brand={navBrand} />
+
+      <main className="page-shell-start pb-32">
+        <div className="container layout-wide px-6">
+          <Link href="/archive" asChild>
+            <a className="btn-text-action mb-12">
+              <ArrowLeft className="w-4 h-4" /> Back to Archive
+            </a>
+          </Link>
+
+          <MixedMediaGallery
+            title={gallery.title}
+            subtitle={gallery.subtitle}
+            description={gallery.description}
+            media={gallery.media}
+            className="bg-transparent"
+            dense
+          />
+        </div>
+      </main>
+    </div>
+  );
 }

@@ -31,19 +31,23 @@ The Monolith Project website is a cinematic digital portal designed to frame the
 ## ⚙️ Development
 
 ### Setup
+
 ```bash
 npm install
 ```
 
 ### Environment
+
 Copy `.env.example` to `.env` and configure your database and API keys.
 
 ### Local Development
+
 ```bash
 npm run dev
 ```
 
 ### Build & Production
+
 ```bash
 npm run build
 npm start
@@ -52,6 +56,7 @@ npm start
 ## 📈 Quality Gates
 
 We maintain a "God-Tier" experience through automated checks:
+
 - `npm run check`: Type checking.
 - `npm run test`: Unit and E2E testing.
 - `npm run lhci`: Performance auditing.
@@ -60,9 +65,11 @@ We maintain a "God-Tier" experience through automated checks:
 ## 🗺 SEO & Discovery
 
 The project utilizes a custom SEO engine (`shared/seo`) which automatically syncs event data into:
+
 - Structured Data (JSON-LD) for Events, Brands, and Podcasts.
 - Dynamic `sitemap.xml` generation.
 - Optimized `robots.txt` configuration.
 
 ---
+
 © 2026 The Monolith Project. All rights reserved.

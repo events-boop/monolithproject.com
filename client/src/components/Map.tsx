@@ -99,15 +99,19 @@ function loadMapScript() {
   if (mapScriptPromise) return mapScriptPromise;
 
   const existingScript = document.querySelector<HTMLScriptElement>(
-    `script[src="${MAPS_SCRIPT_SRC}"]`,
+    `script[src="${MAPS_SCRIPT_SRC}"]`
   );
 
   mapScriptPromise = new Promise<void>((resolve, reject) => {
     if (existingScript) {
       existingScript.addEventListener("load", () => resolve(), { once: true });
-      existingScript.addEventListener("error", () => reject(new Error("Failed to load Google Maps script")), {
-        once: true,
-      });
+      existingScript.addEventListener(
+        "error",
+        () => reject(new Error("Failed to load Google Maps script")),
+        {
+          once: true,
+        }
+      );
       return;
     }
 
@@ -116,9 +120,10 @@ function loadMapScript() {
     script.async = true;
     script.crossOrigin = "anonymous";
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Failed to load Google Maps script"));
+    script.onerror = () =>
+      reject(new Error("Failed to load Google Maps script"));
     document.head.appendChild(script);
-  }).catch((error) => {
+  }).catch(error => {
     mapScriptPromise = null;
     throw error;
   });

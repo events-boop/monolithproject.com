@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Disc3, Instagram, MapPin, Music, Radio, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  Disc3,
+  Instagram,
+  MapPin,
+  Music,
+  Radio,
+  X,
+} from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
 export interface ResidentDJ {
@@ -96,7 +104,9 @@ interface ResidentDJCardProps {
   djs?: ResidentDJ[];
 }
 
-export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProps) {
+export default function ResidentDJCard({
+  djs = DEFAULT_DJS,
+}: ResidentDJCardProps) {
   const [openArtist, setOpenArtist] = useState<string | null>(null);
 
   return (
@@ -107,7 +117,11 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: [0.22, 1, 0.36, 1],
+          }}
           className="sunset-panel-editorial group grid gap-6 p-5 md:p-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:items-stretch"
           data-cursor-text="LISTEN"
         >
@@ -119,7 +133,9 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
                   Resident DJ
                 </span>
                 {dj.handle ? (
-                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#2C1810]/56">{dj.handle}</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#2C1810]/56">
+                    {dj.handle}
+                  </span>
                 ) : null}
                 <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#2C1810]/54">
                   <MapPin size={10} />
@@ -141,14 +157,18 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
                 ))}
               </h3>
 
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#2C1810]/72 md:text-lg">{dj.bio}</p>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#2C1810]/72 md:text-lg">
+                {dj.bio}
+              </p>
             </div>
 
             <div className="grid gap-4 md:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
               <div className="sunset-panel-editorial-soft p-5">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">Sound Profile</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
+                  Sound Profile
+                </span>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {dj.genre.map((genre) => (
+                  {dj.genre.map(genre => (
                     <span
                       key={genre}
                       className="rounded-full border border-[#E8B86D]/26 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-[#2C1810]/76"
@@ -161,7 +181,7 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
 
               {dj.stats ? (
                 <div className="sunset-panel-editorial-soft grid grid-cols-3 gap-3 p-5">
-                  {dj.stats.map((stat) => (
+                  {dj.stats.map(stat => (
                     <div key={stat.label}>
                       <div className="font-display text-2xl uppercase leading-none text-[#A4592C] md:text-3xl">
                         {stat.value}
@@ -212,7 +232,9 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
 
           <button
             type="button"
-            onClick={() => setOpenArtist((current) => (current === dj.name ? null : dj.name))}
+            onClick={() =>
+              setOpenArtist(current => (current === dj.name ? null : dj.name))
+            }
             aria-expanded={openArtist === dj.name}
             aria-label={`Open ${dj.name} artist bio and selected works`}
             className="sunset-media-frame group/media relative aspect-[4/5] min-h-[20rem] w-full cursor-pointer overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/70"
@@ -226,8 +248,9 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover/media:scale-105"
                 style={{ filter: "grayscale(1) contrast(1.08)" }}
-                onError={(event) => {
-                  (event.currentTarget as HTMLImageElement).style.display = "none";
+                onError={event => {
+                  (event.currentTarget as HTMLImageElement).style.display =
+                    "none";
                 }}
               />
             ) : null}
@@ -244,8 +267,12 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-5">
               <div className="rounded-2xl border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(246,234,215,0.8))] px-4 py-3 shadow-[0_18px_34px_rgba(18,13,9,0.16)]">
-                <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">Resident / Chasing Sun(Sets)</div>
-                <div className="mt-2 font-display text-xl uppercase leading-[0.92] text-[#2C1810]">{dj.name}</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
+                  Resident / Chasing Sun(Sets)
+                </div>
+                <div className="mt-2 font-display text-xl uppercase leading-[0.92] text-[#2C1810]">
+                  {dj.name}
+                </div>
                 <div className="mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/56">
                   View Profile
                   <ArrowUpRight size={11} />
@@ -310,7 +337,9 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
                               {work.meta}
                             </p>
                             {work.note ? (
-                              <p className="mt-3 text-sm leading-relaxed text-white/58">{work.note}</p>
+                              <p className="mt-3 text-sm leading-relaxed text-white/58">
+                                {work.note}
+                              </p>
                             ) : null}
                           </div>
                         </div>
@@ -335,8 +364,8 @@ export default function ResidentDJCard({ djs = DEFAULT_DJS }: ResidentDJCardProp
           Want To Join The Roster?
         </span>
         <p className="mx-auto mb-5 max-w-sm text-sm leading-relaxed text-[#2C1810]/64">
-          Afro, organic, Latin, Brazilian, and melodic house with real sunset pacing. If the mix fits the room, send
-          it.
+          Afro, organic, Latin, Brazilian, and melodic house with real sunset
+          pacing. If the mix fits the room, send it.
         </p>
         <a
           href="mailto:music@monolithproject.com?subject=Chasing Sun(Sets) Resident DJ Submission"

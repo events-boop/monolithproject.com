@@ -11,13 +11,13 @@ interface SplitTextProps {
   preserveWhitespace?: boolean;
 }
 
-export default function SplitText({ 
-  text, 
-  className, 
-  initialDelay = 0.1, 
+export default function SplitText({
+  text,
+  className,
+  initialDelay = 0.1,
   staggerDelay = 0.025,
   duration = 0.85,
-  preserveWhitespace = true
+  preserveWhitespace = true,
 }: SplitTextProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-15% 0px" });
@@ -26,12 +26,18 @@ export default function SplitText({
   const characters = text.split("");
 
   return (
-    <span ref={ref} className={cn("inline-block overflow-hidden relative", className)} style={{ whiteSpace: preserveWhitespace ? "pre-wrap" : "normal" }}>
+    <span
+      ref={ref}
+      className={cn("inline-block overflow-hidden relative", className)}
+      style={{ whiteSpace: preserveWhitespace ? "pre-wrap" : "normal" }}
+    >
       {characters.map((char, index) => (
         <motion.span
           key={`${index}-${char}`}
           initial={{ opacity: 0, y: "130%", rotateZ: 2, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, y: "0%", rotateZ: 0, scale: 1 } : {}}
+          animate={
+            isInView ? { opacity: 1, y: "0%", rotateZ: 0, scale: 1 } : {}
+          }
           transition={{
             duration: duration,
             ease: [0.22, 1, 0.36, 1], // luxe ease

@@ -42,15 +42,18 @@ const distPublicDir = path.resolve("dist/public");
 const templatePath = path.join(distPublicDir, "index.html");
 const template = readFileSync(templatePath, "utf8");
 
-const futureEvents = upcomingEvents.filter((event) => event.status !== "past");
+const futureEvents = upcomingEvents.filter(event => event.status !== "past");
 const featuredTicketEvent =
-  futureEvents.find((event) => event.status === "on-sale" && event.ticketUrl) ?? futureEvents[0];
+  futureEvents.find(event => event.status === "on-sale" && event.ticketUrl) ??
+  futureEvents[0];
 const featuredChasingEvent =
-  futureEvents.find((event) => event.series === "chasing-sunsets" && event.headline) ??
-  futureEvents.find((event) => event.series === "chasing-sunsets");
+  futureEvents.find(
+    event => event.series === "chasing-sunsets" && event.headline
+  ) ?? futureEvents.find(event => event.series === "chasing-sunsets");
 const featuredUntoldEvent =
-  futureEvents.find((event) => event.series === "untold-story" && event.id === "us-s3e3") ??
-  futureEvents.find((event) => event.series === "untold-story");
+  futureEvents.find(
+    event => event.series === "untold-story" && event.id === "us-s3e3"
+  ) ?? futureEvents.find(event => event.series === "untold-story");
 
 const sharedLinks = [
   { href: "/tickets", label: "Tickets" },
@@ -59,6 +62,7 @@ const sharedLinks = [
   { href: "/story", label: "Untold Story" },
   { href: "/radio", label: "Radio Show" },
   { href: "/about", label: "About Monolith" },
+  { href: "/monolith", label: "The Monolith" },
 ];
 
 function escapeHtml(value: string) {
@@ -79,19 +83,29 @@ function serializeJson(value: unknown) {
 }
 
 function upsertTag(html: string, pattern: RegExp, replacement: string) {
-  return pattern.test(html) ? html.replace(pattern, replacement) : html.replace("</head>", `  ${replacement}\n</head>`);
+  return pattern.test(html)
+    ? html.replace(pattern, replacement)
+    : html.replace("</head>", `  ${replacement}\n</head>`);
 }
 
 function upsertMetaByName(html: string, name: string, content: string) {
   const escapedContent = escapeHtml(content);
   const pattern = new RegExp(`<meta[^>]+name="${name}"[^>]*>`, "i");
-  return upsertTag(html, pattern, `<meta name="${name}" content="${escapedContent}" />`);
+  return upsertTag(
+    html,
+    pattern,
+    `<meta name="${name}" content="${escapedContent}" />`
+  );
 }
 
 function upsertMetaByProperty(html: string, property: string, content: string) {
   const escapedContent = escapeHtml(content);
   const pattern = new RegExp(`<meta[^>]+property="${property}"[^>]*>`, "i");
-  return upsertTag(html, pattern, `<meta property="${property}" content="${escapedContent}" />`);
+  return upsertTag(
+    html,
+    pattern,
+    `<meta property="${property}" content="${escapedContent}" />`
+  );
 }
 
 function toAbsoluteUrl(pathOrUrl: string) {
@@ -100,7 +114,9 @@ function toAbsoluteUrl(pathOrUrl: string) {
 }
 
 function fullTitle(title: string) {
-  return title.includes("The Monolith Project") ? title : `${title} | The Monolith Project`;
+  return title.includes("The Monolith Project")
+    ? title
+    : `${title} | The Monolith Project`;
 }
 
 function getShortDateLabel(dateLabel: string) {
@@ -144,21 +160,25 @@ function buildRadioEpisodeSeoTitle(episode: (typeof radioEpisodes)[number]) {
   return `Chasing Sun(Sets) Radio | ${episode.shortCode} ${episode.guest}`;
 }
 
-function buildRadioEpisodeSeoDescription(episode: (typeof radioEpisodes)[number]) {
+function buildRadioEpisodeSeoDescription(
+  episode: (typeof radioEpisodes)[number]
+) {
   return `Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`;
 }
 
 function renderParagraphs(paragraphs: string[]) {
-  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n");
+  return paragraphs
+    .map(paragraph => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("\n");
 }
 
 function renderLinkList(
   links: Array<{ href: string; label: string; external?: boolean }>,
-  ordered = false,
+  ordered = false
 ) {
   const tag = ordered ? "ol" : "ul";
   return `<${tag}>${links
-    .map((link) => {
+    .map(link => {
       const rel = link.external ? ` rel="noopener noreferrer"` : "";
       const target = link.external ? ` target="_blank"` : "";
       return `<li><a href="${escapeHtml(link.href)}"${target}${rel}>${escapeHtml(link.label)}</a></li>`;
@@ -167,11 +187,15 @@ function renderLinkList(
 }
 
 function renderEventFacts(pathname: string) {
-  const event = buildPublicSiteData(pathname, upcomingEvents).events.find((entry) => {
-    const slug = pathname.startsWith("/events/") ? pathname.slice("/events/".length) : null;
-    if (!slug) return false;
-    return entry.slug === slug || entry.id === slug;
-  });
+  const event = buildPublicSiteData(pathname, upcomingEvents).events.find(
+    entry => {
+      const slug = pathname.startsWith("/events/")
+        ? pathname.slice("/events/".length)
+        : null;
+      if (!slug) return false;
+      return entry.slug === slug || entry.id === slug;
+    }
+  );
 
   if (!event) return "";
 
@@ -190,7 +214,7 @@ function renderEventFacts(pathname: string) {
         ${factRows
           .map(
             ([label, value]) =>
-              `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`,
+              `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`
           )
           .join("\n")}
       </dl>
@@ -204,10 +228,12 @@ function renderUpcomingEventsSection() {
       <h2>Upcoming Chicago Dates</h2>
       <ol>
         ${futureEvents
-          .map((event) => {
+          .map(event => {
             const eventPath = `/events/${event.slug || event.id}`;
             const ctaHref = event.ticketUrl || eventPath;
-            const ctaLabel = event.ticketUrl ? "Tickets and RSVP" : "Event details";
+            const ctaLabel = event.ticketUrl
+              ? "Tickets and RSVP"
+              : "Event details";
             return `<li>
               <h3><a href="${escapeHtml(eventPath)}">${escapeHtml(event.headline || event.title)}</a></h3>
               <p>${escapeHtml(`${event.date} · ${event.time} · ${event.venue}`)}</p>
@@ -226,7 +252,7 @@ function renderBaseLayout(
   h1: string,
   paragraphs: string[],
   links: Array<{ href: string; label: string; external?: boolean }>,
-  extra = "",
+  extra = ""
 ) {
   return `
     <main>
@@ -475,13 +501,18 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             : "Check the official schedule for dates, venue announcements, and ticket windows.",
         ],
         [
-          { href: featuredTicketEvent?.ticketUrl || POSH_TICKET_URL, label: "Buy tickets" },
           {
-            href: featuredTicketEvent ? `/events/${featuredTicketEvent.slug || featuredTicketEvent.id}` : "/schedule",
+            href: featuredTicketEvent?.ticketUrl || POSH_TICKET_URL,
+            label: "Buy tickets",
+          },
+          {
+            href: featuredTicketEvent
+              ? `/events/${featuredTicketEvent.slug || featuredTicketEvent.id}`
+              : "/schedule",
             label: featuredTicketEvent ? "Open event details" : "View schedule",
           },
           { href: "/schedule", label: "Full schedule" },
-        ],
+        ]
       ),
     },
   ],
@@ -501,7 +532,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           "Each event page includes date, venue, lineup context, and ticket or RSVP access when available.",
         ],
         sharedLinks,
-        renderUpcomingEventsSection(),
+        renderUpcomingEventsSection()
       ),
     },
   ],
@@ -512,9 +543,11 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       description:
         "Chasing Sun(Sets) brings open-air house music, golden-hour energy, and lakefront gatherings to Chicago.",
       absoluteTitle: true,
-      image: featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
-      schemaData:
-        featuredChasingEvent ? buildScheduledEventSchema(featuredChasingEvent, "/chasing-sunsets") : undefined,
+      image:
+        featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
+      schemaData: featuredChasingEvent
+        ? buildScheduledEventSchema(featuredChasingEvent, "/chasing-sunsets")
+        : undefined,
       bodyHtml: renderBaseLayout(
         "Open-Air Chicago Series",
         "Chasing Sun(Sets)",
@@ -524,12 +557,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         ],
         [
           {
-            href: featuredChasingEvent ? `/events/${featuredChasingEvent.slug || featuredChasingEvent.id}` : "/schedule",
+            href: featuredChasingEvent
+              ? `/events/${featuredChasingEvent.slug || featuredChasingEvent.id}`
+              : "/schedule",
             label: "Open the featured date",
           },
           { href: "/radio", label: "Listen to the radio show" },
           { href: INSTAGRAM_SUNSETS, label: "Instagram", external: true },
-        ],
+        ]
       ),
     },
   ],
@@ -543,7 +578,9 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       image: featuredUntoldEvent?.image || "/images/eran-hersh-live-5.webp",
       schemaData: [
         buildFaqSchema(untoldFaqs),
-        ...(featuredUntoldEvent ? [buildScheduledEventSchema(featuredUntoldEvent, "/story")] : []),
+        ...(featuredUntoldEvent
+          ? [buildScheduledEventSchema(featuredUntoldEvent, "/story")]
+          : []),
       ],
       bodyHtml: renderBaseLayout(
         "After-Dark Chicago Series",
@@ -554,12 +591,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         ],
         [
           {
-            href: featuredUntoldEvent ? `/events/${featuredUntoldEvent.slug || featuredUntoldEvent.id}` : "/schedule",
+            href: featuredUntoldEvent
+              ? `/events/${featuredUntoldEvent.slug || featuredUntoldEvent.id}`
+              : "/schedule",
             label: "Open the featured date",
           },
           { href: "/tickets", label: "View tickets" },
           { href: "/newsletter", label: "Get updates" },
-        ],
+        ]
       ),
     },
   ],
@@ -578,10 +617,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           "The radio archive extends the Chasing Sun(Sets) brand beyond live events through mixes, guest sessions, and episode pages.",
           "Each episode page includes the guest, date, tracklist, and a direct listening link.",
         ],
-        radioEpisodes.map((episode) => ({
+        radioEpisodes.map(episode => ({
           href: `/radio/${episode.slug}`,
           label: `${episode.shortCode}: ${episode.title}`,
-        })),
+        }))
       ),
     },
   ],
@@ -593,8 +632,9 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries.",
       absoluteTitle: true,
       image: "/images/chasing-sunsets-premium.webp",
-      schemaData:
-        featuredChasingEvent ? buildScheduledEventSchema(featuredChasingEvent, "/sunsets") : undefined,
+      schemaData: featuredChasingEvent
+        ? buildScheduledEventSchema(featuredChasingEvent, "/sunsets")
+        : undefined,
       bodyHtml: renderBaseLayout(
         "Official Bio Link",
         "Chasing Sun(Sets)",
@@ -604,14 +644,32 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         ],
         [
           { href: "/go/waitlist/chasing-sunsets", label: "Join First Access" },
-          { href: "/chasing-sunsets#chasing-tickets", label: "2026 Schedule / Tickets" },
-          { href: "/go/waitlist/chasing-sunsets?utm_content=join_chat", label: "Join the Chat" },
+          {
+            href: "/chasing-sunsets#chasing-tickets",
+            label: "2026 Schedule / Tickets",
+          },
+          {
+            href: "/go/waitlist/chasing-sunsets?utm_content=join_chat",
+            label: "Join the Chat",
+          },
           { href: "/vip", label: "VIP and tables" },
-          { href: "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA", label: "Watch the recap", external: true },
-          { href: "https://soundcloud.com/chasing-sun-sets", label: "Follow the sound", external: true },
-          { href: "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/register", label: "View the gallery", external: true },
+          {
+            href: "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA",
+            label: "Watch the recap",
+            external: true,
+          },
+          {
+            href: "https://soundcloud.com/chasing-sun-sets",
+            label: "Follow the sound",
+            external: true,
+          },
+          {
+            href: "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/register",
+            label: "View the gallery",
+            external: true,
+          },
           { href: "/partners", label: "Partner inquiry" },
-        ],
+        ]
       ),
     },
   ],
@@ -631,10 +689,13 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           "This page clarifies the music brand and distinguishes it from unrelated products that share a similar name.",
         ],
         [
-          { href: "/chasing-sunsets", label: "Official Chasing Sun(Sets) page" },
+          {
+            href: "/chasing-sunsets",
+            label: "Official Chasing Sun(Sets) page",
+          },
           { href: "/radio", label: "Official radio archive" },
           { href: "/tickets", label: "Official tickets" },
-        ],
+        ]
       ),
     },
   ],
@@ -652,7 +713,25 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           "The Monolith Project is a Chicago-rooted music project designed around events, radio, and cultural continuity.",
           "Chasing Sun(Sets), Untold Story, and the radio archive all belong to one Chicago music company.",
         ],
-        sharedLinks,
+        sharedLinks
+      ),
+    },
+  ],
+  [
+    "/monolith",
+    {
+      title: "The Monolith | Manifesto & Concept",
+      description:
+        "Explore the core concept, story, and manifesto behind The Monolith Project's house music movement in Chicago.",
+      absoluteTitle: true,
+      bodyHtml: renderBaseLayout(
+        "Core Philosophy",
+        "The Monolith",
+        [
+          "The Monolith is the central frequency of our movement, connecting Chasing Sun(Sets) and Untold Story.",
+          "Our manifesto is built around music-first curation, intentional room construction, and community return.",
+        ],
+        sharedLinks
       ),
     },
   ],
@@ -669,10 +748,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           "Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and the radio archive.",
           "Each profile includes background, genre context, and series association.",
         ],
-        ARTIST_ENTRIES.map((artist) => ({
+        ARTIST_ENTRIES.map(artist => ({
           href: `/artists/${artist.id}`,
           label: artist.name,
-        })),
+        }))
       ),
     },
   ],
@@ -692,7 +771,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           { href: "/booking", label: "Booking inquiries" },
           { href: "/partners", label: "Partnerships" },
           { href: "/privacy", label: "Privacy and legal" },
-        ],
+        ]
       ),
     },
   ],
@@ -713,7 +792,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           { href: "/tickets", label: "Ticket page" },
           { href: "/schedule", label: "Schedule" },
           { href: "/booking", label: "Booking" },
-        ],
+        ]
       ),
     },
   ],
@@ -732,7 +811,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         [
           { href: "/contact", label: "Contact" },
           { href: "/booking", label: "Booking" },
-        ],
+        ]
       ),
     },
   ],
@@ -751,7 +830,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         [
           { href: "/contact", label: "General contact" },
           { href: "/lineup", label: "Current lineup" },
-        ],
+        ]
       ),
     },
   ],
@@ -770,7 +849,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         [
           { href: "/schedule", label: "View schedule" },
           { href: "/vip", label: "VIP information" },
-        ],
+        ]
       ),
     },
   ],
@@ -778,15 +857,18 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     "/terms",
     {
       title: "Terms of Service",
-      description: "Terms of Service for The Monolith Project website and events.",
+      description:
+        "Terms of Service for The Monolith Project website and events.",
       bodyHtml: renderBaseLayout(
         "Legal",
         "Terms of Service",
-        ["Review the terms that govern use of The Monolith Project website and events."],
+        [
+          "Review the terms that govern use of The Monolith Project website and events.",
+        ],
         [
           { href: "/privacy", label: "Privacy Policy" },
           { href: "/cookies", label: "Cookie Policy" },
-        ],
+        ]
       ),
     },
   ],
@@ -799,11 +881,13 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       bodyHtml: renderBaseLayout(
         "Legal",
         "Privacy Policy",
-        ["Review how The Monolith Project handles website data and event communications."],
+        [
+          "Review how The Monolith Project handles website data and event communications.",
+        ],
         [
           { href: "/terms", label: "Terms of Service" },
           { href: "/cookies", label: "Cookie Policy" },
-        ],
+        ]
       ),
     },
   ],
@@ -819,14 +903,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         [
           { href: "/privacy", label: "Privacy Policy" },
           { href: "/terms", label: "Terms of Service" },
-        ],
+        ]
       ),
     },
   ],
 ]);
 
 function buildArtistRoutes(): RouteDefinition[] {
-  return ARTIST_ENTRIES.map((artist) => ({
+  return ARTIST_ENTRIES.map(artist => ({
     path: `/artists/${artist.id}`,
     title: artist.name,
     description: artist.bio,
@@ -841,10 +925,22 @@ function buildArtistRoutes(): RouteDefinition[] {
       ],
       [
         ...(artist.socials.instagram
-          ? [{ href: artist.socials.instagram, label: `${artist.name} on Instagram`, external: true }]
+          ? [
+              {
+                href: artist.socials.instagram,
+                label: `${artist.name} on Instagram`,
+                external: true,
+              },
+            ]
           : []),
         ...(artist.socials.website
-          ? [{ href: artist.socials.website, label: `${artist.name} website`, external: true }]
+          ? [
+              {
+                href: artist.socials.website,
+                label: `${artist.name} website`,
+                external: true,
+              },
+            ]
           : []),
         { href: "/lineup", label: "Back to lineup" },
       ],
@@ -855,13 +951,13 @@ function buildArtistRoutes(): RouteDefinition[] {
           <p><strong>Genre:</strong> ${escapeHtml(artist.genre)}</p>
           <p><strong>Series:</strong> ${escapeHtml(artist.series.join(", "))}</p>
         </section>
-      `,
+      `
     ),
   }));
 }
 
 function buildRadioEpisodeRoutes(): RouteDefinition[] {
-  return radioEpisodes.map((episode) => ({
+  return radioEpisodes.map(episode => ({
     path: `/radio/${episode.slug}`,
     title: buildRadioEpisodeSeoTitle(episode),
     description: buildRadioEpisodeSeoDescription(episode),
@@ -876,28 +972,32 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
         episode.summary,
       ],
       [
-        { href: episode.audioUrl, label: "Listen on SoundCloud", external: true },
+        {
+          href: episode.audioUrl,
+          label: "Listen on SoundCloud",
+          external: true,
+        },
         { href: "/radio", label: "Back to the radio archive" },
       ],
       `
         <section>
           <h2>Tracklist</h2>
           ${renderLinkList(
-            episode.tracklist.map((track) => ({
+            episode.tracklist.map(track => ({
               href: episode.audioUrl,
               label: `${track.timecode} · ${track.artist} — ${track.title}`,
               external: true,
             })),
-            true,
+            true
           )}
         </section>
-      `,
+      `
     ),
   }));
 }
 
 function buildEventRoutes(): RouteDefinition[] {
-  return futureEvents.map((event) => {
+  return futureEvents.map(event => {
     const routePath = `/events/${event.slug || event.id}`;
     const actionLinks = event.ticketUrl
       ? [
@@ -914,38 +1014,49 @@ function buildEventRoutes(): RouteDefinition[] {
       image: event.image || "/images/hero-monolith.webp",
       schemaData: buildScheduledEventSchema(event, routePath),
       bodyHtml: renderBaseLayout(
-        event.series === "untold-story" ? "Untold Story Event" : "Chasing Sun(Sets) Event",
+        event.series === "untold-story"
+          ? "Untold Story Event"
+          : "Chasing Sun(Sets) Event",
         event.headline || event.title,
         [
           `${event.date} · ${event.time} · ${event.venue}`,
-          event.description || `Official event details for ${event.title} in Chicago.`,
+          event.description ||
+            `Official event details for ${event.title} in Chicago.`,
         ],
         actionLinks,
-        renderEventFacts(routePath),
+        renderEventFacts(routePath)
       ),
     };
   });
 }
 
 const routeDefinitions = [
-  ...Array.from(staticRoutes.entries()).map(([routePath, route]) => ({ path: routePath, ...route })),
+  ...Array.from(staticRoutes.entries()).map(([routePath, route]) => ({
+    path: routePath,
+    ...route,
+  })),
   ...buildArtistRoutes(),
   ...buildRadioEpisodeRoutes(),
   ...buildEventRoutes(),
 ];
 
-for (const sitemapEntry of mergeSitemapEntries(buildEventSitemapEntries(upcomingEvents))) {
+for (const sitemapEntry of mergeSitemapEntries(
+  buildEventSitemapEntries(upcomingEvents)
+)) {
   const sitemapPath = sitemapEntry.path || "/";
-  if (!routeDefinitions.some((route) => route.path === sitemapPath)) {
+  if (!routeDefinitions.some(route => route.path === sitemapPath)) {
     routeDefinitions.push({
       path: sitemapPath,
-      title: sitemapPath === "/" ? "The Monolith Project" : sitemapPath.split("/").filter(Boolean).join(" "),
+      title:
+        sitemapPath === "/"
+          ? "The Monolith Project"
+          : sitemapPath.split("/").filter(Boolean).join(" "),
       description: `Official ${sitemapPath === "/" ? "homepage" : stripTags(sitemapPath)} page for The Monolith Project.`,
       bodyHtml: renderBaseLayout(
         "The Monolith Project",
         sitemapPath === "/" ? "The Monolith Project" : sitemapPath,
         [`Official route for ${sitemapPath} on The Monolith Project website.`],
-        sharedLinks,
+        sharedLinks
       ),
     });
   }
@@ -953,17 +1064,22 @@ for (const sitemapEntry of mergeSitemapEntries(buildEventSitemapEntries(upcoming
 
 for (const route of routeDefinitions) {
   const canonicalUrl = toAbsoluteUrl(route.path);
-  const resolvedTitle = route.absoluteTitle ? route.title : fullTitle(route.title);
+  const resolvedTitle = route.absoluteTitle
+    ? route.title
+    : fullTitle(route.title);
   const schemaMarkup = route.schemaData
     ? `<script type="application/ld+json">${serializeJson(route.schemaData)}</script>`
     : "";
   const siteDataMarkup = `<script>window.__MONOLITH_SITE_DATA__=${serializeJson(
-    buildPublicSiteData(route.path, upcomingEvents),
+    buildPublicSiteData(route.path, upcomingEvents)
   )};</script>`;
 
   let html = template;
 
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(resolvedTitle)}</title>`);
+  html = html.replace(
+    /<title>[\s\S]*?<\/title>/i,
+    `<title>${escapeHtml(resolvedTitle)}</title>`
+  );
   html = upsertMetaByName(html, "description", route.description);
   html = upsertMetaByProperty(html, "og:url", canonicalUrl);
   html = upsertMetaByProperty(html, "og:title", resolvedTitle);
@@ -986,13 +1102,16 @@ for (const route of routeDefinitions) {
   html = upsertTag(
     html,
     /<link[^>]+rel="canonical"[^>]*>/i,
-    `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" data-rh="true" />`,
+    `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" data-rh="true" />`
   );
   html = html.replace(
     /<div id="root"><\/div>/i,
-    `<div id="root">${route.bodyHtml}</div>`,
+    `<div id="root">${route.bodyHtml}</div>`
   );
-  html = html.replace(/<script[^>]+type="module"[^>]*>/i, `${siteDataMarkup}\n${schemaMarkup}\n$&`);
+  html = html.replace(
+    /<script[^>]+type="module"[^>]*>/i,
+    `${siteDataMarkup}\n${schemaMarkup}\n$&`
+  );
   html = injectHeroPreloads(html, route.path);
 
   const outputPath =

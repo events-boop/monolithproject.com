@@ -102,7 +102,10 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
   await page.goto("/tickets");
   await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
   await expect(
-    page.getByRole("heading", { name: /GET IN|FIRST ACCESS|SOLD OUT/i })
+    page.getByRole("heading", {
+      level: 1,
+      name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
+    })
   ).toBeVisible({
     timeout: 10000,
   });
@@ -125,10 +128,72 @@ test("scoped a11y checks pass for newsletter and tickets header", async ({
 
   await page.goto("/tickets");
   await expect(
-    page.getByRole("heading", { name: /GET IN|FIRST ACCESS|SOLD OUT/i })
+    page.getByRole("heading", {
+      level: 1,
+      name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
+    })
   ).toBeVisible({
     timeout: 10000,
   });
   const ticketsA11y = await new AxeBuilder({ page }).include("main").analyze();
   expect(ticketsA11y.violations).toEqual([]);
+});
+
+test("monolith manifesto page loads and contains required sections", async ({
+  page,
+}) => {
+  await page.goto("/monolith");
+  await page.waitForLoadState("networkidle");
+
+  // Verify main heading
+  await expect(
+    page.getByRole("heading", { name: /THE MONOLITH/i, level: 1 })
+  ).toBeVisible();
+
+  // Verify custom sections exist
+  await expect(page.locator("#story")).toBeVisible();
+  await expect(page.locator("#manifesto")).toBeVisible();
+  await expect(page.locator("#vision")).toBeVisible();
+
+  // Run accessibility verification
+  const monolithA11y = await new AxeBuilder({ page })
+    .include("main")
+    .exclude(".word-scrub-word")
+    .analyze();
+  expect(monolithA11y.violations).toEqual([]);
+});
+
+test("all navigation megamenu and chapter links load cleanly without 404", async ({
+  page,
+}) => {
+  const linksToTest = [
+    "/artists/autograf",
+    "/artists/lazare",
+    "/radio/ep-004-benchek-part-2",
+    "/radio/ep-02-ewerseen",
+    "/radio/ep-03-terranova",
+    "/story",
+    "/archive",
+    "/monolith",
+    "/schedule",
+    "/tickets",
+    "/newsletter",
+    "/chasing-sunsets",
+    "/lineup",
+    "/radio",
+    "/radio/ep-01-benchek",
+    "/guide",
+    "/vip",
+  ];
+
+  for (const path of linksToTest) {
+    const response = await page.goto(path);
+    expect(response?.status()).toBeLessThan(400);
+
+    await page.waitForLoadState("domcontentloaded");
+    const bodyText = await page.locator("body").innerText();
+    expect(bodyText).not.toContain("This page doesn't exist.");
+    expect(bodyText).not.toContain("Episode Not Found");
+    expect(bodyText).not.toContain("Gallery not found");
+  }
 });

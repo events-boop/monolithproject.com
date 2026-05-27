@@ -12,7 +12,11 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { getEventDetailsHref } from "@/lib/cta";
-import { getExperienceEvent, getPrimaryTicketUrl, isTicketOnSale } from "@/lib/siteExperience";
+import {
+  getExperienceEvent,
+  getPrimaryTicketUrl,
+  isTicketOnSale,
+} from "@/lib/siteExperience";
 import { useVisitorContext, type VisitorSegment } from "@/lib/visitorContext";
 
 interface ContextAction {
@@ -27,7 +31,11 @@ interface ContextAction {
 const segmentContent: Record<
   VisitorSegment,
   {
-    actions: (ticketUrl: string, hasLiveTickets: boolean, nextEventHref: string) => ContextAction[];
+    actions: (
+      ticketUrl: string,
+      hasLiveTickets: boolean,
+      nextEventHref: string
+    ) => ContextAction[];
     eyebrow: string;
     label: string;
     title: string;
@@ -46,21 +54,24 @@ const segmentContent: Record<
         href: nextEventHref,
         icon: CalendarRange,
         note: "Upcoming Date",
-        description: "Open the active event page first, then decide whether you want tickets, context, or the full calendar.",
+        description:
+          "Open the active event page first, then decide whether you want tickets, context, or the full calendar.",
       },
       {
         label: "Radio Show",
         href: "/radio",
         icon: Radio,
         note: "Hear The Rooms",
-        description: "The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive.",
+        description:
+          "The Chasing Sun(Sets) Radio Show is the easiest way to hear the taste behind the room before you arrive.",
       },
       {
         label: "Archive",
         href: "/archive",
         icon: LibraryBig,
         note: "See The Nights",
-        description: "See what the nights actually looked and felt like once the doors opened.",
+        description:
+          "See what the nights actually looked and felt like once the doors opened.",
       },
     ],
   },
@@ -77,7 +88,8 @@ const segmentContent: Record<
             href: ticketUrl,
             icon: Ticket,
             note: "Live window",
-            description: "Jump directly into the current on-sale event instead of re-reading the whole homepage.",
+            description:
+              "Jump directly into the current on-sale event instead of re-reading the whole homepage.",
             external: true,
           }
         : {
@@ -85,7 +97,8 @@ const segmentContent: Record<
             href: nextEventHref,
             icon: CalendarRange,
             note: "Upcoming Date",
-            description: "Go directly to the active event page when there is no live ticket window yet.",
+            description:
+              "Go directly to the active event page when there is no live ticket window yet.",
           },
       {
         label: "Radio Show",
@@ -99,14 +112,16 @@ const segmentContent: Record<
         href: "/archive",
         icon: LibraryBig,
         note: "The Visual Record",
-        description: "See what happened between the last event and the next one.",
+        description:
+          "See what happened between the last event and the next one.",
       },
     ],
   },
   "partner-intent": {
     eyebrow: "Working View",
     label: "Partner / Press",
-    title: "Looking at Monolith as a partner, venue, or press contact? Start here.",
+    title:
+      "Looking at Monolith as a partner, venue, or press contact? Start here.",
     description:
       "If you are coming in from venues, brands, media, or booking, the clearest path is partners, press, then direct contact.",
     actions: () => [
@@ -115,14 +130,16 @@ const segmentContent: Record<
         href: "/partners",
         icon: Handshake,
         note: "Brand and venue path",
-        description: "See where venue, brand, and collaboration conversations begin.",
+        description:
+          "See where venue, brand, and collaboration conversations begin.",
       },
       {
         label: "Press Context",
         href: "/press",
         icon: FileText,
         note: "Fast facts",
-        description: "Get the language, context, and assets media or collaborators usually need first.",
+        description:
+          "Get the language, context, and assets media or collaborators usually need first.",
       },
       {
         label: "Contact",
@@ -155,16 +172,19 @@ export default function VisitorContextPanel({
   }
 
   const resolvedSegment =
-    forcedSegment ?? (
-      !allowPartnerIntent && visitorContext.segment === "partner-intent"
+    forcedSegment ??
+    (!allowPartnerIntent && visitorContext.segment === "partner-intent"
       ? visitorContext.homeVisits > 1
         ? "returning"
         : "first-visit"
-      : visitorContext.segment
-    );
+      : visitorContext.segment);
 
   const content = segmentContent[resolvedSegment];
-  const actions = content.actions(ticketUrl || "/schedule", hasLiveTickets, nextEventHref);
+  const actions = content.actions(
+    ticketUrl || "/schedule",
+    hasLiveTickets,
+    nextEventHref
+  );
 
   return (
     <section className="relative z-10 px-6 py-6 md:py-8">
@@ -182,7 +202,9 @@ export default function VisitorContextPanel({
 
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
-              <span className="ui-kicker scene-kicker mb-4 block">{content.eyebrow}</span>
+              <span className="ui-kicker scene-kicker mb-4 block">
+                {content.eyebrow}
+              </span>
               <h2 className="font-display text-[clamp(2rem,4.7vw,4.2rem)] leading-[0.94] text-white">
                 {content.title}
               </h2>
@@ -220,7 +242,9 @@ export default function VisitorContextPanel({
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-white/60">{action.description}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-white/60">
+                    {action.description}
+                  </p>
                   <div className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition-colors group-hover:text-white">
                     Open
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -234,10 +258,19 @@ export default function VisitorContextPanel({
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.06,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                 >
                   {action.external ? (
-                    <a href={action.href} target="_blank" rel="noopener noreferrer" className={cardClasses}>
+                    <a
+                      href={action.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cardClasses}
+                    >
                       {cardContent}
                     </a>
                   ) : (

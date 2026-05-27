@@ -26,7 +26,7 @@ export function ButtonColorful({
         "bg-black/80 border border-white/10",
         "transition-all duration-300",
         "group",
-        className,
+        className
       )}
       {...props}
     >
@@ -37,7 +37,7 @@ export function ButtonColorful({
           "bg-gradient-to-r",
           glowGradients[glow],
           "opacity-60 group-hover:opacity-100",
-          "blur-sm transition-opacity duration-500",
+          "blur-sm transition-opacity duration-500"
         )}
       />
 

@@ -43,7 +43,7 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     sessionStorage.setItem("monolith-loaded-v2", "1");
     sessionStorage.setItem("event-banner-dismissed", "1");
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     // More robust selectors for tailwind brackets, hiding blockers
     style.innerHTML = `
       [class*="z-[200]"], [class*="z-[60]"] { 
@@ -61,14 +61,19 @@ async function waitForAppReady(page: import("@playwright/test").Page) {
   await page.waitForTimeout(2000); // Cinematic transition buffer
 }
 
-async function expectValidRoute(page: import("@playwright/test").Page, pathname: string) {
+async function expectValidRoute(
+  page: import("@playwright/test").Page,
+  pathname: string
+) {
   await page.goto(pathname, { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   await page.waitForTimeout(150);
 
   const body = page.locator("body");
   await expect
-    .poll(async () => (await body.innerText()).trim().length, { timeout: 10000 })
+    .poll(async () => (await body.innerText()).trim().length, {
+      timeout: 10000,
+    })
     .toBeGreaterThan(0);
   await expect(body).not.toContainText("Gallery not found");
   await expect(body).not.toContainText("Episode Not Found");
@@ -84,38 +89,60 @@ for (const pathname of routeSamples) {
 test("event banner chrome stays off ineligible routes", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await expect(page.getByLabel("Open tickets for current featured event")).toHaveCount(0);
+  await expect(
+    page.getByLabel("Open tickets for current featured event")
+  ).toHaveCount(0);
 
   await page.goto("/press", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await expect(page.getByLabel("Open tickets for current featured event")).toHaveCount(0);
+  await expect(
+    page.getByLabel("Open tickets for current featured event")
+  ).toHaveCount(0);
 });
 
-test("desktop nav CTA flows resolve to working destinations", async ({ page }) => {
+test("desktop nav CTA flows resolve to working destinations", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
   await nav.getByRole("button", { name: /^shows/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: "CHASING SUN(SETS)" })).toBeVisible();
-  await page.getByRole("menuitem", { name: "CHASING SUN(SETS)" }).click({ force: true });
+  await expect(
+    page.getByRole("menuitem", { name: "CHASING SUN(SETS)" })
+  ).toBeVisible();
+  await page
+    .getByRole("menuitem", { name: "CHASING SUN(SETS)" })
+    .click({ force: true });
   await expect(page).toHaveURL(/\/chasing-sunsets$/);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^radio/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: "THE SHOW" })).toBeVisible();
-  await page.getByRole("menuitem", { name: "THE SHOW" }).click({ force: true });
-  await expect(page).toHaveURL(/\/radio$/);
+  await nav
+    .getByRole("button", { name: /chasing sun\(sets\) & radio/i })
+    .click({ force: true });
+  await expect(
+    page.getByRole("menuitem", { name: "S1E3: Benchek Marbella" })
+  ).toBeVisible();
+  await page
+    .getByRole("menuitem", { name: "S1E3: Benchek Marbella" })
+    .click({ force: true });
+  await expect(page).toHaveURL(/\/radio\/ep-004-benchek-part-2$/);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   await nav.getByRole("button", { name: /^partners/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: "PARTNER WITH US" })).toBeVisible();
-  await page.getByRole("menuitem", { name: "PARTNER WITH US" }).click({ force: true });
+  await expect(
+    page.getByRole("menuitem", { name: "PARTNER WITH US" })
+  ).toBeVisible();
+  await page
+    .getByRole("menuitem", { name: "PARTNER WITH US" })
+    .click({ force: true });
   await expect(page).toHaveURL(/\/partners$/);
-  await expect(page.getByRole("heading", { name: /partners & crew/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /partners & crew/i })
+  ).toBeVisible();
 });
 
 test("community utility CTAs open the intended flows", async ({ page }) => {
@@ -125,18 +152,30 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   const nav = page.getByRole("navigation").first();
 
   await nav.getByRole("button", { name: /^shows/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: /^upcoming shows/i })).toBeVisible();
-  await page.getByRole("menuitem", { name: /^upcoming shows/i }).click({ force: true });
+  await expect(
+    page.getByRole("menuitem", { name: /^upcoming shows/i })
+  ).toBeVisible();
+  await page
+    .getByRole("menuitem", { name: /^upcoming shows/i })
+    .click({ force: true });
   await expect(page).toHaveURL(/\/schedule$/);
-  await expect(page.getByRole("heading", { name: /upcoming shows/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /upcoming shows/i })
+  ).toBeVisible();
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   await nav.getByRole("button", { name: /^partners/i }).click({ force: true });
-  await expect(page.getByRole("menuitem", { name: /^partner with us/i })).toBeVisible();
-  await page.getByRole("menuitem", { name: /^partner with us/i }).click({ force: true });
+  await expect(
+    page.getByRole("menuitem", { name: /^partner with us/i })
+  ).toBeVisible();
+  await page
+    .getByRole("menuitem", { name: /^partner with us/i })
+    .click({ force: true });
   await expect(page).toHaveURL(/\/partners$/);
-  await expect(page.getByRole("heading", { name: /partners & crew/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /partners & crew/i })
+  ).toBeVisible();
 });
 
 test("schedule quick view hands off to the event dossier and context rail", async ({
@@ -148,6 +187,12 @@ test("schedule quick view hands off to the event dossier and context rail", asyn
   await page.getByRole("link", { name: /full dossier/i }).click();
   await expect(page).toHaveURL(/\/events\/css-jul04$/);
   await expect(page.getByText("Read The Room", { exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: /radio hear the taste behind the room/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /archive see the proof before the next move/i })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /radio hear the taste behind the room/i })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: /archive see the proof before the next move/i,
+    })
+  ).toBeVisible();
 });

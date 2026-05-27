@@ -166,19 +166,43 @@ function parseApiError(body: ApiError, fallback: string) {
   return body.error?.message || body.message || fallback;
 }
 
-export async function submitNewsletterLead(payload: LeadPayload, idempotencyKey: string) {
-  const url = typeof window !== "undefined" ? new URL(window.location.href) : null;
+export async function submitNewsletterLead(
+  payload: LeadPayload,
+  idempotencyKey: string
+) {
+  const url =
+    typeof window !== "undefined" ? new URL(window.location.href) : null;
   const attribution = getAttributionPayload();
   const enrichedPayload: LeadPayload = {
     ...attribution,
     ...payload,
-    eventInterest: payload.eventInterest || url?.searchParams.get("event") || url?.searchParams.get("eventId") || url?.searchParams.get("eventInterest") || undefined,
+    eventInterest:
+      payload.eventInterest ||
+      url?.searchParams.get("event") ||
+      url?.searchParams.get("eventId") ||
+      url?.searchParams.get("eventInterest") ||
+      undefined,
     pageUrl: payload.pageUrl || url?.href || attribution.pageUrl,
-    utmSource: payload.utmSource || url?.searchParams.get("utm_source") || attribution.utmSource,
-    utmMedium: payload.utmMedium || url?.searchParams.get("utm_medium") || attribution.utmMedium,
-    utmCampaign: payload.utmCampaign || url?.searchParams.get("utm_campaign") || attribution.utmCampaign,
-    utmTerm: payload.utmTerm || url?.searchParams.get("utm_term") || attribution.utmTerm,
-    utmContent: payload.utmContent || url?.searchParams.get("utm_content") || attribution.utmContent,
+    utmSource:
+      payload.utmSource ||
+      url?.searchParams.get("utm_source") ||
+      attribution.utmSource,
+    utmMedium:
+      payload.utmMedium ||
+      url?.searchParams.get("utm_medium") ||
+      attribution.utmMedium,
+    utmCampaign:
+      payload.utmCampaign ||
+      url?.searchParams.get("utm_campaign") ||
+      attribution.utmCampaign,
+    utmTerm:
+      payload.utmTerm ||
+      url?.searchParams.get("utm_term") ||
+      attribution.utmTerm,
+    utmContent:
+      payload.utmContent ||
+      url?.searchParams.get("utm_content") ||
+      attribution.utmContent,
   };
 
   const response = await fetch("/api/leads", {
@@ -192,7 +216,12 @@ export async function submitNewsletterLead(payload: LeadPayload, idempotencyKey:
 
   if (!response.ok) {
     const body = (await response.json().catch(() => ({}))) as ApiError;
-    throw new Error(parseApiError(body, "We couldn't subscribe you right now. Please try again."));
+    throw new Error(
+      parseApiError(
+        body,
+        "We couldn't subscribe you right now. Please try again."
+      )
+    );
   }
 
   return response.json();
@@ -209,7 +238,12 @@ export async function submitBookingInquiry(payload: BookingInquiryPayload) {
 
   if (!response.ok) {
     const body = (await response.json().catch(() => ({}))) as ApiError;
-    throw new Error(parseApiError(body, "We couldn't submit your inquiry right now. Please try again."));
+    throw new Error(
+      parseApiError(
+        body,
+        "We couldn't submit your inquiry right now. Please try again."
+      )
+    );
   }
 
   return response.json();
@@ -226,7 +260,12 @@ export async function submitContactForm(payload: ContactPayload) {
 
   if (!response.ok) {
     const body = (await response.json().catch(() => ({}))) as ApiError;
-    throw new Error(parseApiError(body, "We couldn't deliver your message right now. Please try again."));
+    throw new Error(
+      parseApiError(
+        body,
+        "We couldn't deliver your message right now. Please try again."
+      )
+    );
   }
 
   return response.json();
@@ -250,14 +289,20 @@ export async function verifySponsorAccess(password: string) {
   return response.json();
 }
 
-export async function trackTicketIntent(source: string, eventId?: string, destinationUrl?: string) {
+export async function trackTicketIntent(
+  source: string,
+  eventId?: string,
+  destinationUrl?: string
+) {
   const attribution = getAttributionPayload();
   const payload: TicketIntentPayload = {
     ...attribution,
     source,
     eventId,
     destinationUrl,
-    pageUrl: attribution.pageUrl || (typeof window !== "undefined" ? window.location.href : undefined),
+    pageUrl:
+      attribution.pageUrl ||
+      (typeof window !== "undefined" ? window.location.href : undefined),
   };
 
   await fetch("/api/ticket-intent", {

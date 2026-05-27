@@ -3,14 +3,18 @@ import { hasAnalyticsConsent } from "./cookieConsent";
 import { getAttributionPayload } from "./attribution";
 
 type PostHogClient = (typeof import("posthog-js"))["default"];
-type PostHogProperties = Record<string, string | number | boolean | null | undefined>;
+type PostHogProperties = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
 type PendingCapture = {
   eventName: string;
   properties?: PostHogProperties;
 };
 
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
-const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com";
+const POSTHOG_HOST =
+  import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com";
 
 let client: PostHogClient | null = null;
 let loading: Promise<PostHogClient | null> | null = null;
@@ -32,12 +36,19 @@ function isTrackingHost() {
 
 function isEnabled() {
   // Avoid penalizing Lighthouse / previews with analytics scripts.
-  return import.meta.env.PROD && isTrackingHost() && Boolean(POSTHOG_KEY) && hasAnalyticsConsent();
+  return (
+    import.meta.env.PROD &&
+    isTrackingHost() &&
+    Boolean(POSTHOG_KEY) &&
+    hasAnalyticsConsent()
+  );
 }
 
 function compactProperties(properties: PostHogProperties) {
   return Object.fromEntries(
-    Object.entries(properties).filter(([, value]) => value !== undefined && value !== null && value !== ""),
+    Object.entries(properties).filter(
+      ([, value]) => value !== undefined && value !== null && value !== ""
+    )
   ) as PostHogProperties;
 }
 
@@ -123,7 +134,7 @@ export function schedulePostHogInit() {
   initScheduled = true;
 
   runWhenIdle(() => {
-    void loadPostHog().then((ph) => {
+    void loadPostHog().then(ph => {
       if (!ph) return;
       flushPendingCaptures(ph);
     });
@@ -143,7 +154,10 @@ export function queuePostHogPageview() {
   pendingPageviewProperties = undefined;
 }
 
-export function capturePostHogEvent(eventName: string, properties?: PostHogProperties) {
+export function capturePostHogEvent(
+  eventName: string,
+  properties?: PostHogProperties
+) {
   if (!isEnabled()) return;
   const enrichedProperties = withAttributionProperties(properties);
 

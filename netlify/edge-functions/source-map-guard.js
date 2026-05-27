@@ -1,7 +1,8 @@
 function buildDenyHeaders() {
   return {
     "Cache-Control": "public, max-age=300",
-    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Content-Security-Policy":
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
     "Content-Type": "text/plain; charset=utf-8",
     "Cross-Origin-Resource-Policy": "same-origin",
     "Referrer-Policy": "no-referrer",

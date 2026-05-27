@@ -4,39 +4,42 @@ The Monolith Project CTA strategy transitions from a fragmented collection of li
 
 ## The Triple-Stack Model
 
-| Platform | Ownership | Primary Mechanism | Data Output |
-| :--- | :--- | :--- | :--- |
-| **Laylo** | **Intent Capture** | 1-Click RSVP / SMS Drops | Phone, Email, DM Permission |
-| **Fillout** | **Qualification** | Multi-Step Logic Forms | Lead Score, VIP Preferences |
-| **Posh** | **Transaction** | Tiered Ticketing / Referral | Final Sale, Order Value |
+| Platform    | Ownership          | Primary Mechanism           | Data Output                 |
+| :---------- | :----------------- | :-------------------------- | :-------------------------- |
+| **Laylo**   | **Intent Capture** | 1-Click RSVP / SMS Drops    | Phone, Email, DM Permission |
+| **Fillout** | **Qualification**  | Multi-Step Logic Forms      | Lead Score, VIP Preferences |
+| **Posh**    | **Transaction**    | Tiered Ticketing / Referral | Final Sale, Order Value     |
 
 ---
 
 ## Strategic CTA Hierarchy per Page
 
 ### **1. Homepage**
-*   **Primary**: "Join Presale" or "Get Early Access" (**Laylo**)
-*   **Secondary**: "View Events" (Scroll to Schedule)
-*   **Fallback**: "Explore The Series" (Navigation)
+
+- **Primary**: "Join Presale" or "Get Early Access" (**Laylo**)
+- **Secondary**: "View Events" (Scroll to Schedule)
+- **Fallback**: "Explore The Series" (Navigation)
 
 ### **2. Event Experience (Dynamic States)**
 
-| Event State | Primary CTA (Tool) | Secondary CTA (Tool) | Fallback/Backup (Tool) |
-| :--- | :--- | :--- | :--- |
-| **Upcoming** | **Unlock Presale Access** (Laylo) | Join Waitlist (Laylo) | VIP / Tables (Fillout) |
-| **On Sale** | **Get Tickets** (Posh) | VIP / Tables (Fillout) | Join SMS Updates (Laylo) |
-| **Low Inventory** | **Claim Last Tickets** (Posh) | Final VIP Inquiry (Fillout) | SMS Re-stock Alert (Laylo) |
-| **Sold Out** | **Join Waitlist** (Laylo) | VIP Inquiry (Fillout) | Next Drop Access (Laylo) |
-| **Post-Event** | **Next Signal Access** (Laylo) | Watch Recap (Gallery) | Join The List (Laylo) |
+| Event State       | Primary CTA (Tool)                | Secondary CTA (Tool)        | Fallback/Backup (Tool)     |
+| :---------------- | :-------------------------------- | :-------------------------- | :------------------------- |
+| **Upcoming**      | **Unlock Presale Access** (Laylo) | Join Waitlist (Laylo)       | VIP / Tables (Fillout)     |
+| **On Sale**       | **Get Tickets** (Posh)            | VIP / Tables (Fillout)      | Join SMS Updates (Laylo)   |
+| **Low Inventory** | **Claim Last Tickets** (Posh)     | Final VIP Inquiry (Fillout) | SMS Re-stock Alert (Laylo) |
+| **Sold Out**      | **Join Waitlist** (Laylo)         | VIP Inquiry (Fillout)       | Next Drop Access (Laylo)   |
+| **Post-Event**    | **Next Signal Access** (Laylo)    | Watch Recap (Gallery)       | Join The List (Laylo)      |
 
 ### **3. VIP / Concierge Pages**
-*   **Primary**: "Request VIP Access" (**Fillout**)
-*   **Secondary**: "Talk To Concierge" (Direct SMS/WhatsApp)
-*   **Trust Signal**: "An Elevated Signal Experience" (Section Header)
+
+- **Primary**: "Request VIP Access" (**Fillout**)
+- **Secondary**: "Talk To Concierge" (Direct SMS/WhatsApp)
+- **Trust Signal**: "An Elevated Signal Experience" (Section Header)
 
 ### **4. Series & Archive Pages**
-*   **Primary**: "Join The List" (**Laylo**)
-*   **Secondary**: "See Upcoming Dates" (Schedule)
+
+- **Primary**: "Join The List" (**Laylo**)
+- **Secondary**: "See Upcoming Dates" (Schedule)
 
 ---
 

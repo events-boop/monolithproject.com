@@ -13,10 +13,19 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/radio/ep-02-ewerseen", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-03-terranova", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-04-radian", priority: "0.8", changefreq: "weekly" },
-  { path: "/radio/ep-004-benchek-part-2", priority: "0.8", changefreq: "weekly" },
-  { path: "/radio/ch-02-radian-no-sleep", priority: "0.8", changefreq: "weekly" },
+  {
+    path: "/radio/ep-004-benchek-part-2",
+    priority: "0.8",
+    changefreq: "weekly",
+  },
+  {
+    path: "/radio/ch-02-radian-no-sleep",
+    priority: "0.8",
+    changefreq: "weekly",
+  },
   { path: "/lineup", priority: "0.8", changefreq: "weekly" },
   { path: "/about", priority: "0.7", changefreq: "weekly" },
+  { path: "/monolith", priority: "0.85", changefreq: "weekly" },
   { path: "/contact", priority: "0.6", changefreq: "monthly" },
   { path: "/faq", priority: "0.7", changefreq: "weekly" },
   { path: "/partners", priority: "0.6", changefreq: "monthly" },
@@ -54,8 +63,10 @@ function normalizeSitemapPath(path = "") {
 
 export function buildEventSitemapEntries(events = []) {
   return events
-    .filter((event) => event && event.status !== "past" && (event.slug || event.id))
-    .map((event) => ({
+    .filter(
+      event => event && event.status !== "past" && (event.slug || event.id)
+    )
+    .map(event => ({
       path: `/events/${event.slug || event.id}`,
       priority: event.status === "on-sale" ? "0.9" : "0.7",
       changefreq: event.status === "on-sale" ? "daily" : "weekly",
@@ -66,7 +77,7 @@ export function mergeSitemapEntries(entries = []) {
   const merged = [...BASE_PUBLIC_SITEMAP_ENTRIES, ...entries];
   const seen = new Set();
 
-  return merged.filter((entry) => {
+  return merged.filter(entry => {
     const normalizedPath = normalizeSitemapPath(entry.path);
     if (seen.has(normalizedPath)) return false;
     seen.add(normalizedPath);
@@ -79,7 +90,7 @@ export const PUBLIC_SITEMAP_ENTRIES = mergeSitemapEntries();
 
 export function buildSitemapXml(entries = PUBLIC_SITEMAP_ENTRIES) {
   const body = entries
-    .map((entry) => {
+    .map(entry => {
       const priority = entry.priority ?? "0.8";
       const changefreq = entry.changefreq ?? "weekly";
 

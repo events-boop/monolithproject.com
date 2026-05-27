@@ -62,7 +62,11 @@ export default function WhatToExpect() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="group relative flex flex-col p-8 md:p-12 lg:p-16 overflow-hidden cursor-default border-b border-black/10 last:border-b-0 md:[&:nth-child(3)]:border-b-0 md:[&:nth-child(4)]:border-b-0 md:border-t md:[&:nth-child(1)]:border-t-0 md:[&:nth-child(2)]:border-t-0"
             >
               {/* Black flood on hover */}

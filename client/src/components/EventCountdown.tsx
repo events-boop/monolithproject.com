@@ -10,7 +10,10 @@ import {
   getEventWindowStatus,
   getEventById as getEventByIdShared,
 } from "@/lib/siteExperience";
-import { getEventOutlinePillToneClass, getEventPillToneClass } from "@/lib/ctaTone";
+import {
+  getEventOutlinePillToneClass,
+  getEventPillToneClass,
+} from "@/lib/ctaTone";
 import { getEventCta } from "@/lib/cta";
 
 export function getEventById(id: string) {
@@ -23,10 +26,16 @@ function getNextEvent(eventId?: string) {
     const specificEvent = getEventById(eventId);
     if (specificEvent) return specificEvent;
   }
-  return upcomingEvents.find(e => e.startsAt && new Date(e.startsAt) > new Date()) || upcomingEvents[0];
+  return (
+    upcomingEvents.find(e => e.startsAt && new Date(e.startsAt) > new Date()) ||
+    upcomingEvents[0]
+  );
 }
 
-function resolveCountdownEvent(event?: ScheduledEvent | null, eventId?: string) {
+function resolveCountdownEvent(
+  event?: ScheduledEvent | null,
+  eventId?: string
+) {
   if (event) return event;
   return getNextEvent(eventId);
 }
@@ -43,7 +52,15 @@ function getTimeLeft(target: Date | null) {
   };
 }
 
-function Digit({ value, label, accentColor }: { value: number; label: string; accentColor: string }) {
+function Digit({
+  value,
+  label,
+  accentColor,
+}: {
+  value: number;
+  label: string;
+  accentColor: string;
+}) {
   const display = String(value).padStart(2, "0");
   return (
     <div className="min-w-0">
@@ -149,7 +166,12 @@ function LiveClock({
   if (!target || !timeLeft) return null;
 
   return (
-    <div className="grid w-full max-w-full grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="off" aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}>
+    <div
+      className="grid w-full max-w-full grid-cols-4 gap-2 sm:gap-3"
+      role="timer"
+      aria-live="off"
+      aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}
+    >
       <Digit value={timeLeft.days} label="Days" accentColor={accentColor} />
       <Digit value={timeLeft.hours} label="Hours" accentColor={accentColor} />
       <Digit value={timeLeft.minutes} label="Min" accentColor={accentColor} />
@@ -163,13 +185,20 @@ type EventCountdownProps = {
   eventId?: string;
 };
 
-export default function EventCountdown({ event, eventId }: EventCountdownProps) {
+export default function EventCountdown({
+  event,
+  eventId,
+}: EventCountdownProps) {
   const resolvedEvent = resolveCountdownEvent(event, eventId);
 
   if (!resolvedEvent) return null;
 
   const isSunsets = resolvedEvent.series === "chasing-sunsets";
-  const seriesColor = isSunsets ? "#E8B86D" : resolvedEvent.series === "untold-story" ? "#22D3EE" : "#E05A3A";
+  const seriesColor = isSunsets
+    ? "#E8B86D"
+    : resolvedEvent.series === "untold-story"
+      ? "#22D3EE"
+      : "#E05A3A";
   const seriesLabel = getSeriesLabel(resolvedEvent.series);
   const countdownTitle = resolvedEvent.headline || resolvedEvent.title;
   const venueLabel = getEventVenueLabel(resolvedEvent);
@@ -186,7 +215,7 @@ export default function EventCountdown({ event, eventId }: EventCountdownProps) 
     <div
       data-countdown-event-id={resolvedEvent.id}
       data-countdown-state={windowStatus}
-      className={`relative w-full overflow-hidden px-4 py-8 transition-colors duration-700 bg-noise sm:px-6 md:py-12 ${isSunsets ? 'bg-[#0b0907]' : 'bg-[#070b0e]'}`}
+      className={`relative w-full overflow-hidden px-4 py-8 transition-colors duration-700 bg-noise sm:px-6 md:py-12 ${isSunsets ? "bg-[#0b0907]" : "bg-[#070b0e]"}`}
     >
       <div className="container layout-wide relative z-10 transition-opacity">
         <div className="relative max-w-full overflow-hidden rounded-[1.35rem] border border-white/10 bg-[linear-gradient(135deg,rgba(69,12,38,0.92)_0%,rgba(25,18,20,0.96)_46%,rgba(92,26,53,0.9)_100%)] px-5 py-7 shadow-[0_28px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.08)] sm:px-7 md:px-9 md:py-9">
@@ -249,11 +278,17 @@ export default function EventCountdown({ event, eventId }: EventCountdownProps) 
                   <span className="font-mono text-xs font-black uppercase tracking-[0.24em]">
                     {cta.label}
                   </span>
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" strokeWidth={2.4} />
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                    strokeWidth={2.4}
+                  />
                 </a>
                 {startingPrice ? (
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
-                    Entry from <span className="font-black text-white">${startingPrice}</span>
+                    Entry from{" "}
+                    <span className="font-black text-white">
+                      ${startingPrice}
+                    </span>
                   </span>
                 ) : null}
               </div>
@@ -270,9 +305,14 @@ export default function EventCountdown({ event, eventId }: EventCountdownProps) 
                   style={{ color: seriesColor, backgroundColor: seriesColor }}
                 />
               </div>
-              <LiveClock target={eventWindow.start} accentColor={seriesColor} status={windowStatus} />
+              <LiveClock
+                target={eventWindow.start}
+                accentColor={seriesColor}
+                status={windowStatus}
+              />
               <p className="mt-5 border-t border-white/10 pt-4 font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-white/38">
-                First access receives lineup, table, and ticket-window updates before public release.
+                First access receives lineup, table, and ticket-window updates
+                before public release.
               </p>
             </div>
           </div>

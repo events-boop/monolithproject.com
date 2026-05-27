@@ -23,23 +23,30 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      const showDebugDetails = import.meta.env.DEV && Boolean(this.state.error?.stack);
+      const showDebugDetails =
+        import.meta.env.DEV && Boolean(this.state.error?.stack);
       return (
         <div className="flex flex-col items-center justify-center min-h-[100svh] p-8 bg-background selection:bg-primary/30">
           <div className="flex flex-col items-start w-full max-w-2xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 md:p-12 shadow-[0_45px_100px_rgba(0,0,0,0.6)]">
             <div className="flex items-center gap-4 mb-8">
-               <div className="h-px w-12 bg-destructive/50" />
-               <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-destructive">Something Went Wrong</span>
+              <div className="h-px w-12 bg-destructive/50" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-destructive">
+                Something Went Wrong
+              </span>
             </div>
-            
+
             <h2 className="font-display text-5xl md:text-7xl leading-[0.85] uppercase text-white mb-6 tracking-tighter">
-              Page<br/>
-              Did Not<br/>
+              Page
+              <br />
+              Did Not
+              <br />
               Load
             </h2>
 
             <p className="font-mono text-xs md:text-sm tracking-[0.1em] text-white/50 leading-relaxed mb-10 max-w-md">
-              Something went wrong while loading this part of the site. Refresh the page or head back home to keep browsing shows, artists, and updates.
+              Something went wrong while loading this part of the site. Refresh
+              the page or head back home to keep browsing shows, artists, and
+              updates.
             </p>
 
             {showDebugDetails && (
@@ -55,11 +62,14 @@ class ErrorBoundary extends Component<Props, State> {
                 onClick={() => window.location.reload()}
                 className="group flex items-center gap-3 px-6 py-3 bg-white text-black font-mono text-[11px] uppercase tracking-[0.2em] hover:bg-primary transition-all duration-500"
               >
-                <RotateCcw size={14} className="group-hover:rotate-[-180deg] transition-transform duration-700" />
+                <RotateCcw
+                  size={14}
+                  className="group-hover:rotate-[-180deg] transition-transform duration-700"
+                />
                 Refresh Page
               </button>
-              
-              <a 
+
+              <a
                 href="/"
                 className="flex items-center gap-3 px-6 py-3 border border-white/10 text-white/60 font-mono text-[11px] uppercase tracking-[0.2em] hover:text-white hover:border-white transition-all duration-500"
               >
@@ -67,10 +77,10 @@ class ErrorBoundary extends Component<Props, State> {
               </a>
             </div>
           </div>
-          
+
           <div className="fixed inset-0 -z-10 pointer-events-none opacity-20">
-             <div className="absolute inset-0 bg-noise mix-blend-overlay" />
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.1),transparent_70%)]" />
+            <div className="absolute inset-0 bg-noise mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,0,0,0.1),transparent_70%)]" />
           </div>
         </div>
       );

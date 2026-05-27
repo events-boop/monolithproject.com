@@ -13,7 +13,9 @@ const robotsPath = resolve("client/public/robots.txt");
 
 mkdirSync(dirname(sitemapPath), { recursive: true });
 
-const sitemapEntries = mergeSitemapEntries(buildEventSitemapEntries(upcomingEvents));
+const sitemapEntries = mergeSitemapEntries(
+  buildEventSitemapEntries(upcomingEvents)
+);
 
 writeFileSync(sitemapPath, buildSitemapXml(sitemapEntries), "utf8");
 writeFileSync(robotsPath, buildRobotsTxt(), "utf8");

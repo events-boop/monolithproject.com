@@ -42,12 +42,22 @@ export default function SystemHUD() {
   const [uptime, setUptime] = useState(0);
   const [requestId, setRequestId] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentChapter, setCurrentChapter] = useState<{ number: string; label: string } | null>(null);
+  const [currentChapter, setCurrentChapter] = useState<{
+    number: string;
+    label: string;
+  } | null>(null);
   const [currentSignal, setCurrentSignal] = useState(SIGNALS.DEFAULT[0]);
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ days: 89, hours: 23, minutes: 59, seconds: 59 });
+  const [timeLeft, setTimeLeft] = useState({
+    days: 89,
+    hours: 23,
+    minutes: 59,
+    seconds: 59,
+  });
   const [audits, setAudits] = useState<AuditResult[]>([]);
-  const [systemLevel, setSystemLevel] = useState<"green" | "amber" | "red">("green");
+  const [systemLevel, setSystemLevel] = useState<"green" | "amber" | "red">(
+    "green"
+  );
   const [isVisible, setIsVisible] = useState(false);
   const signalIndexRef = useRef(0);
 
@@ -56,9 +66,18 @@ export default function SystemHUD() {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        if (prev.days > 0) return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        if (prev.minutes > 0)
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0)
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        if (prev.days > 0)
+          return {
+            ...prev,
+            days: prev.days - 1,
+            hours: 23,
+            minutes: 59,
+            seconds: 59,
+          };
         return prev;
       });
     }, 1000);
@@ -66,22 +85,37 @@ export default function SystemHUD() {
   }, []);
 
   // Contextual Branding
-  const activeExp = hoveredExpression || (
-    location === "/chasing-sunsets" ? "sunsets" :
-    location === "/story" || location === "/untold-story-deron-juany-bravo" ? "untold" :
-    location === "/radio" ? "radio" : null
-  );
-  
+  const activeExp =
+    hoveredExpression ||
+    (location === "/chasing-sunsets"
+      ? "sunsets"
+      : location === "/story" || location === "/untold-story-deron-juany-bravo"
+        ? "untold"
+        : location === "/radio"
+          ? "radio"
+          : null);
+
   let accentColor = "rgba(224,90,58,0.2)";
   let textColor = "text-primary";
 
-  if (activeExp === "sunsets") { accentColor = "rgba(232,184,109,0.35)"; textColor = "text-[#E8B86D]"; }
-  if (activeExp === "untold") { accentColor = "rgba(34,211,238,0.35)"; textColor = "text-[#22D3EE]"; }
-  if (activeExp === "radio") { accentColor = "rgba(255,255,255,0.25)"; textColor = "text-white"; }
+  if (activeExp === "sunsets") {
+    accentColor = "rgba(232,184,109,0.35)";
+    textColor = "text-[#E8B86D]";
+  }
+  if (activeExp === "untold") {
+    accentColor = "rgba(34,211,238,0.35)";
+    textColor = "text-[#22D3EE]";
+  }
+  if (activeExp === "radio") {
+    accentColor = "rgba(255,255,255,0.25)";
+    textColor = "text-white";
+  }
 
   // Secret Unlock Mechanism
   useEffect(() => {
-    const isDebugMode = localStorage.getItem("MONOLITH_DEBUG") === "true" || window.location.search.includes("monolith_debug=1");
+    const isDebugMode =
+      localStorage.getItem("MONOLITH_DEBUG") === "true" ||
+      window.location.search.includes("monolith_debug=1");
     if (isDebugMode) {
       setIsVisible(true);
       localStorage.setItem("MONOLITH_DEBUG", "true");
@@ -115,7 +149,8 @@ export default function SystemHUD() {
   // Signal Rotator (Independent of Chapter for stability)
   useEffect(() => {
     const signalInterval = setInterval(() => {
-      const sectionKey = (currentChapter?.label?.toUpperCase() || "DEFAULT") as keyof typeof SIGNALS;
+      const sectionKey = (currentChapter?.label?.toUpperCase() ||
+        "DEFAULT") as keyof typeof SIGNALS;
       const pool = SIGNALS[sectionKey] || SIGNALS.DEFAULT;
       signalIndexRef.current = (signalIndexRef.current + 1) % pool.length;
       setCurrentSignal(pool[signalIndexRef.current]);
@@ -136,11 +171,12 @@ export default function SystemHUD() {
       { id: "community", number: "08", label: "COMMUNITY" },
     ];
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(
+      entries => {
         const visible = entries
           .filter(e => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        
+
         if (visible.length > 0) {
           const matched = sections.find(s => s.id === visible[0].target.id);
           if (matched) {
@@ -191,16 +227,16 @@ export default function SystemHUD() {
         results.push({
           code: "STALE_DATA",
           level: "red",
-          message: `EVENT_${staleEvents[0].id}_STALE: CHECK STATUS`
+          message: `EVENT_${staleEvents[0].id}_STALE: CHECK STATUS`,
         });
       }
 
       // 2. ANCHOR / LINK AUDIT
       const allLinks = Array.from(document.querySelectorAll('a[href*="#"]'));
       const brokenAnchors = allLinks.filter(a => {
-        const href = a.getAttribute('href');
-        if (!href || !href.includes('#')) return false;
-        const [path, id] = href.split('#');
+        const href = a.getAttribute("href");
+        if (!href || !href.includes("#")) return false;
+        const [path, id] = href.split("#");
         if (path && path !== location) return false; // Skip cross-page anchors for now
         return id && !document.getElementById(id);
       });
@@ -209,23 +245,25 @@ export default function SystemHUD() {
         results.push({
           code: "BROKEN_ANCHOR",
           level: "amber",
-          message: `LINK_TO_#${brokenAnchors[0].getAttribute('href')?.split('#')[1]}_MISSING`
+          message: `LINK_TO_#${brokenAnchors[0].getAttribute("href")?.split("#")[1]}_MISSING`,
         });
       }
 
       // 3. DUPLICATE ID AUDIT
-      const ids = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
+      const ids = Array.from(document.querySelectorAll("[id]")).map(
+        el => el.id
+      );
       const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
       if (duplicates.length > 0) {
         results.push({
           code: "DUPLICATE_ID",
           level: "red",
-          message: `DUP_ID_DETECTED: #${duplicates[0]}`
+          message: `DUP_ID_DETECTED: #${duplicates[0]}`,
         });
       }
 
       setAudits(results);
-      
+
       const hasRed = results.some(r => r.level === "red");
       const hasAmber = results.some(r => r.level === "amber");
       setSystemLevel(hasRed ? "red" : hasAmber ? "amber" : "green");
@@ -238,7 +276,10 @@ export default function SystemHUD() {
   if (!isVisible) return null;
 
   return (
-    <div aria-hidden="true" className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden">
+    <div
+      aria-hidden="true"
+      className="fixed inset-0 z-[9999] pointer-events-none select-none overflow-hidden"
+    >
       {/* HUD Frame Components — hidden on small screens to prevent content coverage */}
       <div className="absolute top-6 right-8 hidden xl:flex flex-col items-end gap-1.5 mix-blend-difference pointer-events-auto">
         <div
@@ -250,21 +291,31 @@ export default function SystemHUD() {
         >
           <div className="flex items-center gap-3">
             <span className="font-mono text-[10px] text-white/30 tracking-[0.2em] uppercase whitespace-nowrap">
-              System Uptime: {Math.floor(uptime/60).toString().padStart(2, "0")}:{ (uptime%60).toString().padStart(2, "0") }
+              System Uptime:{" "}
+              {Math.floor(uptime / 60)
+                .toString()
+                .padStart(2, "0")}
+              :{(uptime % 60).toString().padStart(2, "0")}
             </span>
-            <div className={`w-1.5 h-1.5 ${systemLevel === "red" ? "bg-red-500" : systemLevel === "amber" ? "bg-amber-500" : "bg-green-500"} rounded-none animate-pulse`} />
+            <div
+              className={`w-1.5 h-1.5 ${systemLevel === "red" ? "bg-red-500" : systemLevel === "amber" ? "bg-amber-500" : "bg-green-500"} rounded-none animate-pulse`}
+            />
           </div>
           <div className="flex items-center gap-3">
-            <span 
-              onClick={(e) => {
+            <span
+              onClick={e => {
                 e.stopPropagation();
-                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+                window.dispatchEvent(
+                  new KeyboardEvent("keydown", { key: "k", metaKey: true })
+                );
               }}
               className={`font-heavy text-xs ${textColor} tracking-widest tabular-nums group-hover:text-white transition-colors cursor-pointer hover:bg-white/5 px-2 py-0.5 rounded-sm`}
             >
               REQID: {requestId}
             </span>
-            <div className={`w-2 h-2 ${systemLevel === "red" ? "bg-red-500 animate-ping" : systemLevel === "amber" ? "bg-amber-500" : diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`} />
+            <div
+              className={`w-2 h-2 ${systemLevel === "red" ? "bg-red-500 animate-ping" : systemLevel === "amber" ? "bg-amber-500" : diagnosticsOpen ? "bg-primary animate-ping" : "bg-white/40"} rounded-none`}
+            />
           </div>
         </div>
       </div>
@@ -277,23 +328,37 @@ export default function SystemHUD() {
             exit={{ opacity: 0, x: 10, scaleY: 0 }}
             className="absolute top-24 right-8 w-64 bg-black/95 border border-white/10 p-4 font-mono z-50 origin-top shadow-2xl pointer-events-auto"
           >
-            <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">Diagnostic_Log</span>
+            <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">
+              Diagnostic_Log
+            </span>
             <div className="flex flex-col gap-2 max-h-[300px] overflow-hidden text-[10px] text-white/70">
               {audits.length > 0 ? (
                 audits.map((a, i) => (
-                  <p key={i} className={a.level === "red" ? "text-red-400" : "text-amber-400"}>
+                  <p
+                    key={i}
+                    className={
+                      a.level === "red" ? "text-red-400" : "text-amber-400"
+                    }
+                  >
                     [{a.code}] {a.message}
                   </p>
                 ))
               ) : (
                 <p className="text-green-400">[SYSTEM] ALL_PATHWAYS_HEALTHY</p>
               )}
-              <p className="text-primary group-hover:text-white mt-2">[SYSTEM] BOOT_SEQUENCE: 0x4F12A</p>
+              <p className="text-primary group-hover:text-white mt-2">
+                [SYSTEM] BOOT_SEQUENCE: 0x4F12A
+              </p>
               <p>[NET] LATENCY_CHECK: 12ms</p>
               <p>[OS] KERNEL_LOAD: STABLE</p>
-              <p>[CONTEXT] REGION: {Intl.DateTimeFormat().resolvedOptions().timeZone}</p>
+              <p>
+                [CONTEXT] REGION:{" "}
+                {Intl.DateTimeFormat().resolvedOptions().timeZone}
+              </p>
               <p className="opacity-40">[LOG] SECTION_SPY: ATTACHED</p>
-              <p className="text-white/30 mt-4 animate-pulse">STREAMING_SIGNALS...</p>
+              <p className="text-white/30 mt-4 animate-pulse">
+                STREAMING_SIGNALS...
+              </p>
             </div>
           </motion.div>
         )}
@@ -301,21 +366,28 @@ export default function SystemHUD() {
 
       <div className="absolute bottom-6 left-8 hidden lg:flex flex-col items-start gap-1.5 mix-blend-difference">
         <div className="flex items-center gap-4 mb-2 pointer-events-auto">
-           <div className="grid grid-cols-4 gap-1">
-             {[...Array(16)].map((_, i) => (
-                <div key={i} className="w-1 h-1 bg-white/20" />
-             ))}
-           </div>
-           <div className="flex flex-col">
-             <span className="font-mono text-[10px] text-primary tracking-[0.4em] uppercase">SYSTEM_NODES:</span>
-             <span className="font-heavy text-xs text-white tabular-nums">ACTIVE_12 // RES: 100%</span>
-           </div>
+          <div className="grid grid-cols-4 gap-1">
+            {[...Array(16)].map((_, i) => (
+              <div key={i} className="w-1 h-1 bg-white/20" />
+            ))}
+          </div>
+          <div className="flex flex-col">
+            <span className="font-mono text-[10px] text-primary tracking-[0.4em] uppercase">
+              SYSTEM_NODES:
+            </span>
+            <span className="font-heavy text-xs text-white tabular-nums">
+              ACTIVE_12 // RES: 100%
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-4 mb-2">
-           <span className="font-mono text-[10px] text-white/40 tracking-[0.4em] uppercase whitespace-nowrap">NEXT_DROP:</span>
-           <span className={`font-heavy text-xs ${textColor} tabular-nums`}>
-             {timeLeft.days}D:{timeLeft.hours}H:{timeLeft.minutes}M:{timeLeft.seconds}S
-           </span>
+          <span className="font-mono text-[10px] text-white/40 tracking-[0.4em] uppercase whitespace-nowrap">
+            NEXT_DROP:
+          </span>
+          <span className={`font-heavy text-xs ${textColor} tabular-nums`}>
+            {timeLeft.days}D:{timeLeft.hours}H:{timeLeft.minutes}M:
+            {timeLeft.seconds}S
+          </span>
         </div>
         <span className="font-mono text-[10px] text-white/40 tracking-[0.2em] uppercase">
           Client Session — 0x{requestId}
@@ -324,7 +396,7 @@ export default function SystemHUD() {
 
       <div className="absolute bottom-6 right-8 hidden lg:flex flex-col items-end gap-1.5 mix-blend-difference min-w-[200px]">
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={currentSignal}
             initial={{ opacity: 0, x: 10, filter: "blur(4px)" }}
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
@@ -332,32 +404,41 @@ export default function SystemHUD() {
             transition={{ duration: 0.8 }}
             className="flex items-center gap-2"
           >
-            <span className="font-mono text-[9px] text-white/50 tracking-[0.2em] uppercase">{currentSignal}</span>
+            <span className="font-mono text-[9px] text-white/50 tracking-[0.2em] uppercase">
+              {currentSignal}
+            </span>
             <div className="w-1 h-1 bg-white/40 animate-pulse rounded-none" />
           </motion.div>
         </AnimatePresence>
-        
+
         <AnimatePresence>
           {currentChapter && (
-             <motion.div 
-               initial={{ opacity: 0, y: 10 }}
-               animate={{ opacity: 1, y: 0 }}
-               exit={{ opacity: 0, y: -10 }}
-               className="flex items-center gap-3"
-             >
-               <span className="font-mono text-[10px] text-white/30 tracking-[0.4em] uppercase">LATENCY: 12ms / BUFFER: 0%</span>
-               <span className="font-heavy text-xs text-white/90 tabular-nums">SEC_{currentChapter.number} // {currentChapter.label}</span>
-               <div className="w-2 h-2 bg-white/40 animate-ping rounded-none" />
-             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex items-center gap-3"
+            >
+              <span className="font-mono text-[10px] text-white/30 tracking-[0.4em] uppercase">
+                LATENCY: 12ms / BUFFER: 0%
+              </span>
+              <span className="font-heavy text-xs text-white/90 tabular-nums">
+                SEC_{currentChapter.number} // {currentChapter.label}
+              </span>
+              <div className="w-2 h-2 bg-white/40 animate-ping rounded-none" />
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-[100] overflow-hidden mix-blend-overlay opacity-30 hidden md:block">
         <div className="absolute inset-0 w-full h-[100%] bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] animate-scanline" />
-        <div 
+        <div
           className="absolute inset-0 opacity-60"
-          style={{ background: `radial-gradient(circle at center, transparent 0%, ${accentColor} 100%)`, boxShadow: 'inset 0 0 150px rgba(0,0,0,0.5)' }} 
+          style={{
+            background: `radial-gradient(circle at center, transparent 0%, ${accentColor} 100%)`,
+            boxShadow: "inset 0 0 150px rgba(0,0,0,0.5)",
+          }}
         />
       </div>
 
@@ -365,7 +446,7 @@ export default function SystemHUD() {
         @keyframes scanline { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
         .animate-scanline { animation: scanline 0.15s linear infinite; }
       `}</style>
-      
+
       <div className="absolute inset-0 border border-white/5 pointer-events-none" />
     </div>
   );

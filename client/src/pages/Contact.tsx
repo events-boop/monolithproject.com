@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, Handshake, Music, ShieldQuestion } from "lucide-react";
+import {
+  ArrowUpRight,
+  Mail,
+  Handshake,
+  Music,
+  ShieldQuestion,
+} from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import ContactFormSection from "@/components/ContactFormSection";
@@ -19,7 +25,8 @@ const contactTiles = [
   {
     icon: Music,
     title: "Artists & Bookings",
-    description: "Submit your mix, reach out for bookings, or propose a lineup idea.",
+    description:
+      "Submit your mix, reach out for bookings, or propose a lineup idea.",
     href: "/booking",
     label: "Go to Booking",
     external: false,
@@ -27,7 +34,8 @@ const contactTiles = [
   {
     icon: Handshake,
     title: "Partners",
-    description: "Venues, brands, crew, and collaborators. Let's build something clean.",
+    description:
+      "Venues, brands, crew, and collaborators. Let's build something clean.",
     href: "/partners",
     label: "View Partners",
     external: false,
@@ -68,12 +76,13 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="max-w-3xl"
             >
-              <span className="section-kicker text-charcoal/55 block mb-5">Get In Touch</span>
-              <h1 className="section-display-title text-charcoal">
-                CONTACT
-              </h1>
+              <span className="section-kicker text-charcoal/55 block mb-5">
+                Get In Touch
+              </span>
+              <h1 className="section-display-title text-charcoal">CONTACT</h1>
               <p className="mt-5 text-charcoal/70 leading-relaxed max-w-2xl">
-                Use the form for general inquiries, or jump directly to booking, partners, or legal.
+                Use the form for general inquiries, or jump directly to booking,
+                partners, or legal.
               </p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -102,7 +111,11 @@ export default function Contact() {
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
-                  transition={{ delay: idx * 0.05, duration: 0.45, ease: "easeOut" }}
+                  transition={{
+                    delay: idx * 0.05,
+                    duration: 0.45,
+                    ease: "easeOut",
+                  }}
                   className="h-full"
                 >
                   {tile.external ? (
@@ -113,8 +126,12 @@ export default function Contact() {
                       <div className="w-11 h-11 rounded-2xl border border-charcoal/10 bg-white/80 flex items-center justify-center text-charcoal/60 mb-5">
                         <tile.icon className="w-5 h-5" />
                       </div>
-                      <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
-                      <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
+                      <h3 className="font-display text-2xl uppercase leading-none">
+                        {tile.title}
+                      </h3>
+                      <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">
+                        {tile.description}
+                      </p>
                       <div className="btn-text-action btn-text-action-dark mt-6">
                         {tile.label}
                         <ArrowUpRight />
@@ -126,8 +143,12 @@ export default function Contact() {
                         <div className="w-11 h-11 rounded-2xl border border-charcoal/10 bg-white/80 flex items-center justify-center text-charcoal/60 mb-5">
                           <tile.icon className="w-5 h-5" />
                         </div>
-                        <h3 className="font-display text-2xl uppercase leading-none">{tile.title}</h3>
-                        <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">{tile.description}</p>
+                        <h3 className="font-display text-2xl uppercase leading-none">
+                          {tile.title}
+                        </h3>
+                        <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">
+                          {tile.description}
+                        </p>
                         <div className="btn-text-action btn-text-action-dark mt-6">
                           {tile.label}
                           <ArrowUpRight />
@@ -148,7 +169,9 @@ export default function Contact() {
                   transition={{ duration: 0.45, ease: "easeOut" }}
                   className="border border-charcoal/15 bg-white/70 rounded-2xl p-7"
                 >
-                  <p className="section-kicker text-charcoal/55 mb-4">What To Include</p>
+                  <p className="section-kicker text-charcoal/55 mb-4">
+                    What To Include
+                  </p>
                   <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
                     <li>Dates + venue (if relevant)</li>
                     <li>Links: mixes, socials, decks, references</li>
@@ -156,7 +179,8 @@ export default function Contact() {
                   </ul>
                   <div className="mt-6 h-px bg-charcoal/15" />
                   <p className="mt-6 text-sm text-charcoal/60 leading-relaxed">
-                    If you're sending music: include a private SoundCloud link and a short note about the vibe you play.
+                    If you're sending music: include a private SoundCloud link
+                    and a short note about the vibe you play.
                   </p>
                 </motion.div>
               </div>

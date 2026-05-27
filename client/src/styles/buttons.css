@@ -1,6 +1,5 @@
 @layer components {
   @media (max-width: 768px) {
-
     .btn-pill,
     .btn-pill-dark,
     .btn-pill-coral,
@@ -40,15 +39,22 @@
     background: rgba(255, 255, 255, 0.055);
     position: relative;
     overflow: hidden;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 28px rgba(0, 0, 0, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 12px 28px rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(14px);
   }
 
   .btn-pill::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.08),
+      transparent
+    );
     transform: translateX(-150%) skewX(-15deg);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -57,7 +63,9 @@
     background: #e7e5e4;
     border-color: rgba(255, 255, 255, 0.75);
     color: #0b0b0b;
-    box-shadow: 0 14px 34px rgba(255, 255, 255, 0.16), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 14px 34px rgba(255, 255, 255, 0.16),
+      inset 0 1px 1px rgba(255, 255, 255, 0.85);
     transform: translateY(-1px);
   }
 
@@ -87,7 +95,9 @@
     transition: all 0.3s ease;
     cursor: pointer;
     background: linear-gradient(180deg, #f0efed, #d8d6d2);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), 0 12px 30px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 12px 30px rgba(0, 0, 0, 0.1);
   }
 
   .btn-pill-dark:hover {
@@ -117,7 +127,10 @@
     padding: 0.75rem 2rem;
     border-radius: 9999px;
     border: 1px solid var(--pill-accent-border, rgba(255, 255, 255, 0.15));
-    background: var(--pill-accent-bg, linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.55 0.15 30)));
+    background: var(
+      --pill-accent-bg,
+      linear-gradient(135deg, oklch(0.65 0.2 25), oklch(0.55 0.15 30))
+    );
     color: var(--pill-accent-text, #ffffff);
     font-weight: 700;
     font-size: 0.75rem;
@@ -125,20 +138,29 @@
     text-transform: uppercase;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
-    box-shadow: var(--pill-accent-shadow, 0 4px 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.2));
+    box-shadow: var(
+      --pill-accent-shadow,
+      0 4px 15px rgba(224, 90, 58, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2)
+    );
     position: relative;
     overflow: hidden;
     text-shadow: var(--pill-accent-text-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
   }
 
   .btn-pill-sunsets {
-    --pill-accent-bg: linear-gradient(135deg, #A4592C, #C9865B);
-    --pill-accent-hover-bg: linear-gradient(135deg, #8F4427, #B66F45);
+    --pill-accent-bg: linear-gradient(135deg, #a4592c, #c9865b);
+    --pill-accent-hover-bg: linear-gradient(135deg, #8f4427, #b66f45);
     --pill-accent-text: #ffffff;
     --pill-accent-border: rgba(164, 89, 44, 0.46);
     --pill-accent-hover-border: rgba(201, 134, 91, 0.62);
-    --pill-accent-shadow: 0 10px 28px rgba(164, 89, 44, 0.24), inset 0 1px 1px rgba(255, 255, 255, 0.24);
-    --pill-accent-hover-shadow: 0 16px 42px rgba(164, 89, 44, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.34);
+    --pill-accent-shadow:
+      0 10px 28px rgba(164, 89, 44, 0.24),
+      inset 0 1px 1px rgba(255, 255, 255, 0.24);
+    --pill-accent-hover-shadow:
+      0 16px 42px rgba(164, 89, 44, 0.34),
+      inset 0 1px 1px rgba(255, 255, 255, 0.34);
     --pill-accent-text-shadow: none;
   }
 
@@ -148,8 +170,12 @@
     --pill-accent-text: #ffffff;
     --pill-accent-border: rgba(255, 180, 196, 0.38);
     --pill-accent-hover-border: rgba(255, 205, 214, 0.6);
-    --pill-accent-shadow: 0 10px 30px rgba(244, 63, 94, 0.34), inset 0 1px 1px rgba(255, 255, 255, 0.28);
-    --pill-accent-hover-shadow: 0 16px 42px rgba(244, 63, 94, 0.5), 0 0 18px rgba(244, 63, 94, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.36);
+    --pill-accent-shadow:
+      0 10px 30px rgba(244, 63, 94, 0.34),
+      inset 0 1px 1px rgba(255, 255, 255, 0.28);
+    --pill-accent-hover-shadow:
+      0 16px 42px rgba(244, 63, 94, 0.5), 0 0 18px rgba(244, 63, 94, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.36);
   }
 
   .btn-pill-untold {
@@ -158,8 +184,12 @@
     --pill-accent-text: #020617;
     --pill-accent-border: rgba(103, 232, 249, 0.42);
     --pill-accent-hover-border: rgba(167, 139, 250, 0.62);
-    --pill-accent-shadow: 0 10px 30px rgba(34, 211, 238, 0.26), 0 0 18px rgba(139, 92, 246, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-    --pill-accent-hover-shadow: 0 16px 44px rgba(34, 211, 238, 0.34), 0 0 22px rgba(139, 92, 246, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.42);
+    --pill-accent-shadow:
+      0 10px 30px rgba(34, 211, 238, 0.26), 0 0 18px rgba(139, 92, 246, 0.18),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    --pill-accent-hover-shadow:
+      0 16px 44px rgba(34, 211, 238, 0.34), 0 0 22px rgba(139, 92, 246, 0.32),
+      inset 0 1px 1px rgba(255, 255, 255, 0.42);
     --pill-accent-text-shadow: none;
   }
 
@@ -170,8 +200,11 @@
     --pill-accent-hover-text: #000000;
     --pill-accent-border: rgba(255, 255, 255, 0.2);
     --pill-accent-hover-border: #ffffff;
-    --pill-accent-shadow: 0 10px 30px rgba(239, 68, 68, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-    --pill-accent-hover-shadow: 0 16px 42px rgba(239, 68, 68, 0.5), 0 0 18px rgba(239, 68, 68, 0.3);
+    --pill-accent-shadow:
+      0 10px 30px rgba(239, 68, 68, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    --pill-accent-hover-shadow:
+      0 16px 42px rgba(239, 68, 68, 0.5), 0 0 18px rgba(239, 68, 68, 0.3);
   }
 
   /* High-contrast secondary pill for dark backgrounds (addresses blending-in issue) */
@@ -194,7 +227,9 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     backdrop-filter: blur(12px);
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .btn-pill-secondary:hover,
@@ -203,7 +238,9 @@
     border-color: rgba(255, 255, 255, 0.5);
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(255, 255, 255, 0.1);
   }
 
   /* Neutral gray pill inspired by the reference direction: quiet surface, black type. */
@@ -227,9 +264,16 @@
     font-size: 0.75rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
-    box-shadow: var(--pill-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 14px 34px rgba(0, 0, 0, 0.16));
+    box-shadow: var(
+      --pill-shadow,
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 14px 34px rgba(0, 0, 0, 0.16)
+    );
   }
 
   .btn-pill-neutral:hover,
@@ -238,10 +282,17 @@
   .btn-pill-outline-dark:hover,
   .cta-ghost:hover {
     background: var(--pill-hover-bg, linear-gradient(180deg, #ffffff, #e8e6e1));
-    border-color: var(--pill-hover-border, var(--pill-border, rgba(0, 0, 0, 0.1)));
+    border-color: var(
+      --pill-hover-border,
+      var(--pill-border, rgba(0, 0, 0, 0.1))
+    );
     color: var(--pill-hover-text, var(--pill-text, #0a0a0a));
     transform: translateY(-2px);
-    box-shadow: var(--pill-hover-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 18px 44px rgba(0, 0, 0, 0.22));
+    box-shadow: var(
+      --pill-hover-shadow,
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 18px 44px rgba(0, 0, 0, 0.22)
+    );
   }
 
   .btn-pill-neutral:active,
@@ -255,13 +306,14 @@
   .btn-pill-outline,
   .btn-pill-ghost,
   .cta-ghost {
-    --pill-bg: rgba(255, 255, 255, 0.10);
+    --pill-bg: rgba(255, 255, 255, 0.1);
     --pill-border: rgba(255, 255, 255, 0.28);
     --pill-text: rgba(255, 255, 255, 0.94);
     --pill-hover-bg: #e7e5e4;
     --pill-hover-border: #e7e5e4;
     --pill-hover-text: #0a0a0a;
-    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 12px 28px rgba(0, 0, 0, 0.18);
+    --pill-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 28px rgba(0, 0, 0, 0.18);
     --pill-hover-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
     backdrop-filter: blur(14px);
   }
@@ -273,7 +325,8 @@
     --pill-hover-bg: #111111;
     --pill-hover-border: #111111;
     --pill-hover-text: #ffffff;
-    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 12px 28px rgba(0, 0, 0, 0.1);
+    --pill-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 12px 28px rgba(0, 0, 0, 0.1);
     --pill-hover-shadow: 0 16px 38px rgba(0, 0, 0, 0.2);
   }
 
@@ -281,20 +334,25 @@
     --pill-bg: rgba(164, 89, 44, 0.12);
     --pill-border: rgba(201, 134, 91, 0.42);
     --pill-text: #d9a17c;
-    --pill-hover-bg: linear-gradient(135deg, #A4592C, #C9865B);
+    --pill-hover-bg: linear-gradient(135deg, #a4592c, #c9865b);
     --pill-hover-border: rgba(201, 134, 91, 0.66);
     --pill-hover-text: #ffffff;
     --pill-hover-shadow: 0 16px 38px rgba(164, 89, 44, 0.28);
   }
 
   .btn-pill-outline-sunsets-light {
-    --pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9));
+    --pill-bg: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94),
+      rgba(248, 250, 252, 0.9)
+    );
     --pill-border: rgba(164, 89, 44, 0.22);
-    --pill-text: #4A2416;
-    --pill-hover-bg: linear-gradient(135deg, #A4592C, #C9865B);
+    --pill-text: #4a2416;
+    --pill-hover-bg: linear-gradient(135deg, #a4592c, #c9865b);
     --pill-hover-border: rgba(201, 134, 91, 0.7);
     --pill-hover-text: #ffffff;
-    --pill-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 14px 34px rgba(44, 24, 16, 0.1);
+    --pill-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 14px 34px rgba(44, 24, 16, 0.1);
     --pill-hover-shadow: 0 16px 38px rgba(164, 89, 44, 0.24);
   }
 
@@ -380,7 +438,11 @@
     line-height: 1;
     text-transform: uppercase;
     box-shadow: var(--inline-pill-shadow, none);
-    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    transition:
+      transform 0.25s ease,
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease;
   }
 
   .btn-inline-pill:hover {
@@ -487,9 +549,16 @@
     letter-spacing: 0.22em;
     line-height: 1;
     text-transform: uppercase;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     backdrop-filter: blur(14px);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 26px rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 10px 26px rgba(0, 0, 0, 0.14);
   }
 
   .btn-text-action-dark {
@@ -524,7 +593,7 @@
   .btn-pill-radio::after,
   .btn-pill-untold::after,
   .btn-pill-monolith::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: 9999px;
@@ -541,9 +610,18 @@
   .btn-pill-untold:hover,
   .btn-pill-monolith:hover {
     transform: translateY(-2px);
-    box-shadow: var(--pill-accent-hover-shadow, 0 12px 30px rgba(224, 90, 58, 0.6), 0 0 15px rgba(224, 90, 58, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -2px 4px rgba(0, 0, 0, 0.1));
+    box-shadow: var(
+      --pill-accent-hover-shadow,
+      0 12px 30px rgba(224, 90, 58, 0.6),
+      0 0 15px rgba(224, 90, 58, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.5),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1)
+    );
     border-color: var(--pill-accent-hover-border, rgba(255, 255, 255, 0.4));
-    background: var(--pill-accent-hover-bg, linear-gradient(135deg, oklch(0.68 0.22 25), oklch(0.58 0.17 30)));
+    background: var(
+      --pill-accent-hover-bg,
+      linear-gradient(135deg, oklch(0.68 0.22 25), oklch(0.58 0.17 30))
+    );
   }
 
   .btn-pill-coral:hover::after,
@@ -562,7 +640,11 @@
   .btn-pill-untold:active,
   .btn-pill-monolith:active {
     transform: translateY(1px) scale(0.975);
-    box-shadow: var(--pill-accent-active-shadow, 0 2px 8px rgba(224, 90, 58, 0.4), inset 0 2px 6px rgba(0, 0, 0, 0.35));
+    box-shadow: var(
+      --pill-accent-active-shadow,
+      0 2px 8px rgba(224, 90, 58, 0.4),
+      inset 0 2px 6px rgba(0, 0, 0, 0.35)
+    );
   }
 
   /* Universal tool-specific CTAs */
@@ -586,7 +668,11 @@
     font-weight: 900;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .cta-series-sunsets {
@@ -654,10 +740,16 @@
     background-color: var(--cta-neutral-bg);
     color: var(--cta-neutral-text);
     background-image:
-      radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 60%),
+      radial-gradient(
+        circle at top left,
+        rgba(255, 255, 255, 0.8),
+        transparent 60%
+      ),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     background-blend-mode: overlay;
-    box-shadow: 0 10px 34px var(--cta-glow), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 10px 34px var(--cta-glow),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9);
   }
 
   .cta-laylo:hover {
@@ -665,11 +757,17 @@
     background-color: #ffffff;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 20px 60px var(--cta-glow-strong), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    box-shadow:
+      0 20px 60px var(--cta-glow-strong),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8);
   }
 
   .cta-posh {
-    background: linear-gradient(135deg, var(--cta-accent), var(--cta-accent-deep));
+    background: linear-gradient(
+      135deg,
+      var(--cta-accent),
+      var(--cta-accent-deep)
+    );
     color: var(--cta-solid-text);
     box-shadow: 0 10px 40px var(--cta-glow);
   }
@@ -683,7 +781,11 @@
   }
 
   .cta-fillout {
-    background: linear-gradient(90deg, var(--cta-accent-deep), var(--cta-accent));
+    background: linear-gradient(
+      90deg,
+      var(--cta-accent-deep),
+      var(--cta-accent)
+    );
     color: var(--cta-solid-text);
     box-shadow: 0 10px 40px var(--cta-glow);
   }
@@ -702,7 +804,11 @@
   }
 
   .cta-experiential:hover {
-    background: linear-gradient(135deg, var(--cta-accent), var(--cta-accent-deep));
+    background: linear-gradient(
+      135deg,
+      var(--cta-accent),
+      var(--cta-accent-deep)
+    );
     color: var(--cta-solid-text);
     transform: translateY(-2px);
   }

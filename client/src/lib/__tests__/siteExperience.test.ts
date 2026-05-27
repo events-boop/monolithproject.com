@@ -63,16 +63,16 @@ describe("siteExperience", () => {
   it("prefers the configured hero event when it matches the requested series", () => {
     seedSiteData({ hero: chasingWaitlistEvent });
 
-    expect(getSeriesExperienceEvent("chasing-sunsets", "hero", TEST_NOW)?.id).toBe(
-      "css-jul04",
-    );
+    expect(
+      getSeriesExperienceEvent("chasing-sunsets", "hero", TEST_NOW)?.id
+    ).toBe("css-jul04");
   });
 
   it("falls back to the best series-specific event when the configured hero belongs to another series", () => {
     seedSiteData({ hero: untoldHeroEvent });
 
-    expect(getSeriesExperienceEvent("chasing-sunsets", "hero", TEST_NOW)?.id).toBe(
-      "css-jul04",
-    );
+    expect(
+      getSeriesExperienceEvent("chasing-sunsets", "hero", TEST_NOW)?.id
+    ).toBe("css-jul04");
   });
 });

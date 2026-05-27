@@ -98,14 +98,20 @@ function getSessionStorage() {
 }
 
 function createSessionId() {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
     return crypto.randomUUID();
   }
 
   return `sess_${Math.random().toString(36).slice(2, 10)}_${Date.now().toString(36)}`;
 }
 
-function normalizeExternalReferrer(currentOrigin: string, rawReferrer?: string) {
+function normalizeExternalReferrer(
+  currentOrigin: string,
+  rawReferrer?: string
+) {
   if (!rawReferrer) return {};
 
   try {
@@ -128,7 +134,11 @@ function readStoredAttribution(): StoredAttribution | null {
 
   try {
     const parsed = JSON.parse(raw) as StoredAttribution;
-    if (!parsed?.sessionId || !parsed?.firstTouch?.pageUrl || !parsed?.lastTouch?.pageUrl) {
+    if (
+      !parsed?.sessionId ||
+      !parsed?.firstTouch?.pageUrl ||
+      !parsed?.lastTouch?.pageUrl
+    ) {
       return null;
     }
     return parsed;
@@ -198,35 +208,60 @@ function buildCurrentTouchPoint(): TouchPoint | null {
 function hasAcquisitionSignal(touch: TouchPoint) {
   return Boolean(
     touch.referrer ||
-      touch.utmSource ||
-      touch.utmMedium ||
-      touch.utmCampaign ||
-      touch.utmTerm ||
-      touch.utmContent ||
-      touch.gclid ||
-      touch.fbclid ||
-      touch.ttclid ||
-      touch.msclkid,
+    touch.utmSource ||
+    touch.utmMedium ||
+    touch.utmCampaign ||
+    touch.utmTerm ||
+    touch.utmContent ||
+    touch.gclid ||
+    touch.fbclid ||
+    touch.ttclid ||
+    touch.msclkid
   );
 }
 
-function mergeTouchPoint(existing: TouchPoint, current: TouchPoint): TouchPoint {
+function mergeTouchPoint(
+  existing: TouchPoint,
+  current: TouchPoint
+): TouchPoint {
   const shouldRefreshSignals = hasAcquisitionSignal(current);
 
   return {
     capturedAt: current.capturedAt,
     pageUrl: current.pageUrl,
-    referrer: shouldRefreshSignals ? current.referrer || existing.referrer : existing.referrer,
-    referrerDomain: shouldRefreshSignals ? current.referrerDomain || existing.referrerDomain : existing.referrerDomain,
-    utmSource: shouldRefreshSignals ? current.utmSource || existing.utmSource : existing.utmSource,
-    utmMedium: shouldRefreshSignals ? current.utmMedium || existing.utmMedium : existing.utmMedium,
-    utmCampaign: shouldRefreshSignals ? current.utmCampaign || existing.utmCampaign : existing.utmCampaign,
-    utmTerm: shouldRefreshSignals ? current.utmTerm || existing.utmTerm : existing.utmTerm,
-    utmContent: shouldRefreshSignals ? current.utmContent || existing.utmContent : existing.utmContent,
-    gclid: shouldRefreshSignals ? current.gclid || existing.gclid : existing.gclid,
-    fbclid: shouldRefreshSignals ? current.fbclid || existing.fbclid : existing.fbclid,
-    ttclid: shouldRefreshSignals ? current.ttclid || existing.ttclid : existing.ttclid,
-    msclkid: shouldRefreshSignals ? current.msclkid || existing.msclkid : existing.msclkid,
+    referrer: shouldRefreshSignals
+      ? current.referrer || existing.referrer
+      : existing.referrer,
+    referrerDomain: shouldRefreshSignals
+      ? current.referrerDomain || existing.referrerDomain
+      : existing.referrerDomain,
+    utmSource: shouldRefreshSignals
+      ? current.utmSource || existing.utmSource
+      : existing.utmSource,
+    utmMedium: shouldRefreshSignals
+      ? current.utmMedium || existing.utmMedium
+      : existing.utmMedium,
+    utmCampaign: shouldRefreshSignals
+      ? current.utmCampaign || existing.utmCampaign
+      : existing.utmCampaign,
+    utmTerm: shouldRefreshSignals
+      ? current.utmTerm || existing.utmTerm
+      : existing.utmTerm,
+    utmContent: shouldRefreshSignals
+      ? current.utmContent || existing.utmContent
+      : existing.utmContent,
+    gclid: shouldRefreshSignals
+      ? current.gclid || existing.gclid
+      : existing.gclid,
+    fbclid: shouldRefreshSignals
+      ? current.fbclid || existing.fbclid
+      : existing.fbclid,
+    ttclid: shouldRefreshSignals
+      ? current.ttclid || existing.ttclid
+      : existing.ttclid,
+    msclkid: shouldRefreshSignals
+      ? current.msclkid || existing.msclkid
+      : existing.msclkid,
   };
 }
 
@@ -312,7 +347,9 @@ export function getAttributionQueryParams() {
   const payload = getAttributionPayload();
   const params = new URLSearchParams();
 
-  for (const [queryName, payloadKey] of Object.entries(ATTRIBUTION_QUERY_PARAMS)) {
+  for (const [queryName, payloadKey] of Object.entries(
+    ATTRIBUTION_QUERY_PARAMS
+  )) {
     const value = payload[payloadKey];
     if (typeof value === "string" && value.trim()) {
       params.set(queryName, value.trim());
@@ -327,7 +364,9 @@ export function appendAttributionQueryParams(href: string) {
   if (!Array.from(params.keys()).length) return href;
 
   try {
-    const origin = isBrowser() ? window.location.origin : "https://monolithproject.com";
+    const origin = isBrowser()
+      ? window.location.origin
+      : "https://monolithproject.com";
     const url = new URL(href, origin);
     if (url.protocol !== "http:" && url.protocol !== "https:") return href;
 

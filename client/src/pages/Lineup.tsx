@@ -1,5 +1,13 @@
 import { useMemo, useState, type ReactNode } from "react";
-import { ArrowUpRight, Grid2x2, Headphones, List, MapPin, Music, Sun } from "lucide-react";
+import {
+  ArrowUpRight,
+  Grid2x2,
+  Headphones,
+  List,
+  MapPin,
+  Music,
+  Sun,
+} from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
@@ -10,7 +18,11 @@ import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { cn } from "@/lib/utils";
-import { ARTIST_ENTRIES, type ArtistData, type ArtistSeries } from "@/data/artists";
+import {
+  ARTIST_ENTRIES,
+  type ArtistData,
+  type ArtistSeries,
+} from "@/data/artists";
 import { radioEpisodes } from "@/data/radioEpisodes";
 
 type Series = "all" | ArtistSeries;
@@ -31,28 +43,79 @@ interface ArtistPreview {
 
 const filters: FilterOption[] = [
   { label: "All", value: "all" },
-  { label: "Chasing Sun(Sets)", value: "chasing-sunsets", icon: <Sun className="h-3.5 w-3.5" /> },
-  { label: "Untold Story", value: "untold-story", icon: <UntoldButterflyLogo className="h-4 w-4" /> },
-  { label: "Sun(Sets) Radio", value: "sunsets-radio", icon: <Headphones className="h-3.5 w-3.5" /> },
+  {
+    label: "Chasing Sun(Sets)",
+    value: "chasing-sunsets",
+    icon: <Sun className="h-3.5 w-3.5" />,
+  },
+  {
+    label: "Untold Story",
+    value: "untold-story",
+    icon: <UntoldButterflyLogo className="h-4 w-4" />,
+  },
+  {
+    label: "Sun(Sets) Radio",
+    value: "sunsets-radio",
+    icon: <Headphones className="h-3.5 w-3.5" />,
+  },
 ];
 
-const EVENT_PREVIEWS: Record<Exclude<ArtistSeries, "sunsets-radio">, ArtistPreview[]> = {
+const EVENT_PREVIEWS: Record<
+  Exclude<ArtistSeries, "sunsets-radio">,
+  ArtistPreview[]
+> = {
   "chasing-sunsets": [
-    { src: "/images/chasing-sunsets-premium.webp", label: "Season Flyer", meta: "Open-Air Series" },
-    { src: "/images/archive/chasing-sunsets/css-s3-1.jpg", label: "Event Flyer", meta: "Latest Chapter" },
-    { src: "/images/autograf-recap.jpg", label: "Recap Frame", meta: "Live Energy" },
+    {
+      src: "/images/chasing-sunsets-premium.webp",
+      label: "Season Flyer",
+      meta: "Open-Air Series",
+    },
+    {
+      src: "/images/archive/chasing-sunsets/css-s3-1.jpg",
+      label: "Event Flyer",
+      meta: "Latest Chapter",
+    },
+    {
+      src: "/images/autograf-recap.jpg",
+      label: "Recap Frame",
+      meta: "Live Energy",
+    },
   ],
   "untold-story": [
-    { src: "/images/untold-story-juany-deron-v2.webp", label: "Chapter Flyer", meta: "Late-Night Series" },
-    { src: "/images/lazare-recap.webp", label: "Series Poster", meta: "Immersive Room" },
-    { src: "/images/eran-hersh-live-5.webp", label: "Live Frame", meta: "Global Guest" },
+    {
+      src: "/images/untold-story-juany-deron-v2.webp",
+      label: "Chapter Flyer",
+      meta: "Late-Night Series",
+    },
+    {
+      src: "/images/lazare-recap.webp",
+      label: "Series Poster",
+      meta: "Immersive Room",
+    },
+    {
+      src: "/images/eran-hersh-live-5.webp",
+      label: "Live Frame",
+      meta: "Global Guest",
+    },
   ],
 };
 
 const RADIO_FALLBACK_PREVIEWS: ArtistPreview[] = [
-  { src: "/images/radio-show-gear.webp", label: "Radio Archive", meta: "Chasing Sun(Sets) Radio" },
-  { src: "/images/artist-benchek.jpg", label: "Guest Portrait", meta: "Featured Session" },
-  { src: "/images/radio-show-gear.webp", label: "Guest Cover", meta: "Recent Drop" },
+  {
+    src: "/images/radio-show-gear.webp",
+    label: "Radio Archive",
+    meta: "Chasing Sun(Sets) Radio",
+  },
+  {
+    src: "/images/artist-benchek.jpg",
+    label: "Guest Portrait",
+    meta: "Featured Session",
+  },
+  {
+    src: "/images/radio-show-gear.webp",
+    label: "Guest Cover",
+    meta: "Recent Drop",
+  },
 ];
 
 const RADIO_PREVIEW_IMAGES: Record<string, string> = {
@@ -62,8 +125,7 @@ const RADIO_PREVIEW_IMAGES: Record<string, string> = {
   RADIAN: "/images/radio-show-gear.webp",
 };
 
-const sectionTitleClass =
-  "section-display-title max-w-[8ch] text-white";
+const sectionTitleClass = "section-display-title max-w-[8ch] text-white";
 
 function getSeriesLabel(series: ArtistSeries) {
   switch (series) {
@@ -119,7 +181,7 @@ function getSeriesIcon(series: ArtistSeries) {
 
 function dedupePreviewItems(items: ArtistPreview[]) {
   const seen = new Set<string>();
-  return items.filter((item) => {
+  return items.filter(item => {
     const key = `${item.src}::${item.label}::${item.meta}`;
     if (seen.has(key)) return false;
     seen.add(key);
@@ -132,16 +194,24 @@ function getArtistFallbackImage(artist: ArtistData) {
     return RADIO_PREVIEW_IMAGES[artist.name] ?? RADIO_FALLBACK_PREVIEWS[0].src;
   }
 
-  const primarySeries = artist.series[0] as Exclude<ArtistSeries, "sunsets-radio">;
-  return EVENT_PREVIEWS[primarySeries]?.[0]?.src ?? "/images/artists-collective.webp";
+  const primarySeries = artist.series[0] as Exclude<
+    ArtistSeries,
+    "sunsets-radio"
+  >;
+  return (
+    EVENT_PREVIEWS[primarySeries]?.[0]?.src ?? "/images/artists-collective.webp"
+  );
 }
 
 function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
   const radioPreviewItems = artist.series.includes("sunsets-radio")
     ? radioEpisodes
-        .filter((episode) => episode.guest === artist.name)
-        .map((episode) => ({
-          src: episode.coverImage || RADIO_PREVIEW_IMAGES[episode.guest] || artist.image,
+        .filter(episode => episode.guest === artist.name)
+        .map(episode => ({
+          src:
+            episode.coverImage ||
+            RADIO_PREVIEW_IMAGES[episode.guest] ||
+            artist.image,
           fallbackSrc: RADIO_PREVIEW_IMAGES[episode.guest] || artist.image,
           label: episode.shortCode,
           meta: episode.title,
@@ -168,7 +238,10 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
       meta: photo.alt,
     })) ?? [];
 
-  const eventPreviewItems = EVENT_PREVIEWS[artist.series[0] as Exclude<ArtistSeries, "sunsets-radio">] ?? [];
+  const eventPreviewItems =
+    EVENT_PREVIEWS[
+      artist.series[0] as Exclude<ArtistSeries, "sunsets-radio">
+    ] ?? [];
 
   return dedupePreviewItems([
     ...galleryPreviewItems,
@@ -182,7 +255,13 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
   ]).slice(0, 3);
 }
 
-function PreviewTile({ item, featured = false }: { item: ArtistPreview; featured?: boolean }) {
+function PreviewTile({
+  item,
+  featured = false,
+}: {
+  item: ArtistPreview;
+  featured?: boolean;
+}) {
   const [src, setSrc] = useState(item.src);
   const isRemote = /^https?:\/\//i.test(src);
   const handleError = () => {
@@ -195,7 +274,7 @@ function PreviewTile({ item, featured = false }: { item: ArtistPreview; featured
     <div
       className={cn(
         "relative overflow-hidden border border-white/10 bg-white/[0.03]",
-        featured ? "aspect-[4/5] min-h-[18rem]" : "aspect-[4/3]",
+        featured ? "aspect-[4/5] min-h-[18rem]" : "aspect-[4/3]"
       )}
     >
       {isRemote ? (
@@ -211,7 +290,11 @@ function PreviewTile({ item, featured = false }: { item: ArtistPreview; featured
         <ResponsiveImage
           src={src}
           alt={item.meta}
-          sizes={featured ? "(min-width: 1024px) 30vw, 100vw" : "(min-width: 1024px) 18vw, 50vw"}
+          sizes={
+            featured
+              ? "(min-width: 1024px) 30vw, 100vw"
+              : "(min-width: 1024px) 18vw, 50vw"
+          }
           onError={handleError}
           className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
         />
@@ -249,7 +332,7 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
               <span
                 className={cn(
                   "inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em]",
-                  getSeriesChipClasses(primarySeries),
+                  getSeriesChipClasses(primarySeries)
                 )}
               >
                 {getSeriesIcon(primarySeries)}
@@ -261,10 +344,14 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
             </div>
 
             <div className="mt-5 flex items-start gap-4">
-              <div className={cn(
-                "hidden overflow-hidden border border-white/10 bg-white/[0.03] sm:block",
-                primarySeries === "sunsets-radio" ? "w-20 aspect-square" : "w-20 aspect-[4/5]",
-              )}>
+              <div
+                className={cn(
+                  "hidden overflow-hidden border border-white/10 bg-white/[0.03] sm:block",
+                  primarySeries === "sunsets-radio"
+                    ? "w-20 aspect-square"
+                    : "w-20 aspect-[4/5]"
+                )}
+              >
                 <ResponsiveImage
                   src={portraitSrc}
                   alt={artist.name}
@@ -294,7 +381,7 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
                 </div>
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {artist.tags.slice(0, 3).map((tag) => (
+                  {artist.tags.slice(0, 3).map(tag => (
                     <span
                       key={tag}
                       className="rounded-full border border-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55"
@@ -315,7 +402,7 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]">
             <PreviewTile item={previews[0]} featured />
             <div className="grid gap-3">
-              {previews.slice(1, 3).map((item) => (
+              {previews.slice(1, 3).map(item => (
                 <PreviewTile key={`${artist.id}-${item.src}`} item={item} />
               ))}
             </div>
@@ -342,7 +429,7 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
         <article
           className={cn(
             "relative overflow-hidden border border-white/10 bg-black transition-colors duration-500",
-            getSeriesHoverBorder(primarySeries),
+            getSeriesHoverBorder(primarySeries)
           )}
         >
           <div className="aspect-[4/5] overflow-hidden">
@@ -359,7 +446,7 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
             <span
               className={cn(
                 "inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em]",
-                getSeriesChipClasses(primarySeries),
+                getSeriesChipClasses(primarySeries)
               )}
             >
               {getSeriesIcon(primarySeries)}
@@ -393,7 +480,9 @@ export default function Lineup() {
 
   const filteredArtists = useMemo(() => {
     if (activeFilter === "all") return ARTIST_ENTRIES;
-    return ARTIST_ENTRIES.filter((artist) => artist.series.includes(activeFilter));
+    return ARTIST_ENTRIES.filter(artist =>
+      artist.series.includes(activeFilter)
+    );
   }, [activeFilter]);
 
   return (
@@ -407,13 +496,16 @@ export default function Lineup() {
 
       <section className="page-shell-start-loose px-6 pb-8">
         <div className="container layout-default">
-          <span className="section-kicker block text-white/42">Monolith Project Index</span>
+          <span className="section-kicker block text-white/42">
+            Monolith Project Index
+          </span>
           <RevealText as="h1" className={sectionTitleClass}>
             ARTISTS
           </RevealText>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-            A roster view modeled as identity on the left and work on the right. Radio guests show episode
-            covers. Event artists show flyers, series frames, and live visuals.
+            A roster view modeled as identity on the left and work on the right.
+            Radio guests show episode covers. Event artists show flyers, series
+            frames, and live visuals.
           </p>
         </div>
       </section>
@@ -422,7 +514,7 @@ export default function Lineup() {
         <div className="container layout-default">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-wrap gap-2">
-              {filters.map((filter) => {
+              {filters.map(filter => {
                 const isActive = activeFilter === filter.value;
                 return (
                   <button
@@ -439,7 +531,7 @@ export default function Lineup() {
                             : filter.value === "sunsets-radio"
                               ? "border-[#C2703E]/45 bg-[#C2703E]/10 text-[#F3CDAF]"
                               : "border-white/20 bg-white/8 text-white"
-                        : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80",
+                        : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80"
                     )}
                   >
                     {filter.icon}
@@ -458,7 +550,7 @@ export default function Lineup() {
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2 transition-colors",
                   viewMode === "list"
                     ? "border-white/20 bg-white/8 text-white"
-                    : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80",
+                    : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80"
                 )}
               >
                 <List className="h-3.5 w-3.5" />
@@ -471,7 +563,7 @@ export default function Lineup() {
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2 transition-colors",
                   viewMode === "grid"
                     ? "border-white/20 bg-white/8 text-white"
-                    : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80",
+                    : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80"
                 )}
               >
                 <Grid2x2 className="h-3.5 w-3.5" />
@@ -486,7 +578,8 @@ export default function Lineup() {
         <div className="container layout-default">
           <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/44">
-              {filteredArtists.length} Artist{filteredArtists.length === 1 ? "" : "s"}
+              {filteredArtists.length} Artist
+              {filteredArtists.length === 1 ? "" : "s"}
             </span>
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/34">
               {viewMode === "list" ? "Identity + Work Preview" : "Poster Grid"}
@@ -495,13 +588,13 @@ export default function Lineup() {
 
           {viewMode === "list" ? (
             <div>
-              {filteredArtists.map((artist) => (
+              {filteredArtists.map(artist => (
                 <ArtistListRow key={artist.id} artist={artist} />
               ))}
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {filteredArtists.map((artist) => (
+              {filteredArtists.map(artist => (
                 <ArtistGridCard key={artist.id} artist={artist} />
               ))}
             </div>
@@ -511,12 +604,15 @@ export default function Lineup() {
 
       <section className="px-6 pb-24">
         <div className="container layout-default border-t border-white/10 pt-12">
-          <span className="section-kicker block text-white/42">Artist Booking / Submissions</span>
+          <span className="section-kicker block text-white/42">
+            Artist Booking / Submissions
+          </span>
           <h2 className="section-display-title-compact max-w-[8ch] text-white">
             WANT TO PLAY
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/68 md:text-lg">
-            Booking inquiries for Chasing Sun(Sets) and Untold Story rooms, plus Sun(Sets) Radio guest submissions.
+            Booking inquiries for Chasing Sun(Sets) and Untold Story rooms, plus
+            Sun(Sets) Radio guest submissions.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link href="/booking" className="btn-pill-primary btn-pill-wide">
@@ -531,7 +627,10 @@ export default function Lineup() {
 
       <EntityBoostStrip tone="dark" className="pb-16" />
       <TicketTicker />
-      <SlimSubscribeStrip title="GET LINEUP DROPS FIRST" source="lineup_strip" />
+      <SlimSubscribeStrip
+        title="GET LINEUP DROPS FIRST"
+        source="lineup_strip"
+      />
     </div>
   );
 }

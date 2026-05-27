@@ -244,6 +244,10 @@ This file governs the non-series route family first:
 - `/tickets`
 - `/events/:slug`
 
+## Required Companion Standards
+
+All image and video work must also follow [ASSET_PROTOCOL.md](./ASSET_PROTOCOL.md). Do not add low-resolution, muddy, over-compressed, stock-like, or purely atmospheric media to solve visual gaps. The Monolith system is dark by design, but every major page needs high-quality visual proof that the world is real, premium, and lived-in.
+
 ## Design Intent
 
 The parent site is not a nightlife flyer. It is the operating system around the nights. It should establish trust, clarity, and structure. Series pages can be warmer, louder, or more seasonal, but the Monolith layer stays disciplined.
@@ -285,6 +289,7 @@ The parent site follows a fixed-shell, modular-section model:
 - Conversion footer or strip.
 
 **Action Stacks & Link-in-Bio:**
+
 - Avoid generic list links. Use visual action stacks where each routing node (tickets, music, gallery) is treated as a component card.
 - Must support a specific `gallery` action type natively, integrating with tools like Pic-Time.
 - Bio links and action stacks should utilize external or specific asset imagery (e.g., SoundCloud covers, specific photography) rather than generic brand fallback images, creating an immediate, high-fidelity visual hierarchy.

@@ -59,7 +59,9 @@ function ResponsiveSlideImage({
   height?: number;
 }) {
   const imageSizes = sizes || "100vw";
-  const imageSources = sources?.length ? sources : buildResponsiveImageSources(src, imageSizes);
+  const imageSources = sources?.length
+    ? sources
+    : buildResponsiveImageSources(src, imageSizes);
 
   return (
     <picture className="contents">
@@ -97,7 +99,9 @@ export default function VideoHeroSlider({
   const [isMuted, setIsMuted] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
+  const [reduceMotion, setReduceMotion] = useState(() =>
+    prefersReducedMotion()
+  );
   const [canStartPrimaryVideo, setCanStartPrimaryVideo] = useState(() => {
     if (typeof document === "undefined") return true;
     return !document.getElementById("initial-loader");
@@ -107,12 +111,15 @@ export default function VideoHeroSlider({
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const trackedProgressRef = useRef<Set<string>>(new Set());
 
-  const goTo = useCallback((index: number) => {
-    if (!slides || slides.length === 0) return;
-    const next = ((index % slides.length) + slides.length) % slides.length;
-    setCurrentSlide(next);
-    onSlideChange?.(next);
-  }, [slides, onSlideChange]);
+  const goTo = useCallback(
+    (index: number) => {
+      if (!slides || slides.length === 0) return;
+      const next = ((index % slides.length) + slides.length) % slides.length;
+      setCurrentSlide(next);
+      onSlideChange?.(next);
+    },
+    [slides, onSlideChange]
+  );
 
   const prev = useCallback(() => goTo(currentSlide - 1), [currentSlide, goTo]);
   const next = useCallback(() => goTo(currentSlide + 1), [currentSlide, goTo]);
@@ -149,7 +156,13 @@ export default function VideoHeroSlider({
     const handleKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
       const tag = target?.tagName?.toLowerCase();
-      if (tag === "input" || tag === "textarea" || tag === "select" || target?.isContentEditable) return;
+      if (
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        target?.isContentEditable
+      )
+        return;
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
@@ -159,7 +172,10 @@ export default function VideoHeroSlider({
 
   const slide = slides[currentSlide];
   const slideFetchPriority = currentSlide === 0 ? "high" : "auto";
-  const activeVideoSrc = useResponsiveVideoSource(slide?.src || "", slide?.mobileSrc);
+  const activeVideoSrc = useResponsiveVideoSource(
+    slide?.src || "",
+    slide?.mobileSrc
+  );
 
   useEffect(() => {
     if (canStartPrimaryVideo) return;
@@ -171,8 +187,11 @@ export default function VideoHeroSlider({
     }
 
     const handleLoaderExit = () => setCanStartPrimaryVideo(true);
-    window.addEventListener("monolith:loader-exit", handleLoaderExit, { once: true });
-    return () => window.removeEventListener("monolith:loader-exit", handleLoaderExit);
+    window.addEventListener("monolith:loader-exit", handleLoaderExit, {
+      once: true,
+    });
+    return () =>
+      window.removeEventListener("monolith:loader-exit", handleLoaderExit);
   }, [canStartPrimaryVideo]);
 
   // Avoid competing with critical JS/CSS on slow connections: keep the poster image
@@ -183,15 +202,29 @@ export default function VideoHeroSlider({
     if (!enableAmbientVideo) return;
     if (!slide) return;
     if (slide.type !== "video" && slide.type !== "youtube") return;
-    if (currentSlide === 0 && slide.type === "video" && !canStartPrimaryVideo) return;
+    if (currentSlide === 0 && slide.type === "video" && !canStartPrimaryVideo)
+      return;
 
     const delayMs = currentSlide === 0 ? 3200 : 600;
     const id = window.setTimeout(() => setLoadVideo(true), delayMs);
     return () => window.clearTimeout(id);
-  }, [canStartPrimaryVideo, currentSlide, enableAmbientVideo, loadVideo, reduceMotion, slide?.type]);
+  }, [
+    canStartPrimaryVideo,
+    currentSlide,
+    enableAmbientVideo,
+    loadVideo,
+    reduceMotion,
+    slide?.type,
+  ]);
 
   useEffect(() => {
-    if (!loadVideo || !enableAmbientVideo || reduceMotion || slide?.type !== "video") return;
+    if (
+      !loadVideo ||
+      !enableAmbientVideo ||
+      reduceMotion ||
+      slide?.type !== "video"
+    )
+      return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -209,7 +242,7 @@ export default function VideoHeroSlider({
   if (!slide) return null;
 
   return (
-    <div 
+    <div
       className="absolute inset-0 z-0 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(!isMuted ? true : false)}
@@ -280,7 +313,7 @@ export default function VideoHeroSlider({
                   className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center]"
                 />
               )}
-              
+
               {/* Video Layer fades in over poster once ready */}
               {enableAmbientVideo && loadVideo && (
                 <video
@@ -293,10 +326,10 @@ export default function VideoHeroSlider({
                   onTimeUpdate={() => {
                     const video = videoRef.current;
                     if (!video || !activeVideoSrc) return;
-                    
+
                     const progress = video.currentTime / video.duration;
                     const percent = Math.floor(progress * 100);
-                    
+
                     const breakpoints = [25, 50, 75, 100];
                     for (const bp of breakpoints) {
                       if (percent >= bp && percent < bp + 10) {
@@ -371,10 +404,11 @@ export default function VideoHeroSlider({
               onClick={() => goTo(index)}
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === currentSlide ? "true" : undefined}
-              className={`h-[2px] transition-all duration-500 ${index === currentSlide
-                ? "bg-primary w-8 md:w-10"
-                : "bg-white/20 w-4 md:w-5 hover:bg-white/40"
-                } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
+              className={`h-[2px] transition-all duration-500 ${
+                index === currentSlide
+                  ? "bg-primary w-8 md:w-10"
+                  : "bg-white/20 w-4 md:w-5 hover:bg-white/40"
+              } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
             />
           ))}
         </div>
@@ -386,16 +420,19 @@ export default function VideoHeroSlider({
               Photo: {slide.credit}
             </span>
           )}
-          {slide.type === "video" && enableAmbientVideo && (loadVideo || !slide.poster) && !reduceMotion && (
-            <button
-              type="button"
-              onClick={toggleMute}
-              className="p-2 border border-white/10 text-white/40 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
-              aria-label={isMuted ? "Unmute video" : "Mute video"}
-            >
-              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            </button>
-          )}
+          {slide.type === "video" &&
+            enableAmbientVideo &&
+            (loadVideo || !slide.poster) &&
+            !reduceMotion && (
+              <button
+                type="button"
+                onClick={toggleMute}
+                className="p-2 border border-white/10 text-white/40 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+            )}
         </div>
       </div>
     </div>

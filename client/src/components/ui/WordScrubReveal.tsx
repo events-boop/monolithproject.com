@@ -20,14 +20,17 @@ function Word({ children, progress, range }: WordProps) {
   return (
     <motion.span
       style={{ opacity, y, filter }}
-      className="mr-[0.25em] mb-[0.1em] will-change-[opacity,transform,filter]"
+      className="mr-[0.25em] mb-[0.1em] will-change-[opacity,transform,filter] word-scrub-word"
     >
       {children}
     </motion.span>
   );
 }
 
-export default function WordScrubReveal({ text, className = "" }: WordScrubRevealProps) {
+export default function WordScrubReveal({
+  text,
+  className = "",
+}: WordScrubRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,

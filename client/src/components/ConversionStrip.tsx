@@ -10,7 +10,15 @@ import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import ConversionCTA from "./ConversionCTA";
 import { useCountdown } from "@/hooks/useCountdown";
 
-function HUDDigit({ value, label, tone }: { value: number; label: string; tone: "warm" | "nocturne" }) {
+function HUDDigit({
+  value,
+  label,
+  tone,
+}: {
+  value: number;
+  label: string;
+  tone: "warm" | "nocturne";
+}) {
   const isWarm = tone === "warm";
 
   return (
@@ -60,7 +68,9 @@ export default function ConversionStrip({
   if (!event) return null;
 
   const isWarm = tone === "warm";
-  const themeColor = isWarm ? getSeriesColorOnLight(event.series) : getSeriesColor(event.series);
+  const themeColor = isWarm
+    ? getSeriesColorOnLight(event.series)
+    : getSeriesColor(event.series);
 
   return (
     <motion.div
@@ -110,9 +120,13 @@ export default function ConversionStrip({
                   isWarm ? "text-[#2C1810]" : "text-white"
                 }`}
               >
-                {cta.label === CTA_LABELS.tickets ? "TICKETS LIVE" : "NEXT EVENT"}
+                {cta.label === CTA_LABELS.tickets
+                  ? "TICKETS LIVE"
+                  : "NEXT EVENT"}
                 <br />
-                <span style={{ color: themeColor }}>{event.headline || "EVENT DETAILS COMING SOON"}</span>
+                <span style={{ color: themeColor }}>
+                  {event.headline || "EVENT DETAILS COMING SOON"}
+                </span>
               </h2>
               <p
                 className={`mt-4 font-sans text-[10px] uppercase tracking-widest leading-relaxed ${
@@ -128,7 +142,9 @@ export default function ConversionStrip({
 
           <div className="mx-auto flex items-center gap-4 md:gap-6 lg:mx-0">
             <HUDDigit value={timeLeft.days} label="Days" tone={tone} />
-            <div className={`hidden h-12 w-px self-center md:block ${isWarm ? "bg-[#C2703E]/14" : "bg-white/10"}`} />
+            <div
+              className={`hidden h-12 w-px self-center md:block ${isWarm ? "bg-[#C2703E]/14" : "bg-white/10"}`}
+            />
             <HUDDigit value={timeLeft.hours} label="Hours" tone={tone} />
             <HUDDigit value={timeLeft.minutes} label="Min" tone={tone} />
             <HUDDigit value={timeLeft.seconds} label="Sec" tone={tone} />

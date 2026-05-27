@@ -11,43 +11,46 @@
  */
 
 function canVibrate(): boolean {
-    if (typeof navigator === "undefined") return false;
-    if (typeof navigator.vibrate !== "function") return false;
-    if (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
-        return false;
-    }
-    return true;
+  if (typeof navigator === "undefined") return false;
+  if (typeof navigator.vibrate !== "function") return false;
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  ) {
+    return false;
+  }
+  return true;
 }
 
 function vibrate(pattern: number | number[]) {
-    if (!canVibrate()) return;
-    try {
-        navigator.vibrate(pattern);
-    } catch {
-        // Some browsers throw if user-activation is missing; fail silently.
-    }
+  if (!canVibrate()) return;
+  try {
+    navigator.vibrate(pattern);
+  } catch {
+    // Some browsers throw if user-activation is missing; fail silently.
+  }
 }
 
 class HapticFeedback {
-    /** Tactile tap on navigation / primary action. */
-    public click() {
-        vibrate(10);
-    }
+  /** Tactile tap on navigation / primary action. */
+  public click() {
+    vibrate(10);
+  }
 
-    /** No-op — hover haptics are hostile on touch and impossible on desktop. */
-    public hover() {
-        // intentional no-op
-    }
+  /** No-op — hover haptics are hostile on touch and impossible on desktop. */
+  public hover() {
+    // intentional no-op
+  }
 
-    /** Error / blocked action — short double pulse. */
-    public error() {
-        vibrate([20, 40, 20]);
-    }
+  /** Error / blocked action — short double pulse. */
+  public error() {
+    vibrate([20, 40, 20]);
+  }
 
-    /** Boot / confirmation sequence — three-step staccato. */
-    public boot() {
-        vibrate([10, 30, 10, 30, 20]);
-    }
+  /** Boot / confirmation sequence — three-step staccato. */
+  public boot() {
+    vibrate([10, 30, 10, 30, 20]);
+  }
 }
 
 export const signalChirp = new HapticFeedback();

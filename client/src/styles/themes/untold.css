@@ -1,9 +1,17 @@
 .bg-untold-hero-glow {
-  background-image: radial-gradient(circle, var(--color-untold-violet), transparent);
+  background-image: radial-gradient(
+    circle,
+    var(--color-untold-violet),
+    transparent
+  );
 }
 
 .bg-untold-hero-btn {
-  background-image: linear-gradient(135deg, var(--color-untold-violet), var(--color-untold-cyan));
+  background-image: linear-gradient(
+    135deg,
+    var(--color-untold-violet),
+    var(--color-untold-cyan)
+  );
 }
 
 .bg-untold-card {
@@ -12,11 +20,20 @@
 }
 
 .bg-untold-glow-cyan {
-  background-image: radial-gradient(circle, var(--color-untold-cyan), transparent);
+  background-image: radial-gradient(
+    circle,
+    var(--color-untold-cyan),
+    transparent
+  );
 }
 
 .bg-untold-contrast {
-  background-image: linear-gradient(180deg, #06060F 0%, rgba(34, 211, 238, 0.05) 50%, #06060F 100%);
+  background-image: linear-gradient(
+    180deg,
+    #06060f 0%,
+    rgba(34, 211, 238, 0.05) 50%,
+    #06060f 100%
+  );
 }
 
 /* Base untold style variables */
@@ -57,5 +74,9 @@
 }
 
 .bg-untold-violet-08 {
-  background-color: color-mix(in srgb, var(--color-untold-violet) 8%, transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--color-untold-violet) 8%,
+    transparent
+  );
 }

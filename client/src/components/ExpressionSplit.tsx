@@ -4,7 +4,12 @@ import { Link } from "wouter";
 import { Sun, AudioLines, ArrowUpRight } from "lucide-react";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { getResponsiveImage } from "../lib/responsiveImages";
-import { MONOLITH_ORANGE, RADIO_ACCENT, SUN_SETS_GOLD, UNTOLD_CYAN } from "../lib/brand";
+import {
+  MONOLITH_ORANGE,
+  RADIO_ACCENT,
+  SUN_SETS_GOLD,
+  UNTOLD_CYAN,
+} from "../lib/brand";
 import ResponsiveImage from "./ResponsiveImage";
 
 const expressions = [
@@ -65,16 +70,18 @@ export default function ExpressionSplit() {
   // Helper to find starting price for a series
   const getStartingPrice = (expId: string) => {
     const seriesMap: Record<string, string> = {
-      'sunsets': 'chasing-sunsets',
-      'untold': 'untold-story',
-      'radio': 'radio',
+      sunsets: "chasing-sunsets",
+      untold: "untold-story",
+      radio: "radio",
     };
     const seriesId = seriesMap[expId];
     if (!seriesId) return null;
-    
-    const events = allEvents.filter(e => e.series === seriesId && e.startingPrice);
+
+    const events = allEvents.filter(
+      e => e.series === seriesId && e.startingPrice
+    );
     if (!events.length) return null;
-    
+
     // Return the minimum starting price
     const minPrice = Math.min(...events.map(e => e.startingPrice!));
     return minPrice;
@@ -82,7 +89,8 @@ export default function ExpressionSplit() {
 
   const handleHoverStart = (id: string) => {
     setHoveredId(id);
-    const normalizedId = id === "untold" ? "untold" : id === "sunsets" ? "sunsets" : "radio";
+    const normalizedId =
+      id === "untold" ? "untold" : id === "sunsets" ? "sunsets" : "radio";
     setHoveredExpression(normalizedId as any);
   };
 
@@ -105,27 +113,39 @@ export default function ExpressionSplit() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="split-panel-item relative group cursor-pointer overflow-hidden border-b border-white/10 last:border-0 lg:border-b-0 lg:border-r"
           >
-            <Link href={exp.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
+            <Link
+              href={exp.href}
+              className="absolute inset-0 block h-full w-full"
+              data-cursor-text="EXPLORE"
+            >
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
                 <ResponsiveImage
                   src={exp.image}
                   alt={exp.title}
-                  sources={getResponsiveImage(
-                    exp.id === 'sunsets' ? 'chasingSunsets' :
-                    exp.id === 'untold' ? 'untoldStoryPoster' :
-                    exp.id === 'radio' ? 'radioShowGear' : 'videoPoster1',
-                    "(min-width: 1024px) 25vw, 100vw"
-                  ).sources}
+                  sources={
+                    getResponsiveImage(
+                      exp.id === "sunsets"
+                        ? "chasingSunsets"
+                        : exp.id === "untold"
+                          ? "untoldStoryPoster"
+                          : exp.id === "radio"
+                            ? "radioShowGear"
+                            : "videoPoster1",
+                      "(min-width: 1024px) 25vw, 100vw"
+                    ).sources
+                  }
                   sizes="(min-width: 1024px) 25vw, 100vw"
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover grayscale-[40%] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/60 transition-colors duration-500 group-hover:bg-black/40" />
-                <div 
+                <div
                   className="absolute inset-0 opacity-20 transition-opacity duration-700 group-hover:opacity-40"
-                  style={{ background: `linear-gradient(to top, ${exp.color}44, transparent)` }}
+                  style={{
+                    background: `linear-gradient(to top, ${exp.color}44, transparent)`,
+                  }}
                 />
               </div>
 
@@ -142,58 +162,76 @@ export default function ExpressionSplit() {
               {/* Content Holder */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-12">
                 <div className="max-w-md">
-                   {/* Icon HUD - Only show on desktop hover or mobile active */}
-                    <motion.div 
-                     animate={{ 
-                       y: hoveredId === exp.id ? 0 : 20,
-                       opacity: (hoveredId === exp.id || hoveredId === null) ? 1 : 0 
-                     }}
-                     className="mb-4 lg:mb-8 flex h-12 w-12 lg:h-16 lg:w-16 items-center justify-center rounded-none border border-white/20 bg-black/40 backdrop-blur-md shadow-2xl"
-                   >
-                     {exp.id === 'untold' ? <UntoldButterflyLogo className="h-6 w-6 lg:h-8 lg:w-8 text-primary" /> : <exp.icon className="h-6 w-6 lg:h-8 lg:w-8" style={{ color: exp.color }} />}
-                   </motion.div>
+                  {/* Icon HUD - Only show on desktop hover or mobile active */}
+                  <motion.div
+                    animate={{
+                      y: hoveredId === exp.id ? 0 : 20,
+                      opacity:
+                        hoveredId === exp.id || hoveredId === null ? 1 : 0,
+                    }}
+                    className="mb-4 lg:mb-8 flex h-12 w-12 lg:h-16 lg:w-16 items-center justify-center rounded-none border border-white/20 bg-black/40 backdrop-blur-md shadow-2xl"
+                  >
+                    {exp.id === "untold" ? (
+                      <UntoldButterflyLogo className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
+                    ) : (
+                      <exp.icon
+                        className="h-6 w-6 lg:h-8 lg:w-8"
+                        style={{ color: exp.color }}
+                      />
+                    )}
+                  </motion.div>
 
-                       <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-display text-3xl lg:text-5xl uppercase tracking-tight text-white leading-none">
-                            {exp.title}
-                          </h3>
-                          {exp.id !== 'archive' && exp.id !== 'radio' && getStartingPrice(exp.id) && (
-                            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 lg:opacity-0 group-hover:opacity-100 transition-opacity">
-                              From <span className="text-white">${getStartingPrice(exp.id)}</span>
-                            </span>
-                          )}
-                       </div>
-                   
-                   <motion.div
-                     initial={false}
-                     animate={{ 
-                       height: (hoveredId === exp.id) ? "auto" : "0px",
-                       opacity: hoveredId === exp.id ? 1 : 0,
-                     }}
-                     className="hidden lg:block overflow-hidden"
-                   >
-                     <p className="mt-6 font-serif italic text-xl lg:text-2xl text-white/80 leading-relaxed max-w-sm">
-                       {exp.tagline}
-                     </p>
-                     
-                     <div className="btn-text-action mt-8">
-                        <span>
-                          {exp.id === 'sunsets' ? 'Get Alerts First' :
-                           exp.id === 'untold' ? 'Join The Story' :
-                           exp.id === 'radio' ? 'Hear The Rooms' :
-                           'See The Archive'}
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-display text-3xl lg:text-5xl uppercase tracking-tight text-white leading-none">
+                      {exp.title}
+                    </h3>
+                    {exp.id !== "archive" &&
+                      exp.id !== "radio" &&
+                      getStartingPrice(exp.id) && (
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                          From{" "}
+                          <span className="text-white">
+                            ${getStartingPrice(exp.id)}
+                          </span>
                         </span>
-                        <ArrowUpRight />
-                     </div>
-                   </motion.div>
+                      )}
+                  </div>
+
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      height: hoveredId === exp.id ? "auto" : "0px",
+                      opacity: hoveredId === exp.id ? 1 : 0,
+                    }}
+                    className="hidden lg:block overflow-hidden"
+                  >
+                    <p className="mt-6 font-serif italic text-xl lg:text-2xl text-white/80 leading-relaxed max-w-sm">
+                      {exp.tagline}
+                    </p>
+
+                    <div className="btn-text-action mt-8">
+                      <span>
+                        {exp.id === "sunsets"
+                          ? "Get Alerts First"
+                          : exp.id === "untold"
+                            ? "Join The Story"
+                            : exp.id === "radio"
+                              ? "Hear The Rooms"
+                              : "See The Archive"}
+                      </span>
+                      <ArrowUpRight />
+                    </div>
+                  </motion.div>
                 </div>
 
                 {/* Mobile Interaction Signal */}
                 <div className="lg:hidden mt-6">
                   <span className="btn-text-action">
-                    {exp.id === 'sunsets' ? 'Get Alerts First' :
-                     exp.id === 'untold' ? 'Join The Story' :
-                     'Open View'}
+                    {exp.id === "sunsets"
+                      ? "Get Alerts First"
+                      : exp.id === "untold"
+                        ? "Join The Story"
+                        : "Open View"}
                     <ArrowUpRight />
                   </span>
                 </div>
@@ -201,9 +239,9 @@ export default function ExpressionSplit() {
 
               {/* Inactive State Vertical Title (Maja Style) */}
               <motion.div
-                animate={{ 
+                animate={{
                   opacity: hoveredId === exp.id ? 0 : 1,
-                  y: hoveredId === exp.id ? 40 : 0
+                  y: hoveredId === exp.id ? 40 : 0,
                 }}
                 className="hidden lg:block absolute right-6 bottom-12 origin-bottom lg:right-auto lg:left-8 lg:bottom-12 lg:origin-bottom-left lg:-rotate-90 pointer-events-none whitespace-nowrap"
               >

@@ -4,7 +4,9 @@ interface HorizonDiscMarkProps {
   className?: string;
 }
 
-export default function HorizonDiscMark({ className = "w-12 h-12 sm:w-14 sm:h-14" }: HorizonDiscMarkProps) {
+export default function HorizonDiscMark({
+  className = "w-12 h-12 sm:w-14 sm:h-14",
+}: HorizonDiscMarkProps) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -38,7 +40,11 @@ export default function HorizonDiscMark({ className = "w-12 h-12 sm:w-14 sm:h-14
                   opacity: [0, 0.35, 1, 0.85],
                   transition: {
                     pathLength: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-                    opacity: { duration: 1.6, times: [0, 0.35, 0.7, 1], ease: "easeOut" },
+                    opacity: {
+                      duration: 1.6,
+                      times: [0, 0.35, 0.7, 1],
+                      ease: "easeOut",
+                    },
                   },
                 },
               }
@@ -58,11 +64,18 @@ export default function HorizonDiscMark({ className = "w-12 h-12 sm:w-14 sm:h-14
                   cy: 32,
                   opacity: 1,
                   scale: 1,
-                  transition: { delay: 0.25, duration: 1, ease: [0.22, 1, 0.36, 1] },
+                  transition: {
+                    delay: 0.25,
+                    duration: 1,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
                 },
               }
         }
-        style={{ transformOrigin: "32px 42px", filter: "drop-shadow(0 0 10px rgba(232,184,109,0.55))" }}
+        style={{
+          transformOrigin: "32px 42px",
+          filter: "drop-shadow(0 0 10px rgba(232,184,109,0.55))",
+        }}
       />
       <defs>
         <radialGradient id="horizonDisc" cx="50%" cy="40%" r="60%">

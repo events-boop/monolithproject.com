@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Ticket, Lock, Zap, Clock, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  Ticket,
+  Lock,
+  Zap,
+  Clock,
+  CheckCircle2,
+} from "lucide-react";
 import { ScheduledEvent } from "@/data/events";
 import { getEventCta, FunnelTool, isEventLowInventory } from "@/lib/cta";
 import MagneticButton from "@/components/MagneticButton";
@@ -24,10 +31,10 @@ interface ConversionCTAProps {
   tone?: CtaTone;
 }
 
-export default function ConversionCTA({ 
-  event, 
-  className = "", 
-  size = "md", 
+export default function ConversionCTA({
+  event,
+  className = "",
+  size = "md",
   showUrgency = true,
   variant = "primary",
   tone,
@@ -35,7 +42,7 @@ export default function ConversionCTA({
   const cta = getEventCta(event);
   const { preconnectGateway } = useIntentPrefetch();
   const { openInquiry } = useInquiry();
-  
+
   const sizeClasses = {
     sm: "px-5 py-2.5 text-[11px]",
     md: "px-6 py-3.5 md:px-8 md:py-4 text-[11px] md:text-[12px]",
@@ -56,9 +63,10 @@ export default function ConversionCTA({
     experiential: "cta-experiential",
   };
 
-  const systemReport = event?.status === 'on-sale' && isEventLowInventory(event)
-    ? `[ CAPACITY // 94% EQUILIBRIUM ]`
-    : null;
+  const systemReport =
+    event?.status === "on-sale" && isEventLowInventory(event)
+      ? `[ CAPACITY // 94% EQUILIBRIUM ]`
+      : null;
   const isInquiry = isInquiryHref(cta.href);
   const toneClass = tone ? getCtaToneClass(tone) : getEventCtaToneClass(event);
   const eventSlug = event?.slug || event?.id;
@@ -97,7 +105,7 @@ export default function ConversionCTA({
         href={isInquiry ? "#" : cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
-        onClick={(e) => {
+        onClick={e => {
           if (isInquiry) {
             e.preventDefault();
             const inquiryType = parseInquiryType(cta.href);
@@ -139,7 +147,7 @@ export default function ConversionCTA({
           group relative flex min-h-[var(--tap-target-min)] items-center justify-center gap-4
           transition-all duration-500 rounded-full
           ${sizeClasses[size]} w-full sm:w-auto
-          ${variant === 'experiential' ? toolStyles.experiential : toolStyles[cta.tool]}
+          ${variant === "experiential" ? toolStyles.experiential : toolStyles[cta.tool]}
           ${toneClass}
           shadow-[0_20px_50px_rgba(0,0,0,0.15)]
           hover:shadow-[0_25px_60px_rgba(0,0,0,0.25)]
@@ -155,14 +163,14 @@ export default function ConversionCTA({
 
       {showUrgency && systemReport && (
         <div className="flex flex-col items-center w-full">
-           {/* Architectural Data Bridge */}
-           <motion.div 
-             initial={{ height: 0 }}
-             animate={{ height: size === 'sm' ? 12 : 16 }}
-             className="w-[1px] bg-white/10 group-hover:bg-primary/30 transition-colors"
-           />
-           
-           <motion.div 
+          {/* Architectural Data Bridge */}
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: size === "sm" ? 12 : 16 }}
+            className="w-[1px] bg-white/10 group-hover:bg-primary/30 transition-colors"
+          />
+
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className={`
@@ -183,7 +191,7 @@ export default function ConversionCTA({
   );
 
   return (
-    <MagneticButton strength={size === 'xl' ? 0.3 : 0.2}>
+    <MagneticButton strength={size === "xl" ? 0.3 : 0.2}>
       {baseButton}
     </MagneticButton>
   );

@@ -38,7 +38,7 @@ const NEXT_BUTTON_SELECTORS = [
   '[aria-label*="next" i]',
   'button[title*="next" i]',
   'button:has-text("Next")',
-  '.pswp__button--arrow--right',
+  ".pswp__button--arrow--right",
 ];
 
 function printHelp() {
@@ -162,7 +162,11 @@ async function readManifest(manifestPath) {
 }
 
 async function writeManifest(manifestPath, manifest) {
-  await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    manifestPath,
+    `${JSON.stringify(manifest, null, 2)}\n`,
+    "utf8"
+  );
 }
 
 async function findVisibleLocator(page, selectors) {
@@ -201,12 +205,16 @@ function extFromUrl(url) {
 
 async function saveImageFromCurrentSrc(context, src, outputPrefixPath) {
   if (!src) {
-    throw new Error("Could not detect current image URL for direct save fallback.");
+    throw new Error(
+      "Could not detect current image URL for direct save fallback."
+    );
   }
 
   const response = await context.request.get(src);
   if (!response.ok()) {
-    throw new Error(`Direct image fetch failed with status ${response.status()}`);
+    throw new Error(
+      `Direct image fetch failed with status ${response.status()}`
+    );
   }
 
   const contentType = response.headers()["content-type"] || "";
@@ -220,7 +228,7 @@ async function saveImageFromCurrentSrc(context, src, outputPrefixPath) {
 async function getCurrentImageFingerprint(page) {
   return page.evaluate(() => {
     const images = Array.from(document.querySelectorAll("img"))
-      .map((node) => {
+      .map(node => {
         const rect = node.getBoundingClientRect();
         return {
           src: node.currentSrc || node.src || "",
@@ -231,7 +239,7 @@ async function getCurrentImageFingerprint(page) {
           left: rect.left,
         };
       })
-      .filter((img) => img.src && img.width > 120 && img.height > 120);
+      .filter(img => img.src && img.width > 120 && img.height > 120);
 
     images.sort((a, b) => b.area - a.area);
     const best = images[0];
@@ -259,7 +267,9 @@ async function triggerDownload(page, timeoutMs) {
 
   const menuButton = await findVisibleLocator(page, DOWNLOAD_MENU_SELECTORS);
   if (!menuButton) {
-    throw new Error("Download button clicked, but no download event or menu item was found.");
+    throw new Error(
+      "Download button clicked, but no download event or menu item was found."
+    );
   }
 
   const [download] = await Promise.all([
@@ -271,8 +281,10 @@ async function triggerDownload(page, timeoutMs) {
 
 async function dumpVisibleActions(page) {
   const actions = await page.evaluate(() => {
-    const nodes = Array.from(document.querySelectorAll("button, a, [role='button']"));
-    const visible = nodes.filter((node) => {
+    const nodes = Array.from(
+      document.querySelectorAll("button, a, [role='button']")
+    );
+    const visible = nodes.filter(node => {
       const style = window.getComputedStyle(node);
       const rect = node.getBoundingClientRect();
       return (
@@ -283,7 +295,7 @@ async function dumpVisibleActions(page) {
         style.opacity !== "0"
       );
     });
-    return visible.slice(0, 80).map((node) => {
+    return visible.slice(0, 80).map(node => {
       const element = node;
       return {
         text: (element.textContent || "").trim().slice(0, 60),
@@ -323,7 +335,10 @@ async function advanceToNext(page, afterActionWaitMs) {
 }
 
 async function promptForStart(url, outDir) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
   console.log("\nManual setup required:");
   console.log(`- Open: ${url}`);
   console.log("- Complete any login/download PIN prompts if needed.");
@@ -341,7 +356,7 @@ async function main() {
   const manifestPath = path.join(options.outDir, "_manifest.json");
   const manifest = await readManifest(manifestPath);
   const seenFingerprints = new Set(
-    manifest.entries.map((entry) => entry.fingerprint).filter(Boolean)
+    manifest.entries.map(entry => entry.fingerprint).filter(Boolean)
   );
 
   const context = await chromium.launchPersistentContext(options.profileDir, {
@@ -393,7 +408,11 @@ async function main() {
         await dumpVisibleActions(page);
         const safeBaseName = `${String(manifest.entries.length + 1).padStart(4, "0")}-${sanitizeFilenamePart("pixieset-photo")}`;
         const outputPrefixPath = path.join(options.outDir, safeBaseName);
-        outputPath = await saveImageFromCurrentSrc(context, fingerprint, outputPrefixPath);
+        outputPath = await saveImageFromCurrentSrc(
+          context,
+          fingerprint,
+          outputPrefixPath
+        );
         outputName = path.basename(outputPath);
       }
 
@@ -422,14 +441,18 @@ async function main() {
       }
     }
 
-    console.log(`\nDone. Downloaded ${downloadedCount} new photo(s) to ${options.outDir}`);
+    console.log(
+      `\nDone. Downloaded ${downloadedCount} new photo(s) to ${options.outDir}`
+    );
     console.log(`Manifest: ${manifestPath}`);
   } finally {
     await context.close();
   }
 }
 
-main().catch((error) => {
-  console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+main().catch(error => {
+  console.error(
+    `Error: ${error instanceof Error ? error.message : String(error)}`
+  );
   process.exit(1);
 });

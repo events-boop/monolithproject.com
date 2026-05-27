@@ -1,7 +1,15 @@
 import { ArrowUpRight, Check, Lock, Ticket, Zap } from "lucide-react";
 import { Link } from "wouter";
-import { getEventById, getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
-import { getEventCta, getEventDetailsHref, isEventLowInventory } from "@/lib/cta";
+import {
+  getEventById,
+  getSeriesColor,
+  getSeriesLabel,
+} from "@/lib/siteExperience";
+import {
+  getEventCta,
+  getEventDetailsHref,
+  isEventLowInventory,
+} from "@/lib/cta";
 import type { EventCta, FunnelTool } from "@/lib/cta";
 import { LIVE_RED } from "@/lib/brand";
 import type { ScheduledEvent } from "@shared/events/types";
@@ -11,20 +19,23 @@ const ACTION_EVENT_IDS = ["us-jul04", "css-aug22"];
 
 export default function LiveTickets() {
   const tieredEvent = getEventById(FEATURED_TIERED_ID);
-  const actionEvents = ACTION_EVENT_IDS
-    .map((id) => getEventById(id))
-    .filter((e): e is ScheduledEvent => Boolean(e));
+  const actionEvents = ACTION_EVENT_IDS.map(id => getEventById(id)).filter(
+    (e): e is ScheduledEvent => Boolean(e)
+  );
 
   if (!tieredEvent && actionEvents.length === 0) return null;
 
-  const totalReleases = (tieredEvent?.ticketTiers?.length ?? 0) + actionEvents.length;
+  const totalReleases =
+    (tieredEvent?.ticketTiers?.length ?? 0) + actionEvents.length;
 
   return (
     <section className="relative bg-black border-y border-white/10 py-14 md:py-20 overflow-hidden">
       <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none" />
       <div
         className="absolute inset-x-0 top-0 h-px pointer-events-none"
-        style={{ background: `linear-gradient(90deg, transparent, ${LIVE_RED}aa, transparent)` }}
+        style={{
+          background: `linear-gradient(90deg, transparent, ${LIVE_RED}aa, transparent)`,
+        }}
       />
 
       <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
@@ -60,7 +71,7 @@ export default function LiveTickets() {
           {tieredEvent && <TieredEventCard event={tieredEvent} />}
 
           <div className="flex flex-col divide-y divide-white/10 bg-black">
-            {actionEvents.map((event) => (
+            {actionEvents.map(event => (
               <ActionCard key={event.id} event={event} />
             ))}
           </div>
@@ -86,7 +97,7 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
   const title = event.headline || event.episode || event.title;
   const label = getSeriesLabel(event.series);
   const tiers = event.ticketTiers ?? [];
-  const firstLockedIndex = tiers.findIndex((t) => !t.available);
+  const firstLockedIndex = tiers.findIndex(t => !t.available);
   const cta = getEventCta(event);
   const href = ctaHref(cta, detailsHref);
   const startingPrice = event.startingPrice;
@@ -158,7 +169,9 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border"
                     style={{
-                      borderColor: isLive ? `${LIVE_RED}88` : "rgba(255,255,255,0.2)",
+                      borderColor: isLive
+                        ? `${LIVE_RED}88`
+                        : "rgba(255,255,255,0.2)",
                       backgroundColor: isLive ? `${LIVE_RED}1a` : "transparent",
                     }}
                   >
@@ -176,7 +189,10 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
                       {isLive && (
                         <span
                           className="font-mono text-[8px] tracking-[0.35em] uppercase px-1 py-0.5 border"
-                          style={{ color: LIVE_RED, borderColor: `${LIVE_RED}66` }}
+                          style={{
+                            color: LIVE_RED,
+                            borderColor: `${LIVE_RED}66`,
+                          }}
                         >
                           Live
                         </span>
@@ -243,8 +259,12 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
   const cta = getEventCta(event);
   const href = ctaHref(cta, detailsHref);
   const statusLabel = isOnSale
-    ? lowInventory ? "Final Release" : "On Sale"
-    : event.startingPrice ? "Presale" : "Waitlist";
+    ? lowInventory
+      ? "Final Release"
+      : "On Sale"
+    : event.startingPrice
+      ? "Presale"
+      : "Waitlist";
 
   return (
     <div className="group relative flex-1 flex items-center gap-4 md:gap-5 p-5 md:p-6 transition-colors duration-500 hover:bg-white/[0.03] min-h-[140px]">
@@ -287,7 +307,10 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
           </span>
           {event.startingPrice && (
             <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60">
-              From <span className="text-white font-bold">${event.startingPrice}</span>
+              From{" "}
+              <span className="text-white font-bold">
+                ${event.startingPrice}
+              </span>
             </span>
           )}
         </div>
@@ -307,7 +330,9 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
         data-cta-tool={cta.tool}
       >
         <span className="hidden sm:inline">{cta.label}</span>
-        <span className="sm:hidden">{cta.tool === "laylo" ? "Notify" : "Get"}</span>
+        <span className="sm:hidden">
+          {cta.tool === "laylo" ? "Notify" : "Get"}
+        </span>
         <ArrowUpRight className="w-3.5 h-3.5 md:w-4 md:h-4" />
       </Link>
     </div>

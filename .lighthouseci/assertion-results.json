@@ -3,11 +3,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.47,
-    "values": [
-      0.47,
-      0.22,
-      0.16
-    ],
+    "values": [0.47, 0.22, 0.16],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
@@ -19,11 +15,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.52,
-    "values": [
-      0.51,
-      0.52,
-      0.52
-    ],
+    "values": [0.51, 0.52, 0.52],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
@@ -35,11 +27,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.43,
-    "values": [
-      0.4,
-      0.43,
-      0.43
-    ],
+    "values": [0.4, 0.43, 0.43],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
@@ -51,11 +39,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.93,
-    "values": [
-      0.93,
-      0.93,
-      0.93
-    ],
+    "values": [0.93, 0.93, 0.93],
     "operator": ">=",
     "passed": false,
     "auditProperty": "accessibility",
@@ -67,11 +51,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.54,
-    "values": [
-      0.53,
-      0.54,
-      0.54
-    ],
+    "values": [0.53, 0.54, 0.54],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
@@ -83,11 +63,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.52,
-    "values": [
-      0.52,
-      0.52,
-      0.52
-    ],
+    "values": [0.52, 0.52, 0.52],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",
@@ -99,11 +75,7 @@
     "name": "minScore",
     "expected": 0.95,
     "actual": 0.54,
-    "values": [
-      0.54,
-      0.54,
-      0.54
-    ],
+    "values": [0.54, 0.54, 0.54],
     "operator": ">=",
     "passed": false,
     "auditProperty": "performance",

@@ -1,4 +1,10 @@
-import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useAmbientVideoEnabled } from "@/hooks/useAmbientVideoEnabled";
@@ -30,15 +36,26 @@ export default function CinematicBreak({
   const isInView = useInView(ref, { margin: "200px", once: true });
   const reduceMotion = useReducedMotion();
   const enableAmbientVideo = useAmbientVideoEnabled(360);
-  const activeVideoSrc = useResponsiveVideoSource(videoSrc || "", mobileVideoSrc);
+  const activeVideoSrc = useResponsiveVideoSource(
+    videoSrc || "",
+    mobileVideoSrc
+  );
   const [loadVideo, setLoadVideo] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", reduceMotion ? "0%" : "20%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], reduceMotion ? [1, 1, 1, 1] : [0.5, 1, 1, 0.5]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", reduceMotion ? "0%" : "20%"]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    reduceMotion ? [1, 1, 1, 1] : [0.5, 1, 1, 0.5]
+  );
 
   // Keep the still image as the "instant" paint, then attach the video src once
   // the section is near the viewport and the browser is idle. This reduces
@@ -55,7 +72,10 @@ export default function CinematicBreak({
   }, [enableAmbientVideo, isInView, loadVideo, reduceMotion, videoSrc]);
 
   return (
-    <div ref={ref} className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
+    <div
+      ref={ref}
+      className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden"
+    >
       {/* Parallax image */}
       <motion.div
         style={{ y }}

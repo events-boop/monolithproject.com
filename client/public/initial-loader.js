@@ -28,6 +28,8 @@
   };
 
   window.addEventListener("monolith:app-ready", removeLoader, { once: true });
-  window.addEventListener("load", () => setTimeout(removeLoader, 40), { once: true });
+  window.addEventListener("load", () => setTimeout(removeLoader, 40), {
+    once: true,
+  });
   setTimeout(removeLoader, 400);
 })();

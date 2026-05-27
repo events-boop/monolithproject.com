@@ -37,8 +37,7 @@ export const insightEntries: InsightEntry[] = [
     readTime: "4 min read",
     summary:
       "Why EWERSEEN works in the Chasing Sun(Sets) lane: patient movement, clean structure, and rhythms that let the room open up before it peaks.",
-    deck:
-      "Not every guest fits an open-air chapter. The ones that do understand that the room has to breathe before it can lift. EWERSEEN is one of those bookings.",
+    deck: "Not every guest fits an open-air chapter. The ones that do understand that the room has to breathe before it can lift. EWERSEEN is one of those bookings.",
     image: "/images/chasing-sunsets-premium.webp",
     accent: "sunsets",
     tags: ["Artist Feature", "Chasing Sun(Sets)", "Open-Air Curation"],
@@ -79,8 +78,7 @@ export const insightEntries: InsightEntry[] = [
     readTime: "3 min read",
     summary:
       "A quick listen guide to EP-01 and the pacing choices that made it a clean entry point for the Chasing Sun(Sets) Radio Show.",
-    deck:
-      "The first radio drops do more than fill a feed. They tell people what standard the project is going to keep. EP-01 had to make that clear fast.",
+    deck: "The first radio drops do more than fill a feed. They tell people what standard the project is going to keep. EP-01 had to make that clear fast.",
     image: "/images/radio-show-gear.webp",
     accent: "radio",
     tags: ["Set Drop", "Radio Show", "BENCHEK"],
@@ -121,8 +119,7 @@ export const insightEntries: InsightEntry[] = [
     readTime: "4 min read",
     summary:
       "Why the March 21, 2026 AUTOGRAF Chicago date matters for Monolith: live energy, a recognizable name, and a room that can hold a full return moment.",
-    deck:
-      "The March 21, 2026 AUTOGRAF date at Alhambra Palace is not just another ticket link. It is the kind of booking that tests whether a room can hold familiarity, momentum, and taste at the same time.",
+    deck: "The March 21, 2026 AUTOGRAF date at Alhambra Palace is not just another ticket link. It is the kind of booking that tests whether a room can hold familiarity, momentum, and taste at the same time.",
     image: "/images/autograf-recap.jpg",
     accent: "monolith",
     tags: ["Show Note", "AUTOGRAF", "March 21, 2026"],
@@ -163,8 +160,7 @@ export const insightEntries: InsightEntry[] = [
     readTime: "3 min read",
     summary:
       "A note on the people who make a Monolith room feel like Monolith: returning guests, first-timers with taste, and dancers who come to share the night.",
-    deck:
-      "Monolith is music-first, but the crowd still matters. Not in a status way. In a room way. The people inside the chapter help determine whether the night feels disposable or worth returning to.",
+    deck: "Monolith is music-first, but the crowd still matters. Not in a status way. In a room way. The people inside the chapter help determine whether the night feels disposable or worth returning to.",
     image: "/images/industrial-roster.webp",
     accent: "story",
     tags: ["Fan Feature", "Togetherness", "Room Culture"],
@@ -199,5 +195,5 @@ export const insightEntries: InsightEntry[] = [
 ];
 
 export function getInsightEntry(slug: string) {
-  return insightEntries.find((entry) => entry.slug === slug);
+  return insightEntries.find(entry => entry.slug === slug);
 }

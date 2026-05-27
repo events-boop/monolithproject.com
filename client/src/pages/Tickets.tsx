@@ -295,7 +295,7 @@ export default function Tickets() {
                 <h2 className="font-monolith text-5xl font-normal uppercase tracking-[0.04em] text-white">
                   First Access Releases
                 </h2>
-                <p className="mt-6 text-lg text-white/40 font-light">
+                <p className="mt-6 text-lg text-white/58 font-light">
                   Public checkout opens by release. First Access gets the signal
                   before each wave goes wide.
                 </p>
@@ -339,7 +339,7 @@ export default function Tickets() {
                       )}
                     </div>
 
-                    <p className="text-white/40 text-base font-light mb-10 leading-relaxed max-w-sm">
+                    <p className="text-white/58 text-base font-light mb-10 leading-relaxed max-w-sm">
                       {tier.description}
                     </p>
 

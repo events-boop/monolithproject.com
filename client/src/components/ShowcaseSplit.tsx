@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "wouter";
-import { Users, FileText, Images, AudioLines, ArrowUpRight } from "lucide-react";
+import {
+  Users,
+  FileText,
+  Images,
+  AudioLines,
+  ArrowUpRight,
+} from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
 const panels = [
@@ -61,7 +67,7 @@ export default function ShowcaseSplit() {
   return (
     <section className="relative split-panel-shell w-full overflow-hidden bg-black border-y border-white/10">
       <div className="split-panel-track">
-        {panels.map((panel) => (
+        {panels.map(panel => (
           <motion.div
             key={panel.id}
             id={panel.id}
@@ -73,7 +79,11 @@ export default function ShowcaseSplit() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="split-panel-item relative group cursor-pointer overflow-hidden border-b border-white/10 last:border-0 scroll-mt-32 lg:border-b-0 lg:border-r"
           >
-            <Link href={panel.href} className="absolute inset-0 block h-full w-full" data-cursor-text="EXPLORE">
+            <Link
+              href={panel.href}
+              className="absolute inset-0 block h-full w-full"
+              data-cursor-text="EXPLORE"
+            >
               {/* Background Image & Overlays */}
               <div className="absolute inset-0">
                 <ResponsiveImage
@@ -87,7 +97,9 @@ export default function ShowcaseSplit() {
                 <div className="absolute inset-0 bg-black/60 transition-colors duration-500 group-hover:bg-black/40" />
                 <div
                   className="absolute inset-0 opacity-20 transition-opacity duration-700 group-hover:opacity-40"
-                  style={{ background: `linear-gradient(to top, ${panel.color}44, transparent)` }}
+                  style={{
+                    background: `linear-gradient(to top, ${panel.color}44, transparent)`,
+                  }}
                 />
               </div>
 
@@ -113,11 +125,15 @@ export default function ShowcaseSplit() {
                   <motion.div
                     animate={{
                       y: hoveredId === panel.id ? 0 : 20,
-                      opacity: (hoveredId === panel.id || hoveredId === null) ? 1 : 0,
+                      opacity:
+                        hoveredId === panel.id || hoveredId === null ? 1 : 0,
                     }}
                     className="mb-4 lg:mb-8 flex h-12 w-12 lg:h-16 lg:w-16 items-center justify-center rounded-none border border-white/20 bg-black/40 backdrop-blur-md shadow-2xl"
                   >
-                    <panel.icon className="h-6 w-6 lg:h-8 lg:w-8" style={{ color: panel.color }} />
+                    <panel.icon
+                      className="h-6 w-6 lg:h-8 lg:w-8"
+                      style={{ color: panel.color }}
+                    />
                   </motion.div>
 
                   <h3 className="font-display text-3xl lg:text-5xl uppercase tracking-tight text-white leading-none mb-2">
