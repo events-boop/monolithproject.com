@@ -10,7 +10,7 @@ type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
 const FALLBACK_POSH_URL =
   "https://posh.vip/owner/groups/6531870aeffdea89e97f7642/events/6a0b9cd3ad1a25534c3beed7/visuals";
-const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject/luYXPr/details";
+const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject/luYXPr";
 const FALLBACK_SUNSETS_RECAP_URL = "https://youtu.be/9R6XH7JZlJI";
 const FALLBACK_SUNSETS_SOUNDCLOUD_URL =
   "https://soundcloud.com/chasing-sun-sets";
