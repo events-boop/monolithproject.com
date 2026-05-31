@@ -371,7 +371,7 @@ export default function InteractiveNavigationOverlay({
                     : undefined
                 }
                 onClick={handleLinkClick(view.primaryHref)}
-                className="btn-pill-monolith btn-pill-compact focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                className="btn-pill-monolith btn-pill-compact"
               >
                 {view.primaryLabel}
                 <ArrowUpRight className="h-4 w-4" />
@@ -452,7 +452,7 @@ export default function InteractiveNavigationOverlay({
                 key={link.href}
                 href={link.href}
                 onClick={handleLinkClick(link.href)}
-                className="btn-pill-outline btn-pill-compact flex justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                className="btn-pill-outline btn-pill-compact flex justify-center text-center"
               >
                 {link.label}
               </a>

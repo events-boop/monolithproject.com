@@ -579,7 +579,7 @@ ${form.bio}
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="btn-pill-monolith group disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                          className="btn-pill-monolith group disabled:opacity-50"
                         >
                           {isSubmitting ? (
                             <span className="animate-pulse">Sending...</span>

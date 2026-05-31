@@ -213,7 +213,7 @@ export default function ArtistsSection() {
         <div className="border-t border-border pt-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link href="/lineup" asChild>
-              <a className="btn-pill group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+              <a className="btn-pill group">
                 <span>See Full Lineup</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </a>

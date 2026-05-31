@@ -88,14 +88,14 @@ export default function Contact() {
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href="mailto:events@monolithproject.com"
-                  className="btn-pill-outline-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  className="btn-pill-outline-dark"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   Email
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
                 </a>
                 <Link href="/booking" asChild>
-                  <a className="btn-pill-monolith focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">
+                  <a className="btn-pill-monolith">
                     <Music className="w-3.5 h-3.5" />
                     Booking
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />

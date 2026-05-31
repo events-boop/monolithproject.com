@@ -515,7 +515,7 @@ export default function ScheduleSection() {
                               )}
 
                               <Link href={detailsHref} asChild>
-                                <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60">
+                                <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group">
                                   Open Event Page
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>

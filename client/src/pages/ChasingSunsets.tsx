@@ -759,7 +759,7 @@ export default function ChasingSunsets() {
                     newsletter to hear about them before the public release.
                   </p>
                   <Link href="/newsletter" asChild>
-                    <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14B8A6]/50">
+                    <a className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-compact group">
                       {CTA_LABELS.innerCircle} <ArrowUpRight size={14} />
                     </a>
                   </Link>
