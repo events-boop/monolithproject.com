@@ -359,7 +359,7 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen bg-[#080a07] text-stone-100 selection:bg-[#c9a45d] selection:text-black">
       <SEO
-        title="Sun(Sets)"
+        title="Sun(Sets) Lake List & First Access"
         description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}

@@ -43,6 +43,24 @@
   force = true
 
 [[redirects]]
+  from = "https://www.sunsets.vip/*"
+  to = "https://monolithproject.com/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://untold.vip/*"
+  to = "https://monolithproject.com/story"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.untold.vip/*"
+  to = "https://monolithproject.com/story"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://chasingsunsets.music/*"
   to = "https://monolithproject.com/radio"
   status = 301

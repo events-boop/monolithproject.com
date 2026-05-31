@@ -9,6 +9,7 @@ const SITE_URLS = [
   "/",
   "/story",
   "/chasing-sunsets",
+  "/sunsets",
   "/series",
   "/schedule",
   "/archive",
