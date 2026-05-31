@@ -627,48 +627,40 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "Chasing Sun(Sets) | Chicago Lakefront House Music",
+      title: "Sun(Sets) Lake List & First Access",
       description:
-        "Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries.",
-      absoluteTitle: true,
-      image: "/images/chasing-sunsets-premium.webp",
+        "Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries.",
+      image: "/images/chasing-sunsets-july4-first-access.png",
       schemaData: featuredChasingEvent
         ? buildScheduledEventSchema(featuredChasingEvent, "/sunsets")
         : undefined,
       bodyHtml: renderBaseLayout(
-        "Official Bio Link",
-        "Chasing Sun(Sets)",
+        "Official Sun(Sets) Wrapper",
+        "Sun(Sets) Lake List & First Access",
         [
-          "A Chicago lakefront house music mini hub from The Monolith Project.",
-          "Join the Chasing Sun(Sets) circle. Watch the sun. Stay for the (sets).",
+          "Sun(Sets) is the official Chicago lakefront ticket and signup destination from The Monolith Project.",
+          "Join the Lake List for July 4 ticket access, artist drops, private codes, recap video, Sun(Sets) Radio, VIP, and partner inquiries.",
         ],
         [
-          { href: "/go/waitlist/chasing-sunsets", label: "Join First Access" },
+          { href: "/sunsets#lake-list", label: "Join the Lake List" },
           {
-            href: "/chasing-sunsets#chasing-tickets",
-            label: "2026 Schedule / Tickets",
+            href: "/go/tickets/css-jul04",
+            label: "July 4 ticket access",
           },
           {
-            href: "/go/waitlist/chasing-sunsets?utm_content=join_chat",
-            label: "Join the Chat",
+            href: "/go/media/sunsets-recap",
+            label: "Watch the recap",
+          },
+          {
+            href: "/go/media/sunsets-soundcloud",
+            label: "Sun(Sets) Radio",
+          },
+          {
+            href: "/go/social/instagram-sunsets",
+            label: "Artist drops and Instagram",
           },
           { href: "/vip", label: "VIP and tables" },
-          {
-            href: "https://youtu.be/9R6XH7JZlJI?si=L6IvNCRrC31yjrpA",
-            label: "Watch the recap",
-            external: true,
-          },
-          {
-            href: "https://soundcloud.com/chasing-sun-sets",
-            label: "Follow the sound",
-            external: true,
-          },
-          {
-            href: "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/register",
-            label: "View the gallery",
-            external: true,
-          },
-          { href: "/partners", label: "Partner inquiry" },
+          { href: "/partners", label: "Partner inquiries" },
         ]
       ),
     },
