@@ -37,6 +37,12 @@
   force = true
 
 [[redirects]]
+  from = "https://sunsets.vip/*"
+  to = "https://monolithproject.com/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://chasingsunsets.music/*"
   to = "https://monolithproject.com/radio"
   status = 301

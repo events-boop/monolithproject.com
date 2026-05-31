@@ -1,24 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
+  AlertCircle,
   ArrowUpRight,
-  Bell,
-  Camera,
+  Calendar,
   Check,
-  Copy,
-  Headphones,
-  Handshake,
+  ChevronRight,
   Instagram,
+  LockKeyhole,
+  Mail,
+  MapPin,
+  Phone,
   Play,
-  Share2,
-  Sparkles,
-  Sun,
+  Radio,
   Ticket,
   Users,
+  Waves,
+  type LucideIcon,
 } from "lucide-react";
 import SEO from "@/components/SEO";
-import ResponsiveImage from "@/components/ResponsiveImage";
+import HoneypotField from "@/components/HoneypotField";
+import { Button } from "@/components/ui/button";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import {
   submitNewsletterLead,
@@ -26,278 +28,86 @@ import {
   trackLinkClick,
 } from "@/lib/api";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
-type BioLink = {
-  type?: "link" | "youtube" | "soundcloud" | "gallery";
+import { honeypotFieldName } from "@shared/generated/hardening";
+
+type Chapter = {
+  title: string;
+  date: string;
+  place: string;
+  status: string;
+  action: string;
+  eventSlug?: string;
+  eventDate?: string;
+  href?: string;
+};
+
+type ActionLink = {
   label: string;
   buttonName: string;
-  eyebrow: string;
-  sub: string;
+  href: string;
+  icon: LucideIcon;
+  interestType: string;
+  channel: string;
+};
+
+type TrackableLink = {
+  buttonName: string;
   href: string;
   eventSlug?: string;
   eventDate?: string;
-  interestType: string;
-  channel: string;
-  icon: typeof Sun;
-  image?: string;
-  variant?: "primary" | "warm" | "cool";
-  external?: boolean;
+  interestType?: string;
+  channel?: string;
 };
 
-type EventDate = "2026-07-04" | "2026-08-22" | "2026-09-19";
-
-const TICKET_HUB_HREF = "/chasing-sunsets#chasing-tickets";
-const RECAP_HREF = "/go/media/sunsets-recap";
-const SOUNDCLOUD_HREF = "/go/media/sunsets-soundcloud";
-const GALLERY_HREF = "/go/gallery/chasing-sunsets";
-const SUNSETS_SOUNDCLOUD_EMBED_HREF = "https://soundcloud.com/chasing-sun-sets";
-const JULY_4_FIRST_ACCESS_IMAGE =
-  "/images/chasing-sunsets-july4-first-access.png";
+const PAGE_PATH = "/sunsets";
+const PAGE_SOURCE = "sunsets_wrapper";
 const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
-const AUGUST_22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
-const SEPTEMBER_19_EVENT_SLUG = "chasing-sunsets-september-19-2026";
-const INSTAGRAM_SUNSETS_HREF = "/go/social/instagram-sunsets";
-const TIKTOK_HREF = "/go/social/tiktok";
-const SPOTIFY_HREF = "/go/social/spotify";
-const X_HREF = "/go/social/x";
+const JULY_4_EVENT_DATE = "2026-07-04";
+const TICKET_HREF = "/go/tickets/css-jul04";
+const RECAP_HREF = "/go/media/sunsets-recap";
+const RADIO_HREF = "/go/media/sunsets-soundcloud";
+const INSTAGRAM_HREF = "/go/social/instagram-sunsets";
+const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
+const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 
-const capturePromises = [
-  "Ticket drops",
-  "Lineup alerts",
-  "VIP access",
-] as const;
-function triggerHaptic(pattern: number | number[] = 12) {
+function triggerHaptic(pattern: number | number[] = 10) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
   navigator.vibrate(pattern);
 }
 
-function TikTokIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M14.4 3.5v10.1a4.9 4.9 0 1 1-4.9-4.9c.3 0 .6 0 .9.1v2.8a2.1 2.1 0 1 0 1.2 1.9V3.5h2.8Zm0 0c.5 2.4 1.9 3.8 4.1 4.2v2.8c-1.6-.1-3-.7-4.1-1.7"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+function appendEventAttribution(href: string, eventSlug?: string) {
+  const attributedHref = appendAttributionQueryParams(href);
+  if (!eventSlug) return attributedHref;
+
+  try {
+    const origin =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "https://monolithproject.com";
+    const isAbsolute = /^https?:\/\//i.test(attributedHref);
+    const url = new URL(attributedHref, origin);
+
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return attributedHref;
+    }
+
+    if (!url.searchParams.has("event_slug")) {
+      url.searchParams.set("event_slug", eventSlug);
+    }
+
+    if (url.origin === origin && !isAbsolute) {
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+
+    return url.toString();
+  } catch {
+    return attributedHref;
+  }
 }
 
-function SpotifyIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M7.8 10.1c3.1-1 6.1-.7 8.6.7"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M8.6 12.7c2.2-.6 4.6-.4 6.4.7"
-        stroke="currentColor"
-        strokeWidth="1.45"
-        strokeLinecap="round"
-      />
-      <path
-        d="M9.2 15.1c1.6-.4 3.2-.2 4.5.5"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="m5.5 5.5 13 13M18.5 5.5l-13 13"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-const socialLinks = [
-  {
-    label: "Instagram",
-    href: INSTAGRAM_SUNSETS_HREF,
-    icon: Instagram,
-    channel: "Instagram",
-  },
-  {
-    label: "TikTok",
-    href: TIKTOK_HREF,
-    icon: TikTokIcon,
-    channel: "TikTok",
-  },
-  {
-    label: "Spotify",
-    href: SPOTIFY_HREF,
-    icon: SpotifyIcon,
-    channel: "Spotify",
-  },
-  {
-    label: "X",
-    href: X_HREF,
-    icon: XIcon,
-    channel: "X",
-  },
-] as const;
-
-const schedule = [
-  {
-    date: "July 4",
-    title: "Independence Day On The Lake",
-    venue: "Castaways, Chicago",
-    time: "3 PM - 10 PM",
-    href: TICKET_HUB_HREF,
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04" as EventDate,
-    status: "First Access Open",
-  },
-  {
-    date: "Aug 22",
-    title: "Summer Chapter",
-    venue: "Castaways, Chicago",
-    time: "Golden Hour",
-    href: TICKET_HUB_HREF,
-    eventSlug: AUGUST_22_EVENT_SLUG,
-    eventDate: "2026-08-22" as EventDate,
-    status: "Watchlist",
-  },
-  {
-    date: "Sept 19",
-    title: "Season Finale",
-    venue: "Castaways, Chicago",
-    time: "Golden Hour",
-    href: TICKET_HUB_HREF,
-    eventSlug: SEPTEMBER_19_EVENT_SLUG,
-    eventDate: "2026-09-19" as EventDate,
-    status: "Watchlist",
-  },
-];
-
-const links: BioLink[] = [
-  {
-    label: "2026 Schedule / Tickets",
-    buttonName: "2026 Schedule / Tickets",
-    eyebrow: "Posh",
-    sub: "See the season dates and ticket path for each chapter.",
-    href: TICKET_HUB_HREF,
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "ticket_click",
-    channel: "Posh",
-    icon: Ticket,
-    variant: "primary",
-  },
-  {
-    label: "VIP / Tables",
-    buttonName: "VIP / Tables",
-    eyebrow: "Fillout",
-    sub: "Groups, birthdays, tables, and elevated lakefront experiences.",
-    href: "/go/forms/sunsets-vip",
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "vip_click",
-    channel: "Fillout",
-    icon: Users,
-    external: true,
-  },
-  {
-    type: "youtube",
-    label: "View Last Year's Event",
-    buttonName: "Watch Recap",
-    eyebrow: "YouTube",
-    sub: "See the energy from last year's Chasing Sun(Sets).",
-    href: RECAP_HREF,
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "recap_click",
-    channel: "YouTube",
-    icon: Play,
-    image: "/images/archive/chasing-sunsets/css-s3-1.jpg",
-    external: true,
-  },
-  {
-    type: "soundcloud",
-    label: "Featured: Chris IDH",
-    buttonName: "Follow the Sound",
-    eyebrow: "SoundCloud",
-    sub: "Mixes, radio, and artist discovery from the Chasing archive.",
-    href: SOUNDCLOUD_HREF,
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "soundcloud_click",
-    channel: "SoundCloud",
-    icon: Headphones,
-    image:
-      "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
-    external: true,
-    variant: "cool",
-  },
-  {
-    type: "gallery",
-    label: "View The Gallery",
-    buttonName: "View Gallery",
-    eyebrow: "Pic-Time",
-    sub: "Photos and lakefront moments from the last chapter.",
-    href: GALLERY_HREF,
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "gallery_click",
-    channel: "Pic-Time",
-    icon: Camera,
-    image: "/images/archive/chasing-sunsets/css-s3-4.jpg",
-    external: true,
-  },
-  {
-    label: "Partner Inquiry",
-    buttonName: "Partner Inquiry",
-    eyebrow: "Fillout",
-    sub: "Venues, brands, sponsors, and city collaborations.",
-    href: "/partners",
-    eventSlug: JULY_4_EVENT_SLUG,
-    eventDate: "2026-07-04",
-    interestType: "partner_form_submit",
-    channel: "Fillout",
-    icon: Handshake,
-  },
-];
-
-function trackSunsetsClick(
-  item: Pick<
-    BioLink,
-    | "buttonName"
-    | "href"
-    | "eventSlug"
-    | "eventDate"
-    | "interestType"
-    | "channel"
-  >
-) {
+function trackSunsetsClick(item: TrackableLink) {
   if (typeof window === "undefined") return;
+
   const win = window as Window & {
     gtag?: (
       command: string,
@@ -306,10 +116,10 @@ function trackSunsetsClick(
     ) => void;
   };
 
-  win.gtag?.("event", "sunsets_bio_click", {
+  win.gtag?.("event", "sunsets_wrapper_click", {
     link_label: item.buttonName,
     link_url: item.href,
-    page_path: "/sunsets",
+    page_path: PAGE_PATH,
     event_slug: item.eventSlug,
     interest_type: item.interestType,
   });
@@ -317,1114 +127,549 @@ function trackSunsetsClick(
   trackLinkClick({
     buttonName: item.buttonName,
     destinationUrl: item.href,
-    pagePath: "/sunsets",
+    pagePath: PAGE_PATH,
     eventSlug: item.eventSlug,
     eventDate: item.eventDate,
     interestType: item.interestType,
     channel: item.channel,
-    source: "sunsets_link_bio",
+    source: PAGE_SOURCE,
   });
 }
 
-function ShareButton() {
-  const [shareState, setShareState] = useState<"idle" | "shared" | "copied">(
-    "idle"
-  );
-  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
-    };
-  }, []);
-
-  const handleShare = async () => {
-    if (typeof window === "undefined") return;
-    triggerHaptic(10);
-
-    const shareUrl = new URL("/sunsets/", window.location.origin);
-    shareUrl.searchParams.set("utm_source", "share");
-    shareUrl.searchParams.set("utm_medium", "native");
-    shareUrl.searchParams.set("utm_campaign", "chasing-sunsets");
-
-    trackSunsetsClick({
-      buttonName: "Share Bio Link",
-      href: shareUrl.toString(),
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: "2026-07-04",
-      interestType: "share_click",
-      channel: "Native Share",
-    });
-
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Chasing Sun(Sets)",
-          text: "Join the Chasing Sun(Sets) circle. Watch the sun. Stay for the (sets).",
-          url: shareUrl.toString(),
-        });
-        setShareState("shared");
-      } else {
-        await navigator.clipboard?.writeText(shareUrl.toString());
-        setShareState("copied");
-      }
-    } catch {
-      setShareState("idle");
-      return;
-    }
-
-    if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
-    resetTimerRef.current = setTimeout(() => setShareState("idle"), 2200);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={handleShare}
-      aria-label="Share Chasing Sun(Sets)"
-      className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-[#F4F0EA]/18 bg-[#F4F0EA]/8 text-[#F4F0EA]/70 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl transition hover:border-[#F4F0EA]/60 hover:bg-[#F4F0EA] hover:text-[#111111] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/70"
-    >
-      {shareState === "idle" ? (
-        <Share2 className="h-4 w-4" strokeWidth={1.7} />
-      ) : shareState === "copied" ? (
-        <Copy className="h-4 w-4" strokeWidth={1.7} />
-      ) : (
-        <Check className="h-4 w-4" strokeWidth={1.9} />
-      )}
-      {shareState !== "idle" && (
-        <span className="absolute right-12 top-1/2 -translate-y-1/2 rounded-full border border-[#F4F0EA]/12 bg-[#111111]/90 px-2 py-1 text-[9px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]">
-          {shareState === "copied" ? "Copied" : "Shared"}
-        </span>
-      )}
-    </button>
-  );
+function focusLakeList() {
+  if (typeof document === "undefined") return;
+  const target = document.getElementById("lake-list");
+  target?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function StickyActionDock() {
-  const firstAccessHref = "#first-access";
-  const ticketHref = appendAttributionQueryParams(TICKET_HUB_HREF);
+function LakeListForm() {
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [honeypotValue, setHoneypotValue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7, type: "spring", stiffness: 220, damping: 24 }}
-      className="sticky bottom-3 z-30 mx-3 mt-8 overflow-hidden rounded-[1.55rem] border border-white/85 bg-[linear-gradient(135deg,#ffffff_0%,#fffaf6_54%,#eefbf8_100%)] p-2 shadow-[0_18px_50px_rgba(44,24,16,0.24)] backdrop-blur-2xl"
-    >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[2rem] font-black uppercase leading-none tracking-[0] text-[#2C1810]/[0.045]"
-      >
-        SUN(SETS)
-      </span>
-      <div className="relative z-10 grid grid-cols-[1.05fr_.95fr] gap-2">
-        <a
-          href={firstAccessHref}
-          onClick={() => {
-            triggerHaptic(12);
-            trackSunsetsClick({
-              buttonName: "Sticky Join First Access",
-              href: firstAccessHref,
-              eventSlug: JULY_4_EVENT_SLUG,
-              eventDate: "2026-07-04",
-              interestType: "first_access_click",
-              channel: "Sticky CTA",
-            });
-          }}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#A4592C] px-3 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-[0_10px_24px_rgba(164,89,44,0.28)] transition hover:bg-[#8F4427] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/45"
-        >
-          <Bell className="h-3.5 w-3.5" strokeWidth={2} />
-          First Access
-        </a>
-        <a
-          href={ticketHref}
-          onClick={() => {
-            triggerHaptic(12);
-            trackSunsetsClick({
-              buttonName: "Sticky Tickets",
-              href: ticketHref,
-              eventSlug: JULY_4_EVENT_SLUG,
-              eventDate: "2026-07-04",
-              interestType: "ticket_click",
-              channel: "Sticky CTA",
-            });
-          }}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#A4592C]/18 bg-white px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#5A2B19]/82 transition hover:border-[#A4592C]/42 hover:bg-[#FFF7F2] hover:text-[#5A2B19] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A4592C]/40"
-        >
-          <Ticket className="h-3.5 w-3.5" strokeWidth={2} />
-          Tickets
-        </a>
-      </div>
-    </motion.div>
-  );
-}
-
-function SocialUtilityRow() {
-  return (
-    <div className="mb-5 flex items-center justify-center gap-2">
-      {socialLinks.map(item => {
-        const Icon = item.icon;
-        const href = appendAttributionQueryParams(item.href);
-        return (
-          <a
-            key={item.label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={item.label}
-            onClick={() => {
-              triggerHaptic(8);
-              trackSunsetsClick({
-                buttonName: item.label,
-                href,
-                eventSlug: JULY_4_EVENT_SLUG,
-                eventDate: "2026-07-04",
-                interestType: `${item.label.toLowerCase()}_click`,
-                channel: item.channel,
-              });
-            }}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.025] text-[#F4F0EA]/50 transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40 hover:bg-[#F4F0EA]/8 hover:text-[#F4F0EA] hover:shadow-[0_0_24px_rgba(244,240,234,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F4F0EA]/60"
-          >
-            <Icon className="h-4 w-4" strokeWidth={1.6} />
-          </a>
-        );
-      })}
-    </div>
-  );
-}
-
-function InlineCaptureForm() {
-  const [value, setValue] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "submitting" | "submitted" | "error"
-  >("idle");
-  const [error, setError] = useState("");
-  const submitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (submitTimerRef.current !== null) clearTimeout(submitTimerRef.current);
-    };
-  }, []);
-
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmedValue = value.trim();
-    const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue);
-    const looksLikePhone = trimmedValue.replace(/\D/g, "").length >= 10;
 
-    if (!looksLikeEmail && !looksLikePhone) {
-      setError("Enter phone or email.");
-      setStatus("error");
-      return;
-    }
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPhone = phone.trim();
+    if (!normalizedEmail) return;
 
-    setStatus("submitting");
-    setError("");
+    setIsSubmitting(true);
+    setSubmitError("");
     triggerHaptic(12);
 
-    trackSunsetsClick({
-      buttonName: "Inline First Access Capture",
-      href: "/sunsets#first-access",
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: "2026-07-04",
-      interestType: looksLikePhone
-        ? "inline_sms_capture"
-        : "inline_email_capture",
-      channel: "Inline Capture",
-    });
-
-    if (looksLikeEmail) {
-      try {
-        await submitNewsletterLead(
-          {
-            email: trimmedValue,
-            consent: true,
-            source: "sunsets_link_bio_inline_capture",
-            formType: "first_access_signup",
-            funnelId: "chasing-sunsets-link-bio",
-            offerId: "first-access",
-            eventInterest: JULY_4_EVENT_SLUG,
-            eventSeries: "chasing-sunsets",
-            eventTitle: "Chasing Sun(Sets) July 4 2026",
-            interestTags: [
-              "chasing_sunsets",
-              "laylo",
-              "first_access_signup",
-              "july4_interest",
-              "sunsets_link_bio",
-            ],
-          },
-          buildLeadIdempotencyKey(
-            "sunsets-link-bio",
-            trimmedValue,
-            JULY_4_EVENT_SLUG
-          )
-        );
-      } catch {
-        setError("Could not add you. Try again.");
-        setStatus("error");
-        triggerHaptic([20, 40, 20]);
-        return;
-      }
-    } else {
-      window.localStorage?.setItem(
-        "sunsets_phone_capture_pending",
-        JSON.stringify({
-          phone: trimmedValue,
-          eventSlug: JULY_4_EVENT_SLUG,
-          capturedAt: new Date().toISOString(),
-        })
+    try {
+      await submitNewsletterLead(
+        {
+          email: normalizedEmail,
+          phone: normalizedPhone || undefined,
+          consent: true,
+          source: "sunsets_lake_list",
+          formType: "lake_list_signup",
+          funnelId: "chasing-sunsets-wrapper",
+          offerId: "lake-list",
+          eventInterest: JULY_4_EVENT_SLUG,
+          eventSeries: "chasing-sunsets",
+          eventTitle: "Chasing Sun(Sets) July 4 2026",
+          interestTags: [
+            "chasing_sunsets",
+            "lake_list",
+            "first_access_signup",
+            "july4_interest",
+            "sunsets_wrapper",
+          ],
+          [honeypotFieldName]: honeypotValue || undefined,
+        },
+        buildLeadIdempotencyKey(
+          "sunsets-lake-list",
+          normalizedEmail,
+          JULY_4_EVENT_SLUG
+        )
       );
-    }
 
-    if (submitTimerRef.current !== null) clearTimeout(submitTimerRef.current);
-    submitTimerRef.current = setTimeout(() => {
-      triggerHaptic(18);
-      setStatus("submitted");
-    }, 520);
+      trackSunsetsClick({
+        buttonName: "Register for First Access",
+        href: PAGE_PATH,
+        eventSlug: JULY_4_EVENT_SLUG,
+        eventDate: JULY_4_EVENT_DATE,
+        interestType: "lake_list_signup",
+        channel: "CRM",
+      });
+
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to register right now. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  if (status === "submitted") {
+  if (isSubmitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 8, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className="mt-6 rounded-[1.15rem] border border-[#F4F0EA]/18 bg-[#F4F0EA]/6 p-4 text-left"
-      >
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111]">
-            <Check className="h-4 w-4" strokeWidth={2} />
-          </span>
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#F4F0EA]">
-              Added to the list
-            </p>
-            <p className="mt-1 text-sm leading-snug text-white/78">
-              Welcome to the Chasing Sun(Sets) circle.
-            </p>
-          </div>
+      <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-4 text-sm font-semibold leading-relaxed text-[#d8f0ce]">
+        <div className="mb-2 flex items-center gap-2 text-white">
+          <Check className="size-4 text-[#c9e8bd]" />
+          You are on the Lake List.
         </div>
-      </motion.div>
+        First signal arrives soon.
+      </div>
     );
   }
 
   return (
-    <div className="relative mt-6">
-      <div className="pointer-events-none absolute inset-0 -inset-x-5 rounded-[1.75rem] bg-[radial-gradient(ellipse_at_50%_0%,rgba(164,89,44,0.24)_0%,rgba(20,184,166,0.10)_48%,transparent_74%)] blur-2xl" />
-      <form
-        onSubmit={submit}
-        id="first-access"
-        className="relative overflow-hidden rounded-[1.45rem] border border-[#A4592C]/34 bg-[linear-gradient(135deg,#ffffff_0%,#fffaf6_48%,#eefbf8_100%)] px-5 py-5 text-left shadow-[0_0_0_1px_rgba(164,89,44,0.10),0_24px_58px_rgba(0,0,0,0.28)] sm:px-6 sm:py-6"
-        noValidate
+    <form className="space-y-2" onSubmit={handleSubmit}>
+      <HoneypotField
+        value={honeypotValue}
+        onChange={event => setHoneypotValue(event.currentTarget.value)}
+      />
+      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#c9e8bd]/40">
+        <Mail className="size-4 text-[#dfc27a]" />
+        <span className="sr-only">Email</span>
+        <input
+          className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
+          placeholder="Email"
+          type="email"
+          autoComplete="email"
+          value={email}
+          onChange={event => setEmail(event.currentTarget.value)}
+          required
+        />
+      </label>
+      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#c9e8bd]/40">
+        <Phone className="size-4 text-[#dfc27a]" />
+        <span className="sr-only">Phone</span>
+        <input
+          className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
+          placeholder="Phone"
+          type="tel"
+          autoComplete="tel"
+          value={phone}
+          onChange={event => setPhone(event.currentTarget.value)}
+        />
+      </label>
+      <p className="px-1 text-[10px] leading-snug text-stone-400">
+        By registering, you agree to receive event updates from The Monolith
+        Project / Chasing Sun(Sets). Message rates may apply.
+      </p>
+      {submitError ? (
+        <div className="flex items-start gap-2 border border-red-400/30 bg-red-500/10 p-3 text-xs font-semibold leading-relaxed text-red-100">
+          <AlertCircle className="mt-0.5 size-4 shrink-0" />
+          {submitError}
+        </div>
+      ) : null}
+      <Button
+        className="h-12 w-full bg-[#c9e8bd] text-sm font-black text-black hover:bg-[#d8f0ce] disabled:opacity-60"
+        disabled={isSubmitting}
+        type="submit"
       >
-        <div className="pointer-events-none absolute -right-3 top-6 text-[4.4rem] font-black uppercase leading-none tracking-[0] text-[#2C1810]/[0.035]">
-          JULY 4
-        </div>
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A4592C]/50 to-transparent" />
-        <div className="pointer-events-none absolute left-1/2 top-0 h-28 w-56 -translate-x-1/2 rounded-full bg-[rgba(164,89,44,0.10)] blur-3xl" />
-
-        <div className="relative">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#A4592C]/10 text-[#7A3A22]">
-                <Bell className="h-3.5 w-3.5" strokeWidth={2} />
-              </span>
-              <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#5A2B19]">
-                  First Access
-                </p>
-                <p className="mt-1 text-[8px] font-black uppercase tracking-[0.18em] text-[#2C1810]/38">
-                  Castaways Chicago
-                </p>
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#A4592C]/24 bg-white px-3 py-1.5 text-[8px] font-black uppercase tracking-[0.16em] text-[#5A2B19] shadow-[0_8px_18px_rgba(44,24,16,0.12)]">
-              <motion.span
-                animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
-                transition={{
-                  duration: 1.6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="h-1.5 w-1.5 rounded-full bg-[#A4592C] shadow-[0_0_8px_rgba(164,89,44,0.7)]"
-              />
-              Waitlist Open
-            </span>
-          </div>
-
-          <div className="flex items-end gap-3">
-            <input
-              type="text"
-              value={value}
-              autoComplete="email"
-              inputMode={/^\d/.test(value) ? "tel" : "email"}
-              onChange={event => {
-                setValue(event.target.value);
-                if (status === "error") setStatus("idle");
-              }}
-              placeholder="phone or email"
-              className="h-14 min-w-0 flex-1 rounded-none border-0 border-b border-[#A4592C]/28 bg-transparent px-0 text-lg text-[#2C1810] outline-none transition placeholder:text-[#2C1810]/42 focus:border-[#A4592C]/72"
-            />
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              aria-label="Join First Access"
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#A4592C]/30 bg-[#A4592C] text-white shadow-[0_0_24px_rgba(164,89,44,0.36)] transition hover:scale-105 hover:bg-[#8F4427] hover:shadow-[0_0_30px_rgba(164,89,44,0.48)] disabled:cursor-wait disabled:opacity-65"
-            >
-              {status === "submitting" ? (
-                <span className="h-3 w-3 animate-pulse rounded-full bg-white" />
-              ) : (
-                <ArrowUpRight className="h-5 w-5" strokeWidth={2.2} />
-              )}
-            </button>
-          </div>
-
-          {status === "error" && (
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7A3A22]/80">
-              {error}
-            </p>
-          )}
-
-          <div className="mt-5 grid grid-cols-3 gap-2 border-t border-[#A4592C]/12 pt-4">
-            {capturePromises.map(promise => (
-              <span
-                key={promise}
-                className="rounded-full border border-[#A4592C]/18 bg-white px-2 py-2 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#7A3A22]/66 shadow-[0_8px_18px_rgba(44,24,16,0.06)]"
-              >
-                {promise}
-              </span>
-            ))}
-          </div>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-const FIRST_ACCESS_FLYER = "/images/chasing-sunsets-firstaccess-flyer.png";
-
-function FlyerCard() {
-  const href = "#first-access";
-
-  return (
-    <motion.a
-      href={href}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 26 }}
-      onClick={() => {
-        triggerHaptic(14);
-        trackSunsetsClick({
-          buttonName: "Flyer Card – First Access",
-          href,
-          eventSlug: JULY_4_EVENT_SLUG,
-          eventDate: "2026-07-04",
-          interestType: "first_access_click",
-          channel: "Flyer Card",
-        });
-      }}
-      className="group relative mt-3 block w-full overflow-hidden rounded-[1.4rem] shadow-[0_20px_60px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.65)]"
-      aria-label="Join First Access — July 4"
-    >
-      {/* Flyer image — full bleed */}
-      <ResponsiveImage
-        src={FIRST_ACCESS_FLYER}
-        alt="Chasing Sun(Sets) First Access — July 4, Castaways Chicago"
-        className="w-full object-cover"
-        loading="lazy"
-        sizes="(min-width: 768px) 420px, calc(100vw - 2rem)"
-      />
-
-      {/* Bottom CTA overlay */}
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-[linear-gradient(to_top,rgba(5,4,3,0.88)_0%,rgba(5,4,3,0.5)_60%,transparent_100%)] px-5 pb-5 pt-12">
-        <div>
-          <p className="text-[9px] font-black uppercase tracking-[0.28em] text-[#F4F0EA]/55">
-            July 4 · Castaways · Chicago
-          </p>
-          <p className="mt-1 text-[14px] font-black uppercase tracking-[0.06em] text-[#F4F0EA]">
-            Join First Access
-          </p>
-        </div>
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111] shadow-[0_0_20px_rgba(244,240,234,0.25)] transition-transform duration-500 group-hover:scale-110">
-          <ArrowUpRight className="h-4 w-4" strokeWidth={2.2} />
-        </span>
-      </div>
-
-      {/* Subtle hover border glow */}
-      <div className="pointer-events-none absolute inset-0 rounded-[1.4rem] ring-1 ring-inset ring-white/10 transition duration-500 group-hover:ring-white/22" />
-    </motion.a>
-  );
-}
-
-function MediaAccordion({
-  item,
-  index,
-  expanded,
-  onToggle,
-}: {
-  item: BioLink;
-  index: number;
-  expanded: boolean;
-  onToggle: () => void;
-}) {
-  const Icon = item.icon;
-  const isYouTube = item.type === "youtube";
-  // Autoplay triggers on expand (user gesture = browser allows it). mute=0 keeps audio on.
-  const embedSrc = isYouTube
-    ? `https://www.youtube-nocookie.com/embed/9R6XH7JZlJI?rel=0&modestbranding=1${expanded ? "&autoplay=1" : ""}`
-    : `https://w.soundcloud.com/player/?url=${encodeURIComponent(SUNSETS_SOUNDCLOUD_EMBED_HREF)}&color=%23f4f0ea&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false`;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        delay: 0.18 + index * 0.045,
-        type: "spring",
-        stiffness: 210,
-        damping: 24,
-      }}
-      className="group my-3 overflow-hidden rounded-[1.15rem] border border-[#F4F0EA]/12 bg-[#111111]/78 shadow-[0_10px_40px_rgba(0,0,0,0.45)] transition hover:border-[#F4F0EA]/34"
-    >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="block w-full text-left"
-        aria-expanded={expanded}
-        aria-label={expanded ? `Close ${item.label}` : `Expand ${item.label}`}
-      >
-        <div className="flex items-center justify-between border-b border-[#F4F0EA]/8 bg-[#F4F0EA]/[0.025] px-4 py-3">
-          <div className="flex items-center gap-2">
-            <Icon className="h-3.5 w-3.5 text-[#F4F0EA]/78" />
-            <span className="text-[10px] font-sans font-light uppercase tracking-[0.2em] text-[#F4F0EA]/60">
-              {item.eyebrow}
-            </span>
-          </div>
-          <span className="text-[11px] font-display uppercase tracking-[0.05em] text-[#F4F0EA]/50">
-            {expanded ? "Close" : item.label}
-          </span>
-        </div>
-        {/* Thumbnail — YouTube gets full brightness, SoundCloud keeps its dark overlay */}
-        <div
-          className={`relative overflow-hidden ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}
-        >
-          {item.image ? (
-            <img
-              src={item.image}
-              alt=""
-              className={`absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03] ${
-                isYouTube
-                  ? "opacity-100 group-hover:opacity-100"
-                  : "opacity-45 group-hover:opacity-62"
-              }`}
-              loading="lazy"
-            />
-          ) : null}
-          {/* No overlay for YouTube — show raw, bright thumbnail */}
-          {!isYouTube && (
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.08)_0%,rgba(17,17,17,0.92)_100%)]" />
-          )}
-          {isYouTube && (
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(10,8,6,0.72)_100%)]" />
-          )}
-          <div
-            className={`relative flex flex-col justify-end p-4 ${isYouTube ? "min-h-[220px]" : "min-h-[132px]"}`}
-          >
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F0EA] text-[#111111] shadow-[0_0_22px_rgba(244,240,234,0.22)]">
-              <Icon className="h-4 w-4" strokeWidth={1.8} />
-            </div>
-            <p className="max-w-[16rem] text-sm font-semibold leading-snug text-[#F4F0EA]/86">
-              {item.sub}
-            </p>
-          </div>
-        </div>
-        <span className="flex items-center justify-between border-t border-[#F4F0EA]/8 px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/80 transition group-hover:text-[#F4F0EA]">
-          {expanded
-            ? "Now Playing Inline"
-            : isYouTube
-              ? "Watch Recap"
-              : "Play Mix"}
-          <ArrowUpRight
-            className={`h-3.5 w-3.5 transition ${expanded ? "rotate-90" : ""}`}
-          />
-        </span>
-      </button>
-
-      <motion.div
-        initial={false}
-        animate={{ height: expanded ? "auto" : 0, opacity: expanded ? 1 : 0 }}
-        transition={{ type: "spring", stiffness: 220, damping: 28 }}
-        className="overflow-hidden"
-      >
-        <div className="border-t border-[#F4F0EA]/8 p-3">
-          <div className="overflow-hidden rounded-xl border border-[#F4F0EA]/10 bg-black">
-            <iframe
-              key={expanded ? "expanded" : "collapsed"}
-              title={
-                isYouTube
-                  ? "Chasing Sun(Sets) recap video"
-                  : "Chasing Sun(Sets) SoundCloud player"
-              }
-              src={embedSrc}
-              className={isYouTube ? "aspect-video w-full" : "h-[180px] w-full"}
-              allow={
-                isYouTube
-                  ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  : "autoplay"
-              }
-              allowFullScreen={isYouTube}
-              loading="lazy"
-            />
-          </div>
-          {isYouTube ? (
-            <a
-              href={appendAttributionQueryParams(item.href)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                triggerHaptic(10);
-                trackSunsetsClick({
-                  ...item,
-                  href: appendAttributionQueryParams(item.href),
-                });
-              }}
-              className="mt-2 flex items-center justify-between rounded-lg border border-[#F4F0EA]/10 bg-[#F4F0EA]/[0.035] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]/72 transition hover:border-[#F4F0EA]/34 hover:text-[#F4F0EA]"
-            >
-              Open recap on YouTube
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-          ) : null}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function LinkCard({ item, index }: { item: BioLink; index: number }) {
-  const Icon = item.icon;
-  const href = appendAttributionQueryParams(item.href);
-  const isPrimary = item.variant === "primary";
-  const cardClass = isPrimary
-    ? "border-[#14B8A6]/65 bg-[linear-gradient(135deg,#ffffff_0%,#f8fafc_46%,#dffdfa_100%)] text-[#050403] shadow-[0_16px_44px_rgba(20,184,166,0.18)] hover:border-[#69F3E3] hover:bg-white"
-    : "border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.82),rgba(12,30,34,0.76)_50%,rgba(14,24,48,0.72))] text-white hover:border-[#8B5CF6]/44 hover:bg-[#F4F0EA]/6";
-  const iconClass = isPrimary
-    ? "border-[#050403]/12 bg-[#050403] text-[#69F3E3]"
-    : "border-[#14B8A6]/18 bg-black/40 text-[#69F3E3]/78";
-  const eyebrowClass = isPrimary ? "text-[#050403]/60" : "text-white/40";
-  const titleClass = isPrimary
-    ? "text-[#050403] font-semibold"
-    : "text-white/90 group-hover:text-white";
-  const subClass = isPrimary
-    ? "text-[#050403]/75"
-    : "text-white/50 group-hover:text-white/70";
-  const arrowClass = isPrimary
-    ? "text-[#050403] opacity-100"
-    : "text-white/30 group-hover:text-white/80";
-  const glowClass =
-    "group-hover:border-[#8B5CF6]/48 group-hover:shadow-[0_14px_38px_rgba(20,184,166,0.16)]";
-
-  return (
-    <motion.a
-      href={href}
-      target={item.external ? "_blank" : undefined}
-      rel={item.external ? "noopener noreferrer" : undefined}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.18 + index * 0.045, duration: 0.42 }}
-      onClick={() => {
-        triggerHaptic(item.variant === "primary" ? 14 : 8);
-        trackSunsetsClick({ ...item, href });
-      }}
-      data-sunsets-link={item.eyebrow.toLowerCase()}
-      className={`group relative flex min-h-[76px] items-center gap-4 overflow-hidden rounded-[1.1rem] border p-4 transition duration-500 hover:-translate-y-0.5 ${cardClass} ${isPrimary ? "" : glowClass}`}
-    >
-      <span
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-transform duration-500 group-hover:scale-110 ${iconClass}`}
-      >
-        <Icon className="h-4 w-4" strokeWidth={1.2} />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span
-          className={`block text-[13px] font-sans font-semibold uppercase tracking-[0.2em] ${eyebrowClass}`}
-        >
-          {item.eyebrow}
-        </span>
-        <span className="mt-0.5 flex items-center justify-between gap-3">
-          <span
-            className={`text-[14px] font-display tracking-[0.03em] transition-colors ${titleClass}`}
-          >
-            {item.label}
-          </span>
-          <ArrowUpRight
-            className={`h-4 w-4 shrink-0 transition-all duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 ${arrowClass}`}
-            strokeWidth={1.5}
-          />
-        </span>
-        <span
-          className={`mt-1 block text-sm font-light leading-relaxed transition-colors ${subClass}`}
-        >
-          {item.sub}
-        </span>
-      </span>
-    </motion.a>
-  );
-}
-
-function AmbientFluidBackground() {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none bg-[#050505] z-0">
-      {/* Cool sunset energy with teal, cyan, and restrained violet contrast. */}
-      <motion.div
-        animate={{
-          x: ["-10%", "12%", "-4%", "-10%"],
-          y: ["-12%", "6%", "18%", "-12%"],
-          scale: [1, 1.15, 0.92, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute -top-[20%] -left-[10%] w-[72vw] h-[72vw] rounded-full blur-[90px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(20,184,166,0.24) 0%, rgba(139,92,246,0.12) 45%, transparent 70%)",
-        }}
-      />
-      {/* Lake shadow contrast on the right side. */}
-      <motion.div
-        animate={{
-          x: ["8%", "-12%", "4%", "8%"],
-          y: ["8%", "-6%", "-18%", "8%"],
-          scale: [0.88, 1.05, 1.18, 0.88],
-        }}
-        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[30%] -right-[12%] w-[65vw] h-[65vw] rounded-full blur-[110px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(25,59,59,0.28) 0%, rgba(44,24,16,0.10) 50%, transparent 72%)",
-        }}
-      />
-      {/* Deep bronze — bottom center */}
-      <motion.div
-        animate={{
-          x: ["-6%", "16%", "2%", "-6%"],
-          y: ["16%", "2%", "-12%", "16%"],
-        }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        className="absolute -bottom-[22%] left-[15%] w-[85vw] h-[85vw] rounded-full blur-[130px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(58,40,22,0.30) 0%, rgba(5,4,3,0.08) 50%, transparent 68%)",
-        }}
-      />
-      {/* Vivid horizon accent at the bottom */}
-      <motion.div
-        animate={{ opacity: [0.18, 0.32, 0.18], y: ["0%", "-4%", "0%"] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-0 right-0 h-[28vh] blur-[60px]"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(20,184,166,0.16) 0%, rgba(139,92,246,0.08) 45%, transparent 100%)",
-        }}
-      />
-      {/* Subtle grid overlay */}
-      <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:48px_48px]" />
-    </div>
+        <LockKeyhole className="size-4" />
+        {isSubmitting ? "Registering..." : "Register for First Access"}
+      </Button>
+    </form>
   );
 }
 
 export default function SunsetsLinkBio() {
-  const [expandedMedia, setExpandedMedia] = useState<
-    "youtube" | "soundcloud" | null
-  >(null);
-  const featuredVideoLink = links.find(item => item.type === "youtube");
-  const featuredVideoIndex = links.findIndex(item => item.type === "youtube");
-
   useEffect(() => {
+    window.scrollTo(0, 0);
     trackFunnelPageView({
-      pagePath: "/sunsets",
+      pagePath: PAGE_PATH,
       eventSlug: JULY_4_EVENT_SLUG,
-      source: "sunsets_link_bio",
+      source: PAGE_SOURCE,
     });
   }, []);
 
+  const chapters = useMemo<Chapter[]>(
+    () => [
+      {
+        title: "SUN(SETS) I",
+        date: "July 4, 2026",
+        place: "Castaways - North Ave Beach",
+        status: "July 4 access",
+        action: "Get Tickets",
+        eventSlug: JULY_4_EVENT_SLUG,
+        eventDate: JULY_4_EVENT_DATE,
+        href: TICKET_HREF,
+      },
+      {
+        title: "SUN(SETS) II",
+        date: "Summer 2026",
+        place: "Chicago chapter pending",
+        status: "Private drop",
+        action: "Join Lake List",
+      },
+      {
+        title: "SUN(SETS) III",
+        date: "Final chapter",
+        place: "Location hidden",
+        status: "Signal locked",
+        action: "Unlock Later",
+      },
+    ],
+    []
+  );
+
+  const actionLinks = useMemo<ActionLink[]>(
+    () => [
+      {
+        label: "Recap",
+        buttonName: "Watch Recap",
+        href: RECAP_HREF,
+        icon: Play,
+        interestType: "recap_click",
+        channel: "YouTube",
+      },
+      {
+        label: "Radio",
+        buttonName: "Sun(Sets) Radio",
+        href: RADIO_HREF,
+        icon: Radio,
+        interestType: "radio_click",
+        channel: "SoundCloud",
+      },
+      {
+        label: "Follow",
+        buttonName: "Follow Sun(Sets)",
+        href: INSTAGRAM_HREF,
+        icon: Instagram,
+        interestType: "instagram_click",
+        channel: "Instagram",
+      },
+      {
+        label: "VIP",
+        buttonName: "VIP Inquiry",
+        href: "/vip",
+        icon: Users,
+        interestType: "vip_inquiry_click",
+        channel: "Monolith",
+      },
+    ],
+    []
+  );
+
+  const ticketHref = appendEventAttribution(TICKET_HREF, JULY_4_EVENT_SLUG);
+
   return (
-    <main className="min-h-[100dvh] w-full overflow-x-clip bg-[#050505] text-white/90 font-sans selection:bg-[#F4F0EA]/30">
+    <div className="min-h-screen bg-[#080a07] text-stone-100 selection:bg-[#c9a45d] selection:text-black">
       <SEO
-        title="Chasing Sun(Sets) | Chicago Lakefront House Music"
-        description="Official Chasing Sun(Sets) mini hub for first access, tickets, VIP tables, recap video, SoundCloud, gallery, and partner inquiries."
-        canonicalPath="/sunsets"
-        image="/images/chasing-sunsets-premium.webp"
-        absoluteTitle
+        title="Sun(Sets)"
+        description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
+        image={OG_IMAGE}
+        canonicalPath={PAGE_PATH}
       />
 
-      <section className="relative flex min-h-[100dvh] flex-col items-center justify-start px-4 py-12 sm:px-6">
-        <AmbientFluidBackground />
+      <div className="fixed inset-0 pointer-events-none">
+        <img
+          src={HERO_IMAGE}
+          alt=""
+          className="h-full w-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,7,0.75)_0%,rgba(8,10,7,0.92)_48%,#080a07_100%)]" />
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-5 sm:py-8">
+        <motion.section
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-[480px] z-10"
+          transition={{ duration: 0.65, ease: "easeOut" }}
+          className="overflow-hidden border border-[#d8e8c8]/25 bg-[#10140f]/86 shadow-2xl shadow-black/60 backdrop-blur"
         >
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#F4F0EA]/10 bg-[#111111] shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl">
-            <ShareButton />
-            {/* Subtle top glare */}
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(58,40,22,0.58)_0%,rgba(17,17,17,0.82)_26%,rgba(17,17,17,0.94)_50%,rgba(25,59,59,0.22)_73%,rgba(17,17,17,0.98)_100%)]" />
-            <div className="pointer-events-none absolute left-1/2 top-14 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.24)_0%,rgba(56,189,248,0.14)_28%,rgba(139,92,246,0.10)_52%,transparent_74%)] blur-3xl" />
-            <div className="pointer-events-none absolute left-1/2 top-[8.25rem] h-32 w-[120%] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(20,184,166,0.18)_28%,rgba(56,189,248,0.18)_50%,rgba(139,92,246,0.14)_72%,transparent)] blur-2xl" />
-            <div className="pointer-events-none absolute inset-x-0 top-[21rem] h-[30rem] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.13),rgba(139,92,246,0.08)_42%,transparent_72%)]" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top,rgba(194,112,62,0.18),transparent_65%)]" />
+          <div className="relative h-[255px] overflow-hidden">
+            <img
+              src={HERO_IMAGE}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,164,93,.28),rgba(20,23,17,.05)_40%,rgba(8,10,7,.35)),linear-gradient(0deg,#10140f_0%,rgba(16,20,15,0)_54%)]" />
+            <div className="absolute left-4 top-4 border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
+              The Monolith Project
+            </div>
+            <div className="absolute right-4 top-4 border border-[#c9e8bd]/30 bg-[#172015]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#c9e8bd] backdrop-blur">
+              Lake List
+            </div>
 
-            <div className="relative z-10 px-5 pb-8 pt-10 sm:px-8 sm:pb-10 sm:pt-12">
-              <header className="text-center">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-[#14B8A6]/28 bg-black/60 shadow-[0_0_42px_rgba(20,184,166,0.22)]"
-                >
-                  <Sun className="h-7 w-7 text-[#69F3E3]" strokeWidth={1} />
-                </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.7 }}
+              className="absolute bottom-5 left-5 right-5"
+            >
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#dfc27a]">
+                <Waves className="size-3.5" />
+                Chicago 2026
+              </div>
+              <h1 className="text-[clamp(3.1rem,16vw,4.3rem)] font-black leading-[0.86] tracking-normal text-white">
+                SUN<span className="text-[#dfc27a]">(</span>SETS
+                <span className="text-[#dfc27a]">)</span>
+              </h1>
+              <p className="mt-3 max-w-[330px] text-sm font-medium leading-relaxed text-stone-200/90">
+                A full-day open-air chapter of house music, lakefront energy,
+                and golden-hour connection.
+              </p>
+            </motion.div>
+          </div>
 
-                <p className="text-[13px] font-sans font-light uppercase tracking-[0.4em] text-[#69F3E3]/80">
-                  The Monolith Project Presents
-                </p>
-                <div className="relative mx-auto mt-4 w-fit max-w-full">
-                  <h1 className="bg-gradient-to-b from-white via-[#F4F0EA] to-[#8EF7EC] bg-clip-text font-display text-[clamp(2.45rem,10.5vw,4.5rem)] uppercase leading-[0.92] tracking-[-0.035em] text-transparent drop-shadow-[0_0_30px_rgba(20,184,166,0.20)]">
-                    Chasing
-                    <br />
-                    <span className="whitespace-nowrap">Sun(Sets)</span>
-                  </h1>
-                  <span className="absolute right-0 -top-5 inline-flex items-center gap-1.5 rounded-full border border-[#14B8A6]/34 bg-[#111111]/86 px-2 py-1 text-[8px] font-black uppercase tracking-[0.14em] text-[#69F3E3]/82 backdrop-blur sm:-right-1 sm:top-1 sm:translate-x-1/4">
-                    <motion.span
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.9, 0.25, 0.9],
-                      }}
-                      transition={{
-                        duration: 1.8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="h-1.5 w-1.5 rounded-full bg-[#14B8A6]"
-                    />
-                    Official
-                  </span>
+          <div className="space-y-4 p-5 pt-6">
+            <div className="flex flex-wrap gap-2">
+              <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
+                July 4
+              </span>
+              <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
+                Castaways
+              </span>
+              <span className="border border-[#c9e8bd]/25 bg-[#c9e8bd]/10 px-3 py-1 text-xs font-semibold text-[#c9e8bd]">
+                First Access
+              </span>
+            </div>
+
+            <a
+              href={ticketHref}
+              onClick={() => {
+                triggerHaptic(16);
+                trackSunsetsClick({
+                  buttonName: "Hero Get Tickets",
+                  href: ticketHref,
+                  eventSlug: JULY_4_EVENT_SLUG,
+                  eventDate: JULY_4_EVENT_DATE,
+                  interestType: "ticket_click",
+                  channel: "Posh",
+                });
+              }}
+              className="flex min-h-14 items-center justify-center gap-2 bg-[#dfc27a] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#efd48d]"
+            >
+              <Ticket className="size-4" />
+              July 4 Ticket Access
+              <ArrowUpRight className="size-4" />
+            </a>
+
+            <section
+              id="lake-list"
+              className="border border-white/10 bg-black/22 p-4"
+            >
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-black tracking-normal">
+                    Join the Lake List
+                  </h2>
+                  <p className="mt-1 text-xs leading-relaxed text-stone-300">
+                    Artist drops, private codes, ticket releases, and location
+                    signals before the public.
+                  </p>
                 </div>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#c9e8bd] text-black">
+                  <LockKeyhole className="size-4.5" />
+                </div>
+              </div>
+              <LakeListForm />
+            </section>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25, duration: 0.6 }}
-                  className="relative mx-auto mt-6 w-full max-w-[280px] sm:max-w-[320px] aspect-[400/463] overflow-hidden rounded-xl border border-[#14B8A6]/35 shadow-[0_0_52px_rgba(20,184,166,0.18),0_18px_48px_rgba(0,0,0,0.48)]"
-                >
-                  <img
-                    src={JULY_4_FIRST_ACCESS_IMAGE}
-                    alt="Chasing Sun(Sets) July 4 First Access artwork"
-                    className="h-full w-full object-cover"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(20,184,166,0.26),rgba(56,189,248,0.14)_32%,transparent_58%)] mix-blend-screen opacity-80" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(5,4,3,0.24)_100%)]" />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none" />
-                </motion.div>
-
-                <p className="mx-auto mt-8 max-w-xs text-sm font-light tracking-[0.1em] uppercase text-[#69F3E3]/90">
-                  Watch the sun. Stay for the (sets).
-                </p>
-                <p className="mx-auto mt-5 max-w-[21rem] text-sm font-light leading-relaxed text-white/50">
-                  Join the Chasing Sun(Sets) circle for first access, ticket
-                  drops, VIP tables, recap video, sound, gallery, and partner
-                  inquiries.
-                </p>
-
-                {featuredVideoLink ? (
-                  <MediaAccordion
-                    item={featuredVideoLink}
-                    index={featuredVideoIndex >= 0 ? featuredVideoIndex : 0}
-                    expanded={expandedMedia === "youtube"}
-                    onToggle={() => {
-                      triggerHaptic(10);
-                      const href = appendAttributionQueryParams(
-                        featuredVideoLink.href
-                      );
-                      trackSunsetsClick({ ...featuredVideoLink, href });
-                      setExpandedMedia(current =>
-                        current === "youtube" ? null : "youtube"
-                      );
-                    }}
-                  />
-                ) : null}
-
-                <InlineCaptureForm />
-              </header>
-
-              {/* Signals Grid */}
-              <div className="mt-8 grid grid-cols-3 gap-2.5">
-                {["Lakefront", "House", "Chicago"].map((item, i) => (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    key={item}
-                    className="flex min-h-[68px] flex-col items-center justify-center overflow-hidden rounded-lg border border-[#F4F0EA]/10 bg-[#111111]/70 px-1.5 py-3 transition-colors hover:border-[#F4F0EA]/30 hover:bg-[#F4F0EA]/5"
-                  >
-                    <p className="text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40">
-                      Signal
-                    </p>
-                    <p className="mt-1.5 max-w-full truncate text-[11px] font-display uppercase tracking-[0.04em] text-white/80 sm:text-[12px]">
-                      {item}
-                    </p>
-                  </motion.div>
-                ))}
+            <section className="space-y-3 pt-1">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-300">
+                  Upcoming Chapters
+                </h3>
+                <span className="text-right text-[11px] font-semibold text-[#dfc27a]">
+                  Prices move by release
+                </span>
               </div>
 
-              {/* July 4th Featured Block */}
-              <motion.a
-                href={appendAttributionQueryParams(TICKET_HUB_HREF)}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                onClick={() => {
-                  triggerHaptic(14);
-                  trackSunsetsClick({
-                    buttonName: "July 4 Tickets",
-                    href: appendAttributionQueryParams(TICKET_HUB_HREF),
-                    eventSlug: JULY_4_EVENT_SLUG,
-                    eventDate: "2026-07-04",
-                    interestType: "ticket_click",
-                    channel: "Posh",
-                  });
-                }}
-                className="mt-8 group relative block overflow-hidden rounded-[1.4rem] border border-[#14B8A6]/40 bg-[linear-gradient(135deg,rgba(20,184,166,0.16),rgba(56,189,248,0.12)_44%,rgba(139,92,246,0.14)_100%)] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-[#69F3E3]/70 hover:shadow-[0_15px_40px_rgba(20,184,166,0.18)]"
-              >
-                <div className="absolute right-0 top-0 h-full w-full bg-[radial-gradient(ellipse_at_top_right,rgba(20,184,166,0.18),transparent_60%)]" />
-                <div className="relative z-10 flex items-start justify-between">
-                  <div className="min-w-0">
-                    <span className="inline-block rounded-full bg-[#69F3E3] px-2.5 py-1 text-[13px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_15px_rgba(20,184,166,0.35)]">
-                      Next Chapter
-                    </span>
-                    <h2 className="mt-3 font-display text-3xl uppercase leading-[0.9] tracking-[-0.02em] text-white">
-                      July 4th
-                      <br />
-                      <span className="text-[#69F3E3]">Open Air</span>
-                    </h2>
-                    <p className="mt-2 text-sm font-light text-white/70">
-                      Castaways, Chicago • 3 PM - 10 PM
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {["Official Hub", "July 4", "Tickets Live Soon"].map(
-                        item => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-[#F4F0EA]/14 bg-[#111111]/70 px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[#F4F0EA]/68"
-                          >
-                            {item}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#69F3E3] text-black transition-transform duration-500 group-hover:scale-110">
-                    <ArrowUpRight className="h-5 w-5" strokeWidth={2} />
-                  </div>
-                </div>
-                <div className="relative z-10 mt-4 border-t border-white/10 pt-3">
-                  <p className="flex items-center gap-2 text-[14px] font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
-                    <Sparkles className="h-3 w-3" />
-                    Tickets / Schedule Path
-                  </p>
-                </div>
-              </motion.a>
+              {chapters.map((chapter, index) => {
+                const Icon = index === 0 ? Ticket : Calendar;
+                const chapterHref = chapter.href
+                  ? appendEventAttribution(chapter.href, chapter.eventSlug)
+                  : undefined;
 
-              <div className="mt-5 rounded-[1.25rem] border border-[#14B8A6]/18 bg-[linear-gradient(135deg,rgba(17,17,17,0.8),rgba(33,18,36,0.7)_48%,rgba(6,42,46,0.72))] p-3 shadow-[0_16px_48px_rgba(20,184,166,0.08)]">
-                <div className="flex items-center justify-between gap-3 px-1 pb-2">
-                  <p className="text-[13px] font-sans font-light uppercase tracking-[0.26em] text-[#F4F0EA]/80">
-                    2026 Schedule
-                  </p>
-                  <a
-                    href={appendAttributionQueryParams(TICKET_HUB_HREF)}
-                    onClick={() => {
-                      triggerHaptic(8);
-                      trackSunsetsClick({
-                        buttonName: "Schedule View",
-                        href: appendAttributionQueryParams(TICKET_HUB_HREF),
-                        eventSlug: JULY_4_EVENT_SLUG,
-                        eventDate: "2026-07-04",
-                        interestType: "schedule_view",
-                        channel: "Posh",
-                      });
+                return (
+                  <motion.div
+                    key={chapter.title}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.1 * index + 0.15,
+                      duration: 0.45,
                     }}
-                    className="inline-flex items-center gap-1 text-[13px] font-black uppercase tracking-[0.16em] text-[#F4F0EA]/82 transition hover:text-[#F4F0EA]"
                   >
-                    Tickets
-                    <ArrowUpRight className="h-3 w-3" />
-                  </a>
-                </div>
-                <div className="grid gap-2">
-                  {schedule.map(event => (
+                    {chapterHref ? (
+                      <a
+                        href={chapterHref}
+                        onClick={() => {
+                          triggerHaptic(12);
+                          trackSunsetsClick({
+                            buttonName: chapter.action,
+                            href: chapterHref,
+                            eventSlug: chapter.eventSlug,
+                            eventDate: chapter.eventDate,
+                            interestType: "chapter_ticket_click",
+                            channel: "Posh",
+                          });
+                        }}
+                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                      >
+                        <ChapterContent
+                          chapter={chapter}
+                          icon={Icon}
+                          isLinked
+                        />
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          triggerHaptic(8);
+                          focusLakeList();
+                          trackSunsetsClick({
+                            buttonName: chapter.action,
+                            href: "#lake-list",
+                            interestType: "lake_list_focus",
+                            channel: "CRM",
+                          });
+                        }}
+                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                      >
+                        <ChapterContent
+                          chapter={chapter}
+                          icon={Icon}
+                          isLinked
+                        />
+                      </button>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </section>
+
+            <section className="grid grid-cols-2 gap-3 pt-2">
+              {actionLinks.map(item => {
+                const Icon = item.icon;
+                const href = appendEventAttribution(item.href, JULY_4_EVENT_SLUG);
+
+                return (
+                  <Button
+                    key={item.label}
+                    asChild
+                    variant="outline"
+                    className="h-12 border-white/10 bg-white/[.04] text-stone-100 hover:bg-white/[.08]"
+                  >
                     <a
-                      key={event.eventSlug}
-                      href={appendAttributionQueryParams(event.href)}
+                      href={href}
                       onClick={() => {
                         triggerHaptic(8);
                         trackSunsetsClick({
-                          buttonName: `${event.date} Schedule`,
-                          href: appendAttributionQueryParams(event.href),
-                          eventSlug: event.eventSlug,
-                          eventDate: event.eventDate,
-                          interestType: "schedule_view",
-                          channel: "Posh",
+                          buttonName: item.buttonName,
+                          href,
+                          eventSlug: JULY_4_EVENT_SLUG,
+                          eventDate: JULY_4_EVENT_DATE,
+                          interestType: item.interestType,
+                          channel: item.channel,
                         });
                       }}
-                      className="group grid grid-cols-[3.85rem_1fr_auto] items-center gap-3 rounded-xl border border-[#14B8A6]/12 bg-black/24 px-3 py-3 transition hover:border-[#8B5CF6]/38 hover:bg-[#14B8A6]/8"
                     >
-                      <span className="text-[14px] font-black uppercase tracking-[0.16em] text-[#FFFFFF]">
-                        {event.date}
-                      </span>
-                      <span className="min-w-0">
-                        <span className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-[14px] font-semibold uppercase leading-snug tracking-[0.06em] text-white/88">
-                            {event.title}
-                          </span>
-                          <span className="rounded-full border border-[#14B8A6]/22 bg-[#14B8A6]/8 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-[0.1em] text-[#69F3E3]/78">
-                            {event.status}
-                          </span>
-                        </span>
-                        <span className="mt-1 block text-[13px] leading-snug text-white/45">
-                          {event.venue} · {event.time}
-                        </span>
-                      </span>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-white/30 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#69F3E3]" />
+                      <Icon className="size-4" />
+                      {item.label}
                     </a>
-                  ))}
+                  </Button>
+                );
+              })}
+            </section>
+
+            <section className="border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                    Official short link
+                  </p>
+                  <p className="mt-1 truncate text-sm font-bold text-white">
+                    sunsets.vip
+                  </p>
                 </div>
-              </div>
-
-              {/* Links Array */}
-              <div className="mt-8 flex flex-col gap-2">
-                {links
-                  .filter(item => item.type !== "youtube")
-                  .map((item, index) => {
-                    if (item.type === "youtube" || item.type === "soundcloud") {
-                      return (
-                        <MediaAccordion
-                          key={item.label}
-                          item={item}
-                          index={index}
-                          expanded={expandedMedia === item.type}
-                          onToggle={() => {
-                            triggerHaptic(10);
-                            const href = appendAttributionQueryParams(
-                              item.href
-                            );
-                            trackSunsetsClick({ ...item, href });
-                            const mediaType =
-                              item.type === "youtube"
-                                ? "youtube"
-                                : "soundcloud";
-                            setExpandedMedia(current =>
-                              current === mediaType ? null : mediaType
-                            );
-                          }}
-                        />
-                      );
+                <Button
+                  asChild
+                  className="h-10 shrink-0 bg-white px-3 text-black hover:bg-stone-200"
+                >
+                  <a
+                    href="/partners"
+                    onClick={() =>
+                      trackSunsetsClick({
+                        buttonName: "Partner Inquiry",
+                        href: "/partners",
+                        eventSlug: JULY_4_EVENT_SLUG,
+                        eventDate: JULY_4_EVENT_DATE,
+                        interestType: "partner_inquiry_click",
+                        channel: "Monolith",
+                      })
                     }
-
-                    if (item.type === "gallery") {
-                      const Icon = item.icon;
-                      const href = appendAttributionQueryParams(item.href);
-                      return (
-                        <motion.a
-                          key={item.label}
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          initial={{ opacity: 0, y: 16 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            delay: 0.18 + index * 0.045,
-                            duration: 0.42,
-                          }}
-                          onClick={() => {
-                            triggerHaptic(8);
-                            trackSunsetsClick({ ...item, href });
-                          }}
-                          className="group my-3 block overflow-hidden rounded-[1.2rem] border border-[#F4F0EA]/12 bg-[#111111]/72 shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition hover:-translate-y-0.5 hover:border-[#F4F0EA]/40"
-                        >
-                          <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-3">
-                            <div className="flex items-center gap-2">
-                              <Icon className="h-3.5 w-3.5 text-[#F4F0EA]" />
-                              <span className="text-[13px] font-sans font-light uppercase tracking-[0.2em] text-[#F4F0EA]">
-                                {item.eyebrow}
-                              </span>
-                            </div>
-                            <span className="text-[14px] font-display tracking-[0.05em] text-white/60">
-                              {item.label}
-                            </span>
-                          </div>
-                          <div className="relative min-h-[156px] overflow-hidden">
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt=""
-                                className="absolute inset-0 h-full w-full object-cover opacity-58 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-72"
-                                loading="lazy"
-                              />
-                            ) : null}
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,4,3,0.18)_0%,rgba(5,4,3,0.88)_100%)]" />
-                            <div className="relative flex min-h-[156px] flex-col justify-end p-4">
-                              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#F4F0EA] text-[#050403] shadow-[0_0_24px_rgba(244,240,234,0.22)] transition group-hover:scale-105">
-                                <Icon
-                                  className="h-4.5 w-4.5"
-                                  strokeWidth={1.8}
-                                />
-                              </div>
-                              <p className="max-w-[15rem] text-sm font-semibold leading-snug text-white/90">
-                                {item.sub}
-                              </p>
-                            </div>
-                          </div>
-                          <span className="flex items-center justify-between border-t border-white/5 px-4 py-3 text-[14px] font-black uppercase tracking-[0.18em] text-[#F4F0EA]/82 transition group-hover:text-[#F4F0EA]">
-                            Open Gallery
-                            <ArrowUpRight className="h-3.5 w-3.5" />
-                          </span>
-                        </motion.a>
-                      );
-                    }
-
-                    return (
-                      <LinkCard key={item.label} item={item} index={index} />
-                    );
-                  })}
-                <FlyerCard />
+                  >
+                    Partners
+                    <ArrowUpRight className="size-3.5" />
+                  </a>
+                </Button>
               </div>
+            </section>
 
-              {/* Footer */}
-              <footer className="mt-10 pt-4 text-center">
-                <SocialUtilityRow />
-                <div className="mx-auto mb-4 flex max-w-full w-fit items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/[0.02] px-3 py-2 text-[9px] font-sans font-light uppercase tracking-[0.16em] text-white/40 shadow-sm backdrop-blur-md transition-colors hover:border-[#F4F0EA]/30 hover:text-[#F4F0EA]/80 sm:text-[12px] sm:tracking-[0.24em]">
-                  <Sparkles
-                    className="h-3.5 w-3.5 text-[#F4F0EA]/70"
-                    strokeWidth={1.5}
-                  />
-                  <span className="truncate">monolithproject.com/sunsets</span>
-                </div>
-                <p className="text-[14px] uppercase font-light tracking-[0.3em] text-white/30">
-                  Togetherness is the frequency.
-                </p>
-                <p className="mt-1.5 text-[14px] uppercase font-light tracking-[0.3em] text-white/30">
-                  Music is the guide.
-                </p>
-              </footer>
-            </div>
+            <footer className="pb-1 pt-2 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                Togetherness is the frequency.
+              </p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                Music is the guide.
+              </p>
+            </footer>
           </div>
-        </motion.div>
+        </motion.section>
+      </main>
+    </div>
+  );
+}
 
-        {/* StickyActionDock — outside overflow-hidden card so position:sticky works */}
-        <StickyActionDock />
-      </section>
-    </main>
+function ChapterContent({
+  chapter,
+  icon: Icon,
+  isLinked,
+}: {
+  chapter: Chapter;
+  icon: LucideIcon;
+  isLinked?: boolean;
+}) {
+  return (
+    <div className="flex gap-3">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-white/[.10] text-[#d8f0ce]">
+        <Icon className="size-5" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h4 className="text-base font-black tracking-normal text-white">
+              {chapter.title}
+            </h4>
+            <p className="mt-1 flex items-center gap-1 text-xs font-semibold text-stone-300">
+              <Calendar className="size-3.5 shrink-0" />
+              {chapter.date}
+            </p>
+            <p className="mt-1 flex items-center gap-1 text-xs text-stone-400">
+              <MapPin className="size-3.5 shrink-0" />
+              {chapter.place}
+            </p>
+          </div>
+          {isLinked ? (
+            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#dfc27a]" />
+          ) : null}
+        </div>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+          <span className="bg-black/25 px-2.5 py-1 text-[11px] font-bold text-stone-300">
+            {chapter.status}
+          </span>
+          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#dfc27a]">
+            {chapter.action}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
