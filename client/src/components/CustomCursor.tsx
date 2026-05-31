@@ -18,6 +18,8 @@ export default function CustomCursor() {
   React.useEffect(() => {
     if (typeof window === "undefined") return undefined;
     if (window.matchMedia("(pointer: coarse)").matches) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return undefined;
 
     const root = document.documentElement;
     root.dataset.desktopChrome = "true";

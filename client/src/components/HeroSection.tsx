@@ -153,12 +153,6 @@ export default function HeroSection() {
       <div className="relative z-10 flex min-h-[100dvh] flex-col px-6 pb-5 pt-[var(--shell-page-top-hero)] sm:px-8 lg:px-14">
         <div className="grid flex-1 items-end gap-10 pb-6 pt-12 lg:grid-cols-[1.12fr_0.88fr] lg:gap-14 lg:pt-16 xl:gap-20">
           <div className="max-w-4xl">
-            <div className="mb-12 hidden items-center gap-5 font-mono text-[10px] font-black uppercase tracking-[0.3em] text-white/58 md:flex lg:mb-20">
-              <span>Monolith</span>
-              <span className="h-px w-14 bg-white/28" />
-              <span>Chicago</span>
-            </div>
-
             <h1
               data-home-hero-heading="true"
               className="hero-wordmark text-[clamp(4.2rem,10vw,10.25rem)] uppercase leading-[0.82] tracking-[0] text-white drop-shadow-[0_22px_48px_rgba(0,0,0,0.62)]"
@@ -166,16 +160,17 @@ export default function HeroSection() {
               <KineticDecryption text={HERO_TITLE} autoStart={false} />
             </h1>
 
-            <div
+            <p
               data-home-hero-eyebrow="true"
-              className="mt-3 font-mono text-[12px] uppercase tracking-[0.18em] text-white/62 sm:tracking-[0.3em]"
+              className="mt-4 max-w-2xl font-display text-[clamp(1.4rem,2.5vw,2.2rem)] uppercase leading-[1.05] tracking-[0.02em] text-white/92"
             >
               {HERO_PILLARS}
-            </div>
+            </p>
 
-            <h2 className="mt-7 max-w-2xl text-balance font-display text-[clamp(2rem,4.1vw,4.25rem)] uppercase leading-[0.9] tracking-[0] text-white">
+            <div className="mt-5 flex items-center gap-3 font-mono text-[11px] font-black uppercase tracking-[0.28em] text-[#e8b86d]">
+              <span className="h-px w-8 bg-[#e8b86d]/70" />
               {HERO_TAGLINE}
-            </h2>
+            </div>
 
             <p
               data-home-hero-summary="true"
@@ -200,16 +195,6 @@ export default function HeroSection() {
                 Untold Story
                 <ArrowUpRight className="ml-4 h-4 w-4" strokeWidth={2.5} />
               </Link>
-            </div>
-
-            <div className="mt-12 hidden font-mono text-[10px] uppercase tracking-[0.24em] text-white/50 md:block">
-              <div className="mb-2 flex items-center gap-2">
-                <span className="h-[2px] w-20 bg-white/20" />
-                <span className="h-[2px] w-10 bg-[#d8b782]" />
-                <span className="h-[2px] w-16 bg-white/20" />
-              </div>
-              <div>41.8781 N, 87.6298 W</div>
-              <div className="mt-1">Sector: Primary_Core</div>
             </div>
           </div>
 

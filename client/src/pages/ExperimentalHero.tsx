@@ -1,140 +1,162 @@
-import Navigation from "@/components/Navigation";
 import { Link } from "wouter";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Menu } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
+import { getEventCta } from "@/lib/cta";
+import {
+  getEventEyebrow,
+  getEventVenueLabel,
+  getExperienceEvent,
+} from "@/lib/siteExperience";
+
+const MONOLITH_RENDER_SRC = "/video/monolith-transparent.webm";
+
+function MonolithObject() {
+  return (
+    <div className="relative h-[58svh] min-h-[30rem] w-[76vw] max-w-[34rem] md:h-[66svh] md:max-w-[38rem]">
+      <div
+        className="absolute inset-x-[13%] inset-y-0 overflow-hidden border border-white/12 bg-[linear-gradient(90deg,rgba(255,255,255,0.04),rgba(255,255,255,0.22)_18%,rgba(0,0,0,0.82)_44%,rgba(255,255,255,0.2)_66%,rgba(0,0,0,0.94))] shadow-[0_0_90px_rgba(255,255,255,0.12),inset_0_0_80px_rgba(255,255,255,0.08)]"
+        style={{ clipPath: "polygon(36% 0%, 64% 0%, 100% 100%, 0% 100%)" }}
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.24),transparent_22%),radial-gradient(circle_at_42%_64%,rgba(255,255,255,0.18),transparent_24%)]" />
+        <div className="absolute left-[48%] top-0 h-full w-[10%] bg-white/16 blur-3xl" />
+        <div className="absolute inset-x-[18%] top-0 h-px bg-white/70" />
+        <div className="absolute inset-x-[8%] bottom-0 h-1/3 bg-gradient-to-t from-black via-black/66 to-transparent" />
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-[20%] bottom-[-2%] h-[16%] rounded-full bg-white/20 blur-3xl"
+      />
+
+      <video
+        className="absolute inset-0 h-full w-full object-contain mix-blend-screen"
+        src={MONOLITH_RENDER_SRC}
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-label="Monolith render"
+        onError={event => {
+          event.currentTarget.style.display = "none";
+        }}
+      />
+    </div>
+  );
+}
+
+function HeroTopBar() {
+  return (
+    <header className="relative z-40 flex min-h-[4.75rem] items-center justify-between rounded-full border border-white/10 bg-[#0d0b0d]/72 px-5 shadow-[0_22px_70px_rgba(0,0,0,0.55)] backdrop-blur-xl md:px-8">
+      <Link
+        href="/"
+        className="font-display text-2xl uppercase tracking-[0.04em] text-white md:text-[1.65rem]"
+      >
+        Monolith
+      </Link>
+
+      <nav
+        className="hidden items-center gap-9 font-mono text-[10px] uppercase tracking-[0.3em] text-white/54 lg:flex"
+        aria-label="Hero editorial links"
+      >
+        <Link className="transition hover:text-white" href="/schedule">
+          Chapters
+        </Link>
+        <Link className="transition hover:text-white" href="/radio">
+          Radio
+        </Link>
+        <Link className="transition hover:text-white" href="/archive">
+          Archive
+        </Link>
+      </nav>
+
+      <Link
+        href="/contact"
+        aria-label="Open contact"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-white/[0.08] text-white transition hover:bg-white/14"
+      >
+        <Menu className="h-7 w-7" />
+      </Link>
+    </header>
+  );
+}
 
 export default function ExperimentalHero() {
-  return (
-    <div className="min-h-screen bg-[#050505] text-white relative overflow-hidden font-mono">
-      <Navigation />
+  const featuredEvent = getExperienceEvent("hero");
+  const cta = getEventCta(featuredEvent);
+  const ctaIsExternal = /^https?:\/\//i.test(cta.href);
+  const eventTitle =
+    featuredEvent?.headline || featuredEvent?.title || "The Next Chapter";
+  const eventEyebrow = getEventEyebrow(featuredEvent);
+  const eventDate = featuredEvent?.date || "Date TBA";
+  const eventVenue = featuredEvent
+    ? getEventVenueLabel(featuredEvent)
+    : "Chicago";
 
-      {/* BACKGROUND TEXT LAYER (Z-INDEX 0) */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+  return (
+    <div className="relative min-h-[100svh] overflow-hidden bg-[#050505] text-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_40%,rgba(255,255,255,0.09),transparent_24%),radial-gradient(circle_at_84%_76%,rgba(255,60,48,0.13),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.18),rgba(0,0,0,0.92))]" />
+
+      <div
+        className="pointer-events-none absolute inset-0 z-0 flex select-none items-center justify-center overflow-hidden"
+        aria-hidden="true"
+      >
         <h1
-          className="font-display text-[clamp(10rem,25vw,35rem)] leading-none text-white/90 tracking-tighter"
+          className="font-display text-[clamp(7rem,26vw,34rem)] uppercase leading-[0.72] tracking-[0] text-white/[0.14] md:text-white/[0.12] xl:text-white/[0.15]"
           style={{ transform: "scaleY(1.3)" }}
         >
           MONOLITH
         </h1>
       </div>
 
-      {/* 3D OBJECT LAYER (Z-INDEX 10) */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-end pb-[10vh] pointer-events-none">
-        <div className="relative w-[90vw] md:w-[60vw] max-w-[500px] h-[65vh] flex items-center justify-center pointer-events-auto">
-          {/* When you generate the video in Luma/Higgsfield, drop it here: */}
-          {/* <video autoPlay loop muted playsInline className="w-full h-full object-cover mix-blend-screen" src="/video/monolith-transparent.webm" /> */}
-
-          {/* Placeholder shape */}
-          <div
-            className="w-full h-full bg-gradient-to-b from-transparent via-black/60 to-[#050505] flex items-center justify-center border border-white/10 backdrop-blur-sm"
-            style={{ clipPath: "polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)" }}
-          >
-            <div className="text-center px-6">
-              <span className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase block mb-4">
-                [ 3D MONOLITH ASSET SPACE ]
-              </span>
-              <span className="font-mono text-white/20 text-[10px] tracking-widest block">
-                Export your Luma/Higgsfield render with a black background and
-                apply mix-blend-mode: screen here.
-              </span>
-            </div>
-          </div>
-        </div>
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center pt-20 opacity-75 md:pt-0 md:opacity-95">
+        <MonolithObject />
       </div>
 
-      {/* FOREGROUND UI LAYER (Z-INDEX 50) */}
-      <div className="relative z-50 min-h-screen flex flex-col justify-between px-6 py-8 md:p-12 pointer-events-none">
-        {/* Top Header/Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pt-20">
-          <div className="flex flex-col gap-1 pointer-events-auto">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              The Monolith Project
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/80">
-              Chicago, IL
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 mt-2">
-              Sound / Culture / Connection
-            </span>
-          </div>
+      <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-6 md:px-10 md:py-8 xl:px-12">
+        <HeroTopBar />
 
-          <div className="hidden md:flex justify-center pointer-events-auto">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-primary">
-                Signal: Live
-              </span>
+        <div className="grid flex-1 items-end gap-8 pb-8 pt-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-10 md:pb-10 md:pt-16">
+          <div className="hidden max-w-sm rounded-[1.25rem] border border-white/10 bg-black/36 p-5 backdrop-blur-md md:block md:bg-transparent md:p-0 md:backdrop-blur-0">
+            <div className="font-mono text-[10px] uppercase leading-7 tracking-[0.32em] text-white/56">
+              <span className="block text-white/80">The Monolith Project</span>
+              <span className="block">Chicago, IL</span>
+              <span className="mt-3 block">Sound / Culture / Connection</span>
             </div>
+            <div className="mt-7 h-px w-10 bg-white/28" />
           </div>
 
-          <div className="hidden md:flex justify-end col-span-2 gap-12 pointer-events-auto">
-            <Link
-              href="/schedule"
-              className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors"
-            >
-              Chapters
-            </Link>
-            <Link
-              href="/lineup"
-              className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors"
-            >
-              Artists
-            </Link>
-            <Link
-              href="/archive"
-              className="text-[10px] uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors"
-            >
-              Archive
-            </Link>
-          </div>
-        </div>
-
-        {/* Bottom Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-end pb-12 md:pb-0 pointer-events-auto">
-          <div className="flex flex-col gap-1 hidden md:flex">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              The Monolith Project
+          <div className="justify-self-stretch rounded-[1.5rem] border border-white/10 bg-black/52 p-5 shadow-[0_26px_90px_rgba(0,0,0,0.55)] backdrop-blur-xl md:max-w-[42rem] md:justify-self-end md:p-7">
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary">
+              Current Signal
             </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              Music Events and Artist-Led
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              Experiences
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              Based in Chicago
-            </span>
-            <div className="w-8 h-px bg-white/30 mt-4" />
-          </div>
-
-          <div className="flex flex-col md:items-end gap-2 text-left md:text-right">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-primary">
-              Next Chapter
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl uppercase tracking-widest text-white mt-1">
-              Untold Story IV
+            <h2 className="mt-3 max-w-[14ch] break-normal hyphens-none text-balance font-display text-[clamp(2.45rem,10vw,3.7rem)] uppercase leading-[0.84] tracking-[0.01em] text-white md:ml-auto md:max-w-[11.8ch] md:text-right md:text-[clamp(3.7rem,5.25vw,5.35rem)] md:leading-[0.82] md:tracking-[0.02em]">
+              {eventTitle}
             </h2>
-            <span className="text-[12px] uppercase tracking-[0.3em] text-white/80 mb-3">
-              May 16
-            </span>
+            <div className="mt-5 grid gap-3 border-t border-white/12 pt-5 font-mono text-[10px] uppercase tracking-[0.26em] text-white/64 sm:grid-cols-3">
+              <span>{eventEyebrow}</span>
+              <span>{eventDate}</span>
+              <span>{eventVenue}</span>
+            </div>
 
-            <MagneticButton strength={0.2}>
-              <Link
-                href="/events/eran-hersh-untold-story-iv"
-                className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary hover:text-white transition-colors flex items-center gap-2"
+            <MagneticButton strength={0.16}>
+              <a
+                href={cta.href}
+                target={ctaIsExternal ? "_blank" : undefined}
+                rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+                className="mt-7 inline-flex min-h-[4rem] w-full items-center justify-center rounded-full bg-white px-8 font-mono text-[11px] font-black uppercase tracking-[0.28em] text-black transition hover:-translate-y-0.5 hover:bg-primary hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto"
               >
-                Reserve Entry <ArrowUpRight className="w-3.5 h-3.5" />
-              </Link>
+                {cta.label}
+                <ArrowUpRight className="ml-4 h-4 w-4" strokeWidth={2.5} />
+              </a>
             </MagneticButton>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 flex justify-center items-center pointer-events-auto border-t border-white/5">
-          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
-            A living archive of sound, story, and connection.
-          </span>
-        </div>
+        <p className="border-t border-white/8 py-5 text-center font-mono text-[10px] uppercase tracking-[0.38em] text-white/38">
+          A living archive of sound, story, and connection.
+        </p>
       </div>
     </div>
   );

@@ -1,4 +1,16 @@
 @layer components {
+  /* Unified scene-aware keyboard focus for every button/CTA primitive.
+     Wildcard selectors keep new variants covered automatically. */
+  :is(
+      [class*="btn-pill"],
+      [class*="btn-inline-pill"],
+      [class*="btn-text-action"],
+      [class*="cta-"]
+    ):focus-visible {
+    outline: 2px solid var(--scene-accent, #e05a3a);
+    outline-offset: 3px;
+  }
+
   @media (max-width: 768px) {
     .btn-pill,
     .btn-pill-dark,

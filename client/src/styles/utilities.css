@@ -168,45 +168,26 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .lift-hover,
-    .ui-card,
-    .btn-pill,
-    .btn-pill-dark,
-    .btn-pill-coral,
-    .btn-pill-primary,
-    .btn-pill-sunsets,
-    .btn-pill-radio,
-    .btn-pill-untold,
-    .btn-pill-monolith,
-    .btn-pill-neutral,
-    .btn-pill-outline,
-    .btn-pill-ghost,
-    .btn-pill-outline-dark,
-    .btn-pill-disabled,
-    .btn-inline-pill,
-    .btn-text-action,
-    .cta-ghost {
+    /* Wildcard selectors auto-cover every current/future button variant. */
+    :is(
+        .lift-hover,
+        .ui-card,
+        [class*="btn-pill"],
+        [class*="btn-inline-pill"],
+        [class*="btn-text-action"],
+        [class*="cta-"]
+      ) {
       transition: none !important;
     }
 
-    .lift-hover:hover,
-    .ui-card:hover,
-    .btn-pill:hover,
-    .btn-pill-dark:hover,
-    .btn-pill-coral:hover,
-    .btn-pill-primary:hover,
-    .btn-pill-sunsets:hover,
-    .btn-pill-radio:hover,
-    .btn-pill-untold:hover,
-    .btn-pill-monolith:hover,
-    .btn-pill-neutral:hover,
-    .btn-pill-outline:hover,
-    .btn-pill-ghost:hover,
-    .btn-pill-outline-dark:hover,
-    .btn-pill-disabled:hover,
-    .btn-inline-pill:hover,
-    .btn-text-action:hover,
-    .cta-ghost:hover {
+    :is(
+        .lift-hover,
+        .ui-card,
+        [class*="btn-pill"],
+        [class*="btn-inline-pill"],
+        [class*="btn-text-action"],
+        [class*="cta-"]
+      ):hover {
       transform: none !important;
     }
   }

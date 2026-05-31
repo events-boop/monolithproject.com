@@ -11,9 +11,11 @@ import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { sendWelcomeEmail } from "../services/email";
-import { createRateLimitMiddleware } from "../services/rate-limit";
+import { createRateLimitMiddleware, getClientIdentifier } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 import { markLeadCaptureProviderStatus, persistLeadCapture } from "../services/crm-store";
+import { parseCookieHeader } from "../lib/cookies";
+import { sendLeadConversion } from "../services/meta-capi";
 
 const router = Router();
 
@@ -121,6 +123,32 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
           .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'success':`, err));
       }
       void markLeadCaptureProviderStatus(crmCapture, "success");
+
+      // Server-side Meta CAPI copy of the conversion. Fire-and-forget: the
+      // service never throws and no-ops when CAPI isn't configured.
+      const fbp = parseCookieHeader(req.header("cookie"))._fbp;
+      void sendLeadConversion({
+        eventId: requestId,
+        email,
+        phone: parsed.data.phone,
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+        city: parsed.data.city,
+        state: parsed.data.state,
+        eventSourceUrl: parsed.data.landingPageUrl || parsed.data.referrer,
+        clientIp: getClientIdentifier(req),
+        userAgent: req.header("user-agent") || undefined,
+        fbp,
+        fbclid:
+          parsed.data.fbclid ||
+          parsed.data.lastFbclid ||
+          parsed.data.firstFbclid,
+        customData: {
+          content_name: "First Access Signup - Chasing Sun(Sets)",
+          content_category: "Waitlist",
+          lead_source: parsed.data.source || "website",
+        },
+      });
 
       const body = {
         ok: true,
