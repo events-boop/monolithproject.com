@@ -16,6 +16,7 @@ import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 import { markLeadCaptureProviderStatus, persistLeadCapture } from "../services/crm-store";
 import { parseCookieHeader } from "../lib/cookies";
 import { sendLeadConversion } from "../services/meta-capi";
+import { mirrorLeadToAirtable } from "../services/airtable-sync";
 
 const router = Router();
 
@@ -123,6 +124,12 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
           .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'success':`, err));
       }
       void markLeadCaptureProviderStatus(crmCapture, "success");
+      void mirrorLeadToAirtable({
+        lead: parsed.data,
+        provider,
+        requestId,
+        idempotencyKey,
+      });
 
       // Server-side Meta CAPI copy of the conversion. Fire-and-forget: the
       // service never throws and no-ops when CAPI isn't configured.

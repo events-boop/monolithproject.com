@@ -111,6 +111,15 @@ Meta CAPI:
 - Do not expose the token client-side.
 - Lead conversion behavior has test coverage in `server/__tests__/meta-capi.test.ts`.
 
+Airtable:
+
+- Airtable is a mirror, not the source of truth.
+- Website forms should continue through `/api/leads`; do not wire client forms
+  directly to Airtable.
+- The optional mirror is server-side and no-ops unless `AIRTABLE_API_KEY`,
+  `AIRTABLE_BASE_ID`, and `AIRTABLE_LEADS_TABLE_ID` or
+  `AIRTABLE_LEADS_TABLE_NAME` are configured.
+
 DNS / Domains:
 
 - Netlify redirect rules are code-side only.
