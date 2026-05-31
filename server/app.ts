@@ -38,6 +38,7 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/ticket-intent", methods: ["POST"] },
   { path: "/api/track/page-view", methods: ["POST"] },
   { path: "/api/track/link-click", methods: ["POST"] },
+  { path: "/api/track/lead", methods: ["POST"] },
   { path: "/api/sponsor-access", methods: ["POST"] },
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },

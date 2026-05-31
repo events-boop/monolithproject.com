@@ -36,18 +36,10 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "https://sunsets.vip/*"
-  to = "https://monolithproject.com/sunsets"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.sunsets.vip/*"
-  to = "https://monolithproject.com/sunsets"
-  status = 301
-  force = true
-
+# sunsets.vip is the paid Sun(Sets) "Lake" campaign front door. It must serve the
+# SPA directly (so /lake renders a real page) rather than redirect to the brand
+# hub. No host rule here means sunsets.vip/* falls through to /api + /go (functions)
+# and finally the SPA fallback (/* -> /index.html) below.
 [[redirects]]
   from = "https://untold.vip/*"
   to = "https://monolithproject.com/story"

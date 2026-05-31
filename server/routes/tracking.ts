@@ -4,10 +4,20 @@ import { asyncHandler } from "../lib/async";
 import { clickCaptureSchema, pageViewCaptureSchema } from "../lib/schemas";
 import { getDatabase } from "../db/client";
 import { contactEventInterest, contentEngagement, funnelPageViews, linkClicks } from "../db/schema";
-import { createRateLimitMiddleware } from "../services/rate-limit";
+import { createRateLimitMiddleware, getClientIdentifier } from "../services/rate-limit";
 import { logEvent } from "../lib/logging";
+import { sendLeadConversion } from "../services/meta-capi";
+import { parseCookieHeader } from "../lib/cookies";
 
 const router = Router();
+
+// Dedicated Dataset for the paid Sun(Sets) "Lake" campaign. Hard-coded to match
+// the browser pixel; overridable via env without a redeploy of marketing logic.
+const LAKE_PIXEL_ID = process.env.META_LAKE_PIXEL_ID?.trim() || "1049241148606250";
+
+function asString(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
 
 const trackingLimiter = createRateLimitMiddleware({
   scope: "api:tracking",
@@ -155,6 +165,46 @@ router.post("/api/track/link-click", trackingLimiter, asyncHandler(async (req, r
   });
 
   return res.status(202).json({ ok: true, requestId });
+}));
+
+// Server-side Meta CAPI Lead for the Lake campaign. The browser fires a pixel
+// Lead with the same `eventId`; Meta deduplicates the pair by event_id. The CAPI
+// access token lives server-side only and never reaches the client.
+router.post("/api/track/lead", trackingLimiter, asyncHandler(async (req, res) => {
+  const requestId = randomUUID();
+  const eventId = asString(req.body?.eventId);
+
+  if (!eventId) {
+    return res.status(400).json({
+      ok: false,
+      requestId,
+      error: { code: "VALIDATION_ERROR", message: "Missing eventId.", retryable: false },
+    });
+  }
+
+  const cookies = parseCookieHeader(req.header("cookie"));
+
+  void sendLeadConversion({
+    eventId,
+    pixelId: LAKE_PIXEL_ID,
+    email: asString(req.body?.email),
+    phone: asString(req.body?.phone),
+    eventSourceUrl: asString(req.body?.eventSourceUrl),
+    clientIp: getClientIdentifier(req),
+    userAgent: req.header("user-agent") || undefined,
+    fbp: cookies._fbp,
+    fbc: cookies._fbc,
+    fbclid: asString(req.body?.fbclid),
+    customData: {
+      content_name: "First Access Signup - Chasing Sun(Sets)",
+      content_category: "Waitlist",
+      lead_source: "sunsets_lake_first_access",
+    },
+  });
+
+  logEvent("tracking.lead_conversion", { requestId, eventId, pixelId: LAKE_PIXEL_ID });
+
+  return res.status(202).json({ ok: true, requestId, eventId });
 }));
 
 export default router;

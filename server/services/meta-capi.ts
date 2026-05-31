@@ -58,7 +58,10 @@ function deriveFbc(eventTimeMs: number, fbc?: string, fbclid?: string) {
 
 export interface LeadConversionInput {
   eventId: string;
-  email: string;
+  // Optional Dataset/Pixel override for per-campaign destinations (e.g. the
+  // Lake campaign). Falls back to the configured default when omitted.
+  pixelId?: string;
+  email?: string;
   phone?: string;
   firstName?: string;
   lastName?: string;
@@ -116,7 +119,8 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
   };
   if (config.testEventCode) body.test_event_code = config.testEventCode;
 
-  const url = `https://graph.facebook.com/${config.graphVersion}/${config.pixelId}/events`;
+  const pixelId = input.pixelId?.trim() || config.pixelId;
+  const url = `https://graph.facebook.com/${config.graphVersion}/${pixelId}/events`;
 
   try {
     const response = await fetch(url, {

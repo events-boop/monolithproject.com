@@ -329,6 +329,35 @@ export function trackFunnelPageView(payload: PageViewPayload) {
   }).catch(() => undefined);
 }
 
+// Server-side Meta CAPI Lead for the Lake campaign. `eventId` MUST match the
+// browser pixel Lead's eventID so Meta deduplicates the pair. Fire-and-forget
+// with keepalive so it survives the navigation to the outbound Laylo link.
+export function trackLeadConversion(
+  eventId: string,
+  payload?: { eventSourceUrl?: string; email?: string; phone?: string }
+) {
+  const attribution = getAttributionPayload();
+
+  void fetch("/api/track/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      eventId,
+      email: payload?.email,
+      phone: payload?.phone,
+      eventSourceUrl:
+        payload?.eventSourceUrl ||
+        attribution.pageUrl ||
+        (typeof window !== "undefined" ? window.location.href : undefined),
+      fbclid:
+        attribution.fbclid ||
+        attribution.lastFbclid ||
+        attribution.firstFbclid,
+    }),
+    keepalive: true,
+  }).catch(() => undefined);
+}
+
 export function trackLinkClick(payload: LinkClickPayload) {
   const attribution = getAttributionPayload();
   const enrichedPayload = {

@@ -23,6 +23,7 @@ const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
 const ChasingSunsets = lazy(() => import("./pages/ChasingSunsets"));
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
 const SunsetsLinkBio = lazy(() => import("./pages/SunsetsLinkBio"));
+const LakeLanding = lazy(() => import("./pages/LakeLanding"));
 const Radio = lazy(() => import("./pages/Radio"));
 const RadioEpisode = lazy(() => import("./pages/RadioEpisode"));
 const UntoldStory = lazy(() => import("./pages/UntoldStory"));
@@ -104,6 +105,7 @@ const AboutTransition = withTransition(About);
 const ChasingSunsetsTransition = withTransition(ChasingSunsets);
 const ChasingSunsetsFactsTransition = withTransition(ChasingSunsetsFacts);
 const SunsetsLinkBioTransition = withTransition(SunsetsLinkBio);
+const LakeLandingTransition = withTransition(LakeLanding);
 const RadioTransition = withTransition(Radio);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
@@ -190,6 +192,8 @@ function Router() {
       </Route>
       <Route path="/sunsets/" component={SunsetsLinkBioTransition} />
       <Route path="/sunsets" component={SunsetsLinkBioTransition} />
+      <Route path="/lake/" component={LakeLandingTransition} />
+      <Route path="/lake" component={LakeLandingTransition} />
       <Route
         path="/chasing-sunsets/:season"
         component={ArchiveGalleryPageTransition}
@@ -357,7 +361,15 @@ function MainContentWrapper() {
   const normalizedLocation = (
     location.split("?")[0].replace(/\/$/, "") || "/"
   ).toLowerCase();
-  const isStandaloneLanding = normalizedLocation === "/sunsets";
+  // On the paid sunsets.vip host, the bare root is the Lake campaign front door —
+  // render it directly (no redirect) so ads land on a real page.
+  const host =
+    typeof window !== "undefined" ? window.location.hostname : "";
+  const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
+  const landingPath =
+    isSunsetsHost && normalizedLocation === "/" ? "/lake" : normalizedLocation;
+  const isStandaloneLanding =
+    landingPath === "/sunsets" || landingPath === "/lake";
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -410,7 +422,15 @@ function MainContentWrapper() {
               "radial-gradient(1000px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh), var(--scene-glow, rgba(255,255,255,0.03)), transparent 40%)",
           }}
         />
-        {isStandaloneLanding ? <SunsetsLinkBioTransition /> : <Router />}
+        {isStandaloneLanding ? (
+          landingPath === "/lake" ? (
+            <LakeLandingTransition />
+          ) : (
+            <SunsetsLinkBioTransition />
+          )
+        ) : (
+          <Router />
+        )}
         {!isStandaloneLanding && (
           <>
             <ViewportLazy
