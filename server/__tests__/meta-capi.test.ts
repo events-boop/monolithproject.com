@@ -63,7 +63,7 @@ describe("meta capi", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url] = fetchMock.mock.calls[0];
-    expect(url).toContain("/1049241148606250/events"); // default pixel id
+    expect(url).toContain("/166134370742863/events"); // default brand pixel id
     expect(url).toContain("/v21.0/"); // default graph version
 
     const body = lastRequestBody(fetchMock);
@@ -121,6 +121,20 @@ describe("meta capi", () => {
     expect(lastRequestBody(fetchMock).data[0].user_data.fbc).toBe(
       "fb.1.999.EXISTING"
     );
+  });
+
+  it("uses an explicit pixel override for campaign CAPI events", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await sendLeadConversion({
+      eventId: "evt-lake",
+      pixelId: "1049241148606250",
+      eventSourceUrl: "https://sunsets.vip/lake",
+    });
+
+    const [url] = fetchMock.mock.calls[0];
+    expect(url).toContain("/1049241148606250/events");
   });
 
   it("omits the ip field when the identifier is the 'unknown' sentinel", async () => {

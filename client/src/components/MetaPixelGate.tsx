@@ -10,7 +10,14 @@ import {
   getCookieConsentState,
 } from "@/lib/cookieConsent";
 
-function isFirstAccessLeadAnchor(anchor: HTMLAnchorElement) {
+export function isLakeCampaignPath(pathname: string) {
+  const normalized = pathname.toLowerCase();
+  return normalized === "/lake" || normalized.startsWith("/lake/");
+}
+
+export function isFirstAccessLeadAnchor(anchor: HTMLAnchorElement) {
+  if (anchor.hasAttribute("data-campaign-lead")) return false;
+
   const href = `${anchor.getAttribute("href") || ""} ${anchor.href || ""}`.toLowerCase();
   const label = anchor.textContent?.toLowerCase() || "";
   const ariaLabel = anchor.getAttribute("aria-label")?.toLowerCase() || "";
@@ -35,6 +42,7 @@ function isFirstAccessLeadAnchor(anchor: HTMLAnchorElement) {
 export default function MetaPixelGate() {
   const [location] = useLocation();
   const [consentState, setConsentState] = useState(getCookieConsentState);
+  const lakeCampaignPath = isLakeCampaignPath(location);
 
   useEffect(() => {
     const handleConsentResolved = (event: Event) => {
@@ -59,13 +67,15 @@ export default function MetaPixelGate() {
   }, []);
 
   useEffect(() => {
-    if (consentState === "declined") return;
+    if (consentState === "declined" || lakeCampaignPath) return;
     scheduleMetaPixelInit();
     queueMetaPixelPageview();
-  }, [consentState, location]);
+  }, [consentState, lakeCampaignPath, location]);
 
   // Lead on anchor click (e.g. "Get First Access" links)
   useEffect(() => {
+    if (lakeCampaignPath) return;
+
     const handleClick = (event: MouseEvent) => {
       if (consentState === 'declined') return;
 
@@ -85,10 +95,12 @@ export default function MetaPixelGate() {
     return () => {
       document.removeEventListener('click', handleClick, { capture: true });
     };
-  }, [consentState]);
+  }, [consentState, lakeCampaignPath]);
 
   // Lead on Lake List form submit (Register for First Access button)
   useEffect(() => {
+    if (lakeCampaignPath) return;
+
     const handleFormSubmit = (event: SubmitEvent) => {
       if (consentState === 'declined') return;
       const form = event.target;
@@ -115,7 +127,7 @@ export default function MetaPixelGate() {
     return () => {
       document.removeEventListener('submit', handleFormSubmit, { capture: true });
     };
-  }, [consentState]);
+  }, [consentState, lakeCampaignPath]);
 
   return null;
 }

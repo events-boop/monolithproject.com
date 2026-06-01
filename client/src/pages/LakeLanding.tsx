@@ -362,6 +362,7 @@ export default function LakeLanding() {
               </div>
               <a
                 href={firstAccessHref}
+                data-campaign-lead="lake"
                 onClick={handleFirstAccess}
                 className="flex h-12 w-full items-center justify-center gap-2 bg-[#c9e8bd] text-sm font-black text-black transition hover:bg-[#d8f0ce]"
               >
