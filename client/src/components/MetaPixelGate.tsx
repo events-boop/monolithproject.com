@@ -64,25 +64,56 @@ export default function MetaPixelGate() {
     queueMetaPixelPageview();
   }, [consentState, location]);
 
+  // Lead on anchor click (e.g. "Get First Access" links)
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
-      if (consentState === "declined") return;
+      if (consentState === 'declined') return;
 
       const target = event.target;
       if (!(target instanceof Element)) return;
 
-      const anchor = target.closest<HTMLAnchorElement>("a[href]");
+      const anchor = target.closest<HTMLAnchorElement>('a[href]');
       if (!anchor || !isFirstAccessLeadAnchor(anchor)) return;
 
       trackMetaPixelLead({
         event_source_url: window.location.href,
-        source: "first_access_cta",
+        source: 'first_access_cta',
       });
     };
 
-    document.addEventListener("click", handleClick, { capture: true });
+    document.addEventListener('click', handleClick, { capture: true });
     return () => {
-      document.removeEventListener("click", handleClick, { capture: true });
+      document.removeEventListener('click', handleClick, { capture: true });
+    };
+  }, [consentState]);
+
+  // Lead on Lake List form submit (Register for First Access button)
+  useEffect(() => {
+    const handleFormSubmit = (event: SubmitEvent) => {
+      if (consentState === 'declined') return;
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement)) return;
+      // Only fire for the lake-list / first-access form — identified by
+      // its submit button text or the form's proximity to #lake-list.
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const btnText = submitBtn?.textContent?.toLowerCase() || '';
+      const isLakeListForm =
+        btnText.includes('first access') ||
+        btnText.includes('register') ||
+        btnText.includes('lake list') ||
+        form.closest('#lake-list') !== null ||
+        form.closest('[data-form="lake-list"]') !== null;
+      if (!isLakeListForm) return;
+      trackMetaPixelLead({
+        event_source_url: window.location.href,
+        source: 'lake_list_form_submit',
+        content_name: 'sunsets_july4_firstaccess',
+      });
+    };
+
+    document.addEventListener('submit', handleFormSubmit, { capture: true });
+    return () => {
+      document.removeEventListener('submit', handleFormSubmit, { capture: true });
     };
   }, [consentState]);
 
