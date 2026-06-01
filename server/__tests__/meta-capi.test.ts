@@ -63,7 +63,7 @@ describe("meta capi", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url] = fetchMock.mock.calls[0];
-    expect(url).toContain("/166134370742863/events"); // default pixel id
+    expect(url).toContain("/1049241148606250/events"); // default pixel id
     expect(url).toContain("/v21.0/"); // default graph version
 
     const body = lastRequestBody(fetchMock);

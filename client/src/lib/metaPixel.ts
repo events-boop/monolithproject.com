@@ -10,7 +10,7 @@ declare global {
 
 // Keep this default in code so marketing doesn't depend on env wiring.
 // Override with VITE_META_PIXEL_ID if needed.
-const DEFAULT_PIXEL_ID = "166134370742863";
+const DEFAULT_PIXEL_ID = "1049241148606250";
 const PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID || DEFAULT_PIXEL_ID;
 
 let initScheduled = false;

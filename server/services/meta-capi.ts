@@ -6,7 +6,7 @@ import { logEvent } from "../lib/logging";
 // Meta. No-ops unless META_CAPI_ACCESS_TOKEN is configured, and never throws
 // into the request path.
 
-const DEFAULT_PIXEL_ID = "166134370742863";
+const DEFAULT_PIXEL_ID = "1049241148606250";
 
 function getConfig() {
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN?.trim();
