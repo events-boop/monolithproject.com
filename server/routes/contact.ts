@@ -55,6 +55,12 @@ router.post("/api/contact", contactLimiter, asyncHandler(async (req, res) => {
   const db = getDatabase();
   const dbRecordId = randomUUID();
   const receivedAt = new Date().toISOString();
+  const submissionMetadata = {
+    source: contact.source || null,
+    formType: contact.formType || null,
+    funnelId: contact.funnelId || null,
+    interestTags: contact.interestTags || [],
+  };
   let dbPersisted = false;
 
   // 1. Persist to DB first — this is the audit trail
@@ -67,7 +73,12 @@ router.post("/api/contact", contactLimiter, asyncHandler(async (req, res) => {
         subject: contact.subject,
         message: contact.message,
         webhookStatus: "pending",
-        metadata: { requestId, receivedAt, deliveryState: "pending" },
+        metadata: {
+          requestId,
+          receivedAt,
+          deliveryState: "pending",
+          ...submissionMetadata,
+        },
       });
       dbPersisted = true;
     } catch (err) {
@@ -140,6 +151,7 @@ router.post("/api/contact", contactLimiter, asyncHandler(async (req, res) => {
           webhookConfigured: Boolean(webhook),
           lastWebhookAttemptAt,
           lastWebhookError: webhookError,
+          ...submissionMetadata,
         },
       })
       .where(eq(contactSubmissions.id, dbRecordId))
@@ -150,6 +162,9 @@ router.post("/api/contact", contactLimiter, asyncHandler(async (req, res) => {
     requestId,
     subject: contact.subject,
     hash: emailHash,
+    source: contact.source,
+    formType: contact.formType,
+    interestTags: contact.interestTags,
     deliveryState: outcome.deliveryState,
     webhookDelivered: webhookOk,
     dbPersisted,

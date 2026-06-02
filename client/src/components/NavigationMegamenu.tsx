@@ -42,6 +42,7 @@ export default function NavigationMegamenu({
 }: MegamenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const menuId = `megamenu-${brand}`;
 
   const openMenu = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -158,6 +159,7 @@ export default function NavigationMegamenu({
         }}
         aria-expanded={isOpen}
         aria-haspopup="menu"
+        aria-controls={menuId}
         aria-label={typeof label === "string" ? label : undefined}
         className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
           isLight
@@ -175,6 +177,7 @@ export default function NavigationMegamenu({
 
       {isOpen && (
         <div
+          id={menuId}
           className={`absolute left-1/2 top-full z-30 mt-3 w-[min(42rem,calc(100vw-3rem))] -translate-x-1/2 rounded-[2rem] border p-2 shadow-[0_22px_48px_rgba(0,0,0,0.38)] backdrop-blur-xl ${
             isLight
               ? "bg-white/97 border-black/6"
@@ -307,6 +310,7 @@ export default function NavigationMegamenu({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
+                      role="menuitem"
                       className={`${megamenu.feature.icon === "ticket" ? "btn-pill-monolith" : "btn-pill-outline"} btn-pill-compact`}
                     >
                       <FeatureIcon className="w-4 h-4" />

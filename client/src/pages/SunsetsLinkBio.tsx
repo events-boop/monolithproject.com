@@ -1,21 +1,22 @@
 import { type FormEvent, useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   AlertCircle,
   ArrowUpRight,
   Calendar,
   Check,
   ChevronRight,
-  Instagram,
   LockKeyhole,
   Mail,
   MapPin,
+  Music,
   Phone,
   Play,
   Radio,
+  Send,
   Ticket,
-  Users,
   Waves,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import SEO from "@/components/SEO";
@@ -23,6 +24,7 @@ import HoneypotField from "@/components/HoneypotField";
 import { Button } from "@/components/ui/button";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import {
+  submitContactForm,
   submitNewsletterLead,
   trackFunnelPageView,
   trackLinkClick,
@@ -41,15 +43,6 @@ type Chapter = {
   href?: string;
 };
 
-type ActionLink = {
-  label: string;
-  buttonName: string;
-  href: string;
-  icon: LucideIcon;
-  interestType: string;
-  channel: string;
-};
-
 type TrackableLink = {
   buttonName: string;
   href: string;
@@ -64,11 +57,16 @@ const PAGE_SOURCE = "sunsets_wrapper";
 const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 const JULY_4_EVENT_DATE = "2026-07-04";
 const TICKET_HREF = "/go/tickets/css-jul04";
-const RECAP_HREF = "/go/media/sunsets-recap";
-const RADIO_HREF = "/go/media/sunsets-soundcloud";
-const INSTAGRAM_HREF = "/go/social/instagram-sunsets";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
+const SUNSETS_COVER_IMAGE = "/images/chasing-sunsets-firstaccess-flyer.png";
+const AUTOGRAF_YOUTUBE_EMBED =
+  "https://www.youtube.com/embed/9R6XH7JZlJI?start=5506&list=RD9R6XH7JZlJI&rel=0&modestbranding=1";
+const SOMMERS_SOUNDCLOUD_URL =
+  "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
+const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+  SOMMERS_SOUNDCLOUD_URL
+)}&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
 
 function triggerHaptic(pattern: number | number[] = 10) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
@@ -140,6 +138,14 @@ function focusLakeList() {
   if (typeof document === "undefined") return;
   const target = document.getElementById("lake-list");
   target?.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function scrollToSection(id: string) {
+  if (typeof document === "undefined") return;
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 }
 
 function LakeListForm() {
@@ -259,7 +265,10 @@ function LakeListForm() {
         Project / Chasing Sun(Sets). Message rates may apply.
       </p>
       {submitError ? (
-        <div className="flex items-start gap-2 border border-red-400/30 bg-red-500/10 p-3 text-xs font-semibold leading-relaxed text-red-100">
+        <div
+          role="alert"
+          className="flex items-start gap-2 border border-red-400/30 bg-red-500/10 p-3 text-xs font-semibold leading-relaxed text-red-100"
+        >
           <AlertCircle className="mt-0.5 size-4 shrink-0" />
           {submitError}
         </div>
@@ -276,7 +285,412 @@ function LakeListForm() {
   );
 }
 
+function FeaturedDropSignup() {
+  const [email, setEmail] = useState("");
+  const [honeypotValue, setHoneypotValue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!normalizedEmail) return;
+
+    setIsSubmitting(true);
+    setSubmitError("");
+    triggerHaptic(12);
+
+    try {
+      await submitNewsletterLead(
+        {
+          email: normalizedEmail,
+          consent: true,
+          source: "sunsets_radio_feature_drops",
+          formType: "featured_drop_signup",
+          funnelId: "chasing-sunsets-radio",
+          offerId: "featured-set-drops",
+          eventInterest: JULY_4_EVENT_SLUG,
+          eventSeries: "chasing-sunsets",
+          eventTitle: "Sun(Sets) Radio Featured Drops",
+          interestTags: [
+            "chasing_sunsets",
+            "sunsets_radio_feature_drops",
+            "featured_drop_signup",
+          ],
+          [honeypotFieldName]: honeypotValue || undefined,
+        },
+        buildLeadIdempotencyKey(
+          "sunsets-radio-feature-drops",
+          normalizedEmail,
+          "featured-drops"
+        )
+      );
+
+      trackSunsetsClick({
+        buttonName: "Sign up for featured set drops",
+        href: "#featured-drop",
+        eventSlug: JULY_4_EVENT_SLUG,
+        eventDate: JULY_4_EVENT_DATE,
+        interestType: "sunsets_radio_feature_drops",
+        channel: "CRM",
+      });
+
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to register right now. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-3 text-xs font-semibold leading-relaxed text-[#d8f0ce]">
+        <div className="mb-1 flex items-center gap-2 text-white">
+          <Check className="size-4 text-[#c9e8bd]" />
+          You are on the featured drop list.
+        </div>
+        New selections land here first.
+      </div>
+    );
+  }
+
+  return (
+    <form className="space-y-2" onSubmit={handleSubmit}>
+      <HoneypotField
+        value={honeypotValue}
+        onChange={event => setHoneypotValue(event.currentTarget.value)}
+      />
+      <label className="flex items-center gap-2 bg-white/[0.10] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#dfc27a]/45">
+        <Mail className="size-4 text-[#dfc27a]" />
+        <span className="sr-only">Email for featured set drops</span>
+        <input
+          className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
+          placeholder="Email for featured set drops"
+          type="email"
+          autoComplete="email"
+          value={email}
+          onChange={event => setEmail(event.currentTarget.value)}
+          required
+        />
+      </label>
+      {submitError ? (
+        <div
+          role="alert"
+          className="flex items-start gap-2 border border-red-400/30 bg-red-500/10 p-3 text-xs font-semibold leading-relaxed text-red-100"
+        >
+          <AlertCircle className="mt-0.5 size-4 shrink-0" />
+          {submitError}
+        </div>
+      ) : null}
+      <Button
+        className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] disabled:opacity-60"
+        disabled={isSubmitting}
+        type="submit"
+      >
+        <Radio className="size-4" />
+        {isSubmitting ? "Signing up..." : "Sign up for featured set drops"}
+      </Button>
+    </form>
+  );
+}
+
+function DJSubmissionModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const [artistName, setArtistName] = useState("");
+  const [email, setEmail] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [soundCloudLink, setSoundCloudLink] = useState("");
+  const [trackTitle, setTrackTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [isUnreleased, setIsUnreleased] = useState("");
+  const [permission, setPermission] = useState("");
+  const [honeypotValue, setHoneypotValue] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  if (!isOpen) return null;
+
+  const resetAndClose = () => {
+    setSubmitError("");
+    onClose();
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!artistName.trim() || !email.trim() || !soundCloudLink.trim()) {
+      setSubmitError("Artist name, email, and SoundCloud link are required.");
+      return;
+    }
+    if (permission !== "yes") {
+      setSubmitError("Permission to feature on Sun(Sets) Radio is required.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError("");
+    triggerHaptic(12);
+
+    try {
+      await submitContactForm({
+        name: artistName.trim(),
+        email: email.trim().toLowerCase(),
+        subject: `Sun(Sets) Radio Submission - ${artistName.trim()}`,
+        source: "sunsets_radio_submission",
+        formType: "sunsets_radio_submission",
+        funnelId: "chasing-sunsets-radio",
+        interestTags: ["sunsets_radio_submission", "chasing_sunsets"],
+        [honeypotFieldName]: honeypotValue || undefined,
+        message: `
+TAG: sunsets_radio_submission
+
+Artist / DJ name: ${artistName.trim()}
+Email: ${email.trim().toLowerCase()}
+Instagram: ${instagram.trim() || "Not provided"}
+SoundCloud link: ${soundCloudLink.trim()}
+Track title: ${trackTitle.trim() || "Not provided"}
+Genre: ${genre.trim() || "Not provided"}
+Unreleased: ${isUnreleased || "Not specified"}
+Permission to feature on Sun(Sets) Radio: ${permission}
+        `.trim(),
+      });
+
+      trackSunsetsClick({
+        buttonName: "DJs submit your track",
+        href: "#dj-submit",
+        eventSlug: JULY_4_EVENT_SLUG,
+        eventDate: JULY_4_EVENT_DATE,
+        interestType: "sunsets_radio_submission",
+        channel: "Contact",
+      });
+
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit right now. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[10000] flex items-end justify-center bg-black/75 px-4 py-4 backdrop-blur-sm sm:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sunsets-dj-submit-title"
+    >
+      <div className="max-h-[92svh] w-full max-w-[460px] overflow-y-auto border border-white/15 bg-[#10140f] shadow-2xl shadow-black/70">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#10140f]/95 p-4 backdrop-blur">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+              Sun(Sets) Radio
+            </p>
+            <h2
+              id="sunsets-dj-submit-title"
+              className="mt-1 text-lg font-black text-white"
+            >
+              DJs - submit your track
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={resetAndClose}
+            className="flex h-10 w-10 items-center justify-center border border-white/10 text-stone-300 transition hover:bg-white/10 hover:text-white"
+            aria-label="Close submission form"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+
+        <div className="p-4">
+          {isSubmitted ? (
+            <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-5 text-sm font-semibold leading-relaxed text-[#d8f0ce]">
+              <div className="mb-2 flex items-center gap-2 text-white">
+                <Check className="size-4 text-[#c9e8bd]" />
+                Submission received.
+              </div>
+              Tagged as sunsets_radio_submission.
+              <Button
+                className="mt-4 h-11 w-full bg-white text-black hover:bg-stone-200"
+                type="button"
+                onClick={resetAndClose}
+              >
+                Back to Sun(Sets)
+              </Button>
+            </div>
+          ) : (
+            <form className="space-y-3" onSubmit={handleSubmit}>
+              <HoneypotField
+                value={honeypotValue}
+                onChange={event => setHoneypotValue(event.currentTarget.value)}
+              />
+              <FormInput
+                label="Artist / DJ name"
+                value={artistName}
+                onChange={setArtistName}
+                required
+              />
+              <FormInput
+                label="Email"
+                type="email"
+                value={email}
+                onChange={setEmail}
+                required
+              />
+              <FormInput
+                label="Instagram"
+                value={instagram}
+                onChange={setInstagram}
+                placeholder="@handle"
+              />
+              <FormInput
+                label="SoundCloud link"
+                type="url"
+                value={soundCloudLink}
+                onChange={setSoundCloudLink}
+                placeholder="https://soundcloud.com/..."
+                required
+              />
+              <FormInput
+                label="Track title"
+                value={trackTitle}
+                onChange={setTrackTitle}
+              />
+              <FormInput label="Genre" value={genre} onChange={setGenre} />
+              <SelectField
+                label="Is this unreleased?"
+                value={isUnreleased}
+                onChange={setIsUnreleased}
+                options={[
+                  ["", "Select one"],
+                  ["yes", "Yes"],
+                  ["no", "No"],
+                ]}
+              />
+              <SelectField
+                label="Permission to feature on Sun(Sets) Radio"
+                value={permission}
+                onChange={setPermission}
+                required
+                options={[
+                  ["", "Select one"],
+                  ["yes", "Yes"],
+                  ["no", "No"],
+                ]}
+              />
+
+              {submitError ? (
+                <div
+                  role="alert"
+                  className="flex items-start gap-2 border border-red-400/30 bg-red-500/10 p-3 text-xs font-semibold leading-relaxed text-red-100"
+                >
+                  <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                  {submitError}
+                </div>
+              ) : null}
+
+              <Button
+                className="h-12 w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d8f0ce] disabled:opacity-60"
+                disabled={isSubmitting}
+                type="submit"
+              >
+                <Send className="size-4" />
+                {isSubmitting ? "Submitting..." : "Submit track"}
+              </Button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FormInput({
+  label,
+  value,
+  onChange,
+  type = "text",
+  placeholder,
+  required,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-stone-400">
+        {label}
+      </span>
+      <input
+        className="w-full border border-white/10 bg-white/[0.06] px-3 py-3 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-[#dfc27a]/50"
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        required={required}
+        onChange={event => onChange(event.currentTarget.value)}
+      />
+    </label>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  onChange,
+  options,
+  required,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: [string, string][];
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-stone-400">
+        {label}
+      </span>
+      <select
+        className="w-full border border-white/10 bg-[#151914] px-3 py-3 text-sm text-white outline-none transition focus:border-[#dfc27a]/50"
+        value={value}
+        required={required}
+        onChange={event => onChange(event.currentTarget.value)}
+      >
+        {options.map(([optionValue, optionLabel]) => (
+          <option key={optionValue || optionLabel} value={optionValue}>
+            {optionLabel}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 export default function SunsetsLinkBio() {
+  const [isDjModalOpen, setIsDjModalOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     trackFunnelPageView({
@@ -316,44 +730,6 @@ export default function SunsetsLinkBio() {
     []
   );
 
-  const actionLinks = useMemo<ActionLink[]>(
-    () => [
-      {
-        label: "Recap",
-        buttonName: "Watch Recap",
-        href: RECAP_HREF,
-        icon: Play,
-        interestType: "recap_click",
-        channel: "YouTube",
-      },
-      {
-        label: "Radio",
-        buttonName: "Sun(Sets) Radio",
-        href: RADIO_HREF,
-        icon: Radio,
-        interestType: "radio_click",
-        channel: "SoundCloud",
-      },
-      {
-        label: "Follow",
-        buttonName: "Follow Sun(Sets)",
-        href: INSTAGRAM_HREF,
-        icon: Instagram,
-        interestType: "instagram_click",
-        channel: "Instagram",
-      },
-      {
-        label: "VIP",
-        buttonName: "VIP Inquiry",
-        href: "/vip",
-        icon: Users,
-        interestType: "vip_inquiry_click",
-        channel: "Monolith",
-      },
-    ],
-    []
-  );
-
   const ticketHref = appendEventAttribution(TICKET_HREF, JULY_4_EVENT_SLUG);
 
   return (
@@ -376,7 +752,7 @@ export default function SunsetsLinkBio() {
 
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-5 sm:py-8">
         <motion.section
-          initial={{ opacity: 0, y: 18 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
           className="overflow-hidden border border-[#d8e8c8]/25 bg-[#10140f]/86 shadow-2xl shadow-black/60 backdrop-blur"
@@ -396,7 +772,7 @@ export default function SunsetsLinkBio() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.7 }}
               className="absolute bottom-5 left-5 right-5"
@@ -416,38 +792,18 @@ export default function SunsetsLinkBio() {
             </motion.div>
           </div>
 
-          <div className="space-y-4 p-5 pt-6">
+          <div className="space-y-5 p-5 pt-6">
             <div className="flex flex-wrap gap-2">
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
-                July 4
+                July 4th, 2026
               </span>
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
-                Castaways
+                Castaways / Chicago Lakefront
               </span>
               <span className="border border-[#c9e8bd]/25 bg-[#c9e8bd]/10 px-3 py-1 text-xs font-semibold text-[#c9e8bd]">
-                First Access
+                Lake List
               </span>
             </div>
-
-            <a
-              href={ticketHref}
-              onClick={() => {
-                triggerHaptic(16);
-                trackSunsetsClick({
-                  buttonName: "Hero Get Tickets",
-                  href: ticketHref,
-                  eventSlug: JULY_4_EVENT_SLUG,
-                  eventDate: JULY_4_EVENT_DATE,
-                  interestType: "ticket_click",
-                  channel: "Posh",
-                });
-              }}
-              className="flex min-h-14 items-center justify-center gap-2 bg-[#dfc27a] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#efd48d]"
-            >
-              <Ticket className="size-4" />
-              July 4 Ticket Access
-              <ArrowUpRight className="size-4" />
-            </a>
 
             <section
               id="lake-list"
@@ -470,14 +826,110 @@ export default function SunsetsLinkBio() {
               <LakeListForm />
             </section>
 
+            <section className="grid gap-3 pt-1">
+              <Button
+                type="button"
+                className="h-12 w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d8f0ce]"
+                onClick={() => {
+                  triggerHaptic(8);
+                  focusLakeList();
+                  trackSunsetsClick({
+                    buttonName: "Join the Lake List",
+                    href: "#lake-list",
+                    eventSlug: JULY_4_EVENT_SLUG,
+                    eventDate: JULY_4_EVENT_DATE,
+                    interestType: "lake_list_focus",
+                    channel: "CRM",
+                  });
+                }}
+              >
+                <LockKeyhole className="size-4" />
+                Join the Lake List
+              </Button>
+              <Button
+                asChild
+                className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d]"
+              >
+                <a
+                  href={ticketHref}
+                  onClick={() => {
+                    triggerHaptic(16);
+                    trackSunsetsClick({
+                      buttonName: "Get Tickets / First Access",
+                      href: ticketHref,
+                      eventSlug: JULY_4_EVENT_SLUG,
+                      eventDate: JULY_4_EVENT_DATE,
+                      interestType: "ticket_click",
+                      channel: "Posh",
+                    });
+                  }}
+                >
+                  <Ticket className="size-4" />
+                  Get Tickets / First Access
+                  <ArrowUpRight className="size-4" />
+                </a>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-12 w-full border-white/10 bg-white/[.04] text-xs font-black uppercase tracking-[0.12em] text-stone-100 hover:bg-white/[.08]"
+                onClick={() => {
+                  triggerHaptic(8);
+                  scrollToSection("last-chapter");
+                  trackSunsetsClick({
+                    buttonName: "Watch 2025 Recap",
+                    href: "#last-chapter",
+                    eventSlug: JULY_4_EVENT_SLUG,
+                    eventDate: JULY_4_EVENT_DATE,
+                    interestType: "recap_embed_focus",
+                    channel: "YouTube",
+                  });
+                }}
+              >
+                <Play className="size-4" />
+                Watch 2025 Recap
+              </Button>
+            </section>
+
+            <section
+              id="last-chapter"
+              className="space-y-3 border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4"
+            >
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                  Recap
+                </p>
+                <h2 className="mt-1 text-2xl font-black leading-none tracking-normal text-white">
+                  WATCH THE LAST CHAPTER
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-stone-300">
+                  Autograf returns to the lake for Sun(Sets) 2026. Revisit the
+                  energy from the last chapter.
+                </p>
+              </div>
+              <div className="aspect-video overflow-hidden border border-white/10 bg-black">
+                <iframe
+                  className="h-full w-full"
+                  src={AUTOGRAF_YOUTUBE_EMBED}
+                  title="Autograf Sun(Sets) July 4 recap"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </section>
+
             <section className="space-y-3 pt-1">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-300">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                  Event / artist teaser
+                </p>
+                <h3 className="mt-1 text-xl font-black tracking-normal text-white">
                   Upcoming Chapters
                 </h3>
-                <span className="text-right text-[11px] font-semibold text-[#dfc27a]">
-                  Prices move by release
-                </span>
+                <p className="mt-2 text-xs leading-relaxed text-stone-300">
+                  SUN(SETS) returns to Castaways with July 4 first access,
+                  private summer drops, and radio-led artist signals.
+                </p>
               </div>
 
               {chapters.map((chapter, index) => {
@@ -489,7 +941,7 @@ export default function SunsetsLinkBio() {
                 return (
                   <motion.div
                     key={chapter.title}
-                    initial={{ opacity: 0, y: 14 }}
+                    initial={reduceMotion ? false : { opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
                       delay: 0.1 * index + 0.15,
@@ -545,40 +997,6 @@ export default function SunsetsLinkBio() {
               })}
             </section>
 
-            <section className="grid grid-cols-2 gap-3 pt-2">
-              {actionLinks.map(item => {
-                const Icon = item.icon;
-                const href = appendEventAttribution(item.href, JULY_4_EVENT_SLUG);
-
-                return (
-                  <Button
-                    key={item.label}
-                    asChild
-                    variant="outline"
-                    className="h-12 border-white/10 bg-white/[.04] text-stone-100 hover:bg-white/[.08]"
-                  >
-                    <a
-                      href={href}
-                      onClick={() => {
-                        triggerHaptic(8);
-                        trackSunsetsClick({
-                          buttonName: item.buttonName,
-                          href,
-                          eventSlug: JULY_4_EVENT_SLUG,
-                          eventDate: JULY_4_EVENT_DATE,
-                          interestType: item.interestType,
-                          channel: item.channel,
-                        });
-                      }}
-                    >
-                      <Icon className="size-4" />
-                      {item.label}
-                    </a>
-                  </Button>
-                );
-              })}
-            </section>
-
             <section className="border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
@@ -613,6 +1031,60 @@ export default function SunsetsLinkBio() {
               </div>
             </section>
 
+            <section
+              id="featured-drop"
+              className="space-y-4 border border-white/10 bg-black/24 p-4"
+            >
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                  SUN(SETS) RADIO — FEATURED DROP
+                </p>
+                <h2 className="mt-1 text-xl font-black tracking-normal text-white">
+                  Sommers UK
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-stone-300">
+                  Sommers UK featured SoundCloud selection.
+                </p>
+              </div>
+              <div className="overflow-hidden border border-white/10 bg-black">
+                <iframe
+                  title="Sommers UK featured SoundCloud selection"
+                  className="h-[300px] w-full"
+                  scrolling="no"
+                  frameBorder="no"
+                  allow="autoplay"
+                  src={SOMMERS_SOUNDCLOUD_EMBED}
+                />
+              </div>
+              <img
+                src={SUNSETS_COVER_IMAGE}
+                alt="Sun(Sets) featured drop cover artwork"
+                className="w-full border border-white/10 object-cover"
+                loading="lazy"
+              />
+              <FeaturedDropSignup />
+              <Button
+                type="button"
+                variant="outline"
+                className="h-12 w-full border-white/10 bg-white/[.04] text-xs font-black uppercase tracking-[0.12em] text-stone-100 hover:bg-white/[.08]"
+                onClick={() => {
+                  triggerHaptic(8);
+                  setIsDjModalOpen(true);
+                  trackSunsetsClick({
+                    buttonName: "DJs - submit your track",
+                    href: "#dj-submit",
+                    eventSlug: JULY_4_EVENT_SLUG,
+                    eventDate: JULY_4_EVENT_DATE,
+                    interestType: "sunsets_radio_submission_open",
+                    channel: "Contact",
+                  });
+                }}
+              >
+                <Music className="size-4" />
+                DJs — submit your track
+              </Button>
+            </section>
+
             <footer className="pb-1 pt-2 text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
                 Togetherness is the frequency.
@@ -623,6 +1095,10 @@ export default function SunsetsLinkBio() {
             </footer>
           </div>
         </motion.section>
+        <DJSubmissionModal
+          isOpen={isDjModalOpen}
+          onClose={() => setIsDjModalOpen(false)}
+        />
       </main>
     </div>
   );

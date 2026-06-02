@@ -26,11 +26,6 @@ export function createAdminRouteGuard({ scope }: AdminRouteGuardOptions): Reques
     const configuredSecret = process.env.OPS_ADMIN_SECRET?.trim();
 
     if (!configuredSecret) {
-      if (process.env.NODE_ENV !== "production") {
-        next();
-        return;
-      }
-
       const requestId = randomUUID();
       logEvent("admin.guard_unconfigured", {
         requestId,

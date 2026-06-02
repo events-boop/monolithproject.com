@@ -112,3 +112,15 @@ test-results/
 
 # Local Netlify folder
 .netlify
+
+# Lighthouse CI artifacts (regenerated each run)
+.lighthouseci/
+
+# Local debug/scratch scripts and artifacts
+fix_*.py
+fix_*.cjs
+check_error.*
+copy_image.py
+debug_evidence.*
+src.zip
+test-image.ts

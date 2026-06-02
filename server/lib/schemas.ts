@@ -123,6 +123,10 @@ export const contactSchema = z.object({
   email: z.string().trim().email().max(320),
   subject: z.string().trim().min(2).max(200),
   message: z.string().trim().min(2).max(5000),
+  source: shortText(120),
+  formType: shortText(80),
+  funnelId: shortText(120),
+  interestTags: shortArray(12, 80),
   ...honeypotFields,
 });
 

@@ -153,6 +153,10 @@ export type ContactPayload = HoneypotPayload & {
   email: string;
   subject: string;
   message: string;
+  source?: string;
+  formType?: string;
+  funnelId?: string;
+  interestTags?: string[];
 };
 
 interface ApiError {

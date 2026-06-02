@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import {
-  queueMetaPixelPageview,
-  scheduleMetaPixelInit,
-  trackMetaPixelLead,
-} from "@/lib/metaPixel";
+import { trackMetaPixelLead } from "@/lib/metaPixel";
 import {
   COOKIE_CONSENT_RESOLVED_EVENT,
   getCookieConsentState,
@@ -66,11 +62,8 @@ export default function MetaPixelGate() {
     };
   }, []);
 
-  useEffect(() => {
-    if (consentState === "declined" || lakeCampaignPath) return;
-    scheduleMetaPixelInit();
-    queueMetaPixelPageview();
-  }, [consentState, lakeCampaignPath, location]);
+  // Pixel init + PageView are owned solely by Analytics.tsx to avoid double-firing.
+  // This component only handles Lead conversion events.
 
   // Lead on anchor click (e.g. "Get First Access" links)
   useEffect(() => {

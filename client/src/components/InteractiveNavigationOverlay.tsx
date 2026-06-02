@@ -311,7 +311,7 @@ export default function InteractiveNavigationOverlay({
       >
         <ResponsiveImage
           src={view.image}
-          alt="Atmospheric Monolith Project branding visual"
+          alt={view.previewTitle}
           sizes="(min-width: 768px) 50vw, 100vw"
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-68 transition-transform duration-700 ease-out"

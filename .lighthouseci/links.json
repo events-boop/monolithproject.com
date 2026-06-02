@@ -1,8 +1,0 @@
-{
-  "http://localhost:3001/": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549200614-81766.report.html",
-  "http://localhost:3001/tickets": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549201282-12616.report.html",
-  "http://localhost:3001/radio": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549201694-99612.report.html",
-  "http://localhost:3001/booking": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549202332-70774.report.html",
-  "http://localhost:3001/partners": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549202743-77172.report.html",
-  "http://localhost:3001/archive": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1776549203089-26278.report.html"
-}
