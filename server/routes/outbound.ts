@@ -37,6 +37,10 @@ function outboundClickMeta(group: string, key: string) {
     return { buttonName: "Join First Access", channel: "Laylo", interestType: "first_access_click" };
   }
 
+  if (normalizedGroup === "waitlist" && normalizedKey === "sunsets-manychat") {
+    return { buttonName: "ManyChat First Access", channel: "ManyChat", interestType: "manychat_first_access_click" };
+  }
+
   if (normalizedGroup === "tickets") {
     return { buttonName: "Tickets", channel: "Posh", interestType: "ticket_click" };
   }

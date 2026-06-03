@@ -6,7 +6,7 @@ import { asyncHandler } from "../lib/async";
 import { scrubEmail } from "../lib/security";
 import { readProvider } from "../lib/env";
 import { getFromCache, setInCache, hasInFlight, setInFlight, resolveInFlight, deleteInFlight } from "../services/idempotency";
-import { subscribeLead } from "../providers/lead-providers";
+import { shouldSyncLeadToLaylo, subscribeLaylo, subscribeLead } from "../providers/lead-providers";
 import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { eq } from "drizzle-orm";
@@ -109,6 +109,16 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
       }
 
       await subscribeLead(provider, parsed.data);
+
+      if (provider !== "laylo" && shouldSyncLeadToLaylo(parsed.data)) {
+        await subscribeLaylo(parsed.data).catch((err) => {
+          logEvent("lead.laylo_sync_failed", {
+            requestId,
+            source: parsed.data.source || "website",
+            message: err instanceof Error ? err.message : "Laylo sync failed",
+          });
+        });
+      }
 
       const welcomeEmail = await sendWelcomeEmail(email, parsed.data.firstName).catch(err => {
         console.error(`[${requestId}] Failed to send welcome email:`, err);

@@ -16,6 +16,18 @@ export function getBrevoBypassReason() {
   return null;
 }
 
+export function getLayloBypassReason() {
+  if (process.env.LAYLO_BYPASS?.trim().toLowerCase() === "true") {
+    return "LAYLO_BYPASS=true";
+  }
+
+  if (!process.env.LAYLO_API_TOKEN?.trim() && !process.env.LAYLO_API_KEY?.trim()) {
+    return "LAYLO_API_TOKEN is not set";
+  }
+
+  return null;
+}
+
 export function readProvider(): LeadProvider {
   const provider = (process.env.LEAD_PROVIDER || "disabled").toLowerCase();
   if (
@@ -25,11 +37,12 @@ export function readProvider(): LeadProvider {
     provider === "convertkit" ||
     provider === "hubspot" ||
     provider === "brevo" ||
-    provider === "emailoctopus"
+    provider === "emailoctopus" ||
+    provider === "laylo"
   ) {
     return provider;
   }
-  throw new Error("Unsupported LEAD_PROVIDER. Use disabled, mailchimp, beehiiv, convertkit, hubspot, brevo, or emailoctopus.");
+  throw new Error("Unsupported LEAD_PROVIDER. Use disabled, mailchimp, beehiiv, convertkit, hubspot, brevo, emailoctopus, or laylo.");
 }
 
 function logValidationFailure(message: string, { fatal }: Required<ValidateEnvironmentOptions>) {
@@ -83,6 +96,16 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       }
     }
 
+    if (provider === "laylo") {
+      const bypassReason = getLayloBypassReason();
+      if (bypassReason) {
+        console.warn(
+          `⚠️  Laylo lead provider is bypassed (${bypassReason}). Lead submissions will skip Laylo but still complete locally.`,
+        );
+        return;
+      }
+    }
+
     const requiredEnvVars: Record<string, string[]> = {
       disabled: [],
       mailchimp: ["MAILCHIMP_API_KEY", "MAILCHIMP_LIST_ID"],
@@ -91,6 +114,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       hubspot: ["HUBSPOT_PORTAL_ID", "HUBSPOT_FORM_ID"],
       brevo: ["BREVO_API_KEY"],
       emailoctopus: ["EMAILOCTOPUS_API_KEY", "EMAILOCTOPUS_LIST_ID"],
+      laylo: [],
     };
 
     const vars = requiredEnvVars[provider];

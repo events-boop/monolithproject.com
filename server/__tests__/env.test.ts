@@ -93,6 +93,33 @@ describe("validateEnvironment", () => {
     );
   });
 
+  it("bypasses Laylo in production when the API token is missing", () => {
+    process.env.NODE_ENV = "production";
+    process.env.LEAD_PROVIDER = "laylo";
+    delete process.env.LAYLO_API_TOKEN;
+    delete process.env.LAYLO_API_KEY;
+    delete process.env.LAYLO_BYPASS;
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(readProvider()).toBe("laylo");
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Laylo lead provider is bypassed"),
+    );
+  });
+
+  it("allows Laylo in production when the API token is present and bypass is off", () => {
+    process.env.NODE_ENV = "production";
+    process.env.LEAD_PROVIDER = "laylo";
+    process.env.LAYLO_API_TOKEN = "test-token";
+    process.env.LAYLO_BYPASS = "false";
+
+    expect(() => validateEnvironment({ fatal: true })).not.toThrow();
+    expect(readProvider()).toBe("laylo");
+    expect(console.warn).not.toHaveBeenCalledWith(
+      expect.stringContaining("Laylo lead provider is bypassed"),
+    );
+  });
+
   it("warns in production when OPS_ADMIN_SECRET is missing", () => {
     process.env.NODE_ENV = "production";
     delete process.env.OPS_ADMIN_SECRET;

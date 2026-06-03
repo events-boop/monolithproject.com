@@ -85,6 +85,9 @@ const waitlistDestinations: Record<string, string> = Object.assign(
     "chasing-sunsets":
       readHttpsEnv("OUTBOUND_WAITLIST_CHASING_SUNSETS_URL") ||
       generalWaitlistUrl,
+    "sunsets-manychat":
+      readHttpsEnv("OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL") ||
+      generalWaitlistUrl,
     "untold-story":
       readHttpsEnv("OUTBOUND_WAITLIST_UNTOLD_STORY_URL") || generalWaitlistUrl,
   }

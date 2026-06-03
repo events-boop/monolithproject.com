@@ -182,6 +182,8 @@ function LakeListForm() {
           eventTitle: "Chasing Sun(Sets) July 4 2026",
           interestTags: [
             "chasing_sunsets",
+            "laylo",
+            "laylo_signup",
             "lake_list",
             "first_access_signup",
             "july4_interest",
@@ -262,7 +264,26 @@ function LakeListForm() {
       </label>
       <p className="px-1 text-[10px] leading-snug text-stone-400">
         By registering, you agree to receive event updates from The Monolith
-        Project / Chasing Sun(Sets). Message rates may apply.
+        Project / Chasing Sun(Sets). Message rates may apply. You also agree
+        to Laylo&apos;s{" "}
+        <a
+          className="underline underline-offset-2 hover:text-white"
+          href="https://laylo.com/terms"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Terms
+        </a>{" "}
+        and{" "}
+        <a
+          className="underline underline-offset-2 hover:text-white"
+          href="https://laylo.com/privacy"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Privacy Policy
+        </a>
+        .
       </p>
       {submitError ? (
         <div
@@ -316,6 +337,8 @@ function FeaturedDropSignup() {
           eventTitle: "Sun(Sets) Radio Featured Drops",
           interestTags: [
             "chasing_sunsets",
+            "laylo",
+            "laylo_feature_drop_signup",
             "sunsets_radio_feature_drops",
             "featured_drop_signup",
           ],

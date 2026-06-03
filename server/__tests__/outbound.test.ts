@@ -29,6 +29,7 @@ describe("resolveOutboundDestination", () => {
   it("resolves named waitlist redirects", async () => {
     const { resolveOutboundDestination } = await importOutbound();
     expect(resolveOutboundDestination("waitlist", "untold-story")).toMatch(/^https:\/\//);
+    expect(resolveOutboundDestination("waitlist", "sunsets-manychat")).toContain("laylo.com");
   });
 
   it("resolves Sunsets media, gallery, form, and social redirects", async () => {

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { leadSchema, type LeadProvider } from "../lib/schemas";
 import { logEvent } from "../lib/logging";
 import { scrubEmail } from "../lib/security";
-import { getBrevoBypassReason } from "../lib/env";
+import { getBrevoBypassReason, getLayloBypassReason } from "../lib/env";
 
 function getAttributionSource(lead: z.infer<typeof leadSchema>) {
   return lead.lastUtmSource || lead.utmSource || lead.source || "website";
@@ -11,6 +11,50 @@ function getAttributionSource(lead: z.infer<typeof leadSchema>) {
 
 function getLeadContextUrl(lead: z.infer<typeof leadSchema>) {
   return lead.pageUrl || lead.landingPageUrl || "https://monolithproject.com";
+}
+
+function getLayloApiToken() {
+  return process.env.LAYLO_API_TOKEN?.trim() || process.env.LAYLO_API_KEY?.trim() || "";
+}
+
+function normalizeLayloPhone(phone?: string) {
+  const trimmed = phone?.trim();
+  if (!trimmed) return undefined;
+
+  const digits = trimmed.replace(/\D/g, "");
+  if (trimmed.startsWith("+") && digits.length >= 10) {
+    return `+${digits}`;
+  }
+  if (digits.length === 10) {
+    return `+1${digits}`;
+  }
+  if (digits.length === 11 && digits.startsWith("1")) {
+    return `+${digits}`;
+  }
+  return trimmed;
+}
+
+export function shouldSyncLeadToLaylo(lead: z.infer<typeof leadSchema>) {
+  const haystack = [
+    lead.formType,
+    lead.source,
+    lead.funnelId,
+    lead.offerId,
+    lead.eventSeries,
+    ...(lead.interestTags || []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return [
+    "laylo",
+    "lake_list",
+    "first_access_signup",
+    "sunsets_lake_list",
+    "sunsets_radio_feature_drops",
+    "chasing-sunsets",
+  ].some((intent) => haystack.includes(intent));
 }
 
 export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
@@ -166,6 +210,56 @@ export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
   }
 }
 
+export async function subscribeLaylo(lead: z.infer<typeof leadSchema>) {
+  const bypassReason = getLayloBypassReason();
+  if (bypassReason) {
+    logEvent("provider.laylo_bypassed", {
+      reason: bypassReason,
+      source: lead.source || "website",
+      emailHash: createHash("sha256").update(scrubEmail(lead.email)).digest("hex").slice(0, 12),
+    });
+    return;
+  }
+
+  const endpoint = process.env.LAYLO_API_URL?.trim() || "https://laylo.com/api/graphql";
+  const apiToken = getLayloApiToken();
+  const normalizedEmail = scrubEmail(lead.email);
+  const phoneNumber = normalizeLayloPhone(lead.phone);
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+    body: JSON.stringify({
+      query: `
+        mutation SubscribeToUser($email: String, $phoneNumber: String) {
+          subscribeToUser(email: $email, phoneNumber: $phoneNumber)
+        }
+      `,
+      variables: {
+        email: normalizedEmail,
+        phoneNumber: phoneNumber || null,
+      },
+    }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || Array.isArray(data.errors)) {
+    logEvent("provider.laylo_error", {
+      status: response.status,
+      detail: Array.isArray(data.errors) ? data.errors[0]?.message : undefined,
+    });
+    throw new Error("Laylo subscription failed");
+  }
+
+  logEvent("provider.laylo_subscribed", {
+    source: lead.source || "website",
+    phoneProvided: Boolean(phoneNumber),
+    emailHash: createHash("sha256").update(normalizedEmail).digest("hex").slice(0, 12),
+  });
+}
+
 export async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
   const apiKey = process.env.CONVERTKIT_API_KEY;
   const formId = process.env.CONVERTKIT_FORM_ID;
@@ -241,5 +335,6 @@ export async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof
   if (provider === "hubspot") return subscribeHubSpot(lead);
   if (provider === "brevo") return subscribeBrevo(lead);
   if (provider === "emailoctopus") return subscribeEmailOctopus(lead);
+  if (provider === "laylo") return subscribeLaylo(lead);
   return subscribeConvertKit(lead);
 }

@@ -1,7 +1,15 @@
 import { z } from "zod";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
-export type LeadProvider = "disabled" | "mailchimp" | "beehiiv" | "convertkit" | "hubspot" | "brevo" | "emailoctopus";
+export type LeadProvider =
+  | "disabled"
+  | "mailchimp"
+  | "beehiiv"
+  | "convertkit"
+  | "hubspot"
+  | "brevo"
+  | "emailoctopus"
+  | "laylo";
 
 const shortText = (max: number) => z.string().trim().max(max).optional();
 const urlText = z.string().url().max(500).optional();
