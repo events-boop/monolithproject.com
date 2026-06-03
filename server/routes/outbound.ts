@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { randomUUID } from "crypto";
 import { logEvent } from "../lib/logging";
-import { decorateOutboundDestination, resolveOutboundDestination } from "../lib/outbound";
+import { decorateOutboundDestination, resolveOutboundDestination, TICKETS_COMING_SOON } from "../lib/outbound";
 import { getDatabase } from "../db/client";
 import { linkClicks } from "../db/schema";
 
@@ -55,6 +55,19 @@ function outboundClickMeta(group: string, key: string) {
 router.get("/go/:group/:key", async (req, res) => {
   const requestId = randomUUID();
   const destination = resolveOutboundDestination(req.params.group, req.params.key);
+
+  // "Tickets coming soon" — env var is unset for this specific event.
+  // Redirect to the Tickets page with a query flag so the UI can show a
+  // clean "coming soon" state instead of a broken link or raw 404.
+  if (destination === TICKETS_COMING_SOON) {
+    logEvent("outbound.tickets_coming_soon", {
+      requestId,
+      group: req.params.group,
+      key: req.params.key,
+    });
+    res.setHeader("Cache-Control", "no-store");
+    return res.redirect(302, `/tickets?coming-soon=${req.params.key}`);
+  }
 
   if (!destination) {
     logEvent("outbound.redirect_missing", {

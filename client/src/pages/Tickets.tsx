@@ -10,7 +10,7 @@ import {
   Crown,
   ArrowUpRight,
 } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import "@/styles/themes/tickets.css";
 import Navigation from "@/components/Navigation";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
@@ -83,6 +83,9 @@ export default function Tickets() {
     }
   };
 
+  const search = useSearch();
+  const comingSoonKey = new URLSearchParams(search).get("coming-soon");
+
   const handleTicketLinkClick = (
     event: SyntheticEvent<HTMLAnchorElement>,
     source: string,
@@ -101,6 +104,42 @@ export default function Tickets() {
       }
     }
   };
+
+  // "Tickets coming soon" fallback — shown when OUTBOUND_TICKETS_CSS_JUL04_URL
+  // (or NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL) is not yet set in the environment.
+  if (comingSoonKey) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <SEO
+          title="Tickets Coming Soon — SUN(SETS) July 4"
+          description="Official ticket link for SUN(SETS) July 4 at Castaways is coming soon. Join the Lake List for First Access."
+        />
+        <Navigation />
+        <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+            SUN(SETS) — JULY 4, 2026
+          </p>
+          <h1 className="text-3xl font-black tracking-tight text-white">
+            TICKETS COMING SOON
+          </h1>
+          <p className="text-sm leading-relaxed text-stone-400">
+            The official Posh ticket link will be live shortly.
+            Join the Lake List to get First Access before the public release.
+          </p>
+          <Link
+            href="/go/waitlist/chasing-sunsets"
+            className="inline-flex items-center justify-center gap-2 h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] transition-colors"
+          >
+            <Ticket className="size-4" />
+            Join the Lake List — First Access
+          </Link>
+          <p className="text-[11px] text-stone-500 uppercase tracking-[0.14em]">
+            Official ticket source powered by Posh.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">

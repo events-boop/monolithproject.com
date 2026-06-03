@@ -62,12 +62,18 @@ const generalWaitlistUrl =
   readHttpsEnv("LAYLO_URL", "OUTBOUND_WAITLIST_GENERAL_URL") ||
   FALLBACK_LAYLO_URL;
 
-const ticketDestinations: Record<string, string> = Object.assign(
+const ticketDestinations: Record<string, string | null> = Object.assign(
   Object.create(null),
   {
     featured: featuredTicketUrl,
+    // SUN(SETS) July 4 — resolves to null when env is unset so the route
+    // can serve a clean "Tickets coming soon" page instead of silently
+    // redirecting to the featured fallback.
     "css-jul04":
-      readHttpsEnv("OUTBOUND_TICKETS_CSS_JUL04_URL") || featuredTicketUrl,
+      readHttpsEnv(
+        "OUTBOUND_TICKETS_CSS_JUL04_URL",
+        "NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL"
+      ) ?? null,
     "mp-autograf-mar21":
       readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") ||
       featuredTicketUrl,
@@ -158,12 +164,19 @@ const FORBIDDEN_KEYS = new Set([
   "tolocalestring",
 ]);
 
+// Sentinel value returned when a ticket destination is explicitly set to null
+// (env var missing) so the route can show a "Tickets coming soon" page.
+export const TICKETS_COMING_SOON = "__coming_soon__" as const;
+
 function getOwnDestination(
-  destinations: Record<string, string>,
+  destinations: Record<string, string | null>,
   key: string
 ): string | null {
   if (Object.prototype.hasOwnProperty.call(destinations, key)) {
-    return destinations[key] || null;
+    const value = destinations[key];
+    // Explicitly null means "coming soon" — return sentinel instead of falling through.
+    if (value === null) return TICKETS_COMING_SOON;
+    return value || null;
   }
   return null;
 }
@@ -177,11 +190,11 @@ export function resolveOutboundDestination(group: string, key: string) {
   }
 
   if (normalizedGroup === "tickets") {
-    return (
-      getOwnDestination(ticketDestinations, normalizedKey) ||
-      ticketDestinations.featured ||
-      null
-    );
+    const dest = getOwnDestination(ticketDestinations, normalizedKey);
+    // If the key was found but explicitly null, return the sentinel — do not
+    // fall through to the featured URL so the caller can show a coming-soon page.
+    if (dest === TICKETS_COMING_SOON) return TICKETS_COMING_SOON;
+    return dest || ticketDestinations.featured || null;
   }
 
   if (normalizedGroup === "waitlist") {

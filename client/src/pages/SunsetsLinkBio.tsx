@@ -877,8 +877,18 @@ export default function SunsetsLinkBio() {
                   href={ticketHref}
                   onClick={() => {
                     triggerHaptic(16);
+                    // Primary TicketCTA_Click event — per campaign spec.
+                    const win = window as Window & {
+                      gtag?: (cmd: string, name: string, params?: Record<string, unknown>) => void;
+                    };
+                    win.gtag?.("event", "TicketCTA_Click", {
+                      event_slug: JULY_4_EVENT_SLUG,
+                      source_page: "sunsets.vip",
+                      destination: "posh",
+                      cta_position: "primary",
+                    });
                     trackSunsetsClick({
-                      buttonName: "Get Tickets / First Access",
+                      buttonName: "BUY TICKETS — JULY 4",
                       href: ticketHref,
                       eventSlug: JULY_4_EVENT_SLUG,
                       eventDate: JULY_4_EVENT_DATE,
@@ -888,7 +898,7 @@ export default function SunsetsLinkBio() {
                   }}
                 >
                   <Ticket className="size-4" />
-                  Get Tickets / First Access
+                  BUY TICKETS — JULY 4
                   <ArrowUpRight className="size-4" />
                 </a>
               </Button>
