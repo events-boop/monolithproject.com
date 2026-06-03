@@ -31,6 +31,15 @@ import { archiveCollectionsBySlug } from "@/data/galleryData";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
+import {
+  SUNSETS_JULY4_EVENT_ADDRESS,
+  SUNSETS_JULY4_EVENT_TIME,
+  SUNSETS_JULY4_EVENT_TITLE,
+  SUNSETS_JULY4_LINEUP,
+  SUNSETS_JULY4_TICKET_PATH,
+  SUNSETS_TICKET_CTA_LABEL,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import {
   getEventVenueLabel,
@@ -61,7 +70,7 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
     src: chasingHeroImage.src,
     sources: chasingHeroImage.sources,
     sizes: chasingHeroImage.sizes,
-    alt: "Chasing Sun(Sets) Atmosphere",
+    alt: "July 4 · Castaways Atmosphere",
     caption: "CHASING SUN(SETS) | GOLDEN HOUR",
   },
   {
@@ -75,6 +84,7 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
 const CHASING_ANCHORS = [
   { label: "Hero", href: "#chasing-hero" },
   { label: "Format", href: "#chasing-concept" },
+  { label: "Tickets", href: "#chasing-tickets" },
   { label: "Records", href: "#chasing-records" },
   { label: "Upcoming", href: "#chasing-upcoming" },
   { label: "Submit", href: "#chasing-submit" },
@@ -106,6 +116,19 @@ function getStatusLabel(status: string) {
 
 function isExternalUrl(url?: string | null) {
   return !!url && (/^https?:\/\//i.test(url) || url.startsWith("/go/"));
+}
+
+function shouldOpenInNewTab(url?: string | null) {
+  return !!url && /^https?:\/\//i.test(url);
+}
+
+function trackSunsetsTicketLink(href?: string | null, ctaPosition: "primary" | "secondary" = "secondary") {
+  if (href !== SUNSETS_JULY4_TICKET_PATH) return;
+  captureSunsetsTicketCtaClick({
+    destinationUrl: appendAttributionQueryParams(href),
+    pagePath: "/chasing-sunsets",
+    ctaPosition,
+  });
 }
 
 export default function ChasingSunsets() {
@@ -149,8 +172,8 @@ export default function ChasingSunsets() {
   return (
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
-        title="Chasing Sun(Sets) | Chicago Lakefront Music Events"
-        description="Chasing Sun(Sets) brings open-air house music, golden-hour energy, and lakefront gatherings to Chicago."
+        title="SUN(SETS) I — July 4th at Castaways | Chasing Sun(Sets)"
+        description="SUN(SETS) I brings Autograf, Kiko Franco, Amari, and Erik The DJ to Castaways Beach Club on July 4th, 2026."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -163,10 +186,10 @@ export default function ChasingSunsets() {
           id="chasing-hero"
           data-featured-event-id={featuredChasingEvent?.id}
           aria-labelledby="chasing-hero-title"
-          className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-32 sm:pt-0"
+          className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#080a07] px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-28 sm:pt-0"
         >
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
-          <div className="absolute inset-0 z-10 opacity-80 pointer-events-none bg-chasing-hero-overlay" />
+          <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(180deg,rgba(0,0,0,0.38)_0%,rgba(8,10,7,0.58)_44%,#080a07_100%),linear-gradient(90deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.34)_48%,rgba(0,0,0,0.12)_100%)]" />
 
           <div className="container layout-default relative z-20 mt-auto pointer-events-none">
             <motion.div
@@ -175,12 +198,12 @@ export default function ChasingSunsets() {
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
-              <div className="mb-5 inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-[#14B8A6]/35 bg-black/35 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-md sm:mb-7 sm:px-4">
+              <div className="mb-5 hidden max-w-full flex-wrap items-center gap-2 border border-[#f4d58d]/40 bg-black/55 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.36)] backdrop-blur-md sm:mb-7 sm:inline-flex sm:px-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FBF5ED]">
-                  Series Hero
+                  SUN(SETS) I
                 </span>
                 <span className="h-1 w-1 rounded-full bg-[#14B8A6]/70" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#69F3E3]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#f4d58d]">
                   Chasing Sun(Sets)
                 </span>
               </div>
@@ -189,33 +212,31 @@ export default function ChasingSunsets() {
                 data-chasing-episode="true"
                 className="mb-3 block font-mono text-xs uppercase tracking-[0.22em] text-white/90 sm:mb-5 sm:text-sm"
               >
-                {featuredChasingEvent
-                  ? featuredChasingEvent.episode
-                  : "Series 01"}
+                {featuredChasingEvent ? featuredChasingEvent.episode : "SUN(SETS) I"}
               </span>
               <h1
                 id="chasing-hero-title"
-                className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-tight-display text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.62)] sm:mb-5"
+                className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-[0] text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.62)] sm:mb-5"
               >
                 {["CHASING", "SUN(SETS)"].map((line, i) => (
                   <motion.span
                     key={`${line}-${i}`}
-                    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 1.0,
-                      delay: 0.1 + i * 0.15,
-                      ease: [0.22, 1, 0.36, 1], // luxe ease
+                      duration: 0.72,
+                      delay: 0.08 + i * 0.1,
+                      ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="block bg-gradient-to-r from-white via-[#69F3E3] to-[#8B5CF6] bg-clip-text text-transparent"
+                    className="block text-white drop-shadow-[0_18px_54px_rgba(0,0,0,0.72)]"
                   >
                     {line}
                   </motion.span>
                 ))}
               </h1>
               {featuredChasingEvent ? (
-                <p className="mb-6 max-w-2xl font-mono text-xs uppercase tracking-[0.2em] text-[#69F3E3] sm:mb-7 sm:text-sm">
-                  {featuredChasingEvent.headline || featuredChasingEvent.title}
+                <p className="mb-6 max-w-2xl font-mono text-xs uppercase tracking-[0.2em] text-[#f4d58d] sm:mb-7 sm:text-sm">
+                  {featuredChasingEvent.headline || SUNSETS_JULY4_EVENT_TITLE}
                 </p>
               ) : null}
               <BrandTranslatorLabel className="mb-4 sm:mb-6" tone="warm">
@@ -223,20 +244,24 @@ export default function ChasingSunsets() {
               </BrandTranslatorLabel>
 
               <div className="max-w-2xl">
-                <p className="mb-4 text-base leading-relaxed text-white/90 sm:text-lg">
-                  The titled summer route for open-air sunset and night sessions
-                  built for movement, warmth, and return.
+                <p className="mb-4 text-base leading-relaxed text-white/92 sm:text-lg">
+                  Chasing Sun(Sets) returns home to the lake this July 4th at Castaways Beach Club. Golden hour. House music. Lake Michigan. The skyline behind you.
+                </p>
+                <p className="mb-4 max-w-xl text-sm font-semibold uppercase tracking-[0.16em] text-[#f4d58d]">
+                  Watch the sun. Stay for the sets.
                 </p>
                 {featuredChasingEvent ? (
                   <div
                     data-chasing-meta="true"
-                    className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-[#69F3E3] sm:mb-8 sm:gap-x-6 sm:text-[11px]"
+                    className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-[#f4d58d] sm:mb-8 sm:gap-x-6 sm:text-[11px]"
                   >
                     <span>{featuredChasingEvent.date}</span>
                     <span className="h-1 w-1 rounded-full bg-white/20" />
+                    <span>{SUNSETS_JULY4_EVENT_TIME}</span>
+                    <span className="h-1 w-1 rounded-full bg-white/20" />
                     <span>{getEventVenueLabel(featuredChasingEvent)}</span>
                     <span className="h-1 w-1 rounded-full bg-white/20" />
-                    <span>{featuredChasingEvent.lineup || "Lineup TBA"}</span>
+                    <span>{SUNSETS_JULY4_LINEUP.join(" · ")}</span>
                   </div>
                 ) : null}
               </div>
@@ -262,14 +287,14 @@ export default function ChasingSunsets() {
               </div>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 {[
-                  "Open Air",
-                  "Melodic + Afro House",
-                  "Good Crowd",
-                  "Rooftop Series",
+                  "Autograf",
+                  "Kiko Franco",
+                  "The Lake Has A Limit",
+                  "Tables From $2,000",
                 ].map(pill => (
                   <span
                     key={pill}
-                    className="rounded-full border border-white/40 bg-black/20 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-white/90 sm:text-xs"
+                    className="border border-white/32 bg-black/35 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-white/90 backdrop-blur sm:text-xs"
                   >
                     {pill}
                   </span>
@@ -310,9 +335,7 @@ export default function ChasingSunsets() {
                   "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
-                Chasing Sun(Sets) is the series title. Each date below is a
-                chapter in the same golden-hour route: release, venue, ticket
-                structure, and archive proof stay connected.
+                SUN(SETS) I opens the 2026 lakefront chapter on July 4 at Castaways. The ticket ladder is live: early arrival, Lake List first access, public GA tiers, group bundles, and a separate table/cabana rail.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <span className="rounded-full border border-[#14B8A6]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
@@ -333,22 +356,24 @@ export default function ChasingSunsets() {
                 {primarySeasonExternal ? (
                   <a
                     href={primarySeasonHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={shouldOpenInNewTab(primarySeasonHref) ? "_blank" : undefined}
+                    rel={shouldOpenInNewTab(primarySeasonHref) ? "noopener noreferrer" : undefined}
+                    onClick={() => trackSunsetsTicketLink(primarySeasonHref, "secondary")}
                     className="btn-pill-sunsets inline-flex items-center justify-center"
                   >
                     {isTicketOnSale(featuredChasingEvent)
-                      ? CTA_LABELS.tickets
+                      ? SUNSETS_TICKET_CTA_LABEL
                       : "Open Featured Chapter"}
                     <ArrowUpRight className="ml-2 h-4 w-4" />
                   </a>
                 ) : (
                   <Link
                     href={primarySeasonHref}
+                    onClick={() => trackSunsetsTicketLink(primarySeasonHref, "secondary")}
                     className="btn-pill-sunsets inline-flex items-center justify-center"
                   >
                     {isTicketOnSale(featuredChasingEvent)
-                      ? CTA_LABELS.tickets
+                      ? SUNSETS_TICKET_CTA_LABEL
                       : "Open Featured Chapter"}
                     <ArrowUpRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -367,22 +392,20 @@ export default function ChasingSunsets() {
               {
                 kicker: "Archive",
                 title: "Season Records",
-                body: "Three summer runs, one running visual archive.",
+                body: "Past summers, proof of room, and the lakefront story that built the return.",
                 href: "#chasing-records",
               },
               {
-                kicker: "Roster",
-                title: "Resident DJs",
-                body: "The selectors who carry the room before and after the headliners.",
-                href: "#chasing-upcoming",
-                onClick: () => setActiveTab("residents"),
+                kicker: "Schedule",
+                title: "Set Times",
+                body: "Doors at 1PM. Erik, Amari, Kiko Franco, then Autograf through sunset.",
+                href: "#chasing-tickets",
               },
               {
-                kicker: "Drop List",
-                title: "Join Early",
-                body: "Get the date release before the public push.",
-                href: appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL),
-                external: true,
+                kicker: "VIP Rail",
+                title: "Tables",
+                body: "6 premium cabanas and limited tables start at a $2,000 minimum.",
+                href: "/vip",
               },
             ].map((card, index) => (
               <motion.article
@@ -402,26 +425,13 @@ export default function ChasingSunsets() {
                 <p className="mt-3 text-sm leading-relaxed sunset-text-60">
                   {card.body}
                 </p>
-                {card.external ? (
-                  <a
-                    href={card.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] sunset-text transition-colors hover:text-[#A4592C]"
-                  >
-                    Open
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
-                ) : (
-                  <a
-                    href={card.href}
-                    onClick={card.onClick}
-                    className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] sunset-text transition-colors hover:text-[#A4592C]"
-                  >
-                    Open
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </a>
-                )}
+                <a
+                  href={card.href}
+                  className="mt-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] sunset-text transition-colors hover:text-[#A4592C]"
+                >
+                  Open
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
               </motion.article>
             ))}
           </div>
@@ -461,15 +471,10 @@ export default function ChasingSunsets() {
             >
               <article className="border border-[#C2703E]/16 bg-white/72 p-6 shadow-[0_20px_48px_rgba(44,24,16,0.06)] md:p-8">
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  Chicago&apos;s open-air house music gathering. Every show
-                  starts in the last light, builds with the room, and reaches
-                  full pressure only after the skyline has already changed.
+                  This July 4th, The Monolith Project brings Chasing Sun(Sets) back to where the story belongs: the Chicago lakefront. A full-day house music experience moves from daytime energy into golden hour and the final sunset set.
                 </p>
                 <p className="mt-5 leading-relaxed sunset-text-70">
-                  Melodic house, afro house, and organic movement in rooftops,
-                  gardens, and shoreline rooms. No fake beach branding. No
-                  dark-club energy too early. Just properly paced summer
-                  programming.
+                  This is not a holiday party. It is the return of a Chicago summer ritual: open air, skyline views, house music, and a crowd built around connection.
                 </p>
               </article>
 
@@ -478,10 +483,11 @@ export default function ChasingSunsets() {
                   Season Logic
                 </span>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
-                  <li>Next date is visible first.</li>
-                  <li>Archive proof stays one section away.</li>
-                  <li>Resident roster is part of the same summer system.</li>
-                  <li>Join and submit paths are never buried.</li>
+                  <li>Tickets move by clean public tier logic.</li>
+                  <li>First Access stays hidden with code SUNSET26.</li>
+                  <li>Tables and cabanas stay separate from GA inventory.</li>
+                  <li>No fake scarcity language: the lake has a limit.</li>
+                  <li>{SUNSETS_JULY4_EVENT_ADDRESS}</li>
                 </ul>
               </article>
             </motion.div>
@@ -716,19 +722,21 @@ export default function ChasingSunsets() {
                               return ticketExternal ? (
                                 <a
                                   href={ticketHref}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
+                                  target={shouldOpenInNewTab(ticketHref) ? "_blank" : undefined}
+                                  rel={shouldOpenInNewTab(ticketHref) ? "noopener noreferrer" : undefined}
+                                  onClick={() => trackSunsetsTicketLink(ticketHref, "secondary")}
                                   className="btn-pill-sunsets btn-pill-compact w-full justify-center"
                                 >
-                                  {CTA_LABELS.tickets}{" "}
+                                  {event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets}{" "}
                                   <ArrowUpRight size={14} />
                                 </a>
                               ) : (
                                 <Link
                                   href={ticketHref}
+                                  onClick={() => trackSunsetsTicketLink(ticketHref, "secondary")}
                                   className="btn-pill-sunsets btn-pill-compact w-full justify-center"
                                 >
-                                  {CTA_LABELS.tickets}{" "}
+                                  {event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets}{" "}
                                   <ArrowUpRight size={14} />
                                 </Link>
                               );
@@ -847,8 +855,7 @@ export default function ChasingSunsets() {
                 FAQ / ACCESS
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-relaxed sunset-text-60 md:text-base">
-                The route closes with the practical layer: venue logic, arrival,
-                tickets, and what kind of room this actually is.
+                The route closes with the practical layer: ticket tiers, arrival windows, table rules, and venue policy.
               </p>
             </div>
 

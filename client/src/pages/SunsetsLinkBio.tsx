@@ -30,6 +30,14 @@ import {
   trackLinkClick,
 } from "@/lib/api";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
+import {
+  SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
+  SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
+  SUNSETS_JULY4_TICKET_PATH as TICKET_HREF,
+  SUNSETS_TICKET_CTA_LABEL,
+  SUNSETS_TICKET_CTA_SUPPORT,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
 type Chapter = {
@@ -54,9 +62,6 @@ type TrackableLink = {
 
 const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
-const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
-const JULY_4_EVENT_DATE = "2026-07-04";
-const TICKET_HREF = "/go/tickets/css-jul04";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 const SUNSETS_COVER_IMAGE = "/images/chasing-sunsets-firstaccess-flyer.png";
@@ -730,7 +735,7 @@ export default function SunsetsLinkBio() {
         date: "July 4, 2026",
         place: "Castaways - North Ave Beach",
         status: "July 4 access",
-        action: "Get Tickets",
+        action: SUNSETS_TICKET_CTA_LABEL,
         eventSlug: JULY_4_EVENT_SLUG,
         eventDate: JULY_4_EVENT_DATE,
         href: TICKET_HREF,
@@ -877,18 +882,13 @@ export default function SunsetsLinkBio() {
                   href={ticketHref}
                   onClick={() => {
                     triggerHaptic(16);
-                    // Primary TicketCTA_Click event — per campaign spec.
-                    const win = window as Window & {
-                      gtag?: (cmd: string, name: string, params?: Record<string, unknown>) => void;
-                    };
-                    win.gtag?.("event", "TicketCTA_Click", {
-                      event_slug: JULY_4_EVENT_SLUG,
-                      source_page: "sunsets.vip",
-                      destination: "posh",
-                      cta_position: "primary",
+                    captureSunsetsTicketCtaClick({
+                      destinationUrl: ticketHref,
+                      pagePath: PAGE_PATH,
+                      ctaPosition: "primary",
                     });
                     trackSunsetsClick({
-                      buttonName: "BUY TICKETS — JULY 4",
+                      buttonName: SUNSETS_TICKET_CTA_LABEL,
                       href: ticketHref,
                       eventSlug: JULY_4_EVENT_SLUG,
                       eventDate: JULY_4_EVENT_DATE,
@@ -898,10 +898,13 @@ export default function SunsetsLinkBio() {
                   }}
                 >
                   <Ticket className="size-4" />
-                  BUY TICKETS — JULY 4
+                  {SUNSETS_TICKET_CTA_LABEL}
                   <ArrowUpRight className="size-4" />
                 </a>
               </Button>
+              <p className="-mt-2 text-center text-[11px] font-semibold text-stone-400">
+                {SUNSETS_TICKET_CTA_SUPPORT}
+              </p>
               <Button
                 type="button"
                 variant="outline"
@@ -986,6 +989,13 @@ export default function SunsetsLinkBio() {
                         href={chapterHref}
                         onClick={() => {
                           triggerHaptic(12);
+                          if (chapter.href === TICKET_HREF) {
+                            captureSunsetsTicketCtaClick({
+                              destinationUrl: chapterHref,
+                              pagePath: PAGE_PATH,
+                              ctaPosition: "chapter",
+                            });
+                          }
                           trackSunsetsClick({
                             buttonName: chapter.action,
                             href: chapterHref,

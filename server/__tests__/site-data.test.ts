@@ -11,9 +11,9 @@ describe("buildPublicSiteData", () => {
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-jul04");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Get First Access",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
+      label: "BUY TICKETS — JULY 4",
+      href: "/go/tickets/css-jul04",
+      tool: "posh",
     });
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
@@ -70,9 +70,9 @@ describe("buildPublicSiteData", () => {
     expect(featuredIds).not.toContain("us-s3e3");
     expect(data.events.length).toBe(1);
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Get First Access",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
+      label: "BUY TICKETS — JULY 4",
+      href: "/go/tickets/css-jul04",
+      tool: "posh",
     });
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();

@@ -16,6 +16,10 @@ import { isInquiryHref, parseInquiryType } from "@/lib/cta";
 import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { CtaTone, getCtaToneClass, getEventCtaToneClass } from "@/lib/ctaTone";
+import {
+  SUNSETS_JULY4_TICKET_PATH,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 
 // Callers on pages like /partners pass a synthesized minimal event whose only
 // meaningful field is `primaryCta` (the CTA-source). Accept a partial shape so
@@ -71,6 +75,7 @@ export default function ConversionCTA({
   const toneClass = tone ? getCtaToneClass(tone) : getEventCtaToneClass(event);
   const eventSlug = event?.slug || event?.id;
   const tracksViaOutboundRedirect = cta.href.startsWith("/go/");
+  const isSunsetsJuly4TicketCta = cta.href === SUNSETS_JULY4_TICKET_PATH;
 
   const trackCtaClick = () => {
     if (tracksViaOutboundRedirect) return;
@@ -126,6 +131,16 @@ export default function ConversionCTA({
           }
 
           const attributedHref = appendAttributionQueryParams(cta.href);
+          if (isSunsetsJuly4TicketCta) {
+            captureSunsetsTicketCtaClick({
+              destinationUrl: attributedHref,
+              pagePath:
+                typeof window !== "undefined"
+                  ? window.location.pathname
+                  : undefined,
+              ctaPosition: "primary",
+            });
+          }
           trackCtaClick();
           if (cta.tool === "posh") {
             void trackTicketIntent("conversion_cta", event?.id, attributedHref);

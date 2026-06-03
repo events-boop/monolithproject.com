@@ -1,7 +1,18 @@
 import { Router } from "express";
 import { randomUUID } from "crypto";
 import { logEvent } from "../lib/logging";
-import { decorateOutboundDestination, resolveOutboundDestination, TICKETS_COMING_SOON } from "../lib/outbound";
+import {
+  decorateOutboundDestination,
+  resolveOutboundDestination,
+  TICKETS_COMING_SOON,
+} from "../lib/outbound";
+import {
+  SUNSETS_JULY4_EVENT_SLUG,
+  SUNSETS_JULY4_TICKET_UTMS,
+  SUNSETS_TICKET_CTA_LABEL,
+  SUNSETS_TICKET_CTA_SUPPORT,
+  isSunsetsJuly4TicketRoute,
+} from "../../shared/events/sunsets-ticketing";
 import { getDatabase } from "../db/client";
 import { linkClicks } from "../db/schema";
 
@@ -10,6 +21,46 @@ const router = Router();
 function readQueryParam(value: unknown) {
   if (Array.isArray(value)) return typeof value[0] === "string" ? value[0] : undefined;
   return typeof value === "string" ? value : undefined;
+}
+
+function renderSunsetsTicketsComingSoonPage(requestId: string) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, noarchive, nosnippet" />
+  <title>Tickets Coming Soon · SUN(SETS) · July 4</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 28px; background: #080a07; color: #f5f1e8; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 560px); border: 1px solid rgba(223,194,122,.26); background: rgba(16,20,15,.92); padding: clamp(24px, 6vw, 42px); box-shadow: 0 28px 80px rgba(0,0,0,.5); }
+    .eyebrow { color: #dfc27a; font-size: 11px; font-weight: 900; letter-spacing: .24em; text-transform: uppercase; }
+    h1 { margin: 14px 0 0; font-size: clamp(34px, 9vw, 58px); line-height: .95; letter-spacing: -.03em; }
+    p { color: rgba(245,241,232,.72); line-height: 1.65; }
+    .support { color: rgba(245,241,232,.48); font-size: 13px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; color: inherit; text-decoration: none; font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .primary { background: #dfc27a; color: #080a07; }
+    .secondary { border: 1px solid rgba(245,241,232,.18); color: rgba(245,241,232,.78); }
+    .request { margin-top: 24px; color: rgba(245,241,232,.34); font-size: 11px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Official Tickets</div>
+    <h1>Tickets coming soon.</h1>
+    <p>SUN(SETS) July 4 tickets will move through the official Posh ticket page once the drop is live.</p>
+    <p class="support">${SUNSETS_TICKET_CTA_SUPPORT} Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
+    <div class="actions">
+      <a class="primary" href="/lake#lake-list">Join Lake List</a>
+      <a class="secondary" href="/sunsets">Back to SUN(SETS)</a>
+    </div>
+    <div class="request">Request ${requestId}</div>
+  </main>
+</body>
+</html>`;
 }
 
 function outboundClickMeta(group: string, key: string) {
@@ -42,7 +93,13 @@ function outboundClickMeta(group: string, key: string) {
   }
 
   if (normalizedGroup === "tickets") {
-    return { buttonName: "Tickets", channel: "Posh", interestType: "ticket_click" };
+    return {
+      buttonName: isSunsetsJuly4TicketRoute(normalizedGroup, normalizedKey)
+        ? SUNSETS_TICKET_CTA_LABEL
+        : "Tickets",
+      channel: "Posh",
+      interestType: "ticket_click",
+    };
   }
 
   if (normalizedGroup === "social") {
@@ -57,8 +114,6 @@ router.get("/go/:group/:key", async (req, res) => {
   const destination = resolveOutboundDestination(req.params.group, req.params.key);
 
   // "Tickets coming soon" — env var is unset for this specific event.
-  // Redirect to the Tickets page with a query flag so the UI can show a
-  // clean "coming soon" state instead of a broken link or raw 404.
   if (destination === TICKETS_COMING_SOON) {
     logEvent("outbound.tickets_coming_soon", {
       requestId,
@@ -66,7 +121,9 @@ router.get("/go/:group/:key", async (req, res) => {
       key: req.params.key,
     });
     res.setHeader("Cache-Control", "no-store");
-    return res.redirect(302, `/tickets?coming-soon=${req.params.key}`);
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
+    return res.status(200).send(renderSunsetsTicketsComingSoonPage(requestId));
   }
 
   if (!destination) {
@@ -75,6 +132,13 @@ router.get("/go/:group/:key", async (req, res) => {
       group: req.params.group,
       key: req.params.key,
     });
+
+    if (isSunsetsJuly4TicketRoute(req.params.group, req.params.key)) {
+      res.setHeader("Cache-Control", "no-store");
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
+      return res.status(200).send(renderSunsetsTicketsComingSoonPage(requestId));
+    }
 
     return res.status(404).json({
       ok: false,
@@ -87,7 +151,11 @@ router.get("/go/:group/:key", async (req, res) => {
     });
   }
 
-  const trackedDestination = decorateOutboundDestination(destination, req.query);
+  const isSunsetsTicket = isSunsetsJuly4TicketRoute(req.params.group, req.params.key);
+  const trackedDestination = decorateOutboundDestination(destination, req.query, {
+    group: req.params.group,
+    key: req.params.key,
+  });
   const clickMeta = outboundClickMeta(req.params.group, req.params.key);
   const referer = req.get("referer");
   const pagePath = (() => {
@@ -108,13 +176,13 @@ router.get("/go/:group/:key", async (req, res) => {
       buttonName: clickMeta.buttonName,
       destinationUrl: trackedDestination,
       pagePath,
-      eventSlug: readQueryParam(req.query.event_slug) || null,
+      eventSlug: readQueryParam(req.query.event_slug) || (isSunsetsTicket ? SUNSETS_JULY4_EVENT_SLUG : null),
       interestType: clickMeta.interestType,
       channel: clickMeta.channel,
-      utmSource: readQueryParam(req.query.utm_source) || null,
-      utmMedium: readQueryParam(req.query.utm_medium) || null,
-      utmCampaign: readQueryParam(req.query.utm_campaign) || null,
-      utmContent: readQueryParam(req.query.utm_content) || null,
+      utmSource: readQueryParam(req.query.utm_source) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_source : null),
+      utmMedium: readQueryParam(req.query.utm_medium) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_medium : null),
+      utmCampaign: readQueryParam(req.query.utm_campaign) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_campaign : null),
+      utmContent: readQueryParam(req.query.utm_content) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_content : null),
       utmTerm: readQueryParam(req.query.utm_term) || null,
       metadata: {
         requestId,

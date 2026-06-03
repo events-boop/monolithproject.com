@@ -1,3 +1,4 @@
+import { SUNSETS_JULY4_TICKET_PATH, SUNSETS_TICKET_CTA_LABEL } from "../../shared/events/sunsets-ticketing";
 import type { EventCta, EventSeries, ScheduledEvent } from "../../shared/events/types";
 
 const CTA_LABELS = {
@@ -114,7 +115,7 @@ export function resolveEventPrimaryCta(event?: ScheduledEvent | null, now: Date 
   if (onSale && isEventLowInventory(event)) {
     const href = event.ticketUrl || "/schedule";
     return {
-      label: CTA_LABELS.claimLast,
+      label: event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.claimLast,
       href,
       tool: "posh",
       isExternal: isExternalHref(href),
@@ -124,7 +125,7 @@ export function resolveEventPrimaryCta(event?: ScheduledEvent | null, now: Date 
   if (onSale) {
     const href = event.ticketUrl || "/schedule";
     return {
-      label: CTA_LABELS.tickets,
+      label: href === SUNSETS_JULY4_TICKET_PATH || event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets,
       href,
       tool: "posh",
       isExternal: isExternalHref(href),

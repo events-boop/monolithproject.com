@@ -1,3 +1,10 @@
+import {
+  SUNSETS_JULY4_EVENT_SLUG,
+  SUNSETS_JULY4_TICKET_KEY,
+  SUNSETS_JULY4_TICKET_UTMS,
+  isSunsetsJuly4TicketRoute,
+} from "../../shared/events/sunsets-ticketing";
+
 type OutboundGroup =
   | "tickets"
   | "waitlist"
@@ -26,6 +33,7 @@ const FALLBACK_X_URL = "https://x.com/monolithproject";
 const OUTBOUND_TRACKING_PARAMS = [
   "session_id",
   "event_slug",
+  "ref",
   "utm_source",
   "utm_medium",
   "utm_campaign",
@@ -69,7 +77,7 @@ const ticketDestinations: Record<string, string | null> = Object.assign(
     // SUN(SETS) July 4 — resolves to null when env is unset so the route
     // can serve a clean "Tickets coming soon" page instead of silently
     // redirecting to the featured fallback.
-    "css-jul04":
+    [SUNSETS_JULY4_TICKET_KEY]:
       readHttpsEnv(
         "OUTBOUND_TICKETS_CSS_JUL04_URL",
         "NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL"
@@ -194,6 +202,11 @@ export function resolveOutboundDestination(group: string, key: string) {
     // If the key was found but explicitly null, return the sentinel — do not
     // fall through to the featured URL so the caller can show a coming-soon page.
     if (dest === TICKETS_COMING_SOON) return TICKETS_COMING_SOON;
+
+    if (isSunsetsJuly4TicketRoute(normalizedGroup, normalizedKey)) {
+      return dest;
+    }
+
     return dest || ticketDestinations.featured || null;
   }
 
@@ -236,10 +249,23 @@ function readQueryValue(source: QuerySource, key: string) {
 
 export function decorateOutboundDestination(
   destination: string,
-  source: QuerySource
+  source: QuerySource,
+  route?: { group?: string; key?: string }
 ) {
   try {
     const url = new URL(destination);
+    const isSunsetsTicket = route?.group && route?.key
+      ? isSunsetsJuly4TicketRoute(route.group, route.key)
+      : false;
+
+    if (isSunsetsTicket) {
+      for (const [key, value] of Object.entries(SUNSETS_JULY4_TICKET_UTMS)) {
+        url.searchParams.set(key, value);
+      }
+      if (!url.searchParams.has("event_slug")) {
+        url.searchParams.set("event_slug", SUNSETS_JULY4_EVENT_SLUG);
+      }
+    }
 
     for (const param of OUTBOUND_TRACKING_PARAMS) {
       const value = readQueryValue(source, param)?.trim();

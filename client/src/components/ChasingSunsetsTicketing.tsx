@@ -1,68 +1,95 @@
 import {
   Anchor,
   ArrowRight,
+  ArrowUpRight,
   Calendar,
-  Check,
-  Lock,
+  Clock,
   MapPin,
+  ShieldCheck,
+  Ticket,
+  Users,
+  Waves,
 } from "lucide-react";
 import type { ScheduledEvent } from "@shared/events/types";
 import { useLocation } from "wouter";
 import { getSeriesEvents } from "@/lib/siteExperience";
-import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { trackAccessEvent } from "@/lib/api";
+import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
+import {
+  SUNSETS_JULY4_ADMISSION_TIERS,
+  SUNSETS_JULY4_EVENT_ADDRESS,
+  SUNSETS_JULY4_EVENT_LOCATION,
+  SUNSETS_JULY4_EVENT_TIME,
+  SUNSETS_JULY4_EVENT_TITLE,
+  SUNSETS_JULY4_EVENT_VENUE,
+  SUNSETS_JULY4_FIRST_ACCESS_CODE,
+  SUNSETS_JULY4_LINEUP,
+  SUNSETS_JULY4_REVENUE,
+  SUNSETS_JULY4_SET_TIMES,
+  SUNSETS_JULY4_TABLE_MINIMUM,
+  SUNSETS_JULY4_TABLE_RAIL,
+  SUNSETS_JULY4_TICKET_PATH,
+  SUNSETS_JULY4_TOTAL_CAPACITY,
+  SUNSETS_TICKET_CTA_LABEL,
+  SUNSETS_TICKET_CTA_SUPPORT,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
+
+const TICKET_RAIL_STATS = [
+  {
+    label: "Capacity",
+    value: SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US"),
+    note: "guest admissions",
+  },
+  { label: "First Access", value: SUNSETS_JULY4_FIRST_ACCESS_CODE, note: "$30 hidden tier" },
+  { label: "Tables", value: SUNSETS_JULY4_TABLE_MINIMUM, note: "6 premium cabanas" },
+  { label: "Ticket Rail", value: "Posh", note: "official source" },
+] as const;
+
+const PUBLIC_RULES = [
+  "Ticket tiers are released in order. When a tier sells out, the price moves.",
+  "Before 2PM Arrival Pass holders must be checked in before 2:00 PM.",
+  "Tables and cabanas are handled through the VIP inquiry rail, not free admission tickets.",
+] as const;
+
+const PUBLIC_COPY_BLOCKS = [
+  {
+    kicker: "Why This One Matters",
+    title: "Watch the sun. Stay for the sets.",
+    body: "Music brings people together when the setting, the sound, and the moment are aligned. On July 4th, we bring that back to the lake: open air, skyline views, house music, and a crowd built around connection.",
+  },
+  {
+    kicker: "Entry Info",
+    title: "Ticketed event. Valid ID required.",
+    body: "Arrive early to avoid peak entry delays. All sales are subject to ticketing platform and venue policies. Before 2PM Arrival Pass holders must be checked in before 2:00 PM.",
+  },
+  {
+    kicker: "After Party",
+    title: "Details shared separately.",
+    body: "Official after party details will be shared with ticket holders and announced separately.",
+  },
+  {
+    kicker: "Presented By The Monolith Project",
+    title: "Rooted in the city where house music was born.",
+    body: "Chicago-based music and cultural experience platform. House music. Artist-led events. Intentional community. Togetherness is the frequency. Music is the guide.",
+  },
+] as const;
 
 type ChasingSunsetsTicketingProps = {
   featuredEvent?: ScheduledEvent | null;
   seasonEvents?: ScheduledEvent[];
 };
 
-function getReleaseStatus(event?: ScheduledEvent | null) {
-  if (!event) {
-    return {
-      dotClassName: "bg-[#C2703E]/50",
-      labelClassName: "text-[#2C1810]/56",
-      label: "Release Tracking",
-    };
-  }
-
-  if (event.status === "on-sale" && event.ticketUrl) {
-    return {
-      dotClassName: "bg-[#3D8A57]",
-      labelClassName: "text-[#3D8A57]",
-      label: "Tickets On Sale",
-    };
-  }
-
-  if (event.activeFunnels?.length) {
-    return {
-      dotClassName: "bg-[#A4592C]",
-      labelClassName: "text-[#A4592C]",
-      label: "Registration Open",
-    };
-  }
-
-  return {
-    dotClassName: "bg-[#2C1810]/30",
-    labelClassName: "text-[#2C1810]/54",
-    label: "Coming Soon",
-  };
+function handleTicketClick(source: string) {
+  const href = appendAttributionQueryParams(SUNSETS_JULY4_TICKET_PATH);
+  captureSunsetsTicketCtaClick({
+    destinationUrl: href,
+    pagePath: "/chasing-sunsets",
+    ctaPosition: source === "primary" ? "primary" : "secondary",
+  });
+  void trackTicketIntent(source, "css-jul04", href);
+  return href;
 }
-
-const SEASON_PASS_PERKS = [
-  "Guaranteed entry to all tracked summer dates",
-  "Lower total cost than buying each chapter separately",
-  "Priority access to venue and lineup updates",
-  "The cleanest way to stay inside the season arc",
-];
-
-const VIP_PASS_PERKS = [
-  "Expedited entry lane across the season",
-  "Better sightlines and higher-touch access",
-  "Private bar line and premium restroom routing",
-  "Priority for the July 5 recovery release",
-];
 
 export default function ChasingSunsetsTicketing({
   featuredEvent,
@@ -71,322 +98,45 @@ export default function ChasingSunsetsTicketing({
   const [, setLocation] = useLocation();
   const chasingEvents = seasonEvents ?? getSeriesEvents("chasing-sunsets");
   const pricingEvent = featuredEvent ?? chasingEvents[0];
-  const tiers = pricingEvent?.ticketTiers ?? [];
-  const releaseStatus = getReleaseStatus(pricingEvent);
-  const releaseTitle =
-    pricingEvent?.headline || pricingEvent?.title || "Featured Release";
-  const releaseEpisode = pricingEvent?.episode || "Featured Chapter";
-  const releaseDate = pricingEvent?.date || "Date TBA";
-  const releaseVenue = pricingEvent?.venue || "Castaways";
-  const releaseLocation = pricingEvent?.location || "Chicago";
-  const hasStructuredPricing = tiers.length > 0;
-  const seasonEventCount = chasingEvents.length || 3;
+  const ticketHref = appendAttributionQueryParams(SUNSETS_JULY4_TICKET_PATH);
 
   return (
     <section
       data-featured-event-id={pricingEvent?.id}
-      className="relative overflow-hidden border-t border-[#C2703E]/14 bg-[linear-gradient(180deg,rgba(244,233,214,0.92),rgba(251,245,237,0.98))] px-6 py-24"
+      className="relative overflow-hidden border-y border-[#f4d58d]/22 bg-[#080a07] px-6 py-20 text-white md:py-28"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_16%,rgba(232,184,109,0.14),transparent_28%),radial-gradient(circle_at_82%_74%,rgba(194,112,62,0.12),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#E8B86D]/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(244,213,141,0.16),rgba(8,10,7,0)_34%),radial-gradient(circle_at_82%_22%,rgba(20,184,166,0.13),transparent_30%),linear-gradient(180deg,#080a07_0%,#11150f_52%,#080a07_100%)]" />
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#f4d58d]/70 to-transparent" />
 
       <div className="container layout-wide relative z-10">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] xl:items-end">
-          <div className="max-w-3xl">
-            <span className="block font-mono text-[10px] uppercase tracking-[0.34em] text-[#A4592C]">
-              Ticketing / Access
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] xl:items-end">
+          <div>
+            <span className="inline-flex items-center gap-2 border border-[#f4d58d]/28 bg-[#f4d58d]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+              <Ticket className="h-3.5 w-3.5" /> Ticketing / Access
             </span>
-            <h2 className="mt-4 font-display text-[clamp(3rem,6vw,6.2rem)] uppercase leading-[0.86] tracking-tight text-[#2C1810] hyphens-none break-keep">
-              CHASING SUN(SETS)
-              <br />
-              SEASON 2026
+            <h2 className="mt-5 font-display text-[clamp(3.1rem,6.4vw,6.8rem)] uppercase leading-[0.84] tracking-normal text-white">
+              SUN(SETS) I
+              <span className="block text-[#f4d58d]">July 4th</span>
             </h2>
-            <p className="mt-4 font-serif text-[clamp(1.35rem,2vw,1.95rem)] italic text-[#A4592C]">
-              Tradition begins on the lakefront.
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82 md:text-xl">
+              Chasing Sun(Sets) returns home to the lake for a full-day house
+              music experience at Castaways Beach Club. Golden hour, Lake
+              Michigan, and the skyline behind you.
             </p>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#2C1810]/70 md:text-lg">
-              This block now carries the same season language as the rest of the
-              page: featured chapter, access logic, pass options, and early-drop
-              routing in one place instead of a separate dark promo wall.
-            </p>
-          </div>
-
-          <div className="sunset-panel-editorial p-6 md:p-8">
-            <div className="flex flex-wrap gap-2.5">
-              <span className="rounded-full border border-[#C2703E]/16 bg-white/72 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/70">
-                {releaseVenue.toUpperCase()}
-              </span>
-              <span className="rounded-full border border-[#C2703E]/16 bg-white/72 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/70">
-                {seasonEventCount} tracked dates
-              </span>
-              <span
-                className={`inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/24 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] ${releaseStatus.labelClassName}`}
-              >
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${releaseStatus.dotClassName}`}
-                />
-                {releaseStatus.label}
-              </span>
-            </div>
-
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
-                  Featured Date
-                </span>
-                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">
-                  {releaseDate}
-                </p>
-              </div>
-              <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
-                  Episode
-                </span>
-                <p className="mt-3 font-display text-2xl uppercase leading-[0.92] text-[#2C1810]">
-                  {releaseEpisode}
-                </p>
-              </div>
-              <div className="sunset-panel-editorial-soft p-4">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.26em] text-[#A4592C]">
-                  Drop Route
-                </span>
-                <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/64">
-                  Release details, lineup, and access signals land here before
-                  the public push.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill-sunsets btn-pill-wide"
+                href={ticketHref}
+                onClick={() => handleTicketClick("primary")}
+                className="inline-flex min-h-14 items-center justify-center gap-3 bg-[#f4d58d] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
               >
-                Sign Up For The Drop
+                <Ticket className="h-4 w-4" />
+                {SUNSETS_TICKET_CTA_LABEL}
+                <ArrowUpRight className="h-4 w-4" />
               </a>
-              <button
-                onClick={() => setLocation("/schedule")}
-                className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide"
-              >
-                View Season Dates
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-          <article className="sunset-panel-editorial p-6 md:p-8">
-            <div className="flex flex-col gap-6 border-b border-[#C2703E]/12 pb-6 md:flex-row md:items-end md:justify-between">
-              <div>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                  {releaseEpisode}
-                </span>
-                <h3 className="mt-3 font-display text-[clamp(2.3rem,4vw,4rem)] uppercase leading-[0.88] text-[#2C1810]">
-                  {releaseTitle}
-                </h3>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[1.25rem] border border-[#C2703E]/14 bg-white/72 px-4 py-3">
-                  <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                    <Calendar className="h-3.5 w-3.5" /> Date
-                  </span>
-                  <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#2C1810]/72">
-                    {releaseDate}
-                  </p>
-                </div>
-                <div className="rounded-[1.25rem] border border-[#C2703E]/14 bg-white/72 px-4 py-3">
-                  <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                    <MapPin className="h-3.5 w-3.5" /> Venue
-                  </span>
-                  <p className="mt-2 text-sm uppercase tracking-[0.14em] text-[#2C1810]/72">
-                    {releaseVenue} / {releaseLocation}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-              <div className="sunset-panel-editorial-soft p-5 md:p-6">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                  {hasStructuredPricing ? "Release Tiers" : "Pricing Window"}
-                </span>
-
-                {hasStructuredPricing ? (
-                  <div className="mt-5 space-y-3">
-                    {tiers.map((tier, index) => {
-                      const isActive = tier.available;
-                      const isLast = index === tiers.length - 1;
-
-                      return (
-                        <div
-                          key={tier.id}
-                          className={`flex items-center justify-between border-[#C2703E]/10 ${isLast ? "" : "border-b pb-3"}`}
-                        >
-                          <span
-                            className={`font-mono text-xs uppercase tracking-[0.22em] ${isActive ? "text-[#2C1810]/78" : "text-[#2C1810]/42"}`}
-                          >
-                            {tier.name}
-                          </span>
-                          <span
-                            className={`font-display text-[1.7rem] uppercase leading-none ${isActive ? "text-[#A4592C]" : "text-[#2C1810]/32 line-through decoration-[#2C1810]/20"}`}
-                          >
-                            {!isActive ? (
-                              <Lock className="mr-1 inline h-3.5 w-3.5 opacity-50" />
-                            ) : null}
-                            ${tier.price}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="mt-4 rounded-[1.25rem] border border-[#C2703E]/12 bg-white/72 p-5">
-                    <p className="text-sm leading-relaxed text-[#2C1810]/68">
-                      The next pricing move for this chapter has not been
-                      published yet. The drop list remains the first place where
-                      new access tiers land.
-                    </p>
-                    {typeof pricingEvent?.startingPrice === "number" ? (
-                      <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                        First public tier starts from $
-                        {pricingEvent.startingPrice}
-                      </p>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-
-              <div className="grid gap-4">
-                <div className="sunset-panel-editorial-soft p-5 md:p-6">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                    Release Route
-                  </span>
-                  <ul className="mt-4 space-y-3 text-sm leading-relaxed text-[#2C1810]/66">
-                    <li>
-                      Season updates move through one drop route instead of
-                      fragmented links.
-                    </li>
-                    <li>
-                      Featured release, pricing logic, and pass access stay tied
-                      to the same chapter system.
-                    </li>
-                    <li>
-                      {hasStructuredPricing
-                        ? "Early tiers are visible now. Later phases close out fast."
-                        : "Pricing is still staging. Join now if you want the first public move."}
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href={appendAttributionQueryParams(
-                      CHASING_SUNSETS_DROP_URL
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide"
-                  >
-                    Unlock Presale <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
-                  <button
-                    onClick={() => setLocation("/schedule")}
-                    className="btn-pill-sunsets btn-pill-wide"
-                  >
-                    See All Dates
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <div className="grid gap-6">
-            <article className="sunset-panel-editorial-soft p-6 md:p-7">
-              <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                Access All Dates
-              </span>
-              <div className="mt-4 flex items-end justify-between gap-4 border-b border-[#C2703E]/12 pb-5">
-                <div>
-                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">
-                    Season Pass
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">
-                    For the people treating Chasing as a full summer run, not a
-                    one-off ticket.
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">
-                    $119
-                  </span>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">
-                    GA Tier
-                  </p>
-                </div>
-              </div>
-              <ul className="mt-5 space-y-3">
-                {SEASON_PASS_PERKS.map(perk => (
-                  <li
-                    key={perk}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68"
-                  >
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#A4592C]" />
-                    <span>{perk}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={appendAttributionQueryParams(CHASING_SUNSETS_DROP_URL)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill-outline btn-pill-outline-sunsets-light btn-pill-wide mt-6"
-              >
-                Season Updates
-              </a>
-            </article>
-
-            <article className="rounded-[1.75rem] border border-[#E8B86D]/24 bg-[linear-gradient(180deg,rgba(250,239,212,0.86),rgba(255,247,231,0.78))] p-6 shadow-[0_20px_48px_rgba(44,24,16,0.06)] md:p-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#E8B86D]/36 bg-[#E8B86D]/12 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-[#A4592C]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#A4592C]" />
-                Highly Limited
-              </div>
-              <div className="mt-5 flex items-end justify-between gap-4 border-b border-[#C2703E]/12 pb-5">
-                <div>
-                  <h3 className="font-display text-[2.2rem] uppercase leading-[0.92] text-[#2C1810]">
-                    VIP Pass
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#2C1810]/62">
-                    Higher-touch entry, cleaner movement, and better positioning
-                    inside the room.
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="font-display text-4xl uppercase leading-none text-[#A4592C]">
-                    $249
-                  </span>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/48">
-                    VIP Tier
-                  </p>
-                </div>
-              </div>
-              <ul className="mt-5 space-y-3">
-                {VIP_PASS_PERKS.map(perk => (
-                  <li
-                    key={perk}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-[#2C1810]/68"
-                  >
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#A4592C]" />
-                    <span>{perk}</span>
-                  </li>
-                ))}
-              </ul>
               <button
                 onClick={() => {
                   trackAccessEvent("vip_inquiry_click", {
-                    buttonName: "Request VIP Table",
+                    buttonName: "Request Table / Cabana",
                     destinationUrl: "/vip",
                     eventSlug: pricingEvent?.slug || pricingEvent?.id,
                     eventDate: pricingEvent?.date,
@@ -395,29 +145,236 @@ export default function ChasingSunsetsTicketing({
                   });
                   setLocation("/vip");
                 }}
-                className="btn-pill-sunsets btn-pill-wide mt-6"
+                className="inline-flex min-h-14 items-center justify-center gap-3 border border-white/18 bg-white/[0.06] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:border-[#f4d58d]/60 hover:bg-white/[0.1]"
               >
-                Request VIP Table
+                <Users className="h-4 w-4" />
+                Tables / Cabanas
+                <ArrowRight className="h-4 w-4" />
               </button>
-            </article>
-
-            <article className="sunset-panel-editorial-soft p-6 md:p-7">
-              <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#A4592C]">
-                <Anchor className="h-3.5 w-3.5" /> July 5 Recovery
-              </span>
-              <h3 className="mt-4 font-display text-[1.9rem] uppercase leading-[0.92] text-[#2C1810]">
-                Recovery Signal
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#2C1810]/64">
-                The follow-up chapter stays intentionally quiet until the
-                primary release window clears. This stays here as season
-                context, not a separate mini-site tease.
-              </p>
-              <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#C2703E]/18 bg-white/72 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[#2C1810]/56">
-                <Lock className="h-3.5 w-3.5" /> Decrypting 06.20.2026
-              </div>
-            </article>
+            </div>
+            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/48">
+              {SUNSETS_TICKET_CTA_SUPPORT}
+            </p>
           </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {TICKET_RAIL_STATS.map(stat => (
+              <div key={stat.label} className="border border-white/12 bg-white/[0.055] p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#f4d58d]">
+                  {stat.label}
+                </p>
+                <p className="mt-3 font-display text-[clamp(1.85rem,3vw,3rem)] uppercase leading-none text-white">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-sm font-semibold text-white/55">{stat.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-4">
+          {PUBLIC_COPY_BLOCKS.map(block => (
+            <article key={block.kicker} className="border border-white/10 bg-black/28 p-5">
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8ee8dd]">
+                {block.kicker}
+              </p>
+              <h3 className="mt-4 text-lg font-black leading-tight text-white">
+                {block.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/64">{block.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+          <div className="border border-[#f4d58d]/22 bg-[#f4d58d]/10 p-5 lg:col-span-2">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+                  Final Ticket Tiers
+                </p>
+                <h3 className="mt-3 font-display text-[clamp(2rem,4vw,4rem)] uppercase leading-[0.88] text-white">
+                  The lake has a limit.
+                </h3>
+              </div>
+              <div className="text-left md:text-right">
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/52">
+                  Ticket revenue potential
+                </p>
+                <p className="mt-1 font-display text-3xl uppercase leading-none text-[#f4d58d]">
+                  {SUNSETS_JULY4_REVENUE.ticketRevenuePotential}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="border border-white/12 bg-black/30 p-5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8ee8dd]">
+              Event Details
+            </p>
+            <dl className="mt-4 space-y-3 text-sm text-white/70">
+              <div className="flex gap-3">
+                <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <div>
+                  <dt className="sr-only">Title</dt>
+                  <dd>{SUNSETS_JULY4_EVENT_TITLE}</dd>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <dd>{SUNSETS_JULY4_EVENT_TIME}</dd>
+              </div>
+              <div className="flex gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <dd>
+                  {SUNSETS_JULY4_EVENT_VENUE} · {SUNSETS_JULY4_EVENT_LOCATION}
+                  <span className="block text-white/42">{SUNSETS_JULY4_EVENT_ADDRESS}</span>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 xl:grid-cols-3">
+          {SUNSETS_JULY4_ADMISSION_TIERS.map(tier => (
+            <article
+              key={tier.id}
+              className={`border p-5 transition hover:-translate-y-1 ${
+                tier.highlight
+                  ? "border-[#f4d58d]/50 bg-[#f4d58d]/12 shadow-[0_24px_70px_rgba(244,213,141,0.12)]"
+                  : "border-white/12 bg-white/[0.055]"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/45">
+                    {tier.visibility}
+                  </p>
+                  <h4 className="mt-3 text-lg font-black leading-tight text-white">
+                    {tier.name}
+                  </h4>
+                </div>
+                <div className="text-right">
+                  <p className="font-display text-4xl uppercase leading-none text-[#f4d58d]">
+                    {tier.priceLabel}
+                  </p>
+                  <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
+                    {tier.quantityLabel}
+                  </p>
+                </div>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-white/68">{tier.description}</p>
+              <div className="mt-5 grid gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/48">
+                <span>{tier.admissionLabel}</span>
+                <span>{tier.timing}</span>
+              </div>
+              {tier.rule ? (
+                <p className="mt-4 border-l-2 border-[#f4d58d]/55 pl-3 text-xs font-semibold leading-relaxed text-[#f8e7b3]">
+                  {tier.rule}
+                </p>
+              ) : null}
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+          <article className="border border-[#8ee8dd]/26 bg-[#8ee8dd]/10 p-6 md:p-7">
+            <div className="flex items-center gap-3">
+              <Anchor className="h-5 w-5 text-[#8ee8dd]" />
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8ee8dd]">
+                Tables / Cabanas
+              </p>
+            </div>
+            <h3 className="mt-4 font-display text-[clamp(2rem,3vw,3.4rem)] uppercase leading-[0.9] text-white">
+              {SUNSETS_JULY4_TABLE_RAIL.name}
+            </h3>
+            <p className="mt-4 text-base leading-relaxed text-white/72">
+              {SUNSETS_JULY4_TABLE_RAIL.description}
+            </p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              {[
+                SUNSETS_JULY4_TABLE_RAIL.priceLabel,
+                SUNSETS_JULY4_TABLE_RAIL.quantityLabel,
+                SUNSETS_JULY4_TABLE_RAIL.admissionLabel,
+              ].map(item => (
+                <span key={item} className="border border-white/10 bg-black/24 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/76">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-xs font-semibold leading-relaxed text-[#f8e7b3]">
+              {SUNSETS_JULY4_TABLE_RAIL.rule}
+            </p>
+            <button
+              onClick={() => {
+                trackAccessEvent("vip_inquiry_click", {
+                  buttonName: "Request Table / Cabana",
+                  destinationUrl: "/vip",
+                  eventSlug: pricingEvent?.slug || pricingEvent?.id,
+                  eventDate: pricingEvent?.date,
+                  channel: "site",
+                  source: "chasing_sunsets_ticketing_table_rail",
+                });
+                setLocation("/vip");
+              }}
+              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f4d58d]"
+            >
+              Request Table / Cabana <ArrowRight className="h-4 w-4" />
+            </button>
+          </article>
+
+          <article className="border border-white/12 bg-white/[0.055] p-6 md:p-7">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+                  <Waves className="h-4 w-4" /> Lineup
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {SUNSETS_JULY4_LINEUP.map(artist => (
+                    <li key={artist} className="font-display text-[clamp(1.55rem,2.4vw,2.55rem)] uppercase leading-none text-white">
+                      {artist}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#8ee8dd]">
+                  <Clock className="h-4 w-4" /> Set Times
+                </p>
+                <ol className="mt-5 space-y-3">
+                  {SUNSETS_JULY4_SET_TIMES.map(slot => (
+                    <li key={`${slot.time}-${slot.label}`} className="flex gap-3 border-b border-white/8 pb-3 last:border-b-0 last:pb-0">
+                      <span className="min-w-[9.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#f4d58d]">
+                        {slot.time}
+                      </span>
+                      <span className="text-sm font-semibold text-white/72">{slot.label}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {PUBLIC_RULES.map(rule => (
+            <div key={rule} className="flex gap-3 border border-white/10 bg-black/24 p-4 text-sm leading-relaxed text-white/66">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+              <span>{rule}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center">
+          <p className="max-w-2xl text-sm leading-relaxed text-white/54">
+            Secure your entry early. Capacity is limited, ticket tiers move as allocations sell out, and all ticket purchases route through the official Posh rail.
+          </p>
+          <a
+            href={ticketHref}
+            onClick={() => handleTicketClick("footer")}
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 border border-[#f4d58d]/42 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-[#f4d58d] transition hover:bg-[#f4d58d] hover:text-black"
+          >
+            {SUNSETS_TICKET_CTA_LABEL} <ArrowUpRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>

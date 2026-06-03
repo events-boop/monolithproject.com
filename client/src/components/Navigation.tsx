@@ -480,7 +480,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       }`}
                     >
                       {resolvedBrand === "chasing-sunsets" ? (
-                        "CHASING SUN(SETS)"
+                        "SUN(SETS)"
                       ) : resolvedBrand === "untold-story" ? (
                         <>
                           <UntoldButterflyLogo
@@ -605,7 +605,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="CHASING SUN(SETS) & RADIO"
+                  label="SUN(SETS)"
                   href="/chasing-sunsets"
                   isActive={
                     location.includes("/chasing-sunsets") ||
@@ -630,7 +630,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="UNTOLD STORY"
+                  label="STORY"
                   href="/story"
                   isActive={
                     location.includes("/story") ||
@@ -671,7 +671,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="THE MONOLITH"
+                  label="MONOLITH"
                   href="/monolith"
                   isActive={location === "/monolith"}
                   isLight={isLight}

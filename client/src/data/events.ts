@@ -1,3 +1,5 @@
+import { SUNSETS_JULY4_TICKET_PATH } from "@shared/events/sunsets-ticketing";
+
 export type {
   ActiveFunnel,
   EventSeries,
@@ -17,4 +19,4 @@ export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
 /** Active audience gateway for the next public drop. */
-export const POSH_TICKET_URL = "/go/tickets/css-jul04";
+export const POSH_TICKET_URL = SUNSETS_JULY4_TICKET_PATH;

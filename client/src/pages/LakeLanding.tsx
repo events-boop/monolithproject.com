@@ -23,6 +23,14 @@ import {
   trackLinkClick,
 } from "@/lib/api";
 import { trackLakeLead, trackLakePageView } from "@/lib/campaignPixel";
+import {
+  SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
+  SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
+  SUNSETS_JULY4_TICKET_PATH as TICKET_HREF,
+  SUNSETS_TICKET_CTA_LABEL,
+  SUNSETS_TICKET_CTA_SUPPORT,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 
 type Chapter = {
   title: string;
@@ -55,9 +63,6 @@ type TrackableLink = {
 
 const PAGE_PATH = "/lake";
 const PAGE_SOURCE = "sunsets_lake";
-const JULY_4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
-const JULY_4_EVENT_DATE = "2026-07-04";
-const TICKET_HREF = "/go/tickets/css-jul04";
 const RECAP_HREF = "/go/media/sunsets-recap";
 const RADIO_HREF = "/go/media/sunsets-soundcloud";
 const INSTAGRAM_HREF = "/go/social/instagram-sunsets";
@@ -163,7 +168,7 @@ export default function LakeLanding() {
         date: "July 4, 2026",
         place: "Castaways - North Ave Beach",
         status: "July 4 access",
-        action: "Get Tickets",
+        action: SUNSETS_TICKET_CTA_LABEL,
         eventSlug: JULY_4_EVENT_SLUG,
         eventDate: JULY_4_EVENT_DATE,
         href: TICKET_HREF,
@@ -326,8 +331,13 @@ export default function LakeLanding() {
               href={ticketHref}
               onClick={() => {
                 triggerHaptic(16);
+                captureSunsetsTicketCtaClick({
+                  destinationUrl: ticketHref,
+                  pagePath: PAGE_PATH,
+                  ctaPosition: "primary",
+                });
                 trackLakeClick({
-                  buttonName: "Hero Get Tickets",
+                  buttonName: SUNSETS_TICKET_CTA_LABEL,
                   href: ticketHref,
                   eventSlug: JULY_4_EVENT_SLUG,
                   eventDate: JULY_4_EVENT_DATE,
@@ -338,9 +348,12 @@ export default function LakeLanding() {
               className="flex min-h-14 items-center justify-center gap-2 bg-[#dfc27a] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#efd48d]"
             >
               <Ticket className="size-4" />
-              July 4 Ticket Access
+              {SUNSETS_TICKET_CTA_LABEL}
               <ArrowUpRight className="size-4" />
             </a>
+            <p className="-mt-2 text-center text-[11px] font-semibold text-stone-400">
+              {SUNSETS_TICKET_CTA_SUPPORT}
+            </p>
 
             <section
               id="lake-list"
@@ -407,6 +420,13 @@ export default function LakeLanding() {
                         href={chapterHref}
                         onClick={() => {
                           triggerHaptic(12);
+                          if (chapter.href === TICKET_HREF) {
+                            captureSunsetsTicketCtaClick({
+                              destinationUrl: chapterHref,
+                              pagePath: PAGE_PATH,
+                              ctaPosition: "chapter",
+                            });
+                          }
                           trackLakeClick({
                             buttonName: chapter.action,
                             href: chapterHref,

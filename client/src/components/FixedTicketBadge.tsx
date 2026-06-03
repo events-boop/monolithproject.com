@@ -1,7 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Ticket } from "lucide-react";
-import { POSH_TICKET_URL } from "@/data/events";
-import { CTA_LABELS } from "@/lib/cta";
+import {
+  SUNSETS_JULY4_TICKET_PATH,
+  SUNSETS_TICKET_CTA_LABEL,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 
 export default function FixedTicketBadge() {
   const { scrollY } = useScroll();
@@ -10,14 +13,21 @@ export default function FixedTicketBadge() {
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
       <a
-        href={POSH_TICKET_URL}
-        className="group relative flex items-center justify-center w-32 h-32 rounded-full cursor-pointer"
-        aria-label="First Access"
+        href={SUNSETS_JULY4_TICKET_PATH}
+        onClick={() =>
+          captureSunsetsTicketCtaClick({
+            destinationUrl: SUNSETS_JULY4_TICKET_PATH,
+            pagePath:
+              typeof window !== "undefined" ? window.location.pathname : undefined,
+            ctaPosition: "footer",
+          })
+        }
+        className="group relative flex h-32 w-32 cursor-pointer items-center justify-center rounded-full"
+        aria-label={SUNSETS_TICKET_CTA_LABEL}
       >
-        {/* Rotating Text Ring */}
         <motion.div
           style={{ rotate }}
-          className="absolute inset-0 w-full h-full flex items-center justify-center"
+          className="absolute inset-0 flex h-full w-full items-center justify-center"
         >
           <svg
             viewBox="0 0 100 100"
@@ -31,17 +41,16 @@ export default function FixedTicketBadge() {
                 d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
               />
             </defs>
-            <text className="text-[11px] font-bold uppercase tracking-[0.2em] fill-white font-mono">
+            <text className="font-mono fill-white text-[10px] font-bold uppercase tracking-[0.2em]">
               <textPath xlinkHref="#circlePath" startOffset="0%">
-                {"First Access • The Monolith Project • First Access •"}
+                {"Buy Tickets • July 4 • Posh • Buy Tickets •"}
               </textPath>
             </text>
           </svg>
         </motion.div>
 
-        {/* Center Icon */}
-        <div className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white text-black flex items-center justify-center transition-transform group-hover:scale-110">
-          <Ticket className="w-5 h-5" />
+        <div className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-black transition-transform group-hover:scale-110">
+          <Ticket className="h-5 w-5" />
         </div>
       </a>
     </div>
