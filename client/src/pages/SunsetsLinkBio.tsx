@@ -31,6 +31,9 @@ import {
 } from "@/lib/api";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
 import {
+  SUNSETS_2026_SEASON_CHAPTERS,
+  SUNSETS_2026_SEASON_PASS,
+  SUNSETS_2026_SEASON_PASS_CTA_LABEL,
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_TICKET_PATH as TICKET_HREF,
@@ -729,32 +732,22 @@ export default function SunsetsLinkBio() {
   }, []);
 
   const chapters = useMemo<Chapter[]>(
-    () => [
-      {
-        title: "SUN(SETS) I",
-        date: "July 4, 2026",
-        place: "Castaways - North Ave Beach",
-        status: "July 4 access",
-        action: SUNSETS_TICKET_CTA_LABEL,
-        eventSlug: JULY_4_EVENT_SLUG,
-        eventDate: JULY_4_EVENT_DATE,
+    () =>
+      SUNSETS_2026_SEASON_CHAPTERS.map((chapter, index) => ({
+        title: chapter.title,
+        date: chapter.date,
+        place: `${chapter.venue} / ${chapter.lineup}`,
+        status:
+          index === 0
+            ? "July 4 access"
+            : index === 1
+              ? "August chapter"
+              : "September chapter",
+        action: index === 0 ? SUNSETS_TICKET_CTA_LABEL : "Season Pass",
+        eventSlug: index === 0 ? JULY_4_EVENT_SLUG : undefined,
+        eventDate: index === 0 ? JULY_4_EVENT_DATE : undefined,
         href: TICKET_HREF,
-      },
-      {
-        title: "SUN(SETS) II",
-        date: "Summer 2026",
-        place: "Chicago chapter pending",
-        status: "Private drop",
-        action: "Join Lake List",
-      },
-      {
-        title: "SUN(SETS) III",
-        date: "Final chapter",
-        place: "Location hidden",
-        status: "Signal locked",
-        action: "Unlock Later",
-      },
-    ],
+      })),
     []
   );
 
@@ -855,6 +848,92 @@ export default function SunsetsLinkBio() {
             </section>
 
             <section className="grid gap-3 pt-1">
+              <section className="space-y-4 border border-[#dfc27a]/35 bg-[linear-gradient(145deg,rgba(223,194,122,0.16),rgba(255,255,255,0.045)_48%,rgba(201,232,189,0.08))] p-4">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                    Season Pass
+                  </p>
+                  <h2 className="mt-2 text-2xl font-black leading-none tracking-normal text-white">
+                    {SUNSETS_2026_SEASON_PASS.name}
+                  </h2>
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-[#e8d596]">
+                    {SUNSETS_2026_SEASON_PASS.summary}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-y border-white/10 py-4">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-stone-300">
+                      {SUNSETS_2026_SEASON_PASS.tierName}
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-stone-400">
+                      {SUNSETS_2026_SEASON_PASS.description}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-4xl font-black leading-none text-white">
+                      {SUNSETS_2026_SEASON_PASS.priceLabel}
+                    </p>
+                    <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                      {SUNSETS_2026_SEASON_PASS.quantityLabel}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  {SUNSETS_2026_SEASON_CHAPTERS.map(chapter => (
+                    <div
+                      key={chapter.id}
+                      className="grid gap-1 border border-white/10 bg-black/20 px-3 py-2.5"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-sm font-black text-white">
+                          {chapter.title}
+                        </span>
+                        <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#dfc27a]">
+                          {chapter.date}
+                        </span>
+                      </div>
+                      <p className="text-xs font-semibold text-stone-300">
+                        {chapter.venue}
+                      </p>
+                      <p className="text-xs text-stone-400">
+                        {chapter.lineup}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <Button
+                  asChild
+                  className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d]"
+                >
+                  <a
+                    href={ticketHref}
+                    onClick={() => {
+                      triggerHaptic(16);
+                      captureSunsetsTicketCtaClick({
+                        destinationUrl: ticketHref,
+                        pagePath: PAGE_PATH,
+                        ctaPosition: "season_pass",
+                      });
+                      trackSunsetsClick({
+                        buttonName: SUNSETS_2026_SEASON_PASS_CTA_LABEL,
+                        href: ticketHref,
+                        eventSlug: JULY_4_EVENT_SLUG,
+                        eventDate: JULY_4_EVENT_DATE,
+                        interestType: "season_pass_claim",
+                        channel: "Posh",
+                      });
+                    }}
+                  >
+                    <Ticket className="size-4" />
+                    {SUNSETS_2026_SEASON_PASS_CTA_LABEL}
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                </Button>
+              </section>
+
               <Button
                 type="button"
                 className="h-12 w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d8f0ce]"

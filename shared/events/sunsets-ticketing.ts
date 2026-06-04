@@ -18,6 +18,47 @@ export const SUNSETS_JULY4_TICKET_PATH = "/go/tickets/css-jul04";
 export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
 export const SUNSETS_TICKET_CTA_LABEL = "BUY TICKETS — JULY 4";
 export const SUNSETS_TICKET_CTA_SUPPORT = "Official ticket source powered by Posh.";
+export const SUNSETS_2026_SEASON_PASS_CTA_LABEL = "CLAIM SEASON PASS";
+
+export const SUNSETS_2026_SEASON_CHAPTERS = [
+  {
+    id: "sunsets-i",
+    title: "SUN(SETS) I",
+    date: "July 4, 2026",
+    venue: "Castaways Chicago",
+    lineup: "Autograf x Kiko Franco",
+  },
+  {
+    id: "sunsets-ii",
+    title: "SUN(SETS) II",
+    date: "August 22, 2026",
+    venue: "Castaways Chicago",
+    lineup: "Lineup TBA",
+  },
+  {
+    id: "sunsets-iii",
+    title: "SUN(SETS) III",
+    date: "September 19, 2026",
+    venue: "Castaways Chicago",
+    lineup: "Lineup TBA",
+  },
+] as const;
+
+export const SUNSETS_2026_SEASON_PASS = {
+  name: "SUN(SETS) 2026 Season Pass",
+  summary: "Three dates. One lakefront season.",
+  tierName: "First 100 Season Pass",
+  priceLabel: "$100",
+  quantityLabel: "First 100",
+  description:
+    "Includes access to all three SUN(SETS) 2026 dates, first RSVP priority, insider community access, and early drops.",
+  features: [
+    "Access to all three SUN(SETS) 2026 dates",
+    "First RSVP priority",
+    "Insider community access",
+    "Early drops",
+  ],
+} as const;
 
 export const SUNSETS_TICKET_CTA_PROPERTIES = {
   event_slug: SUNSETS_JULY4_EVENT_SLUG,

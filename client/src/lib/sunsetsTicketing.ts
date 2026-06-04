@@ -1,4 +1,7 @@
 import {
+  SUNSETS_2026_SEASON_CHAPTERS,
+  SUNSETS_2026_SEASON_PASS,
+  SUNSETS_2026_SEASON_PASS_CTA_LABEL,
   SUNSETS_JULY4_ADMISSION_TIERS,
   SUNSETS_JULY4_EVENT_ADDRESS,
   SUNSETS_JULY4_EVENT_DATE,
@@ -23,6 +26,9 @@ import {
 import { capturePostHogEvent } from "./posthog";
 
 export {
+  SUNSETS_2026_SEASON_CHAPTERS,
+  SUNSETS_2026_SEASON_PASS,
+  SUNSETS_2026_SEASON_PASS_CTA_LABEL,
   SUNSETS_JULY4_ADMISSION_TIERS,
   SUNSETS_JULY4_EVENT_ADDRESS,
   SUNSETS_JULY4_EVENT_DATE,
@@ -44,7 +50,12 @@ export {
   SUNSETS_TICKET_CTA_SUPPORT,
 };
 
-export type TicketCtaPosition = "primary" | "chapter" | "footer" | "secondary";
+export type TicketCtaPosition =
+  | "primary"
+  | "chapter"
+  | "footer"
+  | "secondary"
+  | "season_pass";
 
 interface TicketCtaClickOptions {
   ctaPosition?: TicketCtaPosition;
