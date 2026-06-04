@@ -70,6 +70,10 @@ The project utilizes a custom SEO engine (`shared/seo`) which automatically sync
 - Dynamic `sitemap.xml` generation.
 - Optimized `robots.txt` configuration.
 
+## Campaign Ops
+
+- SUN(SETS) drop swaps: `docs/SUNSETS_MARKETER_DROP_WORKFLOW.md`
+
 ---
 
 © 2026 The Monolith Project. All rights reserved.
