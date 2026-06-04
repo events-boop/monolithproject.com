@@ -73,6 +73,7 @@ The project utilizes a custom SEO engine (`shared/seo`) which automatically sync
 ## Campaign Ops
 
 - SUN(SETS) drop swaps: `docs/SUNSETS_MARKETER_DROP_WORKFLOW.md`
+- Untold Story drop swaps: `docs/UNTOLD_MARKETER_DROP_WORKFLOW.md`
 
 ---
 

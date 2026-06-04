@@ -361,15 +361,23 @@ function MainContentWrapper() {
   const normalizedLocation = (
     location.split("?")[0].replace(/\/$/, "") || "/"
   ).toLowerCase();
-  // On the paid sunsets.vip host, the bare root is the Lake campaign front door —
-  // render it directly (no redirect) so ads land on a real page.
+  // On branded campaign hosts, render the root directly (no redirect) so ads
+  // keep the vanity domain in the address bar while landing on the right rail.
   const host =
     typeof window !== "undefined" ? window.location.hostname : "";
   const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
+  const isUntoldHost = host === "untold.vip" || host === "www.untold.vip";
+  const isUntoldRootLanding = normalizedLocation === "/" && isUntoldHost;
   const landingPath =
-    isSunsetsHost && normalizedLocation === "/" ? "/lake" : normalizedLocation;
+    normalizedLocation === "/" && isSunsetsHost
+      ? "/lake"
+      : isUntoldRootLanding
+        ? "/story"
+        : normalizedLocation;
   const isStandaloneLanding =
-    landingPath === "/sunsets" || landingPath === "/lake";
+    landingPath === "/sunsets" ||
+    landingPath === "/lake" ||
+    isUntoldRootLanding;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -425,6 +433,8 @@ function MainContentWrapper() {
         {isStandaloneLanding ? (
           landingPath === "/lake" ? (
             <LakeLandingTransition />
+          ) : landingPath === "/story" ? (
+            <UntoldStoryTransition />
           ) : (
             <SunsetsLinkBioTransition />
           )
