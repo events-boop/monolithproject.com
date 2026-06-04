@@ -13,6 +13,7 @@ export interface AttributionPayload {
   utmCampaign?: string;
   utmTerm?: string;
   utmContent?: string;
+  ref?: string;
   firstUtmSource?: string;
   firstUtmMedium?: string;
   firstUtmCampaign?: string;
@@ -47,6 +48,7 @@ interface TouchPoint {
   utmCampaign?: string;
   utmTerm?: string;
   utmContent?: string;
+  ref?: string;
   gclid?: string;
   fbclid?: string;
   ttclid?: string;
@@ -69,6 +71,7 @@ const ATTRIBUTION_QUERY_PARAMS = {
   utm_campaign: "utmCampaign",
   utm_term: "utmTerm",
   utm_content: "utmContent",
+  ref: "ref",
   gclid: "gclid",
   fbclid: "fbclid",
   ttclid: "ttclid",
@@ -198,6 +201,7 @@ function buildCurrentTouchPoint(): TouchPoint | null {
     utmCampaign: readQueryParam(pageUrl, "utm_campaign"),
     utmTerm: readQueryParam(pageUrl, "utm_term"),
     utmContent: readQueryParam(pageUrl, "utm_content"),
+    ref: readQueryParam(pageUrl, "ref"),
     gclid: readQueryParam(pageUrl, "gclid"),
     fbclid: readQueryParam(pageUrl, "fbclid"),
     ttclid: readQueryParam(pageUrl, "ttclid"),
@@ -213,6 +217,7 @@ function hasAcquisitionSignal(touch: TouchPoint) {
     touch.utmCampaign ||
     touch.utmTerm ||
     touch.utmContent ||
+    touch.ref ||
     touch.gclid ||
     touch.fbclid ||
     touch.ttclid ||
@@ -250,6 +255,7 @@ function mergeTouchPoint(
     utmContent: shouldRefreshSignals
       ? current.utmContent || existing.utmContent
       : existing.utmContent,
+    ref: shouldRefreshSignals ? current.ref || existing.ref : existing.ref,
     gclid: shouldRefreshSignals
       ? current.gclid || existing.gclid
       : existing.gclid,
@@ -318,6 +324,7 @@ export function getAttributionPayload(): AttributionPayload {
     utmCampaign: lastTouch?.utmCampaign,
     utmTerm: lastTouch?.utmTerm,
     utmContent: lastTouch?.utmContent,
+    ref: lastTouch?.ref,
     firstUtmSource: firstTouch?.utmSource,
     firstUtmMedium: firstTouch?.utmMedium,
     firstUtmCampaign: firstTouch?.utmCampaign,

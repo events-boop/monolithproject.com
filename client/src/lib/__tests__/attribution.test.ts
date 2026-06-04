@@ -26,7 +26,7 @@ describe("attribution", () => {
     window.history.replaceState(
       {},
       "",
-      "/tickets?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&utm_content=story-1&gclid=gclid-123"
+      "/tickets?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&utm_content=story-1&ref=ig_dm_sun&gclid=gclid-123"
     );
 
     initAttributionTracking();
@@ -36,6 +36,7 @@ describe("attribution", () => {
     expect(payload.landingPageUrl).toContain("/tickets?");
     expect(payload.utmSource).toBe("instagram");
     expect(payload.firstUtmSource).toBe("instagram");
+    expect(payload.ref).toBe("ig_dm_sun");
     expect(payload.gclid).toBe("gclid-123");
     expect(payload.firstReferrerDomain).toBe("instagram.com");
   });
@@ -89,7 +90,7 @@ describe("attribution", () => {
     window.history.replaceState(
       {},
       "",
-      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1"
+      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&ref=ig_dm_sun&fbclid=fbclid-1"
     );
     initAttributionTracking();
 
@@ -98,6 +99,7 @@ describe("attribution", () => {
     expect(url.searchParams.get("utm_source")).toBe("instagram");
     expect(url.searchParams.get("utm_medium")).toBe("social");
     expect(url.searchParams.get("utm_campaign")).toBe("season-launch");
+    expect(url.searchParams.get("ref")).toBe("ig_dm_sun");
     expect(url.searchParams.get("fbclid")).toBe("fbclid-1");
     expect(url.searchParams.get("session_id")).toBeTruthy();
   });
