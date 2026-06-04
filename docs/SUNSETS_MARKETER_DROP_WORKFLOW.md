@@ -36,6 +36,8 @@ Use the variable that matches the rail you are changing:
 | Chasing Sun(Sets) waitlist | `/go/waitlist/chasing-sunsets` | `OUTBOUND_WAITLIST_CHASING_SUNSETS_URL` |
 | SUN keyword / ManyChat rail | `/go/waitlist/sunsets-manychat` | `OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL` |
 | July 4 tickets | `/go/tickets/css-jul04` | `OUTBOUND_TICKETS_CSS_JUL04_URL` or `NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL` |
+| August 22 tickets | `/go/tickets/css-aug22` | `OUTBOUND_TICKETS_CSS_AUG22_URL` |
+| September 19 tickets | `/go/tickets/css-sep19` | `OUTBOUND_TICKETS_CSS_SEP19_URL` |
 | SUN(SETS) VIP / tables | `/go/forms/sunsets-vip` | `OUTBOUND_FORMS_SUNSETS_VIP_URL` or `FILLOUT_SUNSETS_VIP_URL` |
 
 Do not use `OUTBOUND_LAYLO_URL` unless the code is updated to support that alias. It is not the active variable name in this app today.
@@ -79,11 +81,19 @@ curl -I "https://sunsets.vip/go/waitlist/chasing-sunsets?utm_source=meta&utm_med
 curl -I "https://sunsets.vip/go/tickets/css-jul04?utm_source=sunsetsvip&utm_medium=linkinbio&utm_campaign=sunsets_2026_07_04&utm_content=buy_tickets_primary&ref=site_cta"
 ```
 
+```bash
+curl -I "https://sunsets.vip/go/tickets/css-aug22?utm_source=sunsetsvip&utm_medium=linkinbio&utm_campaign=sunsets_2026_08_22&utm_content=buy_tickets_chapter&ref=site_cta"
+```
+
+```bash
+curl -I "https://sunsets.vip/go/tickets/css-sep19?utm_source=sunsetsvip&utm_medium=linkinbio&utm_campaign=sunsets_2026_09_19&utm_content=buy_tickets_chapter&ref=site_cta"
+```
+
 Expected result:
 
 - If the destination env var is set, the route returns a redirect to the active external destination.
 - The final destination URL still contains the UTM/ref/click parameters.
-- If the July 4 ticket URL is not set, the route shows the clean Tickets Coming Soon fallback instead of a broken checkout.
+- If a SUN(SETS) ticket URL is not set, the route shows the clean Tickets Coming Soon fallback instead of a broken checkout.
 
 ## Operating Rule
 

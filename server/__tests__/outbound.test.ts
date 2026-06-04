@@ -26,19 +26,31 @@ describe("resolveOutboundDestination", () => {
     );
   });
 
-  it("fails closed for Sun(Sets) July 4 tickets until the official Posh URL is configured", async () => {
+  it("fails closed for Sun(Sets) ticket rails until the official Posh URL is configured", async () => {
     process.env.POSH_TICKET_URL = "https://tickets.example.com/featured";
     delete process.env.OUTBOUND_TICKETS_CSS_JUL04_URL;
     delete process.env.NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL;
+    delete process.env.OUTBOUND_TICKETS_CSS_AUG22_URL;
+    delete process.env.OUTBOUND_TICKETS_CSS_SEP19_URL;
     const { resolveOutboundDestination, TICKETS_COMING_SOON } = await importOutbound();
     expect(resolveOutboundDestination("tickets", "css-jul04")).toBe(TICKETS_COMING_SOON);
+    expect(resolveOutboundDestination("tickets", "css-aug22")).toBe(TICKETS_COMING_SOON);
+    expect(resolveOutboundDestination("tickets", "css-sep19")).toBe(TICKETS_COMING_SOON);
   });
 
-  it("resolves Sun(Sets) July 4 tickets only from the official event env var", async () => {
+  it("resolves Sun(Sets) tickets only from their official event env vars", async () => {
     process.env.OUTBOUND_TICKETS_CSS_JUL04_URL = "https://posh.vip/e/sunsets-july-4";
+    process.env.OUTBOUND_TICKETS_CSS_AUG22_URL = "https://posh.vip/e/sunsets-august-22";
+    process.env.OUTBOUND_TICKETS_CSS_SEP19_URL = "https://posh.vip/e/sunsets-september-19";
     const { resolveOutboundDestination } = await importOutbound();
     expect(resolveOutboundDestination("tickets", "css-jul04")).toBe(
       "https://posh.vip/e/sunsets-july-4",
+    );
+    expect(resolveOutboundDestination("tickets", "css-aug22")).toBe(
+      "https://posh.vip/e/sunsets-august-22",
+    );
+    expect(resolveOutboundDestination("tickets", "css-sep19")).toBe(
+      "https://posh.vip/e/sunsets-september-19",
     );
   });
 

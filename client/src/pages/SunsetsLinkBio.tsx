@@ -741,12 +741,12 @@ export default function SunsetsLinkBio() {
           index === 0
             ? "July 4 access"
             : index === 1
-              ? "August chapter"
-              : "September chapter",
-        action: index === 0 ? SUNSETS_TICKET_CTA_LABEL : "Season Pass",
-        eventSlug: index === 0 ? JULY_4_EVENT_SLUG : undefined,
-        eventDate: index === 0 ? JULY_4_EVENT_DATE : undefined,
-        href: TICKET_HREF,
+              ? "August tickets"
+              : "September tickets",
+        action: index === 0 ? SUNSETS_TICKET_CTA_LABEL : "BUY TICKETS",
+        eventSlug: chapter.eventSlug,
+        eventDate: chapter.eventDate,
+        href: chapter.ticketPath,
       })),
     []
   );

@@ -1,7 +1,10 @@
 import {
+  SUNSETS_AUG22_TICKET_KEY,
   SUNSETS_JULY4_EVENT_SLUG,
   SUNSETS_JULY4_TICKET_KEY,
   SUNSETS_JULY4_TICKET_UTMS,
+  SUNSETS_SEP19_TICKET_KEY,
+  getSunsetsTicketRouteMeta,
   isSunsetsJuly4TicketRoute,
 } from "../../shared/events/sunsets-ticketing";
 
@@ -82,6 +85,10 @@ const ticketDestinations: Record<string, string | null> = Object.assign(
         "OUTBOUND_TICKETS_CSS_JUL04_URL",
         "NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL"
       ) ?? null,
+    [SUNSETS_AUG22_TICKET_KEY]:
+      readHttpsEnv("OUTBOUND_TICKETS_CSS_AUG22_URL") ?? null,
+    [SUNSETS_SEP19_TICKET_KEY]:
+      readHttpsEnv("OUTBOUND_TICKETS_CSS_SEP19_URL") ?? null,
     "mp-autograf-mar21":
       readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") ||
       featuredTicketUrl,
@@ -203,7 +210,7 @@ export function resolveOutboundDestination(group: string, key: string) {
     // fall through to the featured URL so the caller can show a coming-soon page.
     if (dest === TICKETS_COMING_SOON) return TICKETS_COMING_SOON;
 
-    if (isSunsetsJuly4TicketRoute(normalizedGroup, normalizedKey)) {
+    if (getSunsetsTicketRouteMeta(normalizedGroup, normalizedKey)) {
       return dest;
     }
 

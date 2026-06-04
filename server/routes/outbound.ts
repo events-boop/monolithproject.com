@@ -11,6 +11,7 @@ import {
   SUNSETS_JULY4_TICKET_UTMS,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
+  getSunsetsTicketRouteMeta,
   isSunsetsJuly4TicketRoute,
 } from "../../shared/events/sunsets-ticketing";
 import { getDatabase } from "../db/client";
@@ -23,14 +24,20 @@ function readQueryParam(value: unknown) {
   return typeof value === "string" ? value : undefined;
 }
 
-function renderSunsetsTicketsComingSoonPage(requestId: string) {
+function renderSunsetsTicketsComingSoonPage(
+  requestId: string,
+  meta = {
+    dateLabel: "July 4",
+    title: "SUN(SETS) I — July 4th at Castaways",
+  }
+) {
   return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, noarchive, nosnippet" />
-  <title>Tickets Coming Soon · SUN(SETS) · July 4</title>
+  <title>Tickets Coming Soon · SUN(SETS) · ${meta.dateLabel}</title>
   <style>
     :root { color-scheme: dark; }
     * { box-sizing: border-box; }
@@ -51,7 +58,7 @@ function renderSunsetsTicketsComingSoonPage(requestId: string) {
   <main>
     <div class="eyebrow">Official Tickets</div>
     <h1>Tickets coming soon.</h1>
-    <p>SUN(SETS) July 4 tickets will move through the official Posh ticket page once the drop is live.</p>
+    <p>${meta.title} tickets will move through the official Posh ticket page once the drop is live.</p>
     <p class="support">${SUNSETS_TICKET_CTA_SUPPORT} Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
     <div class="actions">
       <a class="primary" href="/lake#lake-list">Join Lake List</a>
@@ -112,6 +119,7 @@ function outboundClickMeta(group: string, key: string) {
 router.get("/go/:group/:key", async (req, res) => {
   const requestId = randomUUID();
   const destination = resolveOutboundDestination(req.params.group, req.params.key);
+  const sunsetsTicketMeta = getSunsetsTicketRouteMeta(req.params.group, req.params.key);
 
   // "Tickets coming soon" — env var is unset for this specific event.
   if (destination === TICKETS_COMING_SOON) {
@@ -123,7 +131,9 @@ router.get("/go/:group/:key", async (req, res) => {
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
-    return res.status(200).send(renderSunsetsTicketsComingSoonPage(requestId));
+    return res
+      .status(200)
+      .send(renderSunsetsTicketsComingSoonPage(requestId, sunsetsTicketMeta ?? undefined));
   }
 
   if (!destination) {
@@ -133,11 +143,13 @@ router.get("/go/:group/:key", async (req, res) => {
       key: req.params.key,
     });
 
-    if (isSunsetsJuly4TicketRoute(req.params.group, req.params.key)) {
+    if (sunsetsTicketMeta) {
       res.setHeader("Cache-Control", "no-store");
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
-      return res.status(200).send(renderSunsetsTicketsComingSoonPage(requestId));
+      return res
+        .status(200)
+        .send(renderSunsetsTicketsComingSoonPage(requestId, sunsetsTicketMeta));
     }
 
     return res.status(404).json({

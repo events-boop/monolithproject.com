@@ -14,6 +14,10 @@ export const SUNSETS_JULY4_TABLE_MINIMUM = "$2,000 minimum";
 export const SUNSETS_JULY4_TICKET_GROUP = "tickets";
 export const SUNSETS_JULY4_TICKET_KEY = "css-jul04";
 export const SUNSETS_JULY4_TICKET_PATH = "/go/tickets/css-jul04";
+export const SUNSETS_AUG22_TICKET_KEY = "css-aug22";
+export const SUNSETS_AUG22_TICKET_PATH = "/go/tickets/css-aug22";
+export const SUNSETS_SEP19_TICKET_KEY = "css-sep19";
+export const SUNSETS_SEP19_TICKET_PATH = "/go/tickets/css-sep19";
 
 export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
 export const SUNSETS_TICKET_CTA_LABEL = "BUY TICKETS — JULY 4";
@@ -25,22 +29,31 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     id: "sunsets-i",
     title: "SUN(SETS) I",
     date: "July 4, 2026",
+    eventDate: SUNSETS_JULY4_EVENT_DATE,
+    eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
     lineup: "Autograf x Kiko Franco",
+    ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
     id: "sunsets-ii",
     title: "SUN(SETS) II",
     date: "August 22, 2026",
+    eventDate: "2026-08-22",
+    eventSlug: "chasing-sunsets-august-22-2026",
     venue: "Castaways Chicago",
     lineup: "Lineup TBA",
+    ticketPath: SUNSETS_AUG22_TICKET_PATH,
   },
   {
     id: "sunsets-iii",
     title: "SUN(SETS) III",
     date: "September 19, 2026",
+    eventDate: "2026-09-19",
+    eventSlug: "chasing-sunsets-september-19-2026",
     venue: "Castaways Chicago",
     lineup: "Lineup TBA",
+    ticketPath: SUNSETS_SEP19_TICKET_PATH,
   },
 ] as const;
 
@@ -248,4 +261,40 @@ export function isSunsetsJuly4TicketRoute(group: string, key: string) {
     group.trim().toLowerCase() === SUNSETS_JULY4_TICKET_GROUP &&
     key.trim().toLowerCase() === SUNSETS_JULY4_TICKET_KEY
   );
+}
+
+export type SunsetsTicketRouteMeta = {
+  eventSlug: string;
+  dateLabel: string;
+  title: string;
+};
+
+export function getSunsetsTicketRouteMeta(
+  group: string,
+  key: string
+): SunsetsTicketRouteMeta | null {
+  if (group.trim().toLowerCase() !== SUNSETS_JULY4_TICKET_GROUP) return null;
+
+  switch (key.trim().toLowerCase()) {
+    case SUNSETS_JULY4_TICKET_KEY:
+      return {
+        eventSlug: SUNSETS_JULY4_EVENT_SLUG,
+        dateLabel: "July 4",
+        title: SUNSETS_JULY4_EVENT_TITLE,
+      };
+    case SUNSETS_AUG22_TICKET_KEY:
+      return {
+        eventSlug: "chasing-sunsets-august-22-2026",
+        dateLabel: "August 22",
+        title: "SUN(SETS) II — August 22nd at Castaways",
+      };
+    case SUNSETS_SEP19_TICKET_KEY:
+      return {
+        eventSlug: "chasing-sunsets-september-19-2026",
+        dateLabel: "September 19",
+        title: "SUN(SETS) III — September 19th at Castaways",
+      };
+    default:
+      return null;
+  }
 }

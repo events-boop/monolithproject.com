@@ -13,6 +13,12 @@ https://www.themonolithproject.com/*  https://monolithproject.com/:splat  301!
 /sunset/   /sunsets  301!
 /sunsets/lake   /lake  301!
 /sunsets/lake/  /lake  301!
+/go/sunsets-2026-07-04/tickets   /go/tickets/css-jul04  301!
+/go/sunsets-2026-07-04/tickets/  /go/tickets/css-jul04  301!
+/go/sunsets-2026-08-22/tickets   /go/tickets/css-aug22  301!
+/go/sunsets-2026-08-22/tickets/  /go/tickets/css-aug22  301!
+/go/sunsets-2026-09-19/tickets   /go/tickets/css-sep19  301!
+/go/sunsets-2026-09-19/tickets/  /go/tickets/css-sep19  301!
 
 # Eran Hersh — Untold Story IV vanity redirects (campaign: eran_hersh_may16)
 /go/eran-bio        https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project?utm_source=instagram&utm_medium=social&utm_campaign=eran_hersh_may16&utm_content=bio              302

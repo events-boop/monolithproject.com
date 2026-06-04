@@ -37,7 +37,9 @@ Current production priorities:
   `monolithproject.com/sunsets` once DNS is pointed at Netlify.
 - The Lake List form should remain real CRM/CAPI-ready capture through
   `/api/leads`, not local-only UI state.
-- July 4 Sun(Sets) ticket traffic should use `/go/tickets/css-jul04`.
+- Sun(Sets) ticket traffic should use the tracked chapter rails:
+  `/go/tickets/css-jul04`, `/go/tickets/css-aug22`, and
+  `/go/tickets/css-sep19`.
 - Recap, radio, social, VIP, and partner actions should use existing tracked
   outbound/internal paths.
 - The experimental hero belongs in the gated sandbox until explicitly promoted.
