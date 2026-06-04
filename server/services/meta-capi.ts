@@ -6,14 +6,11 @@ import { logEvent } from "../lib/logging";
 // Meta. No-ops unless META_CAPI_ACCESS_TOKEN is configured, and never throws
 // into the request path.
 
-const DEFAULT_PIXEL_ID = "166134370742863";
-
 function getConfig() {
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN?.trim();
   if (!accessToken) return null;
   return {
     accessToken,
-    pixelId: process.env.META_PIXEL_ID?.trim() || DEFAULT_PIXEL_ID,
     graphVersion: process.env.META_GRAPH_API_VERSION?.trim() || "v21.0",
     testEventCode: process.env.META_CAPI_TEST_EVENT_CODE?.trim() || undefined,
   };
@@ -58,9 +55,9 @@ function deriveFbc(eventTimeMs: number, fbc?: string, fbclid?: string) {
 
 export interface LeadConversionInput {
   eventId: string;
-  // Optional Dataset/Pixel override for per-campaign destinations (e.g. the
-  // Lake campaign). Falls back to the configured default when omitted.
-  pixelId?: string;
+  // Required so each caller explicitly chooses the right Dataset/Pixel
+  // instead of silently falling back to the wrong campaign.
+  pixelId: string;
   email?: string;
   phone?: string;
   firstName?: string;
@@ -79,6 +76,11 @@ export interface LeadConversionInput {
 export async function sendLeadConversion(input: LeadConversionInput): Promise<void> {
   const config = getConfig();
   if (!config) return;
+  const pixelId = input.pixelId.trim();
+  if (!pixelId) {
+    logEvent("meta_capi.missing_pixel_id", { eventId: input.eventId });
+    return;
+  }
 
   const eventTimeMs = Date.now();
 
@@ -119,7 +121,6 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
   };
   if (config.testEventCode) body.test_event_code = config.testEventCode;
 
-  const pixelId = input.pixelId?.trim() || config.pixelId;
   const url = `https://graph.facebook.com/${config.graphVersion}/${pixelId}/events`;
 
   try {

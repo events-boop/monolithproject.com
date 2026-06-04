@@ -11,6 +11,8 @@ const HASH = {
   firstName: "fdee430d40bd57deeac186cd9790033d0f06f909a8806e7ce6e717ab7c7d5029", // ada
   lastName: "fb1e7ec987523d2cb9e022cec1d6ae7c99dc46edfae4fe51254025fe4bea571f", // lovelace
 };
+const BRAND_PIXEL_ID = "166134370742863";
+const LAKE_PIXEL_ID = "1049241148606250";
 
 function lastRequestBody(fetchMock: ReturnType<typeof vi.fn>) {
   const [, init] = fetchMock.mock.calls.at(-1)!;
@@ -38,7 +40,11 @@ describe("meta capi", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     expect(isMetaCapiEnabled()).toBe(false);
-    await sendLeadConversion({ eventId: "evt-1", email: "x@y.com" });
+    await sendLeadConversion({
+      eventId: "evt-1",
+      pixelId: BRAND_PIXEL_ID,
+      email: "x@y.com",
+    });
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -49,6 +55,7 @@ describe("meta capi", () => {
 
     await sendLeadConversion({
       eventId: "evt-42",
+      pixelId: BRAND_PIXEL_ID,
       email: "  Test@Example.COM  ",
       phone: "+1 (312) 555-0199",
       firstName: "Ada",
@@ -63,7 +70,7 @@ describe("meta capi", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url] = fetchMock.mock.calls[0];
-    expect(url).toContain("/166134370742863/events"); // default brand pixel id
+    expect(url).toContain(`/${BRAND_PIXEL_ID}/events`);
     expect(url).toContain("/v21.0/"); // default graph version
 
     const body = lastRequestBody(fetchMock);
@@ -99,6 +106,7 @@ describe("meta capi", () => {
 
     await sendLeadConversion({
       eventId: "evt-fbclid",
+      pixelId: BRAND_PIXEL_ID,
       email: "test@example.com",
       fbclid: "ABC123",
     });
@@ -113,6 +121,7 @@ describe("meta capi", () => {
 
     await sendLeadConversion({
       eventId: "evt-fbc",
+      pixelId: BRAND_PIXEL_ID,
       email: "test@example.com",
       fbc: "fb.1.999.EXISTING",
       fbclid: "SHOULD_BE_IGNORED",
@@ -129,12 +138,25 @@ describe("meta capi", () => {
 
     await sendLeadConversion({
       eventId: "evt-lake",
-      pixelId: "1049241148606250",
+      pixelId: LAKE_PIXEL_ID,
       eventSourceUrl: "https://sunsets.vip/lake",
     });
 
     const [url] = fetchMock.mock.calls[0];
-    expect(url).toContain("/1049241148606250/events");
+    expect(url).toContain(`/${LAKE_PIXEL_ID}/events`);
+  });
+
+  it("does not send when the caller omits a usable pixel id", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await sendLeadConversion({
+      eventId: "evt-empty-pixel",
+      pixelId: " ",
+      eventSourceUrl: "https://sunsets.vip/lake",
+    });
+
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("omits the ip field when the identifier is the 'unknown' sentinel", async () => {
@@ -143,6 +165,7 @@ describe("meta capi", () => {
 
     await sendLeadConversion({
       eventId: "evt-unknown-ip",
+      pixelId: BRAND_PIXEL_ID,
       email: "test@example.com",
       clientIp: "unknown",
     });
@@ -157,7 +180,11 @@ describe("meta capi", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(
-      sendLeadConversion({ eventId: "evt-err", email: "test@example.com" })
+      sendLeadConversion({
+        eventId: "evt-err",
+        pixelId: BRAND_PIXEL_ID,
+        email: "test@example.com",
+      })
     ).resolves.toBeUndefined();
   });
 });

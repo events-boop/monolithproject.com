@@ -19,6 +19,10 @@ import { sendLeadConversion } from "../services/meta-capi";
 import { mirrorLeadToAirtable } from "../services/airtable-sync";
 
 const router = Router();
+const BRAND_PIXEL_ID =
+  process.env.META_BRAND_PIXEL_ID?.trim() ||
+  process.env.META_PIXEL_ID?.trim() ||
+  "166134370742863";
 
 const leadsLimiter = createRateLimitMiddleware({
   scope: "api:leads",
@@ -146,6 +150,7 @@ router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
       const fbp = parseCookieHeader(req.header("cookie"))._fbp;
       void sendLeadConversion({
         eventId: requestId,
+        pixelId: BRAND_PIXEL_ID,
         email,
         phone: parsed.data.phone,
         firstName: parsed.data.firstName,

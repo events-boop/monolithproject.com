@@ -8,6 +8,8 @@ import { getCookieConsentState } from "./cookieConsent";
 // on env wiring; override with VITE_LAKE_PIXEL_ID if a swap is ever needed.
 export const LAKE_PIXEL_ID =
   import.meta.env.VITE_LAKE_PIXEL_ID || "1049241148606250";
+const LAKE_PIXEL_DEV_ENABLED =
+  import.meta.env.VITE_LAKE_PIXEL_DEV_ENABLED === "true";
 
 let pixelInitialized = false;
 
@@ -24,7 +26,7 @@ function isCampaignHost() {
 
 function isEnabled() {
   return (
-    import.meta.env.PROD &&
+    (import.meta.env.PROD || LAKE_PIXEL_DEV_ENABLED) &&
     isCampaignHost() &&
     Boolean(LAKE_PIXEL_ID) &&
     getCookieConsentState() !== "declined"
@@ -60,7 +62,9 @@ function ensureFbq() {
   }
 
   if (!pixelInitialized) {
-    window.fbq?.("init", LAKE_PIXEL_ID);
+    const fbq = window.fbq;
+    if (!fbq) return false;
+    fbq("init", LAKE_PIXEL_ID);
     pixelInitialized = true;
   }
 
