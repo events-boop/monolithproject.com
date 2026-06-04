@@ -114,6 +114,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/sunsets/lake"
+  to = "/lake"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sunsets/lake/"
+  to = "/lake"
+  status = 301
+  force = true
+
 # Eran Hersh — Untold Story IV vanity redirects (campaign: eran_hersh_may16)
 # Specific rules MUST stay above the generic /go/* proxy below.
 [[redirects]]
