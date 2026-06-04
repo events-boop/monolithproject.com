@@ -94,7 +94,7 @@ export default function NavigationMegamenu({
   let leftColumnItems = megamenu.items;
 
   if (type === "chasing-radio") {
-    leftColumnTitle = "Episodes";
+    leftColumnTitle = "SUN(SETS) Radio";
     leftColumnItems = [
       { label: "S1E1: Autograf", href: "/artists/autograf", icon: "play" },
       { label: "S1E2: Lazare", href: "/artists/lazare", icon: "play" },

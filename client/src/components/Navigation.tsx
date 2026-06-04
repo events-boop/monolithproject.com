@@ -605,12 +605,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="SUN(SETS)"
-                  href="/chasing-sunsets"
-                  isActive={
-                    location.includes("/chasing-sunsets") ||
-                    location.startsWith("/radio")
-                  }
+                  label="SUN(SETS) RADIO"
+                  href="/radio"
+                  isActive={location.startsWith("/radio")}
                   isLight={isLight}
                   brand={resolvedBrand}
                   type="chasing-radio"
