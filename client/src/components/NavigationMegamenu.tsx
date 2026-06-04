@@ -155,6 +155,11 @@ export default function NavigationMegamenu({
         onClick={e => {
           e.preventDefault();
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
+          if (type === "chasing-radio") {
+            setIsOpen(false);
+            onNavigate(href);
+            return;
+          }
           setIsOpen(!isOpen);
         }}
         aria-expanded={isOpen}
