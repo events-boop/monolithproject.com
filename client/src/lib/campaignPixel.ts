@@ -1,6 +1,6 @@
 import { getCookieConsentState } from "./cookieConsent";
 
-// Dedicated Meta Pixel for the paid Sun(Sets) "Lake" campaign (sunsets.vip/lake).
+// Dedicated Meta Pixel for the paid Sun(Sets) campaign (sunsets.vip/sunsets).
 // Kept separate from the brand pixel in metaPixel.ts so the campaign Dataset is
 // never cross-contaminated. All events use `trackSingle` so that, on hosts where
 // both pixels load (e.g. monolithproject.com/lake), the campaign events are

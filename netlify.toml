@@ -36,11 +36,11 @@
   status = 301
   force = true
 
-# sunsets.vip and untold.vip are branded campaign front doors. They must serve
-# the SPA directly so their roots can render campaign-specific pages without
-# losing the vanity domain. No host redirect here means the vanity domains fall
-# through to /api + /go (functions) and finally the SPA fallback (/* ->
-# /index.html) below.
+# sunsets.vip and untold.vip are branded campaign front doors. They serve the
+# SPA directly so their roots can render host-specific campaign pages without
+# losing the vanity domain: sunsets.vip -> /sunsets, untold.vip -> /story.
+# No host redirect here means the vanity domains fall through to /api + /go
+# (functions) and finally the SPA fallback (/* -> /index.html) below.
 
 [[redirects]]
   from = "https://chasingsunsets.music/*"
@@ -116,13 +116,25 @@
 
 [[redirects]]
   from = "/sunsets/lake"
-  to = "/lake"
+  to = "/sunsets"
   status = 301
   force = true
 
 [[redirects]]
   from = "/sunsets/lake/"
-  to = "/lake"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/lake"
+  to = "/sunsets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/lake/"
+  to = "/sunsets"
   status = 301
   force = true
 

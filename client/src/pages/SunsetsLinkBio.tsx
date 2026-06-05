@@ -12,6 +12,7 @@ import {
   Music,
   Phone,
   Play,
+  QrCode,
   Radio,
   Send,
   Ticket,
@@ -27,8 +28,10 @@ import {
   submitContactForm,
   submitNewsletterLead,
   trackFunnelPageView,
+  trackLeadConversion,
   trackLinkClick,
 } from "@/lib/api";
+import { trackLakeLead, trackLakePageView } from "@/lib/campaignPixel";
 import { buildLeadIdempotencyKey } from "@/lib/leadCapture";
 import {
   SUNSETS_2026_SEASON_CHAPTERS,
@@ -65,9 +68,11 @@ type TrackableLink = {
 
 const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
+const CANONICAL_SUNSETS_URL = "https://sunsets.vip/sunsets";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 const SUNSETS_COVER_IMAGE = "/images/chasing-sunsets-firstaccess-flyer.png";
+const SUNSETS_QR_IMAGE = "/images/sunsets-vip-sunsets-qr.svg";
 const AUTOGRAF_YOUTUBE_EMBED =
   "https://www.youtube.com/embed/9R6XH7JZlJI?start=5506&list=RD9R6XH7JZlJI&rel=0&modestbranding=1";
 const SOMMERS_SOUNDCLOUD_URL =
@@ -79,6 +84,10 @@ const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeU
 function triggerHaptic(pattern: number | number[] = 10) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
   navigator.vibrate(pattern);
+}
+
+function newEventId() {
+  return crypto.randomUUID();
 }
 
 function appendEventAttribution(href: string, eventSlug?: string) {
@@ -206,6 +215,15 @@ function LakeListForm() {
         )
       );
 
+      const eventId = newEventId();
+      trackLakeLead(eventId);
+      trackLeadConversion(eventId, {
+        email: normalizedEmail,
+        phone: normalizedPhone || undefined,
+        eventSourceUrl:
+          typeof window !== "undefined" ? window.location.href : undefined,
+      });
+
       trackSunsetsClick({
         buttonName: "Register for First Access",
         href: PAGE_PATH,
@@ -272,8 +290,8 @@ function LakeListForm() {
       </label>
       <p className="px-1 text-[10px] leading-snug text-stone-400">
         By registering, you agree to receive event updates from The Monolith
-        Project / Chasing Sun(Sets). Message rates may apply. You also agree
-        to Laylo&apos;s{" "}
+        Project / Chasing Sun(Sets). Message rates may apply. You also agree to
+        Laylo&apos;s{" "}
         <a
           className="underline underline-offset-2 hover:text-white"
           href="https://laylo.com/terms"
@@ -729,6 +747,7 @@ export default function SunsetsLinkBio() {
       eventSlug: JULY_4_EVENT_SLUG,
       source: PAGE_SOURCE,
     });
+    trackLakePageView();
   }, []);
 
   const chapters = useMemo<Chapter[]>(
@@ -756,9 +775,10 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen bg-[#080a07] text-stone-100 selection:bg-[#c9a45d] selection:text-black">
       <SEO
-        title="Sun(Sets) Lake List & First Access"
-        description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
+        title="SUN(SETS) I - July 4 at Castaways"
+        description="Chasing Sun(Sets) returns home to the lake July 4 at Castaways Chicago. Join the Lake List, claim season access, and secure official SUN(SETS) tickets."
         image={OG_IMAGE}
+        canonicalUrl={CANONICAL_SUNSETS_URL}
         canonicalPath={PAGE_PATH}
       />
 
@@ -897,9 +917,7 @@ export default function SunsetsLinkBio() {
                       <p className="text-xs font-semibold text-stone-300">
                         {chapter.venue}
                       </p>
-                      <p className="text-xs text-stone-400">
-                        {chapter.lineup}
-                      </p>
+                      <p className="text-xs text-stone-400">{chapter.lineup}</p>
                     </div>
                   ))}
                 </div>
@@ -936,7 +954,7 @@ export default function SunsetsLinkBio() {
 
               <Button
                 type="button"
-                className="h-12 w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d8f0ce]"
+                className="h-[3.25rem] w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_10px_32px_rgba(201,232,189,0.14)] hover:bg-[#d8f0ce]"
                 onClick={() => {
                   triggerHaptic(8);
                   focusLakeList();
@@ -955,7 +973,7 @@ export default function SunsetsLinkBio() {
               </Button>
               <Button
                 asChild
-                className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d]"
+                className="h-[3.25rem] w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(223,194,122,0.18)] hover:bg-[#efd48d]"
               >
                 <a
                   href={ticketHref}
@@ -981,7 +999,7 @@ export default function SunsetsLinkBio() {
                   <ArrowUpRight className="size-4" />
                 </a>
               </Button>
-              <p className="-mt-2 text-center text-[11px] font-semibold text-stone-400">
+              <p className="-mt-1 border border-white/10 bg-black/20 px-3 py-2 text-center text-[11px] font-semibold leading-relaxed text-stone-300">
                 {SUNSETS_TICKET_CTA_SUPPORT}
               </p>
               <Button
@@ -1084,7 +1102,7 @@ export default function SunsetsLinkBio() {
                             channel: "Posh",
                           });
                         }}
-                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                        className="group block border border-[#dfc27a]/20 bg-[#12180f]/90 p-4 shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#dfc27a]/45 hover:bg-[#171d13]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -1105,7 +1123,7 @@ export default function SunsetsLinkBio() {
                             channel: "CRM",
                           });
                         }}
-                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                        className="group block w-full border border-[#dfc27a]/20 bg-[#12180f]/90 p-4 text-left shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#dfc27a]/45 hover:bg-[#171d13]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -1119,37 +1137,82 @@ export default function SunsetsLinkBio() {
               })}
             </section>
 
-            <section className="border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
-                    Official short link
-                  </p>
-                  <p className="mt-1 truncate text-sm font-bold text-white">
-                    sunsets.vip
+            <section className="relative overflow-hidden border border-[#dfc27a]/30 bg-[#10140f]/92 p-4 shadow-[0_22px_60px_rgba(0,0,0,0.34)]">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#dfc27a]/70"
+                aria-hidden="true"
+              />
+              <div className="grid gap-4 min-[390px]:grid-cols-[auto_minmax(0,1fr)] min-[390px]:items-center">
+                <div className="mx-auto w-32 shrink-0 min-[390px]:mx-0">
+                  <div className="border border-[#dfc27a]/45 bg-[#f8f4e8] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+                    <img
+                      src={SUNSETS_QR_IMAGE}
+                      alt="QR code for https://sunsets.vip/sunsets"
+                      className="h-28 w-28"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="mt-2 text-center text-[9px] font-black uppercase tracking-[0.24em] text-[#dfc27a]">
+                    Scan rail
                   </p>
                 </div>
-                <Button
-                  asChild
-                  className="h-10 shrink-0 bg-white px-3 text-black hover:bg-stone-200"
-                >
-                  <a
-                    href="/partners"
-                    onClick={() =>
-                      trackSunsetsClick({
-                        buttonName: "Partner Inquiry",
-                        href: "/partners",
-                        eventSlug: JULY_4_EVENT_SLUG,
-                        eventDate: JULY_4_EVENT_DATE,
-                        interestType: "partner_inquiry_click",
-                        channel: "Monolith",
-                      })
-                    }
-                  >
-                    Partners
-                    <ArrowUpRight className="size-3.5" />
-                  </a>
-                </Button>
+                <div className="min-w-0">
+                  <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                    <QrCode className="size-3.5" />
+                    Official canonical link
+                  </p>
+                  <p className="mt-1 truncate text-sm font-bold text-white">
+                    sunsets.vip/sunsets
+                  </p>
+                  <p className="mt-2 text-xs font-semibold leading-relaxed text-stone-300">
+                    Scan to save the SUN(SETS) rail, tickets, Lake List, and
+                    season updates.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Button
+                      asChild
+                      className="h-11 flex-1 bg-[#dfc27a] px-3 text-[11px] font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] min-[390px]:flex-none"
+                    >
+                      <a
+                        href={CANONICAL_SUNSETS_URL}
+                        onClick={() =>
+                          trackSunsetsClick({
+                            buttonName: "Open SUN(SETS) QR Link",
+                            href: CANONICAL_SUNSETS_URL,
+                            eventSlug: JULY_4_EVENT_SLUG,
+                            eventDate: JULY_4_EVENT_DATE,
+                            interestType: "qr_link_click",
+                            channel: "Monolith",
+                          })
+                        }
+                      >
+                        Open link
+                        <ArrowUpRight className="size-3.5" />
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      className="h-11 flex-1 border border-white/15 bg-white/[.07] px-3 text-[11px] font-black uppercase tracking-[0.12em] text-stone-100 hover:bg-white/[.12] min-[390px]:flex-none"
+                    >
+                      <a
+                        href="/partners"
+                        onClick={() =>
+                          trackSunsetsClick({
+                            buttonName: "Partner Inquiry",
+                            href: "/partners",
+                            eventSlug: JULY_4_EVENT_SLUG,
+                            eventDate: JULY_4_EVENT_DATE,
+                            interestType: "partner_inquiry_click",
+                            channel: "Monolith",
+                          })
+                        }
+                      >
+                        Partners
+                        <ArrowUpRight className="size-3.5" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -1237,7 +1300,7 @@ function ChapterContent({
 }) {
   return (
     <div className="flex gap-3">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-white/[.10] text-[#d8f0ce]">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-[#c9e8bd]/20 bg-[#c9e8bd]/10 text-[#d8f0ce]">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
@@ -1250,7 +1313,7 @@ function ChapterContent({
               <Calendar className="size-3.5 shrink-0" />
               {chapter.date}
             </p>
-            <p className="mt-1 flex items-center gap-1 text-xs text-stone-400">
+            <p className="mt-1 flex items-center gap-1 text-xs font-semibold text-stone-300">
               <MapPin className="size-3.5 shrink-0" />
               {chapter.place}
             </p>
@@ -1260,7 +1323,7 @@ function ChapterContent({
           ) : null}
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-          <span className="bg-black/25 px-2.5 py-1 text-[11px] font-bold text-stone-300">
+          <span className="border border-white/10 bg-black/35 px-2.5 py-1 text-[11px] font-bold text-stone-200">
             {chapter.status}
           </span>
           <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#dfc27a]">

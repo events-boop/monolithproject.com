@@ -4,13 +4,13 @@
 
 Keep public links stable while swapping the live drop destination behind the scenes.
 
-All ads, Instagram bio links, organic posts, and ManyChat buttons should stay pointed at:
+All ads, Instagram bio links, organic posts, and ManyChat buttons should stay pointed at the canonical SUN(SETS) rail:
 
 ```text
-https://sunsets.vip
+https://sunsets.vip/sunsets
 ```
 
-The app routes traffic through the Monolith server first, then forwards users to the active Laylo, ManyChat, VIP, or ticket destination. That means UTMs and click identifiers stay intact while the destination can change from Netlify environment variables.
+The root `https://sunsets.vip` mirrors this same page, and legacy `/lake` URLs fold into `/sunsets` with UTMs intact. The app routes CTA traffic through the Monolith server first, then forwards users to the active Laylo, ManyChat, VIP, or ticket destination. That means UTMs and click identifiers stay intact while the destination can change from Netlify environment variables.
 
 ## The 3-Step Drop Swap
 
@@ -30,17 +30,17 @@ The app routes traffic through the Monolith server first, then forwards users to
 
 Use the variable that matches the rail you are changing:
 
-| Rail | Public path | Netlify variable |
-| --- | --- | --- |
-| General Laylo/waitlist fallback | `/go/waitlist/general` | `OUTBOUND_WAITLIST_GENERAL_URL` or `LAYLO_URL` |
-| Chasing Sun(Sets) waitlist | `/go/waitlist/chasing-sunsets` | `OUTBOUND_WAITLIST_CHASING_SUNSETS_URL` |
-| SUN keyword / ManyChat rail | `/go/waitlist/sunsets-manychat` | `OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL` |
-| July 4 tickets | `/go/tickets/css-jul04` | `OUTBOUND_TICKETS_CSS_JUL04_URL` or `NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL` |
-| August 22 tickets | `/go/tickets/css-aug22` | `OUTBOUND_TICKETS_CSS_AUG22_URL` |
-| September 19 tickets | `/go/tickets/css-sep19` | `OUTBOUND_TICKETS_CSS_SEP19_URL` |
-| SUN(SETS) VIP / tables | `/go/forms/sunsets-vip` | `OUTBOUND_FORMS_SUNSETS_VIP_URL` or `FILLOUT_SUNSETS_VIP_URL` |
+| Rail                            | Public path                     | Netlify variable                                                                               |
+| ------------------------------- | ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| General Laylo/waitlist fallback | `/go/waitlist/general`          | `OUTBOUND_LAYLO_URL`, `LAYLO_URL`, or `OUTBOUND_WAITLIST_GENERAL_URL`                          |
+| Chasing Sun(Sets) waitlist      | `/go/waitlist/chasing-sunsets`  | `OUTBOUND_WAITLIST_CHASING_SUNSETS_URL`, `OUTBOUND_LAYLO_SUNSETS_URL`, or `OUTBOUND_LAYLO_URL` |
+| SUN keyword / ManyChat rail     | `/go/waitlist/sunsets-manychat` | `OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL`                                                       |
+| July 4 tickets                  | `/go/tickets/css-jul04`         | `OUTBOUND_TICKETS_CSS_JUL04_URL` or `NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL`                       |
+| August 22 tickets               | `/go/tickets/css-aug22`         | `OUTBOUND_TICKETS_CSS_AUG22_URL`                                                               |
+| September 19 tickets            | `/go/tickets/css-sep19`         | `OUTBOUND_TICKETS_CSS_SEP19_URL`                                                               |
+| SUN(SETS) VIP / tables          | `/go/forms/sunsets-vip`         | `OUTBOUND_FORMS_SUNSETS_VIP_URL` or `FILLOUT_SUNSETS_VIP_URL`                                  |
 
-Do not use `OUTBOUND_LAYLO_URL` unless the code is updated to support that alias. It is not the active variable name in this app today.
+Use `OUTBOUND_LAYLO_URL` for the fastest global drop swap when the same Laylo destination should drive the general and Chasing Sun(Sets) waitlist rails.
 
 ## Attribution Guarantee
 

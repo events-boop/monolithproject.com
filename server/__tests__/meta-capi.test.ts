@@ -155,7 +155,7 @@ describe("meta capi", () => {
     await sendLeadConversion({
       eventId: "evt-lake",
       pixelId: LAKE_PIXEL_ID,
-      eventSourceUrl: "https://sunsets.vip/lake",
+      eventSourceUrl: "https://sunsets.vip/sunsets",
     });
 
     const [url] = fetchMock.mock.calls[0];
@@ -169,7 +169,7 @@ describe("meta capi", () => {
     await sendLeadConversion({
       eventId: "evt-empty-pixel",
       pixelId: " ",
-      eventSourceUrl: "https://sunsets.vip/lake",
+      eventSourceUrl: "https://sunsets.vip/sunsets",
     });
 
     expect(fetchMock).not.toHaveBeenCalled();
@@ -186,9 +186,9 @@ describe("meta capi", () => {
       clientIp: "unknown",
     });
 
-    expect(
-      lastRequestBody(fetchMock).data[0].user_data
-    ).not.toHaveProperty("client_ip_address");
+    expect(lastRequestBody(fetchMock).data[0].user_data).not.toHaveProperty(
+      "client_ip_address"
+    );
   });
 
   it("never throws when the network call rejects", async () => {

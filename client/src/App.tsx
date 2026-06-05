@@ -363,14 +363,13 @@ function MainContentWrapper() {
   ).toLowerCase();
   // On branded campaign hosts, render the root directly (no redirect) so ads
   // keep the vanity domain in the address bar while landing on the right rail.
-  const host =
-    typeof window !== "undefined" ? window.location.hostname : "";
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
   const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
   const isUntoldHost = host === "untold.vip" || host === "www.untold.vip";
   const isUntoldRootLanding = normalizedLocation === "/" && isUntoldHost;
   const landingPath =
     normalizedLocation === "/" && isSunsetsHost
-      ? "/lake"
+      ? "/sunsets"
       : isUntoldRootLanding
         ? "/story"
         : normalizedLocation;

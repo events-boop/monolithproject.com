@@ -15,10 +15,12 @@ async function preparePage(page: Page) {
 }
 
 async function waitForAppReady(page: Page) {
-  await page.waitForSelector("#initial-loader", {
-    state: "detached",
-    timeout: 15000,
-  }).catch(() => undefined);
+  await page
+    .waitForSelector("#initial-loader", {
+      state: "detached",
+      timeout: 15000,
+    })
+    .catch(() => undefined);
   await page.waitForLoadState("domcontentloaded");
 }
 
@@ -30,15 +32,16 @@ test.describe("campaign hardening stress checks", () => {
   test("CAPI lead capture accepts 50 concurrent unique event IDs locally", async ({
     request,
   }) => {
-    const eventIds = Array.from({ length: 50 }, (_, index) =>
-      `stress-lead-${Date.now()}-${index}`
+    const eventIds = Array.from(
+      { length: 50 },
+      (_, index) => `stress-lead-${Date.now()}-${index}`
     );
     const responses = await Promise.all(
       eventIds.map(eventId =>
         request.post(`${API_BASE}/api/track/lead`, {
           data: {
             eventId,
-            eventSourceUrl: `https://sunsets.vip/lake?event_id=${eventId}`,
+            eventSourceUrl: `https://sunsets.vip/sunsets?event_id=${eventId}`,
             fbclid: `fbclid-${eventId}`,
           },
           headers: {
@@ -52,7 +55,9 @@ test.describe("campaign hardening stress checks", () => {
       Array.from({ length: 50 }, () => 202)
     );
 
-    const bodies = await Promise.all(responses.map(response => response.json()));
+    const bodies = await Promise.all(
+      responses.map(response => response.json())
+    );
     expect(new Set(bodies.map(body => body.eventId)).size).toBe(50);
     expect(bodies.map(body => body.ok)).toEqual(
       Array.from({ length: 50 }, () => true)
@@ -74,6 +79,58 @@ test.describe("campaign hardening stress checks", () => {
       expect(JSON.stringify(body).toLowerCase()).not.toContain("access_token");
       expect(JSON.stringify(body).toLowerCase()).not.toContain("token");
     }
+  });
+
+  test("sunsets.vip root mirrors the /sunsets link-in-bio surface", async ({
+    page,
+  }) => {
+    await preparePage(page);
+    await page.route(
+      /https?:\/\/([^/]+\.)?(youtube\.com|youtube-nocookie\.com|ytimg\.com|googlevideo\.com|soundcloud\.com|sndcdn\.com)\//,
+      route => route.fulfill({ body: "", status: 204 })
+    );
+    const pageViewRequests: string[] = [];
+
+    page.on("request", request => {
+      if (request.url().includes("/api/track/page-view")) {
+        pageViewRequests.push(request.postData() || "");
+      }
+    });
+
+    await page.goto("http://sunsets.vip:5001/", {
+      waitUntil: "domcontentloaded",
+    });
+    await waitForAppReady(page);
+
+    await expect(
+      page.getByRole("button", { name: /register for first access/i })
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /watch the last chapter/i })
+    ).toBeVisible();
+    await expect(
+      page.getByAltText(/qr code for https:\/\/sunsets\.vip\/sunsets/i)
+    ).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      "https://sunsets.vip/sunsets"
+    );
+    await expect
+      .poll(() => pageViewRequests.length, { timeout: 5000 })
+      .toBeGreaterThanOrEqual(1);
+
+    const trackedPaths = new Set(
+      pageViewRequests
+        .map(postData => {
+          try {
+            return JSON.parse(postData).pagePath as string | undefined;
+          } catch {
+            return undefined;
+          }
+        })
+        .filter(Boolean)
+    );
+    expect(trackedPaths).toContain("/sunsets");
   });
 
   test("multi-tab attribution keeps session and first touch tab-scoped", async ({
@@ -104,7 +161,10 @@ test.describe("campaign hardening stress checks", () => {
       await expect
         .poll(
           () =>
-            page.evaluate(key => sessionStorage.getItem(key), SESSION_STORAGE_KEY),
+            page.evaluate(
+              key => sessionStorage.getItem(key),
+              SESSION_STORAGE_KEY
+            ),
           { timeout: 10000 }
         )
         .toBeTruthy();
@@ -178,7 +238,14 @@ test.describe("campaign hardening stress checks", () => {
     await page.goto(`${APP_BASE}/`, { waitUntil: "domcontentloaded" });
     await waitForAppReady(page);
 
-    const routes = ["/lake", "/radio", "/sunsets", "/story", "/lake", "/sunsets"];
+    const routes = [
+      "/lake",
+      "/radio",
+      "/sunsets",
+      "/story",
+      "/lake",
+      "/sunsets",
+    ];
     const startedAt = Date.now();
     for (const route of routes) {
       await page.evaluate(path => {
@@ -260,11 +327,11 @@ test.describe("campaign hardening stress checks", () => {
       "accepted"
     );
     const lakeBeforeConsent = await collectFbqCalls(
-      "http://sunsets.vip:5001/lake",
+      "http://sunsets.vip:5001/sunsets",
       null
     );
     const lakeDeclined = await collectFbqCalls(
-      "http://sunsets.vip:5001/lake",
+      "http://sunsets.vip:5001/sunsets",
       "declined"
     );
 

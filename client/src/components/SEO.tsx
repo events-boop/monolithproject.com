@@ -8,6 +8,7 @@ interface SEOProps {
   type?: "website" | "article" | "profile";
   noIndex?: boolean;
   canonicalPath?: string;
+  canonicalUrl?: string;
   absoluteTitle?: boolean;
   schemaData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
@@ -49,6 +50,7 @@ export default function SEO({
   type = "website",
   noIndex = false,
   canonicalPath,
+  canonicalUrl: canonicalUrlOverride,
   absoluteTitle = false,
   schemaData,
 }: SEOProps) {
@@ -57,12 +59,31 @@ export default function SEO({
   const defaultDescription =
     "The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio.";
   const resolvedDescription = description || defaultDescription;
-  const canonicalOrigin = getCanonicalOrigin();
-  const canonicalTarget = normalizePath(
-    canonicalPath ||
-      (typeof window !== "undefined" ? window.location.pathname : "/")
-  );
-  const canonicalUrl = `${canonicalOrigin}${canonicalTarget}`;
+  const fallbackCanonicalOrigin = getCanonicalOrigin();
+  const resolvedCanonical = (() => {
+    if (canonicalUrlOverride) {
+      try {
+        const url = new URL(canonicalUrlOverride);
+        url.pathname = normalizePath(url.pathname);
+        url.search = "";
+        url.hash = "";
+        return { origin: url.origin, url: url.toString() };
+      } catch {
+        // Fall through to the path-based canonical below.
+      }
+    }
+
+    const canonicalTarget = normalizePath(
+      canonicalPath ||
+        (typeof window !== "undefined" ? window.location.pathname : "/")
+    );
+    return {
+      origin: fallbackCanonicalOrigin,
+      url: `${fallbackCanonicalOrigin}${canonicalTarget}`,
+    };
+  })();
+  const canonicalOrigin = resolvedCanonical.origin;
+  const canonicalUrl = resolvedCanonical.url;
   const resolvedImage = resolveAbsoluteUrl(image, canonicalOrigin);
   const serializedSchema =
     schemaData !== undefined

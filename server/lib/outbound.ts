@@ -70,8 +70,11 @@ const featuredTicketUrl =
   readHttpsEnv("POSH_TICKET_URL", "OUTBOUND_TICKETS_FEATURED_URL") ||
   FALLBACK_POSH_URL;
 const generalWaitlistUrl =
-  readHttpsEnv("LAYLO_URL", "OUTBOUND_WAITLIST_GENERAL_URL") ||
-  FALLBACK_LAYLO_URL;
+  readHttpsEnv(
+    "OUTBOUND_LAYLO_URL",
+    "LAYLO_URL",
+    "OUTBOUND_WAITLIST_GENERAL_URL"
+  ) || FALLBACK_LAYLO_URL;
 
 const ticketDestinations: Record<string, string | null> = Object.assign(
   Object.create(null),
@@ -104,8 +107,11 @@ const waitlistDestinations: Record<string, string> = Object.assign(
     "monolith-project":
       readHttpsEnv("OUTBOUND_WAITLIST_MONOLITH_URL") || generalWaitlistUrl,
     "chasing-sunsets":
-      readHttpsEnv("OUTBOUND_WAITLIST_CHASING_SUNSETS_URL") ||
-      generalWaitlistUrl,
+      readHttpsEnv(
+        "OUTBOUND_WAITLIST_CHASING_SUNSETS_URL",
+        "OUTBOUND_LAYLO_SUNSETS_URL",
+        "OUTBOUND_LAYLO_URL"
+      ) || generalWaitlistUrl,
     "sunsets-manychat":
       readHttpsEnv("OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL") ||
       generalWaitlistUrl,
@@ -278,9 +284,10 @@ export function decorateOutboundDestination(
 ) {
   try {
     const url = new URL(destination);
-    const isSunsetsTicket = route?.group && route?.key
-      ? isSunsetsJuly4TicketRoute(route.group, route.key)
-      : false;
+    const isSunsetsTicket =
+      route?.group && route?.key
+        ? isSunsetsJuly4TicketRoute(route.group, route.key)
+        : false;
 
     if (isSunsetsTicket) {
       for (const [key, value] of Object.entries(SUNSETS_JULY4_TICKET_UTMS)) {

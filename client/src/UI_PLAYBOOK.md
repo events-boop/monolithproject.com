@@ -32,9 +32,12 @@ experiments.
 
 Current production priorities:
 
-- `/sunsets` is the official Sun(Sets) mobile-first ticket and Lake List wrapper.
-- `sunsets.vip` is a short public CTA domain that should redirect to
-  `monolithproject.com/sunsets` once DNS is pointed at Netlify.
+- `/sunsets` is the official Sun(Sets) mobile-first ticket, QR, Season Pass,
+  and Lake List wrapper.
+- `sunsets.vip` mirrors `/sunsets` on the vanity host. Use
+  `https://sunsets.vip/sunsets` as the canonical SEO/QR destination; legacy
+  `/lake` and `/sunsets/lake` URLs should fold into `/sunsets` while preserving
+  campaign query params.
 - The Lake List form should remain real CRM/CAPI-ready capture through
   `/api/leads`, not local-only UI state.
 - Sun(Sets) ticket traffic should use the tracked chapter rails:
@@ -63,8 +66,8 @@ Current SEO expectations:
 - Route-specific title, description, canonical, OG/Twitter tags.
 - JSON-LD where it genuinely fits: events, FAQ, podcast/radio, artist pages.
 - Sitemap and IndexNow routes should reflect real public destinations.
-- Avoid duplicate-domain content; use 301s to consolidate vanity domains onto
-  `monolithproject.com`.
+- Avoid duplicate-domain content. Use explicit canonical URLs and 301s to keep
+  vanity-domain campaign rails consolidated to their active public route.
 
 ## 4. Design Principles
 

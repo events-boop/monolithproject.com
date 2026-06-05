@@ -69,7 +69,7 @@ const PAGE_SOURCE = "sunsets_lake";
 const RECAP_HREF = "/go/media/sunsets-recap";
 const RADIO_HREF = "/go/media/sunsets-soundcloud";
 const INSTAGRAM_HREF = "/go/social/instagram-sunsets";
-const LAYLO_HREF = "https://laylo.com/monolithproject/luYXPr";
+const LAYLO_HREF = "/go/waitlist/chasing-sunsets";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 
@@ -548,7 +548,10 @@ export default function LakeLanding() {
             <section className="grid grid-cols-2 gap-3 pt-2">
               {actionLinks.map(item => {
                 const Icon = item.icon;
-                const href = appendEventAttribution(item.href, JULY_4_EVENT_SLUG);
+                const href = appendEventAttribution(
+                  item.href,
+                  JULY_4_EVENT_SLUG
+                );
 
                 return (
                   <Button

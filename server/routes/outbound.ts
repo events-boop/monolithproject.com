@@ -20,7 +20,8 @@ import { linkClicks } from "../db/schema";
 const router = Router();
 
 function readQueryParam(value: unknown) {
-  if (Array.isArray(value)) return typeof value[0] === "string" ? value[0] : undefined;
+  if (Array.isArray(value))
+    return typeof value[0] === "string" ? value[0] : undefined;
   return typeof value === "string" ? value : undefined;
 }
 
@@ -61,7 +62,7 @@ function renderSunsetsTicketsComingSoonPage(
     <p>${meta.title} tickets will move through the official Posh ticket page once the drop is live.</p>
     <p class="support">${SUNSETS_TICKET_CTA_SUPPORT} Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
     <div class="actions">
-      <a class="primary" href="/lake#lake-list">Join Lake List</a>
+      <a class="primary" href="/sunsets#lake-list">Join Lake List</a>
       <a class="secondary" href="/sunsets">Back to SUN(SETS)</a>
     </div>
     <div class="request">Request ${requestId}</div>
@@ -76,27 +77,51 @@ function outboundClickMeta(group: string, key: string) {
   const buttonName = `Outbound ${normalizedGroup}/${normalizedKey}`;
 
   if (normalizedGroup === "media" && normalizedKey === "sunsets-recap") {
-    return { buttonName: "Watch Recap", channel: "YouTube", interestType: "recap_click" };
+    return {
+      buttonName: "Watch Recap",
+      channel: "YouTube",
+      interestType: "recap_click",
+    };
   }
 
   if (normalizedGroup === "media" && normalizedKey === "sunsets-soundcloud") {
-    return { buttonName: "Follow the Sound", channel: "SoundCloud", interestType: "soundcloud_click" };
+    return {
+      buttonName: "Follow the Sound",
+      channel: "SoundCloud",
+      interestType: "soundcloud_click",
+    };
   }
 
   if (normalizedGroup === "gallery" && normalizedKey === "chasing-sunsets") {
-    return { buttonName: "View Gallery", channel: "Pic-Time", interestType: "gallery_click" };
+    return {
+      buttonName: "View Gallery",
+      channel: "Pic-Time",
+      interestType: "gallery_click",
+    };
   }
 
   if (normalizedGroup === "forms" && normalizedKey === "sunsets-vip") {
-    return { buttonName: "VIP / Tables", channel: "Fillout", interestType: "vip_click" };
+    return {
+      buttonName: "VIP / Tables",
+      channel: "Fillout",
+      interestType: "vip_click",
+    };
   }
 
   if (normalizedGroup === "waitlist" && normalizedKey === "chasing-sunsets") {
-    return { buttonName: "Join First Access", channel: "Laylo", interestType: "first_access_click" };
+    return {
+      buttonName: "Join First Access",
+      channel: "Laylo",
+      interestType: "first_access_click",
+    };
   }
 
   if (normalizedGroup === "waitlist" && normalizedKey === "sunsets-manychat") {
-    return { buttonName: "ManyChat First Access", channel: "ManyChat", interestType: "manychat_first_access_click" };
+    return {
+      buttonName: "ManyChat First Access",
+      channel: "ManyChat",
+      interestType: "manychat_first_access_click",
+    };
   }
 
   if (normalizedGroup === "tickets") {
@@ -110,16 +135,30 @@ function outboundClickMeta(group: string, key: string) {
   }
 
   if (normalizedGroup === "social") {
-    return { buttonName: normalizedKey, channel: normalizedKey, interestType: `${normalizedKey}_click` };
+    return {
+      buttonName: normalizedKey,
+      channel: normalizedKey,
+      interestType: `${normalizedKey}_click`,
+    };
   }
 
-  return { buttonName, channel: normalizedGroup, interestType: "outbound_click" };
+  return {
+    buttonName,
+    channel: normalizedGroup,
+    interestType: "outbound_click",
+  };
 }
 
 router.get("/go/:group/:key", async (req, res) => {
   const requestId = randomUUID();
-  const destination = resolveOutboundDestination(req.params.group, req.params.key);
-  const sunsetsTicketMeta = getSunsetsTicketRouteMeta(req.params.group, req.params.key);
+  const destination = resolveOutboundDestination(
+    req.params.group,
+    req.params.key
+  );
+  const sunsetsTicketMeta = getSunsetsTicketRouteMeta(
+    req.params.group,
+    req.params.key
+  );
 
   // "Tickets coming soon" — env var is unset for this specific event.
   if (destination === TICKETS_COMING_SOON) {
@@ -133,7 +172,12 @@ router.get("/go/:group/:key", async (req, res) => {
     res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
     return res
       .status(200)
-      .send(renderSunsetsTicketsComingSoonPage(requestId, sunsetsTicketMeta ?? undefined));
+      .send(
+        renderSunsetsTicketsComingSoonPage(
+          requestId,
+          sunsetsTicketMeta ?? undefined
+        )
+      );
   }
 
   if (!destination) {
@@ -163,11 +207,18 @@ router.get("/go/:group/:key", async (req, res) => {
     });
   }
 
-  const isSunsetsTicket = isSunsetsJuly4TicketRoute(req.params.group, req.params.key);
-  const trackedDestination = decorateOutboundDestination(destination, req.query, {
-    group: req.params.group,
-    key: req.params.key,
-  });
+  const isSunsetsTicket = isSunsetsJuly4TicketRoute(
+    req.params.group,
+    req.params.key
+  );
+  const trackedDestination = decorateOutboundDestination(
+    destination,
+    req.query,
+    {
+      group: req.params.group,
+      key: req.params.key,
+    }
+  );
   const clickMeta = outboundClickMeta(req.params.group, req.params.key);
   const referer = req.get("referer");
   const pagePath = (() => {
@@ -182,35 +233,48 @@ router.get("/go/:group/:key", async (req, res) => {
 
   const db = getDatabase();
   if (db) {
-    await db.insert(linkClicks).values({
-      id: requestId,
-      anonymousSessionId: readQueryParam(req.query.session_id) || null,
-      buttonName: clickMeta.buttonName,
-      destinationUrl: trackedDestination,
-      pagePath,
-      eventSlug: readQueryParam(req.query.event_slug) || (isSunsetsTicket ? SUNSETS_JULY4_EVENT_SLUG : null),
-      interestType: clickMeta.interestType,
-      channel: clickMeta.channel,
-      utmSource: readQueryParam(req.query.utm_source) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_source : null),
-      utmMedium: readQueryParam(req.query.utm_medium) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_medium : null),
-      utmCampaign: readQueryParam(req.query.utm_campaign) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_campaign : null),
-      utmContent: readQueryParam(req.query.utm_content) || (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_content : null),
-      utmTerm: readQueryParam(req.query.utm_term) || null,
-      metadata: {
-        requestId,
-        group: req.params.group,
-        key: req.params.key,
-        query: req.query,
-        referer,
-      },
-    }).catch((error) => {
-      logEvent("outbound.redirect_db_failed", {
-        requestId,
-        group: req.params.group,
-        key: req.params.key,
-        message: error instanceof Error ? error.message : "Unknown error",
+    await db
+      .insert(linkClicks)
+      .values({
+        id: requestId,
+        anonymousSessionId: readQueryParam(req.query.session_id) || null,
+        buttonName: clickMeta.buttonName,
+        destinationUrl: trackedDestination,
+        pagePath,
+        eventSlug:
+          readQueryParam(req.query.event_slug) ||
+          (isSunsetsTicket ? SUNSETS_JULY4_EVENT_SLUG : null),
+        interestType: clickMeta.interestType,
+        channel: clickMeta.channel,
+        utmSource:
+          readQueryParam(req.query.utm_source) ||
+          (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_source : null),
+        utmMedium:
+          readQueryParam(req.query.utm_medium) ||
+          (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_medium : null),
+        utmCampaign:
+          readQueryParam(req.query.utm_campaign) ||
+          (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_campaign : null),
+        utmContent:
+          readQueryParam(req.query.utm_content) ||
+          (isSunsetsTicket ? SUNSETS_JULY4_TICKET_UTMS.utm_content : null),
+        utmTerm: readQueryParam(req.query.utm_term) || null,
+        metadata: {
+          requestId,
+          group: req.params.group,
+          key: req.params.key,
+          query: req.query,
+          referer,
+        },
+      })
+      .catch(error => {
+        logEvent("outbound.redirect_db_failed", {
+          requestId,
+          group: req.params.group,
+          key: req.params.key,
+          message: error instanceof Error ? error.message : "Unknown error",
+        });
       });
-    });
   }
 
   res.setHeader("Cache-Control", "no-store");
