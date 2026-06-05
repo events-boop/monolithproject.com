@@ -1,15 +1,31 @@
-import { Router } from "express";
+import { Router, type Response } from "express";
 import { hasDatabase, getDatabase } from "../db/client";
 import { createAdminRouteGuard } from "../lib/admin-auth";
+import { getMetaCapiHealthStatus } from "../services/meta-capi";
 
 const router = Router();
 
-router.get("/api/health", (_req, res) => {
+function healthPayload() {
+  return {
+    ok: true,
+    capi: getMetaCapiHealthStatus(),
+  };
+}
+
+function sendHealth(res: Response) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 
+  res.status(200).json(healthPayload());
+}
+
+router.get("/api/health", (_req, res) => {
   // Keeping /api/health as a cheap liveness probe for load balancers and load tests.
-  res.status(200).json({ ok: true });
+  sendHealth(res);
+});
+
+router.get("/health", (_req, res) => {
+  sendHealth(res);
 });
 
 router.get("/api/ready", createAdminRouteGuard({ scope: "ready" }), async (_req, res) => {

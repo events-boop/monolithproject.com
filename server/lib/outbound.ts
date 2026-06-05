@@ -254,6 +254,23 @@ function readQueryValue(source: QuerySource, key: string) {
   return typeof value === "string" ? value : undefined;
 }
 
+function truncateTrackingParam(value: string, maxLength = 200) {
+  if (value.length <= maxLength) return value;
+
+  const truncated = value.slice(0, maxLength);
+  const lastAmpersand = truncated.lastIndexOf("&");
+  if (lastAmpersand > 0) {
+    return truncated.slice(0, lastAmpersand);
+  }
+
+  const lastPercent = truncated.lastIndexOf("%");
+  if (lastPercent >= 0 && truncated.length - lastPercent < 3) {
+    return truncated.slice(0, lastPercent);
+  }
+
+  return truncated;
+}
+
 export function decorateOutboundDestination(
   destination: string,
   source: QuerySource,
@@ -277,7 +294,7 @@ export function decorateOutboundDestination(
     for (const param of OUTBOUND_TRACKING_PARAMS) {
       const value = readQueryValue(source, param)?.trim();
       if (value && !url.searchParams.has(param)) {
-        url.searchParams.set(param, value.slice(0, 200));
+        url.searchParams.set(param, truncateTrackingParam(value));
       }
     }
 

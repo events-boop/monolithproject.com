@@ -109,4 +109,19 @@ describe("resolveOutboundDestination", () => {
       "https://tickets.example.com/event?utm_source=posh&session_id=sess_123&event_slug=chasing-sunsets-july-4-2026&ref=ig_dm_sun&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1",
     );
   });
+
+  it("truncates long tracking params without carrying partial query-like fragments", async () => {
+    const { decorateOutboundDestination } = await importOutbound();
+    const safePrefix = "a".repeat(190);
+    const destination = decorateOutboundDestination("https://tickets.example.com/event", {
+      ref: `${safePrefix}&utm_campaign=poisoned${"b".repeat(80)}`,
+      fbclid: `${"c".repeat(199)}%2F`,
+    });
+    const url = new URL(destination);
+
+    expect(url.searchParams.get("ref")).toBe(safePrefix);
+    expect(url.searchParams.get("fbclid")).toBe("c".repeat(199));
+    expect(destination).not.toContain("poisoned");
+    expect(destination).not.toContain("%25");
+  });
 });

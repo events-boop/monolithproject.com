@@ -16,8 +16,52 @@ function getConfig() {
   };
 }
 
+const LAKE_PIXEL_ID = "1049241148606250";
+
+const metaCapiRuntimeStatus: {
+  lastError: string | null;
+  lastFailureAt: string | null;
+  lastPixelId: string | null;
+  lastSuccessAt: string | null;
+} = {
+  lastError: null,
+  lastFailureAt: null,
+  lastPixelId: null,
+  lastSuccessAt: null,
+};
+
 export function isMetaCapiEnabled() {
   return Boolean(getConfig());
+}
+
+function getLakePixelId() {
+  return process.env.META_LAKE_PIXEL_ID?.trim() || LAKE_PIXEL_ID;
+}
+
+function recordMetaCapiFailure(message: string, pixelId?: string) {
+  metaCapiRuntimeStatus.lastError = message;
+  metaCapiRuntimeStatus.lastFailureAt = new Date().toISOString();
+  if (pixelId) metaCapiRuntimeStatus.lastPixelId = pixelId;
+}
+
+function recordMetaCapiSuccess(pixelId: string) {
+  metaCapiRuntimeStatus.lastError = null;
+  metaCapiRuntimeStatus.lastPixelId = pixelId;
+  metaCapiRuntimeStatus.lastSuccessAt = new Date().toISOString();
+}
+
+export function getMetaCapiHealthStatus() {
+  const config = getConfig();
+  return {
+    capi: Boolean(config),
+    pixel_id: getLakePixelId(),
+    graph_version: config?.graphVersion || process.env.META_GRAPH_API_VERSION?.trim() || "v21.0",
+    test_event_code_enabled: Boolean(config?.testEventCode),
+    last_error: metaCapiRuntimeStatus.lastError,
+    last_failure_at: metaCapiRuntimeStatus.lastFailureAt,
+    last_pixel_id: metaCapiRuntimeStatus.lastPixelId,
+    last_success_at: metaCapiRuntimeStatus.lastSuccessAt,
+  };
 }
 
 function sha256(value: string) {
@@ -78,6 +122,7 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
   if (!config) return;
   const pixelId = input.pixelId.trim();
   if (!pixelId) {
+    recordMetaCapiFailure("Missing Meta Pixel/Dataset ID");
     logEvent("meta_capi.missing_pixel_id", { eventId: input.eventId });
     return;
   }
@@ -133,6 +178,7 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
 
     if (!response.ok) {
       const text = await response.text().catch(() => "");
+      recordMetaCapiFailure(`HTTP ${response.status}: ${text.slice(0, 300)}`, pixelId);
       logEvent("meta_capi.lead_failed", {
         eventId: input.eventId,
         status: response.status,
@@ -141,8 +187,13 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
       return;
     }
 
+    recordMetaCapiSuccess(pixelId);
     logEvent("meta_capi.lead_sent", { eventId: input.eventId });
   } catch (error) {
+    recordMetaCapiFailure(
+      error instanceof Error ? error.message : "Unknown Meta CAPI error",
+      pixelId
+    );
     logEvent("meta_capi.lead_error", {
       eventId: input.eventId,
       message: error instanceof Error ? error.message : "unknown",

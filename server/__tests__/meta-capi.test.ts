@@ -1,5 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { isMetaCapiEnabled, sendLeadConversion } from "../services/meta-capi";
+import {
+  getMetaCapiHealthStatus,
+  isMetaCapiEnabled,
+  sendLeadConversion,
+} from "../services/meta-capi";
 
 // Precomputed SHA-256 hex of the *normalized* values, so a normalization
 // regression (wrong casing/whitespace/digit stripping) fails the test.
@@ -47,6 +51,18 @@ describe("meta capi", () => {
     });
 
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("reports CAPI health without exposing credentials", () => {
+    process.env.META_CAPI_TEST_EVENT_CODE = "TEST123";
+
+    const status = getMetaCapiHealthStatus();
+
+    expect(status.capi).toBe(true);
+    expect(status.pixel_id).toBe(LAKE_PIXEL_ID);
+    expect(status.graph_version).toBe("v21.0");
+    expect(status.test_event_code_enabled).toBe(true);
+    expect(status).not.toHaveProperty("access_token");
   });
 
   it("hashes normalized PII and never sends raw identifiers", async () => {

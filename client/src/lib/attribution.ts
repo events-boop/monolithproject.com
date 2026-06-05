@@ -163,11 +163,9 @@ function writeStoredAttribution(store: StoredAttribution) {
 
 function resolveSessionId() {
   const sessionStorage = getSessionStorage();
-  const localStorage = getLocalStorage();
 
   const existingSessionId =
     sessionStorage?.getItem(SESSION_STORAGE_KEY)?.trim() ||
-    readStoredAttribution()?.sessionId ||
     "";
 
   if (existingSessionId) return existingSessionId;
@@ -175,7 +173,6 @@ function resolveSessionId() {
   const nextSessionId = createSessionId();
   try {
     sessionStorage?.setItem(SESSION_STORAGE_KEY, nextSessionId);
-    localStorage?.setItem(SESSION_STORAGE_KEY, nextSessionId);
   } catch {
     // Ignore storage write failures and continue with the in-memory session id.
   }

@@ -79,10 +79,7 @@ function triggerHaptic(pattern: number | number[] = 10) {
 }
 
 function newEventId() {
-  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-    return crypto.randomUUID();
-  }
-  return `lead_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+  return crypto.randomUUID();
 }
 
 function appendEventAttribution(href: string, eventSlug?: string) {
