@@ -6,12 +6,17 @@ export default defineConfig({
   retries: 1,
   use: {
     baseURL: "http://127.0.0.1:4173",
+    launchOptions: {
+      args: [
+        "--host-resolver-rules=MAP monolithproject.com 127.0.0.1,MAP sunsets.vip 127.0.0.1",
+      ],
+    },
     trace: "on-first-retry",
   },
   webServer: [
     {
       command:
-        "NODE_ENV=production PORT=5001 HOST=127.0.0.1 node dist/index.js",
+        "NODE_ENV=production PORT=5001 HOST=127.0.0.1 TRUST_PROXY_HEADERS=true RATE_LIMIT_DEBUG_HEADERS=true node dist/index.js",
       port: 5001,
       reuseExistingServer: !process.env.CI,
       timeout: 120000,

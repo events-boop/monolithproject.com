@@ -82,19 +82,19 @@ function isBrowser() {
   return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
-function getLocalStorage() {
+function getSessionStorage() {
   if (!isBrowser()) return null;
   try {
-    return window.localStorage;
+    return window.sessionStorage;
   } catch {
     return null;
   }
 }
 
-function getSessionStorage() {
+function getLegacyLocalStorage() {
   if (!isBrowser()) return null;
   try {
-    return window.sessionStorage;
+    return window.localStorage;
   } catch {
     return null;
   }
@@ -131,7 +131,7 @@ function normalizeExternalReferrer(
 }
 
 function readStoredAttribution(): StoredAttribution | null {
-  const storage = getLocalStorage();
+  const storage = getSessionStorage();
   const raw = storage?.getItem(ATTRIBUTION_STORAGE_KEY);
   if (!raw) return null;
 
@@ -151,7 +151,7 @@ function readStoredAttribution(): StoredAttribution | null {
 }
 
 function writeStoredAttribution(store: StoredAttribution) {
-  const storage = getLocalStorage();
+  const storage = getSessionStorage();
   if (!storage) return;
 
   try {
@@ -277,7 +277,7 @@ export function captureAttribution() {
 
   const nextStore: StoredAttribution = existing
     ? {
-        sessionId: existing.sessionId || sessionId,
+        sessionId,
         landingPageUrl: existing.landingPageUrl || currentTouch.pageUrl,
         firstTouch: existing.firstTouch,
         lastTouch: mergeTouchPoint(existing.lastTouch, currentTouch),
@@ -391,7 +391,8 @@ export function appendAttributionQueryParams(href: string) {
 }
 
 export function clearAttributionState() {
-  getLocalStorage()?.removeItem(ATTRIBUTION_STORAGE_KEY);
-  getLocalStorage()?.removeItem(SESSION_STORAGE_KEY);
+  getSessionStorage()?.removeItem(ATTRIBUTION_STORAGE_KEY);
   getSessionStorage()?.removeItem(SESSION_STORAGE_KEY);
+  getLegacyLocalStorage()?.removeItem(ATTRIBUTION_STORAGE_KEY);
+  getLegacyLocalStorage()?.removeItem(SESSION_STORAGE_KEY);
 }
