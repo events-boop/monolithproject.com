@@ -36,11 +36,45 @@
   status = 301
   force = true
 
-# sunsets.vip and untold.vip are branded campaign front doors. They serve the
-# SPA directly so their roots can render host-specific campaign pages without
-# losing the vanity domain: sunsets.vip -> /sunsets, untold.vip -> /story.
-# No host redirect here means the vanity domains fall through to /api + /go
-# (functions) and finally the SPA fallback (/* -> /index.html) below.
+# sunsets.vip and untold.vip are branded campaign front doors. Keep /api and /go
+# available on those hosts, but force the SUN(SETS) public vanity root to the
+# canonical rail so every casing renders the same superior campaign page.
+
+[[redirects]]
+  from = "https://sunsets.vip/"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sunsets.vip/"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://sunsets.vip/SUNSETS"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://sunsets.vip/SUNSETS/"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sunsets.vip/SUNSETS"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sunsets.vip/SUNSETS/"
+  to = "https://sunsets.vip/sunsets/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "https://chasingsunsets.music/*"
@@ -56,85 +90,85 @@
 
 [[redirects]]
   from = "/SUNSETS"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/SUNSETS/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/SUNSET"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/SUNSET/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/Sunsets"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/Sunsets/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/Sunset"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/Sunset/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/sunset"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/sunset/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/sunsets/lake"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/sunsets/lake/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/lake"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/lake/"
-  to = "/sunsets"
+  to = "/sunsets/"
   status = 301
   force = true
 
