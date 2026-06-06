@@ -125,6 +125,17 @@ Airtable:
   `AIRTABLE_BASE_ID`, and `AIRTABLE_LEADS_TABLE_ID` or
   `AIRTABLE_LEADS_TABLE_NAME` are configured.
 
+Laylo / Posh:
+
+- Laylo website signups sync through `/api/leads` when `LEAD_PROVIDER=laylo`
+  and `LAYLO_API_TOKEN` or `LAYLO_API_KEY` is configured.
+- Laylo provider callbacks should post to `/api/webhooks/laylo` with
+  `LAYLO_WEBHOOK_SECRET`.
+- Posh buyer/order callbacks should post to `/api/webhooks/posh` with
+  `POSH_WEBHOOK_SECRET`.
+- `/health` reports whether these provider hooks are configured without
+  exposing secret values.
+
 DNS / Domains:
 
 - Netlify redirect rules are code-side only.

@@ -6,6 +6,7 @@ import {
   Calendar,
   Check,
   ChevronRight,
+  Clock,
   LockKeyhole,
   Mail,
   MapPin,
@@ -15,7 +16,9 @@ import {
   QrCode,
   Radio,
   Send,
+  ShieldCheck,
   Ticket,
+  Users,
   Waves,
   X,
   type LucideIcon,
@@ -37,9 +40,14 @@ import {
   SUNSETS_2026_SEASON_CHAPTERS,
   SUNSETS_2026_SEASON_PASS,
   SUNSETS_2026_SEASON_PASS_CTA_LABEL,
+  SUNSETS_JULY4_ADMISSION_TIERS,
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
+  SUNSETS_JULY4_EVENT_TIME,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
+  SUNSETS_JULY4_LINEUP,
+  SUNSETS_JULY4_TABLE_MINIMUM,
   SUNSETS_JULY4_TICKET_PATH as TICKET_HREF,
+  SUNSETS_JULY4_TOTAL_CAPACITY,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
   captureSunsetsTicketCtaClick,
@@ -80,6 +88,31 @@ const SOMMERS_SOUNDCLOUD_URL =
 const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOMMERS_SOUNDCLOUD_URL
 )}&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
+
+const HERO_SIGNAL_STATS = [
+  { label: "Date", value: "July 4", note: "Saturday" },
+  { label: "Time", value: SUNSETS_JULY4_EVENT_TIME, note: "1PM doors" },
+  { label: "Venue", value: "Castaways", note: "Chicago" },
+] as const;
+
+const TICKET_RAIL_STATS = [
+  {
+    label: "Capacity",
+    value: SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US"),
+    note: "guest admissions",
+  },
+  { label: "First Access", value: "SUNSET26", note: "$30 Lake List code" },
+  { label: "Tables", value: SUNSETS_JULY4_TABLE_MINIMUM, note: "limited cabanas" },
+] as const;
+
+const FEATURED_TICKET_TIERS = SUNSETS_JULY4_ADMISSION_TIERS.filter(tier =>
+  [
+    "before-2pm-arrival",
+    "first-access-lake-list",
+    "ga-tier-1",
+    "four-pack-group-bundle",
+  ].includes(tier.id)
+);
 
 function triggerHaptic(pattern: number | number[] = 10) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;
@@ -798,18 +831,26 @@ export default function SunsetsLinkBio() {
           transition={{ duration: 0.65, ease: "easeOut" }}
           className="overflow-hidden border border-[#d8e8c8]/25 bg-[#10140f]/86 shadow-2xl shadow-black/60 backdrop-blur"
         >
-          <div className="relative h-[255px] overflow-hidden">
+          <div className="relative h-[318px] overflow-hidden">
             <img
               src={HERO_IMAGE}
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,164,93,.28),rgba(20,23,17,.05)_40%,rgba(8,10,7,.35)),linear-gradient(0deg,#10140f_0%,rgba(16,20,15,0)_54%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,164,93,.34),rgba(20,23,17,.05)_38%,rgba(8,10,7,.44)),linear-gradient(0deg,#10140f_0%,rgba(16,20,15,.26)_46%,rgba(16,20,15,0)_72%)]" />
             <div className="absolute left-4 top-4 border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
               The Monolith Project
             </div>
             <div className="absolute right-4 top-4 border border-[#c9e8bd]/30 bg-[#172015]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#c9e8bd] backdrop-blur">
               Lake List
+            </div>
+            <div className="absolute left-4 top-14 border-l border-[#dfc27a]/70 bg-black/30 px-3 py-2 backdrop-blur">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#dfc27a]">
+                SUN(SETS) I
+              </p>
+              <p className="mt-1 text-xs font-semibold text-stone-200">
+                July 4 / Castaways
+              </p>
             </div>
 
             <motion.div
@@ -830,6 +871,24 @@ export default function SunsetsLinkBio() {
                 A full-day open-air chapter of house music, lakefront energy,
                 and golden-hour connection.
               </p>
+              <div className="mt-4 grid grid-cols-3 border border-white/12 bg-black/34 backdrop-blur">
+                {HERO_SIGNAL_STATS.map(stat => (
+                  <div
+                    key={stat.label}
+                    className="border-r border-white/10 px-2.5 py-2.5 last:border-r-0"
+                  >
+                    <p className="text-[8px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                      {stat.label}
+                    </p>
+                    <p className="mt-1 truncate text-[13px] font-black leading-none text-white">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 truncate text-[10px] font-semibold text-stone-300">
+                      {stat.note}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
 
@@ -845,6 +904,37 @@ export default function SunsetsLinkBio() {
                 Lake List
               </span>
             </div>
+
+            <section className="border border-[#dfc27a]/25 bg-[#0f130d]/88 p-4 shadow-[0_18px_45px_rgba(0,0,0,0.28)]">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                    July 4 Lineup
+                  </p>
+                  <h2 className="mt-1 text-xl font-black leading-none tracking-normal text-white">
+                    Castaways / Chicago Lakefront
+                  </h2>
+                </div>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#dfc27a]/35 bg-[#dfc27a]/12 text-[#dfc27a]">
+                  <Waves className="size-4.5" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {SUNSETS_JULY4_LINEUP.map((artist, index) => (
+                  <div
+                    key={artist}
+                    className="border border-white/10 bg-black/24 px-3 py-2.5"
+                  >
+                    <p className="text-[9px] font-black uppercase tracking-[0.18em] text-stone-500">
+                      0{index + 1}
+                    </p>
+                    <p className="mt-1 text-sm font-black uppercase tracking-normal text-white">
+                      {artist}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             <section
               id="lake-list"
@@ -1002,6 +1092,91 @@ export default function SunsetsLinkBio() {
               <p className="-mt-1 border border-white/10 bg-black/20 px-3 py-2 text-center text-[11px] font-semibold leading-relaxed text-stone-300">
                 {SUNSETS_TICKET_CTA_SUPPORT}
               </p>
+              <section className="space-y-4 border border-[#dfc27a]/28 bg-[#10140f]/94 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                      <ShieldCheck className="size-3.5" />
+                      Official Ticket Rail
+                    </p>
+                    <h2 className="mt-2 text-2xl font-black leading-none tracking-normal text-white">
+                      The lake has a limit.
+                    </h2>
+                    <p className="mt-2 text-xs font-semibold leading-relaxed text-stone-300">
+                      Ticket tiers move as allocations sell out. Secure entry
+                      early through the official Posh rail.
+                    </p>
+                  </div>
+                  <div className="shrink-0 border border-[#dfc27a]/35 bg-[#dfc27a]/12 px-3 py-2 text-right">
+                    <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#dfc27a]">
+                      From
+                    </p>
+                    <p className="text-2xl font-black leading-none text-white">
+                      $20
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 border border-white/10 bg-black/24">
+                  {TICKET_RAIL_STATS.map((stat, index) => {
+                    const StatIcon =
+                      index === 0 ? Users : index === 1 ? LockKeyhole : Ticket;
+                    return (
+                      <div
+                        key={stat.label}
+                        className="border-r border-white/10 px-2 py-3 last:border-r-0"
+                      >
+                        <StatIcon className="mb-2 size-3.5 text-[#dfc27a]" />
+                        <p className="text-[8px] font-black uppercase tracking-[0.16em] text-stone-500">
+                          {stat.label}
+                        </p>
+                        <p className="mt-1 truncate text-sm font-black leading-none text-white">
+                          {stat.value}
+                        </p>
+                        <p className="mt-1 line-clamp-2 text-[9px] font-semibold leading-tight text-stone-400">
+                          {stat.note}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="space-y-2">
+                  {FEATURED_TICKET_TIERS.map(tier => (
+                    <div
+                      key={tier.id}
+                      className={`border px-3 py-3 ${
+                        tier.highlight
+                          ? "border-[#dfc27a]/45 bg-[#dfc27a]/12"
+                          : "border-white/10 bg-black/22"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-[9px] font-black uppercase tracking-[0.18em] text-stone-500">
+                            {tier.visibility}
+                          </p>
+                          <h3 className="mt-1 text-sm font-black leading-tight text-white">
+                            {tier.name}
+                          </h3>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <p className="text-xl font-black leading-none text-[#dfc27a]">
+                            {tier.priceLabel}
+                          </p>
+                          <p className="mt-1 text-[9px] font-black uppercase tracking-[0.14em] text-stone-500">
+                            {tier.quantityLabel}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="mt-2 flex items-start gap-1.5 text-[11px] font-semibold leading-relaxed text-stone-300">
+                        <Clock className="mt-0.5 size-3 shrink-0 text-[#dfc27a]" />
+                        {tier.timing}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
               <Button
                 type="button"
                 variant="outline"

@@ -1,14 +1,31 @@
 import { Router, type Response } from "express";
 import { hasDatabase, getDatabase } from "../db/client";
 import { createAdminRouteGuard } from "../lib/admin-auth";
+import { getLayloBypassReason, readProvider } from "../lib/env";
 import { getMetaCapiHealthStatus } from "../services/meta-capi";
+import { isAirtableSyncEnabled } from "../services/airtable-sync";
 
 const router = Router();
 
 function healthPayload() {
+  const leadProvider = readProvider();
+  const layloBypassReason = getLayloBypassReason();
+
   return {
     ok: true,
     capi: getMetaCapiHealthStatus(),
+    integrations: {
+      laylo: {
+        provider_sync_enabled: leadProvider === "laylo" && !layloBypassReason,
+        webhook_configured: Boolean(process.env.LAYLO_WEBHOOK_SECRET?.trim()),
+      },
+      posh: {
+        webhook_configured: Boolean(process.env.POSH_WEBHOOK_SECRET?.trim()),
+      },
+      airtable: {
+        sync_enabled: isAirtableSyncEnabled(),
+      },
+    },
   };
 }
 

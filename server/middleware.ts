@@ -94,6 +94,45 @@ export function configureMiddleware(app: Express) {
 
 export function createWebhookAuthMiddleware(): RequestHandler {
   return (req, res, next) => {
+    if (req.path === "/webhooks/laylo") {
+      const requestId = randomUUID();
+      const configuredSecret = process.env.LAYLO_WEBHOOK_SECRET?.trim();
+
+      if (!configuredSecret) {
+        logEvent("laylo.webhook_unconfigured", { requestId });
+        return res.status(503).json({
+          ok: false,
+          requestId,
+          error: {
+            code: "UNAVAILABLE",
+            message: "Webhook handler is not configured.",
+            retryable: false,
+          },
+        });
+      }
+
+      const providedSecret =
+        req.header("Laylo-Secret")?.trim() ||
+        req.header("X-Laylo-Secret")?.trim() ||
+        req.header("X-Webhook-Secret")?.trim();
+
+      if (!providedSecret || !secureCompare(providedSecret, configuredSecret)) {
+        logEvent("laylo.webhook_denied", { requestId });
+        return res.status(401).json({
+          ok: false,
+          requestId,
+          error: {
+            code: "INVALID_CREDENTIALS",
+            message: "Webhook authorization failed.",
+            retryable: false,
+          },
+        });
+      }
+
+      next();
+      return;
+    }
+
     if (req.path === "/webhooks/posh") {
       const requestId = randomUUID();
       const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();

@@ -139,3 +139,4 @@ export const contactSchema = z.object({
 });
 
 export const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());
+export const layloWebhookPayloadSchema = z.record(z.string(), z.unknown());

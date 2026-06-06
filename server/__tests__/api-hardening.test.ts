@@ -239,9 +239,11 @@ describe("api hardening", () => {
 
   describe("Webhook Pre-Parser Authentication", () => {
     const originalWebhookSecret = process.env.POSH_WEBHOOK_SECRET;
+    const originalLayloWebhookSecret = process.env.LAYLO_WEBHOOK_SECRET;
 
     afterEach(() => {
       process.env.POSH_WEBHOOK_SECRET = originalWebhookSecret;
+      process.env.LAYLO_WEBHOOK_SECRET = originalLayloWebhookSecret;
     });
 
     it("rejects webhook request with 503 if secret is not configured", async () => {
@@ -303,7 +305,34 @@ describe("api hardening", () => {
       expect(result.nextCalled).toBe(true);
     });
 
-    it("ignores paths that are not Posh webhooks", async () => {
+    it("accepts Laylo webhook requests with a valid shared secret", async () => {
+      process.env.LAYLO_WEBHOOK_SECRET = "laylo-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/laylo",
+        headers: { "X-Laylo-Secret": "laylo-secret" },
+      });
+
+      expect(result.nextCalled).toBe(true);
+    });
+
+    it("rejects Laylo webhook requests with an invalid shared secret", async () => {
+      process.env.LAYLO_WEBHOOK_SECRET = "laylo-secret";
+      const middleware = createWebhookAuthMiddleware();
+      const result = await runMiddleware(middleware, {
+        path: "/webhooks/laylo",
+        headers: { "X-Laylo-Secret": "wrong-secret" },
+      });
+
+      expect(result.nextCalled).toBe(false);
+      expect(result.statusCode).toBe(401);
+      expect(result.jsonBody).toMatchObject({
+        ok: false,
+        error: { code: "INVALID_CREDENTIALS" },
+      });
+    });
+
+    it("ignores paths that are not provider webhooks", async () => {
       process.env.POSH_WEBHOOK_SECRET = "super-secret";
       const middleware = createWebhookAuthMiddleware();
       const result = await runMiddleware(middleware, {

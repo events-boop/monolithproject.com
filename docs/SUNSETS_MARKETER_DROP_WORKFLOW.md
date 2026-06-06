@@ -42,6 +42,21 @@ Use the variable that matches the rail you are changing:
 
 Use `OUTBOUND_LAYLO_URL` for the fastest global drop swap when the same Laylo destination should drive the general and Chasing Sun(Sets) waitlist rails.
 
+## Provider Webhooks & Sync
+
+Keep these active for the SUN(SETS) rail:
+
+| Provider | Purpose | Endpoint / setting | Required Netlify variable |
+| --- | --- | --- | --- |
+| Laylo | Lake List signup intake from Laylo back into Monolith CRM/Airtable | `https://sunsets.vip/api/webhooks/laylo` | `LAYLO_WEBHOOK_SECRET` |
+| Laylo | Website form sync into Laylo | `LEAD_PROVIDER=laylo` plus Laylo API token | `LAYLO_API_TOKEN` or `LAYLO_API_KEY` |
+| Posh | Buyer/order intake into Monolith CRM | `https://sunsets.vip/api/webhooks/posh` | `POSH_WEBHOOK_SECRET` |
+| Airtable | Server-side lead mirror | Enabled through env only, never client-side | `AIRTABLE_SYNC_ENABLED=true`, `AIRTABLE_API_KEY`, `AIRTABLE_BASE_ID`, and table ID/name |
+
+Use the same shared secret value in the provider dashboard and Netlify. The Laylo webhook accepts `Laylo-Secret`, `X-Laylo-Secret`, or `X-Webhook-Secret`. The Posh webhook accepts `Posh-Secret`.
+
+Check `/health` after deploy. It reports whether Laylo webhook, Posh webhook, Airtable sync, and Meta CAPI are configured without exposing credentials.
+
 ## Attribution Guarantee
 
 The outbound router preserves campaign parameters when it forwards a user to the active destination.
