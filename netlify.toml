@@ -36,43 +36,37 @@
   status = 301
   force = true
 
-# sunsets.vip and untold.vip are branded campaign front doors. Keep /api and /go
-# available on those hosts, but force the SUN(SETS) public vanity root to the
-# canonical rail so every casing renders the same superior campaign page.
-
-[[redirects]]
-  from = "https://sunsets.vip/"
-  to = "https://sunsets.vip/sunsets/"
-  status = 301
-  force = true
+# sunsets.vip and untold.vip are branded campaign front doors. Their roots fall
+# through to the SPA so the vanity domains stay in the address bar while the app
+# renders the matching campaign rail: sunsets.vip -> /sunsets, untold.vip -> /story.
 
 [[redirects]]
   from = "https://www.sunsets.vip/"
-  to = "https://sunsets.vip/sunsets/"
+  to = "https://sunsets.vip/"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sunsets.vip/SUNSETS"
-  to = "https://sunsets.vip/sunsets/"
+  to = "https://sunsets.vip/"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sunsets.vip/SUNSETS/"
-  to = "https://sunsets.vip/sunsets/"
+  to = "https://sunsets.vip/"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/SUNSETS"
-  to = "https://sunsets.vip/sunsets/"
+  to = "https://sunsets.vip/"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/SUNSETS/"
-  to = "https://sunsets.vip/sunsets/"
+  to = "https://sunsets.vip/"
   status = 301
   force = true
 

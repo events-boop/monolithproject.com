@@ -7,11 +7,12 @@ describe("MetaPixelGate", () => {
     expect(isLakeCampaignPath("/lake/")).toBe(true);
     expect(isLakeCampaignPath("/lake/first-access")).toBe(true);
     expect(isLakeCampaignPath("/Lake")).toBe(true);
+    expect(isLakeCampaignPath("/sunsets")).toBe(true);
+    expect(isLakeCampaignPath("/sunsets/")).toBe(true);
   });
 
   it("keeps the brand pixel gate enabled on general Monolith routes", () => {
     expect(isLakeCampaignPath("/")).toBe(false);
-    expect(isLakeCampaignPath("/sunsets")).toBe(false);
     expect(isLakeCampaignPath("/story")).toBe(false);
     expect(isLakeCampaignPath("/events/css-jul04")).toBe(false);
   });

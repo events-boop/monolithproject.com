@@ -73,6 +73,14 @@ export function getSceneForPath(pathname?: string): SceneConfig {
     return scenes.sunsets;
   }
 
+  if (
+    normalized.startsWith("/sunsets") ||
+    normalized.startsWith("/sunset") ||
+    normalized.startsWith("/lake")
+  ) {
+    return scenes.sunsets;
+  }
+
   if (normalized.startsWith("/radio")) {
     return scenes.radio;
   }

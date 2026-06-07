@@ -34,10 +34,10 @@ Current production priorities:
 
 - `/sunsets` is the official Sun(Sets) mobile-first ticket, QR, Season Pass,
   and Lake List wrapper.
-- `sunsets.vip` mirrors `/sunsets` on the vanity host. Use
-  `https://sunsets.vip/sunsets` as the canonical SEO/QR destination; legacy
-  `/lake` and `/sunsets/lake` URLs should fold into `/sunsets` while preserving
-  campaign query params.
+- `sunsets.vip` is the public SUN(SETS) front door and renders the `/sunsets`
+  rail on the vanity host. Use `https://sunsets.vip` as the public/SEO link;
+  legacy `/lake`, `/sunsets/lake`, and case variants should fold into the same
+  SUN(SETS) rail while preserving campaign query params.
 - The Lake List form should remain real CRM/CAPI-ready capture through
   `/api/leads`, not local-only UI state.
 - Sun(Sets) ticket traffic should use the tracked chapter rails:

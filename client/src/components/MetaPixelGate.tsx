@@ -7,8 +7,17 @@ import {
 } from "@/lib/cookieConsent";
 
 export function isLakeCampaignPath(pathname: string) {
-  const normalized = pathname.toLowerCase();
-  return normalized === "/lake" || normalized.startsWith("/lake/");
+  const normalized = pathname.toLowerCase().replace(/\/$/, "") || "/";
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
+  const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
+
+  return (
+    normalized === "/lake" ||
+    normalized.startsWith("/lake/") ||
+    normalized === "/sunsets" ||
+    normalized.startsWith("/sunsets/") ||
+    (normalized === "/" && isSunsetsHost)
+  );
 }
 
 export function isFirstAccessLeadAnchor(anchor: HTMLAnchorElement) {

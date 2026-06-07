@@ -76,7 +76,7 @@ type TrackableLink = {
 
 const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
-const CANONICAL_SUNSETS_URL = "https://sunsets.vip/sunsets";
+const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 const SUNSETS_COVER_IMAGE = "/images/chasing-sunsets-firstaccess-flyer.png";
@@ -1322,7 +1322,7 @@ export default function SunsetsLinkBio() {
                   <div className="border border-[#dfc27a]/45 bg-[#f8f4e8] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
                     <img
                       src={SUNSETS_QR_IMAGE}
-                      alt="QR code for https://sunsets.vip/sunsets"
+                      alt="QR code for the SUN(SETS) rail"
                       className="h-28 w-28"
                       loading="lazy"
                     />
@@ -1334,10 +1334,10 @@ export default function SunsetsLinkBio() {
                 <div className="min-w-0">
                   <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
                     <QrCode className="size-3.5" />
-                    Official canonical link
+                    Official public link
                   </p>
                   <p className="mt-1 truncate text-sm font-bold text-white">
-                    sunsets.vip/sunsets
+                    sunsets.vip
                   </p>
                   <p className="mt-2 text-xs font-semibold leading-relaxed text-stone-300">
                     Scan to save the SUN(SETS) rail, tickets, Lake List, and

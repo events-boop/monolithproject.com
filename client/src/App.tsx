@@ -157,6 +157,22 @@ function SandboxHeroRoute() {
   return <ExperimentalHeroTransition />;
 }
 
+function normalizeRouteLocation(location: string) {
+  return (location.split("?")[0].replace(/\/$/, "") || "/").toLowerCase();
+}
+
+function getCampaignHostLandingPath(location: string) {
+  const normalizedLocation = normalizeRouteLocation(location);
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
+  const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
+  const isUntoldHost = host === "untold.vip" || host === "www.untold.vip";
+
+  if (normalizedLocation === "/" && isSunsetsHost) return "/sunsets";
+  if (normalizedLocation === "/" && isUntoldHost) return "/story";
+
+  return normalizedLocation;
+}
+
 function Router() {
   const [location] = useLocation();
 
@@ -259,7 +275,7 @@ function SceneSync() {
   const [location] = useLocation();
 
   useEffect(() => {
-    const scene = getSceneForPath(location);
+    const scene = getSceneForPath(getCampaignHostLandingPath(location));
     const root = document.documentElement;
     root.dataset.scene = scene.id;
     root.style.setProperty("--scene-accent", scene.accent);
@@ -358,21 +374,10 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
-  const normalizedLocation = (
-    location.split("?")[0].replace(/\/$/, "") || "/"
-  ).toLowerCase();
-  // On branded campaign hosts, render the root directly (no redirect) so ads
-  // keep the vanity domain in the address bar while landing on the right rail.
-  const host = typeof window !== "undefined" ? window.location.hostname : "";
-  const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
-  const isUntoldHost = host === "untold.vip" || host === "www.untold.vip";
-  const isUntoldRootLanding = normalizedLocation === "/" && isUntoldHost;
-  const landingPath =
-    normalizedLocation === "/" && isSunsetsHost
-      ? "/sunsets"
-      : isUntoldRootLanding
-        ? "/story"
-        : normalizedLocation;
+  const normalizedLocation = normalizeRouteLocation(location);
+  const landingPath = getCampaignHostLandingPath(location);
+  const isUntoldRootLanding =
+    normalizedLocation === "/" && landingPath === "/story";
   const isStandaloneLanding =
     landingPath === "/sunsets" ||
     landingPath === "/lake" ||
