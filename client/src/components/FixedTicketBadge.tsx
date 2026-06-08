@@ -4,26 +4,39 @@ import {
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_TICKET_CTA_LABEL,
   captureSunsetsTicketCtaClick,
+  PRELAUNCH_LOCKED,
 } from "@/lib/sunsetsTicketing";
 
 export default function FixedTicketBadge() {
   const { scrollY } = useScroll();
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
+  // Pre-launch: Posh is in draft — route to the Lake List, not the ticket page.
+  const href = PRELAUNCH_LOCKED ? "/sunsets" : SUNSETS_JULY4_TICKET_PATH;
+  const label = PRELAUNCH_LOCKED ? "Join the Lake List" : SUNSETS_TICKET_CTA_LABEL;
+  const ring = PRELAUNCH_LOCKED
+    ? "Join the Lake List • First Access • Join the Lake List •"
+    : "Buy Tickets • July 4 • Posh • Buy Tickets •";
+
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
       <a
-        href={SUNSETS_JULY4_TICKET_PATH}
-        onClick={() =>
-          captureSunsetsTicketCtaClick({
-            destinationUrl: SUNSETS_JULY4_TICKET_PATH,
-            pagePath:
-              typeof window !== "undefined" ? window.location.pathname : undefined,
-            ctaPosition: "footer",
-          })
+        href={href}
+        onClick={
+          PRELAUNCH_LOCKED
+            ? undefined
+            : () =>
+                captureSunsetsTicketCtaClick({
+                  destinationUrl: SUNSETS_JULY4_TICKET_PATH,
+                  pagePath:
+                    typeof window !== "undefined"
+                      ? window.location.pathname
+                      : undefined,
+                  ctaPosition: "footer",
+                })
         }
         className="group relative flex h-32 w-32 cursor-pointer items-center justify-center rounded-full"
-        aria-label={SUNSETS_TICKET_CTA_LABEL}
+        aria-label={label}
       >
         <motion.div
           style={{ rotate }}
@@ -43,7 +56,7 @@ export default function FixedTicketBadge() {
             </defs>
             <text className="font-mono fill-white text-[10px] font-bold uppercase tracking-[0.2em]">
               <textPath xlinkHref="#circlePath" startOffset="0%">
-                {"Buy Tickets • July 4 • Posh • Buy Tickets •"}
+                {ring}
               </textPath>
             </text>
           </svg>

@@ -256,7 +256,7 @@ export default function LakeLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080a07] text-stone-100 selection:bg-[#c9a45d] selection:text-black">
+    <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
       <SEO
         title="Sun(Sets) Lake List & First Access"
         description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
@@ -270,7 +270,7 @@ export default function LakeLanding() {
           alt=""
           className="h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,7,0.75)_0%,rgba(8,10,7,0.92)_48%,#080a07_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,20,0.72)_0%,rgba(5,8,20,0.93)_48%,#050814_100%)]" />
       </div>
 
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-5 sm:py-8">
@@ -278,7 +278,7 @@ export default function LakeLanding() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="overflow-hidden border border-[#d8e8c8]/25 bg-[#10140f]/86 shadow-2xl shadow-black/60 backdrop-blur"
+          className="overflow-hidden border border-[#b9f5ff]/25 bg-[#0a1024]/86 shadow-2xl shadow-black/60 backdrop-blur"
         >
           <div className="relative h-[255px] overflow-hidden">
             <img
@@ -286,11 +286,11 @@ export default function LakeLanding() {
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,164,93,.28),rgba(20,23,17,.05)_40%,rgba(8,10,7,.35)),linear-gradient(0deg,#10140f_0%,rgba(16,20,15,0)_54%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,107,138,.22),rgba(97,232,255,.06)_40%,rgba(5,8,20,.48)),linear-gradient(0deg,#0a1024_0%,rgba(10,16,36,0)_54%)]" />
             <div className="absolute left-4 top-4 border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
               The Monolith Project
             </div>
-            <div className="absolute right-4 top-4 border border-[#c9e8bd]/30 bg-[#172015]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#c9e8bd] backdrop-blur">
+            <div className="absolute right-4 top-4 border border-[#ff6b8a]/30 bg-[#111b2a]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#ff6b8a] backdrop-blur">
               Lake List
             </div>
 
@@ -300,13 +300,13 @@ export default function LakeLanding() {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="absolute bottom-5 left-5 right-5"
             >
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#dfc27a]">
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#61e8ff]">
                 <Waves className="size-3.5" />
                 Chicago 2026
               </div>
               <h1 className="text-[clamp(3.1rem,16vw,4.3rem)] font-black leading-[0.86] tracking-normal text-white">
-                SUN<span className="text-[#dfc27a]">(</span>SETS
-                <span className="text-[#dfc27a]">)</span>
+                SUN<span className="text-[#61e8ff]">(</span>SETS
+                <span className="text-[#61e8ff]">)</span>
               </h1>
               <p className="mt-3 max-w-[330px] text-sm font-medium leading-relaxed text-stone-200/90">
                 A full-day open-air chapter of house music, lakefront energy,
@@ -323,20 +323,20 @@ export default function LakeLanding() {
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
                 Castaways
               </span>
-              <span className="border border-[#c9e8bd]/25 bg-[#c9e8bd]/10 px-3 py-1 text-xs font-semibold text-[#c9e8bd]">
+              <span className="border border-[#ff6b8a]/25 bg-[#ff6b8a]/10 px-3 py-1 text-xs font-semibold text-[#ff6b8a]">
                 First Access
               </span>
             </div>
 
-            <section className="space-y-4 border border-[#dfc27a]/35 bg-[linear-gradient(145deg,rgba(223,194,122,0.16),rgba(255,255,255,0.045)_48%,rgba(201,232,189,0.08))] p-4">
+            <section className="space-y-4 border border-[#61e8ff]/35 bg-[linear-gradient(145deg,rgba(97,232,255,0.14),rgba(255,255,255,0.045)_48%,rgba(255,107,138,0.10))] p-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                   Season Pass
                 </p>
                 <h2 className="mt-2 text-2xl font-black leading-none tracking-normal text-white">
                   {SUNSETS_2026_SEASON_PASS.name}
                 </h2>
-                <p className="mt-2 text-sm font-semibold leading-relaxed text-[#e8d596]">
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-[#c7f7ff]">
                   {SUNSETS_2026_SEASON_PASS.summary}
                 </p>
               </div>
@@ -354,7 +354,7 @@ export default function LakeLanding() {
                 </div>
                 <div className="text-right">
                   {PRELAUNCH_LOCKED ? (
-                    <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#dfc27a]">
+                    <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#61e8ff]">
                       Unlocks
                       <br />
                       at launch
@@ -364,7 +364,7 @@ export default function LakeLanding() {
                       {SUNSETS_2026_SEASON_PASS.priceLabel}
                     </p>
                   )}
-                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
                     {PRELAUNCH_LOCKED
                       ? "Limited"
                       : SUNSETS_2026_SEASON_PASS.quantityLabel}
@@ -382,7 +382,7 @@ export default function LakeLanding() {
                       <span className="text-sm font-black text-white">
                         {chapter.title}
                       </span>
-                      <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#dfc27a]">
+                      <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
                         {chapter.date}
                       </span>
                     </div>
@@ -396,7 +396,7 @@ export default function LakeLanding() {
 
               <Button
                 asChild
-                className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d]"
+                className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff]"
               >
                 <a
                   href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
@@ -468,7 +468,7 @@ export default function LakeLanding() {
                   channel: "Posh",
                 });
               }}
-              className="flex min-h-14 items-center justify-center gap-2 bg-[#dfc27a] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#efd48d]"
+              className="flex min-h-14 items-center justify-center gap-2 bg-[#61e8ff] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#a7f4ff]"
             >
               <Ticket className="size-4" />
               {PRELAUNCH_LOCKED
@@ -496,7 +496,7 @@ export default function LakeLanding() {
                     signals before the public.
                   </p>
                 </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#c9e8bd] text-black">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#ff6b8a] text-black">
                   <LockKeyhole className="size-4.5" />
                 </div>
               </div>
@@ -504,7 +504,7 @@ export default function LakeLanding() {
                 href={firstAccessHref}
                 data-campaign-lead="lake"
                 onClick={handleFirstAccess}
-                className="flex h-12 w-full items-center justify-center gap-2 bg-[#c9e8bd] text-sm font-black text-black transition hover:bg-[#d8f0ce]"
+                className="flex h-12 w-full items-center justify-center gap-2 bg-[#ff6b8a] text-sm font-black text-black transition hover:bg-[#ffd0dc]"
               >
                 <LockKeyhole className="size-4" />
                 Join the Lake List
@@ -521,7 +521,7 @@ export default function LakeLanding() {
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-300">
                   Upcoming Chapters
                 </h3>
-                <span className="text-right text-[11px] font-semibold text-[#dfc27a]">
+                <span className="text-right text-[11px] font-semibold text-[#61e8ff]">
                   {PRELAUNCH_LOCKED
                     ? "Lake List opens first"
                     : "Prices move by release"}
@@ -565,7 +565,7 @@ export default function LakeLanding() {
                             channel: "Posh",
                           });
                         }}
-                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#61e8ff]/35 hover:bg-white/[.075]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -586,7 +586,7 @@ export default function LakeLanding() {
                             channel: "CRM",
                           });
                         }}
-                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#dfc27a]/35 hover:bg-white/[.075]"
+                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#61e8ff]/35 hover:bg-white/[.075]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -637,10 +637,10 @@ export default function LakeLanding() {
               })}
             </section>
 
-            <section className="border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4">
+            <section className="border border-[#61e8ff]/20 bg-[#61e8ff]/10 p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
                     Official short link
                   </p>
                   <p className="mt-1 truncate text-sm font-bold text-white">
@@ -697,7 +697,7 @@ function ChapterContent({
 }) {
   return (
     <div className="flex gap-3">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-white/[.10] text-[#d8f0ce]">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-white/[.10] text-[#ffd0dc]">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
@@ -716,14 +716,14 @@ function ChapterContent({
             </p>
           </div>
           {isLinked ? (
-            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#dfc27a]" />
+            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#61e8ff]" />
           ) : null}
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
           <span className="bg-black/25 px-2.5 py-1 text-[11px] font-bold text-stone-300">
             {chapter.status}
           </span>
-          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#dfc27a]">
+          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#61e8ff]">
             {chapter.action}
           </span>
         </div>

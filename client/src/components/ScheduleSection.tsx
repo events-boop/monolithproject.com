@@ -10,6 +10,7 @@ import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
 import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
+import { PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import ResponsiveImage from "./ResponsiveImage";
@@ -477,31 +478,45 @@ export default function ScheduleSection() {
                             <div className="flex flex-wrap gap-4 items-center">
                               {event.ticketUrl ? (
                                 <a
-                                  href={event.ticketUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={e => {
-                                    const attributedHref =
-                                      appendAttributionQueryParams(
-                                        event.ticketUrl!
-                                      );
-                                    void trackTicketIntent(
-                                      "schedule_quick_view",
-                                      event.id,
-                                      attributedHref
-                                    );
+                                  href={
+                                    PRELAUNCH_LOCKED ? "/sunsets" : event.ticketUrl
+                                  }
+                                  target={PRELAUNCH_LOCKED ? undefined : "_blank"}
+                                  rel={
+                                    PRELAUNCH_LOCKED
+                                      ? undefined
+                                      : "noopener noreferrer"
+                                  }
+                                  onClick={
+                                    PRELAUNCH_LOCKED
+                                      ? undefined
+                                      : e => {
+                                          const attributedHref =
+                                            appendAttributionQueryParams(
+                                              event.ticketUrl!
+                                            );
+                                          void trackTicketIntent(
+                                            "schedule_quick_view",
+                                            event.id,
+                                            attributedHref
+                                          );
 
-                                    if (attributedHref !== event.ticketUrl) {
-                                      e.preventDefault();
-                                      window.open(
-                                        attributedHref,
-                                        "_blank",
-                                        "noopener,noreferrer"
-                                      );
-                                    }
-                                  }}
-                                  onMouseEnter={() =>
-                                    preconnectGateway(event.ticketUrl!)
+                                          if (
+                                            attributedHref !== event.ticketUrl
+                                          ) {
+                                            e.preventDefault();
+                                            window.open(
+                                              attributedHref,
+                                              "_blank",
+                                              "noopener,noreferrer"
+                                            );
+                                          }
+                                        }
+                                  }
+                                  onMouseEnter={
+                                    PRELAUNCH_LOCKED
+                                      ? undefined
+                                      : () => preconnectGateway(event.ticketUrl!)
                                   }
                                   className={`${getEventPillToneClass(event)} btn-pill-monolith btn-pill-compact group`}
                                 >

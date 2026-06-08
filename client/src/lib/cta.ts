@@ -4,11 +4,12 @@ import type {
   ScheduledEvent,
 } from "@shared/events/types";
 import type { InquiryType } from "@/contexts/InquiryContext";
+import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 
 export type { EventCta, FunnelTool };
 
 export const CTA_LABELS = {
-  tickets: "Get Tickets",
+  tickets: SUNSETS_PRELAUNCH_LOCKED ? "Join the Lake List" : "Get Tickets",
   schedule: "See The Schedule",
   collective: "Meet The Artists",
   journal: "Read The Journal",
@@ -86,7 +87,21 @@ export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
     isExternal: false,
   };
 
-  return event?.primaryCta ?? fallback;
+  const cta = event?.primaryCta ?? fallback;
+
+  // Pre-launch: Posh ticketing is still in draft, so never route users to a
+  // Posh ticket CTA (including internal /go/tickets redirects) — send them to
+  // the Lake List. Skip the schedule fallback (events with no primaryCta).
+  if (SUNSETS_PRELAUNCH_LOCKED && event?.primaryCta != null && cta.tool === "posh") {
+    return {
+      label: "Join the Lake List",
+      href: "/sunsets",
+      tool: "laylo",
+      isExternal: false,
+    };
+  }
+
+  return cta;
 }
 
 export function isInquiryHref(href: string) {

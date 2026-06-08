@@ -38,6 +38,7 @@ import {
   SUNSETS_JULY4_LINEUP,
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_TICKET_CTA_LABEL,
+  PRELAUNCH_LOCKED,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import { appendAttributionQueryParams } from "@/lib/attribution";
@@ -290,7 +291,7 @@ export default function ChasingSunsets() {
                   "Autograf",
                   "Kiko Franco",
                   "The Lake Has A Limit",
-                  "Tables From $2,000",
+                  PRELAUNCH_LOCKED ? "Tables / Cabanas" : "Tables From $2,000",
                 ].map(pill => (
                   <span
                     key={pill}
@@ -404,7 +405,9 @@ export default function ChasingSunsets() {
               {
                 kicker: "VIP Rail",
                 title: "Tables",
-                body: "6 premium cabanas and limited tables start at a $2,000 minimum.",
+                body: PRELAUNCH_LOCKED
+                  ? "6 premium cabanas and limited tables — reserved space for your group."
+                  : "6 premium cabanas and limited tables start at a $2,000 minimum.",
                 href: "/vip",
               },
             ].map((card, index) => (

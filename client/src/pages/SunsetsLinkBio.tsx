@@ -87,7 +87,7 @@ const SOMMERS_SOUNDCLOUD_URL =
   "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOMMERS_SOUNDCLOUD_URL
-)}&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
+)}&color=%2361e8ff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
 
 const HERO_SIGNAL_STATS = [
   { label: "Date", value: "July 4", note: "Saturday" },
@@ -140,9 +140,9 @@ function ArtPlaceholder({
   return (
     <div
       aria-hidden="true"
-      className={`relative flex items-center justify-center overflow-hidden border border-dashed border-[#dfc27a]/45 bg-[repeating-linear-gradient(45deg,rgba(223,194,122,0.12)_0,rgba(223,194,122,0.12)_9px,rgba(16,20,15,0.4)_9px,rgba(16,20,15,0.4)_18px)] ${className}`}
+      className={`relative flex items-center justify-center overflow-hidden border border-dashed border-[#61e8ff]/45 bg-[repeating-linear-gradient(45deg,rgba(97,232,255,0.14)_0,rgba(97,232,255,0.14)_9px,rgba(10,16,36,0.48)_9px,rgba(10,16,36,0.48)_18px)] ${className}`}
     >
-      <span className="pointer-events-none px-2 text-center text-[8px] font-black uppercase leading-tight tracking-[0.22em] text-[#f4e8c8]">
+      <span className="pointer-events-none px-2 text-center text-[8px] font-black uppercase leading-tight tracking-[0.22em] text-[#d9fbff]">
         ART · {label}
       </span>
     </div>
@@ -316,9 +316,9 @@ function LakeListForm() {
 
   if (isSubmitted) {
     return (
-      <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-4 text-sm font-semibold leading-relaxed text-[#d8f0ce]">
+      <div className="border border-[#ff6b8a]/35 bg-[#ff6b8a]/10 p-4 text-sm font-semibold leading-relaxed text-[#ffd0dc]">
         <div className="mb-2 flex items-center gap-2 text-white">
-          <Check className="size-4 text-[#c9e8bd]" />
+          <Check className="size-4 text-[#ff6b8a]" />
           You are on the Lake List.
         </div>
         First signal arrives soon.
@@ -332,8 +332,8 @@ function LakeListForm() {
         value={honeypotValue}
         onChange={event => setHoneypotValue(event.currentTarget.value)}
       />
-      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#c9e8bd]/40">
-        <Mail className="size-4 text-[#dfc27a]" />
+      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#ff6b8a]/40">
+        <Mail className="size-4 text-[#61e8ff]" />
         <span className="sr-only">Email</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -345,8 +345,8 @@ function LakeListForm() {
           required
         />
       </label>
-      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#c9e8bd]/40">
-        <Phone className="size-4 text-[#dfc27a]" />
+      <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#ff6b8a]/40">
+        <Phone className="size-4 text-[#61e8ff]" />
         <span className="sr-only">Phone</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -390,7 +390,7 @@ function LakeListForm() {
         </div>
       ) : null}
       <Button
-        className="h-12 w-full bg-[#c9e8bd] text-sm font-black text-black hover:bg-[#d8f0ce] disabled:opacity-60"
+        className="h-12 w-full bg-[#ff6b8a] text-sm font-black text-black hover:bg-[#ffd0dc] disabled:opacity-60"
         disabled={isSubmitting}
         type="submit"
       >
@@ -469,9 +469,9 @@ function FeaturedDropSignup() {
 
   if (isSubmitted) {
     return (
-      <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-3 text-xs font-semibold leading-relaxed text-[#d8f0ce]">
+      <div className="border border-[#ff6b8a]/35 bg-[#ff6b8a]/10 p-3 text-xs font-semibold leading-relaxed text-[#ffd0dc]">
         <div className="mb-1 flex items-center gap-2 text-white">
-          <Check className="size-4 text-[#c9e8bd]" />
+          <Check className="size-4 text-[#ff6b8a]" />
           You are on the featured drop list.
         </div>
         New selections land here first.
@@ -485,8 +485,8 @@ function FeaturedDropSignup() {
         value={honeypotValue}
         onChange={event => setHoneypotValue(event.currentTarget.value)}
       />
-      <label className="flex items-center gap-2 bg-white/[0.10] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#dfc27a]/45">
-        <Mail className="size-4 text-[#dfc27a]" />
+      <label className="flex items-center gap-2 bg-white/[0.10] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#61e8ff]/45">
+        <Mail className="size-4 text-[#61e8ff]" />
         <span className="sr-only">Email for featured set drops</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -508,7 +508,7 @@ function FeaturedDropSignup() {
         </div>
       ) : null}
       <Button
-        className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] disabled:opacity-60"
+        className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff] disabled:opacity-60"
         disabled={isSubmitting}
         type="submit"
       >
@@ -613,10 +613,10 @@ Permission to feature on Sun(Sets) Radio: ${permission}
       aria-modal="true"
       aria-labelledby="sunsets-dj-submit-title"
     >
-      <div className="max-h-[92svh] w-full max-w-[460px] overflow-y-auto border border-white/15 bg-[#10140f] shadow-2xl shadow-black/70">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#10140f]/95 p-4 backdrop-blur">
+      <div className="max-h-[92svh] w-full max-w-[460px] overflow-y-auto border border-white/15 bg-[#0a1024] shadow-2xl shadow-black/70">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#0a1024]/95 p-4 backdrop-blur">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
               Sun(Sets) Radio
             </p>
             <h2
@@ -638,9 +638,9 @@ Permission to feature on Sun(Sets) Radio: ${permission}
 
         <div className="p-4">
           {isSubmitted ? (
-            <div className="border border-[#c9e8bd]/35 bg-[#c9e8bd]/10 p-5 text-sm font-semibold leading-relaxed text-[#d8f0ce]">
+            <div className="border border-[#ff6b8a]/35 bg-[#ff6b8a]/10 p-5 text-sm font-semibold leading-relaxed text-[#ffd0dc]">
               <div className="mb-2 flex items-center gap-2 text-white">
-                <Check className="size-4 text-[#c9e8bd]" />
+                <Check className="size-4 text-[#ff6b8a]" />
                 Submission received.
               </div>
               Tagged as sunsets_radio_submission.
@@ -724,7 +724,7 @@ Permission to feature on Sun(Sets) Radio: ${permission}
               ) : null}
 
               <Button
-                className="h-12 w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d8f0ce] disabled:opacity-60"
+                className="h-12 w-full bg-[#ff6b8a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#ffd0dc] disabled:opacity-60"
                 disabled={isSubmitting}
                 type="submit"
               >
@@ -760,7 +760,7 @@ function FormInput({
         {label}
       </span>
       <input
-        className="w-full border border-white/10 bg-white/[0.06] px-3 py-3 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-[#dfc27a]/50"
+        className="w-full border border-white/10 bg-white/[0.06] px-3 py-3 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-[#61e8ff]/50"
         type={type}
         value={value}
         placeholder={placeholder}
@@ -790,7 +790,7 @@ function SelectField({
         {label}
       </span>
       <select
-        className="w-full border border-white/10 bg-[#151914] px-3 py-3 text-sm text-white outline-none transition focus:border-[#dfc27a]/50"
+        className="w-full border border-white/10 bg-[#0e1730] px-3 py-3 text-sm text-white outline-none transition focus:border-[#61e8ff]/50"
         value={value}
         required={required}
         onChange={event => onChange(event.currentTarget.value)}
@@ -852,7 +852,7 @@ export default function SunsetsLinkBio() {
   const ticketHref = appendEventAttribution(TICKET_HREF, JULY_4_EVENT_SLUG);
 
   return (
-    <div className="min-h-screen bg-[#080a07] text-stone-100 selection:bg-[#c9a45d] selection:text-black">
+    <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
       <SEO
         title="SUN(SETS) I - July 4 at Castaways"
         description={
@@ -871,7 +871,7 @@ export default function SunsetsLinkBio() {
           alt=""
           className="h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,10,7,0.75)_0%,rgba(8,10,7,0.92)_48%,#080a07_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,20,0.72)_0%,rgba(5,8,20,0.93)_48%,#050814_100%)]" />
       </div>
 
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-5 sm:py-8">
@@ -879,7 +879,7 @@ export default function SunsetsLinkBio() {
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="overflow-hidden border border-[#d8e8c8]/25 bg-[#10140f]/86 shadow-2xl shadow-black/60 backdrop-blur"
+          className="overflow-hidden border border-[#b9f5ff]/25 bg-[#0a1024]/86 shadow-2xl shadow-black/60 backdrop-blur"
         >
           <div className="relative h-[318px] overflow-hidden">
             <img
@@ -887,15 +887,15 @@ export default function SunsetsLinkBio() {
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,164,93,.34),rgba(20,23,17,.05)_38%,rgba(8,10,7,.44)),linear-gradient(0deg,#10140f_0%,rgba(16,20,15,.26)_46%,rgba(16,20,15,0)_72%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,107,138,.28),rgba(97,232,255,.06)_38%,rgba(5,8,20,.50)),linear-gradient(0deg,#0a1024_0%,rgba(10,16,36,.30)_46%,rgba(10,16,36,0)_72%)]" />
             <div className="absolute left-4 top-4 border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
               The Monolith Project
             </div>
-            <div className="absolute right-4 top-4 border border-[#c9e8bd]/30 bg-[#172015]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#c9e8bd] backdrop-blur">
+            <div className="absolute right-4 top-4 border border-[#ff6b8a]/30 bg-[#111b2a]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#ff6b8a] backdrop-blur">
               Lake List
             </div>
-            <div className="absolute left-4 top-14 hidden border-l border-[#dfc27a]/70 bg-black/30 px-3 py-2 backdrop-blur min-[450px]:block">
-              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#dfc27a]">
+            <div className="absolute left-4 top-14 hidden border-l border-[#61e8ff]/70 bg-black/30 px-3 py-2 backdrop-blur min-[450px]:block">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
                 SUN(SETS) I
               </p>
               <p className="mt-1 text-xs font-semibold text-stone-200">
@@ -909,17 +909,17 @@ export default function SunsetsLinkBio() {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="absolute bottom-5 left-5 right-5"
             >
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#dfc27a]">
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#61e8ff]">
                 <Waves className="size-3.5" />
                 Chicago 2026
               </div>
               <h1 className="text-[clamp(3.1rem,16vw,4.3rem)] font-black leading-[0.86] tracking-normal text-white">
-                SUN<span className="text-[#dfc27a]">(</span>SETS
-                <span className="text-[#dfc27a]">)</span>
+                SUN<span className="text-[#61e8ff]">(</span>SETS
+                <span className="text-[#61e8ff]">)</span>
               </h1>
               <p className="mt-3 max-w-[330px] text-sm font-medium leading-relaxed text-stone-200/90">
                 Open-air house on the Chicago lakefront, July 4. The{" "}
-                <span className="font-bold text-[#dfc27a]">Lake List</span> gets
+                <span className="font-bold text-[#61e8ff]">Lake List</span> gets
                 first access — the code, ticket drops, and location before the
                 public.
               </p>
@@ -929,7 +929,7 @@ export default function SunsetsLinkBio() {
                     key={stat.label}
                     className="border-r border-white/10 px-2.5 py-2.5 last:border-r-0"
                   >
-                    <p className="text-[8px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                    <p className="text-[8px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
                       {stat.label}
                     </p>
                     <p className="mt-1 truncate text-[13px] font-black leading-none text-white">
@@ -952,7 +952,7 @@ export default function SunsetsLinkBio() {
               />
               <Button
                 type="button"
-                className="h-12 min-w-0 flex-1 bg-[#dfc27a] px-2 text-[10px] font-black uppercase tracking-[0.1em] text-black shadow-[0_14px_36px_rgba(223,194,122,0.18)] hover:bg-[#efd48d] min-[420px]:px-4 min-[420px]:text-xs min-[420px]:tracking-[0.12em]"
+                className="h-12 min-w-0 flex-1 bg-[#61e8ff] px-2 text-[10px] font-black uppercase tracking-[0.1em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff] min-[420px]:px-4 min-[420px]:text-xs min-[420px]:tracking-[0.12em]"
                 onClick={() => {
                   triggerHaptic(12);
                   focusLakeList();
@@ -979,7 +979,7 @@ export default function SunsetsLinkBio() {
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
                 Castaways / Chicago Lakefront
               </span>
-              <span className="border border-[#c9e8bd]/25 bg-[#c9e8bd]/10 px-3 py-1 text-xs font-semibold text-[#c9e8bd]">
+              <span className="border border-[#ff6b8a]/25 bg-[#ff6b8a]/10 px-3 py-1 text-xs font-semibold text-[#ff6b8a]">
                 Lake List
               </span>
             </div>
@@ -1002,24 +1002,24 @@ export default function SunsetsLinkBio() {
                     signals before the public.
                   </p>
                 </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#c9e8bd] text-black">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#ff6b8a] text-black">
                   <LockKeyhole className="size-4.5" />
                 </div>
               </div>
               <LakeListForm />
             </section>
 
-            <section className="border border-[#dfc27a]/25 bg-[#0f130d]/88 p-4 shadow-[0_18px_45px_rgba(0,0,0,0.28)]">
+            <section className="border border-[#61e8ff]/25 bg-[#080d1f]/88 p-4 shadow-[0_18px_45px_rgba(0,0,0,0.28)]">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                     July 4 Lineup
                   </p>
                   <h2 className="mt-1 text-xl font-black leading-none tracking-normal text-white">
                     Castaways / Chicago Lakefront
                   </h2>
                 </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#dfc27a]/35 bg-[#dfc27a]/12 text-[#dfc27a]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#61e8ff]/35 bg-[#61e8ff]/12 text-[#61e8ff]">
                   <Waves className="size-4.5" />
                 </div>
               </div>
@@ -1041,15 +1041,15 @@ export default function SunsetsLinkBio() {
             </section>
 
             <section className="grid gap-3 pt-1">
-              <section className="space-y-4 border border-[#dfc27a]/35 bg-[linear-gradient(145deg,rgba(223,194,122,0.16),rgba(255,255,255,0.045)_48%,rgba(201,232,189,0.08))] p-4">
+              <section className="space-y-4 border border-[#61e8ff]/35 bg-[linear-gradient(145deg,rgba(97,232,255,0.14),rgba(255,255,255,0.045)_48%,rgba(255,107,138,0.10))] p-4">
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                     Season Pass
                   </p>
                   <h2 className="mt-2 text-2xl font-black leading-none tracking-normal text-white">
                     {SUNSETS_2026_SEASON_PASS.name}
                   </h2>
-                  <p className="mt-2 text-sm font-semibold leading-relaxed text-[#e8d596]">
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-[#c7f7ff]">
                     {SUNSETS_2026_SEASON_PASS.summary}
                   </p>
                 </div>
@@ -1067,7 +1067,7 @@ export default function SunsetsLinkBio() {
                   </div>
                   <div className="text-right">
                     {PRELAUNCH_LOCKED ? (
-                      <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#dfc27a]">
+                      <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#61e8ff]">
                         Unlocks
                         <br />
                         at launch
@@ -1077,7 +1077,7 @@ export default function SunsetsLinkBio() {
                         {SUNSETS_2026_SEASON_PASS.priceLabel}
                       </p>
                     )}
-                    <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                    <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
                       {PRELAUNCH_LOCKED
                         ? "Limited"
                         : SUNSETS_2026_SEASON_PASS.quantityLabel}
@@ -1095,7 +1095,7 @@ export default function SunsetsLinkBio() {
                         <span className="text-sm font-black text-white">
                           {chapter.title}
                         </span>
-                        <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#dfc27a]">
+                        <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
                           {chapter.date}
                         </span>
                       </div>
@@ -1109,7 +1109,7 @@ export default function SunsetsLinkBio() {
 
                 <Button
                   asChild
-                  className="h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d]"
+                  className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff]"
                 >
                   <a
                     href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
@@ -1153,7 +1153,7 @@ export default function SunsetsLinkBio() {
 
               <Button
                 type="button"
-                className="h-[3.25rem] w-full bg-[#c9e8bd] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_10px_32px_rgba(201,232,189,0.14)] hover:bg-[#d8f0ce]"
+                className="h-[3.25rem] w-full bg-[#ff6b8a] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_10px_32px_rgba(255,107,138,0.18)] hover:bg-[#ffd0dc]"
                 onClick={() => {
                   triggerHaptic(8);
                   focusLakeList();
@@ -1172,7 +1172,7 @@ export default function SunsetsLinkBio() {
               </Button>
               <Button
                 asChild
-                className="h-[3.25rem] w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(223,194,122,0.18)] hover:bg-[#efd48d]"
+                className="h-[3.25rem] w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff]"
               >
                 <a
                   href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
@@ -1217,10 +1217,10 @@ export default function SunsetsLinkBio() {
                   ? "Lake List members get the first ticket window before public release."
                   : SUNSETS_TICKET_CTA_SUPPORT}
               </p>
-              <section className="space-y-4 border border-[#dfc27a]/28 bg-[#10140f]/94 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
+              <section className="space-y-4 border border-[#61e8ff]/28 bg-[#0a1024]/94 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                    <p className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                       <ShieldCheck className="size-3.5" />
                       Official Ticket Rail
                     </p>
@@ -1233,8 +1233,8 @@ export default function SunsetsLinkBio() {
                         : "Ticket tiers move as allocations sell out. Secure entry early through the official Posh rail."}
                     </p>
                   </div>
-                  <div className="shrink-0 border border-[#dfc27a]/35 bg-[#dfc27a]/12 px-3 py-2 text-right">
-                    <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#dfc27a]">
+                  <div className="shrink-0 border border-[#61e8ff]/35 bg-[#61e8ff]/12 px-3 py-2 text-right">
+                    <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
                       {PRELAUNCH_LOCKED ? "Tickets" : "From"}
                     </p>
                     <p
@@ -1258,7 +1258,7 @@ export default function SunsetsLinkBio() {
                         key={stat.label}
                         className="border-r border-white/10 px-2 py-3 last:border-r-0"
                       >
-                        <StatIcon className="mb-2 size-3.5 text-[#dfc27a]" />
+                        <StatIcon className="mb-2 size-3.5 text-[#61e8ff]" />
                         <p className="text-[8px] font-black uppercase tracking-[0.16em] text-stone-500">
                           {stat.label}
                         </p>
@@ -1279,7 +1279,7 @@ export default function SunsetsLinkBio() {
                       key={tier.id}
                       className={`border px-3 py-3 ${
                         tier.highlight
-                          ? "border-[#dfc27a]/45 bg-[#dfc27a]/12"
+                          ? "border-[#61e8ff]/45 bg-[#61e8ff]/12"
                           : "border-white/10 bg-black/22"
                       }`}
                     >
@@ -1294,7 +1294,7 @@ export default function SunsetsLinkBio() {
                         </div>
                         <div className="shrink-0 text-right">
                           <p
-                            className={`font-black leading-none text-[#dfc27a] ${
+                            className={`font-black leading-none text-[#61e8ff] ${
                               PRELAUNCH_LOCKED
                                 ? "text-[11px] uppercase tracking-[0.1em]"
                                 : "text-xl"
@@ -1310,7 +1310,7 @@ export default function SunsetsLinkBio() {
                         </div>
                       </div>
                       <p className="mt-2 flex items-start gap-1.5 text-[11px] font-semibold leading-relaxed text-stone-300">
-                        <Clock className="mt-0.5 size-3 shrink-0 text-[#dfc27a]" />
+                        <Clock className="mt-0.5 size-3 shrink-0 text-[#61e8ff]" />
                         {tier.timing}
                       </p>
                     </div>
@@ -1341,10 +1341,10 @@ export default function SunsetsLinkBio() {
 
             <section
               id="last-chapter"
-              className="space-y-3 border border-[#dfc27a]/20 bg-[#dfc27a]/10 p-4"
+              className="space-y-3 border border-[#61e8ff]/20 bg-[#61e8ff]/10 p-4"
             >
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                   Recap
                 </p>
                 <h2 className="mt-1 text-2xl font-black leading-none tracking-normal text-white">
@@ -1368,7 +1368,7 @@ export default function SunsetsLinkBio() {
 
             <section className="space-y-3 pt-1">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                   Event / artist teaser
                 </p>
                 <h3 className="mt-1 text-xl font-black tracking-normal text-white">
@@ -1417,7 +1417,7 @@ export default function SunsetsLinkBio() {
                             channel: "Posh",
                           });
                         }}
-                        className="group block border border-[#dfc27a]/20 bg-[#12180f]/90 p-4 shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#dfc27a]/45 hover:bg-[#171d13]"
+                        className="group block border border-[#61e8ff]/20 bg-[#0b1326]/90 p-4 shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#61e8ff]/45 hover:bg-[#111b35]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -1438,7 +1438,7 @@ export default function SunsetsLinkBio() {
                             channel: "CRM",
                           });
                         }}
-                        className="group block w-full border border-[#dfc27a]/20 bg-[#12180f]/90 p-4 text-left shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#dfc27a]/45 hover:bg-[#171d13]"
+                        className="group block w-full border border-[#61e8ff]/20 bg-[#0b1326]/90 p-4 text-left shadow-[0_12px_34px_rgba(0,0,0,0.24)] transition hover:border-[#61e8ff]/45 hover:bg-[#111b35]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -1452,14 +1452,14 @@ export default function SunsetsLinkBio() {
               })}
             </section>
 
-            <section className="relative overflow-hidden border border-[#dfc27a]/30 bg-[#10140f]/92 p-4 shadow-[0_22px_60px_rgba(0,0,0,0.34)]">
+            <section className="relative overflow-hidden border border-[#61e8ff]/30 bg-[#0a1024]/92 p-4 shadow-[0_22px_60px_rgba(0,0,0,0.34)]">
               <div
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#dfc27a]/70"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[#61e8ff]/70"
                 aria-hidden="true"
               />
               <div className="grid gap-4 min-[390px]:grid-cols-[auto_minmax(0,1fr)] min-[390px]:items-center">
                 <div className="mx-auto w-32 shrink-0 min-[390px]:mx-0">
-                  <div className="border border-[#dfc27a]/45 bg-[#f8f4e8] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+                  <div className="border border-[#61e8ff]/45 bg-[#f8f4e8] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
                     <img
                       src={SUNSETS_QR_IMAGE}
                       alt="QR code for the SUN(SETS) rail"
@@ -1467,12 +1467,12 @@ export default function SunsetsLinkBio() {
                       loading="lazy"
                     />
                   </div>
-                  <p className="mt-2 text-center text-[9px] font-black uppercase tracking-[0.24em] text-[#dfc27a]">
+                  <p className="mt-2 text-center text-[9px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
                     Scan rail
                   </p>
                 </div>
                 <div className="min-w-0">
-                  <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#dfc27a]">
+                  <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
                     <QrCode className="size-3.5" />
                     Official public link
                   </p>
@@ -1486,7 +1486,7 @@ export default function SunsetsLinkBio() {
                   <div className="mt-3 flex flex-wrap gap-2">
                     <Button
                       asChild
-                      className="h-11 flex-1 bg-[#dfc27a] px-3 text-[11px] font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] min-[390px]:flex-none"
+                      className="h-11 flex-1 bg-[#61e8ff] px-3 text-[11px] font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff] min-[390px]:flex-none"
                     >
                       <a
                         href={CANONICAL_SUNSETS_URL}
@@ -1536,7 +1536,7 @@ export default function SunsetsLinkBio() {
               className="space-y-4 border border-white/10 bg-black/24 p-4"
             >
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#dfc27a]">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
                   SUN(SETS) RADIO — FEATURED DROP
                 </p>
                 <h2 className="mt-1 text-xl font-black tracking-normal text-white">
@@ -1615,7 +1615,7 @@ function ChapterContent({
 }) {
   return (
     <div className="flex gap-3">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-[#c9e8bd]/20 bg-[#c9e8bd]/10 text-[#d8f0ce]">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-[#ff6b8a]/20 bg-[#ff6b8a]/10 text-[#ffd0dc]">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
@@ -1634,14 +1634,14 @@ function ChapterContent({
             </p>
           </div>
           {isLinked ? (
-            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#dfc27a]" />
+            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#61e8ff]" />
           ) : null}
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
           <span className="border border-white/10 bg-black/35 px-2.5 py-1 text-[11px] font-bold text-stone-200">
             {chapter.status}
           </span>
-          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#dfc27a]">
+          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#61e8ff]">
             {chapter.action}
           </span>
         </div>

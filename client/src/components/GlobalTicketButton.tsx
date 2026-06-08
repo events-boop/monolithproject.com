@@ -6,6 +6,7 @@ import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { getEventCtaToneClass } from "@/lib/ctaTone";
+import { PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import { useUI } from "@/contexts/UIContext";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
@@ -56,8 +57,9 @@ export default function GlobalTicketButton() {
   const cta = getEventCta(featuredEvent);
   const ctaToneClass = getEventCtaToneClass(featuredEvent);
 
-  const stateDot =
-    featuredEvent?.status === "on-sale"
+  const stateDot = PRELAUNCH_LOCKED
+    ? { color: "var(--scene-accent, #E05A3A)", label: "Lake List", pulse: false }
+    : featuredEvent?.status === "on-sale"
       ? { color: "#10B981", label: "Live", pulse: true }
       : featuredEvent?.status === "sold-out"
         ? { color: "#F43F5E", label: "Waitlist", pulse: false }

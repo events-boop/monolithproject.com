@@ -10,6 +10,7 @@ import { InquiryProvider } from "./contexts/InquiryContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
+import { PRELAUNCH_LOCKED } from "./lib/sunsetsTicketing";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import MetaPixelGate from "./components/MetaPixelGate";
@@ -179,7 +180,9 @@ function Router() {
   return (
     <Switch location={location} key={location}>
       <Route path="/" component={HomeTransition} />
-      <Route path="/tickets" component={TicketsTransition} />
+      <Route path="/tickets">
+        {PRELAUNCH_LOCKED ? <Redirect to="/sunsets" /> : <TicketsTransition />}
+      </Route>
       <Route path="/artists/:id" component={ArtistProfileTransition} />
       <Route path="/sponsors" component={SponsorAccessTransition} />
       <Route path="/about" component={AboutTransition} />
