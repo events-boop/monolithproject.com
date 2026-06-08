@@ -10,6 +10,7 @@ import {
     SUNSETS_JULY4_TABLE_RAIL,
     SUNSETS_JULY4_TICKET_PATH,
     SUNSETS_JULY4_TOTAL_CAPACITY,
+    SUNSETS_PRELAUNCH_LOCKED,
     getSunsetsJuly4ScheduledTicketTiers,
 } from "../../shared/events/sunsets-ticketing";
 import type {
@@ -273,6 +274,29 @@ function deriveStartingPrice(event: ScheduledEvent): number | undefined {
 
 type EventPayloadProfile = "full" | "home" | "summary";
 
+function lockSunsetsPrelaunchEvent(event: ScheduledEvent): ScheduledEvent {
+    if (!SUNSETS_PRELAUNCH_LOCKED || event.id !== "css-jul04") return event;
+
+    return {
+        ...event,
+        status: "coming-soon",
+        inventoryState: undefined,
+        capacity: undefined,
+        ticketUrl: undefined,
+        startingPrice: undefined,
+        ticketTiers: undefined,
+        tablePackages: undefined,
+        recentlyDropped: false,
+        whatToExpect: [
+            "A full-day house music experience on Lake Michigan",
+            "Autograf, Kiko Franco, Amari, and Erik The DJ",
+            "Lake List members get the first ticket release window",
+            "Private codes, drops, and location signals before the public",
+            "Season access and VIP/table details unlock at launch",
+        ],
+    };
+}
+
 function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     return {
         id: event.id,
@@ -340,11 +364,13 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
 }
 
 function shapeEvent(event: ScheduledEvent, profile: EventPayloadProfile) {
-    if (profile === "home") return toHomeEvent(event);
-    if (profile === "summary") return toSummaryEvent(event);
+    const publicEvent = lockSunsetsPrelaunchEvent(event);
+
+    if (profile === "home") return toHomeEvent(publicEvent);
+    if (profile === "summary") return toSummaryEvent(publicEvent);
     return {
-        ...event,
-        primaryCta: resolveEventPrimaryCta(event),
+        ...publicEvent,
+        primaryCta: resolveEventPrimaryCta(publicEvent),
     };
 }
 

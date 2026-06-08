@@ -27,6 +27,7 @@ import {
   buildEventSitemapEntries,
   mergeSitemapEntries,
 } from "../shared/seo/public-seo.js";
+import { SUNSETS_PRELAUNCH_LOCKED } from "../shared/events/sunsets-ticketing.ts";
 
 type RouteDefinition = {
   path: string;
@@ -54,6 +55,17 @@ const featuredUntoldEvent =
   futureEvents.find(
     event => event.series === "untold-story" && event.id === "us-s3e3"
   ) ?? futureEvents.find(event => event.series === "untold-story");
+const publicSunsetsEvent = buildPublicSiteData("/sunsets", upcomingEvents).events.find(
+  event => event.id === "css-jul04"
+);
+
+function getPrerenderPublicEvent(event: (typeof upcomingEvents)[number]) {
+  if (SUNSETS_PRELAUNCH_LOCKED && event.id === "css-jul04" && publicSunsetsEvent) {
+    return publicSunsetsEvent;
+  }
+
+  return event;
+}
 
 const sharedLinks = [
   { href: "/tickets", label: "Tickets" },
@@ -631,8 +643,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       description:
         "Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries.",
       image: "/images/chasing-sunsets-july4-first-access.png",
-      schemaData: featuredChasingEvent
-        ? buildScheduledEventSchema(featuredChasingEvent, "/sunsets")
+      schemaData: publicSunsetsEvent
+        ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")
         : undefined,
       bodyHtml: renderBaseLayout(
         "Official Sun(Sets) Wrapper",
@@ -644,8 +656,12 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         [
           { href: "/sunsets#lake-list", label: "Join the Lake List" },
           {
-            href: "/go/tickets/css-jul04",
-            label: "July 4 ticket access",
+            href: SUNSETS_PRELAUNCH_LOCKED
+              ? "/sunsets#lake-list"
+              : "/go/tickets/css-jul04",
+            label: SUNSETS_PRELAUNCH_LOCKED
+              ? "Lake List ticket access"
+              : "July 4 ticket access",
           },
           {
             href: "/go/media/sunsets-recap",
@@ -991,9 +1007,10 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
 function buildEventRoutes(): RouteDefinition[] {
   return futureEvents.map(event => {
     const routePath = `/events/${event.slug || event.id}`;
-    const actionLinks = event.ticketUrl
+    const publicEvent = getPrerenderPublicEvent(event);
+    const actionLinks = publicEvent.ticketUrl
       ? [
-          { href: event.ticketUrl, label: "Tickets and RSVP" },
+          { href: publicEvent.ticketUrl, label: "Tickets and RSVP" },
           { href: "/schedule", label: "Back to schedule" },
         ]
       : [{ href: "/schedule", label: "Back to schedule" }];
@@ -1003,17 +1020,17 @@ function buildEventRoutes(): RouteDefinition[] {
       title: buildEventSeoTitle(event),
       description: buildEventSeoDescription(event),
       absoluteTitle: true,
-      image: event.image || "/images/hero-monolith.webp",
-      schemaData: buildScheduledEventSchema(event, routePath),
+      image: publicEvent.image || "/images/hero-monolith.webp",
+      schemaData: buildScheduledEventSchema(publicEvent, routePath),
       bodyHtml: renderBaseLayout(
-        event.series === "untold-story"
+        publicEvent.series === "untold-story"
           ? "Untold Story Event"
           : "Chasing Sun(Sets) Event",
-        event.headline || event.title,
+        publicEvent.headline || publicEvent.title,
         [
-          `${event.date} · ${event.time} · ${event.venue}`,
-          event.description ||
-            `Official event details for ${event.title} in Chicago.`,
+          `${publicEvent.date} · ${publicEvent.time} · ${publicEvent.venue}`,
+          publicEvent.description ||
+            `Official event details for ${publicEvent.title} in Chicago.`,
         ],
         actionLinks,
         renderEventFacts(routePath)

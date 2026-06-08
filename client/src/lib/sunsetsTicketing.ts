@@ -18,6 +18,7 @@ import {
   SUNSETS_JULY4_TABLE_RAIL,
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TOTAL_CAPACITY,
+  SUNSETS_PRELAUNCH_LOCKED,
   SUNSETS_TICKET_CTA_EVENT,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_PROPERTIES,
@@ -28,7 +29,7 @@ import { capturePostHogEvent } from "./posthog";
 // Master pre-launch switch for the SUN(SETS) drop. While true, every public
 // surface (/sunsets, /lake) hides prices + allocation counts and repoints
 // ticket/season-pass CTAs to the Lake List. Flip to false on launch day.
-export const PRELAUNCH_LOCKED = true;
+export const PRELAUNCH_LOCKED = SUNSETS_PRELAUNCH_LOCKED;
 
 export {
   SUNSETS_2026_SEASON_CHAPTERS,
@@ -50,6 +51,7 @@ export {
   SUNSETS_JULY4_TABLE_RAIL,
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TOTAL_CAPACITY,
+  SUNSETS_PRELAUNCH_LOCKED,
   SUNSETS_TICKET_CTA_EVENT,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
