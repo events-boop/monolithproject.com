@@ -36,37 +36,43 @@
   status = 301
   force = true
 
-# sunsets.vip and untold.vip are branded campaign front doors. Their roots fall
-# through to the SPA so the vanity domains stay in the address bar while the app
-# renders the matching campaign rail: sunsets.vip -> /sunsets, untold.vip -> /story.
+# sunsets.vip is the campaign front door. Root and common aliases redirect to
+# the canonical /sunsets page while non-root paths such as /go/* remain
+# available for short-link handling.
+
+[[redirects]]
+  from = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/"
-  to = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sunsets.vip/SUNSETS"
-  to = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sunsets.vip/SUNSETS/"
-  to = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/SUNSETS"
-  to = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/SUNSETS/"
-  to = "https://sunsets.vip/"
+  to = "https://monolithproject.com/sunsets"
   status = 301
   force = true
 

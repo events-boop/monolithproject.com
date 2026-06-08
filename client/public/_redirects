@@ -1,11 +1,12 @@
 https://themonolithproject.com/*  https://monolithproject.com/:splat  301!
 https://www.themonolithproject.com/*  https://monolithproject.com/:splat  301!
 
-https://www.sunsets.vip/  https://sunsets.vip/  301!
-https://sunsets.vip/SUNSETS  https://sunsets.vip/  301!
-https://sunsets.vip/SUNSETS/  https://sunsets.vip/  301!
-https://www.sunsets.vip/SUNSETS  https://sunsets.vip/  301!
-https://www.sunsets.vip/SUNSETS/  https://sunsets.vip/  301!
+https://sunsets.vip/  https://monolithproject.com/sunsets  301!
+https://www.sunsets.vip/  https://monolithproject.com/sunsets  301!
+https://sunsets.vip/SUNSETS  https://monolithproject.com/sunsets  301!
+https://sunsets.vip/SUNSETS/  https://monolithproject.com/sunsets  301!
+https://www.sunsets.vip/SUNSETS  https://monolithproject.com/sunsets  301!
+https://www.sunsets.vip/SUNSETS/  https://monolithproject.com/sunsets  301!
 
 /SUNSETS   /sunsets/  301!
 /SUNSETS/  /sunsets/  301!
