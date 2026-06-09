@@ -26,7 +26,6 @@ import {
 } from "@shared/events/sunsets-ticketing";
 import { capturePostHogEvent } from "./posthog";
 
-export { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 export {
   SUNSETS_2026_SEASON_CHAPTERS,
   SUNSETS_2026_SEASON_PASS,

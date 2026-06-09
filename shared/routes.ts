@@ -174,7 +174,7 @@ export const STANDALONE_LANDING_PATHS = new Set([
 /*  Paths where the event banner should appear                         */
 /* ------------------------------------------------------------------ */
 
-export const EVENT_BANNER_PATHS = new Set([
+export const EVENT_BANNER_PATHS = new Set<string>([
   ROUTES.home,
   ROUTES.tickets,
   ROUTES.chasingSunsets,

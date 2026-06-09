@@ -2,8 +2,13 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { ROUTES } from "@shared/routes";
 
 export type DrawerType =
-
-...
+  | "faq"
+  | "newsletter"
+  | "contact"
+  | "guide"
+  | "about"
+  | "archive"
+  | null;
 
 const drawerRouteMap: Record<string, DrawerType> = {
   [ROUTES.faq]: "faq",
