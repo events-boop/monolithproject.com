@@ -1,5 +1,47 @@
+/**
+ * ============================================================================
+ * MONOLITH CRM — DATABASE SCHEMA
+ * ============================================================================
+ *
+ * ARCHITECTURE: Contacts-Centric Fan-Out Model
+ * The `contacts` table is the central CRM entity — a unified person record
+ * deduplicated by normalized email. Every lead, submission, purchase, click,
+ * and signup fans OUT from contacts via `contactId` foreign keys. This design
+ * means you can trace a single contact's full journey: what forms they filled,
+ * which events they RSVP'd to, what tickets they bought, which links they
+ * clicked, and what platform syncs succeeded or failed — all from one ID.
+ *
+ * `events` vs `scheduledEvents`:
+ * - `events`        — Internal/template event definitions (metadata, series,
+ *                     slug); lightweight and used as FK targets by fan-out
+ *                     tables (formSubmissions, poshBuyers, vipLeads, etc.).
+ * - `scheduledEvents` — Public-facing, published upcoming events with full
+ *                     detail (lineup, ticket tiers, FAQs, funnels, description).
+ *                     This is the "show page" data. The two tables are NOT
+ *                     directly joined; fan-out tables may reference either.
+ *
+ * `entityEmbeddings` — pgvector Semantic Pipeline:
+ * Stores 1536-dimension OpenAI embeddings for any CRM entity (contacts, form
+ * submissions, etc.). Enables cosine-similarity semantic search via the HNSW
+ * index. The `entityType`/`entityId` pattern allows embedding any record type
+ * without adding vector columns to every table.
+ *
+ * JSONB `metadata` / `rawPayload` Pattern:
+ * Nearly every table carries a `metadata` (structured) or `rawPayload` (source
+ * snapshot) JSONB column. This provides schema flexibility: new providers,
+ * event types, and campaign attributes can be ingested immediately without
+ * migrations, while the relational core stays stable.
+ * ============================================================================
+ */
+
 import { boolean, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex, vector } from "drizzle-orm/pg-core";
 
+/**
+ * rate_limit_buckets — Token-bucket rate limiter backing store.
+ * Standalone utility table (not part of the CRM model). Each row tracks
+ * remaining tokens (`count`) and the next reset window (`resetAt`) for a
+ * rate-limit key (IP, user ID, or endpoint combo).
+ */
 export const rateLimitBuckets = pgTable("rate_limit_buckets", {
   key: text("key").primaryKey(),
   count: integer("count").notNull().default(0),
@@ -7,6 +49,11 @@ export const rateLimitBuckets = pgTable("rate_limit_buckets", {
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
 });
 
+/**
+ * social_echo_event_stats — Cached aggregate RSVP counts per SocialEcho event.
+ * Standalone cache table updated by SocialEcho webhooks. `goingCount` and
+ * `pendingCount` power attendee counters on event pages.
+ */
 export const socialEchoEventStats = pgTable("social_echo_event_stats", {
   eventKey: text("event_key").primaryKey(),
   eventId: text("event_id"),
@@ -17,6 +64,11 @@ export const socialEchoEventStats = pgTable("social_echo_event_stats", {
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
 });
 
+/**
+ * social_echo_activity — Individual RSVP/check-in events from SocialEcho.
+ * Append-only activity log. `rawPayload` captures the full webhook body for
+ * replay/debug. Not linked to contacts (anonymized attendee aliases only).
+ */
 export const socialEchoActivity = pgTable("social_echo_activity", {
   id: text("id").primaryKey(),
   at: timestamp("at", { withTimezone: true, mode: "string" }).notNull().defaultNow(),
@@ -31,6 +83,12 @@ export const socialEchoActivity = pgTable("social_echo_activity", {
   rawPayload: jsonb("raw_payload").notNull().default({}),
 });
 
+/**
+ * leads — Raw top-of-funnel lead capture BEFORE deduplication/merge into
+ * contacts. Ingested from providers (ManyChat, Laylo, forms, etc.). Once
+ * a lead is resolved to an existing or new contact, downstream fan-out
+ * tables use `contactId`; leads are the "inbox" before CRM unification.
+ */
 export const leads = pgTable("leads", {
   id: text("id").primaryKey(),
   email: text("email").notNull(),
@@ -43,6 +101,18 @@ export const leads = pgTable("leads", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+/**
+ * contacts — THE CENTRAL CRM ENTITY. Every person who interacts with the
+ * Monolith ecosystem is unified here by `emailNormalized`. All fan-out
+ * tables (formSubmissions, ticketOrders, linkClicks, vipLeads, etc.)
+ * reference `contacts.id` — this is the hub of the entire data model.
+ *
+ * Key columns:
+ * - `emailNormalized` — unique, lowercased/trimmed email for dedup.
+ * - `primarySource`   — first known acquisition channel.
+ * - `tags`            — JSONB array for flexible segmentation.
+ * - `consentEmail` / `consentSms` — GDPR/TCF compliance flags.
+ */
 export const contacts = pgTable(
   "contacts",
   {
@@ -75,6 +145,12 @@ export const contacts = pgTable(
   }),
 );
 
+/**
+ * events — Internal event definitions used as FK targets by fan-out tables
+ * (formSubmissions, poshBuyers, vipLeads, etc.). Stores core metadata
+ * (slug, venue, series, status). For public-facing event detail with lineup,
+ * ticket tiers, and FAQs see `scheduledEvents`.
+ */
 export const events = pgTable(
   "events",
   {
@@ -98,6 +174,11 @@ export const events = pgTable(
   }),
 );
 
+/**
+ * campaigns — Marketing campaign definitions. Maps campaign keys to sources,
+ * mediums, and platforms. Referenced by `utm_sources` (for attribution) and
+ * `form_submissions` (to credit which campaign drove the conversion).
+ */
 export const campaigns = pgTable(
   "campaigns",
   {
@@ -117,6 +198,12 @@ export const campaigns = pgTable(
   }),
 );
 
+/**
+ * utm_sources — UTM attribution log, one row per touchpoint. Fans out from
+ * `contacts` (who) and `campaigns` (which campaign). Captures full UTM params,
+ * click IDs (gclid/fbclid), referrer, and landing page — the source of truth
+ * for multi-touch marketing attribution.
+ */
 export const utmSources = pgTable(
   "utm_sources",
   {
@@ -151,6 +238,12 @@ export const utmSources = pgTable(
   }),
 );
 
+/**
+ * form_submissions — Every form submission across the site (newsletter, VIP,
+ * sponsor, ambassador, contact, etc.). Fans out from `contacts` (submitter),
+ * `events` (which event), and `campaigns` (attribution). `formType`
+ * discriminates the submission type; `rawPayload` stores the full POST body.
+ */
 export const formSubmissions = pgTable(
   "form_submissions",
   {
@@ -181,6 +274,12 @@ export const formSubmissions = pgTable(
   }),
 );
 
+/**
+ * contact_event_interest — Pre-registration event interest signals. Fans out
+ * from `contacts`. Records which event slug a contact expressed interest in,
+ * the type/level of interest, and the source. Supports anonymous sessions
+ * (`anonymousSessionId`) before contact identification.
+ */
 export const contactEventInterest = pgTable(
   "contact_event_interest",
   {
@@ -202,6 +301,12 @@ export const contactEventInterest = pgTable(
   }),
 );
 
+/**
+ * link_clicks — Tracks every CTA/link click across the funnel. Fans out from
+ * `contacts`. Stores `buttonName`, `destinationUrl`, `eventSlug`, and full UTM
+ * params. Supports anonymous sessions. Powers conversion-path analysis and
+ * click-through-rate reporting per event, channel, and campaign.
+ */
 export const linkClicks = pgTable(
   "link_clicks",
   {
@@ -232,6 +337,12 @@ export const linkClicks = pgTable(
   }),
 );
 
+/**
+ * laylo_signups — Laylo drop signups (SMS/email notification opt-ins). Fans
+ * out from `contacts`, `formSubmissions`, and `events`. Tracks the Laylo
+ * user ID, drop slug, signup channel, and sync status. Bridges the Laylo
+ * platform to the CRM for unified contact profiles.
+ */
 export const layloSignups = pgTable(
   "laylo_signups",
   {
@@ -261,6 +372,11 @@ export const layloSignups = pgTable(
   }),
 );
 
+/**
+ * manychat_leads — ManyChat (Instagram DM automation) lead captures. Fans out
+ * from `contacts` and `formSubmissions`. Stores the ManyChat subscriber ID
+ * and flow ID for tracking Instagram DM leads back to contacts and campaigns.
+ */
 export const manychatLeads = pgTable(
   "manychat_leads",
   {
@@ -279,6 +395,11 @@ export const manychatLeads = pgTable(
   }),
 );
 
+/**
+ * posh_buyers — Ticket purchases from the Posh platform. Fans out from
+ * `contacts` and `events`. Tracks order ID, ticket type, quantity, and
+ * amount. `rawPayload` preserves the full Posh webhook for reconciliation.
+ */
 export const poshBuyers = pgTable(
   "posh_buyers",
   {
@@ -302,6 +423,12 @@ export const poshBuyers = pgTable(
   }),
 );
 
+/**
+ * ticket_orders — Normalized ticket order records (cross-platform). Fans out
+ * from `contacts`. Breaks out gross/net revenue, fees, promo codes, and UTM
+ * attribution. This is the analytics-ready revenue table — `posh_buyers` is
+ * the raw platform-specific counterpart.
+ */
 export const ticketOrders = pgTable(
   "ticket_orders",
   {
@@ -329,6 +456,12 @@ export const ticketOrders = pgTable(
   }),
 );
 
+/**
+ * funnel_page_views — Page-view tracking across the marketing/sales funnel.
+ * Fans out from `contacts`. Records `pagePath`, `eventSlug`, UTM params.
+ * Supports anonymous sessions. Used for funnel drop-off analysis and
+ * multi-touch attribution modeling.
+ */
 export const funnelPageViews = pgTable(
   "funnel_page_views",
   {
@@ -355,6 +488,12 @@ export const funnelPageViews = pgTable(
   }),
 );
 
+/**
+ * vip_leads — VIP/table-service inquiry leads. Fans out from `contacts`,
+ * `formSubmissions`, and `events`. Captures group size, budget, celebration
+ * type, and preferred date. Status tracks pipeline stages: new → contacted →
+ * qualified → converted.
+ */
 export const vipLeads = pgTable(
   "vip_leads",
   {
@@ -382,6 +521,11 @@ export const vipLeads = pgTable(
   }),
 );
 
+/**
+ * sponsor_leads — Sponsorship inquiry leads. Fans out from `contacts` and
+ * `formSubmissions`. Captures company name, sponsorship type, and budget.
+ * Status tracks the sponsorship sales pipeline.
+ */
 export const sponsorLeads = pgTable(
   "sponsor_leads",
   {
@@ -401,6 +545,11 @@ export const sponsorLeads = pgTable(
   }),
 );
 
+/**
+ * ambassador_leads — Ambassador/referral program signups. Fans out from
+ * `contacts`. Captures Instagram handle, estimated reach, promotion method,
+ * and referral code. Status tracks ambassador onboarding pipeline.
+ */
 export const ambassadorLeads = pgTable(
   "ambassador_leads",
   {
@@ -423,6 +572,11 @@ export const ambassadorLeads = pgTable(
   }),
 );
 
+/**
+ * partner_leads — Partnership/collaboration inquiry leads. Fans out from
+ * `contacts`. Captures company name, venue/brand, collaboration type, and
+ * budget range. Status tracks the partnership pipeline stages.
+ */
 export const partnerLeads = pgTable(
   "partner_leads",
   {
@@ -446,6 +600,12 @@ export const partnerLeads = pgTable(
   }),
 );
 
+/**
+ * content_engagement — Tracks interactions with content (articles, videos,
+ * social posts, playlists). Fans out from `contacts`. `contentType`
+ * discriminates the content format; `clickedFrom` records the UI placement.
+ * Supports anonymous sessions. Powers content-performance reporting.
+ */
 export const contentEngagement = pgTable(
   "content_engagement",
   {
@@ -468,6 +628,11 @@ export const contentEngagement = pgTable(
   }),
 );
 
+/**
+ * artist_agent_contacts — Artist booking / agent contact leads. Fans out from
+ * `contacts` and `formSubmissions`. Captures artist name, agency, and role.
+ * Status tracks the booking pipeline.
+ */
 export const artistAgentContacts = pgTable(
   "artist_agent_contacts",
   {
@@ -487,6 +652,12 @@ export const artistAgentContacts = pgTable(
   }),
 );
 
+/**
+ * email_platform_sync_status — Tracks sync status of contacts to external
+ * email/SMS platforms (Mailchimp, SendGrid, etc.). Fans out from `contacts`
+ * and `formSubmissions`. Records the platform, provider contact ID, last sync
+ * timestamp, and error message for debugging failed syncs.
+ */
 export const emailPlatformSyncStatus = pgTable(
   "email_platform_sync_status",
   {
@@ -509,6 +680,14 @@ export const emailPlatformSyncStatus = pgTable(
   }),
 );
 
+/**
+ * entity_embeddings — pgvector semantic search pipeline. Stores 1536-dim
+ * OpenAI embeddings for any CRM entity (contacts, form submissions, events,
+ * etc.) keyed by `entityType` + `entityId`. Uses an HNSW index with cosine
+ * distance for fast approximate nearest-neighbor search. Enables semantic
+ * queries (e.g., "all VIP leads interested in table service in Miami")
+ * without adding vector columns to every table.
+ */
 export const entityEmbeddings = pgTable(
   "entity_embeddings",
   {
@@ -536,6 +715,13 @@ export const entityEmbeddings = pgTable(
   }),
 );
 
+/**
+ * ticket_intents — Pre-purchase ticket intent signals (e.g., "Get Tickets"
+ * button clicks before a conversion is recorded). Lightweight intent log;
+ * once a purchase completes, the `ticket_orders` table records the
+ * realized revenue. Standalone table (not FK'd to contacts) by design —
+ * intents are often anonymous.
+ */
 export const ticketIntents = pgTable("ticket_intents", {
   id: text("id").primaryKey(),
   source: text("source").notNull(),
@@ -546,6 +732,11 @@ export const ticketIntents = pgTable("ticket_intents", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+/**
+ * contact_submissions — General "Contact Us" form submissions. Standalone
+ * table (no FK to contacts) — these are one-off support/contact requests
+ * routed to external systems via webhook. `webhookStatus` tracks delivery.
+ */
 export const contactSubmissions = pgTable("contact_submissions", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -557,6 +748,12 @@ export const contactSubmissions = pgTable("contact_submissions", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+/**
+ * booking_inquiries — Artist booking, sponsorship, and partnership inquiry
+ * form submissions. Standalone table (no FK to contacts). Routed via webhook
+ * to the booking team. `type` discriminates: partner-on-location,
+ * artist-booking, sponsorship, or general.
+ */
 export const bookingInquiries = pgTable("booking_inquiries", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -570,6 +767,13 @@ export const bookingInquiries = pgTable("booking_inquiries", {
   metadata: jsonb("metadata").notNull().default({}),
 });
 
+/**
+ * scheduled_events — Public-facing published event instances with full detail.
+ * This is the "show page" table: lineup, ticket tiers, FAQs, venue info,
+ * active funnels, dress code, and more. Distinct from the lightweight
+ * `events` table (which serves as an internal FK target). Indexed by series,
+ * status, slug, and start date for fast public-facing queries.
+ */
 export const scheduledEvents = pgTable(
   "scheduled_events",
   {
