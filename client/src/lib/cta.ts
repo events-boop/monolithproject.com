@@ -5,6 +5,7 @@ import type {
 } from "@shared/events/types";
 import type { InquiryType } from "@/contexts/InquiryContext";
 import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
+import { ROUTES, routeEvent } from "@shared/routes";
 
 export type { EventCta, FunnelTool };
 
@@ -52,18 +53,18 @@ export const CTA_LABELS = {
 function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
   switch (series) {
     case "chasing-sunsets":
-      return "/chasing-sunsets";
+      return ROUTES.chasingSunsets;
     case "untold-story":
-      return "/story";
+      return ROUTES.story;
     default:
-      return "/tickets";
+      return ROUTES.tickets;
   }
 }
 
 export function getEventDetailsHref(event?: ScheduledEvent | null) {
-  if (!event) return "/schedule";
+  if (!event) return ROUTES.schedule;
   // Direct to God-Tier single event dossier
-  return `/events/${event.slug || event.id}`;
+  return routeEvent(event.slug || event.id);
 }
 
 export function isEventLowInventory(event?: Partial<ScheduledEvent> | null) {
@@ -82,7 +83,7 @@ export function isEventLowInventory(event?: Partial<ScheduledEvent> | null) {
 export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
   const fallback: EventCta = {
     label: CTA_LABELS.schedule,
-    href: "/schedule",
+    href: ROUTES.schedule,
     tool: "posh",
     isExternal: false,
   };
@@ -95,7 +96,7 @@ export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
   if (SUNSETS_PRELAUNCH_LOCKED && event?.primaryCta != null && cta.tool === "posh") {
     return {
       label: "Join the Lake List",
-      href: "/sunsets",
+      href: ROUTES.sunsets,
       tool: "laylo",
       isExternal: false,
     };

@@ -1,7 +1,7 @@
 import { ChevronDown, ArrowUpRight } from "lucide-react";
 import EditorialHeader from "./EditorialHeader";
 import { POSH_TICKET_URL } from "@/data/events";
-import { PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
+import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import { CTA_LABELS } from "@/lib/cta";
 
 const faqs = [
@@ -63,7 +63,7 @@ export default function FAQSection() {
             Still have questions? Reach out and we’ll help before the event.
           </p>
           <a
-            href={PRELAUNCH_LOCKED ? "/sunsets" : POSH_TICKET_URL}
+            href={SUNSETS_PRELAUNCH_LOCKED ? "/sunsets" : POSH_TICKET_URL}
             className="btn-pill-monolith inline-flex items-center gap-2"
           >
             First Access

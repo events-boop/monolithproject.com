@@ -26,11 +26,7 @@ import {
 } from "@shared/events/sunsets-ticketing";
 import { capturePostHogEvent } from "./posthog";
 
-// Master pre-launch switch for the SUN(SETS) drop. While true, every public
-// surface (/sunsets, /lake) hides prices + allocation counts and repoints
-// ticket/season-pass CTAs to the Lake List. Flip to false on launch day.
-export const PRELAUNCH_LOCKED = SUNSETS_PRELAUNCH_LOCKED;
-
+export { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 export {
   SUNSETS_2026_SEASON_CHAPTERS,
   SUNSETS_2026_SEASON_PASS,

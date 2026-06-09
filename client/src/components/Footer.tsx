@@ -6,7 +6,7 @@ import {
   Sun,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
+import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import {
   POSH_TICKET_URL,
   INSTAGRAM_MONOLITH,
@@ -20,6 +20,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { CTA_LABELS } from "@/lib/cta";
 import { getSceneForPath } from "@/lib/scenes";
+import { ROUTES, ANCHORS } from "@shared/routes";
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -59,47 +60,47 @@ const links: FooterLinkGroup[] = [
   {
     title: "Explore",
     items: [
-      { name: "About", href: "/about" },
-      { name: "Togetherness", href: "/about#togetherness" },
-      { name: "Events", href: "/schedule" },
-      { name: "Artists", href: "/lineup" },
-      { name: "Event Archive", href: "/archive" },
-      { name: "Articles", href: "/insights" },
-      { name: "Contact", href: "/contact" },
+      { name: "About", href: ROUTES.about },
+      { name: "Togetherness", href: ROUTES.about + ANCHORS.togetherness },
+      { name: "Events", href: ROUTES.schedule },
+      { name: "Artists", href: ROUTES.lineup },
+      { name: "Event Archive", href: ROUTES.archive },
+      { name: "Articles", href: ROUTES.insights },
+      { name: "Contact", href: ROUTES.contact },
     ],
   },
   {
     title: "Series",
     items: [
-      { name: "Chasing Sun(Sets)", href: "/chasing-sunsets" },
-      { name: "Sun(Sets) Link In Bio", href: "/sunsets" },
-      { name: "Untold Story", href: "/story" },
-      { name: "Radio Show", href: "/radio" },
+      { name: "Chasing Sun(Sets)", href: ROUTES.chasingSunsets },
+      { name: "Sun(Sets) Link In Bio", href: ROUTES.sunsets },
+      { name: "Untold Story", href: ROUTES.story },
+      { name: "Radio Show", href: ROUTES.radio },
     ],
   },
   {
     title: "Work With Us",
     items: [
-      { name: "Partners", href: "/partners" },
-      { name: "Sponsor Access", href: "/sponsors" },
-      { name: "Booking", href: "/booking" },
-      { name: "Artist Submission", href: "/submit" },
-      { name: "Press & Media", href: "/press" },
+      { name: "Partners", href: ROUTES.partners },
+      { name: "Sponsor Access", href: ROUTES.sponsors },
+      { name: "Booking", href: ROUTES.booking },
+      { name: "Artist Submission", href: ROUTES.submit },
+      { name: "Press & Media", href: ROUTES.press },
     ],
   },
   {
     title: "Utilities",
     items: [
-      { name: "Newsletter", href: "/newsletter" },
-      { name: "Night Guide", href: "/guide" },
-      { name: "FAQ", href: "/faq" },
+      { name: "Newsletter", href: ROUTES.newsletter },
+      { name: "Night Guide", href: ROUTES.guide },
+      { name: "FAQ", href: ROUTES.faq },
       {
         name: "First Access",
-        href: PRELAUNCH_LOCKED ? "/sunsets" : POSH_TICKET_URL,
+        href: SUNSETS_PRELAUNCH_LOCKED ? ROUTES.sunsets : POSH_TICKET_URL,
       },
-      { name: "Terms of Service", href: "/terms" },
-      { name: "Privacy Policy", href: "/privacy" },
-      { name: "Cookie Policy", href: "/cookies" },
+      { name: "Terms of Service", href: ROUTES.terms },
+      { name: "Privacy Policy", href: ROUTES.privacy },
+      { name: "Cookie Policy", href: ROUTES.cookies },
     ],
   },
 ];

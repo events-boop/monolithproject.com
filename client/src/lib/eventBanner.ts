@@ -9,17 +9,7 @@ import {
 } from "@/lib/siteExperience";
 import { getEventCta } from "@/lib/cta";
 import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
-
-const BANNER_ENABLED_PATHS = new Set([
-  "/",
-  "/tickets",
-  "/chasing-sunsets",
-  "/story",
-  "/untold-story-deron-juany-bravo",
-  "/lineup",
-  "/schedule",
-  "/radio",
-]);
+import { EVENT_BANNER_PATHS } from "@shared/routes";
 
 export function getEventBannerStatus(
   now: Date = new Date()
@@ -38,7 +28,7 @@ function normalizePathname(pathname: string) {
 }
 
 export function isEventBannerRouteEligible(pathname: string) {
-  return BANNER_ENABLED_PATHS.has(normalizePathname(pathname));
+  return EVENT_BANNER_PATHS.has(normalizePathname(pathname));
 }
 
 export function isEventBannerVisible(

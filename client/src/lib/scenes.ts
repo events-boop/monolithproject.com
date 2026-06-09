@@ -1,6 +1,8 @@
 export type SceneId = "monolith" | "story" | "sunsets" | "radio" | "paper";
 export type SceneTicketTheme = "default" | "violet" | "warm";
 
+import { ROUTES } from "@shared/routes";
+
 export interface SceneConfig {
   id: SceneId;
   variant: "dark" | "light";
@@ -63,32 +65,32 @@ export function getSceneForPath(pathname?: string): SceneConfig {
   const normalized = normalizePathname(pathname);
 
   if (
-    normalized.startsWith("/story") ||
-    normalized.startsWith("/untold-story")
+    normalized.startsWith(ROUTES.story) ||
+    normalized.startsWith(ROUTES.untoldStory)
   ) {
     return scenes.story;
   }
 
-  if (normalized.startsWith("/chasing-sunsets")) {
+  if (normalized.startsWith(ROUTES.chasingSunsets)) {
     return scenes.sunsets;
   }
 
   if (
-    normalized.startsWith("/sunsets") ||
+    normalized.startsWith(ROUTES.sunsets) ||
     normalized.startsWith("/sunset") ||
-    normalized.startsWith("/lake")
+    normalized.startsWith(ROUTES.lake)
   ) {
     return scenes.sunsets;
   }
 
-  if (normalized.startsWith("/radio")) {
+  if (normalized.startsWith(ROUTES.radio)) {
     return scenes.radio;
   }
 
   if (
-    normalized.startsWith("/newsletter") ||
-    normalized.startsWith("/contact") ||
-    normalized.startsWith("/faq")
+    normalized.startsWith(ROUTES.newsletter) ||
+    normalized.startsWith(ROUTES.contact) ||
+    normalized.startsWith(ROUTES.faq)
   ) {
     return scenes.paper;
   }

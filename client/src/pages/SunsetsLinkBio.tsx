@@ -50,7 +50,7 @@ import {
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
   captureSunsetsTicketCtaClick,
-  PRELAUNCH_LOCKED,
+  SUNSETS_PRELAUNCH_LOCKED,
 } from "@/lib/sunsetsTicketing";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
@@ -98,19 +98,19 @@ const HERO_SIGNAL_STATS = [
 const TICKET_RAIL_STATS = [
   {
     label: "Capacity",
-    value: PRELAUNCH_LOCKED
+    value: SUNSETS_PRELAUNCH_LOCKED
       ? "Locked"
       : SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US"),
-    note: PRELAUNCH_LOCKED ? "revealed at launch" : "guest admissions",
+    note: SUNSETS_PRELAUNCH_LOCKED ? "revealed at launch" : "guest admissions",
   },
   {
     label: "First Access",
-    value: PRELAUNCH_LOCKED ? "Locked" : "SUNSET26",
-    note: PRELAUNCH_LOCKED ? "Lake List only" : "$30 Lake List code",
+    value: SUNSETS_PRELAUNCH_LOCKED ? "Locked" : "SUNSET26",
+    note: SUNSETS_PRELAUNCH_LOCKED ? "Lake List only" : "$30 Lake List code",
   },
   {
     label: "Tables",
-    value: PRELAUNCH_LOCKED ? "By request" : SUNSETS_JULY4_TABLE_MINIMUM,
+    value: SUNSETS_PRELAUNCH_LOCKED ? "By request" : SUNSETS_JULY4_TABLE_MINIMUM,
     note: "limited cabanas",
   },
 ] as const;
@@ -826,7 +826,7 @@ export default function SunsetsLinkBio() {
         date: chapter.date,
         place: `${chapter.venue} / ${chapter.lineup}`,
         status:
-          PRELAUNCH_LOCKED
+          SUNSETS_PRELAUNCH_LOCKED
             ? index === 0
               ? "July 4 · first access"
               : index === 1
@@ -837,14 +837,14 @@ export default function SunsetsLinkBio() {
               : index === 1
                 ? "August tickets"
                 : "September tickets",
-        action: PRELAUNCH_LOCKED
+        action: SUNSETS_PRELAUNCH_LOCKED
           ? "JOIN LAKE LIST"
           : index === 0
             ? SUNSETS_TICKET_CTA_LABEL
             : "BUY TICKETS",
         eventSlug: chapter.eventSlug,
         eventDate: chapter.eventDate,
-        href: PRELAUNCH_LOCKED ? undefined : chapter.ticketPath,
+        href: SUNSETS_PRELAUNCH_LOCKED ? undefined : chapter.ticketPath,
       })),
     []
   );
@@ -856,7 +856,7 @@ export default function SunsetsLinkBio() {
       <SEO
         title="SUN(SETS) I - July 4 at Castaways"
         description={
-          PRELAUNCH_LOCKED
+          SUNSETS_PRELAUNCH_LOCKED
             ? "Chasing Sun(Sets) returns home to the lake July 4 at Castaways Chicago. Join the Lake List for first access — codes, drops, and location before the public."
             : "Chasing Sun(Sets) returns home to the lake July 4 at Castaways Chicago. Join the Lake List, claim season access, and secure official SUN(SETS) tickets."
         }
@@ -1057,7 +1057,7 @@ export default function SunsetsLinkBio() {
                 <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-y border-white/10 py-4">
                   <div>
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-stone-300">
-                      {PRELAUNCH_LOCKED
+                      {SUNSETS_PRELAUNCH_LOCKED
                         ? "Founding tier"
                         : SUNSETS_2026_SEASON_PASS.tierName}
                     </p>
@@ -1066,7 +1066,7 @@ export default function SunsetsLinkBio() {
                     </p>
                   </div>
                   <div className="text-right">
-                    {PRELAUNCH_LOCKED ? (
+                    {SUNSETS_PRELAUNCH_LOCKED ? (
                       <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#61e8ff]">
                         Unlocks
                         <br />
@@ -1078,7 +1078,7 @@ export default function SunsetsLinkBio() {
                       </p>
                     )}
                     <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
-                      {PRELAUNCH_LOCKED
+                      {SUNSETS_PRELAUNCH_LOCKED
                         ? "Limited"
                         : SUNSETS_2026_SEASON_PASS.quantityLabel}
                     </p>
@@ -1112,10 +1112,10 @@ export default function SunsetsLinkBio() {
                   className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff]"
                 >
                   <a
-                    href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
+                    href={SUNSETS_PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
                     onClick={() => {
                       triggerHaptic(16);
-                      if (PRELAUNCH_LOCKED) {
+                      if (SUNSETS_PRELAUNCH_LOCKED) {
                         focusLakeList();
                         trackSunsetsClick({
                           buttonName: "Join the Lake List",
@@ -1143,7 +1143,7 @@ export default function SunsetsLinkBio() {
                     }}
                   >
                     <Ticket className="size-4" />
-                    {PRELAUNCH_LOCKED
+                    {SUNSETS_PRELAUNCH_LOCKED
                       ? "Join for Season Pass Access"
                       : SUNSETS_2026_SEASON_PASS_CTA_LABEL}
                     <ArrowUpRight className="size-4" />
@@ -1175,10 +1175,10 @@ export default function SunsetsLinkBio() {
                 className="h-[3.25rem] w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff]"
               >
                 <a
-                  href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
+                  href={SUNSETS_PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
                   onClick={() => {
                     triggerHaptic(16);
-                    if (PRELAUNCH_LOCKED) {
+                    if (SUNSETS_PRELAUNCH_LOCKED) {
                       focusLakeList();
                       trackSunsetsClick({
                         buttonName: "Join the Lake List",
@@ -1206,14 +1206,14 @@ export default function SunsetsLinkBio() {
                   }}
                 >
                   <Ticket className="size-4" />
-                  {PRELAUNCH_LOCKED
+                  {SUNSETS_PRELAUNCH_LOCKED
                     ? "Join Lake List for Tickets"
                     : SUNSETS_TICKET_CTA_LABEL}
                   <ArrowUpRight className="size-4" />
                 </a>
               </Button>
               <p className="-mt-1 border border-white/10 bg-black/20 px-3 py-2 text-center text-[11px] font-semibold leading-relaxed text-stone-300">
-                {PRELAUNCH_LOCKED
+                {SUNSETS_PRELAUNCH_LOCKED
                   ? "Lake List members get the first ticket window before public release."
                   : SUNSETS_TICKET_CTA_SUPPORT}
               </p>
@@ -1228,23 +1228,23 @@ export default function SunsetsLinkBio() {
                       The lake has a limit.
                     </h2>
                     <p className="mt-2 text-xs font-semibold leading-relaxed text-stone-300">
-                      {PRELAUNCH_LOCKED
+                      {SUNSETS_PRELAUNCH_LOCKED
                         ? "Lake List members get the first release window before public ticketing opens."
                         : "Ticket tiers move as allocations sell out. Secure entry early through the official Posh rail."}
                     </p>
                   </div>
                   <div className="shrink-0 border border-[#61e8ff]/35 bg-[#61e8ff]/12 px-3 py-2 text-right">
                     <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
-                      {PRELAUNCH_LOCKED ? "Tickets" : "From"}
+                      {SUNSETS_PRELAUNCH_LOCKED ? "Tickets" : "From"}
                     </p>
                     <p
                       className={`font-black leading-none text-white ${
-                        PRELAUNCH_LOCKED
+                        SUNSETS_PRELAUNCH_LOCKED
                           ? "text-base uppercase tracking-[0.08em]"
                           : "text-2xl"
                       }`}
                     >
-                      {PRELAUNCH_LOCKED ? "Soon" : "$20"}
+                      {SUNSETS_PRELAUNCH_LOCKED ? "Soon" : "$20"}
                     </p>
                   </div>
                 </div>
@@ -1295,15 +1295,15 @@ export default function SunsetsLinkBio() {
                         <div className="shrink-0 text-right">
                           <p
                             className={`font-black leading-none text-[#61e8ff] ${
-                              PRELAUNCH_LOCKED
+                              SUNSETS_PRELAUNCH_LOCKED
                                 ? "text-[11px] uppercase tracking-[0.1em]"
                                 : "text-xl"
                             }`}
                           >
-                            {PRELAUNCH_LOCKED ? "At launch" : tier.priceLabel}
+                            {SUNSETS_PRELAUNCH_LOCKED ? "At launch" : tier.priceLabel}
                           </p>
                           <p className="mt-1 text-[9px] font-black uppercase tracking-[0.14em] text-stone-500">
-                            {PRELAUNCH_LOCKED
+                            {SUNSETS_PRELAUNCH_LOCKED
                               ? "Allocation locked"
                               : tier.quantityLabel}
                           </p>

@@ -25,10 +25,11 @@ import {
 } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "../lib/cta";
-import { PRELAUNCH_LOCKED } from "../lib/sunsetsTicketing";
+import { SUNSETS_PRELAUNCH_LOCKED } from "../lib/sunsetsTicketing";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { ROUTES, ANCHORS, routeRadioEpisode } from "@shared/routes";
 
 const InteractiveNavigationOverlay = lazy(
   () => import("./InteractiveNavigationOverlay")
@@ -115,7 +116,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const { preconnectGateway } = useIntentPrefetch();
 
   const { openDrawer } = useUI();
-  const isHome = location === "/";
+  const isHome = location === ROUTES.home;
   const scene = getSceneForPath(location);
   const resolvedVariant = variant ?? scene.variant;
   const resolvedBrand = brand ?? scene.brand;
@@ -129,9 +130,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
   // Contextual CTA logic: ensure we point to the right series if we're on a series-specific page
   const isUntoldPath =
-    location === "/story" || location.startsWith("/untold-story");
+    location === ROUTES.story || location.startsWith(ROUTES.untoldStory);
   const isSunsetsPath =
-    location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
+    location === ROUTES.chasingSunsets || location.startsWith(ROUTES.chasingSunsets);
 
   const contextEvent = isUntoldPath
     ? featuredUntoldEvent || getSeriesEvents("untold-story")[0] || ticketEvent
@@ -143,7 +144,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
   const cta = getEventCta(contextEvent);
   const ctaToneClass = getEventCtaToneClass(contextEvent);
-  const ticketHref = PRELAUNCH_LOCKED
+  const ticketHref = SUNSETS_PRELAUNCH_LOCKED
     ? undefined
     : getPrimaryTicketUrl(contextEvent);
   const hasEventBanner = isEventBannerVisible(location);
@@ -333,7 +334,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
   const handleLogoClick = () => {
     signalChirp.click();
-    const logoHref = "/";
+    const logoHref = ROUTES.home;
     if (location === logoHref) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
@@ -381,7 +382,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
         <div className="pointer-events-auto mx-auto flex w-full max-w-[1920px] flex-col gap-1 sm:w-[98%] sm:gap-3">
           {bannerPayload && bannerPayload.status !== "past" ? (
             <a
-              href={bannerPayload.ticketUrl || "/newsletter"}
+              href={bannerPayload.ticketUrl || ROUTES.newsletter}
               target={
                 bannerPayload.ticketUrl &&
                 /^https?:\/\//i.test(bannerPayload.ticketUrl)
@@ -548,12 +549,12 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
                   label="SHOWS"
-                  href="/schedule"
+                  href={ROUTES.schedule}
                   isActive={
-                    location === "/schedule" ||
-                    location === "/events" ||
-                    location === "/tickets" ||
-                    location.startsWith("/events/")
+                    location === ROUTES.schedule ||
+                    location === ROUTES.events ||
+                    location === ROUTES.tickets ||
+                    location.startsWith(ROUTES.events + "/")
                   }
                   isLight={isLight}
                   brand={resolvedBrand}
@@ -562,17 +563,17 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     items: [
                       {
                         label: "UPCOMING SHOWS",
-                        href: "/schedule",
+                        href: ROUTES.schedule,
                         icon: "arrow",
                       },
                       {
                         label: ticketHref ? "GET TICKETS" : "FIRST ACCESS",
-                        href: ticketHref || "/tickets",
+                        href: ticketHref || ROUTES.tickets,
                         icon: "ticket",
                       },
-                      { label: "CHASING SUN(SETS)", href: "/chasing-sunsets" },
-                      { label: "UNTOLD STORY", href: "/story" },
-                      { label: "ENTRY GUIDE", href: "/guide#entry" },
+                      { label: "CHASING SUN(SETS)", href: ROUTES.chasingSunsets },
+                      { label: "UNTOLD STORY", href: ROUTES.story },
+                      { label: "ENTRY GUIDE", href: ROUTES.guide + ANCHORS.entry },
                     ],
                     feature: ticketEvent
                       ? {
@@ -589,7 +590,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             `/events/${ticketEvent.slug || ticketEvent.id}`,
                           ctaText: ticketHref ? "On Sale" : "First Access",
                           icon: ticketHref ? "ticket" : "arrow",
-                          badge: PRELAUNCH_LOCKED
+                          badge: SUNSETS_PRELAUNCH_LOCKED
                             ? "FIRST ACCESS"
                             : ticketEvent.status === "on-sale"
                               ? "ON SALE"
@@ -600,7 +601,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           title: "UPCOMING SHOWS",
                           subtitle: "Tickets + dates",
                           image: "/images/chasing-sunsets-premium.webp",
-                          href: "/schedule",
+                          href: ROUTES.schedule,
                           ctaText: "View Shows",
                           icon: "arrow",
                           badge: "SHOWS",
@@ -610,8 +611,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="SUN(SETS) RADIO"
-                  href="/radio"
-                  isActive={location.startsWith("/radio")}
+                  href={ROUTES.radio}
+                  isActive={location.startsWith(ROUTES.radio)}
                   isLight={isLight}
                   brand={resolvedBrand}
                   type="chasing-radio"
@@ -622,7 +623,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       title: "Chasing Sun(Sets) Radio Show",
                       subtitle: "Latest YouTube Broadcast",
                       image: "/images/radio-show-gear.webp",
-                      href: "/radio/ep-004-benchek-part-2",
+                      href: routeRadioEpisode("ep-004-benchek-part-2"),
                       ctaText: "Listen Now",
                       icon: "play",
                       badge: "YOUTUBE BROADCAST",
@@ -632,10 +633,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="STORY"
-                  href="/story"
+                  href={ROUTES.story}
                   isActive={
-                    location.includes("/story") ||
-                    location.includes("/untold-story")
+                    location.includes(ROUTES.story) ||
+                    location.includes(ROUTES.untoldStory)
                   }
                   isLight={isLight}
                   brand={resolvedBrand}
@@ -653,7 +654,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         featuredUntoldEvent?.image ||
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
-                        getPrimaryTicketUrl(featuredUntoldEvent) || "/story",
+                        getPrimaryTicketUrl(featuredUntoldEvent) || ROUTES.story,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
                         : "View Story",
@@ -673,8 +674,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="MONOLITH"
-                  href="/monolith"
-                  isActive={location === "/monolith"}
+                  href={ROUTES.monolith}
+                  isActive={location === ROUTES.monolith}
                   isLight={isLight}
                   brand={resolvedBrand}
                   type="monolith"
@@ -685,7 +686,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       title: "The Collective",
                       subtitle: "Manifesto & Story",
                       image: "/images/hero-monolith.webp",
-                      href: "/monolith",
+                      href: ROUTES.monolith,
                       ctaText: "Explore",
                       icon: "arrow",
                     },
@@ -694,12 +695,12 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="PARTNERS"
-                  href="/partners"
+                  href={ROUTES.partners}
                   isActive={
-                    location === "/partners" ||
-                    location === "/sponsors" ||
-                    location === "/press" ||
-                    location === "/booking"
+                    location === ROUTES.partners ||
+                    location === ROUTES.sponsors ||
+                    location === ROUTES.press ||
+                    location === ROUTES.booking
                   }
                   isLight={isLight}
                   brand={resolvedBrand}
@@ -708,19 +709,19 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     items: [
                       {
                         label: "PARTNER WITH US",
-                        href: "/partners",
+                        href: ROUTES.partners,
                         icon: "arrow",
                       },
-                      { label: "PARTNERSHIPS", href: "/partners" },
-                      { label: "SPONSOR ACCESS", href: "/sponsors" },
-                      { label: "PRESS & MEDIA", href: "/press" },
-                      { label: "ABOUT MONOLITH", href: "/about" },
+                      { label: "PARTNERSHIPS", href: ROUTES.partners },
+                      { label: "SPONSOR ACCESS", href: ROUTES.sponsors },
+                      { label: "PRESS & MEDIA", href: ROUTES.press },
+                      { label: "ABOUT MONOLITH", href: ROUTES.about },
                     ],
                     feature: {
                       title: "PARTNER WITH MONOLITH",
                       subtitle: "Brands, venues, and cultural collaborators",
                       image: "/images/industrial-roster.webp",
-                      href: "/partners",
+                      href: ROUTES.partners,
                       ctaText: "Start Conversation",
                       icon: "arrow",
                       badge: "PARTNERS",
@@ -729,15 +730,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <Link
-                  href="/contact"
+                  href={ROUTES.contact}
                   onClick={e => {
                     e.preventDefault();
-                    handleNavClick("/contact");
+                    handleNavClick(ROUTES.contact);
                   }}
                   className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
                     isLight
-                      ? `hover:text-clay ${location === "/contact" ? "text-clay" : "text-stone"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === "/contact" ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                      ? `hover:text-clay ${location === ROUTES.contact ? "text-clay" : "text-stone"}`
+                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === ROUTES.contact ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
                   }`}
                 >
                   Contact

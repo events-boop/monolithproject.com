@@ -33,7 +33,7 @@ import {
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
   captureSunsetsTicketCtaClick,
-  PRELAUNCH_LOCKED,
+  SUNSETS_PRELAUNCH_LOCKED,
 } from "@/lib/sunsetsTicketing";
 
 type Chapter = {
@@ -169,7 +169,7 @@ export default function LakeLanding() {
         date: chapter.date,
         place: chapter.venue,
         status:
-          PRELAUNCH_LOCKED
+          SUNSETS_PRELAUNCH_LOCKED
             ? index === 0
               ? "July 4 · first access"
               : index === 1
@@ -180,14 +180,14 @@ export default function LakeLanding() {
               : index === 1
                 ? "August tickets"
                 : "September tickets",
-        action: PRELAUNCH_LOCKED
+        action: SUNSETS_PRELAUNCH_LOCKED
           ? "JOIN LAKE LIST"
           : index === 0
             ? SUNSETS_TICKET_CTA_LABEL
             : "BUY TICKETS",
         eventSlug: chapter.eventSlug,
         eventDate: chapter.eventDate,
-        href: PRELAUNCH_LOCKED ? undefined : chapter.ticketPath,
+        href: SUNSETS_PRELAUNCH_LOCKED ? undefined : chapter.ticketPath,
       })),
     []
   );
@@ -344,7 +344,7 @@ export default function LakeLanding() {
               <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-y border-white/10 py-4">
                 <div>
                   <p className="text-xs font-black uppercase tracking-[0.16em] text-stone-300">
-                    {PRELAUNCH_LOCKED
+                    {SUNSETS_PRELAUNCH_LOCKED
                       ? "Founding tier"
                       : SUNSETS_2026_SEASON_PASS.tierName}
                   </p>
@@ -353,7 +353,7 @@ export default function LakeLanding() {
                   </p>
                 </div>
                 <div className="text-right">
-                  {PRELAUNCH_LOCKED ? (
+                  {SUNSETS_PRELAUNCH_LOCKED ? (
                     <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#61e8ff]">
                       Unlocks
                       <br />
@@ -365,7 +365,7 @@ export default function LakeLanding() {
                     </p>
                   )}
                   <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
-                    {PRELAUNCH_LOCKED
+                    {SUNSETS_PRELAUNCH_LOCKED
                       ? "Limited"
                       : SUNSETS_2026_SEASON_PASS.quantityLabel}
                   </p>
@@ -399,10 +399,10 @@ export default function LakeLanding() {
                 className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff]"
               >
                 <a
-                  href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
+                  href={SUNSETS_PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
                   onClick={() => {
                     triggerHaptic(16);
-                    if (PRELAUNCH_LOCKED) {
+                    if (SUNSETS_PRELAUNCH_LOCKED) {
                       focusLakeList();
                       trackLakeClick({
                         buttonName: "Join the Lake List",
@@ -430,7 +430,7 @@ export default function LakeLanding() {
                   }}
                 >
                   <Ticket className="size-4" />
-                  {PRELAUNCH_LOCKED
+                  {SUNSETS_PRELAUNCH_LOCKED
                     ? "Join for Season Pass Access"
                     : SUNSETS_2026_SEASON_PASS_CTA_LABEL}
                   <ArrowUpRight className="size-4" />
@@ -439,10 +439,10 @@ export default function LakeLanding() {
             </section>
 
             <a
-              href={PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
+              href={SUNSETS_PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
               onClick={() => {
                 triggerHaptic(16);
-                if (PRELAUNCH_LOCKED) {
+                if (SUNSETS_PRELAUNCH_LOCKED) {
                   focusLakeList();
                   trackLakeClick({
                     buttonName: "Join the Lake List",
@@ -471,13 +471,13 @@ export default function LakeLanding() {
               className="flex min-h-14 items-center justify-center gap-2 bg-[#61e8ff] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#a7f4ff]"
             >
               <Ticket className="size-4" />
-              {PRELAUNCH_LOCKED
+              {SUNSETS_PRELAUNCH_LOCKED
                 ? "Join Lake List for Tickets"
                 : SUNSETS_TICKET_CTA_LABEL}
               <ArrowUpRight className="size-4" />
             </a>
             <p className="-mt-2 text-center text-[11px] font-semibold text-stone-400">
-              {PRELAUNCH_LOCKED
+              {SUNSETS_PRELAUNCH_LOCKED
                 ? "Lake List members get the first ticket window before public release."
                 : SUNSETS_TICKET_CTA_SUPPORT}
             </p>
@@ -522,7 +522,7 @@ export default function LakeLanding() {
                   Upcoming Chapters
                 </h3>
                 <span className="text-right text-[11px] font-semibold text-[#61e8ff]">
-                  {PRELAUNCH_LOCKED
+                  {SUNSETS_PRELAUNCH_LOCKED
                     ? "Lake List opens first"
                     : "Prices move by release"}
                 </span>

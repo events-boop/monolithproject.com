@@ -1,24 +1,20 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { ROUTES } from "@shared/routes";
 
 export type DrawerType =
-  | "faq"
-  | "newsletter"
-  | "contact"
-  | "guide"
-  | "about"
-  | "archive"
-  | null;
 
-const drawerRouteMap = {
-  "/faq": "faq",
-  "/newsletter": "newsletter",
-  "/contact": "contact",
-  "/guide": "guide",
-  "/inner-circle": "newsletter",
-  "/about": "about",
-  "/togetherness": "about",
-  "/archive": "archive",
-} as const;
+...
+
+const drawerRouteMap: Record<string, DrawerType> = {
+  [ROUTES.faq]: "faq",
+  [ROUTES.newsletter]: "newsletter",
+  [ROUTES.contact]: "contact",
+  [ROUTES.guide]: "guide",
+  [ROUTES.innerCircle]: "newsletter",
+  [ROUTES.about]: "about",
+  [ROUTES.togetherness]: "about",
+  [ROUTES.archive]: "archive",
+};
 
 export type ExpressionId = "sunsets" | "untold" | "radio" | null;
 
@@ -77,7 +73,7 @@ export function useUI() {
 
 export function getDrawerTypeForHref(href: string): DrawerType {
   return (
-    drawerRouteMap[normalizePathname(href) as keyof typeof drawerRouteMap] ??
+    drawerRouteMap[normalizePathname(href)] ??
     null
   );
 }

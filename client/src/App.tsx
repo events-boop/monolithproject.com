@@ -10,10 +10,11 @@ import { InquiryProvider } from "./contexts/InquiryContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { syncAttributionForNavigation } from "./lib/attribution";
-import { PRELAUNCH_LOCKED } from "./lib/sunsetsTicketing";
+import { SUNSETS_PRELAUNCH_LOCKED } from "./lib/sunsetsTicketing";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import MetaPixelGate from "./components/MetaPixelGate";
+import { ROUTES, ANCHORS, CAMPAIGN_HOSTS } from "@shared/routes";
 
 // Lazy Pages
 const InquiryPortal = lazy(() => import("./components/InquiryPortal"));
@@ -144,7 +145,7 @@ const ExperimentalHeroTransition = ExperimentalHero
 
 function MonolithOpsRoute() {
   if (!isMonolithOpsEnabled || !AdminDashboardTransition) {
-    return <Redirect to="/404" />;
+    return <Redirect to={ROUTES.notFound} />;
   }
 
   return <AdminDashboardTransition />;
@@ -152,7 +153,7 @@ function MonolithOpsRoute() {
 
 function SandboxHeroRoute() {
   if (!isMonolithOpsEnabled || !ExperimentalHeroTransition) {
-    return <Redirect to="/404" />;
+    return <Redirect to={ROUTES.notFound} />;
   }
 
   return <ExperimentalHeroTransition />;
@@ -165,11 +166,11 @@ function normalizeRouteLocation(location: string) {
 function getCampaignHostLandingPath(location: string) {
   const normalizedLocation = normalizeRouteLocation(location);
   const host = typeof window !== "undefined" ? window.location.hostname : "";
-  const isSunsetsHost = host === "sunsets.vip" || host === "www.sunsets.vip";
-  const isUntoldHost = host === "untold.vip" || host === "www.untold.vip";
+  const isSunsetsHost = host === CAMPAIGN_HOSTS.sunsetsVip || host === CAMPAIGN_HOSTS.sunsetsVipWww;
+  const isUntoldHost = host === CAMPAIGN_HOSTS.untoldVip || host === CAMPAIGN_HOSTS.untoldVipWww;
 
-  if (normalizedLocation === "/" && isSunsetsHost) return "/sunsets";
-  if (normalizedLocation === "/" && isUntoldHost) return "/story";
+  if (normalizedLocation === ROUTES.home && isSunsetsHost) return ROUTES.sunsets;
+  if (normalizedLocation === ROUTES.home && isUntoldHost) return ROUTES.story;
 
   return normalizedLocation;
 }
@@ -179,95 +180,95 @@ function Router() {
 
   return (
     <Switch location={location} key={location}>
-      <Route path="/" component={HomeTransition} />
-      <Route path="/tickets">
-        {PRELAUNCH_LOCKED ? <Redirect to="/sunsets" /> : <TicketsTransition />}
+      <Route path={ROUTES.home} component={HomeTransition} />
+      <Route path={ROUTES.tickets}>
+        {SUNSETS_PRELAUNCH_LOCKED ? <Redirect to={ROUTES.sunsets} /> : <TicketsTransition />}
       </Route>
       <Route path="/artists/:id" component={ArtistProfileTransition} />
-      <Route path="/sponsors" component={SponsorAccessTransition} />
-      <Route path="/about" component={AboutTransition} />
-      <Route path="/chasing-sunsets" component={ChasingSunsetsTransition} />
+      <Route path={ROUTES.sponsors} component={SponsorAccessTransition} />
+      <Route path={ROUTES.about} component={AboutTransition} />
+      <Route path={ROUTES.chasingSunsets} component={ChasingSunsetsTransition} />
       <Route
-        path="/chasing-sunsets-facts"
+        path={ROUTES.chasingSunsetsFacts}
         component={ChasingSunsetsFactsTransition}
       />
       <Route path="/SUNSETS">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/SUNSET">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/Sunsets">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/Sunset">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/sunset/">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/sunset">
-        <Redirect to="/sunsets" />
+        <Redirect to={ROUTES.sunsets} />
       </Route>
       <Route path="/sunsets/" component={SunsetsLinkBioTransition} />
-      <Route path="/sunsets" component={SunsetsLinkBioTransition} />
+      <Route path={ROUTES.sunsets} component={SunsetsLinkBioTransition} />
       <Route path="/lake/" component={LakeLandingTransition} />
-      <Route path="/lake" component={LakeLandingTransition} />
+      <Route path={ROUTES.lake} component={LakeLandingTransition} />
       <Route
         path="/chasing-sunsets/:season"
         component={ArchiveGalleryPageTransition}
       />
-      <Route path="/radio" component={RadioTransition} />
+      <Route path={ROUTES.radio} component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
-      <Route path="/story" component={UntoldStoryTransition} />
-      <Route path="/untold-story" component={UntoldStoryTransition} />
+      <Route path={ROUTES.story} component={UntoldStoryTransition} />
+      <Route path={ROUTES.untoldStory} component={UntoldStoryTransition} />
       <Route
         path="/untold-story/:season"
         component={ArchiveGalleryPageTransition}
       />
       <Route
-        path="/untold-story-deron-juany-bravo"
+        path={ROUTES.untoldStoryDeronJuanyBravo}
         component={UntoldStoryTransition}
       />
-      <Route path="/archive" component={ArchiveTransition} />
+      <Route path={ROUTES.archive} component={ArchiveTransition} />
       <Route path="/insights/:slug" component={InsightArticleTransition} />
-      <Route path="/insights" component={InsightsTransition} />
-      <Route path="/booking" component={BookingTransition} />
-      <Route path="/submit" component={SubmitTransition} />
-      <Route path="/lineup" component={LineupTransition} />
-      <Route path="/schedule" component={ScheduleTransition} />
-      <Route path="/events" component={ScheduleTransition} />
+      <Route path={ROUTES.insights} component={InsightsTransition} />
+      <Route path={ROUTES.booking} component={BookingTransition} />
+      <Route path={ROUTES.submit} component={SubmitTransition} />
+      <Route path={ROUTES.lineup} component={LineupTransition} />
+      <Route path={ROUTES.schedule} component={ScheduleTransition} />
+      <Route path={ROUTES.events} component={ScheduleTransition} />
       <Route path="/events/:slug" component={EventDetailsTransition} />
-      <Route path="/newsletter" component={NewsletterTransition} />
-      <Route path="/togetherness">
-        <Redirect to="/about#togetherness" />
+      <Route path={ROUTES.newsletter} component={NewsletterTransition} />
+      <Route path={ROUTES.togetherness}>
+        <Redirect to={ROUTES.about + ANCHORS.togetherness} />
       </Route>
-      <Route path="/inner-circle">
-        <Redirect to="/newsletter" />
+      <Route path={ROUTES.innerCircle}>
+        <Redirect to={ROUTES.newsletter} />
       </Route>
-      <Route path="/contact" component={ContactTransition} />
-      <Route path="/faq" component={FAQTransition} />
-      <Route path="/partners" component={PartnersTransition} />
-      <Route path="/press" component={PressTransition} />
-      <Route path="/vip" component={VIPTransition} />
-      <Route path="/travel" component={TravelTransition} />
-      <Route path="/guide" component={GuideTransition} />
-      <Route path="/shop" component={ShopTransition} />
-      <Route path="/ambassadors" component={AmbassadorsTransition} />
-      <Route path="/alerts" component={AlertsTransition} />
-      <Route path="/terms" component={TermsTransition} />
-      <Route path="/privacy" component={PrivacyTransition} />
-      <Route path="/cookies" component={CookiesTransition} />
-      <Route path="/monolith" component={MonolithTransition} />
-      <Route path="/the-monolith">
-        <Redirect to="/monolith" />
+      <Route path={ROUTES.contact} component={ContactTransition} />
+      <Route path={ROUTES.faq} component={FAQTransition} />
+      <Route path={ROUTES.partners} component={PartnersTransition} />
+      <Route path={ROUTES.press} component={PressTransition} />
+      <Route path={ROUTES.vip} component={VIPTransition} />
+      <Route path={ROUTES.travel} component={TravelTransition} />
+      <Route path={ROUTES.guide} component={GuideTransition} />
+      <Route path={ROUTES.shop} component={ShopTransition} />
+      <Route path={ROUTES.ambassadors} component={AmbassadorsTransition} />
+      <Route path={ROUTES.alerts} component={AlertsTransition} />
+      <Route path={ROUTES.terms} component={TermsTransition} />
+      <Route path={ROUTES.privacy} component={PrivacyTransition} />
+      <Route path={ROUTES.cookies} component={CookiesTransition} />
+      <Route path={ROUTES.monolith} component={MonolithTransition} />
+      <Route path={ROUTES.theMonolith}>
+        <Redirect to={ROUTES.monolith} />
       </Route>
-      <Route path="/collective">
-        <Redirect to="/monolith" />
+      <Route path={ROUTES.collective}>
+        <Redirect to={ROUTES.monolith} />
       </Route>
-      <Route path="/monolith-ops" component={MonolithOpsRoute} />
-      <Route path="/404" component={NotFoundTransition} />
-      <Route path="/sandbox/hero" component={SandboxHeroRoute} />
+      <Route path={ROUTES.monolithOps} component={MonolithOpsRoute} />
+      <Route path={ROUTES.notFound} component={NotFoundTransition} />
+      <Route path={ROUTES.sandboxHero} component={SandboxHeroRoute} />
 
       <Route component={NotFoundTransition} />
     </Switch>
@@ -380,10 +381,10 @@ function MainContentWrapper() {
   const normalizedLocation = normalizeRouteLocation(location);
   const landingPath = getCampaignHostLandingPath(location);
   const isUntoldRootLanding =
-    normalizedLocation === "/" && landingPath === "/story";
+    normalizedLocation === ROUTES.home && landingPath === ROUTES.story;
   const isStandaloneLanding =
-    landingPath === "/sunsets" ||
-    landingPath === "/lake" ||
+    landingPath === ROUTES.sunsets ||
+    landingPath === ROUTES.lake ||
     isUntoldRootLanding;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
@@ -438,9 +439,9 @@ function MainContentWrapper() {
           }}
         />
         {isStandaloneLanding ? (
-          landingPath === "/lake" ? (
+          landingPath === ROUTES.lake ? (
             <LakeLandingTransition />
-          ) : landingPath === "/story" ? (
+          ) : landingPath === ROUTES.story ? (
             <UntoldStoryTransition />
           ) : (
             <SunsetsLinkBioTransition />
