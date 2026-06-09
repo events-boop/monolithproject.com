@@ -1,3 +1,7 @@
+/**
+ * Express app factory for the Monolith Project API server.
+ */
+
 import express from "express";
 import { randomUUID } from "crypto";
 import { hasDatabase } from "./db/client";
@@ -64,6 +68,17 @@ export function createMethodNotAllowedHandler(methods: string[]) {
   };
 }
 
+/**
+ * Creates and configures an Express application instance.
+ *
+ * @param includeSpa - When true, mounts the SPA static file router for production
+ *   serving. When false (used in tests and Netlify Function mode), only API routes
+ *   are mounted and the SPA router is omitted.
+ *
+ * The METHOD_GUARDS array defines a whitelist of allowed HTTP methods per path.
+ * Any request to a registered path using an unlisted method receives a 405
+ * Method Not Allowed response.
+ */
 export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   const app = express();
   app.disable("x-powered-by");

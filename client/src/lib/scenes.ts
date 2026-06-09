@@ -1,3 +1,15 @@
+/**
+ * Maps URL paths to visual scenes that drive the site's design tokens.
+ *
+ * Each scene defines an accent color, glow, brand affiliation, and ticket
+ * theme. `getSceneForPath()` is called by the SceneSync component in App.tsx
+ * to set CSS custom properties on <html>, giving each section of the site a
+ * distinct look and feel.
+ *
+ * Five scenes: monolith (default dark), story (Untold Story), sunsets
+ * (Chasing Sunsets), radio, and paper (light informational pages).
+ */
+
 export type SceneId = "monolith" | "story" | "sunsets" | "radio" | "paper";
 export type SceneTicketTheme = "default" | "violet" | "warm";
 

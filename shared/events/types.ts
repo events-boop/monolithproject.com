@@ -1,8 +1,10 @@
+/** The three live event series produced by Monolith Project. */
 export type EventSeries =
   | "chasing-sunsets"
   | "untold-story"
   | "monolith-project";
 
+/** Marketing funnel states mapped to specific event series. */
 export type ActiveFunnel =
   | "waitlist"
   | "waitlist-chasing"
@@ -10,6 +12,7 @@ export type ActiveFunnel =
   | "giveaway"
   | "coordinates";
 
+/** Placement slots across the site for featuring events. */
 export type SiteExperienceSlot =
   | "hero"
   | "banner"
@@ -17,6 +20,7 @@ export type SiteExperienceSlot =
   | "ticket"
   | "guide";
 
+/** Third-party funnel / ticketing platforms integrated with the site. */
 export type FunnelTool = "laylo" | "posh" | "fillout";
 
 export interface EventCta {
@@ -38,6 +42,7 @@ export interface TicketTier {
   highlight?: boolean;
 }
 
+/** A scheduled live event with its venue, ticketing, creative, and funnel configuration. */
 export interface ScheduledEvent {
   id: string;
   series: EventSeries;

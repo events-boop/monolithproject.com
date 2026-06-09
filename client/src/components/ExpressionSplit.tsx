@@ -59,8 +59,14 @@ const expressions = [
   },
 ];
 
-import { useUI } from "../contexts/UIContext";
+import { useUI, type ExpressionId } from "../contexts/UIContext";
 import { getPublicEvents } from "../lib/siteData";
+
+const VALID_EXPRESSION_IDS = new Set<string>(["sunsets", "untold", "radio"]);
+
+function isExpressionId(value: string | null): value is ExpressionId {
+  return value === null || VALID_EXPRESSION_IDS.has(value);
+}
 
 export default function ExpressionSplit() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -91,7 +97,9 @@ export default function ExpressionSplit() {
     setHoveredId(id);
     const normalizedId =
       id === "untold" ? "untold" : id === "sunsets" ? "sunsets" : "radio";
-    setHoveredExpression(normalizedId as any);
+    if (isExpressionId(normalizedId)) {
+      setHoveredExpression(normalizedId);
+    }
   };
 
   const handleHoverEnd = () => {

@@ -1,3 +1,17 @@
+/**
+ * First-touch + last-touch attribution model for marketing campaign tracking.
+ *
+ * UTM parameters and referrer values are captured from the current URL on each
+ * page navigation and persisted in sessionStorage. The first touch is locked on
+ * initial visit; the last touch is refreshed only when a new acquisition signal
+ * (UTM, referrer, or click ID) is detected — otherwise existing values are
+ * carried forward.
+ *
+ * Attribution data flows into API request headers via
+ * `syncAttributionForNavigation()`, which is called on every client-side
+ * navigation to keep the server-side context in sync.
+ */
+
 export interface AttributionPayload {
   sessionId?: string;
   pageUrl?: string;
