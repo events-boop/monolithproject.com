@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    webkitAudioContext?: typeof AudioContext;
+  }
+}
+
 let audioCtx: AudioContext | null = null;
 
 export function playSignalChirp(
@@ -8,7 +14,7 @@ export function playSignalChirp(
   try {
     if (!audioCtx) {
       audioCtx = new (
-        window.AudioContext || (window as any).webkitAudioContext
+        window.AudioContext || window.webkitAudioContext
       )();
     }
 

@@ -11,6 +11,15 @@ export const LAKE_PIXEL_ID =
 const LAKE_PIXEL_DEV_ENABLED =
   import.meta.env.VITE_LAKE_PIXEL_DEV_ENABLED === "true";
 
+interface FbqFunction {
+  (...args: unknown[]): void;
+  callMethod?: { apply: (thisArg: FbqFunction, args: unknown[]) => void };
+  queue: unknown[][];
+  push?: FbqFunction;
+  loaded?: boolean;
+  version?: string;
+}
+
 let pixelInitialized = false;
 
 function isCampaignHost() {
@@ -37,11 +46,10 @@ function ensureFbq() {
   if (typeof window === "undefined") return false;
 
   if (!window.fbq) {
-    const fbq = function (...args: any[]) {
-      const self = fbq as any;
-      if (self.callMethod) self.callMethod.apply(self, args);
-      else self.queue.push(args);
-    } as any;
+    const fbq: FbqFunction = function (...args: unknown[]) {
+      if (fbq.callMethod) fbq.callMethod.apply(fbq, args);
+      else fbq.queue.push(args);
+    };
 
     fbq.push = fbq;
     fbq.loaded = true;

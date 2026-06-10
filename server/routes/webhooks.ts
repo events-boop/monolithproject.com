@@ -28,12 +28,26 @@ import {
   upsertSocialEchoEventStats,
   type SocialEchoEventStatsRow,
 } from "../db/socialEchoRepo";
+import { z } from "zod";
 import {
   socialEchoByEvent,
   socialEchoActivity,
   rememberSocialActivity,
   pruneSocialEchoByEvent,
 } from "../services/social-echo";
+
+// Strict Environment Validation for Webhooks
+const WebhookEnvSchema = z.object({
+  LAYLO_WEBHOOK_SECRET: z.string().min(1, "Missing LAYLO_WEBHOOK_SECRET"),
+  POSH_WEBHOOK_SECRET: z.string().min(1, "Missing POSH_WEBHOOK_SECRET"),
+});
+
+let validatedEnv: z.infer<typeof WebhookEnvSchema> | null = null;
+try {
+  validatedEnv = WebhookEnvSchema.parse(process.env);
+} catch (e) {
+  console.warn("⚠️ Webhook secrets not fully configured in environment.");
+}
 
 const router = Router();
 const layloWebhookLimiter = createRateLimitMiddleware({
@@ -151,7 +165,7 @@ function buildLayloLead(payload: Record<string, unknown>) {
 
 router.post("/api/webhooks/laylo", layloWebhookLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
-  const configuredSecret = process.env.LAYLO_WEBHOOK_SECRET?.trim();
+  const configuredSecret = validatedEnv?.LAYLO_WEBHOOK_SECRET || process.env.LAYLO_WEBHOOK_SECRET?.trim();
 
   if (!configuredSecret) {
     logEvent("laylo.webhook_unconfigured", { requestId });
@@ -310,7 +324,7 @@ router.post("/api/webhooks/laylo", layloWebhookLimiter, asyncHandler(async (req,
 
 router.post("/api/webhooks/posh", poshWebhookLimiter, asyncHandler(async (req, res) => {
   const requestId = randomUUID();
-  const configuredSecret = process.env.POSH_WEBHOOK_SECRET?.trim();
+  const configuredSecret = validatedEnv?.POSH_WEBHOOK_SECRET || process.env.POSH_WEBHOOK_SECRET?.trim();
 
   if (!configuredSecret) {
     logEvent("posh.webhook_unconfigured", { requestId });

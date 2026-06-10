@@ -399,7 +399,7 @@ export default function ChasingSunsets() {
               {
                 kicker: "Schedule",
                 title: "Set Times",
-                body: "Doors at 1PM. Erik, Amari, Kiko Franco, then Autograf through sunset.",
+                body: "Doors at 12PM. Erik, Amari, Kiko Franco, then Autograf through sunset.",
                 href: "#chasing-tickets",
               },
               {

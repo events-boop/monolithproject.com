@@ -134,7 +134,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         time: SUNSETS_JULY4_EVENT_TIME,
         startsAt: "2026-07-04T13:00:00-05:00",
         endsAt: "2026-07-04T22:00:00-05:00",
-        doors: "1:00 PM",
+        doors: "12:00 PM",
         mainExperience: "3:15 PM — 10:00 PM",
         venue: SUNSETS_JULY4_EVENT_VENUE,
         location: SUNSETS_JULY4_EVENT_LOCATION,

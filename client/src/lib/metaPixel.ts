@@ -1,9 +1,18 @@
 import { runWhenIdle } from "./idle";
 import { getCookieConsentState } from "./cookieConsent";
 
+interface FbqFunction {
+  (...args: unknown[]): void;
+  callMethod?: { apply: (thisArg: FbqFunction, args: unknown[]) => void };
+  queue: unknown[][];
+  push?: FbqFunction;
+  loaded?: boolean;
+  version?: string;
+}
+
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
+    fbq?: FbqFunction;
     _fbq?: unknown;
   }
 }
@@ -41,11 +50,10 @@ function ensureFbq(pixelId: string) {
   if (typeof window === "undefined") return;
   if (window.fbq) return;
 
-  const fbq = function (...args: any[]) {
-    const self = fbq as any;
-    if (self.callMethod) self.callMethod.apply(self, args);
-    else self.queue.push(args);
-  } as any;
+  const fbq: FbqFunction = function (...args: unknown[]) {
+    if (fbq.callMethod) fbq.callMethod.apply(fbq, args);
+    else fbq.queue.push(args);
+  };
 
   fbq.push = fbq;
   fbq.loaded = true;

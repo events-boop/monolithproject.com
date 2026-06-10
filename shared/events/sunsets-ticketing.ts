@@ -3,7 +3,7 @@ import type { TicketTier } from "./types";
 export const SUNSETS_JULY4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 export const SUNSETS_JULY4_EVENT_DATE = "2026-07-04";
 export const SUNSETS_JULY4_EVENT_TITLE = "SUN(SETS) I — July 4th at Castaways";
-export const SUNSETS_JULY4_EVENT_TIME = "1:00 PM — 10:00 PM";
+export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";
 export const SUNSETS_JULY4_EVENT_ADDRESS = "1603 N Lake Shore Dr, Chicago, IL 60614";
@@ -98,11 +98,11 @@ export const SUNSETS_JULY4_LINEUP = [
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
-  { time: "1:00 PM", label: "Doors / Event Begins" },
-  { time: "3:15 PM — 4:30 PM", label: "Erik The DJ" },
-  { time: "4:30 PM — 5:45 PM", label: "Amari" },
-  { time: "5:45 PM — 7:45 PM", label: "Kiko Franco" },
-  { time: "7:45 PM — 10:00 PM", label: "Autograf" },
+  { time: "12:00 PM", label: "Doors / Event Begins" },
+  { time: "2:15 PM — 3:30 PM", label: "Erik The DJ" },
+  { time: "3:30 PM — 4:45 PM", label: "Amari" },
+  { time: "4:45 PM — 6:45 PM", label: "Kiko Franco" },
+  { time: "6:45 PM — 10:00 PM", label: "Autograf" },
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 
