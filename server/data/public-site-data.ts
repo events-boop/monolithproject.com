@@ -156,7 +156,7 @@ export const upcomingEvents: ScheduledEvent[] = [
         ],
         eventNotice: "Watch the sun. Stay for the sets.",
         photoNotice: "Togetherness is the frequency. Music is the guide.",
-        layloDropId: "luYXPr",
+        layloDropId: "IQ5HaR",
         activeFunnels: ["waitlist-chasing"],
         tableReservationEmail: "vip@chasingsunsets.music",
         startingPrice: Math.min(...SUNSETS_JULY4_ADMISSION_TIERS.map((tier) => tier.price)),
