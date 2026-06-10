@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ScheduledEvent } from "@/data/events";
+import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
+import { ROUTES } from "@shared/routes";
 import {
   getEventCta,
   getEventDetailsHref,
@@ -103,12 +105,24 @@ describe("cta", () => {
     };
 
     expect(isEventLowInventory(event)).toBe(true);
-    expect(getEventCta(event)).toMatchObject({
-      label: "Final Release",
-      href: "https://posh.vip/e/example",
-      isExternal: true,
-      tool: "posh",
-    });
+
+    if (SUNSETS_PRELAUNCH_LOCKED) {
+      // Pre-launch, Posh is in draft so every Posh CTA is repointed to the Lake
+      // List regardless of inventory state (see getEventCta).
+      expect(getEventCta(event)).toMatchObject({
+        label: "Join the Lake List",
+        href: ROUTES.sunsets,
+        tool: "laylo",
+        isExternal: false,
+      });
+    } else {
+      expect(getEventCta(event)).toMatchObject({
+        label: "Final Release",
+        href: "https://posh.vip/e/example",
+        isExternal: true,
+        tool: "posh",
+      });
+    }
   });
 
   it("parses supported inquiry links into typed portal states", () => {

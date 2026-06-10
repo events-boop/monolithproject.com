@@ -71,8 +71,8 @@ describe("scenes", () => {
         variant: "dark",
         brand: "chasing-sunsets",
         ticketTheme: "warm",
-        accent: "#C2703E",
-        glow: "rgba(194, 112, 62, 0.35)",
+        accent: "#61e8ff",
+        glow: "rgba(97, 232, 255, 0.32)",
       });
     });
 
