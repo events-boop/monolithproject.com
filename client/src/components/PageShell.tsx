@@ -1,7 +1,9 @@
-import { ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import Navigation from "./Navigation";
-import SEO, { SEOProps } from "./SEO";
+import SEO from "./SEO";
 import Footer from "./Footer";
+
+type SEOProps = ComponentProps<typeof SEO>;
 
 interface PageShellProps extends SEOProps {
   children: ReactNode;
