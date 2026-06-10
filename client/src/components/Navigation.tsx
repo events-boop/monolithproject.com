@@ -526,7 +526,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 {/* LOCATION CONTEXT SIGNAL (SCROLL-SPY) */}
                 {isHome && currentChapter && (
                   <div className="hidden 2xl:flex items-center gap-3 pl-6 ml-6 border-l border-white/5 pointer-events-none shrink-0">
-                    <span className="font-mono text-[11px] text-white/20 uppercase tracking-[0.4em] select-none">
+                    <span className="font-mono text-[11px] text-white/70 uppercase tracking-[0.4em] select-none">
                       Section
                     </span>
                     <span

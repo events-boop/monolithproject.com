@@ -159,7 +159,7 @@ export default function VIP() {
                 </p>
               </div>
               {/* This would be a real image */}
-              <div className="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center text-white/20 font-display text-4xl sm:text-6xl uppercase tracking-tighter">
+              <div className="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center text-white/70 font-display text-4xl sm:text-6xl uppercase tracking-tighter">
                 VIP VIEW
               </div>
             </motion.div>

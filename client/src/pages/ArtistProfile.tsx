@@ -311,7 +311,7 @@ export default function ArtistProfile() {
           style={{ opacity: heroOpacity }}
           className="absolute bottom-10 right-10 flex flex-col items-center gap-4 hidden md:flex"
         >
-          <span className="font-mono text-[10px] tracking-[0.5em] text-white/20 uppercase vertical-rl">
+          <span className="font-mono text-[10px] tracking-[0.5em] text-white/70 uppercase vertical-rl">
             The Roster
           </span>
           <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
@@ -326,7 +326,7 @@ export default function ArtistProfile() {
           <div className="lg:col-span-12 xl:col-span-7 space-y-32">
             {/* About Section */}
             <div className="space-y-12">
-              <div className="flex items-center gap-4 text-white/20">
+              <div className="flex items-center gap-4 text-white/70">
                 <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
                   01 / Concept
                 </span>
@@ -351,7 +351,7 @@ export default function ArtistProfile() {
             {/* Previous Sets Section */}
             {artist.previousSets && artist.previousSets.length > 0 && (
               <div className="space-y-12">
-                <div className="flex items-center gap-4 text-white/20">
+                <div className="flex items-center gap-4 text-white/70">
                   <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
                     02 / Recorded Rituals
                   </span>
@@ -373,7 +373,7 @@ export default function ArtistProfile() {
                         <span className="font-mono text-[10px] tracking-[0.4em] text-[#E8B86D] uppercase">
                           {set.date}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="w-4 h-4 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" />
                       </div>
                       <h5 className="font-display text-2xl uppercase tracking-widest text-white mb-2">
                         {set.title}
@@ -390,7 +390,7 @@ export default function ArtistProfile() {
             {/* Gallery Section */}
             {artist.gallery && artist.gallery.length > 0 && (
               <div className="space-y-12">
-                <div className="flex items-center gap-4 text-white/20">
+                <div className="flex items-center gap-4 text-white/70">
                   <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
                     {artist.previousSets?.length ? "03" : "02"} / Live Gallery
                   </span>
@@ -435,7 +435,7 @@ export default function ArtistProfile() {
             {/* Selected Tracks Section */}
             <div className="space-y-12">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-white/20">
+                <div className="flex items-center gap-4 text-white/70">
                   <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
                     {artist.gallery?.length
                       ? artist.previousSets?.length
@@ -454,7 +454,7 @@ export default function ArtistProfile() {
                     className="group flex items-center justify-between p-8 bg-[#050505] hover:bg-white/[0.02] transition-colors duration-500 cursor-pointer"
                   >
                     <div className="flex items-center gap-8">
-                      <span className="font-mono text-xs text-white/20 group-hover:text-primary transition-colors">
+                      <span className="font-mono text-xs text-white/70 group-hover:text-primary transition-colors">
                         {(i + 1).toString().padStart(2, "0")}
                       </span>
                       <div className="flex flex-col gap-1">
@@ -467,7 +467,7 @@ export default function ArtistProfile() {
                       </div>
                     </div>
                     <div className="flex items-center gap-6">
-                      <span className="font-mono text-xs text-white/20">
+                      <span className="font-mono text-xs text-white/70">
                         {track.duration}
                       </span>
                       <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
@@ -519,7 +519,7 @@ export default function ArtistProfile() {
                   },
                 ].map(spec => (
                   <div key={spec.label} className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] tracking-[0.4em] text-white/20 uppercase lowercase-none">
+                    <span className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase lowercase-none">
                       {spec.label}
                     </span>
                     <span className="font-mono text-sm uppercase tracking-widest text-white/80">

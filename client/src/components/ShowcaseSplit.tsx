@@ -105,7 +105,7 @@ export default function ShowcaseSplit() {
 
               {/* Top-left structural label */}
               <div className="absolute top-8 left-6 lg:top-12 lg:left-8 flex items-baseline gap-4 pointer-events-none">
-                <span className="font-display text-3xl lg:text-5xl text-white/20 select-none">
+                <span className="font-display text-3xl lg:text-5xl text-white/70 select-none">
                   {panel.number}
                 </span>
                 <div className="flex items-center gap-3">

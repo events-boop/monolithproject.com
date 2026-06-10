@@ -360,7 +360,7 @@ export default function About() {
                 <h2 className="section-display-title-compact mb-8 text-white">
                   Four parts.
                   <br />
-                  <span className="text-white/20">One project.</span>
+                  <span className="text-white/70">One project.</span>
                 </h2>
                 <p className="text-lg leading-relaxed text-white/70 font-light max-w-sm">
                   One project. Three public expressions. Chasing Sun(Sets) leads

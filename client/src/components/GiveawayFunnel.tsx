@@ -297,7 +297,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
 
                     <div className="space-y-4">
                       <div className="relative group">
-                        <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
+                        <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70 group-focus-within:text-primary transition-colors" />
                         <input
                           required
                           type="text"
@@ -305,12 +305,12 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                           onChange={e => setFullName(e.target.value)}
                           autoComplete="name"
                           placeholder="Full name"
-                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/70 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                         />
                       </div>
 
                       <div className="relative group">
-                        <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
+                        <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70 group-focus-within:text-primary transition-colors" />
                         <input
                           required
                           type="email"
@@ -318,18 +318,18 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                           onChange={e => setEmail(e.target.value)}
                           autoComplete="email"
                           placeholder="Email address"
-                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/70 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                         />
                       </div>
 
                       <div className="relative group">
-                        <Instagram className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
+                        <Instagram className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70 group-focus-within:text-primary transition-colors" />
                         <input
                           type="text"
                           value={handle}
                           onChange={e => setHandle(e.target.value)}
                           placeholder="Instagram handle (optional)"
-                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
+                          className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-14 pr-6 text-white text-xs font-mono uppercase tracking-widest placeholder:text-white/70 focus:outline-none focus:border-primary/50 focus:bg-white/[0.04] transition-all"
                         />
                       </div>
                     </div>
@@ -363,7 +363,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
 
                     <div className="flex items-center gap-3 pt-4">
                       <div className="h-px flex-1 bg-white/5" />
-                      <p className="text-[10px] text-white/20 font-mono uppercase tracking-[0.2em] whitespace-nowrap">
+                      <p className="text-[10px] text-white/70 font-mono uppercase tracking-[0.2em] whitespace-nowrap">
                         21+ only
                       </p>
                       <div className="h-px flex-1 bg-white/5" />

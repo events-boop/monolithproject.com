@@ -159,7 +159,7 @@ export default function ExpressionSplit() {
 
               {/* Vertical Structural Label (Maja Style) */}
               <div className="absolute top-8 left-6 lg:top-12 lg:left-8 flex items-baseline gap-4 pointer-events-none">
-                <span className="font-display text-3xl lg:text-5xl text-white/20 select-none">
+                <span className="font-display text-3xl lg:text-5xl text-white/70 select-none">
                   {exp.number}
                 </span>
                 <span className="ui-kicker text-white/70 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">

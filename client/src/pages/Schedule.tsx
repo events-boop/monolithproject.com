@@ -338,7 +338,7 @@ export default function Schedule() {
                           <div className="md:col-span-1 hidden md:flex flex-col items-center gap-4">
                             <button
                               onClick={e => toggleStar(event.id, e)}
-                              className={`w-8 h-8 flex items-center justify-center transition-colors ${starredIds.includes(event.id) ? "text-primary" : "text-white/20 hover:text-white/70"}`}
+                              className={`w-8 h-8 flex items-center justify-center transition-colors ${starredIds.includes(event.id) ? "text-primary" : "text-white/70 hover:text-white/70"}`}
                             >
                               <div
                                 className={`w-2 h-2 rounded-full ${starredIds.includes(event.id) ? "bg-primary animate-pulse shadow-[0_0_10px_rgba(224,90,58,0.8)]" : "bg-current"}`}

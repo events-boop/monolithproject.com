@@ -219,7 +219,7 @@ export default function Insights() {
                       <span className="font-mono text-[9px] tracking-widest uppercase text-white/70 group-hover:text-white transition-colors">
                         Deep Context
                       </span>
-                      <ArrowRight className="h-4 w-4 text-white/20 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="h-4 w-4 text-white/70 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
                 </Link>

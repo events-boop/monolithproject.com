@@ -67,7 +67,7 @@ export default function TacticalVenueMap() {
             Tactical Venue Blueprint // VER 1.0
           </span>
         </div>
-        <span className="text-[10px] text-white/20">COORD_REF: GHQ_440</span>
+        <span className="text-[10px] text-white/70">COORD_REF: GHQ_440</span>
       </div>
 
       <div className="flex flex-col lg:grid lg:grid-cols-[1fr_300px] h-[500px]">
@@ -149,7 +149,7 @@ export default function TacticalVenueMap() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <span className="text-[10px] text-white/20 uppercase tracking-widest">
+                    <span className="text-[10px] text-white/70 uppercase tracking-widest">
                       Vector_X
                     </span>
                     <p className="text-xs text-white font-mono">
@@ -157,7 +157,7 @@ export default function TacticalVenueMap() {
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[10px] text-white/20 uppercase tracking-widest">
+                    <span className="text-[10px] text-white/70 uppercase tracking-widest">
                       Vector_Y
                     </span>
                     <p className="text-xs text-white font-mono">
@@ -177,7 +177,7 @@ export default function TacticalVenueMap() {
           </AnimatePresence>
 
           <div className="pt-6 border-t border-white/5">
-            <div className="flex items-center justify-between text-[10px] text-white/20 uppercase font-mono tracking-widest">
+            <div className="flex items-center justify-between text-[10px] text-white/70 uppercase font-mono tracking-widest">
               <span>GRID_SCAN: COMPLETED</span>
               <span>PEAK_OCC: 88%</span>
             </div>

@@ -186,7 +186,7 @@ export default function AdminDashboard() {
         >
           <div className="mb-12 text-center">
             <div className="inline-flex p-4 bg-white/5 border border-white/10 rounded-2xl mb-8">
-              <Lock className="w-8 h-8 text-white/20" />
+              <Lock className="w-8 h-8 text-white/70" />
             </div>
             <h1 className="font-display text-4xl uppercase tracking-tighter mb-4">
               <KineticDecryption text="SYSTEM ACCESS" />
@@ -295,7 +295,7 @@ export default function AdminDashboard() {
                 label: "Audit Ghosts",
                 val: issues.length,
                 icon: AlertTriangle,
-                color: issues.length > 0 ? "text-red-400" : "text-white/20",
+                color: issues.length > 0 ? "text-red-400" : "text-white/70",
               },
             ].map((stat, i) => (
               <div
@@ -303,7 +303,7 @@ export default function AdminDashboard() {
                 className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl"
               >
                 <stat.icon className={`w-4 h-4 mb-6 ${stat.color}`} />
-                <span className="font-mono text-[9px] tracking-widest uppercase text-white/20 block mb-2">
+                <span className="font-mono text-[9px] tracking-widest uppercase text-white/70 block mb-2">
                   {stat.label}
                 </span>
                 <span className="font-display text-3xl uppercase leading-none">
@@ -332,7 +332,7 @@ export default function AdminDashboard() {
                     key={i}
                     className="p-5 border border-white/5 bg-black/40 rounded-xl"
                   >
-                    <span className="font-mono text-[9px] text-white/20 uppercase tracking-widest block mb-1">
+                    <span className="font-mono text-[9px] text-white/70 uppercase tracking-widest block mb-1">
                       {metric.label}
                     </span>
                     <div className="flex items-end justify-between">
@@ -348,7 +348,7 @@ export default function AdminDashboard() {
               </div>
               <div className="mt-8 pt-6 border-t border-white/5">
                 <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest">
-                  <span className="text-white/20">Client JS Budget</span>
+                  <span className="text-white/70">Client JS Budget</span>
                   <span className="text-primary font-bold">
                     1.0 MB (HARD LIMIT)
                   </span>
@@ -428,7 +428,7 @@ export default function AdminDashboard() {
                         {issue.suggestion}
                       </p>
                       <div className="flex flex-wrap items-center gap-4">
-                        <div className="text-[9px] font-mono uppercase tracking-[0.3em] text-white/20 border border-white/10 px-3 py-1.5 rounded flex items-center gap-2">
+                        <div className="text-[9px] font-mono uppercase tracking-[0.3em] text-white/70 border border-white/10 px-3 py-1.5 rounded flex items-center gap-2">
                           <ShieldCheck size={10} className="text-primary" />{" "}
                           ACTION_REQUIRED_IN_CODE
                         </div>
@@ -449,7 +449,7 @@ export default function AdminDashboard() {
                 <h3 className="font-display text-3xl mb-2 opacity-40">
                   System Healthy
                 </h3>
-                <p className="font-mono text-xs text-white/20 uppercase tracking-widest">
+                <p className="font-mono text-xs text-white/70 uppercase tracking-widest">
                   No ghosts detected in the current chapter.
                 </p>
               </div>

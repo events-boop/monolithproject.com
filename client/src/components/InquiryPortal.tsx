@@ -943,7 +943,7 @@ export default function InquiryPortal() {
 }
 
 const portalInputClass =
-  "min-h-[54px] rounded-3xl border-white/10 bg-white/[0.04] px-4 text-[15px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm placeholder:text-white/20 focus-visible:border-white/20 focus-visible:ring-[3px] focus-visible:ring-white/8";
+  "min-h-[54px] rounded-3xl border-white/10 bg-white/[0.04] px-4 text-[15px] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm placeholder:text-white/70 focus-visible:border-white/20 focus-visible:ring-[3px] focus-visible:ring-white/8";
 
 function SignalChip({
   icon: Icon,

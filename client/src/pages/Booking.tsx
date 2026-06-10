@@ -131,7 +131,7 @@ export default function Booking() {
         <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="container layout-narrow">
             <div className="mb-16 text-center">
-              <span className="section-kicker text-white/20 mb-4 block">
+              <span className="section-kicker text-white/70 mb-4 block">
                 Booking Request
               </span>
               <h2 className="section-display-title-compact">

@@ -200,7 +200,7 @@ export default function BookingFormSection() {
                 <input
                   {...register("name")}
                   autoComplete="name"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/70 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="Full name"
                 />
                 {errors.name && (
@@ -218,7 +218,7 @@ export default function BookingFormSection() {
                   {...register("email")}
                   type="email"
                   autoComplete="email"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/70 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="email@address.com"
                 />
                 {errors.email && (
@@ -245,7 +245,7 @@ export default function BookingFormSection() {
                 <input
                   {...register("entity")}
                   autoComplete="organization"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/70 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                   placeholder="Company, venue, or artist name"
                 />
                 {errors.entity && (
@@ -266,7 +266,7 @@ export default function BookingFormSection() {
                 <input
                   {...register("location")}
                   disabled={selectedType !== "partner-on-location"}
-                  className={`w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${
+                  className={`w-full rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/70 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${
                     selectedType !== "partner-on-location"
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -288,7 +288,7 @@ export default function BookingFormSection() {
             <textarea
               {...register("message")}
               rows={6}
-              className="min-h-[180px] w-full rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/25 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+              className="min-h-[180px] w-full rounded-[1.75rem] border border-white/10 bg-white/[0.03] px-5 py-4 text-white placeholder:text-white/70 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
               placeholder="Tell us about your proposal, dates, or vision..."
             />
             {errors.message && (

@@ -281,7 +281,7 @@ export default function Tickets() {
                     },
                   ].map(item => (
                     <div key={item.label} className="flex flex-col gap-3">
-                      <div className="flex items-center gap-2 text-white/20">
+                      <div className="flex items-center gap-2 text-white/70">
                         {item.icon}
                         <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
                           {item.label}
@@ -328,7 +328,7 @@ export default function Tickets() {
           <div className="container layout-wide">
             <div className="flex flex-col md:flex-row items-end justify-between gap-8 mb-20">
               <div className="max-w-xl">
-                <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/20 mb-4 block">
+                <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-white/70 mb-4 block">
                   Release Preview
                 </span>
                 <h2 className="font-monolith text-5xl font-normal uppercase tracking-[0.04em] text-white">
@@ -339,7 +339,7 @@ export default function Tickets() {
                   before each wave goes wide.
                 </p>
               </div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 italic">
+              <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70 italic">
                 Updated for {new Date().getFullYear()}
               </p>
             </div>
@@ -352,7 +352,7 @@ export default function Tickets() {
                 >
                   <div className="flex items-center justify-between mb-12">
                     <div
-                      className={`w-14 h-14 rounded-full border border-white/5 flex items-center justify-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/5 ${tier.highlight ? "text-primary border-primary/20 bg-primary/10" : "text-white/20 group-hover:text-primary"}`}
+                      className={`w-14 h-14 rounded-full border border-white/5 flex items-center justify-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/5 ${tier.highlight ? "text-primary border-primary/20 bg-primary/10" : "text-white/70 group-hover:text-primary"}`}
                     >
                       {getTierIcon(tier.icon)}
                     </div>
@@ -372,7 +372,7 @@ export default function Tickets() {
                         ${tier.price}
                       </span>
                       {tier.originalPrice && (
-                        <span className="text-white/20 line-through text-lg">
+                        <span className="text-white/70 line-through text-lg">
                           ${tier.originalPrice}
                         </span>
                       )}
@@ -405,7 +405,7 @@ export default function Tickets() {
                         ? tier.highlight
                           ? `cta-posh ${ctaToneClass}`
                           : `cta-laylo ${ctaToneClass} !bg-white/5 border-white/10 hover:border-primary/40`
-                        : "bg-white/5 border border-white/5 text-white/20 cursor-not-allowed"
+                        : "bg-white/5 border border-white/5 text-white/70 cursor-not-allowed"
                     }`}
                   >
                     {tier.available ? (
@@ -428,12 +428,12 @@ export default function Tickets() {
             </div>
 
             <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8">
-              <p className="text-white/20 text-[10px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
+              <p className="text-white/70 text-[10px] font-mono tracking-widest uppercase italic border-l border-white/5 pl-6">
                 Release details can change before public checkout opens.
               </p>
               <div className="flex items-center gap-4">
                 <div className="h-2 w-2 rounded-full bg-primary/20" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20">
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70">
                   {cta.tool === "posh"
                     ? "Secure checkout via Posh"
                     : "First access before public release"}

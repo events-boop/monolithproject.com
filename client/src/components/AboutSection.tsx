@@ -210,7 +210,7 @@ export default function AboutSection() {
               <h2 className="font-display text-[clamp(2.2rem,4vw,4rem)] leading-[0.9] uppercase text-white mb-6">
                 Four parts.
                 <br />
-                <span className="text-white/20">One project.</span>
+                <span className="text-white/70">One project.</span>
               </h2>
               <p className="text-base leading-relaxed text-white/70 font-light max-w-sm">
                 One project. Three public expressions. Chasing Sun(Sets) leads

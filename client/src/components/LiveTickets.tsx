@@ -134,7 +134,7 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
             <span>{event.date}</span>
             {event.venue && (
               <>
-                <span className="text-white/20">·</span>
+                <span className="text-white/70">·</span>
                 <span className="truncate">{event.venue}</span>
               </>
             )}
@@ -282,7 +282,7 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
           >
             {label}
           </Link>
-          <span className="text-white/20">·</span>
+          <span className="text-white/70">·</span>
           <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/70 truncate">
             {event.date}
           </span>

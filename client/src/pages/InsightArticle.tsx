@@ -165,7 +165,7 @@ export default function InsightArticle() {
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                   {article.displayDate} // {article.readTime}
                 </span>
-                <button className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors ml-auto md:ml-0">
+                <button className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/70 hover:text-white/60 transition-colors ml-auto md:ml-0">
                   <Share2 size={12} /> Share Signal
                 </button>
               </div>
@@ -251,7 +251,7 @@ export default function InsightArticle() {
             className="mt-32 pt-16 border-t border-white/5"
             {...sectionReveal}
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 mb-8 block text-center md:text-left">
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70 mb-8 block text-center md:text-left">
               Related Transmissions
             </span>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -261,7 +261,7 @@ export default function InsightArticle() {
                     <span className="font-display text-xl uppercase tracking-wider">
                       {link.label}
                     </span>
-                    <ArrowUpRight className="text-white/20 group-hover:text-primary transition-colors" />
+                    <ArrowUpRight className="text-white/70 group-hover:text-primary transition-colors" />
                   </a>
                 </Link>
               ))}

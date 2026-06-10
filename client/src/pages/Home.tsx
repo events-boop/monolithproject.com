@@ -579,7 +579,7 @@ export default function Home() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="btn-pill-outline-dark btn-pill-compact w-full text-white border-white/20 hover:bg-white/10 hover:text-white"
+                    className="btn-pill-outline-dark btn-pill-compact w-full"
                   >
                     Contact <ArrowUpRight className="w-4 h-4" />
                   </Link>

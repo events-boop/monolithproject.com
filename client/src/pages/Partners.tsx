@@ -395,7 +395,7 @@ export default function Partners() {
                     Submit Crew Inquiry
                   </button>
                 </MagneticButton>
-                <p className="text-white/20 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm mx-auto">
+                <p className="text-white/70 font-mono text-[10px] uppercase tracking-[0.3em] max-w-sm mx-auto">
                   Direct inquiries via crew@monolithproject.com // Review cycles
                   occur monthly.
                 </p>

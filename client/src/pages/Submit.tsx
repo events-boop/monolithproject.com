@@ -569,7 +569,7 @@ ${form.bio}
 
                     {/* Submit */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-                      <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/20">
+                      <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/70">
                         * Required fields
                       </p>
                       <MagneticButton

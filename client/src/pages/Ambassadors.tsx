@@ -283,7 +283,7 @@ export default function Ambassadors() {
                     </div>
                   )}
 
-                  <p className="text-center text-[10px] text-white/20 font-mono uppercase tracking-widest pt-2">
+                  <p className="text-center text-[10px] text-white/70 font-mono uppercase tracking-widest pt-2">
                     Limited spots available per event
                   </p>
                 </form>
