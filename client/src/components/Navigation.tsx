@@ -548,7 +548,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               {/* CENTER: NAV ITEMS */}
               <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="SHOWS"
+                  label="SCHEDULE"
                   href={ROUTES.schedule}
                   isActive={
                     location === ROUTES.schedule ||
@@ -632,7 +632,57 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="STORY"
+                  label="CHASING SUN(SETS)"
+                  href={ROUTES.chasingSunsets}
+                  isActive={
+                    location === ROUTES.chasingSunsets ||
+                    location.startsWith(ROUTES.chasingSunsetsFacts) ||
+                    location.startsWith(ROUTES.sunsets)
+                  }
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "SUN(SETS) LINK IN BIO", href: ROUTES.sunsets },
+                      { label: "FAST FACTS", href: ROUTES.chasingSunsetsFacts },
+                      { label: "SEASON DATES", href: ROUTES.schedule },
+                      { label: "SEASON ARCHIVE", href: ROUTES.archive },
+                    ],
+                    feature: {
+                      title:
+                        featuredChasingEvent?.headline ||
+                        featuredChasingEvent?.title ||
+                        "Chasing Sun(Sets)",
+                      subtitle:
+                        featuredChasingEvent?.episode ||
+                        featuredChasingEvent?.subtitle ||
+                        "Open-air series",
+                      image:
+                        featuredChasingEvent?.image ||
+                        "/images/chasing-sunsets-premium.webp",
+                      href:
+                        getPrimaryTicketUrl(featuredChasingEvent) ||
+                        ROUTES.chasingSunsets,
+                      ctaText: getPrimaryTicketUrl(featuredChasingEvent)
+                        ? "Get Tickets"
+                        : "View Series",
+                      icon: getPrimaryTicketUrl(featuredChasingEvent)
+                        ? "ticket"
+                        : "arrow",
+                      badge:
+                        featuredChasingEvent?.status === "on-sale"
+                          ? "ON SALE"
+                          : featuredChasingEvent?.status === "coming-soon"
+                            ? "FIRST ACCESS"
+                            : undefined,
+                      external: !!getPrimaryTicketUrl(featuredChasingEvent),
+                    },
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="UNTOLD STORY"
                   href={ROUTES.story}
                   isActive={
                     location.includes(ROUTES.story) ||
