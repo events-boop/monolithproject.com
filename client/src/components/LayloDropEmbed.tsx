@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight, Bell } from "lucide-react";
 
-const LAYLO_SCRIPT_SRC = "https://embed.laylo.com/embed.js";
+const LAYLO_SCRIPT_SRC = "https://embed.laylo.com/laylo-sdk.js";
 const LAYLO_SCRIPT_ID = "laylo-embed-script";
+const LAYLO_PROFILE_HREF = "https://laylo.com/monolithproject";
 
 function ensureLayloScript() {
   if (typeof document === "undefined") return;
@@ -20,8 +21,42 @@ interface LayloDropEmbedProps {
   fallbackHref?: string;
   fallbackLabel?: string;
   accentColor?: string;
+  profileLabel?: string;
+  showFooterLinks?: boolean;
   variant?: "card" | "inline";
   className?: string;
+}
+
+function buildLayloEmbedSrc(dropId: string, accentColor?: string) {
+  const params = new URLSearchParams({
+    dropId,
+    color: (accentColor ?? "b6bdce").replace("#", ""),
+    minimal: "false",
+    theme: "dark",
+    background: "solid",
+  });
+
+  return `https://embed.laylo.com?${params.toString()}`;
+}
+
+function buildLayloProfileHref(dropId: string) {
+  const params = new URLSearchParams({
+    utm_source: "multidropEmbed",
+    utm_campaign: dropId,
+    utm_medium: "profileLink",
+  });
+
+  return `${LAYLO_PROFILE_HREF}?${params.toString()}`;
+}
+
+function buildLayloDropHref(dropId: string) {
+  const params = new URLSearchParams({
+    utm_source: "multidropEmbed",
+    utm_campaign: dropId,
+    utm_medium: "multidropLink",
+  });
+
+  return `https://laylo.com/d/${dropId}?${params.toString()}`;
 }
 
 export default function LayloDropEmbed({
@@ -29,6 +64,8 @@ export default function LayloDropEmbed({
   fallbackHref = "/alerts",
   fallbackLabel = "Get Alerts First",
   accentColor,
+  profileLabel = "Follow CHASING SUN(SETS)",
+  showFooterLinks = true,
   variant = "card",
   className,
 }: LayloDropEmbedProps) {
@@ -65,7 +102,35 @@ export default function LayloDropEmbed({
       data-cta-source="laylo-embed"
       data-cta-tool="laylo"
     >
-      <div id={`laylo-drop-${dropId}`} />
+      <iframe
+        id={`laylo-drop-${dropId}`}
+        className="block min-h-[430px] w-full border-0 bg-transparent"
+        scrolling="no"
+        allow="web-share"
+        allowTransparency
+        title="CHASING SUN(SETS) first access signup"
+        src={buildLayloEmbedSrc(dropId, accentColor)}
+      />
+      {showFooterLinks ? (
+        <div className="flex items-center justify-between gap-3 px-1 pt-2 text-[10px] font-semibold leading-3 tracking-[0.02em] text-stone-400">
+          <a
+            href={buildLayloProfileHref(dropId)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-dotted underline-offset-4 transition hover:text-white"
+          >
+            {profileLabel}
+          </a>
+          <a
+            href={buildLayloDropHref(dropId)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 underline decoration-dotted underline-offset-4 transition hover:text-white"
+          >
+            View on Laylo
+          </a>
+        </div>
+      ) : null}
     </div>
   );
 }
