@@ -173,7 +173,7 @@ export default function AboutSection() {
                 key={item.label}
                 className="border border-white/10 bg-white/[0.03] p-6"
               >
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-3">
                   {item.label}
                 </p>
                 <p className="text-sm text-white/70 leading-relaxed">
@@ -203,7 +203,7 @@ export default function AboutSection() {
             >
               <div className="flex items-center gap-3 mb-5">
                 <div className="h-px w-6 bg-primary/50" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80">
+                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary">
                   How It Works
                 </span>
               </div>
@@ -212,7 +212,7 @@ export default function AboutSection() {
                 <br />
                 <span className="text-white/20">One project.</span>
               </h2>
-              <p className="text-base leading-relaxed text-white/40 font-light max-w-sm">
+              <p className="text-base leading-relaxed text-white/70 font-light max-w-sm">
                 One project. Three public expressions. Chasing Sun(Sets) leads
                 the open-air season, Untold Story leads the late-night room, and
                 Radio keeps the artists and culture moving between shows.
@@ -260,7 +260,7 @@ export default function AboutSection() {
                             ease: [0.22, 1, 0.36, 1],
                           }}
                         >
-                          <Plus className="w-4 h-4 text-white/40 group-hover:text-black transition-colors" />
+                          <Plus className="w-4 h-4 text-white/70 group-hover:text-black transition-colors" />
                         </motion.div>
                       </div>
                     </button>

@@ -125,7 +125,7 @@ export default function VIP() {
                 <span className="block">The VIP</span>
                 <span className="block">Experience</span>
               </h1>
-              <p className="text-white/50 text-lg leading-relaxed max-w-lg mb-10">
+              <p className="text-white/70 text-lg leading-relaxed max-w-lg mb-10">
                 Experience the event from the best vantage point in the house.
                 Full service, private space, and zero friction.
               </p>
@@ -136,7 +136,7 @@ export default function VIP() {
                     <div className="font-display text-lg uppercase text-white mb-2 flex items-center gap-2">
                       <p.icon className="w-4 h-4 text-primary" /> {p.title}
                     </div>
-                    <p className="text-sm text-white/40">{p.desc}</p>
+                    <p className="text-sm text-white/70">{p.desc}</p>
                   </div>
                 ))}
               </div>
@@ -180,7 +180,7 @@ export default function VIP() {
                 <h3 className="font-display text-xl uppercase text-white mb-2">
                   Request Received
                 </h3>
-                <p className="text-sm text-white/50">
+                <p className="text-sm text-white/70">
                   Our VIP host will text you shortly to confirm availability.
                 </p>
               </div>

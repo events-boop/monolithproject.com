@@ -108,7 +108,7 @@ export default function FeaturedSets() {
                 Radio / Archive
               </span>
             </div>
-            <span className="event-system-chip shrink-0 text-white/40">
+            <span className="event-system-chip shrink-0 text-white/70">
               {SETS.length.toString().padStart(2, "0")} Selections
             </span>
           </div>
@@ -122,7 +122,7 @@ export default function FeaturedSets() {
                 Artist Content
               </span>
               <span className="mt-3 block h-px w-20 bg-white/20" />
-              <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/50">
+              <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/70">
                 Mixes, guest sessions, and past live moments from Monolith
                 nights.
               </span>

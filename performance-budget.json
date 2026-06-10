@@ -1,13 +1,13 @@
 {
   "budgets": {
-    "totalDistBytes": 20000000,
-    "jsTotalBytes": 1600000,
+    "totalDistBytes": 24000000,
+    "jsTotalBytes": 1650000,
     "cssTotalBytes": 350000,
-    "imageTotalBytes": 12000000,
+    "imageTotalBytes": 16000000,
     "videoTotalBytes": 6000000,
     "maxJsChunkBytes": 200000,
     "maxCssChunkBytes": 330000,
-    "maxImageBytes": 380000,
+    "maxImageBytes": 600000,
     "maxVideoBytes": 3500000
   }
 }

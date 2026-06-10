@@ -90,7 +90,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                     (event?.time ? event.time.split("—")[0].trim() : "9:00 PM")}
                 </p>
                 {event?.mainExperience && (
-                  <p className="text-white/40 text-xs">
+                  <p className="text-white/70 text-xs">
                     Main Experience: {event.mainExperience}
                   </p>
                 )}
@@ -105,7 +105,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                 <p className="text-white text-sm font-medium">
                   {event?.venue || "Venue Reveal Soon"}
                 </p>
-                <p className="text-white/40 text-xs">
+                <p className="text-white/70 text-xs">
                   {event?.location || "Chicago, IL"}
                 </p>
               </div>
@@ -328,7 +328,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
               </span>
               <div className="flex flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="text-white/40 uppercase tracking-wider text-[10px] w-20">
+                  <span className="text-white/70 uppercase tracking-wider text-[10px] w-20">
                     Inquiries
                   </span>
                   <a
@@ -339,7 +339,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                   </a>
                 </div>
                 <div className="flex items-center gap-2 text-white/70">
-                  <span className="text-white/40 uppercase tracking-wider text-[10px] w-20">
+                  <span className="text-white/70 uppercase tracking-wider text-[10px] w-20">
                     Follow
                   </span>
                   <a
@@ -352,7 +352,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                   </a>
                 </div>
               </div>
-              <div className="mt-6 flex flex-wrap gap-2 text-[10px] text-white/30 font-mono tracking-wider uppercase">
+              <div className="mt-6 flex flex-wrap gap-2 text-[10px] text-white/70 font-mono tracking-wider uppercase">
                 <span>#UNTOLDSTORY</span>
                 <span>#CHASINGSUNSETS</span>
                 <span>#CHICAGO</span>

@@ -28,11 +28,11 @@ export default function FeaturedRecap() {
               The Standout
             </span>
             <span className="h-px w-8 md:w-12 bg-white/20" />
-            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-white/50">
+            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-white/70">
               Archive Selection
             </span>
           </div>
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 shrink-0">
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/70 shrink-0">
             01 · Featured
           </span>
         </div>
@@ -74,19 +74,19 @@ export default function FeaturedRecap() {
 
               <dl className="grid grid-cols-2 gap-y-4 gap-x-6 font-mono text-[10px] tracking-[0.3em] uppercase border-y border-white/10 py-5 mb-8">
                 <div>
-                  <dt className="text-white/40 mb-1">Venue</dt>
+                  <dt className="text-white/70 mb-1">Venue</dt>
                   <dd className="text-white">Castaways · Chicago</dd>
                 </div>
                 <div>
-                  <dt className="text-white/40 mb-1">Format</dt>
+                  <dt className="text-white/70 mb-1">Format</dt>
                   <dd className="text-white">Archive · Full Set</dd>
                 </div>
                 <div>
-                  <dt className="text-white/40 mb-1">Series</dt>
+                  <dt className="text-white/70 mb-1">Series</dt>
                   <dd className="text-white">Monolith</dd>
                 </div>
                 <div>
-                  <dt className="text-white/40 mb-1">Runtime</dt>
+                  <dt className="text-white/70 mb-1">Runtime</dt>
                   <dd className="text-white">58:00</dd>
                 </div>
               </dl>

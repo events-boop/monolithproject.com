@@ -145,7 +145,9 @@ export default function SunsetsLinkBio() {
       SUNSETS_2026_SEASON_CHAPTERS.map((chapter, index) => ({
         title: chapter.title,
         date: chapter.date,
-        place: `${chapter.venue} / ${chapter.lineup}`,
+        place: SUNSETS_PRELAUNCH_LOCKED && index === 0
+          ? `${chapter.venue} / Lineup TBA`
+          : `${chapter.venue} / ${chapter.lineup}`,
         status:
           SUNSETS_PRELAUNCH_LOCKED
             ? index === 0
@@ -344,21 +346,33 @@ export default function SunsetsLinkBio() {
                   <Waves className="size-4.5" />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                {SUNSETS_JULY4_LINEUP.map((artist, index) => (
-                  <div
-                    key={artist}
-                    className="border border-white/10 bg-black/24 px-3 py-2.5"
-                  >
-                    <p className="text-[9px] font-black uppercase tracking-[0.18em] text-stone-500">
-                      0{index + 1}
-                    </p>
-                    <p className="mt-1 text-sm font-black uppercase tracking-normal text-white">
-                      {artist}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              {SUNSETS_PRELAUNCH_LOCKED ? (
+                <div className="border border-[#61e8ff]/15 bg-black/20 px-4 py-6 text-center">
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#61e8ff]/60">
+                    Lineup TBA
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-400">
+                    Artist announcements drop to the Lake List first. Sign up
+                    above to get the lineup before the public.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  {SUNSETS_JULY4_LINEUP.map((artist, index) => (
+                    <div
+                      key={artist}
+                      className="border border-white/10 bg-black/24 px-3 py-2.5"
+                    >
+                      <p className="text-[9px] font-black uppercase tracking-[0.18em] text-stone-500">
+                        0{index + 1}
+                      </p>
+                      <p className="mt-1 text-sm font-black uppercase tracking-normal text-white">
+                        {artist}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
 
             <section className="grid gap-3 pt-1">

@@ -159,7 +159,7 @@ export default function NewsletterSection({
 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[11px] text-white/40 uppercase tracking-widest">
+                    <span className="font-mono text-[11px] text-white/70 uppercase tracking-widest">
                       Name
                     </span>
                     <span className="hero-wordmark text-2xl text-white uppercase">
@@ -167,7 +167,7 @@ export default function NewsletterSection({
                     </span>
                   </div>
                   <div className="flex flex-col gap-2 text-right md:text-left">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                    <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">
                       Signed Up On
                     </span>
                     <span className="hero-wordmark text-lg text-white/80">
@@ -175,7 +175,7 @@ export default function NewsletterSection({
                     </span>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                    <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">
                       What You&apos;ll Get
                     </span>
                     <span className="hero-wordmark text-lg text-white/80">
@@ -217,7 +217,7 @@ export default function NewsletterSection({
                 </div>
 
                 <h2 className="hero-wordmark text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/40">NEXT</span>
+                  <span className="text-white/70">NEXT</span>
                   <span>DROP.</span>
                 </h2>
 
@@ -289,7 +289,7 @@ export default function NewsletterSection({
                       value={firstName}
                       onChange={e => setFirstName(e.target.value)}
                       placeholder="Enter name"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
 
@@ -331,7 +331,7 @@ export default function NewsletterSection({
                         );
                       }}
                       placeholder="you@email.com"
-                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
+                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
                     />
                     {touched.email && errors.email && (
                       <p
@@ -357,7 +357,7 @@ export default function NewsletterSection({
                       autoComplete="tel"
                       onChange={e => setPhone(e.target.value)}
                       placeholder="+1 (000) 000-0000"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/40 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
                   </div>
                 </div>

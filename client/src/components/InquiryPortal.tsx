@@ -643,7 +643,7 @@ export default function InquiryPortal() {
                       />
                     </span>
                     <div className="min-w-0">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
                         Monolith Office
                       </p>
                       <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/80">
@@ -665,7 +665,7 @@ export default function InquiryPortal() {
                 </div>
 
                 <div className="relative mt-10 max-w-xl">
-                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
+                  <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.4em] text-white/70">
                     Direct Route To The Office
                   </p>
                   <h2
@@ -697,7 +697,7 @@ export default function InquiryPortal() {
                       transition={{ duration: 0.35 }}
                       className="rounded-[1.25rem] border border-white/10 bg-black/20 px-4 py-4 backdrop-blur-sm"
                     >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                         Scope
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-white/80">
@@ -712,7 +712,7 @@ export default function InquiryPortal() {
                 <div className="sticky top-0 z-10 border-b border-white/10 bg-[linear-gradient(180deg,rgba(5,5,5,0.95),rgba(5,5,5,0.82))] px-6 py-5 backdrop-blur-xl sm:px-8 lg:px-10 xl:px-12">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
                         What We Need
                       </p>
                       <p className="mt-1 text-sm text-white/60">
@@ -750,7 +750,7 @@ export default function InquiryPortal() {
                           />
                         </div>
 
-                        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
+                        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
                           You're In
                         </p>
                         <h3 className="mt-3 font-display text-4xl uppercase leading-none tracking-[-0.04em] text-white">
@@ -904,7 +904,7 @@ export default function InquiryPortal() {
                       ) : null}
 
                       <div className="flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="max-w-md text-sm leading-relaxed text-white/50">
+                        <p className="max-w-md text-sm leading-relaxed text-white/70">
                           Your note lands directly with the Monolith office. No
                           auto-replies — a real person reviews every submission.
                         </p>
@@ -965,7 +965,7 @@ function SignalChip({
 function SuccessMeta({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.03] px-4 py-4">
-      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">
         {label}
       </p>
       <p className="mt-2 text-sm text-white/80">{value}</p>
@@ -976,7 +976,7 @@ function SuccessMeta({ label, value }: { label: string; value: string }) {
 function AccentNote({ config }: { config: InquiryPortalConfig }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white/60">
-      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">
         Where This Goes
       </p>
       <p className="mt-2 leading-relaxed">
@@ -1004,11 +1004,11 @@ function PortalField({
   return (
     <div className="space-y-2.5">
       <div className="flex items-center justify-between gap-4">
-        <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
+        <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
           {label}
           {required ? <span className="ml-1 text-white/90">*</span> : null}
         </label>
-        <span className="text-[11px] text-white/30">{hint}</span>
+        <span className="text-[11px] text-white/70">{hint}</span>
       </div>
       {children}
       {error ? <p className="text-xs text-red-300">{error}</p> : null}

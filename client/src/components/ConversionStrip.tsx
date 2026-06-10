@@ -42,7 +42,7 @@ function HUDDigit({
       </div>
       <span
         className={`font-mono text-[11px] uppercase tracking-[0.3em] md:text-sm ${
-          isWarm ? "text-[#2C1810]/42" : "text-white/30"
+          isWarm ? "text-[#2C1810]/42" : "text-white/70"
         }`}
       >
         {label}
@@ -130,7 +130,7 @@ export default function ConversionStrip({
               </h2>
               <p
                 className={`mt-4 font-sans text-[10px] uppercase tracking-widest leading-relaxed ${
-                  isWarm ? "text-[#2C1810]/50" : "text-white/40"
+                  isWarm ? "text-[#2C1810]/50" : "text-white/70"
                 }`}
               >
                 {event.status === "on-sale"

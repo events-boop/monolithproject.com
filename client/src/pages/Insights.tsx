@@ -58,7 +58,7 @@ export default function Insights() {
         <div className="container layout-default">
           {/* Breadcrumbs for SEO Drive */}
           <nav
-            className="flex items-center gap-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30"
+            className="flex items-center gap-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70"
             aria-label="Breadcrumb"
           >
             <Link href="/" className="hover:text-white transition-colors">
@@ -94,7 +94,7 @@ export default function Insights() {
                 {ALL_TAGS.slice(0, 6).map(tag => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 rounded-sm border border-white/10 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/40 hover:text-white transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-sm border border-white/10 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/70 hover:text-white transition-colors cursor-pointer"
                   >
                     #{tag.replace(/\s+/g, "_").toLowerCase()}
                   </span>
@@ -142,7 +142,7 @@ export default function Insights() {
                     >
                       Featured Insight
                     </span>
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-[0.2em]">
+                    <span className="font-mono text-[10px] text-white/70 uppercase tracking-[0.2em]">
                       {featured.displayDate} // {featured.readTime}
                     </span>
                   </div>
@@ -201,7 +201,7 @@ export default function Insights() {
                     />
 
                     <div className="absolute bottom-6 left-6 right-6">
-                      <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 block mb-3">
+                      <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/70 block mb-3">
                         {article.category} // {article.displayDate}
                       </span>
                       <h3 className="font-display text-2xl md:text-3xl uppercase leading-[0.9] text-white group-hover:text-primary transition-colors">
@@ -211,12 +211,12 @@ export default function Insights() {
                   </div>
 
                   <div className="p-7 flex flex-col flex-1 border-t border-white/5">
-                    <p className="text-sm leading-relaxed text-white/40 mb-8 line-clamp-3">
+                    <p className="text-sm leading-relaxed text-white/70 mb-8 line-clamp-3">
                       {article.summary}
                     </p>
 
                     <div className="mt-auto flex items-center justify-between">
-                      <span className="font-mono text-[9px] tracking-widest uppercase text-white/30 group-hover:text-white transition-colors">
+                      <span className="font-mono text-[9px] tracking-widest uppercase text-white/70 group-hover:text-white transition-colors">
                         Deep Context
                       </span>
                       <ArrowRight className="h-4 w-4 text-white/20 group-hover:text-primary group-hover:translate-x-1 transition-all" />
@@ -235,7 +235,7 @@ export default function Insights() {
             <h2 className="font-display text-4xl md:text-6xl uppercase mb-8">
               Get Show Updates
             </h2>
-            <p className="max-w-xl mx-auto text-white/50 mb-12 italic text-lg leading-relaxed">
+            <p className="max-w-xl mx-auto text-white/70 mb-12 italic text-lg leading-relaxed">
               Join the list for artist notes, show updates, and early access to
               the schedule.
             </p>

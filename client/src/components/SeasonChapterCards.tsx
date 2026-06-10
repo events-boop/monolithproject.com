@@ -212,7 +212,7 @@ export default function SeasonChapterCards() {
                       showUrgency
                       className="w-full"
                     />
-                    <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/30">
+                    <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
                       Limited Capacity
                     </p>
                   </div>

@@ -218,7 +218,7 @@ export default function RadioEpisode() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50">
+                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <p className="font-mono text-xs tracking-[0.2em] uppercase text-primary">
@@ -296,7 +296,7 @@ export default function RadioEpisode() {
                 href={`/radio/${previousEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
                   Previous Episode
                 </p>
                 <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
@@ -312,7 +312,7 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
                   Previous Episode
                 </p>
                 <p className="text-sm text-white/70">
@@ -326,7 +326,7 @@ export default function RadioEpisode() {
                 href={`/radio/${nextEpisode.slug}`}
                 className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
               >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
                   Next Episode
                 </p>
                 <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
@@ -342,7 +342,7 @@ export default function RadioEpisode() {
               </Link>
             ) : (
               <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 mb-2">
+                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
                   Next Episode
                 </p>
                 <p className="text-sm text-white/70">

@@ -383,11 +383,11 @@ export default function Radio() {
                               <p className="mt-1 truncate font-display text-lg uppercase leading-none text-white">
                                 {episode.guest}
                               </p>
-                              <p className="mt-1 truncate text-xs uppercase tracking-[0.22em] text-white/40">
+                              <p className="mt-1 truncate text-xs uppercase tracking-[0.22em] text-white/70">
                                 {scene.signal}
                               </p>
                             </div>
-                            <Play className="h-4 w-4 shrink-0 text-white/35 transition-colors group-hover:text-white" />
+                            <Play className="h-4 w-4 shrink-0 text-white/70 transition-colors group-hover:text-white" />
                           </button>
                         );
                       })}
@@ -480,7 +480,7 @@ export default function Radio() {
                 <p className="mt-4 text-base leading-relaxed text-white/70">
                   {activeEpisode.summary}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-white/50">
+                <p className="mt-4 text-sm leading-relaxed text-white/70">
                   {getNarrativePreview(activeEpisode.narrative)}
                 </p>
 
@@ -642,10 +642,10 @@ export default function Radio() {
                         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
                           {scene.signal}
                         </span>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/30">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
                           {episode.displayDate}
                         </span>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/30">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
                           {episode.duration}
                         </span>
                       </div>

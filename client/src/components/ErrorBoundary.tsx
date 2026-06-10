@@ -43,7 +43,7 @@ class ErrorBoundary extends Component<Props, State> {
               Load
             </h2>
 
-            <p className="font-mono text-xs md:text-sm tracking-[0.1em] text-white/50 leading-relaxed mb-10 max-w-md">
+            <p className="font-mono text-xs md:text-sm tracking-[0.1em] text-white/70 leading-relaxed mb-10 max-w-md">
               Something went wrong while loading this part of the site. Refresh
               the page or head back home to keep browsing shows, artists, and
               updates.

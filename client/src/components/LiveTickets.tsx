@@ -62,7 +62,7 @@ export default function LiveTickets() {
               On Sale
             </span>
           </div>
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30 shrink-0">
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/70 shrink-0">
             {totalReleases.toString().padStart(2, "0")} Releases
           </span>
         </div>
@@ -125,12 +125,12 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
             >
               {label}
             </Link>
-            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/40">
+            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/70">
               Tiered Release
             </span>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] uppercase text-white/50 mb-4">
+          <div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-4">
             <span>{event.date}</span>
             {event.venue && (
               <>
@@ -178,7 +178,7 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
                     {isLive ? (
                       <Check className="w-3 h-3" style={{ color: LIVE_RED }} />
                     ) : (
-                      <Lock className="w-2.5 h-2.5 text-white/40" />
+                      <Lock className="w-2.5 h-2.5 text-white/70" />
                     )}
                   </span>
                   <div className="min-w-0">
@@ -198,7 +198,7 @@ function TieredEventCard({ event }: { event: ScheduledEvent }) {
                         </span>
                       )}
                       {isNext && (
-                        <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-white/40">
+                        <span className="font-mono text-[8px] tracking-[0.35em] uppercase text-white/70">
                           Next
                         </span>
                       )}
@@ -283,7 +283,7 @@ function ActionCard({ event }: { event: ScheduledEvent }) {
             {label}
           </Link>
           <span className="text-white/20">·</span>
-          <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/50 truncate">
+          <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/70 truncate">
             {event.date}
           </span>
         </div>

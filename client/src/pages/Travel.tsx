@@ -76,7 +76,7 @@ export default function Travel() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-24"
           >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               — Logistics
             </span>
             <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-8">
@@ -84,7 +84,7 @@ export default function Travel() {
               <br />
               TRIP
             </h1>
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
+            <p className="text-white/70 text-lg leading-relaxed max-w-2xl">
               Everything you need to land, rest, and arrive ready. We've curated
               a list of partner hotels and travel tips for the best experience.
             </p>
@@ -96,7 +96,7 @@ export default function Travel() {
               <h2 className="font-display text-3xl uppercase text-white">
                 Where To Stay
               </h2>
-              <span className="font-mono text-xs text-white/40 tracking-widest hidden md:inline-block">
+              <span className="font-mono text-xs text-white/70 tracking-widest hidden md:inline-block">
                 WEST LOOP / FULTON MARKET
               </span>
             </div>
@@ -128,7 +128,7 @@ export default function Travel() {
                       <span className="text-primary uppercase">
                         {hotel.area}
                       </span>
-                      <span className="text-white/40">{hotel.dist}</span>
+                      <span className="text-white/70">{hotel.dist}</span>
                     </div>
 
                     <p className="text-sm text-white/60 leading-relaxed min-h-[60px]">
@@ -166,7 +166,7 @@ export default function Travel() {
               <h2 className="font-display text-3xl uppercase text-white">
                 Getting Here
               </h2>
-              <span className="font-mono text-xs text-white/40 tracking-widest hidden md:inline-block">
+              <span className="font-mono text-xs text-white/70 tracking-widest hidden md:inline-block">
                 1240 W RANDOLPH ST
               </span>
             </div>
@@ -181,11 +181,11 @@ export default function Travel() {
                   transition={{ delay: idx * 0.1 }}
                   className="p-6 border border-white/10 bg-white/[0.02] rounded-xl"
                 >
-                  <item.icon className="w-6 h-6 text-white/40 mb-4" />
+                  <item.icon className="w-6 h-6 text-white/70 mb-4" />
                   <h3 className="font-display text-lg uppercase text-white mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-white/50 leading-relaxed">
+                  <p className="text-sm text-white/70 leading-relaxed">
                     {item.desc}
                   </p>
                 </motion.div>

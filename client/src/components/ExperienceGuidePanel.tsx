@@ -59,29 +59,29 @@ export default function ExperienceGuidePanel() {
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                 Date + Time
               </p>
               <p className="mt-2 font-display text-xl uppercase text-white">
                 {event.date}
               </p>
-              <p className="mt-1 text-sm text-white/50">{event.time}</p>
+              <p className="mt-1 text-sm text-white/70">{event.time}</p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                 Venue
               </p>
               <p className="mt-2 font-display text-xl uppercase text-white">
                 {event.venue}
               </p>
-              <p className="mt-1 text-sm text-white/50">
+              <p className="mt-1 text-sm text-white/70">
                 {getEventVenueLabel(event)}
               </p>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                 Sound
               </p>
               <p className="mt-2 text-sm leading-relaxed text-white/70">
@@ -90,7 +90,7 @@ export default function ExperienceGuidePanel() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-black/20 px-4 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                 House Rules
               </p>
               <p className="mt-2 text-sm leading-relaxed text-white/70">

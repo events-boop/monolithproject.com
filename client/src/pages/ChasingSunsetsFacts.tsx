@@ -207,19 +207,19 @@ export default function ChasingSunsetsFacts() {
             <h2 className="font-display text-3xl uppercase mb-5">Fast Facts</h2>
             <dl className="grid md:grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-2">
                   Founded
                 </dt>
                 <dd className="text-lg">2024</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-2">
                   Location
                 </dt>
                 <dd className="text-lg">Chicago, IL</dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-2">
                   Format
                 </dt>
                 <dd className="text-lg">
@@ -227,7 +227,7 @@ export default function ChasingSunsetsFacts() {
                 </dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-2">
                   Genres
                 </dt>
                 <dd className="text-lg">
@@ -235,7 +235,7 @@ export default function ChasingSunsetsFacts() {
                 </dd>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 md:col-span-2">
-                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/50 mb-2">
+                <dt className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-2">
                   Organizer
                 </dt>
                 <dd className="text-lg">The Monolith Project</dd>

@@ -333,7 +333,7 @@ export default function ResidentDJCard({
                             <h5 className="font-display text-lg uppercase leading-[0.95] tracking-[0.02em] text-white">
                               {work.title}
                             </h5>
-                            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
                               {work.meta}
                             </p>
                             {work.note ? (

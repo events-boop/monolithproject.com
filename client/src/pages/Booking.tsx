@@ -56,7 +56,7 @@ export default function Booking() {
           <div className="container layout-default">
             {/* Breadcrumbs */}
             <nav
-              className="flex items-center gap-2 mb-10 font-mono text-[9px] uppercase tracking-[0.2em] text-white/30"
+              className="flex items-center gap-2 mb-10 font-mono text-[9px] uppercase tracking-[0.2em] text-white/70"
               aria-label="Breadcrumb"
             >
               <Link href="/" className="transition-colors hover:text-white">
@@ -94,7 +94,7 @@ export default function Booking() {
               <h2 className="section-display-title-compact mb-4 text-white">
                 What We Screen For
               </h2>
-              <p className="text-white/45 text-base md:text-lg leading-relaxed">
+              <p className="text-white/70 text-base md:text-lg leading-relaxed">
                 Every request is reviewed for pacing, technical command, and
                 cultural alignment before we open a conversation.
               </p>
@@ -118,7 +118,7 @@ export default function Booking() {
                   <h3 className="font-display text-2xl uppercase tracking-wider mb-4">
                     {std.label}
                   </h3>
-                  <p className="text-white/40 text-sm leading-relaxed font-light italic">
+                  <p className="text-white/70 text-sm leading-relaxed font-light italic">
                     {std.description}
                   </p>
                 </motion.div>

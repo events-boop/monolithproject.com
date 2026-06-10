@@ -208,7 +208,7 @@ export default function ScheduleSection() {
         <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-white/15 bg-black/[0.02] shadow-[0_24px_70px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:rounded-[2rem]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
-              <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-white/45 md:mb-4 md:text-3xl">
+              <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-white/70 md:mb-4 md:text-3xl">
                 No Events Found
               </span>
               <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-white/60">

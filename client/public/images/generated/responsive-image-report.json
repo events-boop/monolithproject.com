@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-03T07:10:01.153Z",
+  "generatedAt": "2026-06-10T08:14:10.419Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
     "originalBytes": 4154350,
-    "estimatedTransferBytes": 1416677,
-    "estimatedSavingsBytes": 2737673,
-    "variantBytes": 5250967
+    "estimatedTransferBytes": 2516177,
+    "estimatedSavingsBytes": 1728787,
+    "variantBytes": 8340549
   },
   "images": [
     {
@@ -23,31 +23,31 @@
           "path": "/images/generated/apple-touch-icon-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 1273
+          "bytes": 1628
         },
         {
           "path": "/images/generated/apple-touch-icon-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 1092
+          "bytes": 1284
         },
         {
           "path": "/images/generated/apple-touch-icon-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1273
+          "bytes": 1628
         },
         {
           "path": "/images/generated/apple-touch-icon-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 1092
+          "bytes": 1284
         }
       ],
-      "estimatedTransferBytes": 1092,
-      "estimatedTransferKb": 1.1,
-      "estimatedSavingsBytes": 1779,
-      "estimatedSavingsPct": 62
+      "estimatedTransferBytes": 1284,
+      "estimatedTransferKb": 1.3,
+      "estimatedSavingsBytes": 1587,
+      "estimatedSavingsPct": 55
     },
     {
       "source": "/icon-192x192.png",
@@ -61,31 +61,31 @@
           "path": "/images/generated/icon-192x192-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 1198
+          "bytes": 1307
         },
         {
           "path": "/images/generated/icon-192x192-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 1156
+          "bytes": 1294
         },
         {
           "path": "/images/generated/icon-192x192-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1198
+          "bytes": 1307
         },
         {
           "path": "/images/generated/icon-192x192-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 1156
+          "bytes": 1294
         }
       ],
-      "estimatedTransferBytes": 1156,
-      "estimatedTransferKb": 1.1,
-      "estimatedSavingsBytes": 1479,
-      "estimatedSavingsPct": 56
+      "estimatedTransferBytes": 1294,
+      "estimatedTransferKb": 1.3,
+      "estimatedSavingsBytes": 1341,
+      "estimatedSavingsPct": 51
     },
     {
       "source": "/icon-512x512.png",
@@ -99,31 +99,31 @@
           "path": "/images/generated/icon-512x512-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3477
+          "bytes": 5264
         },
         {
           "path": "/images/generated/icon-512x512-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 5656
+          "bytes": 6640
         },
         {
           "path": "/images/generated/icon-512x512-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1742
+          "bytes": 3116
         },
         {
           "path": "/images/generated/icon-512x512-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 3034
+          "bytes": 3050
         }
       ],
-      "estimatedTransferBytes": 1742,
-      "estimatedTransferKb": 1.7,
-      "estimatedSavingsBytes": 5756,
-      "estimatedSavingsPct": 77
+      "estimatedTransferBytes": 3050,
+      "estimatedTransferKb": 3,
+      "estimatedSavingsBytes": 4448,
+      "estimatedSavingsPct": 59
     },
     {
       "source": "/images/archive/chasing-sunsets/brand_clarity_block_new_1774887097962.png",
@@ -137,31 +137,31 @@
           "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3916
+          "bytes": 5126
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 4880
+          "bytes": 6438
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 9304
+          "bytes": 12995
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-brand-clarity-block-new-1774887097962-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 13582
+          "bytes": 17214
         }
       ],
-      "estimatedTransferBytes": 9304,
-      "estimatedTransferKb": 9.1,
-      "estimatedSavingsBytes": 47571,
-      "estimatedSavingsPct": 84
+      "estimatedTransferBytes": 12995,
+      "estimatedTransferKb": 12.7,
+      "estimatedSavingsBytes": 43880,
+      "estimatedSavingsPct": 77
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-1.jpg",
@@ -175,31 +175,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-1-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 23598
+          "bytes": 40234
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-1-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 28746
+          "bytes": 41116
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 65799
+          "bytes": 102907
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-1-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 82390
+          "bytes": 120142
         }
       ],
-      "estimatedTransferBytes": 65799,
-      "estimatedTransferKb": 64.3,
-      "estimatedSavingsBytes": 51415,
-      "estimatedSavingsPct": 44
+      "estimatedTransferBytes": 102907,
+      "estimatedTransferKb": 100.5,
+      "estimatedSavingsBytes": 14307,
+      "estimatedSavingsPct": 12
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-2.jpg",
@@ -213,31 +213,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-2-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6408
+          "bytes": 11631
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-2-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 8424
+          "bytes": 12600
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 14068
+          "bytes": 26972
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-2-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 19894
+          "bytes": 29738
         }
       ],
-      "estimatedTransferBytes": 14068,
-      "estimatedTransferKb": 13.7,
-      "estimatedSavingsBytes": 22813,
-      "estimatedSavingsPct": 62
+      "estimatedTransferBytes": 26972,
+      "estimatedTransferKb": 26.3,
+      "estimatedSavingsBytes": 9909,
+      "estimatedSavingsPct": 27
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-3.jpg",
@@ -251,31 +251,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-3-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 12186
+          "bytes": 22577
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-3-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 14620
+          "bytes": 21812
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 29069
+          "bytes": 52168
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-3-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 37210
+          "bytes": 56204
         }
       ],
-      "estimatedTransferBytes": 29069,
-      "estimatedTransferKb": 28.4,
-      "estimatedSavingsBytes": 35170,
-      "estimatedSavingsPct": 55
+      "estimatedTransferBytes": 52168,
+      "estimatedTransferKb": 50.9,
+      "estimatedSavingsBytes": 12071,
+      "estimatedSavingsPct": 19
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-4.jpg",
@@ -289,31 +289,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-4-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 14286
+          "bytes": 25858
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-4-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 16646
+          "bytes": 25112
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 35664
+          "bytes": 60617
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-4-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 44096
+          "bytes": 65752
         }
       ],
-      "estimatedTransferBytes": 35664,
-      "estimatedTransferKb": 34.8,
-      "estimatedSavingsBytes": 36378,
-      "estimatedSavingsPct": 50
+      "estimatedTransferBytes": 60617,
+      "estimatedTransferKb": 59.2,
+      "estimatedSavingsBytes": 11425,
+      "estimatedSavingsPct": 16
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-5.jpg",
@@ -327,31 +327,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-5-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 8624
+          "bytes": 15469
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-5-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 11318
+          "bytes": 16934
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 18855
+          "bytes": 35109
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-5-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 26432
+          "bytes": 39276
         }
       ],
-      "estimatedTransferBytes": 18855,
-      "estimatedTransferKb": 18.4,
-      "estimatedSavingsBytes": 27745,
-      "estimatedSavingsPct": 60
+      "estimatedTransferBytes": 35109,
+      "estimatedTransferKb": 34.3,
+      "estimatedSavingsBytes": 11491,
+      "estimatedSavingsPct": 25
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-6.jpg",
@@ -365,31 +365,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-6-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 11692
+          "bytes": 20346
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-6-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 14422
+          "bytes": 20818
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 24404
+          "bytes": 44251
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-6-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 33316
+          "bytes": 49512
         }
       ],
-      "estimatedTransferBytes": 24404,
-      "estimatedTransferKb": 23.8,
-      "estimatedSavingsBytes": 33205,
-      "estimatedSavingsPct": 58
+      "estimatedTransferBytes": 44251,
+      "estimatedTransferKb": 43.2,
+      "estimatedSavingsBytes": 13358,
+      "estimatedSavingsPct": 23
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-7.jpg",
@@ -403,31 +403,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-7-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 8675
+          "bytes": 15676
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-7-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 11548
+          "bytes": 17156
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 19408
+          "bytes": 35975
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-7-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 27396
+          "bytes": 40850
         }
       ],
-      "estimatedTransferBytes": 19408,
-      "estimatedTransferKb": 19,
-      "estimatedSavingsBytes": 27988,
-      "estimatedSavingsPct": 59
+      "estimatedTransferBytes": 35975,
+      "estimatedTransferKb": 35.1,
+      "estimatedSavingsBytes": 11421,
+      "estimatedSavingsPct": 24
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-8.jpg",
@@ -441,31 +441,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-8-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 20213
+          "bytes": 33925
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-8-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 22972
+          "bytes": 32648
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 55487
+          "bytes": 85013
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-8-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 67900
+          "bytes": 98432
         }
       ],
-      "estimatedTransferBytes": 55487,
-      "estimatedTransferKb": 54.2,
-      "estimatedSavingsBytes": 39650,
-      "estimatedSavingsPct": 42
+      "estimatedTransferBytes": 85013,
+      "estimatedTransferKb": 83,
+      "estimatedSavingsBytes": 10124,
+      "estimatedSavingsPct": 11
     },
     {
       "source": "/images/archive/chasing-sunsets/css-s3-9.jpg",
@@ -479,31 +479,31 @@
           "path": "/images/generated/archive-chasing-sunsets-css-s3-9-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 18281
+          "bytes": 31245
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-9-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 21280
+          "bytes": 30758
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 45608
+          "bytes": 73059
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-css-s3-9-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 56616
+          "bytes": 81584
         }
       ],
-      "estimatedTransferBytes": 45608,
-      "estimatedTransferKb": 44.5,
-      "estimatedSavingsBytes": 38421,
-      "estimatedSavingsPct": 46
+      "estimatedTransferBytes": 73059,
+      "estimatedTransferKb": 71.3,
+      "estimatedSavingsBytes": 10970,
+      "estimatedSavingsPct": 13
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774889788105.png",
@@ -517,31 +517,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6157
+          "bytes": 8485
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 7974
+          "bytes": 10224
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 9097
+          "bytes": 13911
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774889788105-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 12792
+          "bytes": 16744
         }
       ],
-      "estimatedTransferBytes": 9097,
-      "estimatedTransferKb": 8.9,
-      "estimatedSavingsBytes": 12685,
-      "estimatedSavingsPct": 58
+      "estimatedTransferBytes": 13911,
+      "estimatedTransferKb": 13.6,
+      "estimatedSavingsBytes": 7871,
+      "estimatedSavingsPct": 36
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774897544277.png",
@@ -555,31 +555,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 1227
+          "bytes": 1752
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 1378
+          "bytes": 1860
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1227
+          "bytes": 1752
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897544277-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 1378
+          "bytes": 1860
         }
       ],
-      "estimatedTransferBytes": 1227,
-      "estimatedTransferKb": 1.2,
-      "estimatedSavingsBytes": 1266,
-      "estimatedSavingsPct": 51
+      "estimatedTransferBytes": 1752,
+      "estimatedTransferKb": 1.7,
+      "estimatedSavingsBytes": 741,
+      "estimatedSavingsPct": 30
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774897576594.png",
@@ -593,31 +593,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 1346
+          "bytes": 1788
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 1618
+          "bytes": 2200
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1346
+          "bytes": 1788
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897576594-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 1618
+          "bytes": 2200
         }
       ],
-      "estimatedTransferBytes": 1346,
-      "estimatedTransferKb": 1.3,
-      "estimatedSavingsBytes": 836,
-      "estimatedSavingsPct": 38
+      "estimatedTransferBytes": 1788,
+      "estimatedTransferKb": 1.7,
+      "estimatedSavingsBytes": 394,
+      "estimatedSavingsPct": 18
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774897588070.png",
@@ -631,31 +631,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 1065
+          "bytes": 1308
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 988
+          "bytes": 1310
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1065
+          "bytes": 1308
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897588070-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 988
+          "bytes": 1310
         }
       ],
-      "estimatedTransferBytes": 988,
-      "estimatedTransferKb": 1,
-      "estimatedSavingsBytes": 661,
-      "estimatedSavingsPct": 40
+      "estimatedTransferBytes": 1308,
+      "estimatedTransferKb": 1.3,
+      "estimatedSavingsBytes": 341,
+      "estimatedSavingsPct": 21
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774897795543.png",
@@ -669,31 +669,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3815
+          "bytes": 7294
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 5758
+          "bytes": 8574
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 6244
+          "bytes": 17161
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774897795543-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 9556
+          "bytes": 15676
         }
       ],
-      "estimatedTransferBytes": 6244,
-      "estimatedTransferKb": 6.1,
-      "estimatedSavingsBytes": 58489,
-      "estimatedSavingsPct": 90
+      "estimatedTransferBytes": 15676,
+      "estimatedTransferKb": 15.3,
+      "estimatedSavingsBytes": 49057,
+      "estimatedSavingsPct": 76
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774915021891.png",
@@ -707,31 +707,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6582
+          "bytes": 10113
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 8828
+          "bytes": 11638
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 12401
+          "bytes": 24670
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915021891-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 20564
+          "bytes": 28284
         }
       ],
-      "estimatedTransferBytes": 12401,
-      "estimatedTransferKb": 12.1,
-      "estimatedSavingsBytes": 24490,
-      "estimatedSavingsPct": 66
+      "estimatedTransferBytes": 24670,
+      "estimatedTransferKb": 24.1,
+      "estimatedSavingsBytes": 12221,
+      "estimatedSavingsPct": 33
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774915238586.png",
@@ -745,31 +745,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3689
+          "bytes": 5957
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 4662
+          "bytes": 6648
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 10440
+          "bytes": 29459
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774915238586-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 16778
+          "bytes": 26174
         }
       ],
-      "estimatedTransferBytes": 10440,
-      "estimatedTransferKb": 10.2,
-      "estimatedSavingsBytes": 63513,
-      "estimatedSavingsPct": 86
+      "estimatedTransferBytes": 26174,
+      "estimatedTransferKb": 25.6,
+      "estimatedSavingsBytes": 47779,
+      "estimatedSavingsPct": 65
     },
     {
       "source": "/images/archive/chasing-sunsets/media__1774940360363.png",
@@ -783,31 +783,31 @@
           "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3354
+          "bytes": 4920
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 3934
+          "bytes": 5334
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 8736
+          "bytes": 11735
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-media-1774940360363-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 11002
+          "bytes": 14772
         }
       ],
-      "estimatedTransferBytes": 8736,
-      "estimatedTransferKb": 8.5,
-      "estimatedSavingsBytes": 25769,
-      "estimatedSavingsPct": 75
+      "estimatedTransferBytes": 11735,
+      "estimatedTransferKb": 11.5,
+      "estimatedSavingsBytes": 22770,
+      "estimatedSavingsPct": 66
     },
     {
       "source": "/images/archive/chasing-sunsets/monolith_site_load_check_1774989493273.png",
@@ -821,31 +821,31 @@
           "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 584
+          "bytes": 927
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 762
+          "bytes": 968
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 1367
+          "bytes": 2378
         },
         {
           "path": "/images/generated/archive-chasing-sunsets-monolith-site-load-check-1774989493273-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 2596
+          "bytes": 3408
         }
       ],
-      "estimatedTransferBytes": 1367,
-      "estimatedTransferKb": 1.3,
-      "estimatedSavingsBytes": 18078,
-      "estimatedSavingsPct": 93
+      "estimatedTransferBytes": 2378,
+      "estimatedTransferKb": 2.3,
+      "estimatedSavingsBytes": 17067,
+      "estimatedSavingsPct": 88
     },
     {
       "source": "/images/artist-autograf.webp",
@@ -859,31 +859,31 @@
           "path": "/images/generated/artist-autograf-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 25707
+          "bytes": 47447
         },
         {
           "path": "/images/generated/artist-autograf-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 32708
+          "bytes": 46890
         },
         {
           "path": "/images/generated/artist-autograf-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 75849
+          "bytes": 137202
         },
         {
           "path": "/images/generated/artist-autograf-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 106020
+          "bytes": 130612
         }
       ],
-      "estimatedTransferBytes": 75849,
-      "estimatedTransferKb": 74.1,
-      "estimatedSavingsBytes": 42475,
-      "estimatedSavingsPct": 36
+      "estimatedTransferBytes": 130612,
+      "estimatedTransferKb": 127.6,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/artist-benchek.jpg",
@@ -897,31 +897,31 @@
           "path": "/images/generated/artist-benchek-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 14939
+          "bytes": 26282
         },
         {
           "path": "/images/generated/artist-benchek-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 20904
+          "bytes": 30818
         },
         {
           "path": "/images/generated/artist-benchek-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 21924
+          "bytes": 44275
         },
         {
           "path": "/images/generated/artist-benchek-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 32490
+          "bytes": 50438
         }
       ],
-      "estimatedTransferBytes": 21924,
-      "estimatedTransferKb": 21.4,
-      "estimatedSavingsBytes": 36039,
-      "estimatedSavingsPct": 62
+      "estimatedTransferBytes": 44275,
+      "estimatedTransferKb": 43.2,
+      "estimatedSavingsBytes": 13688,
+      "estimatedSavingsPct": 24
     },
     {
       "source": "/images/artist-ewerseen.png",
@@ -935,31 +935,31 @@
           "path": "/images/generated/artist-ewerseen-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 2323
+          "bytes": 2606
         },
         {
           "path": "/images/generated/artist-ewerseen-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 3990
+          "bytes": 4004
         },
         {
           "path": "/images/generated/artist-ewerseen-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 3704
+          "bytes": 4715
         },
         {
           "path": "/images/generated/artist-ewerseen-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 8562
+          "bytes": 8468
         }
       ],
-      "estimatedTransferBytes": 3704,
-      "estimatedTransferKb": 3.6,
-      "estimatedSavingsBytes": 4297,
-      "estimatedSavingsPct": 54
+      "estimatedTransferBytes": 4715,
+      "estimatedTransferKb": 4.6,
+      "estimatedSavingsBytes": 3286,
+      "estimatedSavingsPct": 41
     },
     {
       "source": "/images/artist-haai.webp",
@@ -973,31 +973,31 @@
           "path": "/images/generated/artist-haai-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 29763
+          "bytes": 52331
         },
         {
           "path": "/images/generated/artist-haai-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 36156
+          "bytes": 51114
         },
         {
           "path": "/images/generated/artist-haai-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 96346
+          "bytes": 165557
         },
         {
           "path": "/images/generated/artist-haai-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 132410
+          "bytes": 159368
         }
       ],
-      "estimatedTransferBytes": 96346,
-      "estimatedTransferKb": 94.1,
-      "estimatedSavingsBytes": 49622,
-      "estimatedSavingsPct": 34
+      "estimatedTransferBytes": 159368,
+      "estimatedTransferKb": 155.6,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/artist-lazare.webp",
@@ -1011,31 +1011,31 @@
           "path": "/images/generated/artist-lazare-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6592
+          "bytes": 12541
         },
         {
           "path": "/images/generated/artist-lazare-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 10266
+          "bytes": 15008
         },
         {
           "path": "/images/generated/artist-lazare-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 15853
+          "bytes": 31539
         },
         {
           "path": "/images/generated/artist-lazare-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 27958
+          "bytes": 35822
         }
       ],
-      "estimatedTransferBytes": 15853,
-      "estimatedTransferKb": 15.5,
-      "estimatedSavingsBytes": 15861,
-      "estimatedSavingsPct": 50
+      "estimatedTransferBytes": 31539,
+      "estimatedTransferKb": 30.8,
+      "estimatedSavingsBytes": 175,
+      "estimatedSavingsPct": 1
     },
     {
       "source": "/images/artist-terranova.png",
@@ -1049,31 +1049,31 @@
           "path": "/images/generated/artist-terranova-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 11265
+          "bytes": 19535
         },
         {
           "path": "/images/generated/artist-terranova-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 16476
+          "bytes": 24242
         },
         {
           "path": "/images/generated/artist-terranova-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 24625
+          "bytes": 93706
         },
         {
           "path": "/images/generated/artist-terranova-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 42128
+          "bytes": 73340
         }
       ],
-      "estimatedTransferBytes": 24625,
-      "estimatedTransferKb": 24,
-      "estimatedSavingsBytes": 249695,
-      "estimatedSavingsPct": 91
+      "estimatedTransferBytes": 73340,
+      "estimatedTransferKb": 71.6,
+      "estimatedSavingsBytes": 200980,
+      "estimatedSavingsPct": 73
     },
     {
       "source": "/images/artists-collective.webp",
@@ -1087,43 +1087,43 @@
           "path": "/images/generated/artists-collective-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 9127
+          "bytes": 18369
         },
         {
           "path": "/images/generated/artists-collective-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 12378
+          "bytes": 18890
         },
         {
           "path": "/images/generated/artists-collective-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 24516
+          "bytes": 51532
         },
         {
           "path": "/images/generated/artists-collective-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 34598
+          "bytes": 53220
         },
         {
           "path": "/images/generated/artists-collective-1600.avif",
           "width": 1600,
           "format": "avif",
-          "bytes": 42720
+          "bytes": 83788
         },
         {
           "path": "/images/generated/artists-collective-1600.webp",
           "width": 1600,
           "format": "webp",
-          "bytes": 71840
+          "bytes": 92894
         }
       ],
-      "estimatedTransferBytes": 24516,
-      "estimatedTransferKb": 23.9,
-      "estimatedSavingsBytes": 62150,
-      "estimatedSavingsPct": 72
+      "estimatedTransferBytes": 51532,
+      "estimatedTransferKb": 50.3,
+      "estimatedSavingsBytes": 35134,
+      "estimatedSavingsPct": 41
     },
     {
       "source": "/images/autograf-recap.jpg",
@@ -1137,31 +1137,31 @@
           "path": "/images/generated/autograf-recap-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 12495
+          "bytes": 21719
         },
         {
           "path": "/images/generated/autograf-recap-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 15138
+          "bytes": 21862
         },
         {
           "path": "/images/generated/autograf-recap-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 21315
+          "bytes": 34883
         },
         {
           "path": "/images/generated/autograf-recap-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 26630
+          "bytes": 38542
         }
       ],
-      "estimatedTransferBytes": 21315,
-      "estimatedTransferKb": 20.8,
-      "estimatedSavingsBytes": 16976,
-      "estimatedSavingsPct": 44
+      "estimatedTransferBytes": 34883,
+      "estimatedTransferKb": 34.1,
+      "estimatedSavingsBytes": 3408,
+      "estimatedSavingsPct": 9
     },
     {
       "source": "/images/chasing-sunsets-1.jpg",
@@ -1175,31 +1175,31 @@
           "path": "/images/generated/chasing-sunsets-1-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 11067
+          "bytes": 20161
         },
         {
           "path": "/images/generated/chasing-sunsets-1-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 13796
+          "bytes": 20724
         },
         {
           "path": "/images/generated/chasing-sunsets-1-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 24252
+          "bytes": 45986
         },
         {
           "path": "/images/generated/chasing-sunsets-1-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 33494
+          "bytes": 50302
         }
       ],
-      "estimatedTransferBytes": 24252,
-      "estimatedTransferKb": 23.7,
-      "estimatedSavingsBytes": 38501,
-      "estimatedSavingsPct": 61
+      "estimatedTransferBytes": 45986,
+      "estimatedTransferKb": 44.9,
+      "estimatedSavingsBytes": 16767,
+      "estimatedSavingsPct": 27
     },
     {
       "source": "/images/chasing-sunsets-firstaccess-flyer.png",
@@ -1213,31 +1213,31 @@
           "path": "/images/generated/chasing-sunsets-firstaccess-flyer-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 10961
+          "bytes": 22777
         },
         {
           "path": "/images/generated/chasing-sunsets-firstaccess-flyer-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 15888
+          "bytes": 25970
         },
         {
           "path": "/images/generated/chasing-sunsets-firstaccess-flyer-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 42520
+          "bytes": 143032
         },
         {
           "path": "/images/generated/chasing-sunsets-firstaccess-flyer-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 55422
+          "bytes": 111078
         }
       ],
-      "estimatedTransferBytes": 42520,
-      "estimatedTransferKb": 41.5,
-      "estimatedSavingsBytes": 186829,
-      "estimatedSavingsPct": 81
+      "estimatedTransferBytes": 111078,
+      "estimatedTransferKb": 108.5,
+      "estimatedSavingsBytes": 118271,
+      "estimatedSavingsPct": 52
     },
     {
       "source": "/images/chasing-sunsets-july4-first-access.png",
@@ -1251,31 +1251,31 @@
           "path": "/images/generated/chasing-sunsets-july4-first-access-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 10728
+          "bytes": 18752
         },
         {
           "path": "/images/generated/chasing-sunsets-july4-first-access-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 14036
+          "bytes": 21036
         },
         {
           "path": "/images/generated/chasing-sunsets-july4-first-access-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 10728
+          "bytes": 18752
         },
         {
           "path": "/images/generated/chasing-sunsets-july4-first-access-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 14036
+          "bytes": 21036
         }
       ],
-      "estimatedTransferBytes": 10728,
-      "estimatedTransferKb": 10.5,
-      "estimatedSavingsBytes": 342031,
-      "estimatedSavingsPct": 97
+      "estimatedTransferBytes": 18752,
+      "estimatedTransferKb": 18.3,
+      "estimatedSavingsBytes": 334007,
+      "estimatedSavingsPct": 95
     },
     {
       "source": "/images/chasing-sunsets-premium.webp",
@@ -1289,31 +1289,31 @@
           "path": "/images/generated/chasing-sunsets-premium-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 14468
+          "bytes": 27897
         },
         {
           "path": "/images/generated/chasing-sunsets-premium-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 20686
+          "bytes": 30332
         },
         {
           "path": "/images/generated/chasing-sunsets-premium-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 44519
+          "bytes": 86129
         },
         {
           "path": "/images/generated/chasing-sunsets-premium-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 72316
+          "bytes": 88766
         }
       ],
-      "estimatedTransferBytes": 44519,
-      "estimatedTransferKb": 43.5,
-      "estimatedSavingsBytes": 36753,
-      "estimatedSavingsPct": 45
+      "estimatedTransferBytes": 86129,
+      "estimatedTransferKb": 84.1,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/chasing-sunsets.webp",
@@ -1327,43 +1327,43 @@
           "path": "/images/generated/chasing-sunsets-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 5377
+          "bytes": 10422
         },
         {
           "path": "/images/generated/chasing-sunsets-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 6906
+          "bytes": 10724
         },
         {
           "path": "/images/generated/chasing-sunsets-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 12956
+          "bytes": 27037
         },
         {
           "path": "/images/generated/chasing-sunsets-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 18248
+          "bytes": 27928
         },
         {
           "path": "/images/generated/chasing-sunsets-1600.avif",
           "width": 1600,
           "format": "avif",
-          "bytes": 21854
+          "bytes": 43250
         },
         {
           "path": "/images/generated/chasing-sunsets-1600.webp",
           "width": 1600,
           "format": "webp",
-          "bytes": 35380
+          "bytes": 45222
         }
       ],
-      "estimatedTransferBytes": 12956,
-      "estimatedTransferKb": 12.7,
-      "estimatedSavingsBytes": 28728,
-      "estimatedSavingsPct": 69
+      "estimatedTransferBytes": 27037,
+      "estimatedTransferKb": 26.4,
+      "estimatedSavingsBytes": 14647,
+      "estimatedSavingsPct": 35
     },
     {
       "source": "/images/deron-press.jpg",
@@ -1377,31 +1377,31 @@
           "path": "/images/generated/deron-press-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 5641
+          "bytes": 11938
         },
         {
           "path": "/images/generated/deron-press-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 9866
+          "bytes": 15262
         },
         {
           "path": "/images/generated/deron-press-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 12736
+          "bytes": 27851
         },
         {
           "path": "/images/generated/deron-press-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 22178
+          "bytes": 35160
         }
       ],
-      "estimatedTransferBytes": 12736,
-      "estimatedTransferKb": 12.4,
-      "estimatedSavingsBytes": 29799,
-      "estimatedSavingsPct": 70
+      "estimatedTransferBytes": 27851,
+      "estimatedTransferKb": 27.2,
+      "estimatedSavingsBytes": 14684,
+      "estimatedSavingsPct": 35
     },
     {
       "source": "/images/eran-hersh-live-1.webp",
@@ -1415,31 +1415,31 @@
           "path": "/images/generated/eran-hersh-live-1-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 9988
+          "bytes": 19673
         },
         {
           "path": "/images/generated/eran-hersh-live-1-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 13016
+          "bytes": 19906
         },
         {
           "path": "/images/generated/eran-hersh-live-1-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 15575
+          "bytes": 29220
         },
         {
           "path": "/images/generated/eran-hersh-live-1-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 22680
+          "bytes": 28940
         }
       ],
-      "estimatedTransferBytes": 15575,
-      "estimatedTransferKb": 15.2,
-      "estimatedSavingsBytes": 11119,
-      "estimatedSavingsPct": 42
+      "estimatedTransferBytes": 28940,
+      "estimatedTransferKb": 28.3,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/eran-hersh-live-5.webp",
@@ -1453,31 +1453,31 @@
           "path": "/images/generated/eran-hersh-live-5-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 9578
+          "bytes": 18538
         },
         {
           "path": "/images/generated/eran-hersh-live-5-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 12396
+          "bytes": 18708
         },
         {
           "path": "/images/generated/eran-hersh-live-5-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 27555
+          "bytes": 51235
         },
         {
           "path": "/images/generated/eran-hersh-live-5-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 39960
+          "bytes": 50104
         }
       ],
-      "estimatedTransferBytes": 27555,
-      "estimatedTransferKb": 26.9,
-      "estimatedSavingsBytes": 18199,
-      "estimatedSavingsPct": 40
+      "estimatedTransferBytes": 50104,
+      "estimatedTransferKb": 48.9,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/eran-hersh-live-6.png",
@@ -1491,31 +1491,31 @@
           "path": "/images/generated/eran-hersh-live-6-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 5206
+          "bytes": 9620
         },
         {
           "path": "/images/generated/eran-hersh-live-6-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 8258
+          "bytes": 12334
         },
         {
           "path": "/images/generated/eran-hersh-live-6-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 7506
+          "bytes": 34223
         },
         {
           "path": "/images/generated/eran-hersh-live-6-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 15142
+          "bytes": 28692
         }
       ],
-      "estimatedTransferBytes": 7506,
-      "estimatedTransferKb": 7.3,
-      "estimatedSavingsBytes": 81644,
-      "estimatedSavingsPct": 92
+      "estimatedTransferBytes": 28692,
+      "estimatedTransferKb": 28,
+      "estimatedSavingsBytes": 60458,
+      "estimatedSavingsPct": 68
     },
     {
       "source": "/images/eran-hersh-untold-story-iv.jpg",
@@ -1529,31 +1529,31 @@
           "path": "/images/generated/eran-hersh-untold-story-iv-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 7971
+          "bytes": 14176
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 11876
+          "bytes": 17444
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 13577
+          "bytes": 25996
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 22376
+          "bytes": 33992
         }
       ],
-      "estimatedTransferBytes": 13577,
-      "estimatedTransferKb": 13.3,
-      "estimatedSavingsBytes": 230576,
-      "estimatedSavingsPct": 94
+      "estimatedTransferBytes": 25996,
+      "estimatedTransferKb": 25.4,
+      "estimatedSavingsBytes": 218157,
+      "estimatedSavingsPct": 89
     },
     {
       "source": "/images/hero-monolith-modern.webp",
@@ -1567,31 +1567,31 @@
           "path": "/images/generated/hero-monolith-modern-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 34477
+          "bytes": 54401
         },
         {
           "path": "/images/generated/hero-monolith-modern-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 37642
+          "bytes": 52558
         },
         {
           "path": "/images/generated/hero-monolith-modern-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 124033
+          "bytes": 175225
         },
         {
           "path": "/images/generated/hero-monolith-modern-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 132894
+          "bytes": 154692
         }
       ],
-      "estimatedTransferBytes": 124033,
-      "estimatedTransferKb": 121.1,
-      "estimatedSavingsBytes": 9781,
-      "estimatedSavingsPct": 7
+      "estimatedTransferBytes": 154692,
+      "estimatedTransferKb": 151.1,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/hero-monolith.webp",
@@ -1605,43 +1605,43 @@
           "path": "/images/generated/hero-monolith-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 10621
+          "bytes": 20368
         },
         {
           "path": "/images/generated/hero-monolith-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 13444
+          "bytes": 20904
         },
         {
           "path": "/images/generated/hero-monolith-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 34917
+          "bytes": 68371
         },
         {
           "path": "/images/generated/hero-monolith-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 46432
+          "bytes": 69666
         },
         {
           "path": "/images/generated/hero-monolith-1920.avif",
           "width": 1920,
           "format": "avif",
-          "bytes": 88178
+          "bytes": 160848
         },
         {
           "path": "/images/generated/hero-monolith-1920.webp",
           "width": 1920,
           "format": "webp",
-          "bytes": 130526
+          "bytes": 162896
         }
       ],
-      "estimatedTransferBytes": 34917,
-      "estimatedTransferKb": 34.1,
-      "estimatedSavingsBytes": 114455,
-      "estimatedSavingsPct": 77
+      "estimatedTransferBytes": 68371,
+      "estimatedTransferKb": 66.8,
+      "estimatedSavingsBytes": 81001,
+      "estimatedSavingsPct": 54
     },
     {
       "source": "/images/hero-video-1-poster.jpg",
@@ -1655,43 +1655,43 @@
           "path": "/images/generated/hero-video-1-poster-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6014
+          "bytes": 11669
         },
         {
           "path": "/images/generated/hero-video-1-poster-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 8176
+          "bytes": 12688
         },
         {
           "path": "/images/generated/hero-video-1-poster-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 14867
+          "bytes": 28350
         },
         {
           "path": "/images/generated/hero-video-1-poster-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 21628
+          "bytes": 33584
         },
         {
           "path": "/images/generated/hero-video-1-poster-1920.avif",
           "width": 1920,
           "format": "avif",
-          "bytes": 29583
+          "bytes": 59179
         },
         {
           "path": "/images/generated/hero-video-1-poster-1920.webp",
           "width": 1920,
           "format": "webp",
-          "bytes": 47148
+          "bytes": 71696
         }
       ],
-      "estimatedTransferBytes": 14867,
-      "estimatedTransferKb": 14.5,
-      "estimatedSavingsBytes": 77000,
-      "estimatedSavingsPct": 84
+      "estimatedTransferBytes": 28350,
+      "estimatedTransferKb": 27.7,
+      "estimatedSavingsBytes": 63517,
+      "estimatedSavingsPct": 69
     },
     {
       "source": "/images/industrial-roster.webp",
@@ -1705,31 +1705,31 @@
           "path": "/images/generated/industrial-roster-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 24536
+          "bytes": 48465
         },
         {
           "path": "/images/generated/industrial-roster-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 32278
+          "bytes": 48678
         },
         {
           "path": "/images/generated/industrial-roster-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 115467
+          "bytes": 172867
         },
         {
           "path": "/images/generated/industrial-roster-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 130018
+          "bytes": 151704
         }
       ],
-      "estimatedTransferBytes": 115467,
-      "estimatedTransferKb": 112.8,
-      "estimatedSavingsBytes": 16165,
-      "estimatedSavingsPct": 12
+      "estimatedTransferBytes": 151704,
+      "estimatedTransferKb": 148.1,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/lazare-carbon-center.png",
@@ -1743,31 +1743,31 @@
           "path": "/images/generated/lazare-carbon-center-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 8852
+          "bytes": 15815
         },
         {
           "path": "/images/generated/lazare-carbon-center-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 12926
+          "bytes": 19212
         },
         {
           "path": "/images/generated/lazare-carbon-center-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 14225
+          "bytes": 30691
         },
         {
           "path": "/images/generated/lazare-carbon-center-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 23272
+          "bytes": 35632
         }
       ],
-      "estimatedTransferBytes": 14225,
-      "estimatedTransferKb": 13.9,
-      "estimatedSavingsBytes": 135839,
-      "estimatedSavingsPct": 91
+      "estimatedTransferBytes": 30691,
+      "estimatedTransferKb": 30,
+      "estimatedSavingsBytes": 119373,
+      "estimatedSavingsPct": 80
     },
     {
       "source": "/images/lazare-recap.webp",
@@ -1781,43 +1781,43 @@
           "path": "/images/generated/lazare-recap-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 9626
+          "bytes": 17750
         },
         {
           "path": "/images/generated/lazare-recap-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 12466
+          "bytes": 18644
         },
         {
           "path": "/images/generated/lazare-recap-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 24784
+          "bytes": 51533
         },
         {
           "path": "/images/generated/lazare-recap-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 35610
+          "bytes": 54900
         },
         {
           "path": "/images/generated/lazare-recap-1542.avif",
           "width": 1542,
           "format": "avif",
-          "bytes": 45274
+          "bytes": 97894
         },
         {
           "path": "/images/generated/lazare-recap-1542.webp",
           "width": 1542,
           "format": "webp",
-          "bytes": 78756
+          "bytes": 102218
         }
       ],
-      "estimatedTransferBytes": 24784,
-      "estimatedTransferKb": 24.2,
-      "estimatedSavingsBytes": 71052,
-      "estimatedSavingsPct": 74
+      "estimatedTransferBytes": 51533,
+      "estimatedTransferKb": 50.3,
+      "estimatedSavingsBytes": 44303,
+      "estimatedSavingsPct": 46
     },
     {
       "source": "/images/lazare-sabry-hero-v2.jpg",
@@ -1831,31 +1831,31 @@
           "path": "/images/generated/lazare-sabry-hero-v2-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 9398
+          "bytes": 19381
         },
         {
           "path": "/images/generated/lazare-sabry-hero-v2-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 13406
+          "bytes": 21122
         },
         {
           "path": "/images/generated/lazare-sabry-hero-v2-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 27040
+          "bytes": 53868
         },
         {
           "path": "/images/generated/lazare-sabry-hero-v2-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 37580
+          "bytes": 58062
         }
       ],
-      "estimatedTransferBytes": 27040,
-      "estimatedTransferKb": 26.4,
-      "estimatedSavingsBytes": 42491,
-      "estimatedSavingsPct": 61
+      "estimatedTransferBytes": 53868,
+      "estimatedTransferKb": 52.6,
+      "estimatedSavingsBytes": 15663,
+      "estimatedSavingsPct": 23
     },
     {
       "source": "/images/radio-show-gear.webp",
@@ -1869,31 +1869,31 @@
           "path": "/images/generated/radio-show-gear-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 17049
+          "bytes": 34392
         },
         {
           "path": "/images/generated/radio-show-gear-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 24848
+          "bytes": 38560
         },
         {
           "path": "/images/generated/radio-show-gear-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 66773
+          "bytes": 129545
         },
         {
           "path": "/images/generated/radio-show-gear-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 107236
+          "bytes": 133312
         }
       ],
-      "estimatedTransferBytes": 66773,
-      "estimatedTransferKb": 65.2,
-      "estimatedSavingsBytes": 56155,
-      "estimatedSavingsPct": 46
+      "estimatedTransferBytes": 129545,
+      "estimatedTransferKb": 126.5,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/images/sunset-party-hero-v2.jpg",
@@ -1907,31 +1907,31 @@
           "path": "/images/generated/sunset-party-hero-v2-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 7886
+          "bytes": 14899
         },
         {
           "path": "/images/generated/sunset-party-hero-v2-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 10048
+          "bytes": 15040
         },
         {
           "path": "/images/generated/sunset-party-hero-v2-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 19477
+          "bytes": 37024
         },
         {
           "path": "/images/generated/sunset-party-hero-v2-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 25750
+          "bytes": 39598
         }
       ],
-      "estimatedTransferBytes": 19477,
-      "estimatedTransferKb": 19,
-      "estimatedSavingsBytes": 30392,
-      "estimatedSavingsPct": 61
+      "estimatedTransferBytes": 37024,
+      "estimatedTransferKb": 36.2,
+      "estimatedSavingsBytes": 12845,
+      "estimatedSavingsPct": 26
     },
     {
       "source": "/images/untold-story-hero-post1.webp",
@@ -1945,31 +1945,31 @@
           "path": "/images/generated/untold-story-hero-post1-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 3303
+          "bytes": 5832
         },
         {
           "path": "/images/generated/untold-story-hero-post1-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 4426
+          "bytes": 6442
         },
         {
           "path": "/images/generated/untold-story-hero-post1-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 7438
+          "bytes": 14280
         },
         {
           "path": "/images/generated/untold-story-hero-post1-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 12738
+          "bytes": 15816
         }
       ],
-      "estimatedTransferBytes": 7438,
-      "estimatedTransferKb": 7.3,
-      "estimatedSavingsBytes": 6956,
-      "estimatedSavingsPct": 48
+      "estimatedTransferBytes": 14280,
+      "estimatedTransferKb": 13.9,
+      "estimatedSavingsBytes": 114,
+      "estimatedSavingsPct": 1
     },
     {
       "source": "/images/untold-story-juany-deron-v2.webp",
@@ -1983,43 +1983,43 @@
           "path": "/images/generated/untold-story-juany-deron-v2-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 6063
+          "bytes": 11159
         },
         {
           "path": "/images/generated/untold-story-juany-deron-v2-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 9200
+          "bytes": 13258
         },
         {
           "path": "/images/generated/untold-story-juany-deron-v2-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 14909
+          "bytes": 30911
         },
         {
           "path": "/images/generated/untold-story-juany-deron-v2-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 26546
+          "bytes": 38950
         },
         {
           "path": "/images/generated/untold-story-juany-deron-v2-1600.avif",
           "width": 1600,
           "format": "avif",
-          "bytes": 28611
+          "bytes": 60155
         },
         {
           "path": "/images/generated/untold-story-juany-deron-v2-1600.webp",
           "width": 1600,
           "format": "webp",
-          "bytes": 57270
+          "bytes": 71048
         }
       ],
-      "estimatedTransferBytes": 14909,
-      "estimatedTransferKb": 14.6,
-      "estimatedSavingsBytes": 50163,
-      "estimatedSavingsPct": 77
+      "estimatedTransferBytes": 30911,
+      "estimatedTransferKb": 30.2,
+      "estimatedSavingsBytes": 34161,
+      "estimatedSavingsPct": 52
     },
     {
       "source": "/images/untold-story-moody.webp",
@@ -2033,31 +2033,31 @@
           "path": "/images/generated/untold-story-moody-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 13701
+          "bytes": 28808
         },
         {
           "path": "/images/generated/untold-story-moody-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 18244
+          "bytes": 27952
         },
         {
           "path": "/images/generated/untold-story-moody-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 41885
+          "bytes": 84909
         },
         {
           "path": "/images/generated/untold-story-moody-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 64944
+          "bytes": 83088
         }
       ],
-      "estimatedTransferBytes": 41885,
-      "estimatedTransferKb": 40.9,
-      "estimatedSavingsBytes": 35297,
-      "estimatedSavingsPct": 46
+      "estimatedTransferBytes": 83088,
+      "estimatedTransferKb": 81.1,
+      "estimatedSavingsBytes": 0,
+      "estimatedSavingsPct": 0
     },
     {
       "source": "/og-image.jpg",
@@ -2071,31 +2071,31 @@
           "path": "/images/generated/og-image-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 12806
+          "bytes": 22308
         },
         {
           "path": "/images/generated/og-image-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 17128
+          "bytes": 24960
         },
         {
           "path": "/images/generated/og-image-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 41304
+          "bytes": 67205
         },
         {
           "path": "/images/generated/og-image-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 57360
+          "bytes": 81448
         }
       ],
-      "estimatedTransferBytes": 41304,
-      "estimatedTransferKb": 40.3,
-      "estimatedSavingsBytes": 35476,
-      "estimatedSavingsPct": 46
+      "estimatedTransferBytes": 67205,
+      "estimatedTransferKb": 65.6,
+      "estimatedSavingsBytes": 9575,
+      "estimatedSavingsPct": 12
     }
   ]
 }

@@ -196,7 +196,7 @@ export default function NavigationMegamenu({
             {/* Left Column: Links */}
             <div className="w-5/12 p-6 flex flex-col gap-5">
               <span
-                className={`text-[10px] font-bold tracking-[0.2em] uppercase ${isLight ? "text-black/40" : "text-white/40"}`}
+                className={`text-[10px] font-bold tracking-[0.2em] uppercase ${isLight ? "text-black/40" : "text-white/70"}`}
               >
                 {leftColumnTitle}
               </span>

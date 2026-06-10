@@ -301,7 +301,7 @@ function PreviewTile({
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-4">
-        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
+        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">
           {item.label}
         </span>
         <p className="mt-2 font-display text-lg uppercase leading-[0.95] text-white sm:text-xl">

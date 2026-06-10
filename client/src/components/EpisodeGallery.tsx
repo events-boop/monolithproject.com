@@ -126,7 +126,7 @@ export default function EpisodeGallery({
           ) : null}
           {description ? (
             <p
-              className="max-w-xl border-l-2 pl-4 text-sm leading-relaxed text-white/50"
+              className="max-w-xl border-l-2 pl-4 text-sm leading-relaxed text-white/70"
               style={{ borderColor: accentColor }}
             >
               {description}
@@ -172,7 +172,7 @@ export default function EpisodeGallery({
 
             {img.label ? (
               <div className="absolute bottom-6 left-6 right-6 translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
-                <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+                <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                   Card {idx + 1}
                 </span>
                 <p className="font-display text-xl uppercase tracking-widest text-white drop-shadow-md">

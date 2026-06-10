@@ -38,14 +38,14 @@ export default function NotFound() {
         >
           <ShieldAlert
             size={32}
-            className="text-white/40 group-hover:text-white group-hover:scale-110 transition-all duration-500"
+            className="text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-500"
           />
           <div className="absolute inset-0 border border-white/0 group-hover:border-white/40 transition-all duration-700 scale-125 opacity-0 group-hover:opacity-100" />
         </motion.div>
 
         <h1 className="hero-wordmark text-[clamp(4.5rem,15vw,14rem)] leading-[0.95] tracking-[-0.04em] uppercase text-white mb-8 relative">
           <GlitchText active={glitchActive}>404</GlitchText>
-          <span className="absolute -top-4 -right-8 font-mono text-[10px] text-white/40 tracking-widest uppercase rotate-90 origin-left">
+          <span className="absolute -top-4 -right-8 font-mono text-[10px] text-white/70 tracking-widest uppercase rotate-90 origin-left">
             Page Not Found
           </span>
         </h1>
@@ -54,7 +54,7 @@ export default function NotFound() {
           <h2 className="hero-wordmark text-4xl md:text-5xl uppercase tracking-tighter text-white/90 mb-6 font-display">
             Page Not Found
           </h2>
-          <p className="font-sans text-lg text-white/50 mb-12 font-light leading-relaxed">
+          <p className="font-sans text-lg text-white/70 mb-12 font-light leading-relaxed">
             The page you were looking for does not exist or may have moved. Head
             back home or open the event archive.
           </p>

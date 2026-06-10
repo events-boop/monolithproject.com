@@ -84,7 +84,7 @@ export default function ArtistProfile() {
         />
         <Navigation />
         <section className="h-[70vh] flex flex-col items-center justify-center px-6 text-center">
-          <p className="font-mono text-[10px] tracking-[0.5em] text-white/30 uppercase mb-4">
+          <p className="font-mono text-[10px] tracking-[0.5em] text-white/70 uppercase mb-4">
             404 / Page Not Found
           </p>
           <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase mb-10">
@@ -195,7 +195,7 @@ export default function ArtistProfile() {
                   <span className="hero-wordmark text-[clamp(1.25rem,3vw,2.5rem)] tracking-[0.3em] text-white uppercase leading-none">
                     Headliner Status
                   </span>
-                  <span className="font-mono text-[10px] md:text-[10px] tracking-[0.5em] text-white/30 uppercase">
+                  <span className="font-mono text-[10px] md:text-[10px] tracking-[0.5em] text-white/70 uppercase">
                     Featured booking in the Monolith roster
                   </span>
                 </div>
@@ -216,7 +216,7 @@ export default function ArtistProfile() {
                   {/* High-Prestige Residency Metadata HUD Grid */}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 pt-6 border-t border-white/10 max-w-3xl">
                     <div className="flex flex-col gap-1.5">
-                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">
+                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/70 uppercase">
                         Residency
                       </span>
                       <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">
@@ -224,7 +224,7 @@ export default function ArtistProfile() {
                       </span>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">
+                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/70 uppercase">
                         Artist Role
                       </span>
                       <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase">
@@ -232,7 +232,7 @@ export default function ArtistProfile() {
                       </span>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">
+                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/70 uppercase">
                         Based In
                       </span>
                       <span className="font-mono text-[10px] tracking-[0.1em] text-white uppercase truncate">
@@ -241,7 +241,7 @@ export default function ArtistProfile() {
                       </span>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/40 uppercase">
+                      <span className="font-mono text-[10px] md:text-[10px] tracking-[0.3em] text-white/70 uppercase">
                         Status
                       </span>
                       <div className="flex items-center gap-2">
@@ -254,7 +254,7 @@ export default function ArtistProfile() {
                   </div>
                 </div>
               ) : (
-                <span className="font-mono text-[10px] tracking-[0.5em] text-white/50 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.5em] text-white/70 uppercase">
                   {artist.role}
                 </span>
               )}
@@ -263,7 +263,7 @@ export default function ArtistProfile() {
             <div className="flex flex-wrap items-center gap-10 md:gap-16">
               <div className="flex items-center gap-8">
                 <div className="flex flex-col gap-1">
-                  <span className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase lowercase-none">
+                  <span className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase lowercase-none">
                     Based In
                   </span>
                   <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
@@ -271,7 +271,7 @@ export default function ArtistProfile() {
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="font-mono text-[10px] tracking-[0.4em] text-white/30 uppercase lowercase-none">
+                  <span className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase lowercase-none">
                     Sound
                   </span>
                   <span className="font-mono text-xs uppercase tracking-widest flex items-center gap-2">
@@ -340,7 +340,7 @@ export default function ArtistProfile() {
                 {artist.tags.map(tag => (
                   <span
                     key={tag}
-                    className="px-5 py-2.5 rounded-full border border-white/5 bg-white/[0.02] font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 hover:text-white hover:border-white/20 transition-all cursor-default"
+                    className="px-5 py-2.5 rounded-full border border-white/5 bg-white/[0.02] font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 hover:text-white hover:border-white/20 transition-all cursor-default"
                   >
                     {tag}
                   </span>
@@ -378,7 +378,7 @@ export default function ArtistProfile() {
                       <h5 className="font-display text-2xl uppercase tracking-widest text-white mb-2">
                         {set.title}
                       </h5>
-                      <p className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase">
+                      <p className="font-mono text-[10px] tracking-[0.2em] text-white/70 uppercase">
                         Live Recording
                       </p>
                     </motion.a>
@@ -461,7 +461,7 @@ export default function ArtistProfile() {
                         <span className="text-xl md:text-2xl font-display uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
                           {track.title}
                         </span>
-                        <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase lowercase-none">
+                        <span className="font-mono text-[10px] tracking-[0.2em] text-white/70 uppercase lowercase-none">
                           {artist.name} · MONOLITH SELECT
                         </span>
                       </div>
@@ -471,7 +471,7 @@ export default function ArtistProfile() {
                         {track.duration}
                       </span>
                       <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
-                        <Play className="w-4 h-4 text-white/40 group-hover:text-black fill-current" />
+                        <Play className="w-4 h-4 text-white/70 group-hover:text-black fill-current" />
                       </div>
                     </div>
                   </div>
@@ -487,7 +487,7 @@ export default function ArtistProfile() {
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                 <Share2 className="w-4 h-4 hover:text-primary cursor-pointer transition-colors" />
               </div>
-              <span className="ui-kicker text-white/40 mb-2 block lowercase-none">
+              <span className="ui-kicker text-white/70 mb-2 block lowercase-none">
                 Next Event
               </span>
               <h4 className="font-display text-4xl uppercase tracking-widest text-white mb-10 leading-none">
@@ -539,7 +539,7 @@ export default function ArtistProfile() {
 
             {/* Connection Card */}
             <div className="p-10 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl">
-              <span className="ui-kicker text-white/40 mb-8 block lowercase-none">
+              <span className="ui-kicker text-white/70 mb-8 block lowercase-none">
                 Follow
               </span>
               <div className="grid grid-cols-2 gap-4">
@@ -548,8 +548,8 @@ export default function ArtistProfile() {
                   target="_blank"
                   className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white group transition-all duration-500"
                 >
-                  <Instagram className="w-6 h-6 text-white/40 group-hover:text-black transition-colors mb-3" />
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">
+                  <Instagram className="w-6 h-6 text-white/70 group-hover:text-black transition-colors mb-3" />
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/70 group-hover:text-black transition-colors uppercase">
                     Instagram
                   </span>
                 </a>
@@ -558,8 +558,8 @@ export default function ArtistProfile() {
                   target="_blank"
                   className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white group transition-all duration-500"
                 >
-                  <Globe className="w-6 h-6 text-white/40 group-hover:text-black transition-colors mb-3" />
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/30 group-hover:text-black transition-colors uppercase">
+                  <Globe className="w-6 h-6 text-white/70 group-hover:text-black transition-colors mb-3" />
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/70 group-hover:text-black transition-colors uppercase">
                     Official Site
                   </span>
                 </a>

@@ -168,7 +168,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                 </p>
               ) : null}
 
-              <p className="text-white/50 text-base md:text-lg mb-12 max-w-lg leading-relaxed font-mono uppercase tracking-widest text-balance">
+              <p className="text-white/70 text-base md:text-lg mb-12 max-w-lg leading-relaxed font-mono uppercase tracking-widest text-balance">
                 Enter for a chance at guest list spots, private room access, and
                 artist-connected perks for the next night.
               </p>
@@ -188,9 +188,9 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                     className="flex items-center gap-4 group"
                   >
                     <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center shrink-0 group-hover:border-primary/40 transition-colors duration-500">
-                      <perk.icon className="w-4 h-4 text-white/30 group-hover:text-primary transition-colors duration-500" />
+                      <perk.icon className="w-4 h-4 text-white/70 group-hover:text-primary transition-colors duration-500" />
                     </div>
-                    <span className="text-white/40 group-hover:text-white/70 transition-colors duration-500">
+                    <span className="text-white/70 group-hover:text-white/70 transition-colors duration-500">
                       {perk.text}
                     </span>
                   </motion.div>
@@ -224,7 +224,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                     <h3 className="font-display text-3xl uppercase text-white mb-4 tracking-widest">
                       You're In
                     </h3>
-                    <p className="text-[11px] text-white/40 mb-10 font-mono uppercase tracking-[0.2em] max-w-xs">
+                    <p className="text-[11px] text-white/70 mb-10 font-mono uppercase tracking-[0.2em] max-w-xs">
                       Your entry has been recorded.
                     </p>
 
@@ -235,7 +235,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                       <h4 className="text-primary font-mono text-[10px] mb-4 uppercase tracking-[0.3em] font-bold">
                         Share Link
                       </h4>
-                      <p className="text-white/40 text-[11px] mb-8 leading-relaxed font-mono uppercase tracking-widest">
+                      <p className="text-white/70 text-[11px] mb-8 leading-relaxed font-mono uppercase tracking-widest">
                         Share the event with the people you actually want in the
                         room. This link keeps the event context attached.
                       </p>
@@ -284,7 +284,7 @@ export default function GiveawayFunnel({ event }: GiveawayFunnelProps) {
                       <h3 className="font-display text-4xl uppercase text-white mb-2 tracking-[0.1em]">
                         Enter Now
                       </h3>
-                      <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">
+                      <p className="text-[10px] font-mono text-white/70 uppercase tracking-[0.3em]">
                         Add your details to join the entry list.
                       </p>
                     </div>

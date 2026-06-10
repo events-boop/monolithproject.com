@@ -113,7 +113,7 @@ export default function Monolith() {
             </motion.div>
 
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center">
-              <span className="font-mono text-[9px] uppercase tracking-[0.45em] text-white/40 mb-3 animate-pulse">
+              <span className="font-mono text-[9px] uppercase tracking-[0.45em] text-white/70 mb-3 animate-pulse">
                 Scroll to enter
               </span>
               <div className="w-px h-12 bg-gradient-to-b from-white/30 to-transparent" />
@@ -196,7 +196,7 @@ export default function Monolith() {
                 </h2>
               </div>
               <div className="lg:col-span-8 space-y-12">
-                <p className="text-xl md:text-2xl font-light leading-relaxed text-white/50">
+                <p className="text-xl md:text-2xl font-light leading-relaxed text-white/70">
                   The Monolith Project provides the framework for three distinct
                   expressions to align:
                 </p>

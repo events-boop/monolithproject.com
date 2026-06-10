@@ -137,7 +137,7 @@ export default function InsightArticle() {
         >
           {/* Breadcrumbs */}
           <nav
-            className="flex items-center gap-2 mb-10 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40"
+            className="flex items-center gap-2 mb-10 font-mono text-[9px] uppercase tracking-[0.2em] text-white/70"
             aria-label="Breadcrumb"
           >
             <Link href="/" className="hover:text-white transition-colors">
@@ -162,7 +162,7 @@ export default function InsightArticle() {
                 >
                   {article.category}
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                   {article.displayDate} // {article.readTime}
                 </span>
                 <button className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors ml-auto md:ml-0">
@@ -212,7 +212,7 @@ export default function InsightArticle() {
               {article.tags.map(tag => (
                 <span
                   key={tag}
-                  className="px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-white/30 border border-white/5 rounded-sm"
+                  className="px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-white/70 border border-white/5 rounded-sm"
                 >
                   #{tag.replace(/\s+/g, "_").toLowerCase()}
                 </span>
@@ -281,7 +281,7 @@ export default function InsightArticle() {
                 <h3 className="font-display text-3xl md:text-4xl uppercase mb-4">
                   Signal Subscription
                 </h3>
-                <p className="text-white/40 font-mono text-[11px] uppercase tracking-[0.3em] leading-relaxed">
+                <p className="text-white/70 font-mono text-[11px] uppercase tracking-[0.3em] leading-relaxed">
                   Receive deeper context on lineup drops,{" "}
                   <br className="hidden md:block" /> radio programming, and
                   private events.

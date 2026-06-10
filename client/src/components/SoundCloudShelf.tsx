@@ -32,14 +32,14 @@ export default function SoundCloudShelf() {
             <h2 className="font-display text-[clamp(2.25rem,4.5vw,4.75rem)] uppercase leading-[0.88] tracking-tight text-white">
               Latest Covers
             </h2>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/45 md:text-base">
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
               Fresh cover art from the Sun(Sets) radio archive, surfaced like a
               closing shelf before the footer.
             </p>
           </div>
 
           <div className="flex items-center gap-4 md:justify-end">
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.32em] text-white/30 md:block">
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.32em] text-white/70 md:block">
               {featuredEpisodes.length.toString().padStart(2, "0")} selections
             </span>
             <Link
@@ -103,7 +103,7 @@ export default function SoundCloudShelf() {
                   <h3 className="mt-2 font-display text-[1.25rem] uppercase leading-[0.95] tracking-[0.02em] text-white">
                     {episode.title}
                   </h3>
-                  <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                  <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
                     <span>{episode.displayDate}</span>
                     <span className="inline-flex items-center gap-1.5 text-white/55 transition-colors group-hover:text-white">
                       Open

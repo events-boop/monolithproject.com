@@ -22,7 +22,7 @@ export default function UntoldContrast() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-white/50 text-lg max-w-xl mx-auto mb-4"
+          className="text-white/70 text-lg max-w-xl mx-auto mb-4"
         >
           Chasing Sun(Sets) is the open-air series. Untold Story is the
           late-night series. Together they make up The Monolith Project.
@@ -32,7 +32,7 @@ export default function UntoldContrast() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-white/40 max-w-xl mx-auto mb-12"
+          className="text-white/70 max-w-xl mx-auto mb-12"
         >
           Same standard. Different time of night.
         </motion.p>

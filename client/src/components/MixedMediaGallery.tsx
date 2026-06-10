@@ -82,7 +82,7 @@ export default function MixedMediaGallery({
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
           <div className="max-w-2xl">
             {subtitle && (
-              <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-white/40 mb-4 block uppercase">
+              <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-white/70 mb-4 block uppercase">
                 {subtitle}
               </span>
             )}
@@ -90,13 +90,13 @@ export default function MixedMediaGallery({
               {title}
             </h2>
             {description && (
-              <p className="font-sans text-base md:text-lg text-white/40 leading-relaxed max-w-xl">
+              <p className="font-sans text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
                 {description}
               </p>
             )}
           </div>
           {hasMedia && (
-            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30">
+            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/70">
               {mediaCountLabel}
             </p>
           )}
@@ -158,7 +158,7 @@ export default function MixedMediaGallery({
               <p className="font-display text-2xl uppercase text-white/90">
                 Archive Coming Soon
               </p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/50">
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/70">
                 Photos are being prepared for this gallery.
               </p>
             </div>

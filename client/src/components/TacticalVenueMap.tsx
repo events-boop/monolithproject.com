@@ -126,7 +126,7 @@ export default function TacticalVenueMap() {
               >
                 <div className="space-y-2">
                   <span
-                    className={`text-[10px] tracking-[0.3em] font-bold uppercase transition-colors ${activeZone.type === "ga" ? "text-green-400" : activeZone.type === "vip" ? "text-primary" : activeZone.type === "peak" ? "text-blue-400" : "text-white/40"}`}
+                    className={`text-[10px] tracking-[0.3em] font-bold uppercase transition-colors ${activeZone.type === "ga" ? "text-green-400" : activeZone.type === "vip" ? "text-primary" : activeZone.type === "peak" ? "text-blue-400" : "text-white/70"}`}
                   >
                     Zone_Identity: {activeZone.type}
                   </span>
@@ -136,7 +136,7 @@ export default function TacticalVenueMap() {
                 </div>
 
                 <div className="p-4 bg-white/[0.03] border border-white/5 rounded-lg">
-                  <div className="flex items-center gap-2 mb-3 text-white/40">
+                  <div className="flex items-center gap-2 mb-3 text-white/70">
                     <Info size={12} />
                     <span className="text-[10px] uppercase font-bold tracking-widest">
                       Description

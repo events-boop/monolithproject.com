@@ -215,7 +215,7 @@ export default function About() {
               transition={{ duration: 1, delay: 0.8 }}
               className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center"
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 mb-4 animate-pulse">
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70 mb-4 animate-pulse">
                 Scroll down
               </span>
               <div className="w-px h-16 bg-gradient-to-b from-white/50 to-transparent" />
@@ -325,7 +325,7 @@ export default function About() {
                   key={item.label}
                   className="border border-white/10 bg-white/[0.03] p-6 md:p-7"
                 >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/75 mb-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary mb-4">
                     {item.label}
                   </p>
                   <p className="text-white/70 leading-relaxed">{item.copy}</p>
@@ -353,7 +353,7 @@ export default function About() {
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="h-px w-8 bg-primary/50" />
-                  <span className="section-kicker text-primary/80">
+                  <span className="section-kicker text-primary">
                     How It Works
                   </span>
                 </div>
@@ -362,7 +362,7 @@ export default function About() {
                   <br />
                   <span className="text-white/20">One project.</span>
                 </h2>
-                <p className="text-lg leading-relaxed text-white/40 font-light max-w-sm">
+                <p className="text-lg leading-relaxed text-white/70 font-light max-w-sm">
                   One project. Three public expressions. Chasing Sun(Sets) leads
                   the open-air season, Untold Story leads the late-night room,
                   and Radio keeps the artists and culture moving between shows.
@@ -410,7 +410,7 @@ export default function About() {
                               ease: [0.22, 1, 0.36, 1],
                             }}
                           >
-                            <Plus className="w-5 h-5 text-white/40 group-hover:text-black transition-colors" />
+                            <Plus className="w-5 h-5 text-white/70 group-hover:text-black transition-colors" />
                           </motion.div>
                         </div>
                       </button>

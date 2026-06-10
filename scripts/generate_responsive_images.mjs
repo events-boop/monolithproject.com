@@ -26,9 +26,11 @@ const sourceExtensionPreference = new Map([
   [".jpeg", 2],
   [".png", 3],
 ]);
+// Quality raised for high-fidelity replacement imports. Effort bumped to 6 so the
+// better-looking variants stay as small as possible (slower build, smaller files).
 const formats = [
-  { ext: "avif", options: { quality: 45, effort: 4 } },
-  { ext: "webp", options: { quality: 60, effort: 4 } },
+  { ext: "avif", options: { quality: 62, effort: 6 } },
+  { ext: "webp", options: { quality: 82, effort: 6 } },
 ];
 
 async function pathExists(targetPath) {

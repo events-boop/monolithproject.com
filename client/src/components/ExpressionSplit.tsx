@@ -162,7 +162,7 @@ export default function ExpressionSplit() {
                 <span className="font-display text-3xl lg:text-5xl text-white/20 select-none">
                   {exp.number}
                 </span>
-                <span className="ui-kicker text-white/40 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
+                <span className="ui-kicker text-white/70 tracking-[0.3em] font-bold text-[10px] lg:text-[11px]">
                   {exp.label}
                 </span>
               </div>
@@ -196,7 +196,7 @@ export default function ExpressionSplit() {
                     {exp.id !== "archive" &&
                       exp.id !== "radio" &&
                       getStartingPrice(exp.id) && (
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                           From{" "}
                           <span className="text-white">
                             ${getStartingPrice(exp.id)}

@@ -167,7 +167,7 @@ function FAQItem({
           {isOpen ? (
             <Minus className="w-4 h-4 text-primary" />
           ) : (
-            <Plus className="w-4 h-4 text-white/30 group-hover:text-white/60 transition-colors" />
+            <Plus className="w-4 h-4 text-white/70 group-hover:text-white/60 transition-colors" />
           )}
         </span>
       </button>
@@ -180,7 +180,7 @@ function FAQItem({
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-sm text-white/50 leading-relaxed pr-8">
+            <p className="pb-5 text-sm text-white/70 leading-relaxed pr-8">
               {a}
             </p>
           </motion.div>
@@ -233,7 +233,7 @@ export default function FAQ() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-16"
           >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               — Got Questions
             </span>
             <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-6">
@@ -250,7 +250,7 @@ export default function FAQ() {
               style={{ originX: 0 }}
               className="h-[2px] w-32 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-6"
             />
-            <p className="text-white/40 max-w-xl leading-relaxed">
+            <p className="text-white/70 max-w-xl leading-relaxed">
               Everything you need to know before, during, and after an event.
             </p>
           </motion.div>
@@ -346,7 +346,7 @@ export default function FAQ() {
             whileInView={{ opacity: 1 }}
             className="mt-24 pt-12 border-t border-white/10 text-center"
           >
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
               Still Have Questions?
             </p>
             <a

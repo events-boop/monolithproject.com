@@ -38,7 +38,7 @@ export default function Shop() {
 
           <RevealText
             as="p"
-            className="font-mono text-sm md:text-base text-primary/80 tracking-[0.3em] uppercase mb-12"
+            className="font-mono text-sm md:text-base text-primary tracking-[0.3em] uppercase mb-12"
             delay={0.4}
             stagger={0.02}
           >
@@ -51,7 +51,7 @@ export default function Shop() {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-md mx-auto w-full"
           >
-            <p className="text-white/50 text-sm mb-6 leading-relaxed">
+            <p className="text-white/70 text-sm mb-6 leading-relaxed">
               Limited run garments and accessories for the underground. Be the
               first to know when the shop opens.
             </p>

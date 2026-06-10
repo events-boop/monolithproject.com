@@ -35,7 +35,7 @@ const inputClass = `
 `;
 
 const labelClass =
-  "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-2";
+  "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/70 mb-2";
 
 const perks = [
   {
@@ -118,7 +118,7 @@ export default function Ambassadors() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-20 text-center max-w-3xl mx-auto"
           >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               — Join The Team
             </span>
             <h1 className="font-display text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] uppercase tracking-tight-display text-white mb-6">
@@ -126,7 +126,7 @@ export default function Ambassadors() {
               <br />
               THE NIGHT ON US.
             </h1>
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
               You're already bringing your friends. You might as well get
               rewarded for it. Join our ambassador program to earn free tickets,
               drink tokens, and exclusive perks.
@@ -157,7 +157,7 @@ export default function Ambassadors() {
                 <h3 className="font-display text-2xl uppercase text-white mb-3">
                   {perk.title}
                 </h3>
-                <p className="text-white/50 text-sm leading-relaxed">
+                <p className="text-white/70 text-sm leading-relaxed">
                   {perk.desc}
                 </p>
               </motion.div>
@@ -176,7 +176,7 @@ export default function Ambassadors() {
                 <h3 className="font-display text-2xl uppercase text-white mb-2">
                   Apply for a Link
                 </h3>
-                <p className="text-white/40 text-sm">
+                <p className="text-white/70 text-sm">
                   We'll review your profile and send your unique tracking link.
                 </p>
               </div>
@@ -189,7 +189,7 @@ export default function Ambassadors() {
                   <h3 className="font-display text-2xl uppercase text-white mb-4">
                     Application Sent
                   </h3>
-                  <p className="text-white/40 max-w-xs mx-auto text-sm leading-relaxed">
+                  <p className="text-white/70 max-w-xs mx-auto text-sm leading-relaxed">
                     Check your email in 24-48 hours. If approved, you'll receive
                     your dashboard login and tracking link.
                   </p>
@@ -233,7 +233,7 @@ export default function Ambassadors() {
                   <div>
                     <label className={labelClass}>Instagram Handle</label>
                     <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-sm">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 text-sm">
                         @
                       </span>
                       <input

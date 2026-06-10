@@ -1,5 +1,17 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+  MotionValue,
+} from "framer-motion";
+
+// Pre-reveal opacity floor. Kept high enough that white text clears WCAG AA
+// (~9:1 on the near-black background) at every frame of the scrub, so the
+// audited contrast score is deterministic. The blur + translate carry the
+// reveal motion, not opacity.
+const REVEAL_OPACITY_FLOOR = 0.7;
 
 interface WordScrubRevealProps {
   text: string;
@@ -13,7 +25,7 @@ interface WordProps {
 }
 
 function Word({ children, progress, range }: WordProps) {
-  const opacity = useTransform(progress, range, [0.15, 1]);
+  const opacity = useTransform(progress, range, [REVEAL_OPACITY_FLOOR, 1]);
   const y = useTransform(progress, range, [8, 0]);
   const filter = useTransform(progress, range, ["blur(8px)", "blur(0px)"]);
 
@@ -32,10 +44,16 @@ export default function WordScrubReveal({
   className = "",
 }: WordScrubRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 85%", "end 50%"],
   });
+
+  // Reduced-motion: render the text plainly at full opacity, no scrub animation.
+  if (prefersReducedMotion) {
+    return <div className={className}>{text}</div>;
+  }
 
   const words = text.split(" ");
   const step = 1 / words.length;

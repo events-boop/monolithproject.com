@@ -108,7 +108,7 @@ export default function BookingFormSection() {
           <div className="w-16 h-16 rounded-full border border-primary/40 bg-primary/10 flex items-center justify-center mb-6 text-primary">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <span className="mb-4 font-mono text-[10px] uppercase tracking-[0.35em] text-primary/70">
+          <span className="mb-4 font-mono text-[10px] uppercase tracking-[0.35em] text-primary">
             Submission Received
           </span>
           <h3 className="font-display text-3xl mb-4 uppercase text-white">
@@ -129,7 +129,7 @@ export default function BookingFormSection() {
 
           <div className="flex flex-col gap-6 border-b border-white/8 pb-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <span className="mb-4 block font-mono text-[10px] uppercase tracking-[0.35em] text-primary/70">
+              <span className="mb-4 block font-mono text-[10px] uppercase tracking-[0.35em] text-primary">
                 Submission Intake
               </span>
               <h3 className="font-display text-3xl md:text-4xl uppercase tracking-tight text-white">
@@ -141,14 +141,14 @@ export default function BookingFormSection() {
                 only required for venue inquiries.
               </p>
             </div>
-            <div className="inline-flex items-center gap-3 self-start rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
+            <div className="inline-flex items-center gap-3 self-start rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">
               <span className="h-2 w-2 rounded-full bg-primary" />
               Manual Review
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/40 mb-4">
+            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/70 mb-4">
               Inquiry Type
             </label>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -168,14 +168,14 @@ export default function BookingFormSection() {
                     className="sr-only"
                   />
                   <span
-                    className={`mb-4 inline-flex rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.28em] ${selectedType === type.id ? "border-primary/40 text-primary" : "border-white/10 text-white/35"}`}
+                    className={`mb-4 inline-flex rounded-full border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.28em] ${selectedType === type.id ? "border-primary/40 text-primary" : "border-white/10 text-white/70"}`}
                   >
                     {type.code}
                   </span>
                   <span className="block text-sm font-semibold uppercase tracking-[0.16em]">
                     {type.label}
                   </span>
-                  <span className="mt-2 block text-xs leading-relaxed text-white/45">
+                  <span className="mt-2 block text-xs leading-relaxed text-white/70">
                     {type.description}
                   </span>
                 </label>
@@ -186,15 +186,15 @@ export default function BookingFormSection() {
           <div className="grid gap-10 border-t border-white/8 pt-10 md:grid-cols-2">
             <div className="space-y-6">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/35">
+                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/70">
                   Contact
                 </p>
-                <p className="mt-2 text-sm text-white/45">
+                <p className="mt-2 text-sm text-white/70">
                   The person we should reply to directly.
                 </p>
               </div>
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/70 mb-3">
                   Name
                 </label>
                 <input
@@ -211,7 +211,7 @@ export default function BookingFormSection() {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/70 mb-3">
                   Email
                 </label>
                 <input
@@ -231,15 +231,15 @@ export default function BookingFormSection() {
 
             <div className="space-y-6">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/35">
+                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/70">
                   Context
                 </p>
-                <p className="mt-2 text-sm text-white/45">
+                <p className="mt-2 text-sm text-white/70">
                   Tell us what lane this request belongs to.
                 </p>
               </div>
               <div>
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3">
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/70 mb-3">
                   Organization
                 </label>
                 <input
@@ -260,7 +260,7 @@ export default function BookingFormSection() {
                   opacity: selectedType === "partner-on-location" ? 1 : 0.5,
                 }}
               >
-                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/40 mb-3 flex items-center gap-2">
+                <label className="block text-xs font-mono uppercase tracking-[0.28em] text-white/70 mb-3 flex items-center gap-2">
                   <MapPin className="w-3 h-3" /> Location / Venue
                 </label>
                 <input
@@ -282,7 +282,7 @@ export default function BookingFormSection() {
           </div>
 
           <div className="border-t border-white/8 pt-10">
-            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/40 mb-3">
+            <label className="block text-xs font-mono uppercase tracking-[0.32em] text-white/70 mb-3">
               Details
             </label>
             <textarea
@@ -299,7 +299,7 @@ export default function BookingFormSection() {
           </div>
 
           <div className="flex flex-col gap-5 border-t border-white/8 pt-8 md:flex-row md:items-center md:justify-between">
-            <p className="max-w-md text-xs leading-relaxed text-white/35">
+            <p className="max-w-md text-xs leading-relaxed text-white/70">
               Venue location is only required for on-site partnership requests.
               Everything else should live in the brief.
             </p>

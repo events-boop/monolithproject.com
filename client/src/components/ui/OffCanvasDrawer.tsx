@@ -135,7 +135,7 @@ export default function OffCanvasDrawer() {
                 <div className="sticky top-0 z-20 border-b border-white/10 bg-black/28 px-6 py-5 backdrop-blur-2xl md:px-8">
                   <div className="flex items-start justify-between gap-4">
                     <div className="max-w-xl">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/75">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">
                         {meta.eyebrow}
                       </p>
                       <Dialog.Title className="mt-3 font-display text-3xl uppercase leading-[0.9] text-white md:text-[2.4rem]">
@@ -173,7 +173,7 @@ export default function OffCanvasDrawer() {
                 <div className="relative z-10 flex-1 overflow-y-auto">
                   <Suspense
                     fallback={
-                      <div className="p-12 text-white/40 font-mono text-sm tracking-widest uppercase">
+                      <div className="p-12 text-white/70 font-mono text-sm tracking-widest uppercase">
                         Loading interface...
                       </div>
                     }

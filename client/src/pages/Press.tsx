@@ -138,7 +138,7 @@ export default function Press() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-20"
           >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               — Media Resources
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
@@ -156,7 +156,7 @@ export default function Press() {
               style={{ originX: 0 }}
               className="h-[2px] w-44 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-8"
             />
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
+            <p className="text-white/70 text-lg leading-relaxed max-w-2xl">
               Everything you need to cover The Monolith Project. Assets,
               contacts, and context — all in one place.
             </p>
@@ -190,13 +190,13 @@ export default function Press() {
             }}
           >
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-primary/60 via-primary/20 to-transparent" />
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
               Fast Facts
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {fastFacts.map(fact => (
                 <div key={fact.label}>
-                  <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-1">
+                  <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/70 mb-1">
                     {fact.label}
                   </p>
                   <p className="text-sm text-white/70">{fact.value}</p>
@@ -214,7 +214,7 @@ export default function Press() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-7"
             >
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-5">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-5">
                 About
               </p>
               <div className="space-y-4 text-white/60 leading-relaxed">
@@ -251,7 +251,7 @@ export default function Press() {
               }}
               className="lg:col-span-5"
             >
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-5">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-5">
                 Press Contacts
               </p>
               <div className="space-y-4">
@@ -264,7 +264,7 @@ export default function Press() {
                       border: "1px solid rgba(255,255,255,0.07)",
                     }}
                   >
-                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary/70 mb-2">
+                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-2">
                       {contact.role}
                     </p>
                     <a
@@ -274,7 +274,7 @@ export default function Press() {
                       {contact.email}
                       <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
-                    <p className="text-xs text-white/40 leading-relaxed">
+                    <p className="text-xs text-white/70 leading-relaxed">
                       {contact.note}
                     </p>
                   </div>
@@ -292,10 +292,10 @@ export default function Press() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-2">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-2">
                 Brand Assets
               </p>
-              <p className="text-white/40 text-sm">
+              <p className="text-white/70 text-sm">
                 Request assets via email — we'll send a download link within 24
                 hours.
               </p>
@@ -341,7 +341,7 @@ export default function Press() {
                       />
                     </div>
                     {!asset.available && (
-                      <span className="font-mono text-[10px] tracking-widest uppercase text-white/30 border border-white/10 px-2 py-0.5">
+                      <span className="font-mono text-[10px] tracking-widest uppercase text-white/70 border border-white/10 px-2 py-0.5">
                         Coming Soon
                       </span>
                     )}
@@ -356,7 +356,7 @@ export default function Press() {
                   >
                     {asset.format}
                   </p>
-                  <p className="text-xs text-white/40 leading-relaxed mb-4">
+                  <p className="text-xs text-white/70 leading-relaxed mb-4">
                     {asset.desc}
                   </p>
 
@@ -382,7 +382,7 @@ export default function Press() {
             transition={{ duration: 0.6 }}
             className="mb-20"
           >
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
               As Seen In
             </p>
             <div className="space-y-3">
@@ -397,20 +397,20 @@ export default function Press() {
                   style={{ border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   <div className="flex-shrink-0 w-24">
-                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary/70">
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary">
                       {item.outlet}
                     </p>
-                    <p className="font-mono text-[10px] text-white/30 mt-0.5">
+                    <p className="font-mono text-[10px] text-white/70 mt-0.5">
                       {item.year}
                     </p>
                   </div>
-                  <p className="flex-1 text-sm text-white/50 leading-relaxed italic">
+                  <p className="flex-1 text-sm text-white/70 leading-relaxed italic">
                     "{item.headline}"
                   </p>
                 </motion.div>
               ))}
             </div>
-            <p className="mt-4 text-xs text-white/30 font-mono italic">
+            <p className="mt-4 text-xs text-white/70 font-mono italic">
               * Coverage examples — update with real placements as they come in.
             </p>
           </motion.div>
@@ -427,7 +427,7 @@ export default function Press() {
               <p className="font-display text-2xl uppercase text-white mb-1">
                 Need Something Else?
               </p>
-              <p className="text-sm text-white/40">
+              <p className="text-sm text-white/70">
                 We'll get back to press inquiries within 24 hours.
               </p>
             </div>

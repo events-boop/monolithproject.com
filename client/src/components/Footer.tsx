@@ -126,7 +126,7 @@ export default function Footer() {
   let topNavLeft = "MONOLITH";
   let topNavRight = "PROJECT";
   let glowColor = "rgba(224,90,58";
-  let fontSizeClass = "text-[23vw]";
+  let fontSizeClass = "text-[18vw]";
 
   if ((resolvedBrand as string) === "chasing-sunsets") {
     displayTitle = "CHASING SUNSETS";
@@ -189,7 +189,7 @@ export default function Footer() {
 
           {links.map(group => (
             <div key={group.title}>
-              <h2 className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">
+              <h2 className="font-bold text-[12px] md:text-[11px] tracking-[0.2em] uppercase text-white/70 mb-6">
                 {group.title}
               </h2>
               <ul className="space-y-4">
@@ -238,7 +238,7 @@ export default function Footer() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/20 bg-white/[0.04] text-white/50 hover:text-white hover:border-white/40 hover:bg-white/[0.1] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="group flex flex-col items-center justify-center w-12 h-12 border border-white/20 bg-white/[0.04] text-white/70 hover:text-white hover:border-white/40 hover:bg-white/[0.1] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label={s.name}
                 title={s.name}
               >
@@ -248,10 +248,10 @@ export default function Footer() {
           </div>
 
           <div className="text-center md:text-right">
-            <p className="ui-chip text-white/50 text-[11px]">
+            <p className="ui-chip text-white/70 text-[11px]">
               © {new Date().getFullYear()} The Monolith Project
             </p>
-            <p className="ui-chip text-white/40 mt-1.5 text-[11px]">
+            <p className="ui-chip text-white/70 mt-1.5 text-[11px]">
               ENGINEERED BY STARK INDUSTRIES
             </p>
           </div>

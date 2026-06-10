@@ -512,7 +512,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           <span
                             className={cn(
                               "font-monolith hidden text-[11px] font-medium uppercase leading-none tracking-[0.18em] transition-colors sm:inline shrink-0",
-                              isLight ? "text-black/40" : "text-white/40"
+                              isLight ? "text-black/40" : "text-white/70"
                             )}
                           >
                             PROJECT

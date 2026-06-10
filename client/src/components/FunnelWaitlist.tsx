@@ -403,7 +403,7 @@ export default function FunnelWaitlist({
                 </h2>
 
                 {eventMeta ? (
-                  <p className="mb-3 text-[10px] font-mono tracking-[0.3em] uppercase text-white/40">
+                  <p className="mb-3 text-[10px] font-mono tracking-[0.3em] uppercase text-white/70">
                     {eventMeta}
                   </p>
                 ) : null}
@@ -466,11 +466,11 @@ export default function FunnelWaitlist({
                       className="space-y-4"
                     >
                       <div className="space-y-1">
-                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/70 ml-1">
                           Full Name
                         </label>
                         <div className="relative">
-                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" />
                           <input
                             required
                             type="text"
@@ -478,17 +478,17 @@ export default function FunnelWaitlist({
                             onChange={e => setFullName(e.target.value)}
                             autoComplete="name"
                             placeholder="John Doe"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/70 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/70 ml-1">
                           Email Address
                         </label>
                         <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" />
                           <input
                             required
                             type="email"
@@ -496,27 +496,27 @@ export default function FunnelWaitlist({
                             onChange={e => setEmail(e.target.value)}
                             autoComplete="email"
                             placeholder="john@example.com"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/70 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/50 ml-1">
+                        <label className="text-[10px] font-mono tracking-widest uppercase text-white/70 ml-1">
                           Phone Number{" "}
-                          <span className="text-white/30 lowercase">
+                          <span className="text-white/70 lowercase">
                             (Optional)
                           </span>
                         </label>
                         <div className="relative">
-                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" />
                           <input
                             type="tel"
                             value={phone}
                             onChange={e => setPhone(e.target.value)}
                             autoComplete="tel"
                             placeholder="+1 (555) 000-0000"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-white placeholder:text-white/70 focus:outline-none focus:border-[#E8B86D]/50 focus:bg-white/10 transition-all text-sm"
                           />
                         </div>
                       </div>
@@ -543,7 +543,7 @@ export default function FunnelWaitlist({
                         <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" />
                       </button>
 
-                      <p className="text-[10px] text-center text-white/40 mt-3 font-mono">
+                      <p className="text-[10px] text-center text-white/70 mt-3 font-mono">
                         By joining, you agree to receive event updates.
                         Unsubscribe anytime.
                       </p>

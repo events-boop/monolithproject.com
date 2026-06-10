@@ -191,7 +191,7 @@ export default function AdminDashboard() {
             <h1 className="font-display text-4xl uppercase tracking-tighter mb-4">
               <KineticDecryption text="SYSTEM ACCESS" />
             </h1>
-            <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/30">
+            <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/70">
               Authentication Required for Ops
             </p>
           </div>
@@ -241,7 +241,7 @@ export default function AdminDashboard() {
               <h1 className="font-display text-5xl md:text-7xl uppercase tracking-tighter">
                 Monolith Ops
               </h1>
-              <p className="text-white/40 mt-4 max-w-xl font-mono text-sm uppercase tracking-widest">
+              <p className="text-white/70 mt-4 max-w-xl font-mono text-sm uppercase tracking-widest">
                 Hardware Monitoring & Performance Integrity
               </p>
             </div>
@@ -317,7 +317,7 @@ export default function AdminDashboard() {
             {/* Performance Baseline (P75 Mobile) */}
             <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-transparent opacity-50" />
-              <h3 className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-8 flex items-center gap-3">
+              <h3 className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-8 flex items-center gap-3">
                 <BarChart3 className="w-4 h-4 text-primary" />{" "}
                 Performance_Baseline (p75 Mobile)
               </h3>
@@ -358,7 +358,7 @@ export default function AdminDashboard() {
 
             {/* Connectivity Sentry */}
             <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8">
-              <h3 className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 mb-8 flex items-center gap-3">
+              <h3 className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-8 flex items-center gap-3">
                 <ShieldCheck className="w-4 h-4 text-primary" />{" "}
                 Connectivity_Sentry
               </h3>
@@ -376,7 +376,7 @@ export default function AdminDashboard() {
                         {c.name}
                       </span>
                     </div>
-                    <span className="font-mono text-[10px] text-white/30">
+                    <span className="font-mono text-[10px] text-white/70">
                       {c.latency || "-- ms"}
                     </span>
                   </div>
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
           {/* Issue List */}
 
           <div className="space-y-6">
-            <h2 className="font-mono text-xs tracking-[0.3em] uppercase text-white/30 mb-8 flex items-center gap-3">
+            <h2 className="font-mono text-xs tracking-[0.3em] uppercase text-white/70 mb-8 flex items-center gap-3">
               <ChevronRight className="w-4 h-4" /> Integrity_Logs
             </h2>
 
@@ -424,7 +424,7 @@ export default function AdminDashboard() {
                       <h3 className="text-xl font-display mb-2">
                         {issue.message}
                       </h3>
-                      <p className="text-white/40 text-sm leading-relaxed mb-6">
+                      <p className="text-white/70 text-sm leading-relaxed mb-6">
                         {issue.suggestion}
                       </p>
                       <div className="flex flex-wrap items-center gap-4">

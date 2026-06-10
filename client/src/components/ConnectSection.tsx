@@ -98,7 +98,7 @@ export default function ConnectSection({
                   <div className="relative z-10 flex flex-col h-full">
                     {/* Icon */}
                     <div
-                      className={`${compact ? "mb-6" : "mb-8"} text-white/30 group-hover:text-primary group-hover:scale-110 origin-left transition-all duration-500`}
+                      className={`${compact ? "mb-6" : "mb-8"} text-white/70 group-hover:text-primary group-hover:scale-110 origin-left transition-all duration-500`}
                     >
                       <option.icon
                         strokeWidth={1}
@@ -108,7 +108,7 @@ export default function ConnectSection({
 
                     {/* Meta */}
                     <div className="flex flex-col gap-2 mb-4">
-                      <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary/70">
+                      <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary">
                         {option.subtitle}
                       </span>
                       <h3
@@ -120,13 +120,13 @@ export default function ConnectSection({
 
                     {/* Desc */}
                     <p
-                      className={`text-white/40 leading-relaxed flex-grow font-light border-l border-white/5 pl-4 ml-1 group-hover:border-primary/30 transition-colors duration-500 ${compact ? "text-xs mb-6" : "text-sm mb-10"}`}
+                      className={`text-white/70 leading-relaxed flex-grow font-light border-l border-white/5 pl-4 ml-1 group-hover:border-primary/30 transition-colors duration-500 ${compact ? "text-xs mb-6" : "text-sm mb-10"}`}
                     >
                       {option.description}
                     </p>
 
                     {/* Footer/CTA */}
-                    <div className="flex items-center gap-3 text-[10px] font-bold tracking-[0.2em] uppercase text-white/30 group-hover:text-white transition-colors mt-auto">
+                    <div className="flex items-center gap-3 text-[10px] font-bold tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors mt-auto">
                       <span>Start Here</span>
                       <div className="relative w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-primary transition-all duration-300">
                         <ArrowRight className="absolute -right-1 -top-1.5 w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />

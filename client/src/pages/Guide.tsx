@@ -89,10 +89,10 @@ export default function Guide() {
               </h1>
             </div>
             <div className="text-right hidden sm:block">
-              <p className="font-mono text-xs text-white/50 tracking-wide">
+              <p className="font-mono text-xs text-white/70 tracking-wide">
                 {guideEvent?.date || "Date TBA"}
               </p>
-              <p className="font-mono text-xs text-white/50 tracking-wide">
+              <p className="font-mono text-xs text-white/70 tracking-wide">
                 {guideEvent?.venue || "Venue TBA"}
               </p>
             </div>
@@ -118,7 +118,7 @@ export default function Guide() {
                     <h3 className="font-display text-xl uppercase text-white mb-1">
                       {slot.event}
                     </h3>
-                    <p className="text-sm text-white/40">{slot.desc}</p>
+                    <p className="text-sm text-white/70">{slot.desc}</p>
                   </div>
                 ))}
               </div>
@@ -157,7 +157,7 @@ export default function Guide() {
 
                 <TacticalVenueMap />
 
-                <p className="mt-3 text-xs text-white/40 font-mono tracking-wide">
+                <p className="mt-3 text-xs text-white/70 font-mono tracking-wide">
                   Use the main entrance for general admission. <br />
                   {guideEvent
                     ? `${getEventVenueLabel(guideEvent)}.`

@@ -159,7 +159,7 @@ export default function EventDetails() {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
         <h1 className="font-display text-4xl mb-4">Event Cipher Null</h1>
-        <p className="font-mono text-white/50 mb-8">
+        <p className="font-mono text-white/70 mb-8">
           The requested event data could not be located.
         </p>
         <MagneticButton>
@@ -296,16 +296,16 @@ export default function EventDetails() {
 
             <div className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-white/70 text-xs md:text-sm tracking-[0.2em] uppercase mb-12">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-white/40" /> {event.venue},{" "}
+                <MapPin className="w-4 h-4 text-white/70" /> {event.venue},{" "}
                 {event.location}
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-white/40" /> {event.date} //{" "}
+                <Clock className="w-4 h-4 text-white/70" /> {event.date} //{" "}
                 {event.time}
               </div>
               {event.lineup && (
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4 text-white/40" /> {event.lineup}
+                  <Star className="w-4 h-4 text-white/70" /> {event.lineup}
                 </div>
               )}
               {event.ticketTiers && event.ticketTiers.length > 0 && (
@@ -331,7 +331,7 @@ export default function EventDetails() {
           <div className="mx-auto grid w-full max-w-7xl gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-4">
             {decisionCards.map(card => (
               <div key={card.label} className="bg-[#050505] p-5 md:p-6">
-                <div className="mb-4 flex items-center gap-3 text-white/30">
+                <div className="mb-4 flex items-center gap-3 text-white/70">
                   {card.icon}
                   <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
                     {card.label}
@@ -348,7 +348,7 @@ export default function EventDetails() {
         <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7 flex flex-col gap-16">
             <section>
-              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
                 Why This Event
               </h3>
               <div className="grid gap-4 md:grid-cols-3">
@@ -364,7 +364,7 @@ export default function EventDetails() {
                     key={label}
                     className="border border-white/8 bg-white/[0.025] p-5"
                   >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/35">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">
                       {label}
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-white/76">
@@ -377,7 +377,7 @@ export default function EventDetails() {
 
             {event.description && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
                   Transmission
                 </h3>
                 <div className="prose prose-invert prose-p:text-white/70 prose-p:leading-relaxed prose-p:font-light text-lg">
@@ -388,7 +388,7 @@ export default function EventDetails() {
 
             {event.whatToExpect && event.whatToExpect.length > 0 && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
                   Atmosphere
                 </h3>
                 <ul className="flex flex-col gap-4">
@@ -407,7 +407,7 @@ export default function EventDetails() {
 
             {event.faqs && event.faqs.length > 0 && (
               <section>
-                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase mb-8 border-b border-white/10 pb-4">
+                <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
                   Logistics
                 </h3>
                 <div className="flex flex-col gap-6">
@@ -431,45 +431,45 @@ export default function EventDetails() {
 
           <div className="lg:col-span-5 flex flex-col gap-8">
             <div className="bg-white/[0.03] border border-white/10 p-8 flex flex-col gap-6 sticky top-32">
-              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/40 uppercase border-b border-white/10 pb-4">
+              <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase border-b border-white/10 pb-4">
                 Dossier
               </h3>
 
               <div className="flex flex-col gap-4 text-sm font-mono tracking-wide text-white/80">
                 {event.format && (
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-white/40">Format</span>
+                    <span className="text-white/70">Format</span>
                     <span>{event.format}</span>
                   </div>
                 )}
                 {event.sound && (
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-white/40">Sound</span>
+                    <span className="text-white/70">Sound</span>
                     <span>{event.sound}</span>
                   </div>
                 )}
                 {event.dress && (
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-white/40">Dress</span>
+                    <span className="text-white/70">Dress</span>
                     <span>{event.dress}</span>
                   </div>
                 )}
                 {event.age && (
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-white/40">Age</span>
+                    <span className="text-white/70">Age</span>
                     <span>{event.age}</span>
                   </div>
                 )}
                 <div className="flex justify-between border-b border-white/5 pb-2">
-                  <span className="text-white/40">Arrival</span>
+                  <span className="text-white/70">Arrival</span>
                   <span>{getArrivalCopy(event)}</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
-                  <span className="text-white/40">Tickets</span>
+                  <span className="text-white/70">Tickets</span>
                   <span>{getTicketPathCopy(event)}</span>
                 </div>
                 <div className="flex justify-between pb-2">
-                  <span className="text-white/40">Location</span>
+                  <span className="text-white/70">Location</span>
                   <span>{event.location}</span>
                 </div>
               </div>
@@ -482,7 +482,7 @@ export default function EventDetails() {
 
               <div className="border-t border-white/10 pt-6">
                 <div className="mb-4 flex items-center justify-between gap-4">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/40">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/70">
                     Read The Room
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/24">
@@ -505,7 +505,7 @@ export default function EventDetails() {
                           <span className="block font-display text-base uppercase tracking-wide text-white">
                             {path.label}
                           </span>
-                          <span className="mt-1 block text-xs leading-relaxed text-white/45">
+                          <span className="mt-1 block text-xs leading-relaxed text-white/70">
                             {path.note}
                           </span>
                         </span>
@@ -522,7 +522,7 @@ export default function EventDetails() {
         <section className="relative z-10 border-y border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.015))] px-6 py-14 xl:px-12">
           <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/40">
+              <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/70">
                 Next Step
               </p>
               <h2 className="mt-4 max-w-[11ch] font-monolith text-[clamp(2.5rem,6vw,5.5rem)] font-normal uppercase leading-[0.86] tracking-[0.01em] text-white">

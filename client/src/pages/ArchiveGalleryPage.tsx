@@ -27,7 +27,7 @@ export default function ArchiveGalleryPage() {
   if (!gallery) {
     return (
       <div className="min-h-screen text-white flex items-center justify-center">
-        <p className="font-mono uppercase tracking-widest text-white/50">
+        <p className="font-mono uppercase tracking-widest text-white/70">
           Gallery not found
         </p>
       </div>

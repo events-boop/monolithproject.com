@@ -111,7 +111,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
                 {event?.episode || "Series 02"}
               </span>
               <div className="h-px w-8 sm:w-12 bg-white/20" />
-              <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/50">
+              <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/70">
                 {event?.location || "Chicago"}
               </span>
             </div>

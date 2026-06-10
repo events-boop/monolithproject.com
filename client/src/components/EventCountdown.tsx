@@ -285,7 +285,7 @@ export default function EventCountdown({
                   />
                 </a>
                 {startingPrice && !SUNSETS_PRELAUNCH_LOCKED ? (
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">
                     Entry from{" "}
                     <span className="font-black text-white">
                       ${startingPrice}

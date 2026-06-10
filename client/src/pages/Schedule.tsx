@@ -281,7 +281,7 @@ export default function Schedule() {
                   <Fragment key={event.id}>
                     {showMonthHeader && (
                       <div className="px-6 md:px-10 py-4 border-b border-white/[0.05] bg-black/20">
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary/80">
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary">
                           {monthLabel}
                         </span>
                       </div>
@@ -338,7 +338,7 @@ export default function Schedule() {
                           <div className="md:col-span-1 hidden md:flex flex-col items-center gap-4">
                             <button
                               onClick={e => toggleStar(event.id, e)}
-                              className={`w-8 h-8 flex items-center justify-center transition-colors ${starredIds.includes(event.id) ? "text-primary" : "text-white/20 hover:text-white/40"}`}
+                              className={`w-8 h-8 flex items-center justify-center transition-colors ${starredIds.includes(event.id) ? "text-primary" : "text-white/20 hover:text-white/70"}`}
                             >
                               <div
                                 className={`w-2 h-2 rounded-full ${starredIds.includes(event.id) ? "bg-primary animate-pulse shadow-[0_0_10px_rgba(224,90,58,0.8)]" : "bg-current"}`}
@@ -475,7 +475,7 @@ export default function Schedule() {
                                     className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                  <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-widest text-white/40 uppercase">
+                                  <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-widest text-white/70 uppercase">
                                     Event Photo
                                   </span>
                                 </div>
@@ -485,7 +485,7 @@ export default function Schedule() {
                               <div className="md:col-span-9 pr-0 md:pr-12">
                                 <div className="flex items-center gap-3 mb-8">
                                   <div className="h-px w-12 bg-primary/40" />
-                                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/80 font-bold">
+                                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary font-bold">
                                     Event Details
                                   </span>
                                 </div>

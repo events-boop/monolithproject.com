@@ -32,7 +32,7 @@ export default function Alerts() {
           <h1 className="font-display text-4xl md:text-5xl uppercase tracking-wide mb-3">
             Select Your Drop
           </h1>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/50">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/70">
             Venue coordinates · Private links · Pre-sale access
           </p>
         </div>
@@ -103,7 +103,7 @@ export default function Alerts() {
                   <h3 className="font-display text-2xl tracking-wide text-white transition-colors">
                     SUN(SETS) RADIO
                   </h3>
-                  <p className="font-mono text-[10px] tracking-widest text-white/50 uppercase">
+                  <p className="font-mono text-[10px] tracking-widest text-white/70 uppercase">
                     The Global Connection
                   </p>
                 </div>
@@ -118,7 +118,7 @@ export default function Alerts() {
           </div>
         </div>
 
-        <div className="mt-12 text-center text-white/30 font-mono text-[10px] tracking-widest uppercase">
+        <div className="mt-12 text-center text-white/70 font-mono text-[10px] tracking-widest uppercase">
           Powered by Laylo
           <br />
           (Mockup Version)

@@ -182,7 +182,7 @@ export default function Partners() {
                 >
                   <div className="relative z-10">
                     <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center mb-10 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-700">
-                      <partner.icon className="w-7 h-7 text-white/40 group-hover:text-white transition-colors" />
+                      <partner.icon className="w-7 h-7 text-white/70 group-hover:text-white transition-colors" />
                     </div>
                     <h3 className="font-display text-4xl md:text-5xl text-white mb-3 uppercase tracking-tighter">
                       {partner.title}
@@ -190,7 +190,7 @@ export default function Partners() {
                     <p className="font-mono text-[10px] text-primary tracking-[0.3em] uppercase mb-10">
                       [ {partner.subtitle} ]
                     </p>
-                    <p className="text-white/50 leading-relaxed mb-12 font-light text-lg md:text-xl">
+                    <p className="text-white/70 leading-relaxed mb-12 font-light text-lg md:text-xl">
                       {partner.description}
                     </p>
 
@@ -227,7 +227,7 @@ export default function Partners() {
               className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 md:mb-16"
             >
               <div className="md:w-[65%]">
-                <span className="section-kicker text-white/30 mb-4 block">
+                <span className="section-kicker text-white/70 mb-4 block">
                   Resource_Network
                 </span>
                 <h2 className="section-display-title-compact text-white">
@@ -351,23 +351,23 @@ export default function Partners() {
                     onClick={() => openInquiry("general")}
                   >
                     <div>
-                      <r.icon className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors mb-3" />
+                      <r.icon className="w-5 h-5 text-white/70 group-hover:text-primary transition-colors mb-3" />
                       <h3 className="font-display text-lg lg:text-xl text-white uppercase tracking-tight leading-[0.95]">
                         {r.title}
                       </h3>
-                      <p className="mt-1 font-mono text-[10px] tracking-[0.24em] uppercase text-white/35">
+                      <p className="mt-1 font-mono text-[10px] tracking-[0.24em] uppercase text-white/70">
                         [ {r.code} ]
                       </p>
                     </div>
                     <div className="flex justify-end">
-                      <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-white transition-colors" />
+                      <ArrowRight className="w-4 h-4 text-white/70 group-hover:text-white transition-colors" />
                     </div>
                   </motion.article>
                 ))}
               </div>
             </div>
 
-            <p className="mt-8 font-mono text-[10px] text-white/30 tracking-[0.32em] uppercase">
+            <p className="mt-8 font-mono text-[10px] text-white/70 tracking-[0.32em] uppercase">
               Also looking for: Media · Musicians · Anyone with the right
               energy.
             </p>

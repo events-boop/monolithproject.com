@@ -61,14 +61,14 @@ export default function CookieConsent() {
             <button
               onClick={decline}
               aria-label="Dismiss cookie notice"
-              className="absolute right-2.5 top-2.5 z-10 rounded-full p-1 text-white/30 transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/20"
+              className="absolute right-2.5 top-2.5 z-10 rounded-full p-1 text-white/70 transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/20"
             >
               <X className="h-3.5 w-3.5" />
             </button>
 
             <div className="flex flex-col gap-2.5 p-3 pr-8">
               <div className="min-w-0">
-                <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary/75">
+                <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary">
                   Analytics Consent
                 </p>
                 <p className="mt-1 text-[11px] leading-relaxed text-white/60">

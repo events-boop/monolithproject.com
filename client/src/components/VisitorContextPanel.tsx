@@ -233,7 +233,7 @@ export default function VisitorContextPanel({
                 <>
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="ui-chip text-white/40">{action.note}</p>
+                      <p className="ui-chip text-white/70">{action.note}</p>
                       <h3 className="mt-3 font-display text-2xl uppercase text-white">
                         {action.label}
                       </h3>

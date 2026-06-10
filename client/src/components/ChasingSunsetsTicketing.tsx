@@ -264,7 +264,7 @@ export default function ChasingSunsetsTicketing({
             >
               <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/45">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/70">
                     {tier.visibility}
                   </p>
                   <h4 className="mt-3 text-lg font-black leading-tight text-white">
@@ -279,7 +279,7 @@ export default function ChasingSunsetsTicketing({
                   >
                     {SUNSETS_PRELAUNCH_LOCKED ? "At launch" : tier.priceLabel}
                   </p>
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
+                  <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
                     {SUNSETS_PRELAUNCH_LOCKED ? "Allocation locked" : tier.quantityLabel}
                   </p>
                 </div>

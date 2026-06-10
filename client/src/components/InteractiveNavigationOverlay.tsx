@@ -359,7 +359,7 @@ export default function InteractiveNavigationOverlay({
             )}
 
             <div className="mt-7 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+              <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                 {view.proof}
               </p>
               <a
@@ -436,7 +436,7 @@ export default function InteractiveNavigationOverlay({
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-var(--shell-nav-height)-3rem)] w-full max-w-[1800px] flex-col px-4 py-6 sm:px-6 lg:px-10">
         <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/40">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
               Explore Monolith
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
@@ -509,7 +509,7 @@ export default function InteractiveNavigationOverlay({
                   />
                   <span className="flex items-center justify-between gap-4">
                     <span>
-                      <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/30">
+                      <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/70">
                         {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                       </span>
                       <span className="block font-display text-[clamp(1.55rem,2.55vw,3.45rem)] uppercase leading-[0.8] tracking-[-0.04em] text-white">
@@ -563,7 +563,7 @@ export default function InteractiveNavigationOverlay({
                   className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   <span>
-                    <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
+                    <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">
                       {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                     </span>
                     <span className="font-display text-[clamp(2rem,9vw,3.6rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
@@ -614,7 +614,7 @@ export default function InteractiveNavigationOverlay({
                             <p className="mt-3 text-sm leading-relaxed text-white/70">
                               {view.description}
                             </p>
-                            <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                            <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
                               {view.proof}
                             </p>
                             <div className="mt-4 flex flex-col gap-2">

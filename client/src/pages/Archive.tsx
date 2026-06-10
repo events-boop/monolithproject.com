@@ -69,11 +69,11 @@ export default function Archive() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-16"
           >
-            <span className="section-kicker text-white/40 block mb-5">
+            <span className="section-kicker text-white/70 block mb-5">
               Event Archive
             </span>
             <h1 className="section-display-title text-white mb-6">ARCHIVE</h1>
-            <p className="text-white/40 max-w-xl leading-relaxed">
+            <p className="text-white/70 max-w-xl leading-relaxed">
               Every season, every event, every gallery.
             </p>
           </motion.div>
@@ -137,10 +137,10 @@ export default function Archive() {
                       <h2 className="font-display text-xl uppercase tracking-wider text-white mb-1">
                         {entry.title}
                       </h2>
-                      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 mb-3">
+                      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-3">
                         {entry.subtitle}
                       </p>
-                      <p className="text-sm text-white/40 leading-relaxed line-clamp-2 mb-4">
+                      <p className="text-sm text-white/70 leading-relaxed line-clamp-2 mb-4">
                         {entry.description}
                       </p>
                       <span className="btn-text-action">

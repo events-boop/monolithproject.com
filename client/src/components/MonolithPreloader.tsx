@@ -62,7 +62,7 @@ export default function MonolithPreloader() {
               className="font-display text-[clamp(2.5rem,8vw,5.5rem)] tracking-[0.2em] text-white"
             />
             <div className="h-px w-16 bg-white/20" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.8em] text-white/40">
+            <span className="font-mono text-[10px] uppercase tracking-[0.8em] text-white/70">
               The Monolith Project
             </span>
           </motion.div>

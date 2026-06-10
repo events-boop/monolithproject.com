@@ -115,7 +115,7 @@ const inputClass =
   "w-full px-4 py-3.5 text-sm text-white placeholder-white/25 bg-white/[0.04] border border-white/10 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 focus:outline-none transition-all duration-200";
 
 const labelClass =
-  "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-2";
+  "block text-[10px] font-mono uppercase tracking-[0.25em] text-white/70 mb-2";
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -219,7 +219,7 @@ ${form.bio}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-20"
           >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-5">
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               — Join The Lineup
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
@@ -238,7 +238,7 @@ ${form.bio}
               style={{ originX: 0 }}
               className="h-[2px] w-44 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-8"
             />
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
+            <p className="text-white/70 text-lg leading-relaxed max-w-2xl">
               We're always building the pipeline. If your sound fits the
               frequency, drop your mix here. We listen to everything.
             </p>
@@ -253,7 +253,7 @@ ${form.bio}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-4"
             >
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-6">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
                 What We Look For
               </p>
               <ul className="space-y-5 mb-10">
@@ -264,7 +264,7 @@ ${form.bio}
                       <p className="text-sm text-white/80 font-medium mb-0.5">
                         {item.label}
                       </p>
-                      <p className="text-xs text-white/40 leading-relaxed">
+                      <p className="text-xs text-white/70 leading-relaxed">
                         {item.desc}
                       </p>
                     </div>
@@ -273,10 +273,10 @@ ${form.bio}
               </ul>
 
               <div className="pt-8 border-t border-white/10">
-                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-3">
+                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-3">
                   Response Time
                 </p>
-                <p className="text-xs text-white/40 leading-relaxed">
+                <p className="text-xs text-white/70 leading-relaxed">
                   We review submissions on a rolling basis. If there's a fit,
                   we'll reach out within 4–6 weeks. Not every submission gets a
                   response — but every one gets listened to.
@@ -284,12 +284,12 @@ ${form.bio}
               </div>
 
               <div className="mt-8 pt-8 border-t border-white/10">
-                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/30 mb-3">
+                <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-3">
                   Already Have a Booking Inquiry?
                 </p>
                 <a
                   href="/booking"
-                  className="inline-flex items-center gap-1.5 text-xs text-primary/70 hover:text-primary transition-colors font-mono"
+                  className="inline-flex items-center gap-1.5 text-xs text-primary hover:text-primary transition-colors font-mono"
                 >
                   Use the Booking Form instead
                   <ArrowUpRight className="w-3 h-3" />
@@ -323,7 +323,7 @@ ${form.bio}
                     <h2 className="font-display text-3xl uppercase text-white mb-4">
                       Submitted
                     </h2>
-                    <p className="text-white/40 max-w-md text-sm leading-relaxed">
+                    <p className="text-white/70 max-w-md text-sm leading-relaxed">
                       We've got your mix. If there's a fit, we'll be in touch
                       within 4–6 weeks. Keep creating.
                     </p>
@@ -391,7 +391,7 @@ ${form.bio}
                                 >
                                   {opt.label}
                                 </p>
-                                <p className="text-[10px] text-white/30 mt-0.5 leading-snug">
+                                <p className="text-[10px] text-white/70 mt-0.5 leading-snug">
                                   {opt.sub}
                                 </p>
                               </div>

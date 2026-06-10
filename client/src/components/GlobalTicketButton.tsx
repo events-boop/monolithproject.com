@@ -200,7 +200,7 @@ export default function GlobalTicketButton() {
             </div>
 
             <div className="relative z-10 min-w-[8.5rem]">
-              <span className="ui-chip flex items-center gap-1.5 text-white/50">
+              <span className="ui-chip flex items-center gap-1.5 text-white/70">
                 <span
                   className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
                   style={{

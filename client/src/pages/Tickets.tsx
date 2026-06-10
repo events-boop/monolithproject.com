@@ -161,7 +161,7 @@ export default function Tickets() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="font-serif italic text-lg text-primary/80 block mb-6">
+              <span className="font-serif italic text-lg text-primary block mb-6">
                 {featuredEyebrow}
               </span>
               <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
@@ -251,7 +251,7 @@ export default function Tickets() {
                     <KineticDecryption text={featuredHeadline} />
                   </h2>
                   <div className="h-px w-20 bg-primary/40 mb-8" />
-                  <p className="text-lg md:text-xl leading-relaxed text-white/50 max-w-lg font-light">
+                  <p className="text-lg md:text-xl leading-relaxed text-white/70 max-w-lg font-light">
                     {featuredEvent?.description ||
                       "Music-first nights with limited capacity, strong curation, and a room worth arriving for."}
                   </p>
@@ -357,7 +357,7 @@ export default function Tickets() {
                       {getTierIcon(tier.icon)}
                     </div>
                     {tier.highlight && (
-                      <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/80 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
                         High Demand
                       </span>
                     )}
@@ -447,7 +447,7 @@ export default function Tickets() {
           <div className="container layout-wide">
             <div className="grid gap-10 rounded-[2rem] border border-white/10 bg-white/[0.025] p-6 md:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:items-end">
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-primary/70">
+                <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-primary">
                   Before Checkout
                 </span>
                 <h2 className="mt-5 max-w-[10ch] font-monolith text-[clamp(2.6rem,6vw,5.75rem)] font-normal uppercase leading-[0.86] tracking-[0.01em] text-white">
@@ -482,7 +482,7 @@ export default function Tickets() {
               </div>
 
               <div className="rounded-[1.5rem] border border-white/10 bg-black/50 p-5 md:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/35">
+                <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-white/70">
                   Primary Action
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-white/58">

@@ -56,13 +56,13 @@ export default function ArchiveSection() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 border-b border-white/5 pb-8"
         >
-          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/40 block mb-4">
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-4">
             Event Archive
           </span>
           <h1 className="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.82] uppercase tracking-tight text-white mb-4 drop-shadow-md">
             <SplitText text="ARCHIVE" initialDelay={0.15} />
           </h1>
-          <p className="text-white/40 max-w-md leading-relaxed text-sm md:text-base">
+          <p className="text-white/70 max-w-md leading-relaxed text-sm md:text-base">
             Every season, every event, every gallery. The full history of
             Monolith Project events.
           </p>
@@ -121,10 +121,10 @@ export default function ArchiveSection() {
                   <h2 className="font-display text-xl uppercase tracking-wider text-white mb-1">
                     {entry.title}
                   </h2>
-                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/40 mb-3">
+                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-3">
                     {entry.subtitle}
                   </p>
-                  <p className="text-sm text-white/40 leading-relaxed line-clamp-2 mb-6 flex-1">
+                  <p className="text-sm text-white/70 leading-relaxed line-clamp-2 mb-6 flex-1">
                     {entry.description}
                   </p>
                   <div className="mt-auto">

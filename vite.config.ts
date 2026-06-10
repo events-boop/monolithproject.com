@@ -85,12 +85,12 @@ export default defineConfig(({ mode }) => {
         },
       }),
       ViteImageOptimizer({
-        // Favor delivery size over archival fidelity for photographic assets.
-        png: { quality: 85 },
-        jpeg: { quality: 85 },
-        jpg: { quality: 85 },
-        webp: { quality: 85 },
-        avif: { quality: 65 },
+        // Higher fidelity for directly-referenced assets; edge compression covers transfer size.
+        png: { quality: 90 },
+        jpeg: { quality: 90 },
+        jpg: { quality: 90 },
+        webp: { quality: 88 },
+        avif: { quality: 72 },
       }),
       cspSafeStylesheetLinks(),
     ],

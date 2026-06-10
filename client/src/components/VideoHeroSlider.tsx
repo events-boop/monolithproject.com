@@ -379,7 +379,7 @@ export default function VideoHeroSlider({
       <button
         type="button"
         onClick={prev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -387,7 +387,7 @@ export default function VideoHeroSlider({
       <button
         type="button"
         onClick={next}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-white/10 hidden md:flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5" />
@@ -416,7 +416,7 @@ export default function VideoHeroSlider({
         {/* Right: Credit + Mute */}
         <div className="flex items-center gap-4 pointer-events-auto">
           {slide.credit && (
-            <span className="font-mono text-[10px] text-white/30 tracking-widest uppercase hidden md:block">
+            <span className="font-mono text-[10px] text-white/70 tracking-widest uppercase hidden md:block">
               Photo: {slide.credit}
             </span>
           )}
@@ -427,7 +427,7 @@ export default function VideoHeroSlider({
               <button
                 type="button"
                 onClick={toggleMute}
-                className="p-2 border border-white/10 text-white/40 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+                className="p-2 border border-white/10 text-white/70 hover:text-white hover:border-white/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
                 aria-label={isMuted ? "Unmute video" : "Mute video"}
               >
                 {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
