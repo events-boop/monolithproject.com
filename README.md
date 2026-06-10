@@ -75,6 +75,40 @@ The project utilizes a custom SEO engine (`shared/seo`) which automatically sync
 - SUN(SETS) drop swaps: `docs/SUNSETS_MARKETER_DROP_WORKFLOW.md`
 - Untold Story drop swaps: `docs/UNTOLD_MARKETER_DROP_WORKFLOW.md`
 
+## 🤖 Multi-Agent & Deploy Workflow
+
+Multiple coding agents run against this repo. To avoid commits clobbering each
+other and overlapping Netlify production deploys, follow these rules:
+
+1. **One agent per checkout — never share a working directory.** Give each agent
+   its own [git worktree](https://git-scm.com/docs/git-worktree) on its own branch:
+
+   ```bash
+   git worktree add ../mp-<agent-name> -b agent/<agent-name>
+   ```
+
+   Two agents in the same folder will sweep each other's uncommitted files into a
+   single commit (and fight over `main`). Separate worktrees share history but
+   have independent working trees, so they can't.
+
+2. **Agents push feature branches, not `main`.** Each branch gets its own Netlify
+   **deploy-preview** URL. Only a human (or one designated merge step) lands `main`,
+   so exactly one production deploy runs at a time.
+
+3. **Never `git add -A` blindly.** Stage the specific paths you changed so you
+   don't pick up another agent's in-flight edits.
+
+### Netlify settings to enable (dashboard, one-time)
+
+These can't live in `netlify.toml` and must be set in **Site settings → Build & deploy**:
+
+- **Branch deploys / Deploy previews:** on, so feature branches don't hit prod.
+- **Auto-cancel superseded builds:** on, so rapid pushes don't stack overlapping
+  production deploys.
+
+`netlify.toml` already skips builds for commits that only touch `docs/`,
+`private/`, or markdown (see the `ignore` rule under `[build]`).
+
 ---
 
 © 2026 The Monolith Project. All rights reserved.
