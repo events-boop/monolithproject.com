@@ -303,7 +303,70 @@ export default function SunsetsLinkBio() {
             </a>
           ) : null}
 
-          {/* 4. Secondary CTA */}
+          {/* 4. Set Times */}
+          <section className="space-y-2 border border-white/10 bg-black/20 px-4 py-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
+              Set Times
+            </p>
+            <div className="space-y-2">
+              {[
+                { time: "12:00 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Doors Open" : "Doors Open" },
+                { time: "2:15 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Erik The DJ" },
+                { time: "3:30 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Amari" },
+                { time: "4:45 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Kiko Franco" },
+                { time: "6:45 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Autograf" },
+                { time: "10:00 PM", label: "Close" },
+              ].map(slot => (
+                <div
+                  key={slot.time}
+                  className="flex items-center justify-between border-b border-white/5 pb-2 last:border-b-0 last:pb-0"
+                >
+                  <span className="text-[11px] font-mono font-semibold tracking-[0.06em] text-stone-400">
+                    {slot.time}
+                  </span>
+                  <span
+                    className={`text-[11px] font-bold uppercase tracking-[0.08em] ${
+                      SUNSETS_PRELAUNCH_LOCKED && slot.label === "Artist TBA"
+                        ? "text-stone-500"
+                        : "text-stone-200"
+                    }`}
+                  >
+                    {slot.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 5. What to Expect */}
+          <section className="border border-white/10 bg-black/20 px-4 py-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
+              What to Expect
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-stone-300">
+              Open-air house music on the Chicago lakefront, built around
+              panoramic skyline views and the transition from late afternoon into
+              night. Sand between sets. Golden hour into fireworks. One of the
+              best views in the city.
+            </p>
+          </section>
+
+          {/* 6. Venue */}
+          <section className="border border-white/10 bg-black/20 px-4 py-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
+              The Venue
+            </p>
+            <p className="mt-2 text-sm font-black text-white">
+              Castaways Beach Club
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-stone-400">
+              North Avenue Beach — Chicago's iconic lakefront venue with
+              panoramic skyline views. Outdoor bar, beach access, and the best
+              sunset sightline in the city. 21+ only.
+            </p>
+          </section>
+
+          {/* 7. Secondary CTA */}
           <Button
             asChild
             variant="outline"
@@ -328,7 +391,7 @@ export default function SunsetsLinkBio() {
             </a>
           </Button>
 
-          {/* 5. Footer strip */}
+          {/* 8. Footer strip */}
           <footer className="mt-auto pt-4">
             <nav
               aria-label="More from Sun(Sets)"
