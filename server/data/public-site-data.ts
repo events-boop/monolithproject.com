@@ -319,7 +319,7 @@ function lockSunsetsPrelaunchEvent(event: ScheduledEvent): ScheduledEvent {
         recentlyDropped: false,
         whatToExpect: [
             "A full-day house music experience on Lake Michigan",
-            "Autograf, Kiko Franco, Amari, and Erik The DJ",
+            "Kiko Franco & Special Guests — reveals drop in chapters",
             "Lake List members get the first ticket release window",
             "Private codes, drops, and location signals before the public",
             "Season access and VIP/table details unlock at launch",

@@ -91,7 +91,7 @@ const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeU
 
 const HERO_SIGNAL_STATS = [
   { label: "Date", value: "July 4", note: "Saturday" },
-  { label: "Time", value: "12PM-10PM", note: "12PM doors" },
+  { label: "Time", value: "1PM-10PM", note: "1PM doors" },
   { label: "Venue", value: "Castaways", note: "Chicago" },
 ] as const;
 

@@ -14,6 +14,7 @@ import {
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
   SUNSETS_LAKELIST_PATH,
+  SUNSETS_PRELAUNCH_LOCKED,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import {
@@ -36,7 +37,7 @@ const SEASON_DATES = [
   {
     title: "SUN(SETS) I",
     date: "July 4",
-    badge: "ON SALE NOW",
+    badge: SUNSETS_PRELAUNCH_LOCKED ? "FIRST ACCESS" : "ON SALE NOW",
     eventSlug: JULY_4_EVENT_SLUG,
   },
   { title: "SUN(SETS) II", date: "August 22" },
@@ -222,25 +223,27 @@ export default function SunsetsLinkBio() {
             </div>
 
             <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-stone-400">
-              Castaways Beach Club · Chicago · 1PM–10PM · 21+
+              Castaways Beach Club · Chicago · 12PM–10PM · 21+
             </p>
           </header>
 
           {/* 2. Primary CTAs */}
           <section className="space-y-3" aria-label="Tickets and Lake List">
+            {!SUNSETS_PRELAUNCH_LOCKED ? (
+              <Button
+                asChild
+                className="h-14 w-full bg-[#61e8ff] text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff]"
+              >
+                <a href={ticketHref} onClick={handleTicketClick}>
+                  <Ticket className="size-4" />
+                  GET JULY 4 TICKETS
+                  <ArrowUpRight className="size-4" />
+                </a>
+              </Button>
+            ) : null}
             <Button
               asChild
-              className="h-14 w-full bg-[#61e8ff] text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff]"
-            >
-              <a href={ticketHref} onClick={handleTicketClick}>
-                <Ticket className="size-4" />
-                GET JULY 4 TICKETS
-                <ArrowUpRight className="size-4" />
-              </a>
-            </Button>
-            <Button
-              asChild
-              className="h-14 w-full border border-[#ff6b8a]/60 bg-[#ff6b8a]/14 text-sm font-black uppercase tracking-[0.12em] text-[#ffd0dc] shadow-[0_10px_32px_rgba(255,107,138,0.16)] hover:bg-[#ff6b8a]/24"
+              className={`h-14 w-full border border-[#ff6b8a]/60 bg-[#ff6b8a]/14 text-sm font-black uppercase tracking-[0.12em] text-[#ffd0dc] shadow-[0_10px_32px_rgba(255,107,138,0.16)] hover:bg-[#ff6b8a]/24 ${SUNSETS_PRELAUNCH_LOCKED ? "mt-0" : ""}`}
             >
               <a href={lakeListHref} onClick={handleLakeListClick}>
                 <LockKeyhole className="size-4" />
@@ -249,40 +252,56 @@ export default function SunsetsLinkBio() {
               </a>
             </Button>
             <p className="text-center text-[11px] font-semibold leading-relaxed text-stone-400">
-              First access to SUN(SETS) II + III, the limited 2026 Season Pass
-              release, artist announcements + guest-list opportunities.
+              {SUNSETS_PRELAUNCH_LOCKED
+                ? "First access to SUN(SETS) I–III tickets, the limited 2026 Season Pass, artist announcements, and guest-list opportunities before the public."
+                : "First access to SUN(SETS) II + III, the limited 2026 Season Pass release, artist announcements + guest-list opportunities."}
             </p>
           </section>
 
           {/* 3. Proof strip */}
           <section className="border-y border-white/10 py-3 text-center">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
-              Kiko Franco · Lakefront Debut · July 4
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
-              Full lineup revealed in chapters.
-            </p>
+            {SUNSETS_PRELAUNCH_LOCKED ? (
+              <>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
+                  Full Lineup Announced Soon
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
+                  Lake List members get the first signal.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
+                  Kiko Franco · Lakefront Debut · July 4
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
+                  Full lineup revealed in chapters.
+                </p>
+              </>
+            )}
           </section>
 
           {/* Benchek release teaser */}
-          <a
-            href={benchekReleaseHref}
-            onClick={handleBenchekReleaseClick}
-            className="block border border-[#ff6b8a]/30 bg-[#ff6b8a]/[.07] px-4 py-3.5 text-center transition hover:border-[#ff6b8a]/55 hover:bg-[#ff6b8a]/[.14]"
-          >
-            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#ffd0dc]">
-              Stay tuned
-            </p>
-            <p className="mt-1 text-sm font-black uppercase tracking-[0.06em] text-white">
-              BENCHEK — 4th of July Release 2026
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-300">
-              From Marbella, Spain · Exclusive live set
-            </p>
-            <p className="mt-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[#ff6b8a]">
-              Sign up here <ArrowUpRight className="inline size-3.5 align-[-2px]" />
-            </p>
-          </a>
+          {!SUNSETS_PRELAUNCH_LOCKED ? (
+            <a
+              href={benchekReleaseHref}
+              onClick={handleBenchekReleaseClick}
+              className="block border border-[#ff6b8a]/30 bg-[#ff6b8a]/[.07] px-4 py-3.5 text-center transition hover:border-[#ff6b8a]/55 hover:bg-[#ff6b8a]/[.14]"
+            >
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#ffd0dc]">
+                Stay tuned
+              </p>
+              <p className="mt-1 text-sm font-black uppercase tracking-[0.06em] text-white">
+                BENCHEK — 4th of July Release 2026
+              </p>
+              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-300">
+                From Marbella, Spain · Exclusive live set
+              </p>
+              <p className="mt-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[#ff6b8a]">
+                Sign up here <ArrowUpRight className="inline size-3.5 align-[-2px]" />
+              </p>
+            </a>
+          ) : null}
 
           {/* 4. Secondary CTA */}
           <Button

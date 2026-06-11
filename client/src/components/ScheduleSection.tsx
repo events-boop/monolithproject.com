@@ -234,13 +234,13 @@ export default function ScheduleSection() {
                   className="group relative border-b border-white/10 last:border-b-0"
                 >
                   <div
-                    className={`absolute bottom-0 left-0 top-0 w-[4px] opacity-0 transition-opacity duration-500 ${isExpanded ? "opacity-100" : "group-hover:opacity-100"}`}
+                    className={`absolute bottom-0 left-0 top-0 w-[4px] transition-opacity duration-500 ${event.featured || isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                     style={{ backgroundColor: seriesAccent }}
                   />
 
                   {/* Main Event Row */}
                   <div
-                    className={`group relative z-10 w-full px-4 transition-colors duration-500 sm:px-6 ${isExpanded ? "bg-black/[0.04]" : "hover:bg-black/[0.025]"}`}
+                    className={`group relative z-10 w-full px-4 transition-colors duration-500 sm:px-6 ${isExpanded ? "bg-black/[0.04]" : "hover:bg-black/[0.025]"} ${event.featured ? "bg-white/[0.03]" : ""}`}
                   >
                     <div className="py-6 md:py-10 flex flex-col lg:grid lg:grid-cols-12 gap-5 md:gap-6 lg:items-center w-full text-left">
                       {/* 📅 DATE (Top on mobile, left on desktop) */}
@@ -329,7 +329,10 @@ export default function ScheduleSection() {
                       <div className="lg:col-span-4 flex flex-col gap-2 pl-0 lg:pl-4">
                         <h3
                           className={cn(
-                            "hero-wordmark text-[clamp(1.45rem,5vw,2.55rem)] font-black uppercase leading-[0.9] tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white lg:text-[clamp(1.9rem,4vw,2.9rem)]"
+                            "hero-wordmark font-black uppercase leading-[0.9] tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white",
+                            event.featured
+                              ? "text-[clamp(1.7rem,5.6vw,2.9rem)] lg:text-[clamp(2.2rem,4.5vw,3.4rem)]"
+                              : "text-[clamp(1.45rem,5vw,2.55rem)] lg:text-[clamp(1.9rem,4vw,2.9rem)]"
                           )}
                           style={{
                             color: isJulyHoliday ? seriesAccent : undefined,
@@ -349,9 +352,18 @@ export default function ScheduleSection() {
                               NEW DROP
                             </span>
                           )}
-                          <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
-                            {getStatusLabel(event.status)}
-                          </span>
+                          {event.featured && event.status === "on-sale" ? (
+                            <span
+                              className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-black shadow-sm"
+                              style={{ backgroundColor: seriesAccent }}
+                            >
+                              ON SALE NOW
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
+                              {getStatusLabel(event.status)}
+                            </span>
+                          )}
                         </div>
                       </div>
 
