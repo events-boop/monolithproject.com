@@ -357,7 +357,16 @@ export default function ChasingSunsetsTicketing({
                 <ul className="mt-5 space-y-3">
                   {SUNSETS_JULY4_LINEUP.map(artist => (
                     <li key={artist} className="font-display text-[clamp(1.55rem,2.4vw,2.55rem)] uppercase leading-none text-white">
-                      {artist}
+                      {artist === "Kiko Franco" ? (
+                        <a
+                          href="/artists/kiko-franco"
+                          className="underline-offset-8 transition-colors hover:text-[#f4d58d] hover:underline"
+                        >
+                          {artist}
+                        </a>
+                      ) : (
+                        artist
+                      )}
                     </li>
                   ))}
                 </ul>

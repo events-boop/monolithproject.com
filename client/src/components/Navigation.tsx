@@ -546,7 +546,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* CENTER: NAV ITEMS */}
-              <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-2 xl:gap-3 2xl:gap-6 pr-2 xl:pr-4 whitespace-nowrap">
+              <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-1.5 xl:gap-2.5 2xl:gap-4 pr-2 xl:pr-3 whitespace-nowrap">
                 <NavigationMegamenu
                   label="SCHEDULE"
                   href={ROUTES.schedule}
@@ -606,6 +606,38 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           icon: "arrow",
                           badge: "SHOWS",
                         },
+                  }}
+                />
+
+                <NavigationMegamenu
+                  label="ARTISTS"
+                  href={ROUTES.artists}
+                  isActive={
+                    location === ROUTES.artists ||
+                    location === ROUTES.lineup ||
+                    location.startsWith("/artists/")
+                  }
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [
+                      { label: "ALL ARTISTS", href: ROUTES.artists, icon: "arrow" },
+                      {
+                        label: "KIKO FRANCO — JULY 4",
+                        href: "/artists/kiko-franco",
+                      },
+                      { label: "RADIO EPISODES", href: ROUTES.radio },
+                    ],
+                    feature: {
+                      title: "Kiko Franco",
+                      subtitle: "July 4 Headliner — Lakefront Debut",
+                      image: "/images/artist-kiko-franco-card.webp",
+                      href: "/artists/kiko-franco",
+                      ctaText: "View Profile",
+                      icon: "arrow",
+                      badge: "JULY 4",
+                    },
                   }}
                 />
 
@@ -701,7 +733,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="SUN(SETS) RADIO"
+                  label="RADIO"
                   href={ROUTES.radio}
                   isActive={location.startsWith(ROUTES.radio)}
                   isLight={isLight}

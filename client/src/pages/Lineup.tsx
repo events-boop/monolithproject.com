@@ -476,7 +476,7 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
 
 export default function Lineup() {
   const [activeFilter, setActiveFilter] = useState<Series>("all");
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   const filteredArtists = useMemo(() => {
     if (activeFilter === "all") return ARTIST_ENTRIES;

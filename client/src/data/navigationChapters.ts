@@ -102,7 +102,7 @@ export const navigationChapters: NavigationChapter[] = [
     id: "artists",
     label: "Artists",
     eyebrow: "Roster",
-    href: ROUTES.lineup,
+    href: ROUTES.artists,
     tagline: "The artists behind the shows.",
     description:
       "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",

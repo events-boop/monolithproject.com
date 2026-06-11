@@ -135,6 +135,7 @@ export default function ArtistProfile() {
       <SEO
         title={artist.name}
         description={artist.bio}
+        image={artist.image}
         canonicalPath={canonicalArtistPath}
         schemaData={buildArtistSchema(artist, canonicalArtistPath)}
       />

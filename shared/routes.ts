@@ -18,6 +18,7 @@ export const ROUTES = {
   tickets: "/tickets",
   about: "/about",
   lineup: "/lineup",
+  artists: "/artists",
   schedule: "/schedule",
   events: "/events",
   archive: "/archive",

@@ -10,7 +10,9 @@ export const SUNSETS_JULY4_EVENT_ADDRESS = "1603 N Lake Shore Dr, Chicago, IL 60
 export const SUNSETS_JULY4_TOTAL_CAPACITY = 1200;
 export const SUNSETS_JULY4_FIRST_ACCESS_CODE = "SUNSET26";
 export const SUNSETS_JULY4_TABLE_MINIMUM = "$2,000 minimum";
-export const SUNSETS_PRELAUNCH_LOCKED = true;
+// Flipped false 2026-06-11: July 4 tickets are publicly on sale (owner brief).
+// While true this hid prices/counts sitewide and redirected /tickets → /sunsets.
+export const SUNSETS_PRELAUNCH_LOCKED = false;
 
 export const SUNSETS_JULY4_TICKET_GROUP = "tickets";
 export const SUNSETS_JULY4_TICKET_KEY = "css-jul04";

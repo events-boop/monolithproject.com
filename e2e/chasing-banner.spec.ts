@@ -27,12 +27,10 @@ test("chasing sunsets keeps the next-event context on mobile", async ({
   await expect(page.locator("#chasing-hero")).toContainText("July 4, 2026");
   await expect(page.locator("#chasing-hero")).toContainText("Castaways");
 
-  const countdown = page
-    .locator("div")
-    .filter({ has: page.getByText("Next Event", { exact: true }) })
-    .filter({ hasText: "Chasing Sun(Sets)" })
-    .filter({ hasText: "July 4, 2026" })
-    .first();
-  await expect(countdown).toContainText("Chasing Sun(Sets)");
-  await expect(countdown).toContainText("July 4, 2026");
+  // On-sale era: the prelaunch "Next Event" countdown is replaced by the
+  // live ticket state (ticker + BUY TICKETS CTA).
+  await expect(page.getByText("TICKETS ON SALE NOW").first()).toBeVisible();
+  await expect(
+    page.getByText(/BUY TICKETS — JULY 4/i).first()
+  ).toBeVisible();
 });

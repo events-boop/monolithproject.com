@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-10T09:01:12.647Z",
+  "generatedAt": "2026-06-11T20:50:51.908Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 4154350,
-    "estimatedTransferBytes": 2516177,
-    "estimatedSavingsBytes": 1728787,
-    "variantBytes": 8340549
+    "originalBytes": 4313664,
+    "estimatedTransferBytes": 2638419,
+    "estimatedSavingsBytes": 1765859,
+    "variantBytes": 8707523
   },
   "images": [
     {
@@ -998,6 +998,82 @@
       "estimatedTransferKb": 155.6,
       "estimatedSavingsBytes": 0,
       "estimatedSavingsPct": 0
+    },
+    {
+      "source": "/images/artist-kiko-franco-card.webp",
+      "originalBytes": 44818,
+      "originalKb": 43.8,
+      "originalWidth": 640,
+      "originalHeight": 886,
+      "generatedBaseName": "artist-kiko-franco-card",
+      "variants": [
+        {
+          "path": "/images/generated/artist-kiko-franco-card-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 22246
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-card-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 24598
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-card-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 41170
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-card-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 44968
+        }
+      ],
+      "estimatedTransferBytes": 41170,
+      "estimatedTransferKb": 40.2,
+      "estimatedSavingsBytes": 3648,
+      "estimatedSavingsPct": 8
+    },
+    {
+      "source": "/images/artist-kiko-franco.webp",
+      "originalBytes": 114496,
+      "originalKb": 111.8,
+      "originalWidth": 1100,
+      "originalHeight": 1522,
+      "generatedBaseName": "artist-kiko-franco",
+      "variants": [
+        {
+          "path": "/images/generated/artist-kiko-franco-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 26812
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 28062
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 81072
+        },
+        {
+          "path": "/images/generated/artist-kiko-franco-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 98046
+        }
+      ],
+      "estimatedTransferBytes": 81072,
+      "estimatedTransferKb": 79.2,
+      "estimatedSavingsBytes": 33424,
+      "estimatedSavingsPct": 29
     },
     {
       "source": "/images/artist-lazare.webp",

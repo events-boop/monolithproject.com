@@ -19,6 +19,25 @@ export interface ArtistData {
 
 export const ARTIST_ENTRIES: ArtistData[] = [
   {
+    // OWNER REWRITE: placeholder bio assembled from launch-brief source
+    // material — replace with approved copy before/at announcement push.
+    id: "kiko-franco",
+    name: "KIKO FRANCO",
+    role: "JULY 4 HEADLINER",
+    origin: "RIO DE JANEIRO, BR",
+    genre: "AFRO HOUSE",
+    image: "/images/artist-kiko-franco.webp",
+    series: ["chasing-sunsets"],
+    bio: "Rio-born Kiko Franco took Afro House global with his No. 1 Beatport remix of \"Love Tonight\" — Diamond certified and a BBC Radio summer anthem — earning support from Black Coffee, Carl Cox, David Guetta, and Tiësto. From Tomorrowland Brasil to Burning Man and Ushuaïa, his sets carry golden-hour energy built for the lakefront. On July 4 he makes his Chicago lakefront debut headlining SUN(SETS) I.",
+    tags: ["Afro House", "July 4 Headliner", "Lakefront Debut"],
+    socials: {},
+    tracks: [
+      { title: "Love Tonight (Kiko Franco Remix)", duration: "—" },
+      { title: "Live at Tomorrowland Brasil", duration: "—" },
+      { title: "Ushuaïa Ibiza Session", duration: "—" },
+    ],
+  },
+  {
     id: "lazare",
     name: "LAZARE SABRY",
     role: "HEADLINER",
