@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, LockKeyhole, Ticket } from "lucide-react";
+import { ArrowUpRight, LockKeyhole, Play, Ticket } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { trackFunnelPageView } from "@/lib/api";
@@ -28,6 +28,14 @@ const PAGE_SOURCE = "sunsets_wrapper";
 const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
+
+const AUTOGRAF_YOUTUBE_EMBED =
+  "https://www.youtube.com/embed/9R6XH7JZlJI?start=5506&rel=0&modestbranding=1";
+const SOMMERS_SOUNDCLOUD_URL =
+  "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
+const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+  SOMMERS_SOUNDCLOUD_URL
+)}&color=%2361e8ff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
 
 // Forwarded to Laylo by the /go/ redirect layer.
 const LAKELIST_UTM_QUERY =
@@ -391,7 +399,46 @@ export default function SunsetsLinkBio() {
             </a>
           </Button>
 
-          {/* 8. Footer strip */}
+          {/* 8. YouTube Recap */}
+          <section className="space-y-3 border border-white/10 bg-black/20 px-4 py-4">
+            <div className="flex items-center gap-2">
+              <Play className="size-4 text-[#61e8ff]" />
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#61e8ff]">
+                Watch the Last Chapter
+              </p>
+            </div>
+            <div className="aspect-video overflow-hidden bg-black">
+              <iframe
+                className="h-full w-full"
+                src={AUTOGRAF_YOUTUBE_EMBED}
+                title="Autograf Sun(Sets) recap"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </section>
+
+          {/* 9. SoundCloud */}
+          <section className="space-y-3 border border-white/10 bg-black/20 px-4 py-4">
+            <div className="flex items-center gap-2">
+              <Play className="size-4 text-[#61e8ff]" />
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#61e8ff]">
+                SUN(SETS) Radio — Sommers UK
+              </p>
+            </div>
+            <div className="overflow-hidden bg-black">
+              <iframe
+                title="Sommers UK featured SoundCloud selection"
+                className="h-[300px] w-full"
+                scrolling="no"
+                frameBorder="no"
+                allow="autoplay"
+                src={SOMMERS_SOUNDCLOUD_EMBED}
+              />
+            </div>
+          </section>
+
+          {/* 10. Footer strip */}
           <footer className="mt-auto pt-4">
             <nav
               aria-label="More from Sun(Sets)"

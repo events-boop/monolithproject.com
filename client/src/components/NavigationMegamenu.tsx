@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import { Link } from "wouter";
 import { ChevronDown, ArrowUpRight, Play, Ticket } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";

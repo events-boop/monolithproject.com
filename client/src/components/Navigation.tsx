@@ -642,7 +642,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="CHASING SUN(SETS)"
+                  label="SUN(SETS)"
                   href={ROUTES.chasingSunsets}
                   isActive={
                     location === ROUTES.chasingSunsets ||
