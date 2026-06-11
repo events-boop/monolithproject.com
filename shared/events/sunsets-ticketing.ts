@@ -3,7 +3,7 @@ import type { TicketTier } from "./types";
 export const SUNSETS_JULY4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 export const SUNSETS_JULY4_EVENT_DATE = "2026-07-04";
 export const SUNSETS_JULY4_EVENT_TITLE = "SUN(SETS) I — July 4th at Castaways";
-export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
+export const SUNSETS_JULY4_EVENT_TIME = "1:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";
 export const SUNSETS_JULY4_EVENT_ADDRESS = "1603 N Lake Shore Dr, Chicago, IL 60614";
@@ -15,6 +15,12 @@ export const SUNSETS_PRELAUNCH_LOCKED = true;
 export const SUNSETS_JULY4_TICKET_GROUP = "tickets";
 export const SUNSETS_JULY4_TICKET_KEY = "css-jul04";
 export const SUNSETS_JULY4_TICKET_PATH = "/go/tickets/css-jul04";
+// Launch vanity aliases used on the sunsets.vip landing page and printed
+// materials. Redirected to the canonical /go destinations by netlify.toml and
+// server/routes/outbound.ts — keep all three places in sync.
+export const SUNSETS_JULY4_VANITY_TICKET_PATH = "/go/tickets/sunsets-july4";
+export const SUNSETS_LAKELIST_PATH = "/go/lakelist";
+export const SUNSETS_LAKELIST_CANONICAL_PATH = "/go/waitlist/chasing-sunsets";
 export const SUNSETS_AUG22_TICKET_KEY = "css-aug22";
 export const SUNSETS_AUG22_TICKET_PATH = "/go/tickets/css-aug22";
 export const SUNSETS_SEP19_TICKET_KEY = "css-sep19";
@@ -35,7 +41,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_JULY4_EVENT_DATE,
     eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Autograf x Kiko Franco",
+    lineup: "Kiko Franco & Special Guests",
     ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
@@ -90,19 +96,18 @@ export const SUNSETS_JULY4_TICKET_UTMS = {
   utm_content: "buy_tickets_primary",
 } as const;
 
+// DECISION A (2026-06-11): public billing is "Kiko Franco & Special Guests"
+// only. Additional artists are pending confirmation / held as chapter
+// reveals — do not add names here until cleared for public announcement.
 export const SUNSETS_JULY4_LINEUP = [
-  "Autograf",
   "Kiko Franco",
-  "Amari",
-  "Erik The DJ",
+  "Special Guests",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
-  { time: "12:00 PM", label: "Doors / Event Begins" },
-  { time: "2:15 PM — 3:30 PM", label: "Erik The DJ" },
-  { time: "3:30 PM — 4:45 PM", label: "Amari" },
-  { time: "4:45 PM — 6:45 PM", label: "Kiko Franco" },
-  { time: "6:45 PM — 10:00 PM", label: "Autograf" },
+  { time: "1:00 PM", label: "Doors / Event Begins" },
+  { time: "Golden Hour", label: "Kiko Franco — Lakefront Debut" },
+  { time: "Support Sets", label: "Revealed in chapters" },
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 

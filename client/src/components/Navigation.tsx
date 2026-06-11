@@ -610,28 +610,6 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
-                  label="SUN(SETS) RADIO"
-                  href={ROUTES.radio}
-                  isActive={location.startsWith(ROUTES.radio)}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  type="chasing-radio"
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [], // Dynamic roster generated inside NavigationMegamenu
-                    feature: {
-                      title: "Chasing Sun(Sets) Radio Show",
-                      subtitle: "Latest YouTube Broadcast",
-                      image: "/images/radio-show-gear.webp",
-                      href: routeRadioEpisode("ep-004-benchek-part-2"),
-                      ctaText: "Listen Now",
-                      icon: "play",
-                      badge: "YOUTUBE BROADCAST",
-                    },
-                  }}
-                />
-
-                <NavigationMegamenu
                   label="CHASING SUN(SETS)"
                   href={ROUTES.chasingSunsets}
                   isActive={
@@ -723,6 +701,28 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
 
                 <NavigationMegamenu
+                  label="SUN(SETS) RADIO"
+                  href={ROUTES.radio}
+                  isActive={location.startsWith(ROUTES.radio)}
+                  isLight={isLight}
+                  brand={resolvedBrand}
+                  type="chasing-radio"
+                  onNavigate={handleNavClick}
+                  megamenu={{
+                    items: [], // Dynamic roster generated inside NavigationMegamenu
+                    feature: {
+                      title: "Chasing Sun(Sets) Radio Show",
+                      subtitle: "Latest YouTube Broadcast",
+                      image: "/images/radio-show-gear.webp",
+                      href: routeRadioEpisode("ep-004-benchek-part-2"),
+                      ctaText: "Listen Now",
+                      icon: "play",
+                      badge: "YOUTUBE BROADCAST",
+                    },
+                  }}
+                />
+
+                <NavigationMegamenu
                   label="MONOLITH"
                   href={ROUTES.monolith}
                   isActive={location === ROUTES.monolith}
@@ -762,7 +762,6 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         href: ROUTES.partners,
                         icon: "arrow",
                       },
-                      { label: "PARTNERSHIPS", href: ROUTES.partners },
                       { label: "SPONSOR ACCESS", href: ROUTES.sponsors },
                       { label: "PRESS & MEDIA", href: ROUTES.press },
                       { label: "ABOUT MONOLITH", href: ROUTES.about },

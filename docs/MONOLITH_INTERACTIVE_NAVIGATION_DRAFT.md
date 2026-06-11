@@ -58,7 +58,7 @@ These already exist in:
 ### Navigation Behaviors Already Present
 
 - desktop preview-card megamenus in [Navigation.tsx](</Users/starkindustries/Downloads/monolith-project website/client/src/components/Navigation.tsx:536>)
-- a community utility cluster in [CommunityDropdown.tsx](</Users/starkindustries/Downloads/monolith-project website/client/src/components/CommunityDropdown.tsx:1>)
+- a community utility cluster, formerly CommunityDropdown.tsx (deleted in b3e1948; absorbed into the PARTNERS megamenu in Navigation.tsx)
 - event-aware CTAs in [Navigation.tsx](</Users/starkindustries/Downloads/monolith-project website/client/src/components/Navigation.tsx:658>)
 - route-aware scene switching in [App.tsx](</Users/starkindustries/Downloads/monolith-project website/client/src/App.tsx:191>)
 

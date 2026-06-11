@@ -1,5 +1,16 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { SUNSETS_PRELAUNCH_LOCKED } from "../shared/events/sunsets-ticketing";
+
+// networkidle is unreachable on this site: tracking fetches use keepalive,
+// which Chromium never reports as finished to Playwright. Wait for the app
+// shell loader instead (same pattern as campaign-hardening.spec.ts).
+async function waitForAppReady(page: import("@playwright/test").Page) {
+  await page
+    .waitForSelector("#initial-loader", { state: "detached", timeout: 15000 })
+    .catch(() => undefined);
+  await page.waitForLoadState("domcontentloaded");
+}
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -19,7 +30,7 @@ test.beforeEach(async ({ page }) => {
 
 async function ensureNewsletterVisible(page: import("@playwright/test").Page) {
   await page.goto("/newsletter");
-  await page.waitForLoadState("networkidle");
+  await waitForAppReady(page);
   await page.waitForTimeout(1500);
   await page.waitForSelector("#newsletter", {
     state: "visible",
@@ -93,6 +104,10 @@ test("newsletter flow shows user-visible error then success", async ({
 test("ticket flow emits intent tracking and preserves outbound ticket link", async ({
   page,
 }) => {
+  test.skip(
+    SUNSETS_PRELAUNCH_LOCKED,
+    "/tickets redirects to /sunsets while SUNSETS_PRELAUNCH_LOCKED is on; re-enable at launch."
+  );
   let intentTracked = false;
   await page.route("**/api/ticket-intent", async route => {
     intentTracked = true;
@@ -100,7 +115,7 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
   });
 
   await page.goto("/tickets");
-  await page.waitForLoadState("networkidle"); // Wait for cinematic PageTransition
+  await waitForAppReady(page); // Wait for cinematic PageTransition
   await expect(
     page.getByRole("heading", {
       level: 1,
@@ -120,6 +135,9 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
 test("scoped a11y checks pass for newsletter and tickets header", async ({
   page,
 }) => {
+  // Reduced motion keeps axe from sampling colors mid fade-in, which reads
+  // blended foreground/background values and reports phantom contrast issues.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await ensureNewsletterVisible(page);
   const newsletterA11y = await new AxeBuilder({ page })
     .include("#newsletter")
@@ -127,14 +145,23 @@ test("scoped a11y checks pass for newsletter and tickets header", async ({
   expect(newsletterA11y.violations).toEqual([]);
 
   await page.goto("/tickets");
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
-    })
-  ).toBeVisible({
-    timeout: 10000,
-  });
+  await waitForAppReady(page);
+  if (SUNSETS_PRELAUNCH_LOCKED) {
+    // /tickets redirects to the /sunsets launch page while locked — audit that.
+    await expect(page).toHaveURL(/\/sunsets$/);
+    await expect(
+      page.getByRole("link", { name: /get july 4 tickets/i })
+    ).toBeVisible({ timeout: 10000 });
+  } else {
+    await expect(
+      page.getByRole("heading", {
+        level: 1,
+        name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
+      })
+    ).toBeVisible({
+      timeout: 10000,
+    });
+  }
   const ticketsA11y = await new AxeBuilder({ page }).include("main").analyze();
   expect(ticketsA11y.violations).toEqual([]);
 });
@@ -143,7 +170,7 @@ test("monolith manifesto page loads and contains required sections", async ({
   page,
 }) => {
   await page.goto("/monolith");
-  await page.waitForLoadState("networkidle");
+  await waitForAppReady(page);
 
   // Verify main heading
   await expect(

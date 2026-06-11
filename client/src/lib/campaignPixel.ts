@@ -85,6 +85,23 @@ export function trackLakePageView() {
   window.fbq?.("trackSingle", LAKE_PIXEL_ID, "PageView");
 }
 
+// Fires when a visitor clicks through to the Posh ticket rail. No CAPI
+// counterpart exists for this event, so no eventID is needed for dedup.
+export function trackLakeInitiateCheckout(payload?: Record<string, unknown>) {
+  if (!isEnabled()) return false;
+  if (!ensureFbq()) return false;
+
+  window.fbq?.("trackSingle", LAKE_PIXEL_ID, "InitiateCheckout", {
+    content_name: "SUN(SETS) I Tickets - July 4",
+    content_category: "Tickets",
+    content_ids: ["posh-sunsets-2026-07-04"],
+    currency: "USD",
+    ...payload,
+  });
+
+  return true;
+}
+
 // Fires the browser-side Lead with a shared eventID so Meta deduplicates it
 // against the server-side CAPI Lead carrying the same id.
 export function trackLakeLead(

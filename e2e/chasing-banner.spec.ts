@@ -9,7 +9,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function waitForAppReady(page: import("@playwright/test").Page) {
-  await page.goto("/chasing-sunsets", { waitUntil: "networkidle" });
+  // networkidle is unreachable: keepalive tracking fetches never report
+  // finished to Playwright. The loader-detach wait below covers readiness.
+  await page.goto("/chasing-sunsets", { waitUntil: "domcontentloaded" });
   await page.waitForSelector("#initial-loader", {
     state: "detached",
     timeout: 15000,
@@ -21,7 +23,7 @@ test("chasing sunsets keeps the next-event context on mobile", async ({
 }) => {
   await waitForAppReady(page);
 
-  await expect(page.locator("#chasing-hero")).toContainText("INDEPENDENCE DAY");
+  await expect(page.locator("#chasing-hero")).toContainText("SUN(SETS) I");
   await expect(page.locator("#chasing-hero")).toContainText("July 4, 2026");
   await expect(page.locator("#chasing-hero")).toContainText("Castaways");
 

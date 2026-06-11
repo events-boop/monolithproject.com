@@ -57,7 +57,13 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function waitForAppReady(page: import("@playwright/test").Page) {
-  await page.waitForLoadState("networkidle");
+  // networkidle is unreachable here: tracking fetches use keepalive, which
+  // Chromium never reports as finished to Playwright. Wait for the app shell
+  // loader instead (same pattern as campaign-hardening.spec.ts).
+  await page
+    .waitForSelector("#initial-loader", { state: "detached", timeout: 15000 })
+    .catch(() => undefined);
+  await page.waitForLoadState("domcontentloaded");
   await page.waitForTimeout(2000); // Cinematic transition buffer
 }
 
@@ -108,27 +114,25 @@ test("desktop nav CTA flows resolve to working destinations", async ({
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
-  await nav.getByRole("button", { name: /^shows/i }).click({ force: true });
+  await nav
+    .getByRole("button", { name: "SCHEDULE", exact: true })
+    .click({ force: true });
   await expect(
-    page.getByRole("menuitem", { name: "CHASING SUN(SETS)" })
+    page.getByRole("menuitem", { name: /chasing sun\(sets\)/i }).first()
   ).toBeVisible();
   await page
-    .getByRole("menuitem", { name: "CHASING SUN(SETS)" })
+    .getByRole("menuitem", { name: /chasing sun\(sets\)/i })
+    .first()
     .click({ force: true });
   await expect(page).toHaveURL(/\/chasing-sunsets$/);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
+  // SUN(SETS) RADIO is a direct navigation, not a dropdown.
   await nav
-    .getByRole("button", { name: /chasing sun\(sets\) & radio/i })
+    .getByRole("button", { name: /sun\(sets\) radio/i })
     .click({ force: true });
-  await expect(
-    page.getByRole("menuitem", { name: "S1E3: Benchek Marbella" })
-  ).toBeVisible();
-  await page
-    .getByRole("menuitem", { name: "S1E3: Benchek Marbella" })
-    .click({ force: true });
-  await expect(page).toHaveURL(/\/radio\/ep-004-benchek-part-2$/);
+  await expect(page).toHaveURL(/\/radio$/);
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
@@ -151,7 +155,9 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
-  await nav.getByRole("button", { name: /^shows/i }).click({ force: true });
+  await nav
+    .getByRole("button", { name: "SCHEDULE", exact: true })
+    .click({ force: true });
   await expect(
     page.getByRole("menuitem", { name: /^upcoming shows/i })
   ).toBeVisible();
@@ -185,7 +191,7 @@ test("schedule quick view hands off to the event dossier and context rail", asyn
   await waitForAppReady(page);
 
   await page.getByRole("link", { name: /full dossier/i }).click();
-  await expect(page).toHaveURL(/\/events\/css-jul04$/);
+  await expect(page).toHaveURL(/\/events\/chasing-sunsets-july-4-2026$/);
   await expect(page.getByText("Read The Room", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /radio hear the taste behind the room/i })

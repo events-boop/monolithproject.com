@@ -246,6 +246,21 @@
   status = 302
   force = true
 
+# Chasing Sun(Sets) 2026 launch vanity aliases (sunsets.vip landing CTAs +
+# printed materials). Query params are forwarded automatically. Keep in sync
+# with the express aliases in server/routes/outbound.ts.
+[[redirects]]
+  from = "/go/tickets/sunsets-july4"
+  to = "/go/tickets/css-jul04"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/go/lakelist"
+  to = "/go/waitlist/chasing-sunsets"
+  status = 302
+  force = true
+
 [[redirects]]
   from = "/go/*"
   to = "/.netlify/functions/api/go/:splat"

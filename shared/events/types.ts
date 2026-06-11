@@ -60,6 +60,8 @@ export interface ScheduledEvent {
   lineup?: string;
   image?: string;
   status: "on-sale" | "coming-soon" | "sold-out" | "past";
+  /** One featured event at a time — gets the flagship card treatment. */
+  featured?: boolean;
   inventoryState?: "normal" | "low";
   capacity?: string;
   format?: string;

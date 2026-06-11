@@ -639,30 +639,24 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "Sun(Sets) Lake List & First Access",
+      title: "Chasing Sun(Sets) 2026 — Tickets & Lake List",
       description:
-        "Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries.",
+        "Three dates. One lake. One home. July 4 tickets on sale now. Join the Lake List for first access to SUN(SETS) II + III and the limited 2026 Season Pass.",
       image: "/images/chasing-sunsets-july4-first-access.png",
       schemaData: publicSunsetsEvent
         ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")
         : undefined,
       bodyHtml: renderBaseLayout(
-        "Official Sun(Sets) Wrapper",
-        "Sun(Sets) Lake List & First Access",
+        "The Monolith Project Presents",
+        "Chasing Sun(Sets) 2026",
         [
-          "Sun(Sets) is the official Chicago lakefront ticket and signup destination from The Monolith Project.",
-          "Join the Lake List for July 4 ticket access, artist drops, private codes, recap video, Sun(Sets) Radio, VIP, and partner inquiries.",
+          "Three dates. One lake. One home. SUN(SETS) I — July 4 (on sale now), SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
+          "Castaways Beach Club, Chicago. Join the Lake List for first access to SUN(SETS) II + III, the limited 2026 Season Pass release, artist announcements, and guest-list opportunities.",
         ],
         [
-          { href: "/sunsets#lake-list", label: "Join the Lake List" },
-          {
-            href: SUNSETS_PRELAUNCH_LOCKED
-              ? "/sunsets#lake-list"
-              : "/go/tickets/css-jul04",
-            label: SUNSETS_PRELAUNCH_LOCKED
-              ? "Lake List ticket access"
-              : "July 4 ticket access",
-          },
+          { href: "/go/tickets/sunsets-july4", label: "Get July 4 tickets" },
+          { href: "/go/lakelist", label: "Join the Lake List" },
+          { href: "/vip", label: "VIP and cabanas" },
           {
             href: "/go/media/sunsets-recap",
             label: "Watch the recap",
@@ -673,9 +667,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           },
           {
             href: "/go/social/instagram-sunsets",
-            label: "Artist drops and Instagram",
+            label: "Instagram",
           },
-          { href: "/vip", label: "VIP and tables" },
           { href: "/partners", label: "Partner inquiries" },
         ]
       ),

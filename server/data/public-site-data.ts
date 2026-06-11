@@ -32,7 +32,7 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 /** Active audience gateway for the next public drop. */
 export const POSH_TICKET_URL = SUNSETS_JULY4_TICKET_PATH;
 
-export const upcomingEvents: ScheduledEvent[] = [
+const EVENT_CATALOG: ScheduledEvent[] = [
     {
         id: "us-s3e1",
         series: "untold-story",
@@ -114,13 +114,15 @@ export const upcomingEvents: ScheduledEvent[] = [
     {
         id: "css-sep19",
         series: "chasing-sunsets",
-        episode: "LATE SUMMER '26",
+        episode: "SUN(SETS) III",
         title: "Chasing Sun(Sets)",
+        headline: "SUN(SETS) III — Chapter Three",
         date: "September 19, 2026",
         time: "Golden Hour",
         venue: "Castaways",
         location: "Chicago, IL",
         status: "coming-soon",
+        description: "Chapter Three. The season closer at Castaways. Join the Lake List for first access.",
         activeFunnels: ["waitlist-chasing"],
     },
     {
@@ -134,22 +136,26 @@ export const upcomingEvents: ScheduledEvent[] = [
         time: SUNSETS_JULY4_EVENT_TIME,
         startsAt: "2026-07-04T13:00:00-05:00",
         endsAt: "2026-07-04T22:00:00-05:00",
-        doors: "12:00 PM",
+        doors: "1:00 PM",
         mainExperience: "3:15 PM — 10:00 PM",
         venue: SUNSETS_JULY4_EVENT_VENUE,
         location: SUNSETS_JULY4_EVENT_LOCATION,
-        lineup: SUNSETS_JULY4_LINEUP.join(" · "),
+        // DECISION A: public billing is Kiko Franco & Special Guests only.
+        // Additional artists are held as chapter reveals — do not list them
+        // on any public surface until confirmed for announcement.
+        lineup: "Kiko Franco & Special Guests",
+        featured: true,
         status: "on-sale",
         inventoryState: "normal",
         capacity: `${SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US")} guest admissions`,
         format: "Day Into Night · Open Air · Lakefront House Music",
         dress: "Elevated lakefront summer attire",
         sound: "House Music · Golden Hour · Skyline Energy",
-        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Autograf, Kiko Franco, Amari, and Erik The DJ.",
+        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco & Special Guests.",
         experienceIntro: "Golden hour. House music. Lake Michigan. The skyline behind you. From afternoon energy to the final sunset set, this is not a holiday party. This is the return of a Chicago summer ritual.",
         whatToExpect: [
             "A full-day house music experience on Lake Michigan",
-            "Autograf, Kiko Franco, Amari, and Erik The DJ",
+            "Kiko Franco's Chicago lakefront debut, with special guests revealed in chapters",
             "Public GA tiers that move from $45 to $55 to $65 as allocations sell out",
             "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
             "Tables and 6 premium cabanas starting at a $2,000 minimum",
@@ -165,7 +171,6 @@ export const upcomingEvents: ScheduledEvent[] = [
         tablePackages: [
             SUNSETS_JULY4_TABLE_RAIL.description,
             `Address: ${SUNSETS_JULY4_EVENT_ADDRESS}`,
-            `Set times: ${SUNSETS_JULY4_SET_TIMES.map((slot) => `${slot.time} ${slot.label}`).join(" / ")}`,
         ],
         recentlyDropped: true,
     },
@@ -204,26 +209,51 @@ export const upcomingEvents: ScheduledEvent[] = [
     {
         id: "css-aug22",
         series: "chasing-sunsets",
-        episode: "SUMMER '26",
+        episode: "SUN(SETS) II",
         title: "Chasing Sun(Sets)",
+        headline: "SUN(SETS) II — Chapter Two",
         date: "August 22, 2026",
         time: "Golden Hour",
         venue: "Castaways",
         location: "Chicago, IL",
         status: "coming-soon",
+        description: "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+        activeFunnels: ["waitlist-chasing"],
     },
     {
+        // Parent-brand launch moment — NOT a SUN(SETS) season date. The
+        // "Three dates. One lake. One home." framing stays exclusive to the
+        // three CSS dates (Jul 4, Aug 22, Sep 19).
         id: "css-oct10",
-        series: "chasing-sunsets",
-        episode: "SEASON FINALE",
-        title: "Chasing Sun(Sets)",
+        series: "monolith-project",
+        episode: "LAUNCH",
+        title: "THE MONOLITH PROJECT",
+        headline: "THE MONOLITH PROJECT — LAUNCH",
+        slug: "monolith-launch",
         date: "October 10, 2026",
-        time: "Golden Hour",
+        time: "Reveal Soon",
         venue: "Venue Reveal Soon",
         location: "Chicago, IL",
         status: "coming-soon",
+        description: "The season ends in September. Then the Monolith stands.",
+        eventNotice: "The season ends in September. Then the Monolith stands.",
+        activeFunnels: ["waitlist"],
     }
 ];
+
+function eventStartValue(event: ScheduledEvent) {
+    const explicit = event.startsAt ? Date.parse(event.startsAt) : NaN;
+    if (!Number.isNaN(explicit)) return explicit;
+    const fromDate = Date.parse(event.date);
+    return Number.isNaN(fromDate) ? Number.POSITIVE_INFINITY : fromDate;
+}
+
+// Chronological ascending for every consumer (client payload, prerender,
+// sitemap). Same-day events stay grouped: intra-day order comes from startsAt,
+// so the July 4 after-party card sits directly after SUN(SETS) I.
+export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG].sort(
+    (a, b) => eventStartValue(a) - eventStartValue(b)
+);
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
     hero: "css-jul04",

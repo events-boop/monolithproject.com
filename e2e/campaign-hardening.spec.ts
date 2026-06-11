@@ -102,14 +102,21 @@ test.describe("campaign hardening stress checks", () => {
     });
     await waitForAppReady(page);
 
+    const ticketCta = page.getByRole("link", {
+      name: /get july 4 tickets/i,
+    });
+    await expect(ticketCta).toBeVisible();
+    await expect(ticketCta).toHaveAttribute(
+      "href",
+      /\/go\/tickets\/sunsets-july4/
+    );
+    const lakeListCta = page.getByRole("link", {
+      name: /join the lake list/i,
+    });
+    await expect(lakeListCta).toBeVisible();
+    await expect(lakeListCta).toHaveAttribute("href", /\/go\/lakelist/);
     await expect(
-      page.getByRole("button", { name: /register for first access/i })
-    ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: /watch the last chapter/i })
-    ).toBeVisible();
-    await expect(
-      page.getByAltText(/qr code for https:\/\/sunsets\.vip\/sunsets/i)
+      page.getByRole("heading", { name: /chasing\s*sun\(sets\)\s*2026/i })
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",

@@ -8,7 +8,11 @@ import {
 } from "../lib/outbound";
 import {
   SUNSETS_JULY4_EVENT_SLUG,
+  SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TICKET_UTMS,
+  SUNSETS_JULY4_VANITY_TICKET_PATH,
+  SUNSETS_LAKELIST_CANONICAL_PATH,
+  SUNSETS_LAKELIST_PATH,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
   getSunsetsTicketRouteMeta,
@@ -147,6 +151,23 @@ function outboundClickMeta(group: string, key: string) {
     channel: normalizedGroup,
     interestType: "outbound_click",
   };
+}
+
+// Chasing Sun(Sets) 2026 launch vanity aliases. Production traffic is handled
+// by the equivalent netlify.toml rules before reaching this function — these
+// keep dev/preview behavior identical. Must stay above /go/:group/:key.
+const VANITY_ALIASES: Record<string, string> = {
+  [SUNSETS_JULY4_VANITY_TICKET_PATH]: SUNSETS_JULY4_TICKET_PATH,
+  [SUNSETS_LAKELIST_PATH]: SUNSETS_LAKELIST_CANONICAL_PATH,
+};
+
+for (const [from, to] of Object.entries(VANITY_ALIASES)) {
+  router.get(from, (req, res) => {
+    const query = req.originalUrl.split("?")[1];
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
+    return res.redirect(302, query ? `${to}?${query}` : to);
+  });
 }
 
 router.get("/go/:group/:key", async (req, res) => {

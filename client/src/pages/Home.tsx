@@ -26,6 +26,10 @@ import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
 import { appendAttributionQueryParams } from "@/lib/attribution";
+import {
+  SUNSETS_JULY4_TICKET_PATH,
+  captureSunsetsTicketCtaClick,
+} from "@/lib/sunsetsTicketing";
 
 function getStatusLabel(status?: string) {
   if (status === "on-sale") return "ON SALE";
@@ -56,6 +60,9 @@ export default function Home() {
   const untoldTicketIsExternal =
     /^https?:\/\//i.test(untoldTicketHref) ||
     untoldTicketHref.startsWith("/go/");
+  const julyFourTicketHref = appendAttributionQueryParams(
+    SUNSETS_JULY4_TICKET_PATH
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +99,54 @@ export default function Home() {
 
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
+
+        {/* July 4 featured promo — launch priority directly under the hero */}
+        <section
+          aria-label="SUN(SETS) I — July 4 tickets"
+          className="relative z-10 border-y border-[#E8B86D]/35 bg-[#0e0c08] py-8 md:py-10"
+        >
+          <div className="container layout-wide px-6">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center">
+              <div>
+                <span className="section-kicker block text-[#E8B86D]">
+                  On Sale Now
+                </span>
+                <h2 className="section-display-title-compact mt-3 max-w-[26ch] text-white hyphens-none break-keep text-balance">
+                  SUN(SETS) I — July 4 — Kiko Franco &amp; Special Guests
+                </h2>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/82 md:text-[11px]">
+                  Castaways Beach Club · Chicago · 1PM–10PM · 21+
+                </p>
+                <p className="mt-2 text-sm text-[#F4D7A1]/80">
+                  Three dates. One lake. One home.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 lg:items-end">
+                <a
+                  href={julyFourTicketHref}
+                  onClick={() =>
+                    captureSunsetsTicketCtaClick({
+                      destinationUrl: julyFourTicketHref,
+                      pagePath: "/",
+                      ctaPosition: "primary",
+                      sourcePage: "homepage",
+                    })
+                  }
+                  className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
+                >
+                  Get Tickets
+                  <ArrowUpRight className="size-4" />
+                </a>
+                <Link
+                  href="/events/us-jul04"
+                  className="btn-text-action text-left lg:text-right"
+                >
+                  + the official after-party: Untold Story, 10:30PM
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="relative z-10 border-y border-white/10 bg-[#10100f] py-10 md:py-12">
           <div className="container layout-wide px-6">
