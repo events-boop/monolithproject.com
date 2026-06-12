@@ -654,6 +654,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
+                      { label: "CHASING SUN(SETS)", href: ROUTES.chasingSunsets },
                       { label: "SUN(SETS) LINK IN BIO", href: ROUTES.sunsets },
                       { label: "FAST FACTS", href: ROUTES.chasingSunsetsFacts },
                       { label: "SEASON DATES", href: ROUTES.schedule },
