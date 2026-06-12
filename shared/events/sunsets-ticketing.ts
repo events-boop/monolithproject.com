@@ -106,6 +106,7 @@ export const SUNSETS_JULY4_LINEUP = [
   "Jerome",
   "Frank Bono",
   "Erik The DJ",
+  "Autograf",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
@@ -114,8 +115,9 @@ export const SUNSETS_JULY4_SET_TIMES = [
   { time: "3:00 PM — 4:00 PM", label: "Erik The DJ" },
   { time: "4:00 PM — 5:00 PM", label: "Frank Bono" },
   { time: "5:00 PM — 6:00 PM", label: "Gianni Blu" },
-  { time: "6:00 PM — 7:00 PM", label: "Amari" },
-  { time: "7:00 PM — 10:00 PM", label: "Kiko Franco — Lakefront Debut" },
+  { time: "6:00 PM — 7:15 PM", label: "Amari" },
+  { time: "7:15 PM — 8:45 PM", label: "Kiko Franco" },
+  { time: "8:45 PM — 10:00 PM", label: "Autograf — Closing Set" },
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 

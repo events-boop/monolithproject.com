@@ -141,8 +141,8 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
       <SEO
-        title="SUN(SETS) I — July 4 at Castaways | Kiko Franco, Amari, Erik The DJ"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Kiko Franco, Amari, Erik The DJ, Jerome, Frank Bono, and Gianni Blu. Open-air house on the Chicago lakefront. Tickets on sale now."
+        title="SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari"
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Erik The DJ, Jerome, Frank Bono, and Gianni Blu. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -241,7 +241,7 @@ export default function SunsetsLinkBio() {
           {/* 3. Lineup strip */}
           <section className="border-y border-white/10 py-3 text-center">
             <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
-              Kiko Franco · Amari · Erik The DJ · Jerome
+              Autograf · Kiko Franco · Amari · Erik The DJ
             </p>
             <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
               Full lineup revealed in chapters.
@@ -261,7 +261,8 @@ export default function SunsetsLinkBio() {
                 { time: "4:00 PM", label: "Frank Bono" },
                 { time: "5:00 PM", label: "Gianni Blu" },
                 { time: "6:00 PM", label: "Amari" },
-                { time: "7:00 PM", label: "Kiko Franco" },
+                { time: "7:15 PM", label: "Kiko Franco" },
+                { time: "8:45 PM", label: "Autograf" },
                 { time: "10:00 PM", label: "Close" },
               ].map(slot => (
                 <div
