@@ -639,10 +639,10 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "SUN(SETS) I — July 4 at Castaways | Kiko Franco, Amari, Erik The DJ",
+      title: "Chasing Sun(Sets) 2026 — Tickets & Lake List",
       description:
-        "SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni. Open-air house on the Chicago lakefront. Tickets on sale now.",
-      image: "/images/chasing-sunsets-july4-first-access.png",
+        "Three dates. One lake. One home. Kiko Franco, Amari, Gianni Blu, Erik The DJ & more. July 4 on sale now at Castaways Beach Club. Join the Lake List for first access to the limited 2026 Season Pass.",
+      image: "/images/css-2026-og.png",
       schemaData: publicSunsetsEvent
         ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")
         : undefined,
@@ -650,8 +650,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "The Monolith Project Presents",
         "Chasing Sun(Sets) 2026",
         [
-          "SUN(SETS) I — July 4 (on sale now) with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni at Castaways Beach Club, Chicago. Doors 12PM. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
-          "Three dates. One lake. One home. Join the Lake List for first access to SUN(SETS) II + III, the limited 2026 Season Pass release, artist announcements, and guest-list opportunities.",
+          "SUN(SETS) I — July 4 (on sale now) with Kiko Franco, Amari, Gianni Blu, Erik The DJ & more at Castaways Beach Club, Chicago. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
+          "Three dates. One lake. One home. Join the Lake List for first access to SUN(SETS) II + III and the limited 2026 Season Pass release.",
         ],
         [
           { href: "/go/tickets/sunsets-july4", label: "Get July 4 tickets" },

@@ -149,11 +149,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         format: "Day Into Night · Open Air · Lakefront House Music",
         dress: "Elevated lakefront summer attire",
         sound: "House Music · Golden Hour · Skyline Energy",
-        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni.",
+        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco, Amari, Gianni Blu, Erik The DJ & more.",
         experienceIntro: "Golden hour. House music. Lake Michigan. The skyline behind you. From afternoon energy to the final sunset set, this is not a holiday party. This is the return of a Chicago summer ritual.",
         whatToExpect: [
             "A full-day house music experience on Lake Michigan",
-            "Kiko Franco's Chicago lakefront debut, with Amari, Erik The DJ, Frank Bono, and Gianni",
+            "Kiko Franco's Chicago lakefront debut, with Amari, Gianni Blu, Erik The DJ & more",
             "Public GA tiers that move from $45 to $55 to $65 as allocations sell out",
             "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
             "Tables and 6 premium cabanas starting at a $2,000 minimum",
@@ -319,7 +319,7 @@ function lockSunsetsPrelaunchEvent(event: ScheduledEvent): ScheduledEvent {
             "A full-day house music experience on Lake Michigan",
             "Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni",
             "Lake List members get the first ticket release window",
-            "Private codes, drops, and location signals before the public",
+            "Artist drops and location signals before the public",
             "Season access and VIP/table details unlock at launch",
         ],
     };

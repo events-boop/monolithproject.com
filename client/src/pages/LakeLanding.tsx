@@ -492,7 +492,7 @@ export default function LakeLanding() {
                     Join the Lake List
                   </h2>
                   <p className="mt-1 text-xs leading-relaxed text-stone-300">
-                    Artist drops, private codes, ticket releases, and location
+                    Artist drops, ticket releases, and location
                     signals before the public.
                   </p>
                 </div>

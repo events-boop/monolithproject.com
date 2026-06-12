@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, LockKeyhole, Play, Ticket } from "lucide-react";
+import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
-import { Button } from "@/components/ui/button";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import { trackFunnelPageView } from "@/lib/api";
 import {
   trackLakeInitiateCheckout,
@@ -14,7 +12,6 @@ import {
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
   SUNSETS_LAKELIST_PATH,
-  SUNSETS_PRELAUNCH_LOCKED,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import {
@@ -26,31 +23,86 @@ import {
 const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
 const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
-const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
-const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
+// OWNER ASSET: placeholder crop from the Kiko campaign photo — swap with the
+// approved 1200×630 campaign-poster crop before the paid push.
+const OG_IMAGE = "/images/css-2026-og.png";
+// Recap video — same ID the /go/media/sunsets-recap redirect resolves to.
+const RECAP_YOUTUBE_ID = "9R6XH7JZlJI";
+const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
 
 // Forwarded to Laylo by the /go/ redirect layer.
 const LAKELIST_UTM_QUERY =
   "utm_source=sunsets-vip&utm_medium=landing&utm_campaign=css-2026-launch";
 
-const SEASON_DATES = [
-  {
-    title: "SUN(SETS) I",
-    date: "July 4",
-    badge: SUNSETS_PRELAUNCH_LOCKED ? "FIRST ACCESS" : "ON SALE NOW",
-    eventSlug: JULY_4_EVENT_SLUG,
+const SHARED_EVENT_SCHEMA = {
+  "@context": "https://schema.org" as const,
+  "@type": "MusicEvent" as const,
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  eventStatus: "https://schema.org/EventScheduled",
+  image: `https://monolithproject.com${OG_IMAGE}`,
+  organizer: {
+    "@type": "Organization" as const,
+    name: "The Monolith Project",
+    url: "https://monolithproject.com",
   },
-  { title: "SUN(SETS) II", date: "August 22" },
-  { title: "SUN(SETS) III", date: "September 19" },
-] as const;
+  location: {
+    "@type": "Place" as const,
+    name: "Castaways Beach Club",
+    address: {
+      "@type": "PostalAddress" as const,
+      streetAddress: "1603 N Lake Shore Dr",
+      addressLocality: "Chicago",
+      addressRegion: "IL",
+      postalCode: "60614",
+      addressCountry: "US",
+    },
+  },
+};
+
+const SEASON_EVENTS_SCHEMA = [
+  {
+    ...SHARED_EVENT_SCHEMA,
+    name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
+    startDate: "2026-07-04T13:00:00-05:00",
+    endDate: "2026-07-04T22:00:00-05:00",
+    performer: ["Autograf", "Kiko Franco", "Amari", "Gianni Blu", "Jerome x Colin x Nomar", "Frank Bono", "Erik The DJ"].map(
+      name => ({ "@type": "MusicGroup" as const, name })
+    ),
+    offers: {
+      "@type": "Offer" as const,
+      url: "https://sunsets.vip",
+      availability: "https://schema.org/InStock",
+      priceCurrency: "USD",
+      price: "20",
+    },
+  },
+  {
+    ...SHARED_EVENT_SCHEMA,
+    name: "SUN(SETS) II — Chasing Sun(Sets) 2026",
+    startDate: "2026-08-22T13:00:00-05:00",
+    endDate: "2026-08-22T22:00:00-05:00",
+    offers: {
+      "@type": "Offer" as const,
+      url: "https://sunsets.vip",
+      availability: "https://schema.org/PreOrder",
+      priceCurrency: "USD",
+    },
+  },
+  {
+    ...SHARED_EVENT_SCHEMA,
+    name: "SUN(SETS) III — Chasing Sun(Sets) 2026",
+    startDate: "2026-09-19T13:00:00-05:00",
+    endDate: "2026-09-19T22:00:00-05:00",
+    offers: {
+      "@type": "Offer" as const,
+      url: "https://sunsets.vip",
+      availability: "https://schema.org/PreOrder",
+      priceCurrency: "USD",
+    },
+  },
+];
 
 const FOOTER_LINKS = [
-  {
-    label: "Watch the recap",
-    href: "/go/media/sunsets-recap",
-    interestType: "recap_click",
-    channel: "YouTube",
-  },
   {
     label: "Sun(Sets) Radio",
     href: "/go/media/sunsets-soundcloud",
@@ -84,7 +136,7 @@ function newLeadEventId() {
 }
 
 export default function SunsetsLinkBio() {
-  const reduceMotion = useReducedMotion();
+  const [recapPlaying, setRecapPlaying] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -129,7 +181,7 @@ export default function SunsetsLinkBio() {
       content_name: "Lake List Signup Click - Chasing Sun(Sets)",
     });
     trackSunsetsClick({
-      buttonName: "JOIN THE LAKE LIST",
+      buttonName: "JOIN THE LAKE LIST FOR FIRST ACCESS",
       href: lakeListHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
@@ -138,190 +190,213 @@ export default function SunsetsLinkBio() {
     });
   };
 
+  const handleRecapPlay = () => {
+    triggerHaptic(8);
+    setRecapPlaying(true);
+    trackSunsetsClick({
+      buttonName: "Play 2025 Recap",
+      href: `https://youtu.be/${RECAP_YOUTUBE_ID}`,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "recap_embed_play",
+      channel: "YouTube",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
+    <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
-        title="SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Erik The DJ, Jerome, Frank Bono, and Gianni Blu. Open-air house on the Chicago lakefront. Tickets on sale now."
+        title="Chasing Sun(Sets) 2026 — Tickets & Lake List"
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome x Colin x Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
+        schemaData={SEASON_EVENTS_SCHEMA}
       />
 
-      <div className="fixed inset-0 pointer-events-none">
-        <img
-          src={HERO_IMAGE}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,20,0.72)_0%,rgba(5,8,20,0.93)_48%,#050814_100%)]" />
-      </div>
+      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-7 sm:py-10">
+        {/* 1. Hero — brand + lineup */}
+        <header className="text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
+            The Monolith Project Presents
+          </p>
+          <h1 className="mt-4 font-black leading-[0.92] tracking-normal text-white">
+            <span className="block whitespace-nowrap text-[clamp(2rem,9.6vw,2.7rem)]">
+              CHASING SUN(SETS)
+            </span>
+            <span className="block text-[clamp(2rem,9.6vw,2.7rem)] text-[#E8B86D]">
+              2026
+            </span>
+          </h1>
+          <p className="mt-3 font-serif text-base italic text-stone-300">
+            Three dates. One lake. One home.
+          </p>
+          <p className="mt-2 text-[11px] font-black uppercase tracking-[0.28em] text-stone-400">
+            Castaways Beach Club
+          </p>
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-6 sm:py-10">
-        <motion.section
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: "easeOut" }}
-          className="flex flex-1 flex-col gap-5"
+          <div className="mt-6 border-y border-white/10 py-4">
+            <p className="whitespace-nowrap text-[clamp(1.6rem,7.8vw,2.1rem)] font-black uppercase leading-none tracking-[0.04em] text-white">
+              KIKO FRANCO
+            </p>
+            <p className="mt-2 whitespace-nowrap text-[clamp(0.72rem,3.4vw,0.92rem)] font-bold uppercase tracking-[0.14em] text-stone-300">
+              AMARI · GIANNI BLU · JEROME x COLIN x NOMAR{" "}
+              <span className="text-[#E8B86D]">&amp; MORE</span>
+            </p>
+          </div>
+        </header>
+
+        {/* 2. Dates ledger */}
+        <section className="mt-5" aria-label="2026 season dates">
+          <div className="border border-white/12 bg-white/[0.03]">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#E8B86D]/[0.07] px-3.5 py-3">
+              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
+                SUN(SETS) I — JUL 4
+              </p>
+              <span className="shrink-0 whitespace-nowrap bg-[#E8B86D] px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.14em] text-black">
+                ON SALE NOW
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-3 opacity-55">
+              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
+                SUN(SETS) II — AUG 22
+              </p>
+              <span className="shrink-0 whitespace-nowrap font-serif text-xs italic text-stone-400">
+                Chapter Two
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-3 px-3.5 py-3 opacity-55">
+              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
+                SUN(SETS) III — SEP 19
+              </p>
+              <span className="shrink-0 whitespace-nowrap font-serif text-xs italic text-stone-400">
+                Chapter Three
+              </span>
+            </div>
+          </div>
+          <p className="mt-2.5 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
+            Saturdays · 1PM–10PM · 21+ · Chicago
+          </p>
+        </section>
+
+        {/* 3. Primary CTA */}
+        <a
+          href={ticketHref}
+          onClick={handleTicketClick}
+          className="mt-5 flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap bg-[#E8B86D] text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(232,184,109,0.22)] transition hover:bg-[#f4d58d]"
         >
-          {/* 1. Hero */}
-          <header>
-            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#61e8ff]">
-              The Monolith Project Presents
-            </p>
-            <h1 className="mt-3 text-[clamp(2.5rem,11.5vw,3.4rem)] font-black leading-[0.92] tracking-normal text-white">
-              CHASING
-              <br />
-              SUN<span className="text-[#61e8ff]">(</span>SETS
-              <span className="text-[#61e8ff]">)</span> 2026
-            </h1>
-            <p className="mt-3 text-sm font-semibold text-stone-200">
-              Three dates. One lake. One home.
-            </p>
+          GET JULY 4 TICKETS <span aria-hidden="true">→</span>
+        </a>
 
-            <div className="mt-4 border border-white/12 bg-black/34 backdrop-blur">
-              {SEASON_DATES.map(chapter => (
-                <div
-                  key={chapter.title}
-                  className={`flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-2.5 last:border-b-0 ${"badge" in chapter ? "bg-[#61e8ff]/[.06]" : ""
-                    }`}
-                >
-                  <p className="text-sm font-black text-white">
-                    {chapter.title}{" "}
-                    <span className="font-semibold text-stone-300">
-                      — {chapter.date}
-                    </span>
-                  </p>
-                  {"badge" in chapter ? (
-                    <span className="shrink-0 border border-[#61e8ff]/45 bg-[#61e8ff]/12 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
-                      {chapter.badge}
-                    </span>
-                  ) : null}
-                </div>
-              ))}
+        {/* 4. Season Pass — vault card */}
+        <section
+          className="mt-5 border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
+          aria-label="2026 Season Pass"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="whitespace-nowrap text-base font-black uppercase tracking-[0.08em] text-white">
+              2026 SEASON PASS
+            </h2>
+            <span className="shrink-0 border border-[#E8B86D]/50 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
+              Limited
+            </span>
+          </div>
+          <p className="mt-2 text-sm font-semibold text-stone-300">
+            Every date. One pass. All summer on the lake.
+          </p>
+
+          <div className="mt-4 grid grid-cols-2 gap-2.5">
+            <div className="border border-white/12 bg-black/30 px-3 py-3 text-center">
+              <p className="text-2xl font-black leading-none text-white">
+                $100
+              </p>
+              <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-400">
+                GA · All 3 Dates
+              </p>
             </div>
-
-            <p className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-stone-400">
-              Castaways Beach Club · Chicago · 12PM–10PM · 21+
-            </p>
-          </header>
-
-          {/* 2. Primary CTAs */}
-          <section className="space-y-3" aria-label="Tickets and Lake List">
-            {!SUNSETS_PRELAUNCH_LOCKED ? (
-              <Button
-                asChild
-                className="h-14 w-full bg-[#61e8ff] text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(97,232,255,0.22)] hover:bg-[#a7f4ff]"
-              >
-                <a href={ticketHref} onClick={handleTicketClick}>
-                  <Ticket className="size-4" />
-                  GET JULY 4 TICKETS
-                  <ArrowUpRight className="size-4" />
-                </a>
-              </Button>
-            ) : null}
-            <Button
-              asChild
-              className={`h-14 w-full border border-[#ff6b8a]/60 bg-[#ff6b8a]/14 text-sm font-black uppercase tracking-[0.12em] text-[#ffd0dc] shadow-[0_10px_32px_rgba(255,107,138,0.16)] hover:bg-[#ff6b8a]/24 ${SUNSETS_PRELAUNCH_LOCKED ? "mt-0" : ""}`}
-            >
-              <a href={lakeListHref} onClick={handleLakeListClick}>
-                <LockKeyhole className="size-4" />
-                JOIN THE LAKE LIST
-                <ArrowUpRight className="size-4" />
-              </a>
-            </Button>
-            <p className="text-center text-[11px] font-semibold leading-relaxed text-stone-400">
-              {SUNSETS_PRELAUNCH_LOCKED
-                ? "First access to SUN(SETS) I–III tickets, the limited 2026 Season Pass, artist announcements, and guest-list opportunities before the public."
-                : "First access to SUN(SETS) II + III, the limited 2026 Season Pass release, artist announcements + guest-list opportunities."}
-            </p>
-          </section>
-
-          {/* 3. Lineup strip */}
-          <section className="border-y border-white/10 py-3 text-center">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
-              Autograf · Kiko Franco · Amari · Erik The DJ
-            </p>
-            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
-              Full lineup revealed in chapters.
-            </p>
-          </section>
-
-          {/* 4. Set Times */}
-          <section className="space-y-2 border border-white/10 bg-black/20 px-4 py-4">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
-              Set Times
-            </p>
-            <div className="space-y-2">
-              {[
-                { time: "12:00 PM", label: "Doors Open" },
-                { time: "2:00 PM", label: "Jerome" },
-                { time: "3:00 PM", label: "Erik The DJ" },
-                { time: "4:00 PM", label: "Frank Bono" },
-                { time: "5:00 PM", label: "Gianni Blu" },
-                { time: "6:00 PM", label: "Amari" },
-                { time: "7:15 PM", label: "Kiko Franco" },
-                { time: "8:45 PM", label: "Autograf" },
-                { time: "10:00 PM", label: "Close" },
-              ].map(slot => (
-                <div
-                  key={slot.time}
-                  className="flex items-center justify-between border-b border-white/5 pb-2 last:border-b-0 last:pb-0"
-                >
-                  <span className="text-[11px] font-mono font-semibold tracking-[0.06em] text-stone-400">
-                    {slot.time}
-                  </span>
-                  <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-stone-200">
-                    {slot.label}
-                  </span>
-                </div>
-              ))}
+            <div className="border border-[#E8B86D]/55 bg-[#E8B86D]/[0.06] px-3 py-3 text-center">
+              <p className="text-2xl font-black leading-none text-[#E8B86D]">
+                $150
+              </p>
+              <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-300">
+                VIP · All 3 Dates
+              </p>
             </div>
-          </section>
+          </div>
 
-          {/* 5. What to Expect */}
-          <section className="border border-white/10 bg-black/20 px-4 py-4">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
-              What to Expect
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-stone-300">
-              Open-air house music on the Chicago lakefront, built around
-              panoramic skyline views and the transition from late afternoon into
-              night. Sand between sets. Golden hour into fireworks. One of the
-              best views in the city.
-            </p>
-          </section>
-
-          {/* 6. Venue */}
-          <section className="border border-white/10 bg-black/20 px-4 py-4">
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
-              The Venue
-            </p>
-            <p className="mt-2 text-sm font-black text-white">
-              Castaways Beach Club
-            </p>
-            <p className="mt-1 text-xs leading-relaxed text-stone-400">
-              North Avenue Beach — Chicago's iconic lakefront venue with
-              panoramic skyline views. Outdoor bar, beach access, and the best
-              sunset sightline in the city. 21+ only.
-            </p>
-          </section>
-
-
-
-          {/* Secondary CTA */}
-          <Button
-            asChild
-            variant="outline"
-            className="h-12 w-full border-white/15 bg-white/[.04] text-xs font-black uppercase tracking-[0.14em] text-stone-100 hover:bg-white/[.08]"
+          <a
+            href={lakeListHref}
+            onClick={handleLakeListClick}
+            className="mt-4 flex h-12 w-full items-center justify-center gap-2 border border-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10 min-[390px]:text-xs"
           >
+            JOIN THE LAKE LIST FOR FIRST ACCESS
+          </a>
+          <p className="mt-2.5 text-center text-[11px] font-semibold leading-relaxed text-stone-400">
+            Season Pass releases to the Lake List first. Limited quantity.
+          </p>
+        </section>
+
+        {/* 5. Social proof — recap facade */}
+        <section className="mt-6" aria-label="2025 recap">
+          <p className="text-center font-serif text-sm italic text-stone-300">
+            Last summer: 2,800 on the lakefront.
+          </p>
+          <div className="relative mt-3 aspect-video w-full overflow-hidden border border-white/12 bg-black">
+            {recapPlaying ? (
+              <YouTubeEmbed
+                url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
+                title="Chasing Sun(Sets) 2025 recap"
+                className="absolute inset-0 h-full w-full"
+                loading="eager"
+                autoplay
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={handleRecapPlay}
+                aria-label="Play the 2025 recap video"
+                className="group absolute inset-0 h-full w-full"
+              >
+                <img
+                  src={RECAP_THUMB}
+                  alt="Chasing Sun(Sets) 2025 recap preview"
+                  loading="lazy"
+                  className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+                />
+                <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
+                <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
+                  {/* Inline play glyph — no icon fonts. */}
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="ml-0.5 h-6 w-6 fill-current"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5.5v13l11-6.5-11-6.5z" />
+                  </svg>
+                </span>
+              </button>
+            )}
+          </div>
+        </section>
+
+        {/* 6. Closing block — cabanas, divider, sign-off */}
+        <section className="mt-6" aria-label="Cabanas and sign-off">
+          <div className="border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]">
+            <h2 className="whitespace-nowrap text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
+              CABANAS &amp; VIP RESERVATIONS
+            </h2>
+            <p className="mt-2 text-sm font-semibold text-stone-300">
+              Lock your section for the holiday.
+            </p>
+            <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
+              Daybeds · Cabanas · Group tables
+            </p>
             <a
               href="/vip"
               onClick={() => {
                 triggerHaptic(8);
                 trackSunsetsClick({
-                  buttonName: "VIP & CABANAS",
+                  buttonName: "RESERVE A SECTION",
                   href: "/vip",
                   eventSlug: JULY_4_EVENT_SLUG,
                   eventDate: JULY_4_EVENT_DATE,
@@ -329,43 +404,71 @@ export default function SunsetsLinkBio() {
                   channel: "Monolith",
                 });
               }}
+              className="mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10"
             >
-              VIP &amp; CABANAS
-              <ArrowUpRight className="size-4" />
+              RESERVE A SECTION <span aria-hidden="true">→</span>
             </a>
-          </Button>
+          </div>
 
-          {/* 10. Footer strip */}
-          <footer className="mt-auto pt-4">
-            <nav
-              aria-label="More from Sun(Sets)"
-              className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
+          <div className="mt-8 flex items-center gap-4" aria-hidden="true">
+            <span className="h-px flex-1 bg-white/10" />
+            {/* Sun glyph — inline SVG, not an icon font. */}
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 text-[#E8B86D]/70"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
             >
-              {FOOTER_LINKS.map(link => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-[11px] font-semibold text-stone-400 underline-offset-4 transition hover:text-stone-200 hover:underline"
-                  onClick={() =>
-                    trackSunsetsClick({
-                      buttonName: link.label,
-                      href: link.href,
-                      eventSlug: JULY_4_EVENT_SLUG,
-                      eventDate: JULY_4_EVENT_DATE,
-                      interestType: link.interestType,
-                      channel: link.channel,
-                    })
-                  }
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-            <p className="mt-5 text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-400">
-              Togetherness is the frequency. Music is the guide.
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" />
+            </svg>
+            <span className="h-px flex-1 bg-white/10" />
+          </div>
+
+          <div className="mt-7 text-center">
+            <p className="text-sm font-semibold text-stone-100">
+              Three dates. One lake. One home.
             </p>
-          </footer>
-        </motion.section>
+            <p className="mt-3 font-serif text-sm italic leading-relaxed text-[#E8B86D]/70">
+              Togetherness is the frequency.
+              <br />
+              Music is the guide.
+            </p>
+            <p className="mt-7 text-[9px] font-black uppercase tracking-[0.34em] text-stone-600">
+              The Monolith Project
+            </p>
+          </div>
+        </section>
+
+        {/* 7. Footer strip */}
+        <footer className="mt-auto pt-9">
+          <nav
+            aria-label="More from Sun(Sets)"
+            className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
+          >
+            {FOOTER_LINKS.map(link => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-[11px] font-semibold text-stone-400 underline-offset-4 transition hover:text-stone-200 hover:underline"
+                onClick={() =>
+                  trackSunsetsClick({
+                    buttonName: link.label,
+                    href: link.href,
+                    eventSlug: JULY_4_EVENT_SLUG,
+                    eventDate: JULY_4_EVENT_DATE,
+                    interestType: link.interestType,
+                    channel: link.channel,
+                  })
+                }
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </footer>
       </main>
     </div>
   );
