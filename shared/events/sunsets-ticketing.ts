@@ -103,7 +103,7 @@ export const SUNSETS_JULY4_LINEUP = [
   "Kiko Franco",
   "Amari",
   "Gianni Blu",
-  "Jerome x Colin x Nomar",
+  "Jerome b3b Colin b3b Nomar",
   "Frank Bono",
   "Erik The DJ",
   "Autograf",
@@ -111,7 +111,7 @@ export const SUNSETS_JULY4_LINEUP = [
 
 export const SUNSETS_JULY4_SET_TIMES = [
   { time: "12:00 PM", label: "Doors / Event Begins" },
-  { time: "2:00 PM — 3:00 PM", label: "Jerome x Colin x Nomar" },
+  { time: "2:00 PM — 3:00 PM", label: "Jerome b3b Colin b3b Nomar" },
   { time: "3:00 PM — 4:00 PM", label: "Erik The DJ" },
   { time: "4:00 PM — 5:00 PM", label: "Frank Bono" },
   { time: "5:00 PM — 6:00 PM", label: "Gianni Blu" },

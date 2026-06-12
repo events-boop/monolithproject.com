@@ -65,7 +65,7 @@ const SEASON_EVENTS_SCHEMA = [
     name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
     startDate: "2026-07-04T13:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
-    performer: ["Autograf", "Kiko Franco", "Amari", "Gianni Blu", "Jerome x Colin x Nomar", "Frank Bono", "Erik The DJ"].map(
+    performer: ["Autograf", "Kiko Franco", "Amari", "Gianni Blu", "Jerome b3b Colin b3b Nomar", "Frank Bono", "Erik The DJ"].map(
       name => ({ "@type": "MusicGroup" as const, name })
     ),
     offers: {
@@ -207,7 +207,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Chasing Sun(Sets) 2026 — Tickets & Lake List"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome x Colin x Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
