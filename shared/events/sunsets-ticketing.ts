@@ -3,7 +3,7 @@ import type { TicketTier } from "./types";
 export const SUNSETS_JULY4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 export const SUNSETS_JULY4_EVENT_DATE = "2026-07-04";
 export const SUNSETS_JULY4_EVENT_TITLE = "SUN(SETS) I — July 4th at Castaways";
-export const SUNSETS_JULY4_EVENT_TIME = "1:00 PM — 10:00 PM";
+export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";
 export const SUNSETS_JULY4_EVENT_ADDRESS = "1603 N Lake Shore Dr, Chicago, IL 60614";
@@ -104,7 +104,7 @@ export const SUNSETS_JULY4_LINEUP = [
   "Amari",
   "Erik The DJ",
   "Frank Bono",
-  "Gianni",
+  "Gianni Blu",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [

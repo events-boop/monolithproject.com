@@ -134,16 +134,14 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         slug: "chasing-sunsets-july-4-2026",
         date: "July 4, 2026",
         time: SUNSETS_JULY4_EVENT_TIME,
-        startsAt: "2026-07-04T13:00:00-05:00",
+        startsAt: "2026-07-04T12:00:00-05:00",
         endsAt: "2026-07-04T22:00:00-05:00",
-        doors: "1:00 PM",
-        mainExperience: "3:15 PM — 10:00 PM",
+        doors: "12:00 PM",
+        mainExperience: "2:00 PM — 10:00 PM",
         venue: SUNSETS_JULY4_EVENT_VENUE,
         location: SUNSETS_JULY4_EVENT_LOCATION,
-        // DECISION A: public billing is Kiko Franco & Special Guests only.
-        // Additional artists are held as chapter reveals — do not list them
-        // on any public surface until confirmed for announcement.
-        lineup: "Kiko Franco & Special Guests",
+        // Lineup confirmed for public announcement — June 2026.
+        lineup: SUNSETS_JULY4_LINEUP.join(" · "),
         featured: true,
         status: "on-sale",
         inventoryState: "normal",
@@ -151,11 +149,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         format: "Day Into Night · Open Air · Lakefront House Music",
         dress: "Elevated lakefront summer attire",
         sound: "House Music · Golden Hour · Skyline Energy",
-        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco & Special Guests.",
+        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni.",
         experienceIntro: "Golden hour. House music. Lake Michigan. The skyline behind you. From afternoon energy to the final sunset set, this is not a holiday party. This is the return of a Chicago summer ritual.",
         whatToExpect: [
             "A full-day house music experience on Lake Michigan",
-            "Kiko Franco's Chicago lakefront debut, with special guests revealed in chapters",
+            "Kiko Franco's Chicago lakefront debut, with Amari, Erik The DJ, Frank Bono, and Gianni",
             "Public GA tiers that move from $45 to $55 to $65 as allocations sell out",
             "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
             "Tables and 6 premium cabanas starting at a $2,000 minimum",
@@ -319,7 +317,7 @@ function lockSunsetsPrelaunchEvent(event: ScheduledEvent): ScheduledEvent {
         recentlyDropped: false,
         whatToExpect: [
             "A full-day house music experience on Lake Michigan",
-            "Kiko Franco & Special Guests — reveals drop in chapters",
+            "Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni",
             "Lake List members get the first ticket release window",
             "Private codes, drops, and location signals before the public",
             "Season access and VIP/table details unlock at launch",

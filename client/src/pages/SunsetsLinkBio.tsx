@@ -142,7 +142,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
       <SEO
         title="SUN(SETS) I — July 4 at Castaways | Kiko Franco, Amari, Erik The DJ"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni. Open-air house on the Chicago lakefront. Tickets on sale now."
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni Blu. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -256,7 +256,7 @@ export default function SunsetsLinkBio() {
             <div className="space-y-2">
               {[
                 { time: "12:00 PM", label: "Doors Open" },
-                { time: "2:00 PM", label: "Gianni" },
+                { time: "2:00 PM", label: "Gianni Blu" },
                 { time: "3:00 PM", label: "Frank Bono" },
                 { time: "4:00 PM", label: "Erik The DJ" },
                 { time: "5:15 PM", label: "Amari" },

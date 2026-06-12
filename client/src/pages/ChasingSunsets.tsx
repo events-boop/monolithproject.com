@@ -174,7 +174,7 @@ export default function ChasingSunsets() {
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
         title="SUN(SETS) I — July 4th at Castaways | Chasing Sun(Sets)"
-        description="SUN(SETS) I brings Kiko Franco & Special Guests to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
+        description="SUN(SETS) I brings Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -399,7 +399,7 @@ export default function ChasingSunsets() {
               {
                 kicker: "Schedule",
                 title: "Set Times",
-                body: "Doors at 1PM. Kiko Franco & Special Guests through sunset — set times revealed in chapters.",
+                body: "Doors at 12PM. Gianni, Frank Bono, Erik The DJ, and Amari build the day — Kiko Franco takes sunset.",
                 href: "#chasing-tickets",
               },
               {
