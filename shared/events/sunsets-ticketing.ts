@@ -119,16 +119,6 @@ export const SUNSETS_JULY4_SET_TIMES = [
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 
-export const SUNSETS_JULY4_SET_TIMES = [
-  { time: "12:00 PM", label: "Doors / Event Begins" },
-  { time: "2:00 PM — 3:00 PM", label: "Gianni" },
-  { time: "3:00 PM — 4:00 PM", label: "Frank Bono" },
-  { time: "4:00 PM — 5:15 PM", label: "Erik The DJ" },
-  { time: "5:15 PM — 6:30 PM", label: "Amari" },
-  { time: "6:30 PM — 10:00 PM", label: "Kiko Franco — Lakefront Debut" },
-  { time: "10:00 PM", label: "Event Ends" },
-] as const;
-
 export type SunsetsTicketInventoryTier = {
   id: string;
   name: string;
