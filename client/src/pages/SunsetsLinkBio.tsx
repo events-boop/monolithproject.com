@@ -257,9 +257,9 @@ export default function SunsetsLinkBio() {
               {[
                 { time: "12:00 PM", label: "Doors Open" },
                 { time: "2:00 PM", label: "Jerome" },
-                { time: "3:00 PM", label: "Gianni Blu" },
+                { time: "3:00 PM", label: "Erik The DJ" },
                 { time: "4:00 PM", label: "Frank Bono" },
-                { time: "5:00 PM", label: "Erik The DJ" },
+                { time: "5:00 PM", label: "Gianni Blu" },
                 { time: "6:00 PM", label: "Amari" },
                 { time: "7:00 PM", label: "Kiko Franco" },
                 { time: "10:00 PM", label: "Close" },
