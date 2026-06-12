@@ -43,7 +43,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_JULY4_EVENT_DATE,
     eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Kiko Franco & Special Guests",
+    lineup: "Kiko Franco x Amari x Erik The DJ",
     ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
@@ -98,18 +98,22 @@ export const SUNSETS_JULY4_TICKET_UTMS = {
   utm_content: "buy_tickets_primary",
 } as const;
 
-// DECISION A (2026-06-11): public billing is "Kiko Franco & Special Guests"
-// only. Additional artists are pending confirmation / held as chapter
-// reveals — do not add names here until cleared for public announcement.
+// Lineup confirmed for public announcement — June 2026.
 export const SUNSETS_JULY4_LINEUP = [
   "Kiko Franco",
-  "Special Guests",
+  "Amari",
+  "Erik The DJ",
+  "Frank Bono",
+  "Gianni",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
-  { time: "1:00 PM", label: "Doors / Event Begins" },
-  { time: "Golden Hour", label: "Kiko Franco — Lakefront Debut" },
-  { time: "Support Sets", label: "Revealed in chapters" },
+  { time: "12:00 PM", label: "Doors / Event Begins" },
+  { time: "2:00 PM — 3:00 PM", label: "Gianni" },
+  { time: "3:00 PM — 4:00 PM", label: "Frank Bono" },
+  { time: "4:00 PM — 5:15 PM", label: "Erik The DJ" },
+  { time: "5:15 PM — 6:30 PM", label: "Amari" },
+  { time: "6:30 PM — 10:00 PM", label: "Kiko Franco — Lakefront Debut" },
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 

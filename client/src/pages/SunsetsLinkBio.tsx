@@ -29,14 +29,6 @@ const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 
-const AUTOGRAF_YOUTUBE_EMBED =
-  "https://www.youtube.com/embed/9R6XH7JZlJI?start=5506&rel=0&modestbranding=1";
-const SOMMERS_SOUNDCLOUD_URL =
-  "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
-const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
-  SOMMERS_SOUNDCLOUD_URL
-)}&color=%2361e8ff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
-
 // Forwarded to Laylo by the /go/ redirect layer.
 const LAKELIST_UTM_QUERY =
   "utm_source=sunsets-vip&utm_medium=landing&utm_campaign=css-2026-launch";
@@ -112,10 +104,6 @@ export default function SunsetsLinkBio() {
     `${SUNSETS_LAKELIST_PATH}?${LAKELIST_UTM_QUERY}`,
     JULY_4_EVENT_SLUG
   );
-  const benchekReleaseHref = appendEventAttribution(
-    `${SUNSETS_LAKELIST_PATH}?${LAKELIST_UTM_QUERY}&utm_content=benchek-july4-release`,
-    JULY_4_EVENT_SLUG
-  );
 
   const handleTicketClick = () => {
     triggerHaptic(16);
@@ -150,26 +138,11 @@ export default function SunsetsLinkBio() {
     });
   };
 
-  const handleBenchekReleaseClick = () => {
-    triggerHaptic(12);
-    trackLakeLead(newLeadEventId(), {
-      content_name: "Benchek July 4 Release Signup Click",
-    });
-    trackSunsetsClick({
-      buttonName: "Benchek July 4 Release — Sign Up",
-      href: benchekReleaseHref,
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: JULY_4_EVENT_DATE,
-      interestType: "benchek_release_signup",
-      channel: "Laylo",
-    });
-  };
-
   return (
     <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
       <SEO
-        title="Chasing Sun(Sets) 2026 — Tickets & Lake List"
-        description="Three dates. One lake. One home. July 4 tickets on sale now. Join the Lake List for first access to SUN(SETS) II + III and the limited 2026 Season Pass."
+        title="SUN(SETS) I — July 4 at Castaways | Kiko Franco, Amari, Erik The DJ"
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -211,9 +184,8 @@ export default function SunsetsLinkBio() {
               {SEASON_DATES.map(chapter => (
                 <div
                   key={chapter.title}
-                  className={`flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-2.5 last:border-b-0 ${
-                    "badge" in chapter ? "bg-[#61e8ff]/[.06]" : ""
-                  }`}
+                  className={`flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-2.5 last:border-b-0 ${"badge" in chapter ? "bg-[#61e8ff]/[.06]" : ""
+                    }`}
                 >
                   <p className="text-sm font-black text-white">
                     {chapter.title}{" "}
@@ -266,50 +238,15 @@ export default function SunsetsLinkBio() {
             </p>
           </section>
 
-          {/* 3. Proof strip */}
+          {/* 3. Lineup strip */}
           <section className="border-y border-white/10 py-3 text-center">
-            {SUNSETS_PRELAUNCH_LOCKED ? (
-              <>
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
-                  Full Lineup Announced Soon
-                </p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
-                  Lake List members get the first signal.
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
-                  Kiko Franco · Lakefront Debut · July 4
-                </p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
-                  Full lineup revealed in chapters.
-                </p>
-              </>
-            )}
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#61e8ff]">
+              Kiko Franco · Amari · Erik The DJ
+            </p>
+            <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-400">
+              Full lineup revealed in chapters.
+            </p>
           </section>
-
-          {/* Benchek release teaser */}
-          {!SUNSETS_PRELAUNCH_LOCKED ? (
-            <a
-              href={benchekReleaseHref}
-              onClick={handleBenchekReleaseClick}
-              className="block border border-[#ff6b8a]/30 bg-[#ff6b8a]/[.07] px-4 py-3.5 text-center transition hover:border-[#ff6b8a]/55 hover:bg-[#ff6b8a]/[.14]"
-            >
-              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#ffd0dc]">
-                Stay tuned
-              </p>
-              <p className="mt-1 text-sm font-black uppercase tracking-[0.06em] text-white">
-                BENCHEK — 4th of July Release 2026
-              </p>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-300">
-                From Marbella, Spain · Exclusive live set
-              </p>
-              <p className="mt-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[#ff6b8a]">
-                Sign up here <ArrowUpRight className="inline size-3.5 align-[-2px]" />
-              </p>
-            </a>
-          ) : null}
 
           {/* 4. Set Times */}
           <section className="space-y-2 border border-white/10 bg-black/20 px-4 py-4">
@@ -318,11 +255,12 @@ export default function SunsetsLinkBio() {
             </p>
             <div className="space-y-2">
               {[
-                { time: "12:00 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Doors Open" : "Doors Open" },
-                { time: "2:15 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Erik The DJ" },
-                { time: "3:30 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Amari" },
-                { time: "4:45 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Kiko Franco" },
-                { time: "6:45 PM", label: SUNSETS_PRELAUNCH_LOCKED ? "Artist TBA" : "Autograf" },
+                { time: "12:00 PM", label: "Doors Open" },
+                { time: "2:00 PM", label: "Gianni" },
+                { time: "3:00 PM", label: "Frank Bono" },
+                { time: "4:00 PM", label: "Erik The DJ" },
+                { time: "5:15 PM", label: "Amari" },
+                { time: "6:30 PM", label: "Kiko Franco" },
                 { time: "10:00 PM", label: "Close" },
               ].map(slot => (
                 <div
@@ -332,13 +270,7 @@ export default function SunsetsLinkBio() {
                   <span className="text-[11px] font-mono font-semibold tracking-[0.06em] text-stone-400">
                     {slot.time}
                   </span>
-                  <span
-                    className={`text-[11px] font-bold uppercase tracking-[0.08em] ${
-                      SUNSETS_PRELAUNCH_LOCKED && slot.label === "Artist TBA"
-                        ? "text-stone-500"
-                        : "text-stone-200"
-                    }`}
-                  >
+                  <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-stone-200">
                     {slot.label}
                   </span>
                 </div>
@@ -374,7 +306,9 @@ export default function SunsetsLinkBio() {
             </p>
           </section>
 
-          {/* 7. Secondary CTA */}
+
+
+          {/* Secondary CTA */}
           <Button
             asChild
             variant="outline"
@@ -398,45 +332,6 @@ export default function SunsetsLinkBio() {
               <ArrowUpRight className="size-4" />
             </a>
           </Button>
-
-          {/* 8. YouTube Recap */}
-          <section className="space-y-3 border border-white/10 bg-black/20 px-4 py-4">
-            <div className="flex items-center gap-2">
-              <Play className="size-4 text-[#61e8ff]" />
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#61e8ff]">
-                Watch the Last Chapter
-              </p>
-            </div>
-            <div className="aspect-video overflow-hidden bg-black">
-              <iframe
-                className="h-full w-full"
-                src={AUTOGRAF_YOUTUBE_EMBED}
-                title="Autograf Sun(Sets) recap"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-          </section>
-
-          {/* 9. SoundCloud */}
-          <section className="space-y-3 border border-white/10 bg-black/20 px-4 py-4">
-            <div className="flex items-center gap-2">
-              <Play className="size-4 text-[#61e8ff]" />
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#61e8ff]">
-                SUN(SETS) Radio — Sommers UK
-              </p>
-            </div>
-            <div className="overflow-hidden bg-black">
-              <iframe
-                title="Sommers UK featured SoundCloud selection"
-                className="h-[300px] w-full"
-                scrolling="no"
-                frameBorder="no"
-                allow="autoplay"
-                src={SOMMERS_SOUNDCLOUD_EMBED}
-              />
-            </div>
-          </section>
 
           {/* 10. Footer strip */}
           <footer className="mt-auto pt-4">
