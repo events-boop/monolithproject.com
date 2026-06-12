@@ -754,6 +754,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   }}
                 />
 
+                {/* Secondary cluster: collapses into the menu overlay below
+                    2xl so the six core items never overflow the brand row.
+                    All three remain reachable via the burger overlay. */}
+                <div className="hidden 2xl:contents">
                 <NavigationMegamenu
                   label="MONOLITH"
                   href={ROUTES.monolith}
@@ -824,6 +828,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 >
                   Contact
                 </Link>
+                </div>
               </div>
 
               {/* RIGHT: CTA & MOBILE TOGGLE */}

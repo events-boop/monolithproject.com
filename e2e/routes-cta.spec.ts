@@ -109,7 +109,7 @@ test("event banner chrome stays off ineligible routes", async ({ page }) => {
 test("desktop nav CTA flows resolve to working destinations", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
@@ -128,9 +128,9 @@ test("desktop nav CTA flows resolve to working destinations", async ({
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  // SUN(SETS) RADIO is a direct navigation, not a dropdown.
+  // RADIO is a direct navigation, not a dropdown.
   await nav
-    .getByRole("button", { name: /sun\(sets\) radio/i })
+    .getByRole("button", { name: "RADIO", exact: true })
     .click({ force: true });
   await expect(page).toHaveURL(/\/radio$/);
 
@@ -150,7 +150,7 @@ test("desktop nav CTA flows resolve to working destinations", async ({
 });
 
 test("community utility CTAs open the intended flows", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();

@@ -1,5 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { buildPublicSiteData } from "../data/public-site-data";
+import { SUNSETS_PRELAUNCH_LOCKED } from "../../shared/events/sunsets-ticketing";
+
+// CTA expectations flip with the launch switch: prelaunch funnels everything
+// to the Lake List; on-sale routes the featured event to the Posh rail.
+const expectedSunsetsCta = SUNSETS_PRELAUNCH_LOCKED
+  ? {
+      label: "Get First Access",
+      href: "/go/waitlist/chasing-sunsets",
+      tool: "laylo",
+    }
+  : {
+      label: "BUY TICKETS — JULY 4",
+      href: "/go/tickets/css-jul04",
+      tool: "posh",
+    };
 
 describe("buildPublicSiteData", () => {
   it("returns a lean public season profile for the homepage", () => {
@@ -10,13 +25,14 @@ describe("buildPublicSiteData", () => {
     expect(data.path).toBe("/");
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-jul04");
-    expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Get First Access",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
-    });
-    expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    if (SUNSETS_PRELAUNCH_LOCKED) {
+      expect(featuredSunsets?.startingPrice).toBeUndefined();
+      expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    } else {
+      expect(featuredSunsets?.startingPrice).toBe(20);
+      expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-jul04");
+    }
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -71,13 +87,14 @@ describe("buildPublicSiteData", () => {
     expect(featuredIds).toContain("css-jul04");
     expect(featuredIds).not.toContain("us-s3e3");
     expect(data.events.length).toBe(1);
-    expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Get First Access",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
-    });
-    expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    if (SUNSETS_PRELAUNCH_LOCKED) {
+      expect(featuredSunsets?.startingPrice).toBeUndefined();
+      expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    } else {
+      expect(featuredSunsets?.startingPrice).toBe(20);
+      expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-jul04");
+    }
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });

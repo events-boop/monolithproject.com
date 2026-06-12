@@ -469,7 +469,18 @@ export default function ScheduleSection() {
                                   Lineup Detail
                                 </span>
                                 <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-white md:text-2xl">
-                                  {event.lineup || "Lineup Release Pending"}
+                                  {event.lineup ? (
+                                    event.lineup.includes("Kiko Franco") ? (
+                                      <>
+                                        <Link href="/artists/kiko-franco" className="hover:text-[#E8B86D] transition-colors underline decoration-white/20 underline-offset-4">
+                                          Kiko Franco
+                                        </Link>
+                                        {event.lineup.split("Kiko Franco")[1]}
+                                      </>
+                                    ) : (
+                                      event.lineup
+                                    )
+                                  ) : "Lineup Release Pending"}
                                 </p>
                               </div>
 
@@ -541,9 +552,9 @@ export default function ScheduleSection() {
                                 </button>
                               )}
 
-                              <Link href={detailsHref} asChild>
+                              <Link href={event.id === "css-jul04" ? "/artists/kiko-franco" : detailsHref} asChild>
                                 <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group">
-                                  Open Event Page
+                                  {event.id === "css-jul04" ? "Open Artist Profile" : "Open Event Page"}
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>
                               </Link>
