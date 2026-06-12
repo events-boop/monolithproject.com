@@ -114,9 +114,8 @@ test("desktop nav CTA flows resolve to working destinations", async ({
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
-  await nav
-    .getByRole("button", { name: "SCHEDULE", exact: true })
-    .click({ force: true });
+  // Megamenu triggers navigate on click; dropdown panels open on hover.
+  await nav.getByRole("button", { name: "SCHEDULE", exact: true }).hover();
   await expect(
     page.getByRole("menuitem", { name: /chasing sun\(sets\)/i }).first()
   ).toBeVisible();
@@ -128,7 +127,7 @@ test("desktop nav CTA flows resolve to working destinations", async ({
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  // RADIO is a direct navigation, not a dropdown.
+  // Clicking a trigger navigates directly to its hub page.
   await nav
     .getByRole("button", { name: "RADIO", exact: true })
     .click({ force: true });
@@ -136,7 +135,7 @@ test("desktop nav CTA flows resolve to working destinations", async ({
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^partners/i }).click({ force: true });
+  await nav.getByRole("button", { name: /^partners/i }).hover();
   await expect(
     page.getByRole("menuitem", { name: "PARTNER WITH US" })
   ).toBeVisible();
@@ -155,9 +154,8 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
-  await nav
-    .getByRole("button", { name: "SCHEDULE", exact: true })
-    .click({ force: true });
+  // Megamenu triggers navigate on click; dropdown panels open on hover.
+  await nav.getByRole("button", { name: "SCHEDULE", exact: true }).hover();
   await expect(
     page.getByRole("menuitem", { name: /^upcoming shows/i })
   ).toBeVisible();
@@ -171,7 +169,7 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^partners/i }).click({ force: true });
+  await nav.getByRole("button", { name: /^partners/i }).hover();
   await expect(
     page.getByRole("menuitem", { name: /^partner with us/i })
   ).toBeVisible();

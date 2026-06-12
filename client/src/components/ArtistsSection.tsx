@@ -21,8 +21,10 @@ interface Artist {
 const SUNSETS_ROSTER_IDS = ["autograf", "chus"] as const;
 const UNTOLD_ROSTER_IDS = ["haai", "lazare"] as const;
 
-const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map(id => ARTISTS[id]);
-const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map(id => ARTISTS[id]);
+// Roster entries may be retired from ARTISTS (Kiko-only launch roster) —
+// drop missing ids instead of rendering undefined artists.
+const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map(id => ARTISTS[id]).filter(Boolean);
+const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map(id => ARTISTS[id]).filter(Boolean);
 
 function ArtistCard({
   artist,

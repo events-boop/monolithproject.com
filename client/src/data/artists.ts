@@ -37,7 +37,6 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "Ushuaïa Ibiza Session", duration: "—" },
     ],
   },
-];,
 ];
 
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(

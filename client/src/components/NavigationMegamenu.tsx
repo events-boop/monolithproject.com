@@ -114,8 +114,12 @@ export default function NavigationMegamenu({
   if (type === "chasing-radio") {
     leftColumnTitle = "SUN(SETS) Radio";
     leftColumnItems = [
-      { label: "S1E1: Autograf", href: "/artists/autograf", icon: "play" },
-      { label: "S1E2: Lazare", href: "/artists/lazare", icon: "play" },
+      { label: "S1E1: Benchek", href: "/radio/ep-01-benchek", icon: "play" },
+      {
+        label: "S1E2: Terranova",
+        href: "/radio/ep-03-terranova",
+        icon: "play",
+      },
       {
         label: "S1E3: Benchek Marbella",
         href: "/radio/ep-004-benchek-part-2",
@@ -173,12 +177,8 @@ export default function NavigationMegamenu({
         onClick={e => {
           e.preventDefault();
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
-          if (type === "chasing-radio") {
-            setIsOpen(false);
-            onNavigate(href);
-            return;
-          }
-          setIsOpen(!isOpen);
+          setIsOpen(false);
+          onNavigate(href);
         }}
         aria-expanded={isOpen}
         aria-haspopup="menu"
