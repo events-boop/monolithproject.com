@@ -11,7 +11,7 @@ import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
-  SUNSETS_LAKELIST_PATH,
+  SUNSETS_SEASON_PASS_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import {
@@ -65,9 +65,14 @@ const SEASON_EVENTS_SCHEMA = [
     name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
     startDate: "2026-07-04T13:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
-    performer: ["Autograf", "Kiko Franco", "Amari", "Gianni Blu", "Jerome b3b Colin b3b Nomar", "Frank Bono", "Erik The DJ"].map(
-      name => ({ "@type": "MusicGroup" as const, name })
-    ),
+    performer: [
+      "Autograf",
+      "Kiko Franco",
+      "Jewels (Le Yora)",
+      "Amari",
+      "Gianni Blu",
+      "Erik The DJ",
+    ].map(name => ({ "@type": "MusicGroup" as const, name })),
     offers: {
       "@type": "Offer" as const,
       url: "https://sunsets.vip",
@@ -206,7 +211,7 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
-        title="Chasing Sun(Sets) 2026 — Tickets & Lake List"
+        title="SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari"
         description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
@@ -221,10 +226,10 @@ export default function SunsetsLinkBio() {
             The Monolith Project Presents
           </p>
           <h1 className="mt-4 font-black leading-[0.92] tracking-normal text-white">
-            <span className="block whitespace-nowrap text-[clamp(2rem,9.6vw,2.7rem)]">
+            <span className="block whitespace-nowrap text-[clamp(1.65rem,8.4vw,2.7rem)]">
               CHASING SUN(SETS)
             </span>
-            <span className="block text-[clamp(2rem,9.6vw,2.7rem)] text-[#E8B86D]">
+            <span className="block text-[clamp(1.65rem,8.4vw,2.7rem)] text-[#E8B86D]">
               2026
             </span>
           </h1>
@@ -239,9 +244,12 @@ export default function SunsetsLinkBio() {
             <p className="whitespace-nowrap text-[clamp(1.6rem,7.8vw,2.1rem)] font-black uppercase leading-none tracking-[0.04em] text-white">
               KIKO FRANCO
             </p>
-            <p className="mt-2 whitespace-nowrap text-[clamp(0.72rem,3.4vw,0.92rem)] font-bold uppercase tracking-[0.14em] text-stone-300">
-              AMARI · GIANNI BLU · JEROME x COLIN x NOMAR{" "}
-              <span className="text-[#E8B86D]">&amp; MORE</span>
+            {/* Name list may wrap; the no-wrap rule covers dates and titles. */}
+            <p className="mt-2 text-[clamp(0.7rem,3.2vw,0.92rem)] font-bold uppercase leading-relaxed tracking-[0.12em] text-stone-300">
+              AMARI · GIANNI BLU · JEROME b3b COLIN b3b NOMAR · FRANK BONO · ERIK THE DJ
+            </p>
+            <p className="mt-1 text-[clamp(0.65rem,2.8vw,0.82rem)] font-bold uppercase tracking-[0.12em] text-[#E8B86D]">
+              AUTOGRAF — CLOSING SET
             </p>
           </div>
         </header>
@@ -390,6 +398,10 @@ export default function SunsetsLinkBio() {
             </p>
             <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
               Daybeds · Cabanas · Group tables
+            </p>
+            <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-400">
+              $2,000 minimum spend · Admission for up to 15 guests · Limited,
+              confirmed manually
             </p>
             <a
               href="/vip"

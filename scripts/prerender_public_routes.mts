@@ -641,7 +641,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Chasing Sun(Sets) 2026 — Tickets & Lake List",
       description:
-        "Three dates. One lake. One home. Kiko Franco, Amari, Gianni Blu, Erik The DJ & more. July 4 on sale now at Castaways Beach Club. Join the Lake List for first access to the limited 2026 Season Pass.",
+        "SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now.",
       image: "/images/css-2026-og.png",
       schemaData: publicSunsetsEvent
         ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")

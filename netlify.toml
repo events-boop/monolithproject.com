@@ -178,6 +178,19 @@
   status = 301
   force = true
 
+# Cabana inquiries — printed/posted as sunsets.vip/tables.
+[[redirects]]
+  from = "/tables"
+  to = "/vip#tables"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tables/"
+  to = "/vip#tables"
+  status = 301
+  force = true
+
 # Eran Hersh — Untold Story IV vanity redirects (campaign: eran_hersh_may16)
 # Specific rules MUST stay above the generic /go/* proxy below.
 [[redirects]]
@@ -258,6 +271,14 @@
 [[redirects]]
   from = "/go/lakelist"
   to = "/go/waitlist/chasing-sunsets"
+  status = 302
+  force = true
+
+# Season Pass purchase rail — resolves to OUTBOUND_TICKETS_SEASON_PASS_URL via
+# the express handler; shows "coming soon" until that env var is set.
+[[redirects]]
+  from = "/go/season-pass"
+  to = "/go/tickets/season-pass"
   status = 302
   force = true
 

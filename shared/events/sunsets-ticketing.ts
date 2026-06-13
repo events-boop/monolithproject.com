@@ -21,6 +21,10 @@ export const SUNSETS_JULY4_TICKET_PATH = "/go/tickets/css-jul04";
 // materials. Redirected to the canonical /go destinations by netlify.toml and
 // server/routes/outbound.ts — keep all three places in sync.
 export const SUNSETS_JULY4_VANITY_TICKET_PATH = "/go/tickets/sunsets-july4";
+// Season Pass purchase rail. Resolves via OUTBOUND_TICKETS_SEASON_PASS_URL;
+// shows the branded "coming soon" page until that env var is set.
+export const SUNSETS_SEASON_PASS_TICKET_KEY = "season-pass";
+export const SUNSETS_SEASON_PASS_PATH = "/go/tickets/season-pass";
 export const SUNSETS_LAKELIST_PATH = "/go/lakelist";
 export const SUNSETS_LAKELIST_CANONICAL_PATH = "/go/waitlist/chasing-sunsets";
 export const SUNSETS_AUG22_TICKET_KEY = "css-aug22";
@@ -98,15 +102,23 @@ export const SUNSETS_JULY4_TICKET_UTMS = {
   utm_content: "buy_tickets_primary",
 } as const;
 
-// Lineup confirmed for public announcement — June 2026.
+// Lineup confirmed for public announcement — June 2026. The headline trio
+// (Autograf, Kiko Franco, Jewels (Le Yora)) leads the July 4 billing.
 export const SUNSETS_JULY4_LINEUP = [
+  "Autograf",
   "Kiko Franco",
+  "Jewels (Le Yora)",
   "Amari",
   "Gianni Blu",
   "Jerome b3b Colin b3b Nomar",
   "Frank Bono",
   "Erik The DJ",
+] as const;
+// The three top-billed names featured in announcements + the /sunsets hero.
+export const SUNSETS_JULY4_HEADLINERS = [
   "Autograf",
+  "Kiko Franco",
+  "Jewels (Le Yora)",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
@@ -311,6 +323,12 @@ export function getSunsetsTicketRouteMeta(
         eventSlug: "chasing-sunsets-september-19-2026",
         dateLabel: "September 19",
         title: "SUN(SETS) III — September 19th at Castaways",
+      };
+    case SUNSETS_SEASON_PASS_TICKET_KEY:
+      return {
+        eventSlug: SUNSETS_JULY4_EVENT_SLUG,
+        dateLabel: "Season Pass",
+        title: "SUN(SETS) 2026 Season Pass",
       };
     default:
       return null;

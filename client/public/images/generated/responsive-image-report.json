@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-12T06:26:44.878Z",
+  "generatedAt": "2026-06-13T03:07:54.570Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 4313664,
-    "estimatedTransferBytes": 2638419,
-    "estimatedSavingsBytes": 1765859,
-    "variantBytes": 8707523
+    "originalBytes": 4699760,
+    "estimatedTransferBytes": 2719824,
+    "estimatedSavingsBytes": 2070550,
+    "variantBytes": 8910712
   },
   "images": [
     {
@@ -1440,6 +1440,44 @@
       "estimatedTransferKb": 26.4,
       "estimatedSavingsBytes": 14647,
       "estimatedSavingsPct": 35
+    },
+    {
+      "source": "/images/css-2026-og.png",
+      "originalBytes": 386096,
+      "originalKb": 377,
+      "originalWidth": 1200,
+      "originalHeight": 630,
+      "generatedBaseName": "css-2026-og",
+      "variants": [
+        {
+          "path": "/images/generated/css-2026-og-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 19724
+        },
+        {
+          "path": "/images/generated/css-2026-og-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 19380
+        },
+        {
+          "path": "/images/generated/css-2026-og-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 81405
+        },
+        {
+          "path": "/images/generated/css-2026-og-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 82680
+        }
+      ],
+      "estimatedTransferBytes": 81405,
+      "estimatedTransferKb": 79.5,
+      "estimatedSavingsBytes": 304691,
+      "estimatedSavingsPct": 79
     },
     {
       "source": "/images/deron-press.jpg",

@@ -127,11 +127,10 @@ export default function SEO({
       <meta name="twitter:image" content={resolvedImage} />
       {noIndex ? <meta name="robots" content="noindex,nofollow" /> : null}
 
+      {/* react-helmet-async drops dangerouslySetInnerHTML scripts; pass the
+          serialized JSON as children so the tag actually renders. */}
       {serializedSchema ? (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: serializedSchema }}
-        />
+        <script type="application/ld+json">{serializedSchema}</script>
       ) : null}
     </Helmet>
   );

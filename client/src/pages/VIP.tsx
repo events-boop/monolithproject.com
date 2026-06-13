@@ -165,6 +165,67 @@ export default function VIP() {
             </motion.div>
           </div>
 
+          {/* Cabana Reservations — sunsets.vip/tables lands here */}
+          <section
+            id="tables"
+            className="mx-auto mb-24 max-w-3xl border border-primary/30 bg-white/[0.03] p-6 sm:p-8"
+          >
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 className="font-display text-2xl uppercase text-white sm:text-3xl">
+                Cabana Reservation
+              </h2>
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+                $2,000 Minimum Spend
+              </p>
+            </div>
+            <p className="mt-3 text-white/80">
+              Includes admission for up to 15 guests. Each cabana includes a
+              dedicated reserved space for your group and a $2,000 food &amp;
+              beverage minimum spend applied through the venue.
+            </p>
+
+            <div className="mt-8 grid gap-8 sm:grid-cols-2">
+              <div>
+                <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-primary">
+                  Includes
+                </h3>
+                <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <li>Admission for up to 15 guests</li>
+                  <li>Reserved cabana space</li>
+                  <li>Food &amp; beverage minimum through Castaways</li>
+                  <li>Dedicated service based on venue availability</li>
+                  <li>Premium lakefront event experience</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-white/60">
+                  Important Notes
+                </h3>
+                <ul className="mt-4 space-y-2 text-sm text-white/60">
+                  <li>
+                    Minimum spend does not include taxes, gratuity, or service
+                    fees unless confirmed by the venue.
+                  </li>
+                  <li>
+                    Groups larger than 15 may require an additional cabana or
+                    additional admission.
+                  </li>
+                  <li>
+                    Final placement is based on venue availability and layout.
+                  </li>
+                  <li>Cabana reservations are limited and confirmed manually.</li>
+                </ul>
+              </div>
+            </div>
+
+            <a
+              href="#vip-request"
+              className="mt-8 inline-flex h-12 items-center justify-center border border-primary px-6 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition hover:bg-primary/10"
+            >
+              Inquire Below <span aria-hidden="true">&nbsp;→</span>
+            </a>
+          </section>
+
           {/* Request Form */}
           <section
             id="vip-request"

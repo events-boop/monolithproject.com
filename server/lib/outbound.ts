@@ -3,6 +3,7 @@ import {
   SUNSETS_JULY4_EVENT_SLUG,
   SUNSETS_JULY4_TICKET_KEY,
   SUNSETS_JULY4_TICKET_UTMS,
+  SUNSETS_SEASON_PASS_TICKET_KEY,
   SUNSETS_SEP19_TICKET_KEY,
   getSunsetsTicketRouteMeta,
   isSunsetsJuly4TicketRoute,
@@ -92,6 +93,10 @@ const ticketDestinations: Record<string, string | null> = Object.assign(
       readHttpsEnv("OUTBOUND_TICKETS_CSS_AUG22_URL") ?? null,
     [SUNSETS_SEP19_TICKET_KEY]:
       readHttpsEnv("OUTBOUND_TICKETS_CSS_SEP19_URL") ?? null,
+    // Season Pass — null until the Posh season-pass URL is wired, so the route
+    // shows "coming soon" rather than redirecting to a single-date event.
+    [SUNSETS_SEASON_PASS_TICKET_KEY]:
+      readHttpsEnv("OUTBOUND_TICKETS_SEASON_PASS_URL") ?? null,
     "mp-autograf-mar21":
       readHttpsEnv("OUTBOUND_TICKETS_MP_AUTOGRAF_MAR21_URL") ||
       featuredTicketUrl,

@@ -237,6 +237,10 @@ function Router() {
       <Route path={ROUTES.submit} component={SubmitTransition} />
       <Route path={ROUTES.lineup} component={LineupTransition} />
       <Route path={ROUTES.artists} component={LineupTransition} />
+      {/* Cabana inquiries vanity path (sunsets.vip/tables). */}
+      <Route path="/tables">
+        <Redirect to={ROUTES.vip} />
+      </Route>
       <Route path={ROUTES.schedule} component={ScheduleTransition} />
       <Route path={ROUTES.events} component={ScheduleTransition} />
       {/* DECISION B: October 10 was rebranded from a Sun(Sets) finale to the
