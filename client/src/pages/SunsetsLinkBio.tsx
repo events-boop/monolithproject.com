@@ -239,6 +239,16 @@ export default function SunsetsLinkBio() {
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
           </p>
+          
+          <div className="mx-auto mt-4 mb-3 max-w-[280px] overflow-hidden border-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)]">
+            <img 
+              src="/images/css-2026-poster.jpg" 
+              alt="Chasing Sunsets 2026 Poster" 
+              className="w-full h-auto object-cover"
+              loading="eager"
+            />
+          </div>
+
           <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
             <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
               CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
