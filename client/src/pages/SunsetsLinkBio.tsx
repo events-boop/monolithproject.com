@@ -11,7 +11,6 @@ import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
-  SUNSETS_SEASON_PASS_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import {
@@ -156,10 +155,6 @@ export default function SunsetsLinkBio() {
     SUNSETS_JULY4_VANITY_TICKET_PATH,
     JULY_4_EVENT_SLUG
   );
-  const seasonPassHref = appendEventAttribution(
-    SUNSETS_SEASON_PASS_PATH,
-    JULY_4_EVENT_SLUG
-  );
   const benchekDropHref = appendEventAttribution(
     BENCHEK_DROP_HREF,
     JULY_4_EVENT_SLUG
@@ -187,13 +182,13 @@ export default function SunsetsLinkBio() {
     triggerHaptic(16);
     trackLakeInitiateCheckout();
     captureSunsetsTicketCtaClick({
-      destinationUrl: seasonPassHref,
+      destinationUrl: ticketHref,
       pagePath: PAGE_PATH,
       ctaPosition: "season_pass",
     });
     trackSunsetsClick({
       buttonName: "GET SEASON PASS",
-      href: seasonPassHref,
+      href: ticketHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
       interestType: "season_pass_click",
@@ -352,7 +347,7 @@ export default function SunsetsLinkBio() {
           </div>
 
           <a
-            href={seasonPassHref}
+            href={ticketHref}
             onClick={handleSeasonPassClick}
             className="mt-4 flex h-12 w-full items-center justify-center gap-2 border border-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10 min-[390px]:text-xs"
           >
