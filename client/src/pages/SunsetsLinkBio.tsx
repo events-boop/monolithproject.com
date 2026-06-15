@@ -156,6 +156,18 @@ export default function SunsetsLinkBio() {
     SUNSETS_SEASON_PASS_PATH,
     JULY_4_EVENT_SLUG
   );
+  const lakeListHref = `${SUNSETS_LAKELIST_PATH}?${LAKELIST_UTM_QUERY}`;
+  const handleLakeListClick = () => {
+    triggerHaptic(12);
+    trackSunsetsClick({
+      buttonName: "LAKE LIST — FIRST ACCESS",
+      href: lakeListHref,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "lakelist_click",
+      channel: "Laylo",
+    });
+  };
 
   const handleTicketClick = () => {
     triggerHaptic(16);
