@@ -67,9 +67,7 @@ const SEASON_EVENTS_SCHEMA = [
     startDate: "2026-07-04T13:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
     performer: [
-      "Autograf",
       "Kiko Franco",
-      "Jewels (Le Yora)",
       "Amari",
       "Gianni Blu",
       "Erik The DJ",
@@ -212,8 +210,8 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
-        title="SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
+        title="Chasing Sun(Sets) 2026 — Tickets & Lake List | The Monolith Project"
+        description="Three dates. One lake. One home. Kiko Franco, Amari, Gianni Blu, Erik The DJ & more. July 4 on sale now at Castaways Beach Club. Join the Lake List for first access to the limited 2026 Season Pass."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -226,31 +224,27 @@ export default function SunsetsLinkBio() {
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
           </p>
-          <h1 className="mt-4 font-black leading-[0.92] tracking-normal text-white">
-            <span className="block whitespace-nowrap text-[clamp(1.65rem,8.4vw,2.7rem)]">
-              CHASING SUN(SETS)
+          <h1 className="mt-4 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
+            <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
+              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
             </span>
-            <span className="block text-[clamp(1.65rem,8.4vw,2.7rem)] text-[#E8B86D]">
+            <span className="mt-1 block whitespace-nowrap text-[clamp(1.5rem,7vw,2.5rem)] text-[#E8B86D]">
               2026
             </span>
           </h1>
-          <p className="mt-3 font-serif text-base italic text-stone-300">
+          <p className="mt-3 font-serif text-base italic text-stone-200">
             Three dates. One lake. One home.
           </p>
-          <p className="mt-2 text-[11px] font-black uppercase tracking-[0.28em] text-stone-400">
-            Castaways Beach Club
+          <p className="mt-2 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
+            CASTAWAYS BEACH CLUB
           </p>
 
-          <div className="mt-6 border-y border-white/10 py-4">
-            <p className="whitespace-nowrap text-[clamp(1.6rem,7.8vw,2.1rem)] font-black uppercase leading-none tracking-[0.04em] text-white">
+          <div className="mt-5 border-y border-white/14 py-4">
+            <p className="text-[clamp(1.45rem,7.4vw,2.05rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-white">
               KIKO FRANCO
             </p>
-            {/* Name list may wrap; the no-wrap rule covers dates and titles. */}
-            <p className="mt-2 text-[clamp(0.7rem,3.2vw,0.92rem)] font-bold uppercase leading-relaxed tracking-[0.12em] text-stone-300">
-              AMARI · GIANNI BLU · JEROME b3b COLIN b3b NOMAR · FRANK BONO · ERIK THE DJ
-            </p>
-            <p className="mt-1 text-[clamp(0.65rem,2.8vw,0.82rem)] font-bold uppercase tracking-[0.12em] text-[#E8B86D]">
-              AUTOGRAF — CLOSING SET
+            <p className="mt-2 text-[clamp(0.72rem,3.2vw,0.94rem)] font-black uppercase leading-relaxed tracking-[0.12em] text-stone-300">
+              AMARI · GIANNI BLU · ERIK THE DJ <span className="text-[#E8B86D]">&amp; MORE</span>
             </p>
           </div>
         </header>
@@ -289,13 +283,15 @@ export default function SunsetsLinkBio() {
         </section>
 
         {/* 3. Primary CTA */}
-        <a
-          href={ticketHref}
-          onClick={handleTicketClick}
-          className="mt-5 flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap bg-[#E8B86D] text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_36px_rgba(232,184,109,0.22)] transition hover:bg-[#f4d58d]"
-        >
-          GET JULY 4 TICKETS <span aria-hidden="true">→</span>
-        </a>
+        <section className="mt-5" aria-label="July 4 Tickets">
+          <a
+            href={ticketHref}
+            onClick={handleTicketClick}
+            className="flex h-[52px] min-h-[52px] items-center justify-center gap-2 bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition hover:bg-[#f4d58d]"
+          >
+            GET JULY 4 TICKETS <span aria-hidden="true">→</span>
+          </a>
+        </section>
 
         {/* 4. Season Pass — vault card */}
         <section
