@@ -236,47 +236,13 @@ export default function SunsetsLinkBio() {
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* 1. Hero — brand + lineup */}
         <header className="text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
-            The Monolith Project Presents
-          </p>
-          
-          <div className="mx-auto mt-4 mb-3 max-w-[280px] overflow-hidden border-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)]">
+          <div className="mx-auto mt-4 mb-5 max-w-[320px] overflow-hidden border-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)]">
             <img 
               src="/images/css-2026-poster.jpg" 
               alt="Chasing Sunsets 2026 Poster" 
               className="w-full h-auto object-cover"
               loading="eager"
             />
-          </div>
-
-          <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
-            <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
-              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
-            </span>
-            <span className="mt-1 block whitespace-nowrap text-[clamp(1.5rem,7vw,2.5rem)] text-[#E8B86D]">
-              2026
-            </span>
-          </h1>
-          <p className="mt-2 font-serif text-base italic text-stone-200">
-            Three dates. One lake. One home.
-          </p>
-          <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
-            CASTAWAYS BEACH CLUB
-          </p>
-
-          <div className="mt-3 border-y border-white/14 py-3">
-            <p className="text-[clamp(1.45rem,7.4vw,2.05rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-white">
-              KIKO FRANCO
-            </p>
-            <p className="mt-1.5 text-[clamp(1rem,5vw,1.35rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-stone-200">
-              AMARI
-            </p>
-            <p className="mt-2.5 text-[clamp(0.72rem,3.2vw,0.94rem)] font-black uppercase leading-relaxed tracking-[0.12em] text-stone-300">
-              GIANNI BLU · JEROME b3b COLIN b3b NOMAR · FRANK BONO · ERIK THE DJ
-            </p>
-            <p className="mt-1 text-[clamp(0.65rem,2.6vw,0.84rem)] font-black uppercase tracking-[0.1em] text-[#E8B86D]">
-              AUTOGRAF — CLOSING SET
-            </p>
           </div>
         </header>
 
