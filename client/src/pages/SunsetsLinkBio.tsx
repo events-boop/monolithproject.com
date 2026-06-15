@@ -236,7 +236,25 @@ export default function SunsetsLinkBio() {
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* 1. Hero — brand + lineup */}
         <header className="text-center">
-          <div className="mx-auto mt-4 mb-5 max-w-[320px] overflow-hidden border-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)]">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
+            The Monolith Project Presents
+          </p>
+          <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
+            <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
+              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
+            </span>
+            <span className="mt-1 block whitespace-nowrap text-[clamp(1.5rem,7vw,2.5rem)] text-[#E8B86D]">
+              2026
+            </span>
+          </h1>
+          <p className="mt-2 font-serif text-base italic text-stone-200">
+            Three dates. One lake. One home.
+          </p>
+          <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
+            CASTAWAYS BEACH CLUB
+          </p>
+
+          <div className="-mx-5 mt-5 mb-5 overflow-hidden border-y-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)] sm:mx-0 sm:border-[4px]">
             <img 
               src="/images/css-2026-poster.jpg" 
               alt="Chasing Sunsets 2026 Poster" 
