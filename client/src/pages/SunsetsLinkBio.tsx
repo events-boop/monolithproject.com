@@ -10,6 +10,7 @@ import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
+  SUNSETS_LAKELIST_PATH,
   SUNSETS_SEASON_PASS_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
@@ -28,6 +29,9 @@ const OG_IMAGE = "/images/css-2026-og.png";
 // Recap video — same ID the /go/media/sunsets-recap redirect resolves to.
 const RECAP_YOUTUBE_ID = "9R6XH7JZlJI";
 const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
+
+const LAKELIST_UTM_QUERY =
+  "utm_source=sunsets-vip&utm_medium=landing&utm_campaign=css-2026-launch";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
