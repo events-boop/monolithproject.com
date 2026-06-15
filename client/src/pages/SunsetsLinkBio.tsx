@@ -233,13 +233,13 @@ export default function SunsetsLinkBio() {
         schemaData={SEASON_EVENTS_SCHEMA}
       />
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-7 sm:py-10">
+      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* 1. Hero — brand + lineup */}
         <header className="text-center">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
           </p>
-          <h1 className="mt-4 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
+          <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
             <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
               CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
             </span>
@@ -247,14 +247,14 @@ export default function SunsetsLinkBio() {
               2026
             </span>
           </h1>
-          <p className="mt-3 font-serif text-base italic text-stone-200">
+          <p className="mt-2 font-serif text-base italic text-stone-200">
             Three dates. One lake. One home.
           </p>
-          <p className="mt-2 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
+          <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
             CASTAWAYS BEACH CLUB
           </p>
 
-          <div className="mt-5 border-y border-white/14 py-4">
+          <div className="mt-3 border-y border-white/14 py-3">
             <p className="text-[clamp(1.45rem,7.4vw,2.05rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-white">
               KIKO FRANCO
             </p>
@@ -271,9 +271,9 @@ export default function SunsetsLinkBio() {
         </header>
 
         {/* 2. Dates ledger */}
-        <section className="mt-5" aria-label="2026 season dates">
+        <section className="mt-4" aria-label="2026 season dates">
           <div className="border border-white/12 bg-white/[0.03]">
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#E8B86D]/[0.07] px-3.5 py-3">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#E8B86D]/[0.07] px-3.5 py-2">
               <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
                 SUN(SETS) I — JUL 4
               </p>
@@ -281,7 +281,7 @@ export default function SunsetsLinkBio() {
                 ON SALE NOW
               </span>
             </div>
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-3 opacity-55">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-2 opacity-55">
               <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
                 SUN(SETS) II — AUG 22
               </p>
@@ -289,7 +289,7 @@ export default function SunsetsLinkBio() {
                 Chapter Two
               </span>
             </div>
-            <div className="flex items-center justify-between gap-3 px-3.5 py-3 opacity-55">
+            <div className="flex items-center justify-between gap-3 px-3.5 py-2 opacity-55">
               <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
                 SUN(SETS) III — SEP 19
               </p>
@@ -304,7 +304,7 @@ export default function SunsetsLinkBio() {
         </section>
 
         {/* 3. Primary CTA */}
-        <section className="mt-5" aria-label="July 4 Tickets">
+        <section className="mt-4" aria-label="July 4 Tickets">
           <a
             href={ticketHref}
             onClick={handleTicketClick}
@@ -316,7 +316,7 @@ export default function SunsetsLinkBio() {
 
         {/* 4. Season Pass — vault card */}
         <section
-          className="mt-5 border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
+          className="mt-4 border border-[#E8B86D]/40 bg-[#15110a] p-3.5 shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
           aria-label="2026 Season Pass"
         >
           <div className="flex items-center justify-between gap-3">
