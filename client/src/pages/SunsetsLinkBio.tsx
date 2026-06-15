@@ -4,14 +4,12 @@ import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import { trackFunnelPageView } from "@/lib/api";
 import {
   trackLakeInitiateCheckout,
-  trackLakeLead,
   trackLakePageView,
 } from "@/lib/campaignPixel";
 import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
-  SUNSETS_LAKELIST_PATH,
   SUNSETS_SEASON_PASS_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
@@ -30,10 +28,6 @@ const OG_IMAGE = "/images/css-2026-og.png";
 // Recap video — same ID the /go/media/sunsets-recap redirect resolves to.
 const RECAP_YOUTUBE_ID = "9R6XH7JZlJI";
 const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
-
-// Forwarded to Laylo by the /go/ redirect layer.
-const LAKELIST_UTM_QUERY =
-  "utm_source=sunsets-vip&utm_medium=landing&utm_campaign=css-2026-launch";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
@@ -67,7 +61,9 @@ const SEASON_EVENTS_SCHEMA = [
     startDate: "2026-07-04T13:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
     performer: [
+      "Autograf",
       "Kiko Franco",
+      "Jewels (Le Yora)",
       "Amari",
       "Gianni Blu",
       "Erik The DJ",
@@ -156,8 +152,8 @@ export default function SunsetsLinkBio() {
     SUNSETS_JULY4_VANITY_TICKET_PATH,
     JULY_4_EVENT_SLUG
   );
-  const lakeListHref = appendEventAttribution(
-    `${SUNSETS_LAKELIST_PATH}?${LAKELIST_UTM_QUERY}`,
+  const seasonPassHref = appendEventAttribution(
+    SUNSETS_SEASON_PASS_PATH,
     JULY_4_EVENT_SLUG
   );
 
@@ -170,7 +166,7 @@ export default function SunsetsLinkBio() {
       ctaPosition: "primary",
     });
     trackSunsetsClick({
-      buttonName: "GET JULY 4 TICKETS",
+      buttonName: "BUY JULY 4 TICKETS",
       href: ticketHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
@@ -179,18 +175,21 @@ export default function SunsetsLinkBio() {
     });
   };
 
-  const handleLakeListClick = () => {
-    triggerHaptic(12);
-    trackLakeLead(newLeadEventId(), {
-      content_name: "Lake List Signup Click - Chasing Sun(Sets)",
+  const handleSeasonPassClick = () => {
+    triggerHaptic(16);
+    trackLakeInitiateCheckout();
+    captureSunsetsTicketCtaClick({
+      destinationUrl: seasonPassHref,
+      pagePath: PAGE_PATH,
+      ctaPosition: "season_pass",
     });
     trackSunsetsClick({
-      buttonName: "JOIN THE LAKE LIST FOR FIRST ACCESS",
-      href: lakeListHref,
+      buttonName: "GET SEASON PASS",
+      href: seasonPassHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
-      interestType: "lakelist_click",
-      channel: "Laylo",
+      interestType: "season_pass_click",
+      channel: "Posh",
     });
   };
 
@@ -211,7 +210,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Chasing Sun(Sets) 2026 — Tickets & Lake List | The Monolith Project"
-        description="Three dates. One lake. One home. Kiko Franco, Amari, Gianni Blu, Erik The DJ & more. July 4 on sale now at Castaways Beach Club. Join the Lake List for first access to the limited 2026 Season Pass."
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026. Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -247,7 +246,10 @@ export default function SunsetsLinkBio() {
               AMARI
             </p>
             <p className="mt-2.5 text-[clamp(0.72rem,3.2vw,0.94rem)] font-black uppercase leading-relaxed tracking-[0.12em] text-stone-300">
-              GIANNI BLU · ERIK THE DJ <span className="text-[#E8B86D]">&amp; MORE</span>
+              GIANNI BLU · JEROME b3b COLIN b3b NOMAR · FRANK BONO · ERIK THE DJ
+            </p>
+            <p className="mt-1 text-[clamp(0.65rem,2.6vw,0.84rem)] font-black uppercase tracking-[0.1em] text-[#E8B86D]">
+              AUTOGRAF — CLOSING SET
             </p>
           </div>
         </header>

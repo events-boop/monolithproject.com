@@ -35,6 +35,7 @@ Use the variable that matches the rail you are changing:
 | General Laylo/waitlist fallback | `/go/waitlist/general`          | `OUTBOUND_LAYLO_URL`, `LAYLO_URL`, or `OUTBOUND_WAITLIST_GENERAL_URL`                          |
 | Chasing Sun(Sets) waitlist      | `/go/waitlist/chasing-sunsets`  | `OUTBOUND_WAITLIST_CHASING_SUNSETS_URL`, `OUTBOUND_LAYLO_SUNSETS_URL`, or `OUTBOUND_LAYLO_URL` |
 | SUN keyword / ManyChat rail     | `/go/waitlist/sunsets-manychat` | `OUTBOUND_WAITLIST_SUNSETS_MANYCHAT_URL`                                                       |
+| Benchek featured set drop       | `/go/waitlist/benchek`          | `OUTBOUND_WAITLIST_BENCHEK_URL`                                                               |
 | July 4 tickets                  | `/go/tickets/css-jul04`         | `OUTBOUND_TICKETS_CSS_JUL04_URL` or `NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL`                       |
 | August 22 tickets               | `/go/tickets/css-aug22`         | `OUTBOUND_TICKETS_CSS_AUG22_URL`                                                               |
 | September 19 tickets            | `/go/tickets/css-sep19`         | `OUTBOUND_TICKETS_CSS_SEP19_URL`                                                               |

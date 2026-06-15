@@ -47,7 +47,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_JULY4_EVENT_DATE,
     eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Autograf x Kiko Franco x Amari",
+    lineup: "Autograf x Kiko Franco x Jewels",
     ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
@@ -75,9 +75,13 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
 export const SUNSETS_2026_SEASON_PASS = {
   name: "SUN(SETS) 2026 Season Pass",
   summary: "Three dates. One lakefront season.",
-  tierName: "First 100 Season Pass",
-  priceLabel: "$100",
-  quantityLabel: "First 100",
+  tierName: "Season Pass · GA",
+  // GA is the entry tier; VIP season pass is $200. `priceLabel` stays the
+  // single headline (GA) for surfaces that show one price.
+  priceLabel: "$120",
+  gaPriceLabel: "$120",
+  vipPriceLabel: "$200",
+  quantityLabel: "Limited",
   description:
     "Includes access to all three SUN(SETS) 2026 dates, first RSVP priority, insider community access, and early drops.",
   features: [

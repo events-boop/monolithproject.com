@@ -75,6 +75,9 @@ describe("resolveOutboundDestination", () => {
     expect(
       resolveOutboundDestination("waitlist", "sunsets-manychat")
     ).toContain("laylo.com");
+    expect(resolveOutboundDestination("waitlist", "benchek")).toBe(
+      "https://laylo.com/monolithproject/vhX7ZX"
+    );
   });
 
   it("lets OUTBOUND_LAYLO_URL drive the general and Chasing Sunsets waitlist rail", async () => {
