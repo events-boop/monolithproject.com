@@ -4,13 +4,13 @@ import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import { trackFunnelPageView } from "@/lib/api";
 import {
   trackLakeInitiateCheckout,
+  trackLakeLead,
   trackLakePageView,
 } from "@/lib/campaignPixel";
 import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
-  SUNSETS_LAKELIST_PATH,
   SUNSETS_SEASON_PASS_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
@@ -29,9 +29,9 @@ const OG_IMAGE = "/images/css-2026-og.png";
 // Recap video — same ID the /go/media/sunsets-recap redirect resolves to.
 const RECAP_YOUTUBE_ID = "9R6XH7JZlJI";
 const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
-
-const LAKELIST_UTM_QUERY =
-  "utm_source=sunsets-vip&utm_medium=landing&utm_campaign=css-2026-launch";
+// Benchek featured-set drop — Laylo signup via the /go redirect layer.
+const BENCHEK_DROP_HREF = "/go/waitlist/benchek";
+const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
@@ -160,18 +160,10 @@ export default function SunsetsLinkBio() {
     SUNSETS_SEASON_PASS_PATH,
     JULY_4_EVENT_SLUG
   );
-  const lakeListHref = `${SUNSETS_LAKELIST_PATH}?${LAKELIST_UTM_QUERY}`;
-  const handleLakeListClick = () => {
-    triggerHaptic(12);
-    trackSunsetsClick({
-      buttonName: "LAKE LIST — FIRST ACCESS",
-      href: lakeListHref,
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: JULY_4_EVENT_DATE,
-      interestType: "lakelist_click",
-      channel: "Laylo",
-    });
-  };
+  const benchekDropHref = appendEventAttribution(
+    BENCHEK_DROP_HREF,
+    JULY_4_EVENT_SLUG
+  );
 
   const handleTicketClick = () => {
     triggerHaptic(16);
@@ -206,6 +198,21 @@ export default function SunsetsLinkBio() {
       eventDate: JULY_4_EVENT_DATE,
       interestType: "season_pass_click",
       channel: "Posh",
+    });
+  };
+
+  const handleBenchekDropClick = () => {
+    triggerHaptic(12);
+    trackLakeLead(newLeadEventId(), {
+      content_name: "Benchek Featured Set Drop Click",
+    });
+    trackSunsetsClick({
+      buttonName: "GET THE SET DROP",
+      href: benchekDropHref,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "benchek_set_drop",
+      channel: "Laylo",
     });
   };
 
@@ -304,7 +311,7 @@ export default function SunsetsLinkBio() {
             onClick={handleTicketClick}
             className="flex h-[52px] min-h-[52px] items-center justify-center gap-2 bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition hover:bg-[#f4d58d]"
           >
-            GET JULY 4 TICKETS <span aria-hidden="true">→</span>
+            BUY JULY 4 TICKETS <span aria-hidden="true">→</span>
           </a>
         </section>
 
@@ -345,14 +352,14 @@ export default function SunsetsLinkBio() {
           </div>
 
           <a
-            href={lakeListHref}
-            onClick={handleLakeListClick}
+            href={seasonPassHref}
+            onClick={handleSeasonPassClick}
             className="mt-4 flex h-12 w-full items-center justify-center gap-2 border border-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10 min-[390px]:text-xs"
           >
-            JOIN THE LAKE LIST FOR FIRST ACCESS
+            GET SEASON PASS <span aria-hidden="true">→</span>
           </a>
           <p className="mt-2.5 text-center text-[11px] font-semibold leading-relaxed text-stone-400">
-            Season Pass releases to the Lake List first. Limited quantity.
+            Limited release for the full SUN(SETS) 2026 season.
           </p>
         </section>
 
@@ -399,7 +406,42 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 6. Closing block — cabanas, divider, sign-off */}
+        {/* 6. Benchek featured set drop */}
+        <section className="mt-6" aria-label="Benchek featured set drop">
+          <div className="overflow-hidden border border-[#E8B86D]/30 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
+            <div className="grid grid-cols-[0.82fr_1fr]">
+              <img
+                src={BENCHEK_DROP_IMAGE}
+                alt="Benchek exclusive July 4 holiday set"
+                loading="lazy"
+                className="h-full min-h-[178px] w-full object-cover"
+              />
+              <div className="flex flex-col justify-between p-4">
+                <div>
+                  <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#E8B86D]">
+                    Featured Set Drop
+                  </p>
+                  <h2 className="mt-2 text-lg font-black uppercase leading-[1.05] tracking-[0.02em] text-white">
+                    Benchek
+                  </h2>
+                  <p className="mt-2 text-[12px] font-semibold leading-relaxed text-stone-300">
+                    An exclusive July 4 holiday set — Marbella to the Chicago
+                    lakefront. Sign up for the unreleased drop.
+                  </p>
+                </div>
+                <a
+                  href={benchekDropHref}
+                  onClick={handleBenchekDropClick}
+                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition hover:bg-[#E8B86D] hover:text-black"
+                >
+                  Get the Set Drop
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. Closing block — cabanas, divider, sign-off */}
         <section className="mt-6" aria-label="Cabanas and sign-off">
           <div className="border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]">
             <h2 className="whitespace-nowrap text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
@@ -420,7 +462,7 @@ export default function SunsetsLinkBio() {
               onClick={() => {
                 triggerHaptic(8);
                 trackSunsetsClick({
-                  buttonName: "RESERVE A SECTION",
+                  buttonName: "RESERVE BOTTLE SERVICE",
                   href: "/vip",
                   eventSlug: JULY_4_EVENT_SLUG,
                   eventDate: JULY_4_EVENT_DATE,
@@ -430,7 +472,7 @@ export default function SunsetsLinkBio() {
               }}
               className="mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10"
             >
-              RESERVE A SECTION <span aria-hidden="true">→</span>
+              RESERVE BOTTLE SERVICE <span aria-hidden="true">→</span>
             </a>
           </div>
 
