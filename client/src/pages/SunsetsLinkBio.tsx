@@ -243,8 +243,11 @@ export default function SunsetsLinkBio() {
             <p className="text-[clamp(1.45rem,7.4vw,2.05rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-white">
               KIKO FRANCO
             </p>
-            <p className="mt-2 text-[clamp(0.72rem,3.2vw,0.94rem)] font-black uppercase leading-relaxed tracking-[0.12em] text-stone-300">
-              AMARI · GIANNI BLU · ERIK THE DJ <span className="text-[#E8B86D]">&amp; MORE</span>
+            <p className="mt-1.5 text-[clamp(1rem,5vw,1.35rem)] font-black uppercase leading-[0.98] tracking-[0.04em] text-stone-200">
+              AMARI
+            </p>
+            <p className="mt-2.5 text-[clamp(0.72rem,3.2vw,0.94rem)] font-black uppercase leading-relaxed tracking-[0.12em] text-stone-300">
+              GIANNI BLU · ERIK THE DJ <span className="text-[#E8B86D]">&amp; MORE</span>
             </p>
           </div>
         </header>
