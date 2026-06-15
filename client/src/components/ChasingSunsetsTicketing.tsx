@@ -213,16 +213,6 @@ export default function ChasingSunsetsTicketing({
                   The lake has a limit.
                 </h3>
               </div>
-              {!SUNSETS_PRELAUNCH_LOCKED ? (
-                <div className="text-left md:text-right">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/52">
-                    Ticket revenue potential
-                  </p>
-                  <p className="mt-1 font-display text-3xl uppercase leading-none text-[#f4d58d]">
-                    {SUNSETS_JULY4_REVENUE.ticketRevenuePotential}
-                  </p>
-                </div>
-              ) : null}
             </div>
           </div>
           <div className="border border-white/12 bg-black/30 p-5">
@@ -272,13 +262,6 @@ export default function ChasingSunsetsTicketing({
                   </h4>
                 </div>
                 <div className="text-right">
-                  <p
-                    className={`font-display uppercase leading-none text-[#f4d58d] ${
-                      SUNSETS_PRELAUNCH_LOCKED ? "text-lg" : "text-4xl"
-                    }`}
-                  >
-                    {SUNSETS_PRELAUNCH_LOCKED ? "At launch" : tier.priceLabel}
-                  </p>
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
                     {SUNSETS_PRELAUNCH_LOCKED ? "Allocation locked" : tier.quantityLabel}
                   </p>
@@ -316,9 +299,6 @@ export default function ChasingSunsetsTicketing({
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               {[
-                SUNSETS_PRELAUNCH_LOCKED
-                  ? "By request"
-                  : SUNSETS_JULY4_TABLE_RAIL.priceLabel,
                 SUNSETS_JULY4_TABLE_RAIL.quantityLabel,
                 SUNSETS_JULY4_TABLE_RAIL.admissionLabel,
               ].map(item => (

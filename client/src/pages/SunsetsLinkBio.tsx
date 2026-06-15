@@ -332,20 +332,20 @@ export default function SunsetsLinkBio() {
           </p>
 
           <div className="mt-4 grid grid-cols-2 gap-2.5">
-            <div className="border border-white/12 bg-black/30 px-3 py-3 text-center">
-              <p className="text-2xl font-black leading-none text-white">
-                $100
+            <div className="flex flex-col justify-center border border-white/12 bg-black/30 px-3 py-3 text-center">
+              <p className="text-[13px] font-black uppercase leading-none tracking-[0.1em] text-white">
+                GA PASS
               </p>
               <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-400">
-                GA · All 3 Dates
+                All 3 Dates
               </p>
             </div>
-            <div className="border border-[#E8B86D]/55 bg-[#E8B86D]/[0.06] px-3 py-3 text-center">
-              <p className="text-2xl font-black leading-none text-[#E8B86D]">
-                $150
+            <div className="flex flex-col justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/[0.06] px-3 py-3 text-center">
+              <p className="text-[13px] font-black uppercase leading-none tracking-[0.1em] text-[#E8B86D]">
+                VIP PASS
               </p>
               <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-300">
-                VIP · All 3 Dates
+                All 3 Dates
               </p>
             </div>
           </div>
