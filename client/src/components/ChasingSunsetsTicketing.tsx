@@ -49,7 +49,9 @@ const TICKET_RAIL_STATS = [
   },
   {
     label: "Tables",
-    value: SUNSETS_PRELAUNCH_LOCKED ? "By request" : SUNSETS_JULY4_TABLE_MINIMUM,
+    value: SUNSETS_PRELAUNCH_LOCKED
+      ? "By request"
+      : SUNSETS_JULY4_TABLE_MINIMUM,
     note: "6 premium cabanas",
   },
   {
@@ -131,8 +133,7 @@ export default function ChasingSunsetsTicketing({
               <Ticket className="h-3.5 w-3.5" /> Ticketing / Access
             </span>
             <h2 className="mt-5 font-display text-[clamp(3.1rem,6.4vw,6.8rem)] uppercase leading-[0.84] tracking-normal text-white">
-              SUN(SETS) I
-              <span className="block text-[#f4d58d]">July 4th</span>
+              SUN(SETS) I<span className="block text-[#f4d58d]">July 4th</span>
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82 md:text-xl">
               Chasing Sun(Sets) returns home to the lake for a full-day house
@@ -175,14 +176,19 @@ export default function ChasingSunsetsTicketing({
 
           <div className="grid gap-3 sm:grid-cols-2">
             {TICKET_RAIL_STATS.map(stat => (
-              <div key={stat.label} className="border border-white/12 bg-white/[0.055] p-5">
+              <div
+                key={stat.label}
+                className="border border-white/12 bg-white/[0.055] p-5"
+              >
                 <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#f4d58d]">
                   {stat.label}
                 </p>
                 <p className="mt-3 font-display text-[clamp(1.85rem,3vw,3rem)] uppercase leading-none text-white">
                   {stat.value}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-white/55">{stat.note}</p>
+                <p className="mt-2 text-sm font-semibold text-white/55">
+                  {stat.note}
+                </p>
               </div>
             ))}
           </div>
@@ -190,14 +196,19 @@ export default function ChasingSunsetsTicketing({
 
         <div className="mt-10 grid gap-4 lg:grid-cols-4">
           {PUBLIC_COPY_BLOCKS.map(block => (
-            <article key={block.kicker} className="border border-white/10 bg-black/28 p-5">
+            <article
+              key={block.kicker}
+              className="border border-white/10 bg-black/28 p-5"
+            >
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8ee8dd]">
                 {block.kicker}
               </p>
               <h3 className="mt-4 text-lg font-black leading-tight text-white">
                 {block.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/64">{block.body}</p>
+              <p className="mt-3 text-sm leading-relaxed text-white/64">
+                {block.body}
+              </p>
             </article>
           ))}
         </div>
@@ -235,7 +246,9 @@ export default function ChasingSunsetsTicketing({
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
                 <dd>
                   {SUNSETS_JULY4_EVENT_VENUE} · {SUNSETS_JULY4_EVENT_LOCATION}
-                  <span className="block text-white/42">{SUNSETS_JULY4_EVENT_ADDRESS}</span>
+                  <span className="block text-white/42">
+                    {SUNSETS_JULY4_EVENT_ADDRESS}
+                  </span>
                 </dd>
               </div>
             </dl>
@@ -263,11 +276,15 @@ export default function ChasingSunsetsTicketing({
                 </div>
                 <div className="text-right">
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
-                    {SUNSETS_PRELAUNCH_LOCKED ? "Allocation locked" : tier.quantityLabel}
+                    {SUNSETS_PRELAUNCH_LOCKED
+                      ? "Allocation locked"
+                      : tier.quantityLabel}
                   </p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-white/68">{tier.description}</p>
+              <p className="mt-4 text-sm leading-relaxed text-white/68">
+                {tier.description}
+              </p>
               <div className="mt-5 grid gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/48">
                 <span>{tier.admissionLabel}</span>
                 <span>{tier.timing}</span>
@@ -302,7 +319,10 @@ export default function ChasingSunsetsTicketing({
                 SUNSETS_JULY4_TABLE_RAIL.quantityLabel,
                 SUNSETS_JULY4_TABLE_RAIL.admissionLabel,
               ].map(item => (
-                <span key={item} className="border border-white/10 bg-black/24 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/76">
+                <span
+                  key={item}
+                  className="border border-white/10 bg-black/24 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-white/76"
+                >
                   {item}
                 </span>
               ))}
@@ -336,7 +356,10 @@ export default function ChasingSunsetsTicketing({
                 </p>
                 <ul className="mt-5 space-y-3">
                   {SUNSETS_JULY4_LINEUP.map(artist => (
-                    <li key={artist} className="font-display text-[clamp(1.55rem,2.4vw,2.55rem)] uppercase leading-none text-white">
+                    <li
+                      key={artist}
+                      className="font-display text-[clamp(1.55rem,2.4vw,2.55rem)] uppercase leading-none text-white"
+                    >
                       {artist === "Kiko Franco" ? (
                         <a
                           href="/artists/kiko-franco"
@@ -357,11 +380,16 @@ export default function ChasingSunsetsTicketing({
                 </p>
                 <ol className="mt-5 space-y-3">
                   {SUNSETS_JULY4_SET_TIMES.map(slot => (
-                    <li key={`${slot.time}-${slot.label}`} className="flex gap-3 border-b border-white/8 pb-3 last:border-b-0 last:pb-0">
+                    <li
+                      key={`${slot.time}-${slot.label}`}
+                      className="flex gap-3 border-b border-white/8 pb-3 last:border-b-0 last:pb-0"
+                    >
                       <span className="min-w-[9.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#f4d58d]">
                         {slot.time}
                       </span>
-                      <span className="text-sm font-semibold text-white/72">{slot.label}</span>
+                      <span className="text-sm font-semibold text-white/72">
+                        {slot.label}
+                      </span>
                     </li>
                   ))}
                 </ol>
@@ -372,7 +400,10 @@ export default function ChasingSunsetsTicketing({
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {PUBLIC_RULES.map(rule => (
-            <div key={rule} className="flex gap-3 border border-white/10 bg-black/24 p-4 text-sm leading-relaxed text-white/66">
+            <div
+              key={rule}
+              className="flex gap-3 border border-white/10 bg-black/24 p-4 text-sm leading-relaxed text-white/66"
+            >
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
               <span>{rule}</span>
             </div>
@@ -381,7 +412,9 @@ export default function ChasingSunsetsTicketing({
 
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center">
           <p className="max-w-2xl text-sm leading-relaxed text-white/54">
-            Secure your entry early. Capacity is limited, ticket tiers move as allocations sell out, and all ticket purchases route through the official Posh rail.
+            Secure your entry early. Capacity is limited, ticket tiers move as
+            allocations sell out, and all ticket purchases route through the
+            official Posh rail.
           </p>
           <a
             href={ticketHref}

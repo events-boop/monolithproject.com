@@ -1,11 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight, MapPin, Music, Sun } from "lucide-react";
+import { ArrowRight, MapPin, Music, Radio, Sun } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
 import { POSH_TICKET_URL } from "@/data/events";
-import { ARTISTS } from "@/data/artists";
+import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 import EditorialHeader from "./EditorialHeader";
 import KineticDecryption from "./KineticDecryption";
 
@@ -18,13 +18,34 @@ interface Artist {
   image: string;
 }
 
-const SUNSETS_ROSTER_IDS = ["autograf", "chus"] as const;
-const UNTOLD_ROSTER_IDS = ["haai", "lazare"] as const;
+// Rosters render straight from each artist's primary series tag (series[0]),
+// so adding an artist to a section is just a data change in artists.ts.
+const rosterForSeries = (series: ArtistSeries): Artist[] =>
+  ARTIST_ENTRIES.filter(artist => artist.series[0] === series);
 
-// Roster entries may be retired from ARTISTS (Kiko-only launch roster) —
-// drop missing ids instead of rendering undefined artists.
-const SUNSETS_ROSTER: Artist[] = SUNSETS_ROSTER_IDS.map(id => ARTISTS[id]).filter(Boolean);
-const UNTOLD_ROSTER: Artist[] = UNTOLD_ROSTER_IDS.map(id => ARTISTS[id]).filter(Boolean);
+const SUNSETS_ROSTER = rosterForSeries("chasing-sunsets");
+const UNTOLD_ROSTER = rosterForSeries("untold-story");
+const RADIO_ROSTER = rosterForSeries("sunsets-radio");
+
+type AccentKey = "clay" | "cyan" | "radio";
+const ACCENTS: Record<AccentKey, { dot: string; glow: string; hover: string }> =
+  {
+    clay: {
+      dot: "bg-clay",
+      glow: "bg-[radial-gradient(circle_at_18%_18%,#E8B86D,transparent_40%)]",
+      hover: "group-hover:text-clay",
+    },
+    cyan: {
+      dot: "bg-primary",
+      glow: "bg-[radial-gradient(circle_at_82%_18%,#22D3EE,transparent_40%)]",
+      hover: "group-hover:text-primary",
+    },
+    radio: {
+      dot: "bg-[#E05A3A]",
+      glow: "bg-[radial-gradient(circle_at_82%_18%,#E05A3A,transparent_40%)]",
+      hover: "group-hover:text-[#E05A3A]",
+    },
+  };
 
 function ArtistCard({
   artist,
@@ -32,11 +53,12 @@ function ArtistCard({
   delay,
 }: {
   artist: Artist;
-  accentColor: string;
+  accentColor: AccentKey;
   delay: number;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const artistId = artist.id.toUpperCase().substring(0, 3);
+  const accent = ACCENTS[accentColor];
 
   return (
     <Link href={`/artists/${artist.id}`}>
@@ -72,7 +94,7 @@ function ArtistCard({
           </span>
           <div className="flex items-center gap-1.5">
             <div
-              className={`h-1 w-1 rounded-full animate-pulse ${accentColor === "clay" ? "bg-clay" : "bg-primary"}`}
+              className={`h-1 w-1 rounded-full animate-pulse ${accent.dot}`}
             />
             <span className="font-mono text-[10px] text-white/60 tracking-widest uppercase">
               {artist.role}
@@ -95,9 +117,7 @@ function ArtistCard({
           />
           {/* Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
-          <div
-            className={`absolute inset-0 opacity-20 ${accentColor === "clay" ? "bg-[radial-gradient(circle_at_18%_18%,#E8B86D,transparent_40%)]" : "bg-[radial-gradient(circle_at_82%_18%,#22D3EE,transparent_40%)]"}`}
-          />
+          <div className={`absolute inset-0 opacity-20 ${accent.glow}`} />
         </div>
 
         {/* Content HUD - Bottom */}
@@ -110,7 +130,7 @@ function ArtistCard({
               <div className="min-h-[2.5rem] flex items-center">
                 <KineticDecryption
                   text={artist.name}
-                  className={`hero-wordmark text-3xl md:text-4xl text-white uppercase tracking-tighter leading-none ${accentColor === "clay" ? "group-hover:text-clay" : "group-hover:text-primary"} transition-colors duration-500`}
+                  className={`hero-wordmark text-3xl md:text-4xl text-white uppercase tracking-tighter leading-none ${accent.hover} transition-colors duration-500`}
                 />
               </div>
             </div>
@@ -204,12 +224,34 @@ export default function ArtistsSection() {
               <ArtistCard
                 key={artist.id}
                 artist={artist}
-                accentColor="primary"
+                accentColor="cyan"
                 delay={0.1 * i}
               />
             ))}
           </div>
         </div>
+
+        {/* Sun(Sets) Radio */}
+        {RADIO_ROSTER.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <Radio className="w-4 h-4 text-[#E05A3A]" />
+              <span className="font-display text-lg tracking-wide text-[#E05A3A] uppercase">
+                Sun(Sets) Radio
+              </span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {RADIO_ROSTER.map((artist, i) => (
+                <ArtistCard
+                  key={artist.id}
+                  artist={artist}
+                  accentColor="radio"
+                  delay={0.1 * i}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTAs — consumer + artist */}
         <div className="border-t border-border pt-12 flex flex-col md:flex-row items-center justify-between gap-6">

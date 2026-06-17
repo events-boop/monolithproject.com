@@ -170,24 +170,24 @@
   @media (prefers-reduced-motion: reduce) {
     /* Wildcard selectors auto-cover every current/future button variant. */
     :is(
-        .lift-hover,
-        .ui-card,
-        [class*="btn-pill"],
-        [class*="btn-inline-pill"],
-        [class*="btn-text-action"],
-        [class*="cta-"]
-      ) {
+      .lift-hover,
+      .ui-card,
+      [class*="btn-pill"],
+      [class*="btn-inline-pill"],
+      [class*="btn-text-action"],
+      [class*="cta-"]
+    ) {
       transition: none !important;
     }
 
     :is(
-        .lift-hover,
-        .ui-card,
-        [class*="btn-pill"],
-        [class*="btn-inline-pill"],
-        [class*="btn-text-action"],
-        [class*="cta-"]
-      ):hover {
+      .lift-hover,
+      .ui-card,
+      [class*="btn-pill"],
+      [class*="btn-inline-pill"],
+      [class*="btn-text-action"],
+      [class*="cta-"]
+    ):hover {
       transform: none !important;
     }
   }

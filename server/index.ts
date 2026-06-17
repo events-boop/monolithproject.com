@@ -35,7 +35,7 @@ const isMainModule =
   pathToFileURL(process.argv[1]).href === import.meta.url;
 
 if (isMainModule) {
-  startServer().catch((error) => {
+  startServer().catch(error => {
     console.error(error);
     process.exit(1);
   });

@@ -15,10 +15,9 @@ interface LocationPin {
 
 const locations: LocationPin[] = [
   // Artists (real roster)
-  { label: "HAAi", lat: 51.5, lon: -0.12, type: "artist" },
   { label: "AUTOGRAF", lat: 41.87, lon: -87.62, type: "artist" },
   { label: "LAZARE SABRY", lat: 41.8781, lon: -87.6298, type: "artist" },
-  { label: "CHUS", lat: 32.06, lon: 34.78, type: "artist" },
+  { label: "JOEZI", lat: 32.06, lon: 34.78, type: "artist" },
   // Listener clusters (aspirational but plausible)
   { label: "NYC", lat: 40.71, lon: -74.0, type: "listener" },
   { label: "LA", lat: 34.05, lon: -118.24, type: "listener" },

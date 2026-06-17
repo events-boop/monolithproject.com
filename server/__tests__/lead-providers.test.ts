@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { shouldSyncLeadToLaylo, subscribeBrevo, subscribeLaylo } from "../providers/lead-providers";
+import {
+  shouldSyncLeadToLaylo,
+  subscribeBrevo,
+  subscribeLaylo,
+} from "../providers/lead-providers";
 
 describe("lead providers", () => {
   const originalEnv = { ...process.env };
@@ -15,11 +19,13 @@ describe("lead providers", () => {
     delete process.env.BREVO_API_KEY;
     delete process.env.BREVO_BYPASS;
 
-    await expect(subscribeBrevo({
-      email: "fan@example.com",
-      consent: true,
-      source: "newsletter_section",
-    })).resolves.toBeUndefined();
+    await expect(
+      subscribeBrevo({
+        email: "fan@example.com",
+        consent: true,
+        source: "newsletter_section",
+      })
+    ).resolves.toBeUndefined();
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -30,11 +36,13 @@ describe("lead providers", () => {
     process.env.BREVO_API_KEY = "test-key";
     process.env.BREVO_BYPASS = "true";
 
-    await expect(subscribeBrevo({
-      email: "fan@example.com",
-      consent: true,
-      source: "newsletter_section",
-    })).resolves.toBeUndefined();
+    await expect(
+      subscribeBrevo({
+        email: "fan@example.com",
+        consent: true,
+        source: "newsletter_section",
+      })
+    ).resolves.toBeUndefined();
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -47,11 +55,13 @@ describe("lead providers", () => {
     process.env.BREVO_API_KEY = "test-key";
     process.env.BREVO_BYPASS = "false";
 
-    await expect(subscribeBrevo({
-      email: "fan@example.com",
-      consent: true,
-      source: "newsletter_section",
-    })).resolves.toBeUndefined();
+    await expect(
+      subscribeBrevo({
+        email: "fan@example.com",
+        consent: true,
+        source: "newsletter_section",
+      })
+    ).resolves.toBeUndefined();
 
     expect(fetchMock).toHaveBeenCalledWith(
       "https://api.brevo.com/v3/contacts",
@@ -60,7 +70,7 @@ describe("lead providers", () => {
         headers: expect.objectContaining({
           "api-key": "test-key",
         }),
-      }),
+      })
     );
   });
 
@@ -71,31 +81,37 @@ describe("lead providers", () => {
     delete process.env.LAYLO_API_KEY;
     delete process.env.LAYLO_BYPASS;
 
-    await expect(subscribeLaylo({
-      email: "fan@example.com",
-      consent: true,
-      source: "sunsets_lake_list",
-      interestTags: ["laylo", "lake_list"],
-    })).resolves.toBeUndefined();
+    await expect(
+      subscribeLaylo({
+        email: "fan@example.com",
+        consent: true,
+        source: "sunsets_lake_list",
+        interestTags: ["laylo", "lake_list"],
+      })
+    ).resolves.toBeUndefined();
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("detects Laylo-relevant lead submissions", () => {
-    expect(shouldSyncLeadToLaylo({
-      email: "fan@example.com",
-      consent: true,
-      source: "sunsets_lake_list",
-      formType: "lake_list_signup",
-      interestTags: ["first_access_signup"],
-    })).toBe(true);
+    expect(
+      shouldSyncLeadToLaylo({
+        email: "fan@example.com",
+        consent: true,
+        source: "sunsets_lake_list",
+        formType: "lake_list_signup",
+        interestTags: ["first_access_signup"],
+      })
+    ).toBe(true);
 
-    expect(shouldSyncLeadToLaylo({
-      email: "fan@example.com",
-      consent: true,
-      source: "newsletter_section",
-      interestTags: ["newsletter"],
-    })).toBe(false);
+    expect(
+      shouldSyncLeadToLaylo({
+        email: "fan@example.com",
+        consent: true,
+        source: "newsletter_section",
+        interestTags: ["newsletter"],
+      })
+    ).toBe(false);
   });
 
   it("sends Laylo signups to the GraphQL API when configured", async () => {
@@ -110,13 +126,15 @@ describe("lead providers", () => {
     delete process.env.LAYLO_BYPASS;
     delete process.env.LAYLO_API_URL;
 
-    await expect(subscribeLaylo({
-      email: "Fan@Example.com",
-      phone: "(312) 555-1212",
-      consent: true,
-      source: "sunsets_lake_list",
-      interestTags: ["laylo", "lake_list"],
-    })).resolves.toBeUndefined();
+    await expect(
+      subscribeLaylo({
+        email: "Fan@Example.com",
+        phone: "(312) 555-1212",
+        consent: true,
+        source: "sunsets_lake_list",
+        interestTags: ["laylo", "lake_list"],
+      })
+    ).resolves.toBeUndefined();
 
     expect(fetchMock).toHaveBeenCalledWith(
       "https://laylo.com/api/graphql",
@@ -126,7 +144,7 @@ describe("lead providers", () => {
           "Content-Type": "application/json",
           Authorization: "Bearer laylo-test-token",
         }),
-      }),
+      })
     );
 
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
@@ -147,11 +165,13 @@ describe("lead providers", () => {
     process.env.LAYLO_API_TOKEN = "laylo-test-token";
     delete process.env.LAYLO_BYPASS;
 
-    await expect(subscribeLaylo({
-      email: "fan@example.com",
-      consent: true,
-      source: "sunsets_lake_list",
-      interestTags: ["laylo"],
-    })).rejects.toThrow("Laylo subscription failed");
+    await expect(
+      subscribeLaylo({
+        email: "fan@example.com",
+        consent: true,
+        source: "sunsets_lake_list",
+        interestTags: ["laylo"],
+      })
+    ).rejects.toThrow("Laylo subscription failed");
   });
 });

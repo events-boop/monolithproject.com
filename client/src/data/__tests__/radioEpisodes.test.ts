@@ -8,8 +8,8 @@ describe("radio episode routing", () => {
   });
 
   it("maps legacy artist-name radio slugs to their current canonical destinations", () => {
-    expect(getLegacyRadioRedirect("autograf")).toBe("/radio");
-    expect(getLegacyRadioRedirect("lazare")).toBe("/radio");
+    expect(getLegacyRadioRedirect("autograf")).toBe("/artists/autograf");
+    expect(getLegacyRadioRedirect("lazare")).toBe("/artists/lazare");
     expect(getLegacyRadioRedirect("eran-hersh")).toBe("/story");
   });
 

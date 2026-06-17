@@ -132,7 +132,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const isUntoldPath =
     location === ROUTES.story || location.startsWith(ROUTES.untoldStory);
   const isSunsetsPath =
-    location === ROUTES.chasingSunsets || location.startsWith(ROUTES.chasingSunsets);
+    location === ROUTES.chasingSunsets ||
+    location.startsWith(ROUTES.chasingSunsets);
 
   const contextEvent = isUntoldPath
     ? featuredUntoldEvent || getSeriesEvents("untold-story")[0] || ticketEvent
@@ -571,9 +572,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         href: ticketHref || ROUTES.tickets,
                         icon: "ticket",
                       },
-                      { label: "CHASING SUN(SETS)", href: ROUTES.chasingSunsets },
+                      {
+                        label: "CHASING SUN(SETS)",
+                        href: ROUTES.chasingSunsets,
+                      },
                       { label: "UNTOLD STORY", href: ROUTES.story },
-                      { label: "ENTRY GUIDE", href: ROUTES.guide + ANCHORS.entry },
+                      {
+                        label: "ENTRY GUIDE",
+                        href: ROUTES.guide + ANCHORS.entry,
+                      },
                     ],
                     feature: ticketEvent
                       ? {
@@ -622,7 +629,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "ALL ARTISTS", href: ROUTES.artists, icon: "arrow" },
+                      {
+                        label: "ALL ARTISTS",
+                        href: ROUTES.artists,
+                        icon: "arrow",
+                      },
                       {
                         label: "KIKO FRANCO — JULY 4",
                         href: "/artists/kiko-franco",
@@ -654,7 +665,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   onNavigate={handleNavClick}
                   megamenu={{
                     items: [
-                      { label: "CHASING SUN(SETS)", href: ROUTES.chasingSunsets },
+                      {
+                        label: "CHASING SUN(SETS)",
+                        href: ROUTES.chasingSunsets,
+                      },
                       { label: "SUN(SETS) LINK IN BIO", href: ROUTES.sunsets },
                       { label: "FAST FACTS", href: ROUTES.chasingSunsetsFacts },
                       { label: "SEASON DATES", href: ROUTES.schedule },
@@ -715,7 +729,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         featuredUntoldEvent?.image ||
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
-                        getPrimaryTicketUrl(featuredUntoldEvent) || ROUTES.story,
+                        getPrimaryTicketUrl(featuredUntoldEvent) ||
+                        ROUTES.story,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
                         : "View Story",
@@ -759,76 +774,76 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     2xl so the six core items never overflow the brand row.
                     All three remain reachable via the burger overlay. */}
                 <div className="hidden 2xl:contents">
-                <NavigationMegamenu
-                  label="MONOLITH"
-                  href={ROUTES.monolith}
-                  isActive={location === ROUTES.monolith}
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  type="monolith"
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [], // Dynamic concept links generated inside NavigationMegamenu
-                    feature: {
-                      title: "The Collective",
-                      subtitle: "Manifesto & Story",
-                      image: "/images/hero-monolith.webp",
-                      href: ROUTES.monolith,
-                      ctaText: "Explore",
-                      icon: "arrow",
-                    },
-                  }}
-                />
-
-                <NavigationMegamenu
-                  label="PARTNERS"
-                  href={ROUTES.partners}
-                  isActive={
-                    location === ROUTES.partners ||
-                    location === ROUTES.sponsors ||
-                    location === ROUTES.press ||
-                    location === ROUTES.booking
-                  }
-                  isLight={isLight}
-                  brand={resolvedBrand}
-                  onNavigate={handleNavClick}
-                  megamenu={{
-                    items: [
-                      {
-                        label: "PARTNER WITH US",
-                        href: ROUTES.partners,
+                  <NavigationMegamenu
+                    label="MONOLITH"
+                    href={ROUTES.monolith}
+                    isActive={location === ROUTES.monolith}
+                    isLight={isLight}
+                    brand={resolvedBrand}
+                    type="monolith"
+                    onNavigate={handleNavClick}
+                    megamenu={{
+                      items: [], // Dynamic concept links generated inside NavigationMegamenu
+                      feature: {
+                        title: "The Collective",
+                        subtitle: "Manifesto & Story",
+                        image: "/images/hero-monolith.webp",
+                        href: ROUTES.monolith,
+                        ctaText: "Explore",
                         icon: "arrow",
                       },
-                      { label: "SPONSOR ACCESS", href: ROUTES.sponsors },
-                      { label: "PRESS & MEDIA", href: ROUTES.press },
-                      { label: "ABOUT MONOLITH", href: ROUTES.about },
-                    ],
-                    feature: {
-                      title: "PARTNER WITH MONOLITH",
-                      subtitle: "Brands, venues, and cultural collaborators",
-                      image: "/images/industrial-roster.webp",
-                      href: ROUTES.partners,
-                      ctaText: "Start Conversation",
-                      icon: "arrow",
-                      badge: "PARTNERS",
-                    },
-                  }}
-                />
+                    }}
+                  />
 
-                <Link
-                  href={ROUTES.contact}
-                  onClick={e => {
-                    e.preventDefault();
-                    handleNavClick(ROUTES.contact);
-                  }}
-                  className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
-                    isLight
-                      ? `hover:text-clay ${location === ROUTES.contact ? "text-clay" : "text-stone"}`
-                      : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === ROUTES.contact ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-                  }`}
-                >
-                  Contact
-                </Link>
+                  <NavigationMegamenu
+                    label="PARTNERS"
+                    href={ROUTES.partners}
+                    isActive={
+                      location === ROUTES.partners ||
+                      location === ROUTES.sponsors ||
+                      location === ROUTES.press ||
+                      location === ROUTES.booking
+                    }
+                    isLight={isLight}
+                    brand={resolvedBrand}
+                    onNavigate={handleNavClick}
+                    megamenu={{
+                      items: [
+                        {
+                          label: "PARTNER WITH US",
+                          href: ROUTES.partners,
+                          icon: "arrow",
+                        },
+                        { label: "SPONSOR ACCESS", href: ROUTES.sponsors },
+                        { label: "PRESS & MEDIA", href: ROUTES.press },
+                        { label: "ABOUT MONOLITH", href: ROUTES.about },
+                      ],
+                      feature: {
+                        title: "PARTNER WITH MONOLITH",
+                        subtitle: "Brands, venues, and cultural collaborators",
+                        image: "/images/industrial-roster.webp",
+                        href: ROUTES.partners,
+                        ctaText: "Start Conversation",
+                        icon: "arrow",
+                        badge: "PARTNERS",
+                      },
+                    }}
+                  />
+
+                  <Link
+                    href={ROUTES.contact}
+                    onClick={e => {
+                      e.preventDefault();
+                      handleNavClick(ROUTES.contact);
+                    }}
+                    className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
+                      isLight
+                        ? `hover:text-clay ${location === ROUTES.contact ? "text-clay" : "text-stone"}`
+                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === ROUTES.contact ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
+                    }`}
+                  >
+                    Contact
+                  </Link>
                 </div>
               </div>
 

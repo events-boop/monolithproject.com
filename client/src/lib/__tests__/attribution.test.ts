@@ -41,6 +41,21 @@ describe("attribution", () => {
     expect(payload.firstReferrerDomain).toBe("instagram.com");
   });
 
+  it("captures follower promo codes from ManyChat landing URLs", () => {
+    window.history.replaceState(
+      {},
+      "",
+      "/?promo=sunsets26&utm_source=instagram&utm_medium=organic_dm"
+    );
+
+    initAttributionTracking();
+    const payload = getAttributionPayload();
+
+    expect(payload.promo).toBe("sunsets26");
+    expect(payload.utmSource).toBe("instagram");
+    expect(payload.utmMedium).toBe("organic_dm");
+  });
+
   it("preserves acquisition fields across SPA navigation without new query params", () => {
     setReferrer("https://instagram.com/monolith");
     window.history.replaceState(
@@ -90,7 +105,7 @@ describe("attribution", () => {
     window.history.replaceState(
       {},
       "",
-      "/story?utm_source=instagram&utm_medium=social&utm_campaign=season-launch&ref=ig_dm_sun&fbclid=fbclid-1"
+      "/story?promo=sunsets26&utm_source=instagram&utm_medium=social&utm_campaign=season-launch&ref=ig_dm_sun&fbclid=fbclid-1"
     );
     initAttributionTracking();
 
@@ -99,6 +114,7 @@ describe("attribution", () => {
     expect(url.searchParams.get("utm_source")).toBe("instagram");
     expect(url.searchParams.get("utm_medium")).toBe("social");
     expect(url.searchParams.get("utm_campaign")).toBe("season-launch");
+    expect(url.searchParams.get("promo")).toBe("sunsets26");
     expect(url.searchParams.get("ref")).toBe("ig_dm_sun");
     expect(url.searchParams.get("fbclid")).toBe("fbclid-1");
     expect(url.searchParams.get("session_id")).toBeTruthy();

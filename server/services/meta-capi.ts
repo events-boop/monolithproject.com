@@ -55,7 +55,10 @@ export function getMetaCapiHealthStatus() {
   return {
     capi: Boolean(config),
     pixel_id: getLakePixelId(),
-    graph_version: config?.graphVersion || process.env.META_GRAPH_API_VERSION?.trim() || "v21.0",
+    graph_version:
+      config?.graphVersion ||
+      process.env.META_GRAPH_API_VERSION?.trim() ||
+      "v21.0",
     test_event_code_enabled: Boolean(config?.testEventCode),
     last_error: metaCapiRuntimeStatus.lastError,
     last_failure_at: metaCapiRuntimeStatus.lastFailureAt,
@@ -78,7 +81,10 @@ function hashNormalized(value?: string | null) {
 // City: also strip internal whitespace and punctuation.
 function hashCity(value?: string | null) {
   if (!value) return undefined;
-  const normalized = value.trim().toLowerCase().replace(/[^a-z]/g, "");
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z]/g, "");
   return normalized ? sha256(normalized) : undefined;
 }
 
@@ -117,7 +123,9 @@ export interface LeadConversionInput {
   customData?: Record<string, unknown>;
 }
 
-export async function sendLeadConversion(input: LeadConversionInput): Promise<void> {
+export async function sendLeadConversion(
+  input: LeadConversionInput
+): Promise<void> {
   const config = getConfig();
   if (!config) return;
   const pixelId = input.pixelId.trim();
@@ -178,7 +186,10 @@ export async function sendLeadConversion(input: LeadConversionInput): Promise<vo
 
     if (!response.ok) {
       const text = await response.text().catch(() => "");
-      recordMetaCapiFailure(`HTTP ${response.status}: ${text.slice(0, 300)}`, pixelId);
+      recordMetaCapiFailure(
+        `HTTP ${response.status}: ${text.slice(0, 300)}`,
+        pixelId
+      );
       logEvent("meta_capi.lead_failed", {
         eventId: input.eventId,
         status: response.status,

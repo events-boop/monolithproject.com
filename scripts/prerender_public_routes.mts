@@ -55,12 +55,17 @@ const featuredUntoldEvent =
   futureEvents.find(
     event => event.series === "untold-story" && event.id === "us-s3e3"
   ) ?? futureEvents.find(event => event.series === "untold-story");
-const publicSunsetsEvent = buildPublicSiteData("/sunsets", upcomingEvents).events.find(
-  event => event.id === "css-jul04"
-);
+const publicSunsetsEvent = buildPublicSiteData(
+  "/sunsets",
+  upcomingEvents
+).events.find(event => event.id === "css-jul04");
 
 function getPrerenderPublicEvent(event: (typeof upcomingEvents)[number]) {
-  if (SUNSETS_PRELAUNCH_LOCKED && event.id === "css-jul04" && publicSunsetsEvent) {
+  if (
+    SUNSETS_PRELAUNCH_LOCKED &&
+    event.id === "css-jul04" &&
+    publicSunsetsEvent
+  ) {
     return publicSunsetsEvent;
   }
 

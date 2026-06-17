@@ -44,6 +44,7 @@ const OUTBOUND_TRACKING_PARAMS = [
   "utm_campaign",
   "utm_term",
   "utm_content",
+  "promo",
   "gclid",
   "fbclid",
   "ttclid",

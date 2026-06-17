@@ -69,7 +69,7 @@ describe("readPublicScheduledEvents", () => {
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.find((event) => event.id === "mp-dec31")).toMatchObject({
+    expect(events.find(event => event.id === "mp-dec31")).toMatchObject({
       id: "mp-dec31",
       title: "MONOLITH NEW YEAR",
       series: "monolith-project",
@@ -88,7 +88,7 @@ describe("readPublicScheduledEvents", () => {
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.some((event) => event.id === "us-s3e2")).toBe(false);
+    expect(events.some(event => event.id === "us-s3e2")).toBe(false);
   });
 
   it("normalizes stale external ticket URLs for tracked events", async () => {
@@ -102,14 +102,15 @@ describe("readPublicScheduledEvents", () => {
         time: "9:00 PM - Late",
         venue: "Hideaway",
         status: "on-sale",
-        ticketUrl: "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project",
+        ticketUrl:
+          "https://posh.vip/e/eran-hersh-untold-story-iv-the-360-experience-a-monolith-project",
       }),
     ]);
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.find((event) => event.id === "us-s3e3")?.ticketUrl).toBe(
-      "/go/tickets/us-s3e3",
+    expect(events.find(event => event.id === "us-s3e3")?.ticketUrl).toBe(
+      "/go/tickets/us-s3e3"
     );
   });
 
@@ -125,8 +126,8 @@ describe("readPublicScheduledEvents", () => {
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.find((event) => event.id === "us-s3e3")?.ticketUrl).toBe(
-      "/go/tickets/us-s3e3-late",
+    expect(events.find(event => event.id === "us-s3e3")?.ticketUrl).toBe(
+      "/go/tickets/us-s3e3-late"
     );
   });
 
@@ -142,7 +143,9 @@ describe("readPublicScheduledEvents", () => {
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.find((event) => event.id === "mp-dec31")?.ticketUrl).toBeUndefined();
+    expect(
+      events.find(event => event.id === "mp-dec31")?.ticketUrl
+    ).toBeUndefined();
   });
 
   it("appends a DB-only event to the static catalog instead of dropping it", async () => {
@@ -161,7 +164,7 @@ describe("readPublicScheduledEvents", () => {
 
     const events = await readPublicScheduledEvents();
 
-    expect(events.some((event) => event.id === "us-s3e3")).toBe(true);
-    expect(events.some((event) => event.id === "mp-dec31")).toBe(true);
+    expect(events.some(event => event.id === "us-s3e3")).toBe(true);
+    expect(events.some(event => event.id === "mp-dec31")).toBe(true);
   });
 });

@@ -2,11 +2,11 @@
   /* Unified scene-aware keyboard focus for every button/CTA primitive.
      Wildcard selectors keep new variants covered automatically. */
   :is(
-      [class*="btn-pill"],
-      [class*="btn-inline-pill"],
-      [class*="btn-text-action"],
-      [class*="cta-"]
-    ):focus-visible {
+    [class*="btn-pill"],
+    [class*="btn-inline-pill"],
+    [class*="btn-text-action"],
+    [class*="cta-"]
+  ):focus-visible {
     outline: 2px solid var(--scene-accent, #e05a3a);
     outline-offset: 3px;
   }
@@ -46,8 +46,11 @@
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      outline-color 0s, outline-width 0s, outline-offset 0s;
+    transition:
+      all 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      outline-color 0s,
+      outline-width 0s,
+      outline-offset 0s;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.055);
     position: relative;
@@ -105,7 +108,10 @@
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.3s ease, outline-color 0s, outline-width 0s,
+    transition:
+      all 0.3s ease,
+      outline-color 0s,
+      outline-width 0s,
       outline-offset 0s;
     cursor: pointer;
     background: linear-gradient(180deg, #f0efed, #d8d6d2);
@@ -150,8 +156,11 @@
     font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      outline-color 0s, outline-width 0s, outline-offset 0s;
+    transition:
+      all 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      outline-color 0s,
+      outline-width 0s,
+      outline-offset 0s;
     cursor: pointer;
     box-shadow: var(
       --pill-accent-shadow,
@@ -239,8 +248,11 @@
     font-size: 0.75rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      outline-color 0s, outline-width 0s, outline-offset 0s;
+    transition:
+      all 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      outline-color 0s,
+      outline-width 0s,
+      outline-offset 0s;
     backdrop-filter: blur(12px);
     cursor: pointer;
     box-shadow:

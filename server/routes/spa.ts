@@ -20,10 +20,15 @@ function resolveStaticPath() {
           path.resolve(entryDir, "public"),
           path.resolve(process.cwd(), "client"),
         ]
-      : [path.resolve(process.cwd(), "dist", "public"), path.resolve(process.cwd(), "client")];
+      : [
+          path.resolve(process.cwd(), "dist", "public"),
+          path.resolve(process.cwd(), "client"),
+        ];
 
   return (
-    candidates.find((candidate) => existsSync(path.join(candidate, "index.html"))) ?? candidates[0]
+    candidates.find(candidate =>
+      existsSync(path.join(candidate, "index.html"))
+    ) ?? candidates[0]
   );
 }
 
@@ -64,7 +69,11 @@ router.get("*", (req, res) => {
         ? (cachedIndexHtml ??= readFileSync(indexHtmlPath, "utf8"))
         : readFileSync(htmlPath, "utf8");
 
-    res.type("html").send(shouldInjectPreloads ? injectHeroPreloads(template, req.path) : template);
+    res
+      .type("html")
+      .send(
+        shouldInjectPreloads ? injectHeroPreloads(template, req.path) : template
+      );
   } catch (error) {
     console.error("Failed to render app shell", error);
     res.status(500).send("Unable to render app shell.");

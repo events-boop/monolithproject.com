@@ -6,7 +6,10 @@ const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
 
 export async function sendWelcomeEmail(email: string, firstName?: string) {
   if (!process.env.RESEND_API_KEY) {
-    console.warn("⚠️  RESEND_API_KEY not set — skipping welcome email for:", email);
+    console.warn(
+      "⚠️  RESEND_API_KEY not set — skipping welcome email for:",
+      email
+    );
     return;
   }
 

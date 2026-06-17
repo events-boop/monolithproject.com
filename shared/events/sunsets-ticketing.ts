@@ -6,7 +6,8 @@ export const SUNSETS_JULY4_EVENT_TITLE = "SUN(SETS) I — July 4th at Castaways"
 export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";
-export const SUNSETS_JULY4_EVENT_ADDRESS = "1603 N Lake Shore Dr, Chicago, IL 60614";
+export const SUNSETS_JULY4_EVENT_ADDRESS =
+  "1603 N Lake Shore Dr, Chicago, IL 60614";
 export const SUNSETS_JULY4_TOTAL_CAPACITY = 1200;
 export const SUNSETS_JULY4_FIRST_ACCESS_CODE = "SUNSET26";
 export const SUNSETS_JULY4_TABLE_MINIMUM = "$2,000 minimum";
@@ -36,7 +37,8 @@ export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
 export const SUNSETS_TICKET_CTA_LABEL = SUNSETS_PRELAUNCH_LOCKED
   ? "JOIN THE LAKE LIST"
   : "BUY TICKETS — JULY 4";
-export const SUNSETS_TICKET_CTA_SUPPORT = "Official ticket source powered by Posh.";
+export const SUNSETS_TICKET_CTA_SUPPORT =
+  "Official ticket source powered by Posh.";
 export const SUNSETS_2026_SEASON_PASS_CTA_LABEL = "CLAIM SEASON PASS";
 
 export const SUNSETS_2026_SEASON_CHAPTERS = [
@@ -168,8 +170,7 @@ export const SUNSETS_JULY4_ADMISSION_TIERS: SunsetsTicketInventoryTier[] = [
     purpose: "Fill the venue early and start daytime energy.",
     description:
       "Early arrival pass for SUN(SETS) I. Valid for entry before 2:00 PM only.",
-    rule:
-      "Guests must be checked in by 2:00 PM. Late arrival is not guaranteed entry and may require an upgrade, subject to capacity and venue discretion.",
+    rule: "Guests must be checked in by 2:00 PM. Late arrival is not guaranteed entry and may require an upgrade, subject to capacity and venue discretion.",
     features: [
       "General admission",
       "Before 2:00 PM check-in required",
@@ -205,8 +206,13 @@ export const SUNSETS_JULY4_ADMISSION_TIERS: SunsetsTicketInventoryTier[] = [
     visibility: "Public",
     timing: "Phase 4 public release",
     purpose: "Main public release entry tier.",
-    description: "Standard entry for SUN(SETS) I. Price increases when this tier sells out.",
-    features: ["General admission", "Public release", "Price moves after sellout"],
+    description:
+      "Standard entry for SUN(SETS) I. Price increases when this tier sells out.",
+    features: [
+      "General admission",
+      "Public release",
+      "Price moves after sellout",
+    ],
     icon: "ticket",
     available: true,
   },
@@ -220,7 +226,8 @@ export const SUNSETS_JULY4_ADMISSION_TIERS: SunsetsTicketInventoryTier[] = [
     visibility: "Public",
     timing: "Opens when Tier 1 sells out",
     purpose: "Momentum tier after initial demand is confirmed.",
-    description: "Standard entry for SUN(SETS) I. Price increases when this tier sells out.",
+    description:
+      "Standard entry for SUN(SETS) I. Price increases when this tier sells out.",
     features: ["General admission", "Sequential release", "Main momentum tier"],
     icon: "star",
     available: false,
@@ -250,7 +257,8 @@ export const SUNSETS_JULY4_ADMISSION_TIERS: SunsetsTicketInventoryTier[] = [
     visibility: "Public",
     timing: "Phase 4 public release",
     purpose: "Capture group momentum and encourage crews to commit together.",
-    description: "Bring the crew. Includes 4 General Admission tickets at a preferred rate.",
+    description:
+      "Bring the crew. Includes 4 General Admission tickets at a preferred rate.",
     rule: "$40 effective price per ticket. Preferred setup issues 4 individual scannable tickets.",
     features: ["4 GA admissions", "$40 per ticket", "Group bundle"],
     icon: "star",
@@ -267,8 +275,7 @@ export const SUNSETS_JULY4_TABLE_RAIL = {
   cta: "/vip",
   description:
     "Limited tables and 6 premium cabanas are available for SUN(SETS) I. Tables and cabanas start at a $2,000 minimum and include reserved space for your group.",
-  rule:
-    "This is an inquiry or deposit path, not a free public admission ticket.",
+  rule: "This is an inquiry or deposit path, not a free public admission ticket.",
 } as const;
 
 export const SUNSETS_JULY4_REVENUE = {

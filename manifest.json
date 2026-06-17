@@ -1,0 +1,218 @@
+[
+  {
+    "url": "http://127.0.0.1:3001/",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_45_13.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_45_13.report.json",
+    "summary": {
+      "performance": 0.78,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_45_39.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_45_39.report.json",
+    "summary": {
+      "performance": 0.89,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/tickets",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_46_58.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_46_58.report.json",
+    "summary": {
+      "performance": 0.83,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/tickets",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_47_21.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_47_21.report.json",
+    "summary": {
+      "performance": 0.76,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/radio",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_48_08.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_48_08.report.json",
+    "summary": {
+      "performance": 0.68,
+      "accessibility": 1,
+      "best-practices": 0.79,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/radio",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_48_33.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_48_33.report.json",
+    "summary": {
+      "performance": 0.73,
+      "accessibility": 1,
+      "best-practices": 0.79,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/booking",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_48_58.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_48_58.report.json",
+    "summary": {
+      "performance": 0.79,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/booking",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_49_16.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_49_16.report.json",
+    "summary": {
+      "performance": 0.79,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/partners",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_49_54.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_49_54.report.json",
+    "summary": {
+      "performance": 0.77,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/partners",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_50_15.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_50_15.report.json",
+    "summary": {
+      "performance": 0.78,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/archive",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_51_19.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_51_19.report.json",
+    "summary": {
+      "performance": 0.79,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/archive",
+    "isRepresentativeRun": false,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_51_40.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_51_40.report.json",
+    "summary": {
+      "performance": 0.76,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_46_06.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_-2026_06_17_15_46_06.report.json",
+    "summary": {
+      "performance": 0.89,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/tickets",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_46_36.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_tickets-2026_06_17_15_46_36.report.json",
+    "summary": {
+      "performance": 0.76,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/radio",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_47_43.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_radio-2026_06_17_15_47_43.report.json",
+    "summary": {
+      "performance": 0.72,
+      "accessibility": 1,
+      "best-practices": 0.79,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/booking",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_49_35.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_booking-2026_06_17_15_49_35.report.json",
+    "summary": {
+      "performance": 0.79,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/partners",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_50_37.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_partners-2026_06_17_15_50_37.report.json",
+    "summary": {
+      "performance": 0.76,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://127.0.0.1:3001/archive",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_50_58.report.html",
+    "jsonPath": "/Users/starkindustries/Downloads/monolith-project website/127_0_0_1-_archive-2026_06_17_15_50_58.report.json",
+    "summary": {
+      "performance": 0.75,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    }
+  }
+]

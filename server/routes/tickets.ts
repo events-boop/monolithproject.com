@@ -11,21 +11,22 @@ const ticketIntentLimiter = createRateLimitMiddleware({
   scope: "api:ticket-intent",
   windowMs: 15 * 60 * 1000,
   limit: 90,
-  message: "Too many ticket redirects. Please wait 15 minutes before trying again.",
+  message:
+    "Too many ticket redirects. Please wait 15 minutes before trying again.",
 });
 
 router.post("/api/ticket-intent", ticketIntentLimiter, async (req, res) => {
   const requestId = randomUUID();
   const parsed = ticketIntentSchema.safeParse(req.body);
-  
+
   if (!parsed.success) {
     return res.status(400).json({
       ok: false,
       requestId,
-      error: { 
-        code: "VALIDATION_ERROR", 
-        message: "Invalid payload provided for ticket intent.", 
-        retryable: false 
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Invalid payload provided for ticket intent.",
+        retryable: false,
       },
     });
   }
@@ -33,16 +34,19 @@ router.post("/api/ticket-intent", ticketIntentLimiter, async (req, res) => {
   const ticketIntentId = randomUUID();
   const db = getDatabase();
   if (db) {
-    await db.insert(ticketIntents).values({
-      id: ticketIntentId,
-      source: parsed.data.source,
-      eventId: parsed.data.eventId,
-      sessionId: parsed.data.sessionId,
-      destinationUrl: parsed.data.destinationUrl,
-      metadata: parsed.data,
-    }).catch((error) => {
-      console.error(`[${requestId}] Failed to persist ticket intent:`, error);
-    });
+    await db
+      .insert(ticketIntents)
+      .values({
+        id: ticketIntentId,
+        source: parsed.data.source,
+        eventId: parsed.data.eventId,
+        sessionId: parsed.data.sessionId,
+        destinationUrl: parsed.data.destinationUrl,
+        metadata: parsed.data,
+      })
+      .catch(error => {
+        console.error(`[${requestId}] Failed to persist ticket intent:`, error);
+      });
   }
 
   logEvent("ticket.intent_started", {
@@ -54,7 +58,8 @@ router.post("/api/ticket-intent", ticketIntentLimiter, async (req, res) => {
     destinationUrl: parsed.data.destinationUrl || null,
     pageUrl: parsed.data.pageUrl || null,
     landingPageUrl: parsed.data.landingPageUrl || null,
-    referrerDomain: parsed.data.referrerDomain || parsed.data.firstReferrerDomain || null,
+    referrerDomain:
+      parsed.data.referrerDomain || parsed.data.firstReferrerDomain || null,
     utmSource: parsed.data.utmSource || parsed.data.lastUtmSource || null,
     utmMedium: parsed.data.utmMedium || parsed.data.lastUtmMedium || null,
     utmCampaign: parsed.data.utmCampaign || parsed.data.lastUtmCampaign || null,
@@ -62,11 +67,11 @@ router.post("/api/ticket-intent", ticketIntentLimiter, async (req, res) => {
     fbclid: parsed.data.fbclid || parsed.data.lastFbclid || null,
   });
 
-  return res.status(202).json({ 
-    ok: true, 
+  return res.status(202).json({
+    ok: true,
     requestId,
     ticketIntentId,
-    message: "Intent recorded." 
+    message: "Intent recorded.",
   });
 });
 

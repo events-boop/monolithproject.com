@@ -18,7 +18,14 @@ type PersistPoshWebhookResult = {
   eventId?: string;
   ticketOrderId?: string;
   poshBuyerId?: string;
-  status: "purchase" | "pending" | "denied" | "refunded" | "cancelled" | "disputed" | "ignored";
+  status:
+    | "purchase"
+    | "pending"
+    | "denied"
+    | "refunded"
+    | "cancelled"
+    | "disputed"
+    | "ignored";
 };
 
 function cleanString(value: unknown) {
@@ -50,7 +57,13 @@ function readTrackingQueryParam(payload: PoshWebhookPayload, key: string) {
   const direct = cleanString(payload[key]);
   if (direct) return direct;
 
-  for (const field of ["tracking_link", "tracking_url", "source_url", "landing_page_url", "referrer"]) {
+  for (const field of [
+    "tracking_link",
+    "tracking_url",
+    "source_url",
+    "landing_page_url",
+    "referrer",
+  ]) {
     const raw = cleanString(payload[field]);
     if (!raw || !raw.includes("?")) continue;
 
@@ -110,57 +123,82 @@ function totalQuantity(items: PoshItem[]) {
     1,
     Math.min(
       100,
-      items.reduce((sum, item) => sum + itemQuantity(item), 0),
-    ),
+      items.reduce((sum, item) => sum + itemQuantity(item), 0)
+    )
   );
 }
 
 function itemNames(items: PoshItem[]) {
   const names = items
-    .map((item) => cleanString(item.name))
+    .map(item => cleanString(item.name))
     .filter((name): name is string => Boolean(name));
   return Array.from(new Set(names));
 }
 
-function deriveEventSlug(eventName: string, eventStart?: string, eventId?: string) {
+function deriveEventSlug(
+  eventName: string,
+  eventStart?: string,
+  eventId?: string
+) {
   const date = eventStart ? new Date(eventStart) : undefined;
-  const year = date && !Number.isNaN(date.getTime()) ? date.getUTCFullYear() : undefined;
-  const month = date && !Number.isNaN(date.getTime()) ? date.getUTCMonth() + 1 : undefined;
-  const day = date && !Number.isNaN(date.getTime()) ? date.getUTCDate() : undefined;
+  const year =
+    date && !Number.isNaN(date.getTime()) ? date.getUTCFullYear() : undefined;
+  const month =
+    date && !Number.isNaN(date.getTime()) ? date.getUTCMonth() + 1 : undefined;
+  const day =
+    date && !Number.isNaN(date.getTime()) ? date.getUTCDate() : undefined;
   const normalizedName = eventName.toLowerCase();
 
   if (normalizedName.includes("chasing") && normalizedName.includes("sun")) {
-    if (year === 2026 && month === 7 && day === 4) return "chasing-sunsets-july-4-2026";
-    if (year === 2026 && month === 8 && day === 22) return "chasing-sunsets-august-22-2026";
-    if (year === 2026 && month === 9 && day === 19) return "chasing-sunsets-september-19-2026";
+    if (year === 2026 && month === 7 && day === 4)
+      return "chasing-sunsets-july-4-2026";
+    if (year === 2026 && month === 8 && day === 22)
+      return "chasing-sunsets-august-22-2026";
+    if (year === 2026 && month === 9 && day === 19)
+      return "chasing-sunsets-september-19-2026";
   }
 
-  const datePart = year && month && day ? `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}` : undefined;
+  const datePart =
+    year && month && day
+      ? `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+      : undefined;
   const base = slugify([eventName, datePart].filter(Boolean).join(" "));
   return base || (eventId ? `posh-${eventId}` : "posh-event");
 }
 
-function deriveStatus(payload: PoshWebhookPayload): PersistPoshWebhookResult["status"] {
+function deriveStatus(
+  payload: PoshWebhookPayload
+): PersistPoshWebhookResult["status"] {
   const type = cleanString(payload.type)?.toLowerCase() || "unknown";
   const action = cleanString(payload.action)?.toLowerCase();
 
   if (cleanBoolean(payload.disputed)) return "disputed";
   if (cleanBoolean(payload.cancelled)) return "cancelled";
-  if (cleanBoolean(payload.refunded) || moneyToCents(payload.partialRefund) > 0) return "refunded";
+  if (cleanBoolean(payload.refunded) || moneyToCents(payload.partialRefund) > 0)
+    return "refunded";
   if (type === "pending_order_actioned" && action === "denied") return "denied";
   if (type === "new_order_request") return "pending";
-  if (type === "new_order" || (type === "pending_order_actioned" && action === "approved")) return "purchase";
+  if (
+    type === "new_order" ||
+    (type === "pending_order_actioned" && action === "approved")
+  )
+    return "purchase";
   if (type === "order_status_update") return "purchase";
   return "ignored";
 }
 
 function shouldPersistRevenue(status: PersistPoshWebhookResult["status"]) {
-  return status === "purchase" || status === "refunded" || status === "cancelled" || status === "disputed";
+  return (
+    status === "purchase" ||
+    status === "refunded" ||
+    status === "cancelled" ||
+    status === "disputed"
+  );
 }
 
 export async function persistPoshWebhookPurchase(
   payload: PoshWebhookPayload,
-  requestId: string,
+  requestId: string
 ): Promise<PersistPoshWebhookResult> {
   const db = getDatabase();
   if (!db) return { status: "ignored" };
@@ -178,7 +216,9 @@ export async function persistPoshWebhookPurchase(
   const eventTitle = cleanString(payload.event_name) || "Posh Event";
   const eventStart = isoDate(payload.event_start);
   const eventSlug = deriveEventSlug(eventTitle, eventStart, eventExternalId);
-  const eventId = eventExternalId ? `posh:${eventExternalId}` : hashId("posh_event", eventSlug);
+  const eventId = eventExternalId
+    ? `posh:${eventExternalId}`
+    : hashId("posh_event", eventSlug);
   const items = asItems(payload);
   const names = itemNames(items);
   const firstItemId = cleanString(items[0]?.item_id);
@@ -189,8 +229,13 @@ export async function persistPoshWebhookPurchase(
   const orderKey =
     trackingLink ||
     orderNumber ||
-    createHash("sha256").update(JSON.stringify({ type, eventExternalId, eventTitle, email, items })).digest("hex");
-  const purchaseDate = isoDate(payload.date_purchased) || isoDate(payload.update_date) || now;
+    createHash("sha256")
+      .update(
+        JSON.stringify({ type, eventExternalId, eventTitle, email, items })
+      )
+      .digest("hex");
+  const purchaseDate =
+    isoDate(payload.date_purchased) || isoDate(payload.update_date) || now;
   const subtotalCents = moneyToCents(payload.subtotal);
   const totalCents = moneyToCents(payload.total);
   const refundCents = moneyToCents(payload.partialRefund);
@@ -223,12 +268,15 @@ export async function persistPoshWebhookPurchase(
         primarySource: "posh",
         sourceFirstSeen: utmSource || "posh",
         utmSource: utmSource || null,
+        utmMedium: utmMedium || null,
         utmCampaign: utmCampaign || null,
+        utmContent: utmContent || null,
+        utmTerm: utmTerm || null,
         lastSeenAt: now,
         consentEmail: true,
         consentSms: Boolean(phone),
         tags: ["posh", "buyer"],
-        metadata: { requestId, lastPoshWebhookType: type, attribution: { anonymousSessionId, utmMedium, utmContent, utmTerm } },
+        metadata: { requestId, lastPoshWebhookType: type, anonymousSessionId },
       })
       .onConflictDoUpdate({
         target: contacts.emailNormalized,
@@ -239,7 +287,10 @@ export async function persistPoshWebhookPurchase(
           instagramHandle: instagramHandle || null,
           primarySource: "posh",
           utmSource: utmSource || null,
+          utmMedium: utmMedium || null,
           utmCampaign: utmCampaign || null,
+          utmContent: utmContent || null,
+          utmTerm: utmTerm || null,
           lastSeenAt: now,
           consentEmail: true,
           consentSms: Boolean(phone),
@@ -248,7 +299,7 @@ export async function persistPoshWebhookPurchase(
             lastRequestId: requestId,
             lastPoshWebhookType: type,
             lastPoshWebhookStatus: status,
-            attribution: { anonymousSessionId, utmMedium, utmContent, utmTerm },
+            anonymousSessionId,
           })}::jsonb`,
         },
       })
@@ -262,13 +313,19 @@ export async function persistPoshWebhookPurchase(
     .values({
       id: eventId,
       externalId: eventExternalId || null,
-      series: eventTitle.toLowerCase().includes("chasing") ? "chasing-sunsets" : "posh",
+      series: eventTitle.toLowerCase().includes("chasing")
+        ? "chasing-sunsets"
+        : "posh",
       title: eventTitle,
       slug: eventSlug,
       startsAt: eventStart || null,
       status: "ticketing",
       updatedAt: now,
-      metadata: { requestId, provider: "posh", eventEnd: isoDate(payload.event_end) },
+      metadata: {
+        requestId,
+        provider: "posh",
+        eventEnd: isoDate(payload.event_end),
+      },
     })
     .onConflictDoUpdate({
       target: events.slug,
@@ -293,7 +350,10 @@ export async function persistPoshWebhookPurchase(
   }
 
   const ticketOrderId = hashId("ticket_order", `posh:${eventId}:${orderKey}`);
-  const poshBuyerId = hashId("posh_buyer", `posh:${eventId}:${orderKey}:${firstItemId || ticketType || "ticket"}`);
+  const poshBuyerId = hashId(
+    "posh_buyer",
+    `posh:${eventId}:${orderKey}:${firstItemId || ticketType || "ticket"}`
+  );
   const rawPayload = {
     ...payload,
     normalized: {
@@ -335,6 +395,7 @@ export async function persistPoshWebhookPurchase(
       target: ticketOrders.id,
       set: {
         contactId: contactId || null,
+        eventSlug: inboundEventSlug || eventSlug,
         ticketType: ticketType || null,
         quantity,
         grossRevenue,

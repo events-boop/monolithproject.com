@@ -17,10 +17,13 @@ function readPositiveIntEnv(name: string, fallback: number) {
 
 const siteDataLimiter = createRateLimitMiddleware({
   scope: "site_data_public",
-  limit: readPositiveIntEnv("SITE_DATA_RATE_LIMIT", DEFAULT_SITE_DATA_RATE_LIMIT),
+  limit: readPositiveIntEnv(
+    "SITE_DATA_RATE_LIMIT",
+    DEFAULT_SITE_DATA_RATE_LIMIT
+  ),
   windowMs: readPositiveIntEnv(
     "SITE_DATA_RATE_LIMIT_WINDOW_MS",
-    DEFAULT_SITE_DATA_RATE_LIMIT_WINDOW_MS,
+    DEFAULT_SITE_DATA_RATE_LIMIT_WINDOW_MS
   ),
   preferMemory: true, // Keep public site-data reads off the database hot path
   message: "Too many site data requests. Please try again shortly.",
@@ -32,7 +35,7 @@ function hasMatchingEtag(ifNoneMatchHeader: string | undefined, etag: string) {
 
   return ifNoneMatchHeader
     .split(",")
-    .some((candidate) => candidate.trim() === etag);
+    .some(candidate => candidate.trim() === etag);
 }
 
 router.get(
@@ -40,12 +43,15 @@ router.get(
   siteDataLimiter,
   asyncHandler(async (req, res) => {
     const path = typeof req.query.path === "string" ? req.query.path : "/";
-    
+
     // The service handles SWR event caching plus per-path response memoization.
     const siteData = await siteDataService.getSiteDataResponse(path);
     const ifNoneMatch = req.header("if-none-match");
 
-    res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=120");
+    res.setHeader(
+      "Cache-Control",
+      "public, max-age=60, stale-while-revalidate=120"
+    );
     res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
     res.setHeader("X-Data-Source", "memcached-swr");
     res.setHeader("ETag", siteData.etag);
@@ -55,7 +61,7 @@ router.get(
     }
 
     res.type("application/json").send(siteData.serialized);
-  }),
+  })
 );
 
 export default router;

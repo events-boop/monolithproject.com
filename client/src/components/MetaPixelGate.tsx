@@ -23,7 +23,8 @@ export function isLakeCampaignPath(pathname: string) {
 export function isFirstAccessLeadAnchor(anchor: HTMLAnchorElement) {
   if (anchor.hasAttribute("data-campaign-lead")) return false;
 
-  const href = `${anchor.getAttribute("href") || ""} ${anchor.href || ""}`.toLowerCase();
+  const href =
+    `${anchor.getAttribute("href") || ""} ${anchor.href || ""}`.toLowerCase();
   const label = anchor.textContent?.toLowerCase() || "";
   const ariaLabel = anchor.getAttribute("aria-label")?.toLowerCase() || "";
   const combinedLabel = `${label} ${ariaLabel}`;
@@ -79,23 +80,23 @@ export default function MetaPixelGate() {
     if (lakeCampaignPath) return;
 
     const handleClick = (event: MouseEvent) => {
-      if (consentState === 'declined') return;
+      if (consentState === "declined") return;
 
       const target = event.target;
       if (!(target instanceof Element)) return;
 
-      const anchor = target.closest<HTMLAnchorElement>('a[href]');
+      const anchor = target.closest<HTMLAnchorElement>("a[href]");
       if (!anchor || !isFirstAccessLeadAnchor(anchor)) return;
 
       trackMetaPixelLead({
         event_source_url: window.location.href,
-        source: 'first_access_cta',
+        source: "first_access_cta",
       });
     };
 
-    document.addEventListener('click', handleClick, { capture: true });
+    document.addEventListener("click", handleClick, { capture: true });
     return () => {
-      document.removeEventListener('click', handleClick, { capture: true });
+      document.removeEventListener("click", handleClick, { capture: true });
     };
   }, [consentState, lakeCampaignPath]);
 
@@ -104,30 +105,34 @@ export default function MetaPixelGate() {
     if (lakeCampaignPath) return;
 
     const handleFormSubmit = (event: SubmitEvent) => {
-      if (consentState === 'declined') return;
+      if (consentState === "declined") return;
       const form = event.target;
       if (!(form instanceof HTMLFormElement)) return;
       // Only fire for the lake-list / first-access form — identified by
       // its submit button text or the form's proximity to #lake-list.
-      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const btnText = submitBtn?.textContent?.toLowerCase() || '';
+      const submitBtn = form.querySelector<HTMLButtonElement>(
+        'button[type="submit"]'
+      );
+      const btnText = submitBtn?.textContent?.toLowerCase() || "";
       const isLakeListForm =
-        btnText.includes('first access') ||
-        btnText.includes('register') ||
-        btnText.includes('lake list') ||
-        form.closest('#lake-list') !== null ||
+        btnText.includes("first access") ||
+        btnText.includes("register") ||
+        btnText.includes("lake list") ||
+        form.closest("#lake-list") !== null ||
         form.closest('[data-form="lake-list"]') !== null;
       if (!isLakeListForm) return;
       trackMetaPixelLead({
         event_source_url: window.location.href,
-        source: 'lake_list_form_submit',
-        content_name: 'sunsets_july4_firstaccess',
+        source: "lake_list_form_submit",
+        content_name: "sunsets_july4_firstaccess",
       });
     };
 
-    document.addEventListener('submit', handleFormSubmit, { capture: true });
+    document.addEventListener("submit", handleFormSubmit, { capture: true });
     return () => {
-      document.removeEventListener('submit', handleFormSubmit, { capture: true });
+      document.removeEventListener("submit", handleFormSubmit, {
+        capture: true,
+      });
     };
   }, [consentState, lakeCampaignPath]);
 

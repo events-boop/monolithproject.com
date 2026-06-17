@@ -31,6 +31,7 @@ const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
 // Benchek featured-set drop — Laylo signup via the /go redirect layer.
 const BENCHEK_DROP_HREF = "/go/waitlist/benchek";
 const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
+const LAKE_LIST_HREF = "/go/lakelist";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
@@ -159,6 +160,10 @@ export default function SunsetsLinkBio() {
     BENCHEK_DROP_HREF,
     JULY_4_EVENT_SLUG
   );
+  const lakeListHref = appendEventAttribution(
+    LAKE_LIST_HREF,
+    JULY_4_EVENT_SLUG
+  );
 
   const handleTicketClick = () => {
     triggerHaptic(16);
@@ -169,12 +174,24 @@ export default function SunsetsLinkBio() {
       ctaPosition: "primary",
     });
     trackSunsetsClick({
-      buttonName: "BUY JULY 4 TICKETS",
+      buttonName: "GET JULY 4 TICKETS",
       href: ticketHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
       interestType: "ticket_click",
       channel: "Posh",
+    });
+  };
+
+  const handleLakeListClick = () => {
+    triggerHaptic(12);
+    trackSunsetsClick({
+      buttonName: "JOIN THE LAKE LIST",
+      href: lakeListHref,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "first_access_click",
+      channel: "Laylo",
     });
   };
 
@@ -243,7 +260,8 @@ export default function SunsetsLinkBio() {
           </p>
           <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
             <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
-              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS<span className="text-[#E8B86D]">)</span>
+              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS
+              <span className="text-[#E8B86D]">)</span>
             </span>
             <span className="mt-1 block whitespace-nowrap text-[clamp(1.5rem,7vw,2.5rem)] text-[#E8B86D]">
               2026
@@ -257,9 +275,9 @@ export default function SunsetsLinkBio() {
           </p>
 
           <div className="-mx-5 mt-5 mb-5 overflow-hidden border-y-[4px] border-[#15110a] outline outline-1 outline-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)] sm:mx-0 sm:border-[4px]">
-            <img 
-              src="/images/css-2026-poster.jpg" 
-              alt="Chasing Sunsets 2026 Poster" 
+            <img
+              src="/images/css-2026-poster.jpg"
+              alt="Chasing Sunsets 2026 Poster"
               className="w-full h-auto object-cover"
               loading="eager"
             />
@@ -306,7 +324,14 @@ export default function SunsetsLinkBio() {
             onClick={handleTicketClick}
             className="flex h-[52px] min-h-[52px] items-center justify-center gap-2 bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition hover:bg-[#f4d58d]"
           >
-            BUY JULY 4 TICKETS <span aria-hidden="true">→</span>
+            GET JULY 4 TICKETS <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href={lakeListHref}
+            onClick={handleLakeListClick}
+            className="mt-2.5 flex h-11 min-h-11 items-center justify-center gap-2 border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D] hover:text-black"
+          >
+            JOIN THE LAKE LIST <span aria-hidden="true">→</span>
           </a>
         </section>
 

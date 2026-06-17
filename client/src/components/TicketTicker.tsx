@@ -12,7 +12,9 @@ export default function TicketTicker({ className = "" }: TicketTickerProps) {
   const primaryLabel = SUNSETS_PRELAUNCH_LOCKED
     ? "Join the Lake List"
     : CTA_LABELS.tickets;
-  const hoverLabel = SUNSETS_PRELAUNCH_LOCKED ? "First Access" : CTA_LABELS.getTicketsNow;
+  const hoverLabel = SUNSETS_PRELAUNCH_LOCKED
+    ? "First Access"
+    : CTA_LABELS.getTicketsNow;
   const href = SUNSETS_PRELAUNCH_LOCKED ? "/sunsets" : POSH_TICKET_URL;
   const external = !SUNSETS_PRELAUNCH_LOCKED;
 

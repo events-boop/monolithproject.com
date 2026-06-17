@@ -27,6 +27,7 @@ export interface AttributionPayload {
   utmCampaign?: string;
   utmTerm?: string;
   utmContent?: string;
+  promo?: string;
   ref?: string;
   firstUtmSource?: string;
   firstUtmMedium?: string;
@@ -62,6 +63,7 @@ interface TouchPoint {
   utmCampaign?: string;
   utmTerm?: string;
   utmContent?: string;
+  promo?: string;
   ref?: string;
   gclid?: string;
   fbclid?: string;
@@ -85,6 +87,7 @@ const ATTRIBUTION_QUERY_PARAMS = {
   utm_campaign: "utmCampaign",
   utm_term: "utmTerm",
   utm_content: "utmContent",
+  promo: "promo",
   ref: "ref",
   gclid: "gclid",
   fbclid: "fbclid",
@@ -179,8 +182,7 @@ function resolveSessionId() {
   const sessionStorage = getSessionStorage();
 
   const existingSessionId =
-    sessionStorage?.getItem(SESSION_STORAGE_KEY)?.trim() ||
-    "";
+    sessionStorage?.getItem(SESSION_STORAGE_KEY)?.trim() || "";
 
   if (existingSessionId) return existingSessionId;
 
@@ -212,6 +214,7 @@ function buildCurrentTouchPoint(): TouchPoint | null {
     utmCampaign: readQueryParam(pageUrl, "utm_campaign"),
     utmTerm: readQueryParam(pageUrl, "utm_term"),
     utmContent: readQueryParam(pageUrl, "utm_content"),
+    promo: readQueryParam(pageUrl, "promo"),
     ref: readQueryParam(pageUrl, "ref"),
     gclid: readQueryParam(pageUrl, "gclid"),
     fbclid: readQueryParam(pageUrl, "fbclid"),
@@ -228,6 +231,7 @@ function hasAcquisitionSignal(touch: TouchPoint) {
     touch.utmCampaign ||
     touch.utmTerm ||
     touch.utmContent ||
+    touch.promo ||
     touch.ref ||
     touch.gclid ||
     touch.fbclid ||
@@ -266,6 +270,9 @@ function mergeTouchPoint(
     utmContent: shouldRefreshSignals
       ? current.utmContent || existing.utmContent
       : existing.utmContent,
+    promo: shouldRefreshSignals
+      ? current.promo || existing.promo
+      : existing.promo,
     ref: shouldRefreshSignals ? current.ref || existing.ref : existing.ref,
     gclid: shouldRefreshSignals
       ? current.gclid || existing.gclid
@@ -335,6 +342,7 @@ export function getAttributionPayload(): AttributionPayload {
     utmCampaign: lastTouch?.utmCampaign,
     utmTerm: lastTouch?.utmTerm,
     utmContent: lastTouch?.utmContent,
+    promo: lastTouch?.promo,
     ref: lastTouch?.ref,
     firstUtmSource: firstTouch?.utmSource,
     firstUtmMedium: firstTouch?.utmMedium,

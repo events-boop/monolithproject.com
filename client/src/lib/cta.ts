@@ -93,7 +93,11 @@ export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
   // Pre-launch: Posh ticketing is still in draft, so never route users to a
   // Posh ticket CTA (including internal /go/tickets redirects) — send them to
   // the Lake List. Skip the schedule fallback (events with no primaryCta).
-  if (SUNSETS_PRELAUNCH_LOCKED && event?.primaryCta != null && cta.tool === "posh") {
+  if (
+    SUNSETS_PRELAUNCH_LOCKED &&
+    event?.primaryCta != null &&
+    cta.tool === "posh"
+  ) {
     return {
       label: "Join the Lake List",
       href: ROUTES.sunsets,

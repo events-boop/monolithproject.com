@@ -20,4 +20,3 @@ export function hasDatabase() {
 export function getDatabase() {
   return db;
 }
-

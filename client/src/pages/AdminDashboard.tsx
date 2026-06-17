@@ -142,7 +142,9 @@ export default function AdminDashboard() {
         {
           name: "Google Analytics (GA4)",
           status:
-            typeof (window as Window & { gtag?: unknown }).gtag !== "undefined" ? "active" : "error",
+            typeof (window as Window & { gtag?: unknown }).gtag !== "undefined"
+              ? "active"
+              : "error",
           latency: "12ms",
         },
         { name: "Neon (Reporting)", status: "active", latency: "156ms" },

@@ -5,15 +5,32 @@ import { logEvent } from "../lib/logging";
 import { asyncHandler } from "../lib/async";
 import { scrubEmail } from "../lib/security";
 import { readProvider } from "../lib/env";
-import { getFromCache, setInCache, hasInFlight, setInFlight, resolveInFlight, deleteInFlight } from "../services/idempotency";
-import { shouldSyncLeadToLaylo, subscribeLaylo, subscribeLead } from "../providers/lead-providers";
+import {
+  getFromCache,
+  setInCache,
+  hasInFlight,
+  setInFlight,
+  resolveInFlight,
+  deleteInFlight,
+} from "../services/idempotency";
+import {
+  shouldSyncLeadToLaylo,
+  subscribeLaylo,
+  subscribeLead,
+} from "../providers/lead-providers";
 import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { sendWelcomeEmail } from "../services/email";
-import { createRateLimitMiddleware, getClientIdentifier } from "../services/rate-limit";
+import {
+  createRateLimitMiddleware,
+  getClientIdentifier,
+} from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
-import { markLeadCaptureProviderStatus, persistLeadCapture } from "../services/crm-store";
+import {
+  markLeadCaptureProviderStatus,
+  persistLeadCapture,
+} from "../services/crm-store";
 import { parseCookieHeader } from "../lib/cookies";
 import { sendLeadConversion } from "../services/meta-capi";
 import { mirrorLeadToAirtable } from "../services/airtable-sync";
@@ -28,224 +45,259 @@ const leadsLimiter = createRateLimitMiddleware({
   scope: "api:leads",
   windowMs: 15 * 60 * 1000,
   limit: 24,
-  message: "Too many signup attempts. Please wait 15 minutes before trying again.",
+  message:
+    "Too many signup attempts. Please wait 15 minutes before trying again.",
 });
 
-router.post("/api/leads", leadsLimiter, asyncHandler(async (req, res) => {
-  const requestId = randomUUID();
-  const honeypotValue = readHoneypotValue(req.body);
-  if (honeypotValue) {
-    logEvent("bot.honeypot_triggered", {
-      requestId,
-      route: "/api/leads",
-      field: honeypotFieldName,
-      valueLength: honeypotValue.length,
-    });
-    return res.status(200).json({
-      ok: true,
-      requestId,
-      message: "Subscribed successfully",
-    });
-  }
-
-  const parsed = leadSchema.safeParse(req.body);
-
-  if (!parsed.success) {
-    return res.status(400).json({
-      ok: false,
-      requestId,
-      error: {
-        code: "VALIDATION_ERROR",
-        message: "Please provide a valid email and consent.",
-        retryable: false,
-      },
-    });
-  }
-
-  const provider = readProvider();
-  const email = scrubEmail(parsed.data.email);
-  const incomingKey = req.header("Idempotency-Key")?.trim();
-  const idempotencyKey = incomingKey || `${provider}:${email}`;
-
-  const cached = getFromCache(idempotencyKey);
-  if (cached) {
-    res.setHeader("X-Idempotent-Replay", "true");
-    return res.status(cached.status).json(cached.body);
-  }
-
-  if (hasInFlight(idempotencyKey)) {
-    try {
-      const pendingResult = await resolveInFlight(idempotencyKey);
-      res.setHeader("X-Idempotent-Replay", "true");
-      return res.status(pendingResult.status).json(pendingResult.body);
-    } catch {
-      return res.status(502).json({
-        ok: false,
+router.post(
+  "/api/leads",
+  leadsLimiter,
+  asyncHandler(async (req, res) => {
+    const requestId = randomUUID();
+    const honeypotValue = readHoneypotValue(req.body);
+    if (honeypotValue) {
+      logEvent("bot.honeypot_triggered", {
         requestId,
-        error: { code: "PROVIDER_ERROR", message: "We couldn't process your request. Please try again.", retryable: true },
+        route: "/api/leads",
+        field: honeypotFieldName,
+        valueLength: honeypotValue.length,
       });
-    }
-  }
-
-  const operation = (async () => {
-    const dbLeadId = randomUUID();
-    const db = getDatabase();
-    const crmCapture = await persistLeadCapture({
-      lead: parsed.data,
-      provider,
-      idempotencyKey,
-      requestId,
-    });
-
-    try {
-      // 1. Backup to DB first (Critical)
-      if (db) {
-        await db.insert(leads).values({
-          id: dbLeadId,
-          email: email,
-          firstName: parsed.data.firstName,
-          lastName: parsed.data.lastName,
-          source: parsed.data.source || "website",
-          provider: provider,
-          providerStatus: "pending",
-          metadata: parsed.data,
-        }).catch(err => console.error("Failed to backup lead to DB:", err));
-      }
-
-      await subscribeLead(provider, parsed.data);
-
-      if (provider !== "laylo" && shouldSyncLeadToLaylo(parsed.data)) {
-        await subscribeLaylo(parsed.data).catch((err) => {
-          logEvent("lead.laylo_sync_failed", {
-            requestId,
-            source: parsed.data.source || "website",
-            message: err instanceof Error ? err.message : "Laylo sync failed",
-          });
-        });
-      }
-
-      const welcomeEmail = await sendWelcomeEmail(email, parsed.data.firstName).catch(err => {
-        console.error(`[${requestId}] Failed to send welcome email:`, err);
-        return null;
-      });
-
-      // 2. Update DB status on success
-      if (db) {
-        // Fire and forget update
-        db.update(leads)
-          .set({ providerStatus: "success" })
-          .where(eq(leads.id, dbLeadId))
-          .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'success':`, err));
-      }
-      void markLeadCaptureProviderStatus(crmCapture, "success");
-      void mirrorLeadToAirtable({
-        lead: parsed.data,
-        provider,
-        requestId,
-        idempotencyKey,
-      });
-
-      // Server-side Meta CAPI copy of the conversion. Fire-and-forget: the
-      // service never throws and no-ops when CAPI isn't configured.
-      const fbp = parseCookieHeader(req.header("cookie"))._fbp;
-      void sendLeadConversion({
-        eventId: requestId,
-        pixelId: BRAND_PIXEL_ID,
-        email,
-        phone: parsed.data.phone,
-        firstName: parsed.data.firstName,
-        lastName: parsed.data.lastName,
-        city: parsed.data.city,
-        state: parsed.data.state,
-        eventSourceUrl: parsed.data.landingPageUrl || parsed.data.referrer,
-        clientIp: getClientIdentifier(req),
-        userAgent: req.header("user-agent") || undefined,
-        fbp,
-        fbclid:
-          parsed.data.fbclid ||
-          parsed.data.lastFbclid ||
-          parsed.data.firstFbclid,
-        customData: {
-          content_name: "First Access Signup - Chasing Sun(Sets)",
-          content_category: "Waitlist",
-          lead_source: parsed.data.source || "website",
-        },
-      });
-
-      const body = {
+      return res.status(200).json({
         ok: true,
         requestId,
-        provider,
         message: "Subscribed successfully",
-      };
-
-      logEvent("lead.subscribed", {
-        requestId,
-        provider,
-        source: parsed.data.source || "website",
-        funnelId: parsed.data.funnelId || null,
-        offerId: parsed.data.offerId || null,
-        eventInterest: parsed.data.eventInterest || null,
-        eventSeries: parsed.data.eventSeries || null,
-        eventTitle: parsed.data.eventTitle || null,
-        sessionId: parsed.data.sessionId || null,
-        landingPageUrl: parsed.data.landingPageUrl || null,
-        referrerDomain: parsed.data.referrerDomain || parsed.data.firstReferrerDomain || null,
-        utmSource: parsed.data.utmSource || null,
-        utmMedium: parsed.data.utmMedium || null,
-        utmCampaign: parsed.data.utmCampaign || null,
-        firstUtmSource: parsed.data.firstUtmSource || null,
-        lastUtmSource: parsed.data.lastUtmSource || null,
-        phoneProvided: Boolean(parsed.data.phone),
-        instagramHandleProvided: Boolean(parsed.data.instagramHandle),
-        emailHash: createHash("sha256").update(email).digest("hex").slice(0, 12),
       });
+    }
 
-      return { status: 200, body };
-    } catch (error) {
-      const rawMessage = error instanceof Error ? error.message : "Subscription failed";
+    const parsed = leadSchema.safeParse(req.body);
 
-      // 3. Update DB status on failure
-      if (db) {
-        db.update(leads)
-          .set({ providerStatus: "failed", metadata: { ...parsed.data, error: rawMessage } })
-          .where(eq(leads.id, dbLeadId))
-          .catch((err) => console.error(`[${requestId}] Failed to update lead status to 'failed':`, err));
-      }
-      void markLeadCaptureProviderStatus(crmCapture, "failed", rawMessage);
-
-      const body = {
+    if (!parsed.success) {
+      return res.status(400).json({
         ok: false,
         requestId,
         error: {
-          code: "PROVIDER_ERROR",
-          message: "We couldn't process your request. Please try again.",
-          retryable: true,
+          code: "VALIDATION_ERROR",
+          message: "Please provide a valid email and consent.",
+          retryable: false,
         },
-      };
+      });
+    }
 
-      logEvent("lead.subscription_failed", {
-        requestId,
+    const provider = readProvider();
+    const email = scrubEmail(parsed.data.email);
+    const incomingKey = req.header("Idempotency-Key")?.trim();
+    const idempotencyKey = incomingKey || `${provider}:${email}`;
+
+    const cached = getFromCache(idempotencyKey);
+    if (cached) {
+      res.setHeader("X-Idempotent-Replay", "true");
+      return res.status(cached.status).json(cached.body);
+    }
+
+    if (hasInFlight(idempotencyKey)) {
+      try {
+        const pendingResult = await resolveInFlight(idempotencyKey);
+        res.setHeader("X-Idempotent-Replay", "true");
+        return res.status(pendingResult.status).json(pendingResult.body);
+      } catch {
+        return res.status(502).json({
+          ok: false,
+          requestId,
+          error: {
+            code: "PROVIDER_ERROR",
+            message: "We couldn't process your request. Please try again.",
+            retryable: true,
+          },
+        });
+      }
+    }
+
+    const operation = (async () => {
+      const dbLeadId = randomUUID();
+      const db = getDatabase();
+      const crmCapture = await persistLeadCapture({
+        lead: parsed.data,
         provider,
-        message: rawMessage,
+        idempotencyKey,
+        requestId,
       });
 
-      return { status: 502, body };
-    }
-  })();
+      try {
+        // 1. Backup to DB first (Critical)
+        if (db) {
+          await db
+            .insert(leads)
+            .values({
+              id: dbLeadId,
+              email: email,
+              firstName: parsed.data.firstName,
+              lastName: parsed.data.lastName,
+              source: parsed.data.source || "website",
+              provider: provider,
+              providerStatus: "pending",
+              metadata: parsed.data,
+            })
+            .catch(err => console.error("Failed to backup lead to DB:", err));
+        }
 
-  setInFlight(idempotencyKey, operation);
-  try {
-    const result = await operation;
-    // Only cache successful responses. Caching transient provider failures (e.g. 502)
-    // would lock out a legitimate user from retrying for the full 24h TTL.
-    if (result.status >= 200 && result.status < 300) {
-      setInCache(idempotencyKey, result.status, result.body);
+        await subscribeLead(provider, parsed.data);
+
+        if (provider !== "laylo" && shouldSyncLeadToLaylo(parsed.data)) {
+          await subscribeLaylo(parsed.data).catch(err => {
+            logEvent("lead.laylo_sync_failed", {
+              requestId,
+              source: parsed.data.source || "website",
+              message: err instanceof Error ? err.message : "Laylo sync failed",
+            });
+          });
+        }
+
+        const welcomeEmail = await sendWelcomeEmail(
+          email,
+          parsed.data.firstName
+        ).catch(err => {
+          console.error(`[${requestId}] Failed to send welcome email:`, err);
+          return null;
+        });
+
+        // 2. Update DB status on success
+        if (db) {
+          // Fire and forget update
+          db.update(leads)
+            .set({ providerStatus: "success" })
+            .where(eq(leads.id, dbLeadId))
+            .catch(err =>
+              console.error(
+                `[${requestId}] Failed to update lead status to 'success':`,
+                err
+              )
+            );
+        }
+        void markLeadCaptureProviderStatus(crmCapture, "success");
+        void mirrorLeadToAirtable({
+          lead: parsed.data,
+          provider,
+          requestId,
+          idempotencyKey,
+        });
+
+        // Server-side Meta CAPI copy of the conversion. Fire-and-forget: the
+        // service never throws and no-ops when CAPI isn't configured.
+        const fbp = parseCookieHeader(req.header("cookie"))._fbp;
+        void sendLeadConversion({
+          eventId: requestId,
+          pixelId: BRAND_PIXEL_ID,
+          email,
+          phone: parsed.data.phone,
+          firstName: parsed.data.firstName,
+          lastName: parsed.data.lastName,
+          city: parsed.data.city,
+          state: parsed.data.state,
+          eventSourceUrl: parsed.data.landingPageUrl || parsed.data.referrer,
+          clientIp: getClientIdentifier(req),
+          userAgent: req.header("user-agent") || undefined,
+          fbp,
+          fbclid:
+            parsed.data.fbclid ||
+            parsed.data.lastFbclid ||
+            parsed.data.firstFbclid,
+          customData: {
+            content_name: "First Access Signup - Chasing Sun(Sets)",
+            content_category: "Waitlist",
+            lead_source: parsed.data.source || "website",
+          },
+        });
+
+        const body = {
+          ok: true,
+          requestId,
+          provider,
+          message: "Subscribed successfully",
+        };
+
+        logEvent("lead.subscribed", {
+          requestId,
+          provider,
+          source: parsed.data.source || "website",
+          funnelId: parsed.data.funnelId || null,
+          offerId: parsed.data.offerId || null,
+          eventInterest: parsed.data.eventInterest || null,
+          eventSeries: parsed.data.eventSeries || null,
+          eventTitle: parsed.data.eventTitle || null,
+          sessionId: parsed.data.sessionId || null,
+          landingPageUrl: parsed.data.landingPageUrl || null,
+          referrerDomain:
+            parsed.data.referrerDomain ||
+            parsed.data.firstReferrerDomain ||
+            null,
+          utmSource: parsed.data.utmSource || null,
+          utmMedium: parsed.data.utmMedium || null,
+          utmCampaign: parsed.data.utmCampaign || null,
+          firstUtmSource: parsed.data.firstUtmSource || null,
+          lastUtmSource: parsed.data.lastUtmSource || null,
+          phoneProvided: Boolean(parsed.data.phone),
+          instagramHandleProvided: Boolean(parsed.data.instagramHandle),
+          emailHash: createHash("sha256")
+            .update(email)
+            .digest("hex")
+            .slice(0, 12),
+        });
+
+        return { status: 200, body };
+      } catch (error) {
+        const rawMessage =
+          error instanceof Error ? error.message : "Subscription failed";
+
+        // 3. Update DB status on failure
+        if (db) {
+          db.update(leads)
+            .set({
+              providerStatus: "failed",
+              metadata: { ...parsed.data, error: rawMessage },
+            })
+            .where(eq(leads.id, dbLeadId))
+            .catch(err =>
+              console.error(
+                `[${requestId}] Failed to update lead status to 'failed':`,
+                err
+              )
+            );
+        }
+        void markLeadCaptureProviderStatus(crmCapture, "failed", rawMessage);
+
+        const body = {
+          ok: false,
+          requestId,
+          error: {
+            code: "PROVIDER_ERROR",
+            message: "We couldn't process your request. Please try again.",
+            retryable: true,
+          },
+        };
+
+        logEvent("lead.subscription_failed", {
+          requestId,
+          provider,
+          message: rawMessage,
+        });
+
+        return { status: 502, body };
+      }
+    })();
+
+    setInFlight(idempotencyKey, operation);
+    try {
+      const result = await operation;
+      // Only cache successful responses. Caching transient provider failures (e.g. 502)
+      // would lock out a legitimate user from retrying for the full 24h TTL.
+      if (result.status >= 200 && result.status < 300) {
+        setInCache(idempotencyKey, result.status, result.body);
+      }
+      return res.status(result.status).json(result.body);
+    } finally {
+      deleteInFlight(idempotencyKey);
     }
-    return res.status(result.status).json(result.body);
-  } finally {
-    deleteInFlight(idempotencyKey);
-  }
-}));
+  })
+);
 
 export default router;

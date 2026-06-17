@@ -354,9 +354,7 @@ export function trackLeadConversion(
         attribution.pageUrl ||
         (typeof window !== "undefined" ? window.location.href : undefined),
       fbclid:
-        attribution.fbclid ||
-        attribution.lastFbclid ||
-        attribution.firstFbclid,
+        attribution.fbclid || attribution.lastFbclid || attribution.firstFbclid,
     }),
     keepalive: true,
   }).catch(() => undefined);

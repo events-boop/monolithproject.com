@@ -83,7 +83,10 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   const app = express();
   app.disable("x-powered-by");
 
-  logEvent("database.mode", { provider: "neon-postgres", configured: hasDatabase() });
+  logEvent("database.mode", {
+    provider: "neon-postgres",
+    configured: hasDatabase(),
+  });
 
   configureMiddleware(app);
 

@@ -44,14 +44,14 @@ function isEventStatus(value: string): value is ScheduledEvent["status"] {
 }
 
 function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((item) => typeof item === "string");
+  return Array.isArray(value) && value.every(item => typeof item === "string");
 }
 
 function isTicketTierArray(value: unknown): value is TicketTier[] {
   return (
     Array.isArray(value) &&
     value.every(
-      (item) =>
+      item =>
         Boolean(item) &&
         typeof item === "object" &&
         typeof item.id === "string" &&
@@ -59,22 +59,26 @@ function isTicketTierArray(value: unknown): value is TicketTier[] {
         typeof item.price === "number" &&
         typeof item.description === "string" &&
         Array.isArray(item.features) &&
-        item.features.every((feature: unknown) => typeof feature === "string") &&
+        item.features.every(
+          (feature: unknown) => typeof feature === "string"
+        ) &&
         ["ticket", "star", "crown"].includes(String(item.icon)) &&
-        typeof item.available === "boolean",
+        typeof item.available === "boolean"
     )
   );
 }
 
-function isFaqArray(value: unknown): value is NonNullable<ScheduledEvent["faqs"]> {
+function isFaqArray(
+  value: unknown
+): value is NonNullable<ScheduledEvent["faqs"]> {
   return (
     Array.isArray(value) &&
     value.every(
-      (item) =>
+      item =>
         Boolean(item) &&
         typeof item === "object" &&
         typeof item.q === "string" &&
-        typeof item.a === "string",
+        typeof item.a === "string"
     )
   );
 }
@@ -84,7 +88,7 @@ function toActiveFunnels(value: unknown): ActiveFunnel[] | undefined {
 
   const funnels = value.filter(
     (item): item is ActiveFunnel =>
-      typeof item === "string" && ACTIVE_FUNNELS.has(item as ActiveFunnel),
+      typeof item === "string" && ACTIVE_FUNNELS.has(item as ActiveFunnel)
   );
 
   return funnels.length > 0 ? funnels : undefined;
@@ -112,8 +116,8 @@ function normalizeTrackedTicketUrl(eventId: string, ticketUrl: string | null) {
 function pickDefined<T extends object>(value: T): Partial<T> {
   return Object.fromEntries(
     Object.entries(value as Record<string, unknown>).filter(
-      ([, entry]) => entry !== undefined && entry !== null,
-    ),
+      ([, entry]) => entry !== undefined && entry !== null
+    )
   ) as Partial<T>;
 }
 
@@ -151,12 +155,18 @@ function mapRowToScheduledEvent(row: ScheduledEventRow): ScheduledEvent | null {
     age: row.age ?? undefined,
     ticketUrl: normalizeTrackedTicketUrl(row.id, row.ticketUrl),
     startingPrice: row.startingPrice ?? undefined,
-    ticketTiers: isTicketTierArray(row.ticketTiers) ? row.ticketTiers : undefined,
+    ticketTiers: isTicketTierArray(row.ticketTiers)
+      ? row.ticketTiers
+      : undefined,
     headline: row.headline ?? undefined,
     mainExperience: row.mainExperience ?? undefined,
     experienceIntro: row.experienceIntro ?? undefined,
-    whatToExpect: isStringArray(row.whatToExpect) ? row.whatToExpect : undefined,
-    tablePackages: isStringArray(row.tablePackages) ? row.tablePackages : undefined,
+    whatToExpect: isStringArray(row.whatToExpect)
+      ? row.whatToExpect
+      : undefined,
+    tablePackages: isStringArray(row.tablePackages)
+      ? row.tablePackages
+      : undefined,
     tableReservationEmail: row.tableReservationEmail ?? undefined,
     faqs: isFaqArray(row.faqs) ? row.faqs : undefined,
     photoNotice: row.photoNotice ?? undefined,
@@ -170,16 +180,16 @@ function mapRowToScheduledEvent(row: ScheduledEventRow): ScheduledEvent | null {
 
 export function mergeScheduledEvents(
   baseEvents: ScheduledEvent[],
-  overrideEvents: ScheduledEvent[],
+  overrideEvents: ScheduledEvent[]
 ) {
-  const overridesById = new Map(overrideEvents.map((event) => [event.id, event]));
-  const merged = baseEvents.map((event) => ({
+  const overridesById = new Map(overrideEvents.map(event => [event.id, event]));
+  const merged = baseEvents.map(event => ({
     ...event,
     ...(overridesById.get(event.id) ?? {}),
   }));
 
-  const baseIds = new Set(baseEvents.map((event) => event.id));
-  const appended = overrideEvents.filter((event) => !baseIds.has(event.id));
+  const baseIds = new Set(baseEvents.map(event => event.id));
+  const appended = overrideEvents.filter(event => !baseIds.has(event.id));
 
   return [...merged, ...appended];
 }
@@ -206,7 +216,7 @@ export async function readPublicScheduledEvents() {
   } catch (error) {
     console.warn(
       "[site-data] Falling back to static events because scheduled_events could not be read.",
-      error instanceof Error ? error.message : error,
+      error instanceof Error ? error.message : error
     );
     return upcomingEvents;
   }

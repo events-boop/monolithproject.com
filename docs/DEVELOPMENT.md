@@ -15,6 +15,7 @@ shared/       Types, SEO constants, canonical routes, event/ticketing data
 **Infrastructure:** `netlify.toml` handles domain redirects (`themonolithproject.com` → `monolithproject.com`, `sunsets.vip` → `/sunsets`, etc.), CSP headers, immutable cache rules for static assets, and function routing (`/api/*` → Netlify Function, `/go/*` → API proxy).
 
 **Edge Functions** in `netlify/edge-functions/`:
+
 - `csp-nonce.js` — injects cryptographic nonces into script tags at the edge
 - `source-map-guard.js` — blocks external access to `.map` files
 - `media-hotlink-guard.js` — prevents hotlinking of images and videos from unauthorized origins
@@ -52,13 +53,13 @@ Use `SUNSETS_PRELAUNCH_LOCKED` from `@shared/events/sunsets-ticketing` to gate t
 
 `client/src/lib/scenes.ts` provides path-based theming for the SPA. Each route resolves to a `SceneConfig` with accent colors, glow values, and brand identity:
 
-| Path prefix    | Scene     | Accent   |
-|----------------|-----------|----------|
-| `/monolith`    | monolith  | #E05A3A  |
-| `/story`, `/untold-story` | story | #8B5CF6 |
-| `/sunsets`, `/chasing-sunsets` | sunsets | #C2703E |
-| `/radio`       | radio     | #F43F5E  |
-| `/newsletter`, `/contact`, `/faq` | paper | #8B5CF6 (light) |
+| Path prefix                       | Scene    | Accent          |
+| --------------------------------- | -------- | --------------- |
+| `/monolith`                       | monolith | #E05A3A         |
+| `/story`, `/untold-story`         | story    | #8B5CF6         |
+| `/sunsets`, `/chasing-sunsets`    | sunsets  | #C2703E         |
+| `/radio`                          | radio    | #F43F5E         |
+| `/newsletter`, `/contact`, `/faq` | paper    | #8B5CF6 (light) |
 
 ### Utilities
 
@@ -69,6 +70,7 @@ Use `cn()` from `@/lib/utils` (clsx + tailwind-merge) for classname merging. Pre
 `scripts/prerender_public_routes.mts` runs after the Vite build to generate static HTML for every public route — 50+ pages including the homepage, static info pages, artist profiles, radio episodes, and individual event detail pages.
 
 Each prerendered page receives:
+
 - Full SEO meta tags (title, description, Open Graph, Twitter)
 - Canonical URL
 - JSON-LD structured data (`buildSitewideIdentitySchema`, `buildScheduledEventSchema`, `buildPodcastEpisodeSchema`, etc.)
@@ -123,28 +125,28 @@ Follow the Sun(Sets) pattern:
 
 See `.env.example` in the repo root for the full inventory. Key groups:
 
-| Variable | Purpose |
-|----------|---------|
-| `DATABASE_URL` | Neon PostgreSQL connection string |
-| `RESEND_API_KEY` | Transactional email via Resend |
-| `LEAD_PROVIDER` | CRM lead destination (`disabled`, `mailchimp`, `beehiiv`, `convertkit`, `hubspot`, `brevo`, `emailoctopus`, `laylo`) |
-| `OPS_ADMIN_SECRET` | Gate for `/api/ops/*` admin routes (fail-closed if unset) |
-| `POSH_WEBHOOK_SECRET` | Posh ticket webhook verification |
-| `LAYLO_WEBHOOK_SECRET` | Laylo signup webhook verification |
-| `AIRTABLE_SYNC_ENABLED` | Toggle Airtable mirror (`true`/`false`) |
-| `META_CAPI_ACCESS_TOKEN` | Meta Conversions API token |
-| `VITE_ENABLE_MONOLITH_OPS` | Enable dev admin dashboard (`true`/`false`) |
-| `OUTBOUND_TICKETS_CSS_JUL04_URL` | Sun(Sets) July 4 Posh ticket page (shows "coming soon" fallback when unset) |
-| `SITE_DATA_RATE_LIMIT` | Rate limit tuning for public site-data endpoint (default 600) |
+| Variable                         | Purpose                                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`                   | Neon PostgreSQL connection string                                                                                    |
+| `RESEND_API_KEY`                 | Transactional email via Resend                                                                                       |
+| `LEAD_PROVIDER`                  | CRM lead destination (`disabled`, `mailchimp`, `beehiiv`, `convertkit`, `hubspot`, `brevo`, `emailoctopus`, `laylo`) |
+| `OPS_ADMIN_SECRET`               | Gate for `/api/ops/*` admin routes (fail-closed if unset)                                                            |
+| `POSH_WEBHOOK_SECRET`            | Posh ticket webhook verification                                                                                     |
+| `LAYLO_WEBHOOK_SECRET`           | Laylo signup webhook verification                                                                                    |
+| `AIRTABLE_SYNC_ENABLED`          | Toggle Airtable mirror (`true`/`false`)                                                                              |
+| `META_CAPI_ACCESS_TOKEN`         | Meta Conversions API token                                                                                           |
+| `VITE_ENABLE_MONOLITH_OPS`       | Enable dev admin dashboard (`true`/`false`)                                                                          |
+| `OUTBOUND_TICKETS_CSS_JUL04_URL` | Sun(Sets) July 4 Posh ticket page (shows "coming soon" fallback when unset)                                          |
+| `SITE_DATA_RATE_LIMIT`           | Rate limit tuning for public site-data endpoint (default 600)                                                        |
 
 ## Testing
 
-| Command | Tool | Scope |
-|---------|------|-------|
-| `npm run test:unit` | Vitest | Server unit tests: schemas, idempotency, lead providers, CRM store, outbound routing |
-| `npm run test:e2e` | Playwright | 68 tests: smoke, campaign hardening, responsive layout, crawl, visual regression |
-| `npm run check` | TypeScript (`tsc --noEmit`) | Full-project type checking |
-| `npm run lhci` | Lighthouse CI | Performance audit (configured in `lighthouserc.json`) |
+| Command             | Tool                        | Scope                                                                                |
+| ------------------- | --------------------------- | ------------------------------------------------------------------------------------ |
+| `npm run test:unit` | Vitest                      | Server unit tests: schemas, idempotency, lead providers, CRM store, outbound routing |
+| `npm run test:e2e`  | Playwright                  | 68 tests: smoke, campaign hardening, responsive layout, crawl, visual regression     |
+| `npm run check`     | TypeScript (`tsc --noEmit`) | Full-project type checking                                                           |
+| `npm run lhci`      | Lighthouse CI               | Performance audit (configured in `lighthouserc.json`)                                |
 
 ## Quality Gates
 

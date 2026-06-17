@@ -20,13 +20,13 @@ export default function PageShell({
   ...seoProps
 }: PageShellProps) {
   return (
-    <div className={`min-h-screen bg-[#050505] text-white bg-scanlines flex flex-col ${className}`}>
+    <div
+      className={`min-h-screen bg-[#050505] text-white bg-scanlines flex flex-col ${className}`}
+    >
       <SEO {...seoProps} />
       {!hideNavigation && <Navigation />}
-      
-      <main className="flex-1">
-        {children}
-      </main>
+
+      <main className="flex-1">{children}</main>
 
       {!hideFooter && <Footer />}
     </div>

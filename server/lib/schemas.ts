@@ -115,7 +115,12 @@ export const bookingInquirySchema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(320),
   entity: z.string().trim().min(2).max(160),
-  type: z.enum(["partner-on-location", "artist-booking", "sponsorship", "general"]),
+  type: z.enum([
+    "partner-on-location",
+    "artist-booking",
+    "sponsorship",
+    "general",
+  ]),
   location: z.string().trim().max(180).optional(),
   message: z.string().trim().min(10).max(5000),
   ...honeypotFields,

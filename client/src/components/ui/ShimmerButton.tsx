@@ -44,7 +44,11 @@ const ShimmerButton = forwardRef<
   if (href) {
     return (
       <Link href={href} asChild>
-        <a className={buttonClass} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)} ref={ref as React.Ref<HTMLAnchorElement>}>
+        <a
+          className={buttonClass}
+          {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+        >
           {content}
         </a>
       </Link>
@@ -52,7 +56,11 @@ const ShimmerButton = forwardRef<
   }
 
   return (
-    <button className={buttonClass} {...props} ref={ref as React.Ref<HTMLButtonElement>}>
+    <button
+      className={buttonClass}
+      {...props}
+      ref={ref as React.Ref<HTMLButtonElement>}
+    >
       {content}
     </button>
   );

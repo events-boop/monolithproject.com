@@ -1,5 +1,12 @@
-import { SUNSETS_JULY4_TICKET_PATH, SUNSETS_TICKET_CTA_LABEL } from "../../shared/events/sunsets-ticketing";
-import type { EventCta, EventSeries, ScheduledEvent } from "../../shared/events/types";
+import {
+  SUNSETS_JULY4_TICKET_PATH,
+  SUNSETS_TICKET_CTA_LABEL,
+} from "../../shared/events/sunsets-ticketing";
+import type {
+  EventCta,
+  EventSeries,
+  ScheduledEvent,
+} from "../../shared/events/types";
 
 const CTA_LABELS = {
   tickets: "Get Tickets",
@@ -54,7 +61,10 @@ function getEventWindow(event?: ScheduledEvent | null) {
   return { start, end };
 }
 
-function getEventWindowStatus(event?: ScheduledEvent | null, now: Date = new Date()) {
+function getEventWindowStatus(
+  event?: ScheduledEvent | null,
+  now: Date = new Date()
+) {
   const { start, end } = getEventWindow(event);
 
   if (!start) return "unscheduled";
@@ -81,7 +91,10 @@ function isEventLowInventory(event?: ScheduledEvent | null) {
   return /(low|last|final|sold out 9\d%|9\d%\s+sold)/.test(capacity);
 }
 
-export function resolveEventPrimaryCta(event?: ScheduledEvent | null, now: Date = new Date()): EventCta {
+export function resolveEventPrimaryCta(
+  event?: ScheduledEvent | null,
+  now: Date = new Date()
+): EventCta {
   const fallback: EventCta = {
     label: CTA_LABELS.schedule,
     href: "/schedule",
@@ -115,7 +128,10 @@ export function resolveEventPrimaryCta(event?: ScheduledEvent | null, now: Date 
   if (onSale && isEventLowInventory(event)) {
     const href = event.ticketUrl || "/schedule";
     return {
-      label: event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.claimLast,
+      label:
+        event.id === "css-jul04"
+          ? SUNSETS_TICKET_CTA_LABEL
+          : CTA_LABELS.claimLast,
       href,
       tool: "posh",
       isExternal: isExternalHref(href),
@@ -125,7 +141,10 @@ export function resolveEventPrimaryCta(event?: ScheduledEvent | null, now: Date 
   if (onSale) {
     const href = event.ticketUrl || "/schedule";
     return {
-      label: href === SUNSETS_JULY4_TICKET_PATH || event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets,
+      label:
+        href === SUNSETS_JULY4_TICKET_PATH || event.id === "css-jul04"
+          ? SUNSETS_TICKET_CTA_LABEL
+          : CTA_LABELS.tickets,
       href,
       tool: "posh",
       isExternal: isExternalHref(href),

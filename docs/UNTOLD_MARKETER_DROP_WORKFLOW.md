@@ -32,11 +32,11 @@ The app handles the routing behind the scenes:
 
 ## Live Variable Map
 
-| Rail | Public path | Netlify variable |
-| --- | --- | --- |
-| Untold Story front door | `/` on `untold.vip` | App-rendered Untold Story page |
-| Untold Story waitlist/drop | `/go/waitlist/untold-story` | `OUTBOUND_WAITLIST_UNTOLD_STORY_URL` |
-| General fallback waitlist | `/go/waitlist/general` | `OUTBOUND_WAITLIST_GENERAL_URL` or `LAYLO_URL` |
+| Rail                       | Public path                 | Netlify variable                               |
+| -------------------------- | --------------------------- | ---------------------------------------------- |
+| Untold Story front door    | `/` on `untold.vip`         | App-rendered Untold Story page                 |
+| Untold Story waitlist/drop | `/go/waitlist/untold-story` | `OUTBOUND_WAITLIST_UNTOLD_STORY_URL`           |
+| General fallback waitlist  | `/go/waitlist/general`      | `OUTBOUND_WAITLIST_GENERAL_URL` or `LAYLO_URL` |
 
 If `OUTBOUND_WAITLIST_UNTOLD_STORY_URL` is unset, the route falls back to the general waitlist destination.
 

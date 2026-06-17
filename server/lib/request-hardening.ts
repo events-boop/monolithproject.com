@@ -12,12 +12,15 @@ function readForwardedHeader(value?: string | null) {
 function getRequestOrigin(req: Request) {
   const trustForwarded = shouldTrustForwardedHeaders();
   const host =
-    (trustForwarded ? readForwardedHeader(req.header("x-forwarded-host")) : undefined) ||
-    req.header("host")?.trim();
+    (trustForwarded
+      ? readForwardedHeader(req.header("x-forwarded-host"))
+      : undefined) || req.header("host")?.trim();
   if (!host) return null;
 
   const proto =
-    (trustForwarded ? readForwardedHeader(req.header("x-forwarded-proto")) : undefined) ||
+    (trustForwarded
+      ? readForwardedHeader(req.header("x-forwarded-proto"))
+      : undefined) ||
     req.protocol ||
     "https";
   return `${proto}://${host}`;
@@ -28,14 +31,17 @@ export function createApiResponseHardening(): RequestHandler {
     res.setHeader("Cache-Control", "no-store");
     res.setHeader(
       "Content-Security-Policy",
-      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
     );
     res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
     res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
     res.setHeader("X-Permitted-Cross-Domain-Policies", "none");
     res.setHeader("Origin-Agent-Cluster", "?1");
     res.setHeader("X-Frame-Options", "DENY");
-    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+    res.setHeader(
+      "Strict-Transport-Security",
+      "max-age=31536000; includeSubDomains; preload"
+    );
     next();
   };
 }

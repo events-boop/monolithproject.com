@@ -71,12 +71,18 @@ describe("leadSchema", () => {
   });
 
   it("rejects when consent is false (must be literal true)", () => {
-    const result = leadSchema.safeParse({ email: "fan@example.com", consent: false });
+    const result = leadSchema.safeParse({
+      email: "fan@example.com",
+      consent: false,
+    });
     expect(result.success).toBe(false);
   });
 
   it("rejects an invalid email address", () => {
-    const result = leadSchema.safeParse({ email: "not-an-email", consent: true });
+    const result = leadSchema.safeParse({
+      email: "not-an-email",
+      consent: true,
+    });
     expect(result.success).toBe(false);
   });
 
@@ -260,7 +266,7 @@ describe("bookingInquirySchema", () => {
     "artist-booking",
     "sponsorship",
     "general",
-  ] as const)("accepts type enum value '%s'", (type) => {
+  ] as const)("accepts type enum value '%s'", type => {
     const result = bookingInquirySchema.safeParse({ ...validInquiry, type });
     expect(result.success).toBe(true);
   });

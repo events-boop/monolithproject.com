@@ -27,7 +27,7 @@ describe("validateEnvironment", () => {
     delete process.env.SPONSOR_SESSION_SECRET;
 
     expect(() => validateEnvironment({ fatal: true })).toThrow(
-      /SPONSOR_SESSION_SECRET/,
+      /SPONSOR_SESSION_SECRET/
     );
   });
 
@@ -63,7 +63,7 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(readProvider()).toBe("brevo");
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("Brevo lead provider is bypassed"),
+      expect.stringContaining("Brevo lead provider is bypassed")
     );
   });
 
@@ -76,7 +76,7 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(readProvider()).toBe("brevo");
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("BREVO_BYPASS=true"),
+      expect.stringContaining("BREVO_BYPASS=true")
     );
   });
 
@@ -89,7 +89,7 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(readProvider()).toBe("brevo");
     expect(console.warn).not.toHaveBeenCalledWith(
-      expect.stringContaining("Brevo lead provider is bypassed"),
+      expect.stringContaining("Brevo lead provider is bypassed")
     );
   });
 
@@ -103,7 +103,7 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(readProvider()).toBe("laylo");
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("Laylo lead provider is bypassed"),
+      expect.stringContaining("Laylo lead provider is bypassed")
     );
   });
 
@@ -116,7 +116,7 @@ describe("validateEnvironment", () => {
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(readProvider()).toBe("laylo");
     expect(console.warn).not.toHaveBeenCalledWith(
-      expect.stringContaining("Laylo lead provider is bypassed"),
+      expect.stringContaining("Laylo lead provider is bypassed")
     );
   });
 
@@ -126,7 +126,7 @@ describe("validateEnvironment", () => {
 
     expect(() => validateEnvironment({ fatal: true })).not.toThrow();
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("OPS_ADMIN_SECRET"),
+      expect.stringContaining("OPS_ADMIN_SECRET")
     );
   });
 

@@ -19,7 +19,7 @@ const expectedSunsetsCta = SUNSETS_PRELAUNCH_LOCKED
 describe("buildPublicSiteData", () => {
   it("returns a lean public season profile for the homepage", () => {
     const data = buildPublicSiteData("/");
-    const featuredUntold = data.events.find((event) => event.id === "us-s3e3");
+    const featuredUntold = data.events.find(event => event.id === "us-s3e3");
     const featuredSunsets = data.featuredEvents.hero;
 
     expect(data.path).toBe("/");
@@ -45,11 +45,15 @@ describe("buildPublicSiteData", () => {
 
   it("limits untold pages to the featured payload plus untold events", () => {
     const data = buildPublicSiteData("/story");
-    const untoldEvent = data.events.find((event) => event.id === "us-s3e3");
+    const untoldEvent = data.events.find(event => event.id === "us-s3e3");
 
-    expect(data.events.every((event) => ["untold-story", "chasing-sunsets"].includes(event.series))).toBe(true);
-    expect(data.events.some((event) => event.id === "us-s3e3")).toBe(true);
-    expect(data.events.some((event) => event.id === "css-jul04")).toBe(true);
+    expect(
+      data.events.every(event =>
+        ["untold-story", "chasing-sunsets"].includes(event.series)
+      )
+    ).toBe(true);
+    expect(data.events.some(event => event.id === "us-s3e3")).toBe(true);
+    expect(data.events.some(event => event.id === "css-jul04")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
       label: "Get Alerts First",
       href: "/story#untold-funnel",
@@ -62,7 +66,7 @@ describe("buildPublicSiteData", () => {
 
   it("returns summary-only season data for the schedule page", () => {
     const data = buildPublicSiteData("/schedule");
-    const scheduleUntold = data.events.find((event) => event.id === "us-s3e3");
+    const scheduleUntold = data.events.find(event => event.id === "us-s3e3");
 
     expect(data.events.length).toBeGreaterThan(5);
     expect(scheduleUntold?.sound).toBeDefined();
@@ -81,8 +85,8 @@ describe("buildPublicSiteData", () => {
 
   it("falls back to featured events for non-season routes", () => {
     const data = buildPublicSiteData("/vip");
-    const featuredIds = data.events.map((event) => event.id);
-    const featuredSunsets = data.events.find((event) => event.id === "css-jul04");
+    const featuredIds = data.events.map(event => event.id);
+    const featuredSunsets = data.events.find(event => event.id === "css-jul04");
 
     expect(featuredIds).toContain("css-jul04");
     expect(featuredIds).not.toContain("us-s3e3");

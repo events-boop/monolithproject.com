@@ -33,9 +33,10 @@ function sanitizeString(value: string, key?: string) {
 function sanitizeValue(value: unknown, key?: string, depth = 0): unknown {
   if (depth > MAX_LOG_DEPTH) return "[Truncated]";
   if (typeof value === "string") return sanitizeString(value, key);
-  if (typeof value === "number" || typeof value === "boolean" || value == null) return value;
+  if (typeof value === "number" || typeof value === "boolean" || value == null)
+    return value;
   if (Array.isArray(value)) {
-    return value.slice(0, 20).map((item) => sanitizeValue(item, key, depth + 1));
+    return value.slice(0, 20).map(item => sanitizeValue(item, key, depth + 1));
   }
   if (value instanceof Error) {
     return {
@@ -45,10 +46,12 @@ function sanitizeValue(value: unknown, key?: string, depth = 0): unknown {
   }
   if (typeof value === "object") {
     return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>).map(([childKey, childValue]) => [
-        childKey,
-        sanitizeValue(childValue, childKey, depth + 1),
-      ]),
+      Object.entries(value as Record<string, unknown>).map(
+        ([childKey, childValue]) => [
+          childKey,
+          sanitizeValue(childValue, childKey, depth + 1),
+        ]
+      )
     );
   }
   return String(value);
@@ -56,7 +59,10 @@ function sanitizeValue(value: unknown, key?: string, depth = 0): unknown {
 
 function sanitizePayload(payload: Record<string, unknown>) {
   return Object.fromEntries(
-    Object.entries(payload).map(([key, value]) => [key, sanitizeValue(value, key)]),
+    Object.entries(payload).map(([key, value]) => [
+      key,
+      sanitizeValue(value, key),
+    ])
   );
 }
 
@@ -67,6 +73,6 @@ export function logEvent(event: string, payload: Record<string, unknown>) {
       ts: new Date().toISOString(),
       event,
       ...sanitizePayload(payload),
-    }),
+    })
   );
 }

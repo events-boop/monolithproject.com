@@ -123,8 +123,8 @@ export default function Tickets() {
             TICKETS COMING SOON
           </h1>
           <p className="text-sm leading-relaxed text-stone-400">
-            The official Posh ticket link will be live shortly.
-            Join the Lake List to get First Access before the public release.
+            The official Posh ticket link will be live shortly. Join the Lake
+            List to get First Access before the public release.
           </p>
           <Link
             href="/go/waitlist/chasing-sunsets"

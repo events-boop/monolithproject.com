@@ -12,8 +12,12 @@ export function rememberSocialActivity(activity: SocialEchoActivityRow) {
   socialEchoActivity.set(activity.id, activity);
   if (socialEchoActivity.size <= socialEchoActivityMaxItems) return;
 
-  const ordered = Array.from(socialEchoActivity.values()).sort((a, b) => b.at.localeCompare(a.at));
-  const keep = new Set(ordered.slice(0, socialEchoActivityMaxItems).map((item) => item.id));
+  const ordered = Array.from(socialEchoActivity.values()).sort((a, b) =>
+    b.at.localeCompare(a.at)
+  );
+  const keep = new Set(
+    ordered.slice(0, socialEchoActivityMaxItems).map(item => item.id)
+  );
   socialEchoActivity.forEach((_value, key) => {
     if (!keep.has(key)) socialEchoActivity.delete(key);
   });
@@ -31,7 +35,10 @@ export function readInMemorySocialEchoSnapshot() {
     .slice(0, 30);
 
   const totalGoing = events.reduce((sum, event) => sum + event.goingCount, 0);
-  const totalPending = events.reduce((sum, event) => sum + event.pendingCount, 0);
+  const totalPending = events.reduce(
+    (sum, event) => sum + event.pendingCount,
+    0
+  );
 
   return {
     now: new Date().toISOString(),
@@ -47,10 +54,12 @@ export function readInMemorySocialEchoSnapshot() {
 
 export function pruneSocialEchoByEvent() {
   if (socialEchoByEvent.size > socialEchoByEventMaxItems) {
-    const ordered = Array.from(socialEchoByEvent.entries()).sort(
-      (a, b) => b[1].updatedAt.localeCompare(a[1].updatedAt)
+    const ordered = Array.from(socialEchoByEvent.entries()).sort((a, b) =>
+      b[1].updatedAt.localeCompare(a[1].updatedAt)
     );
-    const keep = new Set(ordered.slice(0, socialEchoByEventMaxItems).map(([k]) => k));
+    const keep = new Set(
+      ordered.slice(0, socialEchoByEventMaxItems).map(([k]) => k)
+    );
     socialEchoByEvent.forEach((_v, k) => {
       if (!keep.has(k)) socialEchoByEvent.delete(k);
     });

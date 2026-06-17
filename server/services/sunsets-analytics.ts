@@ -84,10 +84,14 @@ export async function readSunsetsAnalytics() {
     };
   }
 
-  const eventSlugList = sql.join(SUNSETS_EVENT_SLUGS.map((slug) => sql`${slug}`), sql`, `);
+  const eventSlugList = sql.join(
+    SUNSETS_EVENT_SLUGS.map(slug => sql`${slug}`),
+    sql`, `
+  );
 
-  const [summaryResult, sourceResult, eventResult, buttonResult] = await Promise.all([
-    db.execute<SummaryRow>(sql`
+  const [summaryResult, sourceResult, eventResult, buttonResult] =
+    await Promise.all([
+      db.execute<SummaryRow>(sql`
       with
         page_views as (
           select *
@@ -134,7 +138,7 @@ export async function readSunsetsAnalytics() {
         (select count(*) from clicks where interest_type = 'soundcloud_click') as soundcloud_clicks,
         (select count(*) from clicks where interest_type = 'share_click') as share_clicks
     `),
-    db.execute<SourceRow>(sql`
+      db.execute<SourceRow>(sql`
       with
         visits as (
           select coalesce(utm_source, source, metadata->>'source', 'direct') as source, count(*) as visits
@@ -195,7 +199,7 @@ export async function readSunsetsAnalytics() {
       order by revenue_cents desc, purchases desc, ticket_clicks desc, visits desc
       limit 20
     `),
-    db.execute<EventRow>(sql`
+      db.execute<EventRow>(sql`
       with
         event_keys as (
           select unnest(array[${eventSlugList}]) as event_slug
@@ -238,7 +242,7 @@ export async function readSunsetsAnalytics() {
       left join vip on vip.event_slug = event_keys.event_slug
       order by event_keys.event_slug
     `),
-    db.execute<ButtonRow>(sql`
+      db.execute<ButtonRow>(sql`
       select button_name, count(*) as clicks
       from link_clicks
       where page_path in ('/sunsets', '/sunsets/')
@@ -247,7 +251,7 @@ export async function readSunsetsAnalytics() {
       order by clicks desc, button_name asc
       limit 20
     `),
-  ]);
+    ]);
 
   const summaryRow = rows(summaryResult)[0];
   const summary = {
@@ -278,7 +282,7 @@ export async function readSunsetsAnalytics() {
       purchaseRate: rate(summary.purchases, summary.visits),
       revenueDollars: Number((summary.revenueCents / 100).toFixed(2)),
     },
-    sources: rows(sourceResult).map((row) => {
+    sources: rows(sourceResult).map(row => {
       const visits = numberValue(row.visits);
       const signups = numberValue(row.signups);
       const ticketClicks = numberValue(row.ticket_clicks);
@@ -300,7 +304,7 @@ export async function readSunsetsAnalytics() {
         costPerPurchase: null,
       };
     }),
-    events: rows(eventResult).map((row) => {
+    events: rows(eventResult).map(row => {
       const revenueCents = numberValue(row.revenue_cents);
       return {
         eventSlug: row.event_slug,
@@ -312,7 +316,7 @@ export async function readSunsetsAnalytics() {
         vipLeads: numberValue(row.vip_leads),
       };
     }),
-    buttons: rows(buttonResult).map((row) => ({
+    buttons: rows(buttonResult).map(row => ({
       buttonName: row.button_name || "Unknown",
       clicks: numberValue(row.clicks),
     })),

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-13T03:07:54.570Z",
+  "generatedAt": "2026-06-17T22:43:59.737Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 4699760,
-    "estimatedTransferBytes": 2719824,
-    "estimatedSavingsBytes": 2070550,
-    "variantBytes": 8910712
+    "originalBytes": 8671934,
+    "estimatedTransferBytes": 3602716,
+    "estimatedSavingsBytes": 5159832,
+    "variantBytes": 11403198
   },
   "images": [
     {
@@ -1240,6 +1240,44 @@
       "estimatedSavingsPct": 9
     },
     {
+      "source": "/images/benchek-featured-set-drop.webp",
+      "originalBytes": 41068,
+      "originalKb": 40.1,
+      "originalWidth": 760,
+      "originalHeight": 1012,
+      "generatedBaseName": "benchek-featured-set-drop",
+      "variants": [
+        {
+          "path": "/images/generated/benchek-featured-set-drop-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 21956
+        },
+        {
+          "path": "/images/generated/benchek-featured-set-drop-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 24180
+        },
+        {
+          "path": "/images/generated/benchek-featured-set-drop-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 36053
+        },
+        {
+          "path": "/images/generated/benchek-featured-set-drop-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 40932
+        }
+      ],
+      "estimatedTransferBytes": 36053,
+      "estimatedTransferKb": 35.2,
+      "estimatedSavingsBytes": 5015,
+      "estimatedSavingsPct": 12
+    },
+    {
       "source": "/images/chasing-sunsets-1.jpg",
       "originalBytes": 62753,
       "originalKb": 61.3,
@@ -1478,6 +1516,44 @@
       "estimatedTransferKb": 79.5,
       "estimatedSavingsBytes": 304691,
       "estimatedSavingsPct": 79
+    },
+    {
+      "source": "/images/css-2026-poster.jpg",
+      "originalBytes": 498547,
+      "originalKb": 486.9,
+      "originalWidth": 682,
+      "originalHeight": 1024,
+      "generatedBaseName": "css-2026-poster",
+      "variants": [
+        {
+          "path": "/images/generated/css-2026-poster-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 80204
+        },
+        {
+          "path": "/images/generated/css-2026-poster-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 81090
+        },
+        {
+          "path": "/images/generated/css-2026-poster-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 125467
+        },
+        {
+          "path": "/images/generated/css-2026-poster-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 128168
+        }
+      ],
+      "estimatedTransferBytes": 125467,
+      "estimatedTransferKb": 122.5,
+      "estimatedSavingsBytes": 373080,
+      "estimatedSavingsPct": 75
     },
     {
       "source": "/images/deron-press.jpg",
@@ -2210,6 +2286,120 @@
       "estimatedTransferKb": 65.6,
       "estimatedSavingsBytes": 9575,
       "estimatedSavingsPct": 12
+    },
+    {
+      "source": "/samurai_sword_hilt.png",
+      "originalBytes": 761553,
+      "originalKb": 743.7,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "samurai-sword-hilt",
+      "variants": [
+        {
+          "path": "/images/generated/samurai-sword-hilt-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 22703
+        },
+        {
+          "path": "/images/generated/samurai-sword-hilt-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 23806
+        },
+        {
+          "path": "/images/generated/samurai-sword-hilt-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 90245
+        },
+        {
+          "path": "/images/generated/samurai-sword-hilt-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 99590
+        }
+      ],
+      "estimatedTransferBytes": 90245,
+      "estimatedTransferKb": 88.1,
+      "estimatedSavingsBytes": 671308,
+      "estimatedSavingsPct": 88
+    },
+    {
+      "source": "/sunsets_hero_bg.png",
+      "originalBytes": 1304887,
+      "originalKb": 1274.3,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "sunsets-hero-bg",
+      "variants": [
+        {
+          "path": "/images/generated/sunsets-hero-bg-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 92518
+        },
+        {
+          "path": "/images/generated/sunsets-hero-bg-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 88864
+        },
+        {
+          "path": "/images/generated/sunsets-hero-bg-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 306665
+        },
+        {
+          "path": "/images/generated/sunsets-hero-bg-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 346334
+        }
+      ],
+      "estimatedTransferBytes": 306665,
+      "estimatedTransferKb": 299.5,
+      "estimatedSavingsBytes": 998222,
+      "estimatedSavingsPct": 76
+    },
+    {
+      "source": "/sunsets_poster.png",
+      "originalBytes": 1366119,
+      "originalKb": 1334.1,
+      "originalWidth": 1024,
+      "originalHeight": 1024,
+      "generatedBaseName": "sunsets-poster",
+      "variants": [
+        {
+          "path": "/images/generated/sunsets-poster-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 107947
+        },
+        {
+          "path": "/images/generated/sunsets-poster-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 99328
+        },
+        {
+          "path": "/images/generated/sunsets-poster-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 324462
+        },
+        {
+          "path": "/images/generated/sunsets-poster-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 351974
+        }
+      ],
+      "estimatedTransferBytes": 324462,
+      "estimatedTransferKb": 316.9,
+      "estimatedSavingsBytes": 1041657,
+      "estimatedSavingsPct": 76
     }
   ]
 }

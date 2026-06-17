@@ -47,24 +47,26 @@ function pagePathFromUrl(pageUrl?: string) {
 function hasAttribution(lead: LeadInput) {
   return Boolean(
     lead.utmSource ||
-      lead.utmMedium ||
-      lead.utmCampaign ||
-      lead.utmTerm ||
-      lead.utmContent ||
-      lead.gclid ||
-      lead.fbclid ||
-      lead.ttclid ||
-      lead.msclkid ||
-      lead.pageUrl ||
-      lead.landingPageUrl ||
-      lead.referrer ||
-      lead.sessionId,
+    lead.utmMedium ||
+    lead.utmCampaign ||
+    lead.utmTerm ||
+    lead.utmContent ||
+    lead.gclid ||
+    lead.fbclid ||
+    lead.ttclid ||
+    lead.msclkid ||
+    lead.pageUrl ||
+    lead.landingPageUrl ||
+    lead.referrer ||
+    lead.sessionId
   );
 }
 
 function buildCampaignKey(lead: LeadInput) {
-  const campaign = lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign;
-  const source = lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || lead.source;
+  const campaign =
+    lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign;
+  const source =
+    lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || lead.source;
   const medium = lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium;
 
   if (!campaign && !source && !medium) return undefined;
@@ -103,19 +105,40 @@ async function upsertCampaign(lead: LeadInput) {
     .values({
       id: randomUUID(),
       key,
-      name: lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign || key,
-      source: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || lead.source || null,
-      medium: lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
-      platform: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
+      name:
+        lead.utmCampaign ||
+        lead.lastUtmCampaign ||
+        lead.firstUtmCampaign ||
+        key,
+      source:
+        lead.utmSource ||
+        lead.lastUtmSource ||
+        lead.firstUtmSource ||
+        lead.source ||
+        null,
+      medium:
+        lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
+      platform:
+        lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
       updatedAt: now,
-      metadata: { firstUtmCampaign: lead.firstUtmCampaign, lastUtmCampaign: lead.lastUtmCampaign },
+      metadata: {
+        firstUtmCampaign: lead.firstUtmCampaign,
+        lastUtmCampaign: lead.lastUtmCampaign,
+      },
     })
     .onConflictDoUpdate({
       target: campaigns.key,
       set: {
-        source: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || lead.source || null,
-        medium: lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
-        platform: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
+        source:
+          lead.utmSource ||
+          lead.lastUtmSource ||
+          lead.firstUtmSource ||
+          lead.source ||
+          null,
+        medium:
+          lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
+        platform:
+          lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
         updatedAt: now,
       },
     })
@@ -165,7 +188,8 @@ export async function persistLeadCapture({
   const email = scrubEmail(lead.email);
   const now = new Date().toISOString();
   const pagePath = pagePathFromUrl(lead.pageUrl);
-  const source = lead.source || lead.utmSource || lead.lastUtmSource || "website";
+  const source =
+    lead.source || lead.utmSource || lead.lastUtmSource || "website";
 
   try {
     const [contact] = await db
@@ -182,16 +206,31 @@ export async function persistLeadCapture({
         state: lead.state || null,
         primarySource: source,
         sourceFirstSeen: lead.firstUtmSource || lead.utmSource || source,
-        utmSource: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
-        utmMedium: lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
-        utmCampaign: lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign || null,
-        utmContent: lead.utmContent || lead.lastUtmContent || lead.firstUtmContent || null,
+        utmSource:
+          lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
+        utmMedium:
+          lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
+        utmCampaign:
+          lead.utmCampaign ||
+          lead.lastUtmCampaign ||
+          lead.firstUtmCampaign ||
+          null,
+        utmContent:
+          lead.utmContent ||
+          lead.lastUtmContent ||
+          lead.firstUtmContent ||
+          null,
         utmTerm: lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
         lastSeenAt: now,
         consentEmail: true,
         consentSms: Boolean(lead.phone),
         tags: lead.interestTags || [],
-        metadata: { requestId, funnelId: lead.funnelId, offerId: lead.offerId, interestTags: lead.interestTags },
+        metadata: {
+          requestId,
+          funnelId: lead.funnelId,
+          offerId: lead.offerId,
+          interestTags: lead.interestTags,
+        },
       })
       .onConflictDoUpdate({
         target: contacts.emailNormalized,
@@ -203,11 +242,22 @@ export async function persistLeadCapture({
           city: lead.city || null,
           state: lead.state || null,
           primarySource: source,
-          utmSource: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
-          utmMedium: lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
-          utmCampaign: lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign || null,
-          utmContent: lead.utmContent || lead.lastUtmContent || lead.firstUtmContent || null,
-          utmTerm: lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
+          utmSource:
+            lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
+          utmMedium:
+            lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
+          utmCampaign:
+            lead.utmCampaign ||
+            lead.lastUtmCampaign ||
+            lead.firstUtmCampaign ||
+            null,
+          utmContent:
+            lead.utmContent ||
+            lead.lastUtmContent ||
+            lead.firstUtmContent ||
+            null,
+          utmTerm:
+            lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
           lastSeenAt: now,
           consentEmail: true,
           consentSms: Boolean(lead.phone),
@@ -222,7 +272,10 @@ export async function persistLeadCapture({
       .returning({ id: contacts.id });
 
     const contactId = contact?.id;
-    const [campaignId, eventId] = await Promise.all([upsertCampaign(lead), upsertEvent(lead)]);
+    const [campaignId, eventId] = await Promise.all([
+      upsertCampaign(lead),
+      upsertEvent(lead),
+    ]);
 
     if (contactId && hasAttribution(lead)) {
       await db.insert(utmSources).values({
@@ -230,11 +283,25 @@ export async function persistLeadCapture({
         contactId,
         campaignId: campaignId || null,
         sessionId: lead.sessionId || null,
-        source: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || source || null,
-        medium: lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
-        campaign: lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign || null,
+        source:
+          lead.utmSource ||
+          lead.lastUtmSource ||
+          lead.firstUtmSource ||
+          source ||
+          null,
+        medium:
+          lead.utmMedium || lead.lastUtmMedium || lead.firstUtmMedium || null,
+        campaign:
+          lead.utmCampaign ||
+          lead.lastUtmCampaign ||
+          lead.firstUtmCampaign ||
+          null,
         term: lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
-        content: lead.utmContent || lead.lastUtmContent || lead.firstUtmContent || null,
+        content:
+          lead.utmContent ||
+          lead.lastUtmContent ||
+          lead.firstUtmContent ||
+          null,
         gclid: lead.gclid || lead.lastGclid || lead.firstGclid || null,
         fbclid: lead.fbclid || lead.lastFbclid || lead.firstFbclid || null,
         ttclid: lead.ttclid || lead.lastTtclid || lead.firstTtclid || null,
@@ -312,13 +379,22 @@ export async function persistLeadCapture({
           eventId: eventId || null,
           dropName: lead.eventTitle || "Chasing Sun(Sets)",
           dropSlug: lead.eventInterest || lead.eventSeries || "chasing-sunsets",
-          signupChannel: lead.utmSource || lead.lastUtmSource || lead.source || "website",
+          signupChannel:
+            lead.utmSource || lead.lastUtmSource || lead.source || "website",
           phone: lead.phone || null,
           email,
           instagramHandle: lead.instagramHandle || null,
-          utmSource: lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
-          utmCampaign: lead.utmCampaign || lead.lastUtmCampaign || lead.firstUtmCampaign || null,
-          layloUrl: process.env.LAYLO_URL || process.env.OUTBOUND_WAITLIST_CHASING_SUNSETS_URL || null,
+          utmSource:
+            lead.utmSource || lead.lastUtmSource || lead.firstUtmSource || null,
+          utmCampaign:
+            lead.utmCampaign ||
+            lead.lastUtmCampaign ||
+            lead.firstUtmCampaign ||
+            null,
+          layloUrl:
+            process.env.LAYLO_URL ||
+            process.env.OUTBOUND_WAITLIST_CHASING_SUNSETS_URL ||
+            null,
           status: "pending",
           metadata: { requestId, source },
         });
@@ -335,7 +411,10 @@ export async function persistLeadCapture({
         });
       }
 
-      if (leadMatchesIntent(lead, "sponsor") || leadMatchesIntent(lead, "partner")) {
+      if (
+        leadMatchesIntent(lead, "sponsor") ||
+        leadMatchesIntent(lead, "partner")
+      ) {
         await db.insert(sponsorLeads).values({
           id: randomUUID(),
           contactId,
@@ -352,7 +431,10 @@ export async function persistLeadCapture({
   } catch (error) {
     logEvent("crm.lead_capture_failed", {
       requestId,
-      message: error instanceof Error ? error.message : "Unknown CRM persistence error",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Unknown CRM persistence error",
     });
     return {};
   }
@@ -361,7 +443,7 @@ export async function persistLeadCapture({
 export async function markLeadCaptureProviderStatus(
   capture: PersistedLeadCapture,
   status: "success" | "failed",
-  errorMessage?: string,
+  errorMessage?: string
 ) {
   const db = getDatabase();
   if (!db || !capture.formSubmissionId) return;
@@ -382,7 +464,9 @@ export async function markLeadCaptureProviderStatus(
         errorMessage: errorMessage || null,
         updatedAt: now,
       })
-      .where(eq(emailPlatformSyncStatus.formSubmissionId, capture.formSubmissionId))
+      .where(
+        eq(emailPlatformSyncStatus.formSubmissionId, capture.formSubmissionId)
+      )
       .catch(() => undefined),
   ]);
 }

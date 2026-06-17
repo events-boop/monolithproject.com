@@ -60,7 +60,9 @@ function setRateLimitHeaders(res: Response, result: RateLimitResult) {
 
   if (exposePolicy) {
     const resetAtMs = Date.parse(result.resetAt);
-    const resetAtUnix = Number.isFinite(resetAtMs) ? Math.ceil(resetAtMs / 1000) : 0;
+    const resetAtUnix = Number.isFinite(resetAtMs)
+      ? Math.ceil(resetAtMs / 1000)
+      : 0;
 
     res.setHeader("RateLimit-Limit", String(result.limit));
     res.setHeader("RateLimit-Remaining", String(result.remaining));
@@ -170,7 +172,9 @@ export function getClientIdentifier(req: Request) {
   return req.ip || req.socket.remoteAddress || "unknown";
 }
 
-export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOptions): RequestHandler {
+export function createRateLimitMiddleware(
+  options: CreateRateLimitMiddlewareOptions
+): RequestHandler {
   const { skip } = options;
   return (req, res, next) => {
     if (skip?.(req)) {
@@ -182,22 +186,22 @@ export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOpti
       const identifier = getClientIdentifier(req);
 
       let result: RateLimitResult;
-      
+
       // OPTIMIZATION: High-performance bypass for read routes
       if (options.preferMemory) {
-        result = consumeInMemoryRateLimit({ 
-          identifier, 
-          limit: options.limit, 
-          scope: options.scope, 
-          windowMs: options.windowMs 
+        result = consumeInMemoryRateLimit({
+          identifier,
+          limit: options.limit,
+          scope: options.scope,
+          windowMs: options.windowMs,
         });
       } else {
         try {
-          result = await consumeDatabaseRateLimit({ 
-            identifier, 
-            limit: options.limit, 
-            scope: options.scope, 
-            windowMs: options.windowMs 
+          result = await consumeDatabaseRateLimit({
+            identifier,
+            limit: options.limit,
+            scope: options.scope,
+            windowMs: options.windowMs,
           });
         } catch (error) {
           if (Date.now() - lastStorageFailureLogAt > 60_000) {
@@ -207,11 +211,11 @@ export function createRateLimitMiddleware(options: CreateRateLimitMiddlewareOpti
               message: error instanceof Error ? error.message : "Unknown error",
             });
           }
-          result = consumeInMemoryRateLimit({ 
-            identifier, 
-            limit: options.limit, 
-            scope: options.scope, 
-            windowMs: options.windowMs 
+          result = consumeInMemoryRateLimit({
+            identifier,
+            limit: options.limit,
+            scope: options.scope,
+            windowMs: options.windowMs,
           });
         }
       }

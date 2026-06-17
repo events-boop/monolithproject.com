@@ -51,7 +51,9 @@ export function resolveSubmissionOutcome({
   return {
     deliveryState: "failed",
     responseStatus: webhookConfigured ? 502 : 503,
-    responseMessage: webhookConfigured ? deliveryFailedMessage : unavailableMessage || deliveryFailedMessage,
+    responseMessage: webhookConfigured
+      ? deliveryFailedMessage
+      : unavailableMessage || deliveryFailedMessage,
     retryable: webhookConfigured,
     webhookStatus: "failed",
   };

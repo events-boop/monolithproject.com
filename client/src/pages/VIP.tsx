@@ -213,7 +213,9 @@ export default function VIP() {
                   <li>
                     Final placement is based on venue availability and layout.
                   </li>
-                  <li>Cabana reservations are limited and confirmed manually.</li>
+                  <li>
+                    Cabana reservations are limited and confirmed manually.
+                  </li>
                 </ul>
               </div>
             </div>

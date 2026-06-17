@@ -13,18 +13,22 @@ test("crawl and audit all internal links for 404s", async ({ page }) => {
 
     console.log(`Auditing page: ${currentPath}`);
     const response = await page.goto(currentPath);
-    
+
     // 1. Check HTTP response status code
     const status = response?.status() ?? 0;
     if (status >= 400) {
-      failedLinks.push({ page: currentPath, href: currentPath, error: `HTTP status ${status}` });
+      failedLinks.push({
+        page: currentPath,
+        href: currentPath,
+        error: `HTTP status ${status}`,
+      });
       continue;
     }
 
     // Wait for transition animation and DOM load state
     await page.waitForLoadState("domcontentloaded");
     await page.waitForTimeout(100); // Allow animations/drawers to settle
-    
+
     const bodyText = await page.locator("body").innerText();
 
     // 2. Check for SPA client-side 404 components / copy
@@ -34,19 +38,29 @@ test("crawl and audit all internal links for 404s", async ({ page }) => {
       bodyText.includes("Gallery not found") ||
       bodyText.includes("Article Not Found")
     ) {
-      failedLinks.push({ page: currentPath, href: currentPath, error: "Client-side 404 text detected" });
+      failedLinks.push({
+        page: currentPath,
+        href: currentPath,
+        error: "Client-side 404 text detected",
+      });
       continue;
     }
 
     // 3. Extract and queue all internal links
-    const hrefs = await page.locator("a[href]").evaluateAll((elements) =>
+    const hrefs = await page.locator("a[href]").evaluateAll(elements =>
       elements
         .map(el => el.getAttribute("href"))
         .filter((href): href is string => {
           if (!href) return false;
           // Ignore external links, anchors, and protocol prefixes
           if (/^https?:\/\//i.test(href)) return false;
-          if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("inquiry://")) return false;
+          if (
+            href.startsWith("#") ||
+            href.startsWith("mailto:") ||
+            href.startsWith("tel:") ||
+            href.startsWith("inquiry://")
+          )
+            return false;
           return true;
         })
     );
@@ -60,10 +74,12 @@ test("crawl and audit all internal links for 404s", async ({ page }) => {
     }
   }
 
-  console.log(`\n--- Link audit complete. Visited ${visited.size} internal pages. ---`);
+  console.log(
+    `\n--- Link audit complete. Visited ${visited.size} internal pages. ---`
+  );
   if (failedLinks.length > 0) {
     console.error("404 Errors Found:\n", JSON.stringify(failedLinks, null, 2));
   }
-  
+
   expect(failedLinks).toEqual([]);
 });

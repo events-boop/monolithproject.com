@@ -17,9 +17,7 @@ interface WelcomeEmailProps {
   firstName?: string;
 }
 
-export const WelcomeEmail = ({
-  firstName = "RESIDENT",
-}: WelcomeEmailProps) => (
+export const WelcomeEmail = ({ firstName = "RESIDENT" }: WelcomeEmailProps) => (
   <Html>
     <Head />
     <Preview>ACCESS GRANTED // THE INNER CIRCLE</Preview>
@@ -30,14 +28,16 @@ export const WelcomeEmail = ({
         </Section>
         <Section style={content}>
           <Text style={statusLabel}>STATUS: AUTHENTICATED</Text>
-          <Heading style={h1}>SYSTEMS ONLINE, {firstName.toUpperCase()}.</Heading>
+          <Heading style={h1}>
+            SYSTEMS ONLINE, {firstName.toUpperCase()}.
+          </Heading>
           <Text style={text}>
-            You have successfully bypassed the perimeter. As a member of the **Inner Circle**, 
-            you are now synced to the primary Monolith signal. 
+            You have successfully bypassed the perimeter. As a member of the
+            **Inner Circle**, you are now synced to the primary Monolith signal.
           </Text>
           <Text style={text}>
-            Expect first-priority access to line-ups, secret locations, and architectural audio 
-            experiences before the digital crowd arrives.
+            Expect first-priority access to line-ups, secret locations, and
+            architectural audio experiences before the digital crowd arrives.
           </Text>
           <Section style={btnContainer}>
             <Link style={button} href="https://monolithproject.com/schedule">
@@ -49,7 +49,8 @@ export const WelcomeEmail = ({
           </Text>
           <Hr style={hr} />
           <Text style={footer}>
-            THE MONOLITH PROJECT // CHICAGO, IL<br />
+            THE MONOLITH PROJECT // CHICAGO, IL
+            <br />
             Curated Atmosphere. Return-Worthy Rooms.
           </Text>
         </Section>

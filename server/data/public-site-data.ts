@@ -1,23 +1,23 @@
 import {
-    SUNSETS_JULY4_ADMISSION_TIERS,
-    SUNSETS_JULY4_EVENT_ADDRESS,
-    SUNSETS_JULY4_EVENT_LOCATION,
-    SUNSETS_JULY4_EVENT_TIME,
-    SUNSETS_JULY4_EVENT_TITLE,
-    SUNSETS_JULY4_EVENT_VENUE,
-    SUNSETS_JULY4_LINEUP,
-    SUNSETS_JULY4_SET_TIMES,
-    SUNSETS_JULY4_TABLE_RAIL,
-    SUNSETS_JULY4_TICKET_PATH,
-    SUNSETS_JULY4_TOTAL_CAPACITY,
-    SUNSETS_PRELAUNCH_LOCKED,
-    getSunsetsJuly4ScheduledTicketTiers,
+  SUNSETS_JULY4_ADMISSION_TIERS,
+  SUNSETS_JULY4_EVENT_ADDRESS,
+  SUNSETS_JULY4_EVENT_LOCATION,
+  SUNSETS_JULY4_EVENT_TIME,
+  SUNSETS_JULY4_EVENT_TITLE,
+  SUNSETS_JULY4_EVENT_VENUE,
+  SUNSETS_JULY4_LINEUP,
+  SUNSETS_JULY4_SET_TIMES,
+  SUNSETS_JULY4_TABLE_RAIL,
+  SUNSETS_JULY4_TICKET_PATH,
+  SUNSETS_JULY4_TOTAL_CAPACITY,
+  SUNSETS_PRELAUNCH_LOCKED,
+  getSunsetsJuly4ScheduledTicketTiers,
 } from "../../shared/events/sunsets-ticketing";
 import type {
-    EventSeries,
-    PublicSiteData,
-    ScheduledEvent,
-    SiteExperienceSlot,
+  EventSeries,
+  PublicSiteData,
+  ScheduledEvent,
+  SiteExperienceSlot,
 } from "../../shared/events/types";
 import { resolveEventPrimaryCta } from "../lib/public-cta";
 
@@ -25,7 +25,8 @@ import { resolveEventPrimaryCta } from "../lib/public-cta";
 export const LAYLO_URL = "/go/waitlist/chasing-sunsets";
 export const SOUNDCLOUD_URL = "https://soundcloud.com/monolithproject";
 export const TIKTOK_URL = "https://tiktok.com/@monolithproject";
-export const INSTAGRAM_MONOLITH = "https://instagram.com/monolithproject.events";
+export const INSTAGRAM_MONOLITH =
+  "https://instagram.com/monolithproject.events";
 export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
@@ -33,456 +34,491 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 export const POSH_TICKET_URL = SUNSETS_JULY4_TICKET_PATH;
 
 const EVENT_CATALOG: ScheduledEvent[] = [
-    {
-        id: "us-s3e1",
-        series: "untold-story",
-        episode: "SEASON III · EPISODE I",
-        title: "THE OPENING",
-        date: "March 21, 2026",
-        time: "Doors Closed",
-        venue: "Alhambra Palace",
-        location: "Chicago, IL",
-        status: "past",
-        image: "/images/untold-story-moody.webp",
-    },
-    {
-        id: "us-s3e3",
-        series: "untold-story",
-        episode: "CHAPTER IV",
-        title: "UNTOLD STORY IV: ERAN HERSH",
-        subtitle: "Untold Story IV",
-        headline: "UNTOLD STORY IV: ERAN HERSH",
-        slug: "eran-hersh-untold-story-iv",
-        date: "May 16, 2026",
-        time: "9:00 PM — Late",
-        startsAt: "2026-05-16T21:00:00-05:00",
-        endsAt: "2026-05-17T03:00:00-05:00",
-        doors: "9:00 PM",
-        mainExperience: "10:30 PM — Late",
-        venue: "Hideaway",
-        location: "Chicago, IL",
-        lineup: "Eran Hersh (Headliner) · Support TBD",
-        status: "past",
-        image: "/images/eran-hersh-untold-story-iv.jpg",
-        format: "Late Night · Immersive · Intimate",
-        dress: "Elevated nightlife attire",
-        sound: "Afro House · Melodic House · Peak-Hour Energy",
-        description: "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026.",
-        experienceIntro: "A focused after-dark room built for dancers first. Eran Hersh leads Untold Story IV with immersive Afro and melodic house pressure from open to late.",
-        eventNotice: "THE MONOLITH PROJECT PRESENTS: UNTOLD STORY IV",
-        whatToExpect: [
-          "Late-night Untold Story IV chapter",
-          "Immersive room design and focused dancefloor energy",
-          "Afro house and melodic pressure built for peak-time movement",
-          "Chicago crowd with a tighter, music-first room dynamic",
-          "Support lineup reveal to follow",
+  {
+    id: "us-s3e1",
+    series: "untold-story",
+    episode: "SEASON III · EPISODE I",
+    title: "THE OPENING",
+    date: "March 21, 2026",
+    time: "Doors Closed",
+    venue: "Alhambra Palace",
+    location: "Chicago, IL",
+    status: "past",
+    image: "/images/untold-story-moody.webp",
+  },
+  {
+    id: "us-s3e3",
+    series: "untold-story",
+    episode: "CHAPTER IV",
+    title: "UNTOLD STORY IV: ERAN HERSH",
+    subtitle: "Untold Story IV",
+    headline: "UNTOLD STORY IV: ERAN HERSH",
+    slug: "eran-hersh-untold-story-iv",
+    date: "May 16, 2026",
+    time: "9:00 PM — Late",
+    startsAt: "2026-05-16T21:00:00-05:00",
+    endsAt: "2026-05-17T03:00:00-05:00",
+    doors: "9:00 PM",
+    mainExperience: "10:30 PM — Late",
+    venue: "Hideaway",
+    location: "Chicago, IL",
+    lineup: "Eran Hersh (Headliner) · Support TBD",
+    status: "past",
+    image: "/images/eran-hersh-untold-story-iv.jpg",
+    format: "Late Night · Immersive · Intimate",
+    dress: "Elevated nightlife attire",
+    sound: "Afro House · Melodic House · Peak-Hour Energy",
+    description:
+      "The Monolith Project presents Untold Story IV with Eran Hersh at Hideaway Chicago on May 16, 2026.",
+    experienceIntro:
+      "A focused after-dark room built for dancers first. Eran Hersh leads Untold Story IV with immersive Afro and melodic house pressure from open to late.",
+    eventNotice: "THE MONOLITH PROJECT PRESENTS: UNTOLD STORY IV",
+    whatToExpect: [
+      "Late-night Untold Story IV chapter",
+      "Immersive room design and focused dancefloor energy",
+      "Afro house and melodic pressure built for peak-time movement",
+      "Chicago crowd with a tighter, music-first room dynamic",
+      "Support lineup reveal to follow",
+    ],
+    age: "21+",
+    activeFunnels: [],
+    ticketTiers: [
+      {
+        id: "presale",
+        name: "Early Tickets",
+        price: 40,
+        description: "First release for registered guests.",
+        features: [
+          "General admission",
+          "Access to all rooms",
+          "Newsletter registration required",
         ],
-        age: "21+",
-        activeFunnels: [],
-        ticketTiers: [
-            {
-                id: "presale",
-                name: "Early Tickets",
-                price: 40,
-                description: "First release for registered guests.",
-                features: ["General admission", "Access to all rooms", "Newsletter registration required"],
-                icon: "ticket",
-                available: false,
-            },
-            {
-                id: "general",
-                name: "General Admission",
-                price: 60,
-                description: "Standard entry for the full room.",
-                features: ["General admission", "Access to all rooms", "Welcome drink"],
-                icon: "star",
-                available: false,
-                highlight: true,
-            },
-            {
-                id: "vip",
-                name: "VIP Table",
-                price: 120,
-                description: "Premium table placement with dedicated service.",
-                features: ["Guaranteed proximity to artist", "Dedicated hospitality team", "Expedited entry"],
-                icon: "crown",
-                available: false,
-            }
+        icon: "ticket",
+        available: false,
+      },
+      {
+        id: "general",
+        name: "General Admission",
+        price: 60,
+        description: "Standard entry for the full room.",
+        features: ["General admission", "Access to all rooms", "Welcome drink"],
+        icon: "star",
+        available: false,
+        highlight: true,
+      },
+      {
+        id: "vip",
+        name: "VIP Table",
+        price: 120,
+        description: "Premium table placement with dedicated service.",
+        features: [
+          "Guaranteed proximity to artist",
+          "Dedicated hospitality team",
+          "Expedited entry",
         ],
-        recentlyDropped: false,
-    },
-    {
-        id: "css-sep19",
-        series: "chasing-sunsets",
-        episode: "SUN(SETS) III",
-        title: "Chasing Sun(Sets)",
-        headline: "SUN(SETS) III — Chapter Three",
-        date: "September 19, 2026",
-        time: "Golden Hour",
-        venue: "Castaways",
-        location: "Chicago, IL",
-        status: "coming-soon",
-        description: "Chapter Three. The season closer at Castaways. Join the Lake List for first access.",
-        activeFunnels: ["waitlist-chasing"],
-    },
-    {
-        id: "css-jul04",
-        series: "chasing-sunsets",
-        episode: "SUN(SETS) I",
-        title: "CHASING SUN(SETS)",
-        headline: SUNSETS_JULY4_EVENT_TITLE,
-        slug: "chasing-sunsets-july-4-2026",
-        date: "July 4, 2026",
-        time: SUNSETS_JULY4_EVENT_TIME,
-        startsAt: "2026-07-04T12:00:00-05:00",
-        endsAt: "2026-07-04T22:00:00-05:00",
-        doors: "12:00 PM",
-        mainExperience: "2:00 PM — 10:00 PM",
-        venue: SUNSETS_JULY4_EVENT_VENUE,
-        location: SUNSETS_JULY4_EVENT_LOCATION,
-        // Lineup confirmed for public announcement — June 2026.
-        lineup: SUNSETS_JULY4_LINEUP.join(" · "),
-        featured: true,
-        status: "on-sale",
-        inventoryState: "normal",
-        capacity: `${SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US")} guest admissions`,
-        format: "Day Into Night · Open Air · Lakefront House Music",
-        dress: "Elevated lakefront summer attire",
-        sound: "House Music · Golden Hour · Skyline Energy",
-        description: "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco, Amari, Gianni Blu, Erik The DJ & more.",
-        experienceIntro: "Golden hour. House music. Lake Michigan. The skyline behind you. From afternoon energy to the final sunset set, this is not a holiday party. This is the return of a Chicago summer ritual.",
-        whatToExpect: [
-            "A full-day house music experience on Lake Michigan",
-            "Kiko Franco's Chicago lakefront debut, with Amari, Gianni Blu, Erik The DJ & more",
-            "Public GA tiers that move from $45 to $55 to $65 as allocations sell out",
-            "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
-            "Tables and 6 premium cabanas starting at a $2,000 minimum",
-        ],
-        eventNotice: "Watch the sun. Stay for the sets.",
-        photoNotice: "Togetherness is the frequency. Music is the guide.",
-        layloDropId: "IQ5HaR",
-        activeFunnels: ["waitlist-chasing"],
-        tableReservationEmail: "vip@chasingsunsets.music",
-        startingPrice: Math.min(...SUNSETS_JULY4_ADMISSION_TIERS.map((tier) => tier.price)),
-        ticketUrl: POSH_TICKET_URL,
-        ticketTiers: getSunsetsJuly4ScheduledTicketTiers(),
-        tablePackages: [
-            SUNSETS_JULY4_TABLE_RAIL.description,
-            `Address: ${SUNSETS_JULY4_EVENT_ADDRESS}`,
-        ],
-        recentlyDropped: true,
-    },
-    {
-        id: "us-jul04",
-        series: "untold-story",
-        episode: "THE AFTERPARTY",
-        title: "UNTOLD STORY",
-        headline: "LATE NIGHT CONTINUATION",
-        date: "July 4, 2026",
-        time: "10:30 PM — Late",
-        startsAt: "2026-07-04T22:30:00-05:00",
-        endsAt: "2026-07-05T04:00:00-05:00",
-        doors: "10:30 PM",
-        venue: "Venue Reveal Soon",
-        location: "Chicago, IL",
-        lineup: "Secret Guest B2B",
-        status: "coming-soon",
-        format: "Dark Room · Intimate",
-        description: "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
-        activeFunnels: ["waitlist-untold"],
-        startingPrice: 45,
-    },
-    {
-        id: "us-aug01",
-        series: "untold-story",
-        episode: "SUMMER '26",
-        title: "Untold Story",
-        date: "August 1, 2026",
-        time: "Late Night",
-        venue: "Venue Reveal Soon",
-        location: "Chicago, IL",
-        status: "coming-soon",
-    },
+        icon: "crown",
+        available: false,
+      },
+    ],
+    recentlyDropped: false,
+  },
+  {
+    id: "css-sep19",
+    series: "chasing-sunsets",
+    episode: "SUN(SETS) III",
+    title: "Chasing Sun(Sets)",
+    headline: "SUN(SETS) III — Chapter Three",
+    date: "September 19, 2026",
+    time: "Golden Hour",
+    venue: "Castaways",
+    location: "Chicago, IL",
+    status: "coming-soon",
+    description:
+      "Chapter Three. The season closer at Castaways. Join the Lake List for first access.",
+    activeFunnels: ["waitlist-chasing"],
+  },
+  {
+    id: "css-jul04",
+    series: "chasing-sunsets",
+    episode: "SUN(SETS) I",
+    title: "CHASING SUN(SETS)",
+    headline: SUNSETS_JULY4_EVENT_TITLE,
+    slug: "chasing-sunsets-july-4-2026",
+    date: "July 4, 2026",
+    time: SUNSETS_JULY4_EVENT_TIME,
+    startsAt: "2026-07-04T12:00:00-05:00",
+    endsAt: "2026-07-04T22:00:00-05:00",
+    doors: "12:00 PM",
+    mainExperience: "2:00 PM — 10:00 PM",
+    venue: SUNSETS_JULY4_EVENT_VENUE,
+    location: SUNSETS_JULY4_EVENT_LOCATION,
+    // Lineup confirmed for public announcement — June 2026.
+    lineup: SUNSETS_JULY4_LINEUP.join(" · "),
+    featured: true,
+    status: "on-sale",
+    inventoryState: "normal",
+    capacity: `${SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US")} guest admissions`,
+    format: "Day Into Night · Open Air · Lakefront House Music",
+    dress: "Elevated lakefront summer attire",
+    sound: "House Music · Golden Hour · Skyline Energy",
+    description:
+      "Chasing Sun(Sets) returns home to the lake this July 4th for SUN(SETS) I at Castaways Beach Club — a golden-hour house music experience with Kiko Franco, Amari, Gianni Blu, Erik The DJ & more.",
+    experienceIntro:
+      "Golden hour. House music. Lake Michigan. The skyline behind you. From afternoon energy to the final sunset set, this is not a holiday party. This is the return of a Chicago summer ritual.",
+    whatToExpect: [
+      "A full-day house music experience on Lake Michigan",
+      "Kiko Franco's Chicago lakefront debut, with Amari, Gianni Blu, Erik The DJ & more",
+      "Public GA tiers that move from $45 to $55 to $65 as allocations sell out",
+      "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
+      "Tables and 6 premium cabanas starting at a $2,000 minimum",
+    ],
+    eventNotice: "Watch the sun. Stay for the sets.",
+    photoNotice: "Togetherness is the frequency. Music is the guide.",
+    layloDropId: "IQ5HaR",
+    activeFunnels: ["waitlist-chasing"],
+    tableReservationEmail: "vip@chasingsunsets.music",
+    startingPrice: Math.min(
+      ...SUNSETS_JULY4_ADMISSION_TIERS.map(tier => tier.price)
+    ),
+    ticketUrl: POSH_TICKET_URL,
+    ticketTiers: getSunsetsJuly4ScheduledTicketTiers(),
+    tablePackages: [
+      SUNSETS_JULY4_TABLE_RAIL.description,
+      `Address: ${SUNSETS_JULY4_EVENT_ADDRESS}`,
+    ],
+    recentlyDropped: true,
+  },
+  {
+    id: "us-jul04",
+    series: "untold-story",
+    episode: "THE AFTERPARTY",
+    title: "UNTOLD STORY",
+    headline: "LATE NIGHT CONTINUATION",
+    date: "July 4, 2026",
+    time: "10:30 PM — Late",
+    startsAt: "2026-07-04T22:30:00-05:00",
+    endsAt: "2026-07-05T04:00:00-05:00",
+    doors: "10:30 PM",
+    venue: "Venue Reveal Soon",
+    location: "Chicago, IL",
+    lineup: "Secret Guest B2B",
+    status: "coming-soon",
+    format: "Dark Room · Intimate",
+    description:
+      "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
+    activeFunnels: ["waitlist-untold"],
+    startingPrice: 45,
+  },
+  {
+    id: "us-aug01",
+    series: "untold-story",
+    episode: "SUMMER '26",
+    title: "Untold Story",
+    date: "August 1, 2026",
+    time: "Late Night",
+    venue: "Venue Reveal Soon",
+    location: "Chicago, IL",
+    status: "coming-soon",
+  },
 
-    {
-        id: "css-aug22",
-        series: "chasing-sunsets",
-        episode: "SUN(SETS) II",
-        title: "Chasing Sun(Sets)",
-        headline: "SUN(SETS) II — Chapter Two",
-        date: "August 22, 2026",
-        time: "Golden Hour",
-        venue: "Castaways",
-        location: "Chicago, IL",
-        status: "coming-soon",
-        description: "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
-        activeFunnels: ["waitlist-chasing"],
-    },
-    {
-        // Parent-brand launch moment — NOT a SUN(SETS) season date. The
-        // "Three dates. One lake. One home." framing stays exclusive to the
-        // three CSS dates (Jul 4, Aug 22, Sep 19).
-        id: "css-oct10",
-        series: "monolith-project",
-        episode: "LAUNCH",
-        title: "THE MONOLITH PROJECT",
-        headline: "THE MONOLITH PROJECT — LAUNCH",
-        slug: "monolith-launch",
-        date: "October 10, 2026",
-        time: "Reveal Soon",
-        venue: "Venue Reveal Soon",
-        location: "Chicago, IL",
-        status: "coming-soon",
-        description: "The season ends in September. Then the Monolith stands.",
-        eventNotice: "The season ends in September. Then the Monolith stands.",
-        activeFunnels: ["waitlist"],
-    }
+  {
+    id: "css-aug22",
+    series: "chasing-sunsets",
+    episode: "SUN(SETS) II",
+    title: "Chasing Sun(Sets)",
+    headline: "SUN(SETS) II — Chapter Two",
+    date: "August 22, 2026",
+    time: "Golden Hour",
+    venue: "Castaways",
+    location: "Chicago, IL",
+    status: "coming-soon",
+    description:
+      "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+    activeFunnels: ["waitlist-chasing"],
+  },
+  {
+    // Parent-brand launch moment — NOT a SUN(SETS) season date. The
+    // "Three dates. One lake. One home." framing stays exclusive to the
+    // three CSS dates (Jul 4, Aug 22, Sep 19).
+    id: "css-oct10",
+    series: "monolith-project",
+    episode: "LAUNCH",
+    title: "THE MONOLITH PROJECT",
+    headline: "THE MONOLITH PROJECT — LAUNCH",
+    slug: "monolith-launch",
+    date: "October 10, 2026",
+    time: "Reveal Soon",
+    venue: "Venue Reveal Soon",
+    location: "Chicago, IL",
+    status: "coming-soon",
+    description: "The season ends in September. Then the Monolith stands.",
+    eventNotice: "The season ends in September. Then the Monolith stands.",
+    activeFunnels: ["waitlist"],
+  },
 ];
 
 function eventStartValue(event: ScheduledEvent) {
-    const explicit = event.startsAt ? Date.parse(event.startsAt) : NaN;
-    if (!Number.isNaN(explicit)) return explicit;
-    const fromDate = Date.parse(event.date);
-    return Number.isNaN(fromDate) ? Number.POSITIVE_INFINITY : fromDate;
+  const explicit = event.startsAt ? Date.parse(event.startsAt) : NaN;
+  if (!Number.isNaN(explicit)) return explicit;
+  const fromDate = Date.parse(event.date);
+  return Number.isNaN(fromDate) ? Number.POSITIVE_INFINITY : fromDate;
 }
 
 // Chronological ascending for every consumer (client payload, prerender,
 // sitemap). Same-day events stay grouped: intra-day order comes from startsAt,
 // so the July 4 after-party card sits directly after SUN(SETS) I.
 export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG].sort(
-    (a, b) => eventStartValue(a) - eventStartValue(b)
+  (a, b) => eventStartValue(a) - eventStartValue(b)
 );
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
-    hero: "css-jul04",
-    banner: "css-jul04",
-    funnel: "css-jul04",
-    ticket: "css-jul04",
-    guide: "css-jul04",
+  hero: "css-jul04",
+  banner: "css-jul04",
+  funnel: "css-jul04",
+  ticket: "css-jul04",
+  guide: "css-jul04",
 };
 
 export const MAX_PUBLIC_SITE_PATH_LENGTH = 160;
 
 export function normalizePublicSitePath(pathname?: string | null) {
-    const raw = pathname || "/";
-    const clean = raw.split("?")[0]?.split("#")[0] || "/";
-    const bounded = clean.slice(0, MAX_PUBLIC_SITE_PATH_LENGTH);
-    const withLeadingSlash = bounded.startsWith("/") ? bounded : `/${bounded}`;
-    if (withLeadingSlash.length > 1 && withLeadingSlash.endsWith("/")) return withLeadingSlash.slice(0, -1);
-    return withLeadingSlash || "/";
+  const raw = pathname || "/";
+  const clean = raw.split("?")[0]?.split("#")[0] || "/";
+  const bounded = clean.slice(0, MAX_PUBLIC_SITE_PATH_LENGTH);
+  const withLeadingSlash = bounded.startsWith("/") ? bounded : `/${bounded}`;
+  if (withLeadingSlash.length > 1 && withLeadingSlash.endsWith("/"))
+    return withLeadingSlash.slice(0, -1);
+  return withLeadingSlash || "/";
 }
 
 function getEventById(events: ScheduledEvent[], eventId?: string | null) {
-    if (!eventId) return undefined;
-    return events.find((event) => event.id === eventId);
+  if (!eventId) return undefined;
+  return events.find(event => event.id === eventId);
 }
 
 function uniqueEvents(events: ScheduledEvent[]) {
-    const seen = new Set<string>();
-    return events.filter((event) => {
-        if (seen.has(event.id)) return false;
-        seen.add(event.id);
-        return true;
-    });
+  const seen = new Set<string>();
+  return events.filter(event => {
+    if (seen.has(event.id)) return false;
+    seen.add(event.id);
+    return true;
+  });
 }
 
 function getSeriesEvents(events: ScheduledEvent[], series: EventSeries) {
-    return events.filter((event) => event.series === series);
+  return events.filter(event => event.series === series);
 }
 
 function deriveStartingPrice(event: ScheduledEvent): number | undefined {
-    if (event.startingPrice) return event.startingPrice;
-    if (!event.ticketTiers || event.ticketTiers.length === 0) return undefined;
+  if (event.startingPrice) return event.startingPrice;
+  if (!event.ticketTiers || event.ticketTiers.length === 0) return undefined;
 
-    const availableTiers = event.ticketTiers.filter((t) => t.available);
-    if (availableTiers.length === 0) return undefined;
+  const availableTiers = event.ticketTiers.filter(t => t.available);
+  if (availableTiers.length === 0) return undefined;
 
-    return Math.min(...availableTiers.map((t) => t.price));
+  return Math.min(...availableTiers.map(t => t.price));
 }
 
 type EventPayloadProfile = "full" | "home" | "summary";
 
 function lockSunsetsPrelaunchEvent(event: ScheduledEvent): ScheduledEvent {
-    if (!SUNSETS_PRELAUNCH_LOCKED || event.id !== "css-jul04") return event;
+  if (!SUNSETS_PRELAUNCH_LOCKED || event.id !== "css-jul04") return event;
 
-    return {
-        ...event,
-        status: "coming-soon",
-        inventoryState: undefined,
-        capacity: undefined,
-        ticketUrl: undefined,
-        startingPrice: undefined,
-        ticketTiers: undefined,
-        tablePackages: undefined,
-        recentlyDropped: false,
-        whatToExpect: [
-            "A full-day house music experience on Lake Michigan",
-            "Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni",
-            "Lake List members get the first ticket release window",
-            "Artist drops and location signals before the public",
-            "Season access and VIP/table details unlock at launch",
-        ],
-    };
+  return {
+    ...event,
+    status: "coming-soon",
+    inventoryState: undefined,
+    capacity: undefined,
+    ticketUrl: undefined,
+    startingPrice: undefined,
+    ticketTiers: undefined,
+    tablePackages: undefined,
+    recentlyDropped: false,
+    whatToExpect: [
+      "A full-day house music experience on Lake Michigan",
+      "Kiko Franco, Amari, Erik The DJ, Frank Bono, and Gianni",
+      "Lake List members get the first ticket release window",
+      "Artist drops and location signals before the public",
+      "Season access and VIP/table details unlock at launch",
+    ],
+  };
 }
 
 function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
-    return {
-        id: event.id,
-        series: event.series,
-        episode: event.episode,
-        title: event.title,
-        subtitle: event.subtitle,
-        headline: event.headline,
-        date: event.date,
-        time: event.time,
-        startsAt: event.startsAt,
-        endsAt: event.endsAt,
-        doors: event.doors,
-        venue: event.venue,
-        location: event.location,
-        lineup: event.lineup,
-        status: event.status,
-        inventoryState: event.inventoryState,
-        description: event.description,
-        age: event.age,
-        ticketUrl: event.ticketUrl,
-        startingPrice: deriveStartingPrice(event),
-        experienceIntro: event.experienceIntro,
-        dress: event.dress,
-        tableReservationEmail: event.tableReservationEmail,
-        image: event.image,
-        recentlyDropped: event.recentlyDropped,
-        primaryCta: resolveEventPrimaryCta(event),
-    };
+  return {
+    id: event.id,
+    series: event.series,
+    episode: event.episode,
+    title: event.title,
+    subtitle: event.subtitle,
+    headline: event.headline,
+    date: event.date,
+    time: event.time,
+    startsAt: event.startsAt,
+    endsAt: event.endsAt,
+    doors: event.doors,
+    venue: event.venue,
+    location: event.location,
+    lineup: event.lineup,
+    status: event.status,
+    inventoryState: event.inventoryState,
+    description: event.description,
+    age: event.age,
+    ticketUrl: event.ticketUrl,
+    startingPrice: deriveStartingPrice(event),
+    experienceIntro: event.experienceIntro,
+    dress: event.dress,
+    tableReservationEmail: event.tableReservationEmail,
+    image: event.image,
+    recentlyDropped: event.recentlyDropped,
+    primaryCta: resolveEventPrimaryCta(event),
+  };
 }
 
 function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
-    return {
-        id: event.id,
-        series: event.series,
-        episode: event.episode,
-        title: event.title,
-        slug: event.slug,
-        subtitle: event.subtitle,
-        headline: event.headline,
-        date: event.date,
-        time: event.time,
-        startsAt: event.startsAt,
-        endsAt: event.endsAt,
-        doors: event.doors,
-        mainExperience: event.mainExperience,
-        venue: event.venue,
-        location: event.location,
-        lineup: event.lineup,
-        image: event.image,
-        status: event.status,
-        inventoryState: event.inventoryState,
-        format: event.format,
-        dress: event.dress,
-        sound: event.sound,
-        description: event.description,
-        age: event.age,
-        ticketUrl: event.ticketUrl,
-        startingPrice: deriveStartingPrice(event),
-        experienceIntro: event.experienceIntro,
-        tableReservationEmail: event.tableReservationEmail,
-        recentlyDropped: event.recentlyDropped,
-        primaryCta: resolveEventPrimaryCta(event),
-    };
+  return {
+    id: event.id,
+    series: event.series,
+    episode: event.episode,
+    title: event.title,
+    slug: event.slug,
+    subtitle: event.subtitle,
+    headline: event.headline,
+    date: event.date,
+    time: event.time,
+    startsAt: event.startsAt,
+    endsAt: event.endsAt,
+    doors: event.doors,
+    mainExperience: event.mainExperience,
+    venue: event.venue,
+    location: event.location,
+    lineup: event.lineup,
+    image: event.image,
+    status: event.status,
+    inventoryState: event.inventoryState,
+    format: event.format,
+    dress: event.dress,
+    sound: event.sound,
+    description: event.description,
+    age: event.age,
+    ticketUrl: event.ticketUrl,
+    startingPrice: deriveStartingPrice(event),
+    experienceIntro: event.experienceIntro,
+    tableReservationEmail: event.tableReservationEmail,
+    recentlyDropped: event.recentlyDropped,
+    primaryCta: resolveEventPrimaryCta(event),
+  };
 }
 
 function shapeEvent(event: ScheduledEvent, profile: EventPayloadProfile) {
-    const publicEvent = lockSunsetsPrelaunchEvent(event);
+  const publicEvent = lockSunsetsPrelaunchEvent(event);
 
-    if (profile === "home") return toHomeEvent(publicEvent);
-    if (profile === "summary") return toSummaryEvent(publicEvent);
-    return {
-        ...publicEvent,
-        primaryCta: resolveEventPrimaryCta(publicEvent),
-    };
+  if (profile === "home") return toHomeEvent(publicEvent);
+  if (profile === "summary") return toSummaryEvent(publicEvent);
+  return {
+    ...publicEvent,
+    primaryCta: resolveEventPrimaryCta(publicEvent),
+  };
 }
 
-function resolveFeaturedEvents(events: ScheduledEvent[], profile: EventPayloadProfile = "full") {
-    return Object.fromEntries(
-        Object.entries(FEATURED_EVENT_IDS)
-            .map(([slot, eventId]) => {
-                const event = getEventById(events, eventId);
-                return [slot, event ? shapeEvent(event, profile) : undefined];
-            })
-            .filter((entry): entry is [SiteExperienceSlot, ScheduledEvent] => Boolean(entry[1])),
-    ) as PublicSiteData["featuredEvents"];
+function resolveFeaturedEvents(
+  events: ScheduledEvent[],
+  profile: EventPayloadProfile = "full"
+) {
+  return Object.fromEntries(
+    Object.entries(FEATURED_EVENT_IDS)
+      .map(([slot, eventId]) => {
+        const event = getEventById(events, eventId);
+        return [slot, event ? shapeEvent(event, profile) : undefined];
+      })
+      .filter((entry): entry is [SiteExperienceSlot, ScheduledEvent] =>
+        Boolean(entry[1])
+      )
+  ) as PublicSiteData["featuredEvents"];
 }
 
 function resolveEventsForPath(
-    pathname: string,
-    featuredEvents: PublicSiteData["featuredEvents"],
-    events: ScheduledEvent[],
+  pathname: string,
+  featuredEvents: PublicSiteData["featuredEvents"],
+  events: ScheduledEvent[]
 ) {
-    if (pathname === "/") {
-        return events.map((event) => shapeEvent(event, "home"));
-    }
+  if (pathname === "/") {
+    return events.map(event => shapeEvent(event, "home"));
+  }
 
-    if (pathname === "/schedule" || pathname === "/events" || pathname.startsWith("/artists/")) {
-        return events;
-    }
+  if (
+    pathname === "/schedule" ||
+    pathname === "/events" ||
+    pathname.startsWith("/artists/")
+  ) {
+    return events;
+  }
 
-    if (
-        pathname === "/story" ||
-        pathname === "/untold-story" ||
-        pathname === "/untold-story-deron-juany-bravo" ||
-        pathname.startsWith("/untold-story/")
-    ) {
-        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents(events, "untold-story")]);
-    }
+  if (
+    pathname === "/story" ||
+    pathname === "/untold-story" ||
+    pathname === "/untold-story-deron-juany-bravo" ||
+    pathname.startsWith("/untold-story/")
+  ) {
+    return uniqueEvents([
+      ...Object.values(featuredEvents),
+      ...getSeriesEvents(events, "untold-story"),
+    ]);
+  }
 
-    if (
-        pathname === "/chasing-sunsets" ||
-        pathname === "/chasing-sunsets-facts" ||
-        pathname.startsWith("/chasing-sunsets/")
-    ) {
-        return uniqueEvents([...Object.values(featuredEvents), ...getSeriesEvents(events, "chasing-sunsets")]);
-    }
+  if (
+    pathname === "/chasing-sunsets" ||
+    pathname === "/chasing-sunsets-facts" ||
+    pathname.startsWith("/chasing-sunsets/")
+  ) {
+    return uniqueEvents([
+      ...Object.values(featuredEvents),
+      ...getSeriesEvents(events, "chasing-sunsets"),
+    ]);
+  }
 
-    if (pathname.startsWith("/events/")) {
-        return events;
-    }
+  if (pathname.startsWith("/events/")) {
+    return events;
+  }
 
-    return uniqueEvents(Object.values(featuredEvents));
+  return uniqueEvents(Object.values(featuredEvents));
 }
 
 function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
-    if (pathname === "/") return "home";
+  if (pathname === "/") return "home";
 
-    if (
-        pathname === "/tickets" ||
-        pathname === "/story" ||
-        pathname === "/untold-story" ||
-        pathname === "/untold-story-deron-juany-bravo" ||
-        pathname.startsWith("/untold-story/") ||
-        pathname === "/chasing-sunsets" ||
-        pathname.startsWith("/chasing-sunsets/") ||
-        pathname.startsWith("/events/")
-    ) {
-        return "full";
-    }
+  if (
+    pathname === "/tickets" ||
+    pathname === "/story" ||
+    pathname === "/untold-story" ||
+    pathname === "/untold-story-deron-juany-bravo" ||
+    pathname.startsWith("/untold-story/") ||
+    pathname === "/chasing-sunsets" ||
+    pathname.startsWith("/chasing-sunsets/") ||
+    pathname.startsWith("/events/")
+  ) {
+    return "full";
+  }
 
-    return "summary";
+  return "summary";
 }
 
 export function buildPublicSiteData(
-    pathname?: string | null,
-    eventsSource: ScheduledEvent[] = upcomingEvents,
+  pathname?: string | null,
+  eventsSource: ScheduledEvent[] = upcomingEvents
 ): PublicSiteData {
-    const normalizedPath = normalizePublicSitePath(pathname);
-    const profile = getPayloadProfileForPath(normalizedPath);
-    const featuredEvents = resolveFeaturedEvents(eventsSource, profile);
-    const events = resolveEventsForPath(normalizedPath, featuredEvents, eventsSource).map((event) =>
-        profile === "home" ? event : shapeEvent(event, profile),
-    );
+  const normalizedPath = normalizePublicSitePath(pathname);
+  const profile = getPayloadProfileForPath(normalizedPath);
+  const featuredEvents = resolveFeaturedEvents(eventsSource, profile);
+  const events = resolveEventsForPath(
+    normalizedPath,
+    featuredEvents,
+    eventsSource
+  ).map(event => (profile === "home" ? event : shapeEvent(event, profile)));
 
-    return {
-        path: normalizedPath,
-        events,
-        featuredEvents,
-    };
+  return {
+    path: normalizedPath,
+    events,
+    featuredEvents,
+  };
 }

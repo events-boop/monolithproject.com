@@ -1,5 +1,9 @@
 import { describe, expect, it, beforeEach } from "vitest";
-import { getFromCache, setInCache, idempotencyCache } from "../services/idempotency";
+import {
+  getFromCache,
+  setInCache,
+  idempotencyCache,
+} from "../services/idempotency";
 
 describe("idempotency cache", () => {
   beforeEach(() => {
@@ -8,7 +12,10 @@ describe("idempotency cache", () => {
 
   it("stores and returns a 2xx response under its key", () => {
     setInCache("k1", 200, { ok: true });
-    expect(getFromCache("k1")).toMatchObject({ status: 200, body: { ok: true } });
+    expect(getFromCache("k1")).toMatchObject({
+      status: 200,
+      body: { ok: true },
+    });
   });
 
   it("only caches successful responses in the leads route (contract test)", () => {

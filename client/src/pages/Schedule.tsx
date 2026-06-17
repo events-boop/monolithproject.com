@@ -1,6 +1,15 @@
 import { Fragment, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Clock, Music, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  Bookmark,
+  CalendarPlus,
+  Check,
+  Clock,
+  Mail,
+  Music,
+  MapPin,
+} from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import SocialGrid from "@/components/SocialGrid";
@@ -10,7 +19,11 @@ import { buildScheduleSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import { Link } from "wouter";
-import { getScheduledEvents, isTicketOnSale } from "@/lib/siteExperience";
+import {
+  getEventWindow,
+  getScheduledEvents,
+  isTicketOnSale,
+} from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import ConversionCTA from "@/components/ConversionCTA";
@@ -56,6 +69,49 @@ function getEventSummary(event: ScheduledEvent) {
   return `${seriesLabels[event.series]} at ${event.venue}, ${event.location}.`;
 }
 
+function formatIcsLocal(d: Date) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}` +
+    `T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`
+  );
+}
+
+function escapeIcsText(value?: string | null) {
+  return (value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function downloadICS(event: ScheduledEvent) {
+  const { start, end } = getEventWindow(event);
+  if (!start || !end) return;
+
+  const icsStr = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Monolith Project//EN
+BEGIN:VEVENT
+DTSTART;TZID=America/Chicago:${formatIcsLocal(start)}
+DTEND;TZID=America/Chicago:${formatIcsLocal(end)}
+SUMMARY:${escapeIcsText(event.title)}
+DESCRIPTION:${escapeIcsText(event.description || event.experienceIntro || "The Monolith Project Event")}
+LOCATION:${escapeIcsText(`${event.venue} - ${event.location}`)}
+END:VEVENT
+END:VCALENDAR`;
+
+  const blob = new Blob([icsStr], { type: "text/calendar;charset=utf-8" });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", `${event.title.replace(/\s+/g, "_")}.ics`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
+
 export default function Schedule() {
   usePublicSiteDataVersion();
   const scheduleEvents = getScheduledEvents();
@@ -80,6 +136,30 @@ export default function Schedule() {
     setStarredIds(prev =>
       prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
     );
+  };
+
+  const trackScheduleUpdates = () => {
+    trackAccessEvent("event_card_click", {
+      buttonName: "Schedule Season Updates",
+      destinationUrl: "/newsletter",
+      pagePath: "/schedule",
+      channel: "site",
+      source: "schedule_header",
+    });
+  };
+
+  const handleCalendarClick = (event: ScheduledEvent, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    downloadICS(event);
+    trackAccessEvent("event_card_click", {
+      buttonName: "Add To Calendar",
+      destinationUrl: "calendar-download",
+      pagePath: "/schedule",
+      eventSlug: event.slug || event.id,
+      eventDate: event.date,
+      channel: "site",
+      source: "schedule_event_row",
+    });
   };
 
   useEffect(() => {
@@ -190,19 +270,53 @@ export default function Schedule() {
             </div>
 
             {/* Month Filters - Glassmorphic Architectural Style */}
-            <div className="flex overflow-x-auto no-scrollbar gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-[2rem] md:rounded-full backdrop-blur-xl max-w-full">
-              {months.map(month => (
+            <div className="flex w-full max-w-full flex-col items-start gap-4 md:w-auto md:items-end">
+              <Link
+                href="/newsletter"
+                onClick={trackScheduleUpdates}
+                className="inline-flex min-h-[var(--tap-target-min)] items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/75 transition-all duration-300 hover:border-primary/30 hover:bg-primary/10 hover:text-foreground"
+              >
+                <Mail className="h-4 w-4 text-primary" />
+                Season Updates
+              </Link>
+
+              <div className="flex max-w-full overflow-x-auto no-scrollbar gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-[2rem] md:rounded-full backdrop-blur-xl">
+                {months.map(month => (
+                  <button
+                    key={month}
+                    onClick={() => setActiveMonth(month)}
+                    data-schedule-filter={month}
+                    className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
+                      activeMonth === month
+                        ? "text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {activeMonth === month && (
+                      <motion.div
+                        layoutId="schedule-active-tab-page"
+                        className="absolute inset-0 bg-primary/95 rounded-full shadow-[0_4px_20px_rgba(224,90,58,0.3)]"
+                        transition={{
+                          type: "spring",
+                          bounce: 0.1,
+                          duration: 0.6,
+                        }}
+                      />
+                    )}
+                    <span className="relative z-10">{month}</span>
+                  </button>
+                ))}
+
                 <button
-                  key={month}
-                  onClick={() => setActiveMonth(month)}
-                  data-schedule-filter={month}
+                  onClick={() => setActiveMonth("MY_LINEUP")}
+                  data-schedule-filter="MY_LINEUP"
                   className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
-                    activeMonth === month
+                    activeMonth === "MY_LINEUP"
                       ? "text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {activeMonth === month && (
+                  {activeMonth === "MY_LINEUP" && (
                     <motion.div
                       layoutId="schedule-active-tab-page"
                       className="absolute inset-0 bg-primary/95 rounded-full shadow-[0_4px_20px_rgba(224,90,58,0.3)]"
@@ -213,28 +327,9 @@ export default function Schedule() {
                       }}
                     />
                   )}
-                  <span className="relative z-10">{month}</span>
+                  <span className="relative z-10">Saved</span>
                 </button>
-              ))}
-
-              <button
-                onClick={() => setActiveMonth("MY_LINEUP")}
-                data-schedule-filter="MY_LINEUP"
-                className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
-                  activeMonth === "MY_LINEUP"
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {activeMonth === "MY_LINEUP" && (
-                  <motion.div
-                    layoutId="schedule-active-tab-page"
-                    className="absolute inset-0 bg-primary/95 rounded-full shadow-[0_4px_20px_rgba(224,90,58,0.3)]"
-                    transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">Saved Events</span>
-              </button>
+              </div>
             </div>
           </div>
 
@@ -334,15 +429,24 @@ export default function Schedule() {
                             </span>
                           </div>
 
-                          {/* Thumbnail/Indicator Col - Active Radar + Star */}
+                          {/* Thumbnail/Indicator Col - Active Radar + Save */}
                           <div className="md:col-span-1 hidden md:flex flex-col items-center gap-4">
                             <button
+                              type="button"
                               onClick={e => toggleStar(event.id, e)}
-                              className={`w-8 h-8 flex items-center justify-center transition-colors ${starredIds.includes(event.id) ? "text-primary" : "text-white/70 hover:text-white/70"}`}
+                              aria-pressed={starredIds.includes(event.id)}
+                              aria-label={`${starredIds.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
+                              className={`h-9 w-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                                starredIds.includes(event.id)
+                                  ? "border-primary/50 bg-primary text-black shadow-[0_0_18px_rgba(224,90,58,0.25)]"
+                                  : "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/25 hover:text-white"
+                              }`}
                             >
-                              <div
-                                className={`w-2 h-2 rounded-full ${starredIds.includes(event.id) ? "bg-primary animate-pulse shadow-[0_0_10px_rgba(224,90,58,0.8)]" : "bg-current"}`}
-                              />
+                              {starredIds.includes(event.id) ? (
+                                <Check className="h-4 w-4" />
+                              ) : (
+                                <Bookmark className="h-4 w-4" />
+                              )}
                             </button>
 
                             <div
@@ -429,6 +533,39 @@ export default function Schedule() {
                                 showUrgency={false}
                                 className="w-full md:w-auto"
                               />
+                            </div>
+                            <div
+                              onClick={e => e.stopPropagation()}
+                              className="z-20 flex items-center gap-2"
+                            >
+                              <button
+                                type="button"
+                                onClick={e => toggleStar(event.id, e)}
+                                aria-pressed={starredIds.includes(event.id)}
+                                aria-label={`${starredIds.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
+                                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 md:hidden ${
+                                  starredIds.includes(event.id)
+                                    ? "border-primary/50 bg-primary text-black shadow-[0_0_18px_rgba(224,90,58,0.25)]"
+                                    : "border-white/10 bg-white/[0.04] text-white/70 hover:border-white/25 hover:text-white"
+                                }`}
+                              >
+                                {starredIds.includes(event.id) ? (
+                                  <Check className="h-4 w-4" />
+                                ) : (
+                                  <Bookmark className="h-4 w-4" />
+                                )}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={e => handleCalendarClick(event, e)}
+                                aria-label={`Add ${event.title} to calendar`}
+                                className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white/75 transition-all duration-300 hover:border-primary/30 hover:bg-primary/10 hover:text-white sm:px-4"
+                              >
+                                <CalendarPlus className="h-4 w-4" />
+                                <span className="hidden xl:inline">
+                                  Calendar
+                                </span>
+                              </button>
                             </div>
                             <div
                               className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-muted-foreground/50 group-hover:text-foreground"}`}
@@ -573,6 +710,14 @@ export default function Schedule() {
                                     FULL DOSSIER
                                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                                   </Link>
+                                  <button
+                                    type="button"
+                                    onClick={e => handleCalendarClick(event, e)}
+                                    className="btn-text-action group"
+                                  >
+                                    ADD TO CALENDAR
+                                    <CalendarPlus className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                                  </button>
                                   {event.tableReservationEmail && (
                                     <a
                                       href={`mailto:${event.tableReservationEmail}`}

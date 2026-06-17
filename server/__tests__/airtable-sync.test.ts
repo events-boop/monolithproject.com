@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { isAirtableSyncEnabled, mirrorLeadToAirtable } from "../services/airtable-sync";
+import {
+  isAirtableSyncEnabled,
+  mirrorLeadToAirtable,
+} from "../services/airtable-sync";
 
 describe("airtable sync", () => {
   const originalEnv = { ...process.env };
@@ -81,7 +84,7 @@ describe("airtable sync", () => {
           Authorization: "Bearer pat_test",
           "Content-Type": "application/json",
         }),
-      }),
+      })
     );
 
     const request = fetchMock.mock.calls[0][1] as RequestInit;
@@ -125,7 +128,7 @@ describe("airtable sync", () => {
     });
 
     expect(fetchMock.mock.calls[0][0]).toBe(
-      "https://airtable.test/v0/app123/Lake%20List%20Leads",
+      "https://airtable.test/v0/app123/Lake%20List%20Leads"
     );
   });
 
@@ -139,12 +142,14 @@ describe("airtable sync", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(mirrorLeadToAirtable({
-      lead,
-      provider: "brevo",
-      requestId: "req_4",
-      idempotencyKey: "idem_4",
-    })).resolves.toBeUndefined();
+    await expect(
+      mirrorLeadToAirtable({
+        lead,
+        provider: "brevo",
+        requestId: "req_4",
+        idempotencyKey: "idem_4",
+      })
+    ).resolves.toBeUndefined();
   });
 
   it("does not throw when the Airtable request fails", async () => {
@@ -153,11 +158,13 @@ describe("airtable sync", () => {
     const fetchMock = vi.fn().mockRejectedValue(new Error("network down"));
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(mirrorLeadToAirtable({
-      lead,
-      provider: "brevo",
-      requestId: "req_5",
-      idempotencyKey: "idem_5",
-    })).resolves.toBeUndefined();
+    await expect(
+      mirrorLeadToAirtable({
+        lead,
+        provider: "brevo",
+        requestId: "req_5",
+        idempotencyKey: "idem_5",
+      })
+    ).resolves.toBeUndefined();
   });
 });

@@ -21,7 +21,10 @@ export function getLayloBypassReason() {
     return "LAYLO_BYPASS=true";
   }
 
-  if (!process.env.LAYLO_API_TOKEN?.trim() && !process.env.LAYLO_API_KEY?.trim()) {
+  if (
+    !process.env.LAYLO_API_TOKEN?.trim() &&
+    !process.env.LAYLO_API_KEY?.trim()
+  ) {
     return "LAYLO_API_TOKEN is not set";
   }
 
@@ -42,10 +45,15 @@ export function readProvider(): LeadProvider {
   ) {
     return provider;
   }
-  throw new Error("Unsupported LEAD_PROVIDER. Use disabled, mailchimp, beehiiv, convertkit, hubspot, brevo, emailoctopus, or laylo.");
+  throw new Error(
+    "Unsupported LEAD_PROVIDER. Use disabled, mailchimp, beehiiv, convertkit, hubspot, brevo, emailoctopus, or laylo."
+  );
 }
 
-function logValidationFailure(message: string, { fatal }: Required<ValidateEnvironmentOptions>) {
+function logValidationFailure(
+  message: string,
+  { fatal }: Required<ValidateEnvironmentOptions>
+) {
   if (fatal) {
     console.error(`❌ CRITICAL BOOT FAILURE: ${message}`);
     throw new Error(message);
@@ -63,25 +71,31 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   // DATABASE_URL is degrade-gracefully: form handlers fall back to email delivery,
   // so a missing value is a warning, not a fatal — even under fatal: true.
   if (!process.env.DATABASE_URL) {
-    console.warn("⚠️  DATABASE_URL is not set — running without database persistence. Form handlers and restricted areas may fail.");
+    console.warn(
+      "⚠️  DATABASE_URL is not set — running without database persistence. Form handlers and restricted areas may fail."
+    );
   }
 
   // Sponsor access is optional. If a sponsor password is configured, the
   // matching session secret must also be configured so successful logins can
   // issue signed cookies.
-  const sponsorPasswordConfigured = Boolean(process.env.SPONSOR_ACCESS_PASSWORD?.trim());
-  const sponsorSecretConfigured = Boolean(process.env.SPONSOR_SESSION_SECRET?.trim());
+  const sponsorPasswordConfigured = Boolean(
+    process.env.SPONSOR_ACCESS_PASSWORD?.trim()
+  );
+  const sponsorSecretConfigured = Boolean(
+    process.env.SPONSOR_SESSION_SECRET?.trim()
+  );
   if (sponsorPasswordConfigured && !sponsorSecretConfigured) {
     logValidationFailure(
       "SPONSOR_ACCESS_PASSWORD is configured but SPONSOR_SESSION_SECRET is missing. Sponsor access will fail.",
-      resolvedOptions,
+      resolvedOptions
     );
   }
 
   if (isProd) {
     if (!process.env.OPS_ADMIN_SECRET?.trim()) {
       console.warn(
-        "⚠️  OPS_ADMIN_SECRET is not set. Administrative routes will fail closed in production.",
+        "⚠️  OPS_ADMIN_SECRET is not set. Administrative routes will fail closed in production."
       );
     }
 
@@ -90,7 +104,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       const bypassReason = getBrevoBypassReason();
       if (bypassReason) {
         console.warn(
-          `⚠️  Brevo lead provider is bypassed (${bypassReason}). Lead submissions will skip Brevo but still complete locally.`,
+          `⚠️  Brevo lead provider is bypassed (${bypassReason}). Lead submissions will skip Brevo but still complete locally.`
         );
         return;
       }
@@ -100,7 +114,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       const bypassReason = getLayloBypassReason();
       if (bypassReason) {
         console.warn(
-          `⚠️  Laylo lead provider is bypassed (${bypassReason}). Lead submissions will skip Laylo but still complete locally.`,
+          `⚠️  Laylo lead provider is bypassed (${bypassReason}). Lead submissions will skip Laylo but still complete locally.`
         );
         return;
       }
@@ -121,7 +135,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
     if (!vars) {
       logValidationFailure(
         `Unknown LEAD_PROVIDER "${provider}". Lead capturing will fail.`,
-        resolvedOptions,
+        resolvedOptions
       );
       return;
     }
@@ -130,11 +144,11 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       return;
     }
 
-    const missing = vars.filter((v) => !process.env[v]);
+    const missing = vars.filter(v => !process.env[v]);
     if (missing.length > 0) {
       logValidationFailure(
         `Missing env vars for ${provider}: ${missing.join(", ")}. Lead capturing will fail.`,
-        resolvedOptions,
+        resolvedOptions
       );
     }
   }

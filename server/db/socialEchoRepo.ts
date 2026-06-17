@@ -41,7 +41,11 @@ export async function readSocialEchoEventByKey(eventKey: string) {
   const db = getDatabase();
   if (!db) return null;
 
-  const rows = await db.select().from(socialEchoEventStats).where(eq(socialEchoEventStats.eventKey, eventKey)).limit(1);
+  const rows = await db
+    .select()
+    .from(socialEchoEventStats)
+    .where(eq(socialEchoEventStats.eventKey, eventKey))
+    .limit(1);
   return rows[0] || null;
 }
 
@@ -104,7 +108,10 @@ export async function readSocialEchoSnapshot() {
   const db = getDatabase();
   if (!db) return null;
 
-  const events = await db.select().from(socialEchoEventStats).orderBy(desc(socialEchoEventStats.goingCount));
+  const events = await db
+    .select()
+    .from(socialEchoEventStats)
+    .orderBy(desc(socialEchoEventStats.goingCount));
   const activity = await db
     .select()
     .from(socialEchoActivity)
@@ -112,7 +119,10 @@ export async function readSocialEchoSnapshot() {
     .limit(30);
 
   const totalGoing = events.reduce((sum, event) => sum + event.goingCount, 0);
-  const totalPending = events.reduce((sum, event) => sum + event.pendingCount, 0);
+  const totalPending = events.reduce(
+    (sum, event) => sum + event.pendingCount,
+    0
+  );
 
   const snapshot: SocialEchoSnapshot = {
     now: new Date().toISOString(),
@@ -122,7 +132,7 @@ export async function readSocialEchoSnapshot() {
       liveEvents: events.length,
     },
     events,
-    activity: activity.map((item) => ({
+    activity: activity.map(item => ({
       ...item,
       rawPayload: (item.rawPayload || {}) as Record<string, unknown>,
     })),
@@ -130,4 +140,3 @@ export async function readSocialEchoSnapshot() {
 
   return snapshot;
 }
-

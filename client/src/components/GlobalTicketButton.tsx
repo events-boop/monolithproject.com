@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { ArrowUpRight, ArrowRight, Ticket, Lock, Zap } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Ticket,
+  Lock,
+  Zap,
+  Waves,
+} from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { getEventCtaToneClass } from "@/lib/ctaTone";
+import { ROUTES } from "@shared/routes";
 import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
+import { appendAttributionQueryParams } from "@/lib/attribution";
+import { trackAccessEvent } from "@/lib/api";
 import { useUI } from "@/contexts/UIContext";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
@@ -57,8 +67,20 @@ export default function GlobalTicketButton() {
   const cta = getEventCta(featuredEvent);
   const ctaToneClass = getEventCtaToneClass(featuredEvent);
 
+  // Posh ticket CTAs route to the on-site /tickets page rather than the
+  // /go/tickets Posh redirect (which falls back to the Lake List until the
+  // Posh ticket URL is configured). Waitlist/presale CTAs are unchanged.
+  const ctaHref = cta.tool === "posh" ? ROUTES.tickets : cta.href;
+  const ctaIsExternal = cta.tool === "posh" ? false : cta.isExternal;
+  const isHome = location === "/";
+  const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
+
   const stateDot = SUNSETS_PRELAUNCH_LOCKED
-    ? { color: "var(--scene-accent, #E05A3A)", label: "Lake List", pulse: false }
+    ? {
+        color: "var(--scene-accent, #E05A3A)",
+        label: "Lake List",
+        pulse: false,
+      }
     : featuredEvent?.status === "on-sale"
       ? { color: "#10B981", label: "Live", pulse: true }
       : featuredEvent?.status === "sold-out"
@@ -156,6 +178,18 @@ export default function GlobalTicketButton() {
     fillout: "cta-fillout py-5",
   };
 
+  const trackSunsetsVipClick = () => {
+    trackAccessEvent("event_card_click", {
+      buttonName: "Floating Sunsets VIP",
+      destinationUrl: sunsetsVipHref,
+      pagePath: location || "/",
+      eventSlug: featuredEvent?.slug || featuredEvent?.id,
+      eventDate: featuredEvent?.date,
+      channel: "site",
+      source: "home_floating_cta",
+    });
+  };
+
   // Keep the hero and consent flows focused before adding another conversion layer.
   if (
     location.startsWith("/chasing-sunsets") ||
@@ -168,71 +202,126 @@ export default function GlobalTicketButton() {
   return (
     <div className="fixed bottom-0 left-0 right-0 md:bottom-12 md:right-12 md:left-auto z-[100] w-full md:w-auto">
       <div className="hidden md:block">
-        <MagneticButton strength={0.16}>
-          <a
-            href={cta.href}
-            target={cta.isExternal ? "_blank" : undefined}
-            rel={cta.isExternal ? "noopener noreferrer" : undefined}
-            data-cursor-magnetic
-            data-cursor-text={cursorTextByTool[cta.tool]}
-            onMouseEnter={() => setSensoryOverloadActive(true)}
-            onMouseLeave={() => setSensoryOverloadActive(false)}
-            aria-label={`${cta.label} ${featuredEvent?.headline || featuredEvent?.title || "featured event"}`}
-            className={`group sensory-ticket-btn relative flex items-center gap-3 rounded-full bg-black/78 px-5 py-3.5 shadow-[0_18px_38px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_46px_rgba(0,0,0,0.28)] ${theme.border}`}
-          >
-            <div
-              className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-              style={{
-                background: `radial-gradient(circle at 12% 50%, ${cta.tool === "posh" ? "var(--scene-glow)" : "rgba(255,255,255,0.1)"}, transparent 45%)`,
-              }}
-            />
-
-            <div
-              className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
-              style={{
-                backgroundColor:
-                  cta.tool === "posh"
-                    ? "color-mix(in srgb, var(--scene-accent) 14%, rgba(255,255,255,0.02))"
-                    : "rgba(255,255,255,0.05)",
-              }}
-            >
-              {toolIcons[cta.tool]}
-            </div>
-
-            <div className="relative z-10 min-w-[8.5rem]">
-              <span className="ui-chip flex items-center gap-1.5 text-white/70">
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+        <div className="flex flex-col items-end gap-3">
+          {isHome && (
+            <MagneticButton strength={0.12}>
+              <a
+                href={sunsetsVipHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-magnetic
+                data-cursor-text="SUNSETS"
+                onClick={trackSunsetsVipClick}
+                onMouseEnter={() => setSensoryOverloadActive(true)}
+                onMouseLeave={() => setSensoryOverloadActive(false)}
+                aria-label="Open Sunsets VIP"
+                className="group relative flex items-center gap-3 rounded-full border border-[#E8B86D]/28 bg-[#0c0905]/86 px-4 py-3 shadow-[0_18px_38px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E8B86D]/58 hover:bg-[#151006] hover:shadow-[0_22px_46px_rgba(232,184,109,0.12)]"
+              >
+                <div
+                  className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
-                    backgroundColor: stateDot.color,
-                    boxShadow: stateDot.pulse
-                      ? `0 0 8px ${stateDot.color}`
-                      : undefined,
+                    background:
+                      "radial-gradient(circle at 16% 50%, rgba(232,184,109,0.24), transparent 48%)",
                   }}
-                  aria-hidden="true"
                 />
-                {cta.label}
-              </span>
-              <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-white">
-                {featuredEvent?.headline ||
-                  featuredEvent?.title ||
-                  "Next Night"}
-              </span>
-            </div>
+                <div className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#E8B86D]/24 bg-[#E8B86D]/14 text-[#E8B86D]">
+                  <Waves className="h-4 w-4" />
+                </div>
+                <div className="relative z-10 min-w-[8rem]">
+                  <span className="ui-chip text-[#E8B86D]/78">July 4 Hub</span>
+                  <span className="mt-1 block text-[12px] font-black uppercase tracking-[0.22em] text-white/90 transition-colors group-hover:text-white">
+                    SUNSETS.VIP
+                  </span>
+                </div>
+                <ArrowUpRight className="relative z-10 h-4 w-4 text-[#E8B86D]/70 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#E8B86D]" />
+              </a>
+            </MagneticButton>
+          )}
 
-            <ArrowUpRight className="relative z-10 h-4 w-4 text-white/60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
-          </a>
-        </MagneticButton>
+          <MagneticButton strength={0.16}>
+            <a
+              href={ctaHref}
+              target={ctaIsExternal ? "_blank" : undefined}
+              rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+              data-cursor-magnetic
+              data-cursor-text={cursorTextByTool[cta.tool]}
+              onMouseEnter={() => setSensoryOverloadActive(true)}
+              onMouseLeave={() => setSensoryOverloadActive(false)}
+              aria-label={`${cta.label} ${featuredEvent?.headline || featuredEvent?.title || "featured event"}`}
+              className={`group sensory-ticket-btn relative flex items-center gap-3 rounded-full bg-black/78 px-5 py-3.5 shadow-[0_18px_38px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_46px_rgba(0,0,0,0.28)] ${theme.border}`}
+            >
+              <div
+                className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background: `radial-gradient(circle at 12% 50%, ${cta.tool === "posh" ? "var(--scene-glow)" : "rgba(255,255,255,0.1)"}, transparent 45%)`,
+                }}
+              />
+
+              <div
+                className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
+                style={{
+                  backgroundColor:
+                    cta.tool === "posh"
+                      ? "color-mix(in srgb, var(--scene-accent) 14%, rgba(255,255,255,0.02))"
+                      : "rgba(255,255,255,0.05)",
+                }}
+              >
+                {toolIcons[cta.tool]}
+              </div>
+
+              <div className="relative z-10 min-w-[8.5rem]">
+                <span className="ui-chip flex items-center gap-1.5 text-white/70">
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+                    style={{
+                      backgroundColor: stateDot.color,
+                      boxShadow: stateDot.pulse
+                        ? `0 0 8px ${stateDot.color}`
+                        : undefined,
+                    }}
+                    aria-hidden="true"
+                  />
+                  {cta.label}
+                </span>
+                <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-white">
+                  {featuredEvent?.headline ||
+                    featuredEvent?.title ||
+                    "Next Night"}
+                </span>
+              </div>
+
+              <ArrowUpRight className="relative z-10 h-4 w-4 text-white/60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white group-hover:scale-110" />
+            </a>
+          </MagneticButton>
+        </div>
       </div>
 
       {/* Mobile Sticky Bar */}
       <div
         className={`md:hidden w-full backdrop-blur-xl px-4 py-4 safe-bottom ${cta.tool === "posh" ? "bg-black/90 border-t border-white/10" : "bg-[#0a0a0d]/95 border-t border-white/5"}`}
       >
+        {isHome && (
+          <a
+            href={sunsetsVipHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackSunsetsVipClick}
+            aria-label="Open Sunsets VIP"
+            className="mb-2 flex h-11 w-full items-center justify-between rounded-full border border-[#E8B86D]/30 bg-[#E8B86D]/10 px-5 text-[#F8E7B3] transition active:scale-[0.98]"
+          >
+            <span className="flex min-w-0 items-center gap-3">
+              <Waves className="h-4 w-4 shrink-0" />
+              <span className="truncate text-[11px] font-black uppercase tracking-[0.22em]">
+                SUNSETS.VIP
+              </span>
+            </span>
+            <ArrowUpRight className="h-4 w-4 shrink-0" />
+          </a>
+        )}
         <a
-          href={cta.href}
-          target={cta.isExternal ? "_blank" : undefined}
-          rel={cta.isExternal ? "noopener noreferrer" : undefined}
+          href={ctaHref}
+          target={ctaIsExternal ? "_blank" : undefined}
+          rel={ctaIsExternal ? "noopener noreferrer" : undefined}
           aria-label={`${cta.label} — ${featuredEvent?.headline || featuredEvent?.title || "Next Night"}`}
           className={`flex items-center justify-between w-full h-14 px-6 transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]} ${ctaToneClass}`}
         >

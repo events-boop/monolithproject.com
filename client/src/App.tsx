@@ -54,6 +54,7 @@ const Alerts = lazy(() => import("./pages/Alerts"));
 const Insights = lazy(() => import("./pages/Insights"));
 const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
+const SunsetsHero = lazy(() => import("./pages/SunsetsHero"));
 
 const isMonolithOpsEnabled =
   import.meta.env.DEV || import.meta.env.VITE_ENABLE_MONOLITH_OPS === "true";
@@ -136,6 +137,7 @@ const GuideTransition = withTransition(Guide);
 const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
+const SunsetsHeroTransition = withTransition(SunsetsHero);
 const AdminDashboardTransition = AdminDashboard
   ? withTransition(AdminDashboard)
   : null;
@@ -166,10 +168,13 @@ function normalizeRouteLocation(location: string) {
 function getCampaignHostLandingPath(location: string) {
   const normalizedLocation = normalizeRouteLocation(location);
   const host = typeof window !== "undefined" ? window.location.hostname : "";
-  const isSunsetsHost = host === CAMPAIGN_HOSTS.sunsetsVip || host === CAMPAIGN_HOSTS.sunsetsVipWww;
-  const isUntoldHost = host === CAMPAIGN_HOSTS.untoldVip || host === CAMPAIGN_HOSTS.untoldVipWww;
+  const isSunsetsHost =
+    host === CAMPAIGN_HOSTS.sunsetsVip || host === CAMPAIGN_HOSTS.sunsetsVipWww;
+  const isUntoldHost =
+    host === CAMPAIGN_HOSTS.untoldVip || host === CAMPAIGN_HOSTS.untoldVipWww;
 
-  if (normalizedLocation === ROUTES.home && isSunsetsHost) return ROUTES.sunsets;
+  if (normalizedLocation === ROUTES.home && isSunsetsHost)
+    return ROUTES.sunsets;
   if (normalizedLocation === ROUTES.home && isUntoldHost) return ROUTES.story;
 
   return normalizedLocation;
@@ -182,12 +187,19 @@ function Router() {
     <Switch location={location} key={location}>
       <Route path={ROUTES.home} component={HomeTransition} />
       <Route path={ROUTES.tickets}>
-        {SUNSETS_PRELAUNCH_LOCKED ? <Redirect to={ROUTES.sunsets} /> : <TicketsTransition />}
+        {SUNSETS_PRELAUNCH_LOCKED ? (
+          <Redirect to={ROUTES.sunsets} />
+        ) : (
+          <TicketsTransition />
+        )}
       </Route>
       <Route path="/artists/:id" component={ArtistProfileTransition} />
       <Route path={ROUTES.sponsors} component={SponsorAccessTransition} />
       <Route path={ROUTES.about} component={AboutTransition} />
-      <Route path={ROUTES.chasingSunsets} component={ChasingSunsetsTransition} />
+      <Route
+        path={ROUTES.chasingSunsets}
+        component={ChasingSunsetsTransition}
+      />
       <Route
         path={ROUTES.chasingSunsetsFacts}
         component={ChasingSunsetsFactsTransition}
@@ -212,6 +224,7 @@ function Router() {
       </Route>
       <Route path="/sunsets/" component={SunsetsLinkBioTransition} />
       <Route path={ROUTES.sunsets} component={SunsetsLinkBioTransition} />
+      <Route path="/sunsets-hero" component={SunsetsHeroTransition} />
       <Route path="/lake/" component={LakeLandingTransition} />
       <Route path={ROUTES.lake} component={LakeLandingTransition} />
       <Route
@@ -362,6 +375,11 @@ const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
 const Toaster = lazy(() =>
   import("./components/ui/sonner").then(module => ({ default: module.Toaster }))
 );
+const TicketOfferPopup = lazy(() =>
+  import("./components/ui/TicketOfferPopup").then(module => ({
+    default: module.TicketOfferPopup,
+  }))
+);
 
 function DeferredGlobalModules() {
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -485,6 +503,15 @@ function MainContentWrapper() {
 }
 
 function App() {
+  const [showOfferPopup, setShowOfferPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowOfferPopup(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <HelmetProvider>
       <ErrorBoundary>
@@ -495,6 +522,11 @@ function App() {
               <MainContentWrapper />
 
               <DeferredGlobalModules />
+              {showOfferPopup && (
+                <Suspense fallback={null}>
+                  <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
+                </Suspense>
+              )}
             </InquiryProvider>
           </UIProvider>
         </ThemeProvider>

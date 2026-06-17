@@ -1,6 +1,12 @@
 export const idempotencyTtlMs = 24 * 60 * 60 * 1000;
-export const idempotencyCache = new Map<string, { status: number; body: unknown; expiresAt: number }>();
-export const idempotencyInFlight = new Map<string, Promise<{ status: number; body: unknown }>>();
+export const idempotencyCache = new Map<
+  string,
+  { status: number; body: unknown; expiresAt: number }
+>();
+export const idempotencyInFlight = new Map<
+  string,
+  Promise<{ status: number; body: unknown }>
+>();
 
 export function getFromCache(key: string) {
   const cached = idempotencyCache.get(key);
@@ -22,7 +28,10 @@ export function hasInFlight(key: string) {
   return idempotencyInFlight.has(key);
 }
 
-export function setInFlight(key: string, promise: Promise<{ status: number; body: unknown }>) {
+export function setInFlight(
+  key: string,
+  promise: Promise<{ status: number; body: unknown }>
+) {
   idempotencyInFlight.set(key, promise);
 }
 

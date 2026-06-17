@@ -63,11 +63,12 @@ async function runMiddleware(
   let jsonBody: unknown = null;
   let nextCalled = false;
 
-  await new Promise<void>((resolve) => {
+  await new Promise<void>(resolve => {
     const req = {
       path: reqOpts.path,
       method: reqOpts.method || "POST",
-      header: (name: string) => reqOpts.headers[name.toLowerCase()] || reqOpts.headers[name],
+      header: (name: string) =>
+        reqOpts.headers[name.toLowerCase()] || reqOpts.headers[name],
       headers: reqOpts.headers,
     };
 
@@ -87,18 +88,14 @@ async function runMiddleware(
       },
     };
 
-    middleware(
-      req as any,
-      res as any,
-      (error?: any) => {
-        if (error) {
-          resolve();
-          return;
-        }
-        nextCalled = true;
+    middleware(req as any, res as any, (error?: any) => {
+      if (error) {
         resolve();
+        return;
       }
-    );
+      nextCalled = true;
+      resolve();
+    });
   });
 
   return { headers, statusCode, jsonBody, nextCalled };

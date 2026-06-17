@@ -5,7 +5,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowRight, CalendarPlus } from "lucide-react";
+import { ArrowRight, CalendarDays, CalendarPlus, Mail } from "lucide-react";
 import { Link } from "wouter";
 import type { ScheduledEvent } from "../data/events";
 import { useIntentPrefetch } from "@/hooks/useIntentPrefetch";
@@ -21,7 +21,7 @@ import {
   getScheduledEvents,
 } from "@/lib/siteExperience";
 import { MONOLITH_ORANGE } from "@/lib/brand";
-import { trackTicketIntent } from "@/lib/api";
+import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { getEventPillToneClass } from "@/lib/ctaTone";
 
@@ -171,27 +171,68 @@ export default function ScheduleSection() {
             </p>
           </div>
 
-          <div className="z-20 flex max-w-full gap-1 overflow-x-auto rounded-full border border-white/15 bg-black/[0.04] p-1 shadow-none backdrop-blur-md no-scrollbar">
-            {months.map(month => (
-              <button
-                key={month}
-                onClick={() => setActiveMonth(month)}
-                className={`relative shrink-0 min-h-[var(--tap-target-min)] px-4 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
-                  activeMonth === month
-                    ? "text-white shadow-sm"
-                    : "text-white/65 hover:text-white"
-                }`}
+          <div className="z-20 flex w-full max-w-full flex-col items-start gap-3 lg:w-auto lg:items-end">
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/schedule"
+                onClick={() =>
+                  trackAccessEvent("event_card_click", {
+                    buttonName: "Explore Calendar",
+                    destinationUrl: "/schedule",
+                    pagePath: "/",
+                    channel: "site",
+                    source: "schedule_section_header",
+                  })
+                }
+                className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group"
               >
-                {activeMonth === month && (
-                  <motion.div
-                    layoutId="schedule-section-active-tab"
-                    className="absolute inset-0 bg-black rounded-full"
-                    transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">{month}</span>
-              </button>
-            ))}
+                <CalendarDays className="h-4 w-4" />
+                Explore Calendar
+              </Link>
+              <Link
+                href="/newsletter"
+                onClick={() =>
+                  trackAccessEvent("event_card_click", {
+                    buttonName: "Schedule Season Updates",
+                    destinationUrl: "/newsletter",
+                    pagePath: "/",
+                    channel: "site",
+                    source: "schedule_section_header",
+                  })
+                }
+                className="btn-pill-neutral btn-pill-compact group"
+              >
+                <Mail className="h-4 w-4" />
+                Season Updates
+              </Link>
+            </div>
+
+            <div className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-white/15 bg-black/[0.04] p-1 shadow-none backdrop-blur-md no-scrollbar">
+              {months.map(month => (
+                <button
+                  key={month}
+                  onClick={() => setActiveMonth(month)}
+                  className={`relative shrink-0 min-h-[var(--tap-target-min)] px-4 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
+                    activeMonth === month
+                      ? "text-white shadow-sm"
+                      : "text-white/65 hover:text-white"
+                  }`}
+                >
+                  {activeMonth === month && (
+                    <motion.div
+                      layoutId="schedule-section-active-tab"
+                      className="absolute inset-0 bg-black rounded-full"
+                      transition={{
+                        type: "spring",
+                        bounce: 0.1,
+                        duration: 0.6,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">{month}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -472,7 +513,10 @@ export default function ScheduleSection() {
                                   {event.lineup ? (
                                     event.lineup.includes("Kiko Franco") ? (
                                       <>
-                                        <Link href="/artists/kiko-franco" className="hover:text-[#E8B86D] transition-colors underline decoration-white/20 underline-offset-4">
+                                        <Link
+                                          href="/artists/kiko-franco"
+                                          className="hover:text-[#E8B86D] transition-colors underline decoration-white/20 underline-offset-4"
+                                        >
                                           Kiko Franco
                                         </Link>
                                         {event.lineup.split("Kiko Franco")[1]}
@@ -480,7 +524,9 @@ export default function ScheduleSection() {
                                     ) : (
                                       event.lineup
                                     )
-                                  ) : "Lineup Release Pending"}
+                                  ) : (
+                                    "Lineup Release Pending"
+                                  )}
                                 </p>
                               </div>
 
@@ -502,9 +548,15 @@ export default function ScheduleSection() {
                               {event.ticketUrl ? (
                                 <a
                                   href={
-                                    SUNSETS_PRELAUNCH_LOCKED ? "/sunsets" : event.ticketUrl
+                                    SUNSETS_PRELAUNCH_LOCKED
+                                      ? "/sunsets"
+                                      : event.ticketUrl
                                   }
-                                  target={SUNSETS_PRELAUNCH_LOCKED ? undefined : "_blank"}
+                                  target={
+                                    SUNSETS_PRELAUNCH_LOCKED
+                                      ? undefined
+                                      : "_blank"
+                                  }
                                   rel={
                                     SUNSETS_PRELAUNCH_LOCKED
                                       ? undefined
@@ -539,7 +591,8 @@ export default function ScheduleSection() {
                                   onMouseEnter={
                                     SUNSETS_PRELAUNCH_LOCKED
                                       ? undefined
-                                      : () => preconnectGateway(event.ticketUrl!)
+                                      : () =>
+                                          preconnectGateway(event.ticketUrl!)
                                   }
                                   className={`${getEventPillToneClass(event)} btn-pill-monolith btn-pill-compact group`}
                                 >
@@ -552,9 +605,18 @@ export default function ScheduleSection() {
                                 </button>
                               )}
 
-                              <Link href={event.id === "css-jul04" ? "/artists/kiko-franco" : detailsHref} asChild>
+                              <Link
+                                href={
+                                  event.id === "css-jul04"
+                                    ? "/artists/kiko-franco"
+                                    : detailsHref
+                                }
+                                asChild
+                              >
                                 <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group">
-                                  {event.id === "css-jul04" ? "Open Artist Profile" : "Open Event Page"}
+                                  {event.id === "css-jul04"
+                                    ? "Open Artist Profile"
+                                    : "Open Event Page"}
                                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>
                               </Link>

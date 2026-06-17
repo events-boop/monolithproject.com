@@ -4,11 +4,14 @@ import { randomUUID, createHmac, timingSafeEqual } from "crypto";
 
 export const sponsorSessionTtlMs = 30 * 60 * 1000;
 export const sponsorSessionCookieName = "monolith_sponsor_session";
-export const sponsorDeckFilename = "Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf";
+export const sponsorDeckFilename =
+  "Chasing Sun(Sets) 2026 Pitch Deck (Upgraded).pdf";
 
 function resolveCandidatePath(candidate: string | undefined) {
   if (!candidate) return null;
-  return path.isAbsolute(candidate) ? candidate : path.resolve(process.cwd(), candidate);
+  return path.isAbsolute(candidate)
+    ? candidate
+    : path.resolve(process.cwd(), candidate);
 }
 
 export function resolveSponsorDeckPath() {
@@ -30,7 +33,10 @@ function sign(token: string, secret: string) {
   return createHmac("sha256", secret).update(token).digest("base64url");
 }
 
-export function buildSponsorSessionCookie(value: string, maxAgeSeconds: number) {
+export function buildSponsorSessionCookie(
+  value: string,
+  maxAgeSeconds: number
+) {
   const secure = process.env.NODE_ENV === "production" ? "; Secure" : "";
   return `${sponsorSessionCookieName}=${encodeURIComponent(value)}; Max-Age=${maxAgeSeconds}; Path=/api; HttpOnly; SameSite=Strict${secure}`;
 }
@@ -49,12 +55,12 @@ export function hasValidSponsorSession(cookieValue: string | undefined) {
   if (!cookieValue) return false;
   const secret = process.env.SPONSOR_SESSION_SECRET;
   if (!secret) return false;
-  
+
   const [payload, signature] = cookieValue.split(".");
   if (!payload || !signature) return false;
 
   const expectedSignature = sign(payload, secret);
-  
+
   let validSignature = false;
   try {
     validSignature = timingSafeEqual(
@@ -70,7 +76,7 @@ export function hasValidSponsorSession(cookieValue: string | undefined) {
   // Check temporal validity
   const [_, expiresAtStr] = payload.split(":");
   const expiresAt = parseInt(expiresAtStr, 10);
-  
+
   if (isNaN(expiresAt) || expiresAt <= Date.now()) {
     return false;
   }

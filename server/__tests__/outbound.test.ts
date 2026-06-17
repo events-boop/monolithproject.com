@@ -132,6 +132,7 @@ describe("resolveOutboundDestination", () => {
         utm_medium: "dm",
         utm_campaign: "manychat",
         utm_content: "sun_keyword",
+        promo: "sunsets26",
         ref: "ig_dm_sun",
         fbclid: "fbclid-1",
       },
@@ -139,7 +140,7 @@ describe("resolveOutboundDestination", () => {
     );
 
     expect(destination).toBe(
-      "https://posh.vip/e/sunsets-july-4?foo=bar&utm_source=sunsetsvip&utm_medium=linkinbio&utm_campaign=sunsets_2026_07_04&utm_content=buy_tickets_primary&event_slug=chasing-sunsets-july-4-2026&session_id=sess_123&ref=ig_dm_sun&fbclid=fbclid-1"
+      "https://posh.vip/e/sunsets-july-4?foo=bar&utm_source=sunsetsvip&utm_medium=linkinbio&utm_campaign=sunsets_2026_07_04&utm_content=buy_tickets_primary&event_slug=chasing-sunsets-july-4-2026&session_id=sess_123&ref=ig_dm_sun&promo=sunsets26&fbclid=fbclid-1"
     );
   });
 
@@ -153,13 +154,14 @@ describe("resolveOutboundDestination", () => {
         utm_source: "instagram",
         utm_medium: "social",
         utm_campaign: "season-launch",
+        promo: "sunsets26",
         ref: "ig_dm_sun",
         fbclid: "fbclid-1",
       }
     );
 
     expect(destination).toBe(
-      "https://tickets.example.com/event?utm_source=posh&session_id=sess_123&event_slug=chasing-sunsets-july-4-2026&ref=ig_dm_sun&utm_medium=social&utm_campaign=season-launch&fbclid=fbclid-1"
+      "https://tickets.example.com/event?utm_source=posh&session_id=sess_123&event_slug=chasing-sunsets-july-4-2026&ref=ig_dm_sun&utm_medium=social&utm_campaign=season-launch&promo=sunsets26&fbclid=fbclid-1"
     );
   });
 

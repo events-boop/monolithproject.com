@@ -68,6 +68,7 @@ function getPostHogAttributionProperties(): PostHogProperties {
     utm_campaign: attribution.utmCampaign,
     utm_term: attribution.utmTerm,
     utm_content: attribution.utmContent,
+    promo: attribution.promo,
     first_utm_source: attribution.firstUtmSource,
     first_utm_medium: attribution.firstUtmMedium,
     first_utm_campaign: attribution.firstUtmCampaign,

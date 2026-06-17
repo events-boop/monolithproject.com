@@ -1,13 +1,20 @@
-export function readPath(payload: Record<string, unknown>, pathParts: string[]) {
+export function readPath(
+  payload: Record<string, unknown>,
+  pathParts: string[]
+) {
   let current: unknown = payload;
   for (const part of pathParts) {
-    if (typeof current !== "object" || current === null || !(part in current)) return undefined;
+    if (typeof current !== "object" || current === null || !(part in current))
+      return undefined;
     current = (current as Record<string, unknown>)[part];
   }
   return current;
 }
 
-export function pickString(payload: Record<string, unknown>, candidates: string[]) {
+export function pickString(
+  payload: Record<string, unknown>,
+  candidates: string[]
+) {
   for (const candidate of candidates) {
     const value = readPath(payload, candidate.split("."));
     if (typeof value === "string") {

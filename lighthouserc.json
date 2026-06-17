@@ -1,14 +1,14 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "npm run start",
+      "startServerCommand": "PORT=3001 HOST=127.0.0.1 NODE_ENV=production node dist/index.js",
       "url": [
-        "http://localhost:3001/",
-        "http://localhost:3001/tickets",
-        "http://localhost:3001/radio",
-        "http://localhost:3001/booking",
-        "http://localhost:3001/partners",
-        "http://localhost:3001/archive"
+        "http://127.0.0.1:3001/",
+        "http://127.0.0.1:3001/tickets",
+        "http://127.0.0.1:3001/radio",
+        "http://127.0.0.1:3001/booking",
+        "http://127.0.0.1:3001/partners",
+        "http://127.0.0.1:3001/archive"
       ],
       "numberOfRuns": 3
     },

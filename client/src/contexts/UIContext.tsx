@@ -77,8 +77,5 @@ export function useUI() {
 }
 
 export function getDrawerTypeForHref(href: string): DrawerType {
-  return (
-    drawerRouteMap[normalizePathname(href)] ??
-    null
-  );
+  return drawerRouteMap[normalizePathname(href)] ?? null;
 }

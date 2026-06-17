@@ -31,11 +31,10 @@ import type { ScheduledEvent } from "@/data/events";
 import { buildArtistSchema } from "@/lib/schema";
 
 const LEGACY_ID_MAP: Record<string, string> = {
-  "1": "haai",
   "3": "lazare",
-  "4": "chus",
+  "4": "joezi",
   "5": "autograf",
-  joezi: "chus",
+  chus: "joezi",
 };
 
 function resolveArtistId(id: string | undefined) {

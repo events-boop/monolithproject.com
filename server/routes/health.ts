@@ -45,30 +45,34 @@ router.get("/health", (_req, res) => {
   sendHealth(res);
 });
 
-router.get("/api/ready", createAdminRouteGuard({ scope: "ready" }), async (_req, res) => {
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
+router.get(
+  "/api/ready",
+  createAdminRouteGuard({ scope: "ready" }),
+  async (_req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 
-  let dbConnected = false;
-  try {
-    if (hasDatabase()) {
-      const db = getDatabase();
-      await db?.execute("SELECT 1");
-      dbConnected = true;
+    let dbConnected = false;
+    try {
+      if (hasDatabase()) {
+        const db = getDatabase();
+        await db?.execute("SELECT 1");
+        dbConnected = true;
+      }
+    } catch (e) {
+      dbConnected = false;
     }
-  } catch (e) {
-    dbConnected = false;
+
+    const status = dbConnected || !hasDatabase() ? 200 : 503;
+
+    res.status(status).json({
+      ok: status === 200,
+      database: {
+        configured: hasDatabase(),
+        connected: dbConnected,
+      },
+    });
   }
-
-  const status = dbConnected || !hasDatabase() ? 200 : 503;
-
-  res.status(status).json({ 
-    ok: status === 200,
-    database: {
-      configured: hasDatabase(),
-      connected: dbConnected,
-    }
-  });
-});
+);
 
 export default router;

@@ -12,8 +12,12 @@ export default function FixedTicketBadge() {
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
   // Pre-launch: Posh is in draft — route to the Lake List, not the ticket page.
-  const href = SUNSETS_PRELAUNCH_LOCKED ? "/sunsets" : SUNSETS_JULY4_TICKET_PATH;
-  const label = SUNSETS_PRELAUNCH_LOCKED ? "Join the Lake List" : SUNSETS_TICKET_CTA_LABEL;
+  const href = SUNSETS_PRELAUNCH_LOCKED
+    ? "/sunsets"
+    : SUNSETS_JULY4_TICKET_PATH;
+  const label = SUNSETS_PRELAUNCH_LOCKED
+    ? "Join the Lake List"
+    : SUNSETS_TICKET_CTA_LABEL;
   const ring = SUNSETS_PRELAUNCH_LOCKED
     ? "Join the Lake List • First Access • Join the Lake List •"
     : "Buy Tickets • July 4 • Posh • Buy Tickets •";

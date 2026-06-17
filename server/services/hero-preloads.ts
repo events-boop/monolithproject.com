@@ -15,8 +15,16 @@ export function normalizeAppPath(pathname: string) {
   return clean || "/";
 }
 
-export function buildGeneratedImageSrcSet(baseName: string, widths: number[], extension: "avif" | "webp") {
-  return widths.map((width) => `/images/generated/${baseName}-${width}.${extension} ${width}w`).join(", ");
+export function buildGeneratedImageSrcSet(
+  baseName: string,
+  widths: number[],
+  extension: "avif" | "webp"
+) {
+  return widths
+    .map(
+      width => `/images/generated/${baseName}-${width}.${extension} ${width}w`
+    )
+    .join(", ");
 }
 
 export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
@@ -27,7 +35,11 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
       {
         href: "/images/generated/hero-video-1-poster-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("hero-video-1-poster", HERO_PRELOAD_WIDTHS, "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet(
+          "hero-video-1-poster",
+          HERO_PRELOAD_WIDTHS,
+          "avif"
+        ),
         type: "image/avif",
       },
     ];
@@ -38,7 +50,11 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
       {
         href: "/images/generated/chasing-sunsets-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("chasing-sunsets", HERO_PRELOAD_WIDTHS, "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet(
+          "chasing-sunsets",
+          HERO_PRELOAD_WIDTHS,
+          "avif"
+        ),
         type: "image/avif",
       },
     ];
@@ -49,7 +65,11 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
       {
         href: "/images/generated/untold-story-juany-deron-v2-1024.avif",
         imageSizes: "100vw",
-        imageSrcSet: buildGeneratedImageSrcSet("untold-story-juany-deron-v2", HERO_PRELOAD_WIDTHS, "avif"),
+        imageSrcSet: buildGeneratedImageSrcSet(
+          "untold-story-juany-deron-v2",
+          HERO_PRELOAD_WIDTHS,
+          "avif"
+        ),
         type: "image/avif",
       },
     ];
@@ -66,7 +86,7 @@ export function renderHeroPreloadLinks(pathname: string) {
   }
 
   return specs
-    .map((spec) => {
+    .map(spec => {
       const attrs = [
         'rel="preload"',
         'as="image"',

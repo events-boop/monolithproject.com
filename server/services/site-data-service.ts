@@ -1,6 +1,9 @@
 import { createHash } from "crypto";
 import { readPublicScheduledEvents } from "../db/scheduledEventsRepo";
-import { buildPublicSiteData, normalizePublicSitePath } from "../data/public-site-data";
+import {
+  buildPublicSiteData,
+  normalizePublicSitePath,
+} from "../data/public-site-data";
 import { logEvent } from "../lib/logging";
 import type { ScheduledEvent, PublicSiteData } from "../../shared/events/types";
 
@@ -18,13 +21,13 @@ type CachedSiteDataResponse = {
 class SiteDataService {
   private static instance: SiteDataService;
   private readonly MAX_CACHED_RESPONSES = 64;
-  
+
   private cachedEvents: ScheduledEvent[] | null = null;
   private cachedResponses = new Map<string, CachedSiteDataResponse>();
   private lastFetchTime: number = 0;
   private isRefreshing: boolean = false;
   private refreshPromise: Promise<void> | null = null;
-  
+
   // Cache TTL: 60 seconds. Stale period: High (background refresh)
   private readonly TTL_MS = 60 * 1000;
 
@@ -46,7 +49,9 @@ class SiteDataService {
     return response.payload;
   }
 
-  public async getSiteDataResponse(path: string): Promise<CachedSiteDataResponse> {
+  public async getSiteDataResponse(
+    path: string
+  ): Promise<CachedSiteDataResponse> {
     const normalizedPath = normalizePublicSitePath(path);
     const events = await this.getEventsWithSWR();
     const cachedResponse = this.cachedResponses.get(normalizedPath);
@@ -109,16 +114,16 @@ class SiteDataService {
   private async refreshCache(): Promise<void> {
     this.isRefreshing = true;
     const startTime = Date.now();
-    
+
     try {
       const events = await readPublicScheduledEvents();
       this.cachedEvents = events;
       this.cachedResponses.clear();
       this.lastFetchTime = Date.now();
-      
-      logEvent("site_data.cache_refreshed", { 
+
+      logEvent("site_data.cache_refreshed", {
         latency: Date.now() - startTime,
-        count: events.length 
+        count: events.length,
       });
     } finally {
       this.isRefreshing = false;

@@ -11,7 +11,7 @@ router.use("/api/ops", createAdminRouteGuard({ scope: "ops" }));
 
 /**
  * Audit Log: Manual Cache Invalidation
- * Used by editors to force an Edge/Origin refresh for 
+ * Used by editors to force an Edge/Origin refresh for
  * time-sensitive schedule drops.
  */
 router.post(
@@ -19,11 +19,11 @@ router.post(
   asyncHandler(async (_req, res) => {
     siteDataService.invalidate();
     logEvent("admin.cache_invalidated", { timestamp: Date.now() });
-    
+
     res.json({
       ok: true,
       message: "Global site-data cache cleared successfully.",
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   })
 );
@@ -41,13 +41,13 @@ router.get(
         fid: "0.2ms",
         cls: "0.01",
         inp: "40ms",
-        p75_mobile: "1.5s"
+        p75_mobile: "1.5s",
       },
       budgets: {
         js_total: "1.0MB",
         img_limit: "400KB",
-        render: "Edge Hybrid"
-      }
+        render: "Edge Hybrid",
+      },
     });
   })
 );

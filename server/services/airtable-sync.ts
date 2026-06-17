@@ -30,7 +30,9 @@ function readEnv(name: string) {
 
 function isExplicitlyDisabled() {
   const value = readEnv("AIRTABLE_SYNC_ENABLED").toLowerCase();
-  return value === "false" || value === "0" || value === "off" || value === "no";
+  return (
+    value === "false" || value === "0" || value === "off" || value === "no"
+  );
 }
 
 function readConfig(): AirtableSyncConfig | null {
@@ -38,7 +40,8 @@ function readConfig(): AirtableSyncConfig | null {
 
   const apiKey = readEnv("AIRTABLE_API_KEY");
   const baseId = readEnv("AIRTABLE_BASE_ID");
-  const leadsTable = readEnv("AIRTABLE_LEADS_TABLE_ID") || readEnv("AIRTABLE_LEADS_TABLE_NAME");
+  const leadsTable =
+    readEnv("AIRTABLE_LEADS_TABLE_ID") || readEnv("AIRTABLE_LEADS_TABLE_NAME");
 
   if (!apiKey || !baseId || !leadsTable) {
     return null;
@@ -48,7 +51,8 @@ function readConfig(): AirtableSyncConfig | null {
     apiKey,
     baseId,
     leadsTable,
-    apiBaseUrl: readEnv("AIRTABLE_API_BASE_URL") || DEFAULT_AIRTABLE_API_BASE_URL,
+    apiBaseUrl:
+      readEnv("AIRTABLE_API_BASE_URL") || DEFAULT_AIRTABLE_API_BASE_URL,
   };
 }
 
@@ -63,7 +67,9 @@ function buildAirtableUrl(config: AirtableSyncConfig) {
 
 function compactFields(fields: Record<string, string | undefined>) {
   return Object.fromEntries(
-    Object.entries(fields).filter(([, value]) => value !== undefined && value !== ""),
+    Object.entries(fields).filter(
+      ([, value]) => value !== undefined && value !== ""
+    )
   );
 }
 
@@ -113,7 +119,9 @@ function buildLeadFields(input: AirtableLeadMirrorInput) {
   });
 }
 
-export async function mirrorLeadToAirtable(input: AirtableLeadMirrorInput): Promise<void> {
+export async function mirrorLeadToAirtable(
+  input: AirtableLeadMirrorInput
+): Promise<void> {
   const config = readConfig();
   if (!config) return;
 

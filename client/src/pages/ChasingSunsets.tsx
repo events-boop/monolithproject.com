@@ -123,7 +123,10 @@ function shouldOpenInNewTab(url?: string | null) {
   return !!url && /^https?:\/\//i.test(url);
 }
 
-function trackSunsetsTicketLink(href?: string | null, ctaPosition: "primary" | "secondary" = "secondary") {
+function trackSunsetsTicketLink(
+  href?: string | null,
+  ctaPosition: "primary" | "secondary" = "secondary"
+) {
   if (href !== SUNSETS_JULY4_TICKET_PATH) return;
   captureSunsetsTicketCtaClick({
     destinationUrl: appendAttributionQueryParams(href),
@@ -213,7 +216,9 @@ export default function ChasingSunsets() {
                 data-chasing-episode="true"
                 className="mb-3 block font-mono text-xs uppercase tracking-[0.22em] text-white/90 sm:mb-5 sm:text-sm"
               >
-                {featuredChasingEvent ? featuredChasingEvent.episode : "SUN(SETS) I"}
+                {featuredChasingEvent
+                  ? featuredChasingEvent.episode
+                  : "SUN(SETS) I"}
               </span>
               <h1
                 id="chasing-hero-title"
@@ -246,7 +251,9 @@ export default function ChasingSunsets() {
 
               <div className="max-w-2xl">
                 <p className="mb-4 text-base leading-relaxed text-white/92 sm:text-lg">
-                  Chasing Sun(Sets) returns home to the lake this July 4th at Castaways Beach Club. Golden hour. House music. Lake Michigan. The skyline behind you.
+                  Chasing Sun(Sets) returns home to the lake this July 4th at
+                  Castaways Beach Club. Golden hour. House music. Lake Michigan.
+                  The skyline behind you.
                 </p>
                 <p className="mb-4 max-w-xl text-sm font-semibold uppercase tracking-[0.16em] text-[#f4d58d]">
                   Watch the sun. Stay for the sets.
@@ -291,7 +298,9 @@ export default function ChasingSunsets() {
                   "Autograf",
                   "Kiko Franco",
                   "The Lake Has A Limit",
-                  SUNSETS_PRELAUNCH_LOCKED ? "Tables / Cabanas" : "Tables From $2,000",
+                  SUNSETS_PRELAUNCH_LOCKED
+                    ? "Tables / Cabanas"
+                    : "Tables From $2,000",
                 ].map(pill => (
                   <span
                     key={pill}
@@ -336,7 +345,10 @@ export default function ChasingSunsets() {
                   "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
-                SUN(SETS) I opens the 2026 lakefront chapter on July 4 at Castaways. The ticket ladder is live: early arrival, Lake List first access, public GA tiers, group bundles, and a separate table/cabana rail.
+                SUN(SETS) I opens the 2026 lakefront chapter on July 4 at
+                Castaways. The ticket ladder is live: early arrival, Lake List
+                first access, public GA tiers, group bundles, and a separate
+                table/cabana rail.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <span className="rounded-full border border-[#14B8A6]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">
@@ -357,9 +369,19 @@ export default function ChasingSunsets() {
                 {primarySeasonExternal ? (
                   <a
                     href={primarySeasonHref}
-                    target={shouldOpenInNewTab(primarySeasonHref) ? "_blank" : undefined}
-                    rel={shouldOpenInNewTab(primarySeasonHref) ? "noopener noreferrer" : undefined}
-                    onClick={() => trackSunsetsTicketLink(primarySeasonHref, "secondary")}
+                    target={
+                      shouldOpenInNewTab(primarySeasonHref)
+                        ? "_blank"
+                        : undefined
+                    }
+                    rel={
+                      shouldOpenInNewTab(primarySeasonHref)
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    onClick={() =>
+                      trackSunsetsTicketLink(primarySeasonHref, "secondary")
+                    }
                     className="btn-pill-sunsets inline-flex items-center justify-center"
                   >
                     {isTicketOnSale(featuredChasingEvent)
@@ -370,7 +392,9 @@ export default function ChasingSunsets() {
                 ) : (
                   <Link
                     href={primarySeasonHref}
-                    onClick={() => trackSunsetsTicketLink(primarySeasonHref, "secondary")}
+                    onClick={() =>
+                      trackSunsetsTicketLink(primarySeasonHref, "secondary")
+                    }
                     className="btn-pill-sunsets inline-flex items-center justify-center"
                   >
                     {isTicketOnSale(featuredChasingEvent)
@@ -474,10 +498,15 @@ export default function ChasingSunsets() {
             >
               <article className="border border-[#C2703E]/16 bg-white/72 p-6 shadow-[0_20px_48px_rgba(44,24,16,0.06)] md:p-8">
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  This July 4th, The Monolith Project brings Chasing Sun(Sets) back to where the story belongs: the Chicago lakefront. A full-day house music experience moves from daytime energy into golden hour and the final sunset set.
+                  This July 4th, The Monolith Project brings Chasing Sun(Sets)
+                  back to where the story belongs: the Chicago lakefront. A
+                  full-day house music experience moves from daytime energy into
+                  golden hour and the final sunset set.
                 </p>
                 <p className="mt-5 leading-relaxed sunset-text-70">
-                  This is not a holiday party. It is the return of a Chicago summer ritual: open air, skyline views, house music, and a crowd built around connection.
+                  This is not a holiday party. It is the return of a Chicago
+                  summer ritual: open air, skyline views, house music, and a
+                  crowd built around connection.
                 </p>
               </article>
 
@@ -725,21 +754,43 @@ export default function ChasingSunsets() {
                               return ticketExternal ? (
                                 <a
                                   href={ticketHref}
-                                  target={shouldOpenInNewTab(ticketHref) ? "_blank" : undefined}
-                                  rel={shouldOpenInNewTab(ticketHref) ? "noopener noreferrer" : undefined}
-                                  onClick={() => trackSunsetsTicketLink(ticketHref, "secondary")}
+                                  target={
+                                    shouldOpenInNewTab(ticketHref)
+                                      ? "_blank"
+                                      : undefined
+                                  }
+                                  rel={
+                                    shouldOpenInNewTab(ticketHref)
+                                      ? "noopener noreferrer"
+                                      : undefined
+                                  }
+                                  onClick={() =>
+                                    trackSunsetsTicketLink(
+                                      ticketHref,
+                                      "secondary"
+                                    )
+                                  }
                                   className="btn-pill-sunsets btn-pill-compact w-full justify-center"
                                 >
-                                  {event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets}{" "}
+                                  {event.id === "css-jul04"
+                                    ? SUNSETS_TICKET_CTA_LABEL
+                                    : CTA_LABELS.tickets}{" "}
                                   <ArrowUpRight size={14} />
                                 </a>
                               ) : (
                                 <Link
                                   href={ticketHref}
-                                  onClick={() => trackSunsetsTicketLink(ticketHref, "secondary")}
+                                  onClick={() =>
+                                    trackSunsetsTicketLink(
+                                      ticketHref,
+                                      "secondary"
+                                    )
+                                  }
                                   className="btn-pill-sunsets btn-pill-compact w-full justify-center"
                                 >
-                                  {event.id === "css-jul04" ? SUNSETS_TICKET_CTA_LABEL : CTA_LABELS.tickets}{" "}
+                                  {event.id === "css-jul04"
+                                    ? SUNSETS_TICKET_CTA_LABEL
+                                    : CTA_LABELS.tickets}{" "}
                                   <ArrowUpRight size={14} />
                                 </Link>
                               );
@@ -858,7 +909,8 @@ export default function ChasingSunsets() {
                 FAQ / ACCESS
               </h2>
               <p className="mt-4 max-w-xl text-sm leading-relaxed sunset-text-60 md:text-base">
-                The route closes with the practical layer: ticket tiers, arrival windows, table rules, and venue policy.
+                The route closes with the practical layer: ticket tiers, arrival
+                windows, table rules, and venue policy.
               </p>
             </div>
 

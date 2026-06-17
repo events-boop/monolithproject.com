@@ -21,7 +21,9 @@ function readProvidedAdminSecret(req: Request) {
   );
 }
 
-export function createAdminRouteGuard({ scope }: AdminRouteGuardOptions): RequestHandler {
+export function createAdminRouteGuard({
+  scope,
+}: AdminRouteGuardOptions): RequestHandler {
   return (req, res, next) => {
     const configuredSecret = process.env.OPS_ADMIN_SECRET?.trim();
 

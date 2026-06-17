@@ -14,7 +14,11 @@ function getLeadContextUrl(lead: z.infer<typeof leadSchema>) {
 }
 
 function getLayloApiToken() {
-  return process.env.LAYLO_API_TOKEN?.trim() || process.env.LAYLO_API_KEY?.trim() || "";
+  return (
+    process.env.LAYLO_API_TOKEN?.trim() ||
+    process.env.LAYLO_API_KEY?.trim() ||
+    ""
+  );
 }
 
 function normalizeLayloPhone(phone?: string) {
@@ -54,7 +58,7 @@ export function shouldSyncLeadToLaylo(lead: z.infer<typeof leadSchema>) {
     "sunsets_lake_list",
     "sunsets_radio_feature_drops",
     "chasing-sunsets",
-  ].some((intent) => haystack.includes(intent));
+  ].some(intent => haystack.includes(intent));
 }
 
 export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
@@ -62,11 +66,15 @@ export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
   const listId = process.env.MAILCHIMP_LIST_ID;
   const dc = process.env.MAILCHIMP_DC || apiKey?.split("-")[1];
   if (!apiKey || !listId || !dc) {
-    throw new Error("MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID and MAILCHIMP_DC (or key suffix) are required");
+    throw new Error(
+      "MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID and MAILCHIMP_DC (or key suffix) are required"
+    );
   }
 
   const normalizedEmail = scrubEmail(lead.email);
-  const subscriberHash = createHash("md5").update(normalizedEmail).digest("hex");
+  const subscriberHash = createHash("md5")
+    .update(normalizedEmail)
+    .digest("hex");
   const endpoint = `https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members/${subscriberHash}`;
   const attributionSource = getAttributionSource(lead);
   const tags = ["monolith-project", attributionSource];
@@ -94,7 +102,10 @@ export async function subscribeMailchimp(lead: z.infer<typeof leadSchema>) {
 
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    logEvent("provider.mailchimp_error", { status: response.status, detail: data.detail });
+    logEvent("provider.mailchimp_error", {
+      status: response.status,
+      detail: data.detail,
+    });
     throw new Error("Mailchimp subscription failed");
   }
 }
@@ -131,7 +142,10 @@ export async function subscribeBeehiiv(lead: z.infer<typeof leadSchema>) {
 
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    logEvent("provider.beehiiv_error", { status: response.status, detail: data.message });
+    logEvent("provider.beehiiv_error", {
+      status: response.status,
+      detail: data.message,
+    });
     throw new Error("Beehiiv subscription failed");
   }
 }
@@ -140,7 +154,9 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
   const apiKey = process.env.EMAILOCTOPUS_API_KEY;
   const listId = process.env.EMAILOCTOPUS_LIST_ID;
   if (!apiKey || !listId) {
-    throw new Error("EMAILOCTOPUS_API_KEY and EMAILOCTOPUS_LIST_ID are required");
+    throw new Error(
+      "EMAILOCTOPUS_API_KEY and EMAILOCTOPUS_LIST_ID are required"
+    );
   }
 
   const endpoint = `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`;
@@ -164,8 +180,12 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
 
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    if (data.error && data.error.code === "MEMBER_EXISTS_WITH_EMAIL_ADDRESS") return;
-    logEvent("provider.emailoctopus_error", { status: response.status, detail: data.error?.message });
+    if (data.error && data.error.code === "MEMBER_EXISTS_WITH_EMAIL_ADDRESS")
+      return;
+    logEvent("provider.emailoctopus_error", {
+      status: response.status,
+      detail: data.error?.message,
+    });
     throw new Error("EmailOctopus subscription failed");
   }
 }
@@ -176,7 +196,10 @@ export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
     logEvent("provider.brevo_bypassed", {
       reason: bypassReason,
       source: lead.source || "website",
-      emailHash: createHash("sha256").update(scrubEmail(lead.email)).digest("hex").slice(0, 12),
+      emailHash: createHash("sha256")
+        .update(scrubEmail(lead.email))
+        .digest("hex")
+        .slice(0, 12),
     });
     return;
   }
@@ -205,7 +228,10 @@ export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
     const data = await response.json().catch(() => ({}));
     // Ignore if contact already exists (error code duplicate_parameter usually)
     if (data.code === "duplicate_parameter") return;
-    logEvent("provider.brevo_error", { status: response.status, detail: data.message });
+    logEvent("provider.brevo_error", {
+      status: response.status,
+      detail: data.message,
+    });
     throw new Error("Brevo subscription failed");
   }
 }
@@ -216,12 +242,16 @@ export async function subscribeLaylo(lead: z.infer<typeof leadSchema>) {
     logEvent("provider.laylo_bypassed", {
       reason: bypassReason,
       source: lead.source || "website",
-      emailHash: createHash("sha256").update(scrubEmail(lead.email)).digest("hex").slice(0, 12),
+      emailHash: createHash("sha256")
+        .update(scrubEmail(lead.email))
+        .digest("hex")
+        .slice(0, 12),
     });
     return;
   }
 
-  const endpoint = process.env.LAYLO_API_URL?.trim() || "https://laylo.com/api/graphql";
+  const endpoint =
+    process.env.LAYLO_API_URL?.trim() || "https://laylo.com/api/graphql";
   const apiToken = getLayloApiToken();
   const normalizedEmail = scrubEmail(lead.email);
   const phoneNumber = normalizeLayloPhone(lead.phone);
@@ -256,7 +286,10 @@ export async function subscribeLaylo(lead: z.infer<typeof leadSchema>) {
   logEvent("provider.laylo_subscribed", {
     source: lead.source || "website",
     phoneProvided: Boolean(phoneNumber),
-    emailHash: createHash("sha256").update(normalizedEmail).digest("hex").slice(0, 12),
+    emailHash: createHash("sha256")
+      .update(normalizedEmail)
+      .digest("hex")
+      .slice(0, 12),
   });
 }
 
@@ -284,12 +317,19 @@ export async function subscribeConvertKit(lead: z.infer<typeof leadSchema>) {
     }),
   });
 
-  if (response.status === 200 || response.status === 201 || response.status === 409) {
+  if (
+    response.status === 200 ||
+    response.status === 201 ||
+    response.status === 409
+  ) {
     return;
   }
 
   const data = await response.json().catch(() => ({}));
-  logEvent("provider.convertkit_error", { status: response.status, detail: data.message });
+  logEvent("provider.convertkit_error", {
+    status: response.status,
+    detail: data.message,
+  });
   throw new Error("ConvertKit subscription failed");
 }
 
@@ -323,12 +363,18 @@ export async function subscribeHubSpot(lead: z.infer<typeof leadSchema>) {
 
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
-    logEvent("provider.hubspot_error", { status: response.status, detail: data.inlineMessage || data.message });
+    logEvent("provider.hubspot_error", {
+      status: response.status,
+      detail: data.inlineMessage || data.message,
+    });
     throw new Error("HubSpot submission failed");
   }
 }
 
-export async function subscribeLead(provider: LeadProvider, lead: z.infer<typeof leadSchema>) {
+export async function subscribeLead(
+  provider: LeadProvider,
+  lead: z.infer<typeof leadSchema>
+) {
   if (provider === "disabled") return;
   if (provider === "mailchimp") return subscribeMailchimp(lead);
   if (provider === "beehiiv") return subscribeBeehiiv(lead);

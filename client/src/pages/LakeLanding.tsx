@@ -168,18 +168,17 @@ export default function LakeLanding() {
         title: chapter.title,
         date: chapter.date,
         place: chapter.venue,
-        status:
-          SUNSETS_PRELAUNCH_LOCKED
-            ? index === 0
-              ? "July 4 · first access"
-              : index === 1
-                ? "August · first access"
-                : "September · first access"
-            : index === 0
-              ? "July 4 tickets"
-              : index === 1
-                ? "August tickets"
-                : "September tickets",
+        status: SUNSETS_PRELAUNCH_LOCKED
+          ? index === 0
+            ? "July 4 · first access"
+            : index === 1
+              ? "August · first access"
+              : "September · first access"
+          : index === 0
+            ? "July 4 tickets"
+            : index === 1
+              ? "August tickets"
+              : "September tickets",
         action: SUNSETS_PRELAUNCH_LOCKED
           ? "JOIN LAKE LIST"
           : index === 0
@@ -492,8 +491,8 @@ export default function LakeLanding() {
                     Join the Lake List
                   </h2>
                   <p className="mt-1 text-xs leading-relaxed text-stone-300">
-                    Artist drops, ticket releases, and location
-                    signals before the public.
+                    Artist drops, ticket releases, and location signals before
+                    the public.
                   </p>
                 </div>
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#ff6b8a] text-black">

@@ -110,7 +110,9 @@ const TICKET_RAIL_STATS = [
   },
   {
     label: "Tables",
-    value: SUNSETS_PRELAUNCH_LOCKED ? "By request" : SUNSETS_JULY4_TABLE_MINIMUM,
+    value: SUNSETS_PRELAUNCH_LOCKED
+      ? "By request"
+      : SUNSETS_JULY4_TABLE_MINIMUM,
     note: "limited cabanas",
   },
 ] as const;
@@ -123,7 +125,6 @@ const FEATURED_TICKET_TIERS = SUNSETS_JULY4_ADMISSION_TIERS.filter(tier =>
     "four-pack-group-bundle",
   ].includes(tier.id)
 );
-
 
 export function triggerHaptic(pattern: number | number[] = 10) {
   if (typeof navigator === "undefined" || !("vibrate" in navigator)) return;

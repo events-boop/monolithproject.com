@@ -30,11 +30,9 @@ export interface RadioEpisode {
 
 export const RADIO_SERIES_NAME = "Chasing Sun(Sets) Radio Show";
 
-// autograf/lazare artist profiles were retired with the Kiko-only roster
-// (DECISION A) — send their legacy radio slugs to the radio hub instead.
 export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
-  autograf: "/radio",
-  lazare: "/radio",
+  autograf: "/artists/autograf",
+  lazare: "/artists/lazare",
   "eran-hersh": "/story",
 };
 
