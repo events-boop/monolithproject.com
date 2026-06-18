@@ -60,6 +60,7 @@ export {
 
 export type TicketCtaPosition =
   | "primary"
+  | "hero_primary"
   | "chapter"
   | "footer"
   | "secondary"

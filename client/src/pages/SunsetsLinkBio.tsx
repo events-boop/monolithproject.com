@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
   trackLakeInitiateCheckout,
@@ -258,12 +259,18 @@ export default function SunsetsLinkBio() {
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
           </p>
-          <h1 className="mt-2 font-black leading-[0.9] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]">
-            <span className="block whitespace-nowrap text-[clamp(2.05rem,10vw,3.45rem)]">
-              CHASING SUN<span className="text-[#E8B86D]">(</span>SETS
+          <h1
+            className="mt-2 font-black leading-[0.82] tracking-normal text-white drop-shadow-[0_8px_26px_rgba(0,0,0,0.72)]"
+            aria-label="Chasing Sun(Sets) 2026"
+          >
+            <span className="block text-[clamp(2.6rem,15vw,4.15rem)]">
+              CHASING
+            </span>
+            <span className="mt-0.5 block text-[clamp(2.35rem,13vw,3.75rem)]">
+              SUN<span className="text-[#E8B86D]">(</span>SETS
               <span className="text-[#E8B86D]">)</span>
             </span>
-            <span className="mt-1 block whitespace-nowrap text-[clamp(1.5rem,7vw,2.5rem)] text-[#E8B86D]">
+            <span className="mt-2 block whitespace-nowrap text-[clamp(1.35rem,6.5vw,2.15rem)] text-[#E8B86D]">
               2026
             </span>
           </h1>
@@ -478,7 +485,7 @@ export default function SunsetsLinkBio() {
               confirmed manually
             </p>
             <a
-              href="/vip"
+              href={ROUTES.vip}
               onClick={() => {
                 triggerHaptic(8);
                 trackSunsetsClick({
