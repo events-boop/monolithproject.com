@@ -522,11 +522,12 @@ function App() {
               <MainContentWrapper />
 
               <DeferredGlobalModules />
+              {/* Seedance popup temporarily disabled 
               {showOfferPopup && (
                 <Suspense fallback={null}>
                   <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
                 </Suspense>
-              )}
+              )} */}
             </InquiryProvider>
           </UIProvider>
         </ThemeProvider>
