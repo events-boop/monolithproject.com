@@ -111,8 +111,8 @@ export default function Tickets() {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <SEO
-          title="Tickets Coming Soon — SUN(SETS) July 4"
-          description="Official ticket link for SUN(SETS) July 4 at Castaways is coming soon. Join the Lake List for First Access."
+          title="SUN(SETS) I — July 4 Tickets | Sunsets.vip"
+          description="Official tickets for SUN(SETS) July 4 at Castaways Beach Club. Autograf, Kiko Franco, Amari, Jewels (Le Yora), and more. Tickets on sale now via Posh."
         />
         <Navigation />
         <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
@@ -120,11 +120,11 @@ export default function Tickets() {
             SUN(SETS) — JULY 4, 2026
           </p>
           <h1 className="text-3xl font-black tracking-tight text-white">
-            TICKETS COMING SOON
+            SUN(SETS) I — JULY 4 TICKETS
           </h1>
           <p className="text-sm leading-relaxed text-stone-400">
-            The official Posh ticket link will be live shortly. Join the Lake
-            List to get First Access before the public release.
+            Tickets are on sale now via Posh. Join the Lake List for first
+            access to SUN(SETS) II + III and the limited 2026 Season Pass.
           </p>
           <Link
             href="/go/waitlist/chasing-sunsets"
@@ -144,8 +144,8 @@ export default function Tickets() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="Tickets"
-        description="Secure your spot for the next Monolith Project event. Limited capacity available."
+          title="SUN(SETS) I — Tickets | Chasing Sun(Sets) July 4"
+          description="Official Posh tickets for SUN(SETS) July 4 at Castaways Beach Club, Chicago. Autograf, Kiko Franco, Amari, and more. Open-air house on the lakefront."
       />
       {featuredEventSchema ? <JsonLd data={featuredEventSchema} /> : null}
       <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />
