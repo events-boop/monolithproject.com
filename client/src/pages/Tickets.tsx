@@ -112,7 +112,7 @@ export default function Tickets() {
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <SEO
           title="SUN(SETS) I — July 4 Tickets | Sunsets.vip"
-          description="Official tickets for SUN(SETS) July 4 at Castaways Beach Club. Autograf, Kiko Franco, Amari, Jewels (Le Yora), and more. Tickets on sale now via Posh."
+          description="Official tickets for SUN(SETS) July 4 at Castaways Beach Club. Autograf, Kiko Franco, Amari, and more. Tickets on sale now via Posh."
         />
         <Navigation />
         <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
@@ -145,7 +145,7 @@ export default function Tickets() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
           title="SUN(SETS) I — Tickets | Chasing Sun(Sets) July 4"
-          description="Official Posh tickets for SUN(SETS) July 4 at Castaways Beach Club, Chicago. Autograf, Kiko Franco, Amari, and more. Open-air house on the lakefront."
+          description="Official Posh tickets for SUN(SETS) July 4 at Castaways Beach Club, Chicago. Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, Erik The DJ."
       />
       {featuredEventSchema ? <JsonLd data={featuredEventSchema} /> : null}
       <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />

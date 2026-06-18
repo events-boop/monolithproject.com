@@ -49,7 +49,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_JULY4_EVENT_DATE,
     eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Autograf x Kiko Franco x Jewels",
+    lineup: "Autograf x Kiko Franco x Amari",
     ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
@@ -113,12 +113,23 @@ export const SUNSETS_JULY4_TICKET_UTMS = {
 export const SUNSETS_JULY4_LINEUP = [
   "Autograf",
   "Kiko Franco",
-  "Jewels (Le Yora)",
   "Amari",
   "Gianni Blu",
   "Jerome b3b Colin b3b Nomar",
   "Frank Bono",
   "Erik The DJ",
+] as const;
+
+export const SUNSETS_JULY4_SET_TIMES = [
+  { time: "12:00 PM", label: "Doors / Event Begins" },
+  { time: "2:00 PM — 3:00 PM", label: "Jerome b3b Colin b3b Nomar" },
+  { time: "3:00 PM — 4:00 PM", label: "Erik The DJ" },
+  { time: "4:00 PM — 5:00 PM", label: "Frank Bono" },
+  { time: "5:00 PM — 6:00 PM", label: "Gianni Blu" },
+  { time: "6:00 PM — 7:15 PM", label: "Amari" },
+  { time: "7:15 PM — 8:45 PM", label: "Kiko Franco" },
+  { time: "8:45 PM — 10:00 PM", label: "Autograf — Closing Set" },
+  { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 // The three top-billed names featured in announcements + the /sunsets hero.
 export const SUNSETS_JULY4_HEADLINERS = [
