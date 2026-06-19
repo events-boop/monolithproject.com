@@ -328,7 +328,7 @@ export default function SunsetsLinkBio() {
           <a
             href={ticketHref}
             onClick={handleTicketClick}
-            className="flex h-[52px] min-h-[52px] items-center justify-center gap-2 bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition hover:bg-[#f4d58d]"
+            className="flex h-[52px] min-h-[52px] items-center justify-center gap-2 bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition hover:bg-[#d4a574]"
           >
             GET JULY 4 TICKETS <span aria-hidden="true">→</span>
           </a>

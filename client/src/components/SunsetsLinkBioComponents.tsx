@@ -87,7 +87,7 @@ const SOMMERS_SOUNDCLOUD_URL =
   "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeURIComponent(
   SOMMERS_SOUNDCLOUD_URL
-)}&color=%2361e8ff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
+)}&color=%23E8B86D&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
 
 const HERO_SIGNAL_STATS = [
   { label: "Date", value: "July 4", note: "Saturday" },
@@ -142,7 +142,7 @@ export function ArtPlaceholder({
   return (
     <div
       aria-hidden="true"
-      className={`relative flex items-center justify-center overflow-hidden border border-dashed border-[#61e8ff]/45 bg-[repeating-linear-gradient(45deg,rgba(97,232,255,0.14)_0,rgba(97,232,255,0.14)_9px,rgba(10,16,36,0.48)_9px,rgba(10,16,36,0.48)_18px)] ${className}`}
+      className={`relative flex items-center justify-center overflow-hidden border border-dashed border-[#E8B86D]/45 bg-[repeating-linear-gradient(45deg,rgba(97,232,255,0.14)_0,rgba(97,232,255,0.14)_9px,rgba(10,16,36,0.48)_9px,rgba(10,16,36,0.48)_18px)] ${className}`}
     >
       <span className="pointer-events-none px-2 text-center text-[8px] font-black uppercase leading-tight tracking-[0.22em] text-[#d9fbff]">
         ART · {label}
@@ -335,7 +335,7 @@ export function LakeListForm() {
         onChange={event => setHoneypotValue(event.currentTarget.value)}
       />
       <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#ff6b8a]/40">
-        <Mail className="size-4 text-[#61e8ff]" />
+        <Mail className="size-4 text-[#E8B86D]" />
         <span className="sr-only">Email</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -348,7 +348,7 @@ export function LakeListForm() {
         />
       </label>
       <label className="flex items-center gap-2 bg-white/[0.11] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#ff6b8a]/40">
-        <Phone className="size-4 text-[#61e8ff]" />
+        <Phone className="size-4 text-[#E8B86D]" />
         <span className="sr-only">Phone</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -487,8 +487,8 @@ export function FeaturedDropSignup() {
         value={honeypotValue}
         onChange={event => setHoneypotValue(event.currentTarget.value)}
       />
-      <label className="flex items-center gap-2 bg-white/[0.10] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#61e8ff]/45">
-        <Mail className="size-4 text-[#61e8ff]" />
+      <label className="flex items-center gap-2 bg-white/[0.10] px-3 py-3 text-sm text-stone-300 ring-1 ring-white/10 focus-within:ring-[#E8B86D]/45">
+        <Mail className="size-4 text-[#E8B86D]" />
         <span className="sr-only">Email for featured set drops</span>
         <input
           className="w-full bg-transparent text-base outline-none placeholder:text-stone-400 sm:text-sm"
@@ -510,7 +510,7 @@ export function FeaturedDropSignup() {
         </div>
       ) : null}
       <Button
-        className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff] disabled:opacity-60"
+        className="h-12 w-full bg-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d4a574] disabled:opacity-60"
         disabled={isSubmitting}
         type="submit"
       >
@@ -618,7 +618,7 @@ Permission to feature on Sun(Sets) Radio: ${permission}
       <div className="max-h-[92svh] w-full max-w-[460px] overflow-y-auto border border-white/15 bg-[#0a1024] shadow-2xl shadow-black/70">
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#0a1024]/95 p-4 backdrop-blur">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#E8B86D]">
               Sun(Sets) Radio
             </p>
             <h2
@@ -762,7 +762,7 @@ export function FormInput({
         {label}
       </span>
       <input
-        className="w-full border border-white/10 bg-white/[0.06] px-3 py-3 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-[#61e8ff]/50"
+        className="w-full border border-white/10 bg-white/[0.06] px-3 py-3 text-sm text-white outline-none transition placeholder:text-stone-500 focus:border-[#E8B86D]/50"
         type={type}
         value={value}
         placeholder={placeholder}
@@ -792,7 +792,7 @@ export function SelectField({
         {label}
       </span>
       <select
-        className="w-full border border-white/10 bg-[#0e1730] px-3 py-3 text-sm text-white outline-none transition focus:border-[#61e8ff]/50"
+        className="w-full border border-white/10 bg-[#0a0a0a] px-3 py-3 text-sm text-white outline-none transition focus:border-[#E8B86D]/50"
         value={value}
         required={required}
         onChange={event => onChange(event.currentTarget.value)}

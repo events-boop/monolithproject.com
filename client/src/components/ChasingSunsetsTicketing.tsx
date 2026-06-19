@@ -121,19 +121,19 @@ export default function ChasingSunsetsTicketing({
   return (
     <section
       data-featured-event-id={pricingEvent?.id}
-      className="relative overflow-hidden border-y border-[#f4d58d]/22 bg-[#080a07] px-6 py-20 text-white md:py-28"
+      className="relative overflow-hidden border-y border-[#E8B86D]/22 bg-[#0a0a0a] px-6 py-20 text-white md:py-28"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(244,213,141,0.16),rgba(8,10,7,0)_34%),radial-gradient(circle_at_82%_22%,rgba(20,184,166,0.13),transparent_30%),linear-gradient(180deg,#080a07_0%,#11150f_52%,#080a07_100%)]" />
-      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#f4d58d]/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(244,213,141,0.16),rgba(8,10,7,0)_34%),radial-gradient(circle_at_82%_22%,rgba(20,184,166,0.13),transparent_30%),linear-gradient(180deg,#0a0a0a_0%,#11150f_52%,#0a0a0a_100%)]" />
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#E8B86D]/70 to-transparent" />
 
       <div className="container layout-wide relative z-10">
         <div className="grid gap-10 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] xl:items-end">
           <div>
-            <span className="inline-flex items-center gap-2 border border-[#f4d58d]/28 bg-[#f4d58d]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+            <span className="inline-flex items-center gap-2 border border-[#E8B86D]/28 bg-[#E8B86D]/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
               <Ticket className="h-3.5 w-3.5" /> Ticketing / Access
             </span>
             <h2 className="mt-5 font-display text-[clamp(3.1rem,6.4vw,6.8rem)] uppercase leading-[0.84] tracking-normal text-white">
-              SUN(SETS) I<span className="block text-[#f4d58d]">July 4th</span>
+              SUN(SETS) I<span className="block text-[#E8B86D]">July 4th</span>
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/82 md:text-xl">
               Chasing Sun(Sets) returns home to the lake for a full-day house
@@ -144,7 +144,7 @@ export default function ChasingSunsetsTicketing({
               <a
                 href={ticketHref}
                 onClick={() => handleTicketClick("primary")}
-                className="inline-flex min-h-14 items-center justify-center gap-3 bg-[#f4d58d] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
+                className="inline-flex min-h-14 items-center justify-center gap-3 bg-[#E8B86D] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
               >
                 <Ticket className="h-4 w-4" />
                 {SUNSETS_TICKET_CTA_LABEL}
@@ -162,7 +162,7 @@ export default function ChasingSunsetsTicketing({
                   });
                   setLocation("/vip");
                 }}
-                className="inline-flex min-h-14 items-center justify-center gap-3 border border-white/18 bg-white/[0.06] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:border-[#f4d58d]/60 hover:bg-white/[0.1]"
+                className="inline-flex min-h-14 items-center justify-center gap-3 border border-white/18 bg-white/[0.06] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:border-[#E8B86D]/60 hover:bg-white/[0.1]"
               >
                 <Users className="h-4 w-4" />
                 Tables / Cabanas
@@ -180,7 +180,7 @@ export default function ChasingSunsetsTicketing({
                 key={stat.label}
                 className="border border-white/12 bg-white/[0.055] p-5"
               >
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#f4d58d]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#E8B86D]">
                   {stat.label}
                 </p>
                 <p className="mt-3 font-display text-[clamp(1.85rem,3vw,3rem)] uppercase leading-none text-white">
@@ -214,10 +214,10 @@ export default function ChasingSunsetsTicketing({
         </div>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
-          <div className="border border-[#f4d58d]/22 bg-[#f4d58d]/10 p-5 lg:col-span-2">
+          <div className="border border-[#E8B86D]/22 bg-[#E8B86D]/10 p-5 lg:col-span-2">
             <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
                   Final Ticket Tiers
                 </p>
                 <h3 className="mt-3 font-display text-[clamp(2rem,4vw,4rem)] uppercase leading-[0.88] text-white">
@@ -232,18 +232,18 @@ export default function ChasingSunsetsTicketing({
             </p>
             <dl className="mt-4 space-y-3 text-sm text-white/70">
               <div className="flex gap-3">
-                <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-[#E8B86D]" />
                 <div>
                   <dt className="sr-only">Title</dt>
                   <dd>{SUNSETS_JULY4_EVENT_TITLE}</dd>
                 </div>
               </div>
               <div className="flex gap-3">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#E8B86D]" />
                 <dd>{SUNSETS_JULY4_EVENT_TIME}</dd>
               </div>
               <div className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#E8B86D]" />
                 <dd>
                   {SUNSETS_JULY4_EVENT_VENUE} · {SUNSETS_JULY4_EVENT_LOCATION}
                   <span className="block text-white/42">
@@ -261,7 +261,7 @@ export default function ChasingSunsetsTicketing({
               key={tier.id}
               className={`border p-5 transition hover:-translate-y-1 ${
                 tier.highlight
-                  ? "border-[#f4d58d]/50 bg-[#f4d58d]/12 shadow-[0_24px_70px_rgba(244,213,141,0.12)]"
+                  ? "border-[#E8B86D]/50 bg-[#E8B86D]/12 shadow-[0_24px_70px_rgba(244,213,141,0.12)]"
                   : "border-white/12 bg-white/[0.055]"
               }`}
             >
@@ -290,7 +290,7 @@ export default function ChasingSunsetsTicketing({
                 <span>{tier.timing}</span>
               </div>
               {tier.rule && !SUNSETS_PRELAUNCH_LOCKED ? (
-                <p className="mt-4 border-l-2 border-[#f4d58d]/55 pl-3 text-xs font-semibold leading-relaxed text-[#f8e7b3]">
+                <p className="mt-4 border-l-2 border-[#E8B86D]/55 pl-3 text-xs font-semibold leading-relaxed text-[#f8e7b3]">
                   {tier.rule}
                 </p>
               ) : null}
@@ -342,7 +342,7 @@ export default function ChasingSunsetsTicketing({
                 });
                 setLocation("/vip");
               }}
-              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f4d58d]"
+              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#E8B86D]"
             >
               Request Table / Cabana <ArrowRight className="h-4 w-4" />
             </button>
@@ -351,7 +351,7 @@ export default function ChasingSunsetsTicketing({
           <article className="border border-white/12 bg-white/[0.055] p-6 md:p-7">
             <div className="grid gap-6 md:grid-cols-2">
               <div>
-                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#f4d58d]">
+                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
                   <Waves className="h-4 w-4" /> Lineup
                 </p>
                 <ul className="mt-5 space-y-3">
@@ -363,7 +363,7 @@ export default function ChasingSunsetsTicketing({
                       {artist === "Kiko Franco" ? (
                         <a
                           href="/artists/kiko-franco"
-                          className="underline-offset-8 transition-colors hover:text-[#f4d58d] hover:underline"
+                          className="underline-offset-8 transition-colors hover:text-[#E8B86D] hover:underline"
                         >
                           {artist}
                         </a>
@@ -384,7 +384,7 @@ export default function ChasingSunsetsTicketing({
                       key={`${slot.time}-${slot.label}`}
                       className="flex gap-3 border-b border-white/8 pb-3 last:border-b-0 last:pb-0"
                     >
-                      <span className="min-w-[9.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#f4d58d]">
+                      <span className="min-w-[9.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#E8B86D]">
                         {slot.time}
                       </span>
                       <span className="text-sm font-semibold text-white/72">
@@ -404,7 +404,7 @@ export default function ChasingSunsetsTicketing({
               key={rule}
               className="flex gap-3 border border-white/10 bg-black/24 p-4 text-sm leading-relaxed text-white/66"
             >
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#f4d58d]" />
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#E8B86D]" />
               <span>{rule}</span>
             </div>
           ))}
@@ -419,7 +419,7 @@ export default function ChasingSunsetsTicketing({
           <a
             href={ticketHref}
             onClick={() => handleTicketClick("footer")}
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 border border-[#f4d58d]/42 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-[#f4d58d] transition hover:bg-[#f4d58d] hover:text-black"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 border border-[#E8B86D]/42 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D] hover:text-black"
           >
             {SUNSETS_TICKET_CTA_LABEL} <ArrowUpRight className="h-4 w-4" />
           </a>

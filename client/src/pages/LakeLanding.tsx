@@ -255,7 +255,7 @@ export default function LakeLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050814] text-stone-100 selection:bg-[#61e8ff] selection:text-black">
+    <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Sun(Sets) Lake List & First Access"
         description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
@@ -269,7 +269,7 @@ export default function LakeLanding() {
           alt=""
           className="h-full w-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,20,0.72)_0%,rgba(5,8,20,0.93)_48%,#050814_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,20,0.72)_0%,rgba(5,8,20,0.93)_48%,#0a0a0a_100%)]" />
       </div>
 
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-4 py-5 sm:py-8">
@@ -289,7 +289,7 @@ export default function LakeLanding() {
             <div className="absolute left-4 top-4 border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
               The Monolith Project
             </div>
-            <div className="absolute right-4 top-4 border border-[#ff6b8a]/30 bg-[#111b2a]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#ff6b8a] backdrop-blur">
+            <div className="absolute right-4 top-4 border border-[#E8B86D]/30 bg-[#111b2a]/75 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#E8B86D] backdrop-blur">
               Lake List
             </div>
 
@@ -299,13 +299,13 @@ export default function LakeLanding() {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="absolute bottom-5 left-5 right-5"
             >
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#61e8ff]">
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#E8B86D]">
                 <Waves className="size-3.5" />
                 Chicago 2026
               </div>
               <h1 className="text-[clamp(3.1rem,16vw,4.3rem)] font-black leading-[0.86] tracking-normal text-white">
-                SUN<span className="text-[#61e8ff]">(</span>SETS
-                <span className="text-[#61e8ff]">)</span>
+                SUN<span className="text-[#E8B86D]">(</span>SETS
+                <span className="text-[#E8B86D]">)</span>
               </h1>
               <p className="mt-3 max-w-[330px] text-sm font-medium leading-relaxed text-stone-200/90">
                 A full-day open-air chapter of house music, lakefront energy,
@@ -322,14 +322,14 @@ export default function LakeLanding() {
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
                 Castaways
               </span>
-              <span className="border border-[#ff6b8a]/25 bg-[#ff6b8a]/10 px-3 py-1 text-xs font-semibold text-[#ff6b8a]">
+              <span className="border border-[#E8B86D]/25 bg-[#E8B86D]/10 px-3 py-1 text-xs font-semibold text-[#E8B86D]">
                 First Access
               </span>
             </div>
 
-            <section className="space-y-4 border border-[#61e8ff]/35 bg-[linear-gradient(145deg,rgba(97,232,255,0.14),rgba(255,255,255,0.045)_48%,rgba(255,107,138,0.10))] p-4">
+            <section className="space-y-4 border border-[#E8B86D]/35 bg-[linear-gradient(145deg,rgba(97,232,255,0.14),rgba(255,255,255,0.045)_48%,rgba(255,107,138,0.10))] p-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#61e8ff]">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#E8B86D]">
                   Season Pass
                 </p>
                 <h2 className="mt-2 text-2xl font-black leading-none tracking-normal text-white">
@@ -353,7 +353,7 @@ export default function LakeLanding() {
                 </div>
                 <div className="text-right">
                   {SUNSETS_PRELAUNCH_LOCKED ? (
-                    <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#61e8ff]">
+                    <p className="text-base font-black uppercase leading-tight tracking-[0.08em] text-[#E8B86D]">
                       Unlocks
                       <br />
                       at launch
@@ -363,7 +363,7 @@ export default function LakeLanding() {
                       {SUNSETS_2026_SEASON_PASS.priceLabel}
                     </p>
                   )}
-                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
+                  <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
                     {SUNSETS_PRELAUNCH_LOCKED
                       ? "Limited"
                       : SUNSETS_2026_SEASON_PASS.quantityLabel}
@@ -381,7 +381,7 @@ export default function LakeLanding() {
                       <span className="text-sm font-black text-white">
                         {chapter.title}
                       </span>
-                      <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#61e8ff]">
+                      <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-[#E8B86D]">
                         {chapter.date}
                       </span>
                     </div>
@@ -395,7 +395,7 @@ export default function LakeLanding() {
 
               <Button
                 asChild
-                className="h-12 w-full bg-[#61e8ff] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#a7f4ff]"
+                className="h-12 w-full bg-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#d4a574]"
               >
                 <a
                   href={SUNSETS_PRELAUNCH_LOCKED ? "#lake-list" : ticketHref}
@@ -467,7 +467,7 @@ export default function LakeLanding() {
                   channel: "Posh",
                 });
               }}
-              className="flex min-h-14 items-center justify-center gap-2 bg-[#61e8ff] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#a7f4ff]"
+              className="flex min-h-14 items-center justify-center gap-2 bg-[#E8B86D] px-4 py-3 text-center text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#d4a574]"
             >
               <Ticket className="size-4" />
               {SUNSETS_PRELAUNCH_LOCKED
@@ -495,7 +495,7 @@ export default function LakeLanding() {
                     the public.
                   </p>
                 </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#ff6b8a] text-black">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-[#E8B86D] text-black">
                   <LockKeyhole className="size-4.5" />
                 </div>
               </div>
@@ -503,7 +503,7 @@ export default function LakeLanding() {
                 href={firstAccessHref}
                 data-campaign-lead="lake"
                 onClick={handleFirstAccess}
-                className="flex h-12 w-full items-center justify-center gap-2 bg-[#ff6b8a] text-sm font-black text-black transition hover:bg-[#ffd0dc]"
+                className="flex h-12 w-full items-center justify-center gap-2 bg-[#E8B86D] text-sm font-black text-black transition hover:bg-[#ffd0dc]"
               >
                 <LockKeyhole className="size-4" />
                 Join the Lake List
@@ -520,7 +520,7 @@ export default function LakeLanding() {
                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-300">
                   Upcoming Chapters
                 </h3>
-                <span className="text-right text-[11px] font-semibold text-[#61e8ff]">
+                <span className="text-right text-[11px] font-semibold text-[#E8B86D]">
                   {SUNSETS_PRELAUNCH_LOCKED
                     ? "Lake List opens first"
                     : "Prices move by release"}
@@ -564,7 +564,7 @@ export default function LakeLanding() {
                             channel: "Posh",
                           });
                         }}
-                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#61e8ff]/35 hover:bg-white/[.075]"
+                        className="group block border border-white/10 bg-white/[.055] p-4 transition hover:border-[#E8B86D]/35 hover:bg-white/[.075]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -585,7 +585,7 @@ export default function LakeLanding() {
                             channel: "CRM",
                           });
                         }}
-                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#61e8ff]/35 hover:bg-white/[.075]"
+                        className="group block w-full border border-white/10 bg-white/[.055] p-4 text-left transition hover:border-[#E8B86D]/35 hover:bg-white/[.075]"
                       >
                         <ChapterContent
                           chapter={chapter}
@@ -636,10 +636,10 @@ export default function LakeLanding() {
               })}
             </section>
 
-            <section className="border border-[#61e8ff]/20 bg-[#61e8ff]/10 p-4">
+            <section className="border border-[#E8B86D]/20 bg-[#E8B86D]/10 p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#61e8ff]">
+                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
                     Official short link
                   </p>
                   <p className="mt-1 truncate text-sm font-bold text-white">
@@ -715,14 +715,14 @@ function ChapterContent({
             </p>
           </div>
           {isLinked ? (
-            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#61e8ff]" />
+            <ChevronRight className="mt-1 size-4.5 shrink-0 text-stone-500 transition group-hover:translate-x-1 group-hover:text-[#E8B86D]" />
           ) : null}
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
           <span className="bg-black/25 px-2.5 py-1 text-[11px] font-bold text-stone-300">
             {chapter.status}
           </span>
-          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#61e8ff]">
+          <span className="text-[11px] font-black uppercase tracking-[0.14em] text-[#E8B86D]">
             {chapter.action}
           </span>
         </div>
