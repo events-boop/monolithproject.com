@@ -179,7 +179,7 @@ export default function ChasingSunsets() {
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
         title="SUN(SETS) I — July 4th at Castaways | Chasing Sun(Sets)"
-        description="SUN(SETS) I brings Kiko Franco, Amari, Gianni Blu, Erik The DJ & more to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
+        description="SUN(SETS) I brings Kiko Franco, Amari, Erik The DJ & more to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -205,7 +205,7 @@ export default function ChasingSunsets() {
               className="pointer-events-auto"
             >
               <div className="mb-5 hidden max-w-full flex-wrap items-center gap-2 border border-[#E8B86D]/40 bg-black/55 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.36)] backdrop-blur-md sm:mb-7 sm:inline-flex sm:px-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#1a1a1a]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
                   SUN(SETS) I
                 </span>
                 <span className="h-1 w-1 rounded-full bg-[#E8B86D]/70" />
@@ -425,7 +425,7 @@ export default function ChasingSunsets() {
               {
                 kicker: "Schedule",
                 title: "Set Times",
-                body: "Doors at 12PM. Amari, Gianni Blu, Erik The DJ & more build the day — Kiko Franco takes sunset.",
+                body: "Doors at 12PM. Amari, Erik The DJ & more build the day — Kiko Franco takes sunset.",
                 href: "#chasing-tickets",
               },
               {

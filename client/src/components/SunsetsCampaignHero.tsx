@@ -132,7 +132,7 @@ export default function SunsetsCampaignHero() {
                   AUTOGRAF <span className="text-pink-500">★</span> KIKO FRANCO
                 </div>
                 <div className="text-xs sm:text-base font-bold text-yellow-400 tracking-widest uppercase">
-                  AMARI • GIANNI BLU • ERIK THE DJ
+                  AMARI • ERIK THE DJ
                 </div>
                 <div className="text-[9px] sm:text-[10px] text-gray-400 tracking-widest uppercase mt-3 sm:mt-4 border-t border-gray-800 pt-2 sm:pt-3">
                   AND MANY MORE
