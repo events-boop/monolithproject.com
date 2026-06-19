@@ -73,12 +73,14 @@ const CHASING_SUNSETS_SLIDES: Slide[] = [
     sizes: chasingHeroImage.sizes,
     alt: "July 4 · Castaways Atmosphere",
     caption: "CHASING SUN(SETS) | GOLDEN HOUR",
+    className: "object-contain object-center",
   },
   {
     type: "image",
     src: "/images/chasing-sunsets-1.jpg",
     alt: "Rooftop Crowd at Sunset",
     caption: "CHASING SUN(SETS) | THE CROWD",
+    className: "object-contain object-center",
   },
 ];
 

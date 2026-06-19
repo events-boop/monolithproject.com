@@ -29,6 +29,7 @@ export interface Slide {
   alt?: string;
   credit?: string;
   caption?: string;
+  className?: string;
 }
 
 interface VideoHeroSliderProps {
@@ -291,7 +292,7 @@ export default function VideoHeroSlider({
                   sizes={slide.posterSizes}
                   width={slide.width}
                   height={slide.height}
-                  className="w-full h-full object-cover object-center md:object-[80%_center]"
+                  className={slide.className || "w-full h-full object-cover object-center"}
                 />
               ) : (
                 <div className="absolute inset-0 bg-black" aria-hidden="true" />
@@ -310,7 +311,7 @@ export default function VideoHeroSlider({
                   sizes={slide.posterSizes}
                   width={slide.width}
                   height={slide.height}
-                  className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center]"
+                  className={`absolute inset-0 w-full h-full ${slide.className || 'object-cover object-center'}`}
                 />
               )}
 
@@ -350,7 +351,7 @@ export default function VideoHeroSlider({
                   muted={isMuted}
                   playsInline
                   preload="metadata"
-                  className="absolute inset-0 w-full h-full object-cover object-center md:object-[80%_center] transition-opacity duration-1000 ease-in-out"
+                  className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${slide.className || 'object-cover object-center'}`}
                   aria-hidden="true"
                   tabIndex={-1}
                   style={{ opacity: 0 }}
@@ -366,7 +367,7 @@ export default function VideoHeroSlider({
               sizes={slide.sizes}
               width={slide.width}
               height={slide.height}
-              className="w-full h-full object-cover object-center md:object-[80%_center]"
+              className={slide.className || "w-full h-full object-cover object-center"}
             />
           )}
         </motion.div>
