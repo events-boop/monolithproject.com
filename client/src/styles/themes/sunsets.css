@@ -1,12 +1,14 @@
-/* ── Scroll-sunset utility layer ──
-   These reference the CSS vars set by useScrollSunset on :root,
-   so the browser resolves colours via inheritance — zero React overhead. */
+/* ── Sun(Sets) CSS Theme — Warm Gold / Dark ──
+   Unified Chasing Sun(Sets) visual system.
+   Primary accent #E8B86D, dark background #0A0A0A, cream text #FAFAF7. */
+
 :root {
-  --sunset-bg: #fafaf7;
-  --sunset-text: #2c1810;
-  --sunset-accent: #1f8a8d;
-  --sunset-warmGold: #1f6f72;
-  --sunset-glass: #ffffff;
+  --sunset-bg: #0a0a0a;
+  --sunset-text: #fafaf7;
+  --sunset-accent: #e8b86d;
+  --sunset-warmGold: #e8b86d;
+  --sunset-glass: #1a1a1a;
+  --sunset-depth: #2c1810;
 }
 
 .sunset-page {
@@ -57,16 +59,16 @@
 .sunset-glass-card {
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--sunset-glass) 75%, transparent),
-    color-mix(in srgb, var(--sunset-glass) 36%, transparent)
+    color-mix(in srgb, var(--sunset-glass) 65%, transparent),
+    color-mix(in srgb, var(--sunset-glass) 28%, transparent)
   );
 }
 
 .sunset-glass-card-solid {
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--sunset-glass) 87%, transparent),
-    color-mix(in srgb, var(--sunset-glass) 60%, transparent)
+    color-mix(in srgb, var(--sunset-glass) 80%, transparent),
+    color-mix(in srgb, var(--sunset-glass) 50%, transparent)
   );
 }
 
@@ -75,10 +77,10 @@
   border: 1px solid color-mix(in srgb, var(--sunset-accent) 16%, transparent);
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.84),
-    rgba(255, 247, 236, 0.74)
+    rgba(26, 26, 26, 0.84),
+    rgba(20, 18, 14, 0.74)
   );
-  box-shadow: 0 20px 48px rgba(44, 24, 16, 0.06);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3);
 }
 
 .sunset-panel-editorial-soft {
@@ -86,21 +88,21 @@
   border: 1px solid color-mix(in srgb, var(--sunset-accent) 14%, transparent);
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.76),
-    rgba(246, 234, 215, 0.68)
+    rgba(26, 26, 26, 0.76),
+    rgba(20, 18, 14, 0.68)
   );
-  box-shadow: 0 18px 40px rgba(44, 24, 16, 0.05);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
 }
 
 .sunset-media-frame {
   border-radius: 1.5rem;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--sunset-accent) 16%, transparent);
-  background: #120d09;
+  background: #000;
 }
 
 .sunset-warm-section {
-  background: color-mix(in srgb, var(--sunset-warmGold) 7%, transparent);
+  background: color-mix(in srgb, var(--sunset-warmGold) 6%, transparent);
 }
 
 .sunset-accent-tag {
@@ -111,70 +113,70 @@
 .sunset-warmGold-tag {
   border-color: color-mix(in srgb, var(--sunset-warmGold) 21%, transparent);
   color: var(--sunset-warmGold);
-  background: color-mix(in srgb, var(--sunset-warmGold) 3%, transparent);
+  background: color-mix(in srgb, var(--sunset-warmGold) 6%, transparent);
 }
 
 .sunset-gradient-btn {
-  background: linear-gradient(135deg, #14b8a6, #8b5cf6);
+  background: linear-gradient(135deg, #e8b86d, #c2703e);
 }
 
 .sunset-lively-strip {
   background:
     radial-gradient(
       circle at 8% 12%,
-      rgba(20, 184, 166, 0.16),
+      rgba(232, 184, 109, 0.14),
       transparent 32%
     ),
     radial-gradient(
       circle at 82% 18%,
-      rgba(139, 92, 246, 0.12),
+      rgba(194, 112, 62, 0.1),
       transparent 34%
     ),
-    linear-gradient(135deg, #ffffff 0%, #f8fbfb 46%, #eef7f5 100%);
+    linear-gradient(135deg, #0a0a0a 0%, #111 46%, #0f0f0f 100%);
 }
 
 .sunset-lively-card {
-  border: 1px solid rgba(20, 184, 166, 0.2);
+  border: 1px solid rgba(232, 184, 109, 0.2);
   background:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.92),
-      rgba(250, 250, 247, 0.84)
+      rgba(26, 26, 26, 0.92),
+      rgba(10, 10, 10, 0.84)
     ),
     radial-gradient(
       circle at 100% 0%,
-      rgba(31, 111, 114, 0.12),
+      rgba(232, 184, 109, 0.1),
       transparent 44%
     );
-  box-shadow: 0 24px 60px rgba(28, 44, 42, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
 }
 
 .sunset-lively-card-feature {
-  border-color: rgba(31, 111, 114, 0.24);
+  border-color: rgba(232, 184, 109, 0.24);
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.95),
-      rgba(247, 249, 247, 0.86)
+      rgba(26, 26, 26, 0.95),
+      rgba(10, 10, 10, 0.86)
     ),
-    radial-gradient(circle at 0% 0%, rgba(20, 184, 166, 0.13), transparent 42%),
+    radial-gradient(circle at 0% 0%, rgba(232, 184, 109, 0.12), transparent 42%),
     radial-gradient(
       circle at 100% 20%,
-      rgba(139, 92, 246, 0.1),
+      rgba(194, 112, 62, 0.08),
       transparent 44%
     );
 }
 
 .sunset-coral-chip {
-  border-color: rgba(20, 184, 166, 0.24);
-  background: rgba(20, 184, 166, 0.08);
-  color: #174f52;
+  border-color: rgba(232, 184, 109, 0.24);
+  background: rgba(232, 184, 109, 0.1);
+  color: #e8b86d;
 }
 
 .sunset-teal-chip {
-  border-color: rgba(31, 111, 114, 0.24);
-  background: rgba(31, 111, 114, 0.08);
-  color: #174f52;
+  border-color: rgba(31, 138, 141, 0.24);
+  background: rgba(31, 138, 141, 0.08);
+  color: #1f8a8d;
 }
 
 .sunset-glass-overlay {
@@ -188,7 +190,7 @@
 .sunset-accent-glow {
   background: radial-gradient(
     circle at 20% 50%,
-    color-mix(in srgb, var(--sunset-accent) 9%, transparent),
+    rgba(232, 184, 109, 0.08),
     transparent 60%
   );
 }
@@ -206,27 +208,27 @@
   background-image:
     radial-gradient(
       circle at 12% 16%,
-      rgba(20, 184, 166, 0.2),
+      rgba(232, 184, 109, 0.18),
       transparent 34%
     ),
     radial-gradient(
       circle at 84% 18%,
-      rgba(139, 92, 246, 0.16),
+      rgba(194, 112, 62, 0.12),
       transparent 32%
     ),
-    radial-gradient(circle at 75% 84%, rgba(56, 189, 248, 0.1), transparent 36%);
+    radial-gradient(circle at 75% 84%, rgba(232, 184, 109, 0.08), transparent 36%);
 }
 
 .bg-chasing-glow-2 {
   background-image:
     radial-gradient(
       circle at 18% 18%,
-      rgba(20, 184, 166, 0.18),
+      rgba(232, 184, 109, 0.16),
       transparent 32%
     ),
     radial-gradient(
       circle at 82% 76%,
-      rgba(139, 92, 246, 0.16),
+      rgba(194, 112, 62, 0.12),
       transparent 34%
     );
 }

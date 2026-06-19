@@ -46,8 +46,8 @@ const scenes: Record<SceneId, SceneConfig> = {
     variant: "dark",
     brand: "chasing-sunsets",
     ticketTheme: "warm",
-    accent: "#61e8ff",
-    glow: "rgba(97, 232, 255, 0.32)",
+    accent: "#E8B86D",
+    glow: "rgba(232, 184, 109, 0.28)",
   },
   radio: {
     id: "radio",

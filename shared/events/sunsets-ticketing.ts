@@ -135,20 +135,7 @@ export const SUNSETS_JULY4_SET_TIMES = [
 export const SUNSETS_JULY4_HEADLINERS = [
   "Autograf",
   "Kiko Franco",
-  "Jewels (Le Yora)",
-] as const;
-
-export const SUNSETS_JULY4_SET_TIMES = [
-  { time: "12:00 PM", label: "Doors / Event Begins" },
-  { time: "2:00 PM — 3:00 PM", label: "Jerome b3b Colin b3b Nomar" },
-  { time: "3:00 PM — 4:00 PM", label: "Erik The DJ" },
-  { time: "4:00 PM — 5:00 PM", label: "Frank Bono" },
-  { time: "5:00 PM — 6:00 PM", label: "Gianni Blu" },
-  { time: "6:00 PM — 7:00 PM", label: "Jewels (Le Yora)" },
-  { time: "7:00 PM — 8:15 PM", label: "Amari" },
-  { time: "8:15 PM — 9:30 PM", label: "Kiko Franco" },
-  { time: "9:30 PM — 10:00 PM", label: "Autograf — Closing Set" },
-  { time: "10:00 PM", label: "Event Ends" },
+  "Amari",
 ] as const;
 
 export type SunsetsTicketInventoryTier = {
