@@ -1,24 +1,23 @@
 ---
-version: v2
+version: v3
 name: Chasing Sun(Sets)
-description: The open-air Chasing Sun(Sets) design system. Warm, lakefront, golden-hour, premium, and conversion-focused without becoming beach-generic or cluttered.
+description: The open-air Chasing Sun(Sets) design system. Warm gold on deep black. Golden-hour, lakefront, premium, and conversion-focused without being beach-generic or cluttered.
 
 colors:
-  canvas: "#0B0A09"
-  canvas-deep: "#050403"
-  surface: "#18110D"
+  canvas: "#0A0A0A"
+  canvas-deep: "#050505"
+  surface: "#1A1A1A"
   surface-warm: "#2C1810"
-  surface-gold: "#3A2816"
-  cream: "#FBF5ED"
-  text: "#F8F2E8"
+  primary: "#E8B86D"
+  primary-bright: "#d4a574"
+  accent-deep: "#C2703E"
+  text: "#FAFAF7"
   text-muted: "#C9B08C"
   text-dim: "#8E7358"
-  primary: "#E8B86D"
-  primary-bright: "#FFD28A"
-  accent-deep: "#C2703E"
   lake: "#193B3B"
-  border: "#5C4331"
+  border: "#332820"
   border-gold: "#A87B3F"
+  cream-cta: "#FBF5ED"
 
 typography:
   display-xxl:
@@ -168,7 +167,8 @@ components:
     rounded: "{rounded.lg}"
     padding: "{spacing.xl}"
   cream-panel:
-    backgroundColor: "{colors.cream}"
+    description: Rare high-contrast relief CTAs only — not a recurring theme.
+    backgroundColor: "{colors.cream-cta}"
     textColor: "{colors.canvas}"
     rounded: "{rounded.lg}"
     padding: "{spacing.xl}"
@@ -279,13 +279,15 @@ Priority hierarchy:
 
 ## Color Rules
 
-The system is built around auburn depth, sun gold accents, lake darkness, and cream relief.
+The system is built around deep black, warm gold, and sunset depth.
 
-- Gold is the active signal. Use it for next chapters, button focus, date emphasis, and section markers.
-- Deep brown and black carry the after-sunset premium feel.
-- Cream creates air and conversion clarity. Use it for primary CTAs and occasional relief panels.
-- Lake green should be a quiet undertone, not a dominant theme.
-- Avoid purple, cyan, neon blue, or unrelated festival colors.
+- Gold (`#E8B86D`) is the active signal. Use it for CTAs, section markers, chapter emphasis, and hover states.
+- Deep black (`#0A0A0A`) carries the architectural weight. All Sun(Sets) surfaces default to dark.
+- Dark elevated (`#1A1A1A`) is for cards, panels, and raised surfaces against the canvas.
+- Sunset brown (`#2C1810`) provides subtle depth in gradients and overlay transitions.
+- Cream (`#FBF5ED`) is reserved for rare high-contrast relief CTAs only — do not use as a background or section theme.
+- Lake green (`#193B3B`) is a quiet undertone, not a dominant theme.
+- Avoid cyan, neon blue, purple, or unrelated festival colors. 
 
 ## Typography Rules
 
@@ -328,7 +330,7 @@ Use the tokenized components above as the source of truth.
 - `link-card-primary` is reserved for Join First Access / Join the Chat.
 - `event-card` is for July 4, August 22, and September 19 ticket paths.
 - `media-frame` should hold real recap, gallery, lakefront, skyline, crowd, or flyer assets.
-- `cream-panel` should appear only when the page needs a strong clarity break.
+- `cream-panel` is reserved for rare high-contrast relief CTAs only.
 - `signal-badge` is for Lakefront, House, Chicago, First Access, VIP, and similar metadata.
 
 ## Funnel Rules
@@ -362,7 +364,7 @@ Mobile is the primary viewport because this is a link-in-bio surface.
 
 ### Do
 
-- Let warmth and cream space carry the open-air feeling.
+- Let warmth and gold carry the open-air feeling.
 - Use gold as the active signal everywhere inside the series.
 - Keep imagery grounded in lakefront, skyline, crowd, sound, sunset, and real event proof.
 - Make the route read as a season system, not a single flyer.
