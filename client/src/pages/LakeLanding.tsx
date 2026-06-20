@@ -71,7 +71,7 @@ const RECAP_HREF = "/go/media/sunsets-recap";
 const RADIO_HREF = "/go/media/sunsets-soundcloud";
 const INSTAGRAM_HREF = "/go/social/instagram-sunsets";
 const LAYLO_HREF = "/go/waitlist/chasing-sunsets";
-const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
+const HERO_IMAGE = "/images/sunsets-hero-beach.jpg";
 const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
 
 function triggerHaptic(pattern: number | number[] = 10) {
