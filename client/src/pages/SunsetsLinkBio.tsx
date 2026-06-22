@@ -296,36 +296,20 @@ export default function SunsetsLinkBio() {
           </div>
         </header>
 
-        {/* 2. Dates ledger */}
-        <section className="mt-4" aria-label="2026 season dates">
-          <div className="border border-white/12 bg-white/[0.03]">
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#E8B86D]/[0.07] px-3.5 py-2">
-              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
-                SUN(SETS) I — JUL 4
-              </p>
-              <span className="shrink-0 whitespace-nowrap bg-[#E8B86D] px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.14em] text-black">
-                ON SALE NOW
-              </span>
-            </div>
-            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-2 opacity-55">
-              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
-                SUN(SETS) II — AUG 22
-              </p>
-              <span className="shrink-0 whitespace-nowrap font-serif text-xs italic text-stone-400">
-                Chapter Two
-              </span>
-            </div>
-            <div className="flex items-center justify-between gap-3 px-3.5 py-2 opacity-55">
-              <p className="whitespace-nowrap text-[clamp(0.8rem,3.8vw,0.95rem)] font-black text-white">
-                SUN(SETS) III — SEP 19
-              </p>
-              <span className="shrink-0 whitespace-nowrap font-serif text-xs italic text-stone-400">
-                Chapter Three
-              </span>
-            </div>
-          </div>
-          <p className="mt-2.5 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-            Saturdays · 1PM–10PM · 21+ · Chicago
+        {/* 2. July 4th Header */}
+        <section
+          className="mt-2 border border-white/12 bg-[#E8B86D]/[0.05] p-5 text-center shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+          aria-label="July 4th Event Details"
+        >
+          <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+            SUN(SETS) I — JUL 4
+          </p>
+          <h2 className="mt-3 text-[1.45rem] font-black uppercase leading-[1.1] text-white drop-shadow-md">
+            AUTOGRAF <span className="text-[#E8B86D] mx-1">x</span> KIKO FRANCO
+          </h2>
+          <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
+            The opening chapter. Open-air house music and golden-hour sets on
+            the Chicago lakefront.
           </p>
         </section>
 
@@ -347,8 +331,8 @@ export default function SunsetsLinkBio() {
           </a>
         </section>
 
-        {/* 4. Social proof — recap facade */}
-        <section className="mt-6" aria-label="2025 recap">
+        {/* 4. Video section */}
+        <section className="mt-6" aria-label="Autograf / 2025 recap">
           <p className="text-center font-serif text-sm italic text-stone-300">
             Last summer: 2,800 on the lakefront.
           </p>
@@ -356,7 +340,7 @@ export default function SunsetsLinkBio() {
             {recapPlaying ? (
               <YouTubeEmbed
                 url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
-                title="Chasing Sun(Sets) 2025 recap"
+                title="Chasing Sun(Sets) recap"
                 className="absolute inset-0 h-full w-full"
                 loading="eager"
                 autoplay
@@ -365,18 +349,17 @@ export default function SunsetsLinkBio() {
               <button
                 type="button"
                 onClick={handleRecapPlay}
-                aria-label="Play the 2025 recap video"
+                aria-label="Play the recap video"
                 className="group absolute inset-0 h-full w-full"
               >
                 <img
                   src={RECAP_THUMB}
-                  alt="Chasing Sun(Sets) 2025 recap preview"
+                  alt="Chasing Sun(Sets) recap preview"
                   loading="lazy"
                   className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
                 />
                 <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
                 <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
-                  {/* Inline play glyph — no icon fonts. */}
                   <svg
                     viewBox="0 0 24 24"
                     className="ml-0.5 h-6 w-6 fill-current"
@@ -390,9 +373,45 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 5. Season Pass — proof card */}
+        {/* 5. Cabanas */}
+        <section className="mt-6" aria-label="Cabanas and VIP">
+          <div className="border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]">
+            <h2 className="whitespace-nowrap text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
+              CABANAS &amp; VIP RESERVATIONS
+            </h2>
+            <p className="mt-2 text-sm font-semibold text-stone-300">
+              Lock your section for the holiday.
+            </p>
+            <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
+              Daybeds · Cabanas · Group tables
+            </p>
+            <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-400">
+              $2,000 minimum spend · Admission for up to 15 guests · Limited,
+              confirmed manually
+            </p>
+            <a
+              href={ROUTES.vip}
+              onClick={() => {
+                triggerHaptic(8);
+                trackSunsetsClick({
+                  buttonName: "RESERVE BOTTLE SERVICE",
+                  href: "/vip",
+                  eventSlug: JULY_4_EVENT_SLUG,
+                  eventDate: JULY_4_EVENT_DATE,
+                  interestType: "vip_click",
+                  channel: "Monolith",
+                });
+              }}
+              className="mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10"
+            >
+              RESERVE BOTTLE SERVICE <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        {/* 6. Season Pass */}
         <section
-          className="mt-6 overflow-hidden border border-[#E8B86D]/35 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
+          className="mt-8 overflow-hidden border border-[#E8B86D]/35 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
           aria-label="2026 Season Pass"
         >
           <div className="relative border-b border-[#E8B86D]/20 bg-black">
@@ -458,8 +477,17 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 6. Benchek featured set drop */}
-        <section className="mt-6" aria-label="Benchek featured set drop">
+        {/* 7. Featured Sets */}
+        <div className="mt-10 mb-4 flex items-center justify-center gap-4">
+          <span className="h-px flex-1 bg-white/10" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+            Featured Sets
+          </span>
+          <span className="h-px flex-1 bg-white/10" />
+        </div>
+
+        {/* Benchek */}
+        <section className="mt-4" aria-label="Benchek featured set drop">
           <div className="overflow-hidden border border-[#E8B86D]/30 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
             <div className="grid grid-cols-[0.82fr_1fr]">
               <img
@@ -470,13 +498,10 @@ export default function SunsetsLinkBio() {
               />
               <div className="flex flex-col justify-between p-4">
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-[0.22em] text-[#E8B86D]">
-                    Featured Set Drop
-                  </p>
-                  <h2 className="mt-2 text-lg font-black uppercase leading-[1.05] tracking-[0.02em] text-white">
+                  <h2 className="mt-1 text-lg font-black uppercase leading-[1.05] tracking-[0.02em] text-white">
                     Benchek
                   </h2>
-                  <p className="mt-2 text-[12px] font-semibold leading-relaxed text-stone-300">
+                  <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-300">
                     An exclusive July 4 holiday set — Marbella to the Chicago
                     lakefront. Sign up for the unreleased drop.
                   </p>
@@ -493,44 +518,42 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 7. Closing block — cabanas, divider, sign-off */}
-        <section className="mt-6" aria-label="Cabanas and sign-off">
-          <div className="border border-[#E8B86D]/40 bg-[#15110a] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)]">
-            <h2 className="whitespace-nowrap text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
-              CABANAS &amp; VIP RESERVATIONS
-            </h2>
-            <p className="mt-2 text-sm font-semibold text-stone-300">
-              Lock your section for the holiday.
-            </p>
-            <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
-              Daybeds · Cabanas · Group tables
-            </p>
-            <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-400">
-              $2,000 minimum spend · Admission for up to 15 guests · Limited,
-              confirmed manually
-            </p>
-            <a
-              href={ROUTES.vip}
-              onClick={() => {
-                triggerHaptic(8);
-                trackSunsetsClick({
-                  buttonName: "RESERVE BOTTLE SERVICE",
-                  href: "/vip",
-                  eventSlug: JULY_4_EVENT_SLUG,
-                  eventDate: JULY_4_EVENT_DATE,
-                  interestType: "vip_click",
-                  channel: "Monolith",
-                });
-              }}
-              className="mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10"
-            >
-              RESERVE BOTTLE SERVICE <span aria-hidden="true">→</span>
-            </a>
+        {/* Summers UK */}
+        <section className="mt-4" aria-label="Summers UK featured set drop">
+          <div className="overflow-hidden border border-[#E8B86D]/30 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
+            <div className="grid grid-cols-[0.82fr_1fr]">
+              <img
+                src="/images/chasing-sunsets-premium.webp"
+                alt="Summers UK exclusive sunset set"
+                loading="lazy"
+                className="h-full min-h-[178px] w-full object-cover"
+              />
+              <div className="flex flex-col justify-between p-4">
+                <div>
+                  <h2 className="mt-1 text-lg font-black uppercase leading-[1.05] tracking-[0.02em] text-white">
+                    Summers UK
+                  </h2>
+                  <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-300">
+                    Warm melodic arrangements and open-air pacing built for
+                    sunset transitions.
+                  </p>
+                </div>
+                <a
+                  href="#"
+                  onClick={e => e.preventDefault()}
+                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition hover:bg-[#E8B86D] hover:text-black"
+                >
+                  Coming Soon
+                </a>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="mt-8 flex items-center gap-4" aria-hidden="true">
+        {/* 8. Closing Sign-off */}
+        <section className="mt-10 mb-6 text-center" aria-label="Sign-off">
+          <div className="flex items-center gap-4" aria-hidden="true">
             <span className="h-px flex-1 bg-white/10" />
-            {/* Sun glyph — inline SVG, not an icon font. */}
             <svg
               viewBox="0 0 24 24"
               className="h-4 w-4 text-[#E8B86D]/70"
@@ -544,24 +567,21 @@ export default function SunsetsLinkBio() {
             </svg>
             <span className="h-px flex-1 bg-white/10" />
           </div>
-
-          <div className="mt-7 text-center">
-            <p className="text-sm font-semibold text-stone-100">
-              Three dates. One lake. One home.
-            </p>
-            <p className="mt-3 font-serif text-sm italic leading-relaxed text-[#E8B86D]/70">
-              Togetherness is the frequency.
-              <br />
-              Music is the guide.
-            </p>
-            <p className="mt-7 text-[9px] font-black uppercase tracking-[0.34em] text-stone-600">
-              The Monolith Project
-            </p>
-          </div>
+          <p className="mt-7 text-sm font-semibold text-stone-100">
+            Three dates. One lake. One home.
+          </p>
+          <p className="mt-3 font-serif text-sm italic leading-relaxed text-[#E8B86D]/70">
+            Togetherness is the frequency.
+            <br />
+            Music is the guide.
+          </p>
+          <p className="mt-7 text-[9px] font-black uppercase tracking-[0.34em] text-stone-600">
+            The Monolith Project
+          </p>
         </section>
 
-        {/* 7. Footer strip */}
-        <footer className="mt-auto pt-9">
+        {/* 9. Footer strip */}
+        <footer className="mt-auto pt-4">
           <nav
             aria-label="More from Sun(Sets)"
             className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
