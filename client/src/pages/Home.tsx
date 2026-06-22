@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
-import SunsetsCampaignHero from "@/components/SunsetsCampaignHero";
+import HeroSection from "@/components/HeroSection";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -98,7 +98,7 @@ export default function Home() {
       <Navigation />
 
       <main id="main-content" tabIndex={-1}>
-        <SunsetsCampaignHero />
+        <HeroSection />
 
         {/* July 4 featured promo — launch priority directly under the hero */}
         <section

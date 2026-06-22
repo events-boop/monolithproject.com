@@ -3,14 +3,32 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { getSeriesColor, getSeriesEvents } from "@/lib/siteExperience";
 import ConversionCTA from "@/components/ConversionCTA";
-import { appendAttributionQueryParams } from "@/lib/attribution";
 
-const CHAPTER_LABELS = ["SUN(SETS) I", "SUN(SETS) II", "SUN(SETS) III"];
-const CHAPTER_NUMBERS = ["01", "02", "03"];
-const CHAPTER_SUBTITLES = [
-  "Independence Day · Open-Air Experience",
-  "The Summer Return",
-  "Season Finale",
+const CHAPTER_CARDS = [
+  {
+    label: "SUN(SETS) I",
+    number: "01",
+    status: "Tickets Live",
+    subtitle: "Independence Day · Open-Air Experience",
+    body: "The July 4 opening chapter brings the confirmed Castaways lineup into the full-day lakefront format.",
+    footer: "On sale now",
+  },
+  {
+    label: "SUN(SETS) II",
+    number: "02",
+    status: "Lake List",
+    subtitle: "The Summer Return",
+    body: "August 22 keeps the season moving with protected first notice for lineup, tables, and access windows.",
+    footer: "First notice before public",
+  },
+  {
+    label: "SUN(SETS) III",
+    number: "03",
+    status: "Artist Proof",
+    subtitle: "Season Finale",
+    body: "September 19 anchors the closing chapter with Joezi season proof and special guests still TBA.",
+    footer: "Special guests TBA",
+  },
 ];
 
 const PILLARS = [
@@ -26,6 +44,7 @@ export default function SeasonChapterCards() {
 
   const [featured, ...rest] = events;
   const featuredAccent = getSeriesColor(featured.series);
+  const featuredChapter = CHAPTER_CARDS[0];
 
   return (
     <section className="relative z-10 overflow-hidden border-t border-white/10 bg-[#070707] py-20 md:py-28">
@@ -54,12 +73,13 @@ export default function SeasonChapterCards() {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/52">
               A lakefront summer series by The Monolith Project —{" "}
               <br className="hidden sm:block" />
-              built around golden hour, open-air sound, and togetherness.
+              three dates, one lake, one home, built around golden hour,
+              open-air sound, and togetherness.
             </p>
           </div>
-          <Link href="/schedule">
+          <Link href="/sunsets">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/[0.04] px-6 py-3 font-mono text-[11px] font-black uppercase tracking-[0.2em] text-white/72 transition hover:bg-white/[0.08] hover:text-white">
-              View All Events
+              Open Sun(Sets) Hub
               <ArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -89,7 +109,7 @@ export default function SeasonChapterCards() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-4 top-12 z-0 font-display text-[10rem] font-black leading-none tracking-tight text-white/[0.045] sm:-right-6 sm:text-[12rem]"
               >
-                {CHAPTER_NUMBERS[0]}
+                {featuredChapter.number}
               </span>
 
               {/* Top row */}
@@ -98,10 +118,10 @@ export default function SeasonChapterCards() {
                   className="font-mono text-[10px] font-black uppercase tracking-[0.28em]"
                   style={{ color: featuredAccent }}
                 >
-                  {CHAPTER_LABELS[0]}
+                  {featuredChapter.label}
                 </span>
                 <span className="rounded-full bg-white px-3 py-1 font-mono text-[9px] font-black uppercase tracking-[0.18em] text-black">
-                  Up Next
+                  {featuredChapter.status}
                 </span>
               </div>
 
@@ -120,7 +140,10 @@ export default function SeasonChapterCards() {
                 className="mt-5 font-mono text-[10px] font-black uppercase tracking-[0.22em]"
                 style={{ color: featuredAccent }}
               >
-                {CHAPTER_SUBTITLES[0]}
+                {featuredChapter.subtitle}
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-white/58">
+                {featuredChapter.body}
               </p>
 
               {/* Sun icon */}
@@ -141,7 +164,7 @@ export default function SeasonChapterCards() {
                   className="w-full"
                 />
                 <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/36">
-                  Limited Capacity
+                  {featuredChapter.footer}
                 </p>
               </div>
             </div>
@@ -150,6 +173,7 @@ export default function SeasonChapterCards() {
           {/* ── SUPPORTING CARDS ── */}
           {rest.map((event, i) => {
             const accent = getSeriesColor(event.series);
+            const chapter = CHAPTER_CARDS[i + 1];
             return (
               <motion.div
                 key={event.id}
@@ -168,7 +192,7 @@ export default function SeasonChapterCards() {
                     aria-hidden="true"
                     className="pointer-events-none absolute -right-4 top-12 z-0 font-display text-[8.5rem] font-black leading-none tracking-tight text-white/[0.04] sm:-right-6 sm:text-[10rem]"
                   >
-                    {CHAPTER_NUMBERS[i + 1]}
+                    {chapter.number}
                   </span>
 
                   {/* Top row */}
@@ -177,7 +201,10 @@ export default function SeasonChapterCards() {
                       className="font-mono text-[10px] font-black uppercase tracking-[0.28em]"
                       style={{ color: accent }}
                     >
-                      {CHAPTER_LABELS[i + 1]}
+                      {chapter.label}
+                    </span>
+                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[9px] font-black uppercase tracking-[0.18em] text-white/58">
+                      {chapter.status}
                     </span>
                   </div>
 
@@ -194,7 +221,10 @@ export default function SeasonChapterCards() {
                     className="mt-5 font-mono text-[10px] font-black uppercase tracking-[0.22em]"
                     style={{ color: `${accent}99` }}
                   >
-                    {CHAPTER_SUBTITLES[i + 1]}
+                    {chapter.subtitle}
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-white/54">
+                    {chapter.body}
                   </p>
 
                   <div className="my-6 flex justify-center">
@@ -213,7 +243,7 @@ export default function SeasonChapterCards() {
                       className="w-full"
                     />
                     <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
-                      Limited Capacity
+                      {chapter.footer}
                     </p>
                   </div>
                 </div>

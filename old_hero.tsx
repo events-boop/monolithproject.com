@@ -14,6 +14,7 @@ import {
   getEventVenueLabel,
   getExperienceEvent,
   getSeriesLabel,
+  getSeriesEvents,
 } from "@/lib/siteExperience";
 
 const heroPosterImage = getResponsiveImage("videoPoster1");
@@ -155,11 +156,7 @@ function getEventStatusLabel(status?: string) {
   return "FEATURED";
 }
 
-function getSystemKicker(
-  event: any | undefined,
-  eyebrow: string | undefined,
-  slideInfo: SlideBannerInfo
-) {
+function getSystemKicker(event: any | undefined, eyebrow: string | undefined, slideInfo: SlideBannerInfo) {
   if (event) {
     return `${toSystemText(getSeriesLabel(event.series))} / ${getEventSignalLabel(event)}`;
   }
@@ -193,7 +190,7 @@ function HomeHeroUtilityRow() {
   );
 }
 
-/**
+/** 
  * FloatingEventCard:
  * The immersive, interactive conversion point for the hero section.
  * Syncs with the active slide to feature live shows, radio episodes, or archives.
@@ -205,7 +202,7 @@ function FloatingEventCard({
   venueLabel,
   eyebrow,
   isJuly4thEvent,
-  contextualFallbackAction,
+  contextualFallbackAction
 }: {
   event?: any;
   slideInfo: SlideBannerInfo;
@@ -226,9 +223,7 @@ function FloatingEventCard({
   const shortDescription =
     event?.description ||
     event?.experienceIntro ||
-    (event
-      ? `${event.title} at ${event.venue}, ${event.location}.`
-      : undefined);
+    (event ? `${event.title} at ${event.venue}, ${event.location}.` : undefined);
 
   return (
     <div
@@ -268,15 +263,13 @@ function FloatingEventCard({
           <span className="event-system-kicker text-white/58">
             {systemKicker}
           </span>
-          <h3
-            className={cn(
-              "event-system-headline text-white text-balance drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)]",
-              isJuly4thEvent
-                ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
-                : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
-              isJuly4thEvent && "july-4th-gradient"
-            )}
-          >
+          <h3 className={cn(
+            "event-system-headline text-white text-balance drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)]",
+            isJuly4thEvent
+              ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
+              : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
+            isJuly4thEvent && "july-4th-gradient"
+          )}>
             {toSystemText(headline)}
           </h3>
           <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/72">
@@ -330,12 +323,8 @@ function HeroCardCTA({ event }: { event: any }) {
   const href =
     event?.primaryCta?.href ||
     event?.ticketUrl ||
-    (event?.slug || event?.id
-      ? `/events/${event.slug || event.id}`
-      : "/schedule");
-  const label =
-    event?.primaryCta?.label ||
-    (event?.ticketUrl ? "Get Tickets" : "View Details");
+    (event?.slug || event?.id ? `/events/${event.slug || event.id}` : "/schedule");
+  const label = event?.primaryCta?.label || (event?.ticketUrl ? "Get Tickets" : "View Details");
   const isExternal = /^https?:\/\//i.test(href);
 
   return (
@@ -354,10 +343,7 @@ export default function HeroSection() {
   const featuredEvent = getExperienceEvent("hero");
 
   const [activeSlide, setActiveSlide] = useState(0);
-  const handleSlideChange = useCallback(
-    (index: number) => setActiveSlide(index),
-    []
-  );
+  const handleSlideChange = useCallback((index: number) => setActiveSlide(index), []);
 
   // Resolve which event to show in the banner based on the active slide
   const slideInfo = SLIDE_EVENT_MAP[activeSlide] ?? SLIDE_EVENT_MAP[0];
@@ -367,18 +353,11 @@ export default function HeroSection() {
       ? getEventById(slideInfo.eventId)
       : undefined;
 
-  const headline =
-    bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
-  const eyebrow = bannerEvent
-    ? getEventEyebrow(bannerEvent)
-    : slideInfo.eyebrow;
+  const headline = bannerEvent?.headline || bannerEvent?.title || slideInfo.label;
+  const eyebrow = bannerEvent ? getEventEyebrow(bannerEvent) : slideInfo.eyebrow;
   const dateLabel = bannerEvent?.date ?? slideInfo.dateLabel ?? "Coming Soon";
-  const venueLabel = bannerEvent
-    ? getEventVenueLabel(bannerEvent)
-    : slideInfo.venueLabel;
-  const isJuly4thEvent =
-    headline.toUpperCase().includes("JULY 4") ||
-    headline.toUpperCase().includes("INDEPENDENCE");
+  const venueLabel = bannerEvent ? getEventVenueLabel(bannerEvent) : slideInfo.venueLabel;
+  const isJuly4thEvent = headline.toUpperCase().includes("JULY 4") || headline.toUpperCase().includes("INDEPENDENCE");
   const contextualFallbackAction =
     !bannerEvent && activeSlide === 3
       ? { href: "/story", label: "Explore Untold Story" }
@@ -386,9 +365,7 @@ export default function HeroSection() {
         ? { href: "/archive", label: "See The Archive" }
         : undefined;
 
-  const structuredData = featuredEvent ? (
-    <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} />
-  ) : null;
+  const structuredData = featuredEvent ? <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} /> : null;
 
   return (
     <section
@@ -399,10 +376,7 @@ export default function HeroSection() {
 
       {/* Cinematic Background Layer — always video slider */}
       <div className="absolute inset-0 z-0 h-[115%] -top-[7%] hero-bg">
-        <VideoHeroSlider
-          slides={HERO_SLIDES}
-          onSlideChange={handleSlideChange}
-        />
+        <VideoHeroSlider slides={HERO_SLIDES} onSlideChange={handleSlideChange} />
       </div>
 
       {/* Architectural HUD Grid Overlay */}

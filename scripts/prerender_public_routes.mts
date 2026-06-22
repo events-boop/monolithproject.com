@@ -644,7 +644,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "Chasing Sun(Sets) 2026 — Tickets & Lake List",
+      title: "SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari",
       description:
         "SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now.",
       image: "/images/css-2026-og.png",
@@ -655,7 +655,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "The Monolith Project Presents",
         "Chasing Sun(Sets) 2026",
         [
-          "SUN(SETS) I — July 4 (on sale now) with Kiko Franco, Amari, Gianni Blu, Erik The DJ & more at Castaways Beach Club, Chicago. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
+          "SUN(SETS) I — July 4 (on sale now) with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ at Castaways Beach Club, Chicago. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
           "Three dates. One lake. One home. Join the Lake List for first access to SUN(SETS) II + III and the limited 2026 Season Pass release.",
         ],
         [

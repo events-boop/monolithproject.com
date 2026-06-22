@@ -32,6 +32,8 @@ const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
 // Benchek featured-set drop — Laylo signup via the /go redirect layer.
 const BENCHEK_DROP_HREF = "/go/waitlist/benchek";
 const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
+const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
+const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const LAKE_LIST_HREF = "/go/lakelist";
 
 const SHARED_EVENT_SCHEMA = {
@@ -164,6 +166,10 @@ export default function SunsetsLinkBio() {
     LAKE_LIST_HREF,
     JULY_4_EVENT_SLUG
   );
+  const seasonPassHref = appendEventAttribution(
+    SEASON_PASS_HREF,
+    JULY_4_EVENT_SLUG
+  );
 
   const handleTicketClick = () => {
     triggerHaptic(16);
@@ -199,17 +205,17 @@ export default function SunsetsLinkBio() {
     triggerHaptic(16);
     trackLakeInitiateCheckout();
     captureSunsetsTicketCtaClick({
-      destinationUrl: ticketHref,
+      destinationUrl: seasonPassHref,
       pagePath: PAGE_PATH,
       ctaPosition: "season_pass",
     });
     trackSunsetsClick({
       buttonName: "GET SEASON PASS",
-      href: ticketHref,
+      href: seasonPassHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
       interestType: "season_pass_click",
-      channel: "Posh",
+      channel: "Laylo",
     });
   };
 
@@ -341,55 +347,7 @@ export default function SunsetsLinkBio() {
           </a>
         </section>
 
-        {/* 4. Season Pass — vault card */}
-        <section
-          className="mt-4 border border-[#E8B86D]/40 bg-[#15110a] p-3.5 shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
-          aria-label="2026 Season Pass"
-        >
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="whitespace-nowrap text-base font-black uppercase tracking-[0.08em] text-white">
-              2026 SEASON PASS
-            </h2>
-            <span className="shrink-0 border border-[#E8B86D]/50 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
-              Limited
-            </span>
-          </div>
-          <p className="mt-2 text-sm font-semibold text-stone-300">
-            Every date. One pass. All summer on the lake.
-          </p>
-
-          <div className="mt-4 grid grid-cols-2 gap-2.5">
-            <div className="flex flex-col justify-center border border-white/12 bg-black/30 px-3 py-3 text-center">
-              <p className="text-[13px] font-black uppercase leading-none tracking-[0.1em] text-white">
-                GA PASS
-              </p>
-              <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-400">
-                All 3 Dates
-              </p>
-            </div>
-            <div className="flex flex-col justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/[0.06] px-3 py-3 text-center">
-              <p className="text-[13px] font-black uppercase leading-none tracking-[0.1em] text-[#E8B86D]">
-                VIP PASS
-              </p>
-              <p className="mt-1.5 whitespace-nowrap text-[9px] font-black uppercase tracking-[0.16em] text-stone-300">
-                All 3 Dates
-              </p>
-            </div>
-          </div>
-
-          <a
-            href={ticketHref}
-            onClick={handleSeasonPassClick}
-            className="mt-4 flex h-12 w-full items-center justify-center gap-2 border border-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition hover:bg-[#E8B86D]/10 min-[390px]:text-xs"
-          >
-            GET SEASON PASS <span aria-hidden="true">→</span>
-          </a>
-          <p className="mt-2.5 text-center text-[11px] font-semibold leading-relaxed text-stone-400">
-            Limited release for the full SUN(SETS) 2026 season.
-          </p>
-        </section>
-
-        {/* 5. Social proof — recap facade */}
+        {/* 4. Social proof — recap facade */}
         <section className="mt-6" aria-label="2025 recap">
           <p className="text-center font-serif text-sm italic text-stone-300">
             Last summer: 2,800 on the lakefront.
@@ -429,6 +387,74 @@ export default function SunsetsLinkBio() {
                 </span>
               </button>
             )}
+          </div>
+        </section>
+
+        {/* 5. Season Pass — proof card */}
+        <section
+          className="mt-6 overflow-hidden border border-[#E8B86D]/35 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.4)]"
+          aria-label="2026 Season Pass"
+        >
+          <div className="relative border-b border-[#E8B86D]/20 bg-black">
+            <img
+              src={SEASON_III_PROOF_IMAGE}
+              alt="Joezi artist proof card for SUN(SETS) III on September 19, 2026 at Castaways Beach Club, Chicago Lakefront"
+              loading="lazy"
+              className="aspect-[696/877] h-auto w-full object-cover"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute bottom-[17.4%] left-[24%] right-[24%] flex min-h-[3.7%] items-center justify-center rounded-full border border-[#7a5f37]/20 bg-[#b99a6c]/95 px-2 text-center text-[clamp(0.38rem,2vw,0.58rem)] font-black uppercase tracking-[0.3em] text-[#1a1208] shadow-[0_8px_18px_rgba(77,52,24,0.24)] backdrop-blur-[2px]"
+            >
+              Special guests TBA
+            </div>
+          </div>
+
+          <div className="p-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#E8B86D]">
+                Season Pass
+              </p>
+              <span className="shrink-0 border border-[#E8B86D]/50 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
+                Limited
+              </span>
+            </div>
+
+            <h2 className="mt-3 text-2xl font-black uppercase leading-[0.92] tracking-[0.01em] text-white">
+              Three dates. One lake. One home.
+            </h2>
+            <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
+              Season Pass holders get access to every 2026 Chasing Sun(Sets)
+              date at Castaways, plus first notice on special guests, DJ
+              appearances, and artist announcements before the public.
+            </p>
+
+            <div className="mt-4 border border-white/12 bg-black/30">
+              {[
+                "SUN(SETS) I · July 4",
+                "SUN(SETS) II · August 22",
+                "SUN(SETS) III · September 19",
+              ].map((label, index) => (
+                <div
+                  key={label}
+                  className={`px-3.5 py-2.5 text-[10px] font-black uppercase tracking-[0.16em] text-stone-200 ${
+                    index > 0 ? "border-t border-white/10" : ""
+                  }`}
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+
+            <a
+              href={seasonPassHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleSeasonPassClick}
+              className="mt-4 flex h-12 w-full items-center justify-center gap-2 bg-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#d4a574] min-[390px]:text-xs"
+            >
+              GET SEASON PASS <span aria-hidden="true">→</span>
+            </a>
           </div>
         </section>
 
