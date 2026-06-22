@@ -6,7 +6,6 @@ import {
   Sun,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import {
   POSH_TICKET_URL,
   INSTAGRAM_MONOLITH,
@@ -95,8 +94,8 @@ const links: FooterLinkGroup[] = [
       { name: "Night Guide", href: ROUTES.guide },
       { name: "FAQ", href: ROUTES.faq },
       {
-        name: "First Access",
-        href: SUNSETS_PRELAUNCH_LOCKED ? ROUTES.sunsets : POSH_TICKET_URL,
+        name: "Tickets",
+        href: POSH_TICKET_URL,
       },
       { name: "Terms of Service", href: ROUTES.terms },
       { name: "Privacy Policy", href: ROUTES.privacy },

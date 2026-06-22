@@ -644,7 +644,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "SUN(SETS) I — July 4 at Castaways | Autograf, Kiko Franco, Amari",
+      title: "Chasing Sun(Sets) 2026 — July 4 Tickets On Sale",
       description:
         "SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now.",
       image: "/images/css-2026-og.png",
@@ -656,11 +656,11 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "Chasing Sun(Sets) 2026",
         [
           "SUN(SETS) I — July 4 (on sale now) with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ at Castaways Beach Club, Chicago. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
-          "Three dates. One lake. One home. Join the Lake List for first access to SUN(SETS) II + III and the limited 2026 Season Pass release.",
+          "Three dates. One lake. One home. Get alerts for SUN(SETS) II + III and the limited 2026 Season Pass release.",
         ],
         [
           { href: "/go/tickets/sunsets-july4", label: "Get July 4 tickets" },
-          { href: "/go/lakelist", label: "Join the Lake List" },
+          { href: "/go/lakelist", label: "SUN(SETS) II + III — Get Alerts" },
           { href: "/vip", label: "VIP and cabanas" },
           {
             href: "/go/media/sunsets-recap",
