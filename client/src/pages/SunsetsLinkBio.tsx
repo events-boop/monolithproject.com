@@ -35,6 +35,8 @@ const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const LAKE_LIST_HREF = "/go/lakelist";
+const SUMMERS_UK_HREF = "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
+const SUMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
@@ -162,6 +164,10 @@ export default function SunsetsLinkBio() {
     BENCHEK_DROP_HREF,
     JULY_4_EVENT_SLUG
   );
+  const summersUkHref = appendEventAttribution(
+    SUMMERS_UK_HREF,
+    JULY_4_EVENT_SLUG
+  );
   const lakeListHref = appendEventAttribution(
     LAKE_LIST_HREF,
     JULY_4_EVENT_SLUG
@@ -231,6 +237,21 @@ export default function SunsetsLinkBio() {
       eventDate: JULY_4_EVENT_DATE,
       interestType: "benchek_set_drop",
       channel: "Laylo",
+    });
+  };
+
+  const handleSummersUkClick = () => {
+    triggerHaptic(12);
+    trackLakeLead(newLeadEventId(), {
+      content_name: "Summers UK SoundCloud Click",
+    });
+    trackSunsetsClick({
+      buttonName: "LISTEN ON SOUNDCLOUD",
+      href: summersUkHref,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "summers_uk_set",
+      channel: "SoundCloud",
     });
   };
 
@@ -523,7 +544,7 @@ export default function SunsetsLinkBio() {
           <div className="overflow-hidden border border-[#E8B86D]/30 bg-[#15110a] shadow-[0_18px_48px_rgba(0,0,0,0.32)]">
             <div className="grid grid-cols-[0.82fr_1fr]">
               <img
-                src="/images/chasing-sunsets-premium.webp"
+                src={SUMMERS_UK_IMAGE}
                 alt="Summers UK exclusive sunset set"
                 loading="lazy"
                 className="h-full min-h-[178px] w-full object-cover"
@@ -534,16 +555,17 @@ export default function SunsetsLinkBio() {
                     Summers UK
                   </h2>
                   <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-300">
-                    Warm melodic arrangements and open-air pacing built for
-                    sunset transitions.
+                    A London-based duo making waves with their distinctive fusion of Afro-Tech and melodic house.
                   </p>
                 </div>
                 <a
-                  href="#"
-                  onClick={e => e.preventDefault()}
+                  href={summersUkHref}
+                  onClick={handleSummersUkClick}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition hover:bg-[#E8B86D] hover:text-black"
                 >
-                  Coming Soon
+                  Listen on SoundCloud
                 </a>
               </div>
             </div>
