@@ -35,7 +35,8 @@ const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const LAKE_LIST_HREF = "/go/lakelist";
-const SOMMERS_UK_HREF = "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
+const SOMMERS_UK_HREF =
+  "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
 
 const SHARED_EVENT_SCHEMA = {
@@ -269,7 +270,7 @@ export default function SunsetsLinkBio() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
+    <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Chasing Sun(Sets) 2026 — July 4 Tickets On Sale"
         description="SUN(SETS) returns to Castaways Beach Club July 4, 2026. Autograf, Kiko Franco, Amari, NOMAR b3b COLIN b3b JEROME, Frank Bono, Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
@@ -281,8 +282,11 @@ export default function SunsetsLinkBio() {
 
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* Ambient Glow */}
-        <div className="absolute left-1/2 top-0 -z-10 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-[#E8B86D]/10 opacity-60 blur-[80px]" aria-hidden="true" />
-        
+        <div
+          className="absolute left-1/2 top-0 -z-10 h-[24rem] w-[24rem] max-w-[120vw] -translate-x-1/2 rounded-full bg-[#E8B86D]/10 opacity-60 blur-[80px]"
+          aria-hidden="true"
+        />
+
         {/* 1. Hero — brand + lineup */}
         <header className="relative text-center">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
@@ -329,7 +333,7 @@ export default function SunsetsLinkBio() {
           <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
             SUN(SETS) I — JUL 4
           </p>
-          <h2 className="mx-1 mt-3 text-[1.45rem] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
+          <h2 className="mx-1 mt-3 text-[clamp(1.25rem,5.8vw,1.45rem)] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
             AUTOGRAF <span className="mx-1 text-[#E8B86D]">x</span> KIKO FRANCO
           </h2>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
@@ -343,23 +347,26 @@ export default function SunsetsLinkBio() {
           <a
             href={ticketHref}
             onClick={handleTicketClick}
-            className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[12px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98]"
+            className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
               GET JULY 4 TICKETS{" "}
               <span
                 aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1"
+                className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
               >
                 →
               </span>
             </span>
-            <div className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%]" />
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
           </a>
           <a
             href={lakeListHref}
             onClick={handleLakeListClick}
-            className="mt-2.5 flex h-11 min-h-11 items-center justify-center gap-2 border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.98]"
+            className="mt-2.5 flex h-11 min-h-11 items-center justify-center gap-2 border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-[10px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.98] motion-reduce:transition-none min-[380px]:px-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.12em]"
           >
             SUN(SETS) II + III — GET ALERTS <span aria-hidden="true">→</span>
           </a>
@@ -384,7 +391,7 @@ export default function SunsetsLinkBio() {
                 type="button"
                 onClick={handleRecapPlay}
                 aria-label="Play the recap video"
-                className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99]"
+                className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99] motion-reduce:transition-none"
               >
                 <img
                   src={RECAP_THUMB}
@@ -409,7 +416,7 @@ export default function SunsetsLinkBio() {
 
         {/* 5. Season Pass */}
         <section
-          className="mt-6 overflow-hidden border border-[#E8B86D]/35 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-md [content-visibility:auto]"
+          className="mt-6 overflow-hidden border border-[#E8B86D]/35 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-md"
           aria-label="2026 Season Pass"
         >
           <div className="relative border-b border-[#E8B86D]/20 bg-black">
@@ -468,12 +475,12 @@ export default function SunsetsLinkBio() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleSeasonPassClick}
-              className="group mt-4 flex h-12 w-full items-center justify-center gap-2 bg-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-black transition-all hover:bg-[#d4a574] hover:shadow-[0_0_15px_rgba(232,184,109,0.3)] active:scale-[0.98] min-[390px]:text-xs"
+              className="group mt-4 flex h-12 w-full items-center justify-center gap-2 bg-[#E8B86D] text-[11px] font-black uppercase tracking-[0.12em] text-black transition-all hover:bg-[#d4a574] hover:shadow-[0_0_15px_rgba(232,184,109,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[390px]:text-xs"
             >
               GET SEASON PASS{" "}
               <span
                 aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1"
+                className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
               >
                 →
               </span>
@@ -482,12 +489,9 @@ export default function SunsetsLinkBio() {
         </section>
 
         {/* 6. Cabanas */}
-        <section
-          className="mt-6 [content-visibility:auto]"
-          aria-label="Cabanas and VIP"
-        >
+        <section className="mt-6" aria-label="Cabanas and VIP">
           <div className="border border-[#E8B86D]/40 bg-[#15110a]/80 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-sm">
-            <h2 className="whitespace-nowrap text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
+            <h2 className="text-balance text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
               CABANAS &amp; VIP RESERVATIONS
             </h2>
             <p className="mt-2 text-sm font-semibold text-stone-300">
@@ -513,12 +517,12 @@ export default function SunsetsLinkBio() {
                   channel: "Monolith",
                 });
               }}
-              className="group mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-xs font-black uppercase tracking-[0.12em] text-[#E8B86D] transition-all hover:bg-[#E8B86D]/10 active:scale-[0.98]"
+              className="group mt-4 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#E8B86D] text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D]/10 active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-xs min-[380px]:tracking-[0.12em]"
             >
               RESERVE BOTTLE SERVICE{" "}
               <span
                 aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1"
+                className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
               >
                 →
               </span>
@@ -536,18 +540,15 @@ export default function SunsetsLinkBio() {
         </div>
 
         {/* Benchek */}
-        <section
-          className="mt-4 [content-visibility:auto]"
-          aria-label="Benchek featured set drop"
-        >
+        <section className="mt-4" aria-label="Benchek featured set drop">
           <div className="group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
-            <div className="grid grid-cols-[0.82fr_1fr]">
-              <div className="overflow-hidden">
+            <div className="grid grid-cols-1 min-[380px]:grid-cols-[0.82fr_1fr]">
+              <div className="overflow-hidden bg-black/30">
                 <img
                   src={BENCHEK_DROP_IMAGE}
                   alt="Benchek exclusive July 4 holiday set"
                   loading="lazy"
-                  className="h-full min-h-[178px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="aspect-[4/3] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 min-[380px]:aspect-auto min-[380px]:min-h-[178px]"
                 />
               </div>
               <div className="flex flex-col justify-between p-4">
@@ -563,7 +564,7 @@ export default function SunsetsLinkBio() {
                 <a
                   href={benchekDropHref}
                   onClick={handleBenchekDropClick}
-                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.97]"
+                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.97] motion-reduce:transition-none"
                 >
                   Get the Set Drop
                 </a>
@@ -573,18 +574,15 @@ export default function SunsetsLinkBio() {
         </section>
 
         {/* Sommers UK */}
-        <section
-          className="mt-4 [content-visibility:auto]"
-          aria-label="Sommers UK featured set drop"
-        >
+        <section className="mt-4" aria-label="Sommers UK featured set drop">
           <div className="group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
-            <div className="grid grid-cols-[0.82fr_1fr]">
-              <div className="overflow-hidden">
+            <div className="grid grid-cols-1 min-[380px]:grid-cols-[0.82fr_1fr]">
+              <div className="overflow-hidden bg-black/30">
                 <img
                   src={SOMMERS_UK_IMAGE}
                   alt="Sommers UK exclusive sunset set"
                   loading="lazy"
-                  className="h-full min-h-[178px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="aspect-[4/3] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 min-[380px]:aspect-auto min-[380px]:min-h-[178px]"
                 />
               </div>
               <div className="flex flex-col justify-between p-4">
@@ -602,7 +600,7 @@ export default function SunsetsLinkBio() {
                   onClick={handleSommersUkClick}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.97]"
+                  className="mt-4 flex min-h-[46px] items-center justify-center border border-[#E8B86D]/55 bg-[#E8B86D]/10 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black active:scale-[0.97] motion-reduce:transition-none"
                 >
                   Listen on SoundCloud
                 </a>
