@@ -32,7 +32,11 @@ function isTrackingHost() {
     host === "monolithproject.com" ||
     host === "www.monolithproject.com" ||
     host === "themonolithproject.com" ||
-    host === "www.themonolithproject.com"
+    host === "www.themonolithproject.com" ||
+    host === "sunsets.vip" ||
+    host === "www.sunsets.vip" ||
+    host === "untold.vip" ||
+    host === "www.untold.vip"
   );
 }
 
