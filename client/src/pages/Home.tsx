@@ -112,7 +112,8 @@ export default function Home() {
                   On Sale Now
                 </span>
                 <h2 className="section-display-title-compact mt-3 max-w-[26ch] text-white hyphens-none break-keep text-balance">
-                  SUN(SETS) I — July 4 — Kiko Franco · Amari · Erik The DJ
+                  SUN(SETS) I — July 4 — Autograf · Kiko Franco · Amari · Eliana
+                  · Gianni Blu
                 </h2>
                 <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/82 md:text-[11px]">
                   Castaways Beach Club · Chicago · 12PM–10PM · 21+

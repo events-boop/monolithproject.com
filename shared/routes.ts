@@ -29,6 +29,7 @@ export const ROUTES = {
   chasingSunsets: "/chasing-sunsets",
   chasingSunsetsFacts: "/chasing-sunsets-facts",
   story: "/story",
+  untoldVip: "/untold",
   untoldStory: "/untold-story",
   untoldStoryDeronJuanyBravo: "/untold-story-deron-juany-bravo",
   newsletter: "/newsletter",
@@ -169,6 +170,7 @@ export const STANDALONE_LANDING_PATHS = new Set([
   ROUTES.sunsets,
   ROUTES.lake,
   ROUTES.story,
+  ROUTES.untoldVip,
 ]);
 
 /* ------------------------------------------------------------------ */

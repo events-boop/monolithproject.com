@@ -7,7 +7,9 @@ export type HeroPreloadSpec = {
   type?: string;
 };
 
-const HERO_PRELOAD_WIDTHS = [480, 1024, 1920];
+const HERO_VIDEO_PRELOAD_WIDTHS = [480, 1024, 1920];
+const WIDE_PRELOAD_WIDTHS = [480, 1024, 1600];
+const STANDARD_PRELOAD_WIDTHS = [480, 1024];
 
 export function normalizeAppPath(pathname: string) {
   const clean = pathname.split("?")[0]?.split("#")[0] || "/";
@@ -37,7 +39,7 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
         imageSizes: "100vw",
         imageSrcSet: buildGeneratedImageSrcSet(
           "hero-video-1-poster",
-          HERO_PRELOAD_WIDTHS,
+          HERO_VIDEO_PRELOAD_WIDTHS,
           "avif"
         ),
         type: "image/avif",
@@ -52,7 +54,7 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
         imageSizes: "100vw",
         imageSrcSet: buildGeneratedImageSrcSet(
           "chasing-sunsets",
-          HERO_PRELOAD_WIDTHS,
+          WIDE_PRELOAD_WIDTHS,
           "avif"
         ),
         type: "image/avif",
@@ -67,7 +69,22 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
         imageSizes: "100vw",
         imageSrcSet: buildGeneratedImageSrcSet(
           "untold-story-juany-deron-v2",
-          HERO_PRELOAD_WIDTHS,
+          WIDE_PRELOAD_WIDTHS,
+          "avif"
+        ),
+        type: "image/avif",
+      },
+    ];
+  }
+
+  if (route === "/untold") {
+    return [
+      {
+        href: "/images/generated/untold-story-moody-1024.avif",
+        imageSizes: "(min-width: 1024px) 420px, 92vw",
+        imageSrcSet: buildGeneratedImageSrcSet(
+          "untold-story-moody",
+          STANDARD_PRELOAD_WIDTHS,
           "avif"
         ),
         type: "image/avif",

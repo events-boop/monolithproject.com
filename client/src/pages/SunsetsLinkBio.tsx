@@ -74,8 +74,13 @@ const SEASON_EVENTS_SCHEMA = [
       "Autograf",
       "Kiko Franco",
       "Amari",
-      "NOMAR b3b COLIN b3b JEROME",
+      "Eliana",
+      "Gianni Blu",
+      "Frank Bono",
       "Erik The DJ",
+      "Jerome",
+      "Colin",
+      "Nomar",
     ].map(name => ({ "@type": "MusicGroup" as const, name })),
     offers: {
       "@type": "Offer" as const,
@@ -112,6 +117,12 @@ const SEASON_EVENTS_SCHEMA = [
 ];
 
 const FOOTER_LINKS = [
+  {
+    label: "Untold Story",
+    href: "https://untold.vip",
+    interestType: "untold_story_click",
+    channel: "Untold",
+  },
   {
     label: "Sun(Sets) Radio",
     href: "/go/media/sunsets-soundcloud",
@@ -273,7 +284,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Chasing Sun(Sets) 2026 — July 4 Tickets On Sale"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026. Autograf, Kiko Franco, Amari, NOMAR b3b COLIN b3b JEROME, Frank Bono, Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now."
+        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026. Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar. Open-air house on the Chicago lakefront. Tickets on sale now."
         image={OG_IMAGE}
         canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
@@ -649,6 +660,12 @@ export default function SunsetsLinkBio() {
               <a
                 key={link.label}
                 href={link.href}
+                target={/^https?:\/\//i.test(link.href) ? "_blank" : undefined}
+                rel={
+                  /^https?:\/\//i.test(link.href)
+                    ? "noopener noreferrer"
+                    : undefined
+                }
                 className="text-[11px] font-semibold text-stone-400 underline-offset-4 transition hover:text-stone-200 hover:underline"
                 onClick={() =>
                   trackSunsetsClick({

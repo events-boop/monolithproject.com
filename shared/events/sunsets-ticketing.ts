@@ -49,7 +49,8 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_JULY4_EVENT_DATE,
     eventSlug: SUNSETS_JULY4_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Autograf x Kiko Franco x Amari",
+    lineup:
+      "Autograf x Kiko Franco with Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar",
     ticketPath: SUNSETS_JULY4_TICKET_PATH,
   },
   {
@@ -108,25 +109,29 @@ export const SUNSETS_JULY4_TICKET_UTMS = {
   utm_content: "buy_tickets_primary",
 } as const;
 
-// Lineup confirmed for public announcement — June 2026. The headline trio
-// (Autograf, Kiko Franco, Jewels (Le Yora)) leads the July 4 billing.
+// Lineup confirmed for public announcement — June 2026.
 export const SUNSETS_JULY4_LINEUP = [
   "Autograf",
   "Kiko Franco",
   "Amari",
-  "NOMAR b3b COLIN b3b JEROME",
+  "Eliana",
+  "Gianni Blu",
   "Frank Bono",
   "Erik The DJ",
+  "Jerome",
+  "Colin",
+  "Nomar",
 ] as const;
 
 export const SUNSETS_JULY4_SET_TIMES = [
   { time: "12:00 PM", label: "Doors / Event Begins" },
-  { time: "2:00 PM — 3:00 PM", label: "NOMAR b3b COLIN b3b JEROME" },
-  { time: "3:00 PM — 4:00 PM", label: "Erik The DJ" },
-  { time: "4:00 PM — 5:00 PM", label: "Frank Bono" },
-  { time: "6:00 PM — 7:15 PM", label: "Amari" },
+  {
+    time: "2:00 PM — 6:00 PM",
+    label: "Jerome / Colin / Nomar / Frank Bono / Erik The DJ",
+  },
+  { time: "6:00 PM — 7:15 PM", label: "Amari / Eliana / Gianni Blu" },
   { time: "7:15 PM — 8:45 PM", label: "Kiko Franco" },
-  { time: "8:45 PM — 10:00 PM", label: "Autograf — Closing Set" },
+  { time: "8:45 PM — 10:00 PM", label: "Autograf" },
   { time: "10:00 PM", label: "Event Ends" },
 ] as const;
 // The three top-billed names featured in announcements + the /sunsets hero.

@@ -28,6 +28,7 @@ const LakeLanding = lazy(() => import("./pages/LakeLanding"));
 const Radio = lazy(() => import("./pages/Radio"));
 const RadioEpisode = lazy(() => import("./pages/RadioEpisode"));
 const UntoldStory = lazy(() => import("./pages/UntoldStory"));
+const UntoldVipLanding = lazy(() => import("./pages/UntoldVipLanding"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Partners = lazy(() => import("./pages/Partners"));
 const Lineup = lazy(() => import("./pages/Lineup"));
@@ -111,6 +112,7 @@ const LakeLandingTransition = withTransition(LakeLanding);
 const RadioTransition = withTransition(Radio);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
+const UntoldVipLandingTransition = withTransition(UntoldVipLanding);
 const BookingTransition = withTransition(Booking);
 const SubmitTransition = withTransition(Submit);
 const LineupTransition = withTransition(Lineup);
@@ -174,7 +176,8 @@ function getCampaignHostLandingPath(location: string) {
 
   if (normalizedLocation === ROUTES.home && isSunsetsHost)
     return ROUTES.sunsets;
-  if (normalizedLocation === ROUTES.home && isUntoldHost) return ROUTES.story;
+  if (normalizedLocation === ROUTES.home && isUntoldHost)
+    return ROUTES.untoldVip;
 
   return normalizedLocation;
 }
@@ -228,6 +231,7 @@ function Router() {
       />
       <Route path={ROUTES.radio} component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
+      <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />
       <Route path={ROUTES.story} component={UntoldStoryTransition} />
       <Route path={ROUTES.untoldStory} component={UntoldStoryTransition} />
       <Route
@@ -404,10 +408,11 @@ function MainContentWrapper() {
   const normalizedLocation = normalizeRouteLocation(location);
   const landingPath = getCampaignHostLandingPath(location);
   const isUntoldRootLanding =
-    normalizedLocation === ROUTES.home && landingPath === ROUTES.story;
+    normalizedLocation === ROUTES.home && landingPath === ROUTES.untoldVip;
   const isStandaloneLanding =
     landingPath === ROUTES.sunsets ||
     landingPath === ROUTES.lake ||
+    landingPath === ROUTES.untoldVip ||
     isUntoldRootLanding;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
@@ -464,6 +469,8 @@ function MainContentWrapper() {
         {isStandaloneLanding ? (
           landingPath === ROUTES.lake ? (
             <LakeLandingTransition />
+          ) : landingPath === ROUTES.untoldVip ? (
+            <UntoldVipLandingTransition />
           ) : landingPath === ROUTES.story ? (
             <UntoldStoryTransition />
           ) : (

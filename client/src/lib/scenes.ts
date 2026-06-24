@@ -78,6 +78,7 @@ export function getSceneForPath(pathname?: string): SceneConfig {
 
   if (
     normalized.startsWith(ROUTES.story) ||
+    normalized.startsWith(ROUTES.untoldVip) ||
     normalized.startsWith(ROUTES.untoldStory)
   ) {
     return scenes.story;

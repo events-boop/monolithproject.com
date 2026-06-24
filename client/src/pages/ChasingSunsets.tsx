@@ -178,7 +178,7 @@ export default function ChasingSunsets() {
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
         title="SUN(SETS) I — July 4th at Castaways | Chasing Sun(Sets)"
-        description="SUN(SETS) I brings Kiko Franco, Amari, Erik The DJ & more to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
+        description="SUN(SETS) I brings Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -422,14 +422,13 @@ export default function ChasingSunsets() {
               {
                 kicker: "Schedule",
                 title: "Set Times",
-                body: "Doors at 12PM. Amari, Erik The DJ & more build the day — Kiko Franco takes sunset.",
+                body: "Doors at 12PM. Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar build the day — Autograf and Kiko Franco take sunset.",
                 href: "#chasing-tickets",
               },
               {
                 kicker: "VIP Rail",
                 title: "Tables",
-                body:
-                  "6 premium cabanas and limited tables start at a $2,000 minimum.",
+                body: "6 premium cabanas and limited tables start at a $2,000 minimum.",
                 href: "/vip",
               },
             ].map((card, index) => (

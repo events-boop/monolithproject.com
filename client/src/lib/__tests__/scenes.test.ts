@@ -72,7 +72,7 @@ describe("scenes", () => {
         brand: "chasing-sunsets",
         ticketTheme: "warm",
         accent: "#E8B86D",
-        glow: "rgba(97, 232, 255, 0.32)",
+        glow: "rgba(232, 184, 109, 0.28)",
       });
     });
 
@@ -131,6 +131,10 @@ describe("scenes", () => {
 
     it("returns story scene for /story/sub-page", () => {
       expect(getSceneForPath("/story/sub-page").id).toBe("story");
+    });
+
+    it("returns story scene for /untold", () => {
+      expect(getSceneForPath("/untold").id).toBe("story");
     });
 
     it("returns story scene for /untold-story", () => {
