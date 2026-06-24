@@ -15,7 +15,6 @@ import {
   getEventPillToneClass,
 } from "@/lib/ctaTone";
 import { getEventCta } from "@/lib/cta";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 
 export function getEventById(id: string) {
   return getEventByIdShared(id);
@@ -284,7 +283,7 @@ export default function EventCountdown({
                     strokeWidth={2.4}
                   />
                 </a>
-                {startingPrice && !SUNSETS_PRELAUNCH_LOCKED ? (
+                {startingPrice ? (
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">
                     Entry from{" "}
                     <span className="font-black text-white">

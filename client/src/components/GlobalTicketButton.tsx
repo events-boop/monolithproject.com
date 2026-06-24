@@ -14,7 +14,6 @@ import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { getEventCtaToneClass } from "@/lib/ctaTone";
 import { ROUTES } from "@shared/routes";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { trackAccessEvent } from "@/lib/api";
 import { useUI } from "@/contexts/UIContext";
@@ -75,13 +74,7 @@ export default function GlobalTicketButton() {
   const isHome = location === "/";
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
 
-  const stateDot = SUNSETS_PRELAUNCH_LOCKED
-    ? {
-        color: "var(--scene-accent, #E05A3A)",
-        label: "Lake List",
-        pulse: false,
-      }
-    : featuredEvent?.status === "on-sale"
+  const stateDot = featuredEvent?.status === "on-sale"
       ? { color: "#10B981", label: "Live", pulse: true }
       : featuredEvent?.status === "sold-out"
         ? { color: "#F43F5E", label: "Waitlist", pulse: false }

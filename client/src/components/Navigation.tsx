@@ -25,7 +25,6 @@ import {
 } from "../lib/siteExperience";
 import NavigationMegamenu from "./NavigationMegamenu";
 import { getEventCta } from "../lib/cta";
-import { SUNSETS_PRELAUNCH_LOCKED } from "../lib/sunsetsTicketing";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
@@ -145,9 +144,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
   const cta = getEventCta(contextEvent);
   const ctaToneClass = getEventCtaToneClass(contextEvent);
-  const ticketHref = SUNSETS_PRELAUNCH_LOCKED
-    ? undefined
-    : getPrimaryTicketUrl(contextEvent);
+  const ticketHref = getPrimaryTicketUrl(contextEvent);
   const hasEventBanner = isEventBannerVisible(location);
   const bannerPayload = hasEventBanner ? getEventBannerPayload() : null;
   const mobileMenuId = "nav-mobile-menu";
@@ -597,11 +594,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             `/events/${ticketEvent.slug || ticketEvent.id}`,
                           ctaText: ticketHref ? "On Sale" : "First Access",
                           icon: ticketHref ? "ticket" : "arrow",
-                          badge: SUNSETS_PRELAUNCH_LOCKED
-                            ? "FIRST ACCESS"
-                            : ticketEvent.status === "on-sale"
-                              ? "ON SALE"
-                              : "COMING SOON",
+                          badge: ticketEvent.status === "on-sale"
+                            ? "ON SALE"
+                            : "COMING SOON",
                           external: !!ticketHref,
                         }
                       : {

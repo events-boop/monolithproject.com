@@ -8,7 +8,6 @@ import {
   isTicketOnSale,
 } from "@/lib/siteExperience";
 import { getEventCta } from "@/lib/cta";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 import { EVENT_BANNER_PATHS } from "@shared/routes";
 
 export function getEventBannerStatus(
@@ -51,9 +50,7 @@ export function getEventBannerPayload(now: Date = new Date()) {
   const headline = (event.headline || event.title).toUpperCase();
   const eyebrow = getEventEyebrow(event).toUpperCase();
   const venue = getEventVenueLabel(event).toUpperCase();
-  const saleTail = SUNSETS_PRELAUNCH_LOCKED
-    ? "JOIN THE LAKE LIST FOR FIRST ACCESS"
-    : isTicketOnSale(event, now)
+  const saleTail = isTicketOnSale(event, now)
       ? "TICKETS ON SALE NOW"
       : "SAVE THE DATE";
   const message =

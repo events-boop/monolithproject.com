@@ -4,40 +4,29 @@ import {
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_TICKET_CTA_LABEL,
   captureSunsetsTicketCtaClick,
-  SUNSETS_PRELAUNCH_LOCKED,
 } from "@/lib/sunsetsTicketing";
 
 export default function FixedTicketBadge() {
   const { scrollY } = useScroll();
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
-  // Pre-launch: Posh is in draft — route to the Lake List, not the ticket page.
-  const href = SUNSETS_PRELAUNCH_LOCKED
-    ? "/sunsets"
-    : SUNSETS_JULY4_TICKET_PATH;
-  const label = SUNSETS_PRELAUNCH_LOCKED
-    ? "Join the Lake List"
-    : SUNSETS_TICKET_CTA_LABEL;
-  const ring = SUNSETS_PRELAUNCH_LOCKED
-    ? "Join the Lake List • First Access • Join the Lake List •"
-    : "Buy Tickets • July 4 • Posh • Buy Tickets •";
+  const href = SUNSETS_JULY4_TICKET_PATH;
+  const label = SUNSETS_TICKET_CTA_LABEL;
+  const ring = "Buy Tickets • July 4 • Posh • Buy Tickets •";
 
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
       <a
         href={href}
-        onClick={
-          SUNSETS_PRELAUNCH_LOCKED
-            ? undefined
-            : () =>
-                captureSunsetsTicketCtaClick({
-                  destinationUrl: SUNSETS_JULY4_TICKET_PATH,
-                  pagePath:
-                    typeof window !== "undefined"
-                      ? window.location.pathname
-                      : undefined,
-                  ctaPosition: "footer",
-                })
+        onClick={() =>
+          captureSunsetsTicketCtaClick({
+            destinationUrl: SUNSETS_JULY4_TICKET_PATH,
+            pagePath:
+              typeof window !== "undefined"
+                ? window.location.pathname
+                : undefined,
+            ctaPosition: "footer",
+          })
         }
         className="group relative flex h-32 w-32 cursor-pointer items-center justify-center rounded-full"
         aria-label={label}

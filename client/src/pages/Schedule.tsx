@@ -25,7 +25,6 @@ import {
   isTicketOnSale,
 } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 import ConversionCTA from "@/components/ConversionCTA";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { trackAccessEvent } from "@/lib/api";
@@ -496,8 +495,7 @@ export default function Schedule() {
                                 </motion.span>
                               )}
                               {event.startingPrice &&
-                                event.status !== "sold-out" &&
-                                !SUNSETS_PRELAUNCH_LOCKED && (
+                                event.status !== "sold-out" && (
                                   <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
                                     From ${event.startingPrice}
                                   </span>

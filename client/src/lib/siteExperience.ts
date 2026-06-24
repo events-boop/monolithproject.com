@@ -1,5 +1,4 @@
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
 import {
   MONOLITH_ORANGE,
@@ -73,8 +72,6 @@ export function isTicketOnSale(
   event?: ScheduledEvent | null,
   now: Date = new Date()
 ) {
-  // Pre-launch: nothing is publicly "on sale" until Posh is published.
-  if (SUNSETS_PRELAUNCH_LOCKED) return false;
   if (!event?.ticketUrl) return false;
   if (event.status !== "on-sale") return false;
 
@@ -140,9 +137,6 @@ export function getExperienceEvent(
 }
 
 export function getPrimaryTicketUrl(event?: ScheduledEvent | null) {
-  // Pre-launch: suppress the Posh ticket URL so callers fall back to safe
-  // internal routes / first-access copy until Posh is published.
-  if (SUNSETS_PRELAUNCH_LOCKED) return undefined;
   return event?.ticketUrl;
 }
 

@@ -1,22 +1,16 @@
 import { Ticket, ArrowUpRight } from "lucide-react";
 import { POSH_TICKET_URL } from "@/data/events";
 import { CTA_LABELS } from "@/lib/cta";
-import { SUNSETS_PRELAUNCH_LOCKED } from "@/lib/sunsetsTicketing";
 
 interface TicketTickerProps {
   className?: string;
 }
 
 export default function TicketTicker({ className = "" }: TicketTickerProps) {
-  // Pre-launch: Posh is in draft — point the marquee at the Lake List instead.
-  const primaryLabel = SUNSETS_PRELAUNCH_LOCKED
-    ? "Join the Lake List"
-    : CTA_LABELS.tickets;
-  const hoverLabel = SUNSETS_PRELAUNCH_LOCKED
-    ? "First Access"
-    : CTA_LABELS.getTicketsNow;
-  const href = SUNSETS_PRELAUNCH_LOCKED ? "/sunsets" : POSH_TICKET_URL;
-  const external = !SUNSETS_PRELAUNCH_LOCKED;
+  const primaryLabel = CTA_LABELS.tickets;
+  const hoverLabel = CTA_LABELS.getTicketsNow;
+  const href = POSH_TICKET_URL;
+  const external = true;
 
   // Repeating pattern for the marquee
   const items = Array.from({ length: 12 }).map((_, i) => (

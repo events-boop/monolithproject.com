@@ -28,7 +28,6 @@ import {
   SUNSETS_JULY4_SET_TIMES,
   SUNSETS_JULY4_TABLE_MINIMUM,
   SUNSETS_JULY4_TABLE_RAIL,
-  SUNSETS_PRELAUNCH_LOCKED,
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TOTAL_CAPACITY,
   SUNSETS_TICKET_CTA_LABEL,
@@ -45,19 +44,17 @@ const TICKET_RAIL_STATS = [
   {
     label: "First Access",
     value: SUNSETS_JULY4_FIRST_ACCESS_CODE,
-    note: SUNSETS_PRELAUNCH_LOCKED ? "hidden tier" : "$30 hidden tier",
+    note: "$30 hidden tier",
   },
   {
     label: "Tables",
-    value: SUNSETS_PRELAUNCH_LOCKED
-      ? "By request"
-      : SUNSETS_JULY4_TABLE_MINIMUM,
+    value: SUNSETS_JULY4_TABLE_MINIMUM,
     note: "6 premium cabanas",
   },
   {
     label: "Ticket Rail",
-    value: SUNSETS_PRELAUNCH_LOCKED ? "Lake List" : "Posh",
-    note: SUNSETS_PRELAUNCH_LOCKED ? "first access" : "official source",
+    value: "Posh",
+    note: "official source",
   },
 ] as const;
 
@@ -96,7 +93,6 @@ type ChasingSunsetsTicketingProps = {
 };
 
 function handleTicketClick(source: string) {
-  if (SUNSETS_PRELAUNCH_LOCKED) return "/sunsets";
   const href = appendAttributionQueryParams(SUNSETS_JULY4_TICKET_PATH);
   captureSunsetsTicketCtaClick({
     destinationUrl: href,
@@ -114,9 +110,7 @@ export default function ChasingSunsetsTicketing({
   const [, setLocation] = useLocation();
   const chasingEvents = seasonEvents ?? getSeriesEvents("chasing-sunsets");
   const pricingEvent = featuredEvent ?? chasingEvents[0];
-  const ticketHref = SUNSETS_PRELAUNCH_LOCKED
-    ? "/sunsets"
-    : appendAttributionQueryParams(SUNSETS_JULY4_TICKET_PATH);
+  const ticketHref = appendAttributionQueryParams(SUNSETS_JULY4_TICKET_PATH);
 
   return (
     <section
@@ -276,9 +270,7 @@ export default function ChasingSunsetsTicketing({
                 </div>
                 <div className="text-right">
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
-                    {SUNSETS_PRELAUNCH_LOCKED
-                      ? "Allocation locked"
-                      : tier.quantityLabel}
+                    {tier.quantityLabel}
                   </p>
                 </div>
               </div>
@@ -289,7 +281,7 @@ export default function ChasingSunsetsTicketing({
                 <span>{tier.admissionLabel}</span>
                 <span>{tier.timing}</span>
               </div>
-              {tier.rule && !SUNSETS_PRELAUNCH_LOCKED ? (
+              {tier.rule ? (
                 <p className="mt-4 border-l-2 border-[#E8B86D]/55 pl-3 text-xs font-semibold leading-relaxed text-[#f8e7b3]">
                   {tier.rule}
                 </p>
@@ -310,9 +302,7 @@ export default function ChasingSunsetsTicketing({
               {SUNSETS_JULY4_TABLE_RAIL.name}
             </h3>
             <p className="mt-4 text-base leading-relaxed text-white/72">
-              {SUNSETS_PRELAUNCH_LOCKED
-                ? "Limited tables and 6 premium cabanas are available for SUN(SETS) I — reserved space for your group. Pricing shared on inquiry."
-                : SUNSETS_JULY4_TABLE_RAIL.description}
+              {SUNSETS_JULY4_TABLE_RAIL.description}
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               {[
