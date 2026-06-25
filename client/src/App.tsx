@@ -412,6 +412,7 @@ function MainContentWrapper() {
   const isStandaloneLanding =
     landingPath === ROUTES.sunsets ||
     landingPath === ROUTES.lake ||
+    landingPath === ROUTES.story ||
     landingPath === ROUTES.untoldVip ||
     isUntoldRootLanding;
 

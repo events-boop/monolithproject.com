@@ -151,9 +151,11 @@ export default function UntoldVipLanding() {
             <p className="font-mono text-[10px] font-black uppercase tracking-[0.34em] text-[#22D3EE]/82">
               The Monolith Project Presents
             </p>
-            <h1 className="mt-5 font-display text-[clamp(4.25rem,17vw,9rem)] uppercase leading-[0.76] tracking-tight text-white drop-shadow-[0_24px_72px_rgba(0,0,0,0.82)]">
-              Untold
-              <span className="block text-[#22D3EE]">Story</span>
+            <h1 className="mt-5 font-display text-[clamp(3.55rem,15.5vw,8rem)] uppercase leading-[0.76] tracking-tight text-white drop-shadow-[0_24px_72px_rgba(0,0,0,0.82)]">
+              <span className="block whitespace-nowrap">Untold</span>
+              <span className="block whitespace-nowrap text-[#22D3EE]">
+                Story
+              </span>
             </h1>
             <p className="mx-auto mt-6 max-w-[37rem] text-balance text-base font-medium leading-relaxed text-white/72 sm:text-lg lg:mx-0">
               After-dark records from Chicago rooms built for deeper house
@@ -163,7 +165,7 @@ export default function UntoldVipLanding() {
             <div className="mx-auto mt-7 grid max-w-xl grid-cols-3 border border-white/10 bg-white/[0.035] backdrop-blur lg:mx-0">
               {[
                 ["4", "Chapters"],
-                ["Chicago", "Rooms"],
+                ["CHI", "Rooms"],
                 ["Music", "First"],
               ].map(([value, label]) => (
                 <div
@@ -194,6 +196,16 @@ export default function UntoldVipLanding() {
                 className="inline-flex min-h-12 items-center justify-center border border-white/14 bg-white/[0.035] px-5 text-[11px] font-black uppercase tracking-[0.16em] text-white/72 transition hover:border-[#22D3EE]/45 hover:text-[#22D3EE] active:scale-[0.98] motion-reduce:transition-none"
               >
                 Visit Sun(Sets)
+              </a>
+            </div>
+            <div className="mt-3 flex justify-center lg:justify-start">
+              <a
+                href="https://laylo.com/monolithproject"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-[#8B5CF6]/40 bg-[#8B5CF6]/10 px-5 text-[11px] font-black uppercase tracking-[0.16em] text-[#8B5CF6] transition hover:border-[#8B5CF6]/70 hover:bg-[#8B5CF6]/20 active:scale-[0.98] motion-reduce:transition-none"
+              >
+                Join the Night List — Untold Drops
               </a>
             </div>
           </header>
