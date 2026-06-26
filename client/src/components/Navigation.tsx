@@ -594,9 +594,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             `/events/${ticketEvent.slug || ticketEvent.id}`,
                           ctaText: ticketHref ? "On Sale" : "First Access",
                           icon: ticketHref ? "ticket" : "arrow",
-                          badge: ticketEvent.status === "on-sale"
-                            ? "ON SALE"
-                            : "COMING SOON",
+                          badge:
+                            ticketEvent.status === "on-sale"
+                              ? "ON SALE"
+                              : "COMING SOON",
                           external: !!ticketHref,
                         }
                       : {
@@ -856,7 +857,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         cta.tool === "posh"
                           ? "GET IN"
                           : cta.tool === "laylo"
-                            ? "UNLOCK"
+                            ? "TICKETS"
                             : "RSVP"
                       }
                       onMouseEnter={() => {
@@ -894,7 +895,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         cta.tool === "posh"
                           ? "GET IN"
                           : cta.tool === "laylo"
-                            ? "UNLOCK"
+                            ? "TICKETS"
                             : "RSVP"
                       }
                       onMouseEnter={() => {

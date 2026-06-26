@@ -105,6 +105,10 @@ const SEASON_EVENTS_SCHEMA = [
     name: "SUN(SETS) III — Chasing Sun(Sets) 2026",
     startDate: "2026-09-19T13:00:00-05:00",
     endDate: "2026-09-19T22:00:00-05:00",
+    performer: ["Joezi", "Massuma"].map(name => ({
+      "@type": "MusicGroup" as const,
+      name,
+    })),
     offers: {
       "@type": "Offer" as const,
       url: "https://sunsets.vip",
@@ -282,7 +286,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="SUN(SETS) I | July 4 Tickets — Castaways Chicago"
-        description="Autograf, Kiko Franco & more. The ultimate independence day house music celebration on the Chicago lakefront. Grab your tickets before they sell out."
+        description="SUN(SETS) I brings Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar to Castaways Beach Club on July 4."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
         canonicalUrl={CANONICAL_SUNSETS_URL}
@@ -429,18 +433,26 @@ export default function SunsetsLinkBio() {
           aria-label="2026 Season Pass"
         >
           <div className="relative border-b border-[#E8B86D]/20 bg-black">
-            <img
-              src={SEASON_III_PROOF_IMAGE}
-              alt="Joezi artist proof card for SUN(SETS) III on September 19, 2026 at Castaways Beach Club, Chicago Lakefront"
-              loading="lazy"
-              className="aspect-[696/877] h-auto w-full object-cover"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute bottom-[17.4%] left-[24%] right-[24%] flex min-h-[3.7%] items-center justify-center rounded-full border border-[#7a5f37]/20 bg-[#b99a6c]/95 px-2 text-center text-[clamp(0.38rem,2vw,0.58rem)] font-black uppercase tracking-[0.3em] text-[#1a1208] shadow-[0_8px_18px_rgba(77,52,24,0.24)] backdrop-blur-[2px]"
-            >
-              Special guests TBA
+            <div className="relative">
+              <img
+                src={SEASON_III_PROOF_IMAGE}
+                alt="Joezi artist proof card for SUN(SETS) III on September 19, 2026 at Castaways Beach Club, Chicago Lakefront"
+                loading="lazy"
+                className="aspect-[696/877] h-auto w-full object-cover"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute bottom-[17.4%] left-[24%] right-[24%] flex min-h-[3.7%] items-center justify-center rounded-full border border-[#7a5f37]/20 bg-[#b99a6c]/95 px-2 text-center text-[clamp(0.38rem,2vw,0.58rem)] font-black uppercase tracking-[0.3em] text-[#1a1208] shadow-[0_8px_18px_rgba(77,52,24,0.24)] backdrop-blur-[2px]"
+              >
+                with Massuma
+              </div>
             </div>
+            <img
+              src="/images/MASSUMA.png"
+              alt="Massuma artist card for SUN(SETS) III on September 19, 2026"
+              loading="lazy"
+              className="h-auto w-full object-cover border-t border-[#E8B86D]/20"
+            />
           </div>
 
           <div className="p-4">
@@ -466,7 +478,7 @@ export default function SunsetsLinkBio() {
               {[
                 "SUN(SETS) I · July 4",
                 "SUN(SETS) II · August 22",
-                "SUN(SETS) III · September 19",
+                "SUN(SETS) III · September 19 · Joezi x Massuma",
               ].map((label, index) => (
                 <div
                   key={label}

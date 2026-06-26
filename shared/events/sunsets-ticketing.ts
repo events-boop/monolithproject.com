@@ -70,7 +70,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: "2026-09-19",
     eventSlug: "chasing-sunsets-september-19-2026",
     venue: "Castaways Chicago",
-    lineup: "Lineup TBA",
+    lineup: "Joezi x Massuma (Special guests TBA)",
     ticketPath: SUNSETS_SEP19_TICKET_PATH,
   },
 ] as const;
