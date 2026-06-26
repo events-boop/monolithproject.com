@@ -74,7 +74,8 @@ export default function GlobalTicketButton() {
   const isHome = location === "/";
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
 
-  const stateDot = featuredEvent?.status === "on-sale"
+  const stateDot =
+    featuredEvent?.status === "on-sale"
       ? { color: "#10B981", label: "Live", pulse: true }
       : featuredEvent?.status === "sold-out"
         ? { color: "#F43F5E", label: "Waitlist", pulse: false }
@@ -86,7 +87,7 @@ export default function GlobalTicketButton() {
 
   const cursorTextByTool = {
     posh: "GET IN",
-    laylo: "UNLOCK",
+    laylo: "TICKETS",
     fillout: "RSVP",
   } as const;
 
