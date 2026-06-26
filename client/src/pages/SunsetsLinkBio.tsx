@@ -23,9 +23,7 @@ import {
 const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
 const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
-// OWNER ASSET: placeholder crop from the Kiko campaign photo — swap with the
-// approved 1200×630 campaign-poster crop before the paid push.
-const OG_IMAGE = "/images/css-2026-og.png";
+const OG_IMAGE = "/sunsets_poster.jpg";
 // Recap video — same ID the /go/media/sunsets-recap redirect resolves to.
 const RECAP_YOUTUBE_ID = "9R6XH7JZlJI";
 const RECAP_THUMB = `https://i.ytimg.com/vi/${RECAP_YOUTUBE_ID}/hqdefault.jpg`;
@@ -283,14 +281,14 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
-        title="Chasing Sun(Sets) 2026 — July 4 Tickets On Sale"
-        description="SUN(SETS) returns to Castaways Beach Club July 4, 2026. Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar. Open-air house on the Chicago lakefront. Tickets on sale now."
+        title="SUN(SETS) I | July 4 Tickets — Castaways Chicago"
+        description="Autograf, Kiko Franco & more. The ultimate independence day house music celebration on the Chicago lakefront. Grab your tickets before they sell out."
         image={OG_IMAGE}
-        canonicalUrl={`${CANONICAL_SUNSETS_URL}${PAGE_PATH}`}
         canonicalPath={PAGE_PATH}
+        canonicalUrl={CANONICAL_SUNSETS_URL}
         schemaData={SEASON_EVENTS_SCHEMA}
+        absoluteTitle
       />
-
       <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* Ambient Glow */}
         <div

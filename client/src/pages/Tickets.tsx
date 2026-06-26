@@ -144,8 +144,10 @@ export default function Tickets() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="SUN(SETS) I — Tickets | Chasing Sun(Sets) July 4"
+        title="SUN(SETS) I | July 4 Tickets — Castaways Chicago"
         description="Official Posh tickets for SUN(SETS) July 4 at Castaways Beach Club, Chicago. Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar."
+        image="/sunsets_poster.jpg"
+        absoluteTitle
       />
       {featuredEventSchema ? <JsonLd data={featuredEventSchema} /> : null}
       <div className="pointer-events-none absolute inset-0 bg-tickets-top-glow" />
