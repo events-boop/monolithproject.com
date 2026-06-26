@@ -329,7 +329,7 @@ export default function SunsetsLinkBio() {
 
           <div className="-mx-5 mb-5 mt-5 overflow-hidden border-y-[4px] border-[#15110a] shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_0_1px_rgba(232,184,109,0.2)] outline outline-1 outline-white/10 sm:mx-0 sm:border-[4px]">
             <img
-              src="/images/css-2026-poster.jpg"
+              src="/sunsets_poster.jpg"
               alt="Chasing Sunsets 2026 Poster"
               className="h-auto w-full object-cover"
               fetchPriority="high"
