@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-17T22:43:59.737Z",
+  "generatedAt": "2026-06-25T15:59:01.974Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 8671934,
-    "estimatedTransferBytes": 3602716,
-    "estimatedSavingsBytes": 5159832,
-    "variantBytes": 11403198
+    "originalBytes": 10209405,
+    "estimatedTransferBytes": 3804776,
+    "estimatedSavingsBytes": 6495243,
+    "variantBytes": 12038105
   },
   "images": [
     {
@@ -846,6 +846,44 @@
       "estimatedTransferKb": 2.3,
       "estimatedSavingsBytes": 17067,
       "estimatedSavingsPct": 88
+    },
+    {
+      "source": "/images/artist-autograf-new.jpg",
+      "originalBytes": 270352,
+      "originalKb": 264,
+      "originalWidth": 641,
+      "originalHeight": 688,
+      "generatedBaseName": "artist-autograf-new",
+      "variants": [
+        {
+          "path": "/images/generated/artist-autograf-new-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 25280
+        },
+        {
+          "path": "/images/generated/artist-autograf-new-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 31138
+        },
+        {
+          "path": "/images/generated/artist-autograf-new-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 72423
+        },
+        {
+          "path": "/images/generated/artist-autograf-new-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 83936
+        }
+      ],
+      "estimatedTransferBytes": 72423,
+      "estimatedTransferKb": 70.7,
+      "estimatedSavingsBytes": 197929,
+      "estimatedSavingsPct": 73
     },
     {
       "source": "/images/artist-autograf.webp",
@@ -2086,6 +2124,44 @@
       "estimatedSavingsPct": 0
     },
     {
+      "source": "/images/sommers-uk-cover.jpg",
+      "originalBytes": 39020,
+      "originalKb": 38.1,
+      "originalWidth": 500,
+      "originalHeight": 500,
+      "generatedBaseName": "sommers-uk-cover",
+      "variants": [
+        {
+          "path": "/images/generated/sommers-uk-cover-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 11590
+        },
+        {
+          "path": "/images/generated/sommers-uk-cover-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 14058
+        },
+        {
+          "path": "/images/generated/sommers-uk-cover-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 13521
+        },
+        {
+          "path": "/images/generated/sommers-uk-cover-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 15082
+        }
+      ],
+      "estimatedTransferBytes": 13521,
+      "estimatedTransferKb": 13.2,
+      "estimatedSavingsBytes": 25499,
+      "estimatedSavingsPct": 65
+    },
+    {
       "source": "/images/sunset-party-hero-v2.jpg",
       "originalBytes": 49869,
       "originalKb": 48.7,
@@ -2122,6 +2198,82 @@
       "estimatedTransferKb": 36.2,
       "estimatedSavingsBytes": 12845,
       "estimatedSavingsPct": 26
+    },
+    {
+      "source": "/images/sunsets-hero-beach.jpg",
+      "originalBytes": 363362,
+      "originalKb": 354.8,
+      "originalWidth": 1024,
+      "originalHeight": 614,
+      "generatedBaseName": "sunsets-hero-beach",
+      "variants": [
+        {
+          "path": "/images/generated/sunsets-hero-beach-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 33634
+        },
+        {
+          "path": "/images/generated/sunsets-hero-beach-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 33518
+        },
+        {
+          "path": "/images/generated/sunsets-hero-beach-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 84437
+        },
+        {
+          "path": "/images/generated/sunsets-hero-beach-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 92902
+        }
+      ],
+      "estimatedTransferBytes": 84437,
+      "estimatedTransferKb": 82.5,
+      "estimatedSavingsBytes": 278925,
+      "estimatedSavingsPct": 77
+    },
+    {
+      "source": "/images/sunsets-season-iii-joezi-proof.png",
+      "originalBytes": 864737,
+      "originalKb": 844.5,
+      "originalWidth": 696,
+      "originalHeight": 877,
+      "generatedBaseName": "sunsets-season-iii-joezi-proof",
+      "variants": [
+        {
+          "path": "/images/generated/sunsets-season-iii-joezi-proof-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 21173
+        },
+        {
+          "path": "/images/generated/sunsets-season-iii-joezi-proof-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 26324
+        },
+        {
+          "path": "/images/generated/sunsets-season-iii-joezi-proof-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 31679
+        },
+        {
+          "path": "/images/generated/sunsets-season-iii-joezi-proof-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 44212
+        }
+      ],
+      "estimatedTransferBytes": 31679,
+      "estimatedTransferKb": 30.9,
+      "estimatedSavingsBytes": 833058,
+      "estimatedSavingsPct": 96
     },
     {
       "source": "/images/untold-story-hero-post1.webp",

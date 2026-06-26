@@ -22,12 +22,12 @@ export default function SunsetsCampaignHero() {
         backgroundAttachment: "scroll",
       }}
     >
-      {/* Dark overlay for readability and to blend with the rest of the site */}
-      <div className="absolute inset-0 bg-black/50 mix-blend-multiply pointer-events-none" />
+      {/* Softened dark overlay for readability without muddying the image */}
+      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
       {/* Top gradient for Navigation bar legibility */}
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
       {/* Bottom gradient to blend into the next section smoothly */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#0e0c08] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12 mt-10">
         {/* Left Column: Typography & CTA */}
@@ -150,7 +150,7 @@ export default function SunsetsCampaignHero() {
             <div
               className="w-full h-full rounded border-2 border-black relative overflow-hidden"
               style={{
-                backgroundImage: "url(/sunsets_poster.png)",
+                backgroundImage: "url(/sunsets_poster.jpg)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { getSeriesColor, getSeriesEvents } from "@/lib/siteExperience";
 import ConversionCTA from "@/components/ConversionCTA";
+import { SUNSETS_2026_SEASON_CHAPTERS } from "@/lib/sunsetsTicketing";
 
 const CHAPTER_CARDS = [
   {
@@ -42,9 +43,22 @@ export default function SeasonChapterCards() {
   const events = getSeriesEvents("chasing-sunsets").slice(0, 3);
   if (!events.length) return null;
 
-  const [featured, ...rest] = events;
+  const eventBySlugOrId = new Map<string, (typeof events)[number]>();
+  for (const event of events) {
+    eventBySlugOrId.set(event.id, event);
+    if (event.slug) eventBySlugOrId.set(event.slug, event);
+  }
+  const seasonChapters = SUNSETS_2026_SEASON_CHAPTERS.map((chapter, index) => ({
+    ...CHAPTER_CARDS[index],
+    ...chapter,
+    event:
+      eventBySlugOrId.get(chapter.eventSlug) ||
+      eventBySlugOrId.get(chapter.ticketPath.split("/").pop() || ""),
+  }));
+
+  const [featuredChapter, ...restChapters] = seasonChapters;
+  const featured = featuredChapter.event || events[0];
   const featuredAccent = getSeriesColor(featured.series);
-  const featuredChapter = CHAPTER_CARDS[0];
 
   return (
     <section className="relative z-10 overflow-hidden border-t border-white/10 bg-[#070707] py-20 md:py-28">
@@ -127,12 +141,12 @@ export default function SeasonChapterCards() {
 
               {/* Date — hero-sized */}
               <p className="relative z-10 font-display text-[clamp(3.2rem,7vw,5.5rem)] font-black uppercase leading-[0.85] tracking-tight text-white">
-                {featured.date}
+                {featuredChapter.date}
               </p>
 
               {/* Venue */}
               <p className="mt-2 font-mono text-[11px] font-black uppercase tracking-[0.24em] text-white/55">
-                {featured.venue}, Chicago
+                {featuredChapter.venue}
               </p>
 
               {/* Subtitle */}
@@ -171,18 +185,18 @@ export default function SeasonChapterCards() {
           </motion.div>
 
           {/* ── SUPPORTING CARDS ── */}
-          {rest.map((event, i) => {
+          {restChapters.map(chapter => {
+            const event = chapter.event || featured;
             const accent = getSeriesColor(event.series);
-            const chapter = CHAPTER_CARDS[i + 1];
             return (
               <motion.div
-                key={event.id}
+                key={chapter.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
                   duration: 0.55,
-                  delay: 0.1 * (i + 1),
+                  delay: 0.1 * Number(chapter.number),
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0c0c0c] shadow-[0_18px_48px_rgba(0,0,0,0.38)] transition-colors hover:border-white/20"
@@ -210,11 +224,11 @@ export default function SeasonChapterCards() {
 
                   {/* Date */}
                   <p className="relative z-10 font-display text-[clamp(2rem,4.5vw,3.25rem)] font-black uppercase leading-[0.88] tracking-tight text-white/82">
-                    {event.date}
+                    {chapter.date}
                   </p>
 
                   <p className="mt-2 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-white/42">
-                    {event.venue}, Chicago
+                    {chapter.venue}
                   </p>
 
                   <p

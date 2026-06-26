@@ -348,7 +348,7 @@ export default function Tickets() {
               {(featuredEvent?.ticketTiers || []).map((tier: TicketTier) => (
                 <article
                   key={tier.id}
-                  className={`bg-[#050505] p-12 lg:p-16 flex flex-col h-full transition-all duration-700 hover:bg-white/[0.01] group`}
+                  className={`bg-black/60 backdrop-blur-3xl p-12 lg:p-16 flex flex-col h-full transition-all duration-700 hover:bg-white/[0.05] hover:shadow-[0_0_60px_rgba(255,255,255,0.05)] group`}
                 >
                   <div className="flex items-center justify-between mb-12">
                     <div

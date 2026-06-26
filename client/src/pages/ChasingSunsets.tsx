@@ -183,7 +183,24 @@ export default function ChasingSunsets() {
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
       />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden bg-chasing-glow-1" />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-black/95">
+        <div
+          className="absolute left-[-20%] top-[-10%] h-[60rem] w-[60rem] rounded-full opacity-30 mix-blend-screen animate-pulse duration-[10000ms]"
+          style={{
+            background:
+              "radial-gradient(circle, var(--color-sunsets-auburn) 0%, transparent 60%)",
+            filter: "blur(90px)",
+          }}
+        />
+        <div
+          className="absolute right-[-10%] bottom-[-20%] h-[50rem] w-[50rem] rounded-full opacity-25 mix-blend-screen animate-pulse duration-[15000ms]"
+          style={{
+            background:
+              "radial-gradient(circle, var(--color-sunsets-gold) 0%, transparent 60%)",
+            filter: "blur(100px)",
+          }}
+        />
+      </div>
       <Navigation variant="dark" brand="chasing-sunsets" />
 
       <main id="main-content" tabIndex={-1}>
@@ -191,10 +208,10 @@ export default function ChasingSunsets() {
           id="chasing-hero"
           data-featured-event-id={featuredChasingEvent?.id}
           aria-labelledby="chasing-hero-title"
-          className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#0a0a0a] px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-28 sm:pt-0"
+          className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-black/40 backdrop-blur-sm px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-28 sm:pt-0"
         >
           <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
-          <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(180deg,rgba(0,0,0,0.38)_0%,rgba(8,10,7,0.58)_44%,#0a0a0a_100%),linear-gradient(90deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.34)_48%,rgba(0,0,0,0.12)_100%)]" />
+          <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.4)_60%,rgba(0,0,0,0.8)_100%)]" />
 
           <div className="container layout-default relative z-20 mt-auto pointer-events-none">
             <motion.div
@@ -203,7 +220,7 @@ export default function ChasingSunsets() {
               transition={{ duration: 0.8 }}
               className="pointer-events-auto"
             >
-              <div className="mb-5 hidden max-w-full flex-wrap items-center gap-2 border border-[#E8B86D]/40 bg-black/55 px-3 py-2 shadow-[0_18px_60px_rgba(0,0,0,0.36)] backdrop-blur-md sm:mb-7 sm:inline-flex sm:px-4">
+              <div className="mb-5 hidden max-w-full flex-wrap items-center gap-2 border border-[#E8B86D]/40 bg-white/[0.05] px-3 py-2 shadow-[0_0_30px_rgba(232,184,109,0.15)] backdrop-blur-xl sm:mb-7 sm:inline-flex sm:px-4 rounded-full hover:bg-white/[0.1] transition-colors">
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
                   SUN(SETS) I
                 </span>
@@ -223,7 +240,7 @@ export default function ChasingSunsets() {
               </span>
               <h1
                 id="chasing-hero-title"
-                className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-[0] text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.62)] sm:mb-5"
+                className="font-display mb-4 flex flex-col text-[clamp(3.15rem,9.2vw,9rem)] uppercase leading-[0.82] tracking-[0] bg-gradient-to-br from-[#fbf5ed] via-[#e8b86d] to-[#c2703e] bg-clip-text text-transparent drop-shadow-[0_10px_40px_rgba(232,184,109,0.3)] sm:mb-5"
               >
                 {["CHASING", "SUN(SETS)"].map((line, i) => (
                   <motion.span
@@ -235,7 +252,7 @@ export default function ChasingSunsets() {
                       delay: 0.08 + i * 0.1,
                       ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="block text-white drop-shadow-[0_18px_54px_rgba(0,0,0,0.72)]"
+                    className="block"
                   >
                     {line}
                   </motion.span>
@@ -333,7 +350,7 @@ export default function ChasingSunsets() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="sunset-lively-card sunset-lively-card-feature lg:col-span-6 p-6 backdrop-blur-sm md:p-8"
+              className="sunset-lively-card sunset-lively-card-feature lg:col-span-6 p-6 backdrop-blur-2xl bg-white/[0.03] border border-white/10 hover:border-[#E8B86D]/40 transition-colors duration-500 shadow-[0_0_50px_rgba(232,184,109,0.05)] rounded-2xl md:p-8"
             >
               <span className="font-mono text-[10px] uppercase tracking-[0.34em] sunset-accent">
                 Next Chapter
@@ -438,7 +455,7 @@ export default function ChasingSunsets() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
-                className="sunset-lively-card lg:col-span-2 p-5"
+                className="sunset-lively-card lg:col-span-2 p-6 backdrop-blur-2xl bg-white/[0.03] border border-white/10 hover:border-[#E8B86D]/40 hover:bg-white/[0.06] transition-all duration-500 rounded-2xl group"
               >
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] sunset-accent">
                   {card.kicker}
@@ -466,7 +483,7 @@ export default function ChasingSunsets() {
           width="wide"
           scrollAnchor
           borderTop="border-t border-[#E8B86D]/14"
-          bg="bg-[#1a1a1a]"
+          bg="bg-black/40 backdrop-blur-xl"
         >
           <div className="grid items-start gap-12 xl:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
             <motion.div

@@ -78,20 +78,22 @@ export default function Home() {
         schemaData={buildSitewideIdentitySchema()}
       />
 
-      {/* Ambient static background glows for depth */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      {/* Ambient animated background glows for dynamic depth */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-black/90">
         <div
-          className="absolute -left-[8vw] -top-[10vh] h-[42rem] w-[42rem] rounded-full opacity-[0.12]"
+          className="absolute -left-[10vw] top-[10vh] h-[45rem] w-[45rem] rounded-full opacity-30 mix-blend-screen animate-pulse duration-[8000ms]"
           style={{
             background:
-              "radial-gradient(circle, var(--scene-glow) 0%, transparent 62%)",
+              "radial-gradient(circle, var(--color-sunsets-gold) 0%, transparent 70%)",
+            filter: "blur(80px)",
           }}
         />
         <div
-          className="absolute -right-[8vw] bottom-[-16vh] h-[34rem] w-[34rem] rounded-full opacity-[0.08]"
+          className="absolute -right-[15vw] bottom-[10vh] h-[50rem] w-[50rem] rounded-full opacity-20 mix-blend-screen animate-pulse duration-[12000ms]"
           style={{
             background:
-              "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 68%)",
+              "radial-gradient(circle, var(--color-untold-cyan) 0%, transparent 70%)",
+            filter: "blur(100px)",
           }}
         />
       </div>
@@ -103,7 +105,7 @@ export default function Home() {
         {/* July 4 featured promo — launch priority directly under the hero */}
         <section
           aria-label="SUN(SETS) I — July 4 tickets"
-          className="relative z-10 border-y border-[#E8B86D]/35 bg-[#0e0c08] py-8 md:py-10"
+          className="relative z-10 border-y border-[#E8B86D]/30 bg-black/40 backdrop-blur-2xl py-10 md:py-14 shadow-[0_0_30px_rgba(232,184,109,0.05)]"
         >
           <div className="container layout-wide px-6">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center">
@@ -149,7 +151,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-y border-white/10 bg-[#10100f] py-10 md:py-12">
+        <section className="relative z-10 border-y border-white/10 bg-white/[0.02] backdrop-blur-xl py-12 md:py-16">
           <div className="container layout-wide px-6">
             <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
               <p className="max-w-4xl text-balance font-display text-2xl leading-[1.03] text-white md:text-3xl">
@@ -176,7 +178,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-y border-white/10 bg-[#0d0d0d] py-20 md:py-28">
+        <section className="relative z-10 border-y border-white/10 bg-black/20 backdrop-blur-md py-20 md:py-28">
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
@@ -219,7 +221,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
+              <div className="border border-white/15 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:border-white/30 transition-all duration-500">
                 <span className="section-kicker block text-[#E8B86D]">
                   Season Focus
                 </span>
@@ -266,7 +268,7 @@ export default function Home() {
 
         <section
           id="campaigns"
-          className="relative z-10 border-b border-white/10 bg-[#080808] py-20 md:py-28"
+          className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-lg py-20 md:py-28"
         >
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
@@ -297,7 +299,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="border border-white/15 bg-white/[0.02] p-5 md:p-6">
+                <div className="border border-white/15 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(34,211,238,0.03)] hover:border-[#22d3ee]/40 transition-all duration-500">
                   <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
                     <div>
                       <dt className="text-white/66">Date</dt>
@@ -356,7 +358,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-b border-white/10 bg-[#0d0c0b] py-16 md:py-24">
+        <section className="relative z-10 border-b border-white/10 bg-black/40 backdrop-blur-sm py-16 md:py-24">
           <div className="container layout-wide px-6">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
               <div>
@@ -391,7 +393,7 @@ export default function Home() {
 
         <div
           id="season"
-          className="bg-[#050505] transition-colors duration-500 relative z-10"
+          className="bg-black/20 backdrop-blur-md transition-colors duration-500 relative z-10"
         >
           <div
             aria-hidden
@@ -440,7 +442,7 @@ export default function Home() {
 
         <section
           id="series"
-          className="relative z-10 border-b border-white/10 bg-[#111111] py-20 md:py-28"
+          className="relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-xl py-20 md:py-28"
         >
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
@@ -521,43 +523,43 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-b border-white/10 bg-[#111111] py-16 md:py-24">
+        <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-16 md:py-24">
           <div className="container layout-wide px-6">
             <div className="mb-6">
               <span className="section-kicker block text-primary">
                 Past nights / Proof points
               </span>
             </div>
-            <div className="grid gap-px bg-white/5 md:grid-cols-4">
-              <div className="bg-[#111111] p-6">
+            <div className="grid gap-[1px] bg-white/10 md:grid-cols-4 rounded-xl overflow-hidden shadow-2xl">
+              <div className="bg-black/60 backdrop-blur-xl p-8 hover:bg-white/[0.05] transition-all duration-300">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
                   What It Is
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                <p className="mt-4 text-sm leading-relaxed text-white/90">
                   Chicago-rooted music company
                 </p>
               </div>
-              <div className="bg-[#111111] p-6">
+              <div className="bg-black/60 backdrop-blur-xl p-8 hover:bg-white/[0.05] transition-all duration-300">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
                   Show Types
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                <p className="mt-4 text-sm leading-relaxed text-white/90">
                   Open-air, rooftop, and after-dark chapters
                 </p>
               </div>
-              <div className="bg-[#111111] p-6">
+              <div className="bg-black/60 backdrop-blur-xl p-8 hover:bg-white/[0.05] transition-all duration-300">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
                   Audience Reach
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                <p className="mt-4 text-sm leading-relaxed text-white/90">
                   1M+ organic impressions across past event content
                 </p>
               </div>
-              <div className="bg-[#111111] p-6">
+              <div className="bg-black/60 backdrop-blur-xl p-8 hover:bg-white/[0.05] transition-all duration-300">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
                   Attendance
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-white/90">
+                <p className="mt-4 text-sm leading-relaxed text-white/90">
                   6,000+ community attendance across flagship open-air moments
                 </p>
               </div>
@@ -565,7 +567,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="bg-[#0c0c0c] relative z-10 transition-colors duration-500">
+        <div className="bg-black/20 backdrop-blur-md relative z-10 transition-colors duration-500">
           <SectionDivider
             id="featured"
             number="02"
@@ -607,7 +609,7 @@ export default function Home() {
 
         <section
           id="community"
-          className="relative z-10 border-y border-white/10 bg-[#0c0b0a] py-24 md:py-32"
+          className="relative z-10 border-y border-white/10 bg-black/40 backdrop-blur-lg py-24 md:py-32"
         >
           <div className="container layout-wide px-6">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">

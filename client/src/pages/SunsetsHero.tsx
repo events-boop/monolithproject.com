@@ -22,8 +22,8 @@ export default function SunsetsHero() {
           backgroundAttachment: "fixed",
         }}
       >
-        {/* Dark overlay to make text readable */}
-        <div className="absolute inset-0 bg-black/40 mix-blend-multiply pointer-events-none" />
+        {/* Softened dark overlay to make text readable without muddying the image */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80 pointer-events-none" />
 
         {/* Navigation Bar */}
         <nav className="relative z-50 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/50 backdrop-blur-md">
@@ -169,7 +169,7 @@ export default function SunsetsHero() {
               <div
                 className="w-full h-full rounded border-2 border-black relative overflow-hidden"
                 style={{
-                  backgroundImage: "url(/sunsets_poster.png)",
+                  backgroundImage: "url(/sunsets_poster.jpg)",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
