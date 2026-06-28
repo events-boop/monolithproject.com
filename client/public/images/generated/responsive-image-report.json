@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-25T15:59:01.974Z",
+  "generatedAt": "2026-06-26T22:07:40.777Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 10209405,
-    "estimatedTransferBytes": 3804776,
-    "estimatedSavingsBytes": 6495243,
-    "variantBytes": 12038105
+    "originalBytes": 11881907,
+    "estimatedTransferBytes": 4088692,
+    "estimatedSavingsBytes": 7883829,
+    "variantBytes": 12701310
   },
   "images": [
     {
@@ -1557,41 +1557,41 @@
     },
     {
       "source": "/images/css-2026-poster.jpg",
-      "originalBytes": 498547,
-      "originalKb": 486.9,
-      "originalWidth": 682,
-      "originalHeight": 1024,
+      "originalBytes": 761021,
+      "originalKb": 743.2,
+      "originalWidth": 1024,
+      "originalHeight": 1535,
       "generatedBaseName": "css-2026-poster",
       "variants": [
         {
           "path": "/images/generated/css-2026-poster-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 80204
+          "bytes": 103519
         },
         {
           "path": "/images/generated/css-2026-poster-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 81090
+          "bytes": 97152
         },
         {
           "path": "/images/generated/css-2026-poster-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 125467
+          "bytes": 345413
         },
         {
           "path": "/images/generated/css-2026-poster-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 128168
+          "bytes": 336698
         }
       ],
-      "estimatedTransferBytes": 125467,
-      "estimatedTransferKb": 122.5,
-      "estimatedSavingsBytes": 373080,
-      "estimatedSavingsPct": 75
+      "estimatedTransferBytes": 336698,
+      "estimatedTransferKb": 328.8,
+      "estimatedSavingsBytes": 424323,
+      "estimatedSavingsPct": 56
     },
     {
       "source": "/images/deron-press.jpg",
@@ -2086,6 +2086,44 @@
       "estimatedSavingsPct": 23
     },
     {
+      "source": "/images/MASSUMA.png",
+      "originalBytes": 2015126,
+      "originalKb": 1967.9,
+      "originalWidth": 1122,
+      "originalHeight": 1402,
+      "generatedBaseName": "massuma",
+      "variants": [
+        {
+          "path": "/images/generated/massuma-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 22526
+        },
+        {
+          "path": "/images/generated/massuma-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 28808
+        },
+        {
+          "path": "/images/generated/massuma-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 60449
+        },
+        {
+          "path": "/images/generated/massuma-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 84498
+        }
+      ],
+      "estimatedTransferBytes": 60449,
+      "estimatedTransferKb": 59,
+      "estimatedSavingsBytes": 1954677,
+      "estimatedSavingsPct": 97
+    },
+    {
       "source": "/images/radio-show-gear.webp",
       "originalBytes": 122928,
       "originalKb": 120,
@@ -2516,42 +2554,42 @@
       "estimatedSavingsPct": 76
     },
     {
-      "source": "/sunsets_poster.png",
-      "originalBytes": 1366119,
-      "originalKb": 1334.1,
+      "source": "/sunsets_poster.jpg",
+      "originalBytes": 761021,
+      "originalKb": 743.2,
       "originalWidth": 1024,
-      "originalHeight": 1024,
+      "originalHeight": 1535,
       "generatedBaseName": "sunsets-poster",
       "variants": [
         {
           "path": "/images/generated/sunsets-poster-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 107947
+          "bytes": 103519
         },
         {
           "path": "/images/generated/sunsets-poster-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 99328
+          "bytes": 97152
         },
         {
           "path": "/images/generated/sunsets-poster-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 324462
+          "bytes": 345413
         },
         {
           "path": "/images/generated/sunsets-poster-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 351974
+          "bytes": 336698
         }
       ],
-      "estimatedTransferBytes": 324462,
-      "estimatedTransferKb": 316.9,
-      "estimatedSavingsBytes": 1041657,
-      "estimatedSavingsPct": 76
+      "estimatedTransferBytes": 336698,
+      "estimatedTransferKb": 328.8,
+      "estimatedSavingsBytes": 424323,
+      "estimatedSavingsPct": 56
     }
   ]
 }

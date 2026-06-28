@@ -64,7 +64,7 @@ export default function Tickets() {
     featuredEvent?.subtitle || getEventEyebrow(featuredEvent);
   const featuredVenue = getEventVenueLabel(featuredEvent);
   const featuredPoster =
-    featuredEvent?.image || "/images/chasing-sunsets-july4-first-access.png";
+    featuredEvent?.image || "/images/css-2026-poster.jpg";
   const showTicketFunnel = Boolean(
     featuredEvent?.activeFunnels?.length && cta.tool !== "posh"
   );

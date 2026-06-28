@@ -78,8 +78,8 @@ const PAGE_PATH = "/sunsets";
 const PAGE_SOURCE = "sunsets_wrapper";
 const CANONICAL_SUNSETS_URL = "https://sunsets.vip";
 const HERO_IMAGE = "/images/chasing-sunsets-premium.webp";
-const OG_IMAGE = "/images/chasing-sunsets-july4-first-access.png";
-const SUNSETS_COVER_IMAGE = "/images/chasing-sunsets-firstaccess-flyer.png";
+const OG_IMAGE = "/images/css-2026-og.png";
+const SUNSETS_COVER_IMAGE = "/images/css-2026-poster.jpg";
 const SUNSETS_QR_IMAGE = "/images/sunsets-vip-sunsets-qr.svg";
 const AUTOGRAF_YOUTUBE_EMBED =
   "https://www.youtube.com/embed/9R6XH7JZlJI?start=5506&list=RD9R6XH7JZlJI&rel=0&modestbranding=1";

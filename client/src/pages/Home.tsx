@@ -391,6 +391,16 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-12 md:py-16">
+          <div className="container layout-wide px-6">
+            <img 
+              src="/images/monolith-three-worlds-banner.jpg" 
+              alt="Monolith Project - Three Worlds. One Purpose." 
+              className="w-full h-auto rounded-xl border border-white/15 shadow-[0_0_40px_rgba(232,184,109,0.1)]"
+            />
+          </div>
+        </section>
+
         <div
           id="season"
           className="bg-black/20 backdrop-blur-md transition-colors duration-500 relative z-10"
