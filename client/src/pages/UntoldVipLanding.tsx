@@ -20,7 +20,7 @@ const PREVIOUS_SHOWS = [
   },
   {
     chapter: "II",
-    title: "Deron x Juany",
+    title: "Juany & Deron",
     date: "March 6, 2026",
     schemaDate: "2026-03-06",
     venue: "Chicago",
@@ -28,7 +28,7 @@ const PREVIOUS_SHOWS = [
     image: "/images/juany.jpeg",
     href: "/untold-story/season-iii",
     ctaLabel: "View Gallery",
-    note: "A percussion-led b2b chapter with a tighter dancefloor and the clearest version of the sound yet.",
+    note: "Juany and Deron went back-to-back in a percussion-led set. The tightest dancefloor of the season.",
   },
   {
     chapter: "III",
