@@ -25,7 +25,7 @@ const PREVIOUS_SHOWS = [
     schemaDate: "2026-03-06",
     venue: "Chicago",
     location: "Chicago, IL",
-    image: "/images/untold-story-juany-deron-v2.webp",
+    image: "/images/juany.jpeg",
     href: "/untold-story/season-iii",
     ctaLabel: "View Gallery",
     note: "A percussion-led b2b chapter with a tighter dancefloor and the clearest version of the sound yet.",
