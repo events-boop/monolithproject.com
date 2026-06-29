@@ -8,6 +8,7 @@ import { getDatabase } from "../db/client";
 import { contactSubmissions } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
+import { notifyFormSubmission } from "../services/email";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
@@ -141,6 +142,18 @@ router.post(
           message: webhookError,
         });
       }
+    }
+
+    // 3. Email fallback — notify admin if no webhook or webhook failed
+    if (!webhook || (webhook && !webhookOk)) {
+      notifyFormSubmission({
+        type: "contact",
+        name: contact.name,
+        email,
+        subject: contact.subject,
+        message: contact.message,
+        requestId,
+      }).catch(() => {});
     }
 
     const outcome = resolveSubmissionOutcome({

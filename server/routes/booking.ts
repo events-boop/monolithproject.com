@@ -8,6 +8,7 @@ import { getDatabase } from "../db/client";
 import { bookingInquiries } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
+import { notifyFormSubmission } from "../services/email";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
@@ -134,6 +135,20 @@ router.post(
           message: webhookError,
         });
       }
+    }
+
+    // 3. Email fallback — notify admin if no webhook or webhook failed
+    if (!webhook || (webhook && !webhookOk)) {
+      notifyFormSubmission({
+        type: inquiry.type === "artist-booking" ? "artist" : "booking",
+        name: inquiry.name,
+        email,
+        entity: inquiry.entity || null,
+        inquiryType: inquiry.type,
+        location: inquiry.location || null,
+        message: inquiry.message,
+        requestId,
+      }).catch(() => {});
     }
 
     const outcome = resolveSubmissionOutcome({
