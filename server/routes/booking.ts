@@ -8,7 +8,7 @@ import { getDatabase } from "../db/client";
 import { bookingInquiries } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
-import { notifyFormSubmission } from "../services/email";
+import { notifyFormSubmission, isAdminEmailConfigured } from "../services/email";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
@@ -138,7 +138,9 @@ router.post(
     }
 
     // 3. Email fallback — notify admin if no webhook or webhook failed
+    let emailOk = false;
     if (!webhook || (webhook && !webhookOk)) {
+      emailOk = true;
       notifyFormSubmission({
         type: inquiry.type === "artist-booking" ? "artist" : "booking",
         name: inquiry.name,
@@ -148,17 +150,18 @@ router.post(
         location: inquiry.location || null,
         message: inquiry.message,
         requestId,
-      }).catch(() => {});
+      }).catch(() => { emailOk = false; });
     }
 
+    const anyDelivery = webhookOk || dbPersisted || emailOk;
     const outcome = resolveSubmissionOutcome({
       acceptedMessage: "Inquiry received",
       deliveryFailedMessage: webhook
         ? "We couldn't submit your inquiry right now. Please try again."
         : "Booking inquiries are temporarily unavailable. Please try again later.",
       successStatus: 202,
-      webhookConfigured: Boolean(webhook),
-      webhookDelivered: webhookOk,
+      webhookConfigured: Boolean(webhook) || isAdminEmailConfigured(),
+      webhookDelivered: anyDelivery,
       dbPersisted,
     });
 

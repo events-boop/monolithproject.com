@@ -8,7 +8,7 @@ import { getDatabase } from "../db/client";
 import { contactSubmissions } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { resolveSubmissionOutcome } from "../services/submission-delivery";
-import { notifyFormSubmission } from "../services/email";
+import { notifyFormSubmission, isAdminEmailConfigured } from "../services/email";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 
@@ -145,7 +145,9 @@ router.post(
     }
 
     // 3. Email fallback — notify admin if no webhook or webhook failed
+    let emailOk = false;
     if (!webhook || (webhook && !webhookOk)) {
+      emailOk = true;
       notifyFormSubmission({
         type: "contact",
         name: contact.name,
@@ -153,9 +155,10 @@ router.post(
         subject: contact.subject,
         message: contact.message,
         requestId,
-      }).catch(() => {});
+      }).catch(() => { emailOk = false; });
     }
 
+    const anyDelivery = webhookOk || dbPersisted || emailOk;
     const outcome = resolveSubmissionOutcome({
       acceptedMessage: "Message received",
       deliveryFailedMessage:
@@ -163,8 +166,8 @@ router.post(
       unavailableMessage:
         "Contact is temporarily unavailable. Please try again later.",
       successStatus: 200,
-      webhookConfigured: Boolean(webhook),
-      webhookDelivered: webhookOk,
+      webhookConfigured: Boolean(webhook) || isAdminEmailConfigured(),
+      webhookDelivered: anyDelivery,
       dbPersisted,
     });
 

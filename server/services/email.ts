@@ -5,6 +5,10 @@ import * as React from "react";
 const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "events@monolithproject.com";
 
+export function isAdminEmailConfigured() {
+  return Boolean(process.env.RESEND_API_KEY) && Boolean(ADMIN_EMAIL);
+}
+
 export async function sendWelcomeEmail(email: string, firstName?: string) {
   if (!process.env.RESEND_API_KEY) {
     console.warn(
