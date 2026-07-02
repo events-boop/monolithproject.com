@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Play, Ticket } from "lucide-react";
 import { Link } from "wouter";
 import ResponsiveImage from "./ResponsiveImage";
@@ -87,9 +87,26 @@ function getSetLabel(series: FeaturedSet["series"]) {
   return getSeriesLabel(series);
 }
 
+const CARD_WIDTH = 300;
+
 export default function FeaturedSets() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const fanRef = useRef<HTMLDivElement | null>(null);
+  const [fanWidth, setFanWidth] = useState(1352);
   const center = (SETS.length - 1) / 2;
+
+  useEffect(() => {
+    const el = fanRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(entries => {
+      setFanWidth(entries[0].contentRect.width);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Widest spacing that keeps the whole fan inside the container.
+  const maxSpread = (fanWidth - CARD_WIDTH) / (SETS.length - 1);
 
   return (
     <section className="relative bg-black border-t border-white/10 py-16 md:py-24 overflow-hidden">
@@ -127,6 +144,7 @@ export default function FeaturedSets() {
 
         {/* Desktop fanning stack */}
         <div
+          ref={fanRef}
           className="hidden md:flex relative h-[540px] items-center justify-center [contain:layout_paint]"
           onMouseLeave={() => setHoveredId(null)}
         >
@@ -135,7 +153,11 @@ export default function FeaturedSets() {
             const color = getSetColor(set.series);
             const label = getSetLabel(set.series);
             const isHovered = hoveredId === set.id;
-            const x = offset * 230;
+            // Cards overlap left-to-right; the deck spreads open while any
+            // card is hovered so neighboring names stay readable, capped so
+            // the fan never overflows the container on smaller screens.
+            const spread = Math.min(hoveredId ? 262 : 256, maxSpread);
+            const x = offset * spread;
             const baseRot = offset * 3;
             const rot = isHovered ? 0 : baseRot;
             const y = isHovered ? -18 : 0;
@@ -148,9 +170,7 @@ export default function FeaturedSets() {
                 className="absolute motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{
                   transform: `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg) scale(${scale})`,
-                  zIndex: isHovered
-                    ? 40
-                    : 10 + (SETS.length - Math.abs(offset)),
+                  zIndex: isHovered ? 40 : 10 + i,
                   willChange: "transform",
                 }}
               >
@@ -200,7 +220,7 @@ export default function FeaturedSets() {
                     >
                       {label}
                     </span>
-                    <h3 className="font-display text-[2rem] leading-[0.9] uppercase text-white tracking-tight mb-1">
+                    <h3 className="font-display text-[1.8rem] leading-[0.9] uppercase text-white tracking-tight mb-1">
                       {set.artist}
                     </h3>
                     <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/60 mb-6">
