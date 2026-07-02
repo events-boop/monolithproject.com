@@ -181,6 +181,12 @@ const socialDestinations: Record<string, string> = Object.assign(
       readHttpsEnv("OUTBOUND_SOCIAL_SPOTIFY_URL", "SPOTIFY_URL") ||
       FALLBACK_SPOTIFY_URL,
     x: readHttpsEnv("OUTBOUND_SOCIAL_X_URL", "X_URL") || FALLBACK_X_URL,
+    // WhatsApp community invite links get rotated/revoked, so the destination
+    // stays env-driven. Falls back to the general Laylo waitlist until
+    // OUTBOUND_SOCIAL_WHATSAPP_URL is set.
+    whatsapp:
+      readHttpsEnv("OUTBOUND_SOCIAL_WHATSAPP_URL", "WHATSAPP_COMMUNITY_URL") ||
+      generalWaitlistUrl,
   }
 );
 

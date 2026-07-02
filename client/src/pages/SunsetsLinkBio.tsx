@@ -33,6 +33,12 @@ const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const LAKE_LIST_HREF = "/go/lakelist";
+// Live channel row at the bottom of the page. untold.vip serves its own
+// cert + host-detected landing (verified live 2026-07-01); the WhatsApp
+// destination resolves server-side via OUTBOUND_SOCIAL_WHATSAPP_URL so the
+// invite link can rotate without a redeploy.
+const UNTOLD_VIP_HREF = "https://untold.vip";
+const WHATSAPP_COMMUNITY_HREF = "/go/social/whatsapp";
 const SOMMERS_UK_HREF =
   "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
@@ -723,7 +729,65 @@ export default function SunsetsLinkBio() {
           </p>
         </section>
 
-        {/* 9. Footer strip */}
+        {/* 9. Live channels */}
+        <section className="mb-6" aria-label="Live channels">
+          <a
+            href={UNTOLD_VIP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackSunsetsClick({
+                buttonName: "UNTOLD.VIP",
+                href: UNTOLD_VIP_HREF,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "untold_story_click",
+                channel: "Untold",
+              })
+            }
+            className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#22d3ee]/50 bg-[#22d3ee]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#B9F6FF] transition-all hover:bg-[#22d3ee] hover:text-black hover:shadow-[0_0_20px_rgba(34,211,238,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2.5">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full bg-[#22d3ee] shadow-[0_0_8px_rgba(34,211,238,0.9)] animate-pulse motion-reduce:animate-none"
+              />
+              UNTOLD.VIP — THE AFTERPARTY
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={WHATSAPP_COMMUNITY_HREF}
+            onClick={() =>
+              trackSunsetsClick({
+                buttonName: "WhatsApp Community",
+                href: WHATSAPP_COMMUNITY_HREF,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "whatsapp_community_click",
+                channel: "WhatsApp",
+              })
+            }
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#25D366]/50 bg-[#25D366]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#5ee88f] transition-all hover:bg-[#25D366] hover:text-black hover:shadow-[0_0_20px_rgba(37,211,102,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2.5">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full bg-[#25D366] shadow-[0_0_8px_rgba(37,211,102,0.9)] animate-pulse motion-reduce:animate-none"
+              />
+              WHATSAPP COMMUNITY
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+        </section>
+
+        {/* 10. Footer strip */}
         <footer className="mt-auto pt-4">
           <nav
             aria-label="More from Sun(Sets)"
