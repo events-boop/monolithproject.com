@@ -7,7 +7,7 @@ export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";
 export const SUNSETS_JULY4_EVENT_ADDRESS =
-  "1603 N Lake Shore Dr, Chicago, IL 60614";
+  "1603 N Lake Shore Dr, Chicago, IL 60611";
 export const SUNSETS_JULY4_TOTAL_CAPACITY = 1200;
 export const SUNSETS_JULY4_FIRST_ACCESS_CODE = "SUNSET26";
 export const SUNSETS_JULY4_TABLE_MINIMUM = "$2,000 minimum";

@@ -600,7 +600,7 @@ export default function Home() {
         <div id="showcase" className="bg-black relative z-10">
           <SectionDivider
             number="03"
-            label="Radio"
+            label="Lineup"
             glow={MONOLITH_ORANGE}
             dense
           />

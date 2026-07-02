@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, Ticket } from "lucide-react";
 import { Link } from "wouter";
 import ResponsiveImage from "./ResponsiveImage";
 import { getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
@@ -20,63 +20,59 @@ interface FeaturedSet {
 
 const SETS: FeaturedSet[] = [
   {
-    id: "ep-01-benchek",
-    series: "radio",
-    artist: "BENCHEK",
-    title: "Chapter III · Special NYE",
-    shortCode: "EP-01",
-    duration: "58:23",
-    image:
-      "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
-    href: "/radio/ep-01-benchek",
-    cta: "Listen Now",
-  },
-  {
-    id: "ep-02-ewerseen",
-    series: "radio",
-    artist: "EWERSEEN",
-    title: "Mix Vol. 3",
-    shortCode: "EP-02",
-    duration: "55:48",
-    image:
-      "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
-    href: "/radio/ep-02-ewerseen",
-    cta: "Listen Now",
-  },
-  {
-    id: "ep-03-terranova",
-    series: "radio",
-    artist: "TERRANOVA",
-    title: "Guest Session",
-    shortCode: "EP-03",
-    duration: "62:10",
-    image:
-      "https://i1.sndcdn.com/artworks-yrdlfcJnVQdyx9ZE-uV4tLw-t500x500.jpg",
-    href: "/radio/ep-03-terranova",
-    cta: "Listen Now",
-  },
-  {
-    id: "ep-04-radian",
-    series: "radio",
-    artist: "RADIAN",
-    title: "Untold Crossover",
-    shortCode: "EP-04",
-    duration: "71:05",
-    image:
-      "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
-    href: "/radio/ep-04-radian",
-    cta: "Listen Now",
-  },
-  {
-    id: "autograf-castaways",
-    series: "monolith-project",
+    id: "july4-autograf",
+    series: "chasing-sunsets",
     artist: "AUTOGRAF",
-    title: "Live at Castaways",
+    title: "Headliner",
     shortCode: "LIVE",
-    duration: "Archive Set",
-    image: "https://i.ytimg.com/vi/9R6XH7JZlJI/hqdefault.jpg",
-    href: "/archive",
-    cta: "Watch Set",
+    duration: "July 4th",
+    image: "/images/july4-autograf.png",
+    href: "/sunsets",
+    cta: "Get Tickets",
+  },
+  {
+    id: "july4-erik",
+    series: "chasing-sunsets",
+    artist: "ERIK THE DJ",
+    title: "Resident DJ",
+    shortCode: "LIVE",
+    duration: "July 4th",
+    image: "/images/july4-erik.jpg",
+    href: "/sunsets",
+    cta: "Get Tickets",
+  },
+  {
+    id: "july4-frank",
+    series: "chasing-sunsets",
+    artist: "FRANK BONO",
+    title: "Direct Support",
+    shortCode: "LIVE",
+    duration: "July 4th",
+    image: "/images/july4-frank.jpg",
+    href: "/sunsets",
+    cta: "Get Tickets",
+  },
+  {
+    id: "july4-eliana",
+    series: "chasing-sunsets",
+    artist: "ELIANA",
+    title: "Resident DJ",
+    shortCode: "LIVE",
+    duration: "July 4th",
+    image: "/images/july4-eliana.jpg",
+    href: "/sunsets",
+    cta: "Get Tickets",
+  },
+  {
+    id: "july4-amari",
+    series: "chasing-sunsets",
+    artist: "AMARI",
+    title: "Direct Support",
+    shortCode: "LIVE",
+    duration: "July 4th",
+    image: "/images/july4-amari.jpg",
+    href: "/sunsets",
+    cta: "Get Tickets",
   },
 ];
 
@@ -105,26 +101,25 @@ export default function FeaturedSets() {
             <div className="flex items-center gap-3">
               <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
               <span className="event-system-kicker text-white/60">
-                Radio / Archive
+                July 4th Open-Air
               </span>
             </div>
             <span className="event-system-chip shrink-0 text-white/70">
-              {SETS.length.toString().padStart(2, "0")} Selections
+              {SETS.length.toString().padStart(2, "0")} Artists
             </span>
           </div>
 
           <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.34fr)] md:items-end">
             <h2 className="event-system-headline max-w-[10ch] text-[clamp(3.4rem,9vw,8.5rem)] text-white">
-              Radio Picks
+              Featured Lineup
             </h2>
             <div className="border-l border-white/10 pl-5 md:justify-self-end">
               <span className="event-system-meta block text-white/80">
-                Artist Content
+                Castaways Beach Club
               </span>
               <span className="mt-3 block h-px w-20 bg-white/20" />
               <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/70">
-                Mixes, guest sessions, and past live moments from Monolith
-                nights.
+                Autograf, Erik the DJ, Frank Bono, Eliana, and Amari bringing the sounds of summer.
               </span>
             </div>
           </div>
@@ -217,7 +212,7 @@ export default function FeaturedSets() {
                         className="flex h-10 w-10 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors group-hover:bg-white group-hover:text-black"
                         style={{ borderColor: `${color}88` }}
                       >
-                        <Play className="w-3.5 h-3.5 ml-0.5 fill-current" />
+                        <Ticket className="w-3.5 h-3.5 fill-current" />
                       </span>
                       <span>{set.cta}</span>
                     </div>
@@ -271,7 +266,7 @@ export default function FeaturedSets() {
                       className="flex h-9 w-9 items-center justify-center rounded-full border bg-black/50"
                       style={{ borderColor: `${color}88` }}
                     >
-                      <Play className="w-3 h-3 ml-0.5 fill-current" />
+                      <Ticket className="w-3 h-3 fill-current" />
                     </span>
                     <span>{set.cta}</span>
                   </div>

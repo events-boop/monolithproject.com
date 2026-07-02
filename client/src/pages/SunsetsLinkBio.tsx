@@ -56,7 +56,7 @@ const SHARED_EVENT_SCHEMA = {
       streetAddress: "1603 N Lake Shore Dr",
       addressLocality: "Chicago",
       addressRegion: "IL",
-      postalCode: "60614",
+      postalCode: "60611",
       addressCountry: "US",
     },
   },
@@ -66,7 +66,7 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
-    startDate: "2026-07-04T13:00:00-05:00",
+    startDate: "2026-07-04T12:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
     performer: [
       "Autograf",
@@ -91,7 +91,7 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) II — Chasing Sun(Sets) 2026",
-    startDate: "2026-08-22T13:00:00-05:00",
+    startDate: "2026-08-22T12:00:00-05:00",
     endDate: "2026-08-22T22:00:00-05:00",
     offers: {
       "@type": "Offer" as const,
@@ -103,7 +103,7 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) III — Chasing Sun(Sets) 2026",
-    startDate: "2026-09-19T13:00:00-05:00",
+    startDate: "2026-09-19T12:00:00-05:00",
     endDate: "2026-09-19T22:00:00-05:00",
     performer: ["Joezi", "Massuma"].map(name => ({
       "@type": "MusicGroup" as const,
