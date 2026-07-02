@@ -87,6 +87,25 @@ const SEASON_EVENTS_SCHEMA = [
       priceCurrency: "USD",
       price: "20",
     },
+    subEvent: {
+      "@type": "MusicEvent" as const,
+      name: "Untold Story — Late Night Continuation (Official Afterparty)",
+      startDate: "2026-07-04T22:30:00-05:00",
+      endDate: "2026-07-05T04:00:00-05:00",
+      url: "https://monolithproject.com/story",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
+      location: {
+        "@type": "Place" as const,
+        name: "Venue Reveal Soon",
+        address: {
+          "@type": "PostalAddress" as const,
+          addressLocality: "Chicago",
+          addressRegion: "IL",
+          addressCountry: "US",
+        },
+      },
+    },
   },
   {
     ...SHARED_EVENT_SCHEMA,

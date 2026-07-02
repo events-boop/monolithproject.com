@@ -266,29 +266,55 @@ export function buildArtistSchema(artist: ArtistData, pagePath: string) {
   };
 }
 
+// The July 4 Untold Story late-night chapter is the official Chasing
+// Sun(Sets) afterparty — superEvent ties the two listings together for
+// search engines.
+const SUNSETS_JULY4_SUPER_EVENT = {
+  "@type": "MusicEvent",
+  name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
+  startDate: "2026-07-04T12:00:00-05:00",
+  endDate: "2026-07-04T22:00:00-05:00",
+  url: `${SITE_ORIGIN}/sunsets`,
+  location: {
+    "@type": "Place",
+    name: "Castaways Beach Club",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "1603 N Lake Shore Dr",
+      addressLocality: "Chicago",
+      addressRegion: "IL",
+      postalCode: "60611",
+      addressCountry: "US",
+    },
+  },
+};
+
 export function buildUntoldStoryEventSchema(pagePath: string) {
   const event = getEventById("us-jul04");
   if (event) return buildScheduledEventSchema(event, pagePath);
 
-  return buildEventSchema({
-    pagePath,
-    name: "Untold Story: Late Night Continuation",
-    description:
-      "The Monolith Project presents the next Untold Story late-night chapter in Chicago.",
-    startDate: "2026-07-04T22:30:00-05:00",
-    endDate: "2026-07-05T04:00:00-05:00",
-    image: [
-      "/images/untold-story-moody.webp",
-      "/images/untold-story-hero-post1.webp",
-    ],
-    performer: ["The Monolith Project"],
-    locationName: "Venue Reveal Soon",
-    streetAddress: "Chicago IL",
-    addressLocality: "Chicago",
-    addressRegion: "IL",
-    postalCode: "60607",
-    addressCountry: "US",
-  });
+  return {
+    ...buildEventSchema({
+      pagePath,
+      name: "Untold Story: Late Night Continuation",
+      description:
+        "The Monolith Project presents the next Untold Story late-night chapter in Chicago.",
+      startDate: "2026-07-04T22:30:00-05:00",
+      endDate: "2026-07-05T04:00:00-05:00",
+      image: [
+        "/images/untold-story-moody.webp",
+        "/images/untold-story-hero-post1.webp",
+      ],
+      performer: ["The Monolith Project"],
+      locationName: "Venue Reveal Soon",
+      streetAddress: "Chicago IL",
+      addressLocality: "Chicago",
+      addressRegion: "IL",
+      postalCode: "60607",
+      addressCountry: "US",
+    }),
+    superEvent: SUNSETS_JULY4_SUPER_EVENT,
+  };
 }
 
 export function buildFaqSchema(faqEntries: Array<[string, string]>) {
@@ -326,6 +352,13 @@ function getVenueAddress(event: ScheduledEvent) {
     return {
       streetAddress: "1240 W Randolph St",
       postalCode: "60607",
+    };
+  }
+
+  if (event.venue.startsWith("Castaways")) {
+    return {
+      streetAddress: "1603 N Lake Shore Dr",
+      postalCode: "60611",
     };
   }
 
@@ -380,7 +413,7 @@ export function buildScheduledEventSchema(
           )
       ) ?? [];
 
-  return buildEventSchema({
+  const schema = buildEventSchema({
     pagePath,
     name: event.headline || event.title,
     description:
@@ -403,6 +436,12 @@ export function buildScheduledEventSchema(
     postalCode: address.postalCode,
     addressCountry: "US",
   });
+
+  if (event.id === "us-jul04") {
+    return { ...schema, superEvent: SUNSETS_JULY4_SUPER_EVENT };
+  }
+
+  return schema;
 }
 
 export function buildScheduleSchema(events: ScheduledEvent[]) {
