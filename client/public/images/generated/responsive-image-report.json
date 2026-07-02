@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-26T22:07:40.777Z",
+  "generatedAt": "2026-07-02T03:28:06.331Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 11881907,
-    "estimatedTransferBytes": 4088692,
-    "estimatedSavingsBytes": 7883829,
-    "variantBytes": 12701310
+    "originalBytes": 14787029,
+    "estimatedTransferBytes": 4938381,
+    "estimatedSavingsBytes": 9939262,
+    "variantBytes": 15214855
   },
   "images": [
     {
@@ -1632,6 +1632,44 @@
       "estimatedSavingsPct": 35
     },
     {
+      "source": "/images/deron.jpeg",
+      "originalBytes": 4605,
+      "originalKb": 4.5,
+      "originalWidth": 224,
+      "originalHeight": 225,
+      "generatedBaseName": "deron",
+      "variants": [
+        {
+          "path": "/images/generated/deron-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 3805
+        },
+        {
+          "path": "/images/generated/deron-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 4114
+        },
+        {
+          "path": "/images/generated/deron-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 3805
+        },
+        {
+          "path": "/images/generated/deron-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 4114
+        }
+      ],
+      "estimatedTransferBytes": 3805,
+      "estimatedTransferKb": 3.7,
+      "estimatedSavingsBytes": 800,
+      "estimatedSavingsPct": 17
+    },
+    {
       "source": "/images/eran-hersh-live-1.webp",
       "originalBytes": 26694,
       "originalKb": 26.1,
@@ -1960,6 +1998,234 @@
       "estimatedSavingsPct": 0
     },
     {
+      "source": "/images/juany.jpeg",
+      "originalBytes": 3923,
+      "originalKb": 3.8,
+      "originalWidth": 225,
+      "originalHeight": 224,
+      "generatedBaseName": "juany",
+      "variants": [
+        {
+          "path": "/images/generated/juany-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 3212
+        },
+        {
+          "path": "/images/generated/juany-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 3556
+        },
+        {
+          "path": "/images/generated/juany-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 3212
+        },
+        {
+          "path": "/images/generated/juany-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 3556
+        }
+      ],
+      "estimatedTransferBytes": 3212,
+      "estimatedTransferKb": 3.1,
+      "estimatedSavingsBytes": 711,
+      "estimatedSavingsPct": 18
+    },
+    {
+      "source": "/images/july4-amari.jpg",
+      "originalBytes": 570609,
+      "originalKb": 557.2,
+      "originalWidth": 683,
+      "originalHeight": 1024,
+      "generatedBaseName": "july4-amari",
+      "variants": [
+        {
+          "path": "/images/generated/july4-amari-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 91439
+        },
+        {
+          "path": "/images/generated/july4-amari-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 85034
+        },
+        {
+          "path": "/images/generated/july4-amari-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 175522
+        },
+        {
+          "path": "/images/generated/july4-amari-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 167616
+        }
+      ],
+      "estimatedTransferBytes": 167616,
+      "estimatedTransferKb": 163.7,
+      "estimatedSavingsBytes": 402993,
+      "estimatedSavingsPct": 71
+    },
+    {
+      "source": "/images/july4-autograf.png",
+      "originalBytes": 65034,
+      "originalKb": 63.5,
+      "originalWidth": 175,
+      "originalHeight": 261,
+      "generatedBaseName": "july4-autograf",
+      "variants": [
+        {
+          "path": "/images/generated/july4-autograf-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 5240
+        },
+        {
+          "path": "/images/generated/july4-autograf-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 6268
+        },
+        {
+          "path": "/images/generated/july4-autograf-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 5240
+        },
+        {
+          "path": "/images/generated/july4-autograf-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 6268
+        }
+      ],
+      "estimatedTransferBytes": 5240,
+      "estimatedTransferKb": 5.1,
+      "estimatedSavingsBytes": 59794,
+      "estimatedSavingsPct": 92
+    },
+    {
+      "source": "/images/july4-eliana.jpg",
+      "originalBytes": 601201,
+      "originalKb": 587.1,
+      "originalWidth": 682,
+      "originalHeight": 1024,
+      "generatedBaseName": "july4-eliana",
+      "variants": [
+        {
+          "path": "/images/generated/july4-eliana-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 105260
+        },
+        {
+          "path": "/images/generated/july4-eliana-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 95570
+        },
+        {
+          "path": "/images/generated/july4-eliana-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 200001
+        },
+        {
+          "path": "/images/generated/july4-eliana-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 186068
+        }
+      ],
+      "estimatedTransferBytes": 186068,
+      "estimatedTransferKb": 181.7,
+      "estimatedSavingsBytes": 415133,
+      "estimatedSavingsPct": 69
+    },
+    {
+      "source": "/images/july4-erik.jpg",
+      "originalBytes": 604314,
+      "originalKb": 590.2,
+      "originalWidth": 768,
+      "originalHeight": 1024,
+      "generatedBaseName": "july4-erik",
+      "variants": [
+        {
+          "path": "/images/generated/july4-erik-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 76657
+        },
+        {
+          "path": "/images/generated/july4-erik-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 74428
+        },
+        {
+          "path": "/images/generated/july4-erik-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 174857
+        },
+        {
+          "path": "/images/generated/july4-erik-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 172856
+        }
+      ],
+      "estimatedTransferBytes": 172856,
+      "estimatedTransferKb": 168.8,
+      "estimatedSavingsBytes": 431458,
+      "estimatedSavingsPct": 71
+    },
+    {
+      "source": "/images/july4-frank.jpg",
+      "originalBytes": 616366,
+      "originalKb": 601.9,
+      "originalWidth": 768,
+      "originalHeight": 1024,
+      "generatedBaseName": "july4-frank",
+      "variants": [
+        {
+          "path": "/images/generated/july4-frank-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 78071
+        },
+        {
+          "path": "/images/generated/july4-frank-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 76522
+        },
+        {
+          "path": "/images/generated/july4-frank-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 185735
+        },
+        {
+          "path": "/images/generated/july4-frank-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 179530
+        }
+      ],
+      "estimatedTransferBytes": 179530,
+      "estimatedTransferKb": 175.3,
+      "estimatedSavingsBytes": 436836,
+      "estimatedSavingsPct": 71
+    },
+    {
       "source": "/images/lazare-carbon-center.png",
       "originalBytes": 150064,
       "originalKb": 146.5,
@@ -2122,6 +2388,44 @@
       "estimatedTransferKb": 59,
       "estimatedSavingsBytes": 1954677,
       "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/monolith-three-worlds-banner.jpg",
+      "originalBytes": 439070,
+      "originalKb": 428.8,
+      "originalWidth": 1024,
+      "originalHeight": 512,
+      "generatedBaseName": "monolith-three-worlds-banner",
+      "variants": [
+        {
+          "path": "/images/generated/monolith-three-worlds-banner-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 35057
+        },
+        {
+          "path": "/images/generated/monolith-three-worlds-banner-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 33578
+        },
+        {
+          "path": "/images/generated/monolith-three-worlds-banner-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 135992
+        },
+        {
+          "path": "/images/generated/monolith-three-worlds-banner-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 131362
+        }
+      ],
+      "estimatedTransferBytes": 131362,
+      "estimatedTransferKb": 128.3,
+      "estimatedSavingsBytes": 307708,
+      "estimatedSavingsPct": 70
     },
     {
       "source": "/images/radio-show-gear.webp",
