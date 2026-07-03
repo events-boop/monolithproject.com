@@ -732,6 +732,41 @@ export default function SunsetsLinkBio() {
         {/* 9. Live channels */}
         <section className="mb-6" aria-label="Live channels">
           <a
+            href={ticketHref}
+            onClick={() => {
+              triggerHaptic(16);
+              trackLakeInitiateCheckout();
+              captureSunsetsTicketCtaClick({
+                destinationUrl: ticketHref,
+                pagePath: PAGE_PATH,
+                ctaPosition: "footer",
+              });
+              trackSunsetsClick({
+                buttonName: "GET JULY 4 TICKETS — Bottom",
+                href: ticketHref,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "ticket_click",
+                channel: "Posh",
+              });
+            }}
+            className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              GET JULY 4 TICKETS{" "}
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+              >
+                →
+              </span>
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+          <a
             href={UNTOLD_VIP_HREF}
             target="_blank"
             rel="noopener noreferrer"
@@ -745,7 +780,7 @@ export default function SunsetsLinkBio() {
                 channel: "Untold",
               })
             }
-            className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#22d3ee]/50 bg-[#22d3ee]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#B9F6FF] transition-all hover:bg-[#22d3ee] hover:text-black hover:shadow-[0_0_20px_rgba(34,211,238,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#22d3ee]/50 bg-[#22d3ee]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#B9F6FF] transition-all hover:bg-[#22d3ee] hover:text-black hover:shadow-[0_0_20px_rgba(34,211,238,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2.5">
               <span
@@ -779,6 +814,30 @@ export default function SunsetsLinkBio() {
                 className="h-2 w-2 rounded-full bg-[#25D366] shadow-[0_0_8px_rgba(37,211,102,0.9)] animate-pulse motion-reduce:animate-none"
               />
               WHATSAPP COMMUNITY
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href="https://monolithproject.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackSunsetsClick({
+                buttonName: "Monolith Project",
+                href: "https://monolithproject.com",
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "monolith_site_click",
+                channel: "Monolith",
+              })
+            }
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-white/25 bg-white/[0.03] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-stone-200 transition-all hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2.5">
+              MONOLITH PROJECT
             </span>
             <div
               className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"

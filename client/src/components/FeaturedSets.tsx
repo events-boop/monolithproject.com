@@ -153,10 +153,10 @@ export default function FeaturedSets() {
             const color = getSetColor(set.series);
             const label = getSetLabel(set.series);
             const isHovered = hoveredId === set.id;
-            // Cards overlap left-to-right; the deck spreads open while any
-            // card is hovered so neighboring names stay readable, capped so
-            // the fan never overflows the container on smaller screens.
-            const spread = Math.min(hoveredId ? 262 : 256, maxSpread);
+            // Cards overlap left-to-right at a fixed spread (capped to the
+            // container so the fan never overflows). Only the hovered card
+            // moves — the deck itself stays put.
+            const spread = Math.min(256, maxSpread);
             const x = offset * spread;
             const baseRot = offset * 3;
             const rot = isHovered ? 0 : baseRot;
