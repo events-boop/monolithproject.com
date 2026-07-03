@@ -172,6 +172,10 @@ export default function ChasingSunsets() {
       "What is the dress code?",
       "Elevated but relaxed. Dress for weather, movement, and a room that starts in the sun before it finishes at night.",
     ],
+    [
+      "What happens if it rains?",
+      "SUN(SETS) is an open-air, rain-or-shine event — light rain doesn't stop the lakefront. If severe weather (lightning or high winds) forces a pause, direction comes from venue and safety staff on-site, and real-time updates post to @chasingsunsets.music. Refunds are issued only if the event is canceled in full.",
+    ],
   ] as const;
 
   return (

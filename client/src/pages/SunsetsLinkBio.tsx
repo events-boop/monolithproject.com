@@ -421,6 +421,19 @@ export default function SunsetsLinkBio() {
               aria-hidden="true"
             />
           </a>
+          <p className="mt-3 text-center text-[10px] font-semibold leading-relaxed tracking-[0.06em] text-stone-400">
+            Rain or shine — open-air on the lake. Severe-weather updates post
+            in real time on{" "}
+            <a
+              href="https://instagram.com/chasingsunsets.music"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#E8B86D]/80 underline underline-offset-2 hover:text-[#E8B86D]"
+            >
+              @chasingsunsets.music
+            </a>
+            . Refunds only if the event is fully canceled.
+          </p>
         </section>
 
         {/* 4. Video section */}
