@@ -174,7 +174,7 @@ export default function ChasingSunsets() {
     ],
     [
       "What happens if it rains?",
-      "SUN(SETS) is an open-air, rain-or-shine event — light rain doesn't stop the lakefront. If severe weather (lightning or high winds) forces a pause, direction comes from venue and safety staff on-site, and real-time updates post to @chasingsunsets.music. Refunds are issued only if the event is canceled in full.",
+      "SUN(SETS) is a rain-or-shine event — a little rain won't stop the lake. Lightning or severe weather may cause a temporary pause for safety, then we resume when cleared. We're watching the weather closely with venue and production, and real-time updates post to @chasingsunsets.music. Refunds are issued only if the event is canceled in full.",
     ],
   ] as const;
 

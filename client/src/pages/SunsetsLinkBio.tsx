@@ -422,8 +422,8 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <p className="mt-3 text-center text-[10px] font-semibold leading-relaxed tracking-[0.06em] text-stone-400">
-            Rain or shine — open-air on the lake. Severe-weather updates post
-            in real time on{" "}
+            Rain or shine — a little rain won't stop the lake. Severe weather
+            may pause sets for safety; we resume when cleared. Live updates on{" "}
             <a
               href="https://instagram.com/chasingsunsets.music"
               target="_blank"
