@@ -361,6 +361,16 @@ export default function SunsetsLinkBio() {
               fetchPriority="high"
             />
           </div>
+
+          <div className="relative -mx-5 mb-5 overflow-hidden border-y border-[#E8B86D]/40 shadow-[0_0_30px_rgba(232,184,109,0.15)] sm:mx-0 sm:rounded-xl sm:border sm:border-[#E8B86D]/30">
+            <div className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_20px_rgba(232,184,109,0.1)] sm:rounded-xl" aria-hidden="true" />
+            <img
+              src="/images/july4-set-times.png"
+              alt="July 4th Set Times and Lineup"
+              className="h-auto w-full object-cover"
+              loading="lazy"
+            />
+          </div>
         </header>
 
         {/* 2. July 4th Header */}
