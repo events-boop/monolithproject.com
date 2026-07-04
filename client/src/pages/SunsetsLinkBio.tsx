@@ -72,6 +72,8 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
+    description:
+      "SUN(SETS) I opens the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar.",
     startDate: "2026-07-04T12:00:00-05:00",
     endDate: "2026-07-04T22:00:00-05:00",
     performer: [
@@ -96,11 +98,19 @@ const SEASON_EVENTS_SCHEMA = [
     subEvent: {
       "@type": "MusicEvent" as const,
       name: "Untold Story — Late Night Continuation (Official Afterparty)",
+      description:
+        "The official July 4 after-party. When the open-air session ends, Untold Story carries the night into a darker, tighter room — 10:30 PM until late in Chicago.",
       startDate: "2026-07-04T22:30:00-05:00",
       endDate: "2026-07-05T04:00:00-05:00",
       url: "https://monolithproject.com/story",
+      image: "https://monolithproject.com/images/untold-story-moody.webp",
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       eventStatus: "https://schema.org/EventScheduled",
+      organizer: {
+        "@type": "Organization" as const,
+        name: "The Monolith Project",
+        url: "https://monolithproject.com",
+      },
       location: {
         "@type": "Place" as const,
         name: "Venue Reveal Soon",
@@ -116,6 +126,8 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) II — Chasing Sun(Sets) 2026",
+    description:
+      "SUN(SETS) II — the summer return. Chapter Two of Chasing Sun(Sets) 2026 at Castaways Beach Club, Chicago. Artist reveal and ticket window announced through the Lake List first.",
     startDate: "2026-08-22T12:00:00-05:00",
     endDate: "2026-08-22T22:00:00-05:00",
     offers: {
@@ -128,6 +140,8 @@ const SEASON_EVENTS_SCHEMA = [
   {
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) III — Chasing Sun(Sets) 2026",
+    description:
+      "SUN(SETS) III — the season finale of Chasing Sun(Sets) 2026 at Castaways Beach Club with Joezi and Massuma, plus special guests TBA. The closing chapter on the Chicago lakefront.",
     startDate: "2026-09-19T12:00:00-05:00",
     endDate: "2026-09-19T22:00:00-05:00",
     performer: ["Joezi", "Massuma"].map(name => ({

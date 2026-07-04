@@ -272,9 +272,14 @@ export function buildArtistSchema(artist: ArtistData, pagePath: string) {
 const SUNSETS_JULY4_SUPER_EVENT = {
   "@type": "MusicEvent",
   name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
+  description:
+    "SUN(SETS) I opens the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, and friends.",
   startDate: "2026-07-04T12:00:00-05:00",
   endDate: "2026-07-04T22:00:00-05:00",
   url: `${SITE_ORIGIN}/sunsets`,
+  image: `${SITE_ORIGIN}/images/chasing-sunsets-premium.webp`,
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {
     "@type": "Place",
     name: "Castaways Beach Club",
@@ -286,6 +291,19 @@ const SUNSETS_JULY4_SUPER_EVENT = {
       postalCode: "60611",
       addressCountry: "US",
     },
+  },
+  organizer: {
+    "@type": "Organization",
+    "@id": `${SITE_ORIGIN}/#organization`,
+    name: "The Monolith Project",
+    url: SITE_ORIGIN,
+  },
+  offers: {
+    "@type": "Offer",
+    url: "https://sunsets.vip",
+    availability: "https://schema.org/InStock",
+    priceCurrency: "USD",
+    price: "20",
   },
 };
 

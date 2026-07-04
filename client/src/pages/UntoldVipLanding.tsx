@@ -97,6 +97,7 @@ const schemaData = [
       item: {
         "@type": "MusicEvent",
         name: `Untold Story ${show.chapter}: ${show.title}`,
+        description: `Untold Story ${show.chapter} — "${show.title}" at ${show.venue}. An after-dark house music chapter by The Monolith Project in Chicago.`,
         startDate: show.schemaDate,
         eventStatus: "https://schema.org/EventCompleted",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
