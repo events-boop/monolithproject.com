@@ -35,6 +35,9 @@ import {
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 
+// Chapter One archive — photos + recap land here as they clear the edit.
+const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
+
 type Chapter = {
   title: string;
   date: string;
@@ -168,16 +171,14 @@ export default function LakeLanding() {
         date: chapter.date,
         place: chapter.venue,
         status: index === 0
-            ? "July 4 tickets"
+            ? "Chapter complete"
             : index === 1
               ? "August tickets"
               : "September tickets",
-        action: index === 0
-            ? SUNSETS_TICKET_CTA_LABEL
-            : "BUY TICKETS",
+        action: index === 0 ? "RELIVE IT" : "GET FIRST ACCESS",
         eventSlug: chapter.eventSlug,
         eventDate: chapter.eventDate,
-        href: chapter.ticketPath,
+        href: index === 0 ? SUNSETS_I_ARCHIVE_HREF : chapter.ticketPath,
       })),
     []
   );
@@ -249,7 +250,7 @@ export default function LakeLanding() {
     <div className="min-h-screen bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="Sun(Sets) Lake List & First Access"
-        description="Join the Lake List for Sun(Sets) July 4 ticket access, artist drops, recap video, radio, VIP, and partner inquiries."
+        description="Join the Lake List for Sun(Sets) first access — SUN(SETS) II on August 22, artist drops, recap video, radio, VIP, and partner inquiries."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
       />
@@ -308,7 +309,7 @@ export default function LakeLanding() {
           <div className="space-y-4 p-5 pt-6">
             <div className="flex flex-wrap gap-2">
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
-                July 4
+                Aug 22 · Sep 19
               </span>
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
                 Castaways

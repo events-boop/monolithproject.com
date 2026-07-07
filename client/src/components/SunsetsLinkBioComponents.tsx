@@ -89,12 +89,6 @@ const SOMMERS_SOUNDCLOUD_EMBED = `https://w.soundcloud.com/player/?url=${encodeU
   SOMMERS_SOUNDCLOUD_URL
 )}&color=%23E8B86D&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
 
-const HERO_SIGNAL_STATS = [
-  { label: "Date", value: "July 4", note: "Saturday" },
-  { label: "Time", value: "12PM-10PM", note: "12PM doors" },
-  { label: "Venue", value: "Castaways", note: "Chicago" },
-] as const;
-
 const TICKET_RAIL_STATS = [
   {
     label: "Capacity",
@@ -259,16 +253,16 @@ export function LakeListForm() {
           formType: "lake_list_signup",
           funnelId: "chasing-sunsets-wrapper",
           offerId: "lake-list",
-          eventInterest: JULY_4_EVENT_SLUG,
+          eventInterest: "chasing-sunsets-august-22-2026",
           eventSeries: "chasing-sunsets",
-          eventTitle: "Chasing Sun(Sets) July 4 2026",
+          eventTitle: "Chasing Sun(Sets) 2026 Season",
           interestTags: [
             "chasing_sunsets",
             "laylo",
             "laylo_signup",
             "lake_list",
             "first_access_signup",
-            "july4_interest",
+            "sunsets_ii_interest",
             "sunsets_wrapper",
           ],
           [honeypotFieldName]: honeypotValue || undefined,

@@ -34,11 +34,12 @@ export const SUNSETS_SEP19_TICKET_KEY = "css-sep19";
 export const SUNSETS_SEP19_TICKET_PATH = "/go/tickets/css-sep19";
 
 export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
-export const SUNSETS_TICKET_CTA_LABEL = SUNSETS_PRELAUNCH_LOCKED
-  ? "JOIN THE LAKE LIST"
-  : "BUY TICKETS — JULY 4";
+// July 4 sold and executed (2026-07-04). SUN(SETS) II checkout isn't live
+// yet, so the primary CTA reverts to the Lake List until the Aug 22 record
+// passes its gates — then this becomes "BUY TICKETS — AUGUST 22".
+export const SUNSETS_TICKET_CTA_LABEL = "JOIN THE LAKE LIST";
 export const SUNSETS_TICKET_CTA_SUPPORT =
-  "Official ticket source powered by Posh.";
+  "First access to SUN(SETS) II — August 22. Tickets powered by Posh.";
 export const SUNSETS_2026_SEASON_PASS_CTA_LABEL = "CLAIM SEASON PASS";
 
 export const SUNSETS_2026_SEASON_CHAPTERS = [

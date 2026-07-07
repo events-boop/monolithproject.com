@@ -1,4 +1,4 @@
-import { ArrowUpRight, Sunset } from "lucide-react";
+import { ArrowUpRight, Camera, Sunset } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { getSeriesColor, getSeriesEvents } from "@/lib/siteExperience";
@@ -9,10 +9,10 @@ const CHAPTER_CARDS = [
   {
     label: "SUN(SETS) I",
     number: "01",
-    status: "Tickets Live",
-    subtitle: "Independence Day · Open-Air Experience",
-    body: "The July 4 opening chapter brings the confirmed Castaways lineup into the full-day lakefront format.",
-    footer: "On sale now",
+    status: "Chapter Complete",
+    subtitle: "Independence Day · Chapter One",
+    body: "2,800 on the lakefront. Heat, rain, and the moment the purpose became clear. The recap is coming.",
+    footer: "Photos + recap coming soon",
   },
   {
     label: "SUN(SETS) II",
@@ -31,6 +31,13 @@ const CHAPTER_CARDS = [
     footer: "Special guests TBA",
   },
 ];
+
+const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
+
+/** A chapter is complete once its event day has fully passed. */
+function isChapterPast(eventDate: string) {
+  return Date.now() > new Date(`${eventDate}T23:59:59`).getTime();
+}
 
 const PILLARS = [
   { icon: "♩", label: "House Music", sub: "All Day & Night" },
@@ -51,12 +58,20 @@ export default function SeasonChapterCards() {
   const seasonChapters = SUNSETS_2026_SEASON_CHAPTERS.map((chapter, index) => ({
     ...CHAPTER_CARDS[index],
     ...chapter,
+    isPast: isChapterPast(chapter.eventDate),
     event:
       eventBySlugOrId.get(chapter.eventSlug) ||
       eventBySlugOrId.get(chapter.ticketPath.split("/").pop() || ""),
   }));
 
-  const [featuredChapter, ...restChapters] = seasonChapters;
+  // Feature the next chapter that hasn't happened yet; completed chapters
+  // fall back into the supporting rail as archive cards.
+  const featuredChapter =
+    seasonChapters.find(chapter => !chapter.isPast) ??
+    seasonChapters[seasonChapters.length - 1];
+  const restChapters = seasonChapters.filter(
+    chapter => chapter !== featuredChapter
+  );
   const featured = featuredChapter.event || events[0];
   const featuredAccent = getSeriesColor(featured.series);
 
@@ -101,7 +116,7 @@ export default function SeasonChapterCards() {
 
         {/* Cards grid */}
         <div className="grid gap-4 lg:grid-cols-3">
-          {/* ── FEATURED: July 4 ── */}
+          {/* ── FEATURED: next upcoming chapter ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -250,12 +265,21 @@ export default function SeasonChapterCards() {
                   </div>
 
                   <div className="mt-auto">
-                    <ConversionCTA
-                      event={event}
-                      size="sm"
-                      showUrgency
-                      className="w-full"
-                    />
+                    {chapter.isPast ? (
+                      <Link href={SUNSETS_I_ARCHIVE_HREF}>
+                        <span className="flex min-h-[42px] w-full items-center justify-center gap-2 border border-white/18 bg-white/[0.04] px-3 text-center font-mono text-[11px] font-black uppercase tracking-[0.14em] text-white/72 transition hover:bg-white/[0.08] hover:text-white">
+                          <Camera className="h-3.5 w-3.5" />
+                          Relive Chapter One
+                        </span>
+                      </Link>
+                    ) : (
+                      <ConversionCTA
+                        event={event}
+                        size="sm"
+                        showUrgency
+                        className="w-full"
+                      />
+                    )}
                     <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
                       {chapter.footer}
                     </p>

@@ -36,6 +36,8 @@ export interface ArchiveCollection {
   coverImage: string;
   date: string;
   media: MediaItem[];
+  /** Collection is announced but the gallery is still in the edit. */
+  comingSoon?: boolean;
 }
 
 function image(item: GalleryImageItem): GalleryImageItem {
@@ -467,6 +469,18 @@ export const autografSpecial: MediaItem[] = [
 ];
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
+  "chasing-sunsets-sunsets-i-2026": {
+    slug: "chasing-sunsets-sunsets-i-2026",
+    title: "Chasing Sun(Sets)",
+    subtitle: "SUN(SETS) I — Chapter One",
+    description:
+      "July 4, 2026 at Castaways Beach Club. 2,800 on the lakefront — heat, rain, and the moment the purpose became clear. The full gallery and recap film are in the edit now.",
+    accentColor: "#E8B86D",
+    coverImage: "/images/sunsets-hero-beach.jpg",
+    date: "July 4, 2026",
+    comingSoon: true,
+    media: [],
+  },
   "chasing-sunsets-season-i": {
     slug: "chasing-sunsets-season-i",
     title: "Chasing Sun(Sets)",

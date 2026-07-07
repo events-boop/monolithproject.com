@@ -1,5 +1,4 @@
 import {
-  SUNSETS_JULY4_ADMISSION_TIERS,
   SUNSETS_JULY4_EVENT_ADDRESS,
   SUNSETS_JULY4_EVENT_LOCATION,
   SUNSETS_JULY4_EVENT_TIME,
@@ -8,10 +7,8 @@ import {
   SUNSETS_JULY4_LINEUP,
   SUNSETS_JULY4_SET_TIMES,
   SUNSETS_JULY4_TABLE_RAIL,
-  SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TOTAL_CAPACITY,
   SUNSETS_PRELAUNCH_LOCKED,
-  getSunsetsJuly4ScheduledTicketTiers,
 } from "../../shared/events/sunsets-ticketing";
 import type {
   EventSeries,
@@ -30,8 +27,12 @@ export const INSTAGRAM_MONOLITH =
 export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
-/** Active audience gateway for the next public drop. */
-export const POSH_TICKET_URL = SUNSETS_JULY4_TICKET_PATH;
+/**
+ * Active audience gateway for the next public drop.
+ * SUN(SETS) II tickets are not live yet, so this points at the Lake List
+ * until the Aug 22 Posh checkout passes its gates (then: ticket path).
+ */
+export const POSH_TICKET_URL = LAYLO_URL;
 
 const EVENT_CATALOG: ScheduledEvent[] = [
   {
@@ -137,6 +138,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     description:
       "Chapter Three. The season closer at Castaways with Joezi and Massuma. Join the Lake List for first access.",
     activeFunnels: ["waitlist-chasing"],
+    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
   },
   {
     id: "css-jul04",
@@ -155,9 +157,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     location: SUNSETS_JULY4_EVENT_LOCATION,
     // Lineup confirmed for public announcement — June 2026.
     lineup: SUNSETS_JULY4_LINEUP.join(" · "),
-    featured: true,
-    status: "on-sale",
-    inventoryState: "normal",
+    status: "past",
     capacity: `${SUNSETS_JULY4_TOTAL_CAPACITY.toLocaleString("en-US")} guest admissions`,
     format: "Day Into Night · Open Air · Lakefront House Music",
     dress: "Elevated lakefront summer attire",
@@ -178,16 +178,13 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     layloDropId: "IQ5HaR",
     activeFunnels: ["waitlist-chasing"],
     tableReservationEmail: "vip@chasingsunsets.music",
-    startingPrice: Math.min(
-      ...SUNSETS_JULY4_ADMISSION_TIERS.map(tier => tier.price)
-    ),
-    ticketUrl: POSH_TICKET_URL,
-    ticketTiers: getSunsetsJuly4ScheduledTicketTiers(),
     tablePackages: [
       SUNSETS_JULY4_TABLE_RAIL.description,
       `Address: ${SUNSETS_JULY4_EVENT_ADDRESS}`,
     ],
-    recentlyDropped: true,
+    // Chapter One archived — sold and executed July 4, 2026.
+    gates: { creativeReady: true, trackingQA: true, poshLinked: true },
+    archiveSlug: "chasing-sunsets-sunsets-i-2026",
   },
   {
     id: "us-jul04",
@@ -203,12 +200,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Venue Reveal Soon",
     location: "Chicago, IL",
     lineup: "Secret Guest B2B",
-    status: "coming-soon",
+    status: "past",
     format: "Dark Room · Intimate",
     description:
       "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
     activeFunnels: ["waitlist-untold"],
-    startingPrice: 45,
   },
   {
     id: "us-aug01",
@@ -236,6 +232,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     description:
       "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
     activeFunnels: ["waitlist-chasing"],
+    // Flip these as the Aug 22 record completes; on-sale is blocked until all pass.
+    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
   },
   {
     // Parent-brand launch moment — NOT a SUN(SETS) season date. The
@@ -273,11 +271,11 @@ export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG].sort(
 );
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
-  hero: "css-jul04",
-  banner: "css-jul04",
-  funnel: "css-jul04",
-  ticket: "css-jul04",
-  guide: "css-jul04",
+  hero: "css-aug22",
+  banner: "css-aug22",
+  funnel: "css-aug22",
+  ticket: "css-aug22",
+  guide: "css-aug22",
 };
 
 export const MAX_PUBLIC_SITE_PATH_LENGTH = 160;
@@ -510,11 +508,19 @@ export function buildPublicSiteData(
 ): PublicSiteData {
   const normalizedPath = normalizePublicSitePath(pathname);
   const profile = getPayloadProfileForPath(normalizedPath);
-  const featuredEvents = resolveFeaturedEvents(eventsSource, profile);
+  // Publish OS: drafts never enter a public payload; hidden events only
+  // resolve on direct event pages and stay out of every list surface.
+  const publishedEvents = eventsSource.filter(
+    event => event.status !== "draft"
+  );
+  const visibleEvents = normalizedPath.startsWith("/events/")
+    ? publishedEvents
+    : publishedEvents.filter(event => event.status !== "hidden");
+  const featuredEvents = resolveFeaturedEvents(visibleEvents, profile);
   const events = resolveEventsForPath(
     normalizedPath,
     featuredEvents,
-    eventsSource
+    visibleEvents
   ).map(event => (profile === "home" ? event : shapeEvent(event, profile)));
 
   return {

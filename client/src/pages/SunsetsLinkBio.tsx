@@ -11,7 +11,6 @@ import {
 import {
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
-  SUNSETS_JULY4_VANITY_TICKET_PATH,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 import {
@@ -42,6 +41,14 @@ const WHATSAPP_COMMUNITY_HREF = "/go/social/whatsapp";
 const SOMMERS_UK_HREF =
   "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
+// Chapter One archive — gallery + recap land here as they clear the edit.
+const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
+// Dropbox file request — community uploads of DJ sets, photos, and videos.
+const COMMUNITY_UPLOAD_URL =
+  "https://www.dropbox.com/request/3f0662s872jlukad0r4h";
+// Follow rails for the Featured Sets block.
+const SUNSETS_SOUNDCLOUD_FOLLOW_HREF = "/go/media/sunsets-soundcloud";
+const SUNSETS_SPOTIFY_FOLLOW_HREF = "/go/social/spotify";
 
 const SHARED_EVENT_SCHEMA = {
   "@context": "https://schema.org" as const,
@@ -88,13 +95,8 @@ const SEASON_EVENTS_SCHEMA = [
       "Colin",
       "Nomar",
     ].map(name => ({ "@type": "MusicGroup" as const, name })),
-    offers: {
-      "@type": "Offer" as const,
-      url: "https://sunsets.vip",
-      availability: "https://schema.org/InStock",
-      priceCurrency: "USD",
-      price: "20",
-    },
+    // No offers block: the event has happened — an InStock offer on a past
+    // event is a Search Console structured-data violation.
     subEvent: {
       "@type": "MusicEvent" as const,
       name: "Untold Story — Late Night Continuation (Official Afterparty)",
@@ -209,10 +211,6 @@ export default function SunsetsLinkBio() {
     trackLakePageView();
   }, []);
 
-  const ticketHref = appendEventAttribution(
-    SUNSETS_JULY4_VANITY_TICKET_PATH,
-    JULY_4_EVENT_SLUG
-  );
   const benchekDropHref = appendEventAttribution(
     BENCHEK_DROP_HREF,
     JULY_4_EVENT_SLUG
@@ -230,33 +228,57 @@ export default function SunsetsLinkBio() {
     JULY_4_EVENT_SLUG
   );
 
-  const handleTicketClick = () => {
+  const handleLakeListPrimaryClick = () => {
     triggerHaptic(16);
-    trackLakeInitiateCheckout();
-    captureSunsetsTicketCtaClick({
-      destinationUrl: ticketHref,
-      pagePath: PAGE_PATH,
-      ctaPosition: "primary",
+    trackLakeLead(newLeadEventId(), {
+      content_name: "Lake List Primary Click",
     });
     trackSunsetsClick({
-      buttonName: "GET JULY 4 TICKETS",
-      href: ticketHref,
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: JULY_4_EVENT_DATE,
-      interestType: "ticket_click",
-      channel: "Posh",
-    });
-  };
-
-  const handleLakeListClick = () => {
-    triggerHaptic(12);
-    trackSunsetsClick({
-      buttonName: "SUN(SETS) II + III — GET ALERTS",
+      buttonName: "JOIN THE LAKE LIST",
       href: lakeListHref,
       eventSlug: JULY_4_EVENT_SLUG,
       eventDate: JULY_4_EVENT_DATE,
       interestType: "first_access_click",
       channel: "Laylo",
+    });
+  };
+
+  const handleArchiveClick = (position: string) => {
+    triggerHaptic(12);
+    trackSunsetsClick({
+      buttonName: `RELIVE CHAPTER ONE — ${position}`,
+      href: SUNSETS_I_ARCHIVE_HREF,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "archive_click",
+      channel: "Monolith",
+    });
+  };
+
+  const handleCommunityUploadClick = () => {
+    triggerHaptic(12);
+    trackLakeLead(newLeadEventId(), {
+      content_name: "Community Upload Click",
+    });
+    trackSunsetsClick({
+      buttonName: "UPLOAD SETS PHOTOS VIDEOS",
+      href: COMMUNITY_UPLOAD_URL,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "community_upload_click",
+      channel: "Dropbox",
+    });
+  };
+
+  const handleFollowClick = (channel: "SoundCloud" | "Spotify", href: string) => {
+    triggerHaptic(12);
+    trackSunsetsClick({
+      buttonName: `FOLLOW ON ${channel.toUpperCase()}`,
+      href,
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "set_drop_follow_click",
+      channel,
     });
   };
 
@@ -324,8 +346,8 @@ export default function SunsetsLinkBio() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
-        title="SUN(SETS) I | July 4 Tickets — Castaways Chicago"
-        description="SUN(SETS) I brings Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar to Castaways Beach Club on July 4."
+        title="SUN(SETS) 2026 | Chasing Sun(Sets) — Castaways Chicago"
+        description="SUN(SETS) II returns to Castaways Beach Club August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
         canonicalUrl={CANONICAL_SUNSETS_URL}
@@ -376,44 +398,35 @@ export default function SunsetsLinkBio() {
             />
           </div>
 
-          <div className="relative -mx-5 mb-5 overflow-hidden border-y border-[#E8B86D]/40 shadow-[0_0_30px_rgba(232,184,109,0.15)] sm:mx-0 sm:rounded-xl sm:border sm:border-[#E8B86D]/30">
-            <div className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_20px_rgba(232,184,109,0.1)] sm:rounded-xl" aria-hidden="true" />
-            <img
-              src="/images/july4-set-times.png"
-              alt="July 4th Set Times and Lineup"
-              className="h-auto w-full object-cover"
-              loading="lazy"
-            />
-          </div>
         </header>
 
-        {/* 2. July 4th Header */}
+        {/* 2. SUN(SETS) II Header */}
         <section
           className="relative mt-2 border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md"
-          aria-label="July 4th Event Details"
+          aria-label="SUN(SETS) II Event Details"
         >
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#E8B86D]/5 to-transparent" />
           <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
-            SUN(SETS) I — JUL 4
+            SUN(SETS) II — AUG 22
           </p>
           <h2 className="mx-1 mt-3 text-[clamp(1.25rem,5.8vw,1.45rem)] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
-            AUTOGRAF <span className="mx-1 text-[#E8B86D]">x</span> KIKO FRANCO
+            THE SUMMER RETURN
           </h2>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-            The opening chapter. Open-air house music and golden-hour sets on
-            the Chicago lakefront.
+            Chapter Two at Castaways Beach Club. Artist reveal coming — the
+            Lake List hears it first.
           </p>
         </section>
 
         {/* 3. Primary CTA */}
-        <section className="mt-4" aria-label="July 4 Tickets">
+        <section className="mt-4" aria-label="Lake List signup">
           <a
-            href={ticketHref}
-            onClick={handleTicketClick}
+            href={lakeListHref}
+            onClick={handleLakeListPrimaryClick}
             className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              GET JULY 4 TICKETS{" "}
+              JOIN THE LAKE LIST{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -427,12 +440,12 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <a
-            href={lakeListHref}
-            onClick={handleLakeListClick}
+            href={SUNSETS_I_ARCHIVE_HREF}
+            onClick={() => handleArchiveClick("Top")}
             className="group relative mt-2.5 flex h-11 min-h-11 overflow-hidden items-center justify-center gap-2 border border-[#E8B86D]/50 bg-[#E8B86D]/5 px-3 text-[10px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:px-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.12em]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              SUN(SETS) II + III — GET ALERTS{" "}
+              RELIVE CHAPTER ONE — JULY 4{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -446,8 +459,8 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <p className="mt-3 text-center text-[10px] font-semibold leading-relaxed tracking-[0.06em] text-stone-400">
-            Rain or shine — a little rain won't stop the lake. Severe weather
-            may pause sets for safety; we resume when cleared. Live updates on{" "}
+            First ticket windows, artist reveals, and table access go to the
+            Lake List before the public. Live updates on{" "}
             <a
               href="https://instagram.com/chasingsunsets.music"
               target="_blank"
@@ -456,14 +469,14 @@ export default function SunsetsLinkBio() {
             >
               @chasingsunsets.music
             </a>
-            . Refunds only if the event is fully canceled.
+            .
           </p>
         </section>
 
         {/* 4. Video section */}
         <section className="mt-6" aria-label="Autograf / 2025 recap">
           <p className="text-center font-serif text-sm italic text-stone-300">
-            Last summer: 2,800 on the lakefront.
+            Last chapter: 2,800 on the lakefront.
           </p>
           <div className="relative mt-3 aspect-video w-full overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]" aria-hidden="true" />
@@ -502,6 +515,42 @@ export default function SunsetsLinkBio() {
               </button>
             )}
             </div>
+          </div>
+        </section>
+
+        {/* 4b. Chapter One — community uploads */}
+        <section className="mt-4" aria-label="Chapter One photos and uploads">
+          <div className="relative overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#E8B86D]/5 to-transparent" />
+            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+              SUN(SETS) I — CHAPTER ONE COMPLETE
+            </p>
+            <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
+              Photos and the recap film are in the edit. Were you there? Send
+              us your sets, photos, and videos — the best make the official
+              recap.
+            </p>
+            <a
+              href={COMMUNITY_UPLOAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleCommunityUploadClick}
+              className="group relative mt-4 flex h-11 min-h-11 overflow-hidden items-center justify-center gap-2 border border-[#E8B86D]/50 bg-[#E8B86D]/5 px-3 text-[10px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:px-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.12em]"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                UPLOAD YOUR SETS, PHOTOS + VIDEOS{" "}
+                <span
+                  aria-hidden="true"
+                  className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+                >
+                  →
+                </span>
+              </span>
+              <div
+                className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+                aria-hidden="true"
+              />
+            </a>
           </div>
         </section>
 
@@ -555,7 +604,7 @@ export default function SunsetsLinkBio() {
 
             <div className="mt-4 border border-white/12 bg-black/30">
               {[
-                "SUN(SETS) I · July 4",
+                "SUN(SETS) I · July 4 — Complete",
                 "SUN(SETS) II · August 22",
                 "SUN(SETS) III · September 19 · Joezi x Massuma",
               ].map((label, index) => (
@@ -603,7 +652,7 @@ export default function SunsetsLinkBio() {
               CABANAS &amp; VIP RESERVATIONS
             </h2>
             <p className="mt-2 text-sm font-semibold text-stone-300">
-              Lock your section for the holiday.
+              Lock your section for August 22.
             </p>
             <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
               Daybeds · Cabanas · Group tables
@@ -685,14 +734,37 @@ export default function SunsetsLinkBio() {
                   Benchek
                 </h2>
                 <p className="text-[13px] text-[#b3b3b3] line-clamp-2">
-                  Exclusive July 4 holiday set. Sign up for the unreleased drop on SoundCloud & Spotify.
+                  Sign up for Set drops — unreleased sets from the lakefront,
+                  delivered first.
                 </p>
               </div>
-              
+
               {/* Follow / Signup Button */}
               <button className="relative z-30 shrink-0 rounded-full border border-[#727272] px-4 py-1.5 text-[13px] font-bold text-white transition-all hover:scale-105 hover:border-white">
                 Sign Up
               </button>
+            </div>
+
+            {/* Follow rails */}
+            <div className="relative z-30 grid grid-cols-2 gap-2 px-4 pb-4">
+              <a
+                href={SUNSETS_SOUNDCLOUD_FOLLOW_HREF}
+                onClick={() =>
+                  handleFollowClick("SoundCloud", SUNSETS_SOUNDCLOUD_FOLLOW_HREF)
+                }
+                className="flex min-h-[38px] items-center justify-center rounded-full border border-[#727272] px-3 text-[12px] font-bold text-white transition-all hover:border-white hover:bg-white/5"
+              >
+                Follow on SoundCloud
+              </a>
+              <a
+                href={SUNSETS_SPOTIFY_FOLLOW_HREF}
+                onClick={() =>
+                  handleFollowClick("Spotify", SUNSETS_SPOTIFY_FOLLOW_HREF)
+                }
+                className="flex min-h-[38px] items-center justify-center rounded-full border border-[#727272] px-3 text-[12px] font-bold text-white transition-all hover:border-white hover:bg-white/5"
+              >
+                Follow on Spotify
+              </a>
             </div>
           </div>
         </section>
@@ -773,28 +845,25 @@ export default function SunsetsLinkBio() {
         {/* 9. Live channels */}
         <section className="mb-6" aria-label="Live channels">
           <a
-            href={ticketHref}
+            href={lakeListHref}
             onClick={() => {
               triggerHaptic(16);
-              trackLakeInitiateCheckout();
-              captureSunsetsTicketCtaClick({
-                destinationUrl: ticketHref,
-                pagePath: PAGE_PATH,
-                ctaPosition: "footer",
+              trackLakeLead(newLeadEventId(), {
+                content_name: "Lake List Footer Click",
               });
               trackSunsetsClick({
-                buttonName: "GET JULY 4 TICKETS — Bottom",
-                href: ticketHref,
+                buttonName: "JOIN THE LAKE LIST — Bottom",
+                href: lakeListHref,
                 eventSlug: JULY_4_EVENT_SLUG,
                 eventDate: JULY_4_EVENT_DATE,
-                interestType: "ticket_click",
-                channel: "Posh",
+                interestType: "first_access_click",
+                channel: "Laylo",
               });
             }}
             className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              GET JULY 4 TICKETS{" "}
+              JOIN THE LAKE LIST{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"

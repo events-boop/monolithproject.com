@@ -43,7 +43,12 @@ const distPublicDir = path.resolve("dist/public");
 const templatePath = path.join(distPublicDir, "index.html");
 const template = readFileSync(templatePath, "utf8");
 
-const futureEvents = upcomingEvents.filter(event => event.status !== "past");
+const futureEvents = upcomingEvents.filter(
+  event =>
+    event.status !== "past" &&
+    event.status !== "draft" &&
+    event.status !== "hidden"
+);
 const featuredTicketEvent =
   futureEvents.find(event => event.status === "on-sale" && event.ticketUrl) ??
   futureEvents[0];
