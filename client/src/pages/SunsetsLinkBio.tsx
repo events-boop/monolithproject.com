@@ -656,43 +656,47 @@ export default function SunsetsLinkBio() {
 
         {/* Benchek */}
         <section className="mt-4" aria-label="Benchek featured set drop">
-          <div className="group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
-            <div className="grid grid-cols-1 min-[380px]:grid-cols-[0.82fr_1fr]">
-              <div className="overflow-hidden bg-black/30">
-                <img
-                  src={BENCHEK_DROP_IMAGE}
-                  alt="Benchek exclusive July 4 holiday set"
-                  loading="lazy"
-                  className="aspect-[4/3] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 min-[380px]:aspect-auto min-[380px]:min-h-[178px]"
-                />
+          <div className="group relative overflow-hidden rounded-[8px] bg-[#181818] transition-colors hover:bg-[#282828] duration-300 cursor-pointer">
+            <a
+              href={benchekDropHref}
+              onClick={handleBenchekDropClick}
+              className="absolute inset-0 z-20"
+              aria-label="Sign up for Benchek set drop"
+            />
+            {/* Top Image Area */}
+            <div className="relative aspect-[4/3] w-full">
+              <img
+                src={BENCHEK_DROP_IMAGE}
+                alt="Benchek exclusive July 4 holiday set"
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-[#181818]/60 to-transparent"></div>
+              
+              <span className="absolute left-4 top-4 text-[13px] font-bold text-white drop-shadow-md">
+                Featured Set Drop
+              </span>
+            </div>
+
+            {/* Bottom Content Area */}
+            <div className="relative z-10 flex items-end justify-between p-4 -mt-8">
+              <div className="flex flex-col pr-4">
+                <h2 className="text-[22px] font-bold tracking-tight text-white mb-1">
+                  Benchek
+                </h2>
+                <p className="text-[13px] text-[#b3b3b3] line-clamp-2">
+                  Exclusive July 4 holiday set. Sign up for the unreleased drop on SoundCloud & Spotify.
+                </p>
               </div>
-              <div className="flex flex-col justify-between p-4">
-                <div>
-                  <h2 className="mt-1 text-lg font-black uppercase leading-[1.05] tracking-tight text-white">
-                    Benchek
-                  </h2>
-                  <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-300">
-                    An exclusive July 4 holiday set — Marbella to the Chicago
-                    lakefront. Sign up for the unreleased drop.
-                  </p>
-                </div>
-                <a
-                  href={benchekDropHref}
-                  onClick={handleBenchekDropClick}
-                  className="group relative mt-4 flex min-h-[46px] overflow-hidden items-center justify-center border border-[#E8B86D]/50 bg-[#E8B86D]/5 px-3 text-center text-[11px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] active:scale-[0.97] motion-reduce:transition-none"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Get the Set Drop
-                  </span>
-                  <div
-                    className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
-                    aria-hidden="true"
-                  />
-                </a>
-              </div>
+              
+              {/* Follow / Signup Button */}
+              <button className="relative z-30 shrink-0 rounded-full border border-[#727272] px-4 py-1.5 text-[13px] font-bold text-white transition-all hover:scale-105 hover:border-white">
+                Sign Up
+              </button>
             </div>
           </div>
         </section>
+
 
         {/* Sommers UK */}
         <section className="mt-4" aria-label="Sommers UK featured set drop">
@@ -851,6 +855,31 @@ export default function SunsetsLinkBio() {
                 className="h-2 w-2 rounded-full bg-[#25D366] shadow-[0_0_8px_rgba(37,211,102,0.9)] animate-pulse motion-reduce:animate-none"
               />
               WHATSAPP COMMUNITY
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href="https://www.dropbox.com/request/3f0662s872jlukad0r4h"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackSunsetsClick({
+                buttonName: "Upload Content (Dropbox)",
+                href: "https://www.dropbox.com/request/3f0662s872jlukad0r4h",
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "content_upload_click",
+                channel: "Dropbox",
+              })
+            }
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#4d94ff]/50 bg-[#4d94ff]/10 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#4d94ff] transition-all hover:bg-[#4d94ff] hover:text-white hover:shadow-[0_0_20px_rgba(77,148,255,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2.5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              SUBMIT YOUR PHOTOS & VIDEOS
             </span>
             <div
               className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
