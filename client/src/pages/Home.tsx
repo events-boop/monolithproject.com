@@ -26,10 +26,10 @@ import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import {
-  SUNSETS_JULY4_TICKET_PATH,
-  captureSunsetsTicketCtaClick,
-} from "@/lib/sunsetsTicketing";
+import { SUNSETS_LAKELIST_PATH } from "@/lib/sunsetsTicketing";
+
+// Chapter One archive — photos + recap land here as they clear the edit.
+const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
 
 function getStatusLabel(status?: string) {
   if (status === "on-sale") return "ON SALE";
@@ -60,9 +60,7 @@ export default function Home() {
   const untoldTicketIsExternal =
     /^https?:\/\//i.test(untoldTicketHref) ||
     untoldTicketHref.startsWith("/go/");
-  const julyFourTicketHref = appendAttributionQueryParams(
-    SUNSETS_JULY4_TICKET_PATH
-  );
+  const lakeListHref = appendAttributionQueryParams(SUNSETS_LAKELIST_PATH);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -102,23 +100,22 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        {/* July 4 featured promo — launch priority directly under the hero */}
+        {/* Next-chapter promo — SUN(SETS) II announce directly under the hero */}
         <section
-          aria-label="SUN(SETS) I — July 4 tickets"
+          aria-label="SUN(SETS) II — August 22"
           className="relative z-10 border-y border-[#E8B86D]/30 bg-black/40 backdrop-blur-2xl py-10 md:py-14 shadow-[0_0_30px_rgba(232,184,109,0.05)]"
         >
           <div className="container layout-wide px-6">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center">
               <div>
                 <span className="section-kicker block text-[#E8B86D]">
-                  On Sale Now
+                  Next Chapter
                 </span>
                 <h2 className="section-display-title-compact mt-3 max-w-[26ch] text-white hyphens-none break-keep text-balance">
-                  SUN(SETS) I — July 4 — Autograf · Kiko Franco · Amari · Eliana
-                  · Gianni Blu
+                  SUN(SETS) II — August 22 — The Summer Return
                 </h2>
                 <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/82 md:text-[11px]">
-                  Castaways Beach Club · Chicago · 12PM–10PM · 21+
+                  Castaways Beach Club · Chicago · Artist Reveal Coming · 21+
                 </p>
                 <p className="mt-2 text-sm text-[#F4D7A1]/80">
                   Three dates. One lake. One home.
@@ -126,25 +123,17 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-3 lg:items-end">
                 <a
-                  href={julyFourTicketHref}
-                  onClick={() =>
-                    captureSunsetsTicketCtaClick({
-                      destinationUrl: julyFourTicketHref,
-                      pagePath: "/",
-                      ctaPosition: "primary",
-                      sourcePage: "homepage",
-                    })
-                  }
+                  href={lakeListHref}
                   className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
                 >
-                  Get Tickets
+                  Join the Lake List
                   <ArrowUpRight className="size-4" />
                 </a>
                 <Link
-                  href="/events/us-jul04"
+                  href={SUNSETS_I_ARCHIVE_HREF}
                   className="btn-text-action text-left lg:text-right"
                 >
-                  + the official after-party: Untold Story, 10:30PM
+                  Chapter One complete — relive July 4
                 </Link>
               </div>
             </div>
@@ -188,7 +177,7 @@ export default function Home() {
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
               <div>
                 <h2 className="section-display-title-compact max-w-[16ch] text-white hyphens-none break-keep text-balance">
-                  Chasing Sun(Sets) July 4 Open-Air
+                  Chasing Sun(Sets) 2026 Open-Air
                 </h2>
                 <p className={titleSubtextClass}>
                   The official summer hub is live. Join First Access for ticket
@@ -226,8 +215,7 @@ export default function Home() {
                   Season Focus
                 </span>
                 <h3 className="section-display-title-compact mt-3 max-w-[14ch] text-white hyphens-none break-keep text-balance">
-                  {chasingSeasonEvent?.headline ||
-                    "July 4th Open-Air Homecoming"}
+                  {chasingSeasonEvent?.headline || "The 2026 Lakefront Season"}
                 </h3>
                 <p className={warmSubtextClass}>
                   {chasingSeasonEvent?.description ||
