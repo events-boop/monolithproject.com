@@ -931,31 +931,6 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <a
-            href="https://www.dropbox.com/request/3f0662s872jlukad0r4h"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackSunsetsClick({
-                buttonName: "Upload Content (Dropbox)",
-                href: "https://www.dropbox.com/request/3f0662s872jlukad0r4h",
-                eventSlug: JULY_4_EVENT_SLUG,
-                eventDate: JULY_4_EVENT_DATE,
-                interestType: "content_upload_click",
-                channel: "Dropbox",
-              })
-            }
-            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#4d94ff]/50 bg-[#4d94ff]/10 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#4d94ff] transition-all hover:bg-[#4d94ff] hover:text-white hover:shadow-[0_0_20px_rgba(77,148,255,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
-          >
-            <span className="relative z-10 flex items-center gap-2.5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-              SUBMIT YOUR PHOTOS & VIDEOS
-            </span>
-            <div
-              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
-              aria-hidden="true"
-            />
-          </a>
-          <a
             href="https://monolithproject.com"
             target="_blank"
             rel="noopener noreferrer"
