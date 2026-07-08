@@ -9,7 +9,10 @@ import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   getEventVenueLabel,
+  getEventWindowStatus,
+  getScheduledEvents,
   getSeriesExperienceEvent,
+  isTicketOnSale,
 } from "@/lib/siteExperience";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 
@@ -60,7 +63,15 @@ export default function Home() {
   const untoldTicketIsExternal =
     /^https?:\/\//i.test(untoldTicketHref) ||
     untoldTicketHref.startsWith("/go/");
+  // The featured untold record can be a past-event fallback — never show a
+  // past date grid next to future-tense copy.
+  const untoldIsPast = getEventWindowStatus(untoldMoment) === "past";
   const lakeListHref = appendAttributionQueryParams(SUNSETS_LAKELIST_PATH);
+  // One primary action per state: ticket CTAs only exist while something is
+  // actually buyable; otherwise everything funnels to the Lake List.
+  const anythingOnSale = getScheduledEvents().some(event =>
+    isTicketOnSale(event)
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -150,12 +161,21 @@ export default function Home() {
                 artist-led radio in Chicago.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
-                <Link
-                  href="/tickets"
-                  className="btn-pill-monolith btn-pill-wide justify-center"
-                >
-                  Current Tickets
-                </Link>
+                {anythingOnSale ? (
+                  <Link
+                    href="/tickets"
+                    className="btn-pill-monolith btn-pill-wide justify-center"
+                  >
+                    Current Tickets
+                  </Link>
+                ) : (
+                  <a
+                    href={lakeListHref}
+                    className="btn-pill-monolith btn-pill-wide justify-center"
+                  >
+                    Join the Lake List
+                  </a>
+                )}
                 <Link
                   href="/sunsets"
                   className="btn-pill-outline btn-pill-wide justify-center"
@@ -199,7 +219,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
                   >
-                    Join First Access
+                    Join the Lake List
                   </a>
                   <Link href="/chasing-sunsets" className="btn-text-action">
                     Chasing Sun(Sets)
@@ -263,7 +283,7 @@ export default function Home() {
               <span className="section-kicker text-primary">Untold Story</span>
               {untoldMoment?.status ? (
                 <span className="border border-white/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.28em] text-white/75">
-                  {getStatusLabel(untoldMoment.status)}
+                  {untoldIsPast ? "TBA" : getStatusLabel(untoldMoment.status)}
                 </span>
               ) : null}
             </div>
@@ -272,14 +292,24 @@ export default function Home() {
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
                 <div>
                   <span className="section-kicker mb-3 block text-white/78">
-                    Archive closed / next chapter
+                    {untoldIsPast
+                      ? "Archive closed / next chapter"
+                      : "Next chapter"}
                   </span>
                   <h2 className="section-display-title-compact max-w-[14ch] text-white hyphens-none break-keep text-balance">
-                    {untoldMoment.headline || untoldMoment.title}
+                    {untoldIsPast
+                      ? "The Next Chapter Is Loading"
+                      : untoldMoment.headline || untoldMoment.title}
                   </h2>
-                  <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
-                    {untoldMoment.date} at {untoldMoment.venue}
-                  </p>
+                  {untoldIsPast ? (
+                    <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
+                      Date + venue reveal soon
+                    </p>
+                  ) : (
+                    <p className="mt-4 font-display text-xl text-[#F4D7A1] md:text-2xl">
+                      {untoldMoment.date} at {untoldMoment.venue}
+                    </p>
+                  )}
                   <p className={coolSubtextClass}>
                     The next late-night chapter is moving into first-access
                     mode. Join the list for the reveal, table path, and
@@ -288,29 +318,45 @@ export default function Home() {
                 </div>
 
                 <div className="border border-white/15 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(34,211,238,0.03)] hover:border-[#22d3ee]/40 transition-all duration-500">
-                  <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
-                    <div>
-                      <dt className="text-white/66">Date</dt>
-                      <dd className="mt-1 text-white">{untoldMoment.date}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/66">Time</dt>
-                      <dd className="mt-1 text-white">{untoldMoment.time}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/66">Venue</dt>
-                      <dd className="mt-1 text-white">{untoldMoment.venue}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-white/66">City</dt>
-                      <dd className="mt-1 text-white">
-                        {untoldMoment.location}
-                      </dd>
-                    </div>
-                  </dl>
-                  <p className="mt-4 text-sm text-white/82">
-                    {getEventVenueLabel(untoldMoment)}
-                  </p>
+                  {untoldIsPast ? (
+                    <p className="border-b border-white/10 pb-5 text-sm leading-relaxed text-white/82">
+                      Last chapter: {untoldMoment.headline || untoldMoment.title}{" "}
+                      — {untoldMoment.date}. The room is being chosen for the
+                      next one.
+                    </p>
+                  ) : (
+                    <>
+                      <dl className="grid grid-cols-2 gap-4 border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
+                        <div>
+                          <dt className="text-white/66">Date</dt>
+                          <dd className="mt-1 text-white">
+                            {untoldMoment.date}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="text-white/66">Time</dt>
+                          <dd className="mt-1 text-white">
+                            {untoldMoment.time}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="text-white/66">Venue</dt>
+                          <dd className="mt-1 text-white">
+                            {untoldMoment.venue}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="text-white/66">City</dt>
+                          <dd className="mt-1 text-white">
+                            {untoldMoment.location}
+                          </dd>
+                        </div>
+                      </dl>
+                      <p className="mt-4 text-sm text-white/82">
+                        {getEventVenueLabel(untoldMoment)}
+                      </p>
+                    </>
+                  )}
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link
                       href={untoldMomentHref}
@@ -343,39 +389,6 @@ export default function Home() {
                 The next Untold Story chapter is being updated.
               </p>
             )}
-          </div>
-        </section>
-
-        <section className="relative z-10 border-b border-white/10 bg-black/40 backdrop-blur-sm py-16 md:py-24">
-          <div className="container layout-wide px-6">
-            <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-5">
-              <div>
-                <span className="section-kicker block text-white/74">
-                  Chasing Sun(Sets) Summer 2026
-                </span>
-                <h3 className="section-display-title-compact mt-3 text-white">
-                  Season Dates
-                </h3>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F4D7A1]/82">
-                  Summer dates are listed here for planning. Ticket drops and
-                  lineups release separately by chapter.
-                </p>
-              </div>
-              <Link href="/chasing-sunsets" className="btn-text-action">
-                Open Chasing Sun(Sets)
-              </Link>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
-                July 4, 2026
-              </div>
-              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
-                August 22, 2026
-              </div>
-              <div className="border border-white/15 bg-white/[0.02] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/85">
-                September 19, 2026
-              </div>
-            </div>
           </div>
         </section>
 
@@ -521,6 +534,46 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="bg-black/20 backdrop-blur-md relative z-10 transition-colors duration-500">
+          <SectionDivider
+            id="featured"
+            number="02"
+            label="Past Nights"
+            glow={`${LIVE_RED}14`}
+          />
+          <ViewportLazy
+            minHeightClassName="min-h-[620px]"
+            rootMargin="500px 0px"
+            revealAfterMs={1200}
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[620px] w-full opacity-10" />}
+            >
+              <FeaturedRecap />
+            </Suspense>
+          </ViewportLazy>
+        </div>
+
+        <div id="showcase" className="bg-black relative z-10">
+          <SectionDivider
+            number="03"
+            label="Lineup"
+            glow={MONOLITH_ORANGE}
+            dense
+          />
+          <ViewportLazy
+            minHeightClassName="min-h-[420px]"
+            rootMargin="500px 0px"
+            revealAfterMs={1400}
+          >
+            <Suspense
+              fallback={<Skeleton className="h-[420px] w-full opacity-10" />}
+            >
+              <FeaturedSets />
+            </Suspense>
+          </ViewportLazy>
+        </div>
+
         <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-16 md:py-24">
           <div className="container layout-wide px-6">
             <div className="mb-6">
@@ -564,46 +617,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <div className="bg-black/20 backdrop-blur-md relative z-10 transition-colors duration-500">
-          <SectionDivider
-            id="featured"
-            number="02"
-            label="Past Nights"
-            glow={`${LIVE_RED}14`}
-          />
-          <ViewportLazy
-            minHeightClassName="min-h-[620px]"
-            rootMargin="500px 0px"
-            revealAfterMs={1200}
-          >
-            <Suspense
-              fallback={<Skeleton className="h-[620px] w-full opacity-10" />}
-            >
-              <FeaturedRecap />
-            </Suspense>
-          </ViewportLazy>
-        </div>
-
-        <div id="showcase" className="bg-black relative z-10">
-          <SectionDivider
-            number="03"
-            label="Lineup"
-            glow={MONOLITH_ORANGE}
-            dense
-          />
-          <ViewportLazy
-            minHeightClassName="min-h-[420px]"
-            rootMargin="500px 0px"
-            revealAfterMs={1400}
-          >
-            <Suspense
-              fallback={<Skeleton className="h-[420px] w-full opacity-10" />}
-            >
-              <FeaturedSets />
-            </Suspense>
-          </ViewportLazy>
-        </div>
 
         <section
           id="community"

@@ -5,14 +5,17 @@ import { getSeriesColor, getSeriesEvents } from "@/lib/siteExperience";
 import ConversionCTA from "@/components/ConversionCTA";
 import { SUNSETS_2026_SEASON_CHAPTERS } from "@/lib/sunsetsTicketing";
 
+// Narrative copy per chapter. Badge + footer text for announced chapters
+// only — live/sold-out/past states derive from event status below, so the
+// cards update themselves when a status flips in the event record.
 const CHAPTER_CARDS = [
   {
     label: "SUN(SETS) I",
     number: "01",
-    status: "Chapter Complete",
+    status: "Lake List",
     subtitle: "Independence Day · Chapter One",
     body: "2,800 on the lakefront. Heat, rain, and the moment the purpose became clear. The recap is coming.",
-    footer: "Photos + recap coming soon",
+    footer: "First notice before public",
   },
   {
     label: "SUN(SETS) II",
@@ -37,6 +40,29 @@ const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
 /** A chapter is complete once its event day has fully passed. */
 function isChapterPast(eventDate: string) {
   return Date.now() > new Date(`${eventDate}T23:59:59`).getTime();
+}
+
+type SeasonChapter = {
+  isPast: boolean;
+  status: string;
+  footer: string;
+  event?: { status?: string };
+};
+
+/** Badge text follows the event record; hand-written text only covers the
+ *  announced state. */
+function chapterBadge(chapter: SeasonChapter) {
+  if (chapter.isPast) return "Chapter Complete";
+  if (chapter.event?.status === "on-sale") return "Tickets Live";
+  if (chapter.event?.status === "sold-out") return "Sold Out";
+  return chapter.status;
+}
+
+function chapterFooter(chapter: SeasonChapter) {
+  if (chapter.isPast) return "Photos + recap coming soon";
+  if (chapter.event?.status === "on-sale") return "On sale now";
+  if (chapter.event?.status === "sold-out") return "Sold out — join the SMS list";
+  return chapter.footer;
 }
 
 const PILLARS = [
@@ -150,7 +176,7 @@ export default function SeasonChapterCards() {
                   {featuredChapter.label}
                 </span>
                 <span className="rounded-full bg-white px-3 py-1 font-mono text-[9px] font-black uppercase tracking-[0.18em] text-black">
-                  {featuredChapter.status}
+                  {chapterBadge(featuredChapter)}
                 </span>
               </div>
 
@@ -193,7 +219,7 @@ export default function SeasonChapterCards() {
                   className="w-full"
                 />
                 <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/36">
-                  {featuredChapter.footer}
+                  {chapterFooter(featuredChapter)}
                 </p>
               </div>
             </div>
@@ -233,7 +259,7 @@ export default function SeasonChapterCards() {
                       {chapter.label}
                     </span>
                     <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[9px] font-black uppercase tracking-[0.18em] text-white/58">
-                      {chapter.status}
+                      {chapterBadge(chapter)}
                     </span>
                   </div>
 
@@ -281,7 +307,7 @@ export default function SeasonChapterCards() {
                       />
                     )}
                     <p className="mt-3 text-center font-mono text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
-                      {chapter.footer}
+                      {chapterFooter(chapter)}
                     </p>
                   </div>
                 </div>
