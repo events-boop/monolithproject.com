@@ -181,8 +181,8 @@ export default function ChasingSunsets() {
   return (
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
-        title="SUN(SETS) I — July 4th at Castaways | Chasing Sun(Sets)"
-        description="SUN(SETS) I brings Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar to Castaways Beach Club on July 4th, 2026. Tickets on sale now."
+        title="Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 at Castaways"
+        description="Chapter One is complete. SUN(SETS) II returns to Castaways Beach Club on August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -273,9 +273,10 @@ export default function ChasingSunsets() {
 
               <div className="max-w-2xl">
                 <p className="mb-4 text-base leading-relaxed text-white/92 sm:text-lg">
-                  Chasing Sun(Sets) returns home to the lake this July 4th at
-                  Castaways Beach Club. Golden hour. House music. Lake Michigan.
-                  The skyline behind you.
+                  Chasing Sun(Sets) came home to the lake on July 4th at
+                  Castaways Beach Club — and the season is just getting
+                  started. Golden hour. House music. Lake Michigan. The
+                  skyline behind you.
                 </p>
                 <p className="mb-4 max-w-xl text-sm font-semibold uppercase tracking-[0.16em] text-[#E8B86D]">
                   Watch the sun. Stay for the sets.
@@ -365,9 +366,9 @@ export default function ChasingSunsets() {
                   "Season 2026"}
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
-                SUN(SETS) I opens the 2026 lakefront chapter on July 4 at
-                Castaways. The ticket ladder is live: early arrival, Lake List
-                first access, public GA tiers, group bundles, and a separate
+                SUN(SETS) I opened the 2026 lakefront chapter on July 4 at
+                Castaways. Next: SUN(SETS) II on August 22 — Lake List first
+                access, then public tiers, group bundles, and a separate
                 table/cabana rail.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
@@ -516,10 +517,11 @@ export default function ChasingSunsets() {
             >
               <article className="border border-[#E8B86D]/16 bg-white/72 p-6 shadow-[0_20px_48px_rgba(44,24,16,0.06)] md:p-8">
                 <p className="text-lg leading-relaxed sunset-text-80">
-                  This July 4th, The Monolith Project brings Chasing Sun(Sets)
+                  On July 4th, The Monolith Project brought Chasing Sun(Sets)
                   back to where the story belongs: the Chicago lakefront. A
-                  full-day house music experience moves from daytime energy into
-                  golden hour and the final sunset set.
+                  full-day house music experience moving from daytime energy
+                  into golden hour and the final sunset set — twice more this
+                  season.
                 </p>
                 <p className="mt-5 leading-relaxed sunset-text-70">
                   This is not a holiday party. It is the return of a Chicago

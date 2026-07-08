@@ -14,6 +14,10 @@ import { trackAccessEvent } from "@/lib/api";
 // Newest first — static list since we have a small fixed set
 const archiveEntries: (ArchiveCollection & { href: string })[] = [
   {
+    ...archiveCollectionsBySlug["chasing-sunsets-sunsets-i-2026"],
+    href: "/chasing-sunsets/sunsets-i-2026",
+  },
+  {
     ...archiveCollectionsBySlug["untold-story-season-iii"],
     href: "/untold-story/season-iii",
   },
@@ -37,7 +41,7 @@ const archiveEntries: (ArchiveCollection & { href: string })[] = [
     ...archiveCollectionsBySlug["chasing-sunsets-season-i"],
     href: "/chasing-sunsets/season-i",
   },
-].filter(e => e.media.length > 0);
+].filter(e => e.media.length > 0 || e.comingSoon);
 
 export default function Archive() {
   useEffect(() => {
@@ -117,11 +121,13 @@ export default function Archive() {
                         decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      {/* Photo count badge */}
+                      {/* Photo count / coming soon badge */}
                       <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-sm">
                         <Camera className="w-3 h-3 text-white/70" />
                         <span className="font-mono text-[10px] text-white/70">
-                          {entry.media.length}
+                          {entry.comingSoon && entry.media.length === 0
+                            ? "COMING SOON"
+                            : entry.media.length}
                         </span>
                       </div>
                     </div>

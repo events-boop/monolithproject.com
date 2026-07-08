@@ -1,20 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { buildPublicSiteData } from "../data/public-site-data";
-import { SUNSETS_PRELAUNCH_LOCKED } from "../../shared/events/sunsets-ticketing";
 
-// CTA expectations flip with the launch switch: prelaunch funnels everything
-// to the Lake List; on-sale routes the featured event to the Posh rail.
-const expectedSunsetsCta = SUNSETS_PRELAUNCH_LOCKED
-  ? {
-      label: "Get First Access",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
-    }
-  : {
-      label: "BUY TICKETS — JULY 4",
-      href: "/go/tickets/css-jul04",
-      tool: "posh",
-    };
+// SUN(SETS) I (css-jul04) is past and SUN(SETS) II (css-aug22) is the
+// featured record. Aug 22 is announced but not on sale, so every featured
+// CTA funnels to the Lake List until its gates pass.
+const expectedSunsetsCta = {
+  label: "Get First Access",
+  href: "/go/waitlist/chasing-sunsets",
+  tool: "laylo",
+};
 
 describe("buildPublicSiteData", () => {
   it("returns a lean public season profile for the homepage", () => {
@@ -24,15 +18,11 @@ describe("buildPublicSiteData", () => {
 
     expect(data.path).toBe("/");
     expect(data.events.length).toBeGreaterThan(5);
-    expect(data.featuredEvents.hero?.id).toBe("css-jul04");
+    expect(data.featuredEvents.hero?.id).toBe("css-aug22");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
-    if (SUNSETS_PRELAUNCH_LOCKED) {
-      expect(featuredSunsets?.startingPrice).toBeUndefined();
-      expect(featuredSunsets?.ticketUrl).toBeUndefined();
-    } else {
-      expect(featuredSunsets?.startingPrice).toBe(20);
-      expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-jul04");
-    }
+    // Not on sale yet: no checkout path or price may leak into the payload.
+    expect(featuredSunsets?.startingPrice).toBeUndefined();
+    expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -53,7 +43,7 @@ describe("buildPublicSiteData", () => {
       )
     ).toBe(true);
     expect(data.events.some(event => event.id === "us-s3e3")).toBe(true);
-    expect(data.events.some(event => event.id === "css-jul04")).toBe(true);
+    expect(data.events.some(event => event.id === "css-aug22")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
       label: "Get Alerts First",
       href: "/story#untold-funnel",
@@ -86,20 +76,55 @@ describe("buildPublicSiteData", () => {
   it("falls back to featured events for non-season routes", () => {
     const data = buildPublicSiteData("/vip");
     const featuredIds = data.events.map(event => event.id);
-    const featuredSunsets = data.events.find(event => event.id === "css-jul04");
+    const featuredSunsets = data.events.find(event => event.id === "css-aug22");
 
-    expect(featuredIds).toContain("css-jul04");
+    expect(featuredIds).toContain("css-aug22");
     expect(featuredIds).not.toContain("us-s3e3");
     expect(data.events.length).toBe(1);
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
-    if (SUNSETS_PRELAUNCH_LOCKED) {
-      expect(featuredSunsets?.startingPrice).toBeUndefined();
-      expect(featuredSunsets?.ticketUrl).toBeUndefined();
-    } else {
-      expect(featuredSunsets?.startingPrice).toBe(20);
-      expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-jul04");
-    }
+    expect(featuredSunsets?.startingPrice).toBeUndefined();
+    expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
+  });
+
+  it("never ships draft events in any public payload", () => {
+    const draftEvent = {
+      id: "test-draft",
+      series: "chasing-sunsets" as const,
+      episode: "TEST",
+      title: "Draft Event",
+      date: "December 1, 2026",
+      time: "TBD",
+      venue: "TBA",
+      location: "Chicago, IL",
+      status: "draft" as const,
+    };
+    const data = buildPublicSiteData("/schedule", [draftEvent]);
+    expect(data.events.some(event => event.id === "test-draft")).toBe(false);
+  });
+
+  it("keeps hidden events out of list payloads but in event pages", () => {
+    const hiddenEvent = {
+      id: "test-hidden",
+      series: "chasing-sunsets" as const,
+      episode: "TEST",
+      title: "Hidden Event",
+      slug: "hidden-event",
+      date: "December 1, 2026",
+      time: "TBD",
+      venue: "TBA",
+      location: "Chicago, IL",
+      status: "hidden" as const,
+    };
+    const listData = buildPublicSiteData("/schedule", [hiddenEvent]);
+    expect(listData.events.some(event => event.id === "test-hidden")).toBe(
+      false
+    );
+
+    const pageData = buildPublicSiteData("/events/hidden-event", [hiddenEvent]);
+    expect(pageData.events.some(event => event.id === "test-hidden")).toBe(
+      true
+    );
   });
 });

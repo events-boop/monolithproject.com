@@ -30,6 +30,20 @@ export interface EventCta {
   isExternal: boolean;
 }
 
+/**
+ * Publish gates — the 11-point QA checklist as data instead of memory.
+ * scripts/validate_events.mts enforces these at build time: an event
+ * cannot ship "on-sale" until every gate is flipped.
+ */
+export interface EventGates {
+  /** Flyer + square + story + OG image uploaded */
+  creativeReady: boolean;
+  /** Pixel/GA/UTM tracking QA passed */
+  trackingQA: boolean;
+  /** Posh checkout created and its URL pasted into ticketUrl */
+  poshLinked: boolean;
+}
+
 export interface TicketTier {
   id: string;
   name: string;
@@ -59,7 +73,16 @@ export interface ScheduledEvent {
   location: string;
   lineup?: string;
   image?: string;
-  status: "on-sale" | "coming-soon" | "sold-out" | "past";
+  /**
+   * The one lever that controls how an event appears everywhere.
+   *   draft       — internal only; never enters any public payload
+   *   hidden      — resolves on direct event pages, excluded from lists
+   *   coming-soon — announced; funnel CTA (Lake List), no checkout
+   *   on-sale     — checkout live (validator requires all gates passed)
+   *   sold-out    — checkout closed, SMS/waitlist CTA
+   *   past        — archive mode; recap/gallery is the CTA
+   */
+  status: "draft" | "hidden" | "on-sale" | "coming-soon" | "sold-out" | "past";
   /** One featured event at a time — gets the flagship card treatment. */
   featured?: boolean;
   inventoryState?: "normal" | "low";
@@ -85,6 +108,12 @@ export interface ScheduledEvent {
   primaryCta?: EventCta;
   recentlyDropped?: boolean;
   layloDropId?: string;
+  /** Publish gates enforced by scripts/validate_events.mts */
+  gates?: EventGates;
+  /** Archive collection slug in galleryData — the "Relive It" target for past events */
+  archiveSlug?: string;
+  /** Recap page/video URL for past events */
+  recapUrl?: string;
 }
 
 export type PublicSiteData = {
