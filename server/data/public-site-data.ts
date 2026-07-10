@@ -207,18 +207,6 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     activeFunnels: ["waitlist-untold"],
   },
   {
-    id: "us-aug01",
-    series: "untold-story",
-    episode: "SUMMER '26",
-    title: "Untold Story",
-    date: "August 1, 2026",
-    time: "Late Night",
-    venue: "Venue Reveal Soon",
-    location: "Chicago, IL",
-    status: "coming-soon",
-  },
-
-  {
     id: "css-aug22",
     series: "chasing-sunsets",
     episode: "SUN(SETS) II",

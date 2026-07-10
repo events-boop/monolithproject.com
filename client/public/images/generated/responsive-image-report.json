@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-02T03:28:06.331Z",
+  "generatedAt": "2026-07-09T21:03:44.825Z",
   "defaultWidths": [
     480,
     1024
   ],
   "totals": {
-    "originalBytes": 14787029,
-    "estimatedTransferBytes": 4938381,
-    "estimatedSavingsBytes": 9939262,
-    "variantBytes": 15214855
+    "originalBytes": 15690065,
+    "estimatedTransferBytes": 4997346,
+    "estimatedSavingsBytes": 10783333,
+    "variantBytes": 15444510
   },
   "images": [
     {
@@ -2224,6 +2224,44 @@
       "estimatedTransferKb": 175.3,
       "estimatedSavingsBytes": 436836,
       "estimatedSavingsPct": 71
+    },
+    {
+      "source": "/images/july4-set-times.png",
+      "originalBytes": 903036,
+      "originalKb": 881.9,
+      "originalWidth": 557,
+      "originalHeight": 832,
+      "generatedBaseName": "july4-set-times",
+      "variants": [
+        {
+          "path": "/images/generated/july4-set-times-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 49238
+        },
+        {
+          "path": "/images/generated/july4-set-times-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 54646
+        },
+        {
+          "path": "/images/generated/july4-set-times-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 58965
+        },
+        {
+          "path": "/images/generated/july4-set-times-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 66806
+        }
+      ],
+      "estimatedTransferBytes": 58965,
+      "estimatedTransferKb": 57.6,
+      "estimatedSavingsBytes": 844071,
+      "estimatedSavingsPct": 93
     },
     {
       "source": "/images/lazare-carbon-center.png",

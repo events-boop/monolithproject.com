@@ -270,7 +270,10 @@ export default function SunsetsLinkBio() {
     });
   };
 
-  const handleFollowClick = (channel: "SoundCloud" | "Spotify", href: string) => {
+  const handleFollowClick = (
+    channel: "SoundCloud" | "Spotify",
+    href: string
+  ) => {
     triggerHaptic(12);
     trackSunsetsClick({
       buttonName: `FOLLOW ON ${channel.toUpperCase()}`,
@@ -361,7 +364,7 @@ export default function SunsetsLinkBio() {
           aria-hidden="true"
         />
 
-        {/* 1. Hero — brand + lineup */}
+        {/* 1. Hero — current season */}
         <header className="relative text-center">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
@@ -387,17 +390,6 @@ export default function SunsetsLinkBio() {
           <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
             CASTAWAYS BEACH CLUB
           </p>
-
-          <div className="relative -mx-5 mb-5 mt-5 overflow-hidden border-y border-[#E8B86D]/40 shadow-[0_0_30px_rgba(232,184,109,0.15)] sm:mx-0 sm:rounded-xl sm:border sm:border-[#E8B86D]/30">
-            <div className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_20px_rgba(232,184,109,0.1)] sm:rounded-xl" aria-hidden="true" />
-            <img
-              src="/sunsets_poster.jpg"
-              alt="Chasing Sunsets 2026 Poster"
-              className="h-auto w-full object-cover"
-              fetchPriority="high"
-            />
-          </div>
-
         </header>
 
         {/* 2. SUN(SETS) II Header */}
@@ -413,8 +405,8 @@ export default function SunsetsLinkBio() {
             THE SUMMER RETURN
           </h2>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-            Chapter Two at Castaways Beach Club. Artist reveal coming — the
-            Lake List hears it first.
+            Chapter Two at Castaways Beach Club. Artist reveal coming — the Lake
+            List hears it first.
           </p>
         </section>
 
@@ -427,25 +419,6 @@ export default function SunsetsLinkBio() {
           >
             <span className="relative z-10 flex items-center gap-2">
               JOIN THE LAKE LIST{" "}
-              <span
-                aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-              >
-                →
-              </span>
-            </span>
-            <div
-              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
-              aria-hidden="true"
-            />
-          </a>
-          <a
-            href={SUNSETS_I_ARCHIVE_HREF}
-            onClick={() => handleArchiveClick("Top")}
-            className="group relative mt-2.5 flex h-11 min-h-11 overflow-hidden items-center justify-center gap-2 border border-[#E8B86D]/50 bg-[#E8B86D]/5 px-3 text-[10px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:px-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.12em]"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              RELIVE CHAPTER ONE — JULY 4{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -473,47 +446,88 @@ export default function SunsetsLinkBio() {
           </p>
         </section>
 
-        {/* 4. Video section */}
+        {/* 4. Chapter One archive — clearly historical, never the lead signal. */}
+        <section className="mt-5" aria-label="SUN(SETS) I Chapter One archive">
+          <div className="overflow-hidden border border-[#E8B86D]/25 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-4 border-b border-[#E8B86D]/20 px-4 py-3">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+                  Chapter One / Archive
+                </p>
+                <p className="mt-1 text-[11px] text-stone-400">
+                  July 4 is complete. The record stays open.
+                </p>
+              </div>
+              <span className="shrink-0 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/58">
+                Complete
+              </span>
+            </div>
+            <div className="relative">
+              <img
+                src="/sunsets_poster.jpg"
+                alt="SUN(SETS) I Chapter One archive poster from July 4, 2026"
+                className="h-auto w-full object-cover opacity-86"
+                loading="lazy"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 to-transparent"
+              />
+              <a
+                href={SUNSETS_I_ARCHIVE_HREF}
+                onClick={() => handleArchiveClick("Archive card")}
+                className="group absolute inset-x-4 bottom-4 flex h-11 items-center justify-center gap-2 border border-[#E8B86D]/60 bg-black/55 px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#E8B86D] backdrop-blur-md transition hover:border-[#E8B86D] hover:bg-[#E8B86D] hover:text-black"
+              >
+                Relive Chapter One <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. Video section */}
         <section className="mt-6" aria-label="Autograf / 2025 recap">
           <p className="text-center font-serif text-sm italic text-stone-300">
             Last chapter: 2,800 on the lakefront.
           </p>
           <div className="relative mt-3 aspect-video w-full overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-            <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]" aria-hidden="true" />
+            <div
+              className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]"
+              aria-hidden="true"
+            />
             <div className="relative z-10 h-full w-full">
-            {recapPlaying ? (
-              <YouTubeEmbed
-                url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
-                title="Chasing Sun(Sets) recap"
-                className="absolute inset-0 h-full w-full"
-                loading="eager"
-                autoplay
-              />
-            ) : (
-              <button
-                type="button"
-                onClick={handleRecapPlay}
-                aria-label="Play the recap video"
-                className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99] motion-reduce:transition-none"
-              >
-                <img
-                  src={RECAP_THUMB}
-                  alt="Chasing Sun(Sets) recap preview"
-                  loading="lazy"
-                  className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+              {recapPlaying ? (
+                <YouTubeEmbed
+                  url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
+                  title="Chasing Sun(Sets) recap"
+                  className="absolute inset-0 h-full w-full"
+                  loading="eager"
+                  autoplay
                 />
-                <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
-                <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="ml-0.5 h-6 w-6 fill-current"
-                    aria-hidden="true"
-                  >
-                    <path d="M8 5.5v13l11-6.5-11-6.5z" />
-                  </svg>
-                </span>
-              </button>
-            )}
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleRecapPlay}
+                  aria-label="Play the recap video"
+                  className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99] motion-reduce:transition-none"
+                >
+                  <img
+                    src={RECAP_THUMB}
+                    alt="Chasing Sun(Sets) recap preview"
+                    loading="lazy"
+                    className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+                  />
+                  <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
+                  <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="ml-0.5 h-6 w-6 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5.5v13l11-6.5-11-6.5z" />
+                    </svg>
+                  </span>
+                </button>
+              )}
             </div>
           </div>
         </section>
@@ -526,9 +540,8 @@ export default function SunsetsLinkBio() {
               SUN(SETS) I — CHAPTER ONE COMPLETE
             </p>
             <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-              Photos and the recap film are in the edit. Were you there? Send
-              us your sets, photos, and videos — the best make the official
-              recap.
+              Photos and the recap film are in the edit. Were you there? Send us
+              your sets, photos, and videos — the best make the official recap.
             </p>
             <a
               href={COMMUNITY_UPLOAD_URL}
@@ -559,7 +572,10 @@ export default function SunsetsLinkBio() {
           className="relative mt-6 overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl"
           aria-label="2026 Season Pass"
         >
-          <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_left,rgba(232,184,109,0.1),transparent_50%)]" aria-hidden="true" />
+          <div
+            className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_left,rgba(232,184,109,0.1),transparent_50%)]"
+            aria-hidden="true"
+          />
           <div className="relative z-10 border-b border-[#E8B86D]/20 bg-black">
             <div className="relative">
               <img
@@ -646,21 +662,24 @@ export default function SunsetsLinkBio() {
         {/* 6. Cabanas */}
         <section className="mt-6" aria-label="Cabanas and VIP">
           <div className="relative overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-            <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]" aria-hidden="true" />
+            <div
+              className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]"
+              aria-hidden="true"
+            />
             <div className="relative z-10">
-            <h2 className="text-balance text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
-              CABANAS &amp; VIP RESERVATIONS
-            </h2>
-            <p className="mt-2 text-sm font-semibold text-stone-300">
-              Lock your section for August 22.
-            </p>
-            <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
-              Daybeds · Cabanas · Group tables
-            </p>
-            <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-400">
-              $2,000 minimum spend · Admission for up to 15 guests · Limited,
-              confirmed manually
-            </p>
+              <h2 className="text-balance text-[clamp(0.85rem,4vw,1rem)] font-black uppercase tracking-[0.08em] text-white">
+                CABANAS &amp; VIP RESERVATIONS
+              </h2>
+              <p className="mt-2 text-sm font-semibold text-stone-300">
+                Lock your section for August 22.
+              </p>
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.16em] text-stone-400">
+                Daybeds · Cabanas · Group tables
+              </p>
+              <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-400">
+                $2,000 minimum spend · Admission for up to 15 guests · Limited,
+                confirmed manually
+              </p>
               <a
                 href={ROUTES.vip}
                 onClick={() => {
@@ -721,7 +740,7 @@ export default function SunsetsLinkBio() {
                 className="h-full w-full object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-[#181818]/60 to-transparent"></div>
-              
+
               <span className="absolute left-4 top-4 text-[13px] font-bold text-white drop-shadow-md">
                 Featured Set Drop
               </span>
@@ -750,7 +769,10 @@ export default function SunsetsLinkBio() {
               <a
                 href={SUNSETS_SOUNDCLOUD_FOLLOW_HREF}
                 onClick={() =>
-                  handleFollowClick("SoundCloud", SUNSETS_SOUNDCLOUD_FOLLOW_HREF)
+                  handleFollowClick(
+                    "SoundCloud",
+                    SUNSETS_SOUNDCLOUD_FOLLOW_HREF
+                  )
                 }
                 className="flex min-h-[38px] items-center justify-center rounded-full border border-[#727272] px-3 text-[12px] font-bold text-white transition-all hover:border-white hover:bg-white/5"
               >
@@ -768,7 +790,6 @@ export default function SunsetsLinkBio() {
             </div>
           </div>
         </section>
-
 
         {/* Sommers UK */}
         <section className="mt-4" aria-label="Sommers UK featured set drop">

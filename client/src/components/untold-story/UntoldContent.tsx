@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Clock, Users } from "lucide-react";
+import { ArrowUpRight, Calendar, MapPin, Clock, Users } from "lucide-react";
 import { eventVisuals, lineupVisuals, untoldFaqs } from "./constants";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -8,11 +8,114 @@ import { getResponsiveImage } from "@/lib/responsiveImages";
 import { ScheduledEvent } from "@/data/events";
 import ConversionCTA from "@/components/ConversionCTA";
 import { Link } from "wouter";
+import { getEventWindowStatus } from "@/lib/siteExperience";
 
 const untoldPosterImage = getResponsiveImage("untoldStoryPoster");
 
+const UNTOLD_ARCHIVE_CHAPTERS = [
+  {
+    number: "01",
+    label: "Chapter One",
+    title: "The First Room",
+    body: "The first signal: a tighter dancefloor, a different kind of late night.",
+  },
+  {
+    number: "02",
+    label: "Chapter Two",
+    title: "The Pressure Builds",
+    body: "The sound, the crowd, and the pace found a deeper frequency.",
+  },
+  {
+    number: "03",
+    label: "Chapter Three",
+    title: "The Record Grows",
+    body: "A growing archive of rooms built around dancers first.",
+  },
+  {
+    number: "04",
+    label: "Chapter Four",
+    title: "Eran Hersh",
+    body: "The latest chapter closed at Hideaway Chicago. The archive stays open.",
+  },
+] as const;
+
 export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
   const [faqOpen, setFaqOpen] = useState(false);
+  const isArchiveMode = !event || getEventWindowStatus(event) === "past";
+
+  if (isArchiveMode) {
+    return (
+      <section
+        id="untold-event"
+        className="scroll-shell-target border-t border-untold-violet-15 bg-untold-card-solid px-6 py-24"
+      >
+        <div className="container layout-default">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-untold-violet-20 pb-6">
+            <div>
+              <span className="mb-2 block font-mono text-xs uppercase tracking-[0.3em] text-untold-cyan">
+                Untold Story / Archive
+              </span>
+              <h2 className="font-display text-4xl text-white md:text-5xl">
+                FOUR CHAPTERS DEEP
+              </h2>
+            </div>
+            <span className="font-mono text-xs tracking-widest text-untold-cyan">
+              04 / COMPLETE
+            </span>
+          </div>
+
+          <div className="relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid p-6 md:p-10">
+            <div className="pointer-events-none absolute right-0 top-0 h-[22rem] w-[22rem] rounded-full bg-[#22D3EE]/10 blur-[110px]" />
+            <div className="relative grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-untold-cyan">
+                  The record
+                </span>
+                <h3 className="mt-4 max-w-[14ch] font-display text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.86] text-white">
+                  NO FILLER. JUST ROOMS THAT HELD.
+                </h3>
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-white/72 md:text-lg">
+                  Untold Story is the after-dark current inside The Monolith
+                  Project. Four chapters established the room; the next one will
+                  surface when the signal is right.
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="#untold-records"
+                    className="btn-pill-untold btn-pill-wide w-full justify-center sm:w-auto"
+                  >
+                    Enter the Archive <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="#untold-updates"
+                    className="btn-pill-outline w-full justify-center sm:w-auto"
+                  >
+                    Get Untold Updates
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
+                {UNTOLD_ARCHIVE_CHAPTERS.map(chapter => (
+                  <div key={chapter.number} className="bg-black/45 p-5">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#22D3EE]">
+                      {chapter.number} / {chapter.label}
+                    </span>
+                    <h4 className="mt-3 font-display text-xl uppercase leading-[0.92] text-white">
+                      {chapter.title}
+                    </h4>
+                    <p className="mt-3 text-sm leading-relaxed text-white/64">
+                      {chapter.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

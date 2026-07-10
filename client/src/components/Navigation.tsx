@@ -631,19 +631,19 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         icon: "arrow",
                       },
                       {
-                        label: "KIKO FRANCO — JULY 4",
+                        label: "KIKO FRANCO — CHAPTER ONE",
                         href: "/artists/kiko-franco",
                       },
                       { label: "RADIO EPISODES", href: ROUTES.radio },
                     ],
                     feature: {
                       title: "Kiko Franco",
-                      subtitle: "July 4 Headliner — Lakefront Debut",
+                      subtitle: "Chapter One Headliner — Archive",
                       image: "/images/artist-kiko-franco-card.webp",
                       href: "/artists/kiko-franco",
                       ctaText: "View Profile",
                       icon: "arrow",
-                      badge: "JULY 4",
+                      badge: "ARCHIVE",
                     },
                   }}
                 />

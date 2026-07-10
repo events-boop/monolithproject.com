@@ -12,6 +12,7 @@ import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import type { ScheduledEvent } from "@shared/events/types";
 import ConversionCTA from "@/components/ConversionCTA";
 import { getResponsiveImage } from "@/lib/responsiveImages";
+import { getEventWindowStatus } from "@/lib/siteExperience";
 import SplitText from "@/components/ui/SplitText";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
@@ -37,6 +38,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
 
   const headlineLines = ["UNTOLD", "STORY"];
   const featuredHeadline = event?.headline || event?.title;
+  const isArchiveMode = !event || getEventWindowStatus(event) === "past";
 
   return (
     <section
@@ -108,7 +110,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             />
             <div className="flex items-center gap-4 mb-4 sm:mb-6">
               <span className="font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase text-untold-cyan">
-                {event?.episode || "Series 02"}
+                {isArchiveMode ? "Four Chapters / Archive" : event?.episode}
               </span>
               <div className="h-px w-8 sm:w-12 bg-white/20" />
               <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/70">
@@ -127,7 +129,11 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
                 />
               ))}
             </h1>
-            {featuredHeadline ? (
+            {isArchiveMode ? (
+              <p className="max-w-2xl font-display text-[clamp(1.2rem,3vw,2.1rem)] leading-[0.98] uppercase text-[#22D3EE] mb-6 sm:mb-8 drop-shadow-[0_0_18px_rgba(0,0,0,0.75)] hyphens-none break-keep">
+                Four chapters deep. The archive stays open.
+              </p>
+            ) : featuredHeadline ? (
               <p className="max-w-2xl font-display text-[clamp(1.2rem,3vw,2.1rem)] leading-[0.98] uppercase text-[#22D3EE] mb-6 sm:mb-8 drop-shadow-[0_0_18px_rgba(0,0,0,0.75)] hyphens-none break-keep">
                 {featuredHeadline}
               </p>
@@ -137,10 +143,25 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </BrandTranslatorLabel>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 md:gap-6 mb-10 w-full md:w-auto">
-              <ConversionCTA event={event} size="lg" showUrgency={true} />
+              {isArchiveMode ? (
+                <MagneticButton strength={0.28}>
+                  <a
+                    href="#untold-records"
+                    className="btn-pill-untold btn-pill-wide"
+                  >
+                    Enter the Archive
+                    <ArrowRight size={14} />
+                  </a>
+                </MagneticButton>
+              ) : (
+                <ConversionCTA event={event} size="lg" showUrgency={true} />
+              )}
               <MagneticButton strength={0.22}>
-                <a href="#untold-records" className="cta-ghost group">
-                  View Records
+                <a
+                  href={isArchiveMode ? "#untold-updates" : "#untold-records"}
+                  className="cta-ghost group"
+                >
+                  {isArchiveMode ? "Get Untold Updates" : "View Records"}
                   <ArrowRight
                     size={14}
                     className="ml-2 transition-transform group-hover:translate-x-1"
@@ -150,8 +171,9 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </div>
 
             <p className="max-w-xl text-white/80 text-xl leading-relaxed font-light mb-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-              A late-night series built for deeper house music, tighter energy,
-              and a more immersive dancefloor.
+              {isArchiveMode
+                ? "A late-night series built for deeper house music, tighter rooms, and a more immersive dancefloor. The next coordinates arrive when the room is right."
+                : "A late-night series built for deeper house music, tighter energy, and a more immersive dancefloor."}
             </p>
 
             {heroSlides.length > 1 && (

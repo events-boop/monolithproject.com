@@ -37,7 +37,7 @@ export default function Monolith() {
     >
       <SEO
         title="The Monolith | Manifesto & Concept"
-        description="The Monolith represents a Chicago-rooted music movement creating sacred digital and live spaces for electronic music, connecting Chasing Sun(Sets), Untold Story, and Radio."
+        description="The Monolith Project is the Chicago-rooted platform connecting Chasing Sun(Sets), Untold Story, and the spaces still taking form around them."
         absoluteTitle
         canonicalPath="/monolith"
       />
@@ -92,7 +92,7 @@ export default function Monolith() {
                 tone="neutral"
                 className="px-4 py-2 border border-white/10 rounded-full backdrop-blur-md"
               >
-                Core Philosophy
+                Launch Signal / Forthcoming
               </BrandTranslatorLabel>
             </motion.div>
 
@@ -107,8 +107,8 @@ export default function Monolith() {
               </h1>
 
               <p className="max-w-lg text-[10px] md:text-[12px] font-mono uppercase tracking-[0.3em] text-white/60 leading-relaxed">
-                A physical frequency. A digital temple. An aligned collective of
-                electronic music, architecture, and memory.
+                The platform beneath the lakefront, the late-night room, and the
+                chapters still taking form.
               </p>
             </motion.div>
 
@@ -180,7 +180,7 @@ export default function Monolith() {
           </div>
         </section>
 
-        {/* Section 3: The Vision (Togetherness) */}
+        {/* Section 3: The active world */}
         <section
           className="relative py-36 px-6 z-30 border-b border-white/5"
           id="vision"
@@ -192,30 +192,33 @@ export default function Monolith() {
                   03 / Core Expression
                 </span>
                 <h2 className="font-monolith text-4xl lg:text-5xl uppercase tracking-wider text-white leading-tight">
-                  The Vision
+                  The Platform
                 </h2>
               </div>
               <div className="lg:col-span-8 space-y-12">
                 <p className="text-xl md:text-2xl font-light leading-relaxed text-white/70">
-                  The Monolith Project provides the framework for three distinct
-                  expressions to align:
+                  The Monolith Project is not another event series. It is the
+                  platform that gives two active expressions a shared world:
                 </p>
                 <div className="grid gap-8 sm:grid-cols-3">
                   {[
                     {
+                      title: "Monolith Project",
+                      desc: "The parent signal. A platform taking shape around rooms, people, and cultural memory.",
+                      href: "/monolith#manifesto",
+                      label: "Launch Signal",
+                    },
+                    {
                       title: "Chasing Sun(Sets)",
-                      desc: "The open-air expression. Sunlight fading to dusk. Social pacing, outdoor connection, and rhythmic house music.",
+                      desc: "The open-air expression. Lakefront daylight, golden hour, and a season moving from Chapter I into II and III.",
                       href: "/chasing-sunsets",
+                      label: "Daylight",
                     },
                     {
                       title: "Untold Story",
-                      desc: "The after-dark expression. Darker rooms, driving basslines, intimate spaces, and deep late-night focus.",
+                      desc: "The after-dark expression. Four chapters deep, with a tighter room and deeper late-night focus.",
                       href: "/story",
-                    },
-                    {
-                      title: "Sun(Sets) Radio",
-                      desc: "The digital archive. Mixes, guests, and community frequencies keeping the music alive between shows.",
-                      href: "/radio",
+                      label: "After Dark",
                     },
                   ].map(branch => (
                     <div
@@ -232,7 +235,7 @@ export default function Monolith() {
                       </div>
                       <Link href={branch.href} asChild>
                         <a className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-primary hover:text-white transition-colors">
-                          Enter Expression{" "}
+                          {branch.label}{" "}
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </a>
                       </Link>
@@ -256,17 +259,18 @@ export default function Monolith() {
             </h2>
 
             <p className="text-sm md:text-base text-white/60 leading-relaxed font-light max-w-md">
-              Secure early access to upcoming season releases, exclusive audio
-              broadcasts, and collective private table bookings.
+              Join the Lake List for the next Chasing Sun(Sets) release, Untold
+              Story coordinates, and the signals that arrive before the public.
             </p>
 
             <div className="mt-6">
               <MagneticButton strength={0.3}>
-                <Link href="/schedule" asChild>
-                  <a className="btn-pill-monolith px-12 py-5 text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-2">
-                    Enter Schedule <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </Link>
+                <a
+                  href="/go/lakelist"
+                  className="btn-pill-monolith flex items-center justify-center gap-2 px-12 py-5 text-[11px] font-black uppercase tracking-[0.25em]"
+                >
+                  Join the Lake List <ArrowUpRight className="w-4 h-4" />
+                </a>
               </MagneticButton>
             </div>
           </div>

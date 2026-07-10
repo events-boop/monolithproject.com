@@ -51,7 +51,14 @@ const getTierIcon = (iconName: string) => {
 export default function Tickets() {
   usePublicSiteDataVersion();
   const featuredEvent = getExperienceEvent("ticket");
-  const cta = getEventCta(featuredEvent);
+  const cta = featuredEvent
+    ? getEventCta(featuredEvent)
+    : {
+        label: "Join the Lake List",
+        href: "/go/lakelist",
+        tool: "laylo" as const,
+        isExternal: false,
+      };
   const ctaToneClass = getEventCtaToneClass(featuredEvent);
 
   const featuredEventSchema =
@@ -59,15 +66,30 @@ export default function Tickets() {
       ? buildScheduledEventSchema(featuredEvent, "/tickets")
       : null;
   const featuredHeadline =
-    featuredEvent?.headline || featuredEvent?.title || "Featured Event";
+    featuredEvent?.headline ||
+    featuredEvent?.title ||
+    "SUN(SETS) II — Chapter Two";
   const featuredEyebrow =
-    featuredEvent?.subtitle || getEventEyebrow(featuredEvent);
-  const featuredVenue = getEventVenueLabel(featuredEvent);
+    featuredEvent?.subtitle ||
+    (featuredEvent
+      ? getEventEyebrow(featuredEvent)
+      : "Chasing Sun(Sets) / First Access");
+  const featuredVenue = featuredEvent
+    ? getEventVenueLabel(featuredEvent)
+    : "Castaways, Chicago";
   const featuredPoster =
-    featuredEvent?.image || "/images/css-2026-poster.jpg";
+    featuredEvent?.image || "/images/chasing-sunsets-premium.webp";
   const showTicketFunnel = Boolean(
     featuredEvent?.activeFunnels?.length && cta.tool !== "posh"
   );
+  const isFirstAccess = featuredEvent?.status !== "on-sale";
+  const accessHeading = isFirstAccess ? "NEXT SIGNAL" : "TICKETS LIVE";
+  const accessStatus = isFirstAccess
+    ? `${featuredEvent?.episode || "NEXT CHAPTER"} / FIRST ACCESS OPEN`
+    : `${featuredEvent?.episode || "CURRENT RELEASE"} / TICKETS LIVE`;
+  const accessCopy = featuredEvent
+    ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
+    : "Join the Lake List for the next release signal, artist reveal, and ticket window before the public.";
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -105,26 +127,27 @@ export default function Tickets() {
     }
   };
 
-  // "Tickets coming soon" fallback — shown when OUTBOUND_TICKETS_CSS_JUL04_URL
-  // (or NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL) is not yet set in the environment.
+  // First-access fallback for the active season while the next public
+  // checkout is still gated.
   if (comingSoonKey) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <SEO
-          title="SUN(SETS) I — July 4 Tickets | Sunsets.vip"
-          description="Official tickets for SUN(SETS) July 4 at Castaways Beach Club. Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar. Tickets on sale now via Posh."
+          title="SUN(SETS) II First Access | Chasing Sun(Sets)"
+          description="SUN(SETS) II returns August 22 at Castaways. Join the Lake List for the artist reveal, first ticket window, and table access before the public release."
         />
         <Navigation />
         <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-[#dfc27a]">
-            SUN(SETS) — JULY 4, 2026
+            SUN(SETS) II — AUGUST 22, 2026
           </p>
           <h1 className="text-3xl font-black tracking-tight text-white">
-            SUN(SETS) I — JULY 4 TICKETS
+            THE NEXT SIGNAL
           </h1>
           <p className="text-sm leading-relaxed text-stone-400">
-            Tickets are on sale now via Posh. Join the Lake List for first
-            access to SUN(SETS) II + III and the limited 2026 Season Pass.
+            Chapter One is complete. Join the Lake List for first access to
+            SUN(SETS) II + III, artist reveals, and the limited 2026 Season
+            Pass.
           </p>
           <Link
             href="/go/waitlist/chasing-sunsets"
@@ -144,9 +167,9 @@ export default function Tickets() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
-        title="SUN(SETS) I | July 4 Tickets — Castaways Chicago"
-        description="Official Posh tickets for SUN(SETS) July 4 at Castaways Beach Club, Chicago. Autograf, Kiko Franco, Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, Nomar."
-        image="/sunsets_poster.jpg"
+        title={`${featuredHeadline} | ${isFirstAccess ? "First Access" : "Tickets"} — Chasing Sun(Sets)`}
+        description={accessCopy}
+        image={featuredPoster}
         absoluteTitle
       />
       {featuredEventSchema ? <JsonLd data={featuredEventSchema} /> : null}
@@ -167,16 +190,15 @@ export default function Tickets() {
                 {featuredEyebrow}
               </span>
               <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
-                FIRST ACCESS
+                {accessHeading}
               </h1>
               <p className="text-white/80 text-lg max-w-lg mb-4">
-                July 4 is moving through first access before the public ticket
-                drop. Join the list to get the earliest release signal.
+                {accessCopy}
               </p>
               <div className="flex items-center gap-3">
                 <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
                 <span className="font-mono text-xs text-primary tracking-widest uppercase">
-                  First access open — Release timing follows
+                  {accessStatus}
                 </span>
               </div>
               <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
@@ -204,7 +226,7 @@ export default function Tickets() {
                 </MagneticButton>
                 <MagneticButton strength={0.22}>
                   <Link href="/schedule" asChild>
-                    <a className="cta-ghost">{CTA_LABELS.schedule}</a>
+                    <a className="cta-ghost">View All Season Dates</a>
                   </Link>
                 </MagneticButton>
               </div>

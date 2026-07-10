@@ -62,13 +62,13 @@ export default function UntoldStory() {
         <UntoldContent event={scheduledEvent} />
         <UntoldContrast />
 
-        {/* Episode Gallery — Season III Highlights */}
+        {/* Archive fragments — the visual record across four chapters */}
         <section className="relative z-20 py-24 px-6 border-t border-white/10">
           <div className="layout-default">
             <EpisodeGallery
               series="untold-story"
-              season="Season III"
-              episode="Episode II"
+              season="Four Chapters"
+              episode="Archive"
               title="THE RECORD"
               accentColor="#8B5CF6"
               images={[

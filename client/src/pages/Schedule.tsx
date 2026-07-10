@@ -51,14 +51,14 @@ const seriesLabels: Record<string, string> = {
 const seriesDefaultImage: Record<string, string> = {
   "chasing-sunsets": "/images/chasing-sunsets-premium.webp",
   "untold-story": "/images/untold-story-juany-deron-v2.webp",
-  "monolith-project": "/images/artist-autograf.webp",
+  "monolith-project": "/images/monolith-three-worlds-banner.jpg",
 };
 
 function getStatusLabel(status: ScheduledEvent["status"]) {
   if (status === "on-sale") return "ON SALE";
   if (status === "coming-soon") return "COMING SOON";
   if (status === "sold-out") return "SOLD OUT";
-  return "PAST";
+  return "ARCHIVE";
 }
 
 function getEventSummary(event: ScheduledEvent) {
@@ -114,6 +114,14 @@ END:VCALENDAR`;
 export default function Schedule() {
   usePublicSiteDataVersion();
   const scheduleEvents = getScheduledEvents();
+  const nextSignal = scheduleEvents[0];
+  const nextSignalTitle =
+    nextSignal?.headline || nextSignal?.title || "SUN(SETS) II — Chapter Two";
+  const nextSignalDate = nextSignal?.date || "August 22, 2026";
+  const nextSignalVenue = nextSignal
+    ? `${nextSignal.venue}, ${nextSignal.location}`
+    : "Castaways, Chicago";
+  const nextSignalStatus = getStatusLabel(nextSignal?.status || "coming-soon");
   const [expandedId, setExpandedId] = useState<string | null>(
     scheduleEvents[0]?.id || null
   );
@@ -207,7 +215,7 @@ export default function Schedule() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
         title="Upcoming Shows | The Monolith Project"
-        description="Browse upcoming Chicago house music events from The Monolith Project, including Chasing Sun(Sets), Untold Story, and artist-led radio."
+        description="The current Monolith Project calendar: Chasing Sun(Sets) chapters, Untold Story archive signals, and forthcoming platform moments."
         absoluteTitle
         canonicalPath="/schedule"
         schemaData={buildScheduleSchema(scheduleEvents)}
@@ -254,22 +262,59 @@ export default function Schedule() {
       >
         <div className="container mx-auto px-4 md:px-8 max-w-[96%]">
           {/* Header & Filters */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-28 gap-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-10">
             <div className="relative">
               <span className="section-kicker absolute -top-12 left-2 text-primary/60">
-                Chicago Music Events
+                The Monolith Project / Season 2026
               </span>
               <h1 className="section-display-title max-w-[11ch] text-balance text-foreground">
-                Upcoming Shows
+                The Current Calendar
               </h1>
               <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">
-                Chicago house music events from The Monolith Project, Chasing
-                Sun(Sets), and Untold Story.
+                The next lakefront chapter, the after-dark record, and the
+                platform moments still taking shape.
               </p>
             </div>
 
-            {/* Month Filters - Glassmorphic Architectural Style */}
+            {/* Current signal + month filters */}
             <div className="flex w-full max-w-full flex-col items-start gap-4 md:w-auto md:items-end">
+              <div className="w-full border border-white/12 bg-white/[0.04] p-5 shadow-[0_18px_48px_rgba(0,0,0,0.26)] backdrop-blur-xl md:min-w-[24rem] md:p-6">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+                    Next signal
+                  </span>
+                  <span className="border border-white/14 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/70">
+                    {nextSignalStatus}
+                  </span>
+                </div>
+                <h2 className="mt-4 max-w-[18ch] font-display text-3xl uppercase leading-[0.9] text-white md:text-4xl">
+                  {nextSignalTitle}
+                </h2>
+                <div className="mt-5 grid grid-cols-2 gap-4 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/68">
+                  <div>
+                    <span className="block text-white/38">Date</span>
+                    <span className="mt-1 block text-white">
+                      {nextSignalDate}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-white/38">Location</span>
+                    <span className="mt-1 block text-white">
+                      {nextSignalVenue}
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/sunsets"
+                  className="btn-pill-sunsets mt-5 w-full justify-center"
+                >
+                  {nextSignal && isTicketOnSale(nextSignal)
+                    ? "Open Ticketing"
+                    : "Join the Lake List"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
               <Link
                 href="/newsletter"
                 onClick={trackScheduleUpdates}

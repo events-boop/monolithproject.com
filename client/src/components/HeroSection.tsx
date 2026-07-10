@@ -32,6 +32,8 @@ interface SlideBannerInfo {
   eyebrow?: string;
   venueLabel?: string;
   dateLabel?: string;
+  statusLabel?: string;
+  fallbackAction?: { href: string; label: string };
 }
 
 const HERO_SLIDES: Slide[] = [
@@ -52,7 +54,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroEranIntlImage.sources,
     sizes: heroEranIntlImage.sizes,
     alt: "Eran Hersh",
-    caption: "UNTOLD STORY IV | ERAN HERSH",
+    caption: "UNTOLD STORY IV / ARCHIVE",
   },
   {
     type: "image",
@@ -60,7 +62,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroEranPortraitImage.sources,
     sizes: heroEranPortraitImage.sizes,
     alt: "Eran Hersh",
-    caption: "UNTOLD STORY IV PORTRAIT",
+    caption: "UNTOLD STORY IV / CHAPTER FOUR",
   },
   {
     type: "image",
@@ -76,7 +78,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroSunsetsImage.sources,
     sizes: heroSunsetsImage.sizes,
     alt: "Chasing Sun(Sets)",
-    caption: "SUMMER '26 | CHASING SUN(SETS)",
+    caption: "SUN(SETS) II | AUGUST 22",
   },
   {
     type: "image",
@@ -84,50 +86,73 @@ const HERO_SLIDES: Slide[] = [
     sources: heroAutografImage.sources,
     sizes: heroAutografImage.sizes,
     alt: "Chasing Sun(Sets) July 4th",
-    caption: "NEW SEASON DROP | JULY 4TH ARCHIVE",
+    caption: "SUN(SETS) I | CHAPTER ONE ARCHIVE",
   },
   {
     type: "image",
     src: heroLazareImage.src,
     sources: heroLazareImage.sources,
     sizes: heroLazareImage.sizes,
-    alt: "Lazare Sabry Event",
-    caption: "SPECIAL EVENT | LAZARE SABRY",
+    alt: "The Monolith Project launch signal",
+    caption: "THE MONOLITH PROJECT | LAUNCH SIGNAL",
   },
 ];
 
 /** Maps each hero slide to the banner state it should drive. */
 const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
-  { fallbackToFeaturedEvent: true, label: "THE MONOLITH PROJECT" }, // 0: video
-  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 1: eran hersh international
-  { eventId: "us-s3e3", label: "UNTOLD STORY IV" }, // 2: eran hersh portrait
+  {
+    fallbackToFeaturedEvent: true,
+    label: "SUN(SETS) II",
+    eyebrow: "NEXT CHAPTER / FIRST ACCESS",
+    venueLabel: "CASTAWAYS / CHICAGO",
+    dateLabel: "AUGUST 22 / 2026",
+    statusLabel: "FIRST ACCESS",
+    fallbackAction: { href: "/go/lakelist", label: "Join the Lake List" },
+  }, // 0: current season signal
+  {
+    label: "UNTOLD STORY IV",
+    eyebrow: "CHAPTER FOUR / ARCHIVE",
+    venueLabel: "HIDEAWAY / CHICAGO",
+    dateLabel: "MAY 16 / 2026",
+    statusLabel: "ARCHIVE",
+    fallbackAction: { href: "/story", label: "Explore Untold Story" },
+  }, // 1: eran hersh international
+  {
+    label: "UNTOLD STORY IV",
+    eyebrow: "CHAPTER FOUR / ARCHIVE",
+    venueLabel: "HIDEAWAY / CHICAGO",
+    dateLabel: "MAY 16 / 2026",
+    statusLabel: "ARCHIVE",
+    fallbackAction: { href: "/story", label: "Explore Untold Story" },
+  }, // 2: eran hersh portrait
   {
     label: "UNTOLD STORY",
-    eyebrow: "PAST SHOW",
-    venueLabel: "INDOOR SERIES",
-    dateLabel: "UNTOLD STORY ARCHIVE",
-  }, // 3: untold story
-  { eventId: "css-jul04", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / july 4th
-  {
-    eventId: "css-jul04",
-    label: "CHASING SUN(SETS)",
-    eyebrow: "NEW SEASON DROP",
-    venueLabel: "JULY 4TH EVENT",
-    dateLabel: "CHICAGO",
-  }, // 5: chansing sunsets new season drop
-  {
-    label: "LAZARE SABRY",
-    eyebrow: "SPECIAL EVENT",
+    eyebrow: "FOUR CHAPTERS / AFTER DARK",
     venueLabel: "CHICAGO",
-    dateLabel: "COMING SOON",
-  }, // 6: lazare sabry
+    dateLabel: "UNTOLD STORY ARCHIVE",
+    statusLabel: "ARCHIVE",
+    fallbackAction: { href: "/story", label: "Explore Untold Story" },
+  }, // 3: untold story
+  { eventId: "css-aug22", label: "CHASING SUN(SETS)" }, // 4: chasing sunsets / chapter two
+  {
+    label: "SUN(SETS) I",
+    eyebrow: "CHAPTER ONE / ARCHIVE",
+    venueLabel: "CASTAWAYS / CHICAGO",
+    dateLabel: "JULY 4 / 2026",
+    statusLabel: "ARCHIVE",
+    fallbackAction: {
+      href: "/chasing-sunsets/sunsets-i-2026",
+      label: "Enter Chapter One",
+    },
+  }, // 5: chapter one archive
+  { eventId: "css-oct10", label: "THE MONOLITH PROJECT" }, // 6: parent-brand launch
 ];
 
 const HERO_TITLE = "MONOLITH";
-const HERO_PILLARS = "Chicago House Music / Events / Radio";
-const HERO_TAGLINE = "Togetherness is the frequency.";
+const HERO_PILLARS = "Chicago / Daylight / After Dark";
+const HERO_TAGLINE = "One platform. Two currents.";
 const HERO_SUPPORTING_LINE =
-  "The Monolith Project produces Chasing Sun(Sets), Untold Story, and artist-led radio in Chicago.";
+  "Chasing Sun(Sets) moves with the lake. Untold Story takes the night deeper. The Monolith Project is what connects them.";
 
 function toSystemText(value?: string | null) {
   return (value || "")
@@ -147,12 +172,12 @@ function getEventSignalLabel(event?: any) {
   return "FEATURED SHOW";
 }
 
-function getEventStatusLabel(status?: string) {
+function getEventStatusLabel(status?: string, fallback = "FEATURED") {
   if (status === "on-sale") return "ON SALE";
   if (status === "coming-soon") return "COMING SOON";
   if (status === "sold-out") return "SOLD OUT";
   if (status === "past") return "PAST";
-  return "FEATURED";
+  return fallback;
 }
 
 function getSystemKicker(
@@ -167,13 +192,10 @@ function getSystemKicker(
   return toSystemText(eyebrow || slideInfo.eyebrow || "FEATURED SHOW");
 }
 
-function getSystemMeta(dateLabel: string, venueLabel?: string) {
-  const date = toSystemText(dateLabel);
-  const venue = toSystemText(venueLabel)
+function getSystemVenue(venueLabel?: string) {
+  return toSystemText(venueLabel)
     .replace(/,\s*CHICAGO,\s*IL/g, "")
     .replace(/^VENUE REVEAL SOON$/, "VENUE LOCK PENDING");
-
-  return [date, venue].filter(Boolean).join(" / ");
 }
 
 function HomeHeroUtilityRow() {
@@ -185,9 +207,9 @@ function HomeHeroUtilityRow() {
         <span>Chicago</span>
       </div>
       <div className="flex shrink-0 items-center gap-3">
-        <span>Events</span>
+        <span>Daylight</span>
         <span className="h-1 w-1 rounded-full bg-[#E8B86D]" />
-        <span>Radio</span>
+        <span>After Dark</span>
       </div>
     </div>
   );
@@ -221,8 +243,19 @@ function FloatingEventCard({
   const countdown = useCountdown(isLive ? eventStart : null);
   const showCountdown = isLive && eventStart && !countdown.isExpired;
   const systemKicker = getSystemKicker(event, eyebrow, slideInfo);
-  const systemMeta = getSystemMeta(dateLabel, venueLabel);
-  const eventStatusLabel = getEventStatusLabel(event?.status);
+  const systemDate = toSystemText(dateLabel);
+  const systemVenue = getSystemVenue(venueLabel) || "CHICAGO";
+  const eventStatusLabel = getEventStatusLabel(
+    event?.status,
+    slideInfo.statusLabel
+  );
+  const cardSignal =
+    `${event?.series || ""} ${headline} ${systemKicker}`.toUpperCase();
+  const cardTone = cardSignal.includes("UNTOLD")
+    ? "untold"
+    : cardSignal.includes("SUN(SETS)") || cardSignal.includes("CHASING")
+      ? "sunsets"
+      : "monolith";
   const shortDescription =
     event?.description ||
     event?.experienceIntro ||
@@ -234,8 +267,15 @@ function FloatingEventCard({
     <div
       key={headline}
       data-home-hero-card="true"
-      className="group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500"
+      data-card-tone={cardTone}
+      className="hero-event-dossier group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500"
     >
+      <div aria-hidden="true" className="hero-card-etch">
+        <span className="hero-card-etch-corner hero-card-etch-corner-nw" />
+        <span className="hero-card-etch-corner hero-card-etch-corner-ne" />
+        <span className="hero-card-etch-corner hero-card-etch-corner-sw" />
+        <span className="hero-card-etch-corner hero-card-etch-corner-se" />
+      </div>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-8 top-8 z-0 text-[4.25rem] font-black uppercase leading-none tracking-[0] text-white/[0.025]"
@@ -244,13 +284,7 @@ function FloatingEventCard({
       </div>
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 transition-transform duration-[2s] group-hover/card:scale-105 opacity-80"
-          style={{
-            background:
-              "radial-gradient(circle at 18% 18%, rgba(164, 89, 44, 0.12), transparent 52%), radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.06), transparent 54%)",
-          }}
-        />
+        <div className="hero-card-lightfield absolute inset-0 opacity-80 transition-transform duration-[2s] group-hover/card:scale-105" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-white/[0.03]" />
       </div>
 
@@ -258,7 +292,8 @@ function FloatingEventCard({
       <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:gap-5 sm:p-8 md:p-10">
         {/* Status Badge */}
         <div className="flex items-center gap-2 self-end sm:absolute sm:right-6 sm:top-6">
-          <span className="event-system-chip rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-white/76 backdrop-blur-md">
+          <span className="event-system-chip hero-card-status rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-white/76 backdrop-blur-md">
+            <span aria-hidden="true" className="hero-card-status-dot" />
             {eventStatusLabel}
           </span>
         </div>
@@ -279,9 +314,20 @@ function FloatingEventCard({
           >
             {toSystemText(headline)}
           </h3>
-          <span className="event-system-meta max-w-[34ch] border-t border-white/10 pt-3 text-white/72">
-            {systemMeta}
-          </span>
+          <dl className="hero-card-spec-grid mt-1 grid w-full grid-cols-2 border-y border-white/10">
+            <div className="min-w-0 py-3 pr-3">
+              <dt className="event-system-chip text-white/38">Date</dt>
+              <dd className="event-system-meta mt-1.5 text-white/76">
+                {systemDate}
+              </dd>
+            </div>
+            <div className="min-w-0 border-l border-white/10 py-3 pl-3">
+              <dt className="event-system-chip text-white/38">Location</dt>
+              <dd className="event-system-meta mt-1.5 text-white/76">
+                {systemVenue}
+              </dd>
+            </div>
+          </dl>
           {event?.time ? (
             <span className="event-system-chip text-white/54">
               {toSystemText(event.time)}
@@ -315,7 +361,16 @@ function FloatingEventCard({
             <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
-              <a className="btn-pill-monolith btn-pill-wide">
+              <a
+                className={cn(
+                  "btn-pill-wide",
+                  cardTone === "untold"
+                    ? "btn-pill-untold"
+                    : cardTone === "sunsets"
+                      ? "btn-pill-sunsets"
+                      : "btn-pill-monolith"
+                )}
+              >
                 {contextualFallbackAction.label}
               </a>
             </Link>
@@ -379,12 +434,9 @@ export default function HeroSection() {
   const isJuly4thEvent =
     headline.toUpperCase().includes("JULY 4") ||
     headline.toUpperCase().includes("INDEPENDENCE");
-  const contextualFallbackAction =
-    !bannerEvent && activeSlide === 3
-      ? { href: "/story", label: "Explore Untold Story" }
-      : !bannerEvent && activeSlide === 5
-        ? { href: "/archive", label: "See The Archive" }
-        : undefined;
+  const contextualFallbackAction = !bannerEvent
+    ? slideInfo.fallbackAction
+    : undefined;
 
   const structuredData = featuredEvent ? (
     <JsonLd data={buildScheduledEventSchema(featuredEvent, "/")} />
@@ -455,16 +507,16 @@ export default function HeroSection() {
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link
-                  href="/tickets"
+                  href="/go/lakelist"
                   className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/75 bg-white px-8 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-[#F8FAF8] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[15rem]"
                 >
-                  Tickets
+                  Join the Lake List
                 </Link>
                 <Link
                   href="/sunsets"
                   className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/26 bg-white/[0.08] px-8 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/48 hover:bg-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/55 sm:w-auto sm:min-w-[15rem]"
                 >
-                  Sun(Sets) Hub
+                  Explore Sun(Sets)
                 </Link>
               </div>
             </div>
