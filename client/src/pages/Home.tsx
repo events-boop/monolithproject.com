@@ -143,7 +143,10 @@ export default function Home() {
             </div>
 
             <div className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-              <div className="bg-black/55 p-4 backdrop-blur-md">
+              <div
+                className="chapter-etch-cell bg-black/55 p-4 backdrop-blur-md"
+                data-chapter-state="archive"
+              >
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
                   01 / Archive
                 </span>
@@ -154,7 +157,10 @@ export default function Home() {
                   Chapter One complete.
                 </p>
               </div>
-              <div className="bg-[#2b1b10]/72 p-4 backdrop-blur-md">
+              <div
+                className="chapter-etch-cell bg-[#2b1b10]/72 p-4 backdrop-blur-md"
+                data-chapter-state="next"
+              >
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D]">
                   02 / Next
                 </span>
@@ -165,7 +171,10 @@ export default function Home() {
                   Artist reveal incoming.
                 </p>
               </div>
-              <div className="bg-black/55 p-4 backdrop-blur-md">
+              <div
+                className="chapter-etch-cell bg-black/55 p-4 backdrop-blur-md"
+                data-chapter-state="finale"
+              >
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
                   03 / Finale
                 </span>
@@ -193,7 +202,11 @@ export default function Home() {
                 </h2>
               </div>
               <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-3">
-                <div className="bg-black/45 p-5 backdrop-blur-md">
+                <div
+                  className="brand-world-frame bg-black/45 p-5 backdrop-blur-md"
+                  data-world-tone="monolith"
+                >
+                  <span aria-hidden="true" className="world-frame-sigil" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/48">
                     The parent
                   </span>
@@ -208,7 +221,11 @@ export default function Home() {
                     Launch signal / forthcoming
                   </p>
                 </div>
-                <div className="bg-[#2b1b10]/38 p-5 backdrop-blur-md">
+                <div
+                  className="brand-world-frame bg-[#2b1b10]/38 p-5 backdrop-blur-md"
+                  data-world-tone="sunsets"
+                >
+                  <span aria-hidden="true" className="world-frame-sigil" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D]">
                     Daylight
                   </span>
@@ -223,7 +240,11 @@ export default function Home() {
                     II next / III closes the season
                   </p>
                 </div>
-                <div className="bg-[#07191d]/48 p-5 backdrop-blur-md">
+                <div
+                  className="brand-world-frame bg-[#07191d]/48 p-5 backdrop-blur-md"
+                  data-world-tone="untold"
+                >
+                  <span aria-hidden="true" className="world-frame-sigil" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#B9F6FF]">
                     After dark
                   </span>
@@ -282,7 +303,10 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="border border-white/15 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:border-white/30 transition-all duration-500">
+              <div
+                className="signal-etched-frame rounded-xl border border-white/15 bg-white/[0.04] p-6 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-2xl transition-all duration-500 hover:border-white/30 md:p-8"
+                data-signal-tone="sunsets"
+              >
                 <span className="section-kicker block text-[#E8B86D]">
                   Next on the lake
                 </span>
@@ -374,7 +398,10 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="border border-white/15 bg-white/[0.04] backdrop-blur-2xl p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(34,211,238,0.03)] hover:border-[#22d3ee]/40 transition-all duration-500">
+                <div
+                  className="signal-etched-frame rounded-xl border border-white/15 bg-white/[0.04] p-6 shadow-[0_0_40px_rgba(34,211,238,0.03)] backdrop-blur-2xl transition-all duration-500 hover:border-[#22d3ee]/40 md:p-8"
+                  data-signal-tone="untold"
+                >
                   {untoldIsPast ? (
                     <p className="border-b border-white/10 pb-5 text-sm leading-relaxed text-white/82">
                       Four chapters now live in the record. Latest chapter:{" "}
@@ -456,7 +483,10 @@ export default function Home() {
                     coordinates take shape.
                   </p>
                 </div>
-                <div className="border border-white/15 bg-white/[0.04] p-6 shadow-[0_0_40px_rgba(34,211,238,0.03)] backdrop-blur-2xl md:p-8">
+                <div
+                  className="signal-etched-frame border border-white/15 bg-white/[0.04] p-6 shadow-[0_0_40px_rgba(34,211,238,0.03)] backdrop-blur-2xl md:p-8"
+                  data-signal-tone="untold"
+                >
                   <p className="text-sm leading-relaxed text-white/82">
                     The fourth chapter is complete. Enter the archive for the
                     rooms, artists, and stories that built the record.
@@ -475,11 +505,16 @@ export default function Home() {
 
         <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-12 md:py-16">
           <div className="container layout-wide px-6">
-            <img
-              src="/images/monolith-three-worlds-banner.jpg"
-              alt="Monolith Project - Three Worlds. One Purpose."
-              className="w-full h-auto rounded-xl border border-white/15 shadow-[0_0_40px_rgba(232,184,109,0.1)]"
-            />
+            <div
+              className="signal-etched-frame rounded-xl border border-white/15 p-1 shadow-[0_0_40px_rgba(232,184,109,0.1)]"
+              data-signal-tone="monolith"
+            >
+              <img
+                src="/images/monolith-three-worlds-banner.jpg"
+                alt="Monolith Project - Three Worlds. One Purpose."
+                className="h-auto w-full rounded-[0.6rem]"
+              />
+            </div>
           </div>
         </section>
 
@@ -506,10 +541,14 @@ export default function Home() {
             </Suspense>
           </ViewportLazy>
           <SectionDivider
+            id="schedule-divider"
             number="01"
             label="Full Schedule"
             dark={false}
             glow={SUN_SETS_GOLD}
+            etched
+            etchTone="sunsets"
+            watermark="CHASING SUN(SETS)"
           />
           <ViewportLazy
             minHeightClassName="min-h-[780px]"
@@ -550,8 +589,10 @@ export default function Home() {
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               <Link
                 href="/monolith"
-                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                data-world-tone="monolith"
               >
+                <span aria-hidden="true" className="world-frame-sigil" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
                   The Parent
                 </p>
@@ -568,8 +609,10 @@ export default function Home() {
               </Link>
               <Link
                 href="/chasing-sunsets"
-                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                data-world-tone="sunsets"
               >
+                <span aria-hidden="true" className="world-frame-sigil" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">
                   Open Air
                 </p>
@@ -583,8 +626,10 @@ export default function Home() {
               </Link>
               <Link
                 href="/story"
-                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                data-world-tone="untold"
               >
+                <span aria-hidden="true" className="world-frame-sigil" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
                   After Dark
                 </p>
@@ -603,8 +648,10 @@ export default function Home() {
               </Link>
               <Link
                 href="/partners"
-                className="group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+                data-world-tone="monolith"
               >
+                <span aria-hidden="true" className="world-frame-sigil" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
                   Collaborations
                 </p>
@@ -626,6 +673,9 @@ export default function Home() {
             number="02"
             label="Past Nights"
             glow={`${LIVE_RED}14`}
+            etched
+            etchTone="archive"
+            watermark="MONOLITH PROJECT"
           />
           <ViewportLazy
             minHeightClassName="min-h-[620px]"
@@ -642,10 +692,14 @@ export default function Home() {
 
         <div id="showcase" className="bg-black relative z-10">
           <SectionDivider
+            id="lineup-divider"
             number="03"
             label="Lineup"
             glow={MONOLITH_ORANGE}
             dense
+            etched
+            etchTone="monolith"
+            watermark="ARTISTS / LINEUP"
           />
           <ViewportLazy
             minHeightClassName="min-h-[420px]"

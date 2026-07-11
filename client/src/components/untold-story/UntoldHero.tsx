@@ -43,7 +43,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
   return (
     <section
       ref={heroRef}
-      className="relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]"
+      className="untold-etched-hero relative screen-shell-stable flex flex-col justify-center sm:justify-end pb-16 sm:pb-32 pt-24 sm:pt-0 hero-shell-start px-6 overflow-hidden min-h-[100dvh]"
     >
       {/* Full Screen Background Rotator */}
       <div className="absolute inset-0 z-0">
@@ -119,7 +119,7 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
             </div>
 
             {/* Visible Title */}
-            <h1 className="font-display text-[clamp(3.5rem,15vw,11rem)] leading-[0.85] uppercase text-white mb-6 sm:mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+            <h1 className="untold-hero-title font-display text-[clamp(3.5rem,12vw,10.25rem)] leading-[0.85] uppercase text-white mb-6 sm:mb-8 tracking-tight-display drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
               {headlineLines.map((line, i) => (
                 <SplitText
                   key={i}

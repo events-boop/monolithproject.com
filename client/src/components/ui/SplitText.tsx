@@ -29,7 +29,7 @@ export default function SplitText({
     <span
       ref={ref}
       className={cn("inline-block overflow-hidden relative", className)}
-      style={{ whiteSpace: preserveWhitespace ? "pre-wrap" : "normal" }}
+      style={{ whiteSpace: preserveWhitespace ? "pre" : "normal" }}
     >
       {characters.map((char, index) => (
         <motion.span

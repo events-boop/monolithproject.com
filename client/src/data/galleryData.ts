@@ -1,3 +1,5 @@
+import { SUNSETS_JULY4_COMPLETE_LABEL } from "@/lib/sunsetsTicketing";
+
 export type GalleryImageItem = {
   id: string;
   kind: "image";
@@ -472,7 +474,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
   "chasing-sunsets-sunsets-i-2026": {
     slug: "chasing-sunsets-sunsets-i-2026",
     title: "Chasing Sun(Sets)",
-    subtitle: "SUN(SETS) I — Chapter One",
+    subtitle: SUNSETS_JULY4_COMPLETE_LABEL,
     description:
       "July 4, 2026 at Castaways Beach Club. 2,800 on the lakefront — heat, rain, and the moment the purpose became clear. The full gallery and recap film are in the edit now.",
     accentColor: "#E8B86D",

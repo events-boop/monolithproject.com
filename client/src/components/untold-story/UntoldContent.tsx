@@ -64,8 +64,12 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
             </span>
           </div>
 
-          <div className="relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid p-6 md:p-10">
+          <div className="untold-signal-frame relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid p-6 md:p-10">
             <div className="pointer-events-none absolute right-0 top-0 h-[22rem] w-[22rem] rounded-full bg-[#22D3EE]/10 blur-[110px]" />
+            <div className="untold-signal-registry" aria-hidden="true">
+              <span>Room Record / Chicago</span>
+              <span>UT–04 / Archive</span>
+            </div>
             <div className="relative grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-untold-cyan">
@@ -97,7 +101,11 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
 
               <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2">
                 {UNTOLD_ARCHIVE_CHAPTERS.map(chapter => (
-                  <div key={chapter.number} className="bg-black/45 p-5">
+                  <div
+                    key={chapter.number}
+                    className="untold-chapter-etch bg-black/45 p-5"
+                    data-chapter-number={chapter.number}
+                  >
                     <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#22D3EE]">
                       {chapter.number} / {chapter.label}
                     </span>
@@ -143,7 +151,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid"
+          className="untold-signal-frame relative overflow-hidden border border-untold-violet-30 bg-untold-deep-solid"
         >
           {/* Glow accent */}
           <div className="absolute top-0 right-0 w-[300px] h-[300px] opacity-10 blur-[100px] pointer-events-none bg-[#22D3EE]" />

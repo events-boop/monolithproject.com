@@ -3,6 +3,8 @@ import type { TicketTier } from "./types";
 export const SUNSETS_JULY4_EVENT_SLUG = "chasing-sunsets-july-4-2026";
 export const SUNSETS_JULY4_EVENT_DATE = "2026-07-04";
 export const SUNSETS_JULY4_EVENT_TITLE = "SUN(SETS) I — July 4th at Castaways";
+export const SUNSETS_JULY4_COMPLETE_LABEL =
+  "SUN(SETS) I · July 4 · Autograf x Kiko Franco — Complete";
 export const SUNSETS_JULY4_EVENT_TIME = "12:00 PM — 10:00 PM";
 export const SUNSETS_JULY4_EVENT_VENUE = "Castaways Beach Club";
 export const SUNSETS_JULY4_EVENT_LOCATION = "North Avenue Beach, Chicago";

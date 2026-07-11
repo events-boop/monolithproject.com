@@ -13,6 +13,7 @@ import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import ResponsiveImage from "./ResponsiveImage";
+import ScheduleSeriesKey from "./ScheduleSeriesKey";
 import { cn } from "@/lib/utils";
 import {
   getSeriesColor,
@@ -235,6 +236,8 @@ export default function ScheduleSection() {
           </div>
         </div>
 
+        <ScheduleSeriesKey className="mb-8 md:mb-10" />
+
         {/* List Header - HUD Style (Hidden on Mobile) */}
         <div className="hidden grid-cols-12 gap-4 pb-4 pt-4 font-mono text-[10px] font-black uppercase tracking-[0.25em] text-white/55 lg:grid">
           <div className="col-span-2 pl-4">Date / Time</div>
@@ -271,10 +274,11 @@ export default function ScheduleSection() {
               return (
                 <motion.div
                   key={event.id}
-                  className="group relative border-b border-white/10 last:border-b-0"
+                  className="schedule-etched-row group relative border-b border-white/10 last:border-b-0"
+                  data-schedule-tone={event.series}
                 >
                   <div
-                    className={`absolute bottom-0 left-0 top-0 w-[4px] transition-opacity duration-500 ${event.featured || isExpanded ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                    className={`absolute bottom-0 left-0 top-0 w-[4px] transition-opacity duration-500 ${event.featured || isExpanded ? "opacity-100" : "opacity-40 group-hover:opacity-100"}`}
                     style={{ backgroundColor: seriesAccent }}
                   />
 
@@ -560,9 +564,7 @@ export default function ScheduleSection() {
                                       attributedHref
                                     );
 
-                                    if (
-                                      attributedHref !== event.ticketUrl
-                                    ) {
+                                    if (attributedHref !== event.ticketUrl) {
                                       e.preventDefault();
                                       window.open(
                                         attributedHref,

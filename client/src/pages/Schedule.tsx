@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
 import SocialGrid from "@/components/SocialGrid";
 import SEO from "@/components/SEO";
 import { buildScheduleSchema } from "@/lib/schema";
@@ -278,7 +279,10 @@ export default function Schedule() {
 
             {/* Current signal + month filters */}
             <div className="flex w-full max-w-full flex-col items-start gap-4 md:w-auto md:items-end">
-              <div className="w-full border border-white/12 bg-white/[0.04] p-5 shadow-[0_18px_48px_rgba(0,0,0,0.26)] backdrop-blur-xl md:min-w-[24rem] md:p-6">
+              <div
+                className="signal-etched-frame w-full border border-white/12 bg-white/[0.04] p-5 shadow-[0_18px_48px_rgba(0,0,0,0.26)] backdrop-blur-xl md:min-w-[24rem] md:p-6"
+                data-signal-tone={nextSignal?.series || "chasing-sunsets"}
+              >
                 <div className="flex items-center justify-between gap-4">
                   <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
                     Next signal
@@ -377,6 +381,8 @@ export default function Schedule() {
             </div>
           </div>
 
+          <ScheduleSeriesKey className="mb-10 md:mb-12" />
+
           <EntityBoostStrip
             tone="light"
             className="mb-16 px-0 opacity-80"
@@ -434,7 +440,8 @@ export default function Schedule() {
                         duration: 0.8,
                         ease: [0.16, 1, 0.3, 1],
                       }}
-                      className="group border-b border-white/[0.05] relative"
+                      className="schedule-etched-row group relative border-b border-white/[0.05]"
+                      data-schedule-tone={event.series}
                     >
                       {/* Main Row - Premium Interaction Surface */}
                       <div

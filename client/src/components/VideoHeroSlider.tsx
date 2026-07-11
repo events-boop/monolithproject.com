@@ -292,7 +292,10 @@ export default function VideoHeroSlider({
                   sizes={slide.posterSizes}
                   width={slide.width}
                   height={slide.height}
-                  className={slide.className || "w-full h-full object-cover object-center"}
+                  className={
+                    slide.className ||
+                    "w-full h-full object-cover object-center"
+                  }
                 />
               ) : (
                 <div className="absolute inset-0 bg-black" aria-hidden="true" />
@@ -311,7 +314,7 @@ export default function VideoHeroSlider({
                   sizes={slide.posterSizes}
                   width={slide.width}
                   height={slide.height}
-                  className={`absolute inset-0 w-full h-full ${slide.className || 'object-cover object-center'}`}
+                  className={`absolute inset-0 w-full h-full ${slide.className || "object-cover object-center"}`}
                 />
               )}
 
@@ -351,7 +354,7 @@ export default function VideoHeroSlider({
                   muted={isMuted}
                   playsInline
                   preload="metadata"
-                  className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${slide.className || 'object-cover object-center'}`}
+                  className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${slide.className || "object-cover object-center"}`}
                   aria-hidden="true"
                   tabIndex={-1}
                   style={{ opacity: 0 }}
@@ -367,7 +370,9 @@ export default function VideoHeroSlider({
               sizes={slide.sizes}
               width={slide.width}
               height={slide.height}
-              className={slide.className || "w-full h-full object-cover object-center"}
+              className={
+                slide.className || "w-full h-full object-cover object-center"
+              }
             />
           )}
         </motion.div>
@@ -397,7 +402,7 @@ export default function VideoHeroSlider({
       {/* Bottom bar: indicators + credit + mute */}
       <div className="absolute bottom-24 md:bottom-36 left-0 right-0 z-20 px-5 md:px-8 flex items-end justify-between pointer-events-none">
         {/* Left: Slide indicators */}
-        <div className="flex gap-1.5 md:gap-2 pointer-events-auto">
+        <div className="pointer-events-auto flex items-center gap-0.5">
           {slides.map((_, index) => (
             <button
               type="button"
@@ -405,12 +410,16 @@ export default function VideoHeroSlider({
               onClick={() => goTo(index)}
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === currentSlide ? "true" : undefined}
-              className={`h-[2px] transition-all duration-500 ${
-                index === currentSlide
-                  ? "bg-primary w-8 md:w-10"
-                  : "bg-white/20 w-4 md:w-5 hover:bg-white/40"
-              } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70`}
-            />
+              className="group/indicator grid h-11 w-7 place-items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+            >
+              <span
+                className={`block h-[2px] transition-all duration-500 ${
+                  index === currentSlide
+                    ? "w-7 bg-primary md:w-9"
+                    : "w-4 bg-white/20 group-hover/indicator:bg-white/45 md:w-5"
+                }`}
+              />
+            </button>
           ))}
         </div>
 

@@ -7,6 +7,7 @@ import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import { padCountdown, useCountdown } from "@/hooks/useCountdown";
+import { SUNSETS_JULY4_COMPLETE_LABEL } from "@/lib/sunsetsTicketing";
 import {
   getEventById,
   getEventEyebrow,
@@ -86,7 +87,7 @@ const HERO_SLIDES: Slide[] = [
     sources: heroAutografImage.sources,
     sizes: heroAutografImage.sizes,
     alt: "Chasing Sun(Sets) July 4th",
-    caption: "SUN(SETS) I | CHAPTER ONE ARCHIVE",
+    caption: SUNSETS_JULY4_COMPLETE_LABEL,
   },
   {
     type: "image",
@@ -238,6 +239,8 @@ function FloatingEventCard({
   contextualFallbackAction?: { href: string; label: string };
 }) {
   const headline = event?.headline || event?.title || slideInfo.label;
+  const systemHeadline = toSystemText(headline);
+  const usesCondensedHeadline = systemHeadline.length > 22;
   const isLive = event?.status === "on-sale";
   const eventStart = event ? getEventStartTimestamp(event) : null;
   const countdown = useCountdown(isLive ? eventStart : null);
@@ -262,25 +265,45 @@ function FloatingEventCard({
     (event
       ? `${event.title} at ${event.venue}, ${event.location}.`
       : undefined);
+  const phaseLabel = event?.time
+    ? toSystemText(event.time)
+    : cardTone === "untold"
+      ? "AFTER DARK / ARCHIVE RECORD"
+      : cardTone === "sunsets"
+        ? eventStatusLabel === "ARCHIVE"
+          ? "CHAPTER RECORD"
+          : "GOLDEN HOUR"
+        : "LAUNCH SIGNAL";
+  const cardDescription =
+    shortDescription ||
+    (cardTone === "untold"
+      ? "Four chapters live in the archive. The next coordinates arrive when the room is right."
+      : cardTone === "sunsets"
+        ? eventStatusLabel === "ARCHIVE"
+          ? "Chapter One lives in the archive. The lakefront season keeps moving."
+          : "The lakefront season continues. First access moves through the Lake List."
+        : "The parent platform connecting the lake, the room, and what comes next.");
 
   return (
     <div
       key={headline}
       data-home-hero-card="true"
       data-card-tone={cardTone}
-      className="hero-event-dossier group/card relative w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500"
+      className="hero-event-dossier group/card relative h-[29rem] w-full max-w-[420px] overflow-hidden rounded-2xl border border-white/12 bg-[linear-gradient(135deg,rgba(34,34,32,0.86),rgba(12,12,12,0.92)_58%,rgba(28,28,26,0.86))] shadow-[0_34px_90px_rgba(0,0,0,0.78),0_0_0_1px_rgba(255,255,255,0.04),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-500 sm:h-[31rem] md:h-[34rem]"
     >
       <div aria-hidden="true" className="hero-card-etch">
         <span className="hero-card-etch-corner hero-card-etch-corner-nw" />
         <span className="hero-card-etch-corner hero-card-etch-corner-ne" />
         <span className="hero-card-etch-corner hero-card-etch-corner-sw" />
         <span className="hero-card-etch-corner hero-card-etch-corner-se" />
+        <span className="hero-card-etch-rail hero-card-etch-rail-n" />
+        <span className="hero-card-etch-rail hero-card-etch-rail-e" />
+        <span className="hero-card-etch-rail hero-card-etch-rail-s" />
+        <span className="hero-card-etch-rail hero-card-etch-rail-w" />
+        <span className="hero-card-etch-emblem" />
       </div>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-8 top-8 z-0 text-[4.25rem] font-black uppercase leading-none tracking-[0] text-white/[0.025]"
-      >
-        LIVE
+      <div aria-hidden="true" className="hero-card-ambient-sigil">
+        <span />
       </div>
       {/* Immersive Background Window */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -289,7 +312,7 @@ function FloatingEventCard({
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:gap-5 sm:p-8 md:p-10">
+      <div className="relative z-10 flex h-full flex-col items-start gap-3 p-6 sm:gap-4 sm:p-8 md:p-10">
         {/* Status Badge */}
         <div className="flex items-center gap-2 self-end sm:absolute sm:right-6 sm:top-6">
           <span className="event-system-chip hero-card-status rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-white/76 backdrop-blur-md">
@@ -299,49 +322,54 @@ function FloatingEventCard({
         </div>
 
         {/* Narrative Metadata */}
-        <div className="flex w-full flex-col gap-3 sm:pr-20">
-          <span className="event-system-kicker text-white/58">
+        <div className="flex min-h-0 w-full flex-col gap-3">
+          <span className="event-system-kicker min-h-[1em] text-white/58 sm:pr-24">
             {systemKicker}
           </span>
           <h3
             className={cn(
-              "event-system-headline text-white text-balance drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)]",
+              "hero-card-headline-slot event-system-headline h-[5.75rem] w-full max-w-full overflow-hidden text-white text-balance tracking-[-0.035em] drop-shadow-[0_16px_34px_rgba(0,0,0,0.58)] sm:h-[8.5rem]",
               isJuly4thEvent
-                ? "max-w-[10.5ch] text-[clamp(1.55rem,5.8vw,2.75rem)] tracking-[-0.03em] sm:text-[clamp(1.65rem,4.4vw,2.75rem)]"
-                : "max-w-[11ch] text-[clamp(1.65rem,7vw,3.35rem)] sm:text-[clamp(1.9rem,5vw,3.35rem)]",
+                ? "text-[clamp(1.5rem,5.6vw,2.55rem)] sm:text-[clamp(1.65rem,3.8vw,2.55rem)]"
+                : usesCondensedHeadline
+                  ? "text-[clamp(1.5rem,6.4vw,2.25rem)] sm:text-[clamp(1.75rem,3.2vw,2.35rem)]"
+                  : "text-[clamp(1.65rem,7vw,2.8rem)] sm:text-[clamp(1.85rem,4vw,2.8rem)]",
               isJuly4thEvent && "july-4th-gradient"
             )}
           >
-            {toSystemText(headline)}
+            {systemHeadline}
           </h3>
           <dl className="hero-card-spec-grid mt-1 grid w-full grid-cols-2 border-y border-white/10">
             <div className="min-w-0 py-3 pr-3">
               <dt className="event-system-chip text-white/38">Date</dt>
-              <dd className="event-system-meta mt-1.5 text-white/76">
+              <dd className="event-system-meta mt-1.5 min-h-[2.25rem] text-white/76">
                 {systemDate}
               </dd>
             </div>
             <div className="min-w-0 border-l border-white/10 py-3 pl-3">
               <dt className="event-system-chip text-white/38">Location</dt>
-              <dd className="event-system-meta mt-1.5 text-white/76">
+              <dd className="event-system-meta mt-1.5 min-h-[2.25rem] text-white/76">
                 {systemVenue}
               </dd>
             </div>
           </dl>
-          {event?.time ? (
-            <span className="event-system-chip text-white/54">
-              {toSystemText(event.time)}
-            </span>
-          ) : null}
-          {shortDescription ? (
-            <p className="max-w-[34ch] text-[13px] leading-relaxed text-white/72 line-clamp-4">
-              {shortDescription}
-            </p>
-          ) : null}
+          <span className="event-system-chip min-h-[1em] text-white/54">
+            {phaseLabel}
+          </span>
+          <p
+            className={cn(
+              "max-w-[34ch] text-[13px] leading-relaxed text-white/72",
+              showCountdown
+                ? "min-h-[2.6rem] line-clamp-2"
+                : "min-h-[3.8rem] line-clamp-3"
+            )}
+          >
+            {cardDescription}
+          </p>
         </div>
 
         {showCountdown && (
-          <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
+          <div className="grid w-full shrink-0 grid-cols-[1fr_auto] items-center gap-4 border-y border-white/10 py-3">
             <span className="event-system-chip text-white/54">
               Event Starts
             </span>
@@ -356,14 +384,14 @@ function FloatingEventCard({
         )}
 
         {/* CTA Engine */}
-        <div className="mt-3 w-full sm:mt-4">
+        <div className="mt-auto w-full shrink-0">
           {event ? (
             <HeroCardCTA event={event} />
           ) : contextualFallbackAction ? (
             <Link href={contextualFallbackAction.href} asChild>
               <a
                 className={cn(
-                  "btn-pill-wide",
+                  "hero-card-cta btn-pill-wide",
                   cardTone === "untold"
                     ? "btn-pill-untold"
                     : cardTone === "sunsets"
@@ -398,7 +426,7 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/78 bg-white px-6 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_36px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.8)] transition hover:-translate-y-0.5 hover:bg-[#E7E7E2] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/62"
+      className="hero-card-cta inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/78 bg-white px-6 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_36px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.8)] transition hover:-translate-y-0.5 hover:bg-[#E7E7E2] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/62"
     >
       {label}
     </a>
@@ -468,7 +496,7 @@ export default function HeroSection() {
         </span>
       </div>
 
-      <div className="relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
+      <div className="pointer-events-none relative z-30 flex min-h-[100dvh] h-auto flex-col px-6 pb-10 pt-[calc(var(--shell-page-top-hero)+0.5rem)] sm:pb-14 sm:pt-[calc(var(--shell-page-top-hero)+1rem)] md:px-8 md:pb-10 md:pt-[calc(var(--shell-page-top-hero)+0.5rem)]">
         <HomeHeroUtilityRow />
         <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-10 md:grid md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)] md:items-center md:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:gap-16">
           <div
@@ -505,7 +533,7 @@ export default function HeroSection() {
                 {HERO_SUPPORTING_LINE}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
+              <div className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link
                   href="/go/lakelist"
                   className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/75 bg-white px-8 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-[#F8FAF8] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[15rem]"
@@ -522,7 +550,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="mt-auto flex w-full justify-center md:mt-0 md:justify-end">
+          <div className="pointer-events-auto mt-auto flex w-full justify-center md:mt-0 md:justify-end">
             <div className="w-full max-w-[22rem] sm:max-w-[24rem] md:max-w-[26rem] lg:max-w-[28rem]">
               <FloatingEventCard
                 event={bannerEvent}

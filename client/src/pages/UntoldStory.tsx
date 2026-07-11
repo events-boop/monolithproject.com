@@ -12,6 +12,7 @@ import { eventVisuals, untoldFaqs } from "@/components/untold-story/constants";
 import UntoldHero from "@/components/untold-story/UntoldHero";
 import UntoldContent from "@/components/untold-story/UntoldContent";
 import UntoldContrast from "@/components/untold-story/UntoldContrast";
+import CommunityContributionSection from "@/components/CommunityContributionSection";
 import { buildFaqSchema, buildScheduledEventSchema } from "@/lib/schema";
 import {
   getSeriesExperienceEvent,
@@ -63,7 +64,7 @@ export default function UntoldStory() {
         <UntoldContrast />
 
         {/* Archive fragments — the visual record across four chapters */}
-        <section className="relative z-20 py-24 px-6 border-t border-white/10">
+        <section className="untold-archive-gallery-frame relative z-20 py-24 px-6 border-t border-white/10">
           <div className="layout-default">
             <EpisodeGallery
               series="untold-story"
@@ -93,6 +94,13 @@ export default function UntoldStory() {
                   label: "Finale",
                 },
               ]}
+            />
+
+            <CommunityContributionSection
+              tone="untold"
+              seriesName="Untold Story"
+              archiveLabel="the first four chapters"
+              className="mt-16"
             />
           </div>
         </section>

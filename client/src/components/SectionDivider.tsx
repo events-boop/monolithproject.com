@@ -10,6 +10,9 @@ interface SectionDividerProps {
   glow?: string;
   labelOverride?: string;
   dense?: boolean;
+  etched?: boolean;
+  watermark?: string;
+  etchTone?: "sunsets" | "archive" | "monolith";
 }
 
 export default function SectionDivider({
@@ -20,6 +23,9 @@ export default function SectionDivider({
   glow,
   labelOverride,
   dense,
+  etched = false,
+  watermark,
+  etchTone = "archive",
 }: SectionDividerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
@@ -57,12 +63,28 @@ export default function SectionDivider({
     <div
       ref={containerRef}
       id={id}
+      data-divider-tone={etched ? etchTone : undefined}
       className={cn(
         "group relative w-full overflow-hidden border-y transition-opacity duration-700",
         borderColor,
+        etched && "section-divider-etched",
         isInView ? "opacity-100" : "opacity-0"
       )}
     >
+      {etched && (
+        <div aria-hidden="true" className="section-divider-etch-layer">
+          <span className="section-divider-etch-rail section-divider-etch-rail-top" />
+          <span className="section-divider-etch-rail section-divider-etch-rail-bottom" />
+          <span className="section-divider-etch-node" />
+        </div>
+      )}
+
+      {watermark ? (
+        <span aria-hidden="true" className="section-divider-watermark">
+          {watermark}
+        </span>
+      ) : null}
+
       {glow && (
         <div
           className={cn(
@@ -96,6 +118,7 @@ export default function SectionDivider({
           <div className="min-w-0">
             <h2
               className={cn(
+                "section-divider-label",
                 labelOverride || "section-kicker",
                 labelColor,
                 "group-hover:text-primary transition-colors duration-500"
@@ -110,14 +133,17 @@ export default function SectionDivider({
             <span
               aria-hidden="true"
               className={cn(
-                "font-display text-[clamp(3rem,9vw,5.75rem)] leading-[0.82] tracking-[-0.05em]",
+                "section-divider-number font-display text-[clamp(3rem,9vw,5.75rem)] leading-[0.82] tracking-[-0.05em]",
                 numberColor
               )}
             >
               {number}
             </span>
             <span
-              className={cn("section-kicker hidden pb-2 sm:block", labelColor)}
+              className={cn(
+                "section-divider-brand section-kicker hidden pb-2 sm:block",
+                labelColor
+              )}
             >
               MONOLITH
             </span>

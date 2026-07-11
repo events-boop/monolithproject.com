@@ -16,6 +16,7 @@ import MagneticButton from "@/components/MagneticButton";
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 type SeriesFit = "chasing-sunsets" | "untold-story" | "both" | "unsure";
+type SubmissionIntent = "artist" | "dj-set";
 
 type FormState = {
   artistName: string;
@@ -109,6 +110,25 @@ const lookFor = [
   },
 ];
 
+const djSetGuidance = [
+  {
+    label: "The Set",
+    desc: "Send a complete journey, not a highlight reel. Public or private links are both welcome.",
+  },
+  {
+    label: "The Context",
+    desc: "Tell us where and when it was recorded, especially if it came from a Monolith room.",
+  },
+  {
+    label: "The Sound",
+    desc: "Afro, melodic, organic, deep, and global house frequencies belong here.",
+  },
+  {
+    label: "Permission",
+    desc: "Only submit a recording you own and have permission to share with the archive team.",
+  },
+];
+
 // ─── Styles ──────────────────────────────────────────────────────────────────
 
 const inputClass =
@@ -121,13 +141,34 @@ const labelClass =
 
 export default function Submit() {
   const [form, setForm] = useState<FormState>(defaultForm);
+  const [submissionIntent, setSubmissionIntent] =
+    useState<SubmissionIntent>("artist");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("intent") === "dj-set") {
+      setSubmissionIntent("dj-set");
+    }
+
+    const requestedSeries = params.get("series");
+    if (
+      requestedSeries === "chasing-sunsets" ||
+      requestedSeries === "untold-story"
+    ) {
+      setForm(previous => ({
+        ...previous,
+        seriesFit: requestedSeries,
+      }));
+    }
   }, []);
+
+  const isDjSetSubmission = submissionIntent === "dj-set";
+  const guidance = isDjSetSubmission ? djSetGuidance : lookFor;
 
   const set =
     (field: keyof FormState) =>
@@ -154,9 +195,9 @@ export default function Submit() {
         body: JSON.stringify({
           name: form.realName || form.artistName,
           email: form.email,
-          subject: `Artist Submission — ${form.artistName}`,
+          subject: `${isDjSetSubmission ? "DJ Set Submission" : "Artist Submission"} — ${form.artistName}`,
           message: `
-ARTIST SUBMISSION
+${isDjSetSubmission ? "DJ SET SUBMISSION" : "ARTIST SUBMISSION"}
 
 Artist Name: ${form.artistName}
 Real Name: ${form.realName || "Not provided"}
@@ -194,8 +235,12 @@ ${form.bio}
       style={{ background: "#050505" }}
     >
       <SEO
-        title="Artist Submission"
-        description="Submit your mix or demo to The Monolith Project. We're always looking for selectors who fit the Chasing Sun(Sets) or Untold Story frequency."
+        title={isDjSetSubmission ? "DJ Set Submission" : "Artist Submission"}
+        description={
+          isDjSetSubmission
+            ? "Submit a recorded DJ set to the Chasing Sun(Sets) or Untold Story archive."
+            : "Submit your mix or demo to The Monolith Project. We're always looking for selectors who fit the Chasing Sun(Sets) or Untold Story frequency."
+        }
       />
       <Navigation />
 
@@ -220,10 +265,12 @@ ${form.bio}
             className="mb-20"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
-              — Join The Lineup
+              {isDjSetSubmission
+                ? "— Archive Contribution"
+                : "— Join The Lineup"}
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
-              ARTIST
+              {isDjSetSubmission ? "DJ SET" : "ARTIST"}
               <br />
               SUBMISSION
             </h1>
@@ -239,8 +286,9 @@ ${form.bio}
               className="h-[2px] w-44 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-8"
             />
             <p className="text-white/70 text-lg leading-relaxed max-w-2xl">
-              We're always building the pipeline. If your sound fits the
-              frequency, drop your mix here. We listen to everything.
+              {isDjSetSubmission
+                ? "Recorded in one of our rooms—or built for the same frequency? Send the full set and the story behind it."
+                : "We're always building the pipeline. If your sound fits the frequency, drop your mix here. We listen to everything."}
             </p>
           </motion.div>
 
@@ -254,10 +302,10 @@ ${form.bio}
               className="lg:col-span-4"
             >
               <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
-                What We Look For
+                {isDjSetSubmission ? "What To Send" : "What We Look For"}
               </p>
               <ul className="space-y-5 mb-10">
-                {lookFor.map(item => (
+                {guidance.map(item => (
                   <li key={item.label} className="flex items-start gap-4">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-primary flex-shrink-0" />
                     <div>
@@ -277,9 +325,9 @@ ${form.bio}
                   Response Time
                 </p>
                 <p className="text-xs text-white/70 leading-relaxed">
-                  We review submissions on a rolling basis. If there's a fit,
-                  we'll reach out within 4–6 weeks. Not every submission gets a
-                  response — but every one gets listened to.
+                  {isDjSetSubmission
+                    ? "Archive and radio submissions are reviewed on a rolling basis. If we feature your set, the team will contact you for final permission and credits."
+                    : "We review submissions on a rolling basis. If there's a fit, we'll reach out within 4–6 weeks. Not every submission gets a response — but every one gets listened to."}
                 </p>
               </div>
 
@@ -324,8 +372,9 @@ ${form.bio}
                       Submitted
                     </h2>
                     <p className="text-white/70 max-w-md text-sm leading-relaxed">
-                      We've got your mix. If there's a fit, we'll be in touch
-                      within 4–6 weeks. Keep creating.
+                      {isDjSetSubmission
+                        ? "The archive team has your set. If it is selected for a feature, we will reach out for final permission and credits."
+                        : "We've got your mix. If there's a fit, we'll be in touch within 4–6 weeks. Keep creating."}
                     </p>
                   </motion.div>
                 ) : (
@@ -464,14 +513,20 @@ ${form.bio}
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="submit-mix" className={labelClass}>
-                          Mix / Demo Link *
+                          {isDjSetSubmission
+                            ? "DJ Set Link *"
+                            : "Mix / Demo Link *"}
                         </label>
                         <input
                           id="submit-mix"
                           value={form.mixUrl}
                           onChange={set("mixUrl")}
                           className={inputClass}
-                          placeholder="SoundCloud, Mixcloud, Drive..."
+                          placeholder={
+                            isDjSetSubmission
+                              ? "Full set on SoundCloud, Mixcloud, or Drive..."
+                              : "SoundCloud, Mixcloud, Drive..."
+                          }
                           required
                         />
                       </div>
@@ -506,7 +561,9 @@ ${form.bio}
                     {/* Bio */}
                     <div>
                       <label htmlFor="submit-bio" className={labelClass}>
-                        Artist Statement / Bio
+                        {isDjSetSubmission
+                          ? "Set Context / Notes"
+                          : "Artist Statement / Bio"}
                       </label>
                       <textarea
                         id="submit-bio"
@@ -514,47 +571,55 @@ ${form.bio}
                         onChange={set("bio")}
                         rows={4}
                         className={`${inputClass} resize-none`}
-                        placeholder="Tell us who you are, what you bring to a room, and why you'd be a fit for Monolith..."
+                        placeholder={
+                          isDjSetSubmission
+                            ? "Where and when was this recorded? Which chapter or event was it connected to?"
+                            : "Tell us who you are, what you bring to a room, and why you'd be a fit for Monolith..."
+                        }
                       />
                     </div>
 
                     {/* Availability + Played Chicago */}
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="submit-avail" className={labelClass}>
-                          Availability
-                        </label>
-                        <input
-                          id="submit-avail"
-                          value={form.availability}
-                          onChange={set("availability")}
-                          className={inputClass}
-                          placeholder="e.g. Summer 2026, weekends..."
-                        />
+                    {!isDjSetSubmission && (
+                      <div className="grid sm:grid-cols-2 gap-6">
+                        <div>
+                          <label htmlFor="submit-avail" className={labelClass}>
+                            Availability
+                          </label>
+                          <input
+                            id="submit-avail"
+                            value={form.availability}
+                            onChange={set("availability")}
+                            className={inputClass}
+                            placeholder="e.g. Summer 2026, weekends..."
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="submit-played" className={labelClass}>
+                            Played Chicago Before?
+                          </label>
+                          <select
+                            id="submit-played"
+                            value={form.hasPlayed}
+                            onChange={set("hasPlayed")}
+                            className={`${inputClass} appearance-none`}
+                            style={{ backgroundImage: "none" }}
+                          >
+                            <option value="" disabled>
+                              Select...
+                            </option>
+                            <option value="yes-regularly">
+                              Yes, regularly
+                            </option>
+                            <option value="yes-few-times">
+                              Yes, a few times
+                            </option>
+                            <option value="yes-once">Yes, once</option>
+                            <option value="no">No, first time</option>
+                          </select>
+                        </div>
                       </div>
-                      <div>
-                        <label htmlFor="submit-played" className={labelClass}>
-                          Played Chicago Before?
-                        </label>
-                        <select
-                          id="submit-played"
-                          value={form.hasPlayed}
-                          onChange={set("hasPlayed")}
-                          className={`${inputClass} appearance-none`}
-                          style={{ backgroundImage: "none" }}
-                        >
-                          <option value="" disabled>
-                            Select...
-                          </option>
-                          <option value="yes-regularly">Yes, regularly</option>
-                          <option value="yes-few-times">
-                            Yes, a few times
-                          </option>
-                          <option value="yes-once">Yes, once</option>
-                          <option value="no">No, first time</option>
-                        </select>
-                      </div>
-                    </div>
+                    )}
 
                     {/* Error */}
                     {error && (
@@ -585,7 +650,11 @@ ${form.bio}
                             <span className="animate-pulse">Sending...</span>
                           ) : (
                             <>
-                              <span>Submit Mix</span>
+                              <span>
+                                {isDjSetSubmission
+                                  ? "Submit DJ Set"
+                                  : "Submit Mix"}
+                              </span>
                               <Send className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                             </>
                           )}

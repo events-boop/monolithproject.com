@@ -3,7 +3,10 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { getSeriesColor, getSeriesEvents } from "@/lib/siteExperience";
 import ConversionCTA from "@/components/ConversionCTA";
-import { SUNSETS_2026_SEASON_CHAPTERS } from "@/lib/sunsetsTicketing";
+import {
+  SUNSETS_2026_SEASON_CHAPTERS,
+  SUNSETS_JULY4_COMPLETE_LABEL,
+} from "@/lib/sunsetsTicketing";
 
 // Narrative copy per chapter. Badge + footer text for announced chapters
 // only — live/sold-out/past states derive from event status below, so the
@@ -13,7 +16,7 @@ const CHAPTER_CARDS = [
     label: "SUN(SETS) I",
     number: "01",
     status: "Lake List",
-    subtitle: "Independence Day · Chapter One",
+    subtitle: SUNSETS_JULY4_COMPLETE_LABEL,
     body: "2,800 on the lakefront. Heat, rain, and the moment the purpose became clear. The recap is coming.",
     footer: "First notice before public",
   },
@@ -61,7 +64,8 @@ function chapterBadge(chapter: SeasonChapter) {
 function chapterFooter(chapter: SeasonChapter) {
   if (chapter.isPast) return "Photos + recap coming soon";
   if (chapter.event?.status === "on-sale") return "On sale now";
-  if (chapter.event?.status === "sold-out") return "Sold out — join the SMS list";
+  if (chapter.event?.status === "sold-out")
+    return "Sold out — join the SMS list";
   return chapter.footer;
 }
 

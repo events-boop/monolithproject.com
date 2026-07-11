@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import CommunityContributionSection, {
+  COMMUNITY_UPLOAD_URL,
+} from "@/components/CommunityContributionSection";
 import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
@@ -9,6 +12,7 @@ import {
   trackLakePageView,
 } from "@/lib/campaignPixel";
 import {
+  SUNSETS_JULY4_COMPLETE_LABEL,
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
   captureSunsetsTicketCtaClick,
@@ -43,9 +47,6 @@ const SOMMERS_UK_HREF =
 const SOMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
 // Chapter One archive — gallery + recap land here as they clear the edit.
 const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
-// Dropbox file request — community uploads of DJ sets, photos, and videos.
-const COMMUNITY_UPLOAD_URL =
-  "https://www.dropbox.com/request/3f0662s872jlukad0r4h";
 // Follow rails for the Featured Sets block.
 const SUNSETS_SOUNDCLOUD_FOLLOW_HREF = "/go/media/sunsets-soundcloud";
 const SUNSETS_SPOTIFY_FOLLOW_HREF = "/go/social/spotify";
@@ -270,6 +271,21 @@ export default function SunsetsLinkBio() {
     });
   };
 
+  const handleDjSetSubmissionClick = () => {
+    triggerHaptic(12);
+    trackLakeLead(newLeadEventId(), {
+      content_name: "Community DJ Set Submission Click",
+    });
+    trackSunsetsClick({
+      buttonName: "SUBMIT YOUR DJ SET",
+      href: "/submit?intent=dj-set&series=chasing-sunsets",
+      eventSlug: JULY_4_EVENT_SLUG,
+      eventDate: JULY_4_EVENT_DATE,
+      interestType: "dj_set_submission_click",
+      channel: "Monolith",
+    });
+  };
+
   const handleFollowClick = (
     channel: "SoundCloud" | "Spotify",
     href: string
@@ -357,7 +373,7 @@ export default function SunsetsLinkBio() {
         schemaData={SEASON_EVENTS_SCHEMA}
         absoluteTitle
       />
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
+      <main className="sunsets-vip-shell relative mx-auto flex min-h-screen w-full max-w-[460px] flex-col px-5 py-4 sm:py-6">
         {/* Ambient Glow */}
         <div
           className="absolute left-1/2 top-0 -z-10 h-[24rem] w-[24rem] max-w-[120vw] -translate-x-1/2 rounded-full bg-[#E8B86D]/10 opacity-60 blur-[80px]"
@@ -365,7 +381,7 @@ export default function SunsetsLinkBio() {
         />
 
         {/* 1. Hero — current season */}
-        <header className="relative text-center">
+        <header className="sunsets-vip-hero relative text-center">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#E8B86D]">
             The Monolith Project Presents
           </p>
@@ -390,15 +406,24 @@ export default function SunsetsLinkBio() {
           <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-stone-300">
             CASTAWAYS BEACH CLUB
           </p>
+          <div className="sunsets-vip-datum" aria-hidden="true">
+            <span>41.9117° N</span>
+            <span>Chicago Lakefront</span>
+            <span>87.6193° W</span>
+          </div>
         </header>
 
         {/* 2. SUN(SETS) II Header */}
         <section
-          className="relative mt-2 border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md"
+          className="sunsets-vip-frame sunsets-vip-frame-signal relative mt-2 border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md"
           aria-label="SUN(SETS) II Event Details"
         >
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#E8B86D]/5 to-transparent" />
-          <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+          <div className="sunsets-signal-registry" aria-hidden="true">
+            <span>Current Signal</span>
+            <span>02 / Active</span>
+          </div>
+          <p className="mt-4 text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
             SUN(SETS) II — AUG 22
           </p>
           <h2 className="mx-1 mt-3 text-[clamp(1.25rem,5.8vw,1.45rem)] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
@@ -446,130 +471,9 @@ export default function SunsetsLinkBio() {
           </p>
         </section>
 
-        {/* 4. Chapter One archive — clearly historical, never the lead signal. */}
-        <section className="mt-5" aria-label="SUN(SETS) I Chapter One archive">
-          <div className="overflow-hidden border border-[#E8B86D]/25 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-            <div className="flex items-center justify-between gap-4 border-b border-[#E8B86D]/20 px-4 py-3">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
-                  Chapter One / Archive
-                </p>
-                <p className="mt-1 text-[11px] text-stone-400">
-                  July 4 is complete. The record stays open.
-                </p>
-              </div>
-              <span className="shrink-0 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/58">
-                Complete
-              </span>
-            </div>
-            <div className="relative">
-              <img
-                src="/sunsets_poster.jpg"
-                alt="SUN(SETS) I Chapter One archive poster from July 4, 2026"
-                className="h-auto w-full object-cover opacity-86"
-                loading="lazy"
-              />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 to-transparent"
-              />
-              <a
-                href={SUNSETS_I_ARCHIVE_HREF}
-                onClick={() => handleArchiveClick("Archive card")}
-                className="group absolute inset-x-4 bottom-4 flex h-11 items-center justify-center gap-2 border border-[#E8B86D]/60 bg-black/55 px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#E8B86D] backdrop-blur-md transition hover:border-[#E8B86D] hover:bg-[#E8B86D] hover:text-black"
-              >
-                Relive Chapter One <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* 5. Video section */}
-        <section className="mt-6" aria-label="Autograf / 2025 recap">
-          <p className="text-center font-serif text-sm italic text-stone-300">
-            Last chapter: 2,800 on the lakefront.
-          </p>
-          <div className="relative mt-3 aspect-video w-full overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
-            <div
-              className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]"
-              aria-hidden="true"
-            />
-            <div className="relative z-10 h-full w-full">
-              {recapPlaying ? (
-                <YouTubeEmbed
-                  url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
-                  title="Chasing Sun(Sets) recap"
-                  className="absolute inset-0 h-full w-full"
-                  loading="eager"
-                  autoplay
-                />
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleRecapPlay}
-                  aria-label="Play the recap video"
-                  className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99] motion-reduce:transition-none"
-                >
-                  <img
-                    src={RECAP_THUMB}
-                    alt="Chasing Sun(Sets) recap preview"
-                    loading="lazy"
-                    className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
-                  />
-                  <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
-                  <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
-                    <svg
-                      viewBox="0 0 24 24"
-                      className="ml-0.5 h-6 w-6 fill-current"
-                      aria-hidden="true"
-                    >
-                      <path d="M8 5.5v13l11-6.5-11-6.5z" />
-                    </svg>
-                  </span>
-                </button>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* 4b. Chapter One — community uploads */}
-        <section className="mt-4" aria-label="Chapter One photos and uploads">
-          <div className="relative overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md">
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#E8B86D]/5 to-transparent" />
-            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
-              SUN(SETS) I — CHAPTER ONE COMPLETE
-            </p>
-            <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-              Photos and the recap film are in the edit. Were you there? Send us
-              your sets, photos, and videos — the best make the official recap.
-            </p>
-            <a
-              href={COMMUNITY_UPLOAD_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleCommunityUploadClick}
-              className="group relative mt-4 flex h-11 min-h-11 overflow-hidden items-center justify-center gap-2 border border-[#E8B86D]/50 bg-[#E8B86D]/5 px-3 text-[10px] font-black uppercase tracking-[0.1em] text-[#E8B86D] transition-all hover:bg-[#E8B86D] hover:text-black hover:shadow-[0_0_20px_rgba(232,184,109,0.3)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:px-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.12em]"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                UPLOAD YOUR SETS, PHOTOS + VIDEOS{" "}
-                <span
-                  aria-hidden="true"
-                  className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-                >
-                  →
-                </span>
-              </span>
-              <div
-                className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
-                aria-hidden="true"
-              />
-            </a>
-          </div>
-        </section>
-
-        {/* 5. Season Pass */}
+        {/* 4. Season Pass — future dates and announced artists lead. */}
         <section
-          className="relative mt-6 overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+          className="sunsets-vip-frame sunsets-vip-frame-major relative mt-6 overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl"
           aria-label="2026 Season Pass"
         >
           <div
@@ -620,17 +524,26 @@ export default function SunsetsLinkBio() {
 
             <div className="mt-4 border border-white/12 bg-black/30">
               {[
-                "SUN(SETS) I · July 4 — Complete",
-                "SUN(SETS) II · August 22",
-                "SUN(SETS) III · September 19 · Joezi x Massuma",
-              ].map((label, index) => (
+                {
+                  label: "SUN(SETS) II · August 22",
+                  status: "upcoming",
+                },
+                {
+                  label: "SUN(SETS) III · September 19 · Joezi x Massuma",
+                  status: "upcoming",
+                },
+                {
+                  label: SUNSETS_JULY4_COMPLETE_LABEL,
+                  status: "complete",
+                },
+              ].map((date, index) => (
                 <div
-                  key={label}
-                  className={`px-3.5 py-2.5 text-[10px] font-black uppercase tracking-[0.16em] text-stone-200 ${
+                  key={date.label}
+                  className={`px-3.5 py-2.5 text-[10px] font-black uppercase tracking-[0.16em] ${
                     index > 0 ? "border-t border-white/10" : ""
-                  }`}
+                  } ${date.status === "complete" ? "text-stone-500" : "text-stone-200"}`}
                 >
-                  {label}
+                  {date.label}
                 </div>
               ))}
             </div>
@@ -659,9 +572,9 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 6. Cabanas */}
+        {/* 5. Cabanas and VIP — second conversion path. */}
         <section className="mt-6" aria-label="Cabanas and VIP">
-          <div className="relative overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+          <div className="sunsets-vip-frame relative overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/60 p-4 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div
               className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]"
               aria-hidden="true"
@@ -713,7 +626,104 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 7. Featured Sets */}
+        {/* 6. Chapter One archive — clearly historical, below future dates. */}
+        <section className="mt-5" aria-label="SUN(SETS) I Chapter One archive">
+          <div className="sunsets-vip-frame overflow-hidden border border-[#E8B86D]/25 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-4 border-b border-[#E8B86D]/20 px-4 py-3">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+                  Chapter One / Archive
+                </p>
+                <p className="mt-1 text-[11px] text-stone-400">
+                  July 4 is complete. The record stays open.
+                </p>
+              </div>
+              <span className="shrink-0 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/58">
+                Complete
+              </span>
+            </div>
+            <div className="relative">
+              <img
+                src="/sunsets_poster.jpg"
+                alt="SUN(SETS) I Chapter One archive poster from July 4, 2026"
+                className="h-auto w-full object-cover opacity-86"
+                loading="lazy"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 to-transparent"
+              />
+              <a
+                href={SUNSETS_I_ARCHIVE_HREF}
+                onClick={() => handleArchiveClick("Archive card")}
+                className="group absolute inset-x-4 bottom-4 flex h-11 items-center justify-center gap-2 border border-[#E8B86D]/60 bg-black/55 px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#E8B86D] backdrop-blur-md transition hover:border-[#E8B86D] hover:bg-[#E8B86D] hover:text-black"
+              >
+                Relive Chapter One <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* 7. Video section */}
+        <section className="mt-6" aria-label="Autograf / 2025 recap">
+          <p className="text-center font-serif text-sm italic text-stone-300">
+            Last chapter: 2,800 on the lakefront.
+          </p>
+          <div className="sunsets-vip-frame sunsets-vip-frame-media relative mt-3 aspect-video w-full overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+            <div
+              className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,rgba(232,184,109,0.1),transparent_50%)]"
+              aria-hidden="true"
+            />
+            <div className="relative z-10 h-full w-full">
+              {recapPlaying ? (
+                <YouTubeEmbed
+                  url={`https://youtu.be/${RECAP_YOUTUBE_ID}`}
+                  title="Chasing Sun(Sets) recap"
+                  className="absolute inset-0 h-full w-full"
+                  loading="eager"
+                  autoplay
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleRecapPlay}
+                  aria-label="Play the recap video"
+                  className="group absolute inset-0 h-full w-full transition-transform active:scale-[0.99] motion-reduce:transition-none"
+                >
+                  <img
+                    src={RECAP_THUMB}
+                    alt="Chasing Sun(Sets) recap preview"
+                    loading="lazy"
+                    className="h-full w-full object-cover opacity-80 transition group-hover:opacity-100"
+                  />
+                  <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.55))]" />
+                  <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/55 backdrop-blur transition group-hover:bg-[#E8B86D] group-hover:text-black">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="ml-0.5 h-6 w-6 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5.5v13l11-6.5-11-6.5z" />
+                    </svg>
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* 8. Chapter One — community contribution channels */}
+        <CommunityContributionSection
+          tone="sunsets"
+          seriesName="Chasing Sun(Sets)"
+          archiveLabel="Chapter One"
+          compact
+          className="mt-4"
+          onDjSetClick={handleDjSetSubmissionClick}
+          onMediaClick={handleCommunityUploadClick}
+        />
+
+        {/* 9. Featured Sets */}
         <div className="mt-10 mb-4 flex items-center justify-center gap-4">
           <span className="h-px flex-1 bg-white/10" />
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
@@ -793,7 +803,7 @@ export default function SunsetsLinkBio() {
 
         {/* Sommers UK */}
         <section className="mt-4" aria-label="Sommers UK featured set drop">
-          <div className="group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
+          <div className="sunsets-vip-frame group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
             <div className="grid grid-cols-1 min-[380px]:grid-cols-[0.82fr_1fr]">
               <div className="overflow-hidden bg-black/30">
                 <img
