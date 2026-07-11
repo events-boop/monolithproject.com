@@ -111,6 +111,18 @@ export const ticketIntentSchema = z.object({
   ...attributionFields,
 });
 
+// Meta CAPI lead capture. Email stays lax (shape only, no .email()) so an
+// odd-but-real address never drops an authentic conversion; format strictness
+// adds no protection since forgers can trivially satisfy it anyway.
+export const leadConversionCaptureSchema = z.object({
+  eventId: z.string().trim().min(1).max(120),
+  email: z.string().trim().max(320).optional(),
+  phone: z.string().trim().max(40).optional(),
+  eventSourceUrl: urlText,
+  fbclid: z.string().trim().max(500).optional(),
+  ...honeypotFields,
+});
+
 export const bookingInquirySchema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(320),

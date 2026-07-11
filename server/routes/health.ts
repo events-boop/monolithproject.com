@@ -33,7 +33,9 @@ function sendHealth(res: Response) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
 
-  res.status(200).json(healthPayload());
+  // Liveness only. Integration topology and upstream error strings are
+  // recon-useful, so the full payload lives behind the admin guard below.
+  res.status(200).json({ ok: true });
 }
 
 router.get("/api/health", (_req, res) => {
@@ -44,6 +46,16 @@ router.get("/api/health", (_req, res) => {
 router.get("/health", (_req, res) => {
   sendHealth(res);
 });
+
+router.get(
+  "/api/health/details",
+  createAdminRouteGuard({ scope: "health" }),
+  (_req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
+    res.status(200).json(healthPayload());
+  }
+);
 
 router.get(
   "/api/ready",

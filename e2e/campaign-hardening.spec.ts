@@ -64,7 +64,7 @@ test.describe("campaign hardening stress checks", () => {
     );
   });
 
-  test("health endpoints expose CAPI heartbeat without credentials", async ({
+  test("health endpoints stay liveness-only without credentials", async ({
     request,
   }) => {
     for (const path of ["/health", "/api/health"]) {
@@ -73,12 +73,18 @@ test.describe("campaign hardening stress checks", () => {
       const body = await response.json();
 
       expect(body.ok).toBe(true);
-      expect(body.capi.pixel_id).toBe("1049241148606250");
-      expect(body.capi).toHaveProperty("capi");
-      expect(body.capi).toHaveProperty("last_error");
-      expect(JSON.stringify(body).toLowerCase()).not.toContain("access_token");
+      // Integration diagnostics moved behind the admin guard; the public
+      // probe must not leak CAPI status or integration topology.
+      expect(body).not.toHaveProperty("capi");
+      expect(body).not.toHaveProperty("integrations");
       expect(JSON.stringify(body).toLowerCase()).not.toContain("token");
     }
+  });
+
+  test("health details require admin credentials", async ({ request }) => {
+    const response = await request.get(`${API_BASE}/api/health/details`);
+    // 401 when OPS_ADMIN_SECRET is configured, 503 when unset (fail closed).
+    expect([401, 503]).toContain(response.status());
   });
 
   test("sunsets.vip root mirrors the /sunsets link-in-bio surface", async ({

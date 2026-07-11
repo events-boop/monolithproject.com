@@ -56,6 +56,12 @@ function resolvePrerenderedRoutePath(requestPath: string) {
   const normalized = cleanPath.replace(/^\/+/, "").replace(/\/+$/, "");
   if (!normalized) return indexHtmlPath;
 
+  // Reject dot segments so a raw `GET /../..` can never resolve an
+  // index.html outside the static root.
+  if (normalized.split("/").some(segment => segment === "..")) {
+    return indexHtmlPath;
+  }
+
   const candidate = path.join(staticPath, normalized, "index.html");
   return existsSync(candidate) ? candidate : indexHtmlPath;
 }

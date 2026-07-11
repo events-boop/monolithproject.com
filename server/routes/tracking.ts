@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { randomUUID } from "crypto";
 import { asyncHandler } from "../lib/async";
-import { clickCaptureSchema, pageViewCaptureSchema } from "../lib/schemas";
+import {
+  clickCaptureSchema,
+  leadConversionCaptureSchema,
+  pageViewCaptureSchema,
+} from "../lib/schemas";
+import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 import { getDatabase } from "../db/client";
 import {
   contactEventInterest,
@@ -245,33 +250,47 @@ router.post(
   trackingLimiter,
   asyncHandler(async (req, res) => {
     const requestId = randomUUID();
-    const eventId = asString(req.body?.eventId);
 
-    if (!eventId) {
+    // Bots that fill the hidden field get a success response but no CAPI
+    // event, so forged leads never reach the pixel's learning data.
+    const honeypotValue = readHoneypotValue(req.body);
+    if (honeypotValue) {
+      logEvent("bot.honeypot_triggered", {
+        requestId,
+        route: "/api/track/lead",
+        field: honeypotFieldName,
+        valueLength: honeypotValue.length,
+      });
+      return res.status(202).json({ ok: true, requestId });
+    }
+
+    const parsed = leadConversionCaptureSchema.safeParse(req.body);
+    if (!parsed.success) {
       return res.status(400).json({
         ok: false,
         requestId,
         error: {
           code: "VALIDATION_ERROR",
-          message: "Missing eventId.",
+          message: "Invalid lead payload.",
           retryable: false,
         },
       });
     }
 
+    const eventId = parsed.data.eventId;
     const cookies = parseCookieHeader(req.header("cookie"));
 
     void sendLeadConversion({
       eventId,
       pixelId: LAKE_PIXEL_ID,
-      email: asString(req.body?.email),
-      phone: asString(req.body?.phone),
-      eventSourceUrl: asString(req.body?.eventSourceUrl),
+      email: asString(parsed.data.email),
+      phone: asString(parsed.data.phone),
+      eventSourceUrl: parsed.data.eventSourceUrl,
       clientIp: getClientIdentifier(req),
       userAgent: req.header("user-agent") || undefined,
       fbp: cookies._fbp,
       fbc: cookies._fbc,
-      fbclid: asString(req.body?.fbclid),
+      fbclid: asString(parsed.data.fbclid),
       customData: {
         content_name: "First Access Signup - Chasing Sun(Sets)",
         content_category: "Waitlist",

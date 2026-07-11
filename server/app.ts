@@ -34,6 +34,7 @@ type MethodGuard = {
 const METHOD_GUARDS: MethodGuard[] = [
   { path: "/health", methods: ["GET"] },
   { path: "/api/health", methods: ["GET"] },
+  { path: "/api/health/details", methods: ["GET"] },
   { path: "/api/social/echo", methods: ["GET"] },
   { path: "/api/site-data", methods: ["GET"] },
   { path: "/api/sponsor-deck", methods: ["GET"] },
