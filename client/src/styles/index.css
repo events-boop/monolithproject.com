@@ -8,6 +8,7 @@
 @import "./buttons.css";
 @import "./utilities.css";
 @import "./themes/sunsets.css";
+@import "./themes/house-of-friends.css";
 
 @source not "../components/ui/HeroSpotlight.tsx";
 @source not "../components/ui/MagneticButton.tsx";

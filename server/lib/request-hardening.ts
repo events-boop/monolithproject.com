@@ -89,6 +89,16 @@ export function createBrowserApiGuard(): RequestHandler {
       return;
     }
 
+    const isHouseOfFriendsLocalUpload =
+      req.method === "PUT" &&
+      /^\/house-of-friends\/applications\/[^/]+\/assets\/(photo|dj-set)$/.test(
+        req.path
+      );
+    if (isHouseOfFriendsLocalUpload) {
+      next();
+      return;
+    }
+
     if (!req.is("application/json")) {
       res.status(415).json({
         ok: false,

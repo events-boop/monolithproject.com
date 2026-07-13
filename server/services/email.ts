@@ -38,7 +38,7 @@ export async function sendWelcomeEmail(email: string, firstName?: string) {
  * Only sends when RESEND_API_KEY is set — otherwise it's a no-op.
  */
 export async function notifyFormSubmission(opts: {
-  type: "contact" | "booking" | "artist";
+  type: "contact" | "booking" | "artist" | "house-of-friends";
   name: string;
   email: string;
   subject?: string | null;
@@ -46,6 +46,8 @@ export async function notifyFormSubmission(opts: {
   entity?: string | null;
   inquiryType?: string | null;
   location?: string | null;
+  referenceCode?: string | null;
+  folderPrefix?: string | null;
   requestId: string;
 }) {
   if (!process.env.RESEND_API_KEY) return;
@@ -54,16 +56,16 @@ export async function notifyFormSubmission(opts: {
     contact: `[Contact] ${opts.subject || "New message"} — ${opts.name}`,
     booking: `[Booking] ${opts.inquiryType || "Inquiry"} — ${opts.name}`,
     artist: `[Artist Submit] ${opts.name}`,
+    "house-of-friends": `[House of Friends] ${opts.name}${opts.referenceCode ? ` — ${opts.referenceCode}` : ""}`,
   };
 
-  const lines = [
-    `Name: ${opts.name}`,
-    `Email: ${opts.email}`,
-  ];
+  const lines = [`Name: ${opts.name}`, `Email: ${opts.email}`];
   if (opts.subject) lines.push(`Subject: ${opts.subject}`);
   if (opts.entity) lines.push(`Entity: ${opts.entity}`);
   if (opts.inquiryType) lines.push(`Type: ${opts.inquiryType}`);
   if (opts.location) lines.push(`Location: ${opts.location}`);
+  if (opts.referenceCode) lines.push(`Reference: ${opts.referenceCode}`);
+  if (opts.folderPrefix) lines.push(`Private folder: ${opts.folderPrefix}`);
   if (opts.message) lines.push(`\nMessage:\n${opts.message}`);
 
   try {

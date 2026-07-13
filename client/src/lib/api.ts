@@ -1,6 +1,13 @@
 import { getAttributionPayload } from "./attribution";
 import { capturePostHogEvent } from "./posthog";
 import type { HoneypotPayload } from "@shared/generated/hardening";
+import type {
+  HouseOfFriendsAssetType,
+  HouseOfFriendsCompleteResponse,
+  HouseOfFriendsPrepareRequest,
+  HouseOfFriendsPrepareResponse,
+  HouseOfFriendsUploadTarget,
+} from "@shared/house-of-friends";
 
 export type LeadPayload = HoneypotPayload & {
   email: string;
@@ -159,6 +166,17 @@ export type ContactPayload = HoneypotPayload & {
   interestTags?: string[];
 };
 
+export type HouseOfFriendsUploadProgress = Record<
+  HouseOfFriendsAssetType,
+  number
+>;
+
+export type HouseOfFriendsSubmissionStatus =
+  | "preparing"
+  | "uploading-photo"
+  | "uploading-dj-set"
+  | "verifying";
+
 interface ApiError {
   message?: string;
   error?: {
@@ -273,6 +291,132 @@ export async function submitContactForm(payload: ContactPayload) {
   }
 
   return response.json();
+}
+
+function uploadHouseOfFriendsAsset(
+  target: HouseOfFriendsUploadTarget,
+  file: File,
+  onProgress: (progress: number) => void
+) {
+  return new Promise<void>((resolve, reject) => {
+    const request = new XMLHttpRequest();
+    request.open(target.method, target.url, true);
+    request.timeout = 30 * 60 * 1_000;
+    Object.entries(target.headers).forEach(([name, value]) => {
+      request.setRequestHeader(name, value);
+    });
+    request.upload.addEventListener("progress", event => {
+      if (!event.lengthComputable) return;
+      onProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
+    });
+    request.addEventListener("load", () => {
+      if (request.status >= 200 && request.status < 300) {
+        onProgress(100);
+        resolve();
+        return;
+      }
+      reject(
+        new Error(
+          `${target.assetType === "photo" ? "Artist photo" : "DJ set"} upload failed. Check your connection and try again.`
+        )
+      );
+    });
+    request.addEventListener("error", () => {
+      reject(
+        new Error(
+          `${target.assetType === "photo" ? "Artist photo" : "DJ set"} upload was interrupted.`
+        )
+      );
+    });
+    request.addEventListener("timeout", () => {
+      reject(
+        new Error("The upload timed out. Try again on a stronger connection.")
+      );
+    });
+    request.send(file);
+  });
+}
+
+export async function submitHouseOfFriendsApplication(
+  payload: HouseOfFriendsPrepareRequest & HoneypotPayload,
+  files: { photo: File; djSet: File },
+  callbacks?: {
+    onProgress?: (
+      progress: HouseOfFriendsUploadProgress,
+      status: HouseOfFriendsSubmissionStatus
+    ) => void;
+  }
+) {
+  const progress: HouseOfFriendsUploadProgress = { photo: 0, "dj-set": 0 };
+  const emit = (status: HouseOfFriendsSubmissionStatus) => {
+    callbacks?.onProgress?.({ ...progress }, status);
+  };
+
+  emit("preparing");
+  const prepareResponse = await fetch("/api/house-of-friends/applications", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const prepared = (await prepareResponse.json().catch(() => ({}))) as
+    | HouseOfFriendsPrepareResponse
+    | ApiError;
+  if (
+    !prepareResponse.ok ||
+    !("applicationToken" in prepared) ||
+    !("uploads" in prepared)
+  ) {
+    throw new Error(
+      parseApiError(
+        prepared as ApiError,
+        "We couldn't start the application upload right now."
+      )
+    );
+  }
+
+  const targets = new Map(
+    prepared.uploads.map(target => [target.assetType, target])
+  );
+  const photoTarget = targets.get("photo");
+  const setTarget = targets.get("dj-set");
+  if (!photoTarget || !setTarget) {
+    throw new Error("The media upload session is incomplete. Start again.");
+  }
+
+  emit("uploading-photo");
+  await uploadHouseOfFriendsAsset(photoTarget, files.photo, value => {
+    progress.photo = value;
+    emit("uploading-photo");
+  });
+
+  emit("uploading-dj-set");
+  await uploadHouseOfFriendsAsset(setTarget, files.djSet, value => {
+    progress["dj-set"] = value;
+    emit("uploading-dj-set");
+  });
+
+  emit("verifying");
+  const completeResponse = await fetch(
+    "/api/house-of-friends/applications/complete",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ applicationToken: prepared.applicationToken }),
+    }
+  );
+  const completed = (await completeResponse.json().catch(() => ({}))) as
+    | HouseOfFriendsCompleteResponse
+    | ApiError;
+  if (!completeResponse.ok || !("referenceCode" in completed)) {
+    throw new Error(
+      parseApiError(
+        completed as ApiError,
+        "Your files arrived, but registration could not be verified. Try again."
+      )
+    );
+  }
+
+  return completed;
 }
 
 export async function verifySponsorAccess(password: string) {

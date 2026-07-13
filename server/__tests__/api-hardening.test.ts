@@ -1,7 +1,10 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { buildPublicSocialEchoPayload } from "../routes/social-echo";
 import { createMethodNotAllowedHandler } from "../app";
-import { createApiResponseHardening } from "../lib/request-hardening";
+import {
+  createApiResponseHardening,
+  createBrowserApiGuard,
+} from "../lib/request-hardening";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import { createWebhookAuthMiddleware } from "../middleware";
 import { createAdminRouteGuard } from "../lib/admin-auth";
@@ -186,6 +189,21 @@ describe("api hardening", () => {
     expect(headers.get("strict-transport-security")).toBe(
       "max-age=31536000; includeSubDomains; preload"
     );
+  });
+
+  it("allows same-origin binary PUTs only for the local House of Friends asset route", async () => {
+    const middleware = createBrowserApiGuard();
+    const result = await runMiddleware(middleware, {
+      path: "/house-of-friends/applications/hof_2026_test/assets/dj-set",
+      method: "PUT",
+      headers: {
+        origin: "https://monolithproject.com",
+        host: "monolithproject.com",
+        "content-type": "audio/mpeg",
+        "sec-fetch-site": "same-origin",
+      },
+    });
+    expect(result.nextCalled).toBe(true);
   });
 
   it("can skip rate limiting for health probes", () => {

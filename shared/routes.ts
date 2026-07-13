@@ -50,6 +50,8 @@ export const ROUTES = {
   privacy: "/privacy",
   cookies: "/cookies",
   monolith: "/monolith",
+  houseOfFriends: "/house-of-friends",
+  houseOfFriendsApply: "/house-of-friends/apply",
   notFound: "/404",
 
   // Redirect aliases (resolved to canonical routes by the router)

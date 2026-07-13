@@ -1,5 +1,13 @@
 import { z } from "zod";
 import { honeypotFieldName } from "@shared/generated/hardening";
+import {
+  HOUSE_OF_FRIENDS_AUDIO_MAX_BYTES,
+  HOUSE_OF_FRIENDS_AUDIO_TYPES,
+  HOUSE_OF_FRIENDS_PHOTO_MAX_BYTES,
+  HOUSE_OF_FRIENDS_PHOTO_TYPES,
+  houseOfFriendsFileDescriptorSchema,
+  houseOfFriendsProfileSchema,
+} from "@shared/house-of-friends";
 
 export type LeadProvider =
   | "disabled"
@@ -153,6 +161,33 @@ export const contactSchema = z.object({
   funnelId: shortText(120),
   interestTags: shortArray(12, 80),
   ...honeypotFields,
+});
+
+const allowedPhotoTypes = new Set<string>(HOUSE_OF_FRIENDS_PHOTO_TYPES);
+const allowedAudioTypes = new Set<string>(HOUSE_OF_FRIENDS_AUDIO_TYPES);
+
+export const houseOfFriendsApplicationSchema =
+  houseOfFriendsProfileSchema.extend({
+    photo: houseOfFriendsFileDescriptorSchema
+      .refine(file => allowedPhotoTypes.has(file.type), {
+        message: "Upload a JPG, PNG, or WebP artist photo.",
+      })
+      .refine(file => file.size <= HOUSE_OF_FRIENDS_PHOTO_MAX_BYTES, {
+        message: "Artist photo must be 10 MB or smaller.",
+      }),
+    djSet: houseOfFriendsFileDescriptorSchema
+      .refine(file => allowedAudioTypes.has(file.type), {
+        message: "Upload an MP3, M4A, WAV, or FLAC DJ set.",
+      })
+      .refine(file => file.size <= HOUSE_OF_FRIENDS_AUDIO_MAX_BYTES, {
+        message: "DJ set must be 1.5 GB or smaller.",
+      }),
+    [honeypotFieldName]: z.string().max(10).optional(),
+    metadata_correlation_id: z.string().max(10).optional(),
+  });
+
+export const houseOfFriendsCompleteSchema = z.object({
+  applicationToken: z.string().trim().min(40).max(12_000),
 });
 
 export const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());

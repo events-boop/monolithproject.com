@@ -20,6 +20,7 @@ import siteDataRouter from "./routes/site-data";
 import opsRouter from "./routes/ops";
 import outboundRouter from "./routes/outbound";
 import trackingRouter from "./routes/tracking";
+import houseOfFriendsRouter from "./routes/house-of-friends";
 import spaRouter from "./routes/spa";
 
 type CreateAppOptions = {
@@ -46,6 +47,11 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/track/link-click", methods: ["POST"] },
   { path: "/api/track/lead", methods: ["POST"] },
   { path: "/api/sponsor-access", methods: ["POST"] },
+  { path: "/api/house-of-friends/applications", methods: ["POST"] },
+  {
+    path: "/api/house-of-friends/applications/complete",
+    methods: ["POST"],
+  },
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },
   { path: "/api/ops/sunsets-analytics", methods: ["GET"] },
@@ -104,6 +110,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(opsRouter);
   app.use(outboundRouter);
   app.use(trackingRouter);
+  app.use(houseOfFriendsRouter);
 
   for (const guard of METHOD_GUARDS) {
     app.all(guard.path, createMethodNotAllowedHandler(guard.methods));

@@ -935,6 +935,77 @@ export const bookingInquiries = pgTable("booking_inquiries", {
 });
 
 /**
+ * house_of_friends_applications — Completed artist-development applications.
+ * Large media stays in private object storage; this table stores the reviewable
+ * profile plus immutable object keys and consent evidence.
+ */
+export const houseOfFriendsApplications = pgTable(
+  "house_of_friends_applications",
+  {
+    id: text("id").primaryKey(),
+    referenceCode: text("reference_code").notNull(),
+    status: text("status").notNull().default("submitted"),
+    firstName: text("first_name").notNull(),
+    lastName: text("last_name").notNull(),
+    stageName: text("stage_name").notNull(),
+    email: text("email").notNull(),
+    phone: text("phone").notNull(),
+    city: text("city").notNull(),
+    state: text("state").notNull(),
+    instagram: text("instagram").notNull(),
+    artistUrl: text("artist_url"),
+    yearsActive: text("years_active").notNull(),
+    genres: text("genres").notNull(),
+    bio: text("bio").notNull(),
+    whyHouseOfFriends: text("why_house_of_friends").notNull(),
+    collaborationStyle: text("collaboration_style").notNull(),
+    setTitle: text("set_title").notNull(),
+    setTracklist: text("set_tracklist"),
+    setUrl: text("set_url"),
+    folderPrefix: text("folder_prefix").notNull(),
+    profileObjectKey: text("profile_object_key").notNull(),
+    photoObjectKey: text("photo_object_key").notNull(),
+    djSetObjectKey: text("dj_set_object_key").notNull(),
+    photoMetadata: jsonb("photo_metadata").notNull().default({}),
+    djSetMetadata: jsonb("dj_set_metadata").notNull().default({}),
+    ageConfirmed: boolean("age_confirmed").notNull(),
+    availabilityConfirmed: boolean("availability_confirmed").notNull(),
+    rightsConfirmed: boolean("rights_confirmed").notNull(),
+    termsAccepted: boolean("terms_accepted").notNull(),
+    marketingConsent: boolean("marketing_consent").notNull().default(false),
+    submittedAt: timestamp("submitted_at", {
+      withTimezone: true,
+      mode: "string",
+    }).notNull(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+      mode: "string",
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+      withTimezone: true,
+      mode: "string",
+    })
+      .notNull()
+      .defaultNow(),
+    metadata: jsonb("metadata").notNull().default({}),
+  },
+  table => ({
+    referenceCodeIdx: uniqueIndex(
+      "house_of_friends_applications_reference_code_idx"
+    ).on(table.referenceCode),
+    emailIdx: index("house_of_friends_applications_email_idx").on(table.email),
+    statusIdx: index("house_of_friends_applications_status_idx").on(
+      table.status
+    ),
+    submittedAtIdx: index("house_of_friends_applications_submitted_at_idx").on(
+      table.submittedAt
+    ),
+  })
+);
+
+/**
  * scheduled_events — Public-facing published event instances with full detail.
  * This is the "show page" table: lineup, ticket tiers, FAQs, venue info,
  * active funnels, dress code, and more. Distinct from the lightweight

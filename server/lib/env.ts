@@ -93,6 +93,21 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   }
 
   if (isProd) {
+    const houseStorageVars = [
+      "HOF_R2_ACCOUNT_ID",
+      "HOF_R2_ACCESS_KEY_ID",
+      "HOF_R2_SECRET_ACCESS_KEY",
+      "HOF_R2_BUCKET",
+    ];
+    const configuredHouseStorageVars = houseStorageVars.filter(variable =>
+      Boolean(process.env[variable]?.trim())
+    );
+    if (configuredHouseStorageVars.length !== houseStorageVars.length) {
+      console.warn(
+        "⚠️  House of Friends R2 storage is not fully configured. Artist application uploads will fail closed."
+      );
+    }
+
     if (!process.env.OPS_ADMIN_SECRET?.trim()) {
       console.warn(
         "⚠️  OPS_ADMIN_SECRET is not set. Administrative routes will fail closed in production."

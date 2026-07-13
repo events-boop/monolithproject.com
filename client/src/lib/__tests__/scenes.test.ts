@@ -52,6 +52,12 @@ describe("scenes", () => {
       });
     });
 
+    it("keeps House of Friends inside the parent Monolith scene", () => {
+      expect(getSceneForPath("/house-of-friends").id).toBe("monolith");
+      expect(getSceneForPath("/house-of-friends").brand).toBe("monolith");
+      expect(getSceneForPath("/house-of-friends/apply").id).toBe("monolith");
+    });
+
     it("story scene has correct properties", () => {
       const scene = getSceneForPath("/story");
       expect(scene).toEqual<SceneConfig>({

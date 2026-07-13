@@ -45,6 +45,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
 const Monolith = lazy(() => import("./pages/Monolith"));
+const HouseOfFriends = lazy(() => import("./pages/HouseOfFriends"));
+const HouseOfFriendsApply = lazy(() => import("./pages/HouseOfFriendsApply"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Ambassadors = lazy(() => import("./pages/Ambassadors"));
 const Travel = lazy(() => import("./pages/Travel"));
@@ -131,6 +133,8 @@ const PrivacyTransition = withTransition(Privacy);
 const CookiesTransition = withTransition(Cookies);
 const NotFoundTransition = withTransition(NotFoundLazy);
 const MonolithTransition = withTransition(Monolith);
+const HouseOfFriendsTransition = withTransition(HouseOfFriends);
+const HouseOfFriendsApplyTransition = withTransition(HouseOfFriendsApply);
 const ShopTransition = withTransition(Shop);
 const AmbassadorsTransition = withTransition(Ambassadors);
 const TravelTransition = withTransition(Travel);
@@ -282,6 +286,14 @@ function Router() {
       <Route path={ROUTES.privacy} component={PrivacyTransition} />
       <Route path={ROUTES.cookies} component={CookiesTransition} />
       <Route path={ROUTES.monolith} component={MonolithTransition} />
+      <Route
+        path={ROUTES.houseOfFriendsApply}
+        component={HouseOfFriendsApplyTransition}
+      />
+      <Route
+        path={ROUTES.houseOfFriends}
+        component={HouseOfFriendsTransition}
+      />
       <Route path={ROUTES.theMonolith}>
         <Redirect to={ROUTES.monolith} />
       </Route>
@@ -415,6 +427,9 @@ function MainContentWrapper() {
     landingPath === ROUTES.story ||
     landingPath === ROUTES.untoldVip ||
     isUntoldRootLanding;
+  const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
+  const shouldHideGlobalConversion =
+    isStandaloneLanding || isHouseOfFriendsRoute;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -445,7 +460,7 @@ function MainContentWrapper() {
         aria-hidden="true"
       />
 
-      {!isStandaloneLanding && (
+      {!shouldHideGlobalConversion && (
         <Suspense fallback={null}>
           <GlobalTicketButton />
         </Suspense>
@@ -482,14 +497,16 @@ function MainContentWrapper() {
         )}
         {!isStandaloneLanding && (
           <>
-            <ViewportLazy
-              minHeightClassName="min-h-[24rem]"
-              rootMargin="360px 0px"
-            >
-              <Suspense fallback={null}>
-                <SoundCloudShelf />
-              </Suspense>
-            </ViewportLazy>
+            {!shouldHideGlobalConversion && (
+              <ViewportLazy
+                minHeightClassName="min-h-[24rem]"
+                rootMargin="360px 0px"
+              >
+                <Suspense fallback={null}>
+                  <SoundCloudShelf />
+                </Suspense>
+              </ViewportLazy>
+            )}
             <ViewportLazy
               minHeightClassName="min-h-[40rem]"
               rootMargin="420px 0px"

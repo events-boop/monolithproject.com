@@ -6,6 +6,7 @@ import {
   bookingInquirySchema,
   sponsorAccessSchema,
   contactSchema,
+  houseOfFriendsApplicationSchema,
   poshWebhookPayloadSchema,
 } from "../lib/schemas";
 
@@ -511,6 +512,76 @@ describe("contactSchema", () => {
       expect(result.data.subject).toBe("Hello");
       expect(result.data.message).toBe("Hey there!");
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// House of Friends application schema
+// ---------------------------------------------------------------------------
+describe("houseOfFriendsApplicationSchema", () => {
+  const validApplication = {
+    firstName: "Ari",
+    lastName: "Rivera",
+    stageName: "ARI R",
+    email: "ari@example.com",
+    phone: "+1 312 555 0199",
+    city: "Chicago",
+    state: "Illinois",
+    instagram: "@arir",
+    artistUrl: "https://soundcloud.com/arir",
+    yearsActive: "1-2",
+    genres: "Afro House, Melodic House",
+    bio: "B".repeat(120),
+    whyHouseOfFriends: "W".repeat(120),
+    collaborationStyle: "C".repeat(80),
+    setTitle: "House of Friends Submission",
+    setTracklist: "",
+    setUrl: "",
+    ageConfirmed: true,
+    availabilityConfirmed: true,
+    rightsConfirmed: true,
+    termsAccepted: true,
+    marketingConsent: false,
+    photo: {
+      name: "artist.jpg",
+      size: 2_048,
+      type: "image/jpeg",
+    },
+    djSet: {
+      name: "artist-set.mp3",
+      size: 4_096,
+      type: "audio/mpeg",
+    },
+  };
+
+  it("accepts a complete artist profile with photo and DJ set metadata", () => {
+    expect(
+      houseOfFriendsApplicationSchema.safeParse(validApplication).success
+    ).toBe(true);
+  });
+
+  it("rejects unsupported media and missing rights consent", () => {
+    const result = houseOfFriendsApplicationSchema.safeParse({
+      ...validApplication,
+      rightsConfirmed: false,
+      djSet: {
+        name: "video.mov",
+        size: 4_096,
+        type: "video/quicktime",
+      },
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects photos over 10 MB", () => {
+    const result = houseOfFriendsApplicationSchema.safeParse({
+      ...validApplication,
+      photo: {
+        ...validApplication.photo,
+        size: 10 * 1024 * 1024 + 1,
+      },
+    });
+    expect(result.success).toBe(false);
   });
 });
 
