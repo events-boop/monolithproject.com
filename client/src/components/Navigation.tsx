@@ -906,8 +906,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     >
                       <div
                         className={`
-                      rounded-full items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
-                      transition-all duration-500 flex border uppercase font-black
+                      btn-pill-neutral items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
+                      flex border uppercase
                       ${cta.tool === "posh" ? "cta-posh border-transparent" : cta.tool === "laylo" ? "cta-laylo" : "cta-fillout"}
                       ${ctaToneClass}
                       ${isLight && cta.tool === "posh" ? "opacity-90 hover:opacity-100 !shadow-none" : ""}

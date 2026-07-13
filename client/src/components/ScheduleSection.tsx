@@ -23,7 +23,10 @@ import {
 import { MONOLITH_ORANGE } from "@/lib/brand";
 import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { getEventPillToneClass } from "@/lib/ctaTone";
+import {
+  getEventOutlinePillToneClass,
+  getEventPillToneClass,
+} from "@/lib/ctaTone";
 
 function formatIcsLocal(d: Date) {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -184,7 +187,7 @@ export default function ScheduleSection() {
                     source: "schedule_section_header",
                   })
                 }
-                className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group"
+                className="btn-text-action group"
               >
                 <CalendarDays className="h-4 w-4" />
                 Explore Calendar
@@ -200,28 +203,35 @@ export default function ScheduleSection() {
                     source: "schedule_section_header",
                   })
                 }
-                className="btn-pill-neutral btn-pill-compact group"
+                className="btn-pill-monolith btn-pill-compact group"
               >
                 <Mail className="h-4 w-4" />
                 Season Updates
               </Link>
             </div>
 
-            <div className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-white/15 bg-black/[0.04] p-1 shadow-none backdrop-blur-md no-scrollbar">
+            <div
+              className="schedule-month-tabs no-scrollbar"
+              role="group"
+              aria-label="Filter schedule by month"
+            >
               {months.map(month => (
                 <button
                   key={month}
+                  type="button"
                   onClick={() => setActiveMonth(month)}
-                  className={`relative shrink-0 min-h-[var(--tap-target-min)] px-4 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
+                  aria-pressed={activeMonth === month}
+                  data-active={activeMonth === month ? "true" : "false"}
+                  className={`schedule-month-tab ${
                     activeMonth === month
-                      ? "text-white shadow-sm"
+                      ? "text-white"
                       : "text-white/65 hover:text-white"
                   }`}
                 >
                   {activeMonth === month && (
                     <motion.div
                       layoutId="schedule-section-active-tab"
-                      className="absolute inset-0 bg-black rounded-full"
+                      className="schedule-month-tab-active"
                       transition={{
                         type: "spring",
                         bounce: 0.1,
@@ -439,7 +449,8 @@ export default function ScheduleSection() {
                           type="button"
                           onClick={() => toggle(event.id)}
                           aria-expanded={isExpanded}
-                          className={`${isExpanded ? "btn-pill-outline-dark" : "btn-pill-dark"} btn-pill-compact`}
+                          aria-controls={`schedule-preview-${event.id}`}
+                          className="btn-text-action group"
                         >
                           {isExpanded ? "Hide Preview" : "Quick View"}
                           <ArrowRight
@@ -454,6 +465,7 @@ export default function ScheduleSection() {
                   <AnimatePresence>
                     {isExpanded && (
                       <motion.div
+                        id={`schedule-preview-${event.id}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -576,15 +588,15 @@ export default function ScheduleSection() {
                                   onMouseEnter={() =>
                                     preconnectGateway(event.ticketUrl!)
                                   }
-                                  className={`${getEventPillToneClass(event)} btn-pill-monolith btn-pill-compact group`}
+                                  className={`${getEventPillToneClass(event)} btn-pill-compact group`}
                                 >
                                   {CTA_LABELS.tickets}
                                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </a>
                               ) : (
-                                <button className="btn-pill-disabled btn-pill-compact">
+                                <span className="schedule-release-status ui-chip">
                                   Release Details Soon
-                                </button>
+                                </span>
                               )}
 
                               <Link
@@ -595,7 +607,9 @@ export default function ScheduleSection() {
                                 }
                                 asChild
                               >
-                                <a className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group">
+                                <a
+                                  className={`${getEventOutlinePillToneClass(event)} btn-pill-compact group`}
+                                >
                                   {event.id === "css-jul04"
                                     ? "Open Artist Profile"
                                     : "Open Event Page"}
@@ -604,8 +618,9 @@ export default function ScheduleSection() {
                               </Link>
 
                               <button
+                                type="button"
                                 onClick={() => downloadICS(event)}
-                                className="btn-pill-outline btn-pill-outline-dark btn-pill-compact group"
+                                className="btn-text-action group"
                               >
                                 <CalendarPlus className="w-4 h-4" />
                                 Add To Calendar
@@ -629,15 +644,9 @@ export default function ScheduleSection() {
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link href="/schedule">
-              <span className="btn-text-action btn-text-action-dark group cursor-pointer">
+              <span className="btn-text-action group cursor-pointer">
                 See All Dates
                 <ArrowRight />
-              </span>
-            </Link>
-            <Link href="/newsletter">
-              <span className="btn-pill-neutral group cursor-pointer">
-                Get Event Updates
-                <ArrowRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>

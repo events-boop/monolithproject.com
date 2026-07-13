@@ -675,6 +675,371 @@
     );
   }
 
+  /* Etched CTA architecture: restrained slabs that carry the same datum-line
+     language as the hero dossier, world cards, and section dividers. */
+  :is(
+    .btn-pill,
+    .btn-pill-dark,
+    .btn-pill-coral,
+    .btn-pill-primary,
+    .btn-pill-sunsets,
+    .btn-pill-radio,
+    .btn-pill-untold,
+    .btn-pill-monolith,
+    .btn-pill-secondary,
+    .btn-pill-glass,
+    .btn-pill-neutral,
+    .btn-pill-outline,
+    .btn-pill-ghost,
+    .btn-pill-outline-dark,
+    .btn-pill-disabled,
+    .cta-ghost
+  ) {
+    --button-etch: 232, 232, 226;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 0.42rem;
+    font-family: var(--font-monolith);
+    font-size: 0.675rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    backdrop-filter: none;
+    transition:
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease,
+      background 220ms ease,
+      color 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .btn-pill-sunsets,
+  .btn-pill-outline-sunsets,
+  .btn-pill-outline-sunsets-light {
+    --button-etch: 232, 184, 109;
+  }
+
+  .btn-pill-untold,
+  .btn-pill-outline-untold {
+    --button-etch: 34, 211, 238;
+  }
+
+  .btn-pill-radio,
+  .btn-pill-outline-radio {
+    --button-etch: 244, 63, 94;
+  }
+
+  .btn-pill-coral,
+  .btn-pill-primary,
+  .btn-pill-monolith,
+  .btn-pill-outline-monolith {
+    --button-etch: 224, 90, 58;
+  }
+
+  :is(
+    .btn-pill,
+    .btn-pill-dark,
+    .btn-pill-coral,
+    .btn-pill-primary,
+    .btn-pill-sunsets,
+    .btn-pill-radio,
+    .btn-pill-untold,
+    .btn-pill-monolith,
+    .btn-pill-secondary,
+    .btn-pill-glass,
+    .btn-pill-neutral,
+    .btn-pill-outline,
+    .btn-pill-ghost,
+    .btn-pill-outline-dark,
+    .btn-pill-disabled,
+    .cta-ghost
+  )::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(
+          90deg,
+          rgba(var(--button-etch), 0.82),
+          rgba(var(--button-etch), 0.82)
+        )
+        left top / 1.7rem 1px no-repeat,
+      linear-gradient(
+          180deg,
+          rgba(var(--button-etch), 0.7),
+          rgba(var(--button-etch), 0.7)
+        )
+        left top / 1px 0.72rem no-repeat,
+      linear-gradient(
+          270deg,
+          rgba(var(--button-etch), 0.5),
+          rgba(var(--button-etch), 0.5)
+        )
+        right bottom / 1.7rem 1px no-repeat,
+      linear-gradient(
+          0deg,
+          rgba(var(--button-etch), 0.42),
+          rgba(var(--button-etch), 0.42)
+        )
+        right bottom / 1px 0.72rem no-repeat;
+    opacity: 0.62;
+    transform: none;
+    transition: opacity 280ms ease;
+  }
+
+  :is(
+    .btn-pill-coral,
+    .btn-pill-primary,
+    .btn-pill-sunsets,
+    .btn-pill-radio,
+    .btn-pill-untold,
+    .btn-pill-monolith
+  )::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 0;
+    background:
+      linear-gradient(
+          90deg,
+          transparent,
+          rgba(var(--button-etch), 0.58),
+          transparent
+        )
+        15% 0 / 38% 1px no-repeat,
+      linear-gradient(112deg, rgba(255, 255, 255, 0.09), transparent 42%);
+    box-shadow: none;
+    opacity: 0.72;
+    transition: opacity 280ms ease;
+  }
+
+  :is(
+      .btn-pill,
+      .btn-pill-dark,
+      .btn-pill-coral,
+      .btn-pill-primary,
+      .btn-pill-sunsets,
+      .btn-pill-radio,
+      .btn-pill-untold,
+      .btn-pill-monolith,
+      .btn-pill-secondary,
+      .btn-pill-glass,
+      .btn-pill-neutral,
+      .btn-pill-outline,
+      .btn-pill-ghost,
+      .btn-pill-outline-dark,
+      .cta-ghost
+    ):hover::before {
+    opacity: 0.94;
+    transform: none;
+  }
+
+  :is(
+      .btn-pill-coral,
+      .btn-pill-primary,
+      .btn-pill-sunsets,
+      .btn-pill-radio,
+      .btn-pill-untold,
+      .btn-pill-monolith
+    ):hover::after {
+    opacity: 1;
+  }
+
+  .btn-pill-sunsets {
+    --pill-accent-bg: #924827;
+    --pill-accent-hover-bg: #aa5b35;
+    --pill-accent-border: rgba(232, 184, 109, 0.62);
+    --pill-accent-hover-border: rgba(244, 215, 161, 0.86);
+    --pill-accent-shadow:
+      0 12px 30px rgba(90, 38, 20, 0.3),
+      inset 0 0 0 1px rgba(232, 184, 109, 0.08);
+    --pill-accent-hover-shadow:
+      0 16px 38px rgba(164, 89, 44, 0.34), 0 0 20px rgba(232, 184, 109, 0.1);
+  }
+
+  .btn-pill-untold {
+    --pill-accent-bg: #10333c;
+    --pill-accent-hover-bg: #164856;
+    --pill-accent-text: #dffbff;
+    --pill-accent-border: rgba(34, 211, 238, 0.58);
+    --pill-accent-hover-border: rgba(167, 139, 250, 0.74);
+    --pill-accent-shadow:
+      0 12px 30px rgba(4, 28, 36, 0.34), 0 0 18px rgba(34, 211, 238, 0.08);
+    --pill-accent-hover-shadow:
+      0 16px 40px rgba(34, 211, 238, 0.18), 0 0 24px rgba(139, 92, 246, 0.14);
+  }
+
+  .btn-pill-monolith,
+  .btn-pill-coral,
+  .btn-pill-primary {
+    --pill-accent-bg: #7e2f20;
+    --pill-accent-hover-bg: #98412b;
+    --pill-accent-border: rgba(224, 90, 58, 0.58);
+    --pill-accent-hover-border: rgba(240, 163, 142, 0.82);
+    --pill-accent-shadow:
+      0 12px 30px rgba(58, 18, 12, 0.34),
+      inset 0 0 0 1px rgba(224, 90, 58, 0.08);
+    --pill-accent-hover-shadow:
+      0 16px 40px rgba(224, 90, 58, 0.22), 0 0 22px rgba(224, 90, 58, 0.12);
+  }
+
+  .btn-pill-radio {
+    --pill-accent-bg: #68172b;
+    --pill-accent-hover-bg: #861e37;
+    --pill-accent-border: rgba(244, 63, 94, 0.58);
+    --pill-accent-hover-border: rgba(253, 164, 175, 0.82);
+    --pill-accent-shadow: 0 12px 30px rgba(45, 6, 16, 0.34);
+    --pill-accent-hover-shadow:
+      0 16px 40px rgba(244, 63, 94, 0.22), 0 0 22px rgba(244, 63, 94, 0.12);
+  }
+
+  .btn-pill-outline,
+  .btn-pill-ghost,
+  .cta-ghost {
+    --pill-bg: rgba(7, 7, 8, 0.68);
+    --pill-hover-bg: rgba(255, 255, 255, 0.09);
+    --pill-hover-text: #ffffff;
+    --pill-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    --pill-hover-shadow:
+      inset 0 0 0 1px rgba(var(--button-etch), 0.1),
+      0 12px 30px rgba(0, 0, 0, 0.22);
+  }
+
+  .btn-text-action {
+    --cta-etch: var(--home-etch, 232, 232, 226);
+    min-height: 2.65rem;
+    justify-content: flex-start;
+    border: 0;
+    border-block: 1px solid rgba(var(--cta-etch), 0.24);
+    border-radius: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(var(--cta-etch), 0.08),
+      transparent 52%
+    );
+    padding: 0.68rem 0.8rem 0.68rem 0.95rem;
+    font-weight: 400;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .btn-text-action::before {
+    content: "";
+    width: 0.32rem;
+    height: 0.32rem;
+    flex: 0 0 auto;
+    border: 1px solid rgba(var(--cta-etch), 0.72);
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px rgba(var(--cta-etch), 0.18);
+  }
+
+  .btn-text-action:hover {
+    border-color: rgba(var(--cta-etch), 0.5);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--cta-etch), 0.15),
+      transparent 70%
+    );
+    color: #ffffff;
+    box-shadow: none;
+  }
+
+  :is(
+    .btn-pill,
+    .btn-pill-dark,
+    .btn-pill-coral,
+    .btn-pill-primary,
+    .btn-pill-sunsets,
+    .btn-pill-radio,
+    .btn-pill-untold,
+    .btn-pill-monolith,
+    .btn-pill-secondary,
+    .btn-pill-glass,
+    .btn-pill-neutral,
+    .btn-pill-outline,
+    .btn-pill-ghost,
+    .btn-pill-outline-dark,
+    .cta-ghost
+  ):focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(var(--button-etch), 0.38);
+  }
+
+  :is(button:disabled, [aria-disabled="true"], .btn-pill-disabled) {
+    cursor: not-allowed;
+    opacity: 0.52;
+  }
+
+  :is(button:disabled, [aria-disabled="true"], .btn-pill-disabled):hover {
+    transform: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :is(
+      .btn-pill,
+      .btn-pill-dark,
+      .btn-pill-coral,
+      .btn-pill-primary,
+      .btn-pill-sunsets,
+      .btn-pill-radio,
+      .btn-pill-untold,
+      .btn-pill-monolith,
+      .btn-pill-secondary,
+      .btn-pill-glass,
+      .btn-pill-neutral,
+      .btn-pill-outline,
+      .btn-pill-ghost,
+      .btn-pill-outline-dark,
+      .cta-ghost
+    ):hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 768px), (pointer: coarse) {
+    .btn-pill-compact,
+    .btn-text-action {
+      min-height: var(--tap-target-min);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :is(
+      [class*="btn-pill"],
+      [class*="btn-text-action"],
+      [class*="btn-inline-pill"]
+    ) {
+      border-color: ButtonText;
+      background: Canvas;
+      color: ButtonText;
+      box-shadow: none;
+    }
+
+    :is(
+      [class*="btn-pill"],
+      [class*="btn-text-action"],
+      [class*="btn-inline-pill"]
+    ):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :is(
+      [class*="btn-pill"],
+      [class*="btn-inline-pill"],
+      [class*="btn-text-action"]
+    ) {
+      transition-duration: 0.01ms;
+    }
+  }
+
   /* Universal tool-specific CTAs */
   .cta-laylo,
   .cta-posh,
@@ -704,6 +1069,7 @@
   }
 
   .cta-series-sunsets {
+    --button-etch: 232, 184, 109;
     --cta-accent: #a4592c;
     --cta-accent-deep: #8f4427;
     --cta-solid-text: #ffffff;
@@ -719,6 +1085,7 @@
   }
 
   .cta-series-radio {
+    --button-etch: 244, 63, 94;
     --cta-accent: #f43f5e;
     --cta-accent-deep: #8a1230;
     --cta-solid-text: #ffffff;
@@ -734,6 +1101,7 @@
   }
 
   .cta-series-untold {
+    --button-etch: 34, 211, 238;
     --cta-accent: #22d3ee;
     --cta-accent-deep: #8b5cf6;
     --cta-solid-text: #020617;
@@ -749,6 +1117,7 @@
   }
 
   .cta-series-monolith {
+    --button-etch: 224, 90, 58;
     --cta-accent: #e05a3a;
     --cta-accent-deep: #7f311d;
     --cta-solid-text: #ffffff;
@@ -854,5 +1223,22 @@
     color: var(--cta-schedule-hover-text, #ffffff) !important;
     transform: translateY(-2px);
     box-shadow: 0 18px 44px var(--cta-glow-strong, rgba(127, 49, 29, 0.28)) !important;
+  }
+
+  :is(
+    .btn-pill-neutral.cta-laylo,
+    .btn-pill-neutral.cta-posh,
+    .btn-pill-neutral.cta-fillout,
+    .btn-pill-neutral.cta-experiential
+  ) {
+    border-radius: 0.42rem;
+    font-family: var(--font-monolith);
+    font-weight: 600;
+    transition:
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease,
+      background 220ms ease,
+      color 220ms ease,
+      box-shadow 220ms ease;
   }
 }

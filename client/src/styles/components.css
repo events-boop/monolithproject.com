@@ -1052,6 +1052,98 @@
     pointer-events: none;
   }
 
+  /* Page-scale alignment rails: the same split language as the cards and dividers. */
+  .home-etched-band {
+    --home-etch: 164, 89, 44;
+    --home-etch-soft: 232, 184, 109;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .home-etched-band[data-home-etch-tone="sunsets"] {
+    --home-etch: 201, 134, 91;
+    --home-etch-soft: 232, 184, 109;
+  }
+
+  .home-etched-band[data-home-etch-tone="untold"] {
+    --home-etch: 34, 211, 238;
+    --home-etch-soft: 139, 92, 246;
+  }
+
+  .home-etched-band[data-home-etch-tone="archive"] {
+    --home-etch: 164, 89, 44;
+    --home-etch-soft: 232, 184, 109;
+  }
+
+  .home-etched-band > .container,
+  .home-etched-band > div:not(.home-etched-band-etch) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-etched-band::before {
+    content: "";
+    position: absolute;
+    inset: 0.9rem clamp(0.8rem, 3vw, 2.4rem);
+    z-index: 0;
+    pointer-events: none;
+    border-inline: 1px solid rgba(var(--home-etch), 0.11);
+    background:
+      linear-gradient(rgba(var(--home-etch), 0.7), rgba(var(--home-etch), 0.7))
+        left top / clamp(3rem, 12vw, 9rem) 1px no-repeat,
+      linear-gradient(
+          rgba(var(--home-etch-soft), 0.52),
+          rgba(var(--home-etch-soft), 0.52)
+        )
+        right bottom / clamp(3rem, 12vw, 9rem) 1px no-repeat;
+    opacity: 0.72;
+  }
+
+  .home-etched-band::after {
+    content: "";
+    position: absolute;
+    right: clamp(1.5rem, 5vw, 4.5rem);
+    top: 1.05rem;
+    z-index: 0;
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 1px solid rgba(var(--home-etch-soft), 0.62);
+    transform: rotate(45deg);
+    box-shadow:
+      0 0 14px rgba(var(--home-etch), 0.22),
+      inset 0 0 0 0.2rem rgba(var(--home-etch-soft), 0.05);
+  }
+
+  .home-etched-band[data-home-etch-tone="sunsets"]::after {
+    border-radius: 999px;
+    transform: none;
+    background: linear-gradient(
+      180deg,
+      transparent 46%,
+      rgba(var(--home-etch-soft), 0.62) 47% 53%,
+      transparent 54%
+    );
+  }
+
+  .home-etched-band[data-home-etch-tone="untold"]::after {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @media (max-width: 639px) {
+    .home-etched-band::before {
+      inset-inline: 0.55rem;
+      opacity: 0.54;
+    }
+
+    .home-etched-band::after {
+      right: 1.2rem;
+      top: 0.8rem;
+      width: 0.65rem;
+      height: 0.65rem;
+    }
+  }
+
   .signal-etched-frame[data-signal-tone="untold"]::after {
     right: -2.25rem;
     bottom: -2.8rem;
@@ -1081,6 +1173,122 @@
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.08);
+  }
+
+  .floating-access-card {
+    min-width: 15.5rem;
+  }
+
+  .floating-vip-card {
+    min-width: 13rem;
+  }
+
+  .floating-access-card-icon {
+    flex: 0 0 auto;
+    border-radius: 9999px;
+  }
+
+  .schedule-month-tabs {
+    --schedule-tab-etch: 224, 90, 58;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    max-width: 100%;
+    gap: 1px;
+    overflow-x: auto;
+    border: 1px solid rgba(var(--schedule-tab-etch), 0.24);
+    border-radius: 0.46rem;
+    background: rgba(5, 5, 6, 0.42);
+    padding: 0.25rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.035),
+      0 12px 30px rgba(0, 0, 0, 0.14);
+  }
+
+  .schedule-month-tabs::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(
+          90deg,
+          rgba(var(--schedule-tab-etch), 0.72),
+          rgba(var(--schedule-tab-etch), 0.72)
+        )
+        left top / 1.5rem 1px no-repeat,
+      linear-gradient(
+          270deg,
+          rgba(var(--schedule-tab-etch), 0.44),
+          rgba(var(--schedule-tab-etch), 0.44)
+        )
+        right bottom / 1.5rem 1px no-repeat;
+    opacity: 0.72;
+  }
+
+  .schedule-month-tab {
+    position: relative;
+    min-height: var(--tap-target-min);
+    flex: 0 0 auto;
+    border-radius: 0.24rem;
+    padding: 0.625rem 1rem;
+    font-family: var(--font-monolith);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition:
+      color 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .schedule-month-tab + .schedule-month-tab {
+    border-left: 1px solid rgba(255, 255, 255, 0.075);
+  }
+
+  .schedule-month-tab[data-active="true"] {
+    color: #ffffff;
+  }
+
+  .schedule-month-tab-active {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border: 1px solid rgba(var(--schedule-tab-etch), 0.46);
+    border-radius: 0.24rem;
+    background: rgba(22, 12, 9, 0.92);
+    box-shadow:
+      inset 0 1px 0 rgba(var(--schedule-tab-etch), 0.24),
+      0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    .schedule-month-tab {
+      padding-inline: 1.5rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .schedule-release-status {
+    display: inline-flex;
+    min-height: 2.6rem;
+    align-items: center;
+    gap: 0.65rem;
+    border-block: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.055), transparent);
+    padding: 0.7rem 1rem;
+    color: rgba(255, 255, 255, 0.56);
+  }
+
+  .schedule-release-status::before {
+    content: "";
+    width: 0.3rem;
+    height: 0.3rem;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    transform: rotate(45deg);
   }
 
   .schedule-series-key-item {

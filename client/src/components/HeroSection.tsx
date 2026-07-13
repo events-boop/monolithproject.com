@@ -6,6 +6,7 @@ import KineticDecryption from "./KineticDecryption";
 import { getResponsiveImage } from "@/lib/responsiveImages";
 import { buildScheduledEventSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 import { padCountdown, useCountdown } from "@/hooks/useCountdown";
 import { SUNSETS_JULY4_COMPLETE_LABEL } from "@/lib/sunsetsTicketing";
 import {
@@ -426,7 +427,10 @@ function HeroCardCTA({ event }: { event: any }) {
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
-      className="hero-card-cta inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/78 bg-white px-6 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_36px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.8)] transition hover:-translate-y-0.5 hover:bg-[#E7E7E2] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/62"
+      className={cn(
+        "hero-card-cta btn-pill-wide",
+        getEventPillToneClass(event)
+      )}
     >
       {label}
     </a>
@@ -536,13 +540,13 @@ export default function HeroSection() {
               <div className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link
                   href="/go/lakelist"
-                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/75 bg-white px-8 text-[11px] font-black uppercase tracking-[0.18em] text-[#17110E] shadow-[0_18px_40px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-[#F8FAF8] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:min-w-[15rem]"
+                  className="btn-pill-sunsets btn-pill-wide sm:w-auto sm:min-w-[15rem]"
                 >
                   Join the Lake List
                 </Link>
                 <Link
                   href="/sunsets"
-                  className="inline-flex min-h-[3.5rem] w-full items-center justify-center rounded-full border border-white/26 bg-white/[0.08] px-8 text-[11px] font-black uppercase tracking-[0.18em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/48 hover:bg-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/55 sm:w-auto sm:min-w-[15rem]"
+                  className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide sm:w-auto sm:min-w-[15rem]"
                 >
                   Explore Sun(Sets)
                 </Link>

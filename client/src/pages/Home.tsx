@@ -106,7 +106,8 @@ export default function Home() {
         {/* Current season signal — the event truth lands before brand exposition. */}
         <section
           aria-label="SUN(SETS) II — August 22"
-          className="relative z-10 border-y border-[#E8B86D]/30 bg-black/40 backdrop-blur-2xl py-10 md:py-14 shadow-[0_0_30px_rgba(232,184,109,0.05)]"
+          className="home-etched-band relative z-10 border-y border-[#E8B86D]/30 bg-black/40 backdrop-blur-2xl py-10 md:py-14 shadow-[0_0_30px_rgba(232,184,109,0.05)]"
+          data-home-etch-tone="sunsets"
         >
           <div className="container layout-wide px-6">
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center">
@@ -189,7 +190,8 @@ export default function Home() {
 
         <section
           id="platform"
-          className="relative z-10 border-y border-white/10 bg-white/[0.02] backdrop-blur-xl py-12 md:py-16"
+          className="home-etched-band relative z-10 border-y border-white/10 bg-white/[0.02] backdrop-blur-xl py-12 md:py-16"
+          data-home-etch-tone="monolith"
         >
           <div className="container layout-wide px-6">
             <div className="flex flex-col gap-8">
@@ -264,7 +266,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-y border-white/10 bg-black/20 backdrop-blur-md py-20 md:py-28">
+        <section
+          className="home-etched-band relative z-10 border-y border-white/10 bg-black/20 backdrop-blur-md py-20 md:py-28"
+          data-home-etch-tone="sunsets"
+        >
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
@@ -281,25 +286,29 @@ export default function Home() {
                   August 22, with Chapter Three closing the season September 19.
                   First access hears every release before the public.
                 </p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <Link
-                    href="/sunsets"
-                    className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
-                  >
-                    Explore the Season
-                  </Link>
-                  <a
-                    href={lakeListHref}
-                    className="btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
-                  >
-                    Join the Lake List
-                  </a>
-                  <Link href="/chasing-sunsets" className="btn-text-action">
-                    Chapter One Archive
-                  </Link>
-                  <Link href="/schedule" className="btn-text-action">
-                    See All Dates
-                  </Link>
+                <div className="mt-6 flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                    <a
+                      href={lakeListHref}
+                      className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
+                    >
+                      Join the Lake List
+                    </a>
+                    <Link
+                      href="/sunsets"
+                      className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
+                    >
+                      Explore the Season
+                    </Link>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+                    <Link href="/chasing-sunsets" className="btn-text-action">
+                      Chapter One Archive
+                    </Link>
+                    <Link href="/schedule" className="btn-text-action">
+                      See All Dates
+                    </Link>
+                  </div>
                 </div>
               </div>
 
@@ -354,7 +363,8 @@ export default function Home() {
 
         <section
           id="campaigns"
-          className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-lg py-20 md:py-28"
+          className="home-etched-band relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-lg py-20 md:py-28"
+          data-home-etch-tone="untold"
         >
           <div className="container layout-wide px-6">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5 md:mb-10">
@@ -444,7 +454,7 @@ export default function Home() {
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Link
                       href={untoldMomentHref}
-                      className="btn-pill-outline btn-pill-compact w-full justify-center sm:w-auto"
+                      className="btn-pill-outline btn-pill-outline-untold btn-pill-compact w-full justify-center sm:w-auto"
                     >
                       View Untold Story <ArrowUpRight className="w-4 h-4" />
                     </Link>
@@ -493,7 +503,7 @@ export default function Home() {
                   </p>
                   <Link
                     href={untoldMomentHref}
-                    className="btn-pill-outline mt-6 w-full justify-center sm:w-auto"
+                    className="btn-pill-outline btn-pill-outline-untold mt-6 w-full justify-center sm:w-auto"
                   >
                     Explore Untold Story <ArrowUpRight className="w-4 h-4" />
                   </Link>
@@ -503,7 +513,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-12 md:py-16">
+        <section
+          className="home-etched-band relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-12 md:py-16"
+          data-home-etch-tone="monolith"
+        >
           <div className="container layout-wide px-6">
             <div
               className="signal-etched-frame rounded-xl border border-white/15 p-1 shadow-[0_0_40px_rgba(232,184,109,0.1)]"
@@ -573,7 +586,8 @@ export default function Home() {
 
         <section
           id="series"
-          className="relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-xl py-20 md:py-28"
+          className="home-etched-band relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-xl py-20 md:py-28"
+          data-home-etch-tone="monolith"
         >
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
@@ -714,7 +728,10 @@ export default function Home() {
           </ViewportLazy>
         </div>
 
-        <section className="relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-16 md:py-24">
+        <section
+          className="home-etched-band relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-16 md:py-24"
+          data-home-etch-tone="archive"
+        >
           <div className="container layout-wide px-6">
             <div className="mb-6">
               <span className="section-kicker block text-primary">
@@ -778,7 +795,10 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-full border border-white/10 bg-white/[0.04] p-3 md:p-4 backdrop-blur-xl">
+              <div
+                className="signal-etched-frame border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl md:p-4"
+                data-signal-tone="monolith"
+              >
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Link
                     href="/partners"
@@ -788,7 +808,7 @@ export default function Home() {
                   </Link>
                   <Link
                     href="/contact"
-                    className="btn-pill-outline-dark btn-pill-compact w-full"
+                    className="btn-pill-outline btn-pill-outline-monolith btn-pill-compact w-full"
                   >
                     Contact <ArrowUpRight className="w-4 h-4" />
                   </Link>

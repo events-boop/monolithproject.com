@@ -5,18 +5,17 @@ import {
   ArrowRight,
   Ticket,
   Lock,
+  MoonStar,
   Zap,
   Waves,
 } from "lucide-react";
 import MagneticButton from "./MagneticButton";
-import { getSceneForPath } from "@/lib/scenes";
 import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
-import { CTA_LABELS, getEventCta } from "@/lib/cta";
-import { getEventCtaToneClass } from "@/lib/ctaTone";
+import { getEventCta } from "@/lib/cta";
+import { getEventPillToneClass } from "@/lib/ctaTone";
 import { ROUTES } from "@shared/routes";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { trackAccessEvent } from "@/lib/api";
-import { useUI } from "@/contexts/UIContext";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
   COOKIE_CONSENT_RESOLVED_EVENT,
@@ -37,12 +36,10 @@ function shouldDelayFloatingCta(pathname: string) {
 export default function GlobalTicketButton() {
   usePublicSiteDataVersion();
   const [location] = useLocation();
-  const { setSensoryOverloadActive } = useUI();
   const [consentState, setConsentState] = useState(getCookieConsentState);
   const [showAfterHero, setShowAfterHero] = useState(
     () => !shouldDelayFloatingCta(location)
   );
-  const scene = getSceneForPath(location);
   const sunsetsPath =
     location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
   const untoldPath =
@@ -64,7 +61,7 @@ export default function GlobalTicketButton() {
         : getExperienceEvent("ticket");
 
   const cta = getEventCta(featuredEvent);
-  const ctaToneClass = getEventCtaToneClass(featuredEvent);
+  const ticketToneClass = getEventPillToneClass(featuredEvent);
 
   // Posh ticket CTAs route to the on-site /tickets page rather than the
   // /go/tickets Posh redirect (which falls back to the Lake List until the
@@ -73,6 +70,7 @@ export default function GlobalTicketButton() {
   const ctaIsExternal = cta.tool === "posh" ? false : cta.isExternal;
   const isHome = location === "/";
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
+  const untoldVipHref = appendAttributionQueryParams("https://untold.vip");
 
   const stateDot =
     featuredEvent?.status === "on-sale"
@@ -148,34 +146,28 @@ export default function GlobalTicketButton() {
     };
   }, [location]);
 
-  const theme = {
-    default: {
-      border: "border-white/10 hover:border-primary/35",
-    },
-    violet: {
-      border: "border-violet-400/18 hover:border-violet-400/42",
-    },
-    warm: {
-      border: "border-[#E8B86D]/18 hover:border-[#E8B86D]/42",
-    },
-  }[scene.ticketTheme];
-
   const toolIcons = {
     posh: <Ticket className="h-4.5 w-4.5 text-white" />,
     laylo: <Lock className="h-4.5 w-4.5 text-white" />,
     fillout: <Zap className="h-4.5 w-4.5 text-white" />,
   };
 
-  const toolMobileStyles = {
-    posh: "cta-posh",
-    laylo: "cta-laylo py-5",
-    fillout: "cta-fillout py-5",
-  };
-
   const trackSunsetsVipClick = () => {
     trackAccessEvent("event_card_click", {
       buttonName: "Floating Sunsets VIP",
       destinationUrl: sunsetsVipHref,
+      pagePath: location || "/",
+      eventSlug: featuredEvent?.slug || featuredEvent?.id,
+      eventDate: featuredEvent?.date,
+      channel: "site",
+      source: "home_floating_cta",
+    });
+  };
+
+  const trackUntoldVipClick = () => {
+    trackAccessEvent("event_card_click", {
+      buttonName: "Floating Untold VIP",
+      destinationUrl: untoldVipHref,
       pagePath: location || "/",
       eventSlug: featuredEvent?.slug || featuredEvent?.id,
       eventDate: featuredEvent?.date,
@@ -198,61 +190,76 @@ export default function GlobalTicketButton() {
       <div className="hidden md:block">
         <div className="flex flex-col items-end gap-3">
           {isHome && (
-            <MagneticButton strength={0.12}>
-              <a
-                href={sunsetsVipHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor-magnetic
-                data-cursor-text="SUNSETS"
-                onClick={trackSunsetsVipClick}
-                onMouseEnter={() => setSensoryOverloadActive(true)}
-                onMouseLeave={() => setSensoryOverloadActive(false)}
-                aria-label="Open Sunsets VIP"
-                className="group relative flex items-center gap-3 rounded-full border border-[#E8B86D]/28 bg-[#0c0905]/86 px-4 py-3 shadow-[0_18px_38px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#E8B86D]/58 hover:bg-[#151006] hover:shadow-[0_22px_46px_rgba(232,184,109,0.12)]"
-              >
-                <div
-                  className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 16% 50%, rgba(232,184,109,0.24), transparent 48%)",
-                  }}
-                />
-                <div className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#E8B86D]/24 bg-[#E8B86D]/14 text-[#E8B86D]">
-                  <Waves className="h-4 w-4" />
-                </div>
-                <div className="relative z-10 min-w-[8rem]">
-                  <span className="ui-chip text-[#E8B86D]/78">July 4 Hub</span>
-                  <span className="mt-1 block text-[12px] font-black uppercase tracking-[0.22em] text-white/90 transition-colors group-hover:text-white">
-                    SUNSETS.VIP
-                  </span>
-                </div>
-                <ArrowUpRight className="relative z-10 h-4 w-4 text-[#E8B86D]/70 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#E8B86D]" />
-              </a>
-            </MagneticButton>
+            <div className="grid grid-cols-2 items-stretch gap-2">
+              <MagneticButton strength={0.12} className="h-full">
+                <a
+                  href={sunsetsVipHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-magnetic
+                  data-cursor-text="SUNSETS"
+                  onClick={trackSunsetsVipClick}
+                  aria-label="Open Sunsets VIP in a new tab"
+                  className="floating-access-card floating-vip-card btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group h-full w-full justify-start gap-3 px-4 py-3"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="floating-access-card-icon flex h-9 w-9 items-center justify-center border border-[#E8B86D]/24 bg-[#E8B86D]/10 text-[#E8B86D]"
+                  >
+                    <Waves className="h-4 w-4" />
+                  </div>
+                  <div className="relative z-10 min-w-[5rem] text-left">
+                    <span className="ui-chip text-[#E8B86D]/78">Daylight</span>
+                    <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 transition-colors group-hover:text-white">
+                      SUNSETS.VIP
+                    </span>
+                  </div>
+                  <ArrowUpRight className="relative z-10 h-4 w-4 text-[#E8B86D]/70 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#E8B86D]" />
+                </a>
+              </MagneticButton>
+
+              <MagneticButton strength={0.12} className="h-full">
+                <a
+                  href={untoldVipHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-magnetic
+                  data-cursor-text="UNTOLD"
+                  onClick={trackUntoldVipClick}
+                  aria-label="Open Untold VIP in a new tab"
+                  className="floating-access-card floating-vip-card btn-pill-outline btn-pill-outline-untold btn-pill-compact group h-full w-full justify-start gap-3 px-4 py-3"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="floating-access-card-icon flex h-9 w-9 items-center justify-center border border-cyan-300/25 bg-cyan-300/10 text-cyan-200"
+                  >
+                    <MoonStar className="h-4 w-4" />
+                  </div>
+                  <div className="relative z-10 min-w-[5rem] text-left">
+                    <span className="ui-chip text-cyan-200/70">After Dark</span>
+                    <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-white/90 transition-colors group-hover:text-white">
+                      UNTOLD.VIP
+                    </span>
+                  </div>
+                  <ArrowUpRight className="relative z-10 h-4 w-4 text-cyan-200/70 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-cyan-100" />
+                </a>
+              </MagneticButton>
+            </div>
           )}
 
-          <MagneticButton strength={0.16}>
+          <MagneticButton strength={0.16} className="w-full">
             <a
               href={ctaHref}
               target={ctaIsExternal ? "_blank" : undefined}
               rel={ctaIsExternal ? "noopener noreferrer" : undefined}
               data-cursor-magnetic
               data-cursor-text={cursorTextByTool[cta.tool]}
-              onMouseEnter={() => setSensoryOverloadActive(true)}
-              onMouseLeave={() => setSensoryOverloadActive(false)}
-              aria-label={`${cta.label} ${featuredEvent?.headline || featuredEvent?.title || "featured event"}`}
-              className={`group sensory-ticket-btn relative flex items-center gap-3 rounded-full bg-black/78 px-5 py-3.5 shadow-[0_18px_38px_rgba(0,0,0,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_46px_rgba(0,0,0,0.28)] ${theme.border}`}
+              aria-label={`${stateDot.label}: ${cta.label} ${featuredEvent?.headline || featuredEvent?.title || "featured event"}`}
+              className={`${ticketToneClass} btn-pill-compact floating-access-card group w-full min-w-[18rem] justify-start gap-3 px-4 py-3.5`}
             >
               <div
-                className="absolute inset-0 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                  background: `radial-gradient(circle at 12% 50%, ${cta.tool === "posh" ? "var(--scene-glow)" : "rgba(255,255,255,0.1)"}, transparent 45%)`,
-                }}
-              />
-
-              <div
-                className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
+                aria-hidden="true"
+                className="floating-access-card-icon relative z-10 flex h-10 w-10 items-center justify-center border border-white/10"
                 style={{
                   backgroundColor:
                     cta.tool === "posh"
@@ -266,7 +273,7 @@ export default function GlobalTicketButton() {
               <div className="relative z-10 min-w-[8.5rem]">
                 <span className="ui-chip flex items-center gap-1.5 text-white/70">
                   <span
-                    className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+                    className={`h-1.5 w-1.5 rounded-full ${stateDot.pulse ? "animate-pulse motion-reduce:animate-none" : ""}`}
                     style={{
                       backgroundColor: stateDot.color,
                       boxShadow: stateDot.pulse
@@ -275,9 +282,9 @@ export default function GlobalTicketButton() {
                     }}
                     aria-hidden="true"
                   />
-                  {cta.label}
+                  {stateDot.label} · {cta.label}
                 </span>
-                <span className="mt-1 block text-[13px] font-black uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-white">
+                <span className="mt-1 block text-[13px] font-semibold uppercase tracking-[0.2em] text-white/90 transition-colors group-hover:text-white">
                   {featuredEvent?.headline ||
                     featuredEvent?.title ||
                     "Next Night"}
@@ -291,37 +298,47 @@ export default function GlobalTicketButton() {
       </div>
 
       {/* Mobile Sticky Bar */}
-      <div
-        className={`md:hidden w-full backdrop-blur-xl px-4 py-4 safe-bottom ${cta.tool === "posh" ? "bg-black/90 border-t border-white/10" : "bg-[#0a0a0d]/95 border-t border-white/5"}`}
-      >
+      <div className="safe-bottom w-full border-t border-white/10 bg-[#050506] px-4 py-4 shadow-[0_-16px_40px_rgba(0,0,0,0.42)] md:hidden">
         {isHome && (
-          <a
-            href={sunsetsVipHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackSunsetsVipClick}
-            aria-label="Open Sunsets VIP"
-            className="mb-2 flex h-11 w-full items-center justify-between rounded-full border border-[#E8B86D]/30 bg-[#E8B86D]/10 px-5 text-[#F8E7B3] transition active:scale-[0.98]"
-          >
-            <span className="flex min-w-0 items-center gap-3">
-              <Waves className="h-4 w-4 shrink-0" />
-              <span className="truncate text-[11px] font-black uppercase tracking-[0.22em]">
+          <div className="mb-2 grid grid-cols-2 gap-2">
+            <a
+              href={sunsetsVipHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={trackSunsetsVipClick}
+              aria-label="Open Sunsets VIP in a new tab"
+              className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group min-w-0 justify-center gap-2 px-3"
+            >
+              <Waves aria-hidden="true" className="h-4 w-4 shrink-0" />
+              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.14em] min-[380px]:text-[10px]">
                 SUNSETS.VIP
               </span>
-            </span>
-            <ArrowUpRight className="h-4 w-4 shrink-0" />
-          </a>
+            </a>
+            <a
+              href={untoldVipHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={trackUntoldVipClick}
+              aria-label="Open Untold VIP in a new tab"
+              className="btn-pill-outline btn-pill-outline-untold btn-pill-compact group min-w-0 justify-center gap-2 px-3"
+            >
+              <MoonStar aria-hidden="true" className="h-4 w-4 shrink-0" />
+              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.14em] min-[380px]:text-[10px]">
+                UNTOLD.VIP
+              </span>
+            </a>
+          </div>
         )}
         <a
           href={ctaHref}
           target={ctaIsExternal ? "_blank" : undefined}
           rel={ctaIsExternal ? "noopener noreferrer" : undefined}
-          aria-label={`${cta.label} — ${featuredEvent?.headline || featuredEvent?.title || "Next Night"}`}
-          className={`flex items-center justify-between w-full h-14 px-6 transition-all active:scale-[0.98] ${toolMobileStyles[cta.tool]} ${ctaToneClass}`}
+          aria-label={`${stateDot.label}: ${cta.label} — ${featuredEvent?.headline || featuredEvent?.title || "Next Night"}`}
+          className={`${ticketToneClass} btn-pill-wide group min-h-14 justify-between px-5 py-3`}
         >
           <div className="flex items-center gap-3 min-w-0">
             <span
-              className={`h-2 w-2 shrink-0 rounded-full ${stateDot.pulse ? "animate-pulse" : ""}`}
+              className={`h-2 w-2 shrink-0 rounded-full ${stateDot.pulse ? "animate-pulse motion-reduce:animate-none" : ""}`}
               style={{
                 backgroundColor: stateDot.color,
                 boxShadow: stateDot.pulse
@@ -332,9 +349,9 @@ export default function GlobalTicketButton() {
             />
             <div className="flex flex-col min-w-0">
               <span className="text-[10px] mb-0.5 tracking-[0.25em] uppercase font-bold opacity-70">
-                {cta.label}
+                {stateDot.label} · {cta.label}
               </span>
-              <span className="font-black text-xs tracking-[0.2em] uppercase truncate">
+              <span className="truncate text-xs font-semibold uppercase tracking-[0.2em]">
                 {featuredEvent?.headline ||
                   featuredEvent?.title ||
                   "Next Night"}
