@@ -36,7 +36,9 @@ function isTrackingHost() {
     host === "sunsets.vip" ||
     host === "www.sunsets.vip" ||
     host === "untold.vip" ||
-    host === "www.untold.vip"
+    host === "www.untold.vip" ||
+    host === "houseoffriends.vip" ||
+    host === "www.houseoffriends.vip"
   );
 }
 

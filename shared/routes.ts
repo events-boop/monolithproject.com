@@ -118,6 +118,8 @@ export const CAMPAIGN_HOSTS = {
   sunsetsVipWww: "www.sunsets.vip",
   untoldVip: "untold.vip",
   untoldVipWww: "www.untold.vip",
+  houseOfFriendsVip: "houseoffriends.vip",
+  houseOfFriendsVipWww: "www.houseoffriends.vip",
   monolithProject: "monolithproject.com",
   monolithProjectWww: "www.monolithproject.com",
 } as const;

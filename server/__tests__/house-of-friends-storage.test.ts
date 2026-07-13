@@ -1,8 +1,9 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
 import {
   completeHouseOfFriendsApplication,
+  getHouseOfFriendsApplicationReadiness,
   getLocalAssetPath,
   prepareHouseOfFriendsApplication,
   verifyApplicationToken,
@@ -39,6 +40,7 @@ const application: HouseOfFriendsPrepareRequest = {
 };
 
 afterEach(async () => {
+  vi.unstubAllEnvs();
   await Promise.all(
     createdFolders
       .splice(0)
@@ -47,6 +49,29 @@ afterEach(async () => {
 });
 
 describe("House of Friends local application storage", () => {
+  it("keeps production applications closed until every explicit gate is ready", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("HOF_APPLICATIONS_OPEN", "false");
+    expect(getHouseOfFriendsApplicationReadiness().acceptingApplications).toBe(
+      false
+    );
+
+    vi.stubEnv("DATABASE_URL", "postgresql://example.test/app");
+    vi.stubEnv("HOF_R2_ACCOUNT_ID", "account");
+    vi.stubEnv("HOF_R2_ACCESS_KEY_ID", "access");
+    vi.stubEnv("HOF_R2_SECRET_ACCESS_KEY", "secret");
+    vi.stubEnv("HOF_R2_BUCKET", "house-of-friends-private");
+    vi.stubEnv("HOF_APPLICATION_SIGNING_SECRET", "signing-secret");
+    expect(getHouseOfFriendsApplicationReadiness().acceptingApplications).toBe(
+      false
+    );
+
+    vi.stubEnv("HOF_APPLICATIONS_OPEN", "true");
+    expect(getHouseOfFriendsApplicationReadiness().acceptingApplications).toBe(
+      true
+    );
+  });
+
   it("creates one private folder map and finalizes only after both files exist", async () => {
     const prepared = await prepareHouseOfFriendsApplication(application);
     const token = verifyApplicationToken(prepared.applicationToken);

@@ -108,3 +108,9 @@ export type HouseOfFriendsCompleteResponse = {
   referenceCode: string;
   message: string;
 };
+
+export type HouseOfFriendsApplicationStatusResponse = {
+  ok: true;
+  acceptingApplications: boolean;
+  message: string;
+};

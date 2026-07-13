@@ -1,4 +1,4 @@
-CREATE TABLE "house_of_friends_applications" (
+CREATE TABLE IF NOT EXISTS "house_of_friends_applications" (
 	"id" text PRIMARY KEY NOT NULL,
 	"reference_code" text NOT NULL,
 	"status" text DEFAULT 'submitted' NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE "house_of_friends_applications" (
 	"metadata" jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX "house_of_friends_applications_reference_code_idx" ON "house_of_friends_applications" USING btree ("reference_code");--> statement-breakpoint
-CREATE INDEX "house_of_friends_applications_email_idx" ON "house_of_friends_applications" USING btree ("email");--> statement-breakpoint
-CREATE INDEX "house_of_friends_applications_status_idx" ON "house_of_friends_applications" USING btree ("status");--> statement-breakpoint
-CREATE INDEX "house_of_friends_applications_submitted_at_idx" ON "house_of_friends_applications" USING btree ("submitted_at");
+CREATE UNIQUE INDEX IF NOT EXISTS "house_of_friends_applications_reference_code_idx" ON "house_of_friends_applications" USING btree ("reference_code");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "house_of_friends_applications_email_idx" ON "house_of_friends_applications" USING btree ("email");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "house_of_friends_applications_status_idx" ON "house_of_friends_applications" USING btree ("status");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "house_of_friends_applications_submitted_at_idx" ON "house_of_friends_applications" USING btree ("submitted_at");

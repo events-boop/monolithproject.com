@@ -59,6 +59,7 @@ export class HouseOfFriendsStorageError extends Error {
   constructor(
     message: string,
     readonly code:
+      | "APPLICATIONS_CLOSED"
       | "STORAGE_NOT_CONFIGURED"
       | "INVALID_UPLOAD_TOKEN"
       | "UPLOAD_INCOMPLETE"
@@ -70,6 +71,51 @@ export class HouseOfFriendsStorageError extends Error {
 }
 
 let localSigningSecret: string | undefined;
+
+const PRODUCTION_APPLICATION_VARS = [
+  "DATABASE_URL",
+  "HOF_R2_ACCOUNT_ID",
+  "HOF_R2_ACCESS_KEY_ID",
+  "HOF_R2_SECRET_ACCESS_KEY",
+  "HOF_R2_BUCKET",
+  "HOF_APPLICATION_SIGNING_SECRET",
+] as const;
+
+export function getHouseOfFriendsApplicationReadiness() {
+  if (process.env.NODE_ENV !== "production") {
+    return {
+      acceptingApplications: true,
+      message: "House of Friends applications are open in local preview.",
+    };
+  }
+
+  const applicationsOpen =
+    process.env.HOF_APPLICATIONS_OPEN?.trim().toLowerCase() === "true";
+  const infrastructureReady = PRODUCTION_APPLICATION_VARS.every(variable =>
+    Boolean(process.env[variable]?.trim())
+  );
+
+  if (!applicationsOpen) {
+    return {
+      acceptingApplications: false,
+      message:
+        "Founding Class applications are being prepared. Opening details will be announced soon.",
+    };
+  }
+
+  if (!infrastructureReady) {
+    return {
+      acceptingApplications: false,
+      message:
+        "Founding Class applications are temporarily unavailable while secure intake is connected.",
+    };
+  }
+
+  return {
+    acceptingApplications: true,
+    message: "House of Friends Founding Class applications are open.",
+  };
+}
 
 function readR2Config(): R2Config | null {
   const accountId = process.env.HOF_R2_ACCOUNT_ID?.trim();
@@ -103,6 +149,17 @@ function readR2Config(): R2Config | null {
 }
 
 function resolveStorageMode(): StorageMode {
+  const readiness = getHouseOfFriendsApplicationReadiness();
+  if (!readiness.acceptingApplications) {
+    throw new HouseOfFriendsStorageError(
+      readiness.message,
+      process.env.HOF_APPLICATIONS_OPEN?.trim().toLowerCase() === "true"
+        ? "STORAGE_NOT_CONFIGURED"
+        : "APPLICATIONS_CLOSED",
+      503
+    );
+  }
+
   if (readR2Config()) return "r2";
   if (process.env.NODE_ENV !== "production") return "local";
 
@@ -114,9 +171,7 @@ function resolveStorageMode(): StorageMode {
 }
 
 function getSigningSecret(storageMode: StorageMode) {
-  const configured =
-    process.env.HOF_APPLICATION_SIGNING_SECRET?.trim() ||
-    process.env.HOF_R2_SECRET_ACCESS_KEY?.trim();
+  const configured = process.env.HOF_APPLICATION_SIGNING_SECRET?.trim();
   if (configured) return configured;
 
   if (storageMode === "local" && process.env.NODE_ENV !== "production") {

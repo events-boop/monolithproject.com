@@ -9,7 +9,9 @@
 - [ ] Secure `houseoffriends.vip` and social handles.
 - [ ] Approve the built landing page and `/house-of-friends/apply` funnel.
 - [x] Build private profile, photo, and DJ-set intake architecture.
-- [ ] Configure production R2 storage, CORS, and application signing secret.
+- [ ] Authenticate Cloudflare and create the private production R2 bucket.
+- [x] Add repeatable R2 CORS verification tooling and fail-closed application status.
+- [ ] Configure production R2 credentials and application signing secret in Netlify.
 - [ ] Apply the House of Friends application database migration.
 - [ ] Configure the submission webhook and admin email notification.
 - [ ] Decide whether the application carries a fee.

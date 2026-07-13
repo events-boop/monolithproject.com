@@ -94,17 +94,25 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
 
   if (isProd) {
     const houseStorageVars = [
+      "DATABASE_URL",
       "HOF_R2_ACCOUNT_ID",
       "HOF_R2_ACCESS_KEY_ID",
       "HOF_R2_SECRET_ACCESS_KEY",
       "HOF_R2_BUCKET",
+      "HOF_APPLICATION_SIGNING_SECRET",
     ];
     const configuredHouseStorageVars = houseStorageVars.filter(variable =>
       Boolean(process.env[variable]?.trim())
     );
     if (configuredHouseStorageVars.length !== houseStorageVars.length) {
       console.warn(
-        "⚠️  House of Friends R2 storage is not fully configured. Artist application uploads will fail closed."
+        "⚠️  House of Friends secure intake is not fully configured. Artist applications will fail closed."
+      );
+    }
+
+    if (process.env.HOF_APPLICATIONS_OPEN?.trim().toLowerCase() !== "true") {
+      console.warn(
+        "⚠️  HOF_APPLICATIONS_OPEN is not true. House of Friends applications remain safely closed."
       );
     }
 

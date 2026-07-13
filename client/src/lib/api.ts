@@ -3,6 +3,7 @@ import { capturePostHogEvent } from "./posthog";
 import type { HoneypotPayload } from "@shared/generated/hardening";
 import type {
   HouseOfFriendsAssetType,
+  HouseOfFriendsApplicationStatusResponse,
   HouseOfFriendsCompleteResponse,
   HouseOfFriendsPrepareRequest,
   HouseOfFriendsPrepareResponse,
@@ -291,6 +292,21 @@ export async function submitContactForm(payload: ContactPayload) {
   }
 
   return response.json();
+}
+
+export async function getHouseOfFriendsApplicationStatus() {
+  const response = await fetch("/api/house-of-friends/applications/status", {
+    headers: { Accept: "application/json" },
+  });
+  const body = (await response.json().catch(() => ({}))) as
+    | HouseOfFriendsApplicationStatusResponse
+    | ApiError;
+  if (!response.ok || !("acceptingApplications" in body)) {
+    throw new Error(
+      parseApiError(body as ApiError, "Secure artist intake is unavailable.")
+    );
+  }
+  return body;
 }
 
 function uploadHouseOfFriendsAsset(

@@ -9,11 +9,12 @@ import { UIProvider, useUI } from "./contexts/UIContext";
 import { InquiryProvider } from "./contexts/InquiryContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
+import { resolveCampaignHostPath } from "./lib/campaignHosts";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import MetaPixelGate from "./components/MetaPixelGate";
-import { ROUTES, ANCHORS, CAMPAIGN_HOSTS } from "@shared/routes";
+import { ROUTES, ANCHORS } from "@shared/routes";
 
 // Lazy Pages
 const InquiryPortal = lazy(() => import("./components/InquiryPortal"));
@@ -166,24 +167,25 @@ function SandboxHeroRoute() {
   return <ExperimentalHeroTransition />;
 }
 
-function normalizeRouteLocation(location: string) {
-  return (location.split("?")[0].replace(/\/$/, "") || "/").toLowerCase();
+function getCampaignHostLandingPath(location: string) {
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
+  return resolveCampaignHostPath(host, location);
 }
 
-function getCampaignHostLandingPath(location: string) {
-  const normalizedLocation = normalizeRouteLocation(location);
-  const host = typeof window !== "undefined" ? window.location.hostname : "";
-  const isSunsetsHost =
-    host === CAMPAIGN_HOSTS.sunsetsVip || host === CAMPAIGN_HOSTS.sunsetsVipWww;
-  const isUntoldHost =
-    host === CAMPAIGN_HOSTS.untoldVip || host === CAMPAIGN_HOSTS.untoldVipWww;
+function RootRoute() {
+  return getCampaignHostLandingPath(ROUTES.home) === ROUTES.houseOfFriends ? (
+    <HouseOfFriendsTransition />
+  ) : (
+    <HomeTransition />
+  );
+}
 
-  if (normalizedLocation === ROUTES.home && isSunsetsHost)
-    return ROUTES.sunsets;
-  if (normalizedLocation === ROUTES.home && isUntoldHost)
-    return ROUTES.untoldVip;
-
-  return normalizedLocation;
+function HouseOfFriendsApplyHostRoute() {
+  return getCampaignHostLandingPath("/apply") === ROUTES.houseOfFriendsApply ? (
+    <HouseOfFriendsApplyTransition />
+  ) : (
+    <Redirect to={ROUTES.notFound} />
+  );
 }
 
 function Router() {
@@ -191,7 +193,8 @@ function Router() {
 
   return (
     <Switch location={location} key={location}>
-      <Route path={ROUTES.home} component={HomeTransition} />
+      <Route path={ROUTES.home} component={RootRoute} />
+      <Route path="/apply" component={HouseOfFriendsApplyHostRoute} />
       <Route path={ROUTES.tickets}>
         <TicketsTransition />
       </Route>
@@ -417,7 +420,7 @@ function MainContentWrapper() {
   const { activeDrawer, isSensoryOverloadActive } = useUI();
   const [location] = useLocation();
   const isDrawerActive = Boolean(activeDrawer);
-  const normalizedLocation = normalizeRouteLocation(location);
+  const normalizedLocation = resolveCampaignHostPath("", location);
   const landingPath = getCampaignHostLandingPath(location);
   const isUntoldRootLanding =
     normalizedLocation === ROUTES.home && landingPath === ROUTES.untoldVip;

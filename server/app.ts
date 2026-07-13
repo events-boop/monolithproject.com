@@ -47,6 +47,10 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/track/link-click", methods: ["POST"] },
   { path: "/api/track/lead", methods: ["POST"] },
   { path: "/api/sponsor-access", methods: ["POST"] },
+  {
+    path: "/api/house-of-friends/applications/status",
+    methods: ["GET"],
+  },
   { path: "/api/house-of-friends/applications", methods: ["POST"] },
   {
     path: "/api/house-of-friends/applications/complete",

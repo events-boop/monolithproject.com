@@ -59,6 +59,7 @@ HOF_R2_ACCESS_KEY_ID
 HOF_R2_SECRET_ACCESS_KEY
 HOF_R2_BUCKET
 HOF_APPLICATION_SIGNING_SECRET
+HOF_APPLICATIONS_OPEN
 ```
 
 Optional delivery:
@@ -69,7 +70,17 @@ RESEND_API_KEY
 ADMIN_EMAIL
 ```
 
-The R2 bucket must stay private. Its CORS policy must allow `PUT` from `https://monolithproject.com` with the `Content-Type` header. Add localhost origins only for deliberate remote-storage testing.
+The R2 bucket must stay private. Its CORS policy must allow `PUT` with the `Content-Type` header from `https://monolithproject.com`, `https://www.monolithproject.com`, `https://houseoffriends.vip`, and `https://www.houseoffriends.vip`. Add localhost origins only for deliberate remote-storage testing.
+
+After the bucket and scoped R2 credentials exist, load the variables locally and run:
+
+```bash
+npm run hof:storage:configure
+```
+
+The script verifies the bucket, writes the approved browser-upload origins, and reads the CORS rule back before reporting success. It never prints credentials.
+
+`HOF_APPLICATIONS_OPEN` must remain `false` until the migration, storage configuration, public terms, and production upload test are complete. The public status endpoint fails closed and the application page shows a holding state until every production prerequisite exists.
 
 ## Limits
 
@@ -83,9 +94,12 @@ The R2 bucket must stay private. Its CORS policy must allow `PUT` from `https://
 
 Before removing `noindex` or linking the application in primary navigation:
 
-- Apply the generated database migration.
+- Apply the dedicated idempotent database migration with `npm run hof:db:migrate`.
 - Configure and verify the private R2 bucket and CORS policy.
+- Add `houseoffriends.vip` and `www.houseoffriends.vip` to the linked Netlify site before using the standalone host.
+- Set every required environment variable in the production host.
 - Complete one full production-like upload with a large audio file.
 - Approve eligibility, opening and closing dates, review process, and privacy/retention terms.
 - Confirm the artist submission-rights language with counsel.
 - Establish applicant deletion and withdrawal procedures.
+- Set `HOF_APPLICATIONS_OPEN=true` only after every preceding check passes.

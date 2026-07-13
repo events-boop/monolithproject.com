@@ -15,6 +15,7 @@ import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import {
   completeHouseOfFriendsApplication,
+  getHouseOfFriendsApplicationReadiness,
   getLocalAssetPath,
   HouseOfFriendsStorageError,
   prepareHouseOfFriendsApplication,
@@ -23,6 +24,11 @@ import {
 import { deliverHouseOfFriendsApplication } from "../services/house-of-friends-applications";
 
 const router = Router();
+
+router.get("/api/house-of-friends/applications/status", (_req, res) => {
+  const readiness = getHouseOfFriendsApplicationReadiness();
+  return res.json({ ok: true, ...readiness });
+});
 
 const prepareLimiter = createRateLimitMiddleware({
   scope: "api:house-of-friends:prepare",

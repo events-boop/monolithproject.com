@@ -21,6 +21,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import HoneypotField from "@/components/HoneypotField";
 import {
+  getHouseOfFriendsApplicationStatus,
   submitHouseOfFriendsApplication,
   type HouseOfFriendsSubmissionStatus,
   type HouseOfFriendsUploadProgress,
@@ -169,6 +170,12 @@ function UploadField({
 
 export default function HouseOfFriendsApply() {
   const shouldReduceMotion = useReducedMotion();
+  const [availability, setAvailability] = useState<
+    "checking" | "open" | "closed"
+  >("checking");
+  const [availabilityMessage, setAvailabilityMessage] = useState(
+    "Confirming the secure application channel."
+  );
   const [photo, setPhoto] = useState<File | null>(null);
   const [djSet, setDjSet] = useState<File | null>(null);
   const [photoError, setPhotoError] = useState("");
@@ -191,6 +198,26 @@ export default function HouseOfFriendsApply() {
     },
     [photoPreview]
   );
+
+  useEffect(() => {
+    let active = true;
+    void getHouseOfFriendsApplicationStatus()
+      .then(result => {
+        if (!active) return;
+        setAvailability(result.acceptingApplications ? "open" : "closed");
+        setAvailabilityMessage(result.message);
+      })
+      .catch(() => {
+        if (!active) return;
+        setAvailability("closed");
+        setAvailabilityMessage(
+          "Secure artist intake is temporarily unavailable. Opening details will be announced soon."
+        );
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const {
     register,
@@ -361,6 +388,58 @@ export default function HouseOfFriendsApply() {
             <p className="hof-success-note">
               Save this code. Application updates and selection timing will be
               sent to the email address you registered.
+            </p>
+            <Link href={ROUTES.houseOfFriends} className="btn-pill-neutral">
+              Return to House of Friends
+              <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </motion.section>
+        </main>
+      </div>
+    );
+  }
+
+  if (availability !== "open") {
+    const isChecking = availability === "checking";
+    return (
+      <div className="hof-page hof-application-page min-h-screen bg-black text-white">
+        <SEO
+          title="Apply | House of Friends Founding Class 2026"
+          description="House of Friends Founding Class 2026 artist application status."
+          absoluteTitle
+          canonicalPath={ROUTES.houseOfFriendsApply}
+          noIndex
+        />
+        <Navigation variant="dark" brand="monolith" />
+        <main id="main-content" tabIndex={-1} className="hof-success-shell">
+          <div className="hof-success-etch" aria-hidden="true">
+            <span>HOF</span>
+            <span />
+            <span />
+          </div>
+          <motion.section
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="hof-success-card"
+            aria-live="polite"
+          >
+            {isChecking ? (
+              <LoaderCircle className="hof-spin" aria-hidden="true" />
+            ) : (
+              <LockKeyhole aria-hidden="true" />
+            )}
+            <p className="hof-kicker">
+              Secure artist intake / Founding Class 2026
+            </p>
+            <h1>
+              {isChecking
+                ? "Opening the private channel."
+                : "The application channel is not open yet."}
+            </h1>
+            <p>{availabilityMessage}</p>
+            <p className="hof-success-note">
+              No application data or payment is collected while this channel is
+              closed.
             </p>
             <Link href={ROUTES.houseOfFriends} className="btn-pill-neutral">
               Return to House of Friends
