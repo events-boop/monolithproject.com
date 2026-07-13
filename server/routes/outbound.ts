@@ -14,7 +14,6 @@ import {
   SUNSETS_LAKELIST_CANONICAL_PATH,
   SUNSETS_LAKELIST_PATH,
   SUNSETS_TICKET_CTA_LABEL,
-  SUNSETS_TICKET_CTA_SUPPORT,
   getSunsetsTicketRouteMeta,
   isSunsetsJuly4TicketRoute,
 } from "../../shared/events/sunsets-ticketing";
@@ -64,7 +63,7 @@ function renderSunsetsTicketsComingSoonPage(
     <div class="eyebrow">Official Tickets</div>
     <h1>Tickets coming soon.</h1>
     <p>${meta.title} tickets will move through the official Posh ticket page once the drop is live.</p>
-    <p class="support">${SUNSETS_TICKET_CTA_SUPPORT} Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
+    <p class="support">First access to ${meta.title}. Tickets powered by Posh. Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
     <div class="actions">
       <a class="primary" href="/sunsets#lake-list">Join Lake List</a>
       <a class="secondary" href="/sunsets">Back to SUN(SETS)</a>
