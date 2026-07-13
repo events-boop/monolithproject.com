@@ -69,9 +69,16 @@ const seriesLabels: Record<string, string> = {
 };
 
 const seriesDefaultImage: Record<string, string> = {
-  "chasing-sunsets": "/images/css-2026-poster.jpg",
+  // Must stay date-neutral: future chapters (Aug 22, Sep 19) inherit this
+  // fallback, so a poster with a printed date/lineup would misrepresent them.
+  "chasing-sunsets": "/images/sunsets-hero-beach.jpg",
   "untold-story": "/images/untold-story-juany-deron-v2.webp",
   "monolith-project": "/images/artist-autograf.webp",
+};
+
+// Chapter-specific artwork keyed by event id, checked before the series fallback.
+const eventImageOverrides: Record<string, string> = {
+  "css-jul04": "/images/css-2026-poster.jpg",
 };
 
 function getStatusLabel(status: ScheduledEvent["status"]) {
@@ -479,6 +486,7 @@ export default function ScheduleSection() {
                               <ResponsiveImage
                                 src={
                                   event.image ||
+                                  eventImageOverrides[event.id] ||
                                   seriesDefaultImage[event.series]
                                 }
                                 alt={event.title}
