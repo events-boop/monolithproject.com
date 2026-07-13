@@ -430,7 +430,11 @@ function resolveEventsForPath(
   events: ScheduledEvent[]
 ) {
   if (pathname === "/") {
-    return events.map(event => shapeEvent(event, "home"));
+    // The homepage contains a real calendar, not a separate editorial subset.
+    // Give it the same summary contract as /schedule so dates, descriptions,
+    // slugs, statuses, and actions cannot drift between the two surfaces.
+    // Featured hero records still use the lean home profile below.
+    return events.map(event => shapeEvent(event, "summary"));
   }
 
   if (

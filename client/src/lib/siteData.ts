@@ -84,12 +84,14 @@ function abortStaleRequests(activePath: string) {
 
 export async function ensurePublicSiteData(pathname?: string | null) {
   const normalizedPath = normalizePathname(pathname);
-  if (hasPublicSiteData(normalizedPath) && getPublicEvents().length > 0) {
-    return snapshot;
-  }
-
   const pending = pendingRequests.get(normalizedPath);
   if (pending) return pending;
+
+  // Prerendered routes ship a static bootstrap payload so the first paint has
+  // event content immediately. Always revalidate that snapshot against the
+  // public API: live calendar records can be added or changed in the database
+  // after the site bundle was built, and every schedule surface must converge
+  // on that canonical set.
 
   abortStaleRequests(normalizedPath);
 

@@ -73,6 +73,18 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.activeFunnels).toBeUndefined();
   });
 
+  it("keeps the homepage calendar event set aligned with the schedule page", () => {
+    const homeData = buildPublicSiteData("/");
+    const scheduleData = buildPublicSiteData("/schedule");
+    const homeIds = homeData.events.map(event => event.id);
+    const scheduleIds = scheduleData.events.map(event => event.id);
+
+    expect(homeIds).toEqual(scheduleIds);
+    expect(homeData.events.map(event => event.slug)).toEqual(
+      scheduleData.events.map(event => event.slug)
+    );
+  });
+
   it("falls back to featured events for non-season routes", () => {
     const data = buildPublicSiteData("/vip");
     const featuredIds = data.events.map(event => event.id);

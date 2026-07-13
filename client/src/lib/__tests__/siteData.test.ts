@@ -1,9 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
 import type { PublicSiteData, ScheduledEvent } from "@shared/events/types";
 import {
   getPublicEvents,
   getPublicSiteData,
+  ensurePublicSiteData,
   primePublicSiteData,
   usePublicSiteDataVersion,
 } from "@/lib/siteData";
@@ -42,6 +43,10 @@ function buildSiteData(events: ScheduledEvent[]): PublicSiteData {
 }
 
 describe("siteData refresh", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it("notifies subscribers when public site data is re-primed", () => {
     primePublicSiteData(buildSiteData([eranEvent]));
     const { result } = renderHook(() => usePublicSiteDataVersion());
@@ -61,5 +66,40 @@ describe("siteData refresh", () => {
     expect(getPublicEvents().some(event => event.id === "css-jul04")).toBe(
       true
     );
+  });
+
+  it("revalidates a matching prerendered path against the live API", async () => {
+    primePublicSiteData({
+      path: "/",
+      events: [julyOpenAir],
+      featuredEvents: {},
+    });
+
+    const liveAugustEvent: ScheduledEvent = {
+      ...julyOpenAir,
+      id: "css-aug22",
+      date: "August 22, 2026",
+      title: "SUN(SETS) II",
+    };
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        path: "/",
+        events: [julyOpenAir, liveAugustEvent],
+        featuredEvents: {},
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await ensurePublicSiteData("/");
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/site-data?path=%2F",
+      expect.objectContaining({ credentials: "same-origin" })
+    );
+    expect(getPublicEvents().map(event => event.id)).toEqual([
+      "css-jul04",
+      "css-aug22",
+    ]);
   });
 });

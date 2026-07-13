@@ -65,6 +65,8 @@ export default function Home() {
   // past date grid next to future-tense copy.
   const untoldIsPast = getEventWindowStatus(untoldMoment) === "past";
   const lakeListHref = appendAttributionQueryParams(SUNSETS_LAKELIST_PATH);
+  const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
+  const untoldVipHref = appendAttributionQueryParams("https://untold.vip");
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -193,6 +195,16 @@ export default function Home() {
           className="home-etched-band relative z-10 border-y border-white/10 bg-white/[0.02] backdrop-blur-xl py-12 md:py-16"
           data-home-etch-tone="monolith"
         >
+          <div
+            aria-hidden="true"
+            className="platform-etch-field home-etched-band-etch"
+          >
+            <span className="platform-etch-wordmark">MONOLITH PROJECT</span>
+            <span className="platform-etch-axis" />
+            <span className="platform-etch-monolith" />
+            <span className="platform-etch-sun" />
+            <span className="platform-etch-room" />
+          </div>
           <div className="container layout-wide px-6">
             <div className="flex flex-col gap-8">
               <div className="max-w-4xl">
@@ -205,7 +217,7 @@ export default function Home() {
               </div>
               <div className="grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-3">
                 <div
-                  className="brand-world-frame bg-black/45 p-5 backdrop-blur-md"
+                  className="brand-world-frame flex min-h-full flex-col bg-black/45 p-5 backdrop-blur-md"
                   data-world-tone="monolith"
                 >
                   <span aria-hidden="true" className="world-frame-sigil" />
@@ -219,12 +231,20 @@ export default function Home() {
                     The cultural platform taking form around the rooms, people,
                     and rituals that matter.
                   </p>
-                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">
+                  <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">
                     Launch signal / forthcoming
                   </p>
+                  <Link
+                    href="/monolith"
+                    aria-label="Explore the Monolith Project platform"
+                    className="brand-world-domain-link btn-text-action mt-3 w-full justify-between"
+                  >
+                    <span>MONOLITHPROJECT.COM</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </Link>
                 </div>
                 <div
-                  className="brand-world-frame bg-[#2b1b10]/38 p-5 backdrop-blur-md"
+                  className="brand-world-frame flex min-h-full flex-col bg-[#2b1b10]/38 p-5 backdrop-blur-md"
                   data-world-tone="sunsets"
                 >
                   <span aria-hidden="true" className="world-frame-sigil" />
@@ -238,12 +258,22 @@ export default function Home() {
                     Lakefront house music, golden hour, and a season that moves
                     from Chapter I into II and III.
                   </p>
-                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#F4D7A1]/78">
+                  <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#F4D7A1]/78">
                     II next / III closes the season
                   </p>
+                  <a
+                    href={sunsetsVipHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open Sunsets VIP in a new tab"
+                    className="brand-world-domain-link btn-text-action mt-3 w-full justify-between"
+                  >
+                    <span>SUNSETS.VIP</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </a>
                 </div>
                 <div
-                  className="brand-world-frame bg-[#07191d]/48 p-5 backdrop-blur-md"
+                  className="brand-world-frame flex min-h-full flex-col bg-[#07191d]/48 p-5 backdrop-blur-md"
                   data-world-tone="untold"
                 >
                   <span aria-hidden="true" className="world-frame-sigil" />
@@ -257,9 +287,19 @@ export default function Home() {
                     The tighter, deeper room. Four chapters now live in the
                     archive; the next coordinates arrive when they are right.
                   </p>
-                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B9F6FF]/76">
+                  <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B9F6FF]/76">
                     Four chapters / archive open
                   </p>
+                  <a
+                    href={untoldVipHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open Untold VIP in a new tab"
+                    className="brand-world-domain-link btn-text-action mt-3 w-full justify-between"
+                  >
+                    <span>UNTOLD.VIP</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </a>
                 </div>
               </div>
             </div>
