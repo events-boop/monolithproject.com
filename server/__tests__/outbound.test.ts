@@ -109,7 +109,7 @@ describe("resolveOutboundDestination", () => {
       "pic-time.com"
     );
     expect(resolveOutboundDestination("forms", "sunsets-vip")).toContain(
-      "chasingsunsets.vip"
+      "monolithproject.com/vip"
     );
     expect(resolveOutboundDestination("social", "instagram-sunsets")).toContain(
       "instagram.com"

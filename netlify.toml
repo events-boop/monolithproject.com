@@ -282,6 +282,45 @@
   status = 302
   force = true
 
+# Date-based ticket vanity aliases (printed/QR materials). Ported from the
+# retired client/public/_redirects file — that file took precedence over this
+# one and its /go/* + /* catch-alls shadowed every rule not duplicated in it.
+[[redirects]]
+  from = "/go/sunsets-2026-07-04/tickets"
+  to = "/go/tickets/css-jul04"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/sunsets-2026-07-04/tickets/"
+  to = "/go/tickets/css-jul04"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/sunsets-2026-08-22/tickets"
+  to = "/go/tickets/css-aug22"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/sunsets-2026-08-22/tickets/"
+  to = "/go/tickets/css-aug22"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/sunsets-2026-09-19/tickets"
+  to = "/go/tickets/css-sep19"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/sunsets-2026-09-19/tickets/"
+  to = "/go/tickets/css-sep19"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/go/*"
   to = "/.netlify/functions/api/go/:splat"

@@ -19,8 +19,9 @@ type OutboundGroup =
 type QueryValue = string | string[] | null | undefined;
 type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 
-const FALLBACK_POSH_URL =
-  "https://posh.vip/owner/groups/6531870aeffdea89e97f7642/events/6a0b9cd3ad1a25534c3beed7/visuals";
+// Must be a public destination: the previous value was a posh.vip /owner/…
+// admin URL that showed buyers a login wall when the env vars were unset.
+const FALLBACK_POSH_URL = "https://monolithproject.com/tickets";
 const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject/m/IQ5HaR";
 const FALLBACK_BENCHEK_LAYLO_URL = "https://laylo.com/monolithproject/vhX7ZX";
 const FALLBACK_SUNSETS_RECAP_URL = "https://youtu.be/9R6XH7JZlJI";
@@ -28,7 +29,9 @@ const FALLBACK_SUNSETS_SOUNDCLOUD_URL =
   "https://soundcloud.com/chasing-sun-sets";
 const FALLBACK_SUNSETS_GALLERY_URL =
   "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
-const FALLBACK_SUNSETS_VIP_URL = "https://chasingsunsets.vip";
+// chasingsunsets.vip DNS is parked (not on Netlify), so falling back to it
+// stranded VIP clicks on a parking page. The on-site /vip page is evergreen.
+const FALLBACK_SUNSETS_VIP_URL = "https://monolithproject.com/vip";
 const FALLBACK_INSTAGRAM_SUNSETS_URL =
   "https://instagram.com/chasingsunsets.music";
 const FALLBACK_TIKTOK_URL = "https://tiktok.com/@monolithproject";
