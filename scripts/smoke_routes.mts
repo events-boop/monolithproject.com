@@ -199,6 +199,15 @@ const CHECKS: Check[] = [
     status: 200,
     bodyContains: "Monolith",
   },
+  {
+    // Registered at Namecheap 2026-07-15; host detection routes its root to
+    // /house-of-friends. Flip warn off once DNS + Netlify alias are live.
+    name: "houseoffriends.vip serves the site [DNS PENDING]",
+    url: "https://houseoffriends.vip/",
+    status: 200,
+    bodyContains: "Monolith",
+    warn: true,
+  },
   // Pending DNS repointing (registrar action) — flip to hard checks after.
   {
     name: "themonolithproject.com redirects to canonical [DNS PENDING]",
