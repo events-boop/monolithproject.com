@@ -72,6 +72,18 @@ describe("House of Friends local application storage", () => {
     );
   });
 
+  it("fails closed on Netlify even when NODE_ENV is not production", () => {
+    vi.stubEnv("NODE_ENV", "test");
+    vi.stubEnv("NETLIFY", "true");
+    vi.stubEnv("HOF_APPLICATIONS_OPEN", "true");
+
+    expect(getHouseOfFriendsApplicationReadiness()).toEqual({
+      acceptingApplications: false,
+      message:
+        "Founding Class applications are temporarily unavailable while secure intake is connected.",
+    });
+  });
+
   it("creates one private folder map and finalizes only after both files exist", async () => {
     const prepared = await prepareHouseOfFriendsApplication(application);
     const token = verifyApplicationToken(prepared.applicationToken);

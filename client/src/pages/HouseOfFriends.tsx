@@ -10,57 +10,36 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import { useInquiry } from "@/contexts/InquiryContext";
+import { getHouseOfFriendsApplicationStatus } from "@/lib/api";
+import { isHouseOfFriendsCampaignHost } from "@/lib/campaignHosts";
 import { ROUTES } from "@shared/routes";
 
-const schedule = [
+const launchMoments = [
   {
-    time: "11:00–12:15",
-    length: "75 min",
-    title: "Collaborative Set 01",
-    note: "Arrival / discovery",
+    number: "01",
+    label: "Founding Class",
+    title: "A shared performance",
+    copy: "Selected emerging artists take the first House of Friends stage together inside Chasing Sun(Sets) II.",
+    icon: UsersRound,
   },
   {
-    time: "12:25–1:40",
-    length: "75 min",
-    title: "Collaborative Set 02",
-    note: "Community pairing",
+    number: "02",
+    label: "Professional capture",
+    title: "Proof artists can use",
+    copy: "Performance audio, film, and photography turn the moment into a body of work that continues after the event.",
+    icon: Camera,
   },
   {
-    time: "1:50–3:05",
-    length: "75 min",
-    title: "Collaborative Set 03",
-    note: "Build the room",
-  },
-  {
-    time: "3:15–4:30",
-    length: "75 min",
-    title: "Collaborative Set 04",
-    note: "Experience meets emergence",
-  },
-  {
-    time: "4:40–6:10",
-    length: "90 min",
-    title: "Founding Class B3B",
-    note: "Featured three-camera performance",
-    featured: true,
-  },
-  {
-    time: "6:20–7:50",
-    length: "90 min",
-    title: "Monolith Sunset Builder",
-    note: "Resident handoff / golden hour",
-    sunset: true,
-  },
-  {
-    time: "8:00–10:00",
-    length: "120 min",
-    title: "Enoo Napa",
-    note: "Headline performance",
-    headliner: true,
+    number: "03",
+    label: "Public preview",
+    title: "The house opens",
+    copy: "The Monolith community meets the platform for the first time at Castaways Beach Club on August 22.",
+    icon: Sparkles,
   },
 ];
 
@@ -95,12 +74,12 @@ const classBenefits = [
   {
     label: "Core program",
     title: "Featured Performance",
-    copy: "A ninety-minute Founding Class B3B during Chasing Sun(Sets) II.",
+    copy: "A collaborative Founding Class performance during Chasing Sun(Sets) II.",
   },
   {
     label: "Core program",
     title: "Professional Release",
-    copy: "Three-camera film, direct master audio, photography, and approved media releases.",
+    copy: "Performance film, direct master audio, photography, and approved media releases.",
   },
   {
     label: "Partner-supported",
@@ -146,6 +125,30 @@ const roadmap = [
 export default function HouseOfFriends() {
   const { openInquiry } = useInquiry();
   const shouldReduceMotion = useReducedMotion();
+  const [applicationsOpen, setApplicationsOpen] = useState<boolean | null>(
+    null
+  );
+  const applicationHref =
+    typeof window !== "undefined" &&
+    isHouseOfFriendsCampaignHost(window.location.hostname)
+      ? "/apply"
+      : ROUTES.houseOfFriendsApply;
+
+  useEffect(() => {
+    let active = true;
+    void getHouseOfFriendsApplicationStatus()
+      .then(result => {
+        if (active) setApplicationsOpen(result.acceptingApplications);
+      })
+      .catch(() => {
+        if (active) setApplicationsOpen(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const reveal = {
     initial: shouldReduceMotion ? false : { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
@@ -162,8 +165,8 @@ export default function HouseOfFriends() {
         title="House of Friends | Artist Development by The Monolith Project"
         description="House of Friends is The Monolith Project's emerging-artist platform for collaboration, professional content, education, and future opportunity."
         absoluteTitle
-        canonicalPath={ROUTES.houseOfFriends}
-        noIndex
+        canonicalUrl="https://houseoffriends.vip/"
+        image="/og-image.jpg"
       />
 
       <Navigation variant="dark" brand="monolith" />
@@ -181,9 +184,9 @@ export default function HouseOfFriends() {
           </div>
 
           <div className="container layout-wide relative z-10 px-6">
-            <div className="hof-draft-chip">
+            <div className="hof-launch-chip">
               <span aria-hidden="true" />
-              Working draft / Internal preview
+              Public preview / August 22, 2026
             </div>
 
             <div className="hof-hero-grid">
@@ -213,11 +216,12 @@ export default function HouseOfFriends() {
                 </p>
 
                 <div className="hof-hero-actions">
-                  <Link
-                    href={ROUTES.houseOfFriendsApply}
-                    className="btn-pill-neutral"
-                  >
-                    Apply for the Founding Class
+                  <Link href={applicationHref} className="btn-pill-neutral">
+                    {applicationsOpen === true
+                      ? "Apply for the Founding Class"
+                      : applicationsOpen === false
+                        ? "View Founding Class details"
+                        : "Founding Class applications"}
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <button
@@ -414,19 +418,19 @@ export default function HouseOfFriends() {
             >
               <div>
                 <p className="hof-kicker">03 / August 22</p>
-                <h2 id="hof-day-title">The day builds like a story.</h2>
+                <h2 id="hof-day-title">The first house opens August 22.</h2>
               </div>
               <p>
-                Six pre-headliner blocks. Ten-minute protected transitions. The
-                Founding Class is the featured late-afternoon payoff—not simply
-                the first opener.
+                House of Friends makes its public preview inside Chasing
+                Sun(Sets) II—bringing selected artists, professional capture,
+                and the wider Monolith community into one room.
               </p>
             </motion.div>
 
             <div className="hof-day-meta">
               <div>
                 <Clock3 className="h-4 w-4" aria-hidden="true" />
-                <span>11:00 AM–10:00 PM</span>
+                <span>Saturday / August 22, 2026</span>
               </div>
               <div>
                 <Disc3 className="h-4 w-4" aria-hidden="true" />
@@ -438,34 +442,41 @@ export default function HouseOfFriends() {
               </div>
             </div>
 
-            <ol className="hof-timeline">
-              {schedule.map((set, index) => (
-                <motion.li
-                  key={`${set.time}-${set.title}`}
-                  className="hof-timeline-row"
-                  data-featured={set.featured || undefined}
-                  data-sunset={set.sunset || undefined}
-                  data-headliner={set.headliner || undefined}
-                  {...reveal}
-                >
-                  <span className="hof-timeline-index">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <time>{set.time}</time>
-                  <span className="hof-timeline-length">{set.length}</span>
-                  <div>
-                    <h3>{set.title}</h3>
-                    <p>{set.note}</p>
-                  </div>
-                  <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
-                </motion.li>
-              ))}
-            </ol>
+            <div className="hof-launch-grid">
+              {launchMoments.map(moment => {
+                const Icon = moment.icon;
+                return (
+                  <motion.article
+                    key={moment.number}
+                    className="hof-launch-card"
+                    {...reveal}
+                  >
+                    <div className="hof-launch-card-top">
+                      <span>{moment.number}</span>
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <p>{moment.label}</p>
+                    <h3>{moment.title}</h3>
+                    <small>{moment.copy}</small>
+                  </motion.article>
+                );
+              })}
+            </div>
 
-            <p className="hof-working-note">
-              Working program subject to artist contracts, technical advancing,
-              and public announcement clearance.
-            </p>
+            <motion.div className="hof-launch-actions" {...reveal}>
+              <a href="/go/lakelist" className="btn-pill-neutral">
+                Get August 22 first access
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <Link href="/events/css-aug22" className="btn-text-action">
+                View event details
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <p className="hof-launch-note">
+                Artist selections and performance timing will be announced
+                through official Monolith channels.
+              </p>
+            </motion.div>
           </div>
         </section>
 
@@ -517,7 +528,7 @@ export default function HouseOfFriends() {
                 profile, bio, current photo, and one DJ set inside a private
                 applicant workspace. No application payment is collected.
               </p>
-              <Link href={ROUTES.houseOfFriendsApply}>
+              <Link href={applicationHref}>
                 Applications / Enter the house
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </Link>

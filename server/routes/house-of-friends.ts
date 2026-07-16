@@ -12,6 +12,7 @@ import {
 import { asyncHandler } from "../lib/async";
 import { logEvent } from "../lib/logging";
 import { honeypotFieldName, readHoneypotValue } from "../lib/honeypot";
+import { isProductionRuntime } from "../lib/runtime-trust";
 import { createRateLimitMiddleware } from "../services/rate-limit";
 import {
   completeHouseOfFriendsApplication,
@@ -116,7 +117,7 @@ router.put(
   "/api/house-of-friends/applications/:applicationId/assets/:assetType",
   asyncHandler(async (req, res) => {
     const requestId = randomUUID();
-    if (process.env.NODE_ENV === "production") {
+    if (isProductionRuntime()) {
       return res.status(404).json({
         ok: false,
         requestId,

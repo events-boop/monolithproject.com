@@ -200,18 +200,16 @@ const CHECKS: Check[] = [
     bodyContains: "Monolith",
   },
   {
-    // Live 2026-07-16 (Namecheap DNS → Netlify alias). Client-side host
-    // detection routes its root to /house-of-friends and /apply to the form.
-    name: "houseoffriends.vip serves the site",
+    name: "houseoffriends.vip serves the House of Friends launch page",
     url: "https://houseoffriends.vip/",
     status: 200,
-    bodyContains: "Monolith",
+    bodyContains: "House of Friends",
   },
   {
-    name: "www.houseoffriends.vip serves the site",
+    name: "www.houseoffriends.vip redirects to the apex campaign domain",
     url: "https://www.houseoffriends.vip/",
-    status: 200,
-    bodyContains: "Monolith",
+    status: 301,
+    redirectContains: "houseoffriends.vip/",
   },
   // Pending DNS repointing (registrar action) — flip to hard checks after.
   {

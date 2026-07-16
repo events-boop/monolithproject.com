@@ -1,4 +1,5 @@
 import type { LeadProvider } from "./schemas";
+import { isProductionRuntime } from "./runtime-trust";
 
 type ValidateEnvironmentOptions = {
   fatal?: boolean;
@@ -66,7 +67,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
   const resolvedOptions: Required<ValidateEnvironmentOptions> = {
     fatal: options.fatal ?? false,
   };
-  const isProd = process.env.NODE_ENV === "production";
+  const isProd = isProductionRuntime();
 
   // DATABASE_URL is degrade-gracefully: form handlers fall back to email delivery,
   // so a missing value is a warning, not a fatal — even under fatal: true.

@@ -42,6 +42,57 @@
   status = 301
   force = true
 
+# House of Friends owns its campaign domain. Serve the prerendered route at the
+# clean apex URL, keep /apply clean, and collapse the www + legacy path variants.
+
+[[redirects]]
+  from = "https://www.houseoffriends.vip/*"
+  to = "https://houseoffriends.vip/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/house-of-friends"
+  to = "https://houseoffriends.vip/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/house-of-friends/"
+  to = "https://houseoffriends.vip/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/house-of-friends/apply"
+  to = "https://houseoffriends.vip/apply"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/house-of-friends/apply/"
+  to = "https://houseoffriends.vip/apply"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/"
+  to = "/house-of-friends/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/apply"
+  to = "/house-of-friends/apply/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://houseoffriends.vip/apply/"
+  to = "/house-of-friends/apply/index.html"
+  status = 200
+  force = true
+
 # sunsets.vip is the campaign front door. Root and common aliases redirect to
 # the canonical /sunsets page while non-root paths such as /go/* remain
 # available for short-link handling.

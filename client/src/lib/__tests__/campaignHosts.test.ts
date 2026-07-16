@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { resolveCampaignHostPath } from "../campaignHosts";
+import {
+  isHouseOfFriendsCampaignHost,
+  resolveCampaignHostPath,
+} from "../campaignHosts";
 
 describe("campaign host routing", () => {
   it("maps houseoffriends.vip root and apply aliases into the platform", () => {
+    expect(isHouseOfFriendsCampaignHost("HOUSEOFFRIENDS.VIP")).toBe(true);
+    expect(isHouseOfFriendsCampaignHost("monolithproject.com")).toBe(false);
     expect(resolveCampaignHostPath("houseoffriends.vip", "/")).toBe(
       "/house-of-friends"
     );

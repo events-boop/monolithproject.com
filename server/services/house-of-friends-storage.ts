@@ -14,6 +14,7 @@ import type {
   HouseOfFriendsPrepareResponse,
 } from "@shared/house-of-friends";
 import { HOUSE_OF_FRIENDS_APPLICATION_YEAR } from "@shared/house-of-friends";
+import { isProductionRuntime } from "../lib/runtime-trust";
 
 const TOKEN_LIFETIME_SECONDS = 60 * 60;
 const LOCAL_UPLOAD_ROOT = path.resolve(process.cwd(), "var/uploads");
@@ -82,7 +83,7 @@ const PRODUCTION_APPLICATION_VARS = [
 ] as const;
 
 export function getHouseOfFriendsApplicationReadiness() {
-  if (process.env.NODE_ENV !== "production") {
+  if (!isProductionRuntime()) {
     return {
       acceptingApplications: true,
       message: "House of Friends applications are open in local preview.",
@@ -161,7 +162,7 @@ function resolveStorageMode(): StorageMode {
   }
 
   if (readR2Config()) return "r2";
-  if (process.env.NODE_ENV !== "production") return "local";
+  if (!isProductionRuntime()) return "local";
 
   throw new HouseOfFriendsStorageError(
     "Artist applications are not open yet. Media storage must be connected before launch.",
@@ -174,7 +175,7 @@ function getSigningSecret(storageMode: StorageMode) {
   const configured = process.env.HOF_APPLICATION_SIGNING_SECRET?.trim();
   if (configured) return configured;
 
-  if (storageMode === "local" && process.env.NODE_ENV !== "production") {
+  if (storageMode === "local" && !isProductionRuntime()) {
     localSigningSecret ||= randomBytes(48).toString("base64url");
     return localSigningSecret;
   }

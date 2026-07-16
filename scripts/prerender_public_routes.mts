@@ -34,7 +34,9 @@ type RouteDefinition = {
   title: string;
   description: string;
   absoluteTitle?: boolean;
+  canonicalUrl?: string;
   image?: string;
+  noIndex?: boolean;
   schemaData?: Record<string, unknown> | Array<Record<string, unknown>>;
   bodyHtml: string;
 };
@@ -498,6 +500,59 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       absoluteTitle: true,
       schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderHomeCriticalLayout(),
+    },
+  ],
+  [
+    "/house-of-friends",
+    {
+      title: "House of Friends | Artist Development by The Monolith Project",
+      description:
+        "House of Friends is The Monolith Project's emerging-artist platform, previewing August 22, 2026 at Chasing Sun(Sets) II in Chicago.",
+      absoluteTitle: true,
+      canonicalUrl: "https://houseoffriends.vip/",
+      image: "https://houseoffriends.vip/og-image.jpg",
+      bodyHtml: renderBaseLayout(
+        "Artist development / Founding Class 2026",
+        "House of Friends",
+        [
+          "A Monolith platform connecting emerging artists with collaborative performance, professional content, education, tools, and future opportunity.",
+          "The public preview arrives August 22, 2026 inside Chasing Sun(Sets) II at Castaways Beach Club in Chicago.",
+          "Artist selections and performance timing will be announced through official Monolith channels.",
+        ],
+        [
+          {
+            href: "https://houseoffriends.vip/apply",
+            label: "Founding Class applications",
+          },
+          { href: "/go/lakelist", label: "Get August 22 first access" },
+          { href: "/events/css-aug22", label: "View event details" },
+        ]
+      ),
+    },
+  ],
+  [
+    "/house-of-friends/apply",
+    {
+      title: "Apply | House of Friends Founding Class 2026",
+      description:
+        "Check the secure application status for the House of Friends Founding Class 2026.",
+      absoluteTitle: true,
+      canonicalUrl: "https://houseoffriends.vip/apply",
+      noIndex: true,
+      bodyHtml: renderBaseLayout(
+        "Secure artist intake / Founding Class 2026",
+        "House of Friends Applications",
+        [
+          "The application page confirms the secure intake channel before collecting any artist information.",
+          "No application data or payment is collected while the channel is closed.",
+        ],
+        [
+          {
+            href: "https://houseoffriends.vip/",
+            label: "Return to House of Friends",
+          },
+        ]
+      ),
     },
   ],
   [
@@ -1075,7 +1130,7 @@ for (const sitemapEntry of mergeSitemapEntries(
 }
 
 for (const route of routeDefinitions) {
-  const canonicalUrl = toAbsoluteUrl(route.path);
+  const canonicalUrl = route.canonicalUrl || toAbsoluteUrl(route.path);
   const resolvedTitle = route.absoluteTitle
     ? route.title
     : fullTitle(route.title);
@@ -1099,6 +1154,10 @@ for (const route of routeDefinitions) {
   html = upsertMetaByName(html, "twitter:url", canonicalUrl);
   html = upsertMetaByName(html, "twitter:title", resolvedTitle);
   html = upsertMetaByName(html, "twitter:description", route.description);
+
+  if (route.noIndex) {
+    html = upsertMetaByName(html, "robots", "noindex,nofollow");
+  }
 
   if (route.image) {
     const imageUrl = toAbsoluteUrl(route.image);

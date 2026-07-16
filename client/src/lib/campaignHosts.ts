@@ -4,6 +4,14 @@ function normalizeRouteLocation(location: string) {
   return (location.split("?")[0].replace(/\/$/, "") || "/").toLowerCase();
 }
 
+export function isHouseOfFriendsCampaignHost(host: string) {
+  const normalizedHost = host.trim().toLowerCase();
+  return (
+    normalizedHost === CAMPAIGN_HOSTS.houseOfFriendsVip ||
+    normalizedHost === CAMPAIGN_HOSTS.houseOfFriendsVipWww
+  );
+}
+
 export function resolveCampaignHostPath(host: string, location: string) {
   const normalizedLocation = normalizeRouteLocation(location);
   const normalizedHost = host.trim().toLowerCase();
@@ -13,9 +21,7 @@ export function resolveCampaignHostPath(host: string, location: string) {
   const isUntoldHost =
     normalizedHost === CAMPAIGN_HOSTS.untoldVip ||
     normalizedHost === CAMPAIGN_HOSTS.untoldVipWww;
-  const isHouseOfFriendsHost =
-    normalizedHost === CAMPAIGN_HOSTS.houseOfFriendsVip ||
-    normalizedHost === CAMPAIGN_HOSTS.houseOfFriendsVipWww;
+  const isHouseOfFriendsHost = isHouseOfFriendsCampaignHost(normalizedHost);
 
   if (normalizedLocation === ROUTES.home && isSunsetsHost) {
     return ROUTES.sunsets;

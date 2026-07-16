@@ -213,7 +213,6 @@ export const radioEpisodes: RadioEpisode[] = [
     ],
     tracklist: [
       { timecode: "00:00", artist: "TERRANOVA", title: "Guest Session Intro" },
-      { timecode: "14:22", artist: "Arodes", title: "Concentrate" },
       { timecode: "28:06", artist: "Notre Dame", title: "Yumi" },
       { timecode: "41:50", artist: "Keinemusik", title: "Move" },
       { timecode: "57:12", artist: "TERRANOVA", title: "Sunline Exit" },

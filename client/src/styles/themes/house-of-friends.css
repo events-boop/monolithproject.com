@@ -67,7 +67,7 @@
     background: linear-gradient(to bottom, transparent 70%, var(--hof-ink));
   }
 
-  .hof-draft-chip {
+  .hof-launch-chip {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -82,7 +82,7 @@
     color: rgba(240, 234, 223, 0.56);
   }
 
-  .hof-draft-chip span {
+  .hof-launch-chip span {
     width: 0.42rem;
     height: 0.42rem;
     border-radius: 999px;
@@ -744,110 +744,108 @@
     color: var(--hof-sage);
   }
 
-  .hof-timeline {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--hof-line);
-  }
-
-  .hof-timeline-row {
+  .hof-launch-grid {
     display: grid;
-    grid-template-columns:
-      3rem minmax(7rem, 0.55fr) minmax(4.5rem, 0.25fr)
-      minmax(0, 1.5fr) auto;
-    gap: 1.5rem;
-    align-items: center;
-    min-height: 7rem;
-    padding: 1rem 1.2rem;
-    border-bottom: 1px solid var(--hof-line);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .hof-launch-card {
+    position: relative;
+    min-height: 20rem;
+    padding: clamp(1.35rem, 2.6vw, 2rem);
+    overflow: hidden;
+    border: 1px solid var(--hof-line);
+    background:
+      linear-gradient(145deg, rgba(185, 201, 159, 0.075), transparent 52%),
+      rgba(255, 255, 255, 0.014);
     transition:
-      background 0.4s var(--motion-luxe),
-      border-color 0.4s var(--motion-luxe);
+      transform 0.45s var(--motion-luxe),
+      border-color 0.45s var(--motion-luxe),
+      box-shadow 0.45s var(--motion-luxe);
   }
 
-  .hof-timeline-row:hover {
-    background: rgba(255, 255, 255, 0.022);
+  .hof-launch-card::after {
+    content: "";
+    position: absolute;
+    right: -3rem;
+    bottom: -5rem;
+    width: 11rem;
+    height: 11rem;
+    border: 1px solid rgba(185, 201, 159, 0.11);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2.25rem rgba(185, 201, 159, 0.025),
+      0 0 0 4.5rem rgba(185, 201, 159, 0.015);
   }
 
-  .hof-timeline-row[data-featured] {
-    border-color: rgba(185, 201, 159, 0.32);
-    background: linear-gradient(
-      90deg,
-      rgba(185, 201, 159, 0.11),
-      rgba(185, 201, 159, 0.02)
-    );
+  .hof-launch-card:hover {
+    border-color: rgba(185, 201, 159, 0.34);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.3rem);
   }
 
-  .hof-timeline-row[data-sunset] {
-    background: linear-gradient(
-      90deg,
-      rgba(183, 101, 63, 0.11),
-      rgba(232, 184, 109, 0.025)
-    );
+  .hof-launch-card-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--hof-sage);
   }
 
-  .hof-timeline-row[data-headliner] {
-    border-color: rgba(232, 184, 109, 0.28);
-    background: linear-gradient(
-      90deg,
-      rgba(232, 184, 109, 0.1),
-      rgba(183, 101, 63, 0.035)
-    );
-  }
-
-  .hof-timeline-index,
-  .hof-timeline-length {
+  .hof-launch-card-top span,
+  .hof-launch-card > p {
+    position: relative;
+    z-index: 1;
     font-family: var(--font-mono);
     font-size: 0.57rem;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(240, 234, 223, 0.36);
+    color: rgba(240, 234, 223, 0.46);
   }
 
-  .hof-timeline-row time {
-    font-family: var(--font-mono);
-    font-size: clamp(0.78rem, 1.2vw, 0.98rem);
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    color: rgba(240, 234, 223, 0.86);
+  .hof-launch-card > p {
+    margin: clamp(4rem, 9vw, 7rem) 0 0.85rem;
+    color: var(--hof-sage);
   }
 
-  .hof-timeline-row h3 {
+  .hof-launch-card h3 {
+    position: relative;
+    z-index: 1;
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.7vw, 2.5rem);
+    font-size: clamp(1.65rem, 2.9vw, 2.7rem);
     font-weight: 400;
     letter-spacing: -0.025em;
     line-height: 0.96;
     text-transform: uppercase;
   }
 
-  .hof-timeline-row p {
-    margin: 0.45rem 0 0;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(240, 234, 223, 0.42);
+  .hof-launch-card small {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: 25rem;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: rgba(240, 234, 223, 0.5);
   }
 
-  .hof-timeline-row > svg {
-    color: rgba(240, 234, 223, 0.24);
+  .hof-launch-actions {
+    display: grid;
+    grid-template-columns: auto auto minmax(16rem, 1fr);
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hof-line);
   }
 
-  .hof-timeline-row[data-featured] h3,
-  .hof-timeline-row[data-featured] > svg {
-    color: var(--hof-sage-bright);
-  }
-
-  .hof-timeline-row[data-headliner] h3,
-  .hof-timeline-row[data-headliner] > svg {
-    color: var(--hof-gold);
-  }
-
-  .hof-working-note {
-    max-width: 46rem;
-    margin: 1.25rem 0 0 auto;
+  .hof-launch-note {
+    max-width: 31rem;
+    margin: 0 0 0 auto;
     font-family: var(--font-mono);
     font-size: 0.55rem;
     letter-spacing: 0.1em;
@@ -1278,6 +1276,21 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .hof-launch-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hof-launch-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hof-launch-note {
+      grid-column: 1 / -1;
+      max-width: 38rem;
+      margin-left: 0;
+      text-align: left;
+    }
+
     .hof-section-heading-split {
       gap: 0;
     }
@@ -1400,32 +1413,17 @@
       padding: 1rem;
     }
 
-    .hof-timeline-row {
-      grid-template-columns: 2.25rem 1fr auto;
-      gap: 0.75rem 1rem;
-      min-height: 8rem;
-      padding: 1rem 0.8rem;
+    .hof-launch-actions {
+      grid-template-columns: 1fr;
+      align-items: stretch;
     }
 
-    .hof-timeline-row time {
-      grid-column: 2;
+    .hof-launch-actions > a {
+      width: 100%;
     }
 
-    .hof-timeline-length {
-      grid-column: 3;
-      text-align: right;
-    }
-
-    .hof-timeline-row > div {
-      grid-column: 2 / -1;
-    }
-
-    .hof-timeline-row > svg {
-      display: none;
-    }
-
-    .hof-working-note {
-      text-align: left;
+    .hof-launch-note {
+      grid-column: 1;
     }
 
     .hof-class-hero {
@@ -1478,11 +1476,12 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hof-pathway-card,
-    .hof-timeline-row {
+    .hof-launch-card {
       transition: none;
     }
 
-    .hof-pathway-card:hover {
+    .hof-pathway-card:hover,
+    .hof-launch-card:hover {
       transform: none;
     }
   }

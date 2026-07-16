@@ -26,6 +26,7 @@ import {
   type HouseOfFriendsSubmissionStatus,
   type HouseOfFriendsUploadProgress,
 } from "@/lib/api";
+import { isHouseOfFriendsCampaignHost } from "@/lib/campaignHosts";
 import { honeypotFieldName } from "@shared/generated/hardening";
 import {
   HOUSE_OF_FRIENDS_AUDIO_MAX_BYTES,
@@ -170,6 +171,11 @@ function UploadField({
 
 export default function HouseOfFriendsApply() {
   const shouldReduceMotion = useReducedMotion();
+  const houseOfFriendsHref =
+    typeof window !== "undefined" &&
+    isHouseOfFriendsCampaignHost(window.location.hostname)
+      ? "/"
+      : ROUTES.houseOfFriends;
   const [availability, setAvailability] = useState<
     "checking" | "open" | "closed"
   >("checking");
@@ -356,7 +362,7 @@ export default function HouseOfFriendsApply() {
           title="Application Registered | House of Friends"
           description="House of Friends Founding Class application confirmation."
           absoluteTitle
-          canonicalPath={ROUTES.houseOfFriendsApply}
+          canonicalUrl="https://houseoffriends.vip/apply"
           noIndex
         />
         <Navigation variant="dark" brand="monolith" />
@@ -389,7 +395,7 @@ export default function HouseOfFriendsApply() {
               Save this code. Application updates and selection timing will be
               sent to the email address you registered.
             </p>
-            <Link href={ROUTES.houseOfFriends} className="btn-pill-neutral">
+            <Link href={houseOfFriendsHref} className="btn-pill-neutral">
               Return to House of Friends
               <ArrowUpRight aria-hidden="true" />
             </Link>
@@ -407,7 +413,7 @@ export default function HouseOfFriendsApply() {
           title="Apply | House of Friends Founding Class 2026"
           description="House of Friends Founding Class 2026 artist application status."
           absoluteTitle
-          canonicalPath={ROUTES.houseOfFriendsApply}
+          canonicalUrl="https://houseoffriends.vip/apply"
           noIndex
         />
         <Navigation variant="dark" brand="monolith" />
@@ -441,7 +447,7 @@ export default function HouseOfFriendsApply() {
               No application data or payment is collected while this channel is
               closed.
             </p>
-            <Link href={ROUTES.houseOfFriends} className="btn-pill-neutral">
+            <Link href={houseOfFriendsHref} className="btn-pill-neutral">
               Return to House of Friends
               <ArrowUpRight aria-hidden="true" />
             </Link>
@@ -457,7 +463,7 @@ export default function HouseOfFriendsApply() {
         title="Apply | House of Friends Founding Class 2026"
         description="Register for the House of Friends Founding Class 2026 and submit your artist profile, photo, and DJ set."
         absoluteTitle
-        canonicalPath={ROUTES.houseOfFriendsApply}
+        canonicalUrl="https://houseoffriends.vip/apply"
         noIndex
       />
       <Navigation variant="dark" brand="monolith" />
@@ -470,7 +476,7 @@ export default function HouseOfFriendsApply() {
             <span />
           </div>
           <div className="container layout-wide relative z-10 px-6">
-            <Link href={ROUTES.houseOfFriends} className="hof-application-back">
+            <Link href={houseOfFriendsHref} className="hof-application-back">
               <ArrowLeft aria-hidden="true" />
               House of Friends
             </Link>
