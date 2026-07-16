@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import { Link } from "wouter";
-import { ArrowLeft, Camera, UploadCloud } from "lucide-react";
+import { ArrowLeft, BookOpen, Camera, UploadCloud } from "lucide-react";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 
 // Dropbox file request — community uploads of DJ sets, photos, and videos.
@@ -67,9 +67,17 @@ export default function ArchiveGalleryPage() {
               <p className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-6">
                 {gallery.subtitle}
               </p>
-              <p className="max-w-xl text-white/70 leading-relaxed mb-12">
+              <p className="max-w-xl text-white/70 leading-relaxed mb-6">
                 {gallery.description}
               </p>
+
+              {gallery.journalHref && (
+                <Link href={gallery.journalHref} asChild>
+                  <a className="btn-text-action mb-12">
+                    <BookOpen className="w-4 h-4" /> Read The Recap
+                  </a>
+                </Link>
+              )}
 
               <div className="max-w-xl border border-white/12 bg-white/[0.03] p-8 text-center">
                 <Camera
@@ -106,14 +114,23 @@ export default function ArchiveGalleryPage() {
               </div>
             </section>
           ) : (
-            <MixedMediaGallery
-              title={gallery.title}
-              subtitle={gallery.subtitle}
-              description={gallery.description}
-              media={gallery.media}
-              className="bg-transparent"
-              dense
-            />
+            <>
+              {gallery.journalHref && (
+                <Link href={gallery.journalHref} asChild>
+                  <a className="btn-text-action mb-10">
+                    <BookOpen className="w-4 h-4" /> Read The Recap
+                  </a>
+                </Link>
+              )}
+              <MixedMediaGallery
+                title={gallery.title}
+                subtitle={gallery.subtitle}
+                description={gallery.description}
+                media={gallery.media}
+                className="bg-transparent"
+                dense
+              />
+            </>
           )}
         </div>
       </main>

@@ -40,6 +40,8 @@ export interface ArchiveCollection {
   media: MediaItem[];
   /** Collection is announced but the gallery is still in the edit. */
   comingSoon?: boolean;
+  /** Journal recap entry for this chapter (the written half of the record). */
+  journalHref?: string;
 }
 
 function image(item: GalleryImageItem): GalleryImageItem {
@@ -481,6 +483,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     coverImage: "/images/sunsets-hero-beach.jpg",
     date: "July 4, 2026",
     comingSoon: true,
+    journalHref: "/insights/recap-sunsets-i-july-4-castaways",
     media: [],
   },
   "chasing-sunsets-season-i": {

@@ -1,5 +1,5 @@
-import { CTA_LABELS } from "@/lib/cta";
-
+// Pure data module — no client-code imports. Build scripts (prerender,
+// sitemap sync) import this file directly, so it must stay dependency-free.
 export interface InsightSection {
   title: string;
   paragraphs: string[];
@@ -29,6 +29,69 @@ export interface InsightEntry {
 
 export const insightEntries: InsightEntry[] = [
   {
+    slug: "recap-sunsets-i-july-4-castaways",
+    title: "SUN(SETS) I, on the record: July 4 at Castaways",
+    category: "Event Recap",
+    displayDate: "July 16, 2026",
+    datePublished: "2026-07-16",
+    readTime: "5 min read",
+    summary:
+      "The recap of SUN(SETS) I — July 4, 2026 at Castaways Beach Club on North Avenue Beach, Chicago. Autograf, Kiko Franco, and a ten-artist bill carried the first chapter of the lakefront season from noon to the last light.",
+    deck: "Chapter One had one job: prove the lakefront ritual was real. Ten hours on North Avenue Beach later, the answer is in the archive.",
+    image: "/images/sunsets-hero-beach.jpg",
+    accent: "sunsets",
+    tags: [
+      "Event Recap",
+      "Chasing Sun(Sets)",
+      "Autograf",
+      "Kiko Franco",
+      "Castaways",
+    ],
+    relatedLinks: [
+      { label: "Watch The Recap", href: "/go/media/sunsets-recap", external: true },
+      { label: "Open The Gallery", href: "/go/gallery/chasing-sunsets", external: true },
+      { label: "Hear The Sets", href: "/go/media/sunsets-soundcloud", external: true },
+      { label: "Join The Lake List", href: "/go/lakelist" },
+    ],
+    sections: [
+      {
+        title: "What Chapter One had to prove",
+        paragraphs: [
+          "Chasing Sun(Sets) came home to the lake on July 4. Not as a holiday party — as a claim: that Chicago's lakefront deserves a house music ritual of its own, built around golden hour instead of a headline slot. Castaways Beach Club on North Avenue Beach held that claim for ten hours, from noon doors to the last set after sundown, and 2,800 people held it with us — through the heat, through a pass of rain, to the last light.",
+          "A first chapter carries a different weight than a one-off event. Everything about the day — the pacing, the bill, the way the room filled — was designed to be repeatable. That was the test. A great party happens once. A ritual has to make you certain there will be a next one.",
+        ],
+      },
+      {
+        title: "Ten artists, one arc",
+        paragraphs: [
+          "Autograf and Kiko Franco anchored the bill, and around them the day belonged to the wider room: Amari, Eliana, Gianni Blu, Frank Bono, Erik The DJ, Jerome, Colin, and Nomar. Ten artists across ten hours is not a festival flex — it is how an open-air chapter has to move. People arrive in daylight, settle in, find each other. The music's job in the early hours is patience; its job at golden hour is release.",
+          "That is also why this bill mattered beyond the two names at the top. The day proved the room can hold Chicago's own selectors next to touring acts without a seam. The standard is the same at 1 PM as it is at 8: rhythm first, clutter never.",
+        ],
+      },
+      {
+        title: "Golden hour is the headliner",
+        paragraphs: [
+          "The format truth of SUN(SETS) is that the sunset is the real headline slot, and everyone on the bill is playing toward it. Lake Michigan behind the decks, the light dropping through gold into dusk — the room's clock is the sky. No lighting rig can fake the moment the whole beach turns west.",
+          "That is the difference between an event that uses a beautiful setting and one that is built around it. Chapter One was built around it, and the room understood: the day peaked exactly when the lake said it should.",
+        ],
+      },
+      {
+        title: "The record is open",
+        paragraphs: [
+          "The archive of Chapter One is live: the recap film, the full photo gallery, and the sets. If you were in the room, this is your record too — the project collects crowd footage, booth clips, and portraits through the Add To The Record channel on the Sun(Sets) page, and selected media enters the official archive with credit.",
+          "This journal entry is the written half of that record. The gallery holds what it looked like. This holds why it worked.",
+        ],
+      },
+      {
+        title: "Chapter Two: August 22",
+        paragraphs: [
+          "The season is three dates on one lake. Chapter One is in the archive. Chapter Two lands August 22 at Castaways, with the artist reveal coming, and Chapter Three closes the season on September 19. The Lake List hears every release first — lineup, tickets, and the moments between chapters.",
+          "If July 4 proved the ritual is real, August 22 is where it becomes a habit. See you at golden hour.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "artist-feature-ewerseen",
     title: "Why EWERSEEN fits the Chasing Sun(Sets) room",
     category: "Artist Feature",
@@ -44,7 +107,7 @@ export const insightEntries: InsightEntry[] = [
     relatedLinks: [
       { label: "Open Artist Profile", href: "/artists/ewerseen" },
       { label: "Listen To EP-02", href: "/radio/ep-02-ewerseen" },
-      { label: CTA_LABELS.sunSets, href: "/chasing-sunsets" },
+      { label: "Explore Chasing Sun(Sets)", href: "/chasing-sunsets" },
     ],
     sections: [
       {
@@ -84,7 +147,7 @@ export const insightEntries: InsightEntry[] = [
     tags: ["Set Drop", "Radio Show", "BENCHEK"],
     relatedLinks: [
       { label: "Open EP-01", href: "/radio/ep-01-benchek" },
-      { label: CTA_LABELS.radioHub, href: "/radio" },
+      { label: "Open The Radio Show", href: "/radio" },
       { label: "Read Brand Facts", href: "/chasing-sunsets-facts" },
     ],
     sections: [
@@ -124,8 +187,8 @@ export const insightEntries: InsightEntry[] = [
     accent: "monolith",
     tags: ["Show Note", "AUTOGRAF", "March 21, 2026"],
     relatedLinks: [
-      { label: CTA_LABELS.tickets, href: "/tickets" },
-      { label: CTA_LABELS.schedule, href: "/schedule" },
+      { label: "Get Tickets", href: "/tickets" },
+      { label: "See The Schedule", href: "/schedule" },
       { label: "See The Archive", href: "/archive" },
     ],
     sections: [

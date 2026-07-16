@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { ARTIST_ENTRIES } from "../client/src/data/artists.ts";
+import { insightEntries } from "../client/src/data/insights.ts";
 import { radioEpisodes } from "../client/src/data/radioEpisodes.ts";
 import { untoldFaqs } from "../client/src/components/untold-story/constants.ts";
 import {
@@ -1097,6 +1098,61 @@ function buildEventRoutes(): RouteDefinition[] {
   });
 }
 
+function buildInsightRoutes(): RouteDefinition[] {
+  return insightEntries.map(entry => {
+    const routePath = `/insights/${entry.slug}`;
+    return {
+      path: routePath,
+      title: entry.title,
+      description: entry.summary,
+      image: entry.image,
+      schemaData: {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: entry.title,
+        description: entry.summary,
+        datePublished: entry.datePublished,
+        image: `${SITE_ORIGIN}${entry.image}`,
+        mainEntityOfPage: `${SITE_ORIGIN}${routePath}`,
+        author: {
+          "@type": "Organization",
+          name: "The Monolith Project",
+          url: SITE_ORIGIN,
+        },
+        publisher: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+      bodyHtml: renderBaseLayout(
+        entry.category,
+        entry.title,
+        [entry.deck],
+        [
+          ...entry.relatedLinks.map(link => ({
+            href: link.href,
+            label: link.label,
+            external: link.external,
+          })),
+          { href: "/insights", label: "Back to Journal" },
+        ],
+        entry.sections
+          .map(
+            section => `
+        <section>
+          <h2>${section.title}</h2>
+          ${section.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("\n          ")}
+        </section>`
+          )
+          .join("\n")
+      ),
+    };
+  });
+}
+
+const insightSitemapEntries = insightEntries.map(entry => ({
+  path: `/insights/${entry.slug}`,
+  priority: "0.55",
+  changefreq: "monthly",
+}));
+
 const routeDefinitions = [
   ...Array.from(staticRoutes.entries()).map(([routePath, route]) => ({
     path: routePath,
@@ -1105,11 +1161,13 @@ const routeDefinitions = [
   ...buildArtistRoutes(),
   ...buildRadioEpisodeRoutes(),
   ...buildEventRoutes(),
+  ...buildInsightRoutes(),
 ];
 
-for (const sitemapEntry of mergeSitemapEntries(
-  buildEventSitemapEntries(upcomingEvents)
-)) {
+for (const sitemapEntry of mergeSitemapEntries([
+  ...buildEventSitemapEntries(upcomingEvents),
+  ...insightSitemapEntries,
+])) {
   const sitemapPath = sitemapEntry.path || "/";
   if (!routeDefinitions.some(route => route.path === sitemapPath)) {
     routeDefinitions.push({

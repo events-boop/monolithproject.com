@@ -62,6 +62,7 @@ const utilityLinks = [
   { label: "Instagram", href: INSTAGRAM_MONOLITH },
   { label: "Text Alerts", href: LAYLO_URL },
   { label: "SoundCloud", href: SOUNDCLOUD_URL },
+  { label: "Journal", href: "/insights" },
   { label: "About", href: "/about" },
   { label: "Partners", href: "/partners" },
   { label: "Contact", href: "/contact" },
