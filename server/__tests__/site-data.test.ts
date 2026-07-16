@@ -20,6 +20,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-aug22");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    expect(featuredSunsets?.lineup).toBe("TBA");
     // Not on sale yet: no checkout path or price may leak into the payload.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
     expect(featuredSunsets?.ticketUrl).toBeUndefined();

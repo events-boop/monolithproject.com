@@ -440,6 +440,10 @@ export default function HouseOfFriends() {
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
                 <span>Castaways / Chicago</span>
               </div>
+              <div>
+                <UsersRound className="h-4 w-4" aria-hidden="true" />
+                <span>Lineup / TBA</span>
+              </div>
             </div>
 
             <div className="hof-launch-grid">

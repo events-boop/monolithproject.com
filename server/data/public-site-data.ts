@@ -216,6 +216,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     time: "Golden Hour",
     venue: "Castaways",
     location: "Chicago, IL",
+    lineup: "TBA",
     status: "coming-soon",
     description:
       "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
