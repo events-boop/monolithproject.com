@@ -17,6 +17,7 @@ const premiumArtistBaseNamePrefixes = [
   "artists-sommers-uk-",
   "artists-joezi-",
   "artists-massuma-uk-",
+  "artists-chris-idh-",
   "untold-story-header-jpq-",
 ];
 const desktopWidthsByBaseName = new Map([

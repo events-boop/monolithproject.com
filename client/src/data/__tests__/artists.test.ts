@@ -29,6 +29,22 @@ describe("artist catalog", () => {
     expect(srcSet).toContain("1920w");
   });
 
+  it("publishes Chris IDH with the approved portrait and premium image tier", () => {
+    expect(ARTISTS["chris-idh"]).toMatchObject({
+      name: "CHRIS IDH",
+      image: "/images/artists/chris-idh/chris-idh-portrait.jpg",
+      imagePosition: "58% 28%",
+    });
+
+    const srcSet = buildResponsiveImageSrcSet(
+      ARTISTS["chris-idh"].image,
+      "avif"
+    );
+    expect(srcSet).toContain("640w");
+    expect(srcSet).toContain("1280w");
+    expect(srcSet).toContain("1920w");
+  });
+
   it("publishes Joezi with a full press gallery and premium image tier", () => {
     expect(ARTISTS.joezi).toMatchObject({
       name: "JOEZI",

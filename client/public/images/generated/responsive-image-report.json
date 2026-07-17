@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T19:32:33.295Z",
+  "generatedAt": "2026-07-17T21:30:13.760Z",
   "defaultWidths": [
     480,
     1024
@@ -13,13 +13,14 @@
     "artists-sommers-uk-",
     "artists-joezi-",
     "artists-massuma-uk-",
+    "artists-chris-idh-",
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 153619470,
-    "estimatedTransferBytes": 6919695,
-    "estimatedSavingsBytes": 146790389,
-    "variantBytes": 32421776
+    "originalBytes": 157930703,
+    "estimatedTransferBytes": 7017999,
+    "estimatedSavingsBytes": 151003318,
+    "variantBytes": 33276715
   },
   "images": [
     {
@@ -1249,6 +1250,56 @@
       "estimatedTransferKb": 50.3,
       "estimatedSavingsBytes": 35134,
       "estimatedSavingsPct": 41
+    },
+    {
+      "source": "/images/artists/chris-idh/chris-idh-portrait.jpg",
+      "originalBytes": 4311233,
+      "originalKb": 4210.2,
+      "originalWidth": 4480,
+      "originalHeight": 6720,
+      "generatedBaseName": "artists-chris-idh-chris-idh-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 28183
+        },
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 39214
+        },
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 98304
+        },
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 150182
+        },
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 212154
+        },
+        {
+          "path": "/images/generated/artists-chris-idh-chris-idh-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 326902
+        }
+      ],
+      "estimatedTransferBytes": 98304,
+      "estimatedTransferKb": 96,
+      "estimatedSavingsBytes": 4212929,
+      "estimatedSavingsPct": 98
     },
     {
       "source": "/images/artists/joezi/joezi-portrait.jpg",
