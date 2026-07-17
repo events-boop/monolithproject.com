@@ -13,7 +13,11 @@ const defaultWidths = [480, 1024];
 // Premium editorial tier: retain source masters and ship larger, gentler
 // derivatives for artist portraits and press galleries.
 const premiumArtistWidths = [640, 1280, 1920];
-const premiumArtistBaseNamePrefixes = ["artists-sommers-uk-", "artists-joezi-"];
+const premiumArtistBaseNamePrefixes = [
+  "artists-sommers-uk-",
+  "artists-joezi-",
+  "artists-massuma-uk-",
+];
 const desktopWidthsByBaseName = new Map([
   ["hero-monolith", [480, 1024, 1920]],
   ["hero-video-1-poster", [480, 1024, 1920]],

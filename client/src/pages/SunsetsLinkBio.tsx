@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import CommunityContributionSection, {
   COMMUNITY_UPLOAD_URL,
@@ -35,6 +36,7 @@ const BENCHEK_DROP_HREF = "/go/waitlist/benchek";
 const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
+const MASSUMA_UK_IMAGE = "/images/artists/massuma-uk/massuma-uk-portrait.jpg";
 const LAKE_LIST_HREF = "/go/lakelist";
 // Live channel row at the bottom of the page. untold.vip serves its own
 // cert + host-detected landing (verified live 2026-07-01); the WhatsApp
@@ -495,11 +497,11 @@ export default function SunsetsLinkBio() {
                 with Massuma (UK)
               </div>
             </div>
-            <img
-              src="/images/MASSUMA.png"
-              alt="Massuma (UK) artist card for SUN(SETS) III on September 19, 2026"
-              loading="lazy"
-              className="h-auto w-full object-cover border-t border-[#E8B86D]/20"
+            <ResponsiveImage
+              src={MASSUMA_UK_IMAGE}
+              alt="Massuma (UK) portrait for SUN(SETS) III on September 19, 2026"
+              sizes="(max-width: 640px) 100vw, 480px"
+              className="h-auto w-full border-t border-[#E8B86D]/20 object-cover"
             />
           </div>
 

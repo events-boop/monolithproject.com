@@ -47,4 +47,24 @@ describe("artist catalog", () => {
     expect(srcSet).toContain("1280w");
     expect(srcSet).toContain("1920w");
   });
+
+  it("publishes Massuma (UK) with the approved portrait and premium image tier", () => {
+    expect(ARTISTS.massuma).toMatchObject({
+      name: "MASSUMA (UK)",
+      origin: "UNITED KINGDOM",
+      image: "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
+      imagePosition: "50% 26%",
+      featuredVideo: {
+        url: "https://youtu.be/hdsT_dpQXqw",
+        title:
+          "Massuma Opening for Black Coffee – Live Afro House Set in Lagos (2026)",
+        source: "MASSUMA (UK)",
+      },
+    });
+
+    const srcSet = buildResponsiveImageSrcSet(ARTISTS.massuma.image, "avif");
+    expect(srcSet).toContain("640w");
+    expect(srcSet).toContain("1280w");
+    expect(srcSet).toContain("1920w");
+  });
 });

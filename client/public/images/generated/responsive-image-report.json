@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T06:29:23.830Z",
+  "generatedAt": "2026-07-17T18:51:42.401Z",
   "defaultWidths": [
     480,
     1024
@@ -11,13 +11,14 @@
   ],
   "premiumArtistBaseNamePrefixes": [
     "artists-sommers-uk-",
-    "artists-joezi-"
+    "artists-joezi-",
+    "artists-massuma-uk-"
   ],
   "totals": {
-    "originalBytes": 100014893,
-    "estimatedTransferBytes": 6080864,
-    "estimatedSavingsBytes": 94024643,
-    "variantBytes": 25214605
+    "originalBytes": 153111526,
+    "estimatedTransferBytes": 6733573,
+    "estimatedSavingsBytes": 146468567,
+    "variantBytes": 31111674
   },
   "images": [
     {
@@ -1346,6 +1347,56 @@
       "estimatedTransferBytes": 191771,
       "estimatedTransferKb": 187.3,
       "estimatedSavingsBytes": 29041603,
+      "estimatedSavingsPct": 99
+    },
+    {
+      "source": "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
+      "originalBytes": 55111759,
+      "originalKb": 53820.1,
+      "originalWidth": 6336,
+      "originalHeight": 9504,
+      "generatedBaseName": "artists-massuma-uk-massuma-uk-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 124109
+        },
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 125974
+        },
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 838264
+        },
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 713158
+        },
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 2356201
+        },
+        {
+          "path": "/images/generated/artists-massuma-uk-massuma-uk-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 1935644
+        }
+      ],
+      "estimatedTransferBytes": 713158,
+      "estimatedTransferKb": 696.4,
+      "estimatedSavingsBytes": 54398601,
       "estimatedSavingsPct": 99
     },
     {
@@ -2797,44 +2848,6 @@
       "estimatedTransferKb": 52.6,
       "estimatedSavingsBytes": 15663,
       "estimatedSavingsPct": 23
-    },
-    {
-      "source": "/images/MASSUMA.png",
-      "originalBytes": 2015126,
-      "originalKb": 1967.9,
-      "originalWidth": 1122,
-      "originalHeight": 1402,
-      "generatedBaseName": "massuma",
-      "variants": [
-        {
-          "path": "/images/generated/massuma-480.avif",
-          "width": 480,
-          "format": "avif",
-          "bytes": 22526
-        },
-        {
-          "path": "/images/generated/massuma-480.webp",
-          "width": 480,
-          "format": "webp",
-          "bytes": 28808
-        },
-        {
-          "path": "/images/generated/massuma-1024.avif",
-          "width": 1024,
-          "format": "avif",
-          "bytes": 60449
-        },
-        {
-          "path": "/images/generated/massuma-1024.webp",
-          "width": 1024,
-          "format": "webp",
-          "bytes": 84498
-        }
-      ],
-      "estimatedTransferBytes": 60449,
-      "estimatedTransferKb": 59,
-      "estimatedSavingsBytes": 1954677,
-      "estimatedSavingsPct": 97
     },
     {
       "source": "/images/monolith-three-worlds-banner.jpg",

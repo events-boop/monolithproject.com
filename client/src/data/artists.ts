@@ -475,19 +475,28 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     previousSets: [{ title: "Autograf Show Closing Set", date: "Mar 2024" }],
   },
   {
-    // OWNER REWRITE: stub entry — fill origin, genre, bio, image, and tracks
-    // before announce. Image is a temporary placeholder.
+    // OWNER REWRITE: approved biography, socials, and tracks remain pending.
     id: "massuma",
     name: "MASSUMA (UK)",
     role: "GUEST",
     origin: "UNITED KINGDOM",
     genre: "AFRO HOUSE",
-    image: "/images/MASSUMA.png",
+    image: "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
+    imagePosition: "50% 26%",
     series: ["untold-story", "chasing-sunsets"],
     bio: "Bio coming soon.",
     tags: ["Guest", "UK"],
     socials: {},
     tracks: [],
+    featuredVideo: {
+      url: "https://youtu.be/hdsT_dpQXqw",
+      title:
+        "Massuma Opening for Black Coffee – Live Afro House Set in Lagos (2026)",
+      label: "Opening for Black Coffee · Lagos 2026",
+      source: "MASSUMA (UK)",
+      description:
+        "Massuma's live Afro House set opening for Black Coffee in Lagos, embedded from his official YouTube release.",
+    },
   },
   {
     id: "eliana",
