@@ -421,14 +421,14 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     // OWNER REWRITE: stub entry — fill origin, genre, bio, image, and tracks
     // before announce. Image is a temporary placeholder.
     id: "massuma",
-    name: "MASSUMA",
+    name: "MASSUMA (UK)",
     role: "GUEST",
-    origin: "TBA",
+    origin: "UNITED KINGDOM",
     genre: "AFRO HOUSE",
     image: "/images/MASSUMA.png",
     series: ["untold-story", "chasing-sunsets"],
     bio: "Bio coming soon.",
-    tags: ["Guest"],
+    tags: ["Guest", "UK"],
     socials: {},
     tracks: [],
   },
@@ -509,7 +509,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     tags: ["Guest", "Local Support"],
     socials: {},
     tracks: [],
-  }
+  },
 ];
 
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(

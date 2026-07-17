@@ -58,6 +58,7 @@ describe("buildPublicSiteData", () => {
   it("returns summary-only season data for the schedule page", () => {
     const data = buildPublicSiteData("/schedule");
     const scheduleUntold = data.events.find(event => event.id === "us-s3e3");
+    const seasonFinale = data.events.find(event => event.id === "css-sep19");
 
     expect(data.events.length).toBeGreaterThan(5);
     expect(scheduleUntold?.sound).toBeDefined();
@@ -72,6 +73,9 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.faqs).toBeUndefined();
     expect(scheduleUntold?.tablePackages).toBeUndefined();
     expect(scheduleUntold?.activeFunnels).toBeUndefined();
+    expect(seasonFinale?.lineup).toBe(
+      "Joezi x Massuma (UK) · Special Guests TBA"
+    );
   });
 
   it("keeps the homepage calendar event set aligned with the schedule page", () => {

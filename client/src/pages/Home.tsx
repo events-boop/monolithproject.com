@@ -184,7 +184,9 @@ export default function Home() {
                 <p className="mt-2 font-display text-lg leading-none text-white">
                   September 19
                 </p>
-                <p className="mt-1 text-xs text-white/64">Joezi x Massuma.</p>
+                <p className="mt-1 text-xs text-white/64">
+                  Joezi x Massuma (UK).
+                </p>
               </div>
             </div>
           </div>

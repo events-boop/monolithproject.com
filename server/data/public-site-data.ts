@@ -133,10 +133,10 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     time: "Golden Hour",
     venue: "Castaways",
     location: "Chicago, IL",
-    lineup: "Joezi x Massuma (Special Guests TBA)",
+    lineup: "Joezi x Massuma (UK) · Special Guests TBA",
     status: "coming-soon",
     description:
-      "Chapter Three. The season closer at Castaways with Joezi and Massuma. Join the Lake List for first access.",
+      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Join the Lake List for first access.",
     activeFunnels: ["waitlist-chasing"],
     gates: { creativeReady: false, trackingQA: false, poshLinked: false },
   },

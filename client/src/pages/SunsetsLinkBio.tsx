@@ -144,10 +144,10 @@ const SEASON_EVENTS_SCHEMA = [
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) III — Chasing Sun(Sets) 2026",
     description:
-      "SUN(SETS) III — the season finale of Chasing Sun(Sets) 2026 at Castaways Beach Club with Joezi and Massuma, plus special guests TBA. The closing chapter on the Chicago lakefront.",
+      "SUN(SETS) III — the season finale of Chasing Sun(Sets) 2026 at Castaways Beach Club with Joezi and Massuma (UK), plus special guests TBA. The closing chapter on the Chicago lakefront.",
     startDate: "2026-09-19T12:00:00-05:00",
     endDate: "2026-09-19T22:00:00-05:00",
-    performer: ["Joezi", "Massuma"].map(name => ({
+    performer: ["Joezi", "Massuma (UK)"].map(name => ({
       "@type": "MusicGroup" as const,
       name,
     })),
@@ -366,7 +366,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="SUN(SETS) 2026 | Chasing Sun(Sets) — Castaways Chicago"
-        description="SUN(SETS) II returns to Castaways Beach Club August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma."
+        description="SUN(SETS) II returns to Castaways Beach Club August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
         canonicalUrl={CANONICAL_SUNSETS_URL}
@@ -492,12 +492,12 @@ export default function SunsetsLinkBio() {
                 aria-hidden="true"
                 className="absolute bottom-[17.4%] left-[24%] right-[24%] flex min-h-[3.7%] items-center justify-center rounded-full border border-[#7a5f37]/20 bg-[#b99a6c]/95 px-2 text-center text-[clamp(0.38rem,2vw,0.58rem)] font-black uppercase tracking-[0.3em] text-[#1a1208] shadow-[0_8px_18px_rgba(77,52,24,0.24)] backdrop-blur-[2px]"
               >
-                with Massuma
+                with Massuma (UK)
               </div>
             </div>
             <img
               src="/images/MASSUMA.png"
-              alt="Massuma artist card for SUN(SETS) III on September 19, 2026"
+              alt="Massuma (UK) artist card for SUN(SETS) III on September 19, 2026"
               loading="lazy"
               className="h-auto w-full object-cover border-t border-[#E8B86D]/20"
             />
@@ -529,7 +529,7 @@ export default function SunsetsLinkBio() {
                   status: "upcoming",
                 },
                 {
-                  label: "SUN(SETS) III · September 19 · Joezi x Massuma",
+                  label: "SUN(SETS) III · September 19 · Joezi x Massuma (UK)",
                   status: "upcoming",
                 },
                 {

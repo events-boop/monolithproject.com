@@ -182,7 +182,7 @@ export default function ChasingSunsets() {
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
         title="Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 at Castaways"
-        description="Chapter One is complete. SUN(SETS) II returns to Castaways Beach Club on August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma."
+        description="Chapter One is complete. SUN(SETS) II returns to Castaways Beach Club on August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -274,9 +274,9 @@ export default function ChasingSunsets() {
               <div className="max-w-2xl">
                 <p className="mb-4 text-base leading-relaxed text-white/92 sm:text-lg">
                   Chasing Sun(Sets) came home to the lake on July 4th at
-                  Castaways Beach Club — and the season is just getting
-                  started. Golden hour. House music. Lake Michigan. The
-                  skyline behind you.
+                  Castaways Beach Club — and the season is just getting started.
+                  Golden hour. House music. Lake Michigan. The skyline behind
+                  you.
                 </p>
                 <p className="mb-4 max-w-xl text-sm font-semibold uppercase tracking-[0.16em] text-[#E8B86D]">
                   Watch the sun. Stay for the sets.

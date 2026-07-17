@@ -25,8 +25,8 @@ MONOLITH HQ (Workspace)
 ├── 01 · EVENTS                       (Space)
 │   ├── _MASTER EVENT TEMPLATE        (Folder template — §5)
 │   ├── SUN(SETS) — House of Friends Preview — 2026-08-22   (Folder)
-│   ├── SUN(SETS) — Joezi x Massuma — 2026-09-19            (Folder)
-│   ├── MONOLITH — Ape Drums — 2026-08-01 [Date tentative]  (Folder)
+│   ├── SUN(SETS) — Joezi x Massuma (UK) — 2026-09-19            (Folder)
+│   ├── MONOLITH — SPECIAL GUEST — 2026-08-01 [Date tentative]  (Folder)
 │   └── Event Portfolio               (List — one task per event, drives
 │                                      portfolio views + exec dashboard)
 │
@@ -279,7 +279,7 @@ leave restricted Spaces.
 ## 11. Naming Standards
 
 - Folders/events: `[BRAND] — [EVENT NAME] — [YYYY-MM-DD]`
-- Tasks: start with an action verb (`Finalize Ape Drums contract`)
+- Tasks: start with an action verb (`Finalize special-guest contract`)
 - Docs: `[AREA] · [NAME] · vN`
 - No emojis in structural names; statuses and dashboards may use color instead.
 
@@ -290,8 +290,8 @@ leave restricted Spaces.
 | Event | Date | Status flags |
 |---|---|---|
 | SUN(SETS) — House of Friends Preview | 2026-08-22 | Venue: Castaways. Lineup: **Needs confirmation** (site shows TBA). Tickets: Posh page pending |
-| SUN(SETS) — Joezi x Massuma | 2026-09-19 | Venue: Castaways. Special guests: **Needs confirmation** |
-| MONOLITH — Ape Drums (Kashmir) | 2026-07-31 **or** 2026-08-01 | **Date tentative** — portfolio task carries both holds until confirmed. Booking: **Awaiting contract** |
+| SUN(SETS) — Joezi x Massuma (UK) | 2026-09-19 | Venue: Castaways. Special guests: **Needs confirmation** |
+| MONOLITH — Special Guest (Kashmir) | 2026-07-31 **or** 2026-08-01 | **Date tentative** — portfolio task carries both holds until confirmed. Booking: **Awaiting contract** |
 | Untold Story next chapter | TBD | Concept phase |
 | House of Friends discovery | rolling | Applications flow live at houseoffriends.vip/apply |
 | Monolith launch | 2026-10-10 | Per site catalog — **Needs confirmation** as an operating event |
@@ -317,7 +317,7 @@ Nothing tentative is ever marked publicly confirmed.
    save it OUTSIDE chat: `echo "pk_…" > ~/.config/monolith/clickup_token && chmod 600 ~/.config/monolith/clickup_token`
 2. Payment-approval threshold (default proposal: $1,000)
 3. Canonical email/SMS platforms (brief says Flodesk/ManyChat; site rails run Laylo)
-4. Kashmir/Ape Drums final date (Jul 31 vs Aug 1)
+4. Kashmir/special-guest final date (Jul 31 vs Aug 1)
 5. Aug 22 lineup + Posh URLs (also blocks the site's on-sale flip)
 6. Who besides Erik gets Exec-level access; initial team roster for permission groups
 7. n8n hosting (existing instance? or provision one)

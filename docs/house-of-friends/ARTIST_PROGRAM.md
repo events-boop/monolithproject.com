@@ -33,7 +33,7 @@ Only publish specific items after written partner confirmation:
 
 Use `consideration for` until dates and budgets are contractually confirmed:
 
-- Joezi x Massuma afterparty.
+- Joezi x Massuma (UK) afterparty.
 - Kashmir programming.
 - Hideaway programming.
 - Future Chasing Sun(Sets), Untold Story, and Monolith opportunities.
