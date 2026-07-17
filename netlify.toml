@@ -397,6 +397,18 @@
   force = true
 
 [[redirects]]
+  from = "/artists/summers-uk"
+  to = "/artists/sommers-uk"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/artists/summers-uk/"
+  to = "/artists/sommers-uk/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

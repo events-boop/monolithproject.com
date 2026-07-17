@@ -234,7 +234,7 @@ function buildArtistPreviewItems(artist: ArtistData): ArtistPreview[] {
   const galleryPreviewItems =
     artist.gallery?.map((photo, index) => ({
       src: photo.src,
-      label: index === 0 ? "Live Frame" : "Gallery",
+      label: artist.galleryLabel ?? (index === 0 ? "Live Frame" : "Gallery"),
       meta: photo.alt,
     })) ?? [];
 

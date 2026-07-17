@@ -41,7 +41,7 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/artists/deron", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/juany-bravo", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/sabry", priority: "0.8", changefreq: "weekly" },
-  { path: "/artists/summers-uk", priority: "0.8", changefreq: "weekly" },
+  { path: "/artists/sommers-uk", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/chris-idh", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/benchek", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/terranova", priority: "0.8", changefreq: "weekly" },

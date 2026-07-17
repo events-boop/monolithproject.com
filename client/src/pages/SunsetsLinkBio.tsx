@@ -337,7 +337,7 @@ export default function SunsetsLinkBio() {
   const handleSommersUkClick = () => {
     triggerHaptic(12);
     trackLakeLead(newLeadEventId(), {
-      content_name: "Sommers UK SoundCloud Click",
+      content_name: "Sommers (UK) SoundCloud Click",
     });
     trackSunsetsClick({
       buttonName: "LISTEN ON SOUNDCLOUD",
@@ -801,14 +801,14 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* Sommers UK */}
-        <section className="mt-4" aria-label="Sommers UK featured set drop">
+        {/* Sommers (UK) */}
+        <section className="mt-4" aria-label="Sommers (UK) featured set drop">
           <div className="sunsets-vip-frame group overflow-hidden border border-[#E8B86D]/30 bg-[#15110a]/80 shadow-[0_18px_48px_rgba(0,0,0,0.32)] backdrop-blur-sm">
             <div className="grid grid-cols-1 min-[380px]:grid-cols-[0.82fr_1fr]">
               <div className="overflow-hidden bg-black/30">
                 <img
                   src={SOMMERS_UK_IMAGE}
-                  alt="Sommers UK exclusive sunset set"
+                  alt="Sommers (UK) exclusive sunset set"
                   loading="lazy"
                   className="aspect-[4/3] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100 min-[380px]:aspect-auto min-[380px]:min-h-[178px]"
                 />
@@ -816,7 +816,7 @@ export default function SunsetsLinkBio() {
               <div className="flex flex-col justify-between p-4">
                 <div>
                   <h2 className="mt-1 text-lg font-black uppercase leading-[1.05] tracking-tight text-white">
-                    Sommers UK
+                    Sommers (UK)
                   </h2>
                   <p className="mt-2 text-[11px] font-semibold leading-relaxed text-stone-300">
                     A London-based duo making waves with their distinctive

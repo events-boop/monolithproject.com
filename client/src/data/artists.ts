@@ -7,6 +7,7 @@ export interface ArtistData {
   origin: string;
   genre: string;
   image: string;
+  imagePosition?: string;
   // Non-empty list: first entry is the artist's primary series for badges/colors.
   series: [ArtistSeries, ...ArtistSeries[]];
   bio: string;
@@ -14,6 +15,8 @@ export interface ArtistData {
   socials: { instagram?: string; website?: string };
   tracks: { title: string; duration: string }[];
   previousSets?: { title: string; date: string; url?: string }[];
+  galleryCredit?: string;
+  galleryLabel?: string;
   gallery?: { src: string; alt: string }[];
 }
 
@@ -106,20 +109,48 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     ],
   },
   {
-    id: "summers-uk",
-    name: "SUMMERS UK",
-    role: "GUEST",
+    id: "sommers-uk",
+    name: "SOMMERS (UK)",
+    role: "FEATURED SET",
     origin: "LONDON, UK",
-    genre: "MELODIC HOUSE",
-    image: "/images/chasing-sunsets-premium.webp",
-    series: ["chasing-sunsets"],
-    bio: "Summers UK blends warm melodic arrangements with open-air pacing built for sunset transitions.",
-    tags: ["Melodic House", "Sunset", "Open Air"],
+    genre: "AFRO-TECH · MELODIC HOUSE",
+    image: "/images/artists/sommers-uk/sommers-uk-portrait.jpg",
+    imagePosition: "50% 28%",
+    series: ["chasing-sunsets", "sunsets-radio"],
+    bio: "SOMMERS (UK) is a London-based duo shaping a distinctive fusion of Afro-Tech and melodic house. Their Chasing Sun(Sets) session moves through warm, open-air pacing with a deeper club pulse underneath.",
+    tags: ["Afro-Tech", "Melodic House", "UK Duo"],
     socials: {},
-    tracks: [
-      { title: "Golden Arrival", duration: "4:36" },
-      { title: "West Terrace", duration: "5:14" },
-      { title: "Hour Change", duration: "4:28" },
+    tracks: [],
+    previousSets: [
+      {
+        title: "CHAPTER 1 · CHASING SUN(SETS)",
+        date: "SUN(SETS) RADIO",
+        url: "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets",
+      },
+    ],
+    galleryCredit: "Darren Hartwell · Apollo Flux",
+    galleryLabel: "Press Gallery",
+    gallery: [
+      {
+        src: "/images/artists/sommers-uk/sommers-uk-motion.jpg",
+        alt: "SOMMERS (UK) red-room motion portrait",
+      },
+      {
+        src: "/images/artists/sommers-uk/sommers-uk-press-01.jpg",
+        alt: "SOMMERS (UK) duo press portrait",
+      },
+      {
+        src: "/images/artists/sommers-uk/sommers-uk-press-02.jpg",
+        alt: "SOMMERS (UK) red-room editorial portrait",
+      },
+      {
+        src: "/images/artists/sommers-uk/sommers-uk-press-03.jpg",
+        alt: "SOMMERS (UK) close-up press portrait",
+      },
+      {
+        src: "/images/artists/sommers-uk/sommers-uk-press-04.jpg",
+        alt: "SOMMERS (UK) back-to-back press portrait",
+      },
     ],
   },
   {

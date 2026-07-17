@@ -1,14 +1,22 @@
 {
-  "generatedAt": "2026-07-09T21:03:44.825Z",
+  "generatedAt": "2026-07-17T04:56:16.457Z",
   "defaultWidths": [
     480,
     1024
   ],
+  "premiumArtistWidths": [
+    640,
+    1280,
+    1920
+  ],
+  "premiumArtistBaseNamePrefixes": [
+    "artists-sommers-uk-"
+  ],
   "totals": {
-    "originalBytes": 15690065,
-    "estimatedTransferBytes": 4997346,
-    "estimatedSavingsBytes": 10783333,
-    "variantBytes": 15444510
+    "originalBytes": 33266116,
+    "estimatedTransferBytes": 5371711,
+    "estimatedSavingsBytes": 27985019,
+    "variantBytes": 18452427
   },
   "images": [
     {
@@ -1238,6 +1246,306 @@
       "estimatedTransferKb": 50.3,
       "estimatedSavingsBytes": 35134,
       "estimatedSavingsPct": 41
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-motion.jpg",
+      "originalBytes": 2219979,
+      "originalKb": 2167.9,
+      "originalWidth": 2339,
+      "originalHeight": 3508,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-motion",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 27771
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 37938
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 70175
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 109788
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 121706
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-motion-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 209260
+        }
+      ],
+      "estimatedTransferBytes": 70175,
+      "estimatedTransferKb": 68.5,
+      "estimatedSavingsBytes": 2149804,
+      "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-portrait.jpg",
+      "originalBytes": 2929120,
+      "originalKb": 2860.5,
+      "originalWidth": 2806,
+      "originalHeight": 3508,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 20549
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 27386
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 64065
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 87452
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 130114
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 183138
+        }
+      ],
+      "estimatedTransferBytes": 64065,
+      "estimatedTransferKb": 62.6,
+      "estimatedSavingsBytes": 2865055,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-press-01.jpg",
+      "originalBytes": 3353514,
+      "originalKb": 3274.9,
+      "originalWidth": 3508,
+      "originalHeight": 2506,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-press-01",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 19432
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 24750
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 58822
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 79270
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 113683
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-01-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 162798
+        }
+      ],
+      "estimatedTransferBytes": 58822,
+      "estimatedTransferKb": 57.4,
+      "estimatedSavingsBytes": 3294692,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-press-02.jpg",
+      "originalBytes": 2945795,
+      "originalKb": 2876.8,
+      "originalWidth": 3508,
+      "originalHeight": 2506,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-press-02",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 15828
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 21110
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 47851
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 70092
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 96001
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-02-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 148434
+        }
+      ],
+      "estimatedTransferBytes": 47851,
+      "estimatedTransferKb": 46.7,
+      "estimatedSavingsBytes": 2897944,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-press-03.jpg",
+      "originalBytes": 3123969,
+      "originalKb": 3050.8,
+      "originalWidth": 3508,
+      "originalHeight": 2506,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-press-03",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 16928
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 22278
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 55295
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 75022
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 113327
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-03-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 157022
+        }
+      ],
+      "estimatedTransferBytes": 55295,
+      "estimatedTransferKb": 54,
+      "estimatedSavingsBytes": 3068674,
+      "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/artists/sommers-uk/sommers-uk-press-04.jpg",
+      "originalBytes": 3003674,
+      "originalKb": 2933.3,
+      "originalWidth": 2806,
+      "originalHeight": 3508,
+      "generatedBaseName": "artists-sommers-uk-sommers-uk-press-04",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 22553
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 28980
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 78157
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 103730
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 161466
+        },
+        {
+          "path": "/images/generated/artists-sommers-uk-sommers-uk-press-04-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 225746
+        }
+      ],
+      "estimatedTransferBytes": 78157,
+      "estimatedTransferKb": 76.3,
+      "estimatedSavingsBytes": 2925517,
+      "estimatedSavingsPct": 97
     },
     {
       "source": "/images/autograf-recap.jpg",

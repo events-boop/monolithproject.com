@@ -35,6 +35,7 @@ const LEGACY_ID_MAP: Record<string, string> = {
   "4": "joezi",
   "5": "autograf",
   chus: "joezi",
+  "summers-uk": "sommers-uk",
 };
 
 function resolveArtistId(id: string | undefined) {
@@ -157,6 +158,7 @@ export default function ArtistProfile() {
             alt={artist.name}
             priority
             sizes="100vw"
+            style={{ objectPosition: artist.imagePosition }}
             className="w-full h-full object-cover object-center filter saturate-[0.8] brightness-[0.85]"
           />
         </motion.div>
@@ -390,11 +392,19 @@ export default function ArtistProfile() {
             {/* Gallery Section */}
             {artist.gallery && artist.gallery.length > 0 && (
               <div className="space-y-12">
-                <div className="flex items-center gap-4 text-white/70">
-                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                    {artist.previousSets?.length ? "03" : "02"} / Live Gallery
-                  </span>
-                  <div className="h-px w-20 bg-current" />
+                <div className="flex flex-wrap items-center justify-between gap-4 text-white/70">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                      {artist.previousSets?.length ? "03" : "02"} /{" "}
+                      {artist.galleryLabel ?? "Live Gallery"}
+                    </span>
+                    <div className="h-px w-20 bg-current" />
+                  </div>
+                  {artist.galleryCredit && (
+                    <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
+                      Photography · {artist.galleryCredit}
+                    </span>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {artist.gallery.map((photo, i) => (
@@ -433,51 +443,53 @@ export default function ArtistProfile() {
             )}
 
             {/* Selected Tracks Section */}
-            <div className="space-y-12">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-white/70">
-                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                    {artist.gallery?.length
-                      ? artist.previousSets?.length
-                        ? "04"
-                        : "03"
-                      : "03"}{" "}
-                    / Selected Records
-                  </span>
-                  <div className="h-px w-20 bg-current" />
+            {artist.tracks.length > 0 && (
+              <div className="space-y-12">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-white/70">
+                    <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                      {artist.gallery?.length
+                        ? artist.previousSets?.length
+                          ? "04"
+                          : "03"
+                        : "03"}{" "}
+                      / Selected Records
+                    </span>
+                    <div className="h-px w-20 bg-current" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-px bg-white/5 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm">
+                  {artist.tracks.map((track, i) => (
+                    <div
+                      key={track.title}
+                      className="group flex items-center justify-between p-8 bg-[#050505] hover:bg-white/[0.02] transition-colors duration-500 cursor-pointer"
+                    >
+                      <div className="flex items-center gap-8">
+                        <span className="font-mono text-xs text-white/70 group-hover:text-primary transition-colors">
+                          {(i + 1).toString().padStart(2, "0")}
+                        </span>
+                        <div className="flex flex-col gap-1">
+                          <span className="text-xl md:text-2xl font-display uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
+                            {track.title}
+                          </span>
+                          <span className="font-mono text-[10px] tracking-[0.2em] text-white/70 uppercase lowercase-none">
+                            {artist.name} · MONOLITH SELECT
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-6">
+                        <span className="font-mono text-xs text-white/70">
+                          {track.duration}
+                        </span>
+                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
+                          <Play className="w-4 h-4 text-white/70 group-hover:text-black fill-current" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="grid grid-cols-1 gap-px bg-white/5 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm">
-                {artist.tracks.map((track, i) => (
-                  <div
-                    key={track.title}
-                    className="group flex items-center justify-between p-8 bg-[#050505] hover:bg-white/[0.02] transition-colors duration-500 cursor-pointer"
-                  >
-                    <div className="flex items-center gap-8">
-                      <span className="font-mono text-xs text-white/70 group-hover:text-primary transition-colors">
-                        {(i + 1).toString().padStart(2, "0")}
-                      </span>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xl md:text-2xl font-display uppercase tracking-widest text-white/90 group-hover:text-white transition-colors">
-                          {track.title}
-                        </span>
-                        <span className="font-mono text-[10px] tracking-[0.2em] text-white/70 uppercase lowercase-none">
-                          {artist.name} · MONOLITH SELECT
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-6">
-                      <span className="font-mono text-xs text-white/70">
-                        {track.duration}
-                      </span>
-                      <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
-                        <Play className="w-4 h-4 text-white/70 group-hover:text-black fill-current" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Right Content — Sidebar Glass Bento */}

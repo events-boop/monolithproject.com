@@ -10,6 +10,10 @@ const outputDir = path.join(publicImagesDir, "generated");
 const reportPath = path.join(outputDir, "responsive-image-report.json");
 
 const defaultWidths = [480, 1024];
+// Premium editorial tier: retain source masters and ship larger, gentler
+// derivatives for artist portraits and press galleries.
+const premiumArtistWidths = [640, 1280, 1920];
+const premiumArtistBaseNamePrefixes = ["artists-sommers-uk-"];
 const desktopWidthsByBaseName = new Map([
   ["hero-monolith", [480, 1024, 1920]],
   ["hero-video-1-poster", [480, 1024, 1920]],
@@ -28,9 +32,13 @@ const sourceExtensionPreference = new Map([
 ]);
 // Quality raised for high-fidelity replacement imports. Effort bumped to 6 so the
 // better-looking variants stay as small as possible (slower build, smaller files).
-const formats = [
+const defaultFormats = [
   { ext: "avif", options: { quality: 62, effort: 6 } },
   { ext: "webp", options: { quality: 82, effort: 6 } },
+];
+const premiumArtistFormats = [
+  { ext: "avif", options: { quality: 76, effort: 6 } },
+  { ext: "webp", options: { quality: 90, effort: 6 } },
 ];
 
 async function pathExists(targetPath) {
@@ -108,7 +116,20 @@ function toKb(bytes) {
 }
 
 function getWidthsForImage(baseName) {
+  if (
+    premiumArtistBaseNamePrefixes.some(prefix => baseName.startsWith(prefix))
+  ) {
+    return premiumArtistWidths;
+  }
   return desktopWidthsByBaseName.get(baseName) || defaultWidths;
+}
+
+function getFormatsForImage(baseName) {
+  return premiumArtistBaseNamePrefixes.some(prefix =>
+    baseName.startsWith(prefix)
+  )
+    ? premiumArtistFormats
+    : defaultFormats;
 }
 
 async function getSourceImages() {
@@ -168,10 +189,11 @@ async function generateForImage(inputPath) {
   }
 
   const widths = getWidthsForImage(baseName);
+  const imageFormats = getFormatsForImage(baseName);
   const variants = [];
 
   for (const width of widths) {
-    for (const format of formats) {
+    for (const format of imageFormats) {
       const outputPath = path.join(
         outputDir,
         `${baseName}-${width}.${format.ext}`
@@ -192,9 +214,14 @@ async function generateForImage(inputPath) {
     }
   }
 
+  const representativeWidth = widths.includes(1024)
+    ? 1024
+    : widths.includes(1280)
+      ? 1280
+      : widths.at(-1);
   const smallestUseful =
     variants
-      .filter(variant => variant.width === 1024)
+      .filter(variant => variant.width === representativeWidth)
       .sort((a, b) => a.bytes - b.bytes)[0] ||
     variants.sort((a, b) => a.bytes - b.bytes)[0];
 
@@ -291,7 +318,18 @@ async function main() {
 
   await fs.writeFile(
     reportPath,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), defaultWidths, totals, images: reports }, null, 2)}\n`
+    `${JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        defaultWidths,
+        premiumArtistWidths,
+        premiumArtistBaseNamePrefixes,
+        totals,
+        images: reports,
+      },
+      null,
+      2
+    )}\n`
   );
 
   const savingsPct = totals.originalBytes
@@ -300,7 +338,7 @@ async function main() {
 
   console.log(`generated responsive variants for ${reports.length} images`);
   console.log(
-    `estimated 1024w AVIF/WebP transfer: ${formatBytes(totals.estimatedTransferBytes)} vs ${formatBytes(totals.originalBytes)} originals (${savingsPct}% savings)`
+    `estimated representative AVIF/WebP transfer: ${formatBytes(totals.estimatedTransferBytes)} vs ${formatBytes(totals.originalBytes)} originals (${savingsPct}% savings)`
   );
   console.log(`variant bytes written: ${formatBytes(totals.variantBytes)}`);
   console.log(`report written: ${path.relative(rootDir, reportPath)}`);
