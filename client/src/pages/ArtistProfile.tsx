@@ -20,6 +20,7 @@ import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import WordScrubReveal from "@/components/ui/WordScrubReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { ARTISTS } from "@/data/artists";
@@ -126,6 +127,20 @@ export default function ArtistProfile() {
     primarySeries === "untold-story"
       ? { href: "/tickets", label: CTA_LABELS.tickets }
       : { href: "/schedule", label: CTA_LABELS.schedule };
+
+  const hasPreviousSets = Boolean(artist.previousSets?.length);
+  const hasGallery = Boolean(artist.gallery?.length);
+  const sectionNumber = (value: number) => String(value).padStart(2, "0");
+  const gallerySectionNumber = sectionNumber(2 + Number(hasPreviousSets));
+  const videoSectionNumber = sectionNumber(
+    2 + Number(hasPreviousSets) + Number(hasGallery)
+  );
+  const tracksSectionNumber = sectionNumber(
+    2 +
+      Number(hasPreviousSets) +
+      Number(hasGallery) +
+      Number(Boolean(artist.featuredVideo))
+  );
 
   return (
     <div
@@ -395,7 +410,7 @@ export default function ArtistProfile() {
                 <div className="flex flex-wrap items-center justify-between gap-4 text-white/70">
                   <div className="flex items-center gap-4">
                     <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                      {artist.previousSets?.length ? "03" : "02"} /{" "}
+                      {gallerySectionNumber} /{" "}
                       {artist.galleryLabel ?? "Live Gallery"}
                     </span>
                     <div className="h-px w-20 bg-current" />
@@ -442,18 +457,72 @@ export default function ArtistProfile() {
               </div>
             )}
 
+            {/* Featured Video Section */}
+            {artist.featuredVideo && (
+              <div className="space-y-12">
+                <div className="flex items-center gap-4 text-white/70">
+                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                    {videoSectionNumber} / Featured Live Set
+                  </span>
+                  <div className="h-px w-20 bg-current" />
+                </div>
+
+                <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] shadow-[0_32px_80px_rgba(0,0,0,0.45)]">
+                  <div className="grid lg:grid-cols-[minmax(0,1.7fr)_minmax(260px,0.8fr)]">
+                    <div className="relative aspect-video min-h-0 bg-black">
+                      <YouTubeEmbed
+                        url={artist.featuredVideo.url}
+                        title={artist.featuredVideo.title}
+                        className="absolute inset-0 h-full w-full"
+                        loading="lazy"
+                      />
+                      <div
+                        className="pointer-events-none absolute inset-x-0 top-0 h-0.5"
+                        style={{ backgroundColor: accentColor }}
+                      />
+                    </div>
+
+                    <div className="flex flex-col justify-between gap-10 p-8 md:p-10">
+                      <div>
+                        <span
+                          className="font-mono text-[10px] uppercase tracking-[0.35em]"
+                          style={{ color: accentColor }}
+                        >
+                          Full Set · YouTube
+                        </span>
+                        <h3 className="mt-5 font-display text-3xl uppercase leading-none tracking-wider text-white">
+                          {artist.featuredVideo.label}
+                        </h3>
+                        <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/45">
+                          Published by {artist.featuredVideo.source}
+                        </p>
+                        <p className="mt-7 font-serif text-lg italic leading-relaxed text-white/70">
+                          {artist.featuredVideo.description}
+                        </p>
+                      </div>
+
+                      <a
+                        href={artist.featuredVideo.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`${outlinePillClass} group self-start`}
+                      >
+                        <span>Watch on YouTube</span>
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Selected Tracks Section */}
             {artist.tracks.length > 0 && (
               <div className="space-y-12">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4 text-white/70">
                     <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                      {artist.gallery?.length
-                        ? artist.previousSets?.length
-                          ? "04"
-                          : "03"
-                        : "03"}{" "}
-                      / Selected Records
+                      {tracksSectionNumber} / Selected Records
                     </span>
                     <div className="h-px w-20 bg-current" />
                   </div>

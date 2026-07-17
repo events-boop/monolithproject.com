@@ -36,6 +36,11 @@ describe("artist catalog", () => {
       galleryLabel: "Press Gallery",
     });
     expect(ARTISTS.joezi.gallery).toHaveLength(2);
+    expect(ARTISTS.joezi.featuredVideo).toMatchObject({
+      url: "https://youtu.be/qMWZngFojK0",
+      title: "JOEZI Live DJ Set @SOLLUNA Festival W2026",
+      source: "SOLLUNA FESTIVAL",
+    });
 
     const srcSet = buildResponsiveImageSrcSet(ARTISTS.joezi.image, "avif");
     expect(srcSet).toContain("640w");

@@ -18,6 +18,13 @@ export interface ArtistData {
   galleryCredit?: string;
   galleryLabel?: string;
   gallery?: { src: string; alt: string }[];
+  featuredVideo?: {
+    url: string;
+    title: string;
+    label: string;
+    source: string;
+    description: string;
+  };
 }
 
 export const ARTIST_ENTRIES: ArtistData[] = [
@@ -218,6 +225,14 @@ export const ARTIST_ENTRIES: ArtistData[] = [
         alt: "Joezi seated portrait wearing sunglasses",
       },
     ],
+    featuredVideo: {
+      url: "https://youtu.be/qMWZngFojK0",
+      title: "JOEZI Live DJ Set @SOLLUNA Festival W2026",
+      label: "Live at SOLLUNA Festival · W2026",
+      source: "SOLLUNA FESTIVAL",
+      description:
+        "Joezi's live set from SOLLUNA Festival W2026, embedded from the festival's official YouTube release.",
+    },
   },
   {
     id: "benchek",
