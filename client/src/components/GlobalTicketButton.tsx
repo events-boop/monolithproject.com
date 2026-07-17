@@ -180,6 +180,7 @@ export default function GlobalTicketButton() {
   if (
     location.startsWith("/chasing-sunsets") ||
     location === "/tickets" ||
+    location.startsWith("/vip") ||
     consentState === null ||
     !showAfterHero
   )

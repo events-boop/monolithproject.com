@@ -114,15 +114,31 @@ describe("buildPublicSiteData", () => {
     expect(residencyEvents[2]?.lineup).toBe("ERIK THE DJ B2B AMARI");
   });
 
-  it("falls back to featured events for non-season routes", () => {
+  it("returns event-specific maps and live inventory for the VIP route", () => {
     const data = buildPublicSiteData("/vip");
-    const featuredIds = data.events.map(event => event.id);
+    const vipIds = data.events.map(event => event.id);
     const featuredSunsets = data.events.find(event => event.id === "css-aug22");
 
-    expect(featuredIds).toContain("css-aug22");
-    expect(featuredIds).not.toContain("us-s3e3");
-    expect(data.events.length).toBe(1);
+    expect(vipIds).toEqual(["css-aug22", "css-sep19"]);
+    expect(vipIds).not.toContain("us-s3e3");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    expect(featuredSunsets?.venueMap).toMatchObject({
+      id: "castaways-sunsets-ii-2026",
+      venueId: "castaways-chicago",
+      address: "1603 N Lake Shore Dr, Chicago, IL 60611",
+      illustrative: true,
+    });
+    expect(featuredSunsets?.vipPackages?.map(item => item.size)).toEqual([
+      "small",
+      "medium",
+      "large",
+    ]);
+    expect(
+      featuredSunsets?.vipPackages?.map(item => item.availability)
+    ).toEqual(["available", "available", "limited"]);
+    expect(featuredSunsets?.tableReservationEmail).toBe(
+      "vip@chasingsunsets.music"
+    );
     expect(featuredSunsets?.startingPrice).toBeUndefined();
     expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredSunsets?.ticketTiers).toBeUndefined();

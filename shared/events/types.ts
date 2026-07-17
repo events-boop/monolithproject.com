@@ -56,6 +56,32 @@ export interface TicketTier {
   highlight?: boolean;
 }
 
+/** Availability stays on the event record, never inside venue geometry. */
+export type VipAvailability = "available" | "limited" | "sold-out";
+export type VipPackageSize = "small" | "medium" | "large";
+
+export interface VipPackage {
+  size: VipPackageSize;
+  name: string;
+  guestRange: string;
+  description: string;
+  features: string[];
+  availability: VipAvailability;
+  minimumSpend?: string;
+  highlight?: boolean;
+}
+
+export interface VenueMapDetails {
+  /** Event-specific registry key for the model, plan, zones, and camera views. */
+  id: string;
+  /** Stable venue identifier used in the submitted host request. */
+  venueId: string;
+  address: string;
+  neighborhood?: string;
+  /** False only after the venue has supplied and approved an exact floor plan. */
+  illustrative?: boolean;
+}
+
 export interface EventArtistImage {
   src: string;
   alt: string;
@@ -109,6 +135,10 @@ export interface ScheduledEvent {
   whatToExpect?: string[];
   tablePackages?: string[];
   tableReservationEmail?: string;
+  /** Venue location and event-specific model registry key for the VIP flow. */
+  venueMap?: VenueMapDetails;
+  /** Live package inventory kept separate from the visual venue model. */
+  vipPackages?: VipPackage[];
   faqs?: Array<{ q: string; a: string }>;
   photoNotice?: string;
   eventNotice?: string;

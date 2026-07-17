@@ -15,6 +15,7 @@ import type {
   PublicSiteData,
   ScheduledEvent,
   SiteExperienceSlot,
+  VipPackage,
 } from "../../shared/events/types";
 import { resolveEventPrimaryCta } from "../lib/public-cta";
 
@@ -33,6 +34,61 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
  * until the Aug 22 Posh checkout passes its gates (then: ticket path).
  */
 export const POSH_TICKET_URL = LAYLO_URL;
+
+const CASTAWAYS_VIP_EMAIL = "vip@chasingsunsets.music";
+
+/**
+ * Inventory belongs to the event record. The 3D registry only describes
+ * geometry, so availability can change without rebuilding a venue scene.
+ */
+function buildCastawaysVipPackages(
+  availability: Partial<
+    Record<VipPackage["size"], VipPackage["availability"]>
+  > = {}
+): VipPackage[] {
+  return [
+    {
+      size: "small",
+      name: "Small",
+      guestRange: "2–6 guests",
+      description: "A reserved setup for an intimate lakefront group.",
+      features: [
+        "Priority check-in",
+        "Reserved VIP space",
+        "Dedicated venue service",
+      ],
+      availability: availability.small ?? "available",
+      minimumSpend: "Host quote",
+    },
+    {
+      size: "medium",
+      name: "Medium",
+      guestRange: "7–10 guests",
+      description: "More room for the crew with premium placement when open.",
+      features: [
+        "Priority check-in",
+        "Expanded reserved space",
+        "Dedicated venue service",
+      ],
+      availability: availability.medium ?? "available",
+      minimumSpend: "Host quote",
+      highlight: true,
+    },
+    {
+      size: "large",
+      name: "Large",
+      guestRange: "11–15 guests",
+      description: "A full cabana or premium section for the complete group.",
+      features: [
+        "Admission for up to 15 guests",
+        "Reserved cabana or premium section",
+        "Dedicated venue service",
+      ],
+      availability: availability.large ?? "limited",
+      minimumSpend: "$2,000 minimum spend",
+    },
+  ];
+}
 
 const EVENT_CATALOG: ScheduledEvent[] = [
   {
@@ -137,6 +193,19 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     status: "coming-soon",
     description:
       "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Join the Lake List for first access.",
+    tableReservationEmail: CASTAWAYS_VIP_EMAIL,
+    venueMap: {
+      id: "castaways-sunsets-iii-2026",
+      venueId: "castaways-chicago",
+      address: SUNSETS_JULY4_EVENT_ADDRESS,
+      neighborhood: "North Avenue Beach · Chicago",
+      illustrative: true,
+    },
+    vipPackages: buildCastawaysVipPackages({
+      small: "available",
+      medium: "available",
+      large: "limited",
+    }),
     activeFunnels: ["waitlist-chasing"],
     gates: { creativeReady: false, trackingQA: false, poshLinked: false },
   },
@@ -309,6 +378,19 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     status: "coming-soon",
     description:
       "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+    tableReservationEmail: CASTAWAYS_VIP_EMAIL,
+    venueMap: {
+      id: "castaways-sunsets-ii-2026",
+      venueId: "castaways-chicago",
+      address: SUNSETS_JULY4_EVENT_ADDRESS,
+      neighborhood: "North Avenue Beach · Chicago",
+      illustrative: true,
+    },
+    vipPackages: buildCastawaysVipPackages({
+      small: "available",
+      medium: "available",
+      large: "limited",
+    }),
     activeFunnels: ["waitlist-chasing"],
     // Flip these as the Aug 22 record completes; on-sale is blocked until all pass.
     gates: { creativeReady: false, trackingQA: false, poshLinked: false },
@@ -537,6 +619,19 @@ function resolveEventsForPath(
     return events;
   }
 
+  if (pathname === "/vip") {
+    const vipEvents = events.filter(
+      event =>
+        event.status !== "past" &&
+        Boolean(event.venueMap) &&
+        Boolean(event.vipPackages?.length)
+    );
+
+    return vipEvents.length
+      ? vipEvents
+      : uniqueEvents(Object.values(featuredEvents));
+  }
+
   if (
     pathname === "/story" ||
     pathname === "/untold-story" ||
@@ -572,6 +667,7 @@ function getPayloadProfileForPath(pathname: string): EventPayloadProfile {
 
   if (
     pathname === "/tickets" ||
+    pathname === "/vip" ||
     pathname === "/story" ||
     pathname === "/untold-story" ||
     pathname === "/untold-story-deron-juany-bravo" ||
