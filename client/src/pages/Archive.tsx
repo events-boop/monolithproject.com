@@ -18,16 +18,20 @@ const archiveEntries: (ArchiveCollection & { href: string })[] = [
     href: "/chasing-sunsets/sunsets-i-2026",
   },
   {
+    ...archiveCollectionsBySlug["autograf-march-21-2026"],
+    href: "/archive/autograf-march-21-2026",
+  },
+  {
     ...archiveCollectionsBySlug["untold-story-season-iii"],
     href: "/untold-story/season-iii",
   },
   {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-iii"],
-    href: "/chasing-sunsets/season-iii",
-  },
-  {
     ...archiveCollectionsBySlug["untold-story-season-ii"],
     href: "/untold-story/season-ii",
+  },
+  {
+    ...archiveCollectionsBySlug["chasing-sunsets-season-iii"],
+    href: "/chasing-sunsets/season-iii",
   },
   {
     ...archiveCollectionsBySlug["chasing-sunsets-season-ii"],
@@ -127,7 +131,9 @@ export default function Archive() {
                         <span className="font-mono text-[10px] text-white/70">
                           {entry.comingSoon && entry.media.length === 0
                             ? "COMING SOON"
-                            : entry.media.length}
+                            : entry.externalGallery
+                              ? "OFFICIAL"
+                              : entry.media.length}
                         </span>
                       </div>
                     </div>

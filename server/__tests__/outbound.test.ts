@@ -108,6 +108,9 @@ describe("resolveOutboundDestination", () => {
     expect(resolveOutboundDestination("gallery", "chasing-sunsets")).toContain(
       "pic-time.com"
     );
+    expect(resolveOutboundDestination("gallery", "autograf-mar21")).toBe(
+      "https://pogistudios.pixieset.com/monolithproject/"
+    );
     expect(resolveOutboundDestination("forms", "sunsets-vip")).toContain(
       "monolithproject.com/vip"
     );

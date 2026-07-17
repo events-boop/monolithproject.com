@@ -8,7 +8,8 @@ import { ArrowLeft, BookOpen, Camera, UploadCloud } from "lucide-react";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 
 // Dropbox file request — community uploads of DJ sets, photos, and videos.
-const COMMUNITY_UPLOAD_URL = "https://www.dropbox.com/request/3f0662s872jlukad0r4h";
+const COMMUNITY_UPLOAD_URL =
+  "https://www.dropbox.com/request/3f0662s872jlukad0r4h";
 
 export default function ArchiveGalleryPage() {
   const [match, params] = useRoute("/:series/:season");
@@ -19,7 +20,10 @@ export default function ArchiveGalleryPage() {
 
   if (!match || !params?.series || !params?.season) return null;
 
-  const key = `${params.series}-${params.season}`;
+  const key =
+    params.series === "archive"
+      ? params.season
+      : `${params.series}-${params.season}`;
   const gallery = archiveCollectionsBySlug[key];
 
   const navBrand: "chasing-sunsets" | "untold-story" | "monolith" =
@@ -42,7 +46,10 @@ export default function ArchiveGalleryPage() {
       className="min-h-screen text-white relative overflow-hidden"
       style={{ background: "#050505" }}
     >
-      <SEO title={`${gallery.title} — ${gallery.subtitle}`} />
+      <SEO
+        title={`${gallery.title} — ${gallery.subtitle}`}
+        description={gallery.description}
+      />
       <Navigation variant="dark" brand={navBrand} />
 
       <main className="page-shell-start pb-32">
@@ -129,6 +136,8 @@ export default function ArchiveGalleryPage() {
                 media={gallery.media}
                 className="bg-transparent"
                 dense
+                accentColor={gallery.accentColor}
+                externalGallery={gallery.externalGallery}
               />
             </>
           )}

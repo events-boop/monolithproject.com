@@ -66,7 +66,7 @@ function buildEventSeoDescription(
     return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
   }
 
-  return `Get tickets and details for ${event.title} in Chicago on ${shortDate} from The Monolith Project.`;
+  return `Get details and updates for ${event.title} at ${event.venue} in Chicago on ${shortDate} from The Monolith Project.`;
 }
 
 function getTicketPathCopy(
@@ -77,9 +77,11 @@ function getTicketPathCopy(
       ? "Final inventory moving"
       : "Tickets available now";
   if (event.status === "coming-soon")
-    return event.recentlyDropped
-      ? "Presale list open"
-      : "Drop list before public sale";
+    return event.series === "monolith-project"
+      ? "Details release pending"
+      : event.recentlyDropped
+        ? "Presale list open"
+        : "Drop list before public sale";
   if (event.status === "sold-out") return "Sold out";
   return "Archive event";
 }
@@ -99,7 +101,10 @@ function getPriceCopy(
   const availableTier = event.ticketTiers?.find(tier => tier.available);
   if (availableTier) return `From $${availableTier.price}`;
   if (event.startingPrice) return `From $${event.startingPrice}`;
-  if (event.status === "coming-soon") return "Price release pending";
+  if (event.status === "coming-soon")
+    return event.series === "monolith-project"
+      ? "Entry details pending"
+      : "Price release pending";
   return "See event details";
 }
 
@@ -108,6 +113,8 @@ function getEventFitCopy(
 ) {
   if (event.series === "chasing-sunsets") return "Open-air house music";
   if (event.series === "untold-story") return "After-dark club pressure";
+  if (event.id === "hof-kashmir-jul31")
+    return "House of Friends give-back pop-up";
   return "Chicago music gathering";
 }
 
@@ -185,9 +192,12 @@ export default function EventDetails() {
       { name: event.headline || event.title, path: canonicalEventPath },
     ]),
   ];
+  const isHouseOfFriendsPopup = event.id === "hof-kashmir-jul31";
+  const usesEntryLanguage =
+    event.series === "monolith-project" && !event.ticketUrl;
   const decisionCards = [
     {
-      label: "Ticket Path",
+      label: usesEntryLanguage ? "Entry Path" : "Ticket Path",
       value: getTicketPathCopy(event),
       icon: <Ticket className="h-4 w-4" />,
     },
@@ -210,9 +220,15 @@ export default function EventDetails() {
   const eventFit = getEventFitCopy(event);
   const contextPaths = [
     {
-      href: getSeriesHref(event.series),
-      label: getSeriesLabel(event.series),
-      note: getSeriesContextCopy(event.series),
+      href: isHouseOfFriendsPopup
+        ? "/house-of-friends"
+        : getSeriesHref(event.series),
+      label: isHouseOfFriendsPopup
+        ? "House of Friends"
+        : getSeriesLabel(event.series),
+      note: isHouseOfFriendsPopup
+        ? "Artist development and community context"
+        : getSeriesContextCopy(event.series),
       icon: <Star className="h-4 w-4" />,
     },
     {
@@ -465,7 +481,9 @@ export default function EventDetails() {
                   <span>{getArrivalCopy(event)}</span>
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
-                  <span className="text-white/70">Tickets</span>
+                  <span className="text-white/70">
+                    {usesEntryLanguage ? "Entry" : "Tickets"}
+                  </span>
                   <span>{getTicketPathCopy(event)}</span>
                 </div>
                 <div className="flex justify-between pb-2">

@@ -103,6 +103,14 @@ function outboundClickMeta(group: string, key: string) {
     };
   }
 
+  if (normalizedGroup === "gallery" && normalizedKey === "autograf-mar21") {
+    return {
+      buttonName: "View Autograf Gallery",
+      channel: "Pixieset",
+      interestType: "gallery_click",
+    };
+  }
+
   if (normalizedGroup === "forms" && normalizedKey === "sunsets-vip") {
     return {
       buttonName: "VIP / Tables",

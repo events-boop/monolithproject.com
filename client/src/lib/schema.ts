@@ -426,7 +426,7 @@ export function buildScheduledEventSchema(
       .filter(
         segment =>
           segment.length > 0 &&
-          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|venue reveal soon\b)/i.test(
+          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|special guest\b|venue reveal soon\b)/i.test(
             segment
           )
       ) ?? [];

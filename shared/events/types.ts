@@ -56,6 +56,12 @@ export interface TicketTier {
   highlight?: boolean;
 }
 
+export interface EventArtistImage {
+  src: string;
+  alt: string;
+  artist: string;
+}
+
 /** A scheduled live event with its venue, ticketing, creative, and funnel configuration. */
 export interface ScheduledEvent {
   id: string;
@@ -73,6 +79,8 @@ export interface ScheduledEvent {
   location: string;
   lineup?: string;
   image?: string;
+  /** Confirmed public artist portraits used beside calendar listings. */
+  artistImages?: EventArtistImage[];
   /**
    * The one lever that controls how an event appears everywhere.
    *   draft       — internal only; never enters any public payload

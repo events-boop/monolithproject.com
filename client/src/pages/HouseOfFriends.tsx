@@ -24,7 +24,7 @@ const launchMoments = [
     number: "01",
     label: "Founding Class",
     title: "A shared performance",
-    copy: "Selected emerging artists take the first House of Friends stage together inside Chasing Sun(Sets) II.",
+    copy: "Selected emerging artists share their first Founding Class stage together inside Chasing Sun(Sets) II.",
     icon: UsersRound,
   },
   {
@@ -36,9 +36,9 @@ const launchMoments = [
   },
   {
     number: "03",
-    label: "Public preview",
-    title: "The house opens",
-    copy: "The Monolith community meets the platform for the first time at Castaways Beach Club on August 22.",
+    label: "Founding Class preview",
+    title: "The class enters the house",
+    copy: "The wider Monolith community meets the Founding Class at Castaways Beach Club on August 22.",
     icon: Sparkles,
   },
 ];
@@ -163,7 +163,7 @@ export default function HouseOfFriends() {
     <div className="hof-page min-h-screen overflow-x-clip bg-black text-white">
       <SEO
         title="House of Friends | Artist Development by The Monolith Project"
-        description="House of Friends is The Monolith Project's emerging-artist platform for collaboration, professional content, education, and future opportunity."
+        description="House of Friends is The Monolith Project's emerging-artist platform, with a July 31 give-back pop-up at Kashmir and the Founding Class preview on August 22."
         absoluteTitle
         canonicalUrl="https://houseoffriends.vip/"
         image="/og-image.jpg"
@@ -186,7 +186,7 @@ export default function HouseOfFriends() {
           <div className="container layout-wide relative z-10 px-6">
             <div className="hof-launch-chip">
               <span aria-hidden="true" />
-              Public preview / August 22, 2026
+              Next pop-up / July 31, 2026
             </div>
 
             <div className="hof-hero-grid">
@@ -216,7 +216,14 @@ export default function HouseOfFriends() {
                 </p>
 
                 <div className="hof-hero-actions">
-                  <Link href={applicationHref} className="btn-pill-neutral">
+                  <Link
+                    href="/events/house-of-friends-kashmir-july-31-2026"
+                    className="btn-pill-neutral"
+                  >
+                    View the July 31 pop-up
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                  <Link href={applicationHref} className="btn-pill-outline">
                     {applicationsOpen === true
                       ? "Apply for the Founding Class"
                       : applicationsOpen === false
@@ -249,35 +256,35 @@ export default function HouseOfFriends() {
                 aria-label="House of Friends launch details"
               >
                 <div className="hof-signal-card-top">
-                  <span>HOF / 001</span>
-                  <span>Launch signal</span>
+                  <span>HOF / POP-UP 001</span>
+                  <span>Kashmir residency</span>
                 </div>
                 <div className="hof-signal-mark" aria-hidden="true">
                   <span>H</span>
                   <span>F</span>
                 </div>
                 <div className="hof-signal-date">
-                  <span>Saturday</span>
-                  <strong>22</strong>
-                  <span>August / 2026</span>
+                  <span>Friday</span>
+                  <strong>31</strong>
+                  <span>July / 2026</span>
                 </div>
                 <dl className="hof-signal-meta">
                   <div>
-                    <dt>Inside</dt>
-                    <dd>Chasing Sun(Sets) II</dd>
+                    <dt>Series</dt>
+                    <dd>Monolith Project Residency</dd>
                   </div>
                   <div>
                     <dt>Place</dt>
-                    <dd>Castaways / Chicago</dd>
+                    <dd>Kashmir / Chicago</dd>
                   </div>
                   <div>
-                    <dt>First Class</dt>
-                    <dd>Three selected artists</dd>
+                    <dt>Lineup</dt>
+                    <dd>ERIK THE DJ + Special Guest</dd>
                   </div>
                 </dl>
                 <div className="hof-signal-card-foot">
-                  <span>The Monolith Project</span>
-                  <span>Opportunity / Community / Proof</span>
+                  <span>Give-Back Party</span>
+                  <span>Community / Music / Opportunity</span>
                 </div>
               </motion.aside>
             </div>
@@ -309,11 +316,11 @@ export default function HouseOfFriends() {
               <p className="hof-kicker">01 / The idea</p>
               <h2>A house drawn around opportunity.</h2>
               <p>
-                House of Friends begins with one event, but it is designed to
-                outlive it. The launch transforms a daytime lineup into an
+                House of Friends begins through live signals: a July 31
+                give-back pop-up at Kashmir, followed by the Founding Class
+                preview on August 22. Together they turn performance into an
                 artist-development system with a real stage, professional
-                output, partner investment, and a community that continues after
-                August 22.
+                output, partner investment, and a community built to continue.
               </p>
             </motion.div>
 
@@ -418,12 +425,13 @@ export default function HouseOfFriends() {
             >
               <div>
                 <p className="hof-kicker">03 / August 22</p>
-                <h2 id="hof-day-title">The first house opens August 22.</h2>
+                <h2 id="hof-day-title">The Founding Class opens August 22.</h2>
               </div>
               <p>
-                House of Friends makes its public preview inside Chasing
-                Sun(Sets) II—bringing selected artists, professional capture,
-                and the wider Monolith community into one room.
+                After the July 31 Kashmir pop-up, House of Friends brings its
+                Founding Class preview inside Chasing Sun(Sets) II—uniting
+                selected artists, professional capture, and the wider Monolith
+                community.
               </p>
             </motion.div>
 

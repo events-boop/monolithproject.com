@@ -50,6 +50,11 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/artists/avo", priority: "0.8", changefreq: "weekly" },
   { path: "/artists/eran-hersh", priority: "0.8", changefreq: "weekly" },
   { path: "/archive", priority: "0.7", changefreq: "weekly" },
+  {
+    path: "/archive/autograf-march-21-2026",
+    priority: "0.7",
+    changefreq: "monthly",
+  },
   { path: "/press", priority: "0.6", changefreq: "monthly" },
   { path: "/insights", priority: "0.6", changefreq: "weekly" },
   { path: "/submit", priority: "0.6", changefreq: "monthly" },

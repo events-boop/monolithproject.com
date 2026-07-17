@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import EventArtistStack from "@/components/EventArtistStack";
 import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
 import SocialGrid from "@/components/SocialGrid";
 import SEO from "@/components/SEO";
@@ -20,11 +21,8 @@ import { buildScheduleSchema } from "@/lib/schema";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import { Link } from "wouter";
-import {
-  getEventWindow,
-  getScheduledEvents,
-  isTicketOnSale,
-} from "@/lib/siteExperience";
+import { getScheduledEvents, isTicketOnSale } from "@/lib/siteExperience";
+import { downloadEventCalendar } from "@/lib/calendar";
 import { getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -67,49 +65,6 @@ function getEventSummary(event: ScheduledEvent) {
   if (event.experienceIntro) return event.experienceIntro;
   if (event.lineup) return `Lineup: ${event.lineup}.`;
   return `${seriesLabels[event.series]} at ${event.venue}, ${event.location}.`;
-}
-
-function formatIcsLocal(d: Date) {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return (
-    `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}` +
-    `T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`
-  );
-}
-
-function escapeIcsText(value?: string | null) {
-  return (value || "")
-    .replace(/\\/g, "\\\\")
-    .replace(/\n/g, "\\n")
-    .replace(/,/g, "\\,")
-    .replace(/;/g, "\\;");
-}
-
-function downloadICS(event: ScheduledEvent) {
-  const { start, end } = getEventWindow(event);
-  if (!start || !end) return;
-
-  const icsStr = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//The Monolith Project//EN
-BEGIN:VEVENT
-DTSTART;TZID=America/Chicago:${formatIcsLocal(start)}
-DTEND;TZID=America/Chicago:${formatIcsLocal(end)}
-SUMMARY:${escapeIcsText(event.title)}
-DESCRIPTION:${escapeIcsText(event.description || event.experienceIntro || "The Monolith Project Event")}
-LOCATION:${escapeIcsText(`${event.venue} - ${event.location}`)}
-END:VEVENT
-END:VCALENDAR`;
-
-  const blob = new Blob([icsStr], { type: "text/calendar;charset=utf-8" });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", `${event.title.replace(/\s+/g, "_")}.ics`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
 }
 
 export default function Schedule() {
@@ -158,7 +113,7 @@ export default function Schedule() {
 
   const handleCalendarClick = (event: ScheduledEvent, e?: React.MouseEvent) => {
     e?.stopPropagation();
-    downloadICS(event);
+    downloadEventCalendar(event);
     trackAccessEvent("event_card_click", {
       buttonName: "Add To Calendar",
       destinationUrl: "calendar-download",
@@ -308,15 +263,22 @@ export default function Schedule() {
                     </span>
                   </div>
                 </div>
-                <Link
-                  href="/sunsets"
-                  className="btn-pill-sunsets mt-5 w-full justify-center"
-                >
-                  {nextSignal && isTicketOnSale(nextSignal)
-                    ? "Open Ticketing"
-                    : "Join the Lake List"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                {nextSignal ? (
+                  <ConversionCTA
+                    event={nextSignal}
+                    size="sm"
+                    showUrgency={false}
+                    className="mt-5 w-full"
+                  />
+                ) : (
+                  <Link
+                    href="/newsletter"
+                    className="btn-pill-monolith mt-5 w-full justify-center"
+                  >
+                    Season Updates
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                )}
               </div>
 
               <Link
@@ -524,41 +486,47 @@ export default function Schedule() {
                           </div>
 
                           {/* Title Col - Impact Focus */}
-                          <div className="md:col-span-4 flex flex-col gap-2">
-                            <h3 className="font-display text-[clamp(1.8rem,5vw,3.6rem)] uppercase leading-[0.88] text-foreground/80 group-hover:text-foreground transition-all duration-500 tracking-tight-display">
-                              {event.title}
-                            </h3>
-                            <div className="flex flex-wrap gap-2 md:mt-1">
-                              <span
-                                className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}
-                              >
-                                {seriesLabels[event.series]}
-                              </span>
-                              <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full text-white/80">
-                                {getStatusLabel(event.status)}
-                              </span>
-                              {isTicketOnSale(event) && (
-                                <motion.span
-                                  initial={{ opacity: 0, scale: 0.9 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  className="text-[10px] font-black tracking-[0.2em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
+                          <div className="md:col-span-4 flex items-start gap-3 md:gap-4">
+                            <EventArtistStack
+                              artistImages={event.artistImages}
+                              className="pt-0.5"
+                            />
+                            <div className="min-w-0 flex flex-1 flex-col gap-2">
+                              <h3 className="font-display text-[clamp(1.8rem,5vw,3.6rem)] uppercase leading-[0.88] text-foreground/80 group-hover:text-foreground transition-all duration-500 tracking-tight-display">
+                                {event.title}
+                              </h3>
+                              <div className="flex flex-wrap gap-2 md:mt-1">
+                                <span
+                                  className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}
                                 >
-                                  TICKETS ACTIVE
-                                </motion.span>
-                              )}
-                              {event.startingPrice &&
-                                event.status !== "sold-out" && (
-                                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
-                                    From ${event.startingPrice}
-                                  </span>
+                                  {seriesLabels[event.series]}
+                                </span>
+                                <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full text-white/80">
+                                  {getStatusLabel(event.status)}
+                                </span>
+                                {isTicketOnSale(event) && (
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="text-[10px] font-black tracking-[0.2em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
+                                  >
+                                    TICKETS ACTIVE
+                                  </motion.span>
                                 )}
+                                {event.startingPrice &&
+                                  event.status !== "sold-out" && (
+                                    <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
+                                      From ${event.startingPrice}
+                                    </span>
+                                  )}
+                              </div>
+                              <p className="mt-2 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/65 line-clamp-2">
+                                {getEventSummary(event)}
+                              </p>
+                              <p className="md:hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
+                                {event.time} · {event.venue} · {event.location}
+                              </p>
                             </div>
-                            <p className="mt-2 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/65 line-clamp-2">
-                              {getEventSummary(event)}
-                            </p>
-                            <p className="md:hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
-                              {event.time} · {event.venue} · {event.location}
-                            </p>
                           </div>
 
                           {/* Location Col - Minimal Detail */}

@@ -247,6 +247,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://monolithproject.com/archive/autograf-march-21-2026</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://monolithproject.com/press</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -263,6 +269,24 @@
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://monolithproject.com/events/monolith-residency-kashmir-july-24-2026</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://monolithproject.com/events/house-of-friends-kashmir-july-31-2026</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://monolithproject.com/events/monolith-residency-kashmir-august-15-2026</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://monolithproject.com/events/css-aug22</loc>

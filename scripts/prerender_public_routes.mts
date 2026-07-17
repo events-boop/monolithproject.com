@@ -178,7 +178,14 @@ function buildEventSeoDescription(event: (typeof futureEvents)[number]) {
     return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
   }
 
-  return `Get tickets and details for ${event.title} in Chicago on ${shortDate} from The Monolith Project.`;
+  return `Get details and updates for ${event.title} at ${event.venue} in Chicago on ${shortDate} from The Monolith Project.`;
+}
+
+function getEventSeriesEyebrow(event: (typeof futureEvents)[number]) {
+  if (event.series === "untold-story") return "Untold Story Event";
+  if (event.series === "chasing-sunsets") return "Chasing Sun(Sets) Event";
+  if (event.id === "hof-kashmir-jul31") return "House of Friends Pop-Up";
+  return "Monolith Project Event";
 }
 
 function buildRadioEpisodeSeoTitle(episode: (typeof radioEpisodes)[number]) {
@@ -508,7 +515,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "House of Friends | Artist Development by The Monolith Project",
       description:
-        "House of Friends is The Monolith Project's emerging-artist platform, previewing August 22, 2026 at Chasing Sun(Sets) II in Chicago.",
+        "House of Friends opens with a July 31 give-back pop-up at Kashmir before the Founding Class preview on August 22, 2026.",
       absoluteTitle: true,
       canonicalUrl: "https://houseoffriends.vip/",
       image: "https://houseoffriends.vip/og-image.jpg",
@@ -517,10 +524,15 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "House of Friends",
         [
           "A Monolith platform connecting emerging artists with collaborative performance, professional content, education, tools, and future opportunity.",
-          "The public preview arrives August 22, 2026 inside Chasing Sun(Sets) II at Castaways Beach Club in Chicago.",
+          "The next House of Friends signal is a July 31, 2026 give-back pop-up at Kashmir with ERIK THE DJ and a special guest.",
+          "The Founding Class preview follows August 22, 2026 inside Chasing Sun(Sets) II at Castaways Beach Club in Chicago.",
           "Artist selections and performance timing will be announced through official Monolith channels.",
         ],
         [
+          {
+            href: "/events/house-of-friends-kashmir-july-31-2026",
+            label: "View the July 31 pop-up",
+          },
           {
             href: "https://houseoffriends.vip/apply",
             label: "Founding Class applications",
@@ -552,6 +564,32 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             href: "https://houseoffriends.vip/",
             label: "Return to House of Friends",
           },
+        ]
+      ),
+    },
+  ],
+  [
+    "/archive/autograf-march-21-2026",
+    {
+      title: "Autograf at Alhambra Palace — March 21, 2026",
+      description:
+        "Official Monolith Project archive for Autograf at Alhambra Palace in Chicago on March 21, 2026, with the complete Pogi Studios photo collection.",
+      absoluteTitle: true,
+      image: "/images/autograf-recap.jpg",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project · Event Archive",
+        "Autograf · March 21, 2026",
+        [
+          "Live instrumentation and immersive energy from the Autograf Chicago night at Alhambra Palace.",
+          "Official photography is presented through the Pogi Studios Monolith Project collection by JP Quindara.",
+        ],
+        [
+          {
+            href: "/go/gallery/autograf-mar21",
+            label: "Open the official photo collection",
+            external: true,
+          },
+          { href: "/archive", label: "Back to the event archive" },
         ]
       ),
     },
@@ -1082,9 +1120,7 @@ function buildEventRoutes(): RouteDefinition[] {
       image: publicEvent.image || "/images/hero-monolith.webp",
       schemaData: buildScheduledEventSchema(publicEvent, routePath),
       bodyHtml: renderBaseLayout(
-        publicEvent.series === "untold-story"
-          ? "Untold Story Event"
-          : "Chasing Sun(Sets) Event",
+        getEventSeriesEyebrow(publicEvent),
         publicEvent.headline || publicEvent.title,
         [
           `${publicEvent.date} · ${publicEvent.time} · ${publicEvent.venue}`,

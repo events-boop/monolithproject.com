@@ -86,6 +86,30 @@ describe("buildPublicSiteData", () => {
     );
   });
 
+  it("publishes the Kashmir residency series in chronological order", () => {
+    const data = buildPublicSiteData("/schedule");
+    const residencyEvents = data.events.filter(
+      event => event.venue === "Kashmir"
+    );
+
+    expect(residencyEvents.map(event => event.id)).toEqual([
+      "mpr-kashmir-jul24",
+      "hof-kashmir-jul31",
+      "mpr-kashmir-aug15",
+    ]);
+    expect(residencyEvents[0]?.lineup).toBe("ERIK THE DJ · AMAR · FRANK BONO");
+    expect(residencyEvents[1]).toMatchObject({
+      title: "HOUSE OF FRIENDS POP-UP",
+      lineup: "ERIK THE DJ · SPECIAL GUEST",
+      time: "Time TBA",
+      status: "coming-soon",
+    });
+    expect(
+      residencyEvents[1]?.artistImages?.map(image => image.artist)
+    ).toEqual(["ERIK THE DJ"]);
+    expect(residencyEvents[2]?.lineup).toBe("ERIK THE DJ B2B AMARI");
+  });
+
   it("falls back to featured events for non-season routes", () => {
     const data = buildPublicSiteData("/vip");
     const featuredIds = data.events.map(event => event.id);

@@ -13,13 +13,11 @@ import { CTA_LABELS, getEventDetailsHref } from "@/lib/cta";
 import ConversionCTA from "@/components/ConversionCTA";
 import KineticDecryption from "./KineticDecryption";
 import ResponsiveImage from "./ResponsiveImage";
+import EventArtistStack from "./EventArtistStack";
 import ScheduleSeriesKey from "./ScheduleSeriesKey";
 import { cn } from "@/lib/utils";
-import {
-  getSeriesColor,
-  getEventWindow,
-  getScheduledEvents,
-} from "@/lib/siteExperience";
+import { getSeriesColor, getScheduledEvents } from "@/lib/siteExperience";
+import { downloadEventCalendar } from "@/lib/calendar";
 import { MONOLITH_ORANGE } from "@/lib/brand";
 import { trackAccessEvent, trackTicketIntent } from "@/lib/api";
 import { appendAttributionQueryParams } from "@/lib/attribution";
@@ -27,40 +25,6 @@ import {
   getEventOutlinePillToneClass,
   getEventPillToneClass,
 } from "@/lib/ctaTone";
-
-function formatIcsLocal(d: Date) {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return (
-    `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}` +
-    `T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`
-  );
-}
-
-function downloadICS(event: ScheduledEvent) {
-  const { start, end } = getEventWindow(event);
-  if (!start || !end) return;
-
-  const icsStr = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//The Monolith Project//EN
-BEGIN:VEVENT
-DTSTART;TZID=America/Chicago:${formatIcsLocal(start)}
-DTEND;TZID=America/Chicago:${formatIcsLocal(end)}
-SUMMARY:${event.title}
-DESCRIPTION:${event.description || "The Monolith Project Event"}
-LOCATION:${event.venue} — ${event.location}
-END:VEVENT
-END:VCALENDAR`;
-
-  const blob = new Blob([icsStr], { type: "text/calendar;charset=utf-8" });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", `${event.title.replace(/\s+/g, "_")}.ics`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 
 const seriesLabels: Record<string, string> = {
   "chasing-sunsets": "SUN(SETS)",
@@ -73,7 +37,7 @@ const seriesDefaultImage: Record<string, string> = {
   // fallback, so a poster with a printed date/lineup would misrepresent them.
   "chasing-sunsets": "/images/sunsets-hero-beach.jpg",
   "untold-story": "/images/untold-story-juany-deron-v2.webp",
-  "monolith-project": "/images/artist-autograf.webp",
+  "monolith-project": "/images/monolith-three-worlds-banner.jpg",
 };
 
 // Chapter-specific artwork keyed by event id, checked before the series fallback.
@@ -387,44 +351,50 @@ export default function ScheduleSection() {
                       </div>
 
                       {/* 🎫 EVENT IDENTITY */}
-                      <div className="lg:col-span-4 flex flex-col gap-2 pl-0 lg:pl-4">
-                        <h3
-                          className={cn(
-                            "hero-wordmark font-black uppercase leading-[0.9] tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white",
-                            event.featured
-                              ? "text-[clamp(1.7rem,5.6vw,2.9rem)] lg:text-[clamp(2.2rem,4.5vw,3.4rem)]"
-                              : "text-[clamp(1.45rem,5vw,2.55rem)] lg:text-[clamp(1.9rem,4vw,2.9rem)]"
-                          )}
-                          style={{
-                            color: isJulyHoliday ? seriesAccent : undefined,
-                          }}
-                        >
-                          {event.title}
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                          <span
-                            className="rounded-full border border-white/10 bg-black/[0.055] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em]"
-                            style={{ color: getSeriesColor(event.series) }}
+                      <div className="lg:col-span-4 flex items-start gap-3 pl-0 lg:gap-4 lg:pl-4">
+                        <EventArtistStack
+                          artistImages={event.artistImages}
+                          className="pt-0.5"
+                        />
+                        <div className="min-w-0 flex flex-1 flex-col gap-2">
+                          <h3
+                            className={cn(
+                              "hero-wordmark font-black uppercase leading-[0.9] tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white",
+                              event.featured
+                                ? "text-[clamp(1.7rem,5.6vw,2.9rem)] lg:text-[clamp(2.2rem,4.5vw,3.4rem)]"
+                                : "text-[clamp(1.45rem,5vw,2.55rem)] lg:text-[clamp(1.9rem,4vw,2.9rem)]"
+                            )}
+                            style={{
+                              color: isJulyHoliday ? seriesAccent : undefined,
+                            }}
                           >
-                            {seriesLabels[event.series]}
-                          </span>
-                          {event.recentlyDropped && (
-                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-cyan-500 text-white rounded-full shadow-sm">
-                              NEW DROP
-                            </span>
-                          )}
-                          {event.featured && event.status === "on-sale" ? (
+                            {event.title}
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
                             <span
-                              className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-black shadow-sm"
-                              style={{ backgroundColor: seriesAccent }}
+                              className="rounded-full border border-white/10 bg-black/[0.055] px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em]"
+                              style={{ color: getSeriesColor(event.series) }}
                             >
-                              ON SALE NOW
+                              {seriesLabels[event.series]}
                             </span>
-                          ) : (
-                            <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
-                              {getStatusLabel(event.status)}
-                            </span>
-                          )}
+                            {event.recentlyDropped && (
+                              <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-cyan-500 text-white rounded-full shadow-sm">
+                                NEW DROP
+                              </span>
+                            )}
+                            {event.featured && event.status === "on-sale" ? (
+                              <span
+                                className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-black shadow-sm"
+                                style={{ backgroundColor: seriesAccent }}
+                              >
+                                ON SALE NOW
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
+                                {getStatusLabel(event.status)}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -627,7 +597,7 @@ export default function ScheduleSection() {
 
                               <button
                                 type="button"
-                                onClick={() => downloadICS(event)}
+                                onClick={() => downloadEventCalendar(event)}
                                 className="btn-text-action group"
                               >
                                 <CalendarPlus className="w-4 h-4" />

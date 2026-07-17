@@ -245,6 +245,7 @@ function Router() {
         path="/untold-story/:season"
         component={ArchiveGalleryPageTransition}
       />
+      <Route path="/archive/:season" component={ArchiveGalleryPageTransition} />
       <Route
         path={ROUTES.untoldStoryDeronJuanyBravo}
         component={UntoldStoryTransition}

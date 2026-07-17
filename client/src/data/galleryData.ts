@@ -29,6 +29,14 @@ export type GalleryVideoItem = {
 
 export type MediaItem = GalleryImageItem | GalleryVideoItem;
 
+export type ArchiveExternalGallery = {
+  href: string;
+  label: string;
+  provider: string;
+  context: string;
+  note: string;
+};
+
 export interface ArchiveCollection {
   slug: string;
   title: string;
@@ -38,6 +46,8 @@ export interface ArchiveCollection {
   coverImage: string;
   date: string;
   media: MediaItem[];
+  /** A tracked handoff to the photographer's complete hosted collection. */
+  externalGallery?: ArchiveExternalGallery;
   /** Collection is announced but the gallery is still in the edit. */
   comingSoon?: boolean;
   /** Journal recap entry for this chapter (the written half of the record). */
@@ -464,10 +474,10 @@ export const autografSpecial: MediaItem[] = [
   image({
     id: "autograf-portrait",
     kind: "image",
-    src: "/images/artist-autograf.webp",
-    width: 1024,
-    height: 1024,
-    alt: "Autograf",
+    src: "/images/artist-autograf-new.jpg",
+    width: 641,
+    height: 690,
+    alt: "Autograf artist portrait",
     caption: "Portrait",
   }),
 ];
@@ -552,16 +562,23 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     date: "March 6, 2026",
     media: untoldSeason3,
   },
-  "autograf-special-event": {
-    slug: "autograf-special-event",
-    title: "The Monolith Project",
-    subtitle: "Special Event — Autograf",
+  "autograf-march-21-2026": {
+    slug: "autograf-march-21-2026",
+    title: "Autograf",
+    subtitle: "The Monolith Project · Special Event",
     description:
-      "Live instrumentation and immersive energy from the Autograf Chicago night.",
+      "March 21, 2026 at Alhambra Palace — live instrumentation and immersive energy from the Autograf Chicago night.",
     accentColor: "#FFFFFF",
     coverImage: "/images/autograf-recap.jpg",
     date: "March 21, 2026",
     media: autografSpecial,
+    externalGallery: {
+      href: "/go/gallery/autograf-mar21",
+      label: "Enter Official Collection",
+      provider: "Pogi Studios · JP Quindara",
+      context: "AUTOGRAF | 03-21",
+      note: "Open the Monolith Project collection and select AUTOGRAF | 03-21 for the complete event gallery.",
+    },
   },
   "eran-hersh-international": {
     slug: "eran-hersh-international",

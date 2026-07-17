@@ -1,6 +1,8 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MediaItem, homeGallery } from "@/data/galleryData";
+import { ArrowUpRight, Camera } from "lucide-react";
+import { homeGallery } from "@/data/galleryData";
+import type { ArchiveExternalGallery, MediaItem } from "@/data/galleryData";
 import ResponsiveImage from "./ResponsiveImage";
 
 const GalleryLightbox = lazy(() => import("./GalleryLightbox"));
@@ -28,6 +30,8 @@ interface MixedMediaGalleryProps {
   className?: string;
   style?: React.CSSProperties;
   dense?: boolean;
+  accentColor?: string;
+  externalGallery?: ArchiveExternalGallery;
 }
 
 export default function MixedMediaGallery({
@@ -38,13 +42,17 @@ export default function MixedMediaGallery({
   className = "bg-background border-t border-white/5 relative",
   style,
   dense = false,
+  accentColor = "#FFFFFF",
+  externalGallery,
 }: MixedMediaGalleryProps) {
   const [index, setIndex] = useState(-1);
   const isLightboxOpen = index >= 0;
   const hasMedia = media.length > 0;
-  const mediaCountLabel = media.some(item => item.kind === "video")
-    ? `${media.length} ${media.length === 1 ? "item" : "items"}`
-    : `${media.length} ${media.length === 1 ? "photo" : "photos"}`;
+  const mediaCountLabel = externalGallery
+    ? `${media.length} on-site ${media.length === 1 ? "preview" : "previews"}`
+    : media.some(item => item.kind === "video")
+      ? `${media.length} ${media.length === 1 ? "item" : "items"}`
+      : `${media.length} ${media.length === 1 ? "photo" : "photos"}`;
 
   const photos = useMemo<GalleryPhoto[]>(() => {
     return media.map(item => {
@@ -101,6 +109,57 @@ export default function MixedMediaGallery({
             </p>
           )}
         </div>
+
+        {externalGallery ? (
+          <motion.a
+            href={externalGallery.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${externalGallery.label}: ${externalGallery.context}`}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative mb-10 grid overflow-hidden border bg-white/[0.025] p-5 transition-colors duration-500 hover:bg-white/[0.055] md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:p-7"
+            style={{ borderColor: `${accentColor}2E` }}
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 w-px opacity-80"
+              style={{ background: accentColor }}
+            />
+            <div className="relative flex items-start gap-4">
+              <span
+                className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center border bg-black/30"
+                style={{ borderColor: `${accentColor}45`, color: accentColor }}
+              >
+                <Camera className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <div>
+                <span
+                  className="block font-mono text-[9px] font-black uppercase tracking-[0.28em]"
+                  style={{ color: accentColor }}
+                >
+                  Official Photo Collection
+                </span>
+                <p className="mt-2 font-display text-xl uppercase tracking-[0.08em] text-white md:text-2xl">
+                  {externalGallery.context}
+                </p>
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+                  {externalGallery.provider}
+                </p>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/60">
+                  {externalGallery.note}
+                </p>
+              </div>
+            </div>
+
+            <span className="relative mt-6 inline-flex min-h-11 items-center justify-center gap-3 border border-white/18 px-5 font-mono text-[10px] font-black uppercase tracking-[0.16em] text-white transition-all duration-300 group-hover:border-white/45 group-hover:bg-white group-hover:text-black md:mt-0">
+              {externalGallery.label}
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+          </motion.a>
+        ) : null}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

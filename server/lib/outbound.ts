@@ -29,6 +29,8 @@ const FALLBACK_SUNSETS_SOUNDCLOUD_URL =
   "https://soundcloud.com/chasing-sun-sets";
 const FALLBACK_SUNSETS_GALLERY_URL =
   "https://khrysseesyou.pic-time.com/-chasingsunsets4thofjuly/gallery";
+const FALLBACK_AUTOGRAF_MAR21_GALLERY_URL =
+  "https://pogistudios.pixieset.com/monolithproject/";
 // chasingsunsets.vip DNS is parked (not on Netlify), so falling back to it
 // stranded VIP clicks on a parking page. The on-site /vip page is evergreen.
 const FALLBACK_SUNSETS_VIP_URL = "https://monolithproject.com/vip";
@@ -155,6 +157,9 @@ const galleryDestinations: Record<string, string> = Object.assign(
         "OUTBOUND_GALLERY_CHASING_SUNSETS_URL",
         "PICTIME_CHASING_SUNSETS_URL"
       ) || FALLBACK_SUNSETS_GALLERY_URL,
+    "autograf-mar21":
+      readHttpsEnv("OUTBOUND_GALLERY_AUTOGRAF_MAR21_URL") ||
+      FALLBACK_AUTOGRAF_MAR21_GALLERY_URL,
   }
 );
 
