@@ -95,9 +95,9 @@ const responsiveImageCatalog: Record<ResponsiveImageKey, ResponsiveImageAsset> =
       src: "/images/hero-video-1-poster.jpg",
     },
     untoldStoryHero: {
-      baseName: "untold-story-juany-deron-v2",
+      baseName: "untold-story-header-jpq-9379",
       sizes: "100vw",
-      src: "/images/untold-story-juany-deron-v2.webp",
+      src: "/images/untold-story/header-jpq-9379.jpg",
     },
     untoldStoryPoster: {
       baseName: "untold-story-moody",

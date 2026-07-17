@@ -4,6 +4,9 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 
 const UNTOLD_URL = "https://untold.vip";
 const MONOLITH_URL = "https://monolithproject.com";
+const HOUSE_OF_FRIENDS_URL = "https://houseoffriends.vip";
+const CHASING_SUNSETS_CHANNEL_URL =
+  "https://www.instagram.com/channel/AbYuqCKYjvqcwcz0/";
 
 const PREVIOUS_SHOWS = [
   {
@@ -61,6 +64,16 @@ const RELATED_LINKS = [
     label: "Sun(Sets)",
     href: "https://sunsets.vip",
     detail: "Open-air lakefront house music.",
+  },
+  {
+    label: "House of Friends",
+    href: HOUSE_OF_FRIENDS_URL,
+    detail: "People-first gatherings and shared rooms.",
+  },
+  {
+    label: "Chasing Sun(Sets) Channel",
+    href: CHASING_SUNSETS_CHANNEL_URL,
+    detail: "Join the official Instagram broadcast channel.",
   },
   {
     label: "Monolith Project",
@@ -304,7 +317,7 @@ export default function UntoldVipLanding() {
         </section>
 
         <footer className="mx-auto mt-4 w-full max-w-6xl border-t border-white/10 py-8">
-          <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr] md:items-start">
+          <div className="grid gap-6">
             <div>
               <p className="font-serif text-sm italic leading-relaxed text-white/56">
                 Music first. Good crowd. Late finish.
@@ -315,7 +328,7 @@ export default function UntoldVipLanding() {
             </div>
             <nav
               aria-label="Related sites"
-              className="grid gap-3 sm:grid-cols-3"
+              className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
             >
               {RELATED_LINKS.map(link => (
                 <a

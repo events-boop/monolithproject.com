@@ -39,11 +39,12 @@ const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const MASSUMA_UK_IMAGE = "/images/artists/massuma-uk/massuma-uk-portrait.jpg";
 const LAKE_LIST_HREF = "/go/lakelist";
 // Live channel row at the bottom of the page. untold.vip serves its own
-// cert + host-detected landing (verified live 2026-07-01); the WhatsApp
-// destination resolves server-side via OUTBOUND_SOCIAL_WHATSAPP_URL so the
-// invite link can rotate without a redeploy.
+// cert + host-detected landing (verified live 2026-07-01); the broadcast
+// channel is the direct Chasing Sun(Sets) Instagram channel supplied by owner.
 const UNTOLD_VIP_HREF = "https://untold.vip";
-const WHATSAPP_COMMUNITY_HREF = "/go/social/whatsapp";
+const HOUSE_OF_FRIENDS_HREF = "https://houseoffriends.vip";
+const CHASING_SUNSETS_CHANNEL_HREF =
+  "https://www.instagram.com/channel/AbYuqCKYjvqcwcz0/";
 const SOMMERS_UK_HREF =
   "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets";
 const SOMMERS_UK_IMAGE = "/images/sommers-uk-cover.jpg";
@@ -168,6 +169,12 @@ const FOOTER_LINKS = [
     href: "https://untold.vip",
     interestType: "untold_story_click",
     channel: "Untold",
+  },
+  {
+    label: "House of Friends",
+    href: HOUSE_OF_FRIENDS_HREF,
+    interestType: "house_of_friends_click",
+    channel: "House of Friends",
   },
   {
     label: "Sun(Sets) Radio",
@@ -938,25 +945,55 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <a
-            href={WHATSAPP_COMMUNITY_HREF}
+            href={CHASING_SUNSETS_CHANNEL_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() =>
               trackSunsetsClick({
-                buttonName: "WhatsApp Community",
-                href: WHATSAPP_COMMUNITY_HREF,
+                buttonName: "Chasing Sun(Sets) Channel",
+                href: CHASING_SUNSETS_CHANNEL_HREF,
                 eventSlug: JULY_4_EVENT_SLUG,
                 eventDate: JULY_4_EVENT_DATE,
-                interestType: "whatsapp_community_click",
-                channel: "WhatsApp",
+                interestType: "instagram_channel_click",
+                channel: "Instagram Broadcast",
               })
             }
-            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#25D366]/50 bg-[#25D366]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#5ee88f] transition-all hover:bg-[#25D366] hover:text-black hover:shadow-[0_0_20px_rgba(37,211,102,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#E1306C]/50 bg-[#E1306C]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#ff8db2] transition-all hover:bg-[#E1306C] hover:text-white hover:shadow-[0_0_20px_rgba(225,48,108,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2.5">
               <span
                 aria-hidden="true"
-                className="h-2 w-2 rounded-full bg-[#25D366] shadow-[0_0_8px_rgba(37,211,102,0.9)] animate-pulse motion-reduce:animate-none"
+                className="h-2 w-2 rounded-full bg-[#E1306C] shadow-[0_0_8px_rgba(225,48,108,0.9)] animate-pulse motion-reduce:animate-none"
               />
-              WHATSAPP COMMUNITY
+              CHASING SUN(SETS) CHANNEL
+            </span>
+            <div
+              className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={HOUSE_OF_FRIENDS_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackSunsetsClick({
+                buttonName: "HOUSEOFFRIENDS.VIP",
+                href: HOUSE_OF_FRIENDS_HREF,
+                eventSlug: JULY_4_EVENT_SLUG,
+                eventDate: JULY_4_EVENT_DATE,
+                interestType: "house_of_friends_click",
+                channel: "House of Friends",
+              })
+            }
+            className="group relative mt-2.5 flex h-[52px] min-h-[52px] items-center justify-center gap-2.5 overflow-hidden border border-[#f97316]/50 bg-[#f97316]/5 px-4 text-[11px] font-black uppercase tracking-[0.12em] text-[#fdba74] transition-all hover:bg-[#f97316] hover:text-black hover:shadow-[0_0_20px_rgba(249,115,22,0.35)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
+          >
+            <span className="relative z-10 flex items-center gap-2.5">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full bg-[#f97316] shadow-[0_0_8px_rgba(249,115,22,0.9)]"
+              />
+              HOUSEOFFRIENDS.VIP — ENTER THE HOUSE
             </span>
             <div
               className="absolute inset-0 z-0 -translate-x-[150%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)] transition-transform duration-700 ease-in-out group-hover:translate-x-[150%] motion-reduce:hidden"

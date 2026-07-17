@@ -11,12 +11,13 @@ const reportPath = path.join(outputDir, "responsive-image-report.json");
 
 const defaultWidths = [480, 1024];
 // Premium editorial tier: retain source masters and ship larger, gentler
-// derivatives for artist portraits and press galleries.
+// derivatives for artist imagery and full-bleed editorial photography.
 const premiumArtistWidths = [640, 1280, 1920];
 const premiumArtistBaseNamePrefixes = [
   "artists-sommers-uk-",
   "artists-joezi-",
   "artists-massuma-uk-",
+  "untold-story-header-jpq-",
 ];
 const desktopWidthsByBaseName = new Map([
   ["hero-monolith", [480, 1024, 1920]],

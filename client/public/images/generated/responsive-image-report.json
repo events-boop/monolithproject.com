@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T18:51:42.401Z",
+  "generatedAt": "2026-07-17T19:32:33.295Z",
   "defaultWidths": [
     480,
     1024
@@ -12,13 +12,14 @@
   "premiumArtistBaseNamePrefixes": [
     "artists-sommers-uk-",
     "artists-joezi-",
-    "artists-massuma-uk-"
+    "artists-massuma-uk-",
+    "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 153111526,
-    "estimatedTransferBytes": 6733573,
-    "estimatedSavingsBytes": 146468567,
-    "variantBytes": 31111674
+    "originalBytes": 153619470,
+    "estimatedTransferBytes": 6919695,
+    "estimatedSavingsBytes": 146790389,
+    "variantBytes": 32421776
   },
   "images": [
     {
@@ -3202,6 +3203,56 @@
       "estimatedTransferKb": 81.1,
       "estimatedSavingsBytes": 0,
       "estimatedSavingsPct": 0
+    },
+    {
+      "source": "/images/untold-story/header-jpq-9379.jpg",
+      "originalBytes": 507944,
+      "originalKb": 496,
+      "originalWidth": 2048,
+      "originalHeight": 1366,
+      "generatedBaseName": "untold-story-header-jpq-9379",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 58964
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 51988
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 208254
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 186122
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 411220
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 393554
+        }
+      ],
+      "estimatedTransferBytes": 186122,
+      "estimatedTransferKb": 181.8,
+      "estimatedSavingsBytes": 321822,
+      "estimatedSavingsPct": 63
     },
     {
       "source": "/og-image.jpg",

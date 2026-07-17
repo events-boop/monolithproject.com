@@ -5,6 +5,7 @@ const PREMIUM_ARTIST_BASE_NAME_PREFIXES = [
   "artists-sommers-uk-",
   "artists-joezi-",
   "artists-massuma-uk-",
+  "untold-story-header-jpq-",
 ] as const;
 const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
   string,

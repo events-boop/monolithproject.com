@@ -17,8 +17,16 @@ import SplitText from "@/components/ui/SplitText";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const heroSlides = [
-  getResponsiveImage("untoldStoryPoster"),
-  getResponsiveImage("untoldStoryHero"),
+  {
+    ...getResponsiveImage("untoldStoryHero"),
+    alt: "Untold Story dancefloor beneath the chandelier",
+    objectPosition: "50% 58%",
+  },
+  {
+    ...getResponsiveImage("untoldStoryPoster"),
+    alt: "Untold Story after-dark atmosphere",
+    objectPosition: "80% center",
+  },
 ];
 
 export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
@@ -60,14 +68,21 @@ export default function UntoldHero({ event }: { event?: ScheduledEvent }) {
               src={heroSlides[heroSlideIndex].src}
               sources={heroSlides[heroSlideIndex].sources}
               sizes={heroSlides[heroSlideIndex].sizes}
-              alt="Untold Story Atmosphere"
+              alt={heroSlides[heroSlideIndex].alt}
               fetchPriority={heroSlideIndex === 0 ? "high" : "auto"}
               loading={heroSlideIndex === 0 ? "eager" : "lazy"}
               decoding="async"
-              className="w-full h-full object-cover object-[80%_center]"
+              style={{
+                objectPosition: heroSlides[heroSlideIndex].objectPosition,
+              }}
+              className="h-full w-full object-cover"
             />
           </motion.div>
         </AnimatePresence>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(3,3,12,0.84)_0%,rgba(3,3,12,0.42)_46%,rgba(3,3,12,0.08)_78%),linear-gradient(0deg,rgba(6,6,15,0.9)_0%,transparent_58%,rgba(0,0,0,0.44)_100%)]"
+        />
       </div>
 
       {/* Giant Butterfly (Elements of butterfly in the background) */}
