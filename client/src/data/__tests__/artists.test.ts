@@ -28,4 +28,18 @@ describe("artist catalog", () => {
     expect(srcSet).toContain("1280w");
     expect(srcSet).toContain("1920w");
   });
+
+  it("publishes Joezi with a full press gallery and premium image tier", () => {
+    expect(ARTISTS.joezi).toMatchObject({
+      name: "JOEZI",
+      image: "/images/artists/joezi/joezi-portrait.jpg",
+      galleryLabel: "Press Gallery",
+    });
+    expect(ARTISTS.joezi.gallery).toHaveLength(2);
+
+    const srcSet = buildResponsiveImageSrcSet(ARTISTS.joezi.image, "avif");
+    expect(srcSet).toContain("640w");
+    expect(srcSet).toContain("1280w");
+    expect(srcSet).toContain("1920w");
+  });
 });

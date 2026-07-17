@@ -86,6 +86,9 @@ export default defineConfig(({ mode }) => {
       }),
       ViteImageOptimizer({
         // Higher fidelity for directly-referenced assets; edge compression covers transfer size.
+        // Responsive variants are already encoded at deliberate per-tier quality settings.
+        // Excluding them prevents a second lossy pass during the production build.
+        exclude: /images[\\/]generated[\\/]/,
         png: { quality: 90 },
         jpeg: { quality: 90 },
         jpg: { quality: 90 },

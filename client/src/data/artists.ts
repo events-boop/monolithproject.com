@@ -191,13 +191,13 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     ],
   },
   {
-    // OWNER REWRITE: rebranded from "Chus" — verify Joezi origin/genre/bio/image before announce.
     id: "joezi",
     name: "JOEZI",
     role: "GUEST",
     origin: "TEL AVIV, IL",
     genre: "AFRO HOUSE",
-    image: "/images/chasing-sunsets.webp",
+    image: "/images/artists/joezi/joezi-portrait.jpg",
+    imagePosition: "50% 28%",
     series: ["untold-story"],
     bio: "Joezi's Afro-house rhythms and percussive energy have captivated audiences worldwide. He brings a vibrant, rhythmic pulse to sunset and late-night floors alike.",
     tags: ["Afro House", "Percussive", "Groove"],
@@ -206,6 +206,17 @@ export const ARTIST_ENTRIES: ArtistData[] = [
       { title: "7 Seconds", duration: "6:20" },
       { title: "Africa", duration: "5:10" },
       { title: "The Way", duration: "4:55" },
+    ],
+    galleryLabel: "Press Gallery",
+    gallery: [
+      {
+        src: "/images/artists/joezi/joezi-portrait.jpg",
+        alt: "Joezi portrait with crossed tattooed arms",
+      },
+      {
+        src: "/images/artists/joezi/joezi-press-01.jpg",
+        alt: "Joezi seated portrait wearing sunglasses",
+      },
     ],
   },
   {

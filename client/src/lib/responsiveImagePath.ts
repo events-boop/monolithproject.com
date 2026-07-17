@@ -1,7 +1,10 @@
 const DEFAULT_RESPONSIVE_WIDTHS = [480, 1024] as const;
 // Must mirror the premium editorial tier in generate_responsive_images.mjs.
 const PREMIUM_ARTIST_RESPONSIVE_WIDTHS = [640, 1280, 1920] as const;
-const PREMIUM_ARTIST_BASE_NAME_PREFIXES = ["artists-sommers-uk-"] as const;
+const PREMIUM_ARTIST_BASE_NAME_PREFIXES = [
+  "artists-sommers-uk-",
+  "artists-joezi-",
+] as const;
 const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
   string,
   readonly number[]
