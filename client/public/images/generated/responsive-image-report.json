@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T21:30:13.760Z",
+  "generatedAt": "2026-07-18T06:06:42.147Z",
   "defaultWidths": [
     480,
     1024
@@ -17,10 +17,10 @@
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 157930703,
-    "estimatedTransferBytes": 7017999,
-    "estimatedSavingsBytes": 151003318,
-    "variantBytes": 33276715
+    "originalBytes": 158089548,
+    "estimatedTransferBytes": 7040460,
+    "estimatedSavingsBytes": 151139702,
+    "variantBytes": 33356686
   },
   "images": [
     {
@@ -1124,6 +1124,44 @@
       "estimatedTransferKb": 79.2,
       "estimatedSavingsBytes": 33424,
       "estimatedSavingsPct": 29
+    },
+    {
+      "source": "/images/artist-lazare-press.jpg",
+      "originalBytes": 158845,
+      "originalKb": 155.1,
+      "originalWidth": 1600,
+      "originalHeight": 1066,
+      "generatedBaseName": "artist-lazare-press",
+      "variants": [
+        {
+          "path": "/images/generated/artist-lazare-press-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 10266
+        },
+        {
+          "path": "/images/generated/artist-lazare-press-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 13176
+        },
+        {
+          "path": "/images/generated/artist-lazare-press-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 22461
+        },
+        {
+          "path": "/images/generated/artist-lazare-press-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 34068
+        }
+      ],
+      "estimatedTransferBytes": 22461,
+      "estimatedTransferKb": 21.9,
+      "estimatedSavingsBytes": 136384,
+      "estimatedSavingsPct": 86
     },
     {
       "source": "/images/artist-lazare.webp",

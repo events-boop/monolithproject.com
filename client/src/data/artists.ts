@@ -53,7 +53,7 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     role: "HEADLINER",
     origin: "CHICAGO, US",
     genre: "MELODIC HOUSE · TECHNO",
-    image: "/images/artist-lazare.webp",
+    image: "/images/artist-lazare-press.jpg",
     series: ["untold-story"],
     bio: "Over 100 million spins and counting on hit songs. Lazare Sabry is a headliner for record night at Carbon Night Club Chicago, bringing a sophisticated blend of melodic house, deep techno, and progressive rhythms.",
     tags: ["Headliner", "Melodic", "House"],
