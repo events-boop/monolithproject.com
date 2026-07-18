@@ -193,6 +193,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     status: "coming-soon",
     description:
       "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Join the Lake List for first access.",
+    // Date-neutral series art: drives event-page og:image until chapter art exists.
+    image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
     venueMap: {
       id: "castaways-sunsets-iii-2026",
@@ -378,6 +380,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     status: "coming-soon",
     description:
       "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+    // Date-neutral series art: drives event-page og:image until chapter art exists.
+    image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
     venueMap: {
       id: "castaways-sunsets-ii-2026",
