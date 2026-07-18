@@ -52,6 +52,7 @@ export const ROUTES = {
   monolith: "/monolith",
   houseOfFriends: "/house-of-friends",
   houseOfFriendsApply: "/house-of-friends/apply",
+  apeDrums: "/apedrums",
   notFound: "/404",
 
   // Redirect aliases (resolved to canonical routes by the router)
@@ -63,6 +64,7 @@ export const ROUTES = {
   // Dev-only routes (gated behind VITE_ENABLE_MONOLITH_OPS)
   monolithOps: "/monolith-ops",
   sandboxHero: "/sandbox/hero",
+  apeDrumsPreview: "/sandbox/ape-drums",
 } as const;
 
 /* ------------------------------------------------------------------ */
