@@ -315,7 +315,7 @@ export default function Home() {
           <div className="container layout-wide px-6">
             <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
               <span className="section-kicker block text-[#E8B86D]">
-                Chasing Sun(Sets / Current signal
+                Chasing Sun(Sets) / Current signal
               </span>
             </div>
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
@@ -587,10 +587,10 @@ export default function Home() {
           />
           <ViewportLazy
             minHeightClassName="min-h-[560px]"
-            rootMargin="400px 0px"
+            rootMargin="900px 0px"
           >
             <Suspense
-              fallback={<Skeleton className="h-[560px] w-full opacity-10" />}
+              fallback={<Skeleton className="h-[560px] w-full opacity-25 animate-pulse" />}
             >
               <SeasonChapterCards />
             </Suspense>
@@ -607,11 +607,11 @@ export default function Home() {
           />
           <ViewportLazy
             minHeightClassName="min-h-[780px]"
-            rootMargin="500px 0px"
+            rootMargin="900px 0px"
             revealAfterMs={900}
           >
             <Suspense
-              fallback={<Skeleton className="h-[780px] w-full opacity-10" />}
+              fallback={<Skeleton className="h-[780px] w-full opacity-25 animate-pulse" />}
             >
               <ScheduleSection />
             </Suspense>
@@ -735,11 +735,11 @@ export default function Home() {
           />
           <ViewportLazy
             minHeightClassName="min-h-[620px]"
-            rootMargin="500px 0px"
+            rootMargin="900px 0px"
             revealAfterMs={1200}
           >
             <Suspense
-              fallback={<Skeleton className="h-[620px] w-full opacity-10" />}
+              fallback={<Skeleton className="h-[620px] w-full opacity-25 animate-pulse" />}
             >
               <FeaturedRecap />
             </Suspense>
@@ -759,11 +759,11 @@ export default function Home() {
           />
           <ViewportLazy
             minHeightClassName="min-h-[420px]"
-            rootMargin="500px 0px"
+            rootMargin="900px 0px"
             revealAfterMs={1400}
           >
             <Suspense
-              fallback={<Skeleton className="h-[420px] w-full opacity-10" />}
+              fallback={<Skeleton className="h-[420px] w-full opacity-25 animate-pulse" />}
             >
               <FeaturedSets />
             </Suspense>
@@ -862,11 +862,11 @@ export default function Home() {
 
         <ViewportLazy
           minHeightClassName="min-h-[120px]"
-          rootMargin="500px 0px"
+          rootMargin="900px 0px"
           revealAfterMs={1600}
         >
           <Suspense
-            fallback={<Skeleton className="h-[120px] w-full opacity-10" />}
+            fallback={<Skeleton className="h-[120px] w-full opacity-25 animate-pulse" />}
           >
             <PartnershipMarquee />
           </Suspense>
