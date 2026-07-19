@@ -125,3 +125,7 @@ copy_image.py
 debug_evidence.*
 src.zip
 test-image.ts
+
+# Lighthouse report artifacts (never commit)
+/*.report.html
+/*.report.json
