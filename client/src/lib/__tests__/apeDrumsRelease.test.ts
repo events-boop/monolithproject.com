@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getYouTubeVideoId, resolveApeDrumsRelease } from "../apeDrumsRelease";
+import {
+  APE_DRUMS_RELEASE,
+  getYouTubeVideoId,
+  resolveApeDrumsRelease,
+} from "../apeDrumsRelease";
 
 describe("Ape Drums release gate", () => {
   it("stays closed until every launch dependency is real", () => {
@@ -8,14 +12,16 @@ describe("Ape Drums release gate", () => {
       contractCountersigned: "false",
       ticketUrl: "https://example.com/tickets",
       doors: "TBA",
+      heroImage: "",
       approvedVideoUrls: ["https://www.youtube.com/watch?v=JHJoX3ufp1E"],
     });
 
     expect(release.publicReady).toBe(false);
     expect(release.blockers).toEqual([
       "contract countersignature is not confirmed",
-      "Posh checkout URL is missing or invalid",
+      "approved checkout URL is missing or invalid",
       "doors time is missing",
+      "approved hero image is missing or invalid",
       "two approved official YouTube URLs are required",
     ]);
   });
@@ -26,6 +32,7 @@ describe("Ape Drums release gate", () => {
       contractCountersigned: "true",
       ticketUrl: "https://posh.vip/e/approved-event",
       doors: "Doors 10:00 PM",
+      heroImage: "/images/artists/approved/hero.jpg",
       approvedVideoUrls: [
         "https://www.youtube.com/watch?v=JHJoX3ufp1E",
         "https://youtu.be/XAp6w9hTAqk",
@@ -36,6 +43,7 @@ describe("Ape Drums release gate", () => {
       publicReady: true,
       ticketUrl: "https://posh.vip/e/approved-event",
       doors: "Doors 10:00 PM",
+      heroImage: "/images/artists/approved/hero.jpg",
       blockers: [],
     });
     expect(release.videoIds).toEqual(["JHJoX3ufp1E", "XAp6w9hTAqk"]);
@@ -49,5 +57,10 @@ describe("Ape Drums release gate", () => {
       "XAp6w9hTAqk"
     );
     expect(getYouTubeVideoId("https://example.com/JHJoX3ufp1E")).toBeNull();
+  });
+
+  it("ships the owner-approved newest set as the first sealed preview video", () => {
+    expect(APE_DRUMS_RELEASE.videoIds[0]).toBe("O94vKVHzamk");
+    expect(APE_DRUMS_RELEASE.publicReady).toBe(false);
   });
 });

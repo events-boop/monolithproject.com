@@ -20,14 +20,27 @@ describe("Ape Drums private landing preview", () => {
       screen.getByRole("heading", { level: 1, name: /ape drums/i })
     ).toBeInTheDocument();
     expect(screen.getByText(/some bookings happen in a week/i)).toBeVisible();
+    expect(
+      screen.getByRole("heading", {
+        name: /he learned to feel the rhythm/i,
+      })
+    ).toBeVisible();
+    expect(screen.getByText("58K")).toBeVisible();
+    expect(screen.getByText("3M")).toBeVisible();
     expect(screen.getByText(/friday, july 31, 2026/i)).toBeVisible();
     expect(
       document.querySelectorAll('[data-release-gate="closed"]')
     ).toHaveLength(3);
-    expect(document.querySelectorAll("iframe")).toHaveLength(0);
+    expect(document.querySelectorAll("iframe")).toHaveLength(1);
+    expect(
+      document.querySelector('iframe[src*="O94vKVHzamk"]')
+    ).toBeInTheDocument();
     expect(
       screen.getAllByLabelText("Official video pending approval")
-    ).toHaveLength(3);
+    ).toHaveLength(2);
+    expect(
+      screen.getByLabelText("Approved artist hero image pending")
+    ).toBeVisible();
     expect(
       document.querySelector('a[href^="https://posh.vip"]')
     ).not.toBeInTheDocument();
@@ -48,5 +61,20 @@ describe("Ape Drums private landing preview", () => {
     ];
 
     prohibited.forEach(term => expect(renderedCopy).not.toContain(term));
+  });
+
+  it("redirects the public endpoint while any release dependency is unresolved", () => {
+    window.history.replaceState({}, "", "/apedrums");
+
+    render(
+      <HelmetProvider>
+        <ApeDrumsLanding />
+      </HelmetProvider>
+    );
+
+    expect(window.location.pathname).toBe("/404");
+    expect(
+      screen.queryByRole("heading", { level: 1, name: /ape drums/i })
+    ).not.toBeInTheDocument();
   });
 });

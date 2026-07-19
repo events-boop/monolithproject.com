@@ -14,7 +14,6 @@ import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
 import MetaPixelGate from "./components/MetaPixelGate";
-import { APE_DRUMS_RELEASE } from "./lib/apeDrumsRelease";
 import { ROUTES, ANCHORS } from "@shared/routes";
 
 // Lazy Pages
@@ -180,7 +179,7 @@ function SandboxHeroRoute() {
 }
 
 function ApeDrumsPublicRoute() {
-  if (!APE_DRUMS_RELEASE.publicReady || !ApeDrumsLandingTransition) {
+  if (!ApeDrumsLandingTransition) {
     return <Redirect to={ROUTES.notFound} />;
   }
 

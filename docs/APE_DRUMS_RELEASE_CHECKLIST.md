@@ -18,7 +18,7 @@ Status: **sealed draft**. Do not release before the countersigned contract is co
 
 ## Required release inputs
 
-All five controls are required. If one is missing, the public route stays closed.
+All required controls must resolve. If one is missing, the public route stays closed.
 
 | Environment variable                    | Required value                                       |
 | --------------------------------------- | ---------------------------------------------------- |
@@ -26,21 +26,26 @@ All five controls are required. If one is missing, the public route stays closed
 | `VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED` | `true`                                               |
 | `VITE_APE_DRUMS_TICKET_URL`             | Final `https://posh.vip/...` checkout URL            |
 | `VITE_APE_DRUMS_DOORS`                  | Approved public doors line, such as `Doors 10:00 PM` |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Approved official YouTube URL                        |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | Approved official YouTube URL                        |
+| `VITE_APE_DRUMS_HERO_IMAGE`             | Approved `/images/...` path or HTTPS image URL       |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Optional override for the owner-approved newest set  |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | One additional approved official YouTube URL         |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional third approved official YouTube URL         |
+
+The first video defaults to the owner-approved set `O94vKVHzamk`. The route still requires one additional approved video before release.
 
 ## Monday release sequence
 
 1. Confirm the countersigned contract in writing.
 2. Confirm the final artist spelling, event date, venue, age restriction, capacity, doors time, and Posh URL.
-3. Confirm two or three official artist-channel YouTube links.
-4. Re-run the prohibited-language scan across the landing page, metadata, and campaign copy.
-5. Add the environment variables above to the production site.
-6. Build and verify that `/apedrums` renders and `/sandbox/ape-drums` does not.
-7. Test the hero, sticky-header, and bottom ticket CTAs on desktop and mobile. Each must open the same Posh checkout URL.
-8. Confirm one PageView on load and one InitiateCheckout plus internal ticket-intent event per CTA click.
-9. Publish the public social route only after the production URL passes the checks.
+3. Confirm the approved hero press image and mobile crop.
+4. Confirm the supplied newest set and at least one additional official artist-channel YouTube link.
+5. Re-verify the supplied 58K Instagram and 3M monthly-listener audience snapshot.
+6. Re-run the prohibited-language scan across the landing page, metadata, and campaign copy.
+7. Add the environment variables above to the production site.
+8. Build and verify that `/apedrums` renders and `/sandbox/ape-drums` does not.
+9. Test the hero, sticky-header, and bottom ticket CTAs on desktop and mobile. Each must open the same Posh checkout URL.
+10. Confirm one PageView on load and one InitiateCheckout plus internal ticket-intent event per CTA click.
+11. Publish the public social route only after the production URL passes the checks.
 
 ## Rollback
 
