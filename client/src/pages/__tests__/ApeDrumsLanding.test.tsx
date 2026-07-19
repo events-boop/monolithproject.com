@@ -31,13 +31,16 @@ describe("Ape Drums private landing preview", () => {
     expect(
       document.querySelectorAll('[data-release-gate="closed"]')
     ).toHaveLength(3);
-    expect(document.querySelectorAll("iframe")).toHaveLength(1);
+    expect(document.querySelectorAll("iframe")).toHaveLength(2);
     expect(
       document.querySelector('iframe[src*="O94vKVHzamk"]')
     ).toBeInTheDocument();
     expect(
+      document.querySelector('iframe[src*="K_2PZkxuNLY"]')
+    ).toBeInTheDocument();
+    expect(
       screen.getAllByLabelText("Official video pending approval")
-    ).toHaveLength(2);
+    ).toHaveLength(1);
     expect(
       screen.getByLabelText("Approved artist hero image pending")
     ).toBeVisible();

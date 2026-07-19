@@ -17,6 +17,8 @@ export type ApeDrumsReleaseConfig = ArtistShowReleaseConfig;
 
 export const APE_DRUMS_FEATURED_SET_URL =
   "https://www.youtube.com/watch?v=O94vKVHzamk";
+export const APE_DRUMS_SECOND_VIDEO_URL =
+  "https://www.youtube.com/watch?v=K_2PZkxuNLY";
 
 export function resolveApeDrumsRelease(input: ApeDrumsReleaseInput) {
   return resolveArtistShowRelease({
@@ -34,7 +36,8 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
   approvedVideoUrls: [
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_1_URL ||
       APE_DRUMS_FEATURED_SET_URL,
-    import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_2_URL,
+    import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_2_URL ||
+      APE_DRUMS_SECOND_VIDEO_URL,
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_3_URL,
   ],
 });
