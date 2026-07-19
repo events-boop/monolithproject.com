@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Play, Ticket } from "lucide-react";
+import { Play } from "lucide-react";
 import { Link } from "wouter";
 import ResponsiveImage from "./ResponsiveImage";
 import { getSeriesColor, getSeriesLabel } from "@/lib/siteExperience";
@@ -24,55 +24,55 @@ const SETS: FeaturedSet[] = [
     series: "chasing-sunsets",
     artist: "AUTOGRAF",
     title: "Headliner",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-autograf.png",
-    href: "/sunsets",
-    cta: "Get Tickets",
+    href: "/chasing-sunsets/sunsets-i-2026",
+    cta: "Relive Chapter One",
   },
   {
     id: "july4-erik",
     series: "chasing-sunsets",
     artist: "ERIK THE DJ",
     title: "Resident DJ",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-erik.jpg",
-    href: "/sunsets",
-    cta: "Get Tickets",
+    href: "/chasing-sunsets/sunsets-i-2026",
+    cta: "Relive Chapter One",
   },
   {
     id: "july4-frank",
     series: "chasing-sunsets",
     artist: "FRANK BONO",
     title: "Direct Support",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-frank.jpg",
-    href: "/sunsets",
-    cta: "Get Tickets",
+    href: "/chasing-sunsets/sunsets-i-2026",
+    cta: "Relive Chapter One",
   },
   {
     id: "july4-eliana",
     series: "chasing-sunsets",
     artist: "ELIANA",
     title: "Resident DJ",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-eliana.jpg",
-    href: "/sunsets",
-    cta: "Get Tickets",
+    href: "/chasing-sunsets/sunsets-i-2026",
+    cta: "Relive Chapter One",
   },
   {
     id: "july4-amari",
     series: "chasing-sunsets",
     artist: "AMARI",
     title: "Direct Support",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-amari.jpg",
-    href: "/sunsets",
-    cta: "Get Tickets",
+    href: "/chasing-sunsets/sunsets-i-2026",
+    cta: "Relive Chapter One",
   },
 ];
 
@@ -232,7 +232,7 @@ export default function FeaturedSets() {
                         className="flex h-10 w-10 items-center justify-center rounded-full border bg-black/50 backdrop-blur-sm transition-colors group-hover:bg-white group-hover:text-black"
                         style={{ borderColor: `${color}88` }}
                       >
-                        <Ticket className="w-3.5 h-3.5 fill-current" />
+                        <Play className="w-3.5 h-3.5 fill-current" />
                       </span>
                       <span>{set.cta}</span>
                     </div>
@@ -286,7 +286,7 @@ export default function FeaturedSets() {
                       className="flex h-9 w-9 items-center justify-center rounded-full border bg-black/50"
                       style={{ borderColor: `${color}88` }}
                     >
-                      <Ticket className="w-3 h-3 fill-current" />
+                      <Play className="w-3 h-3 fill-current" />
                     </span>
                     <span>{set.cta}</span>
                   </div>
