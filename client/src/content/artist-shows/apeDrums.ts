@@ -112,6 +112,20 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
       },
     ],
   },
+  conversion: {
+    afterProfile: {
+      eyebrow: "The artist is the reason",
+      headline: "Know the story. Then feel it in the room.",
+      note: "July 31 / Kashmir / 350 people",
+      ctaLabel: "Get tickets",
+    },
+    afterSound: {
+      eyebrow: "You heard the signal",
+      headline: "The next move is into the room.",
+      note: "One night / late set / Chicago",
+      ctaLabel: "Enter the room",
+    },
+  },
   event: {
     shortDate: "07.31",
     dateParts: ["07", "31"],

@@ -46,7 +46,7 @@ Development preview reads the approved hero from `client/src/assets/private/ape-
 6. Re-run the prohibited-language scan across the landing page, metadata, and campaign copy.
 7. Add the environment variables above to the production site.
 8. Build and verify that `/apedrums` renders and `/sandbox/ape-drums` does not.
-9. Test the hero, sticky-header, and bottom ticket CTAs on desktop and mobile. Each must open the same Posh checkout URL.
+9. Test all five ticket CTAs—header, hero, post-profile, post-video, and final details—on desktop and mobile. Each must open the same Posh checkout URL.
 10. Confirm one PageView on load and one InitiateCheckout plus internal ticket-intent event per CTA click.
 11. Publish the public social route only after the production URL passes the checks.
 

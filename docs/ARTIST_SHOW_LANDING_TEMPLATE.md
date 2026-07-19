@@ -9,7 +9,8 @@ This is the standard launch system for artist-led Monolith shows. Ape Drums is t
 - Monolith booking story that explains why this artist belongs in this room now.
 - Featured YouTube set plus approval-gated official videos, including an optional full-width lineage or collaboration feature.
 - Date, venue, capacity, age, doors, and performance timing chamber.
-- Header, hero, and final ticket endpoints routed to one verified checkout URL.
+- Header, hero, post-profile, post-video, and final ticket endpoints routed to one verified checkout URL.
+- Optional post-profile and post-video conversion bands, routed through that same checkout resolver.
 - Internal ticket-intent analytics plus Meta PageView and InitiateCheckout events.
 - Monolith family footer and event-specific theme palette.
 - Development-only preview route, production 404 seal, and one-flag rollback.
@@ -32,7 +33,7 @@ Every `ArtistShowLandingConfig` must define:
 2. SEO title and description.
 3. Six-color show palette.
 4. Artist name, display lines, initials, approved hero alt text, bio, metrics, facts, and official link.
-5. Hero thesis and quick facts.
+5. Hero thesis, quick facts, and the optional mid-page conversion moments.
 6. Monolith booking story and real capacity statement.
 7. Featured video copy and optional additional video slots.
 8. Full date, short date, venue, city, capacity, age, timing, and conversion note.

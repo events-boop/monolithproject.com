@@ -16,7 +16,14 @@ import type { ArtistShowReleaseConfig } from "@/lib/artistShowRelease";
 import { trackMetaPixelInitiateCheckout } from "@/lib/metaPixel";
 import "@/styles/themes/artist-show.css";
 
-type TicketPlacement = "header" | "hero" | "details";
+type TicketPlacement = "header" | "hero" | "profile" | "sound" | "details";
+
+interface ArtistShowConversionMoment {
+  eyebrow: string;
+  headline: string;
+  note: string;
+  ctaLabel: string;
+}
 
 interface ArtistProfileFact {
   label: string;
@@ -102,6 +109,10 @@ export interface ArtistShowLandingConfig {
       linkLabel: string;
     };
     additionalSlots: ArtistShowVideoSlot[];
+  };
+  conversion: {
+    afterProfile?: ArtistShowConversionMoment;
+    afterSound?: ArtistShowConversionMoment;
   };
   event: {
     shortDate: string;
@@ -204,12 +215,14 @@ function YouTubeFrame({
 function TicketCta({
   placement,
   compact = false,
+  label = "Tickets",
   preview,
   config,
   release,
 }: {
   placement: TicketPlacement;
   compact?: boolean;
+  label?: string;
   preview: boolean;
   config: ArtistShowLandingConfig;
   release: ArtistShowReleaseConfig;
@@ -226,9 +239,10 @@ function TicketCta({
         className={`${className} show-ticket-cta--locked`}
         disabled
         data-release-gate="closed"
+        aria-label={`${label} — available when ticketing opens`}
       >
         <LockKeyhole aria-hidden="true" />
-        <span>{compact ? "Locked" : "Tickets unlock at release"}</span>
+        <span>{label}</span>
       </button>
     );
   }
@@ -253,9 +267,43 @@ function TicketCta({
       }}
     >
       <Ticket aria-hidden="true" />
-      <span>Tickets</span>
+      <span>{label}</span>
       <ArrowUpRight aria-hidden="true" />
     </a>
+  );
+}
+
+function ConversionBand({
+  moment,
+  placement,
+  preview,
+  config,
+  release,
+}: {
+  moment: ArtistShowConversionMoment;
+  placement: "profile" | "sound";
+  preview: boolean;
+  config: ArtistShowLandingConfig;
+  release: ArtistShowReleaseConfig;
+}) {
+  return (
+    <section
+      className={`show-conversion-band show-conversion-band--${placement}`}
+      aria-label={`${moment.ctaLabel} conversion`}
+    >
+      <p className="show-conversion-band__eyebrow">{moment.eyebrow}</p>
+      <h2>{moment.headline}</h2>
+      <div className="show-conversion-band__action">
+        <TicketCta
+          placement={placement}
+          label={moment.ctaLabel}
+          preview={preview}
+          config={config}
+          release={release}
+        />
+        <p>{moment.note}</p>
+      </div>
+    </section>
   );
 }
 
@@ -533,6 +581,16 @@ export default function ArtistShowLanding({
           </dl>
         </section>
 
+        {config.conversion.afterProfile ? (
+          <ConversionBand
+            moment={config.conversion.afterProfile}
+            placement="profile"
+            preview={preview}
+            config={config}
+            release={release}
+          />
+        ) : null}
+
         <section
           id="story"
           className="show-story"
@@ -620,6 +678,16 @@ export default function ArtistShowLanding({
             </div>
           ) : null}
         </section>
+
+        {config.conversion.afterSound ? (
+          <ConversionBand
+            moment={config.conversion.afterSound}
+            placement="sound"
+            preview={preview}
+            config={config}
+            release={release}
+          />
+        ) : null}
 
         <section className="show-details" aria-labelledby={detailsTitleId}>
           <div className="show-details__date" aria-hidden="true">

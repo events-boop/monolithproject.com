@@ -30,7 +30,11 @@ describe("Ape Drums private landing preview", () => {
     expect(screen.getByText(/friday, july 31, 2026/i)).toBeVisible();
     expect(
       document.querySelectorAll('[data-release-gate="closed"]')
-    ).toHaveLength(3);
+    ).toHaveLength(5);
+    expect(
+      screen.getByText("Know the story. Then feel it in the room.")
+    ).toBeVisible();
+    expect(screen.getByText("The next move is into the room.")).toBeVisible();
     expect(document.querySelectorAll("iframe")).toHaveLength(4);
     expect(
       document.querySelector('iframe[src*="O94vKVHzamk"]')
