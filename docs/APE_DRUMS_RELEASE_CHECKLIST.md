@@ -29,16 +29,16 @@ All required controls must resolve. If one is missing, the public route stays cl
 | `VITE_APE_DRUMS_HERO_IMAGE`             | Approved `/images/...` path or HTTPS image URL        |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Optional override for the owner-approved newest set   |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | Optional override for the second owner-approved video |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional third approved official YouTube URL          |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional override for the third owner-approved video  |
 
-The first two videos default to the owner-approved IDs `O94vKVHzamk` and `K_2PZkxuNLY`. Both remain sealed from the production bundle until the compile-time release and contract flags are open.
+The three videos default to the owner-approved IDs `O94vKVHzamk`, `K_2PZkxuNLY`, and `bpG8KPCJ8EM`. All remain sealed from the production bundle until the compile-time release and contract flags are open.
 
 ## Monday release sequence
 
 1. Confirm the countersigned contract in writing.
 2. Confirm the final artist spelling, event date, venue, age restriction, capacity, doors time, and Posh URL.
 3. Confirm the approved hero press image and mobile crop.
-4. Reconfirm both supplied owner-approved YouTube videos.
+4. Reconfirm all three supplied owner-approved YouTube videos.
 5. Re-verify the supplied 58K Instagram and 3M monthly-listener audience snapshot.
 6. Re-run the prohibited-language scan across the landing page, metadata, and campaign copy.
 7. Add the environment variables above to the production site.

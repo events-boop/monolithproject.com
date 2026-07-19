@@ -59,9 +59,10 @@ describe("Ape Drums release gate", () => {
     expect(getYouTubeVideoId("https://example.com/JHJoX3ufp1E")).toBeNull();
   });
 
-  it("ships both owner-approved videos in the sealed preview", () => {
+  it("ships all owner-approved videos in the sealed preview", () => {
     expect(APE_DRUMS_RELEASE.videoIds[0]).toBe("O94vKVHzamk");
     expect(APE_DRUMS_RELEASE.videoIds[1]).toBe("K_2PZkxuNLY");
+    expect(APE_DRUMS_RELEASE.videoIds[2]).toBe("bpG8KPCJ8EM");
     expect(APE_DRUMS_RELEASE.publicReady).toBe(false);
   });
 });

@@ -19,6 +19,8 @@ export const APE_DRUMS_FEATURED_SET_URL =
   "https://www.youtube.com/watch?v=O94vKVHzamk";
 export const APE_DRUMS_SECOND_VIDEO_URL =
   "https://www.youtube.com/watch?v=K_2PZkxuNLY";
+export const APE_DRUMS_THIRD_VIDEO_URL =
+  "https://www.youtube.com/watch?v=bpG8KPCJ8EM";
 
 export function resolveApeDrumsRelease(input: ApeDrumsReleaseInput) {
   return resolveArtistShowRelease({
@@ -38,6 +40,7 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
       APE_DRUMS_FEATURED_SET_URL,
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_2_URL ||
       APE_DRUMS_SECOND_VIDEO_URL,
-    import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_3_URL,
+    import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_3_URL ||
+      APE_DRUMS_THIRD_VIDEO_URL,
   ],
 });
