@@ -7,7 +7,7 @@ This is the standard launch system for artist-led Monolith shows. Ape Drums is t
 - Image-ready editorial hero with artist name, event coordinates, release status, and ticket CTA.
 - Long-form artist profile with biography, audience metrics, career facts, and official-site link.
 - Monolith booking story that explains why this artist belongs in this room now.
-- Featured YouTube set plus up to two additional approval-gated official videos.
+- Featured YouTube set plus approval-gated official videos, including an optional full-width lineage or collaboration feature.
 - Date, venue, capacity, age, doors, and performance timing chamber.
 - Header, hero, and final ticket endpoints routed to one verified checkout URL.
 - Internal ticket-intent analytics plus Meta PageView and InitiateCheckout events.
@@ -41,11 +41,13 @@ Every `ArtistShowLandingConfig` must define:
 ## Media standard
 
 - Hero image: approved press image, portrait-oriented crop preferred, minimum 2400 px on the long edge.
+- Before announcement, store campaign artwork under `client/src/assets/private/<show>/` and reference it through a development-only `/src/assets/private/...` preview path. Do not statically import it: Vite can emit imported assets even when a route is tree-shaken. Never place unreleased media in `client/public`.
 - Preserve source quality. Generate delivery variants, but do not replace the approved master with a heavily reduced asset.
 - Keep the artist's face and defining silhouette inside the central 60% so desktop and mobile crops remain intentional.
 - Use an explicit alt description.
 - Featured video: newest owner-approved full set when available.
 - Additional videos: official or explicitly owner-approved YouTube sources only.
+- Lineage video: use the `lineage` variant for a meaningful group, label, or collaboration connection; place it last so it closes the watch chapter.
 - YouTube playback uses privacy-enhanced embeds.
 
 ## Release architecture
@@ -75,7 +77,7 @@ The route stays closed if any required input is missing. The page component must
 3. Add public and development-only preview routes.
 4. Add compile-time build flags to the route import.
 5. Create the show-specific release object using the shared resolver.
-6. Add the approved hero master and owner-approved videos.
+6. Add the approved hero master and owner-approved videos. On release day, publish the approved image derivative and supply its production `/images/...` environment path.
 7. Add a DOM test proving the correct artist, bio, media, metrics, and locked CTAs render.
 8. Run TypeScript, focused tests, production build, pixel guard, prohibited-copy scan, and sealed-bundle scan.
 9. Perform desktop and mobile visual QA.

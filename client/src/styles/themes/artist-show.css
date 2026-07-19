@@ -380,6 +380,25 @@
   filter: saturate(0.78) contrast(1.08);
 }
 
+.show-hero__portrait--loaded {
+  border-color: rgba(var(--show-metal-rgb), 0.5);
+  background: #000;
+}
+
+.show-hero__portrait--loaded::after {
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 5, 0.2),
+    transparent 18% 82%,
+    rgba(5, 5, 5, 0.2)
+  );
+}
+
+.show-hero__portrait--loaded img {
+  object-fit: contain;
+  filter: none;
+}
+
 .show-hero__portrait-corner {
   position: absolute;
   z-index: 2;
@@ -1136,6 +1155,78 @@
   color: rgba(var(--show-paper-rgb), 0.5);
   font-size: 0.82rem;
   line-height: 1.5;
+}
+
+.show-sound-card--lineage {
+  position: relative;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1.42fr) minmax(18rem, 0.58fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  overflow: hidden;
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  background:
+    radial-gradient(
+      circle at 84% 26%,
+      rgba(var(--show-accent-rgb), 0.25),
+      transparent 36%
+    ),
+    linear-gradient(120deg, #080706 18%, #160b07 100%);
+}
+
+.show-sound-card--lineage::before {
+  position: absolute;
+  inset: 1rem;
+  border: 1px solid rgba(var(--show-metal-rgb), 0.16);
+  pointer-events: none;
+  content: "";
+}
+
+.show-sound-card--lineage .show-sound-card__meta {
+  z-index: 1;
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+  color: rgba(var(--show-metal-rgb), 0.72);
+}
+
+.show-sound-card--lineage .show-sound-card__media {
+  z-index: 1;
+  aspect-ratio: 16 / 9;
+  border-color: rgba(var(--show-metal-rgb), 0.3);
+  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.34);
+}
+
+.show-sound-card--lineage .show-sound-card__copy {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: clamp(1rem, 2vw, 2rem) 0;
+}
+
+.show-sound-card--lineage .show-sound-card__copy::before {
+  width: 3.5rem;
+  height: 1px;
+  margin-bottom: auto;
+  background: var(--show-metal);
+  box-shadow: 0 0 1.5rem rgba(var(--show-metal-rgb), 0.4);
+  content: "";
+}
+
+.show-sound-card--lineage .show-sound-card__copy h3 {
+  max-width: 7ch;
+  margin-top: 4rem;
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  line-height: 0.78;
+}
+
+.show-sound-card--lineage .show-sound-card__copy p {
+  max-width: 24rem;
+  margin-top: 1.5rem;
+  color: rgba(var(--show-paper-rgb), 0.64);
+  font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .show-details {

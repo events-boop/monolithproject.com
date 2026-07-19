@@ -29,7 +29,7 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
     name: "Ape Drums",
     nameLines: ["APE", "DRUMS"],
     initials: "AD",
-    heroImageAlt: "Ape Drums artist portrait",
+    heroImageAlt: "Ape Drums July 31 event artwork",
     profile: {
       kicker: "Eric Alberto-Lopez / Ape Drums",
       headline: "He learned to feel the rhythm before he learned to build it.",
@@ -102,7 +102,13 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
       {
         number: "03",
         title: "Official video 03",
-        line: "A final signal before the room opens.",
+        line: "A third solo signal before the wider lineage comes into view.",
+      },
+      {
+        number: "04",
+        title: "Major Lazer",
+        line: "The group chapter: global scale, collective energy, and the wider lineage Ape Drums brings into this room.",
+        variant: "lineage",
       },
     ],
   },

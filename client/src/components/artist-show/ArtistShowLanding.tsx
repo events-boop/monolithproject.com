@@ -37,6 +37,7 @@ interface ArtistShowVideoSlot {
   number: string;
   title: string;
   line: string;
+  variant?: "lineage";
 }
 
 export interface ArtistShowLandingConfig {
@@ -267,10 +268,19 @@ function AdditionalVideo({
   slot: ArtistShowVideoSlot;
   videoId?: string;
 }) {
+  const isLineage = slot.variant === "lineage";
+
   return (
-    <article className="show-sound-card">
+    <article
+      className={`show-sound-card${
+        isLineage ? " show-sound-card--lineage" : ""
+      }`}
+      data-video-variant={slot.variant || "standard"}
+    >
       <div className="show-sound-card__meta">
-        <span>Transmission / {slot.number}</span>
+        <span>
+          {isLineage ? "Group lineage" : "Transmission"} / {slot.number}
+        </span>
         <span>{videoId ? "Approved" : "Approval pending"}</span>
       </div>
 

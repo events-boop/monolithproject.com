@@ -17,10 +17,15 @@ export type ApeDrumsReleaseConfig = ArtistShowReleaseConfig;
 
 export const APE_DRUMS_FEATURED_SET_URL =
   "https://www.youtube.com/watch?v=O94vKVHzamk";
+export const APE_DRUMS_HERO_IMAGE = import.meta.env.DEV
+  ? "/src/assets/private/ape-drums/ape-drums-july31-hero.png"
+  : "";
 export const APE_DRUMS_SECOND_VIDEO_URL =
   "https://www.youtube.com/watch?v=K_2PZkxuNLY";
 export const APE_DRUMS_THIRD_VIDEO_URL =
   "https://www.youtube.com/watch?v=bpG8KPCJ8EM";
+export const APE_DRUMS_MAJOR_LAZER_VIDEO_URL =
+  "https://www.youtube.com/watch?v=Vyo-kk0wRw4";
 
 export function resolveApeDrumsRelease(input: ApeDrumsReleaseInput) {
   return resolveArtistShowRelease({
@@ -34,7 +39,7 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
   contractCountersigned: import.meta.env.VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED,
   ticketUrl: import.meta.env.VITE_APE_DRUMS_TICKET_URL,
   doors: import.meta.env.VITE_APE_DRUMS_DOORS,
-  heroImage: import.meta.env.VITE_APE_DRUMS_HERO_IMAGE,
+  heroImage: import.meta.env.VITE_APE_DRUMS_HERO_IMAGE || APE_DRUMS_HERO_IMAGE,
   approvedVideoUrls: [
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_1_URL ||
       APE_DRUMS_FEATURED_SET_URL,
@@ -42,5 +47,7 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
       APE_DRUMS_SECOND_VIDEO_URL,
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_3_URL ||
       APE_DRUMS_THIRD_VIDEO_URL,
+    import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_4_URL ||
+      APE_DRUMS_MAJOR_LAZER_VIDEO_URL,
   ],
 });

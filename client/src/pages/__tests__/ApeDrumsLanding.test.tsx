@@ -31,7 +31,7 @@ describe("Ape Drums private landing preview", () => {
     expect(
       document.querySelectorAll('[data-release-gate="closed"]')
     ).toHaveLength(3);
-    expect(document.querySelectorAll("iframe")).toHaveLength(3);
+    expect(document.querySelectorAll("iframe")).toHaveLength(4);
     expect(
       document.querySelector('iframe[src*="O94vKVHzamk"]')
     ).toBeInTheDocument();
@@ -42,11 +42,22 @@ describe("Ape Drums private landing preview", () => {
       document.querySelector('iframe[src*="bpG8KPCJ8EM"]')
     ).toBeInTheDocument();
     expect(
+      document.querySelector('iframe[src*="Vyo-kk0wRw4"]')
+    ).toBeInTheDocument();
+    expect(
+      document.querySelector('[data-video-variant="lineage"]')
+    ).toHaveTextContent(/major lazer/i);
+    expect(
       screen.queryByLabelText("Official video pending approval")
     ).not.toBeInTheDocument();
     expect(
-      screen.getByLabelText("Approved artist hero image pending")
+      screen.getByRole("img", {
+        name: "Ape Drums July 31 event artwork",
+      })
     ).toBeVisible();
+    expect(
+      screen.queryByLabelText("Approved artist hero image pending")
+    ).not.toBeInTheDocument();
     expect(
       document.querySelector('a[href^="https://posh.vip"]')
     ).not.toBeInTheDocument();

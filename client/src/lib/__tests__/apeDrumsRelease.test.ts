@@ -32,7 +32,7 @@ describe("Ape Drums release gate", () => {
       contractCountersigned: "true",
       ticketUrl: "https://posh.vip/e/approved-event",
       doors: "Doors 10:00 PM",
-      heroImage: "/images/artists/approved/hero.jpg",
+      heroImage: "/assets/ape-drums-hero.abcd1234.png",
       approvedVideoUrls: [
         "https://www.youtube.com/watch?v=JHJoX3ufp1E",
         "https://youtu.be/XAp6w9hTAqk",
@@ -43,7 +43,7 @@ describe("Ape Drums release gate", () => {
       publicReady: true,
       ticketUrl: "https://posh.vip/e/approved-event",
       doors: "Doors 10:00 PM",
-      heroImage: "/images/artists/approved/hero.jpg",
+      heroImage: "/assets/ape-drums-hero.abcd1234.png",
       blockers: [],
     });
     expect(release.videoIds).toEqual(["JHJoX3ufp1E", "XAp6w9hTAqk"]);
@@ -60,9 +60,11 @@ describe("Ape Drums release gate", () => {
   });
 
   it("ships all owner-approved videos in the sealed preview", () => {
+    expect(APE_DRUMS_RELEASE.heroImage).toContain("ape-drums-july31-hero.png");
     expect(APE_DRUMS_RELEASE.videoIds[0]).toBe("O94vKVHzamk");
     expect(APE_DRUMS_RELEASE.videoIds[1]).toBe("K_2PZkxuNLY");
     expect(APE_DRUMS_RELEASE.videoIds[2]).toBe("bpG8KPCJ8EM");
+    expect(APE_DRUMS_RELEASE.videoIds[3]).toBe("Vyo-kk0wRw4");
     expect(APE_DRUMS_RELEASE.publicReady).toBe(false);
   });
 });
