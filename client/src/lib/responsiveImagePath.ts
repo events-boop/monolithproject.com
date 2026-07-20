@@ -18,6 +18,7 @@ const PREMIUM_ARTIST_BASE_NAME_PREFIXES = [
   "artists-maximo-",
   "artists-eliana-",
   "artists-kenbo-slice-",
+  "artists-terranova-",
   "events-sunsets-2026-09-19-",
   "untold-story-header-jpq-",
 ] as const;
@@ -42,6 +43,7 @@ const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
   "artists-maximo-maximo-portrait": [640, 1280, 1920],
   "artists-eliana-eliana-live": [309],
   "artists-kenbo-slice-kenbo-slice-portrait": [640, 1280, 1863],
+  "artists-terranova-terranova-live": [640, 1280, 1667],
   "events-sunsets-2026-09-19-massuma-official-artwork": [640, 1122],
 };
 
