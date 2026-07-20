@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const API_BASE = "http://127.0.0.1:5001";
+const API_BASE = "http://127.0.0.1:5002";
 const APP_BASE = API_BASE;
 const ATTRIBUTION_STORAGE_KEY = "monolith:attribution:v1";
 const CONSENT_STORAGE_KEY = "monolith_cookie_consent";
@@ -24,8 +24,13 @@ async function waitForAppReady(page: Page) {
   await page.waitForLoadState("domcontentloaded");
 }
 
+// Rate-limit buckets live in server memory (or Neon) keyed by client IP with a
+// 15-minute window, so a fixed IP would cross-contaminate back-to-back local
+// runs. A per-run subnet keeps each run in fresh buckets.
+const RUN_SUBNET = 100 + (process.pid % 100);
+
 function syntheticIp(lastOctet: number) {
-  return `198.51.100.${lastOctet}`;
+  return `198.51.${RUN_SUBNET}.${lastOctet}`;
 }
 
 test.describe("campaign hardening stress checks", () => {
@@ -103,19 +108,17 @@ test.describe("campaign hardening stress checks", () => {
       }
     });
 
-    await page.goto("http://sunsets.vip:5001/", {
+    await page.goto("http://sunsets.vip:5002/", {
       waitUntil: "domcontentloaded",
     });
     await waitForAppReady(page);
 
-    const ticketCta = page.getByRole("link", {
-      name: /get july 4 tickets/i,
-    });
-    await expect(ticketCta).toBeVisible();
-    await expect(ticketCta).toHaveAttribute(
-      "href",
-      /\/go\/tickets\/sunsets-july4/
-    );
+    // Post-July 4 the surface leads with the SUN(SETS) II signal and the
+    // Lake List as the primary conversion; there is no live ticket CTA
+    // until the Aug 22 record passes its gates.
+    await expect(
+      page.getByRole("heading", { name: /the summer return/i })
+    ).toBeVisible();
     const lakeListCta = page.getByRole("link", {
       name: /join the lake list/i,
     });
@@ -233,10 +236,10 @@ test.describe("campaign hardening stress checks", () => {
       const url = new URL(response.url());
       if (
         [
-          "127.0.0.1:5001",
-          "localhost:5001",
-          "monolithproject.com:5001",
-          "sunsets.vip:5001",
+          "127.0.0.1:5002",
+          "localhost:5002",
+          "monolithproject.com:5002",
+          "sunsets.vip:5002",
         ].includes(url.host)
       ) {
         firstPartyFailures.push(`${response.status()} ${response.url()}`);
@@ -332,19 +335,19 @@ test.describe("campaign hardening stress checks", () => {
     }
 
     const brandBeforeConsent = await collectFbqCalls(
-      "http://monolithproject.com:5001/",
+      "http://monolithproject.com:5002/",
       null
     );
     const brandAccepted = await collectFbqCalls(
-      "http://monolithproject.com:5001/",
+      "http://monolithproject.com:5002/",
       "accepted"
     );
     const lakeBeforeConsent = await collectFbqCalls(
-      "http://sunsets.vip:5001/sunsets",
+      "http://sunsets.vip:5002/sunsets",
       null
     );
     const lakeDeclined = await collectFbqCalls(
-      "http://sunsets.vip:5001/sunsets",
+      "http://sunsets.vip:5002/sunsets",
       "declined"
     );
 

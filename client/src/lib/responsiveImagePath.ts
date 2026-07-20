@@ -6,6 +6,19 @@ const PREMIUM_ARTIST_BASE_NAME_PREFIXES = [
   "artists-joezi-",
   "artists-massuma-uk-",
   "artists-chris-idh-",
+  "artists-juany-bravo-",
+  "artists-amari-",
+  "artists-sarat-",
+  "artists-benchek-",
+  "artists-summer-mel-",
+  "artists-jerome-",
+  "artists-rose-",
+  "artists-avo-",
+  "artists-jealah-",
+  "artists-maximo-",
+  "artists-eliana-",
+  "artists-kenbo-slice-",
+  "events-sunsets-2026-09-19-",
   "untold-story-header-jpq-",
 ] as const;
 const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
@@ -18,6 +31,18 @@ const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
   "chasing-sunsets": [480, 1024, 1600],
   "untold-story-juany-deron-v2": [480, 1024, 1600],
   "lazare-recap": [480, 1024, 1542],
+  "artists-juany-bravo-juany-bravo-portrait": [640, 1280, 1920],
+  "artists-summer-mel-summer-mel-portrait": [640, 1280],
+  "artists-summer-mel-summer-mel-orange-portrait": [480, 640],
+  "artists-sarat-sarat-live": [480, 720],
+  "artists-jerome-jerome-portrait": [640, 1280, 1920],
+  "artists-rose-rose-live": [640, 1172],
+  "artists-avo-avo-portrait": [640, 1280, 1858],
+  "artists-jealah-jealah-portrait": [640, 1280, 1920],
+  "artists-maximo-maximo-portrait": [640, 1280, 1920],
+  "artists-eliana-eliana-live": [309],
+  "artists-kenbo-slice-kenbo-slice-portrait": [640, 1280, 1863],
+  "events-sunsets-2026-09-19-massuma-official-artwork": [640, 1122],
 };
 
 const RASTER_IMAGE_PATTERN = /\.(?:png|jpe?g|webp|avif)$/i;
@@ -87,6 +112,9 @@ export function buildResponsiveImageSources(
 }
 
 export function getResponsiveImageWidths(baseName: string) {
+  const desktopWidths = DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME[baseName];
+  if (desktopWidths) return desktopWidths;
+
   if (
     PREMIUM_ARTIST_BASE_NAME_PREFIXES.some(prefix =>
       baseName.startsWith(prefix)
@@ -95,10 +123,7 @@ export function getResponsiveImageWidths(baseName: string) {
     return PREMIUM_ARTIST_RESPONSIVE_WIDTHS;
   }
 
-  return (
-    DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME[baseName] ||
-    DEFAULT_RESPONSIVE_WIDTHS
-  );
+  return DEFAULT_RESPONSIVE_WIDTHS;
 }
 
 export { DEFAULT_RESPONSIVE_WIDTHS as RESPONSIVE_WIDTHS };

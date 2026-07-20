@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T21:30:13.760Z",
+  "generatedAt": "2026-07-20T01:42:34.204Z",
   "defaultWidths": [
     480,
     1024
@@ -17,10 +17,10 @@
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 157930703,
-    "estimatedTransferBytes": 7017999,
-    "estimatedSavingsBytes": 151003318,
-    "variantBytes": 33276715
+    "originalBytes": 158487150,
+    "estimatedTransferBytes": 7231618,
+    "estimatedSavingsBytes": 151346146,
+    "variantBytes": 34685312
   },
   "images": [
     {
@@ -2738,6 +2738,44 @@
       "estimatedSavingsPct": 71
     },
     {
+      "source": "/images/july4-kiko-franco.jpg",
+      "originalBytes": 48503,
+      "originalKb": 47.4,
+      "originalWidth": 641,
+      "originalHeight": 850,
+      "generatedBaseName": "july4-kiko-franco",
+      "variants": [
+        {
+          "path": "/images/generated/july4-kiko-franco-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 18126
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 21336
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 27497
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 31536
+        }
+      ],
+      "estimatedTransferBytes": 27497,
+      "estimatedTransferKb": 26.9,
+      "estimatedSavingsBytes": 21006,
+      "estimatedSavingsPct": 43
+    },
+    {
       "source": "/images/july4-set-times.png",
       "originalBytes": 903036,
       "originalKb": 881.9,
@@ -3254,6 +3292,56 @@
       "estimatedTransferKb": 81.1,
       "estimatedSavingsBytes": 0,
       "estimatedSavingsPct": 0
+    },
+    {
+      "source": "/images/untold-story/header-jpq-9379 2.jpg",
+      "originalBytes": 507944,
+      "originalKb": 496,
+      "originalWidth": 2048,
+      "originalHeight": 1366,
+      "generatedBaseName": "untold-story-header-jpq-9379-2",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 58964
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 51988
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 208254
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 186122
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 411220
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 393554
+        }
+      ],
+      "estimatedTransferBytes": 186122,
+      "estimatedTransferKb": 181.8,
+      "estimatedSavingsBytes": 321822,
+      "estimatedSavingsPct": 63
     },
     {
       "source": "/images/untold-story/header-jpq-9379.jpg",

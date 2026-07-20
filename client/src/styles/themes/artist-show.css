@@ -574,6 +574,73 @@
   animation: show-scroll 1.4s ease-in-out infinite;
 }
 
+/*
+ * Poster mode — active once an approved hero image is loaded. Show artwork
+ * ships with its own title typography, so the page title moves beside the
+ * poster instead of layering over it.
+ */
+.show-hero--poster {
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(2.5rem, 6vw, 7rem);
+}
+
+.show-hero--poster .show-hero__flare,
+.show-hero--poster .show-hero__rings {
+  left: auto;
+  right: calc(-1 * min(78vw, 66rem) / 3.2);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.show-hero--poster .show-hero__wave {
+  left: auto;
+  right: 2vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.show-hero--poster .show-hero__portrait {
+  position: relative;
+  left: auto;
+  top: auto;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1;
+  width: clamp(15rem, 24vw, 21rem);
+  height: auto;
+  transform: none;
+}
+
+.show-hero--poster .show-hero__portrait img {
+  height: auto;
+  display: block;
+}
+
+.show-hero--poster .show-hero__content {
+  grid-column: 1;
+  grid-row: 1;
+  align-items: flex-start;
+  justify-self: start;
+  width: min(100%, 52rem);
+  text-align: left;
+}
+
+.show-hero--poster .show-title {
+  margin: clamp(1.8rem, 3.5vh, 3rem) 0 1.6rem;
+  font-size: clamp(4.6rem, 10.5vw, 10.5rem);
+  line-height: 0.78;
+}
+
+.show-hero--poster .show-title > span:last-child {
+  align-self: flex-start;
+  margin-left: clamp(1.6rem, 4vw, 4.5rem);
+}
+
+.show-hero--poster .show-hero__coordinates,
+.show-hero--poster .show-hero__actions {
+  justify-content: flex-start;
+}
+
 .show-section-index {
   color: rgba(var(--show-paper-rgb), 0.33);
   font-family: var(--font-mono);
@@ -1756,6 +1823,52 @@
 
   .show-hero__actions > span {
     text-align: center;
+  }
+
+  .show-hero--poster {
+    grid-template-columns: 1fr;
+    padding-bottom: 6rem;
+  }
+
+  .show-hero--poster .show-hero__flare,
+  .show-hero--poster .show-hero__rings,
+  .show-hero--poster .show-hero__wave {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: 4rem;
+    transform: translate(-50%, 40%);
+  }
+
+  .show-hero--poster .show-hero__portrait {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    width: min(72vw, 20rem);
+    margin-top: 3rem;
+  }
+
+  .show-hero--poster .show-hero__content {
+    grid-row: 1;
+    align-items: center;
+    justify-self: center;
+    text-align: center;
+  }
+
+  .show-hero--poster .show-title {
+    margin: 2.6rem 0 1.8rem;
+    font-size: clamp(4.6rem, 22vw, 7rem);
+    line-height: 0.78;
+  }
+
+  .show-hero--poster .show-title > span:last-child {
+    align-self: center;
+    margin-left: 0;
+  }
+
+  .show-hero--poster .show-hero__coordinates,
+  .show-hero--poster .show-hero__actions {
+    justify-content: center;
   }
 
   .show-scroll-cue {

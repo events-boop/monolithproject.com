@@ -18,6 +18,19 @@ const premiumArtistBaseNamePrefixes = [
   "artists-joezi-",
   "artists-massuma-uk-",
   "artists-chris-idh-",
+  "artists-juany-bravo-",
+  "artists-amari-",
+  "artists-sarat-",
+  "artists-benchek-",
+  "artists-summer-mel-",
+  "artists-jerome-",
+  "artists-rose-",
+  "artists-avo-",
+  "artists-jealah-",
+  "artists-maximo-",
+  "artists-eliana-",
+  "artists-kenbo-slice-",
+  "events-sunsets-2026-09-19-",
   "untold-story-header-jpq-",
 ];
 const desktopWidthsByBaseName = new Map([
@@ -27,6 +40,18 @@ const desktopWidthsByBaseName = new Map([
   ["chasing-sunsets", [480, 1024, 1600]],
   ["untold-story-juany-deron-v2", [480, 1024, 1600]],
   ["lazare-recap", [480, 1024, 1542]],
+  ["artists-juany-bravo-juany-bravo-portrait", [640, 1280, 1920]],
+  ["artists-summer-mel-summer-mel-portrait", [640, 1280]],
+  ["artists-summer-mel-summer-mel-orange-portrait", [480, 640]],
+  ["artists-sarat-sarat-live", [480, 720]],
+  ["artists-jerome-jerome-portrait", [640, 1280, 1920]],
+  ["artists-rose-rose-live", [640, 1172]],
+  ["artists-avo-avo-portrait", [640, 1280, 1858]],
+  ["artists-jealah-jealah-portrait", [640, 1280, 1920]],
+  ["artists-maximo-maximo-portrait", [640, 1280, 1920]],
+  ["artists-eliana-eliana-live", [309]],
+  ["artists-kenbo-slice-kenbo-slice-portrait", [640, 1280, 1863]],
+  ["events-sunsets-2026-09-19-massuma-official-artwork", [640, 1122]],
 ]);
 const sourceExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif"]);
 const sourceExtensionPreference = new Map([
@@ -122,12 +147,15 @@ function toKb(bytes) {
 }
 
 function getWidthsForImage(baseName) {
+  const desktopWidths = desktopWidthsByBaseName.get(baseName);
+  if (desktopWidths) return desktopWidths;
+
   if (
     premiumArtistBaseNamePrefixes.some(prefix => baseName.startsWith(prefix))
   ) {
     return premiumArtistWidths;
   }
-  return desktopWidthsByBaseName.get(baseName) || defaultWidths;
+  return defaultWidths;
 }
 
 function getFormatsForImage(baseName) {

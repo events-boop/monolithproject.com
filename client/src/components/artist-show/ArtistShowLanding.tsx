@@ -431,7 +431,10 @@ export default function ArtistShowLanding({
       </header>
 
       <main id="main-content" tabIndex={-1}>
-        <section className="show-hero" aria-labelledby={titleId}>
+        <section
+          className={`show-hero${release.heroImage ? " show-hero--poster" : ""}`}
+          aria-labelledby={titleId}
+        >
           <div className="show-hero__grid" aria-hidden="true" />
           <div className="show-hero__flare" aria-hidden="true" />
           <div className="show-hero__rings" aria-hidden="true">
