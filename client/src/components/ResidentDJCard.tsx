@@ -36,7 +36,7 @@ const DEFAULT_DJS: ResidentDJ[] = [
     bio: "A cornerstone of the Chasing Sun(Sets) series since Season I. Juany brings a warm, sunrise energy to every set, weaving African rhythm with melodic house and organic textures that feel like golden hour itself.",
     artistStatement:
       "Juany plays like an architect of the room: patient percussion, melodic lift, and a sense for when the floor is ready to move from conversation into ceremony.",
-    image: "/images/untold-story-juany-deron-v2.webp",
+    image: "/images/artists/juany-bravo/juany-bravo-portrait.jpg",
     instagramUrl: "https://instagram.com/juanybravo",
     soundcloudUrl: "https://soundcloud.com/juanybravo",
     bookingEmail: "music@monolithproject.com",

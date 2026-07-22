@@ -9,9 +9,6 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
-  CalendarDays,
-  Disc3,
-  MapPinned,
   Radio,
   Sparkles,
   Sun,
@@ -31,7 +28,6 @@ import {
   getPrimaryTicketUrl,
   getSeriesExperienceEvent,
   getSeriesEvents,
-  getUpcomingEvents,
 } from "@/lib/siteExperience";
 import { INSTAGRAM_MONOLITH, LAYLO_URL, SOUNDCLOUD_URL } from "@/data/events";
 import { cn } from "@/lib/utils";
@@ -59,44 +55,41 @@ interface ChapterView extends NavigationChapter {
 
 const utilityLinks = [
   { label: "Tickets", href: "/tickets" },
+  { label: "Plan Visit", href: "/guide" },
+  { label: "Monolith", href: "/monolith" },
+  { label: "Journal", href: "/insights" },
   { label: "Instagram", href: INSTAGRAM_MONOLITH },
   { label: "Text Alerts", href: LAYLO_URL },
   { label: "SoundCloud", href: SOUNDCLOUD_URL },
-  { label: "Journal", href: "/insights" },
   { label: "About", href: "/about" },
   { label: "Partners", href: "/partners" },
   { label: "Contact", href: "/contact" },
 ];
 
 const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
-  "next-night": Ticket,
-  schedule: CalendarDays,
+  schedule: Ticket,
+  artists: UsersRound,
   "chasing-sunsets": Sun,
   "untold-story": Sparkles,
-  artists: UsersRound,
   radio: Radio,
-  guide: MapPinned,
-  monolith: Disc3,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
-  if (path === "/monolith" || path.startsWith("/monolith")) return "monolith";
-  if (path === "/schedule" || path === "/events" || path.startsWith("/events/"))
+  if (
+    path === "/schedule" ||
+    path === "/events" ||
+    path.startsWith("/events/") ||
+    path === "/tickets"
+  )
     return "schedule";
-  if (path.startsWith("/chasing-sunsets")) return "chasing-sunsets";
+  if (path.startsWith("/chasing-sunsets") || path.startsWith("/sunsets"))
+    return "chasing-sunsets";
   if (path === "/story" || path.startsWith("/untold-story"))
     return "untold-story";
-  if (path === "/lineup" || path.startsWith("/artists/")) return "artists";
+  if (path === "/artists" || path === "/lineup" || path.startsWith("/artists/"))
+    return "artists";
   if (path.startsWith("/radio")) return "radio";
-  if (
-    path === "/guide" ||
-    path === "/faq" ||
-    path === "/travel" ||
-    path === "/vip"
-  )
-    return "guide";
-  if (path === "/tickets") return "next-night";
-  return "next-night";
+  return "schedule";
 }
 
 function isExternalHref(href: string) {
@@ -126,7 +119,7 @@ function resolveChapterView(
 ): ChapterView {
   const ticketEvent = getExperienceEvent("ticket");
 
-  if (chapter.id === "next-night") {
+  if (chapter.id === "schedule") {
     const primaryHref =
       ticketHref ||
       getPrimaryTicketUrl(ticketEvent) ||
@@ -148,18 +141,6 @@ function resolveChapterView(
         ticketEvent?.headline || ticketEvent?.title || chapter.label,
       proof: ticketEvent?.capacity || chapter.proof,
       status: getStatusLabel(ticketEvent?.status),
-    };
-  }
-
-  if (chapter.id === "schedule") {
-    const events = getUpcomingEvents(3);
-    return {
-      ...chapter,
-      meta: events.map(event => `${event.date} / ${event.title}`),
-      primaryHref: chapter.href,
-      primaryLabel: chapter.ctaLabel,
-      previewTitle: "Season Map",
-      status: `${events.length || 0} Upcoming`,
     };
   }
 
@@ -190,22 +171,6 @@ function resolveChapterView(
       primaryLabel: chapter.ctaLabel,
       previewTitle: event?.headline || event?.title || chapter.label,
       status: event ? getStatusLabel(event.status) : "After-Dark Series",
-    };
-  }
-
-  if (chapter.id === "guide") {
-    const guideEvent = getExperienceEvent("guide");
-    return {
-      ...chapter,
-      meta: compactMeta([
-        guideEvent?.date,
-        guideEvent ? getEventVenueLabel(guideEvent) : null,
-        guideEvent?.doors ? `Doors ${guideEvent.doors}` : null,
-      ]),
-      primaryHref: chapter.href,
-      primaryLabel: chapter.ctaLabel,
-      previewTitle: "The Night Of",
-      status: "Entry Ready",
     };
   }
 
@@ -468,7 +433,7 @@ export default function InteractiveNavigationOverlay({
           >
             {navigationChapters.map((chapter, index) => {
               const isActive = chapter.id === activeChapterId;
-              const Icon = chapterIconMap[chapter.id] ?? Disc3;
+              const Icon = chapterIconMap[chapter.id] ?? Sparkles;
               const view = resolveChapterView(chapter, ticketHref);
 
               return (

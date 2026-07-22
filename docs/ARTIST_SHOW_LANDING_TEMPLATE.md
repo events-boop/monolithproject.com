@@ -1,0 +1,90 @@
+# Monolith Artist Show Landing Template
+
+This is the standard launch system for artist-led Monolith shows. Ape Drums is the first implementation.
+
+## What every artist page inherits
+
+- Image-ready editorial hero with artist name, event coordinates, release status, and ticket CTA.
+- Long-form artist profile with biography, audience metrics, career facts, and official-site link.
+- Monolith booking story that explains why this artist belongs in this room now.
+- Featured YouTube set plus approval-gated official videos, including an optional full-width lineage or collaboration feature.
+- Date, venue, capacity, age, doors, and performance timing chamber.
+- Header, hero, post-profile, post-video, and final ticket endpoints routed to one verified checkout URL.
+- Optional post-profile and post-video conversion bands, routed through that same checkout resolver.
+- Internal ticket-intent analytics plus Meta PageView and InitiateCheckout events.
+- Monolith family footer and event-specific theme palette.
+- Development-only preview route, production 404 seal, and one-flag rollback.
+
+## Shared implementation
+
+- Page engine: `client/src/components/artist-show/ArtistShowLanding.tsx`
+- Release resolver: `client/src/lib/artistShowRelease.ts`
+- Shared visual system: `client/src/styles/themes/artist-show.css`
+- First show configuration: `client/src/content/artist-shows/apeDrums.ts`
+- First route wrapper: `client/src/pages/ApeDrumsLanding.tsx`
+
+The shared engine contains no artist-specific copy. A new show should be created as a small configuration wrapper that supplies content, palette, tracking names, routes, and its release object.
+
+## New show configuration
+
+Every `ArtistShowLandingConfig` must define:
+
+1. Event ID, public path, tracking prefix, tracking source, and pixel content name.
+2. SEO title and description.
+3. Six-color show palette.
+4. Artist name, display lines, initials, approved hero alt text, bio, metrics, facts, and official link.
+5. Hero thesis, quick facts, and the optional mid-page conversion moments.
+6. Monolith booking story and real capacity statement.
+7. Featured video copy and optional additional video slots.
+8. Full date, ISO 8601 start date, short date, venue, city, capacity, age, timing, and conversion note.
+9. Monolith family footer links.
+
+## Media standard
+
+- Hero image: approved press image, portrait-oriented crop preferred, minimum 2400 px on the long edge.
+- Before announcement, store campaign artwork under `client/src/assets/private/<show>/` and reference it through a development-only `/src/assets/private/...` preview path. Do not statically import it: Vite can emit imported assets even when a route is tree-shaken. Never place unreleased media in `client/public`.
+- Preserve source quality. Generate delivery variants, but do not replace the approved master with a heavily reduced asset.
+- Keep the artist's face and defining silhouette inside the central 60% so desktop and mobile crops remain intentional.
+- Use an explicit alt description.
+- Featured video: newest owner-approved full set when available.
+- Additional videos: official or explicitly owner-approved YouTube sources only.
+- Lineage video: use the `lineage` variant for a meaningful group, label, or collaboration connection; place it last so it closes the watch chapter.
+- YouTube playback uses privacy-enhanced embeds mounted behind a thumbnail facade; the player JS only loads after the visitor presses play.
+
+## Release architecture
+
+Each show receives its own environment prefix and passes values into `resolveArtistShowRelease`:
+
+- Release flag.
+- Contract countersignature flag.
+- Approved HTTPS checkout URL.
+- Approved doors line.
+- Approved hero image path or HTTPS URL.
+- Required number of approved YouTube URLs.
+
+The route stays closed if any required input is missing. The page component must also remain behind direct compile-time release and contract environment checks so a sealed draft is excluded from the production bundle—not merely hidden behind a 404.
+
+## Routing standard
+
+- CRM SMS and email can route directly to checkout.
+- Public social, press, and ad traffic routes to the Monolith artist page.
+- Every ticket CTA on the page routes to the same verified checkout URL, with `utm_source=monolith_site`, `utm_campaign=<tracking prefix>`, and a per-placement `utm_content` value appended so checkout-side reporting can attribute each CTA position.
+- Once released, the page serves the approved hero art as its social share image and emits a `MusicEvent` JSON-LD block (ISO start date, venue, performer, checkout offer).
+- No extra waitlist handoff is inserted into an on-sale conversion path unless the campaign explicitly requires one.
+
+## Clone process
+
+1. Duplicate the smallest artist page wrapper, not the shared engine.
+2. Replace every configuration field and tracking identifier.
+3. Add public and development-only preview routes.
+4. Add compile-time build flags to the route import.
+5. Create the show-specific release object using the shared resolver.
+6. Add the approved hero master and owner-approved videos. On release day, publish the approved image derivative and supply its production `/images/...` environment path.
+7. Add a DOM test proving the correct artist, bio, media, metrics, and locked CTAs render.
+8. Run TypeScript, focused tests, production build, pixel guard, prohibited-copy scan, and sealed-bundle scan.
+9. Perform desktop and mobile visual QA.
+10. Release only after contract and campaign approval; rollback by closing the release flag and redeploying.
+
+## Metric discipline
+
+Follower, listener, capacity, and ticket-count numbers must be sourced and dated. Re-verify audience metrics on release day, and never manufacture scarcity.

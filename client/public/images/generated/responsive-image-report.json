@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T06:06:42.147Z",
+  "generatedAt": "2026-07-22T06:31:58.295Z",
   "defaultWidths": [
     480,
     1024
@@ -14,13 +14,27 @@
     "artists-joezi-",
     "artists-massuma-uk-",
     "artists-chris-idh-",
+    "artists-juany-bravo-",
+    "artists-amari-",
+    "artists-sarat-",
+    "artists-benchek-",
+    "artists-summer-mel-",
+    "artists-jerome-",
+    "artists-rose-",
+    "artists-avo-",
+    "artists-jealah-",
+    "artists-maximo-",
+    "artists-eliana-",
+    "artists-kenbo-slice-",
+    "artists-terranova-",
+    "events-sunsets-2026-09-19-",
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 158089548,
-    "estimatedTransferBytes": 7040460,
-    "estimatedSavingsBytes": 151139702,
-    "variantBytes": 33356686
+    "originalBytes": 236981640,
+    "estimatedTransferBytes": 9923143,
+    "estimatedSavingsBytes": 227149111,
+    "variantBytes": 51647842
   },
   "images": [
     {
@@ -975,41 +989,41 @@
     },
     {
       "source": "/images/artist-ewerseen.png",
-      "originalBytes": 8001,
-      "originalKb": 7.8,
-      "originalWidth": 1600,
-      "originalHeight": 302,
+      "originalBytes": 2737686,
+      "originalKb": 2673.5,
+      "originalWidth": 1645,
+      "originalHeight": 833,
       "generatedBaseName": "artist-ewerseen",
       "variants": [
         {
           "path": "/images/generated/artist-ewerseen-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 2606
+          "bytes": 40278
         },
         {
           "path": "/images/generated/artist-ewerseen-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 4004
+          "bytes": 38252
         },
         {
           "path": "/images/generated/artist-ewerseen-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 4715
+          "bytes": 141350
         },
         {
           "path": "/images/generated/artist-ewerseen-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 8468
+          "bytes": 138756
         }
       ],
-      "estimatedTransferBytes": 4715,
-      "estimatedTransferKb": 4.6,
-      "estimatedSavingsBytes": 3286,
-      "estimatedSavingsPct": 41
+      "estimatedTransferBytes": 138756,
+      "estimatedTransferKb": 135.5,
+      "estimatedSavingsBytes": 2598930,
+      "estimatedSavingsPct": 95
     },
     {
       "source": "/images/artist-haai.webp",
@@ -1290,6 +1304,306 @@
       "estimatedSavingsPct": 41
     },
     {
+      "source": "/images/artists/amari/amari-portrait.jpg",
+      "originalBytes": 2004851,
+      "originalKb": 1957.9,
+      "originalWidth": 3024,
+      "originalHeight": 3621,
+      "generatedBaseName": "artists-amari-amari-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 66092
+        },
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 75082
+        },
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 201397
+        },
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 247478
+        },
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 422646
+        },
+        {
+          "path": "/images/generated/artists-amari-amari-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 518732
+        }
+      ],
+      "estimatedTransferBytes": 201397,
+      "estimatedTransferKb": 196.7,
+      "estimatedSavingsBytes": 1803454,
+      "estimatedSavingsPct": 90
+    },
+    {
+      "source": "/images/artists/avo/avo-portrait.jpg",
+      "originalBytes": 714953,
+      "originalKb": 698.2,
+      "originalWidth": 1858,
+      "originalHeight": 1920,
+      "generatedBaseName": "artists-avo-avo-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 25623
+        },
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 36922
+        },
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 86822
+        },
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 132702
+        },
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-1858.avif",
+          "width": 1858,
+          "format": "avif",
+          "bytes": 157094
+        },
+        {
+          "path": "/images/generated/artists-avo-avo-portrait-1858.webp",
+          "width": 1858,
+          "format": "webp",
+          "bytes": 244844
+        }
+      ],
+      "estimatedTransferBytes": 86822,
+      "estimatedTransferKb": 84.8,
+      "estimatedSavingsBytes": 628131,
+      "estimatedSavingsPct": 88
+    },
+    {
+      "source": "/images/artists/benchek/benchek-portrait.jpg",
+      "originalBytes": 11206361,
+      "originalKb": 10943.7,
+      "originalWidth": 4178,
+      "originalHeight": 6267,
+      "generatedBaseName": "artists-benchek-benchek-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 10590
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 16494
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 30603
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 52112
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 74062
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 125730
+        }
+      ],
+      "estimatedTransferBytes": 30603,
+      "estimatedTransferKb": 29.9,
+      "estimatedSavingsBytes": 11175758,
+      "estimatedSavingsPct": 100
+    },
+    {
+      "source": "/images/artists/benchek/benchek-press-01.jpg",
+      "originalBytes": 16087971,
+      "originalKb": 15710.9,
+      "originalWidth": 4672,
+      "originalHeight": 7008,
+      "generatedBaseName": "artists-benchek-benchek-press-01",
+      "variants": [
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 29376
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 38424
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 83590
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 112886
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 167794
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-01-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 238158
+        }
+      ],
+      "estimatedTransferBytes": 83590,
+      "estimatedTransferKb": 81.6,
+      "estimatedSavingsBytes": 16004381,
+      "estimatedSavingsPct": 99
+    },
+    {
+      "source": "/images/artists/benchek/benchek-press-02.jpg",
+      "originalBytes": 12234246,
+      "originalKb": 11947.5,
+      "originalWidth": 4068,
+      "originalHeight": 6071,
+      "generatedBaseName": "artists-benchek-benchek-press-02",
+      "variants": [
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 18891
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 27800
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 52692
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 82986
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 123192
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-02-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 194074
+        }
+      ],
+      "estimatedTransferBytes": 52692,
+      "estimatedTransferKb": 51.5,
+      "estimatedSavingsBytes": 12181554,
+      "estimatedSavingsPct": 100
+    },
+    {
+      "source": "/images/artists/benchek/benchek-press-03.jpg",
+      "originalBytes": 19415152,
+      "originalKb": 18960.1,
+      "originalWidth": 4535,
+      "originalHeight": 6802,
+      "generatedBaseName": "artists-benchek-benchek-press-03",
+      "variants": [
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 43648
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 57262
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 170327
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 230456
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 401230
+        },
+        {
+          "path": "/images/generated/artists-benchek-benchek-press-03-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 583760
+        }
+      ],
+      "estimatedTransferBytes": 170327,
+      "estimatedTransferKb": 166.3,
+      "estimatedSavingsBytes": 19244825,
+      "estimatedSavingsPct": 99
+    },
+    {
       "source": "/images/artists/chris-idh/chris-idh-portrait.jpg",
       "originalBytes": 4311233,
       "originalKb": 4210.2,
@@ -1338,6 +1652,132 @@
       "estimatedTransferKb": 96,
       "estimatedSavingsBytes": 4212929,
       "estimatedSavingsPct": 98
+    },
+    {
+      "source": "/images/artists/eliana/eliana-live.png",
+      "originalBytes": 225307,
+      "originalKb": 220,
+      "originalWidth": 309,
+      "originalHeight": 405,
+      "generatedBaseName": "artists-eliana-eliana-live",
+      "variants": [
+        {
+          "path": "/images/generated/artists-eliana-eliana-live-309.avif",
+          "width": 309,
+          "format": "avif",
+          "bytes": 16929
+        },
+        {
+          "path": "/images/generated/artists-eliana-eliana-live-309.webp",
+          "width": 309,
+          "format": "webp",
+          "bytes": 20460
+        }
+      ],
+      "estimatedTransferBytes": 16929,
+      "estimatedTransferKb": 16.5,
+      "estimatedSavingsBytes": 208378,
+      "estimatedSavingsPct": 92
+    },
+    {
+      "source": "/images/artists/jealah/jealah-portrait.jpg",
+      "originalBytes": 1143485,
+      "originalKb": 1116.7,
+      "originalWidth": 2400,
+      "originalHeight": 3600,
+      "generatedBaseName": "artists-jealah-jealah-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 62675
+        },
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 78474
+        },
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 253677
+        },
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 322060
+        },
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 602791
+        },
+        {
+          "path": "/images/generated/artists-jealah-jealah-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 767646
+        }
+      ],
+      "estimatedTransferBytes": 253677,
+      "estimatedTransferKb": 247.7,
+      "estimatedSavingsBytes": 889808,
+      "estimatedSavingsPct": 78
+    },
+    {
+      "source": "/images/artists/jerome/jerome-portrait.jpg",
+      "originalBytes": 510094,
+      "originalKb": 498.1,
+      "originalWidth": 1920,
+      "originalHeight": 1868,
+      "generatedBaseName": "artists-jerome-jerome-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 16536
+        },
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 25706
+        },
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 55827
+        },
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 88672
+        },
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 107446
+        },
+        {
+          "path": "/images/generated/artists-jerome-jerome-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 170582
+        }
+      ],
+      "estimatedTransferBytes": 55827,
+      "estimatedTransferKb": 54.5,
+      "estimatedSavingsBytes": 454267,
+      "estimatedSavingsPct": 89
     },
     {
       "source": "/images/artists/joezi/joezi-portrait.jpg",
@@ -1440,6 +1880,106 @@
       "estimatedSavingsPct": 99
     },
     {
+      "source": "/images/artists/juany-bravo/juany-bravo-portrait.jpg",
+      "originalBytes": 2203764,
+      "originalKb": 2152.1,
+      "originalWidth": 4160,
+      "originalHeight": 6240,
+      "generatedBaseName": "artists-juany-bravo-juany-bravo-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 33140
+        },
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 44014
+        },
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 86008
+        },
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 128118
+        },
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 173209
+        },
+        {
+          "path": "/images/generated/artists-juany-bravo-juany-bravo-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 261216
+        }
+      ],
+      "estimatedTransferBytes": 86008,
+      "estimatedTransferKb": 84,
+      "estimatedSavingsBytes": 2117756,
+      "estimatedSavingsPct": 96
+    },
+    {
+      "source": "/images/artists/kenbo-slice/kenbo-slice-portrait.jpg",
+      "originalBytes": 798270,
+      "originalKb": 779.6,
+      "originalWidth": 1863,
+      "originalHeight": 1920,
+      "generatedBaseName": "artists-kenbo-slice-kenbo-slice-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 34069
+        },
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 46612
+        },
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 128690
+        },
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 180172
+        },
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-1863.avif",
+          "width": 1863,
+          "format": "avif",
+          "bytes": 226598
+        },
+        {
+          "path": "/images/generated/artists-kenbo-slice-kenbo-slice-portrait-1863.webp",
+          "width": 1863,
+          "format": "webp",
+          "bytes": 322284
+        }
+      ],
+      "estimatedTransferBytes": 128690,
+      "estimatedTransferKb": 125.7,
+      "estimatedSavingsBytes": 669580,
+      "estimatedSavingsPct": 84
+    },
+    {
       "source": "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
       "originalBytes": 55111759,
       "originalKb": 53820.1,
@@ -1488,6 +2028,132 @@
       "estimatedTransferKb": 696.4,
       "estimatedSavingsBytes": 54398601,
       "estimatedSavingsPct": 99
+    },
+    {
+      "source": "/images/artists/maximo/maximo-portrait.jpg",
+      "originalBytes": 150514,
+      "originalKb": 147,
+      "originalWidth": 2592,
+      "originalHeight": 4608,
+      "generatedBaseName": "artists-maximo-maximo-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 33338
+        },
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 41430
+        },
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 99163
+        },
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 125168
+        },
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 164455
+        },
+        {
+          "path": "/images/generated/artists-maximo-maximo-portrait-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 218588
+        }
+      ],
+      "estimatedTransferBytes": 99163,
+      "estimatedTransferKb": 96.8,
+      "estimatedSavingsBytes": 51351,
+      "estimatedSavingsPct": 34
+    },
+    {
+      "source": "/images/artists/rose/rose-live.png",
+      "originalBytes": 1889126,
+      "originalKb": 1844.8,
+      "originalWidth": 1172,
+      "originalHeight": 1520,
+      "generatedBaseName": "artists-rose-rose-live",
+      "variants": [
+        {
+          "path": "/images/generated/artists-rose-rose-live-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 81230
+        },
+        {
+          "path": "/images/generated/artists-rose-rose-live-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 87784
+        },
+        {
+          "path": "/images/generated/artists-rose-rose-live-1172.avif",
+          "width": 1172,
+          "format": "avif",
+          "bytes": 201995
+        },
+        {
+          "path": "/images/generated/artists-rose-rose-live-1172.webp",
+          "width": 1172,
+          "format": "webp",
+          "bytes": 240144
+        }
+      ],
+      "estimatedTransferBytes": 201995,
+      "estimatedTransferKb": 197.3,
+      "estimatedSavingsBytes": 1687131,
+      "estimatedSavingsPct": 89
+    },
+    {
+      "source": "/images/artists/sarat/sarat-live.jpg",
+      "originalBytes": 162116,
+      "originalKb": 158.3,
+      "originalWidth": 720,
+      "originalHeight": 900,
+      "generatedBaseName": "artists-sarat-sarat-live",
+      "variants": [
+        {
+          "path": "/images/generated/artists-sarat-sarat-live-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 70248
+        },
+        {
+          "path": "/images/generated/artists-sarat-sarat-live-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 84684
+        },
+        {
+          "path": "/images/generated/artists-sarat-sarat-live-720.avif",
+          "width": 720,
+          "format": "avif",
+          "bytes": 108111
+        },
+        {
+          "path": "/images/generated/artists-sarat-sarat-live-720.webp",
+          "width": 720,
+          "format": "webp",
+          "bytes": 131684
+        }
+      ],
+      "estimatedTransferBytes": 108111,
+      "estimatedTransferKb": 105.6,
+      "estimatedSavingsBytes": 54005,
+      "estimatedSavingsPct": 33
     },
     {
       "source": "/images/artists/sommers-uk/sommers-uk-motion.jpg",
@@ -1788,6 +2454,132 @@
       "estimatedTransferKb": 76.3,
       "estimatedSavingsBytes": 2925517,
       "estimatedSavingsPct": 97
+    },
+    {
+      "source": "/images/artists/summer-mel/summer-mel-orange-portrait.jpg",
+      "originalBytes": 74726,
+      "originalKb": 73,
+      "originalWidth": 640,
+      "originalHeight": 960,
+      "generatedBaseName": "artists-summer-mel-summer-mel-orange-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-orange-portrait-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 32342
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-orange-portrait-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 45368
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-orange-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 56182
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-orange-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 73682
+        }
+      ],
+      "estimatedTransferBytes": 56182,
+      "estimatedTransferKb": 54.9,
+      "estimatedSavingsBytes": 18544,
+      "estimatedSavingsPct": 25
+    },
+    {
+      "source": "/images/artists/summer-mel/summer-mel-portrait.jpg",
+      "originalBytes": 409362,
+      "originalKb": 399.8,
+      "originalWidth": 1320,
+      "originalHeight": 1832,
+      "generatedBaseName": "artists-summer-mel-summer-mel-portrait",
+      "variants": [
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-portrait-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 76632
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-portrait-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 101912
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-portrait-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 142612
+        },
+        {
+          "path": "/images/generated/artists-summer-mel-summer-mel-portrait-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 222820
+        }
+      ],
+      "estimatedTransferBytes": 142612,
+      "estimatedTransferKb": 139.3,
+      "estimatedSavingsBytes": 266750,
+      "estimatedSavingsPct": 65
+    },
+    {
+      "source": "/images/artists/terranova/terranova-live.jpg",
+      "originalBytes": 4394504,
+      "originalKb": 4291.5,
+      "originalWidth": 1667,
+      "originalHeight": 2500,
+      "generatedBaseName": "artists-terranova-terranova-live",
+      "variants": [
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 131992
+        },
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 145944
+        },
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 621406
+        },
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 684228
+        },
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-1667.avif",
+          "width": 1667,
+          "format": "avif",
+          "bytes": 1232072
+        },
+        {
+          "path": "/images/generated/artists-terranova-terranova-live-1667.webp",
+          "width": 1667,
+          "format": "webp",
+          "bytes": 1381968
+        }
+      ],
+      "estimatedTransferBytes": 621406,
+      "estimatedTransferKb": 606.8,
+      "estimatedSavingsBytes": 3773098,
+      "estimatedSavingsPct": 86
     },
     {
       "source": "/images/autograf-recap.jpg",
@@ -2335,41 +3127,79 @@
     },
     {
       "source": "/images/eran-hersh-untold-story-iv.jpg",
-      "originalBytes": 244153,
-      "originalKb": 238.4,
-      "originalWidth": 819,
-      "originalHeight": 1024,
+      "originalBytes": 69711,
+      "originalKb": 68.1,
+      "originalWidth": 821,
+      "originalHeight": 737,
       "generatedBaseName": "eran-hersh-untold-story-iv",
       "variants": [
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-480.avif",
           "width": 480,
           "format": "avif",
-          "bytes": 14176
+          "bytes": 8200
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-480.webp",
           "width": 480,
           "format": "webp",
-          "bytes": 17444
+          "bytes": 9756
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-1024.avif",
           "width": 1024,
           "format": "avif",
-          "bytes": 25996
+          "bytes": 16669
         },
         {
           "path": "/images/generated/eran-hersh-untold-story-iv-1024.webp",
           "width": 1024,
           "format": "webp",
-          "bytes": 33992
+          "bytes": 20936
         }
       ],
-      "estimatedTransferBytes": 25996,
-      "estimatedTransferKb": 25.4,
-      "estimatedSavingsBytes": 218157,
-      "estimatedSavingsPct": 89
+      "estimatedTransferBytes": 16669,
+      "estimatedTransferKb": 16.3,
+      "estimatedSavingsBytes": 53042,
+      "estimatedSavingsPct": 76
+    },
+    {
+      "source": "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",
+      "originalBytes": 2015126,
+      "originalKb": 1967.9,
+      "originalWidth": 1122,
+      "originalHeight": 1402,
+      "generatedBaseName": "events-sunsets-2026-09-19-massuma-official-artwork",
+      "variants": [
+        {
+          "path": "/images/generated/events-sunsets-2026-09-19-massuma-official-artwork-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 47536
+        },
+        {
+          "path": "/images/generated/events-sunsets-2026-09-19-massuma-official-artwork-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 65984
+        },
+        {
+          "path": "/images/generated/events-sunsets-2026-09-19-massuma-official-artwork-1122.avif",
+          "width": 1122,
+          "format": "avif",
+          "bytes": 108038
+        },
+        {
+          "path": "/images/generated/events-sunsets-2026-09-19-massuma-official-artwork-1122.webp",
+          "width": 1122,
+          "format": "webp",
+          "bytes": 158786
+        }
+      ],
+      "estimatedTransferBytes": 108038,
+      "estimatedTransferKb": 105.5,
+      "estimatedSavingsBytes": 1907088,
+      "estimatedSavingsPct": 95
     },
     {
       "source": "/images/hero-monolith-modern.webp",
@@ -2774,6 +3604,44 @@
       "estimatedTransferKb": 175.3,
       "estimatedSavingsBytes": 436836,
       "estimatedSavingsPct": 71
+    },
+    {
+      "source": "/images/july4-kiko-franco.jpg",
+      "originalBytes": 48503,
+      "originalKb": 47.4,
+      "originalWidth": 641,
+      "originalHeight": 850,
+      "generatedBaseName": "july4-kiko-franco",
+      "variants": [
+        {
+          "path": "/images/generated/july4-kiko-franco-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 18126
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 21336
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 27497
+        },
+        {
+          "path": "/images/generated/july4-kiko-franco-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 31536
+        }
+      ],
+      "estimatedTransferBytes": 27497,
+      "estimatedTransferKb": 26.9,
+      "estimatedSavingsBytes": 21006,
+      "estimatedSavingsPct": 43
     },
     {
       "source": "/images/july4-set-times.png",
@@ -3294,6 +4162,56 @@
       "estimatedSavingsPct": 0
     },
     {
+      "source": "/images/untold-story/header-jpq-9379 2.jpg",
+      "originalBytes": 507944,
+      "originalKb": 496,
+      "originalWidth": 2048,
+      "originalHeight": 1366,
+      "generatedBaseName": "untold-story-header-jpq-9379-2",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-640.avif",
+          "width": 640,
+          "format": "avif",
+          "bytes": 58964
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-640.webp",
+          "width": 640,
+          "format": "webp",
+          "bytes": 51988
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1280.avif",
+          "width": 1280,
+          "format": "avif",
+          "bytes": 208254
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1280.webp",
+          "width": 1280,
+          "format": "webp",
+          "bytes": 186122
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1920.avif",
+          "width": 1920,
+          "format": "avif",
+          "bytes": 411220
+        },
+        {
+          "path": "/images/generated/untold-story-header-jpq-9379-2-1920.webp",
+          "width": 1920,
+          "format": "webp",
+          "bytes": 393554
+        }
+      ],
+      "estimatedTransferBytes": 186122,
+      "estimatedTransferKb": 181.8,
+      "estimatedSavingsBytes": 321822,
+      "estimatedSavingsPct": 63
+    },
+    {
       "source": "/images/untold-story/header-jpq-9379.jpg",
       "originalBytes": 507944,
       "originalKb": 496,
@@ -3342,6 +4260,44 @@
       "estimatedTransferKb": 181.8,
       "estimatedSavingsBytes": 321822,
       "estimatedSavingsPct": 63
+    },
+    {
+      "source": "/images/untold-story/hero-astronaut.webp",
+      "originalBytes": 140474,
+      "originalKb": 137.2,
+      "originalWidth": 1708,
+      "originalHeight": 1690,
+      "generatedBaseName": "untold-story-hero-astronaut",
+      "variants": [
+        {
+          "path": "/images/generated/untold-story-hero-astronaut-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15182
+        },
+        {
+          "path": "/images/generated/untold-story-hero-astronaut-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 19060
+        },
+        {
+          "path": "/images/generated/untold-story-hero-astronaut-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 40281
+        },
+        {
+          "path": "/images/generated/untold-story-hero-astronaut-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 52532
+        }
+      ],
+      "estimatedTransferBytes": 40281,
+      "estimatedTransferKb": 39.3,
+      "estimatedSavingsBytes": 100193,
+      "estimatedSavingsPct": 71
     },
     {
       "source": "/og-image.jpg",

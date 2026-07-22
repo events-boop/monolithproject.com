@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
+import FamilyEventPromo from "@/components/FamilyEventPromo";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import CommunityContributionSection, {
   COMMUNITY_UPLOAD_URL,
 } from "@/components/CommunityContributionSection";
+import { FAMILY_PROMO } from "@/content/familyPromo";
 import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
@@ -36,7 +38,8 @@ const BENCHEK_DROP_HREF = "/go/waitlist/benchek";
 const BENCHEK_DROP_IMAGE = "/images/benchek-featured-set-drop.webp";
 const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
-const MASSUMA_UK_IMAGE = "/images/artists/massuma-uk/massuma-uk-portrait.jpg";
+const MASSUMA_SEP19_ARTWORK =
+  "/images/events/sunsets-2026-09-19/massuma-official-artwork.png";
 const LAKE_LIST_HREF = "/go/lakelist";
 // Live channel row at the bottom of the page. untold.vip serves its own
 // cert + host-detected landing (verified live 2026-07-01); the broadcast
@@ -505,8 +508,8 @@ export default function SunsetsLinkBio() {
               </div>
             </div>
             <ResponsiveImage
-              src={MASSUMA_UK_IMAGE}
-              alt="Massuma (UK) portrait for SUN(SETS) III on September 19, 2026"
+              src={MASSUMA_SEP19_ARTWORK}
+              alt="Official Massuma artwork for SUN(SETS) III on September 19, 2026 at Castaways Beach Club"
               sizes="(max-width: 640px) 100vw, 480px"
               className="h-auto w-full border-t border-[#E8B86D]/20 object-cover"
             />
@@ -916,6 +919,11 @@ export default function SunsetsLinkBio() {
               aria-hidden="true"
             />
           </a>
+          {FAMILY_PROMO ? (
+            <div className="mt-2.5">
+              <FamilyEventPromo />
+            </div>
+          ) : null}
           <a
             href={UNTOLD_VIP_HREF}
             target="_blank"

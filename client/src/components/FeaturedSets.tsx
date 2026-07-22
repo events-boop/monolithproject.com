@@ -14,11 +14,12 @@ interface FeaturedSet {
   shortCode?: string;
   duration: string;
   image: string;
+  responsive?: boolean;
   href: string;
   cta: string;
 }
 
-const SETS: FeaturedSet[] = [
+export const FEATURED_SETS: FeaturedSet[] = [
   {
     id: "july4-autograf",
     series: "chasing-sunsets",
@@ -29,6 +30,18 @@ const SETS: FeaturedSet[] = [
     image: "/images/july4-autograf.png",
     href: "/chasing-sunsets/sunsets-i-2026",
     cta: "Relive Chapter One",
+  },
+  {
+    id: "july4-kiko-franco",
+    series: "chasing-sunsets",
+    artist: "KIKO FRANCO",
+    title: "Lakefront Debut",
+    shortCode: "LIVE",
+    duration: "July 4th",
+    image: "/images/july4-kiko-franco.jpg",
+    responsive: false,
+    href: "/artists/kiko-franco",
+    cta: "View Artist",
   },
   {
     id: "july4-erik",
@@ -93,7 +106,7 @@ export default function FeaturedSets() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const fanRef = useRef<HTMLDivElement | null>(null);
   const [fanWidth, setFanWidth] = useState(1352);
-  const center = (SETS.length - 1) / 2;
+  const center = (FEATURED_SETS.length - 1) / 2;
 
   useEffect(() => {
     const el = fanRef.current;
@@ -106,7 +119,7 @@ export default function FeaturedSets() {
   }, []);
 
   // Widest spacing that keeps the whole fan inside the container.
-  const maxSpread = (fanWidth - CARD_WIDTH) / (SETS.length - 1);
+  const maxSpread = (fanWidth - CARD_WIDTH) / (FEATURED_SETS.length - 1);
 
   return (
     <section className="relative bg-black border-t border-white/10 py-16 md:py-24 overflow-hidden">
@@ -122,7 +135,7 @@ export default function FeaturedSets() {
               </span>
             </div>
             <span className="event-system-chip shrink-0 text-white/70">
-              {SETS.length.toString().padStart(2, "0")} Artists
+              {FEATURED_SETS.length.toString().padStart(2, "0")} Artists
             </span>
           </div>
 
@@ -136,7 +149,8 @@ export default function FeaturedSets() {
               </span>
               <span className="mt-3 block h-px w-20 bg-white/20" />
               <span className="event-system-chip mt-4 block max-w-[32ch] leading-[1.45] text-white/70">
-                Autograf, Erik the DJ, Frank Bono, Eliana, and Amari bringing the sounds of summer.
+                Autograf, Kiko Franco, Erik the DJ, Frank Bono, Eliana, and
+                Amari bringing the sounds of summer.
               </span>
             </div>
           </div>
@@ -148,7 +162,7 @@ export default function FeaturedSets() {
           className="hidden md:flex relative h-[540px] items-center justify-center [contain:layout_paint]"
           onMouseLeave={() => setHoveredId(null)}
         >
-          {SETS.map((set, i) => {
+          {FEATURED_SETS.map((set, i) => {
             const offset = i - center;
             const color = getSetColor(set.series);
             const label = getSetLabel(set.series);
@@ -184,6 +198,7 @@ export default function FeaturedSets() {
                     loading="lazy"
                     decoding="async"
                     sizes="300px"
+                    responsive={set.responsive}
                     className="absolute inset-0 w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.08]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
@@ -245,7 +260,7 @@ export default function FeaturedSets() {
 
         {/* Mobile scroll-snap row */}
         <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 scrollbar-none">
-          {SETS.map(set => {
+          {FEATURED_SETS.map(set => {
             const color = getSetColor(set.series);
             const label = getSetLabel(set.series);
 
@@ -261,6 +276,7 @@ export default function FeaturedSets() {
                   loading="lazy"
                   decoding="async"
                   sizes="280px"
+                  responsive={set.responsive}
                   className="absolute inset-0 w-full h-full object-cover grayscale-[20%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />

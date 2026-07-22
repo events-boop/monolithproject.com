@@ -59,6 +59,14 @@ const InsightArticle = lazy(() => import("./pages/InsightArticle"));
 const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
 const SunsetsHero = lazy(() => import("./pages/SunsetsHero"));
 
+const isApeDrumsBuildEnabled =
+  import.meta.env.DEV ||
+  (import.meta.env.VITE_APE_DRUMS_RELEASED === "true" &&
+    import.meta.env.VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED === "true");
+const ApeDrumsLanding = isApeDrumsBuildEnabled
+  ? lazy(() => import("./pages/ApeDrumsLanding"))
+  : null;
+
 const isMonolithOpsEnabled =
   import.meta.env.DEV || import.meta.env.VITE_ENABLE_MONOLITH_OPS === "true";
 const AdminDashboard = isMonolithOpsEnabled
@@ -144,6 +152,9 @@ const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
 const SunsetsHeroTransition = withTransition(SunsetsHero);
+const ApeDrumsLandingTransition = ApeDrumsLanding
+  ? withTransition(ApeDrumsLanding)
+  : null;
 const AdminDashboardTransition = AdminDashboard
   ? withTransition(AdminDashboard)
   : null;
@@ -165,6 +176,22 @@ function SandboxHeroRoute() {
   }
 
   return <ExperimentalHeroTransition />;
+}
+
+function ApeDrumsPublicRoute() {
+  if (!ApeDrumsLandingTransition) {
+    return <Redirect to={ROUTES.notFound} />;
+  }
+
+  return <ApeDrumsLandingTransition />;
+}
+
+function ApeDrumsPreviewRoute() {
+  if (!import.meta.env.DEV || !ApeDrumsLandingTransition) {
+    return <Redirect to={ROUTES.notFound} />;
+  }
+
+  return <ApeDrumsLandingTransition />;
 }
 
 function getCampaignHostLandingPath(location: string) {
@@ -298,6 +325,7 @@ function Router() {
         path={ROUTES.houseOfFriends}
         component={HouseOfFriendsTransition}
       />
+      <Route path={ROUTES.apeDrums} component={ApeDrumsPublicRoute} />
       <Route path={ROUTES.theMonolith}>
         <Redirect to={ROUTES.monolith} />
       </Route>
@@ -307,6 +335,7 @@ function Router() {
       <Route path={ROUTES.monolithOps} component={MonolithOpsRoute} />
       <Route path={ROUTES.notFound} component={NotFoundTransition} />
       <Route path={ROUTES.sandboxHero} component={SandboxHeroRoute} />
+      <Route path={ROUTES.apeDrumsPreview} component={ApeDrumsPreviewRoute} />
 
       <Route component={NotFoundTransition} />
     </Switch>
@@ -432,8 +461,10 @@ function MainContentWrapper() {
     landingPath === ROUTES.untoldVip ||
     isUntoldRootLanding;
   const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
+  const isApeDrumsRoute =
+    landingPath === ROUTES.apeDrums || landingPath === ROUTES.apeDrumsPreview;
   const shouldHideGlobalConversion =
-    isStandaloneLanding || isHouseOfFriendsRoute;
+    isStandaloneLanding || isHouseOfFriendsRoute || isApeDrumsRoute;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -499,7 +530,7 @@ function MainContentWrapper() {
         ) : (
           <Router />
         )}
-        {!isStandaloneLanding && (
+        {!isStandaloneLanding && !isApeDrumsRoute && (
           <>
             {!shouldHideGlobalConversion && (
               <ViewportLazy

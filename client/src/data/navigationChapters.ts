@@ -1,14 +1,11 @@
-import { ROUTES, ANCHORS, routeRadioEpisode } from "@shared/routes";
+import { ROUTES, routeRadioEpisode } from "@shared/routes";
 
 export type NavigationChapterId =
-  | "next-night"
   | "schedule"
+  | "artists"
   | "chasing-sunsets"
   | "untold-story"
-  | "artists"
-  | "radio"
-  | "guide"
-  | "monolith";
+  | "radio";
 
 export interface NavigationChapterLink {
   label: string;
@@ -31,15 +28,15 @@ export interface NavigationChapter {
 
 export const navigationChapters: NavigationChapter[] = [
   {
-    id: "next-night",
+    id: "schedule",
     label: "Shows",
     eyebrow: "Tickets + Dates",
-    href: ROUTES.tickets,
+    href: ROUTES.schedule,
     tagline: "Start with the next Monolith show.",
     description:
       "A direct preview of the next show, ticket state, and the fastest path in.",
     proof: "The clearest route from interest to entry.",
-    image: "/images/chasing-sunsets-july4-first-access.png",
+    image: "/images/chasing-sunsets-premium.webp",
     accent: "#E05A3A",
     ctaLabel: "View Shows",
     secondaryLinks: [
@@ -48,20 +45,20 @@ export const navigationChapters: NavigationChapter[] = [
     ],
   },
   {
-    id: "schedule",
-    label: "Upcoming Shows",
-    eyebrow: "Season 2026",
-    href: ROUTES.schedule,
-    tagline: "All upcoming dates in one place.",
+    id: "artists",
+    label: "Artists",
+    eyebrow: "Roster",
+    href: ROUTES.artists,
+    tagline: "The artists behind the shows.",
     description:
-      "The live calendar for Chasing Sun(Sets), Untold Story, and upcoming Monolith drops.",
-    proof: "One place to compare dates, venues, and ticket states.",
-    image: "/images/autograf-recap.jpg",
-    accent: "#8B5CF6",
-    ctaLabel: "See Upcoming Shows",
+      "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",
+    proof: "A direct view of the artists shaping the sound.",
+    image: "/images/artists-collective.webp",
+    accent: "#F2F0E8",
+    ctaLabel: "Explore Artists",
     secondaryLinks: [
-      { label: "Tickets", href: ROUTES.tickets },
-      { label: "Archive", href: ROUTES.archive },
+      { label: "Featured Artists", href: ROUTES.lineup },
+      { label: "Radio Episodes", href: ROUTES.radio },
     ],
   },
   {
@@ -99,23 +96,6 @@ export const navigationChapters: NavigationChapter[] = [
     ],
   },
   {
-    id: "artists",
-    label: "Artists",
-    eyebrow: "Roster",
-    href: ROUTES.artists,
-    tagline: "The artists behind the shows.",
-    description:
-      "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",
-    proof: "A direct view of the artists shaping the sound.",
-    image: "/images/artists-collective.webp",
-    accent: "#F2F0E8",
-    ctaLabel: "Explore Artists",
-    secondaryLinks: [
-      { label: "Featured Artists", href: ROUTES.lineup },
-      { label: "Radio Episodes", href: ROUTES.radio },
-    ],
-  },
-  {
     id: "radio",
     label: "Radio",
     eyebrow: "Artist Content",
@@ -130,40 +110,6 @@ export const navigationChapters: NavigationChapter[] = [
     secondaryLinks: [
       { label: "Latest Episode", href: routeRadioEpisode("ep-01-benchek") },
       { label: "Browse Episodes", href: ROUTES.radio },
-    ],
-  },
-  {
-    id: "guide",
-    label: "Plan Your Visit",
-    eyebrow: "Entry + Arrival",
-    href: ROUTES.guide,
-    tagline: "Entry, timing, arrival, and access without guesswork.",
-    description:
-      "Everything you need to arrive cleanly, know the timing, and choose the right access path.",
-    proof: "A better arrival makes the show experience better.",
-    image: "/images/industrial-roster.webp",
-    accent: "#D4A574",
-    ctaLabel: "Plan Your Night",
-    secondaryLinks: [
-      { label: "Entry Checklist", href: ROUTES.guide + ANCHORS.entry },
-      { label: "VIP Access", href: ROUTES.vip },
-    ],
-  },
-  {
-    id: "monolith",
-    label: "The Monolith",
-    eyebrow: "Manifesto",
-    href: ROUTES.monolith,
-    tagline: "The overarching collective and digital temple.",
-    description:
-      "Explore the core concept, story, and manifesto behind our movement.",
-    proof: "Our commitment to music-first curation.",
-    image: "/images/hero-monolith.webp",
-    accent: "#E05A3A",
-    ctaLabel: "View Manifesto",
-    secondaryLinks: [
-      { label: "Manifesto", href: ROUTES.monolith + ANCHORS.manifesto },
-      { label: "The Story", href: ROUTES.monolith + ANCHORS.story },
     ],
   },
 ];

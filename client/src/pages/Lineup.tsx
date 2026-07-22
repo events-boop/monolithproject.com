@@ -120,7 +120,7 @@ const RADIO_FALLBACK_PREVIEWS: ArtistPreview[] = [
 
 const RADIO_PREVIEW_IMAGES: Record<string, string> = {
   BENCHEK: "/images/artist-benchek.jpg",
-  EWERSEEN: "/images/radio-show-gear.webp",
+  EWERSEEN: "/images/artist-ewerseen.png",
   TERRANOVA: "/images/artist-terranova.png",
   RADIAN: "/images/radio-show-gear.webp",
 };

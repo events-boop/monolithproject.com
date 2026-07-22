@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const phoneWidths = [320, 340, 360, 375, 390, 430];
+const desktopWidths = [1280, 1366, 1440, 1536, 1600, 1920];
 
 async function waitForAppReady(page: import("@playwright/test").Page) {
   await page.goto("/", { waitUntil: "networkidle" });
@@ -83,4 +84,127 @@ test.describe("responsive header", () => {
       expect(metrics.quickCtaVisible).toBe(width >= 370);
     });
   }
+
+  test("desktop primary navigation stays ordered and collision-free", async ({
+    page,
+  }) => {
+    for (const width of desktopWidths) {
+      await page.setViewportSize({ width, height: 900 });
+      await waitForAppReady(page);
+
+      const metrics = await page.evaluate(() => {
+        const nav = document.querySelector("nav");
+        const rect = (element: Element | null | undefined) => {
+          if (
+            !(element instanceof HTMLElement) ||
+            element.offsetParent === null
+          )
+            return null;
+          const box = element.getBoundingClientRect();
+          return { left: box.left, right: box.right };
+        };
+        const visibleElement = (selector: string) =>
+          Array.from(nav?.querySelectorAll(selector) ?? []).find(
+            element =>
+              element instanceof HTMLElement && element.offsetParent !== null
+          );
+        const exactControl = (label: string) =>
+          Array.from(nav?.querySelectorAll("button, a") ?? []).find(
+            control =>
+              control instanceof HTMLElement &&
+              control.offsetParent !== null &&
+              control.textContent?.trim().replace(/\s+/g, " ").toUpperCase() ===
+                label
+          );
+
+        const labels = [
+          "SHOWS",
+          "ARTISTS",
+          "SUN(SETS)",
+          "UNTOLD STORY",
+          "RADIO",
+        ];
+        const core = labels.map(label => ({
+          label,
+          rect: rect(exactControl(label)),
+        }));
+        const extraLabels = ["MONOLITH", "PARTNERS", "CONTACT"];
+        const visibleExtras = extraLabels.filter(label => exactControl(label));
+
+        return {
+          clientWidth: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          logo: rect(visibleElement("[data-nav-logo='true']")),
+          core,
+          cta: rect(visibleElement("a[data-cursor-text]")),
+          menu: rect(visibleElement("[data-nav-menu-toggle='true']")),
+          visibleExtras,
+        };
+      });
+
+      expect(metrics.scrollWidth, `${width}px page overflow`).toBe(
+        metrics.clientWidth
+      );
+      expect(metrics.visibleExtras, `${width}px secondary nav leakage`).toEqual(
+        []
+      );
+
+      const orderedRects = [
+        metrics.logo,
+        ...metrics.core.map(item => item.rect),
+        metrics.cta,
+        metrics.menu,
+      ];
+      expect(
+        orderedRects.every(Boolean),
+        `${width}px missing primary navigation control`
+      ).toBe(true);
+
+      for (let index = 1; index < orderedRects.length; index += 1) {
+        const previous = orderedRects[index - 1]!;
+        const current = orderedRects[index]!;
+        expect(
+          current.left - previous.right,
+          `${width}px controls ${index - 1} and ${index} overlap`
+        ).toBeGreaterThanOrEqual(8);
+      }
+    }
+  });
+
+  test("universal menu presents one coherent five-world hierarchy", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForAppReady(page);
+    await page.getByRole("button", { name: /open navigation menu/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /navigation menu/i });
+    await expect(dialog).toBeVisible();
+
+    const chapters = dialog.locator("button[aria-expanded]");
+    await expect(chapters).toHaveCount(5);
+    await expect(chapters).toHaveText([
+      /Shows/i,
+      /Artists/i,
+      /Chasing Sun\(Sets\)/i,
+      /Untold Story/i,
+      /Radio/i,
+    ]);
+    await expect(
+      dialog.getByText("Upcoming Shows", { exact: true })
+    ).toHaveCount(0);
+
+    const utilities = dialog.getByRole("navigation", {
+      name: /utility links/i,
+    });
+    await expect(
+      utilities.getByRole("link", { name: "Monolith", exact: true })
+    ).toBeVisible();
+    await expect(
+      utilities.getByRole("link", { name: "Partners", exact: true })
+    ).toBeVisible();
+    await expect(
+      utilities.getByRole("link", { name: "Contact", exact: true })
+    ).toBeVisible();
+  });
 });

@@ -119,3 +119,18 @@ export function trackMetaPixelLead(payload?: Record<string, unknown>) {
 
   return true;
 }
+
+export function trackMetaPixelInitiateCheckout(
+  payload?: Record<string, unknown>
+) {
+  if (!isEnabled()) return false;
+
+  ensureFbq(PIXEL_ID as string);
+  window.fbq?.("track", "InitiateCheckout", {
+    currency: "USD",
+    value: 0,
+    ...payload,
+  });
+
+  return true;
+}

@@ -119,7 +119,7 @@ test("ticket flow emits intent tracking and preserves outbound ticket link", asy
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
+      name: /^(NEXT SIGNAL|TICKETS LIVE)$/i,
     })
   ).toBeVisible({
     timeout: 10000,
@@ -156,7 +156,7 @@ test("scoped a11y checks pass for newsletter and tickets header", async ({
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /^(GET IN|FIRST ACCESS|SOLD OUT)$/i,
+        name: /^(NEXT SIGNAL|TICKETS LIVE)$/i,
       })
     ).toBeVisible({
       timeout: 10000,

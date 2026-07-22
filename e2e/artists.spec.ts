@@ -39,3 +39,23 @@ test("kiko franco profile renders bio, role, and next event", async ({
   await expect(body).toContainText(/afro house/i);
   await expect(body).not.toContainText("Artist Not Found");
 });
+
+test("EWERSEEN profile and lineup use the supplied artwork", async ({
+  page,
+}) => {
+  await page.goto("/artists/ewerseen", { waitUntil: "domcontentloaded" });
+  await waitForAppReady(page);
+
+  await expect(page.getByAltText("EWERSEEN").first()).toHaveAttribute(
+    "src",
+    "/images/artist-ewerseen.png"
+  );
+
+  await page.goto("/lineup", { waitUntil: "domcontentloaded" });
+  await waitForAppReady(page);
+
+  await expect(page.getByAltText("EWERSEEN").first()).toHaveAttribute(
+    "src",
+    "/images/artist-ewerseen.png"
+  );
+});

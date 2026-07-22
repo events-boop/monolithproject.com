@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
+import FamilyEventPromo from "@/components/FamilyEventPromo";
+import { FAMILY_PROMO } from "@/content/familyPromo";
 import { useInquiry } from "@/contexts/InquiryContext";
 import { getHouseOfFriendsApplicationStatus } from "@/lib/api";
 import { isHouseOfFriendsCampaignHost } from "@/lib/campaignHosts";
@@ -669,6 +671,19 @@ export default function HouseOfFriends() {
             </motion.div>
           </div>
         </section>
+
+        {FAMILY_PROMO ? (
+          <section
+            className="hof-section"
+            aria-label="Next in the Monolith family"
+          >
+            <div className="container layout-wide px-6">
+              <div className="max-w-xl">
+                <FamilyEventPromo />
+              </div>
+            </div>
+          </section>
+        ) : null}
       </main>
     </div>
   );

@@ -7,6 +7,7 @@ import {
 interface ResponsiveImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
   priority?: boolean;
+  responsive?: boolean;
   sources?: ResponsiveImageSource[];
   src: string;
 }
@@ -17,14 +18,17 @@ export default function ResponsiveImage({
   fetchPriority,
   loading,
   priority = false,
+  responsive = true,
   sizes = "100vw",
   sources,
   src,
   ...props
 }: ResponsiveImageProps) {
-  const imageSources = sources?.length
-    ? sources
-    : buildResponsiveImageSources(src, sizes);
+  const imageSources = responsive
+    ? sources?.length
+      ? sources
+      : buildResponsiveImageSources(src, sizes)
+    : [];
   const imageLoading = loading ?? (priority ? "eager" : "lazy");
   const imageDecoding = decoding ?? "async";
   const imageFetchPriority = fetchPriority ?? (priority ? "high" : "auto");
