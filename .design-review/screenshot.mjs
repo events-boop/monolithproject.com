@@ -84,6 +84,17 @@ async function settle(page) {
   await page.waitForTimeout(800);
 }
 
+async function settleHero(page) {
+  try {
+    await page.waitForLoadState("networkidle", { timeout: 15000 });
+  } catch {
+    /* hero video may keep streaming; continue after the fixed settle window */
+  }
+  // Do not perform the full-page lazy-load scroll for a viewport-only capture.
+  // Scrolling the carousel offscreen can leave its active frame blank.
+  await page.waitForTimeout(4000);
+}
+
 const browser = await chromium.launch();
 try {
   // 1) Desktop 1440x900 full-page
@@ -114,7 +125,7 @@ try {
     wireListeners(page, "desktop-hero");
     await page.goto(BASE, { waitUntil: "domcontentloaded", timeout: 30000 });
     await dismissOverlays(page);
-    await settle(page);
+    await settleHero(page);
     await page.screenshot({
       path: path.join(__dirname, "homepage-desktop-1440x900-hero.png"),
       fullPage: false,
