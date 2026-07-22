@@ -115,7 +115,7 @@ test("desktop nav CTA flows resolve to working destinations", async ({
   const nav = page.getByRole("navigation").first();
 
   // Megamenu triggers navigate on click; dropdown panels open on hover.
-  await nav.getByRole("button", { name: "SCHEDULE", exact: true }).hover();
+  await nav.getByRole("button", { name: "SHOWS", exact: true }).hover();
   await expect(
     page.getByRole("menuitem", { name: /chasing sun\(sets\)/i }).first()
   ).toBeVisible();
@@ -132,30 +132,18 @@ test("desktop nav CTA flows resolve to working destinations", async ({
     .getByRole("button", { name: "RADIO", exact: true })
     .click({ force: true });
   await expect(page).toHaveURL(/\/radio$/);
-
-  await page.goto("/", { waitUntil: "domcontentloaded" });
-  await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^partners/i }).hover();
-  await expect(
-    page.getByRole("menuitem", { name: "PARTNER WITH US" })
-  ).toBeVisible();
-  await page
-    .getByRole("menuitem", { name: "PARTNER WITH US" })
-    .click({ force: true });
-  await expect(page).toHaveURL(/\/partners$/);
-  await expect(
-    page.getByRole("heading", { name: /partners & crew/i })
-  ).toBeVisible();
 });
 
-test("community utility CTAs open the intended flows", async ({ page }) => {
+test("shows and universal-menu utility links open the intended flows", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
   const nav = page.getByRole("navigation").first();
 
   // Megamenu triggers navigate on click; dropdown panels open on hover.
-  await nav.getByRole("button", { name: "SCHEDULE", exact: true }).hover();
+  await nav.getByRole("button", { name: "SHOWS", exact: true }).hover();
   await expect(
     page.getByRole("menuitem", { name: /^upcoming shows/i })
   ).toBeVisible();
@@ -164,18 +152,15 @@ test("community utility CTAs open the intended flows", async ({ page }) => {
     .click({ force: true });
   await expect(page).toHaveURL(/\/schedule$/);
   await expect(
-    page.getByRole("heading", { name: /upcoming shows/i })
+    page.getByRole("heading", { name: /the current calendar/i })
   ).toBeVisible();
 
   await page.goto("/", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
-  await nav.getByRole("button", { name: /^partners/i }).hover();
-  await expect(
-    page.getByRole("menuitem", { name: /^partner with us/i })
-  ).toBeVisible();
-  await page
-    .getByRole("menuitem", { name: /^partner with us/i })
-    .click({ force: true });
+  await nav.getByRole("button", { name: /open navigation menu/i }).click();
+  const menu = page.getByRole("dialog", { name: /navigation menu/i });
+  await expect(menu).toBeVisible();
+  await menu.getByRole("link", { name: "Partners", exact: true }).click();
   await expect(page).toHaveURL(/\/partners$/);
   await expect(
     page.getByRole("heading", { name: /partners & crew/i })
@@ -188,8 +173,11 @@ test("schedule quick view hands off to the event dossier and context rail", asyn
   await page.goto("/schedule", { waitUntil: "domcontentloaded" });
   await waitForAppReady(page);
 
-  await page.getByRole("link", { name: /full dossier/i }).click();
-  await expect(page).toHaveURL(/\/events\/chasing-sunsets-july-4-2026$/);
+  const dossierLink = page.getByRole("link", { name: /full dossier/i });
+  const dossierHref = await dossierLink.getAttribute("href");
+  expect(dossierHref).toMatch(/^\/events\/[^/?#]+$/);
+  await dossierLink.click();
+  await expect.poll(() => new URL(page.url()).pathname).toBe(dossierHref);
   await expect(page.getByText("Read The Room", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /radio hear the taste behind the room/i })

@@ -7,7 +7,7 @@ import {
   useRef,
 } from "react";
 import { Ticket, ArrowUpRight, Lock, Zap } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { cn } from "../lib/utils";
 import { signalChirp } from "../lib/SignalChirpEngine";
 import MagneticButton from "./MagneticButton";
@@ -51,7 +51,7 @@ const MenuCyclingText = ({
           : "text-primary";
 
   return (
-    <div className="hidden sm:flex lg:hidden relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
+    <div className="hidden sm:flex xl:hidden relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
       <span
         className="h-full flex items-center justify-center"
         style={{
@@ -544,9 +544,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* CENTER: NAV ITEMS */}
-              <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-1.5 xl:gap-2.5 2xl:gap-4 pr-2 xl:pr-3 whitespace-nowrap">
+              <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2.5 2xl:gap-4 pr-3 whitespace-nowrap">
                 <NavigationMegamenu
-                  label="SCHEDULE"
+                  label="SHOWS"
                   href={ROUTES.schedule}
                   isActive={
                     location === ROUTES.schedule ||
@@ -765,82 +765,6 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     },
                   }}
                 />
-
-                {/* Secondary cluster: collapses into the menu overlay below
-                    2xl so the six core items never overflow the brand row.
-                    All three remain reachable via the burger overlay. */}
-                <div className="hidden 2xl:contents">
-                  <NavigationMegamenu
-                    label="MONOLITH"
-                    href={ROUTES.monolith}
-                    isActive={location === ROUTES.monolith}
-                    isLight={isLight}
-                    brand={resolvedBrand}
-                    type="monolith"
-                    onNavigate={handleNavClick}
-                    megamenu={{
-                      items: [], // Dynamic concept links generated inside NavigationMegamenu
-                      feature: {
-                        title: "The Collective",
-                        subtitle: "Manifesto & Story",
-                        image: "/images/hero-monolith.webp",
-                        href: ROUTES.monolith,
-                        ctaText: "Explore",
-                        icon: "arrow",
-                      },
-                    }}
-                  />
-
-                  <NavigationMegamenu
-                    label="PARTNERS"
-                    href={ROUTES.partners}
-                    isActive={
-                      location === ROUTES.partners ||
-                      location === ROUTES.sponsors ||
-                      location === ROUTES.press ||
-                      location === ROUTES.booking
-                    }
-                    isLight={isLight}
-                    brand={resolvedBrand}
-                    onNavigate={handleNavClick}
-                    megamenu={{
-                      items: [
-                        {
-                          label: "PARTNER WITH US",
-                          href: ROUTES.partners,
-                          icon: "arrow",
-                        },
-                        { label: "SPONSOR ACCESS", href: ROUTES.sponsors },
-                        { label: "PRESS & MEDIA", href: ROUTES.press },
-                        { label: "ABOUT MONOLITH", href: ROUTES.about },
-                      ],
-                      feature: {
-                        title: "PARTNER WITH MONOLITH",
-                        subtitle: "Brands, venues, and cultural collaborators",
-                        image: "/images/industrial-roster.webp",
-                        href: ROUTES.partners,
-                        ctaText: "Start Conversation",
-                        icon: "arrow",
-                        badge: "PARTNERS",
-                      },
-                    }}
-                  />
-
-                  <Link
-                    href={ROUTES.contact}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleNavClick(ROUTES.contact);
-                    }}
-                    className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[11px] xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.1em] xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
-                      isLight
-                        ? `hover:text-clay ${location === ROUTES.contact ? "text-clay" : "text-stone"}`
-                        : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${location === ROUTES.contact ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-                    }`}
-                  >
-                    Contact
-                  </Link>
-                </div>
               </div>
 
               {/* RIGHT: CTA & MOBILE TOGGLE */}

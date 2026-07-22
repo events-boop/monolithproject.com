@@ -75,7 +75,7 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
         copy: "The sound he's building now is deeper, warmer, rhythm-first—the same frequency we've been cultivating in Chicago from day one. When an artist burns down a winning formula to chase something truer, you don't just book him. You give the new chapter a home.",
       },
       {
-        copy: "July 31. A 350-cap room. Late night. The first Chicago address of the next era.",
+        copy: "July 31. Kashmir. A 350-cap room. Late night. Built around where Ape Drums is going next.",
       },
     ],
     stampValue: "350",
@@ -122,7 +122,7 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
     afterSound: {
       eyebrow: "You heard the signal",
       headline: "The next move is into the room.",
-      note: "One night / late set / Chicago",
+      note: "One night / late set / Kashmir",
       ctaLabel: "Enter the room",
     },
   },
@@ -130,6 +130,7 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
     shortDate: "07.31",
     dateParts: ["07", "31"],
     fullDate: "Friday, July 31, 2026",
+    startDate: "2026-07-31",
     venue: "Kashmir",
     city: "Chicago",
     capacity: "350",

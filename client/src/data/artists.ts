@@ -533,13 +533,12 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     socials: {},
     tracks: [],
     featuredVideo: {
-      url: "https://youtu.be/hdsT_dpQXqw",
-      title:
-        "Massuma Opening for Black Coffee – Live Afro House Set in Lagos (2026)",
-      label: "Opening for Black Coffee · Lagos 2026",
+      url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
+      title: "Massuma - Live @ KOKO London | Afro & Melodic House Set (2026)",
+      label: "Live @ KOKO London · 2026",
       source: "MASSUMA (UK)",
       description:
-        "Massuma's live Afro House set opening for Black Coffee in Lagos, embedded from his official YouTube release.",
+        "Massuma's live Afro & Melodic House set at KOKO London, embedded from his official YouTube release.",
     },
   },
   {

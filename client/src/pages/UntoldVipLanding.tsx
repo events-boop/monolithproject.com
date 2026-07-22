@@ -1,6 +1,8 @@
 import { Link } from "wouter";
 import SEO from "@/components/SEO";
+import FamilyEventPromo from "@/components/FamilyEventPromo";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { FAMILY_PROMO } from "@/content/familyPromo";
 
 const UNTOLD_URL = "https://untold.vip";
 const MONOLITH_URL = "https://monolithproject.com";
@@ -146,7 +148,7 @@ export default function UntoldVipLanding() {
         description="Previous Untold Story chapters from The Monolith Project: Lazare Sabry, Deron x Juany, Autograf, and Eran Hersh."
         absoluteTitle
         canonicalUrl={`${UNTOLD_URL}/`}
-        image="/images/untold-story-moody.webp"
+        image="/images/untold-story/hero-astronaut.webp"
         schemaData={schemaData}
       />
 
@@ -228,8 +230,8 @@ export default function UntoldVipLanding() {
             <div className="relative overflow-hidden border border-white/12 bg-white/[0.04] p-2 shadow-[0_36px_100px_rgba(0,0,0,0.46)] backdrop-blur">
               <div className="relative aspect-[4/5] overflow-hidden bg-black">
                 <ResponsiveImage
-                  src="/images/untold-story-moody.webp"
-                  alt="Untold Story visual poster"
+                  src="/images/untold-story/hero-astronaut.webp"
+                  alt="Untold Story astronaut poster with butterfly visor"
                   sizes="(min-width: 1024px) 420px, 92vw"
                   priority
                   className="h-full w-full object-cover opacity-90"
@@ -326,6 +328,11 @@ export default function UntoldVipLanding() {
                 The Monolith Project
               </p>
             </div>
+            {FAMILY_PROMO ? (
+              <div className="max-w-md">
+                <FamilyEventPromo />
+              </div>
+            ) : null}
             <nav
               aria-label="Related sites"
               className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"

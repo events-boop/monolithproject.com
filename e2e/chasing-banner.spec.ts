@@ -23,17 +23,15 @@ test("chasing sunsets keeps the next-event context on mobile", async ({
 }) => {
   await waitForAppReady(page);
 
-  await expect(page.locator("#chasing-hero")).toContainText("SUN(SETS) I");
-  await expect(page.locator("#chasing-hero")).toContainText("July 4, 2026");
-  await expect(page.locator("#chasing-hero")).toContainText("Castaways");
+  const hero = page.locator("#chasing-hero");
+  await expect(hero).toHaveAttribute("data-featured-event-id", /.+/);
+  await expect(hero.locator("[data-chasing-episode='true']")).not.toBeEmpty();
+  await expect(hero.locator("[data-chasing-meta='true']")).toBeVisible();
 
-  // On-sale era: the prelaunch "Next Event" countdown is replaced by the
-  // live ticket state. (The top ticker is dismissed via sessionStorage in
-  // beforeEach, so assert the in-page CTA.)
+  // The campaign state can advance from first access to on-sale without
+  // invalidating the mobile context contract. Assert the live conversion CTA
+  // inside the featured hero instead of freezing a date or button label.
   await expect(
-    page
-      .locator("main")
-      .getByRole("link", { name: /buy tickets — july 4/i })
-      .first()
+    hero.locator("a.cta-laylo, a.cta-posh, a.cta-fillout").first()
   ).toBeVisible();
 });

@@ -119,9 +119,9 @@ test.describe("campaign hardening stress checks", () => {
     await expect(
       page.getByRole("heading", { name: /the summer return/i })
     ).toBeVisible();
-    const lakeListCta = page.getByRole("link", {
-      name: /join the lake list/i,
-    });
+    const lakeListCta = page
+      .getByLabel("Lake List signup")
+      .getByRole("link", { name: /join the lake list/i });
     await expect(lakeListCta).toBeVisible();
     await expect(lakeListCta).toHaveAttribute("href", /\/go\/lakelist/);
     await expect(
@@ -129,7 +129,7 @@ test.describe("campaign hardening stress checks", () => {
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://sunsets.vip/sunsets"
+      "https://sunsets.vip/"
     );
     await expect
       .poll(() => pageViewRequests.length, { timeout: 5000 })

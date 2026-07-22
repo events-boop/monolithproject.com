@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { HelmetProvider } from "react-helmet-async";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -28,6 +28,10 @@ describe("Ape Drums private landing preview", () => {
     expect(screen.getByText("58K")).toBeVisible();
     expect(screen.getByText("3M")).toBeVisible();
     expect(screen.getByText(/friday, july 31, 2026/i)).toBeVisible();
+    expect(screen.getByText(/july 31 \/ kashmir \/ 350 people/i)).toBeVisible();
+    expect(
+      screen.getByText(/july 31\. kashmir\. a 350-cap room/i)
+    ).toBeVisible();
     expect(
       document.querySelectorAll('[data-release-gate="closed"]')
     ).toHaveLength(5);
@@ -35,25 +39,39 @@ describe("Ape Drums private landing preview", () => {
       screen.getByText("Know the story. Then feel it in the room.")
     ).toBeVisible();
     expect(screen.getByText("The next move is into the room.")).toBeVisible();
-    expect(document.querySelectorAll("iframe")).toHaveLength(4);
-    expect(
-      document.querySelector('iframe[src*="O94vKVHzamk"]')
-    ).toBeInTheDocument();
-    expect(
-      document.querySelector('iframe[src*="K_2PZkxuNLY"]')
-    ).toBeInTheDocument();
-    expect(
-      document.querySelector('iframe[src*="bpG8KPCJ8EM"]')
-    ).toBeInTheDocument();
-    expect(
-      document.querySelector('iframe[src*="Vyo-kk0wRw4"]')
-    ).toBeInTheDocument();
+
+    // Videos render as click-to-play facades; no YouTube player JS mounts
+    // until a visitor presses play.
+    expect(document.querySelectorAll("iframe")).toHaveLength(0);
+    const playButtons = screen.getAllByRole("button", { name: /^play /i });
+    expect(playButtons).toHaveLength(4);
+    ["O94vKVHzamk", "K_2PZkxuNLY", "bpG8KPCJ8EM", "Vyo-kk0wRw4"].forEach(id =>
+      expect(
+        document.querySelector(`img[src*="i.ytimg.com/vi/${id}/"]`)
+      ).toBeInTheDocument()
+    );
     expect(
       document.querySelector('[data-video-variant="lineage"]')
     ).toHaveTextContent(/major lazer/i);
     expect(
       screen.queryByLabelText("Official video pending approval")
     ).not.toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /play ape drums — the full transmission/i,
+      })
+    );
+    const featuredFrame = document.querySelector(
+      'iframe[src*="youtube-nocookie.com/embed/O94vKVHzamk"]'
+    );
+    expect(featuredFrame).toBeInTheDocument();
+    expect(featuredFrame).toHaveAttribute(
+      "src",
+      expect.stringContaining("autoplay=1")
+    );
+    expect(document.querySelectorAll("iframe")).toHaveLength(1);
+
     expect(
       screen.getByRole("img", {
         name: "Ape Drums July 31 event artwork",

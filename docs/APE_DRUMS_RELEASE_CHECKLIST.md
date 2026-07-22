@@ -27,6 +27,7 @@ All required controls must resolve. If one is missing, the public route stays cl
 | `VITE_APE_DRUMS_TICKET_URL`             | Final `https://posh.vip/...` checkout URL             |
 | `VITE_APE_DRUMS_DOORS`                  | Approved public doors line, such as `Doors 10:00 PM`  |
 | `VITE_APE_DRUMS_HERO_IMAGE`             | Published `/images/...` path for approved July 31 art |
+| `VITE_APE_DRUMS_PROMO_IMAGE`            | Optional published `/images/...` path for the approved square cross-promo art |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Optional override for the owner-approved newest set   |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | Optional override for the second owner-approved video |
 | `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional override for the third owner-approved video  |
@@ -35,6 +36,8 @@ All required controls must resolve. If one is missing, the public route stays cl
 The solo videos default to the owner-approved IDs `O94vKVHzamk`, `K_2PZkxuNLY`, and `bpG8KPCJ8EM`. The fourth defaults to the approved Major Lazer lineage video `Vyo-kk0wRw4`. All remain sealed from the production bundle until the compile-time release and contract flags are open.
 
 Development preview reads the approved hero from `client/src/assets/private/ape-drums/ape-drums-july31-hero.png`. On release day, publish the approved asset into the production image pipeline and set `VITE_APE_DRUMS_HERO_IMAGE` to its final `/images/...` path. Keep unreleased campaign media out of `client/public` so sealed production builds cannot copy it.
+
+The square campaign art (`client/src/assets/private/ape-drums/ape-drums-july31-square.png` in development) powers the shared family cross-promo card that appears on sunsets.vip, untold.vip, and houseoffriends.vip the moment the release gate opens. Publish it alongside the hero and set `VITE_APE_DRUMS_PROMO_IMAGE`; without it, the card falls back to the approved hero image. The card routes internally to `/apedrums` and disappears only when the next confirmed booking replaces the assignment in `client/src/content/familyPromo.ts`.
 
 ## Monday release sequence
 
@@ -56,6 +59,7 @@ Set `VITE_APE_DRUMS_RELEASED=false` and redeploy. The public endpoint immediatel
 
 ## Content rules
 
+- Treat **Friday, July 31, 2026 at Kashmir** as the locked event fact. Never identify the venue as Sound-Bar.
 - Use “the biggest weekend of the Chicago summer” for seasonal context.
 - Do not use festival-adjacency naming in the event name, metadata, artwork, captions, ads, or ticket copy.
 - Use real ticket counts only. Never manufacture scarcity.

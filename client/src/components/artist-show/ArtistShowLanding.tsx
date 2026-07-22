@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -118,6 +118,8 @@ export interface ArtistShowLandingConfig {
     shortDate: string;
     dateParts: [string, string];
     fullDate: string;
+    /** ISO 8601 event date (e.g. "2026-07-31"), used for MusicEvent schema. */
+    startDate: string;
     venue: string;
     city: string;
     capacity: string;
@@ -198,11 +200,36 @@ function YouTubeFrame({
   title: string;
   featured?: boolean;
 }) {
+  const [activated, setActivated] = useState(false);
+
   if (!videoId) return <VideoPlaceholder featured={featured} />;
+
+  // Facade: render only the thumbnail until the visitor presses play, so the
+  // page never pulls YouTube's player JS for unwatched embeds.
+  if (!activated) {
+    return (
+      <button
+        type="button"
+        className="show-video-facade"
+        onClick={() => setActivated(true)}
+        aria-label={`Play ${title}`}
+      >
+        <img
+          src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <span className="show-video-facade__play" aria-hidden="true">
+          <Play />
+        </span>
+      </button>
+    );
+  }
 
   return (
     <iframe
-      src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`}
+      src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`}
       title={title}
       loading="lazy"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -210,6 +237,19 @@ function YouTubeFrame({
       allowFullScreen
     />
   );
+}
+
+function buildTicketUrl(url: string, placement: string, campaign: string) {
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.set("utm_source", "monolith_site");
+    parsed.searchParams.set("utm_medium", "landing_cta");
+    parsed.searchParams.set("utm_campaign", campaign);
+    parsed.searchParams.set("utm_content", placement);
+    return parsed.toString();
+  } catch {
+    return url;
+  }
 }
 
 function TicketCta({
@@ -249,7 +289,7 @@ function TicketCta({
 
   return (
     <a
-      href={release.ticketUrl}
+      href={buildTicketUrl(release.ticketUrl, placement, config.trackingPrefix)}
       className={className}
       target="_blank"
       rel="noopener noreferrer"
@@ -347,6 +387,43 @@ function AdditionalVideo({
   );
 }
 
+export function buildArtistShowEventSchema(
+  config: ArtistShowLandingConfig,
+  release: ArtistShowReleaseConfig
+) {
+  if (!release.publicReady) return undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "MusicEvent",
+    name: config.trackingContentName,
+    startDate: config.event.startDate,
+    eventStatus: "https://schema.org/EventScheduled",
+    performer: {
+      "@type": "MusicGroup",
+      name: config.artist.name,
+    },
+    location: {
+      "@type": "Place",
+      name: config.event.venue,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: config.event.city,
+      },
+    },
+    organizer: {
+      "@type": "Organization",
+      name: config.brand.presenter,
+    },
+    ...(release.heroImage ? { image: [release.heroImage] } : {}),
+    offers: {
+      "@type": "Offer",
+      url: release.ticketUrl,
+      availability: "https://schema.org/InStock",
+    },
+  };
+}
+
 export default function ArtistShowLanding({
   config,
   release,
@@ -376,6 +453,8 @@ export default function ArtistShowLanding({
     "--show-signal-rgb": hexToRgbChannels(config.theme.signal),
   } as CSSProperties;
 
+  const eventSchema = buildArtistShowEventSchema(config, release);
+
   useEffect(() => {
     if (preview || !release.publicReady) return;
 
@@ -399,6 +478,8 @@ export default function ArtistShowLanding({
         description={config.seo.description}
         canonicalPath={config.publicPath}
         absoluteTitle
+        image={release.heroImage || undefined}
+        schemaData={eventSchema}
         noIndex={preview || !release.publicReady}
       />
 

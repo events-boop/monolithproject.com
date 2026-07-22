@@ -71,9 +71,8 @@ describe("artist catalog", () => {
       image: "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
       imagePosition: "50% 26%",
       featuredVideo: {
-        url: "https://youtu.be/hdsT_dpQXqw",
-        title:
-          "Massuma Opening for Black Coffee – Live Afro House Set in Lagos (2026)",
+        url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
+        title: "Massuma - Live @ KOKO London | Afro & Melodic House Set (2026)",
         source: "MASSUMA (UK)",
       },
     });

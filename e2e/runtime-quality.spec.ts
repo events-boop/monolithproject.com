@@ -28,7 +28,7 @@ test("exact route aliases resolve the intended experiences", async ({
 }) => {
   await waitForAppReady(page, "/events");
   await expect(
-    page.getByRole("heading", { name: /upcoming shows/i })
+    page.getByRole("heading", { name: /the current calendar/i })
   ).toBeVisible();
 
   await waitForAppReady(page, "/untold-story");

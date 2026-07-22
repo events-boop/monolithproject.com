@@ -51,3 +51,12 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
       APE_DRUMS_MAJOR_LAZER_VIDEO_URL,
   ],
 });
+
+// Square campaign art for the family cross-promo card. Falls back to the
+// approved hero when no dedicated promo image is published.
+export const APE_DRUMS_PROMO_IMAGE =
+  import.meta.env.VITE_APE_DRUMS_PROMO_IMAGE ||
+  (import.meta.env.DEV
+    ? "/src/assets/private/ape-drums/ape-drums-july31-square.png"
+    : "") ||
+  APE_DRUMS_RELEASE.heroImage;

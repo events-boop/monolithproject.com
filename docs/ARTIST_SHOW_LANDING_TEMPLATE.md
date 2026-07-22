@@ -36,7 +36,7 @@ Every `ArtistShowLandingConfig` must define:
 5. Hero thesis, quick facts, and the optional mid-page conversion moments.
 6. Monolith booking story and real capacity statement.
 7. Featured video copy and optional additional video slots.
-8. Full date, short date, venue, city, capacity, age, timing, and conversion note.
+8. Full date, ISO 8601 start date, short date, venue, city, capacity, age, timing, and conversion note.
 9. Monolith family footer links.
 
 ## Media standard
@@ -49,7 +49,7 @@ Every `ArtistShowLandingConfig` must define:
 - Featured video: newest owner-approved full set when available.
 - Additional videos: official or explicitly owner-approved YouTube sources only.
 - Lineage video: use the `lineage` variant for a meaningful group, label, or collaboration connection; place it last so it closes the watch chapter.
-- YouTube playback uses privacy-enhanced embeds.
+- YouTube playback uses privacy-enhanced embeds mounted behind a thumbnail facade; the player JS only loads after the visitor presses play.
 
 ## Release architecture
 
@@ -68,7 +68,8 @@ The route stays closed if any required input is missing. The page component must
 
 - CRM SMS and email can route directly to checkout.
 - Public social, press, and ad traffic routes to the Monolith artist page.
-- Every ticket CTA on the page routes to the same verified checkout URL.
+- Every ticket CTA on the page routes to the same verified checkout URL, with `utm_source=monolith_site`, `utm_campaign=<tracking prefix>`, and a per-placement `utm_content` value appended so checkout-side reporting can attribute each CTA position.
+- Once released, the page serves the approved hero art as its social share image and emits a `MusicEvent` JSON-LD block (ISO start date, venue, performer, checkout offer).
 - No extra waitlist handoff is inserted into an on-sale conversion path unless the campaign explicitly requires one.
 
 ## Clone process

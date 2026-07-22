@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
+import FamilyEventPromo from "@/components/FamilyEventPromo";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import CommunityContributionSection, {
   COMMUNITY_UPLOAD_URL,
 } from "@/components/CommunityContributionSection";
+import { FAMILY_PROMO } from "@/content/familyPromo";
 import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
@@ -917,6 +919,11 @@ export default function SunsetsLinkBio() {
               aria-hidden="true"
             />
           </a>
+          {FAMILY_PROMO ? (
+            <div className="mt-2.5">
+              <FamilyEventPromo />
+            </div>
+          ) : null}
           <a
             href={UNTOLD_VIP_HREF}
             target="_blank"

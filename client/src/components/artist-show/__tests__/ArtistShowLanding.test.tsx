@@ -1,8 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it } from "vitest";
 import ArtistShowLanding, {
+  buildArtistShowEventSchema,
   type ArtistShowLandingConfig,
 } from "../ArtistShowLanding";
 import { resolveArtistShowRelease } from "@/lib/artistShowRelease";
@@ -83,6 +84,7 @@ const templateConfig: ArtistShowLandingConfig = {
     shortDate: "09.09",
     dateParts: ["09", "09"],
     fullDate: "Wednesday, September 9, 2026",
+    startDate: "2026-09-09",
     venue: "Test Room",
     city: "Chicago",
     capacity: "200",
@@ -122,13 +124,28 @@ describe("ArtistShowLanding template", () => {
     ).toBeVisible();
     expect(screen.getByText(/reusable artist biography/i)).toBeVisible();
     expect(screen.getByText("10K")).toBeVisible();
+
+    // The video renders as a facade first; the player mounts on play.
+    expect(container.querySelector("iframe")).toBeNull();
+    expect(
+      container.querySelector('img[src*="i.ytimg.com/vi/O94vKVHzamk/"]')
+    ).toBeTruthy();
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /play template artist — full transmission/i,
+      })
+    );
     expect(container.querySelector('iframe[src*="O94vKVHzamk"]')).toBeTruthy();
+
     expect(container.querySelector(".show-page")).toHaveStyle(
       "--show-accent: #315caa"
     );
     expect(
       container.querySelectorAll('[data-release-gate="closed"]')
     ).toHaveLength(5);
+
+    // Sealed drafts never emit event schema.
+    expect(buildArtistShowEventSchema(templateConfig, release)).toBeUndefined();
   });
 
   it("routes every conversion endpoint through one verified checkout", () => {
@@ -153,10 +170,34 @@ describe("ArtistShowLanding template", () => {
     );
 
     const ticketLinks = Array.from(
-      container.querySelectorAll<HTMLAnchorElement>(`a[href="${ticketUrl}"]`)
+      container.querySelectorAll<HTMLAnchorElement>(
+        `a[href^="${ticketUrl}"]`
+      )
     );
 
     expect(ticketLinks).toHaveLength(5);
-    expect(ticketLinks.every(link => link.href === ticketUrl)).toBe(true);
+    expect(
+      ticketLinks.map(link =>
+        new URL(link.href).searchParams.get("utm_content")
+      )
+    ).toEqual(["header", "hero", "profile", "sound", "details"]);
+    ticketLinks.forEach(link => {
+      const url = new URL(link.href);
+      expect(`${url.origin}${url.pathname}`).toBe(ticketUrl);
+      expect(url.searchParams.get("utm_source")).toBe("monolith_site");
+      expect(url.searchParams.get("utm_medium")).toBe("landing_cta");
+      expect(url.searchParams.get("utm_campaign")).toBe("template_artist");
+    });
+
+    // Released pages emit MusicEvent structured data for search.
+    const schema = buildArtistShowEventSchema(templateConfig, release);
+    expect(schema).toMatchObject({
+      "@type": "MusicEvent",
+      name: "Template Artist at Test Room",
+      startDate: "2026-09-09",
+      performer: { name: "Template Artist" },
+      location: { name: "Test Room" },
+      offers: { url: ticketUrl },
+    });
   });
 });
