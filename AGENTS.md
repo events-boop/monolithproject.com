@@ -16,9 +16,11 @@ Both commands must resolve to the exact path above. If either differs, stop and
 switch to this checkout. Do not infer repository identity from matching files,
 routes, branches, or content.
 
-The nested checkout at
+The former nested checkout at
 `/Users/starkindustries/Documents/GitHub/Fairgrounds-dev/monolithproject.com`
-is stale and read-only. Never transfer work back into it.
+has been removed and must not be recreated. Its preserved read-only archive is
+`/Users/starkindustries/Documents/GitHub/_archive/monolithproject.com-stale-20260722`.
+Never transfer work into the archive.
 
 Preserve existing user changes and keep all Monolith website commits in this
 canonical repository.
