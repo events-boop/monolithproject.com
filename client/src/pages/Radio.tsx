@@ -84,7 +84,7 @@ const episodeScenes: Record<
     mode: "sunsets",
   },
   "ep-02-ewerseen": {
-    heroImage: "/images/artist-ewerseen.png",
+    heroImage: "/images/artist-ewerseen-2026.png",
     signal: "Guest mix",
     region: "Peak-hour drive",
     mode: "sunsets",

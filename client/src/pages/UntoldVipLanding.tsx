@@ -54,7 +54,7 @@ const PREVIOUS_SHOWS = [
     schemaDate: "2026-05-16",
     venue: "Hideaway Chicago",
     location: "Chicago, IL",
-    image: "/images/eran-hersh-untold-story-iv.jpg",
+    image: "/images/eran-hersh-untold-story-iv-bw.jpg",
     href: "/events/eran-hersh-untold-story-iv",
     ctaLabel: "View Event",
     note: "Afro and melodic house pressure carried the room from peak-hour movement into the late finish.",
