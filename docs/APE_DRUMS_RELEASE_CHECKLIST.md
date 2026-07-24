@@ -20,18 +20,18 @@ Status: **sealed draft**. Do not release before the countersigned contract is co
 
 All required controls must resolve. If one is missing, the public route stays closed.
 
-| Environment variable                    | Required value                                        |
-| --------------------------------------- | ----------------------------------------------------- |
-| `VITE_APE_DRUMS_RELEASED`               | `true`                                                |
-| `VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED` | `true`                                                |
-| `VITE_APE_DRUMS_TICKET_URL`             | Final `https://posh.vip/...` checkout URL             |
-| `VITE_APE_DRUMS_DOORS`                  | Approved public doors line, such as `Doors 10:00 PM`  |
-| `VITE_APE_DRUMS_HERO_IMAGE`             | Published `/images/...` path for approved July 31 art |
-| `VITE_APE_DRUMS_PROMO_IMAGE`            | Optional published `/images/...` path for the approved square cross-promo art |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Optional override for the owner-approved newest set   |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | Optional override for the second owner-approved video |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional override for the third owner-approved video  |
-| `VITE_APE_DRUMS_APPROVED_VIDEO_4_URL`   | Optional override for the Major Lazer lineage video   |
+| Environment variable                    | Required value                                                                                    |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `VITE_APE_DRUMS_RELEASED`               | `true`                                                                                            |
+| `VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED` | `true`                                                                                            |
+| `VITE_APE_DRUMS_TICKET_URL`             | `https://posh.vip/e/monolith-project-presents-ape-drums?u=erik&_t=mrzne6d7&os=ios&src=event_page` |
+| `VITE_APE_DRUMS_DOORS`                  | Approved public doors line, such as `Doors 10:00 PM`                                              |
+| `VITE_APE_DRUMS_HERO_IMAGE`             | Published `/images/...` path for approved July 31 art                                             |
+| `VITE_APE_DRUMS_PROMO_IMAGE`            | Optional published `/images/...` path for the approved square cross-promo art                     |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_1_URL`   | Optional override for the owner-approved newest set                                               |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_2_URL`   | Optional override for the second owner-approved video                                             |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_3_URL`   | Optional override for the third owner-approved video                                              |
+| `VITE_APE_DRUMS_APPROVED_VIDEO_4_URL`   | Optional override for the Major Lazer lineage video                                               |
 
 The solo videos default to the owner-approved IDs `O94vKVHzamk`, `K_2PZkxuNLY`, and `bpG8KPCJ8EM`. The fourth defaults to the approved Major Lazer lineage video `Vyo-kk0wRw4`. All remain sealed from the production bundle until the compile-time release and contract flags are open.
 

@@ -128,19 +128,61 @@ export default function ArtistProfile() {
       ? { href: "/tickets", label: CTA_LABELS.tickets }
       : { href: "/schedule", label: CTA_LABELS.schedule };
 
+  const hasEvents = Boolean(artist.events?.length);
   const hasPreviousSets = Boolean(artist.previousSets?.length);
   const hasGallery = Boolean(artist.gallery?.length);
   const sectionNumber = (value: number) => String(value).padStart(2, "0");
-  const gallerySectionNumber = sectionNumber(2 + Number(hasPreviousSets));
-  const videoSectionNumber = sectionNumber(
-    2 + Number(hasPreviousSets) + Number(hasGallery)
-  );
-  const tracksSectionNumber = sectionNumber(
-    2 +
-      Number(hasPreviousSets) +
-      Number(hasGallery) +
-      Number(Boolean(artist.featuredVideo))
-  );
+
+  let currentSec = 1;
+  const eventsSectionNumber = hasEvents ? sectionNumber(++currentSec) : "";
+  const previousSetsSectionNumber = hasPreviousSets
+    ? sectionNumber(++currentSec)
+    : "";
+  const gallerySectionNumber = hasGallery ? sectionNumber(++currentSec) : "";
+  const videoSectionNumber = artist.featuredVideo
+    ? sectionNumber(++currentSec)
+    : "";
+  const tracksSectionNumber = artist.tracks?.length
+    ? sectionNumber(++currentSec)
+    : "";
+
+  const nextArtistEvent =
+    artist.events?.find(
+      e => e.status === "on-sale" || e.status === "upcoming"
+    ) || artist.events?.[0];
+  const sidebarEvent = nextArtistEvent
+    ? {
+        series:
+          nextArtistEvent.series === "untold-story"
+            ? "Untold Story"
+            : nextArtistEvent.series === "chasing-sunsets"
+              ? "Chasing Sun(Sets)"
+              : "Special Booking",
+        date: nextArtistEvent.date,
+        venue: nextArtistEvent.venue,
+        city: nextArtistEvent.city || "Chicago, IL",
+        href:
+          nextArtistEvent.ticketUrl ||
+          nextArtistEvent.eventUrl ||
+          primaryAction.href,
+        label: nextArtistEvent.ticketUrl ? "Get Tickets" : "View Show",
+        isExternal: Boolean(
+          nextArtistEvent.ticketUrl &&
+          nextArtistEvent.ticketUrl.startsWith("http")
+        ),
+      }
+    : {
+        series:
+          primarySeries === "untold-story"
+            ? "Untold Story"
+            : "Chasing Sun(Sets)",
+        date: nextSeriesEvent?.date || "August 2026",
+        venue: nextSeriesEvent?.venue || "Reveal TBA",
+        city: nextSeriesEvent?.location || "Chicago, IL",
+        href: primaryAction.href,
+        label: primaryAction.label,
+        isExternal: false,
+      };
 
   return (
     <div
@@ -365,12 +407,109 @@ export default function ArtistProfile() {
               </div>
             </div>
 
+            {/* Upcoming Shows & Event Routing Section */}
+            {artist.events && artist.events.length > 0 && (
+              <div className="space-y-12">
+                <div className="flex items-center gap-4 text-white/70">
+                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
+                    {eventsSectionNumber} / Scheduled Shows
+                  </span>
+                  <div className="h-px w-20 bg-current" />
+                </div>
+                <div className="grid grid-cols-1 gap-6">
+                  {artist.events.map((evt, i) => (
+                    <motion.div
+                      key={evt.id || evt.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      className="p-8 md:p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] hover:border-white/20 transition-all group relative overflow-hidden"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-8 items-center">
+                        {evt.cardImage && (
+                          <div className="relative aspect-[9/16] max-w-[180px] w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl group-hover:border-white/30 transition-all">
+                            <ResponsiveImage
+                              src={evt.cardImage}
+                              alt={evt.title}
+                              sizes="180px"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                        )}
+                        <div className="flex flex-col justify-between h-full">
+                          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                            <div className="flex items-center gap-3">
+                              <span className="font-mono text-[10px] tracking-[0.4em] uppercase px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary">
+                                {evt.badge || evt.status || "UPCOMING"}
+                              </span>
+                              <span className="font-mono text-[10px] tracking-[0.3em] text-white/50 uppercase">
+                                {evt.date}
+                              </span>
+                            </div>
+                            <span className="font-mono text-[10px] tracking-[0.3em] text-white/50 uppercase">
+                              {evt.venue} · {evt.city || "Chicago, IL"}
+                            </span>
+                          </div>
+
+                          <h3 className="font-display text-3xl md:text-4xl uppercase tracking-widest text-white mb-3">
+                            {evt.title}
+                          </h3>
+
+                          {evt.description && (
+                            <p className="font-serif text-lg leading-relaxed text-white/70 mb-6 max-w-2xl">
+                              {evt.description}
+                            </p>
+                          )}
+
+                          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
+                            {evt.ticketUrl && (
+                              <MagneticButton strength={0.25}>
+                                <a
+                                  href={evt.ticketUrl}
+                                  target={
+                                    evt.ticketUrl.startsWith("http")
+                                      ? "_blank"
+                                      : "_self"
+                                  }
+                                  rel={
+                                    evt.ticketUrl.startsWith("http")
+                                      ? "noreferrer"
+                                      : undefined
+                                  }
+                                  className="btn-pill-monolith group inline-flex items-center gap-2"
+                                >
+                                  <span>Get Tickets</span>
+                                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </a>
+                              </MagneticButton>
+                            )}
+
+                            {evt.eventUrl && (
+                              <Link href={evt.eventUrl} asChild>
+                                <a
+                                  className={`${outlinePillClass} group inline-flex items-center gap-2`}
+                                >
+                                  <span>Show Details</span>
+                                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                </a>
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Previous Sets Section */}
             {artist.previousSets && artist.previousSets.length > 0 && (
               <div className="space-y-12">
                 <div className="flex items-center gap-4 text-white/70">
                   <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                    02 / Recorded Rituals
+                    {previousSetsSectionNumber} / Recorded Sets
                   </span>
                   <div className="h-px w-20 bg-current" />
                 </div>
@@ -563,7 +702,7 @@ export default function ArtistProfile() {
 
           {/* Right Content — Sidebar Glass Bento */}
           <div className="lg:col-span-12 xl:col-span-5 flex flex-col gap-8">
-            {/* Next Ritual Card */}
+            {/* Next Event Card */}
             <div className="p-10 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
                 <Share2 className="w-4 h-4 hover:text-primary cursor-pointer transition-colors" />
@@ -581,22 +720,19 @@ export default function ArtistProfile() {
                 {[
                   {
                     label: "Series",
-                    value:
-                      primarySeries === "untold-story"
-                        ? "Untold Story"
-                        : "Chasing Sun(Sets)",
+                    value: sidebarEvent.series,
                   },
                   {
                     label: "Date",
-                    value: nextSeriesEvent?.date || "August 2026",
+                    value: sidebarEvent.date,
                   },
                   {
                     label: "Venue",
-                    value: nextSeriesEvent?.venue || "Reveal TBA",
+                    value: sidebarEvent.venue,
                   },
                   {
                     label: "City",
-                    value: nextSeriesEvent?.location || "Chicago, IL",
+                    value: sidebarEvent.city,
                   },
                 ].map(spec => (
                   <div key={spec.label} className="flex flex-col gap-1">
@@ -610,12 +746,26 @@ export default function ArtistProfile() {
                 ))}
               </div>
 
-              <Link href={primaryAction.href} asChild>
-                <a className={`${outlinePillClass} btn-pill-wide group`}>
-                  {primaryAction.label}
-                  <ArrowRight className="w-4 h-4" />
+              {sidebarEvent.isExternal ? (
+                <a
+                  href={sidebarEvent.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`${outlinePillClass} btn-pill-wide group flex items-center justify-between`}
+                >
+                  <span>{sidebarEvent.label}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </a>
-              </Link>
+              ) : (
+                <Link href={sidebarEvent.href} asChild>
+                  <a
+                    className={`${outlinePillClass} btn-pill-wide group flex items-center justify-between`}
+                  >
+                    <span>{sidebarEvent.label}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Link>
+              )}
             </div>
 
             {/* Connection Card */}

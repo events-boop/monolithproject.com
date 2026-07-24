@@ -40,6 +40,19 @@ const SEASON_PASS_HREF = "https://laylo.com/monolithproject/IQ5HaR/details";
 const SEASON_III_PROOF_IMAGE = "/images/sunsets-season-iii-joezi-proof.png";
 const MASSUMA_SEP19_ARTWORK =
   "/images/events/sunsets-2026-09-19/massuma-official-artwork.png";
+// Season III headliner live sets — same YouTube embeds as the artist profiles.
+const SEASON_III_LIVE_SETS = [
+  {
+    artist: "Joezi",
+    label: "Live at SOLLUNA Festival · W2026",
+    url: "https://youtu.be/qMWZngFojK0",
+  },
+  {
+    artist: "Massuma (UK)",
+    label: "Live @ KOKO London · 2026",
+    url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
+  },
+] as const;
 const LAKE_LIST_HREF = "/go/lakelist";
 // Live channel row at the bottom of the page. untold.vip serves its own
 // cert + host-detected landing (verified live 2026-07-01); the broadcast
@@ -581,6 +594,32 @@ export default function SunsetsLinkBio() {
                 aria-hidden="true"
               />
             </a>
+          </div>
+        </section>
+
+        {/* 4b. Season III headliners — Joezi x Massuma (UK) live sets. */}
+        <section className="mt-6" aria-label="Joezi and Massuma (UK) live sets">
+          <p className="text-center font-serif text-sm italic text-stone-300">
+            September 19 headliners, live.
+          </p>
+          <div className="mt-3 space-y-5">
+            {SEASON_III_LIVE_SETS.map(set => (
+              <div key={set.url}>
+                <div className="sunsets-vip-frame sunsets-vip-frame-media relative aspect-video w-full overflow-hidden border border-[#E8B86D]/20 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+                  <YouTubeEmbed
+                    url={set.url}
+                    title={`${set.artist} — ${set.label}`}
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+                <p className="mt-2 text-center text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+                  {set.artist}{" "}
+                  <span className="font-semibold normal-case tracking-normal text-stone-400">
+                    · {set.label}
+                  </span>
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 

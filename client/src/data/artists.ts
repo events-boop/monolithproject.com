@@ -12,9 +12,33 @@ export interface ArtistData {
   series: [ArtistSeries, ...ArtistSeries[]];
   bio: string;
   tags: string[];
-  socials: { instagram?: string; website?: string };
+  socials: {
+    instagram?: string;
+    website?: string;
+    soundcloud?: string;
+    spotify?: string;
+  };
   tracks: { title: string; duration: string }[];
   previousSets?: { title: string; date: string; url?: string }[];
+  events?: {
+    id: string;
+    title: string;
+    series?:
+      | "chasing-sunsets"
+      | "untold-story"
+      | "sunsets-radio"
+      | "monolith-launch"
+      | "special-event";
+    date: string;
+    venue: string;
+    city?: string;
+    status?: "upcoming" | "past" | "on-sale" | "sold-out" | "first-access";
+    ticketUrl?: string;
+    eventUrl?: string;
+    cardImage?: string;
+    description?: string;
+    badge?: string;
+  }[];
   galleryCredit?: string;
   galleryLabel?: string;
   gallery?: { src: string; alt: string }[];
@@ -48,12 +72,69 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     ],
   },
   {
+    id: "ape-drums",
+    name: "APE DRUMS",
+    role: "SPECIAL GUEST · HEADLINER",
+    origin: "HOUSTON / MIAMI, US",
+    genre: "AFRO-TECH · AFRO HOUSE",
+    image: "/images/artist-ape-drums.jpg",
+    imagePosition: "50% 25%",
+    series: ["untold-story", "chasing-sunsets"],
+    bio: "Eric Alberto-Lopez, professionally known as Ape Drums, is a Grammy-nominated, genre-bending DJ and producer whose path began with cassette-tape daydreams in Houston. Officially joining Major Lazer in 2019, he is now pushing beyond festival mainstages into a darker, rawer Afro-tech and Afro-house sound. Breakdance-rooted timing and a physical understanding of rhythm guide every record and set.",
+    tags: [
+      "Afro-Tech",
+      "Afro House",
+      "Major Lazer",
+      "Grammy Nominated",
+      "July 31",
+    ],
+    socials: {
+      instagram: "https://instagram.com/apedrums",
+      website: "https://www.apedrums.com/",
+    },
+    tracks: [
+      { title: "Gimme Di Teppa", duration: "4:12" },
+      { title: "Delete", duration: "3:48" },
+      { title: "The Way", duration: "5:05" },
+    ],
+    events: [
+      {
+        id: "ape-drums-kashmir-july-31-2026",
+        title: "Ape Drums at Kashmir",
+        series: "untold-story",
+        date: "Friday, July 31, 2026",
+        venue: "Kashmir Chicago",
+        city: "Chicago, IL",
+        status: "on-sale",
+        badge: "ON SALE · 350 CAP",
+        ticketUrl:
+          "https://posh.vip/e/monolith-project-presents-ape-drums?u=erik&_t=mrzne6d7&os=ios&src=event_page",
+        eventUrl: "/events/ape-drums-kashmir-july-31-2026",
+        cardImage: "/images/events/ape-drums-july31-card.jpg",
+        description:
+          "A 350-capacity late-night room built around where Ape Drums is moving next. Darker pressure, warmer rhythm.",
+      },
+    ],
+    previousSets: [
+      {
+        title: "Major Lazer World Tour Sessions",
+        date: "2024–2025",
+        url: "https://www.apedrums.com/",
+      },
+      {
+        title: "Live Transmission · Afro-Tech Chapter",
+        date: "2026",
+        url: "https://www.youtube.com/results?search_query=ape+drums+live",
+      },
+    ],
+  },
+  {
     id: "lazare",
     name: "LAZARE SABRY",
     role: "HEADLINER",
     origin: "CHICAGO, US",
     genre: "MELODIC HOUSE · TECHNO",
-    image: "/images/artist-lazare-press.jpg",
+    image: "/images/lazare-recap.webp",
     series: ["untold-story"],
     bio: "Over 100 million spins and counting on hit songs. Lazare Sabry is a headliner for record night at Carbon Night Club Chicago, bringing a sophisticated blend of melodic house, deep techno, and progressive rhythms.",
     tags: ["Headliner", "Melodic", "House"],
@@ -294,7 +375,8 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     role: "RESIDENT DJ",
     origin: "AMSTERDAM, NL",
     genre: "AFRO HOUSE · ORGANIC",
-    image: "/images/artist-ewerseen-2026.png",
+    image: "/images/artist-ewerseen-2026-v2.jpg",
+    imagePosition: "50% 35%",
     series: ["sunsets-radio", "chasing-sunsets"],
     bio: "EWERSEEN merges afro and organic palettes with clean structure and deep rhythmic progression.",
     tags: ["Resident DJ", "Afro House", "Organic", "Radio"],

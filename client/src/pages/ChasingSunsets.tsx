@@ -12,7 +12,6 @@ import ChasingSunsetsDetails from "@/components/ChasingSunsetsDetails";
 import ChasingSunsetsTicketing from "@/components/ChasingSunsetsTicketing";
 import EpisodeGallery from "@/components/EpisodeGallery";
 import SeasonAnchorNav from "@/components/SeasonAnchorNav";
-import VideoHeroSlider, { Slide } from "@/components/VideoHeroSlider";
 import SEO from "@/components/SEO";
 import useScrollSunset from "@/hooks/useScrollSunset";
 import { useState } from "react";
@@ -28,7 +27,6 @@ import JoinSignalSection from "@/components/JoinSignalSection";
 import Section from "@/components/layout/Section";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
-import { getResponsiveImage } from "@/lib/responsiveImages";
 import { CTA_LABELS } from "@/lib/cta";
 import { CHASING_SUNSETS_DROP_URL } from "@/lib/dropLinks";
 import {
@@ -52,36 +50,7 @@ import { usePublicSiteDataVersion } from "@/lib/siteData";
 import SplitText from "@/components/ui/SplitText";
 import HorizonDiscMark from "@/components/HorizonDiscMark";
 
-const chasingPosterImage = getResponsiveImage("chasingSunsets");
-const chasingHeroImage = getResponsiveImage("chasingSunsets");
-
-const CHASING_SUNSETS_SLIDES: Slide[] = [
-  {
-    type: "video",
-    src: "/videos/hero-video-1.mp4",
-    mobileSrc: "/videos/hero-video-1-mobile.mp4",
-    poster: chasingPosterImage.src,
-    posterSources: chasingPosterImage.sources,
-    posterSizes: chasingPosterImage.sizes,
-    caption: "THE MONOLITH PROJECT",
-  },
-  {
-    type: "image",
-    src: chasingHeroImage.src,
-    sources: chasingHeroImage.sources,
-    sizes: chasingHeroImage.sizes,
-    alt: "July 4 · Castaways Atmosphere",
-    caption: "CHASING SUN(SETS) | GOLDEN HOUR",
-    className: "object-contain object-center",
-  },
-  {
-    type: "image",
-    src: "/images/chasing-sunsets-1.jpg",
-    alt: "Rooftop Crowd at Sunset",
-    caption: "CHASING SUN(SETS) | THE CROWD",
-    className: "object-contain object-center",
-  },
-];
+const CHASING_SUNSETS_HERO_IMAGE = "/images/chasing-sunsets-castaways-hero.png";
 
 const CHASING_ANCHORS = [
   { label: "Hero", href: "#chasing-hero" },
@@ -214,7 +183,16 @@ export default function ChasingSunsets() {
           aria-labelledby="chasing-hero-title"
           className="hero-shell-start relative flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-black/40 backdrop-blur-sm px-6 pb-16 pt-24 screen-shell-stable sm:justify-end sm:pb-28 sm:pt-0"
         >
-          <VideoHeroSlider slides={CHASING_SUNSETS_SLIDES} />
+          <ResponsiveImage
+            src={CHASING_SUNSETS_HERO_IMAGE}
+            alt="Aerial view of a crowded Castaways Beach Club on Lake Michigan at sunset"
+            sizes="100vw"
+            width={1697}
+            height={927}
+            priority
+            draggable={false}
+            className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
+          />
           <div className="absolute inset-0 z-10 pointer-events-none bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.4)_60%,rgba(0,0,0,0.8)_100%)]" />
 
           <div className="container layout-default relative z-20 mt-auto pointer-events-none">
@@ -525,7 +503,7 @@ export default function ChasingSunsets() {
                 </p>
                 <p className="mt-5 leading-relaxed sunset-text-70">
                   This is not a holiday party. It is the return of a Chicago
-                  summer ritual: open air, skyline views, house music, and a
+                  summer tradition: open air, skyline views, house music, and a
                   crowd built around connection.
                 </p>
               </article>

@@ -48,7 +48,7 @@ test("EWERSEEN profile and lineup use the supplied artwork", async ({
 
   await expect(page.getByAltText("EWERSEEN").first()).toHaveAttribute(
     "src",
-    "/images/artist-ewerseen.png"
+    "/images/artist-ewerseen-2026-v2.jpg"
   );
 
   await page.goto("/lineup", { waitUntil: "domcontentloaded" });
@@ -56,6 +56,6 @@ test("EWERSEEN profile and lineup use the supplied artwork", async ({
 
   await expect(page.getByAltText("EWERSEEN").first()).toHaveAttribute(
     "src",
-    "/images/artist-ewerseen.png"
+    "/images/artist-ewerseen-2026-v2.jpg"
   );
 });

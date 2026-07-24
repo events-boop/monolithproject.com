@@ -15,6 +15,8 @@ export type ApeDrumsReleaseInput = Omit<
 >;
 export type ApeDrumsReleaseConfig = ArtistShowReleaseConfig;
 
+export const APE_DRUMS_TICKET_URL =
+  "https://posh.vip/e/monolith-project-presents-ape-drums?u=erik&_t=mrzne6d7&os=ios&src=event_page";
 export const APE_DRUMS_FEATURED_SET_URL =
   "https://www.youtube.com/watch?v=O94vKVHzamk";
 export const APE_DRUMS_HERO_IMAGE = import.meta.env.DEV
@@ -37,7 +39,7 @@ export function resolveApeDrumsRelease(input: ApeDrumsReleaseInput) {
 export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
   releaseRequested: import.meta.env.VITE_APE_DRUMS_RELEASED,
   contractCountersigned: import.meta.env.VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED,
-  ticketUrl: import.meta.env.VITE_APE_DRUMS_TICKET_URL,
+  ticketUrl: import.meta.env.VITE_APE_DRUMS_TICKET_URL || APE_DRUMS_TICKET_URL,
   doors: import.meta.env.VITE_APE_DRUMS_DOORS,
   heroImage: import.meta.env.VITE_APE_DRUMS_HERO_IMAGE || APE_DRUMS_HERO_IMAGE,
   approvedVideoUrls: [

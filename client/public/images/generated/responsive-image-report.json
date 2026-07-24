@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T06:31:58.295Z",
+  "generatedAt": "2026-07-24T20:30:56.109Z",
   "defaultWidths": [
     480,
     1024
@@ -31,10 +31,10 @@
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 236981640,
-    "estimatedTransferBytes": 9923143,
-    "estimatedSavingsBytes": 227149111,
-    "variantBytes": 51647842
+    "originalBytes": 242236543,
+    "estimatedTransferBytes": 10200964,
+    "estimatedSavingsBytes": 232126193,
+    "variantBytes": 52699600
   },
   "images": [
     {
@@ -874,6 +874,44 @@
       "estimatedSavingsPct": 88
     },
     {
+      "source": "/images/artist-ape-drums.jpg",
+      "originalBytes": 152976,
+      "originalKb": 149.4,
+      "originalWidth": 1067,
+      "originalHeight": 1600,
+      "generatedBaseName": "artist-ape-drums",
+      "variants": [
+        {
+          "path": "/images/generated/artist-ape-drums-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8184
+        },
+        {
+          "path": "/images/generated/artist-ape-drums-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 10418
+        },
+        {
+          "path": "/images/generated/artist-ape-drums-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 21712
+        },
+        {
+          "path": "/images/generated/artist-ape-drums-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 32434
+        }
+      ],
+      "estimatedTransferBytes": 21712,
+      "estimatedTransferKb": 21.2,
+      "estimatedSavingsBytes": 131264,
+      "estimatedSavingsPct": 86
+    },
+    {
       "source": "/images/artist-autograf-new.jpg",
       "originalBytes": 270352,
       "originalKb": 264,
@@ -986,6 +1024,70 @@
       "estimatedTransferKb": 43.2,
       "estimatedSavingsBytes": 13688,
       "estimatedSavingsPct": 24
+    },
+    {
+      "source": "/images/artist-ewerseen-2026-v2.jpg",
+      "originalBytes": 20323,
+      "originalKb": 19.8,
+      "originalWidth": 447,
+      "originalHeight": 447,
+      "generatedBaseName": "artist-ewerseen-2026-v2",
+      "variants": [
+        {
+          "path": "/images/generated/artist-ewerseen-2026-v2-447.avif",
+          "width": 447,
+          "format": "avif",
+          "bytes": 10264
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-2026-v2-447.webp",
+          "width": 447,
+          "format": "webp",
+          "bytes": 11134
+        }
+      ],
+      "estimatedTransferBytes": 10264,
+      "estimatedTransferKb": 10,
+      "estimatedSavingsBytes": 10059,
+      "estimatedSavingsPct": 49
+    },
+    {
+      "source": "/images/artist-ewerseen-2026.png",
+      "originalBytes": 2737686,
+      "originalKb": 2673.5,
+      "originalWidth": 1645,
+      "originalHeight": 833,
+      "generatedBaseName": "artist-ewerseen-2026",
+      "variants": [
+        {
+          "path": "/images/generated/artist-ewerseen-2026-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 40278
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-2026-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 38252
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-2026-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 141350
+        },
+        {
+          "path": "/images/generated/artist-ewerseen-2026-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 138756
+        }
+      ],
+      "estimatedTransferBytes": 138756,
+      "estimatedTransferKb": 135.5,
+      "estimatedSavingsBytes": 2598930,
+      "estimatedSavingsPct": 95
     },
     {
       "source": "/images/artist-ewerseen.png",
@@ -2696,6 +2798,56 @@
       "estimatedSavingsPct": 27
     },
     {
+      "source": "/images/chasing-sunsets-castaways-hero.png",
+      "originalBytes": 2194112,
+      "originalKb": 2142.7,
+      "originalWidth": 1697,
+      "originalHeight": 927,
+      "generatedBaseName": "chasing-sunsets-castaways-hero",
+      "variants": [
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 20661
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 21176
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 71808
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 76924
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-1600.avif",
+          "width": 1600,
+          "format": "avif",
+          "bytes": 126467
+        },
+        {
+          "path": "/images/generated/chasing-sunsets-castaways-hero-1600.webp",
+          "width": 1600,
+          "format": "webp",
+          "bytes": 149754
+        }
+      ],
+      "estimatedTransferBytes": 71808,
+      "estimatedTransferKb": 70.1,
+      "estimatedSavingsBytes": 2122304,
+      "estimatedSavingsPct": 97
+    },
+    {
       "source": "/images/chasing-sunsets-firstaccess-flyer.png",
       "originalBytes": 229349,
       "originalKb": 224,
@@ -3126,6 +3278,44 @@
       "estimatedSavingsPct": 68
     },
     {
+      "source": "/images/eran-hersh-untold-story-iv-bw.jpg",
+      "originalBytes": 69711,
+      "originalKb": 68.1,
+      "originalWidth": 821,
+      "originalHeight": 737,
+      "generatedBaseName": "eran-hersh-untold-story-iv-bw",
+      "variants": [
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-bw-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 8200
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-bw-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 9756
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-bw-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 16669
+        },
+        {
+          "path": "/images/generated/eran-hersh-untold-story-iv-bw-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 20936
+        }
+      ],
+      "estimatedTransferBytes": 16669,
+      "estimatedTransferKb": 16.3,
+      "estimatedSavingsBytes": 53042,
+      "estimatedSavingsPct": 76
+    },
+    {
       "source": "/images/eran-hersh-untold-story-iv.jpg",
       "originalBytes": 69711,
       "originalKb": 68.1,
@@ -3162,6 +3352,44 @@
       "estimatedTransferKb": 16.3,
       "estimatedSavingsBytes": 53042,
       "estimatedSavingsPct": 76
+    },
+    {
+      "source": "/images/events/ape-drums-july31-card.jpg",
+      "originalBytes": 80095,
+      "originalKb": 78.2,
+      "originalWidth": 576,
+      "originalHeight": 1024,
+      "generatedBaseName": "events-ape-drums-july31-card",
+      "variants": [
+        {
+          "path": "/images/generated/events-ape-drums-july31-card-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 15133
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-card-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 19344
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-card-1024.avif",
+          "width": 1024,
+          "format": "avif",
+          "bytes": 18612
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-card-1024.webp",
+          "width": 1024,
+          "format": "webp",
+          "bytes": 23536
+        }
+      ],
+      "estimatedTransferBytes": 18612,
+      "estimatedTransferKb": 18.2,
+      "estimatedSavingsBytes": 61483,
+      "estimatedSavingsPct": 77
     },
     {
       "source": "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",

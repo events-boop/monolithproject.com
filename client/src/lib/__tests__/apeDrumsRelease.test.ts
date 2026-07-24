@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   APE_DRUMS_RELEASE,
+  APE_DRUMS_TICKET_URL,
   getYouTubeVideoId,
   resolveApeDrumsRelease,
 } from "../apeDrumsRelease";
@@ -60,6 +61,7 @@ describe("Ape Drums release gate", () => {
   });
 
   it("ships all owner-approved videos in the sealed preview", () => {
+    expect(APE_DRUMS_RELEASE.ticketUrl).toBe(APE_DRUMS_TICKET_URL);
     expect(APE_DRUMS_RELEASE.heroImage).toContain("ape-drums-july31-hero.png");
     expect(APE_DRUMS_RELEASE.videoIds[0]).toBe("O94vKVHzamk");
     expect(APE_DRUMS_RELEASE.videoIds[1]).toBe("K_2PZkxuNLY");

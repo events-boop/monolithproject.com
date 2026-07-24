@@ -37,8 +37,10 @@ const premiumArtistBaseNamePrefixes = [
 const desktopWidthsByBaseName = new Map([
   ["hero-monolith", [480, 1024, 1920]],
   ["hero-video-1-poster", [480, 1024, 1920]],
+  ["artist-ewerseen-2026-v2", [447]],
   ["artists-collective", [480, 1024, 1600]],
   ["chasing-sunsets", [480, 1024, 1600]],
+  ["chasing-sunsets-castaways-hero", [480, 1024, 1600]],
   ["untold-story-juany-deron-v2", [480, 1024, 1600]],
   ["lazare-recap", [480, 1024, 1542]],
   ["artists-juany-bravo-juany-bravo-portrait", [640, 1280, 1920]],

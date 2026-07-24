@@ -142,7 +142,7 @@ export default function Monolith() {
                   className="font-serif text-[clamp(2rem,5vw,4.2rem)] leading-[1.05] uppercase text-white/90 text-balance"
                 />
                 <WordScrubReveal
-                  text="We believe a club night is not an industry transaction; it is a collaborative ritual. When the sound is exact, when the light is minimal, and when the crowd enters with intention, the room transitions from space into frequency."
+                  text="We believe a club night is not an industry transaction; it is a collaborative experience. When the sound is exact, when the light is minimal, and when the crowd enters with intention, the room transitions from space into frequency."
                   className="text-lg md:text-xl font-light leading-relaxed text-white/60 text-balance"
                 />
               </div>
