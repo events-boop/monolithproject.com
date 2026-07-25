@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
-import FamilyEventPromo from "@/components/FamilyEventPromo";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import LolaPopupFrame from "@/components/LolaPopupFrame";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import CommunityContributionSection, {
   COMMUNITY_UPLOAD_URL,
 } from "@/components/CommunityContributionSection";
-import { FAMILY_PROMO } from "@/content/familyPromo";
 import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
@@ -437,6 +436,9 @@ export default function SunsetsLinkBio() {
             <span>87.6193° W</span>
           </div>
         </header>
+
+        {/* Lola Pop-Up Weekend flyer — directly under the hero */}
+        <LolaPopupFrame accent="gold" layout="stacked" className="mt-4" />
 
         {/* 2. SUN(SETS) II Header */}
         <section
@@ -958,11 +960,6 @@ export default function SunsetsLinkBio() {
               aria-hidden="true"
             />
           </a>
-          {FAMILY_PROMO ? (
-            <div className="mt-2.5">
-              <FamilyEventPromo />
-            </div>
-          ) : null}
           <a
             href={UNTOLD_VIP_HREF}
             target="_blank"

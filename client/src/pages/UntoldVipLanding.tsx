@@ -1,8 +1,7 @@
 import { Link } from "wouter";
 import SEO from "@/components/SEO";
-import FamilyEventPromo from "@/components/FamilyEventPromo";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { FAMILY_PROMO } from "@/content/familyPromo";
+import LolaPopupFrame from "@/components/LolaPopupFrame";
 
 const UNTOLD_URL = "https://untold.vip";
 const MONOLITH_URL = "https://monolithproject.com";
@@ -254,6 +253,11 @@ export default function UntoldVipLanding() {
           </aside>
         </section>
 
+        <LolaPopupFrame
+          accent="cyan"
+          className="mx-auto mt-8 w-full max-w-6xl lg:mt-10"
+        />
+
         <section
           id="chapters"
           aria-label="Previous Untold Story shows"
@@ -328,11 +332,6 @@ export default function UntoldVipLanding() {
                 The Monolith Project
               </p>
             </div>
-            {FAMILY_PROMO ? (
-              <div className="max-w-md">
-                <FamilyEventPromo />
-              </div>
-            ) : null}
             <nav
               aria-label="Related sites"
               className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"

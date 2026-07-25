@@ -78,6 +78,16 @@ The optional `afterHero` slot is structurally reasonable, and the responsive two
 6. The canonical site already contains a release-gated Ape Drums family promo on `/sunsets`, `untold.vip`, and House of Friends. A larger frame should replace or intentionally complement it, not create an unmeasured duplicate.
 7. Any canonical implementation should use the responsive image pipeline, route to `/apedrums` with placement attribution, emit `OutboundTicketClick` only on the Posh handoff, and remain absent from production bundles until the release and contract flags are open.
 
+## Canonical popup preparation
+
+The visual frame was subsequently prepared in the canonical checkout with the following safeguards:
+
+- It returns nothing while the shared Ape Drums family promotion is release-gated.
+- Its CTA routes internally to `/apedrums`; only the later Posh handoff owns `OutboundTicketClick`.
+- It replaces the compact family card on the SUN(SETS) and Untold pages instead of creating duplicate Ape Drums promos. House of Friends retains the compact family card.
+- It uses the existing optimized responsive artwork and has direct component coverage.
+- The `Lola Pop-Up Weekend` public name and the marks shown in the flyer remain human approval items before the production release flags are opened.
+
 ## Required decisions before porting the popup
 
 - Confirm `Lola Pop-Up Weekend` is approved public naming, or replace it with the locked Ape Drums/Kashmir language.
