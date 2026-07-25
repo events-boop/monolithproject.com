@@ -35,9 +35,9 @@ All required controls must resolve. If one is missing, the public route stays cl
 
 The solo videos default to the owner-approved IDs `O94vKVHzamk`, `K_2PZkxuNLY`, and `bpG8KPCJ8EM`. The fourth defaults to the approved Major Lazer lineage video `Vyo-kk0wRw4`. All remain sealed from the production bundle until the compile-time release and contract flags are open.
 
-Development preview reads the approved hero from `client/src/assets/private/ape-drums/ape-drums-july31-hero.png`. On release day, publish the approved asset into the production image pipeline and set `VITE_APE_DRUMS_HERO_IMAGE` to its final `/images/...` path. Keep unreleased campaign media out of `client/public` so sealed production builds cannot copy it.
+Development preview reads the approved hero from `client/src/assets/private/ape-drums/ape-drums-july31-hero.png`. The approved production asset is published at `/images/events/ape-drums-july31-hero.png`; `VITE_APE_DRUMS_HERO_IMAGE` can override that path if the release art changes.
 
-The square campaign art (`client/src/assets/private/ape-drums/ape-drums-july31-square.png` in development) powers the shared family cross-promo card that appears on sunsets.vip, untold.vip, and houseoffriends.vip the moment the release gate opens. Publish it alongside the hero and set `VITE_APE_DRUMS_PROMO_IMAGE`; without it, the card falls back to the approved hero image. The card routes internally to `/apedrums` and disappears only when the next confirmed booking replaces the assignment in `client/src/content/familyPromo.ts`.
+The square campaign art (`client/src/assets/private/ape-drums/ape-drums-july31-square.png` in development and `/images/events/ape-drums-july31-square.png` in production) powers the shared family cross-promo card that appears on sunsets.vip, untold.vip, and houseoffriends.vip the moment the release gate opens. `VITE_APE_DRUMS_PROMO_IMAGE` can override it. The card routes internally to `/apedrums` and disappears only when the next confirmed booking replaces the assignment in `client/src/content/familyPromo.ts`.
 
 ## Monday release sequence
 
@@ -50,7 +50,7 @@ The square campaign art (`client/src/assets/private/ape-drums/ape-drums-july31-s
 7. Add the environment variables above to the production site.
 8. Build and verify that `/apedrums` renders and `/sandbox/ape-drums` does not.
 9. Test all five ticket CTAs—header, hero, post-profile, post-video, and final details—on desktop and mobile. Each must open the same Posh checkout URL.
-10. Confirm one PageView on load and one InitiateCheckout plus internal ticket-intent event per CTA click.
+10. Confirm one PageView on load and one custom `OutboundTicketClick` plus internal ticket-intent event per CTA click. Confirm Posh alone fires AddToCart, InitiateCheckout, and Purchase after the handoff.
 11. Publish the public social route only after the production URL passes the checks.
 
 ## Rollback

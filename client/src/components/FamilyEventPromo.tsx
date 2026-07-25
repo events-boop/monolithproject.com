@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { FAMILY_PROMO } from "@/content/familyPromo";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 // Brand-neutral cross-promo card for the current Monolith family booking.
 // Renders nothing while the show's release gate is closed (see
@@ -14,11 +15,10 @@ export default function FamilyEventPromo() {
       aria-label={`${FAMILY_PROMO.title} — ${FAMILY_PROMO.detail}`}
       className="group flex items-center gap-4 border border-white/12 bg-white/[0.03] p-3 text-left transition hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.99] motion-reduce:transition-none"
     >
-      <img
+      <ResponsiveImage
         src={FAMILY_PROMO.image}
         alt={FAMILY_PROMO.imageAlt}
-        loading="lazy"
-        decoding="async"
+        sizes="64px"
         className="h-16 w-16 shrink-0 object-cover"
       />
       <span className="min-w-0">

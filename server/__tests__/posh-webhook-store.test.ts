@@ -130,6 +130,74 @@ describe("persistPoshWebhookPurchase", () => {
         utmCampaign: "sunsets_2026_07_04",
         utmContent: "buy_tickets_primary",
         utmTerm: "vip-table",
+        refundCents: 0,
+        refundKind: "none",
+      },
+    });
+  });
+
+  it("stores full refunds as zero net revenue with explicit refund metadata", async () => {
+    await expect(
+      persistPoshWebhookPurchase(
+        {
+          type: "order_status_update",
+          status: "refunded",
+          refunded: true,
+          account_email: "fan@example.com",
+          event_id: "evt_123",
+          event_name: "Chasing Sunsets",
+          event_start: "2026-08-22T18:00:00Z",
+          order_number: "order_refunded",
+          subtotal: "80",
+          total: "90",
+          items: [{ name: "General Admission", quantity: 2 }],
+        },
+        "req_refunded"
+      )
+    ).resolves.toMatchObject({ status: "refunded" });
+
+    const ticketOrderInsert = getInsertFor(ticketOrders);
+    expect(ticketOrderInsert.values).toMatchObject({
+      quantity: 2,
+      grossRevenue: 9000,
+      netRevenue: 0,
+    });
+    expect(ticketOrderInsert.values?.rawPayload).toMatchObject({
+      normalized: {
+        status: "refunded",
+        refundCents: 8000,
+        refundKind: "full",
+      },
+    });
+  });
+
+  it("keeps remaining net revenue for a partial refund", async () => {
+    await persistPoshWebhookPurchase(
+      {
+        type: "order_status_update",
+        account_email: "fan@example.com",
+        event_id: "evt_123",
+        event_name: "Chasing Sunsets",
+        event_start: "2026-08-22T18:00:00Z",
+        order_number: "order_partial",
+        subtotal: "80",
+        total: "90",
+        partialRefund: "20",
+        items: [{ name: "General Admission", quantity: 2 }],
+      },
+      "req_partial"
+    );
+
+    const ticketOrderInsert = getInsertFor(ticketOrders);
+    expect(ticketOrderInsert.values).toMatchObject({
+      quantity: 2,
+      netRevenue: 6000,
+    });
+    expect(ticketOrderInsert.values?.rawPayload).toMatchObject({
+      normalized: {
+        status: "refunded",
+        refundCents: 2000,
+        refundKind: "partial",
       },
     });
   });

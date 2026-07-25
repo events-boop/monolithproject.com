@@ -3,7 +3,10 @@ import { siteDataService } from "../services/site-data-service";
 import { logEvent } from "../lib/logging";
 import { asyncHandler } from "../lib/async";
 import { createAdminRouteGuard } from "../lib/admin-auth";
-import { readSunsetsAnalytics } from "../services/sunsets-analytics";
+import {
+  parseSunsetsAnalyticsFilters,
+  readSunsetsAnalytics,
+} from "../services/sunsets-analytics";
 
 const router = express.Router();
 
@@ -54,10 +57,20 @@ router.get(
 
 router.get(
   "/api/ops/sunsets-analytics",
-  asyncHandler(async (_req, res) => {
+  asyncHandler(async (req, res) => {
+    let filters;
+    try {
+      filters = parseSunsetsAnalyticsFilters(req.query);
+    } catch (error) {
+      return res.status(400).json({
+        ok: false,
+        error: error instanceof Error ? error.message : "Invalid filters",
+      });
+    }
+
     res.json({
       ok: true,
-      analytics: await readSunsetsAnalytics(),
+      analytics: await readSunsetsAnalytics(filters),
     });
   })
 );

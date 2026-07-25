@@ -33,12 +33,12 @@ All API endpoints accept and return `application/json` unless otherwise noted.
 
 ## 1. Health & Readiness
 
-| Method | Path          | Rate Limit | Auth                  | Description                                                                                                                                                                                                      |
-| ------ | ------------- | ---------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET`  | `/health`     | Unmetered  | None                  | Liveness probe. Returns `200 OK` with a simple status payload. Used by infrastructure health checks and load-balancer targets.                                                                                   |
-| `GET`  | `/api/health` | Skipped    | None                  | Same liveness probe as `/health` but routed under `/api` to bypass the global rate limiter entirely. Returns `{ ok: true }` only — integration diagnostics live behind `/api/health/details`.                    |
-| `GET`  | `/api/health/details` | Metered | Admin secret | Full diagnostics payload (Meta CAPI status, Laylo/Posh/Airtable integration state). Requires `x-admin-secret` or `Authorization: Bearer` matching `OPS_ADMIN_SECRET`; 503 when unconfigured.                     |
-| `GET`  | `/api/ready`  | Unmetered  | `Admin-Secret` header | Readiness probe. Tests the database connection. Returns `200 OK` when the database is reachable, `503 Service Unavailable` otherwise. Requires the `Admin-Secret` header to match the configured `ADMIN_SECRET`. |
+| Method | Path                  | Rate Limit | Auth                  | Description                                                                                                                                                                                                      |
+| ------ | --------------------- | ---------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET`  | `/health`             | Unmetered  | None                  | Liveness probe. Returns `200 OK` with a simple status payload. Used by infrastructure health checks and load-balancer targets.                                                                                   |
+| `GET`  | `/api/health`         | Skipped    | None                  | Same liveness probe as `/health` but routed under `/api` to bypass the global rate limiter entirely. Returns `{ ok: true }` only — integration diagnostics live behind `/api/health/details`.                    |
+| `GET`  | `/api/health/details` | Metered    | Admin secret          | Full diagnostics payload (Meta CAPI status, Laylo/Posh/Airtable integration state). Requires `x-admin-secret` or `Authorization: Bearer` matching `OPS_ADMIN_SECRET`; 503 when unconfigured.                     |
+| `GET`  | `/api/ready`          | Unmetered  | `Admin-Secret` header | Readiness probe. Tests the database connection. Returns `200 OK` when the database is reachable, `503 Service Unavailable` otherwise. Requires the `Admin-Secret` header to match the configured `ADMIN_SECRET`. |
 
 ---
 
@@ -129,11 +129,11 @@ If the `_honey` field is present and non-empty the request is silently accepted 
 
 All ops endpoints require the `Admin-Secret` header.
 
-| Method | Path                         | Rate Limit | Auth           | Description                                                                                                                                          |
-| ------ | ---------------------------- | ---------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `POST` | `/api/ops/cache/invalidate`  | Unmetered  | `Admin-Secret` | Invalidates the site-data cache. Accepts an optional `path` in the body to purge a specific route; clears the entire cache when no path is provided. |
-| `GET`  | `/api/ops/baseline`          | Unmetered  | `Admin-Secret` | Returns a performance Web Vitals baseline snapshot (LCP, CLS, INP, TTFB) collected from production telemetry.                                        |
-| `GET`  | `/api/ops/sunsets-analytics` | Unmetered  | `Admin-Secret` | Returns Sun(Sets) campaign funnel analytics: impressions, lead captures, ticket intents, and conversions aggregated per stage.                       |
+| Method | Path                         | Rate Limit | Auth           | Description                                                                                                                                                             |
+| ------ | ---------------------------- | ---------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST` | `/api/ops/cache/invalidate`  | Unmetered  | `Admin-Secret` | Invalidates the site-data cache. Accepts an optional `path` in the body to purge a specific route; clears the entire cache when no path is provided.                    |
+| `GET`  | `/api/ops/baseline`          | Unmetered  | `Admin-Secret` | Returns a performance Web Vitals baseline snapshot (LCP, CLS, INP, TTFB) collected from production telemetry.                                                           |
+| `GET`  | `/api/ops/sunsets-analytics` | Unmetered  | `Admin-Secret` | Returns Sun(Sets) funnel analytics with order and ticket quantities, refunds, paid/owned channel splits, and optional `event_slug`, `date_from`, and `date_to` filters. |
 
 ---
 

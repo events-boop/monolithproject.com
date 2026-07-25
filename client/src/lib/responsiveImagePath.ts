@@ -47,6 +47,8 @@ const DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME: Record<
   "artists-kenbo-slice-kenbo-slice-portrait": [640, 1280, 1863],
   "artists-terranova-terranova-live": [640, 1280, 1667],
   "events-sunsets-2026-09-19-massuma-official-artwork": [640, 1122],
+  "events-ape-drums-july31-hero": [480, 864],
+  "events-ape-drums-july31-square": [160, 320],
 };
 
 const RASTER_IMAGE_PATTERN = /\.(?:png|jpe?g|webp|avif)$/i;

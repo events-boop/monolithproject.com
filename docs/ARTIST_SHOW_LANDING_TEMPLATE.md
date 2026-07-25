@@ -11,7 +11,7 @@ This is the standard launch system for artist-led Monolith shows. Ape Drums is t
 - Date, venue, capacity, age, doors, and performance timing chamber.
 - Header, hero, post-profile, post-video, and final ticket endpoints routed to one verified checkout URL.
 - Optional post-profile and post-video conversion bands, routed through that same checkout resolver.
-- Internal ticket-intent analytics plus Meta PageView and InitiateCheckout events.
+- Internal ticket-intent analytics plus Meta PageView and custom `OutboundTicketClick` events. Posh owns standard commerce events after the handoff.
 - Monolith family footer and event-specific theme palette.
 - Development-only preview route, production 404 seal, and one-flag rollback.
 

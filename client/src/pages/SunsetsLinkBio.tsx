@@ -10,7 +10,7 @@ import { FAMILY_PROMO } from "@/content/familyPromo";
 import { ROUTES } from "@shared/routes";
 import { trackFunnelPageView } from "@/lib/api";
 import {
-  trackLakeInitiateCheckout,
+  trackLakeOutboundTicketClick,
   trackLakeLead,
   trackLakePageView,
 } from "@/lib/campaignPixel";
@@ -328,7 +328,7 @@ export default function SunsetsLinkBio() {
 
   const handleSeasonPassClick = () => {
     triggerHaptic(16);
-    trackLakeInitiateCheckout();
+    trackLakeOutboundTicketClick({ cta_placement: "season_pass" });
     captureSunsetsTicketCtaClick({
       destinationUrl: seasonPassHref,
       pagePath: PAGE_PATH,

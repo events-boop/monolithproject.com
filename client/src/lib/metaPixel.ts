@@ -120,15 +120,15 @@ export function trackMetaPixelLead(payload?: Record<string, unknown>) {
   return true;
 }
 
-export function trackMetaPixelInitiateCheckout(
+// An outbound ticket click is intent, not a checkout start. Posh owns the
+// standard commerce events after the visitor reaches its checkout.
+export function trackMetaPixelOutboundTicketClick(
   payload?: Record<string, unknown>
 ) {
   if (!isEnabled()) return false;
 
   ensureFbq(PIXEL_ID as string);
-  window.fbq?.("track", "InitiateCheckout", {
-    currency: "USD",
-    value: 0,
+  window.fbq?.("trackCustom", "OutboundTicketClick", {
     ...payload,
   });
 

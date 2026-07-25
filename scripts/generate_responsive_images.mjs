@@ -56,6 +56,8 @@ const desktopWidthsByBaseName = new Map([
   ["artists-kenbo-slice-kenbo-slice-portrait", [640, 1280, 1863]],
   ["artists-terranova-terranova-live", [640, 1280, 1667]],
   ["events-sunsets-2026-09-19-massuma-official-artwork", [640, 1122]],
+  ["events-ape-drums-july31-hero", [480, 864]],
+  ["events-ape-drums-july31-square", [160, 320]],
 ]);
 const sourceExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif"]);
 const sourceExtensionPreference = new Map([

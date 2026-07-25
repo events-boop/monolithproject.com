@@ -7,6 +7,7 @@ const publicDir = path.resolve(__dirname, "../dist/public");
 
 const CAMPAIGN_PIXEL_ID = "1049241148606250";
 const BLOCKED_PIXEL_IDS = ["166134370742863"];
+const BLOCKED_ONSITE_COMMERCE_EVENTS = ["InitiateCheckout"];
 
 const searchableExtensions = new Set([
   ".css",
@@ -54,6 +55,7 @@ async function main() {
 
   const files = await walk(publicDir);
   const blockedMatches = [];
+  const blockedCommerceMatches = [];
   let campaignPixelFound = false;
 
   for (const file of files) {
@@ -67,6 +69,12 @@ async function main() {
     for (const blockedPixelId of BLOCKED_PIXEL_IDS) {
       if (contents.includes(blockedPixelId)) {
         blockedMatches.push(`${relativeFile}: ${blockedPixelId}`);
+      }
+    }
+
+    for (const eventName of BLOCKED_ONSITE_COMMERCE_EVENTS) {
+      if (contents.includes(eventName)) {
+        blockedCommerceMatches.push(`${relativeFile}: ${eventName}`);
       }
     }
   }
@@ -86,8 +94,16 @@ async function main() {
     process.exit(1);
   }
 
+  if (blockedCommerceMatches.length > 0) {
+    console.error(
+      "[pixel:guard] Monolith must not ship checkout events owned by Posh:\n" +
+        blockedCommerceMatches.map(match => `  - ${match}`).join("\n")
+    );
+    process.exit(1);
+  }
+
   console.log(
-    `[pixel:guard] Public build uses campaign Meta Pixel ${CAMPAIGN_PIXEL_ID}; blocked IDs absent.`
+    `[pixel:guard] Public build uses campaign Meta Pixel ${CAMPAIGN_PIXEL_ID}; blocked IDs and on-site checkout events absent.`
   );
 }
 

@@ -85,17 +85,20 @@ export function trackLakePageView() {
   window.fbq?.("trackSingle", LAKE_PIXEL_ID, "PageView");
 }
 
-// Fires when a visitor clicks through to the Posh ticket rail. No CAPI
-// counterpart exists for this event, so no eventID is needed for dedup.
-export function trackLakeInitiateCheckout(payload?: Record<string, unknown>) {
+// Fires when a visitor clicks through to the Posh ticket rail. This is a
+// custom intent event; Posh alone owns AddToCart, InitiateCheckout, and
+// Purchase after the handoff. No CAPI counterpart exists, so no eventID is
+// needed for deduplication.
+export function trackLakeOutboundTicketClick(
+  payload?: Record<string, unknown>
+) {
   if (!isEnabled()) return false;
   if (!ensureFbq()) return false;
 
-  window.fbq?.("trackSingle", LAKE_PIXEL_ID, "InitiateCheckout", {
+  window.fbq?.("trackSingleCustom", LAKE_PIXEL_ID, "OutboundTicketClick", {
     content_name: "SUN(SETS) I Tickets - July 4",
     content_category: "Tickets",
     content_ids: ["posh-sunsets-2026-07-04"],
-    currency: "USD",
     ...payload,
   });
 

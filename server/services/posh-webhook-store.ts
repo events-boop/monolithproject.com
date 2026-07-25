@@ -171,10 +171,21 @@ function deriveStatus(
 ): PersistPoshWebhookResult["status"] {
   const type = cleanString(payload.type)?.toLowerCase() || "unknown";
   const action = cleanString(payload.action)?.toLowerCase();
+  const reportedStatus = cleanString(payload.status)?.toLowerCase() || "";
 
-  if (cleanBoolean(payload.disputed)) return "disputed";
-  if (cleanBoolean(payload.cancelled)) return "cancelled";
-  if (cleanBoolean(payload.refunded) || moneyToCents(payload.partialRefund) > 0)
+  if (cleanBoolean(payload.disputed) || reportedStatus.includes("disput"))
+    return "disputed";
+  if (
+    cleanBoolean(payload.cancelled) ||
+    reportedStatus.includes("cancel") ||
+    reportedStatus.includes("void")
+  )
+    return "cancelled";
+  if (
+    cleanBoolean(payload.refunded) ||
+    reportedStatus.includes("refund") ||
+    moneyToCents(payload.partialRefund) > 0
+  )
     return "refunded";
   if (type === "pending_order_actioned" && action === "denied") return "denied";
   if (type === "new_order_request") return "pending";
@@ -238,7 +249,17 @@ export async function persistPoshWebhookPurchase(
     isoDate(payload.date_purchased) || isoDate(payload.update_date) || now;
   const subtotalCents = moneyToCents(payload.subtotal);
   const totalCents = moneyToCents(payload.total);
-  const refundCents = moneyToCents(payload.partialRefund);
+  const reportedRefundCents = moneyToCents(payload.partialRefund);
+  const isFullyReversed =
+    status === "cancelled" ||
+    status === "disputed" ||
+    (status === "refunded" &&
+      (cleanBoolean(payload.refunded) || reportedRefundCents === 0));
+  const refundCents = isFullyReversed
+    ? subtotalCents
+    : Math.min(subtotalCents, reportedRefundCents);
+  const refundKind =
+    refundCents <= 0 ? "none" : isFullyReversed ? "full" : "partial";
   const feesCents = Math.max(0, totalCents - subtotalCents);
   const grossRevenue = shouldPersistRevenue(status) ? totalCents : 0;
   const netRevenue = shouldPersistRevenue(status)
@@ -369,6 +390,8 @@ export async function persistPoshWebhookPurchase(
       utmTerm,
       grossRevenueCents: grossRevenue,
       feesCents,
+      refundCents,
+      refundKind,
       netRevenueCents: netRevenue,
     },
   };

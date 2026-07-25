@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T20:30:56.109Z",
+  "generatedAt": "2026-07-25T01:52:02.291Z",
   "defaultWidths": [
     480,
     1024
@@ -31,10 +31,10 @@
     "untold-story-header-jpq-"
   ],
   "totals": {
-    "originalBytes": 242236543,
-    "estimatedTransferBytes": 10200964,
-    "estimatedSavingsBytes": 232126193,
-    "variantBytes": 52699600
+    "originalBytes": 246479023,
+    "estimatedTransferBytes": 10319354,
+    "estimatedSavingsBytes": 236250283,
+    "variantBytes": 53043722
   },
   "images": [
     {
@@ -3390,6 +3390,82 @@
       "estimatedTransferKb": 18.2,
       "estimatedSavingsBytes": 61483,
       "estimatedSavingsPct": 77
+    },
+    {
+      "source": "/images/events/ape-drums-july31-hero.png",
+      "originalBytes": 1952316,
+      "originalKb": 1906.6,
+      "originalWidth": 864,
+      "originalHeight": 1821,
+      "generatedBaseName": "events-ape-drums-july31-hero",
+      "variants": [
+        {
+          "path": "/images/generated/events-ape-drums-july31-hero-480.avif",
+          "width": 480,
+          "format": "avif",
+          "bytes": 34578
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-hero-480.webp",
+          "width": 480,
+          "format": "webp",
+          "bytes": 39972
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-hero-864.avif",
+          "width": 864,
+          "format": "avif",
+          "bytes": 102828
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-hero-864.webp",
+          "width": 864,
+          "format": "webp",
+          "bytes": 123698
+        }
+      ],
+      "estimatedTransferBytes": 102828,
+      "estimatedTransferKb": 100.4,
+      "estimatedSavingsBytes": 1849488,
+      "estimatedSavingsPct": 95
+    },
+    {
+      "source": "/images/events/ape-drums-july31-square.png",
+      "originalBytes": 2290164,
+      "originalKb": 2236.5,
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "generatedBaseName": "events-ape-drums-july31-square",
+      "variants": [
+        {
+          "path": "/images/generated/events-ape-drums-july31-square-160.avif",
+          "width": 160,
+          "format": "avif",
+          "bytes": 5912
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-square-160.webp",
+          "width": 160,
+          "format": "webp",
+          "bytes": 5672
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-square-320.avif",
+          "width": 320,
+          "format": "avif",
+          "bytes": 15900
+        },
+        {
+          "path": "/images/generated/events-ape-drums-july31-square-320.webp",
+          "width": 320,
+          "format": "webp",
+          "bytes": 15562
+        }
+      ],
+      "estimatedTransferBytes": 15562,
+      "estimatedTransferKb": 15.2,
+      "estimatedSavingsBytes": 2274602,
+      "estimatedSavingsPct": 99
     },
     {
       "source": "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",

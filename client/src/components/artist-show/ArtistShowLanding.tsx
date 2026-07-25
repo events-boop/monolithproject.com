@@ -11,9 +11,10 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import SEO from "@/components/SEO";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { trackFunnelPageView, trackTicketIntent } from "@/lib/api";
 import type { ArtistShowReleaseConfig } from "@/lib/artistShowRelease";
-import { trackMetaPixelInitiateCheckout } from "@/lib/metaPixel";
+import { trackMetaPixelOutboundTicketClick } from "@/lib/metaPixel";
 import "@/styles/themes/artist-show.css";
 
 type TicketPlacement = "header" | "hero" | "profile" | "sound" | "details";
@@ -299,10 +300,11 @@ function TicketCta({
           config.eventId,
           release.ticketUrl
         );
-        trackMetaPixelInitiateCheckout({
+        trackMetaPixelOutboundTicketClick({
           content_name: config.trackingContentName,
           content_category: "Event Tickets",
           content_ids: [config.eventId],
+          cta_placement: placement,
         });
       }}
     >
@@ -541,12 +543,11 @@ export default function ArtistShowLanding({
             <span className="show-hero__portrait-corner show-hero__portrait-corner--tl" />
             <span className="show-hero__portrait-corner show-hero__portrait-corner--br" />
             {release.heroImage ? (
-              <img
+              <ResponsiveImage
                 src={release.heroImage}
                 alt={config.artist.heroImageAlt}
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
+                priority
+                sizes="(max-width: 767px) 86vw, 24vw"
               />
             ) : (
               <div
