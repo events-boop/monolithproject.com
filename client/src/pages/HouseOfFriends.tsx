@@ -565,7 +565,7 @@ export default function HouseOfFriends() {
             </motion.div>
 
             <div className="hof-partner-layout">
-              <motion.article className="hof-partner-letter" {...reveal}>
+              <motion.div className="hof-partner-letter" {...reveal}>
                 <span className="hof-letter-label">
                   Founding Partner Invitation / Excerpt
                 </span>
@@ -587,7 +587,7 @@ export default function HouseOfFriends() {
                   Start a Founding Partner Conversation
                   <Handshake className="h-4 w-4" aria-hidden="true" />
                 </button>
-              </motion.article>
+              </motion.div>
 
               <div className="hof-partner-categories">
                 {partnerCategories.map((category, index) => (
@@ -616,7 +616,6 @@ export default function HouseOfFriends() {
               {roadmap.map((phase, index) => (
                 <motion.article
                   key={phase.year}
-                  className="hof-roadmap-card"
                   {...reveal}
                 >
                   <span>{phase.year}</span>
