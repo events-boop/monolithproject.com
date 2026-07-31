@@ -29,11 +29,12 @@ export const INSTAGRAM_UNTOLD = "https://instagram.com/untoldstory.music";
 export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
 /**
- * Active audience gateway for the next public drop.
- * SUN(SETS) II tickets are not live yet, so this points at the Lake List
- * until the Aug 22 Posh checkout passes its gates (then: ticket path).
+ * Active audience gateway for the current public drop.
+ * SUN(SETS) II tickets are live, so featured ticket CTAs resolve to the
+ * August 22 Posh checkout (House of Friends preview included).
  */
-export const POSH_TICKET_URL = LAYLO_URL;
+export const POSH_TICKET_URL =
+  "https://posh.vip/e/chasing-sunsets-ii-house-of-friends-preview";
 
 const CASTAWAYS_VIP_EMAIL = "vip@chasingsunsets.music";
 
@@ -190,9 +191,10 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Castaways",
     location: "Chicago, IL",
     lineup: "Joezi x Massuma (UK) · Special Guests TBA",
-    status: "coming-soon",
+    status: "on-sale",
+    ticketUrl: "https://posh.vip/e/chasing-sunsets-iii-joezi-x-massuma",
     description:
-      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Join the Lake List for first access.",
+      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Tickets are live.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
@@ -209,7 +211,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       large: "limited",
     }),
     activeFunnels: ["waitlist-chasing"],
-    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
+    // Sep 19 record complete — Posh checkout linked and live.
+    gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
   {
     id: "css-jul04",
@@ -300,7 +303,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "FRANK BONO",
       },
     ],
-    status: "coming-soon",
+    // Residency 01 executed July 24, 2026 — archived.
+    status: "past",
     format: "Monolith Project Residency Series",
     sound: "House Music · Resident DJs",
     description:
@@ -309,30 +313,35 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     activeFunnels: ["waitlist"],
   },
   {
+    // Residency 02 is the Ape Drums headline night. The id stays
+    // "hof-kashmir-jul31" for continuity with existing references, but every
+    // public-facing fact now follows the locked Ape Drums record.
     id: "hof-kashmir-jul31",
     series: "monolith-project",
-    episode: "HOUSE OF FRIENDS POP-UP / RESIDENCY 02",
-    title: "HOUSE OF FRIENDS POP-UP",
-    headline: "HOUSE OF FRIENDS POP-UP — ERIK THE DJ + SPECIAL GUEST",
-    slug: "house-of-friends-kashmir-july-31-2026",
+    episode: "RESIDENCY SERIES / 02",
+    title: "APE DRUMS",
+    headline: "APE DRUMS",
+    slug: "ape-drums-kashmir-july-31-2026",
     date: "July 31, 2026",
     time: "Time TBA",
     venue: "Kashmir",
     location: "Chicago, IL",
-    lineup: "ERIK THE DJ · SPECIAL GUEST",
+    lineup: "APE DRUMS",
     artistImages: [
       {
-        src: "/images/july4-erik.jpg",
-        alt: "ERIK THE DJ",
-        artist: "ERIK THE DJ",
+        src: "/images/events/ape-drums-july31-square.png",
+        alt: "APE DRUMS",
+        artist: "APE DRUMS",
       },
     ],
-    status: "coming-soon",
-    format: "Give-Back Party · House of Friends Pop-Up",
-    sound: "House Music · Residency Session",
+    status: "on-sale",
+    ticketUrl: "https://posh.vip/e/monolith-project-presents-ape-drums",
+    image: "/images/events/ape-drums-july31-square.png",
+    format: "Late Night · Club Room",
+    sound: "House Music · Peak-Time Energy",
     description:
-      "House of Friends takes over the Monolith Project Residency Series at Kashmir for a give-back party with ERIK THE DJ and a special guest.",
-    eventNotice: "HOUSE OF FRIENDS / KASHMIR / GIVE-BACK PARTY",
+      "The Monolith Project presents Ape Drums at Kashmir, Chicago on Friday, July 31, 2026.",
+    eventNotice: "THE MONOLITH PROJECT PRESENTS: APE DRUMS",
     activeFunnels: ["waitlist"],
   },
   {
@@ -377,9 +386,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Castaways",
     location: "Chicago, IL",
     lineup: "TBA",
-    status: "coming-soon",
+    status: "on-sale",
+    ticketUrl:
+      "https://posh.vip/e/chasing-sunsets-ii-house-of-friends-preview",
     description:
-      "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+      "Chapter Two with the House of Friends Founding Class preview. Tickets are live.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
@@ -396,8 +407,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       large: "limited",
     }),
     activeFunnels: ["waitlist-chasing"],
-    // Flip these as the Aug 22 record completes; on-sale is blocked until all pass.
-    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
+    // Aug 22 record complete — Posh checkout linked and live.
+    gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
   {
     // Parent-brand launch moment — NOT a SUN(SETS) season date. The
