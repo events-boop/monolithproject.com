@@ -362,7 +362,10 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-architecture-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
+            <motion.div
+              className="hof-section-heading hof-section-heading-split"
+              {...reveal}
+            >
               <div>
                 <p className="hof-kicker">02 / The ecosystem</p>
                 <h2 id="hof-architecture-title">
@@ -418,7 +421,10 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-day-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
+            <motion.div
+              className="hof-section-heading hof-section-heading-split"
+              {...reveal}
+            >
               <div>
                 <p className="hof-kicker">03 / August 22</p>
                 <h2 id="hof-day-title">The Founding Class opens August 22.</h2>
@@ -550,7 +556,10 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-partners-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
+            <motion.div
+              className="hof-section-heading hof-section-heading-split"
+              {...reveal}
+            >
               <div>
                 <p className="hof-kicker">05 / Founding Partners</p>
                 <h2 id="hof-partners-title">
@@ -614,10 +623,7 @@ export default function HouseOfFriends() {
 
             <div className="hof-roadmap-grid">
               {roadmap.map((phase, index) => (
-                <motion.article
-                  key={phase.year}
-                  {...reveal}
-                >
+                <motion.article key={phase.year} {...reveal}>
                   <span>{phase.year}</span>
                   <div className="hof-roadmap-node" aria-hidden="true">
                     <i />
@@ -676,7 +682,7 @@ export default function HouseOfFriends() {
                 <FamilyEventPromo />
               </div>
             </div>
-          </section>
+          </div>
         ) : null}
       </main>
     </div>
