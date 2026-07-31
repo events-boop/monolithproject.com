@@ -813,7 +813,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Project Overview",
-        "About Monolith",
+        "About The Monolith Project",
         [
           "The Monolith Project is a Chicago-rooted music project designed around events, radio, and cultural continuity.",
           "Chasing Sun(Sets), Untold Story, and the radio archive all belong to one Chicago music company.",
@@ -866,7 +866,6 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       title: "Contact",
       description:
         "Get in touch with The Monolith Project for bookings, partnerships, and general inquiries.",
-      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Get In Touch",
         "Contact",
@@ -892,7 +891,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "Frequently Asked Questions",
         "FAQ",
         [
-          "Find answers about tickets, venues, timing, and event details for The Monolith Project in Chicago.",
+          "Find answers about tickets, venue logistics, booking, and event expectations for The Monolith Project in Chicago.",
         ],
         [
           { href: "/tickets", label: "Ticket page" },
@@ -907,8 +906,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Partners & Crew",
       description:
-        "Partnerships, crew, and collaborators behind The Monolith Project experiences.",
-      absoluteTitle: true,
+        "Partnerships, crew, and collaborators behind The Monolith Project experiences in Chicago.",
       bodyHtml: renderBaseLayout(
         "Partners and Crew",
         "Partners",
@@ -928,7 +926,6 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       title: "Booking",
       description:
         "Booking inquiries for The Monolith Project, Chasing Sun(Sets), Untold Story, and related Chicago events.",
-      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Artist and Booking Inquiries",
         "Booking",
@@ -967,7 +964,6 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       title: "Terms of Service",
       description:
         "Terms of Service for The Monolith Project website and events.",
-      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Legal",
         "Terms of Service",
@@ -987,7 +983,6 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       title: "Privacy Policy",
       description:
         "Privacy policy for The Monolith Project website and event communications.",
-      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Legal",
         "Privacy Policy",
@@ -1006,7 +1001,6 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Cookie Policy",
       description: "Cookie policy for The Monolith Project website.",
-      absoluteTitle: true,
       bodyHtml: renderBaseLayout(
         "Legal",
         "Cookie Policy",
