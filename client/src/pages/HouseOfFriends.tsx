@@ -682,7 +682,7 @@ export default function HouseOfFriends() {
                 <FamilyEventPromo />
               </div>
             </div>
-          </div>
+          </section>
         ) : null}
       </main>
     </div>
