@@ -114,7 +114,7 @@ function getEventFitCopy(
   if (event.series === "chasing-sunsets") return "Open-air house music";
   if (event.series === "untold-story") return "After-dark club pressure";
   if (event.id === "hof-kashmir-jul31")
-    return "House of Friends give-back pop-up";
+    return "Headline club night at Kashmir";
   return "Chicago music gathering";
 }
 
@@ -284,7 +284,7 @@ export default function EventDetails() {
             sizes="100vw"
             className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 blur-sm brightness-50 transition-opacity duration-1000"
           />
-          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
           <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
             <button
