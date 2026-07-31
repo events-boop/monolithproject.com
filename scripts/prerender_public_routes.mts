@@ -314,7 +314,7 @@ function renderHomeCriticalLayout() {
           />
           <source
             type="image/webp"
-            srcset="/images/generated/hero-video-1-poster-480.webp 1024w, /images/generated/hero-video-1-poster-1920.webp 1920w"
+            srcset="/images/generated/hero-video-1-poster-480.webp 480w, /images/generated/hero-video-1-poster-1024.webp 1024w, /images/generated/hero-video-1-poster-1920.webp 1920w"
             sizes="100vw"
           />
           <img
@@ -1095,7 +1095,7 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
           <h2>Tracklist</h2>
           ${renderLinkList(
             episode.tracklist.map(track => ({
-              href: track.audioUrl,
+              href: episode.audioUrl,
               label: `${track.timecode} · ${track.artist} — ${track.title}`,
               external: true,
             })),
