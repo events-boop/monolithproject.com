@@ -219,10 +219,10 @@ export default function HouseOfFriends() {
 
                 <div className="hof-hero-actions">
                   <Link
-                    href="/events/house-of-friends-kashmir-july-31-2026"
+                    href="/events/ape-drums-kashmir-july-31-2026"
                     className="btn-pill-neutral"
                   >
-                    View the July 31 pop-up
+                    View the July 31 Ape Drums night
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link href={applicationHref} className="btn-pill-outline">
@@ -362,10 +362,7 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-architecture-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div
-              className="hof-section-heading hof-section-heading-split"
-              {...reveal}
-            >
+            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
               <div>
                 <p className="hof-kicker">02 / The ecosystem</p>
                 <h2 id="hof-architecture-title">
@@ -421,10 +418,7 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-day-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div
-              className="hof-section-heading hof-section-heading-split"
-              {...reveal}
-            >
+            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
               <div>
                 <p className="hof-kicker">03 / August 22</p>
                 <h2 id="hof-day-title">The Founding Class opens August 22.</h2>
@@ -556,10 +550,7 @@ export default function HouseOfFriends() {
           aria-labelledby="hof-partners-title"
         >
           <div className="container layout-wide px-6">
-            <motion.div
-              className="hof-section-heading hof-section-heading-split"
-              {...reveal}
-            >
+            <motion.div className="hof-section-heading hof-section-heading-split" {...reveal}>
               <div>
                 <p className="hof-kicker">05 / Founding Partners</p>
                 <h2 id="hof-partners-title">
@@ -574,7 +565,7 @@ export default function HouseOfFriends() {
             </motion.div>
 
             <div className="hof-partner-layout">
-              <motion.div className="hof-partner-letter" {...reveal}>
+              <motion.article className="hof-partner-letter" {...reveal}>
                 <span className="hof-letter-label">
                   Founding Partner Invitation / Excerpt
                 </span>
@@ -596,7 +587,7 @@ export default function HouseOfFriends() {
                   Start a Founding Partner Conversation
                   <Handshake className="h-4 w-4" aria-hidden="true" />
                 </button>
-              </motion.div>
+              </motion.article>
 
               <div className="hof-partner-categories">
                 {partnerCategories.map((category, index) => (
@@ -623,7 +614,11 @@ export default function HouseOfFriends() {
 
             <div className="hof-roadmap-grid">
               {roadmap.map((phase, index) => (
-                <motion.article key={phase.year} {...reveal}>
+                <motion.article
+                  key={phase.year}
+                  className="hof-roadmap-card"
+                  {...reveal}
+                >
                   <span>{phase.year}</span>
                   <div className="hof-roadmap-node" aria-hidden="true">
                     <i />
