@@ -89,8 +89,10 @@ export default function Tickets() {
     ? `${featuredEvent?.episode || "NEXT CHAPTER"} / FIRST ACCESS OPEN`
     : `${featuredEvent?.episode || "CURRENT RELEASE"} / TICKETS LIVE`;
   const accessCopy = featuredEvent
-    ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
-    : "Join the Lake List for the next release signal, artist reveal, and ticket window before the public.";
+    ? isFirstAccess
+      ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
+      : `${featuredHeadline} — tickets are live now at Castaways, powered by Posh. Straight to checkout.`
+    : "Tickets for the next Chasing Sun(Sets) chapter — powered by Posh.";
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -128,35 +130,34 @@ export default function Tickets() {
     }
   };
 
-  // First-access fallback for the active season while the next public
-  // checkout is still gated.
+  // Fallback view for drops whose checkout isn't live yet (e.g. Season
+  // Pass). The current chapters sell direct via the Aug 22 rail.
   if (comingSoonKey) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <SEO
-          title="SUN(SETS) II First Access | Chasing Sun(Sets)"
-          description="SUN(SETS) II returns August 22 at Castaways. Join the Lake List for the artist reveal, first ticket window, and table access before the public release."
+          title="SUN(SETS) Tickets | Chasing Sun(Sets)"
+          description="SUN(SETS) II + III tickets are live now at Castaways — official checkout powered by Posh. August 22 and September 19, 2026."
         />
         <Navigation />
         <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-[#dfc27a]">
-            SUN(SETS) II — AUGUST 22, 2026
+            SUN(SETS) 2026 — CASTAWAYS
           </p>
           <h1 className="text-3xl font-black tracking-tight text-white">
-            THE NEXT SIGNAL
+            TICKETS ARE LIVE
           </h1>
           <p className="text-sm leading-relaxed text-stone-400">
-            Chapter One is complete. Join the Lake List for first access to
-            SUN(SETS) II + III, artist reveals, and the limited 2026 Season
-            Pass.
+            Chapter Two (August 22) and Chapter Three (September 19) are on
+            sale now — straight to checkout, no waitlist.
           </p>
-          <Link
-            href="/go/waitlist/chasing-sunsets"
+          <a
+            href={SUNSETS_AUG22_TICKET_PATH}
             className="inline-flex items-center justify-center gap-2 h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] transition-colors"
           >
             <Ticket className="size-4" />
-            Join the Lake List — First Access
-          </Link>
+            Buy Tickets — August 22
+          </a>
           <p className="text-[11px] text-stone-500 uppercase tracking-[0.14em]">
             Official ticket source powered by Posh.
           </p>

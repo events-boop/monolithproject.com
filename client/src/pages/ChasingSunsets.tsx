@@ -151,7 +151,7 @@ export default function ChasingSunsets() {
     <div className="relative min-h-screen bg-noise selection:text-white sunset-page">
       <SEO
         title="Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 at Castaways"
-        description="Chapter One is complete. SUN(SETS) II returns to Castaways Beach Club on August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
+        description="Chapter One is complete. SUN(SETS) II returns to Castaways Beach Club on August 22 — tickets are live now, powered by Posh. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
         absoluteTitle
         canonicalPath="/chasing-sunsets"
         image="/images/chasing-sunsets-premium.webp"
@@ -513,7 +513,7 @@ export default function ChasingSunsets() {
                 </span>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed sunset-text-70">
                   <li>Tickets move by clean public tier logic.</li>
-                  <li>First Access stays hidden with code SUNSET26.</li>
+                  <li>First access codes stay hidden until a drop needs one.</li>
                   <li>Tables and cabanas stay separate from GA inventory.</li>
                   <li>No fake scarcity language: the lake has a limit.</li>
                   <li>{SUNSETS_JULY4_EVENT_ADDRESS}</li>

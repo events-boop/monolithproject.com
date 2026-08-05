@@ -478,8 +478,8 @@ export default function HouseOfFriends() {
             </div>
 
             <motion.div className="hof-launch-actions" {...reveal}>
-              <a href="/go/lakelist" className="btn-pill-neutral">
-                Get August 22 first access
+              <a href="/go/tickets/css-aug22" className="btn-pill-neutral">
+                Get August 22 tickets
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <Link href="/events/css-aug22" className="btn-text-action">

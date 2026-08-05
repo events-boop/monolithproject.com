@@ -21,7 +21,7 @@ const faqItems: Array<[string, string]> = [
   ],
   [
     "Where do I get access?",
-    "First Access is available through the official Chasing Sun(Sets) hub before the public ticket drop.",
+    "Tickets are on sale now through the official Chasing Sun(Sets) hub — straight to checkout, powered by Posh.",
   ],
   [
     "What’s the difference between Chasing Sunsets and Chasing Sun(Sets)?",
@@ -36,7 +36,7 @@ const officialLinks = [
     external: false,
   },
   { label: CTA_LABELS.radioHub, href: "/radio", external: false },
-  { label: "First Access", href: POSH_TICKET_URL, external: false },
+  { label: "Tickets", href: POSH_TICKET_URL, external: false },
   {
     label: "Instagram",
     href: "https://instagram.com/chasingsunsets.music",
@@ -117,7 +117,7 @@ export default function ChasingSunsetsFacts() {
                 {CTA_LABELS.radioHub}
               </Link>
               <a href={POSH_TICKET_URL} className="btn-pill-monolith">
-                First Access
+                Tickets
               </a>
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function ChasingSunsetsFacts() {
                 href={POSH_TICKET_URL}
                 className="btn-inline-pill btn-inline-pill-monolith"
               >
-                first access
+                tickets
               </a>
               .
             </p>

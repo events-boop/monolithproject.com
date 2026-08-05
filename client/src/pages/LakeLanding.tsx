@@ -177,7 +177,7 @@ export default function LakeLanding() {
             : index === 1
               ? "August tickets"
               : "September tickets",
-        action: index === 0 ? "RELIVE IT" : "GET FIRST ACCESS",
+        action: index === 0 ? "RELIVE IT" : "GET TICKETS",
         eventSlug: chapter.eventSlug,
         eventDate: chapter.eventDate,
         href: index === 0 ? SUNSETS_I_ARCHIVE_HREF : chapter.ticketPath,

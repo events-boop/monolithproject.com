@@ -367,7 +367,7 @@ export default function Home() {
                 </h3>
                 <p className={warmSubtextClass}>
                   {chasingSeasonEvent?.description ||
-                    "The Summer Return lands August 22 at Castaways. Artist reveal, first ticket window, and table access move through the Lake List first."}
+                    "The Summer Return lands August 22 at Castaways — tickets are live now, powered by Posh."}
                 </p>
                 <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
                   <div>
