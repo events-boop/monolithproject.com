@@ -483,6 +483,22 @@ export const autografSpecial: MediaItem[] = [
 ];
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
+  // July 31, 2026 — the Lola pop-up weekend opener. Lands here automatically
+  // once the family promo retires; comingSoon keeps the page on the community
+  // upload call-to-action until the photo/video edit ships (add items to
+  // media below and remove comingSoon to publish the full gallery).
+  "ape-drums-july31-2026": {
+    slug: "ape-drums-july31-2026",
+    title: "Ape Drums",
+    subtitle: "The Lola Pop-Up · Chasing Sun(Sets)",
+    description:
+      "July 31, 2026 at Kashmir in the West Loop — Ape Drums opening the Lola pop-up weekend. The full gallery and recap film are in the edit now.",
+    accentColor: "#E8B86D",
+    coverImage: "/images/events/ape-drums-july31-card.jpg",
+    date: "July 31, 2026",
+    comingSoon: true,
+    media: [],
+  },
   "chasing-sunsets-sunsets-i-2026": {
     slug: "chasing-sunsets-sunsets-i-2026",
     title: "Chasing Sun(Sets)",

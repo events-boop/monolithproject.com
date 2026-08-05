@@ -4,12 +4,6 @@ import { Link } from "wouter";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { FAMILY_PROMO } from "@/content/familyPromo";
 
-const LOLA_FLYER_SRC = "/images/events/ape-drums-july31-card.jpg";
-const LOLA_FLYER_ALT =
-  "The Monolith Project presents Chasing Sun(Sets): Ape Drums — Friday, July 31 in the West Loop, doors open 9 PM";
-
-const LOLA_FACTS = ["Friday, July 31", "Doors 9 PM", "West Loop, Chicago"] as const;
-
 const ACCENTS = {
   gold: {
     border: "border-[#E8B86D]/30",
@@ -33,6 +27,9 @@ type LolaPopupFrameProps = {
   layout?: "responsive" | "stacked";
 };
 
+// All copy lives in FAMILY_PROMO (client/src/content/familyPromo.ts), which is
+// release-gated and auto-retires once the show concludes — the frame must not
+// reveal the booking before the show page is live, nor sell a past event.
 export default function LolaPopupFrame({
   accent = "gold",
   className = "",
@@ -45,9 +42,8 @@ export default function LolaPopupFrame({
       ? ""
       : "lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)]";
 
-  // Keep the announcement synchronized with the Ape Drums contract/release
-  // gate. The frame must not reveal the booking before the show page is live.
   if (!FAMILY_PROMO) return null;
+  const promo = FAMILY_PROMO;
 
   return (
     <section
@@ -63,8 +59,8 @@ export default function LolaPopupFrame({
           className={`mx-auto w-full max-w-[260px] border ${tone.border} bg-black/60 p-2`}
         >
           <ResponsiveImage
-            src={LOLA_FLYER_SRC}
-            alt={LOLA_FLYER_ALT}
+            src={promo.flyer}
+            alt={promo.flyerAlt}
             sizes="(min-width: 640px) 240px, 70vw"
             className="block h-auto w-full"
           />
@@ -73,22 +69,21 @@ export default function LolaPopupFrame({
           <p
             className={`font-mono text-[10px] font-black uppercase tracking-[0.3em] ${tone.eyebrow}`}
           >
-            Introducing
+            {promo.eyebrow}
           </p>
           <h2
             id={titleId}
             className="mt-2 font-display text-[clamp(1.6rem,7vw,2.6rem)] uppercase leading-[0.9] tracking-tight text-white"
           >
-            The Lola Pop-Up Weekend
+            {promo.heading}
           </h2>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-white/70">
-            The Monolith Project presents Chasing Sun(Sets) as a West Loop
-            pop-up weekend, opening Friday, July 31 with Ape Drums.
+            {promo.body}
           </p>
           <ul
             className={`mt-4 flex flex-wrap justify-center gap-2 ${layout === "responsive" ? "lg:justify-start" : ""}`}
           >
-            {LOLA_FACTS.map(fact => (
+            {promo.facts.map(fact => (
               <li
                 key={fact}
                 className={`border ${tone.innerBorder} px-3 py-1.5 font-mono text-[9px] font-black uppercase tracking-[0.18em] ${tone.fact}`}
@@ -98,11 +93,11 @@ export default function LolaPopupFrame({
             ))}
           </ul>
           <Link
-            href={FAMILY_PROMO.href}
-            aria-label={`View ${FAMILY_PROMO.title} event details`}
+            href={promo.href}
+            aria-label={`View ${promo.title} event details`}
             className={`mt-5 inline-flex items-center gap-2 border ${tone.innerBorder} px-4 py-2.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.98] motion-reduce:transition-none`}
           >
-            View Ape Drums
+            {promo.ctaLabel}
             <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" />
           </Link>
         </div>

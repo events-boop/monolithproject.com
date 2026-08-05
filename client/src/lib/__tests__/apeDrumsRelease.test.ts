@@ -50,8 +50,46 @@ describe("Ape Drums release gate", () => {
     expect(release.videoIds).toEqual(["JHJoX3ufp1E", "XAp6w9hTAqk"]);
   });
 
-  it("normalizes approved YouTube URL formats", () => {
-    expect(getYouTubeVideoId("https://www.youtube.com/embed/JHJoX3ufp1E")).toBe(
+  it("treats the show as upcoming before the conclusion window ends", () => {
+    const release = resolveApeDrumsRelease(
+      { eventDate: "2026-07-31" },
+      new Date("2026-07-31T21:00:00")
+    );
+
+    expect(release.eventConcluded).toBe(false);
+  });
+
+  it("concludes at noon the day after the event by default", () => {
+    const before = resolveApeDrumsRelease(
+      { eventDate: "2026-07-31" },
+      new Date("2026-08-01T11:00:00")
+    );
+    const after = resolveApeDrumsRelease(
+      { eventDate: "2026-07-31" },
+      new Date("2026-08-01T13:00:00")
+    );
+
+    expect(before.eventConcluded).toBe(false);
+    expect(after.eventConcluded).toBe(true);
+    expect(after.concludesAt).toBe(
+      new Date("2026-08-01T12:00:00").toISOString()
+    );
+  });
+
+  it("never concludes without a valid event date", () => {
+    expect(
+      resolveApeDrumsRelease({}, new Date("2026-08-04T00:00:00"))
+        .eventConcluded
+    ).toBe(false);
+    expect(
+      resolveApeDrumsRelease(
+        { eventDate: "not-a-date" },
+        new Date("2026-08-04T00:00:00")
+      ).concludesAt
+    ).toBeNull();
+  });
+
+  it("normalizes approved YouTube URL formats", () => {    expect(getYouTubeVideoId("https://www.youtube.com/embed/JHJoX3ufp1E")).toBe(
       "JHJoX3ufp1E"
     );
     expect(getYouTubeVideoId("https://youtu.be/XAp6w9hTAqk?t=3")).toBe(

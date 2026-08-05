@@ -17,6 +17,8 @@ export type ApeDrumsReleaseConfig = ArtistShowReleaseConfig;
 
 export const APE_DRUMS_TICKET_URL =
   "https://posh.vip/e/monolith-project-presents-ape-drums?u=erik&_t=mrzne6d7&os=ios&src=event_page";
+// ISO event date — drives promo retirement and the handoff to the archive.
+export const APE_DRUMS_EVENT_DATE = "2026-07-31";
 export const APE_DRUMS_FEATURED_SET_URL =
   "https://www.youtube.com/watch?v=O94vKVHzamk";
 export const APE_DRUMS_HERO_IMAGE = import.meta.env.DEV
@@ -29,11 +31,17 @@ export const APE_DRUMS_THIRD_VIDEO_URL =
 export const APE_DRUMS_MAJOR_LAZER_VIDEO_URL =
   "https://www.youtube.com/watch?v=Vyo-kk0wRw4";
 
-export function resolveApeDrumsRelease(input: ApeDrumsReleaseInput) {
-  return resolveArtistShowRelease({
-    ...input,
-    minimumVideos: 2,
-  });
+export function resolveApeDrumsRelease(
+  input: ApeDrumsReleaseInput,
+  now: Date = new Date()
+) {
+  return resolveArtistShowRelease(
+    {
+      ...input,
+      minimumVideos: 2,
+    },
+    now
+  );
 }
 
 export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
@@ -42,6 +50,7 @@ export const APE_DRUMS_RELEASE = resolveApeDrumsRelease({
   ticketUrl: import.meta.env.VITE_APE_DRUMS_TICKET_URL || APE_DRUMS_TICKET_URL,
   doors: import.meta.env.VITE_APE_DRUMS_DOORS,
   heroImage: import.meta.env.VITE_APE_DRUMS_HERO_IMAGE || APE_DRUMS_HERO_IMAGE,
+  eventDate: import.meta.env.VITE_APE_DRUMS_EVENT_DATE || APE_DRUMS_EVENT_DATE,
   approvedVideoUrls: [
     import.meta.env.VITE_APE_DRUMS_APPROVED_VIDEO_1_URL ||
       APE_DRUMS_FEATURED_SET_URL,

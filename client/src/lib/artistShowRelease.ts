@@ -7,6 +7,16 @@ export interface ArtistShowReleaseInput {
   approvedVideoUrls?: Array<string | undefined>;
   allowedTicketHosts?: string[];
   minimumVideos?: number;
+  /**
+   * ISO event date (YYYY-MM-DD). Once the show has concluded, promos retire
+   * and the event hands off to the archive. Not a launch blocker.
+   */
+  eventDate?: string;
+  /**
+   * Hours after event-date midnight (local) when the show is treated as
+   * concluded. Defaults to 36 — noon the day after the event.
+   */
+  eventConcludesAfterHours?: number;
 }
 
 export interface ArtistShowReleaseConfig {
@@ -16,6 +26,10 @@ export interface ArtistShowReleaseConfig {
   heroImage: string;
   videoIds: string[];
   blockers: string[];
+  /** True once the event itself is over and promos should retire. */
+  eventConcluded: boolean;
+  /** ISO timestamp when the event is treated as concluded, if known. */
+  concludesAt: string | null;
 }
 
 const YOUTUBE_ID_PATTERN = /^[a-zA-Z0-9_-]{11}$/;
@@ -53,6 +67,19 @@ function isApprovedHeroImage(value: string) {
   }
 }
 
+const DEFAULT_CONCLUSION_HOURS = 36;
+
+function resolveConcludesAt(eventDate?: string, afterHours?: number) {
+  const normalized = eventDate?.trim();
+  if (!normalized) return null;
+
+  const start = new Date(`${normalized}T00:00:00`);
+  if (Number.isNaN(start.getTime())) return null;
+
+  const hours = afterHours ?? DEFAULT_CONCLUSION_HOURS;
+  return new Date(start.getTime() + hours * 60 * 60 * 1000);
+}
+
 export function getYouTubeVideoId(value?: string) {
   const normalized = value?.trim();
   if (!normalized) return null;
@@ -82,7 +109,8 @@ export function getYouTubeVideoId(value?: string) {
 }
 
 export function resolveArtistShowRelease(
-  input: ArtistShowReleaseInput
+  input: ArtistShowReleaseInput,
+  now: Date = new Date()
 ): ArtistShowReleaseConfig {
   const ticketUrl = input.ticketUrl?.trim() || "";
   const doors = input.doors?.trim() || "";
@@ -127,6 +155,11 @@ export function resolveArtistShowRelease(
     );
   }
 
+  const concludesAt = resolveConcludesAt(
+    input.eventDate,
+    input.eventConcludesAfterHours
+  );
+
   return {
     publicReady: blockers.length === 0,
     ticketUrl,
@@ -134,5 +167,7 @@ export function resolveArtistShowRelease(
     heroImage,
     videoIds,
     blockers,
+    eventConcluded: concludesAt ? now.getTime() >= concludesAt.getTime() : false,
+    concludesAt: concludesAt ? concludesAt.toISOString() : null,
   };
 }

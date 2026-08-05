@@ -1,42 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Camera } from "lucide-react";
 import { Link } from "wouter";
-import {
-  archiveCollectionsBySlug,
-  ArchiveCollection,
-} from "@/data/galleryData";
+import { publishedArchiveEntries } from "@/data/archiveEntries";
 import { useUI } from "@/contexts/UIContext";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import SplitText from "@/components/ui/SplitText";
-
-// Newest first — static list since we have a small fixed set
-const archiveEntries: (ArchiveCollection & { href: string })[] = [
-  {
-    ...archiveCollectionsBySlug["untold-story-season-iii"],
-    href: "/untold-story/season-iii",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-iii"],
-    href: "/chasing-sunsets/season-iii",
-  },
-  {
-    ...archiveCollectionsBySlug["untold-story-season-ii"],
-    href: "/untold-story/season-ii",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-ii"],
-    href: "/chasing-sunsets/season-ii",
-  },
-  {
-    ...archiveCollectionsBySlug["untold-story-season-i"],
-    href: "/untold-story/season-i",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-i"],
-    href: "/chasing-sunsets/season-i",
-  },
-].filter(e => e.media.length > 0);
 
 export default function ArchiveSection() {
   const { closeDrawer } = useUI();
@@ -70,7 +39,7 @@ export default function ArchiveSection() {
 
         {/* Event Card Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {archiveEntries.map((entry, idx) => (
+          {publishedArchiveEntries.map((entry, idx) => (
             <motion.div
               key={entry.slug}
               initial={{ opacity: 0, y: 20 }}

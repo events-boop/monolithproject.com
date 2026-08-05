@@ -5,47 +5,8 @@ import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
-import {
-  archiveCollectionsBySlug,
-  ArchiveCollection,
-} from "@/data/galleryData";
+import { archiveEntries } from "@/data/archiveEntries";
 import { trackAccessEvent } from "@/lib/api";
-
-// Newest first — static list since we have a small fixed set
-const archiveEntries: (ArchiveCollection & { href: string })[] = [
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-sunsets-i-2026"],
-    href: "/chasing-sunsets/sunsets-i-2026",
-  },
-  {
-    ...archiveCollectionsBySlug["autograf-march-21-2026"],
-    href: "/archive/autograf-march-21-2026",
-  },
-  {
-    ...archiveCollectionsBySlug["untold-story-season-iii"],
-    href: "/untold-story/season-iii",
-  },
-  {
-    ...archiveCollectionsBySlug["untold-story-season-ii"],
-    href: "/untold-story/season-ii",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-iii"],
-    href: "/chasing-sunsets/season-iii",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-ii"],
-    href: "/chasing-sunsets/season-ii",
-  },
-  {
-    ...archiveCollectionsBySlug["untold-story-season-i"],
-    href: "/untold-story/season-i",
-  },
-  {
-    ...archiveCollectionsBySlug["chasing-sunsets-season-i"],
-    href: "/chasing-sunsets/season-i",
-  },
-].filter(e => e.media.length > 0 || e.comingSoon);
 
 export default function Archive() {
   useEffect(() => {
