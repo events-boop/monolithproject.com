@@ -14,6 +14,9 @@ import {
   trackLakePageView,
 } from "@/lib/campaignPixel";
 import {
+  SUNSETS_AUG22_EVENT_DATE as AUG22_EVENT_DATE,
+  SUNSETS_AUG22_EVENT_SLUG as AUG22_EVENT_SLUG,
+  SUNSETS_AUG22_TICKET_PATH,
   SUNSETS_JULY4_COMPLETE_LABEL,
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
@@ -52,7 +55,6 @@ const SEASON_III_LIVE_SETS = [
     url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
   },
 ] as const;
-const LAKE_LIST_HREF = "/go/lakelist";
 // Live channel row at the bottom of the page. untold.vip serves its own
 // cert + host-detected landing (verified live 2026-07-01); the broadcast
 // channel is the direct Chasing Sun(Sets) Instagram channel supplied by owner.
@@ -148,13 +150,13 @@ const SEASON_EVENTS_SCHEMA = [
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) II — Chasing Sun(Sets) 2026",
     description:
-      "SUN(SETS) II — the summer return. Chapter Two of Chasing Sun(Sets) 2026 at Castaways Beach Club, Chicago. Artist reveal and ticket window announced through the Lake List first.",
+      "SUN(SETS) II — the summer return. Chapter Two of Chasing Sun(Sets) 2026 at Castaways Beach Club, Chicago. Tickets on sale now, powered by Posh.",
     startDate: "2026-08-22T12:00:00-05:00",
     endDate: "2026-08-22T22:00:00-05:00",
     offers: {
       "@type": "Offer" as const,
       url: "https://sunsets.vip",
-      availability: "https://schema.org/PreOrder",
+      availability: "https://schema.org/InStock",
       priceCurrency: "USD",
     },
   },
@@ -244,27 +246,30 @@ export default function SunsetsLinkBio() {
     SOMMERS_UK_HREF,
     JULY_4_EVENT_SLUG
   );
-  const lakeListHref = appendEventAttribution(
-    LAKE_LIST_HREF,
-    JULY_4_EVENT_SLUG
+  const aug22TicketHref = appendEventAttribution(
+    SUNSETS_AUG22_TICKET_PATH,
+    AUG22_EVENT_SLUG
   );
   const seasonPassHref = appendEventAttribution(
     SEASON_PASS_HREF,
     JULY_4_EVENT_SLUG
   );
 
-  const handleLakeListPrimaryClick = () => {
+  const handleTicketPrimaryClick = () => {
     triggerHaptic(16);
-    trackLakeLead(newLeadEventId(), {
-      content_name: "Lake List Primary Click",
+    trackLakeOutboundTicketClick({ cta_placement: "primary" });
+    captureSunsetsTicketCtaClick({
+      destinationUrl: aug22TicketHref,
+      pagePath: PAGE_PATH,
+      ctaPosition: "primary",
     });
     trackSunsetsClick({
-      buttonName: "JOIN THE LAKE LIST",
-      href: lakeListHref,
-      eventSlug: JULY_4_EVENT_SLUG,
-      eventDate: JULY_4_EVENT_DATE,
-      interestType: "first_access_click",
-      channel: "Laylo",
+      buttonName: "BUY TICKETS — AUGUST 22",
+      href: aug22TicketHref,
+      eventSlug: AUG22_EVENT_SLUG,
+      eventDate: AUG22_EVENT_DATE,
+      interestType: "ticket_click",
+      channel: "Posh",
     });
   };
 
@@ -390,7 +395,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="SUN(SETS) 2026 | Chasing Sun(Sets) — Castaways Chicago"
-        description="SUN(SETS) II returns to Castaways Beach Club August 22 — join the Lake List for first access. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
+        description="SUN(SETS) II returns to Castaways Beach Club August 22 — tickets on sale now, powered by Posh. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
         canonicalUrl={CANONICAL_SUNSETS_URL}
@@ -457,20 +462,19 @@ export default function SunsetsLinkBio() {
             THE SUMMER RETURN
           </h2>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-            Chapter Two at Castaways Beach Club. Artist reveal coming — the Lake
-            List hears it first.
+            Chapter Two at Castaways Beach Club. Tickets are live now.
           </p>
         </section>
 
         {/* 3. Primary CTA */}
-        <section className="mt-4" aria-label="Lake List signup">
+        <section className="mt-4" aria-label="Buy tickets">
           <a
-            href={lakeListHref}
-            onClick={handleLakeListPrimaryClick}
+            href={aug22TicketHref}
+            onClick={handleTicketPrimaryClick}
             className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              JOIN THE LAKE LIST{" "}
+              BUY TICKETS — AUG 22{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -484,8 +488,8 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <p className="mt-3 text-center text-[10px] font-semibold leading-relaxed tracking-[0.06em] text-stone-400">
-            First ticket windows, artist reveals, and table access go to the
-            Lake List before the public. Live updates on{" "}
+            Official tickets powered by Posh — straight to checkout, no
+            waitlist. Live updates on{" "}
             <a
               href="https://instagram.com/chasingsunsets.music"
               target="_blank"
@@ -929,25 +933,28 @@ export default function SunsetsLinkBio() {
         {/* 9. Live channels */}
         <section className="mb-6" aria-label="Live channels">
           <a
-            href={lakeListHref}
+            href={aug22TicketHref}
             onClick={() => {
               triggerHaptic(16);
-              trackLakeLead(newLeadEventId(), {
-                content_name: "Lake List Footer Click",
+              trackLakeOutboundTicketClick({ cta_placement: "footer" });
+              captureSunsetsTicketCtaClick({
+                destinationUrl: aug22TicketHref,
+                pagePath: PAGE_PATH,
+                ctaPosition: "footer",
               });
               trackSunsetsClick({
-                buttonName: "JOIN THE LAKE LIST — Bottom",
-                href: lakeListHref,
-                eventSlug: JULY_4_EVENT_SLUG,
-                eventDate: JULY_4_EVENT_DATE,
-                interestType: "first_access_click",
-                channel: "Laylo",
+                buttonName: "BUY TICKETS — AUGUST 22 — Bottom",
+                href: aug22TicketHref,
+                eventSlug: AUG22_EVENT_SLUG,
+                eventDate: AUG22_EVENT_DATE,
+                interestType: "ticket_click",
+                channel: "Posh",
               });
             }}
             className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              JOIN THE LAKE LIST{" "}
+              BUY TICKETS — AUG 22{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"

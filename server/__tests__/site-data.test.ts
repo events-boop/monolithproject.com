@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { buildPublicSiteData } from "../data/public-site-data";
 
 // SUN(SETS) I (css-jul04) is past and SUN(SETS) II (css-aug22) is the
-// featured record. Aug 22 is announced but not on sale, so every featured
-// CTA funnels to the Lake List until its gates pass.
+// featured record. Aug 22 is on sale, so every featured CTA goes straight
+// to the ticket rail — no Lake List middleman in the buying path.
 const expectedSunsetsCta = {
-  label: "Get First Access",
-  href: "/go/waitlist/chasing-sunsets",
-  tool: "laylo",
+  label: "Get Tickets",
+  href: "/go/tickets/css-aug22",
+  tool: "posh",
 };
 
 describe("buildPublicSiteData", () => {
@@ -21,9 +21,9 @@ describe("buildPublicSiteData", () => {
     expect(data.featuredEvents.hero?.id).toBe("css-aug22");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
     expect(featuredSunsets?.lineup).toBe("TBA");
-    // Not on sale yet: no checkout path or price may leak into the payload.
+    // On sale: the checkout rail ships in the payload; no price until tiers publish.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-aug22");
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -106,7 +106,7 @@ describe("buildPublicSiteData", () => {
       title: "HOUSE OF FRIENDS POP-UP",
       lineup: "ERIK THE DJ · SPECIAL GUEST",
       time: "Time TBA",
-      status: "coming-soon",
+      status: "past",
     });
     expect(
       residencyEvents[1]?.artistImages?.map(image => image.artist)
@@ -140,7 +140,7 @@ describe("buildPublicSiteData", () => {
       "vip@chasingsunsets.music"
     );
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-aug22");
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });

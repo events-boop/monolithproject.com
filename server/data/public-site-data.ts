@@ -1,4 +1,5 @@
 import {
+  SUNSETS_AUG22_TICKET_PATH,
   SUNSETS_JULY4_EVENT_ADDRESS,
   SUNSETS_JULY4_EVENT_LOCATION,
   SUNSETS_JULY4_EVENT_TIME,
@@ -30,10 +31,10 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
 /**
  * Active audience gateway for the next public drop.
- * SUN(SETS) II tickets are not live yet, so this points at the Lake List
- * until the Aug 22 Posh checkout passes its gates (then: ticket path).
+ * SUN(SETS) II tickets are live — every "tickets" surface goes straight to
+ * the Aug 22 Posh checkout rail. No Lake List middleman in the buying path.
  */
-export const POSH_TICKET_URL = LAYLO_URL;
+export const POSH_TICKET_URL = SUNSETS_AUG22_TICKET_PATH;
 
 const CASTAWAYS_VIP_EMAIL = "vip@chasingsunsets.music";
 
@@ -300,7 +301,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "FRANK BONO",
       },
     ],
-    status: "coming-soon",
+    status: "past",
     format: "Monolith Project Residency Series",
     sound: "House Music · Resident DJs",
     description:
@@ -327,7 +328,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "ERIK THE DJ",
       },
     ],
-    status: "coming-soon",
+    status: "past",
     format: "Give-Back Party · House of Friends Pop-Up",
     sound: "House Music · Residency Session",
     description:
@@ -377,9 +378,10 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Castaways",
     location: "Chicago, IL",
     lineup: "TBA",
-    status: "coming-soon",
+    status: "on-sale",
+    ticketUrl: SUNSETS_AUG22_TICKET_PATH,
     description:
-      "Chapter Two. Artist reveal coming. Join the Lake List for first access.",
+      "Chapter Two at Castaways. Tickets are live — powered by Posh.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
@@ -396,8 +398,9 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       large: "limited",
     }),
     activeFunnels: ["waitlist-chasing"],
-    // Flip these as the Aug 22 record completes; on-sale is blocked until all pass.
-    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
+    // Flipped 2026-08-05: Aug 22 checkout is live (owner brief); deploy
+    // validation requires all gates true + ticketUrl for on-sale records.
+    gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
   {
     // Parent-brand launch moment — NOT a SUN(SETS) season date. The

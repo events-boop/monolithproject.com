@@ -30,18 +30,20 @@ export const SUNSETS_SEASON_PASS_TICKET_KEY = "season-pass";
 export const SUNSETS_SEASON_PASS_PATH = "/go/tickets/season-pass";
 export const SUNSETS_LAKELIST_PATH = "/go/lakelist";
 export const SUNSETS_LAKELIST_CANONICAL_PATH = "/go/waitlist/chasing-sunsets";
+export const SUNSETS_AUG22_EVENT_SLUG = "chasing-sunsets-august-22-2026";
+export const SUNSETS_AUG22_EVENT_DATE = "2026-08-22";
 export const SUNSETS_AUG22_TICKET_KEY = "css-aug22";
 export const SUNSETS_AUG22_TICKET_PATH = "/go/tickets/css-aug22";
 export const SUNSETS_SEP19_TICKET_KEY = "css-sep19";
 export const SUNSETS_SEP19_TICKET_PATH = "/go/tickets/css-sep19";
 
 export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
-// July 4 sold and executed (2026-07-04). SUN(SETS) II checkout isn't live
-// yet, so the primary CTA reverts to the Lake List until the Aug 22 record
-// passes its gates — then this becomes "BUY TICKETS — AUGUST 22".
-export const SUNSETS_TICKET_CTA_LABEL = "JOIN THE LAKE LIST";
+// July 4 sold and executed (2026-07-04). SUN(SETS) II checkout is live, so
+// the primary CTA goes straight to the Aug 22 ticket rail — no Lake List
+// middleman in the buying path.
+export const SUNSETS_TICKET_CTA_LABEL = "BUY TICKETS — AUGUST 22";
 export const SUNSETS_TICKET_CTA_SUPPORT =
-  "First access to SUN(SETS) II — August 22. Tickets powered by Posh.";
+  "SUN(SETS) II — August 22 at Castaways. Tickets powered by Posh.";
 export const SUNSETS_2026_SEASON_PASS_CTA_LABEL = "CLAIM SEASON PASS";
 
 export const SUNSETS_2026_SEASON_CHAPTERS = [
@@ -60,8 +62,8 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     id: "sunsets-ii",
     title: "SUN(SETS) II",
     date: "August 22, 2026",
-    eventDate: "2026-08-22",
-    eventSlug: "chasing-sunsets-august-22-2026",
+    eventDate: SUNSETS_AUG22_EVENT_DATE,
+    eventSlug: SUNSETS_AUG22_EVENT_SLUG,
     venue: "Castaways Chicago",
     lineup: "Lineup TBA",
     ticketPath: SUNSETS_AUG22_TICKET_PATH,
@@ -330,7 +332,7 @@ export function getSunsetsTicketRouteMeta(
       };
     case SUNSETS_AUG22_TICKET_KEY:
       return {
-        eventSlug: "chasing-sunsets-august-22-2026",
+        eventSlug: SUNSETS_AUG22_EVENT_SLUG,
         dateLabel: "August 22",
         title: "SUN(SETS) II — August 22nd at Castaways",
       };

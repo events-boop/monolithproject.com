@@ -27,9 +27,11 @@ import {
   SUNSETS_2026_SEASON_CHAPTERS,
   SUNSETS_2026_SEASON_PASS,
   SUNSETS_2026_SEASON_PASS_CTA_LABEL,
+  SUNSETS_AUG22_EVENT_DATE as TICKET_EVENT_DATE,
+  SUNSETS_AUG22_EVENT_SLUG as TICKET_EVENT_SLUG,
+  SUNSETS_AUG22_TICKET_PATH as TICKET_HREF,
   SUNSETS_JULY4_EVENT_DATE as JULY_4_EVENT_DATE,
   SUNSETS_JULY4_EVENT_SLUG as JULY_4_EVENT_SLUG,
-  SUNSETS_JULY4_TICKET_PATH as TICKET_HREF,
   SUNSETS_TICKET_CTA_LABEL,
   SUNSETS_TICKET_CTA_SUPPORT,
   captureSunsetsTicketCtaClick,
@@ -221,7 +223,7 @@ export default function LakeLanding() {
     []
   );
 
-  const ticketHref = appendEventAttribution(TICKET_HREF, JULY_4_EVENT_SLUG);
+  const ticketHref = appendEventAttribution(TICKET_HREF, TICKET_EVENT_SLUG);
   const firstAccessHref = appendAttributionQueryParams(LAYLO_HREF);
 
   // Primary paid-campaign conversion: one event_id shared by the browser Pixel
@@ -391,8 +393,8 @@ export default function LakeLanding() {
                     trackLakeClick({
                       buttonName: SUNSETS_2026_SEASON_PASS_CTA_LABEL,
                       href: ticketHref,
-                      eventSlug: JULY_4_EVENT_SLUG,
-                      eventDate: JULY_4_EVENT_DATE,
+                      eventSlug: TICKET_EVENT_SLUG,
+                      eventDate: TICKET_EVENT_DATE,
                       interestType: "season_pass_claim",
                       channel: "Posh",
                     });
@@ -417,8 +419,8 @@ export default function LakeLanding() {
                 trackLakeClick({
                   buttonName: SUNSETS_TICKET_CTA_LABEL,
                   href: ticketHref,
-                  eventSlug: JULY_4_EVENT_SLUG,
-                  eventDate: JULY_4_EVENT_DATE,
+                  eventSlug: TICKET_EVENT_SLUG,
+                  eventDate: TICKET_EVENT_DATE,
                   interestType: "ticket_click",
                   channel: "Posh",
                 });

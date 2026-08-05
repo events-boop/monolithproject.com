@@ -1,4 +1,4 @@
-import { SUNSETS_LAKELIST_CANONICAL_PATH } from "@shared/events/sunsets-ticketing";
+import { SUNSETS_AUG22_TICKET_PATH } from "@shared/events/sunsets-ticketing";
 
 export type {
   ActiveFunnel,
@@ -20,7 +20,7 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
 
 /**
  * Active audience gateway for the next public drop.
- * SUN(SETS) II (Aug 22) checkout isn't live yet — every "tickets" surface
- * funnels to the Lake List until the Aug 22 record passes its gates.
+ * SUN(SETS) II (Aug 22) checkout is live — every "tickets" surface goes
+ * straight to the Aug 22 Posh rail. No Lake List middleman in the buying path.
  */
-export const POSH_TICKET_URL = SUNSETS_LAKELIST_CANONICAL_PATH;
+export const POSH_TICKET_URL = SUNSETS_AUG22_TICKET_PATH;

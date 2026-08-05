@@ -345,9 +345,8 @@ export default function ChasingSunsets() {
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-relaxed sunset-text-70 md:text-lg">
                 SUN(SETS) I opened the 2026 lakefront chapter on July 4 at
-                Castaways. Next: SUN(SETS) II on August 22 — Lake List first
-                access, then public tiers, group bundles, and a separate
-                table/cabana rail.
+                Castaways. Next: SUN(SETS) II on August 22 — tickets are live
+                now, with group bundles and a separate table/cabana rail.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <span className="rounded-full border border-[#E8B86D]/18 bg-white/78 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] sunset-text-70">

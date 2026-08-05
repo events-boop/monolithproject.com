@@ -32,6 +32,7 @@ import {
 } from "@/lib/siteExperience";
 import { CTA_LABELS, getEventCta } from "@/lib/cta";
 import { getEventCtaToneClass } from "@/lib/ctaTone";
+import { SUNSETS_AUG22_TICKET_PATH } from "@/lib/sunsetsTicketing";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import type { TicketTier } from "@/data/events";
 
@@ -54,10 +55,10 @@ export default function Tickets() {
   const cta = featuredEvent
     ? getEventCta(featuredEvent)
     : {
-        label: "Join the Lake List",
-        href: "/go/lakelist",
-        tool: "laylo" as const,
-        isExternal: false,
+        label: "Buy Tickets — August 22",
+        href: SUNSETS_AUG22_TICKET_PATH,
+        tool: "posh" as const,
+        isExternal: true,
       };
   const ctaToneClass = getEventCtaToneClass(featuredEvent);
 

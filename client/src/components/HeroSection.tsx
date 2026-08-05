@@ -105,11 +105,14 @@ const SLIDE_EVENT_MAP: SlideBannerInfo[] = [
   {
     fallbackToFeaturedEvent: true,
     label: "SUN(SETS) II",
-    eyebrow: "NEXT CHAPTER / FIRST ACCESS",
+    eyebrow: "NEXT CHAPTER / ON SALE",
     venueLabel: "CASTAWAYS / CHICAGO",
     dateLabel: "AUGUST 22 / 2026",
-    statusLabel: "FIRST ACCESS",
-    fallbackAction: { href: "/go/lakelist", label: "Join the Lake List" },
+    statusLabel: "ON SALE",
+    fallbackAction: {
+      href: "/go/tickets/css-aug22",
+      label: "Buy Tickets — August 22",
+    },
   }, // 0: current season signal
   {
     label: "UNTOLD STORY IV",
@@ -539,10 +542,10 @@ export default function HeroSection() {
 
               <div className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
                 <Link
-                  href="/go/lakelist"
+                  href="/go/tickets/css-aug22"
                   className="btn-pill-sunsets btn-pill-wide sm:w-auto sm:min-w-[15rem]"
                 >
-                  Join the Lake List
+                  Buy Tickets — August 22
                 </Link>
                 <Link
                   href="/sunsets"

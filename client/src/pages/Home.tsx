@@ -26,7 +26,7 @@ import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { SUNSETS_LAKELIST_PATH } from "@/lib/sunsetsTicketing";
+import { SUNSETS_AUG22_TICKET_PATH } from "@/lib/sunsetsTicketing";
 
 // Chapter One archive — photos + recap land here as they clear the edit.
 const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
@@ -64,7 +64,9 @@ export default function Home() {
   // The featured untold record can be a past-event fallback — never show a
   // past date grid next to future-tense copy.
   const untoldIsPast = getEventWindowStatus(untoldMoment) === "past";
-  const lakeListHref = appendAttributionQueryParams(SUNSETS_LAKELIST_PATH);
+  const sunsetsTicketHref = appendAttributionQueryParams(
+    SUNSETS_AUG22_TICKET_PATH
+  );
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
   const untoldVipHref = appendAttributionQueryParams("https://untold.vip");
   useEffect(() => {
@@ -124,16 +126,15 @@ export default function Home() {
                   SUN(SETS) II · AUGUST 22 · CASTAWAYS · CHICAGO · 21+
                 </p>
                 <p className="mt-2 text-sm text-[#F4D7A1]/80">
-                  The Summer Return. Artist reveal, first ticket window, and
-                  table access move through the Lake List first.
+                  The Summer Return. Tickets are live now — powered by Posh.
                 </p>
               </div>
               <div className="flex flex-col gap-3 lg:items-end">
                 <a
-                  href={lakeListHref}
+                  href={sunsetsTicketHref}
                   className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
                 >
-                  Join the Lake List
+                  Buy Tickets — August 22
                   <ArrowUpRight className="size-4" />
                 </a>
                 <Link
@@ -325,16 +326,16 @@ export default function Home() {
                 </h2>
                 <p className={titleSubtextClass}>
                   Chapter One now lives in the archive. Chapter Two arrives
-                  August 22, with Chapter Three closing the season September 19.
-                  First access hears every release before the public.
+                  August 22 — tickets are live — with Chapter Three closing
+                  the season September 19.
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
                   <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                     <a
-                      href={lakeListHref}
+                      href={sunsetsTicketHref}
                       className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
                     >
-                      Join the Lake List
+                      Buy Tickets — August 22
                     </a>
                     <Link
                       href="/sunsets"
