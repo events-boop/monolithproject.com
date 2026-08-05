@@ -1,5 +1,6 @@
 import {
   SUNSETS_AUG22_TICKET_PATH,
+  SUNSETS_SEP19_TICKET_PATH,
   SUNSETS_JULY4_EVENT_ADDRESS,
   SUNSETS_JULY4_EVENT_LOCATION,
   SUNSETS_JULY4_EVENT_TIME,
@@ -191,9 +192,10 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Castaways",
     location: "Chicago, IL",
     lineup: "Joezi x Massuma (UK) · Special Guests TBA",
-    status: "coming-soon",
+    status: "on-sale",
+    ticketUrl: SUNSETS_SEP19_TICKET_PATH,
     description:
-      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Join the Lake List for first access.",
+      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Tickets are live — powered by Posh.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
@@ -210,7 +212,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       large: "limited",
     }),
     activeFunnels: ["waitlist-chasing"],
-    gates: { creativeReady: false, trackingQA: false, poshLinked: false },
+    // Flipped 2026-08-05: Sept 19 checkout is live (owner-supplied Posh URL).
+    gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
   {
     id: "css-jul04",

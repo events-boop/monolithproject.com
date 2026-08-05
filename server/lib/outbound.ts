@@ -22,6 +22,12 @@ type QuerySource = URLSearchParams | Record<string, QueryValue | unknown>;
 // Must be a public destination: the previous value was a posh.vip /owner/…
 // admin URL that showed buyers a login wall when the env vars were unset.
 const FALLBACK_POSH_URL = "https://monolithproject.com/tickets";
+// Official Posh checkouts — published by the owner 2026-08-05. The env vars
+// still win when set; these keep the rails live with zero env dependency.
+const FALLBACK_SUNSETS_AUG22_POSH_URL =
+  "https://posh.vip/e/chasing-sunsets-ii-house-of-friends-preview";
+const FALLBACK_SUNSETS_SEP19_POSH_URL =
+  "https://posh.vip/e/chasing-sunsets-iii-joezi-x-massuma";
 const FALLBACK_LAYLO_URL = "https://laylo.com/monolithproject/m/IQ5HaR";
 const FALLBACK_BENCHEK_LAYLO_URL = "https://laylo.com/monolithproject/vhX7ZX";
 const FALLBACK_SUNSETS_RECAP_URL = "https://youtu.be/9R6XH7JZlJI";
@@ -97,9 +103,11 @@ const ticketDestinations: Record<string, string | null> = Object.assign(
         "NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL"
       ) ?? null,
     [SUNSETS_AUG22_TICKET_KEY]:
-      readHttpsEnv("OUTBOUND_TICKETS_CSS_AUG22_URL") ?? null,
+      readHttpsEnv("OUTBOUND_TICKETS_CSS_AUG22_URL") ||
+      FALLBACK_SUNSETS_AUG22_POSH_URL,
     [SUNSETS_SEP19_TICKET_KEY]:
-      readHttpsEnv("OUTBOUND_TICKETS_CSS_SEP19_URL") ?? null,
+      readHttpsEnv("OUTBOUND_TICKETS_CSS_SEP19_URL") ||
+      FALLBACK_SUNSETS_SEP19_POSH_URL,
     // Season Pass — null until the Posh season-pass URL is wired, so the route
     // shows "coming soon" rather than redirecting to a single-date event.
     [SUNSETS_SEASON_PASS_TICKET_KEY]:

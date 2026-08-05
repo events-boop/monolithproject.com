@@ -174,7 +174,7 @@ const SEASON_EVENTS_SCHEMA = [
     offers: {
       "@type": "Offer" as const,
       url: "https://sunsets.vip",
-      availability: "https://schema.org/PreOrder",
+      availability: "https://schema.org/InStock",
       priceCurrency: "USD",
     },
   },

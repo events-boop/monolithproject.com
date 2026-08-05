@@ -29,7 +29,7 @@ describe("resolveOutboundDestination", () => {
     );
   });
 
-  it("fails closed for Sun(Sets) ticket rails until the official Posh URL is configured", async () => {
+  it("fails closed only for Sun(Sets) rails without an official Posh destination", async () => {
     process.env.POSH_TICKET_URL = "https://tickets.example.com/featured";
     delete process.env.OUTBOUND_TICKETS_CSS_JUL04_URL;
     delete process.env.NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL;
@@ -40,11 +40,13 @@ describe("resolveOutboundDestination", () => {
     expect(resolveOutboundDestination("tickets", "css-jul04")).toBe(
       TICKETS_COMING_SOON
     );
+    // Aug 22 + Sept 19 have owner-published Posh checkouts wired as code-level
+    // fallbacks (2026-08-05), so they resolve even with no env configured.
     expect(resolveOutboundDestination("tickets", "css-aug22")).toBe(
-      TICKETS_COMING_SOON
+      "https://posh.vip/e/chasing-sunsets-ii-house-of-friends-preview"
     );
     expect(resolveOutboundDestination("tickets", "css-sep19")).toBe(
-      TICKETS_COMING_SOON
+      "https://posh.vip/e/chasing-sunsets-iii-joezi-x-massuma"
     );
   });
 
