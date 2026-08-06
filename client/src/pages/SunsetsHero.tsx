@@ -10,7 +10,10 @@ export default function SunsetsHero() {
   return (
     <>
       <Helmet>
-        <title>SUN(SETS) 2026 | Chicago Lakefront Festival</title>
+        <title>
+          Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 Tickets On Sale | The
+          Monolith Project
+        </title>
       </Helmet>
 
       <div
@@ -40,26 +43,44 @@ export default function SunsetsHero() {
             >
               HOME
             </Link>
-            <Link href="/" className="hover:text-pink-400 transition-colors">
+            <Link
+              href="/events"
+              className="hover:text-pink-400 transition-colors"
+            >
               EVENTS
             </Link>
-            <Link href="/" className="hover:text-pink-400 transition-colors">
+            <a
+              href="/go/tickets/css-aug22"
+              className="hover:text-pink-400 transition-colors"
+            >
               TICKETS
-            </Link>
-            <Link href="/" className="hover:text-pink-400 transition-colors">
+            </a>
+            <Link
+              href="/vip"
+              className="hover:text-pink-400 transition-colors"
+            >
               EXPERIENCE
             </Link>
-            <Link href="/" className="hover:text-pink-400 transition-colors">
+            <Link
+              href="/archive"
+              className="hover:text-pink-400 transition-colors"
+            >
               GALLERY
             </Link>
-            <Link href="/" className="hover:text-pink-400 transition-colors">
+            <Link
+              href="/guide"
+              className="hover:text-pink-400 transition-colors"
+            >
               INFO
             </Link>
           </div>
           <div className="flex items-center gap-4">
-            <button className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition-transform hover:scale-105 shadow-lg shadow-pink-500/30 text-sm tracking-widest">
-              JOIN LAKE LIST
-            </button>
+            <a
+              href="/go/tickets/css-aug22"
+              className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition-transform hover:scale-105 shadow-lg shadow-pink-500/30 text-sm tracking-widest"
+            >
+              GET TICKETS
+            </a>
           </div>
         </nav>
 
@@ -94,7 +115,7 @@ export default function SunsetsHero() {
 
             <div className="bg-black/80 backdrop-blur-sm border border-yellow-400/30 rounded-2xl p-6 mb-8 shadow-2xl transform -rotate-1 hover:rotate-0 transition-transform">
               <h3 className="text-2xl md:text-3xl font-black tracking-wider text-white mb-1">
-                JULY <span className="text-pink-500">4TH</span> 2026
+                AUGUST <span className="text-pink-500">22ND</span> 2026
               </h3>
               <p className="text-yellow-400 font-bold tracking-widest mb-1 text-sm md:text-base">
                 CASTAWAYS BEACH CLUB
@@ -105,18 +126,24 @@ export default function SunsetsHero() {
             </div>
 
             <p className="text-lg md:text-xl font-medium leading-relaxed max-w-lg mb-10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-              Chasing Sun(Sets) returns to the lake for Independence Day. A
-              full-day Chicago lakefront celebration with house music,
-              fireworks, skyline views, and good people.
+              Chapter Two lands August 22 at Castaways. Golden hour on the
+              Chicago lakefront — open-air house, skyline views, and good
+              people. Tickets are live now.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 mb-16">
-              <button className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all hover:scale-105 flex items-center justify-center gap-2">
-                GET TICKETS <span className="text-2xl">🎟️</span>
-              </button>
-              <button className="bg-black/80 border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(250,204,21,0.2)] transition-all hover:scale-105 flex items-center justify-center gap-2">
-                JOIN LAKE LIST <span className="text-2xl">🌊</span>
-              </button>
+              <a
+                href="/go/tickets/css-aug22"
+                className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all hover:scale-105 flex items-center justify-center gap-2"
+              >
+                GET TICKETS — AUG 22 <span className="text-2xl">🎟️</span>
+              </a>
+              <a
+                href="/go/tickets/css-sep19"
+                className="bg-black/80 border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(250,204,21,0.2)] transition-all hover:scale-105 flex items-center justify-center gap-2"
+              >
+                SEPT 19 — JOEZI X MASSUMA <span className="text-2xl">🌊</span>
+              </a>
             </div>
 
             {/* Badges */}
@@ -162,9 +189,12 @@ export default function SunsetsHero() {
             </div>
           </div>
 
-          {/* Right Column: Framed Poster */}
+          {/* Right Column: Framed Poster — Chapter One archive piece */}
           <div className="flex-1 flex justify-end items-center w-full max-w-lg lg:max-w-xl relative">
-            <div className="relative w-full aspect-[4/5] bg-[#111] p-4 rounded-lg shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] transform md:rotate-2 hover:rotate-0 transition-all duration-500 border border-gray-800">
+            <Link
+              href="/archive"
+              className="relative block w-full aspect-[4/5] bg-[#111] p-4 rounded-lg shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] transform md:rotate-2 hover:rotate-0 transition-all duration-500 border border-gray-800"
+            >
               {/* Inner Poster Frame */}
               <div
                 className="w-full h-full rounded border-2 border-black relative overflow-hidden"
@@ -177,26 +207,23 @@ export default function SunsetsHero() {
                 {/* Gradient overlay for text readability at the bottom */}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 pb-12 text-center border-t-2 border-pink-500/50">
                   <div className="bg-pink-500 text-white text-[10px] font-bold px-3 py-1 inline-block rounded-sm mb-3 transform -skew-x-12 uppercase tracking-widest">
-                    CO-HEADLINERS
+                    CHAPTER ONE — COMPLETE
                   </div>
                   <div
                     className="text-3xl sm:text-4xl font-black text-white tracking-tighter leading-none mb-2"
                     style={{ fontFamily: "Impact, sans-serif" }}
                   >
-                    AUTOGRAF <span className="text-pink-500">★</span> KIKO
-                    FRANCO
+                    JULY <span className="text-pink-500">4TH</span> 2026
                   </div>
                   <div className="text-[10px] sm:text-xs font-bold text-yellow-400 tracking-widest uppercase mt-2 text-center leading-relaxed">
-                    AMARI • ELIANA • GIANNI BLU • FRANK BONO{" "}
-                    <br className="hidden sm:block" /> ERIK THE DJ • JEROME •
-                    COLIN • NOMAR
+                    AUTOGRAF ★ KIKO FRANCO + FRIENDS
                   </div>
                   <div className="text-[10px] text-gray-400 tracking-widest uppercase mt-4 border-t border-gray-800 pt-3">
-                    FINAL JULY 4 LINEUP
+                    VIEW THE ARCHIVE →
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </main>
 
@@ -224,7 +251,7 @@ export default function SunsetsHero() {
               >
                 <span>THREE DATES • ONE LAKE • ONE HOME</span>
                 <span className="text-pink-500">★</span>
-                <span>FIRST ACCESS • EXCLUSIVE DROPS • SPECIAL OFFERS</span>
+                <span>AUG 22 + SEPT 19 • TICKETS ON SALE NOW</span>
                 <span className="text-pink-500">★</span>
                 <span className="text-white">SUNSETS.VIP</span>
                 <span className="text-pink-500">★</span>
