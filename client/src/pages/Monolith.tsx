@@ -259,17 +259,17 @@ export default function Monolith() {
             </h2>
 
             <p className="text-sm md:text-base text-white/60 leading-relaxed font-light max-w-md">
-              Join the Lake List for the next Chasing Sun(Sets) release, Untold
-              Story coordinates, and the signals that arrive before the public.
+              SUN(SETS) II lands August 22 at Castaways — tickets are live
+              now, straight to checkout.
             </p>
 
             <div className="mt-6">
               <MagneticButton strength={0.3}>
                 <a
-                  href="/go/lakelist"
+                  href="/go/tickets/css-aug22"
                   className="btn-pill-monolith flex items-center justify-center gap-2 px-12 py-5 text-[11px] font-black uppercase tracking-[0.25em]"
                 >
-                  Join the Lake List <ArrowUpRight className="w-4 h-4" />
+                  Buy Tickets — August 22 <ArrowUpRight className="w-4 h-4" />
                 </a>
               </MagneticButton>
             </div>

@@ -537,7 +537,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             href: "https://houseoffriends.vip/apply",
             label: "Founding Class applications",
           },
-          { href: "/go/lakelist", label: "Get August 22 first access" },
+          { href: "/go/tickets/css-aug22", label: "Get August 22 tickets" },
           { href: "/events/css-aug22", label: "View event details" },
         ]
       ),
@@ -743,9 +743,9 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "Chasing Sun(Sets) 2026 — July 4 Tickets On Sale",
+      title: "Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 Tickets On Sale",
       description:
-        "SUN(SETS) returns to Castaways Beach Club July 4, 2026 with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ. Open-air house on the Chicago lakefront. Tickets on sale now.",
+        "SUN(SETS) II returns to Castaways Beach Club August 22, 2026 — tickets on sale now, powered by Posh. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK). Open-air house on the Chicago lakefront.",
       image: "/images/css-2026-og.png",
       schemaData: publicSunsetsEvent
         ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")
@@ -754,12 +754,12 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "The Monolith Project Presents",
         "Chasing Sun(Sets) 2026",
         [
-          "SUN(SETS) I — July 4 (on sale now) with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ at Castaways Beach Club, Chicago. SUN(SETS) II — August 22, SUN(SETS) III — September 19.",
-          "Three dates. One lake. One home. Get alerts for SUN(SETS) II + III and the limited 2026 Season Pass release.",
+          "SUN(SETS) I — July 4 (complete) with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ at Castaways Beach Club, Chicago. SUN(SETS) II — August 22 on sale now. SUN(SETS) III — September 19 with Joezi x Massuma (UK).",
+          "Three dates. One lake. One home. Tickets for SUN(SETS) II + III are live — straight to checkout, no waitlist.",
         ],
         [
-          { href: "/go/tickets/sunsets-july4", label: "Get July 4 tickets" },
-          { href: "/go/lakelist", label: "SUN(SETS) II + III — Get Alerts" },
+          { href: "/go/tickets/css-aug22", label: "Get August 22 tickets" },
+          { href: "/go/tickets/css-sep19", label: "Get September 19 tickets" },
           { href: "/vip", label: "VIP and cabanas" },
           {
             href: "/go/media/sunsets-recap",

@@ -101,10 +101,10 @@ const CHECKS: Check[] = [
 
   // --- Waitlist rails ------------------------------------------------------
   {
-    name: "Lake List alias",
+    name: "Lake List alias retires to the Aug 22 ticket rail",
     url: `${BASE_URL}/go/lakelist`,
     status: 302,
-    redirectContains: "/go/waitlist/chasing-sunsets",
+    redirectContains: "/go/tickets/css-aug22",
   },
   {
     name: "Chasing Sunsets waitlist reaches Laylo",

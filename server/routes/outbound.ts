@@ -11,7 +11,7 @@ import {
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_JULY4_TICKET_UTMS,
   SUNSETS_JULY4_VANITY_TICKET_PATH,
-  SUNSETS_LAKELIST_CANONICAL_PATH,
+  SUNSETS_AUG22_TICKET_PATH,
   SUNSETS_LAKELIST_PATH,
   SUNSETS_TICKET_CTA_LABEL,
   getSunsetsTicketRouteMeta,
@@ -65,7 +65,7 @@ function renderSunsetsTicketsComingSoonPage(
     <p>${meta.title} tickets will move through the official Posh ticket page once the drop is live.</p>
     <p class="support">First access to ${meta.title}. Tickets powered by Posh. Only Posh or another validated Monolith ticket source will be used for live purchases.</p>
     <div class="actions">
-      <a class="primary" href="/sunsets#lake-list">Join Lake List</a>
+      <a class="primary" href="/tickets">View Current Tickets</a>
       <a class="secondary" href="/sunsets">Back to SUN(SETS)</a>
     </div>
     <div class="request">Request ${requestId}</div>
@@ -163,9 +163,11 @@ function outboundClickMeta(group: string, key: string) {
 // Chasing Sun(Sets) 2026 launch vanity aliases. Production traffic is handled
 // by the equivalent netlify.toml rules before reaching this function — these
 // keep dev/preview behavior identical. Must stay above /go/:group/:key.
+// /go/lakelist retired 2026-08-05: mid-season, the Lake List is out of the
+// buying path — the vanity now lands on the live Aug 22 checkout rail.
 const VANITY_ALIASES: Record<string, string> = {
   [SUNSETS_JULY4_VANITY_TICKET_PATH]: SUNSETS_JULY4_TICKET_PATH,
-  [SUNSETS_LAKELIST_PATH]: SUNSETS_LAKELIST_CANONICAL_PATH,
+  [SUNSETS_LAKELIST_PATH]: SUNSETS_AUG22_TICKET_PATH,
 };
 
 for (const [from, to] of Object.entries(VANITY_ALIASES)) {
