@@ -483,10 +483,10 @@ export const autografSpecial: MediaItem[] = [
 ];
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
-  // July 31, 2026 — the Lola pop-up weekend opener. Lands here automatically
-  // once the family promo retires; comingSoon keeps the page on the community
-  // upload call-to-action until the photo/video edit ships (add items to
-  // media below and remove comingSoon to publish the full gallery).
+  // July 31, 2026 — the Lola pop-up weekend opener. Seeded with the billing
+  // art so the record is browsable now; comingSoon keeps the community
+  // upload call-to-action alive under the gallery until the photo/video edit
+  // ships (drop full-edit media below and remove comingSoon to publish).
   "ape-drums-july31-2026": {
     slug: "ape-drums-july31-2026",
     title: "Ape Drums",
@@ -497,7 +497,38 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     coverImage: "/images/events/ape-drums-july31-card.jpg",
     date: "July 31, 2026",
     comingSoon: true,
-    media: [],
+    media: [
+      image({
+        id: "ape-drums-july31-billing",
+        kind: "image",
+        src: "/images/events/ape-drums-july31-hero.png",
+        width: 864,
+        height: 1821,
+        alt: "Ape Drums July 31 official billing artwork",
+        caption: "Official Artwork",
+        description: "The billing for the Lola pop-up weekend opener.",
+      }),
+      image({
+        id: "ape-drums-july31-portrait",
+        kind: "image",
+        src: "/images/artist-ape-drums.jpg",
+        width: 1067,
+        height: 1600,
+        alt: "Ape Drums artist portrait",
+        caption: "Ape Drums",
+        description: "The headliner, up close.",
+      }),
+      image({
+        id: "ape-drums-july31-square",
+        kind: "image",
+        src: "/images/events/ape-drums-july31-square.png",
+        width: 1254,
+        height: 1254,
+        alt: "Ape Drums at Kashmir square poster",
+        caption: "Kashmir · West Loop",
+        description: "July 31 at Kashmir — the weekend opener.",
+      }),
+    ],
   },
   "chasing-sunsets-sunsets-i-2026": {
     slug: "chasing-sunsets-sunsets-i-2026",
@@ -510,7 +541,30 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     date: "July 4, 2026",
     comingSoon: true,
     journalHref: "/insights/recap-sunsets-i-july-4-castaways",
-    media: [],
+    media: [
+      image({
+        id: "sunsets-i-poster",
+        kind: "image",
+        src: "/sunsets_poster.jpg",
+        width: 1024,
+        height: 1535,
+        alt: "SUN(SETS) I July 4 final lineup poster",
+        caption: "Official Artwork — Final Lineup",
+        description:
+          "Autograf and Kiko Franco headlining Chapter One at Castaways.",
+      }),
+      image({
+        id: "sunsets-i-golden-hour",
+        kind: "image",
+        src: "/images/sunsets-hero-beach.jpg",
+        width: 1024,
+        height: 614,
+        alt: "Chasing Sun(Sets) crowd at golden hour on the Chicago lakefront",
+        caption: "The Series on the Lakefront",
+        description:
+          "Golden hour on the Chicago lakefront — the world Chapter One opened.",
+      }),
+    ],
   },
   "chasing-sunsets-season-i": {
     slug: "chasing-sunsets-season-i",

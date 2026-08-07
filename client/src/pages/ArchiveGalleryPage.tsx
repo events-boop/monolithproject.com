@@ -5,11 +5,54 @@ import SEO from "@/components/SEO";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import { Link } from "wouter";
 import { ArrowLeft, BookOpen, Camera, UploadCloud } from "lucide-react";
-import { archiveCollectionsBySlug } from "@/data/galleryData";
+import {
+  archiveCollectionsBySlug,
+  type ArchiveCollection,
+} from "@/data/galleryData";
 
 // Dropbox file request — community uploads of DJ sets, photos, and videos.
 const COMMUNITY_UPLOAD_URL =
   "https://www.dropbox.com/request/3f0662s872jlukad0r4h";
+
+// Community upload panel. Renders standalone when a collection has no media
+// yet, and under a seeded gallery while comingSoon is set (the edit is still
+// in progress and the best community frames make the official recap).
+function CommunityUploadPanel({ gallery }: { gallery: ArchiveCollection }) {
+  return (
+    <div className="max-w-xl border border-white/12 bg-white/[0.03] p-8 text-center">
+      <Camera
+        className="mx-auto mb-4 h-8 w-8 opacity-40"
+        style={{ color: gallery.accentColor }}
+      />
+      <p className="font-mono text-xs font-black uppercase tracking-[0.25em] text-white mb-2">
+        {gallery.media.length === 0 ? "Photos Coming Soon" : "More Coming"}
+      </p>
+      <p className="text-sm text-white/60 leading-relaxed mb-6">
+        The gallery and recap film are in the edit. Were you there? Send us
+        your photos, videos, or DJ sets — the best make the official recap.
+      </p>
+      <a
+        href={COMMUNITY_UPLOAD_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex min-h-[46px] items-center justify-center gap-2 border px-6 font-mono text-[11px] font-black uppercase tracking-[0.14em] transition-all hover:text-black"
+        style={{
+          borderColor: `${gallery.accentColor}80`,
+          color: gallery.accentColor,
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = gallery.accentColor;
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = "transparent";
+        }}
+      >
+        <UploadCloud className="h-4 w-4" />
+        Upload Your Sets, Photos + Videos
+      </a>
+    </div>
+  );
+}
 
 export default function ArchiveGalleryPage() {
   const [match, params] = useRoute("/:series/:season");
@@ -86,39 +129,7 @@ export default function ArchiveGalleryPage() {
                 </Link>
               )}
 
-              <div className="max-w-xl border border-white/12 bg-white/[0.03] p-8 text-center">
-                <Camera
-                  className="mx-auto mb-4 h-8 w-8 opacity-40"
-                  style={{ color: gallery.accentColor }}
-                />
-                <p className="font-mono text-xs font-black uppercase tracking-[0.25em] text-white mb-2">
-                  Photos Coming Soon
-                </p>
-                <p className="text-sm text-white/60 leading-relaxed mb-6">
-                  The gallery and recap film are in the edit. Were you there?
-                  Send us your photos, videos, or DJ sets — the best make the
-                  official recap.
-                </p>
-                <a
-                  href={COMMUNITY_UPLOAD_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[46px] items-center justify-center gap-2 border px-6 font-mono text-[11px] font-black uppercase tracking-[0.14em] transition-all hover:text-black"
-                  style={{
-                    borderColor: `${gallery.accentColor}80`,
-                    color: gallery.accentColor,
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = gallery.accentColor;
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = "transparent";
-                  }}
-                >
-                  <UploadCloud className="h-4 w-4" />
-                  Upload Your Sets, Photos + Videos
-                </a>
-              </div>
+              <CommunityUploadPanel gallery={gallery} />
             </section>
           ) : (
             <>
@@ -139,6 +150,11 @@ export default function ArchiveGalleryPage() {
                 accentColor={gallery.accentColor}
                 externalGallery={gallery.externalGallery}
               />
+              {gallery.comingSoon && (
+                <div className="mt-16">
+                  <CommunityUploadPanel gallery={gallery} />
+                </div>
+              )}
             </>
           )}
         </div>
