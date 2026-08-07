@@ -192,12 +192,24 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Castaways",
     location: "Chicago, IL",
     lineup: "Joezi x Massuma (UK) · Special Guests TBA",
+    artistImages: [
+      {
+        src: "/images/artists/joezi/joezi-portrait.jpg",
+        alt: "Joezi",
+        artist: "Joezi",
+      },
+      {
+        src: "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
+        alt: "Massuma",
+        artist: "Massuma",
+      },
+    ],
     status: "on-sale",
     ticketUrl: SUNSETS_SEP19_TICKET_PATH,
     description:
       "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Tickets are live — powered by Posh.",
-    // Date-neutral series art: drives event-page og:image until chapter art exists.
-    image: "/images/sunsets-hero-beach.jpg",
+    // Official chapter art: drives the event page hero + og:image.
+    image: "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
     venueMap: {
       id: "castaways-sunsets-iii-2026",

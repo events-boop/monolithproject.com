@@ -85,7 +85,7 @@ export const insightEntries: InsightEntry[] = [
       {
         title: "Chapter Two: August 22",
         paragraphs: [
-          "The season is three dates on one lake. Chapter One is in the archive. Chapter Two lands August 22 at Castaways, with the artist reveal coming, and Chapter Three closes the season on September 19. The Lake List hears every release first — lineup, tickets, and the moments between chapters.",
+          "The season is three dates on one lake. Chapter One is in the archive. Chapter Two lands August 22 at Castaways — tickets are live, with the artist reveal still to come — and Chapter Three closes the season on September 19 with Joezi x Massuma (UK). Every release lands here first — lineup, tickets, and the moments between chapters.",
           "If July 4 proved the ritual is real, August 22 is where it becomes a habit. See you at golden hour.",
         ],
       },
