@@ -4,6 +4,7 @@ import { ROUTES } from "@shared/routes";
 export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
   eventId: "ape-drums-kashmir-july-31-2026",
   publicPath: ROUTES.apeDrums,
+  archiveHref: "/archive/ape-drums-july31-2026",
   trackingPrefix: "ape_drums",
   trackingSource: "ape_drums_landing",
   trackingContentName: "Ape Drums at Kashmir",

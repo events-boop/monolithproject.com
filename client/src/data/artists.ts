@@ -105,11 +105,9 @@ export const ARTIST_ENTRIES: ArtistData[] = [
         date: "Friday, July 31, 2026",
         venue: "Kashmir Chicago",
         city: "Chicago, IL",
-        status: "on-sale",
-        badge: "ON SALE · 350 CAP",
-        ticketUrl:
-          "https://posh.vip/e/monolith-project-presents-ape-drums?u=erik&_t=mrzne6d7&os=ios&src=event_page",
-        eventUrl: "/events/ape-drums-kashmir-july-31-2026",
+        status: "past",
+        badge: "ARCHIVE",
+        eventUrl: "/archive/ape-drums-july31-2026",
         cardImage: "/images/events/ape-drums-july31-card.jpg",
         description:
           "A 350-capacity late-night room built around where Ape Drums is moving next. Darker pressure, warmer rhythm.",

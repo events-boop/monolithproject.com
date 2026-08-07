@@ -51,6 +51,8 @@ interface ArtistShowVideoSlot {
 export interface ArtistShowLandingConfig {
   eventId: string;
   publicPath: string;
+  /** Post-event handoff: once the show concludes, ticket CTAs retire here. */
+  archiveHref?: string;
   trackingPrefix: string;
   trackingSource: string;
   trackingContentName: string;
@@ -288,6 +290,19 @@ function TicketCta({
     );
   }
 
+  // Post-event handoff: the show has concluded, so ticket CTAs retire to the
+  // archive record instead of a dead checkout. Internal navigation — no
+  // outbound ticket-intent or Meta pixel tracking fires on this CTA.
+  if (release.eventConcluded && config.archiveHref) {
+    return (
+      <Link href={config.archiveHref} className={className}>
+        <CalendarDays aria-hidden="true" />
+        <span>View The Archive</span>
+        <ArrowUpRight aria-hidden="true" />
+      </Link>
+    );
+  }
+
   return (
     <a
       href={buildTicketUrl(release.ticketUrl, placement, config.trackingPrefix)}
@@ -418,11 +433,17 @@ export function buildArtistShowEventSchema(
       name: config.brand.presenter,
     },
     ...(release.heroImage ? { image: [release.heroImage] } : {}),
-    offers: {
-      "@type": "Offer",
-      url: release.ticketUrl,
-      availability: "https://schema.org/InStock",
-    },
+    // Concluded shows drop the InStock offer — a past checkout is not a
+    // purchasable offer, and search engines should not see one.
+    ...(release.eventConcluded
+      ? {}
+      : {
+          offers: {
+            "@type": "Offer",
+            url: release.ticketUrl,
+            availability: "https://schema.org/InStock",
+          },
+        }),
   };
 }
 

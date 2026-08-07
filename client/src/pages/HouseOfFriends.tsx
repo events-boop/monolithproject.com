@@ -165,7 +165,7 @@ export default function HouseOfFriends() {
     <div className="hof-page min-h-screen overflow-x-clip bg-black text-white">
       <SEO
         title="House of Friends | Artist Development by The Monolith Project"
-        description="House of Friends is The Monolith Project's emerging-artist platform, with a July 31 give-back pop-up at Kashmir and the Founding Class preview on August 22."
+        description="House of Friends is The Monolith Project's emerging-artist platform — the July 31 Kashmir pop-up opened the series, and the Founding Class preview lands August 22 at Castaways."
         absoluteTitle
         canonicalUrl="https://houseoffriends.vip/"
         image="/og-image.jpg"
@@ -188,7 +188,7 @@ export default function HouseOfFriends() {
           <div className="container layout-wide relative z-10 px-6">
             <div className="hof-launch-chip">
               <span aria-hidden="true" />
-              Next pop-up / July 31, 2026
+              Next signal / August 22, 2026
             </div>
 
             <div className="hof-hero-grid">

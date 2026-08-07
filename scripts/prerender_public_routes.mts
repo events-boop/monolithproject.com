@@ -515,7 +515,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "House of Friends | Artist Development by The Monolith Project",
       description:
-        "House of Friends opens with a July 31 give-back pop-up at Kashmir before the Founding Class preview on August 22, 2026.",
+        "House of Friends opened with a July 31 give-back pop-up at Kashmir; the Founding Class preview lands August 22, 2026.",
       absoluteTitle: true,
       canonicalUrl: "https://houseoffriends.vip/",
       image: "https://houseoffriends.vip/og-image.jpg",
@@ -524,7 +524,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         "House of Friends",
         [
           "A Monolith platform connecting emerging artists with collaborative performance, professional content, education, tools, and future opportunity.",
-          "The next House of Friends signal is a July 31, 2026 give-back pop-up at Kashmir with ERIK THE DJ and a special guest.",
+          "House of Friends opened July 31, 2026 with a give-back pop-up at Kashmir — ERIK THE DJ and Ape Drums.",
           "The Founding Class preview follows August 22, 2026 inside Chasing Sun(Sets) II at Castaways Beach Club in Chicago.",
           "Artist selections and performance timing will be announced through official Monolith channels.",
         ],
