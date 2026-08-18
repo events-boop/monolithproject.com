@@ -700,6 +700,39 @@ export const ARTIST_ENTRIES: ArtistData[] = [
     socials: {},
     tracks: [],
   },
+  {
+    id: "gene-farris",
+    name: "GENE FARRIS",
+    role: "HEADLINER",
+    origin: "CHICAGO, IL",
+    genre: "CHICAGO HOUSE / TECH HOUSE",
+    image: "/images/artists/gene-farris/gene-farris-portrait.jpg",
+    series: ["chasing-sunsets"],
+    bio: "A true Chicago house music legend, Gene Farris has been at the forefront of the global dance music movement for three decades. Founder of Farris Wheel Recordings and an iconic innovator of soulful acid and driving tech house, Gene brings his signature high-energy Chicago sound to the lakefront for Chasing Sun(Sets) II at Castaways.",
+    tags: ["Headliner", "Chicago Legend", "Farris Wheel Recordings"],
+    socials: {
+      instagram: "https://instagram.com/genefarris",
+      spotify: "https://open.spotify.com/artist/06v81Z0N585H17m4k82lT7",
+      soundcloud: "https://soundcloud.com/genefarris",
+    },
+    tracks: [
+      { title: "Euphoria", duration: "5:45" },
+      { title: "Guitar Man", duration: "6:12" },
+      { title: "Body Work", duration: "5:20" },
+    ],
+    events: [
+      {
+        id: "css-aug22",
+        title: "Chasing Sun(Sets) II",
+        series: "chasing-sunsets",
+        date: "August 22, 2026",
+        venue: "Castaways · Chicago, IL",
+        status: "on-sale",
+        ticketUrl: "/go/tickets/css-aug22",
+        description: "Chapter Two at Castaways on North Avenue Beach.",
+      },
+    ],
+  },
 ];
 
 export const ARTISTS: Record<string, ArtistData> = Object.fromEntries(

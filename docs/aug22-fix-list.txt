@@ -1,0 +1,293 @@
+Perfect — now we're working with the real thing. First, credit: the July 4 template bugs are dead. One consistent time, real address, no bracket placeholders. Ops discipline showed up. And there are genuinely good lines in here — "One room without walls," "They're showing us what comes next," "We finish together." The voice is right. The problem isn't voice. The problem is **conversion mechanics** — the pages tell a great story and then never ask for the sale, never prove anything, and never put a clock on anything.
+
+Here's the deep run.
+
+## SUN(SETS) II — Audit
+
+**1. The page leads with what it doesn't have.** The header stack goes PRESENTS → CSS II → "ARTIST TO BE ANNOUNCED." The second thing a buyer reads is an absence. Then "TBA/to be revealed" appears **four times** total (title, header, lineup block, Chicago lineup line). Each one is a confession. Every single one should be converted into a controlled reveal — same fact, opposite energy. "Under wraps" (which you already wrote — it's the best line on the page) beats "to be announced" every time.
+
+**2. Zero proof.** Six weeks ago you put 2,000+ people on that sand. Chapter One gets one line — "opened the season" — with no number, no imagery callback, no receipts. You're asking people to buy a ticket to an unnamed lineup. That purchase runs on trust, and trust runs on proof. This is the single biggest conversion miss on the page.
+
+**3. The reveal has no consequence and no destination.** "The announcement is coming" — when, and where do I go to not miss it? There's no date signal, and critically, the reveal isn't wired to the Lake List. Right now your strongest open loop drives nothing into Laylo. The mechanic should read: *ticket holders and the Lake List hear the name first.* That turns the delay into list growth.
+
+**4. The page never asks for the sale.** The July 4 page closed with "Secure your ticket now → sunsets.vip." This one ends the ticket section passively and sends VIP buyers to "contact the organizers" — a dead end with no link. sunsets.vip/vip is nowhere on the page. And the after-party tease — a proven hook from July 4 — is gone.
+
+**5. Passive voice is doing damage.** "Will be released," "will be offered," "will be listed," "to be revealed." The page is grammatically waiting for permission. Compare your July 4 copy: "This is the return of a Chicago summer ritual." Declarative sells.
+
+**6. House of Friends is undersold as a "concept."** "This preview offers the first look at the concept" — brother, HoF isn't a concept. It's a real platform born from open submissions and chosen by community vote. That origin story is the sell and it's not on the page. Also "curated selection of emerging and established artists" is museum-brochure language, not movement language.
+
+**7. The short blurb buries the brand.** "House of Friends previews its next chapter..." — CSS II isn't even in the sentence. That blurb is what renders in shares and search. Lead with the event.
+
+**8. Honest pushback, teammate to teammate:** this page publicly promises "a featured artist will lead the final hours." The copy has written a check the booking hasn't cashed yet. The Yuma/Jewels vs. Apache decision isn't just a booking task anymore — it's a public commitment with a 14-day fuse. Close it.
+
+## SUN(SETS) III — Audit
+
+**1. No sunsets.fm.** This is the miss that hurts most. Your finale doubles as a station launch — "the season ends, the station begins" — and the page doesn't whisper a word of it. Nobody else in this city has that story. Timing call is yours (you may want to hold it for the announce wave), but the page should at minimum carry the tease. Draft below includes it as a removable block.
+
+**2. No artist authority.** "Afro-house rhythm, melodic movement" describes the genre, not JOEZI. One credibility line per artist changes the page — but billing language is often contractual, so I've left brackets for **agent-approved** one-liners rather than writing claims myself. Protect the relationships; use their approved bios.
+
+**3. Same proof gap.** The finale should carry the whole season's momentum. Chapter One's numbers and Chapter Two's story belong in the opening.
+
+**4. Same missing CTAs** — no sunsets.vip close, no /vip link, no after-party tease. And the natural scarcity of a finale ("last sunset of the year — when it's gone, it's gone") lives in the narrative but never touches the ticket section, where it actually converts.
+
+**5. Both pages, one legal add:** "Professional photography and multi-camera video" in EXPECT is a vibe bullet, not consent. If this footage feeds the sunsets.fm catalog, add one consent line to IMPORTANT INFORMATION. It's in both drafts below.
+
+---
+
+## SUN(SETS) II — Upgraded copy (paste-ready)
+
+**Title:** `Chasing Sun(Sets) II — House of Friends` *(kill "LINE UP TBA"; verify the Posh slug doesn't regenerate before you save — your ads and /go/ links point at that URL)*
+
+**Short blurb:**
+```
+Chapter Two of the 2026 lakefront season. House of Friends opens the day. The headliner reveal is coming — ticket holders first. Golden hour at Castaways.
+```
+
+**Body:**
+```
+THE MONOLITH PROJECT PRESENTS
+CHASING SUN(SETS) II
+HOUSE OF FRIENDS PREVIEW
+HEADLINER REVEAL COMING — TICKET HOLDERS FIRST
+
+THE NEXT CHAPTER RETURNS TO THE WATER.
+
+On July 4th, 2,000+ of us filled the sand at Castaways — golden hour,
+house music, fireworks over the lake, one crowd locked into one
+frequency. Chapter One wasn't an event. It was proof.
+
+On Saturday, August 22, we go deeper.
+
+Chapter Two is a full-day, open-air house music experience — afternoon
+warmth through golden hour, sunset into night. The date is locked. The
+lake is waiting. And the headliner is still under wraps.
+
+Chicago opens the chapter. The headliner carries it into sunset.
+One lake. One skyline. One room without walls.
+
+HOUSE OF FRIENDS
+
+House of Friends is The Monolith Project's artist platform — born from
+open submissions, chosen by the community, built around the people and
+sounds that make a dance floor feel like home.
+
+On August 22, you hear it live for the first time. These artists aren't
+opening the show. They're showing you what comes next.
+
+THE HEADLINER
+
+The final hours of the day belong to a featured artist built for the
+lakefront. The name is under wraps — and ticket holders and the Lake
+List hear it first.
+
+Prices step up when the name drops. Early is the move.
+
+LINEUP
+
+HOUSE OF FRIENDS — full Chicago lineup announced in waves
+FEATURED HEADLINER — revealed to ticket holders first
+
+EVENT DETAILS
+
+Date: Saturday, August 22, 2026
+Time: 12:00 PM–10:00 PM
+Venue: Castaways Beach Club at North Avenue Beach
+Address: 1603 N Lake Shore Drive, Chicago, Illinois
+Age requirement: Strictly 21+
+
+EXPECT
+
+* A full-day, open-air house music experience
+* A headliner reveal built for the lakefront
+* HOUSE OF FRIENDS — the community's own, live for the first time
+* Afro-house rhythms, melodic grooves and global club sounds
+* Daytime energy through golden hour and sunset
+* Chicago skyline and Lake Michigan views
+* Food and cocktails from Castaways
+* Professional photography and multi-camera video
+* VIP viewing and elevated group experiences
+
+CHAPTER TWO
+
+Chapter One opened the season.
+Chapter Two takes the story deeper.
+Chapter Three brings everyone home for the finish.
+
+Three dates. One lake. One home.
+Togetherness is the frequency. Music is the guide.
+
+TICKETS
+
+Ticket tiers release in sequence — when a tier sells out, pricing moves
+to the next release. The best available price disappears at the
+headliner reveal. Lock in before the name drops.
+
+Limited discounted group packages are available — details and included
+admissions listed with each ticket option.
+
+GROUPS & VIP
+
+VIP viewing, cabanas and group experiences: sunsets.vip/vip
+
+THE SUNSET ISN'T THE END.
+
+Official after-party details reach ticket holders first.
+
+IMPORTANT INFORMATION
+
+This is an outdoor lakefront event. Artist order, lineup and performance
+times are subject to change.
+
+Valid government-issued photo identification is required. This event is
+strictly 21+.
+
+Admission is subject to security screening, venue capacity and venue
+policies.
+
+Weather may affect entry, performance times or event operations. Guests
+should monitor their email and the official event page for updates
+regarding delays, relocation, rescheduling, entry procedures and other
+operational changes.
+
+By attending, you consent to photography and audio/video recording for
+promotional and broadcast purposes.
+
+All ticket sales are final unless the event is cancelled.
+
+Presented by The Monolith Project.
+
+KEEP THE RUN GOING
+
+CHASING SUN(SETS) III
+JOEZI x MASSUMA — THE SEASON FINALE
+Saturday, September 19
+
+Three dates. One lake. One home.
+THE STORY CONTINUES.
+
+Secure your ticket → SUNSETS.VIP
+```
+
+## SUN(SETS) III — Upgraded copy (paste-ready)
+
+**Title:** keep as is.
+
+**Short blurb:** keep as is — it's clean.
+
+**Body:**
+```
+THE MONOLITH PROJECT PRESENTS
+CHASING SUN(SETS) III
+JOEZI x MASSUMA
+THE SEASON FINALE
+
+Three dates. One lake. One home. One final sunset.
+
+Chapter One brought 2,000+ of us to the sand. Chapter Two put the
+movement's own on the decks. On Saturday, September 19, Chasing
+Sun(Sets) comes home to Castaways Beach Club for the finish.
+
+JOEZI — [agent-approved credibility line] — and MASSUMA —
+[agent-approved credibility line] — carry the finale into deeper
+territory: Afro-house rhythm, melodic movement, and open-air energy
+built for golden hour on Lake Michigan.
+
+This is the last gathering on the water this year. One last skyline
+behind the booth. One last sunset shared with the people who made the
+season what it was.
+
+When this one's gone, it's gone until next summer.
+
+LINEUP
+
+JOEZI
+MASSUMA
+Support lineup announced in waves.
+
+EVENT DETAILS
+
+Date: Saturday, September 19, 2026
+Time: 12:00 PM–10:00 PM
+Venue: Castaways Beach Club, North Avenue Beach
+Address: 1603 N Lake Shore Drive, Chicago, Illinois
+Age Requirement: Strictly 21+
+
+EXPECT
+
+* The closing chapter of the 2026 lakefront season
+* Afro house, melodic grooves, and global club sounds
+* Daytime energy into golden hour and the final sunset
+* Chicago skyline and Lake Michigan views
+* Food and cocktails from Castaways
+* Professional photography and multi-camera video
+* VIP viewing and elevated group experiences
+
+[OPTIONAL — HOLD OR RUN BASED ON YOUR ANNOUNCE TIMING]
+
+THE SHOW CONTINUES.
+
+When the sun goes down on the season, something new switches on.
+September 19. Ticket holders find out first.
+
+THE FINAL CHAPTER
+
+Chapter One opened the season.
+Chapter Two carried the story forward.
+Chapter Three brings everyone home for the finish.
+
+Togetherness is the frequency. Music is the guide.
+
+TICKETS
+
+Ticket tiers release in order — when a tier sells out, pricing moves to
+the next release. This is the last one of the year. Lock in early.
+
+Limited discounted group-ticket and VIP options released separately
+with exact inclusions.
+
+GROUPS & VIP
+
+VIP viewing, cabanas and group experiences: sunsets.vip/vip
+
+THE FINAL SUNSET ISN'T THE END.
+
+Official after-party details reach ticket holders first.
+
+IMPORTANT INFORMATION
+
+This is an outdoor lakefront event. Artist order, support lineup, and
+performance times are subject to change.
+
+Valid government-issued photo identification is required. This event is
+strictly 21+.
+
+Admission is subject to security screening, venue capacity, and venue
+policies.
+
+Weather may affect entry, performance times, or event operations. Guests
+should monitor their email and the official event page for delay,
+relocation, rescheduling, entry, and operational updates.
+
+By attending, you consent to photography and audio/video recording for
+promotional and broadcast purposes.
+
+All ticket sales are final unless the event is cancelled.
+
+Presented by The Monolith Project.
+
+Three dates. One lake. One home.
+We finish together.
+
+Secure your ticket → SUNSETS.VIP
+```
+
+## Execute — next 72 hours
+
+1. **Ship the II rewrite today** — every day that page runs without proof, a reveal mechanic, or a CTA is paid traffic converting below its ceiling. Confirm slug stability, then swap.
+2. **Close the booking.** The page now sells the reveal — the reveal needs a name. Yuma/Jewels vs. Apache gets decided this week or the mechanic loses teeth.
+3. **Wire the reveal to Laylo** so "Lake List hears it first" is real — one drop campaign, armed and waiting for contracts to clear.
+4. **Get approved one-liners** for Joezi and Massuma from their agents before III's rewrite goes live. Don't freelance their billing.
+5. **Decide the sunsets.fm tease timing** on III — run it now or hold for the announce wave. Either is defensible; silent until launch day is not.
+6. Small but real: the exact attendance number — if you want to flex "2,143" instead of "2,000+," that's your call. Precise numbers read as receipts.
+
+The story was already there, brother. Now the pages sell it. Ship II and let's lock that headliner. 🌅

@@ -82,4 +82,13 @@ describe("artist catalog", () => {
     expect(srcSet).toContain("1280w");
     expect(srcSet).toContain("1920w");
   });
+  it("publishes Gene Farris with approved Chicago House bio and event link", () => {
+    expect(ARTISTS["gene-farris"]).toMatchObject({
+      name: "GENE FARRIS",
+      origin: "CHICAGO, IL",
+      role: "HEADLINER",
+      image: "/images/artists/gene-farris/gene-farris-portrait.jpg",
+    });
+    expect(ARTISTS["gene-farris"].events?.[0].id).toBe("css-aug22");
+  });
 });

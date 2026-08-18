@@ -374,7 +374,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "AMARI",
       },
     ],
-    status: "coming-soon",
+    status: "past",
     format: "Monolith Project Residency Series · B2B Session",
     sound: "House Music · Resident DJs",
     description:
@@ -387,16 +387,24 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     series: "chasing-sunsets",
     episode: "SUN(SETS) II",
     title: "Chasing Sun(Sets)",
-    headline: "SUN(SETS) II — Chapter Two",
+    headline: "SUN(SETS) II — GENE FARRIS",
+    subtitle: "Chasing Sun(Sets) Presents · Chicago's Very Own Legend on the Lake",
     date: "August 22, 2026",
     time: "Golden Hour",
-    venue: "Castaways",
-    location: "Chicago, IL",
-    lineup: "TBA",
+    venue: "Castaways Beach Club",
+    location: "Chicago, IL · North Avenue Beach",
+    lineup: "GENE FARRIS",
+    artistImages: [
+      {
+        src: "/images/artists/gene-farris/gene-farris-portrait.jpg",
+        alt: "Gene Farris",
+        artist: "Gene Farris",
+      },
+    ],
     status: "on-sale",
     ticketUrl: SUNSETS_AUG22_TICKET_PATH,
     description:
-      "Chapter Two at Castaways. Tickets are live — powered by Posh.",
+      "Chasing Sun(Sets) presents Chicago's very own legend on the lake: GENE FARRIS. Open air at Castaways Beach Club on North Avenue Beach. Tickets and VIP tables are live now powered by Posh.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,

@@ -292,8 +292,8 @@ export default function Tickets() {
                     },
                     {
                       icon: <Clock className="w-4 h-4" />,
-                      label: "Start Time",
-                      value: featuredEvent?.time || "TBA",
+                      label: "Format",
+                      value: "Open Air · Golden Hour",
                     },
                     {
                       icon: <MapPin className="w-4 h-4" />,
@@ -302,8 +302,8 @@ export default function Tickets() {
                     },
                     {
                       icon: <Users className="w-4 h-4" />,
-                      label: "Entry",
-                      value: "21+ · ID required",
+                      label: "Headliner",
+                      value: featuredEvent?.lineup || "GENE FARRIS",
                     },
                   ].map(item => (
                     <div key={item.label} className="flex flex-col gap-3">

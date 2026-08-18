@@ -20,7 +20,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-aug22");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
-    expect(featuredSunsets?.lineup).toBe("TBA");
+    expect(featuredSunsets?.lineup).toBe("GENE FARRIS");
     // On sale: the checkout rail ships in the payload; no price until tiers publish.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
     expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-aug22");
