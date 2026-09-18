@@ -9,7 +9,7 @@
     "precheck": "node scripts/sync_hardening_constants.mjs && npm run seo:sync",
     "pretest:unit": "node scripts/sync_hardening_constants.mjs && npm run seo:sync",
     "dev": "node scripts/dev.mjs",
-    "build": "npm run validate:events && npm run images:generate && vite build && node --import tsx/esm scripts/prerender_public_routes.mts && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && npm run pixel:guard",
+    "build": "npm run sunsets:render && npm run validate:events && npm run images:generate && vite build && node --import tsx/esm scripts/prerender_public_routes.mts && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && npm run pixel:guard",
     "validate:events": "node --import tsx/esm scripts/validate_events.mts",
     "smoke:routes": "node --import tsx/esm scripts/smoke_routes.mts",
     "start": "NODE_ENV=production node dist/index.js",
@@ -39,7 +39,8 @@
     "hof:storage:configure": "node --import tsx/esm scripts/configure_house_of_friends_r2.mts",
     "lhci": "lhci autorun",
     "design:lint": "find docs/design -path '*/DESIGN.md' -print0 | xargs -0 -n1 npx @google/design.md lint",
-    "design:spec": "npx @google/design.md spec"
+    "design:spec": "npx @google/design.md spec",
+    "sunsets:render": "node scripts/render_sunsets_page.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1085.0",

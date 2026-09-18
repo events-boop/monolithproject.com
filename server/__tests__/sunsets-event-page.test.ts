@@ -29,7 +29,7 @@ describe("published Sunsets event hub", () => {
       expect(el.getAttribute("href")).toBe("https://allevents.in/chicago/chasing-sunsets-iii-joezi-x-massuma-tickets/80003431876974");
     }
     expect(doc.querySelectorAll("#faq details")).toHaveLength(16);
-    expect(doc.querySelector("#set-times")?.textContent).toContain("To be announced");
+    expect(doc.querySelector("#set-times")?.textContent).toContain("once the running order is confirmed");
     expect(doc.querySelector("#faq")?.textContent).toContain("rain-or-shine");
   });
 
@@ -71,5 +71,48 @@ describe("published Sunsets event hub", () => {
     click({ classList: { contains: () => true }, dataset: {}, href: "https://allevents.in/" });
     expect(t.win.fbq.queue).toHaveLength(count);
     expect(t.win["ga-disable-G-DE8Z8VS263"]).toBe(true);
+  });
+});
+
+
+describe("Sunsets review preview integrity", () => {
+  it("puts essentials before the poster and subscriptions after event information",()=>{
+    expect(html.indexOf('id="event-title"')).toBeLessThan(html.indexOf('class="hero-event-art"'));
+    expect(html.indexOf('id="set-times"')).toBeLessThan(html.indexOf('id="venue"'));
+    expect(html.indexOf('id="venue"')).toBeLessThan(html.indexOf('id="artists"'));
+    expect(html.indexOf('id="faq"')).toBeLessThan(html.indexOf('id="updates"'));
+    expect(doc.querySelector('#venue img')?.getAttribute('src')).toContain('castaways-hero');
+    expect(doc.querySelectorAll('.signup-form')).toHaveLength(2);
+    expect(doc.querySelector('#updates')?.innerHTML).not.toContain('mailto:events@monolithproject.com?subject');
+    expect(doc.querySelectorAll('.signup-form fieldset[disabled]')).toHaveLength(2);
+    expect(doc.querySelector('#set-times')?.textContent).toContain('Erik');
+    expect(doc.querySelector('#set-times')?.textContent).not.toContain('6–8');
+  });
+  it("has one event schema matching visible data and the actual destination canonical",()=>{
+    const schemas=doc.querySelectorAll('script[type="application/ld+json"]');
+    expect(schemas).toHaveLength(1);
+    const event=JSON.parse(schemas[0].textContent!);
+    expect(event.url).toBe(doc.querySelector('link[rel="canonical"]')?.getAttribute('href'));
+    expect(event.url).toBe('https://monolithproject.com/sunsets');
+    expect(event.startDate).toBe('2026-09-19T12:00:00-05:00');
+    expect(event.eventStatus).toBe('https://schema.org/EventScheduled');
+    expect(doc.querySelector('.status-notice time')?.textContent).toContain('Chicago');
+  });
+});
+
+
+describe("approved event changes remain consistent",()=>{
+  it("rejects unapproved status changes and stale artwork after date changes",async()=>{
+    // The renderer is shared by every build, not a runtime-only DOM patch.
+    const {renderSunsetsPage}=await import('../../scripts/render_sunsets_page.mjs');
+    const data=JSON.parse(readFileSync('shared/events/sunsets-page.json','utf8'));
+    const template=readFileSync('scripts/templates/sunsets.html','utf8');
+    expect(()=>renderSunsetsPage({...data,status:'EventPostponed',salesEnabled:false},template)).toThrow('approval');
+    expect(()=>renderSunsetsPage({...data,start:'2026-09-20T12:00:00-05:00',end:'2026-09-20T22:00:00-05:00'},template)).toThrow('artwork');
+    const revised=new JSDOM(renderSunsetsPage({...data,status:'EventCancelled',salesEnabled:false,statusApproval:'test-fixture-only'},template)).window.document;
+    expect(revised.querySelectorAll('.ticket-link')).toHaveLength(0);
+    expect(revised.querySelectorAll('a[href*="allevents.in"]')).toHaveLength(0);
+    expect(revised.querySelector('.hero-event-art')).toBeNull();
+    expect(JSON.parse(revised.querySelector('script[type="application/ld+json"]')!.textContent!).eventStatus).toBe('https://schema.org/EventCancelled');
   });
 });

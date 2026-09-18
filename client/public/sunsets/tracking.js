@@ -68,7 +68,7 @@
     if (!link || !allowed()) return;
     const common = { event_id: 'css-sep19', content_name: 'Chasing Sun(Sets) III — JOEZI × MASSUMA' };
     if (link.classList.contains('ticket-link')) {
-      const details = { ...common, placement: link.dataset.placement, link_url: link.href };
+      const details = { ...common, placement: link.dataset.placement, link_url: link.href.split("?")[0] };
       window.gtag?.('event', 'outbound_ticket_click', details);
       // Preserve the live Meta custom-event name. A click is not a purchase.
       window.fbq?.('trackCustom', 'OutboundTicketClick', details);

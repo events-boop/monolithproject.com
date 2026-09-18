@@ -10,6 +10,7 @@ import { configureMiddleware, configureErrorMiddleware } from "./middleware";
 import healthRouter from "./routes/health";
 import seoRouter from "./routes/seo";
 import leadsRouter from "./routes/leads";
+import sunsetsSubscriptionsRouter from "./routes/sunsets-subscriptions";
 import ticketsRouter from "./routes/tickets";
 import bookingRouter from "./routes/booking";
 import contactRouter from "./routes/contact";
@@ -40,6 +41,7 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/site-data", methods: ["GET"] },
   { path: "/api/sponsor-deck", methods: ["GET"] },
   { path: "/api/leads", methods: ["POST"] },
+  { path: "/api/sunsets/subscriptions", methods: ["GET", "POST"] },
   { path: "/api/contact", methods: ["POST"] },
   { path: "/api/booking-inquiry", methods: ["POST"] },
   { path: "/api/ticket-intent", methods: ["POST"] },
@@ -104,6 +106,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(healthRouter);
   app.use(seoRouter);
   app.use(leadsRouter);
+  app.use(sunsetsSubscriptionsRouter);
   app.use(ticketsRouter);
   app.use(bookingRouter);
   app.use(contactRouter);

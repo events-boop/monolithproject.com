@@ -229,15 +229,24 @@ dialog > p { font-size: 16px; line-height: 1.75; }
 }
 .updates-card .section-label { padding-right: 65px; }
 
-/* Restore the compact Castaways photo card without shrinking the rest of the page. */
-.venue-card { --muted: #606358; }
-.venue-copy .section-label { font-size: 8px; line-height: 1.6; letter-spacing: 1.6px; flex-wrap: nowrap; }
-.venue-copy p { font-size: 12px; line-height: 1.8; }
-.venue-copy address { font-size: 10px; line-height: 1.8; overflow-wrap: normal; }
-.venue-copy .text-link { font-size: 11px; line-height: 1.6; }
-.venue-copy h2 em { color: #737b61; }
-.venue-overlay-label { font-size: 8px; letter-spacing: 2px; }
-@media (min-width: 480px) {
-  .venue-copy .section-label { font-size: 9px; }
-  .venue-overlay-label { font-size: 6px; letter-spacing: 1px; }
-}
+
+/* Event essentials and authentic venue photography, September 2026 review. */
+.page-shell{max-width:1080px;padding-bottom:calc(130px + env(safe-area-inset-bottom))}
+.status-notice{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:22px 0 4px;border-bottom:0}
+.status-kicker{display:block;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--muted)}
+.status-notice strong{display:block;font-size:17px;margin:5px 0}.status-notice p{font-size:14px;margin:0 0 4px}.status-notice time{display:block;font-size:12px;color:var(--muted)}
+.status-notice>a{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:14px;font-weight:600;text-underline-offset:4px}
+.hero-frame{margin-top:16px}.hero-frame .masthead{min-height:80px;padding:16px 0}.hero-frame .masthead-note{font-size:12px;flex:1 1 120px}.wordmark.brand-artwork{width:180px;max-width:55%}
+.hero-frame .event-pass{display:flex;flex-direction:column}.hero-frame .pass-content{padding-top:10px}.hero-frame .pass-content h1{font-size:clamp(36px,9vw,70px);white-space:normal;line-height:1.06}.hero-line{margin-bottom:14px}
+.event-facts{padding:14px 0;gap:14px}.event-facts strong{font-size:17px}.event-facts .age{display:inline;font-size:14px;color:var(--paper)}.event-facts>div+div{padding-left:0;border-left:0}
+.hero-event-art{margin:20px -20px -20px}.hero-event-art img{aspect-ratio:1;object-fit:contain}.section-nav{margin-top:0}
+.section{padding:36px 0}.section>p{max-width:680px}.set-times-section{border-top:0}.set-times-section h2{font-size:clamp(40px,6vw,64px)}
+.lineup-names{font:600 clamp(29px,5vw,40px)/1.25 var(--display);margin:22px 0 12px}.support-names{font-size:17px;line-height:1.9;margin:0}.support-names strong{display:block;font-size:12px;letter-spacing:1px;color:var(--muted)}
+.show-hours{margin-top:20px}.set-times-list>div{flex-wrap:wrap}.set-times-list dt{overflow-wrap:anywhere}.set-times-list dd{text-align:left}
+.venue-card{display:block;background:#e4e4d8}.venue-art{height:auto;aspect-ratio:1.83}.venue-art picture,.venue-art img{display:block;width:100%;height:100%;object-fit:cover;filter:none}.venue-overlay-label{font-size:12px;left:20px;letter-spacing:.4px}.venue-copy{padding:26px}.venue-copy h2{font-size:52px}.venue-copy p{font-size:16px;max-width:540px}.venue-copy address{font-size:15px}.venue-copy .section-label{font-size:12px}.venue-copy .text-link{font-size:16px}
+.proof-section{display:grid;gap:14px;border-bottom:1px solid var(--line)}.proof-section h2{font-size:40px}.proof-section p{font-size:16px}.recap-proof{margin:0}.artist-list{display:grid;gap:24px}.artist-card{min-width:0}.artist-heading{gap:8px}.artist-heading h3{font-size:38px}
+.updates-card{margin-bottom:32px;padding:26px}.updates-card h2{font-size:44px}.signup-grid{display:grid;gap:28px}.signup-block h3{font:600 30px/1.15 var(--display);margin:4px 0 10px}.signup-block>p{font-size:16px}.signup-form fieldset{border:0;padding:0;margin:0;min-width:0}.signup-form label:not(.consent-label){display:block;font-size:15px;font-weight:600;margin-bottom:8px}.signup-form input[type=email]{width:100%;min-height:48px;border:1px solid #697353;border-radius:2px;background:var(--paper);font:inherit;font-size:16px;padding:10px 12px}.consent-label{display:flex;align-items:start;gap:10px;font-size:14px;line-height:1.6;padding:16px 0;cursor:pointer}.consent-label input{flex:0 0 20px;width:20px;height:20px;margin:2px 0;accent-color:var(--ink)}.form-feedback{font-size:14px;line-height:1.6;margin:12px 0 0}.signup-form fieldset:disabled{opacity:.7}.form-trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;clip-path:inset(50%);overflow:hidden}.signup-form input:focus-visible{outline:3px solid #a13916;outline-offset:3px}
+.booking-dock{max-width:1012px}.booking-dock>div{min-width:0}.booking-dock strong{font-size:23px}.booking-dock>div>span{font-size:12px}.closing-card{margin-top:0}section,[id]{scroll-margin-bottom:120px}a,button,input,summary{touch-action:manipulation}.site-footer{padding-bottom:20px}
+@media(min-width:480px){.hero-event-art{margin:24px -27px -25px}.event-facts{grid-template-columns:1fr 1.12fr}.section-nav{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:800px){.page-shell{padding-inline:34px}.status-notice{padding-top:22px}.hero-frame .event-pass{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px}.hero-frame .pass-content{padding:20px 0}.hero-event-art{margin:0 -27px -25px 0}.hero-frame .pass-content h1{font-size:58px}.hero-frame .masthead{min-height:92px}.wordmark.brand-artwork{width:218px}.event-facts{grid-template-columns:1fr}.venue-card{display:grid;grid-template-columns:1.25fr 1fr;align-items:stretch}.venue-art{aspect-ratio:auto;min-height:400px}.venue-art img{object-position:45% center}.venue-copy{padding:30px}.proof-section{grid-template-columns:.8fr 1.2fr;align-items:center;gap:40px}.artist-list{grid-template-columns:1fr 1fr;gap:32px}.signup-grid{grid-template-columns:1fr 1fr;gap:40px}.updates-card{padding:32px}.closing-card h2{font-size:74px}.closing-card .button{max-width:470px}.section{padding-block:44px}}
+@media(max-width:479px){.page-shell{padding-inline:16px}.hero-frame{padding-inline:16px}.hero-event-art{margin-inline:-16px}.hero-frame .masthead-note{font-size:11px;flex-basis:100px;text-align:right}.hero-frame .masthead{gap:10px}.event-facts{grid-template-columns:1fr}.pass-foot{gap:0}.venue-copy{padding:22px}.booking-dock{padding-inline:16px}.booking-dock strong{font-size:22px}.booking-dock>div>span{font-size:11px}.section-label{gap:8px}.updates-card{padding:22px}}
