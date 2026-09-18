@@ -5,9 +5,9 @@
   # Skip a build when a commit only touched docs/markdown/internal planning
   # files (nothing that affects the deployed bundle). Cuts redundant deploys and
   # shrinks the window where concurrent agent commits overlap. Exit 0 cancels
-  # the build; any other code (incl. a missing CACHED ref on the first build)
-  # proceeds, so this fails safe toward building.
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)docs/**' ':(exclude)private/**' ':(exclude)**/*.md'"
+  # the build. Missing or identical refs must rebuild: an unquoted empty ref
+  # would otherwise compare the checkout to itself and incorrectly skip deploys.
+  ignore = "test -n \"$CACHED_COMMIT_REF\" && test -n \"$COMMIT_REF\" && test \"$CACHED_COMMIT_REF\" != \"$COMMIT_REF\" && git diff --quiet \"$CACHED_COMMIT_REF\" \"$COMMIT_REF\" -- . ':(exclude)docs/**' ':(exclude)private/**' ':(exclude)**/*.md'"
 
 [build.environment]
   NODE_VERSION = "20"
