@@ -21,7 +21,7 @@ export type SiteExperienceSlot =
   | "guide";
 
 /** Third-party funnel / ticketing platforms integrated with the site. */
-export type FunnelTool = "laylo" | "posh" | "fillout";
+export type FunnelTool = "laylo" | "posh" | "fillout" | "allevents";
 
 export interface EventCta {
   label: string;

@@ -36,7 +36,7 @@ export const FEATURED_SETS: FeaturedSet[] = [
     series: "chasing-sunsets",
     artist: "KIKO FRANCO",
     title: "Lakefront Debut",
-    shortCode: "LIVE",
+    shortCode: "ARCHIVE",
     duration: "July 4th",
     image: "/images/july4-kiko-franco.jpg",
     responsive: false,
@@ -141,7 +141,7 @@ export default function FeaturedSets() {
 
           <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.34fr)] md:items-end">
             <h2 className="event-system-headline max-w-[10ch] text-[clamp(3.4rem,9vw,8.5rem)] text-white">
-              Featured Lineup
+              July 4 / Artists
             </h2>
             <div className="border-l border-white/10 pl-5 md:justify-self-end">
               <span className="event-system-meta block text-white/80">

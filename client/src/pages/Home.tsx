@@ -3,6 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
+import HomeEventFeature from "@/components/HomeEventFeature";
+import "@/styles/home.css";
 import SectionDivider from "@/components/SectionDivider";
 import ViewportLazy from "@/components/ViewportLazy";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -15,9 +17,6 @@ import {
 
 const FeaturedRecap = lazy(() => import("@/components/FeaturedRecap"));
 const ScheduleSection = lazy(() => import("@/components/ScheduleSection"));
-const SeasonChapterCards = lazy(
-  () => import("@/components/SeasonChapterCards")
-);
 const FeaturedSets = lazy(() => import("@/components/FeaturedSets"));
 const PartnershipMarquee = lazy(
   () => import("@/components/PartnershipMarquee")
@@ -26,10 +25,6 @@ import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
 import { LIVE_RED, MONOLITH_ORANGE, SUN_SETS_GOLD } from "@/lib/brand";
 import { appendAttributionQueryParams } from "@/lib/attribution";
-import { SUNSETS_AUG22_TICKET_PATH } from "@/lib/sunsetsTicketing";
-
-// Chapter One archive — photos + recap land here as they clear the edit.
-const SUNSETS_I_ARCHIVE_HREF = "/chasing-sunsets/sunsets-i-2026";
 
 function getStatusLabel(status?: string) {
   if (status === "on-sale") return "ON SALE";
@@ -39,18 +34,11 @@ function getStatusLabel(status?: string) {
   return "SIGNAL PENDING";
 }
 
-const titleSubtextClass =
-  "mt-4 max-w-3xl text-sm leading-relaxed text-[#F4D7A1]/88 md:text-base";
-const warmSubtextClass = "mt-4 text-sm leading-relaxed text-[#E8B86D]/84";
 const coolSubtextClass =
   "mt-4 max-w-3xl text-sm leading-relaxed text-[#B9F6FF]/82 md:text-base";
 
 export default function Home() {
   usePublicSiteDataVersion();
-  const chasingSeasonEvent = getSeriesExperienceEvent(
-    "chasing-sunsets",
-    "hero"
-  );
   const untoldMoment = getSeriesExperienceEvent("untold-story", "hero");
   const untoldMomentHref = "/story";
   const untoldTicketHref =
@@ -64,9 +52,6 @@ export default function Home() {
   // The featured untold record can be a past-event fallback — never show a
   // past date grid next to future-tense copy.
   const untoldIsPast = getEventWindowStatus(untoldMoment) === "past";
-  const sunsetsTicketHref = appendAttributionQueryParams(
-    SUNSETS_AUG22_TICKET_PATH
-  );
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
   const untoldVipHref = appendAttributionQueryParams("https://untold.vip");
   useEffect(() => {
@@ -74,7 +59,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
+    <div className="monolith-home min-h-screen bg-background text-foreground relative overflow-x-hidden bg-noise bg-scanlines">
       <SEO
         title="The Monolith Project | Chicago House Music Events"
         description="The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio."
@@ -107,91 +92,7 @@ export default function Home() {
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
 
-        {/* Current season signal — the event truth lands before brand exposition. */}
-        <section
-          aria-label="SUN(SETS) II — August 22"
-          className="home-etched-band relative z-10 border-y border-[#E8B86D]/30 bg-black/40 backdrop-blur-2xl py-10 md:py-14 shadow-[0_0_30px_rgba(232,184,109,0.05)]"
-          data-home-etch-tone="sunsets"
-        >
-          <div className="container layout-wide px-6">
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-center">
-              <div>
-                <span className="section-kicker block text-[#E8B86D]">
-                  Chasing Sun(Sets) / Season 2026
-                </span>
-                <h2 className="section-display-title-compact mt-3 max-w-[26ch] text-white hyphens-none break-keep text-balance">
-                  Chapter I is archived. Chapter II is next.
-                </h2>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/82 md:text-[11px]">
-                  SUN(SETS) II · AUGUST 22 · CASTAWAYS · CHICAGO · 21+
-                </p>
-                <p className="mt-2 text-sm text-[#F4D7A1]/80">
-                  The Summer Return. Tickets are live now — powered by Posh.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 lg:items-end">
-                <a
-                  href={sunsetsTicketHref}
-                  className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
-                >
-                  Buy Tickets — August 22
-                  <ArrowUpRight className="size-4" />
-                </a>
-                <Link
-                  href={SUNSETS_I_ARCHIVE_HREF}
-                  className="btn-text-action text-left lg:text-right"
-                >
-                  Chapter One complete — relive July 4
-                </Link>
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-3">
-              <div
-                className="chapter-etch-cell bg-black/55 p-4 backdrop-blur-md"
-                data-chapter-state="archive"
-              >
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
-                  01 / Archive
-                </span>
-                <p className="mt-2 font-display text-lg leading-none text-white">
-                  July 4
-                </p>
-                <p className="mt-1 text-xs text-white/64">
-                  Chapter One complete.
-                </p>
-              </div>
-              <div
-                className="chapter-etch-cell bg-[#2b1b10]/72 p-4 backdrop-blur-md"
-                data-chapter-state="next"
-              >
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E8B86D]">
-                  02 / Next
-                </span>
-                <p className="mt-2 font-display text-lg leading-none text-white">
-                  August 22
-                </p>
-                <p className="mt-1 text-xs text-[#F4D7A1]/78">
-                  Artist reveal incoming.
-                </p>
-              </div>
-              <div
-                className="chapter-etch-cell bg-black/55 p-4 backdrop-blur-md"
-                data-chapter-state="finale"
-              >
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
-                  03 / Finale
-                </span>
-                <p className="mt-2 font-display text-lg leading-none text-white">
-                  September 19
-                </p>
-                <p className="mt-1 text-xs text-white/64">
-                  Joezi x Massuma (UK).
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HomeEventFeature />
 
         <section
           id="platform"
@@ -235,7 +136,7 @@ export default function Home() {
                     and rituals that matter.
                   </p>
                   <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/48">
-                    Launch signal / forthcoming
+                    Chicago / Independent music & culture
                   </p>
                   <Link
                     href="/monolith"
@@ -258,11 +159,11 @@ export default function Home() {
                     Chasing Sun(Sets)
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-white/68">
-                    Lakefront house music, golden hour, and a season that moves
-                    from Chapter I into II and III.
+                    Lakefront house music, golden hour, and the final chapter of
+                    the summer at Castaways.
                   </p>
                   <p className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#F4D7A1]/78">
-                    II next / III closes the season
+                    III / The season finale
                   </p>
                   <a
                     href={sunsetsVipHref}
@@ -304,101 +205,6 @@ export default function Home() {
                     <ArrowUpRight aria-hidden="true" />
                   </a>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          className="home-etched-band relative z-10 border-y border-white/10 bg-black/20 backdrop-blur-md py-20 md:py-28"
-          data-home-etch-tone="sunsets"
-        >
-          <div className="container layout-wide px-6">
-            <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
-              <span className="section-kicker block text-[#E8B86D]">
-                Chasing Sun(Sets) / Current signal
-              </span>
-            </div>
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-              <div>
-                <h2 className="section-display-title-compact max-w-[16ch] text-white hyphens-none break-keep text-balance">
-                  The lakefront season keeps moving.
-                </h2>
-                <p className={titleSubtextClass}>
-                  Chapter One now lives in the archive. Chapter Two arrives
-                  August 22 — tickets are live — with Chapter Three closing
-                  the season September 19.
-                </p>
-                <div className="mt-6 flex flex-col gap-3">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                    <a
-                      href={sunsetsTicketHref}
-                      className="btn-pill-sunsets btn-pill-wide w-full justify-center sm:w-auto"
-                    >
-                      Buy Tickets — August 22
-                    </a>
-                    <Link
-                      href="/sunsets"
-                      className="btn-pill-outline btn-pill-outline-sunsets btn-pill-wide w-full justify-center sm:w-auto"
-                    >
-                      Explore the Season
-                    </Link>
-                  </div>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-                    <Link href="/chasing-sunsets" className="btn-text-action">
-                      Chapter One Archive
-                    </Link>
-                    <Link href="/schedule" className="btn-text-action">
-                      See All Dates
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="signal-etched-frame rounded-xl border border-white/15 bg-white/[0.04] p-6 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-2xl transition-all duration-500 hover:border-white/30 md:p-8"
-                data-signal-tone="sunsets"
-              >
-                <span className="section-kicker block text-[#E8B86D]">
-                  Next on the lake
-                </span>
-                <h3 className="section-display-title-compact mt-3 max-w-[14ch] text-white hyphens-none break-keep text-balance">
-                  {chasingSeasonEvent?.headline || "SUN(SETS) II — Chapter Two"}
-                </h3>
-                <p className={warmSubtextClass}>
-                  {chasingSeasonEvent?.description ||
-                    "The Summer Return lands August 22 at Castaways — tickets are live now, powered by Posh."}
-                </p>
-                <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/84">
-                  <div>
-                    <dt className="text-white/66">Date</dt>
-                    <dd className="mt-1 text-white">
-                      {chasingSeasonEvent?.date || "August 22, 2026"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-white/66">Location</dt>
-                    <dd className="mt-1 text-white">
-                      {chasingSeasonEvent
-                        ? getEventVenueLabel(chasingSeasonEvent)
-                        : "Castaways, Chicago"}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-white/66">Status</dt>
-                    <dd className="mt-1 text-white">
-                      {getStatusLabel(
-                        chasingSeasonEvent?.status || "coming-soon"
-                      )}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-white/66">Lineup</dt>
-                    <dd className="mt-1 text-white">
-                      {chasingSeasonEvent?.lineup || "Artist Reveal Coming"}
-                    </dd>
-                  </div>
-                </dl>
               </div>
             </div>
           </div>
@@ -556,24 +362,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          className="home-etched-band relative z-10 border-b border-white/10 bg-black/30 backdrop-blur-md py-12 md:py-16"
-          data-home-etch-tone="monolith"
-        >
-          <div className="container layout-wide px-6">
-            <div
-              className="signal-etched-frame rounded-xl border border-white/15 p-1 shadow-[0_0_40px_rgba(232,184,109,0.1)]"
-              data-signal-tone="monolith"
-            >
-              <img
-                src="/images/monolith-three-worlds-banner.jpg"
-                alt="Monolith Project - Three Worlds. One Purpose."
-                className="h-auto w-full rounded-[0.6rem]"
-              />
-            </div>
-          </div>
-        </section>
-
         <div
           id="season"
           className="bg-black/20 backdrop-blur-md transition-colors duration-500 relative z-10"
@@ -586,16 +374,6 @@ export default function Home() {
                 "linear-gradient(to bottom, rgba(17,17,17,0.35), transparent)",
             }}
           />
-          <ViewportLazy
-            minHeightClassName="min-h-[560px]"
-            rootMargin="900px 0px"
-          >
-            <Suspense
-              fallback={<Skeleton className="h-[560px] w-full opacity-25 animate-pulse" />}
-            >
-              <SeasonChapterCards />
-            </Suspense>
-          </ViewportLazy>
           <SectionDivider
             id="schedule-divider"
             number="01"
@@ -612,7 +390,9 @@ export default function Home() {
             revealAfterMs={900}
           >
             <Suspense
-              fallback={<Skeleton className="h-[780px] w-full opacity-25 animate-pulse" />}
+              fallback={
+                <Skeleton className="h-[780px] w-full opacity-25 animate-pulse" />
+              }
             >
               <ScheduleSection />
             </Suspense>
@@ -626,103 +406,6 @@ export default function Home() {
             }}
           />
         </div>
-
-        <section
-          id="series"
-          className="home-etched-band relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-xl py-20 md:py-28"
-          data-home-etch-tone="monolith"
-        >
-          <div className="container layout-wide px-6">
-            <div className="mb-8 border-b border-white/10 pb-5 md:mb-10">
-              <span className="section-kicker block text-[#E8B86D]">
-                The active world
-              </span>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#D9C6A5]/86">
-                Monolith Project is the platform. Chasing Sun(Sets) owns the
-                daylight; Untold Story owns the room after dark. The next
-                expression arrives when this foundation is ready.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              <Link
-                href="/monolith"
-                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
-                data-world-tone="monolith"
-              >
-                <span aria-hidden="true" className="world-frame-sigil" />
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
-                  The Parent
-                </p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                  Monolith Project
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  The platform around the rooms, people, and cultural signal
-                  connecting every chapter.
-                </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/68">
-                  Launch signal / forthcoming
-                </p>
-              </Link>
-              <Link
-                href="/chasing-sunsets"
-                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
-                data-world-tone="sunsets"
-              >
-                <span aria-hidden="true" className="world-frame-sigil" />
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#E8B86D]">
-                  Open Air
-                </p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                  Chasing Sun(Sets)
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  Open-air house music gatherings shaped by golden hour,
-                  lakefront energy, and community.
-                </p>
-              </Link>
-              <Link
-                href="/story"
-                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
-                data-world-tone="untold"
-              >
-                <span aria-hidden="true" className="world-frame-sigil" />
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
-                  After Dark
-                </p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                  Untold Story
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  After-dark rooms built for deeper sound, immersive
-                  dancefloors, and artist-led moments.
-                </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/68">
-                  {untoldIsPast
-                    ? "Four chapters / archive open"
-                    : untoldMoment?.date || "Next coordinates soon"}
-                </p>
-              </Link>
-              <Link
-                href="/partners"
-                className="brand-world-frame group border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
-                data-world-tone="monolith"
-              >
-                <span aria-hidden="true" className="world-frame-sigil" />
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/76">
-                  Collaborations
-                </p>
-                <h3 className="mt-3 font-display text-2xl uppercase text-white">
-                  Partners
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/84">
-                  Brand and venue collaborations built around real audience
-                  energy, content, and community.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </section>
 
         <div className="bg-black/20 backdrop-blur-md relative z-10 transition-colors duration-500">
           <SectionDivider
@@ -740,7 +423,9 @@ export default function Home() {
             revealAfterMs={1200}
           >
             <Suspense
-              fallback={<Skeleton className="h-[620px] w-full opacity-25 animate-pulse" />}
+              fallback={
+                <Skeleton className="h-[620px] w-full opacity-25 animate-pulse" />
+              }
             >
               <FeaturedRecap />
             </Suspense>
@@ -751,12 +436,12 @@ export default function Home() {
           <SectionDivider
             id="lineup-divider"
             number="03"
-            label="Lineup"
+            label="From the archive"
             glow={MONOLITH_ORANGE}
             dense
             etched
             etchTone="monolith"
-            watermark="ARTISTS / LINEUP"
+            watermark="ARTISTS / ARCHIVE"
           />
           <ViewportLazy
             minHeightClassName="min-h-[420px]"
@@ -764,7 +449,9 @@ export default function Home() {
             revealAfterMs={1400}
           >
             <Suspense
-              fallback={<Skeleton className="h-[420px] w-full opacity-25 animate-pulse" />}
+              fallback={
+                <Skeleton className="h-[420px] w-full opacity-25 animate-pulse" />
+              }
             >
               <FeaturedSets />
             </Suspense>
@@ -867,7 +554,9 @@ export default function Home() {
           revealAfterMs={1600}
         >
           <Suspense
-            fallback={<Skeleton className="h-[120px] w-full opacity-25 animate-pulse" />}
+            fallback={
+              <Skeleton className="h-[120px] w-full opacity-25 animate-pulse" />
+            }
           >
             <PartnershipMarquee />
           </Suspense>

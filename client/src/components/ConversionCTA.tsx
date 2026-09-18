@@ -56,11 +56,13 @@ export default function ConversionCTA({
 
   const toolIcons: Record<FunnelTool, React.ReactNode> = {
     laylo: <Lock className="w-4 h-4" />,
+    allevents: <Ticket className="w-4 h-4" />,
     posh: <Ticket className="w-4 h-4" />,
     fillout: <Zap className="w-4 h-4" />,
   };
 
   const toolStyles: Record<FunnelTool | "experiential", string> = {
+    allevents: "cta-posh",
     posh: "cta-posh",
     laylo: "cta-laylo",
     fillout: "cta-fillout",
@@ -92,13 +94,16 @@ export default function ConversionCTA({
       return;
     }
 
-    if (cta.tool === "posh" && cta.href !== "/schedule") {
+    if (
+      (cta.tool === "posh" || cta.tool === "allevents") &&
+      cta.href !== "/schedule"
+    ) {
       trackAccessEvent("ticket_click", {
         buttonName: cta.label,
         destinationUrl: cta.href,
         eventSlug,
         eventDate: event?.date,
-        channel: "Posh",
+        channel: cta.tool === "allevents" ? "AllEvents" : "Posh",
         source: "conversion_cta",
       });
     }
@@ -142,7 +147,7 @@ export default function ConversionCTA({
             });
           }
           trackCtaClick();
-          if (cta.tool === "posh") {
+          if (cta.tool === "posh" || cta.tool === "allevents") {
             void trackTicketIntent("conversion_cta", event?.id, attributedHref);
           }
 

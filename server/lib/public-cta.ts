@@ -133,7 +133,7 @@ export function resolveEventPrimaryCta(
           ? SUNSETS_TICKET_CTA_LABEL
           : CTA_LABELS.claimLast,
       href,
-      tool: "posh",
+      tool: href.startsWith("https://allevents.in/") ? "allevents" : "posh",
       isExternal: isExternalHref(href),
     };
   }
@@ -146,7 +146,7 @@ export function resolveEventPrimaryCta(
           ? SUNSETS_TICKET_CTA_LABEL
           : CTA_LABELS.tickets,
       href,
-      tool: "posh",
+      tool: href.startsWith("https://allevents.in/") ? "allevents" : "posh",
       isExternal: isExternalHref(href),
     };
   }

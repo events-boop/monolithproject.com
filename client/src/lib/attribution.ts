@@ -397,6 +397,21 @@ export function appendAttributionQueryParams(href: string) {
     if (url.protocol !== "http:" && url.protocol !== "https:") return href;
 
     params.forEach((value, key) => {
+      // Match the public Sunsets guide: send campaign taxonomy to AllEvents,
+      // never session IDs, arbitrary query fields, email addresses or phone numbers.
+      if (
+        url.hostname === "allevents.in" &&
+        (![
+          "utm_source",
+          "utm_medium",
+          "utm_campaign",
+          "utm_content",
+          "utm_term",
+        ].includes(key) ||
+          !/^[a-zA-Z0-9_.~-]{1,100}$/.test(value) ||
+          /\d{7,}/.test(value))
+      )
+        return;
       if (!url.searchParams.has(key)) {
         url.searchParams.set(key, value);
       }

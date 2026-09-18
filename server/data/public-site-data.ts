@@ -1,3 +1,4 @@
+import { withApprovedSunsets } from "../../shared/events/sunsets-current";
 import {
   SUNSETS_AUG22_TICKET_PATH,
   SUNSETS_SEP19_TICKET_PATH,
@@ -388,7 +389,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     episode: "SUN(SETS) II",
     title: "Chasing Sun(Sets)",
     headline: "SUN(SETS) II — GENE FARRIS",
-    subtitle: "Chasing Sun(Sets) Presents · Chicago's Very Own Legend on the Lake",
+    subtitle:
+      "Chasing Sun(Sets) Presents · Chicago's Very Own Legend on the Lake",
     date: "August 22, 2026",
     time: "Golden Hour",
     venue: "Castaways Beach Club",
@@ -455,16 +457,16 @@ function eventStartValue(event: ScheduledEvent) {
 // Chronological ascending for every consumer (client payload, prerender,
 // sitemap). Same-day events stay grouped: intra-day order comes from startsAt,
 // so the July 4 after-party card sits directly after SUN(SETS) I.
-export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG].sort(
-  (a, b) => eventStartValue(a) - eventStartValue(b)
-);
+export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG]
+  .map(withApprovedSunsets)
+  .sort((a, b) => eventStartValue(a) - eventStartValue(b));
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
-  hero: "css-aug22",
-  banner: "css-aug22",
-  funnel: "css-aug22",
-  ticket: "css-aug22",
-  guide: "css-aug22",
+  hero: "css-sep19",
+  banner: "css-sep19",
+  funnel: "css-sep19",
+  ticket: "css-sep19",
+  guide: "css-sep19",
 };
 
 export const MAX_PUBLIC_SITE_PATH_LENGTH = 160;
@@ -553,6 +555,7 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     inventoryState: event.inventoryState,
     description: event.description,
     age: event.age,
+    eventNotice: event.eventNotice,
     ticketUrl: event.ticketUrl,
     startingPrice: deriveStartingPrice(event),
     experienceIntro: event.experienceIntro,
@@ -591,6 +594,7 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
     sound: event.sound,
     description: event.description,
     age: event.age,
+    eventNotice: event.eventNotice,
     ticketUrl: event.ticketUrl,
     startingPrice: deriveStartingPrice(event),
     experienceIntro: event.experienceIntro,
@@ -601,7 +605,7 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
 }
 
 function shapeEvent(event: ScheduledEvent, profile: EventPayloadProfile) {
-  const publicEvent = lockSunsetsPrelaunchEvent(event);
+  const publicEvent = withApprovedSunsets(lockSunsetsPrelaunchEvent(event));
 
   if (profile === "home") return toHomeEvent(publicEvent);
   if (profile === "summary") return toSummaryEvent(publicEvent);

@@ -85,6 +85,7 @@ export default function GlobalTicketButton() {
 
   const cursorTextByTool = {
     posh: "GET IN",
+    allevents: "GET TICKETS",
     laylo: "TICKETS",
     fillout: "RSVP",
   } as const;
@@ -147,6 +148,7 @@ export default function GlobalTicketButton() {
   }, [location]);
 
   const toolIcons = {
+    allevents: <Ticket className="w-4 h-4" />,
     posh: <Ticket className="h-4.5 w-4.5 text-white" />,
     laylo: <Lock className="h-4.5 w-4.5 text-white" />,
     fillout: <Zap className="h-4.5 w-4.5 text-white" />,

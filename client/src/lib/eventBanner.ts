@@ -1,7 +1,6 @@
 export type EventBannerStatus = "upcoming" | "live" | "past";
 
 import {
-  getEventEyebrow,
   getEventVenueLabel,
   getExperienceEvent,
   getEventWindowStatus,
@@ -48,14 +47,11 @@ export function getEventBannerPayload(now: Date = new Date()) {
   }
 
   const headline = (event.headline || event.title).toUpperCase();
-  const eyebrow = getEventEyebrow(event).toUpperCase();
   const venue = getEventVenueLabel(event).toUpperCase();
   const saleTail = isTicketOnSale(event, now)
-      ? "TICKETS ON SALE NOW"
-      : "SAVE THE DATE";
-  const message =
-    `${event.date.toUpperCase()} — ${venue} — ${headline} — ${eyebrow} — ` +
-    `${saleTail}`;
+    ? "TICKETS ON SALE NOW"
+    : "SAVE THE DATE";
+  const message = `${event.date.toUpperCase()} — ${venue} — ${headline} — ${saleTail}`;
   const liveMessage = `LIVE NOW — ${headline} — ${venue}`;
   const cta = getEventCta(event);
 

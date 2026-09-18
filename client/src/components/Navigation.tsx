@@ -778,7 +778,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       data-mobile-quick-cta="true"
                       aria-label={`${cta.label} — ${ticketEvent?.headline || ticketEvent?.title || "Next Night"}`}
                       data-cursor-text={
-                        cta.tool === "posh"
+                        cta.tool === "posh" || cta.tool === "allevents"
                           ? "GET IN"
                           : cta.tool === "laylo"
                             ? "TICKETS"
@@ -790,14 +790,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       }}
                       onClick={() => signalChirp.click()}
                       className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 ${
-                        cta.tool === "posh"
+                        cta.tool === "posh" || cta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
                           : cta.tool === "laylo"
                             ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
                             : "border-white/20 bg-white/[0.08] text-white"
                       }`}
                     >
-                      {cta.tool === "posh" ? (
+                      {cta.tool === "posh" || cta.tool === "allevents" ? (
                         <Ticket className="h-4 w-4" />
                       ) : cta.tool === "laylo" ? (
                         <Lock className="h-4 w-4 text-black" />
@@ -816,7 +816,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       target={cta.isExternal ? "_blank" : undefined}
                       rel={cta.isExternal ? "noopener noreferrer" : undefined}
                       data-cursor-text={
-                        cta.tool === "posh"
+                        cta.tool === "posh" || cta.tool === "allevents"
                           ? "GET IN"
                           : cta.tool === "laylo"
                             ? "TICKETS"
@@ -832,12 +832,12 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         className={`
                       btn-pill-neutral items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
                       flex border uppercase
-                      ${cta.tool === "posh" ? "cta-posh border-transparent" : cta.tool === "laylo" ? "cta-laylo" : "cta-fillout"}
+                      ${cta.tool === "posh" || cta.tool === "allevents" ? "cta-posh border-transparent" : cta.tool === "laylo" ? "cta-laylo" : "cta-fillout"}
                       ${ctaToneClass}
-                      ${isLight && cta.tool === "posh" ? "opacity-90 hover:opacity-100 !shadow-none" : ""}
+                      ${isLight && (cta.tool === "posh" || cta.tool === "allevents") ? "opacity-90 hover:opacity-100 !shadow-none" : ""}
                     `}
                       >
-                        {cta.tool === "posh" ? (
+                        {cta.tool === "posh" || cta.tool === "allevents" ? (
                           <Ticket className="h-4 w-4" />
                         ) : cta.tool === "laylo" ? (
                           <Lock className="h-4 w-4" />

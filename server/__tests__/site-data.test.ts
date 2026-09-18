@@ -1,14 +1,23 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { currentSunsets } from "../../shared/events/sunsets-current";
 import { buildPublicSiteData } from "../data/public-site-data";
 
-// The August chapter is past. September remains the live VIP ticket rail.
+// The public finale uses the same approved publication as /sunsets.
 const expectedSunsetsCta = {
   label: "Get Tickets",
-  href: "/go/tickets/css-sep19",
-  tool: "posh",
+  href: currentSunsets.ticketUrl,
+  tool: "allevents",
 };
 
 describe("buildPublicSiteData", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-09-18T12:00:00Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
   it("returns a lean public season profile for the homepage", () => {
     const data = buildPublicSiteData("/");
     const featuredUntold = data.events.find(event => event.id === "us-s3e3");
@@ -16,12 +25,14 @@ describe("buildPublicSiteData", () => {
 
     expect(data.path).toBe("/");
     expect(data.events.length).toBeGreaterThan(5);
-    expect(data.featuredEvents.hero?.id).toBe("css-aug22");
-    expect(featuredSunsets?.primaryCta).toMatchObject({ href: "/go/waitlist/chasing-sunsets", tool: "laylo" });
-    expect(featuredSunsets?.lineup).toBe("GENE FARRIS");
-    // The August chapter is complete; its expired checkout is no longer exposed.
+    expect(data.featuredEvents.hero?.id).toBe("css-sep19");
+    expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    expect(featuredSunsets?.lineup).toBe(
+      [...currentSunsets.headliners, ...currentSunsets.support].join(" · ")
+    );
+    // Pricing stays at checkout; only the approved ticket destination is exposed.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBeUndefined();
+    expect(featuredSunsets?.ticketUrl).toBe(currentSunsets.ticketUrl);
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -42,7 +53,7 @@ describe("buildPublicSiteData", () => {
       )
     ).toBe(true);
     expect(data.events.some(event => event.id === "us-s3e3")).toBe(true);
-    expect(data.events.some(event => event.id === "css-aug22")).toBe(true);
+    expect(data.events.some(event => event.id === "css-sep19")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
       label: "Get Alerts First",
       href: "/story#untold-funnel",
@@ -72,7 +83,7 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.tablePackages).toBeUndefined();
     expect(scheduleUntold?.activeFunnels).toBeUndefined();
     expect(seasonFinale?.lineup).toBe(
-      "Joezi x Massuma (UK) · Special Guests TBA"
+      [...currentSunsets.headliners, ...currentSunsets.support].join(" · ")
     );
   });
 
@@ -112,7 +123,7 @@ describe("buildPublicSiteData", () => {
     expect(residencyEvents[2]?.lineup).toBe("ERIK THE DJ B2B AMARI");
   });
 
-  it("returns event-specific maps and live inventory for the VIP route", () => {
+  it("returns the approved venue without unverified VIP inventory", () => {
     const data = buildPublicSiteData("/vip");
     const vipIds = data.events.map(event => event.id);
     const featuredSunsets = data.events.find(event => event.id === "css-sep19");
@@ -123,22 +134,15 @@ describe("buildPublicSiteData", () => {
     expect(featuredSunsets?.venueMap).toMatchObject({
       id: "castaways-sunsets-iii-2026",
       venueId: "castaways-chicago",
-      address: "1603 N Lake Shore Dr, Chicago, IL 60611",
+      address: currentSunsets.address,
       illustrative: true,
     });
-    expect(featuredSunsets?.vipPackages?.map(item => item.size)).toEqual([
-      "small",
-      "medium",
-      "large",
-    ]);
-    expect(
-      featuredSunsets?.vipPackages?.map(item => item.availability)
-    ).toEqual(["available", "available", "limited"]);
+    expect(featuredSunsets?.vipPackages).toBeUndefined();
     expect(featuredSunsets?.tableReservationEmail).toBe(
-      "vip@chasingsunsets.music"
+      "events@monolithproject.com"
     );
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-sep19");
+    expect(featuredSunsets?.ticketUrl).toBe(currentSunsets.ticketUrl);
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });
@@ -181,5 +185,36 @@ describe("buildPublicSiteData", () => {
     expect(pageData.events.some(event => event.id === "test-hidden")).toBe(
       true
     );
+  });
+
+  it("automatically sweeps expired events to past and transitions CTA to waitlist/alerts", () => {
+    // Fast-forward past September 19, 2026 to verify automated date sweep engine
+    vi.setSystemTime(new Date("2026-09-20T12:00:00Z"));
+    const data = buildPublicSiteData("/");
+    const featuredSunsets = data.featuredEvents.hero;
+
+    expect(featuredSunsets?.id).toBe("css-sep19");
+    expect(featuredSunsets?.primaryCta).toMatchObject({
+      label: "Get Alerts First",
+      href: "/go/waitlist/chasing-sunsets",
+      tool: "laylo",
+    });
+  });
+  it("keeps stale database content from replacing the approved public finale", () => {
+    const stale = {
+      ...buildPublicSiteData("/").featuredEvents.hero!,
+      status: "coming-soon" as const,
+      venue: "Old venue",
+      lineup: "TBA",
+      ticketUrl: "https://posh.vip/old",
+    };
+    const event = buildPublicSiteData("/", [stale]).featuredEvents.hero;
+    expect(event).toMatchObject({
+      venue: currentSunsets.venueName,
+      status: "on-sale",
+      ticketUrl: currentSunsets.ticketUrl,
+      startsAt: currentSunsets.start,
+      endsAt: currentSunsets.end,
+    });
   });
 });
