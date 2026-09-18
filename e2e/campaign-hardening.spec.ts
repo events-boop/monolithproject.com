@@ -92,61 +92,16 @@ test.describe("campaign hardening stress checks", () => {
     expect([401, 503]).toContain(response.status());
   });
 
-  test("sunsets.vip root mirrors the /sunsets link-in-bio surface", async ({
-    page,
-  }) => {
+  test("sunsets.vip opens the approved September event hub", async ({ page }) => {
     await preparePage(page);
-    await page.route(
-      /https?:\/\/([^/]+\.)?(youtube\.com|youtube-nocookie\.com|ytimg\.com|googlevideo\.com|soundcloud\.com|sndcdn\.com)\//,
-      route => route.fulfill({ body: "", status: 204 })
-    );
-    const pageViewRequests: string[] = [];
-
-    page.on("request", request => {
-      if (request.url().includes("/api/track/page-view")) {
-        pageViewRequests.push(request.postData() || "");
-      }
-    });
-
-    await page.goto("http://sunsets.vip:5002/", {
-      waitUntil: "domcontentloaded",
-    });
-    await waitForAppReady(page);
-
-    // Post-July 4 the surface leads with the SUN(SETS) II signal and the
-    // Lake List as the primary conversion; there is no live ticket CTA
-    // until the Aug 22 record passes its gates.
-    await expect(
-      page.getByRole("heading", { name: /the summer return/i })
-    ).toBeVisible();
-    const lakeListCta = page
-      .getByLabel("Lake List signup")
-      .getByRole("link", { name: /join the lake list/i });
-    await expect(lakeListCta).toBeVisible();
-    await expect(lakeListCta).toHaveAttribute("href", /\/go\/lakelist/);
-    await expect(
-      page.getByRole("heading", { name: /chasing\s*sun\(sets\)\s*2026/i })
-    ).toBeVisible();
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-      "href",
-      "https://sunsets.vip/"
-    );
-    await expect
-      .poll(() => pageViewRequests.length, { timeout: 5000 })
-      .toBeGreaterThanOrEqual(1);
-
-    const trackedPaths = new Set(
-      pageViewRequests
-        .map(postData => {
-          try {
-            return JSON.parse(postData).pagePath as string | undefined;
-          } catch {
-            return undefined;
-          }
-        })
-        .filter(Boolean)
-    );
-    expect(trackedPaths).toContain("/sunsets");
+    await page.goto("http://sunsets.vip:5002/", { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("heading", { name: "JOEZI × MASSUMA", exact: true })).toBeVisible();
+    await expect(page.locator("#hero-tickets-btn")).toHaveAttribute("href", /allevents\.in.*80003431876974/);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://sunsets.vip/");
+    await expect(page.locator("#set-times")).toContainText("To be announced");
+    await expect(page.locator("#faq details")).toHaveCount(16);
+    await page.getByText("Is postponement the same as full cancellation?", { exact: true }).click();
+    await expect(page.locator("#faq details[open]")).toContainText("A postponement moves the event to a later date");
   });
 
   test("multi-tab attribution keeps session and first touch tab-scoped", async ({
@@ -257,10 +212,10 @@ test.describe("campaign hardening stress checks", () => {
     const routes = [
       "/lake",
       "/radio",
-      "/sunsets",
+      "/schedule",
       "/story",
       "/lake",
-      "/sunsets",
+      "/radio",
     ];
     const startedAt = Date.now();
     for (const route of routes) {
@@ -288,7 +243,7 @@ test.describe("campaign hardening stress checks", () => {
         .filter(Boolean)
     );
     expect(trackedPaths).toContain("/lake");
-    expect(trackedPaths).toContain("/sunsets");
+    expect(trackedPaths).toContain("/radio");
     expect(consoleErrors).toEqual([]);
     expect(firstPartyFailures).toEqual([]);
   });
@@ -353,7 +308,7 @@ test.describe("campaign hardening stress checks", () => {
 
     expect(brandBeforeConsent).toEqual([]);
     expect(JSON.stringify(brandAccepted)).toContain("PageView");
-    expect(JSON.stringify(lakeBeforeConsent)).toContain("trackSingle");
+    expect(JSON.stringify(lakeBeforeConsent)).toContain("1049241148606250");
     expect(JSON.stringify(lakeBeforeConsent)).toContain("PageView");
     expect(lakeDeclined).toEqual([]);
   });

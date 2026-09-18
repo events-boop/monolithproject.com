@@ -93,6 +93,20 @@
   status = 200
   force = true
 
+# Serve the standalone event hub before the SPA fallback, with or without
+# a trailing slash. All other campaign domains and short links keep their routes.
+[[redirects]]
+  from = "/sunsets"
+  to = "/sunsets/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sunsets/"
+  to = "/sunsets/index.html"
+  status = 200
+  force = true
+
 # sunsets.vip is the campaign front door. Root and common aliases redirect to
 # the canonical /sunsets page while non-root paths such as /go/* remain
 # available for short-link handling.

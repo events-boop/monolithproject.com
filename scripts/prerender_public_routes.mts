@@ -1224,6 +1224,10 @@ for (const sitemapEntry of mergeSitemapEntries([
 }
 
 for (const route of routeDefinitions) {
+  // The approved event hub is copied intact from client/public by Vite.
+  // Do not replace it with the older React page’s generated shell.
+  if (route.path === "/sunsets") continue;
+
   const canonicalUrl = route.canonicalUrl || toAbsoluteUrl(route.path);
   const resolvedTitle = route.absoluteTitle
     ? route.title

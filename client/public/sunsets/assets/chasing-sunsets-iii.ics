@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Monolith Project//Chasing SunSets//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:chasing-sunsets-iii-20260919@sunsets.vip
+DTSTAMP:20260916T180000Z
+DTSTART:20260919T170000Z
+DTEND:20260920T030000Z
+SUMMARY:Chasing Sun(Sets) III — JOEZI × MASSUMA
+LOCATION:Castaways Beach Club\, Chicago
+DESCRIPTION:The 2026 season finale. 21+ with government-issued photo ID.
+URL:https://sunsets.vip/
+END:VEVENT
+END:VCALENDAR

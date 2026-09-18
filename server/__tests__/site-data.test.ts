@@ -1,12 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { buildPublicSiteData } from "../data/public-site-data";
 
-// SUN(SETS) I (css-jul04) is past and SUN(SETS) II (css-aug22) is the
-// featured record. Aug 22 is on sale, so every featured CTA goes straight
-// to the ticket rail — no Lake List middleman in the buying path.
+// The August chapter is past. September remains the live VIP ticket rail.
 const expectedSunsetsCta = {
   label: "Get Tickets",
-  href: "/go/tickets/css-aug22",
+  href: "/go/tickets/css-sep19",
   tool: "posh",
 };
 
@@ -19,11 +17,11 @@ describe("buildPublicSiteData", () => {
     expect(data.path).toBe("/");
     expect(data.events.length).toBeGreaterThan(5);
     expect(data.featuredEvents.hero?.id).toBe("css-aug22");
-    expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
+    expect(featuredSunsets?.primaryCta).toMatchObject({ href: "/go/waitlist/chasing-sunsets", tool: "laylo" });
     expect(featuredSunsets?.lineup).toBe("GENE FARRIS");
-    // On sale: the checkout rail ships in the payload; no price until tiers publish.
+    // The August chapter is complete; its expired checkout is no longer exposed.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-aug22");
+    expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -117,13 +115,13 @@ describe("buildPublicSiteData", () => {
   it("returns event-specific maps and live inventory for the VIP route", () => {
     const data = buildPublicSiteData("/vip");
     const vipIds = data.events.map(event => event.id);
-    const featuredSunsets = data.events.find(event => event.id === "css-aug22");
+    const featuredSunsets = data.events.find(event => event.id === "css-sep19");
 
-    expect(vipIds).toEqual(["css-aug22", "css-sep19"]);
+    expect(vipIds).toEqual(["css-sep19"]);
     expect(vipIds).not.toContain("us-s3e3");
     expect(featuredSunsets?.primaryCta).toMatchObject(expectedSunsetsCta);
     expect(featuredSunsets?.venueMap).toMatchObject({
-      id: "castaways-sunsets-ii-2026",
+      id: "castaways-sunsets-iii-2026",
       venueId: "castaways-chicago",
       address: "1603 N Lake Shore Dr, Chicago, IL 60611",
       illustrative: true,
@@ -140,7 +138,7 @@ describe("buildPublicSiteData", () => {
       "vip@chasingsunsets.music"
     );
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-aug22");
+    expect(featuredSunsets?.ticketUrl).toBe("/go/tickets/css-sep19");
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });

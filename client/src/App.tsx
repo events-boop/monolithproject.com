@@ -24,7 +24,7 @@ const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
 const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
 const ChasingSunsets = lazy(() => import("./pages/ChasingSunsets"));
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
-const SunsetsLinkBio = lazy(() => import("./pages/SunsetsLinkBio"));
+const SunsetsLinkBio = lazy(() => import("./pages/SunsetsEventRedirect"));
 const LakeLanding = lazy(() => import("./pages/LakeLanding"));
 const Radio = lazy(() => import("./pages/Radio"));
 const RadioEpisode = lazy(() => import("./pages/RadioEpisode"));

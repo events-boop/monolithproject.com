@@ -68,7 +68,12 @@ export default defineConfig(({ mode }) => {
         workbox: {
           globPatterns: ["**/*.{js,css,html,ico,svg,woff2,xml,webmanifest}"],
           maximumFileSizeToCacheInBytes: 700000,
-          navigateFallbackDenylist: [/^\/api\//, /^\/go\//, /^\/\.netlify\//],
+          navigateFallbackDenylist: [
+            /^\/api\//,
+            /^\/go\//,
+            /^\/\.netlify\//,
+            /^\/sunsets(?:\/|$)/,
+          ],
           runtimeCaching: [
             {
               urlPattern: /\.(?:png|jpg|jpeg|webp|avif|gif)$/i,

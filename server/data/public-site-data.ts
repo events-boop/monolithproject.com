@@ -401,10 +401,9 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "Gene Farris",
       },
     ],
-    status: "on-sale",
-    ticketUrl: SUNSETS_AUG22_TICKET_PATH,
+    status: "past",
     description:
-      "Chasing Sun(Sets) presents Chicago's very own legend on the lake: GENE FARRIS. Open air at Castaways Beach Club on North Avenue Beach. Tickets and VIP tables are live now powered by Posh.",
+      "Chasing Sun(Sets) presents Chicago's very own legend on the lake: GENE FARRIS. Open air at Castaways Beach Club on North Avenue Beach. The August 22, 2026 chapter is complete.",
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
