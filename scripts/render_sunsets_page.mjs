@@ -14,7 +14,7 @@ export function renderSunsetsPage(event, template) {
   const endTime=fmt(event.end,{hour:'numeric',minute: new Date(event.end).getUTCMinutes() ? '2-digit' : undefined});
   const monthDay=fmt(event.start,{month:'long',day:'numeric'});
   const json={ '@context':'https://schema.org','@type':'MusicEvent',name:event.name,startDate:event.start,endDate:event.end,eventStatus:'https://schema.org/'+event.status,eventAttendanceMode:'https://schema.org/OfflineEventAttendanceMode',url:event.canonical,image:event.socialImage,location:{'@type':'Place',name:event.venueName,address:{'@type':'PostalAddress',streetAddress:event.streetAddress,addressLocality:'Chicago',addressRegion:'IL',postalCode:'60611',addressCountry:'US'}},performer:[...event.headliners,...event.support].map(name=>({'@type':'MusicGroup',name})),organizer:{'@type':'Organization',name:'The Monolith Project',url:'https://monolithproject.com'}};
-  let scheduleHtml='<p class="lineup-names">'+event.headliners.map(escape).join(' <span aria-hidden="true">/</span> ')+'</p><p class="support-names"><strong>WITH</strong>'+event.support.map(escape).join(' · ')+'</p>';
+  let scheduleHtml='<p class="lineup-names">'+event.headliners.map(escape).join(' <span aria-hidden="true">/</span> ')+'</p><p class="support-names"><strong>WITH</strong>'+event.support.map(name=>'<span class="support-act">'+escape(name)+'</span>').join(' · ')+'</p>';
   if(event.schedule.length){
     let previous=Date.parse(event.start);
     scheduleHtml='<dl class="set-times-list">'+event.schedule.map(slot=>{
