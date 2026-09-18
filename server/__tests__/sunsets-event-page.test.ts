@@ -77,6 +77,8 @@ describe("published Sunsets event hub", () => {
 
 describe("Sunsets review preview integrity", () => {
   it("puts essentials before the poster and subscriptions after event information",()=>{
+    expect(doc.querySelector("#main")?.firstElementChild?.classList.contains("hero-frame")).toBe(true);
+    expect(doc.querySelector(".hero-status-badge")?.getAttribute("href")).toBe("#event-status");
     expect(html.indexOf('id="event-title"')).toBeLessThan(html.indexOf('class="hero-event-art"'));
     expect(html.indexOf('id="set-times"')).toBeLessThan(html.indexOf('id="venue"'));
     expect(html.indexOf('id="venue"')).toBeLessThan(html.indexOf('id="artists"'));
@@ -110,6 +112,8 @@ describe("approved event changes remain consistent",()=>{
     expect(()=>renderSunsetsPage({...data,status:'EventPostponed',salesEnabled:false},template)).toThrow('approval');
     expect(()=>renderSunsetsPage({...data,start:'2026-09-20T12:00:00-05:00',end:'2026-09-20T22:00:00-05:00'},template)).toThrow('artwork');
     const revised=new JSDOM(renderSunsetsPage({...data,status:'EventCancelled',salesEnabled:false,statusApproval:'test-fixture-only'},template)).window.document;
+    expect(revised.querySelector("#main")?.firstElementChild?.id).toBe("event-status");
+    expect(revised.querySelector(".hero-status-badge")?.textContent).toContain("Cancelled");
     expect(revised.querySelectorAll('.ticket-link')).toHaveLength(0);
     expect(revised.querySelectorAll('a[href*="allevents.in"]')).toHaveLength(0);
     expect(revised.querySelector('.hero-event-art')).toBeNull();

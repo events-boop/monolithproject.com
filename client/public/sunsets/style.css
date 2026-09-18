@@ -2170,13 +2170,15 @@ summary {
   border-radius: 6px;
   box-shadow: 0 3px 12px #171a1605;
 }
-.status-notice.status-amber {
+.status-notice.status-amber,
+.hero-status-badge.status-amber {
   --status-accent: #805000;
   --status-dot: #ffe3a1;
   border-color: #d6c9a9;
   border-left-color: var(--status-accent);
 }
-.status-notice.status-red {
+.status-notice.status-red,
+.hero-status-badge.status-red {
   --status-accent: #a12f2d;
   --status-dot: #ffd4ce;
   border-color: #dfbdb6;
@@ -2206,7 +2208,7 @@ summary {
   min-height: 44px;
   padding: 10px 15px;
   border-radius: 999px;
-  background: var(--status-accent);
+  background: var(--status-accent, #24653f);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -2224,7 +2226,7 @@ summary {
   height: 9px;
   flex: 0 0 9px;
   border-radius: 50%;
-  background: var(--status-dot);
+  background: var(--status-dot, #bde8c7);
   box-shadow: 0 0 0 4px #ffffff16;
 }
 .status-arrow {
@@ -2301,3 +2303,26 @@ summary {
     font-size: 12px;
   }
 }
+
+/* A compact status link accompanies the brand; the full notice follows the hero. */
+.masthead-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-left: auto;
+  min-width: 0;
+}
+.hero-frame .masthead-aside .masthead-note {
+  flex: none;
+  text-align: right;
+}
+.status-badge.hero-status-badge {
+  min-height: 36px;
+  padding: 8px 11px;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+}
+.hero-status-badge .status-dot { width: 7px; height: 7px; flex-basis: 7px; }

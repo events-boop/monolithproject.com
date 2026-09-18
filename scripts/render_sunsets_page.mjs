@@ -24,10 +24,10 @@ export function renderSunsetsPage(event, template) {
     }).join('')+'</dl>';
   }
   const statusDisplay = {
-    EventScheduled: {statusTone:'green', statusLabel:'EVENT SCHEDULED'},
-    EventPostponed: {statusTone:'amber', statusLabel:'EVENT POSTPONED'},
-    EventRescheduled: {statusTone:'amber', statusLabel:'DATE UPDATED'},
-    EventCancelled: {statusTone:'red', statusLabel:'EVENT CANCELLED'},
+    EventScheduled: {statusTone:'green', statusLabel:'EVENT SCHEDULED', statusShortLabel:'Scheduled'},
+    EventPostponed: {statusTone:'amber', statusLabel:'EVENT POSTPONED', statusShortLabel:'Postponed'},
+    EventRescheduled: {statusTone:'amber', statusLabel:'DATE UPDATED', statusShortLabel:'Date updated'},
+    EventCancelled: {statusTone:'red', statusLabel:'EVENT CANCELLED', statusShortLabel:'Cancelled'},
   }[event.status];
   const raw={eventJson:JSON.stringify(json).replace(/</g,'\\u003c'),scheduleHtml,heroArtwork:event.status==='EventScheduled'?event.heroArtwork:'',venueHeading:event.venueHeading};
   const values={...event,...statusDisplay,monthDay,monthDayUpper:monthDay.toUpperCase(),shortDate:fmt(event.start,{weekday:'short',month:'long',day:'numeric'}),longDate:fmt(event.start,{weekday:'long',month:'long',day:'numeric'}),fullDate:fmt(event.start,{month:'long',day:'numeric',year:'numeric'}),hours:startTime+'–'+endTime,startTime,endTime,updatedLabel:fmt(event.updatedAt,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})+' (Chicago)',dockLabel:fmt(event.start,{month:'short',day:'numeric'}).toUpperCase()+' · '+event.venueName,ticketLabel:event.salesEnabled?'Official tickets via AllEvents':'Read the current ticket-holder notice',ticketUrl:event.salesEnabled?event.ticketUrl:'#event-update'};
@@ -36,6 +36,12 @@ export function renderSunsetsPage(event, template) {
     if(!(key in values))throw new Error('Unknown event field: '+key);
     return escape(values[key]);
   });
+  // Keep an approved urgent update first in both visual and screen-reader order.
+  if(event.status !== 'EventScheduled') {
+    const notice = html.match(/<!-- status-panel:start -->[\s\S]*?<!-- status-panel:end -->/);
+    if(!notice) throw new Error('Missing event status panel');
+    html = html.replace(notice[0], '').replace('<main id="main">', '<main id="main">\n' + notice[0]);
+  }
   if(!event.salesEnabled){
     html=html.replace(/<a\b[^>]*class="[^"]*ticket-link[^"]*"[^>]*>[\s\S]*?<\/a>/g, '<a class="button button-primary" href="#event-update">READ EVENT UPDATE</a>');
   }
