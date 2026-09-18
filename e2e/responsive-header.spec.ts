@@ -72,7 +72,8 @@ test.describe("responsive header", () => {
         };
       });
 
-      expect(metrics.scrollWidth).toBe(metrics.clientWidth);
+      // A reserved scrollbar gutter may make scrollWidth smaller; only excess is overflow.
+      expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth);
       expect(metrics.totalHeaderHeight).toBeLessThanOrEqual(98);
       expect(metrics.shellHeight).toBeLessThanOrEqual(64);
       expect(metrics.bannerHeight).toBeLessThanOrEqual(38);
@@ -142,7 +143,7 @@ test.describe("responsive header", () => {
         };
       });
 
-      expect(metrics.scrollWidth, `${width}px page overflow`).toBe(
+      expect(metrics.scrollWidth, `${width}px page overflow`).toBeLessThanOrEqual(
         metrics.clientWidth
       );
       expect(metrics.visibleExtras, `${width}px secondary nav leakage`).toEqual(
