@@ -97,8 +97,8 @@ test.describe("campaign hardening stress checks", () => {
     await page.goto("http://sunsets.vip:5002/", { waitUntil: "domcontentloaded" });
     await expect(page.getByRole("heading", { name: "JOEZI × MASSUMA", exact: true })).toBeVisible();
     await expect(page.locator("#hero-tickets-btn")).toHaveAttribute("href", /allevents\.in.*80003431876974/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://sunsets.vip/");
-    await expect(page.locator("#set-times")).toContainText("To be announced");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://monolithproject.com/sunsets");
+    await expect(page.locator("#set-times")).toContainText("once the running order is confirmed");
     await expect(page.locator("#faq details")).toHaveCount(16);
     await page.locator("#faq summary").filter({ hasText: "Is postponement the same as full cancellation?" }).click();
     await expect(page.locator("#faq details[open]")).toContainText("A postponement moves the event to a later date");
