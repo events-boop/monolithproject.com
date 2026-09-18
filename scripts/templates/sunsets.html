@@ -25,7 +25,11 @@
   <a class="skip-link" href="#main">Skip to event information</a>
   <div class="page-shell">
     <main id="main">
-<section class="status-notice" aria-label="Event status"><div><span class="status-kicker">EVENT STATUS / PUBLISHED DETAILS</span><strong>{{statusHeading}}</strong><p>{{shortDate}} · {{venueName}} · {{hours}} CDT</p><time datetime="{{updatedAt}}">Details published {{updatedLabel}}</time></div><a href="#event-update">Updates &amp; weather <span aria-hidden="true">↗</span></a></section>
+<section class="status-notice status-{{statusTone}}" aria-label="Event status">
+  <div class="status-topline"><span class="status-kicker">OFFICIAL EVENT STATUS</span><a class="status-badge" href="#event-update"><span class="status-dot" aria-hidden="true"></span>{{statusLabel}}<span class="status-arrow" aria-hidden="true">↗</span></a></div>
+  <div class="status-bottom"><p class="status-summary">{{shortDate}} · {{venueName}}<span>{{hours}} CDT · Check here before you travel.</span></p><a class="status-details" href="#weather">Weather &amp; ticket info <span aria-hidden="true">↗</span></a></div>
+  <time datetime="{{updatedAt}}">Details published {{updatedLabel}}</time>
+</section>
       <div class="hero-frame">
     <header class="masthead">
       <a class="wordmark brand-artwork" href="#" aria-label="Chasing Sunsets home"><img src="/sunsets/assets/logo-640.webp" alt="Chasing SUN(SETS)" width="2055" height="765"></a>

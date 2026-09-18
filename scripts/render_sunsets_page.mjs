@@ -23,8 +23,14 @@ export function renderSunsetsPage(event, template) {
       return '<div><dt>'+escape(slot.artist)+'</dt><dd>'+escape(fmt(slot.start,{hour:'numeric',minute:'2-digit'})+'–'+fmt(slot.end,{hour:'numeric',minute:'2-digit'}))+'</dd></div>';
     }).join('')+'</dl>';
   }
+  const statusDisplay = {
+    EventScheduled: {statusTone:'green', statusLabel:'EVENT SCHEDULED'},
+    EventPostponed: {statusTone:'amber', statusLabel:'EVENT POSTPONED'},
+    EventRescheduled: {statusTone:'amber', statusLabel:'DATE UPDATED'},
+    EventCancelled: {statusTone:'red', statusLabel:'EVENT CANCELLED'},
+  }[event.status];
   const raw={eventJson:JSON.stringify(json).replace(/</g,'\\u003c'),scheduleHtml,heroArtwork:event.status==='EventScheduled'?event.heroArtwork:'',venueHeading:event.venueHeading};
-  const values={...event,monthDay,monthDayUpper:monthDay.toUpperCase(),shortDate:fmt(event.start,{weekday:'short',month:'long',day:'numeric'}),longDate:fmt(event.start,{weekday:'long',month:'long',day:'numeric'}),fullDate:fmt(event.start,{month:'long',day:'numeric',year:'numeric'}),hours:startTime+'–'+endTime,startTime,endTime,updatedLabel:fmt(event.updatedAt,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})+' (Chicago)',dockLabel:fmt(event.start,{month:'short',day:'numeric'}).toUpperCase()+' · '+event.venueName,ticketLabel:event.salesEnabled?'Official tickets via AllEvents':'Read the current ticket-holder notice',ticketUrl:event.salesEnabled?event.ticketUrl:'#event-update'};
+  const values={...event,...statusDisplay,monthDay,monthDayUpper:monthDay.toUpperCase(),shortDate:fmt(event.start,{weekday:'short',month:'long',day:'numeric'}),longDate:fmt(event.start,{weekday:'long',month:'long',day:'numeric'}),fullDate:fmt(event.start,{month:'long',day:'numeric',year:'numeric'}),hours:startTime+'–'+endTime,startTime,endTime,updatedLabel:fmt(event.updatedAt,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})+' (Chicago)',dockLabel:fmt(event.start,{month:'short',day:'numeric'}).toUpperCase()+' · '+event.venueName,ticketLabel:event.salesEnabled?'Official tickets via AllEvents':'Read the current ticket-holder notice',ticketUrl:event.salesEnabled?event.ticketUrl:'#event-update'};
   let html=template.replace(/\{\{(\w+)\}\}/g,(_,key)=>{
     if(key in raw)return raw[key];
     if(!(key in values))throw new Error('Unknown event field: '+key);
