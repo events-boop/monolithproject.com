@@ -62,9 +62,19 @@ export default function HeroSection() {
         </div>
         <div className="home-event-strip" data-home-hero-card="true">
           <div>
-            <span className="home-eyebrow">
-              Chasing Sun(Sets) / Season finale
-            </span>
+            <div className="home-sunsets-brand-row">
+              <a href="/sunsets" aria-label="Chasing Sun(Sets) event guide">
+                <img
+                  className="home-sunsets-logo home-sunsets-logo-compact"
+                  src="/sunsets/assets/logo-640.webp"
+                  width="640"
+                  height="238"
+                  alt="Chasing Sun(Sets)"
+                  decoding="async"
+                />
+              </a>
+              <span className="home-eyebrow">Season finale</span>
+            </div>
             <p>{currentSunsets.headliners.join(" × ")}</p>
           </div>
           <div className="home-strip-details">

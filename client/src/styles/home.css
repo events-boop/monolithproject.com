@@ -379,3 +379,26 @@
     transition: none !important;
   }
 }
+
+/* Approved transparent Chasing Sun(Sets) wordmark; original artwork colors. */
+.monolith-home .home-sunsets-logo {
+  display: block;
+  width: 232px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.monolith-home .home-sunsets-logo-compact {
+  width: 144px;
+}
+.home-sunsets-brand-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+.home-sunsets-brand {
+  display: block;
+  width: fit-content;
+  margin-bottom: 14px;
+}

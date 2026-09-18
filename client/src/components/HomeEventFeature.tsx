@@ -38,9 +38,22 @@ export default function HomeEventFeature() {
           </picture>
         </a>
         <div className="home-event-copy">
-          <p className="home-eyebrow">
-            Chasing Sun(Sets) III / 2026 season finale
-          </p>
+          <a
+            href="/sunsets"
+            className="home-sunsets-brand"
+            aria-label="Chasing Sun(Sets) event guide"
+          >
+            <img
+              className="home-sunsets-logo"
+              src="/sunsets/assets/logo-640.webp"
+              width="640"
+              height="238"
+              alt="Chasing Sun(Sets)"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <p className="home-eyebrow">III / 2026 season finale</p>
           <h2 id="current-event-title">
             {event.headliners[0]} <span>×</span>
             <br />

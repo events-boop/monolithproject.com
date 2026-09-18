@@ -1,6 +1,6 @@
 # Monolith homepage design review — September 18, 2026
 
-Preview: https://6aadc4310ac521d493aff2c0--monolithproject.netlify.app/
+Preview: https://6aadc7ef367fc00adc9b4fb1--monolithproject.netlify.app/
 
 The homepage keeps Monolith’s dark palette, photography, bold typography and architectural borders. The large rotating event dossier is replaced by a compact, stable event strip. Main homepage purchase buttons use Monolith orange; secondary actions are outlined. Duplicate brand and old August 22 promotional sections were removed. July 4 artists are clearly archival.
 
@@ -20,3 +20,7 @@ The September 19 feature, hero, navigation and public event feed now derive appr
 This homepage pass is a draft preview. No production push was made. The preview build includes the existing working tree; unrelated artist/gallery edits remain uncommitted.
 
 Final performance times remain pending approval. The signup provider connection remains pending on the Sunsets guide. No new postponement/cancellation decision was published. Checkout destination and link behavior were checked; payment completion and external-platform purchase attribution were not tested. No new performance score is claimed.
+
+## Approved logo update
+
+Added the approved transparent gold Chasing Sun(Sets) logo to the compact hero event strip and above the event details. The original Monolith navigation identity remains. Production build and six homepage browser checks passed across five widths. Preview only.
