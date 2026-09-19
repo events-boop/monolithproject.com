@@ -1,3 +1,4 @@
+import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
 import {
   Instagram,
   Headphones,
@@ -95,7 +96,7 @@ const links: FooterLinkGroup[] = [
       { name: "FAQ", href: ROUTES.faq },
       {
         name: "Tickets",
-        href: POSH_TICKET_URL,
+        href: ROUTES.schedule,
       },
       { name: "Terms of Service", href: ROUTES.terms },
       { name: "Privacy Policy", href: ROUTES.privacy },
@@ -168,18 +169,30 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-background border-t border-white/5 relative overflow-hidden pt-12 md:pt-16 pb-8 text-foreground">
+    <footer
+      data-brand={resolvedBrand}
+      className="bg-background border-t border-white/5 relative overflow-hidden pt-12 md:pt-16 pb-8 text-foreground"
+    >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(224,90,58,0.14),transparent_38%),radial-gradient(circle_at_88%_82%,rgba(194,112,62,0.1),transparent_42%),radial-gradient(circle_at_70%_30%,rgba(34,211,238,0.1),transparent_34%),radial-gradient(circle_at_30%_78%,rgba(139,92,246,0.1),transparent_36%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,15,0.16)_0%,rgba(6,6,15,0.45)_100%)]" />
       <div className="container layout-wide px-6 flex flex-col justify-between min-h-[60vh]">
         {/* Top: Navigation Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 mb-16 z-10 relative">
           <div className="col-span-2 md:col-span-1">
-            <span className="hero-wordmark text-3xl md:text-3xl tracking-wide block mb-6 text-white leading-none">
-              {topNavLeft}
-              <br />
-              {topNavRight}
-            </span>
+            {resolvedBrand === "chasing-sunsets" ? (
+              <a
+                href="/chasing-sunsets"
+                className="mb-6 block w-[220px] max-w-full rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              >
+                <ChasingSunsetsLogo className="w-full" />
+              </a>
+            ) : (
+              <span className="hero-wordmark text-3xl md:text-3xl tracking-wide block mb-6 text-white leading-none">
+                {topNavLeft}
+                <br />
+                {topNavRight}
+              </span>
+            )}
             <p className="text-white/70 text-sm leading-relaxed max-w-[220px]">
               Chicago-rooted house music experiences. Curated rooms.
               Uncompromised sound. Built for people who return.
@@ -260,7 +273,7 @@ export default function Footer() {
       {/* Mega Footer: Giant Interactive Typography */}
       <div
         ref={containerRef}
-        className="w-full relative overflow-hidden cursor-default select-none group flex justify-center items-end mt-auto pt-24 md:pt-32 pb-8 md:pb-12"
+        className="footer-mega-wordmark w-full relative overflow-hidden cursor-default select-none group flex justify-center items-end mt-auto pt-24 md:pt-32 pb-8 md:pb-12"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onMouseMove={e => {

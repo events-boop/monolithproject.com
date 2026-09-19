@@ -1,3 +1,5 @@
+import { getEventWindowStatus } from "@shared/events/lifecycle";
+import { resolveEventPrimaryCta } from "@shared/events/public-cta";
 import type {
   EventCta,
   FunnelTool,
@@ -80,14 +82,13 @@ export function isEventLowInventory(event?: Partial<ScheduledEvent> | null) {
  * Returns the server-resolved primary CTA configuration for an event.
  */
 export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
-  const fallback: EventCta = {
-    label: CTA_LABELS.schedule,
-    href: ROUTES.schedule,
-    tool: "posh",
-    isExternal: false,
-  };
-
-  return event?.primaryCta ?? fallback;
+  if (
+    event &&
+    getEventWindowStatus(event as ScheduledEvent) !== "past" &&
+    !["EventCancelled", "EventPostponed"].includes(event.eventStatus || "")
+  )
+    return event.primaryCta ?? resolveEventPrimaryCta(event as ScheduledEvent);
+  return resolveEventPrimaryCta(event as ScheduledEvent | null);
 }
 
 export function isInquiryHref(href: string) {

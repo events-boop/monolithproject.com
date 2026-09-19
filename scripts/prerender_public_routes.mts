@@ -30,6 +30,14 @@ import {
 } from "../shared/seo/public-seo.js";
 import { SUNSETS_PRELAUNCH_LOCKED } from "../shared/events/sunsets-ticketing.ts";
 
+import { getEventWindowStatus } from "../shared/events/lifecycle.ts";
+import {
+  currentSunsets,
+  sunsetsDateLabel,
+  sunsetsTimeLabel,
+  sunsetsStatusLabel,
+} from "../shared/events/sunsets-current.ts";
+
 type RouteDefinition = {
   path: string;
   title: string;
@@ -50,9 +58,14 @@ const futureEvents = upcomingEvents.filter(
   event =>
     event.status !== "past" &&
     event.status !== "draft" &&
-    event.status !== "hidden"
+    event.status !== "hidden" &&
+    !["EventCancelled", "EventPostponed"].includes(event.eventStatus || "") &&
+    getEventWindowStatus(event) !== "past"
 );
 const featuredTicketEvent =
+  upcomingEvents.find(
+    event => event.id === "css-sep19" && event.eventStatus === "EventPostponed"
+  ) ??
   futureEvents.find(event => event.status === "on-sale" && event.ticketUrl) ??
   futureEvents[0];
 const featuredChasingEvent =
@@ -63,18 +76,22 @@ const featuredUntoldEvent =
   futureEvents.find(
     event => event.series === "untold-story" && event.id === "us-s3e3"
   ) ?? futureEvents.find(event => event.series === "untold-story");
-const publicSunsetsEvent = buildPublicSiteData(
+const prelaunchSunsetsEvent = buildPublicSiteData(
   "/sunsets",
   upcomingEvents
 ).events.find(event => event.id === "css-jul04");
+
+const publicSunsetsEvent = upcomingEvents.find(
+  event => event.id === "css-sep19"
+);
 
 function getPrerenderPublicEvent(event: (typeof upcomingEvents)[number]) {
   if (
     SUNSETS_PRELAUNCH_LOCKED &&
     event.id === "css-jul04" &&
-    publicSunsetsEvent
+    prelaunchSunsetsEvent
   ) {
-    return publicSunsetsEvent;
+    return prelaunchSunsetsEvent;
   }
 
   return event;
@@ -119,7 +136,7 @@ function upsertMetaByName(html: string, name: string, content: string) {
   return upsertTag(
     html,
     pattern,
-    `<meta name="${name}" content="${escapedContent}" />`
+    `<meta name="${name}" content="${escapedContent}" data-rh="true" />`
   );
 }
 
@@ -129,7 +146,7 @@ function upsertMetaByProperty(html: string, property: string, content: string) {
   return upsertTag(
     html,
     pattern,
-    `<meta property="${property}" content="${escapedContent}" />`
+    `<meta property="${property}" content="${escapedContent}" data-rh="true" />`
   );
 }
 
@@ -149,6 +166,8 @@ function getShortDateLabel(dateLabel: string) {
 }
 
 function buildEventSeoTitle(event: (typeof futureEvents)[number]) {
+  if (event.eventStatus === "EventPostponed")
+    return `${event.headline || event.title} — Postponed`;
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -164,6 +183,8 @@ function buildEventSeoTitle(event: (typeof futureEvents)[number]) {
 }
 
 function buildEventSeoDescription(event: (typeof futureEvents)[number]) {
+  if (event.eventStatus === "EventPostponed")
+    return event.eventNotice || "Postponed. A new date is not yet confirmed.";
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -329,11 +350,11 @@ function renderHomeCriticalLayout() {
         </picture>
         <div class="critical-hero__shade" aria-hidden="true"></div>
         <header class="critical-hero__content">
-          <p class="critical-hero__eyebrow">Chicago Music Project</p>
-          <h1>THE MONOLITH PROJECT</h1>
+          <p class="critical-hero__eyebrow">Chicago house music</p>
+          <h1>MONOLITH</h1>
           <div class="critical-hero__rule" aria-hidden="true"></div>
-          <p class="critical-hero__kicker">PROJECT</p>
-          <p class="critical-hero__summary">Upcoming Shows / Chasing Sun(Sets) / Untold Story / Radio</p>
+          <p class="critical-hero__kicker">Lakefront days.<br>Late-night dance floors.</p>
+          <p class="critical-hero__summary">Chicago house music events, from the lakefront to late-night rooms.</p>
         </header>
       </section>
       <section class="critical-home-content" aria-label="Monolith overview">
@@ -409,7 +430,7 @@ function renderHomeCriticalStyle() {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      padding: 7rem 32rem 6rem 3rem;
+      padding: 10rem 2rem 3rem;
       text-align: left;
     }
     .critical-hero__eyebrow,
@@ -423,14 +444,15 @@ function renderHomeCriticalStyle() {
       margin-bottom: 2rem;
       color: rgba(255, 255, 255, 0.52);
       font-size: 0.78rem;
-      letter-spacing: 0.78em;
+      letter-spacing: 0.15em;
     }
     .critical-hero h1 {
       margin: 0;
       color: #fff;
-      font-family: "Archivo Black", Impact, "Arial Black", sans-serif;
-      font-size: clamp(4rem, 16.5vw, 12.5rem);
-      line-height: 0.8;
+      font-family: "General Sans", "Kanit", sans-serif;
+      font-weight: 400;
+      font-size: clamp(48px, 7.2vw, 104px);
+      line-height: 1;
       text-transform: uppercase;
       text-shadow: 0 0 80px rgba(255, 255, 255, 0.08);
     }
@@ -444,7 +466,7 @@ function renderHomeCriticalStyle() {
       color: rgba(255, 255, 255, 0.9);
       font-size: clamp(0.8rem, 5vw, 2.5rem);
       line-height: 1;
-      letter-spacing: 0.5em;
+      letter-spacing: 0.015em;
     }
     .critical-hero__summary {
       max-width: 30rem;
@@ -470,17 +492,17 @@ function renderHomeCriticalStyle() {
     }
     @media (max-width: 900px) {
       .critical-hero__content {
-        align-items: center;
+        align-items: flex-start;
         justify-content: flex-start;
-        padding: 7.5rem 1.5rem 18rem;
-        text-align: center;
+        padding: 8rem 22px 3rem;
+        text-align: left;
       }
       .critical-hero__eyebrow {
         font-size: 0.68rem;
-        letter-spacing: 0.5em;
+        letter-spacing: 0.015em;
       }
       .critical-hero h1 {
-        font-size: clamp(3rem, 16.2vw, 7rem);
+        font-size: clamp(42px, 11.8vw, 68px);
       }
       .critical-hero__rule {
         width: min(100%, 34rem);
@@ -537,7 +559,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             href: "https://houseoffriends.vip/apply",
             label: "Founding Class applications",
           },
-          { href: "/go/tickets/css-aug22", label: "Get August 22 tickets" },
+          { href: "/schedule", label: "View current events" },
           { href: "/events/css-aug22", label: "View event details" },
         ]
       ),
@@ -599,18 +621,24 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Tickets",
       description:
-        "Secure your spot for the next Monolith Project event. Limited capacity available.",
+        featuredTicketEvent?.eventNotice ||
+        "Find current Monolith event availability and ticket information.",
       image: featuredTicketEvent?.image || "/images/untold-story-moody.webp",
       schemaData:
         featuredTicketEvent && featuredTicketEvent.ticketUrl
           ? buildScheduledEventSchema(featuredTicketEvent, "/tickets")
           : undefined,
       bodyHtml: renderBaseLayout(
-        "Priority Ticket Access",
-        "Get In",
+        featuredTicketEvent?.eventStatus === "EventPostponed"
+          ? "Official event update"
+          : "Ticket information",
+        featuredTicketEvent?.eventStatus === "EventPostponed"
+          ? "Sun(Sets) III — Postponed"
+          : "Current events",
         [
           featuredTicketEvent
-            ? `${featuredTicketEvent.headline || featuredTicketEvent.title} is the current featured Monolith event.`
+            ? featuredTicketEvent.eventNotice ||
+              `${featuredTicketEvent.headline || featuredTicketEvent.title} is the current featured Monolith event.`
             : "Current featured Monolith event tickets and RSVP information.",
           featuredTicketEvent
             ? `${featuredTicketEvent.date} · ${featuredTicketEvent.time} · ${featuredTicketEvent.venue}.`
@@ -618,8 +646,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         ],
         [
           {
-            href: featuredTicketEvent?.ticketUrl || POSH_TICKET_URL,
-            label: "Buy tickets",
+            href: featuredTicketEvent?.primaryCta?.href || "/schedule",
+            label: featuredTicketEvent?.primaryCta?.label || "View events",
           },
           {
             href: featuredTicketEvent
@@ -655,12 +683,11 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/chasing-sunsets",
     {
-      title: "Chasing Sun(Sets) | Chicago Lakefront Music Events",
+      title: "Chasing Sun(Sets) — Chicago lakefront house music",
       description:
-        "Chasing Sun(Sets) brings open-air house music, golden-hour energy, and lakefront gatherings to Chicago.",
+        "House music, Lake Michigan and golden hour. Explore Chasing Sun(Sets): current event information, artist sets, previous shows and the summer photo archive.",
       absoluteTitle: true,
-      image:
-        featuredChasingEvent?.image || "/images/chasing-sunsets-premium.webp",
+      image: "/images/chasing-sunsets-castaways-hero.png",
       schemaData: featuredChasingEvent
         ? buildScheduledEventSchema(featuredChasingEvent, "/chasing-sunsets")
         : undefined,
@@ -678,7 +705,22 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
               : "/schedule",
             label: "Open the featured date",
           },
-          { href: "/radio", label: "Listen to the radio show" },
+          {
+            href: "/sunsets",
+            label: "Current event guide and weather updates",
+          },
+          {
+            href: "/chasing-sunsets/sunsets-ii-2026",
+            label: "Gene Farris — Chapter II",
+          },
+          {
+            href: "/chasing-sunsets/sunsets-i-2026",
+            label: "Autograf × Kiko Franco — Chapter I",
+          },
+          {
+            href: "/chasing-sunsets/season-iii",
+            label: "Summer photo gallery",
+          },
           { href: INSTAGRAM_SUNSETS, label: "Instagram", external: true },
         ]
       ),
@@ -743,37 +785,29 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/sunsets",
     {
-      title: "Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 Tickets On Sale",
-      description:
-        "SUN(SETS) II returns to Castaways Beach Club August 22, 2026 — tickets on sale now, powered by Posh. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK). Open-air house on the Chicago lakefront.",
-      image: "/images/css-2026-og.png",
+      title: currentSunsets.name,
+      description: `${currentSunsets.name}. ${sunsetsDateLabel}, ${sunsetsTimeLabel}, ${currentSunsets.venueName}. Event updates, lineup and ticket information.`,
+      image: currentSunsets.socialImage,
       schemaData: publicSunsetsEvent
         ? buildScheduledEventSchema(publicSunsetsEvent, "/sunsets")
         : undefined,
       bodyHtml: renderBaseLayout(
         "The Monolith Project Presents",
-        "Chasing Sun(Sets) 2026",
+        currentSunsets.name,
         [
-          "SUN(SETS) I — July 4 (complete) with Autograf, Kiko Franco, Amari, Gianni Blu, Jerome b3b Colin b3b Nomar, Frank Bono, and Erik The DJ at Castaways Beach Club, Chicago. SUN(SETS) II — August 22 on sale now. SUN(SETS) III — September 19 with Joezi x Massuma (UK).",
-          "Three dates. One lake. One home. Tickets for SUN(SETS) II + III are live — straight to checkout, no waitlist.",
+          `${sunsetsDateLabel}. ${sunsetsTimeLabel}. ${currentSunsets.venueName}. 21+ with valid photo ID.`,
+          `${sunsetsStatusLabel()}. ${currentSunsets.statusMessage}`,
+          `With ${currentSunsets.support.join(" · ")}. ${currentSunsets.scheduleMessage}`,
         ],
         [
-          { href: "/go/tickets/css-aug22", label: "Get August 22 tickets" },
-          { href: "/go/tickets/css-sep19", label: "Get September 19 tickets" },
-          { href: "/vip", label: "VIP and cabanas" },
+          { href: "/sunsets#event-status", label: "Latest event status" },
+          { href: "/sunsets#set-times", label: "Lineup and set times" },
           {
-            href: "/go/media/sunsets-recap",
-            label: "Watch the recap",
+            href: "/sunsets#weather",
+            label: "Weather and ticket-holder information",
           },
-          {
-            href: "/go/media/sunsets-soundcloud",
-            label: "Sun(Sets) Radio",
-          },
-          {
-            href: "/go/social/instagram-sunsets",
-            label: "Instagram",
-          },
-          { href: "/partners", label: "Partner inquiries" },
+          { href: "/chasing-sunsets", label: "Previous shows and galleries" },
+          { href: "/sunsets#updates", label: "Show updates" },
         ]
       ),
     },
@@ -1233,7 +1267,7 @@ for (const route of routeDefinitions) {
     ? route.title
     : fullTitle(route.title);
   const schemaMarkup = route.schemaData
-    ? `<script type="application/ld+json">${serializeJson(route.schemaData)}</script>`
+    ? `<script type="application/ld+json" data-rh="true">${serializeJson(route.schemaData)}</script>`
     : "";
   const siteDataMarkup = `<script>window.__MONOLITH_SITE_DATA__=${serializeJson(
     buildPublicSiteData(route.path, upcomingEvents)
@@ -1273,13 +1307,33 @@ for (const route of routeDefinitions) {
     /<link[^>]+rel="canonical"[^>]*>/i,
     `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" data-rh="true" />`
   );
+  const isSunsetsBrandRoute =
+    route.path === "/chasing-sunsets-facts" ||
+    route.path === "/chasing-sunsets" ||
+    route.path.startsWith("/chasing-sunsets/") ||
+    futureEvents.some(
+      event =>
+        event.series === "chasing-sunsets" &&
+        route.path === `/events/${event.slug || event.id}`
+    );
+  const bodyHtml = isSunsetsBrandRoute
+    ? route.bodyHtml.replace(
+        "<header>",
+        '<header><a href="/chasing-sunsets" style="display:block;width:min(100%,320px);margin-bottom:24px"><img src="/sunsets/assets/logo-640.webp" width="640" height="238" alt="Chasing Sun(Sets)" style="display:block;width:100%;height:auto" decoding="async"></a>'
+      )
+    : route.bodyHtml;
   html = html.replace(
     /<div id="root"><\/div>/i,
-    `<div id="root">${route.bodyHtml}</div>`
+    `<div id="root">${bodyHtml}</div>`
   );
   html = html.replace(
     /<script[^>]+type="module"[^>]*>/i,
-    `${siteDataMarkup}\n${schemaMarkup}\n$&`
+    `${siteDataMarkup}\n$&`
+  );
+  html = html.replace("</head>", `${schemaMarkup}\n</head>`);
+  html = html.replace(
+    /<meta (?![^>]*data-rh)(?=[^>]*(?:name="(?:description|twitter:[^"]+|robots)"|property="og:[^"]+"))([^>]+)>/g,
+    '<meta data-rh="true" $1>'
   );
   html = injectHeroPreloads(html, route.path);
 

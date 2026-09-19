@@ -2322,7 +2322,51 @@ summary {
   padding: 8px 11px;
   gap: 8px;
   font-size: 12px;
-  letter-spacing: .35px;
+  letter-spacing: 0.35px;
   text-transform: uppercase;
 }
-.hero-status-badge .status-dot { width: 7px; height: 7px; flex-basis: 7px; }
+.hero-status-badge .status-dot {
+  width: 7px;
+  height: 7px;
+  flex-basis: 7px;
+}
+
+.signup-fallback .fine-print {
+  display: block;
+  margin-top: 12px;
+}
+.signup-fallback[hidden],
+.signup-form fieldset[hidden] {
+  display: none;
+}
+
+.event-status-float { position:fixed; z-index:65; bottom:max(16px,env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%); width:min(760px,calc(100% - 32px)); display:flex; align-items:center; gap:18px; padding:18px 22px; color:#fff0d3; background:#282013f5; border:1px solid #f0b653; border-radius:10px; box-shadow:0 12px 50px #0009,0 0 0 4px #f0b65314; backdrop-filter:blur(20px); }
+.event-status-float > svg { color:#ffc66e; flex-shrink:0; }
+.event-status-float > div { flex:1; }
+.event-status-float strong { display:block; font-size:16px; line-height:1.4; }
+.event-status-float span,.event-status-float time { display:block; font-size:13px; line-height:1.5; color:#e5cfaa; }
+.event-status-float time { font-size:11px; margin-top:3px; }
+.event-status-float a { display:flex; gap:10px; align-items:center; justify-content:center; min-height:44px; padding:10px 15px; color:#251b0d; background:#f0b653; border-radius:5px; font-size:14px; font-weight:700; }
+.event-status-float a:focus-visible { outline:2px solid white; outline-offset:4px; }
+body:has(.event-status-float) { padding-bottom:150px; }
+.home-event-feature[data-event-status="EventPostponed"] { box-shadow:inset 0 0 0 2px #f0b653; background:#1d1c15; }
+.home-show-card[data-event-status="EventPostponed"] { border:2px solid #f0b653; box-shadow:0 0 28px #f0b65312; }
+.home-show-card[data-event-status="EventPostponed"] .home-show-status { color:#ffd692; border-color:#f0b653; background:#f0b65314; }
+.home-event-art { position:relative; }
+.home-postponed-art-label { position:absolute; z-index:2; left:0; right:0; top:0; padding:14px; background:#f0b653; color:#261b0c; text-align:center; font-size:13px; font-weight:800; letter-spacing:.06em; }
+@media(max-width:639px) { .event-status-float { width:calc(100% - 24px); padding:14px; gap:12px; flex-wrap:wrap; } .event-status-float > svg { width:20px; } .event-status-float strong { font-size:14px; } .event-status-float > div { flex-basis:calc(100% - 36px); } .event-status-float a { width:100%; min-height:44px; } body:has(.event-status-float) { padding-bottom:190px; } }
+
+body[data-event-status="EventPostponed"] .booking-dock { display:none; }
+body[data-event-status="EventPostponed"] .hero-frame { border:2px solid #bd7d23; box-shadow:0 0 0 5px #bd7d2314; }
+.postponement-heading { font-size:clamp(24px,4vw,34px); line-height:1.1; color:#38250d; margin:18px 0 12px; }
+.status-notice .postponement-copy { color:#4b3517; font-size:16px; line-height:1.65; }
+body[data-event-status="EventPostponed"] .status-notice { border:2px solid #bd7d23; }
+body[data-event-status="EventPostponed"] .hero-line::after { content:" · POSTPONED"; color:#f0b653; font-weight:bold; }
+
+.event-status-float[hidden] { display: none; }
+/* Reserve a separate row for the email fallback after a failed submission. */
+@media (min-width: 800px) {
+  .signup-grid { grid-template-rows: auto auto 1fr auto; }
+  .signup-block { grid-row: span 4; }
+  .signup-fallback { grid-row: 4; }
+}

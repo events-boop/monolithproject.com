@@ -11,6 +11,10 @@ export type ArchiveEntry = ArchiveCollection & { href: string };
 // filter below. Ordering rule: newer events always prepend.
 const ARCHIVE_ENTRIES: ArchiveEntry[] = [
   {
+    ...archiveCollectionsBySlug["chasing-sunsets-sunsets-ii-2026"],
+    href: "/archive/chasing-sunsets-sunsets-ii-2026",
+  },
+  {
     ...archiveCollectionsBySlug["ape-drums-july31-2026"],
     href: "/archive/ape-drums-july31-2026",
   },

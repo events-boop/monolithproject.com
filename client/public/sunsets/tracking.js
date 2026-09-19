@@ -29,6 +29,7 @@
     window['ga-disable-' + GA_ID] = false;
     window.gtag('js', new Date());
     window.gtag('config', GA_ID);
+    window.gtag('event', 'event_view', {event_id:'css-sep19', source:'sunsets_guide'});
     loadScript('https://www.googletagmanager.com/gtag/js?id=' + GA_ID);
     if (!window.fbq) {
       const fbq = function () { fbq.callMethod ? fbq.callMethod.apply(fbq, arguments) : fbq.queue.push(arguments); };
@@ -57,7 +58,10 @@
     if (choice === 'accepted') initialize();
     window.dispatchEvent(new CustomEvent('monolith:cookie-consent-resolved', { detail: choice }));
   }
-  window.sunsetsTracking = { setConsent };
+  window.sunsetsTracking = { setConsent, subscriptionResult(audience, state) {
+    if (!allowed() || !['event','radio'].includes(audience) || !['subscribed','confirmation_required'].includes(state)) return;
+    window.gtag?.('event', state === 'subscribed' ? 'subscription_confirmed' : 'subscription_confirmation_requested', {audience, event_id:'css-sep19'});
+  } };
   window.addEventListener('storage', (event) => {
     if (event.key === CONSENT_KEY && ['accepted', 'declined'].includes(event.newValue)) setConsent(event.newValue);
   });
@@ -68,7 +72,7 @@
     if (!link || !allowed()) return;
     const common = { event_id: 'css-sep19', content_name: 'Chasing Sun(Sets) III — JOEZI × MASSUMA' };
     if (link.classList.contains('ticket-link')) {
-      const details = { ...common, placement: link.dataset.placement, link_url: link.href.split("?")[0] };
+      const details = { ...common, provider:'AllEvents', placement: link.dataset.placement, link_url: link.href.split("?")[0] };
       window.gtag?.('event', 'outbound_ticket_click', details);
       // Preserve the live Meta custom-event name. A click is not a purchase.
       window.fbq?.('trackCustom', 'OutboundTicketClick', details);

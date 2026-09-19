@@ -69,6 +69,7 @@ export default function UntoldStory() {
             <EpisodeGallery
               series="untold-story"
               season="Four Chapters"
+              galleryHref="/archive"
               episode="Archive"
               title="THE RECORD"
               accentColor="#8B5CF6"

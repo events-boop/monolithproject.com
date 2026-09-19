@@ -76,17 +76,17 @@ export default function ContactFormSection() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="ui-card border border-charcoal/15 bg-white/75 backdrop-blur-sm p-8 md:p-10"
+      className="ui-card border border-border bg-card backdrop-blur-sm p-8 md:p-10"
     >
       {isSubmitted ? (
         <div className="min-h-[360px] flex flex-col items-center justify-center text-center">
           <div className="w-16 h-16 border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 text-primary rounded-2xl">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <h3 className="font-display text-3xl mb-4 uppercase text-charcoal">
+          <h3 className="font-display text-3xl mb-4 uppercase text-foreground">
             Message Received
           </h3>
-          <p className="text-charcoal/70 max-w-md">
+          <p className="text-foreground max-w-md">
             We read everything. If it needs a reply, we will get back to you.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function ContactFormSection() {
           <div>
             <label
               htmlFor="contact-name"
-              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+              className="block text-xs font-mono uppercase tracking-widest text-foreground mb-2"
             >
               Name
             </label>
@@ -106,7 +106,7 @@ export default function ContactFormSection() {
               {...register("name")}
               autoComplete="name"
               aria-invalid={Boolean(errors.name)}
-              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-background border border-border p-4 text-foreground placeholder:text-foreground/80 focus:border-primary focus:ring-2 focus:ring-primary/60 focus:outline-none transition-colors rounded-xl"
               placeholder="Full name"
             />
             {errors.name && (
@@ -119,7 +119,7 @@ export default function ContactFormSection() {
           <div>
             <label
               htmlFor="contact-email"
-              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+              className="block text-xs font-mono uppercase tracking-widest text-foreground mb-2"
             >
               Email
             </label>
@@ -130,7 +130,7 @@ export default function ContactFormSection() {
               {...register("email")}
               autoComplete="email"
               aria-invalid={Boolean(errors.email)}
-              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-background border border-border p-4 text-foreground placeholder:text-foreground/80 focus:border-primary focus:ring-2 focus:ring-primary/60 focus:outline-none transition-colors rounded-xl"
               placeholder="email@address.com"
             />
             {errors.email && (
@@ -143,7 +143,7 @@ export default function ContactFormSection() {
           <div>
             <label
               htmlFor="contact-subject"
-              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+              className="block text-xs font-mono uppercase tracking-widest text-foreground mb-2"
             >
               Subject
             </label>
@@ -152,7 +152,7 @@ export default function ContactFormSection() {
               {...register("subject")}
               autoComplete="off"
               aria-invalid={Boolean(errors.subject)}
-              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors rounded-xl"
+              className="w-full bg-background border border-border p-4 text-foreground placeholder:text-foreground/80 focus:border-primary focus:ring-2 focus:ring-primary/60 focus:outline-none transition-colors rounded-xl"
               placeholder="What is this about?"
             />
             {errors.subject && (
@@ -165,7 +165,7 @@ export default function ContactFormSection() {
           <div>
             <label
               htmlFor="contact-message"
-              className="block text-xs font-mono uppercase tracking-widest text-charcoal/60 mb-2"
+              className="block text-xs font-mono uppercase tracking-widest text-foreground mb-2"
             >
               Message
             </label>
@@ -175,7 +175,7 @@ export default function ContactFormSection() {
               autoComplete="off"
               aria-invalid={Boolean(errors.message)}
               rows={6}
-              className="w-full bg-white/60 border border-charcoal/15 p-4 text-charcoal placeholder:text-charcoal/35 focus:border-primary/50 focus:ring-2 focus:ring-primary/15 focus:outline-none transition-colors resize-none rounded-xl"
+              className="w-full bg-background border border-border p-4 text-foreground placeholder:text-foreground/80 focus:border-primary focus:ring-2 focus:ring-primary/60 focus:outline-none transition-colors resize-none rounded-xl"
               placeholder="Tell us what you need, with dates/links if relevant..."
             />
             {errors.message && (
@@ -186,10 +186,10 @@ export default function ContactFormSection() {
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-charcoal/55">
+            <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-foreground">
               Or email{" "}
               <a
-                className="underline hover:text-charcoal transition-colors"
+                className="underline hover:text-foreground transition-colors"
                 href="mailto:events@monolithproject.com"
               >
                 events@monolithproject.com

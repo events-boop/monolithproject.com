@@ -1,8 +1,14 @@
+import { resolveEventPrimaryCta } from "./public-cta";
 import approved from "./sunsets-page.json";
 import type { ScheduledEvent } from "./types";
 
 // The homepage and public calendar use the same approved publication as /sunsets.
 export const currentSunsets = approved;
+export const sunsetsNeedsUpdate = ["EventPostponed", "EventCancelled"].includes(
+  approved.status
+);
+export const sunsetsShowVisible = () =>
+  sunsetsNeedsUpdate || Date.now() < Date.parse(approved.end);
 const chicago = "America/Chicago";
 export const sunsetsDateLabel = new Intl.DateTimeFormat("en-US", {
   timeZone: chicago,
@@ -34,26 +40,31 @@ export function sunsetsStatusLabel(now = Date.now()) {
   if (approved.status === "EventCancelled") return "Cancelled";
   if (approved.status === "EventPostponed") return "Postponed";
   if (approved.status === "EventRescheduled") return "Rescheduled";
-  return now > Date.parse(approved.end) ? "Event ended" : "Scheduled";
+  return now >= Date.parse(approved.end) ? "Event ended" : "Scheduled";
 }
 export function sunsetsTicketsEnabled(now = Date.now()) {
   return (
     approved.salesEnabled &&
     ["EventScheduled", "EventRescheduled"].includes(approved.status) &&
-    now <= Date.parse(approved.end)
+    now < Date.parse(approved.end)
   );
 }
 
-export function withApprovedSunsets(event: ScheduledEvent): ScheduledEvent {
+export function withApprovedSunsets(
+  event: ScheduledEvent,
+  now = Date.now()
+): ScheduledEvent {
   if (
     event.id !== "css-sep19" ||
     event.status === "draft" ||
     event.status === "hidden"
   )
     return event;
-  return {
+  const normalized: ScheduledEvent = {
     ...event,
     headline: approved.name,
+    confirmationStatus: "confirmed",
+    eventStatus: approved.status as ScheduledEvent["eventStatus"],
     date: sunsetsDateLabel,
     time: sunsetsTimeLabel,
     startsAt: approved.start,
@@ -65,14 +76,14 @@ export function withApprovedSunsets(event: ScheduledEvent): ScheduledEvent {
     lineup: [...approved.headliners, ...approved.support].join(" · "),
     description: `The 2026 season finale with ${approved.headliners.join(" × ")} at ${approved.venueName}. ${approved.scheduleMessage}`,
     status:
-      Date.now() > Date.parse(approved.end)
+      !sunsetsNeedsUpdate && now >= Date.parse(approved.end)
         ? "past"
-        : sunsetsTicketsEnabled()
+        : sunsetsTicketsEnabled(now)
           ? "on-sale"
           : "coming-soon",
-    ticketUrl: sunsetsTicketsEnabled() ? approved.ticketUrl : undefined,
+    ticketUrl: sunsetsTicketsEnabled(now) ? approved.ticketUrl : undefined,
     image: "/sunsets/assets/hero-960.webp",
-    eventNotice: `${sunsetsStatusLabel()}. ${approved.statusMessage}`,
+    eventNotice: `${sunsetsStatusLabel(now)}. ${approved.statusMessage}`,
     tableReservationEmail: "events@monolithproject.com",
     // No inventory or VIP inclusions are approved in the current publication.
     vipPackages: undefined,
@@ -84,5 +95,9 @@ export function withApprovedSunsets(event: ScheduledEvent): ScheduledEvent {
     venueMap: event.venueMap
       ? { ...event.venueMap, address: approved.address }
       : undefined,
+  };
+  return {
+    ...normalized,
+    primaryCta: resolveEventPrimaryCta(normalized, new Date(now)),
   };
 }

@@ -95,6 +95,7 @@ export default function ConversionCTA({
     }
 
     if (
+      event?.status === "on-sale" &&
       (cta.tool === "posh" || cta.tool === "allevents") &&
       cta.href !== "/schedule"
     ) {
@@ -109,10 +110,12 @@ export default function ConversionCTA({
     }
   };
 
+  const CtaElement = isInquiry ? "button" : "a";
   const baseButton = (
     <div className={`flex flex-col items-center gap-0 ${className}`}>
-      <a
-        href={isInquiry ? "#" : cta.href}
+      <CtaElement
+        type={isInquiry ? "button" : undefined}
+        href={isInquiry ? undefined : cta.href}
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
         onClick={e => {
@@ -179,7 +182,7 @@ export default function ConversionCTA({
           {cta.label}
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </span>
-      </a>
+      </CtaElement>
 
       {showUrgency && systemReport && (
         <div className="flex flex-col items-center w-full">

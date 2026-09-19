@@ -7,17 +7,18 @@ import {
   SERIES_COLORS_ON_LIGHT,
 } from "./brand";
 
-export type EventWindowStatus = "upcoming" | "live" | "past" | "unscheduled";
-
-function isValidDate(value?: string) {
-  if (!value) return false;
-  return !Number.isNaN(new Date(value).getTime());
-}
-
-function parseEventDate(value?: string) {
-  if (!isValidDate(value)) return null;
-  return new Date(value!);
-}
+import {
+  getEventWindow,
+  getEventWindowStatus,
+  isTicketOnSale,
+  isUpcomingEvent,
+} from "@shared/events/lifecycle";
+export {
+  getEventWindow,
+  getEventWindowStatus,
+  isTicketOnSale,
+} from "@shared/events/lifecycle";
+export type { EventWindowStatus } from "@shared/events/lifecycle";
 
 function compareEvents(a: ScheduledEvent, b: ScheduledEvent) {
   const aStart = getEventStartTimestamp(a) ?? Number.POSITIVE_INFINITY;
@@ -32,56 +33,18 @@ export function getEventById(eventId?: string | null) {
   return getPublicEvents().find(event => event.id === eventId);
 }
 
-export function getEventWindow(event?: ScheduledEvent | null) {
-  const explicitStart = parseEventDate(event?.startsAt);
-  const fallbackStart = parseEventDate(event?.date);
-  const start = explicitStart ?? fallbackStart;
-  const explicitEnd = parseEventDate(event?.endsAt);
-
-  let end = explicitEnd;
-  if (!end && start) {
-    end = new Date(start);
-    if (explicitStart) {
-      end.setHours(end.getHours() + 6);
-    } else {
-      end.setHours(23, 59, 59, 999);
-    }
-  }
-
-  return { start, end };
-}
-
 export function getEventStartTimestamp(event?: ScheduledEvent | null) {
   const { start } = getEventWindow(event);
   return start ? start.getTime() : null;
 }
 
-export function getEventWindowStatus(
-  event?: ScheduledEvent | null,
-  now: Date = new Date()
-): EventWindowStatus {
-  const { start, end } = getEventWindow(event);
-
-  if (!start) return "unscheduled";
-  if (end && now > end) return "past";
-  if (now >= start) return "live";
-  return "upcoming";
-}
-
-export function isTicketOnSale(
-  event?: ScheduledEvent | null,
-  now: Date = new Date()
-) {
-  if (!event?.ticketUrl) return false;
-  if (event.status !== "on-sale") return false;
-
-  const windowStatus = getEventWindowStatus(event, now);
-  return windowStatus !== "past";
-}
-
 export function getScheduledEvents(now: Date = new Date()) {
   return [...getPublicEvents()]
-    .filter(event => getEventWindowStatus(event, now) !== "past")
+    .filter(
+      event =>
+        !["draft", "hidden", "past"].includes(event.status) &&
+        getEventWindowStatus(event, now) !== "past"
+    )
     .sort(compareEvents);
 }
 
@@ -97,10 +60,15 @@ export function getSeriesExperienceEvent(
   slot: SiteExperienceSlot = "hero",
   now: Date = new Date()
 ) {
-  const configuredEvent = getFeaturedEventForSlot(slot);
+  const configuredEvent =
+    getPublicEvents().find(
+      event =>
+        event.id === "css-sep19" && event.eventStatus === "EventPostponed"
+    ) || getFeaturedEventForSlot(slot);
   if (
     configuredEvent?.series === series &&
-    getEventWindowStatus(configuredEvent, now) !== "past"
+    (isUpcomingEvent(configuredEvent, now) ||
+      configuredEvent.eventStatus === "EventPostponed")
   ) {
     return configuredEvent;
   }
@@ -120,10 +88,15 @@ export function getExperienceEvent(
   slot: SiteExperienceSlot,
   now: Date = new Date()
 ) {
-  const configuredEvent = getFeaturedEventForSlot(slot);
+  const configuredEvent =
+    getPublicEvents().find(
+      event =>
+        event.id === "css-sep19" && event.eventStatus === "EventPostponed"
+    ) || getFeaturedEventForSlot(slot);
   if (
     configuredEvent &&
-    getEventWindowStatus(configuredEvent, now) !== "past"
+    (isUpcomingEvent(configuredEvent, now) ||
+      configuredEvent.eventStatus === "EventPostponed")
   ) {
     return configuredEvent;
   }
@@ -131,13 +104,12 @@ export function getExperienceEvent(
   const scheduledEvents = getScheduledEvents(now);
   return (
     scheduledEvents.find(event => isTicketOnSale(event, now)) ??
-    scheduledEvents[0] ??
-    [...getPublicEvents()].sort(compareEvents)[0]
+    scheduledEvents[0]
   );
 }
 
 export function getPrimaryTicketUrl(event?: ScheduledEvent | null) {
-  return event?.ticketUrl;
+  return isTicketOnSale(event) ? event?.ticketUrl : undefined;
 }
 
 export function getEventVenueLabel(event?: ScheduledEvent | null) {

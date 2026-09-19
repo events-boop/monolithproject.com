@@ -23,4 +23,4 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
  * SUN(SETS) II (Aug 22) checkout is live — every "tickets" surface goes
  * straight to the Aug 22 Posh rail. No Lake List middleman in the buying path.
  */
-export const POSH_TICKET_URL = SUNSETS_AUG22_TICKET_PATH;
+export const POSH_TICKET_URL = "/tickets";

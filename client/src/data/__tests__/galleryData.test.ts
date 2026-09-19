@@ -1,6 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 
+describe("SUN(SETS) II archive collection", () => {
+  it("opens as a coming-soon record with Gene Farris artwork and Castaways lakefront frame", () => {
+    const collection = archiveCollectionsBySlug["chasing-sunsets-sunsets-ii-2026"];
+
+    expect(collection.title).toBe("Chasing Sun(Sets)");
+    expect(collection.date).toBe("August 22, 2026");
+    expect(collection.comingSoon).toBe(true);
+    expect(collection.media.length).toBeGreaterThan(0);
+    expect(collection.media[0]?.src).toContain("gene-farris-portrait");
+    expect(collection.coverImage).toBe(
+      "/images/artists/gene-farris/gene-farris-portrait.jpg"
+    );
+  });
+});
+
 describe("Ape Drums archive collection", () => {
   it("opens as a coming-soon record seeded with the billing art until the photo/video edit ships", () => {
     const collection = archiveCollectionsBySlug["ape-drums-july31-2026"];

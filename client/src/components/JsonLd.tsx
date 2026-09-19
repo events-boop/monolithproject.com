@@ -8,11 +8,9 @@ interface JsonLdProps {
 export default function JsonLd({ id, data }: JsonLdProps) {
   return (
     <Helmet prioritizeSeoTags>
-      <script
-        id={id}
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-      />
+      <script id={id} type="application/ld+json">
+        {JSON.stringify(data).replace(/</g, "\\u003c")}
+      </script>
     </Helmet>
   );
 }

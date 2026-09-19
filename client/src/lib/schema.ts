@@ -158,7 +158,7 @@ interface EventSchemaInput {
   name: string;
   description: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   image: string[];
   performer?: string[];
   ticketUrl?: string;
@@ -204,7 +204,7 @@ export function buildEventSchema(input: EventSchemaInput) {
     name: input.name,
     description: input.description,
     startDate: input.startDate,
-    endDate: input.endDate,
+    ...(input.endDate ? { endDate: input.endDate } : {}),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     url: toAbsoluteUrl(input.pagePath),
@@ -350,21 +350,6 @@ export function buildFaqSchema(faqEntries: Array<[string, string]>) {
   };
 }
 
-function tryParseDate(dateStr: string, timeStr: string) {
-  let cleanTime = timeStr.split("—")[0].split("-")[0].trim();
-  if (cleanTime === "TBA" || cleanTime === "Late") cleanTime = "10:00 PM";
-  try {
-    const d = new Date(`${dateStr} ${cleanTime}`);
-    if (!isNaN(d.getTime())) return d.toISOString();
-  } catch {}
-
-  try {
-    const d = new Date(dateStr);
-    if (!isNaN(d.getTime())) return d.toISOString();
-  } catch {}
-  return new Date().toISOString();
-}
-
 function getVenueAddress(event: ScheduledEvent) {
   if (event.venue === "Alhambra Palace") {
     return {
@@ -390,8 +375,18 @@ export function buildScheduledEventSchema(
   event: ScheduledEvent,
   pagePath: string
 ) {
-  const startDate = event.startsAt || tryParseDate(event.date, event.time);
-  const endDate = event.endsAt || startDate;
+  const startDate =
+    event.startsAt ||
+    (() => {
+      if (!/^(?:[A-Za-z]+ \d{1,2}, \d{4}|\d{4}-\d{2}-\d{2})$/.test(event.date))
+        return undefined;
+      const date = new Date(`${event.date} UTC`);
+      return Number.isFinite(date.getTime())
+        ? date.toISOString().slice(0, 10)
+        : undefined;
+    })();
+  if (!startDate) return {};
+  const endDate = event.endsAt;
   const address = getVenueAddress(event);
   const availableTierPrices =
     event.ticketTiers
@@ -404,7 +399,8 @@ export function buildScheduledEventSchema(
       : undefined;
   const price = event.startingPrice ?? minimumAvailablePrice;
   const ticketUrl =
-    event.status === "on-sale" || event.status === "sold-out"
+    getEventWindowStatus(event) !== "past" &&
+    (event.status === "on-sale" || event.status === "sold-out")
       ? event.ticketUrl
       : undefined;
   const ticketAvailability =
@@ -426,7 +422,7 @@ export function buildScheduledEventSchema(
       .filter(
         segment =>
           segment.length > 0 &&
-          !/^(support|support tbd|tbd|lineup drops\b|secret guest\b|special guest\b|venue reveal soon\b)/i.test(
+          !/^(support|support tbd|tba|tbd|lineup drops\b|secret guest\b|special guest\b|venue reveal soon\b)/i.test(
             segment
           )
       ) ?? [];
@@ -459,7 +455,10 @@ export function buildScheduledEventSchema(
     return { ...schema, superEvent: SUNSETS_JULY4_SUPER_EVENT };
   }
 
-  return schema;
+  return {
+    ...schema,
+    eventStatus: `https://schema.org/${event.eventStatus || "EventScheduled"}`,
+  };
 }
 
 export function buildScheduleSchema(events: ScheduledEvent[]) {

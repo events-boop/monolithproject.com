@@ -1,3 +1,4 @@
+import { withApprovedSunsets } from "@shared/events/sunsets-current";
 import { useSyncExternalStore } from "react";
 import type {
   PublicSiteData,
@@ -48,8 +49,15 @@ function uniqueEvents(events: ScheduledEvent[]) {
 export function primePublicSiteData(data: PublicSiteData) {
   snapshot = {
     path: normalizePathname(data.path),
-    events: uniqueEvents(data.events || []),
-    featuredEvents: data.featuredEvents || {},
+    events: uniqueEvents(data.events || []).map(event =>
+      withApprovedSunsets(event)
+    ),
+    featuredEvents: Object.fromEntries(
+      Object.entries(data.featuredEvents || {}).map(([key, event]) => [
+        key,
+        event ? withApprovedSunsets(event) : event,
+      ])
+    ),
   };
   notify();
 }

@@ -104,6 +104,8 @@ function getStatusLabel(status?: string) {
       return "Coming Soon";
     case "sold-out":
       return "Sold Out";
+    case "past":
+      return "Archive";
     default:
       return "Upcoming";
   }
@@ -135,8 +137,8 @@ function resolveChapterView(
       primaryHref,
       primaryLabel:
         ticketHref || getPrimaryTicketUrl(ticketEvent)
-          ? "Get In"
-          : "See The Night",
+          ? "Get tickets"
+          : "Event details",
       previewTitle:
         ticketEvent?.headline || ticketEvent?.title || chapter.label,
       proof: ticketEvent?.capacity || chapter.proof,
@@ -400,30 +402,36 @@ export default function InteractiveNavigationOverlay({
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-var(--shell-nav-height)-3rem)] w-full max-w-[1800px] flex-col px-4 py-6 sm:px-6 lg:px-10">
+        <nav
+          aria-label="Main pages"
+          className="mb-6 flex flex-wrap gap-2 lg:hidden"
+        >
+          {[
+            { label: "Events / Tickets", href: "/schedule" },
+            { label: "Sun(Sets)", href: "/sunsets" },
+            { label: "Untold Story", href: "/story" },
+            { label: "Radio", href: "/radio" },
+            { label: "About", href: "/about" },
+          ].map(link => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={handleLinkClick(link.href)}
+              className="btn-pill-outline btn-pill-compact"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
         <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
               Explore Monolith
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
-              Choose Your Entry
+              Events & More
             </h1>
           </div>
-          <nav
-            aria-label="Utility links"
-            className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap"
-          >
-            {utilityLinks.map(link => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={handleLinkClick(link.href)}
-                className="btn-pill-outline btn-pill-compact flex justify-center text-center"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
         </header>
 
         <div className="hidden min-h-[30rem] flex-1 grid-cols-[minmax(18rem,0.68fr)_minmax(0,1.32fr)] gap-6 lg:grid 2xl:gap-8">
@@ -625,6 +633,21 @@ export default function InteractiveNavigationOverlay({
             );
           })}
         </div>
+        <nav
+          aria-label="Utility links"
+          className="mt-8 grid grid-cols-2 gap-2 border-t border-white/20 pt-6 sm:flex sm:flex-wrap"
+        >
+          {utilityLinks.map(link => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={handleLinkClick(link.href)}
+              className="btn-pill-outline btn-pill-compact flex justify-center text-center"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </motion.div>
   );

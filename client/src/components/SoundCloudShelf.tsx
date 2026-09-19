@@ -33,8 +33,8 @@ export default function SoundCloudShelf() {
               Latest Covers
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70 md:text-base">
-              Fresh cover art from the Sun(Sets) radio archive, surfaced like a
-              closing shelf before the footer.
+              Listen to the latest artist mixes from the Sun(Sets) radio
+              archive.
             </p>
           </div>
 

@@ -29,7 +29,7 @@ describe("resolveOutboundDestination", () => {
     );
   });
 
-  it("fails closed only for Sun(Sets) rails without an official Posh destination", async () => {
+  it("uses approved event status before legacy checkout fallbacks", async () => {
     process.env.POSH_TICKET_URL = "https://tickets.example.com/featured";
     delete process.env.OUTBOUND_TICKETS_CSS_JUL04_URL;
     delete process.env.NEXT_PUBLIC_POSH_SUNSETS_JULY4_URL;
@@ -46,11 +46,11 @@ describe("resolveOutboundDestination", () => {
       "https://posh.vip/e/chasing-sunsets-ii-house-of-friends-preview"
     );
     expect(resolveOutboundDestination("tickets", "css-sep19")).toBe(
-      "https://posh.vip/e/chasing-sunsets-iii-joezi-x-massuma"
+      "https://monolithproject.com/sunsets#event-update"
     );
   });
 
-  it("resolves Sun(Sets) tickets only from their official event env vars", async () => {
+  it("ignores a stale September checkout override while the show is postponed", async () => {
     process.env.OUTBOUND_TICKETS_CSS_JUL04_URL =
       "https://posh.vip/e/sunsets-july-4";
     process.env.OUTBOUND_TICKETS_CSS_AUG22_URL =
@@ -65,7 +65,7 @@ describe("resolveOutboundDestination", () => {
       "https://posh.vip/e/sunsets-august-22"
     );
     expect(resolveOutboundDestination("tickets", "css-sep19")).toBe(
-      "https://posh.vip/e/sunsets-september-19"
+      "https://monolithproject.com/sunsets#event-update"
     );
   });
 

@@ -29,18 +29,7 @@ function normalizePath(pathname?: string) {
 }
 
 function getCanonicalOrigin() {
-  if (typeof window === "undefined") return CANONICAL_ORIGIN;
-
-  const origin = window.location.origin || CANONICAL_ORIGIN;
-  if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
-    return origin;
-  }
-
-  if (/^https?:\/\/(www\.)?(the)?monolithproject\.com$/i.test(origin)) {
-    return CANONICAL_ORIGIN;
-  }
-
-  return origin;
+  return CANONICAL_ORIGIN;
 }
 
 export default function SEO({

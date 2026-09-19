@@ -1,4 +1,4 @@
-export type EventBannerStatus = "upcoming" | "live" | "past";
+export type EventBannerStatus = "upcoming" | "live" | "past" | "postponed";
 
 import {
   getEventVenueLabel,
@@ -13,6 +13,7 @@ export function getEventBannerStatus(
   now: Date = new Date()
 ): EventBannerStatus {
   const event = getExperienceEvent("banner");
+  if (event?.eventStatus === "EventPostponed") return "postponed";
   const status = getEventWindowStatus(event, now);
 
   if (status === "unscheduled") return "past";
@@ -58,7 +59,12 @@ export function getEventBannerPayload(now: Date = new Date()) {
   return {
     event,
     status,
-    text: status === "live" ? liveMessage : message,
+    text:
+      status === "postponed"
+        ? `POSTPONED — ${headline} — READ THE EVENT UPDATE`
+        : status === "live"
+          ? liveMessage
+          : message,
     ticketUrl: cta.href,
     ticketLabel: cta.label,
   };

@@ -1,0 +1,283 @@
+{
+  "pages": 84,
+  "broken": [],
+  "missingAnchors": [],
+  "routes": [
+    "/",
+    "/sunsets/",
+    "/chasing-sunsets",
+    "/sunsets",
+    "/events/monolith-launch",
+    "/schedule",
+    "/monolith",
+    "/story",
+    "/archive",
+    "/chasing-sunsets/sunsets-i-2026",
+    "/artists",
+    "/artists/joezi",
+    "/artists/massuma",
+    "/artists/eran-hersh",
+    "/artists/gene-farris",
+    "/partners",
+    "/chasing-sunsets/sunsets-ii-2026",
+    "/contact",
+    "/chasing-sunsets/season-iii",
+    "/chasing-sunsets/season-ii",
+    "/chasing-sunsets/season-i",
+    "/radio",
+    "/radio/ep-004-benchek-part-2",
+    "/radio/ch-02-radian-no-sleep",
+    "/radio/ep-01-benchek",
+    "/radio/ep-02-ewerseen",
+    "/about",
+    "/lineup",
+    "/insights",
+    "/sponsors",
+    "/booking",
+    "/submit",
+    "/press",
+    "/newsletter",
+    "/guide",
+    "/faq",
+    "/terms",
+    "/privacy",
+    "/cookies",
+    "/tickets",
+    "/chasing-sunsets-facts",
+    "/events/css-sep19",
+    "/vip",
+    "/archive/chasing-sunsets-sunsets-ii-2026",
+    "/archive/ape-drums-july31-2026",
+    "/archive/autograf-march-21-2026",
+    "/untold-story/season-iii",
+    "/untold-story/season-ii",
+    "/untold-story/season-i",
+    "/insights/recap-sunsets-i-july-4-castaways",
+    "/artists/kiko-franco",
+    "/artists/ape-drums",
+    "/artists/deron",
+    "/artists/lazare",
+    "/artists/juany-bravo",
+    "/artists/autograf",
+    "/artists/sommers-uk",
+    "/artists/chris-idh",
+    "/artists/summermel",
+    "/artists/benchek",
+    "/artists/terranova",
+    "/artists/ewerseen",
+    "/artists/radian",
+    "/artists/avo",
+    "/artists/amari",
+    "/artists/sarat",
+    "/artists/jerome",
+    "/artists/rose",
+    "/artists/hashtom",
+    "/artists/kenbo-slice",
+    "/artists/jealah",
+    "/artists/maximo",
+    "/artists/eliana",
+    "/artists/gianniblu",
+    "/artists/frankbono",
+    "/artists/erikthedj",
+    "/artists/colin",
+    "/artists/nomar",
+    "/radio/ep-03-terranova",
+    "/radio/ep-04-radian",
+    "/insights/show-note-autograf-chicago",
+    "/insights/fan-feature-people-in-the-room",
+    "/insights/artist-feature-ewerseen",
+    "/insights/set-drop-benchek-ep-01"
+  ],
+  "external": [
+    {
+      "url": "https://www.youtube.com/watch?v=9R6XH7JZlJI",
+      "status": 200,
+      "destination": "https://www.youtube.com/watch?v=9R6XH7JZlJI"
+    },
+    {
+      "url": "https://www.google.com/maps/search/?api=1&query=Castaways+Beach+Club+Chicago",
+      "status": 200,
+      "destination": "https://www.google.com/maps/search/?api=1&query=Castaways+Beach+Club+Chicago"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=qMWZngFojK0",
+      "status": 200,
+      "destination": "https://www.youtube.com/watch?v=qMWZngFojK0"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Hynx0-uXk5M",
+      "status": 200,
+      "destination": "https://www.youtube.com/watch?v=Hynx0-uXk5M"
+    },
+    {
+      "url": "https://instagram.com/monolithproject.events",
+      "status": 200,
+      "destination": "https://www.instagram.com/monolithproject.events"
+    },
+    {
+      "url": "https://tiktok.com/@monolithproject",
+      "status": 200,
+      "destination": "https://www.tiktok.com/@monolithproject"
+    },
+    {
+      "url": "https://instagram.com/chasingsunsets.music",
+      "status": 200,
+      "destination": "https://www.instagram.com/chasingsunsets.music"
+    },
+    {
+      "url": "https://instagram.com/untoldstory.music",
+      "status": 200,
+      "destination": "https://www.instagram.com/untoldstory.music"
+    },
+    {
+      "url": "https://youtube.com/@monolithproject",
+      "status": 200,
+      "destination": "https://www.youtube.com/@monolithproject"
+    },
+    {
+      "url": "https://soundcloud.com/monolithproject",
+      "status": 200,
+      "destination": "https://soundcloud.com/monolithproject"
+    },
+    {
+      "url": "https://open.spotify.com/artist/2mC93i8OOfK2jpFERbVv8B",
+      "status": 200,
+      "destination": "https://open.spotify.com/artist/2mC93i8OOfK2jpFERbVv8B"
+    },
+    {
+      "url": "https://open.spotify.com/artist/2JnGvSeKbZegE0nxAsHCNF",
+      "status": 200,
+      "destination": "https://open.spotify.com/artist/2JnGvSeKbZegE0nxAsHCNF"
+    },
+    {
+      "url": "https://sunsets.vip/",
+      "status": 200,
+      "destination": "https://monolithproject.com/sunsets"
+    },
+    {
+      "url": "https://www.sunsets.vip/",
+      "status": 200,
+      "destination": "https://monolithproject.com/sunsets"
+    },
+    {
+      "url": "https://monolithproject.com/sunsets",
+      "status": 200,
+      "destination": "https://monolithproject.com/sunsets"
+    },
+    {
+      "url": "https://monolithproject.com/sunsets/",
+      "status": 200,
+      "destination": "https://monolithproject.com/sunsets/"
+    },
+    {
+      "url": "https://www.dropbox.com/request/3f0662s872jlukad0r4h",
+      "status": 200,
+      "destination": "https://www.dropbox.com/request/3f0662s872jlukad0r4h"
+    },
+    {
+      "url": "https://youtu.be/qMWZngFojK0",
+      "status": 200,
+      "destination": "https://www.youtube.com/watch?v=qMWZngFojK0&feature=youtu.be"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=iErA3nUrdQE",
+      "status": 200,
+      "destination": "https://www.youtube.com/watch?v=iErA3nUrdQE"
+    },
+    {
+      "url": "https://instagram.com/genefarris",
+      "status": 200,
+      "destination": "https://www.instagram.com/genefarris"
+    },
+    {
+      "url": "https://instagram.com/eranhersh",
+      "status": 200,
+      "destination": "https://www.instagram.com/eranhersh"
+    },
+    {
+      "url": "https://soundcloud.com/eranhersh",
+      "status": 200,
+      "destination": "https://soundcloud.com/eranhersh"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/radianofc-set"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/terranova",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/terranova"
+    },
+    {
+      "url": "https://instagram.com/apedrums",
+      "status": 200,
+      "destination": "https://www.instagram.com/apedrums"
+    },
+    {
+      "url": "https://www.apedrums.com/",
+      "status": 200,
+      "destination": "https://www.apedrums.com/"
+    },
+    {
+      "url": "https://www.youtube.com/results?search_query=ape+drums+live",
+      "status": 200,
+      "destination": "https://www.youtube.com/results?search_query=ape+drums+live"
+    },
+    {
+      "url": "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets",
+      "status": 200,
+      "destination": "https://soundcloud.com/chasing-sun-sets/sommers-uk-ep0011-chapter-1-chasing-sunsets"
+    },
+    {
+      "url": "https://instagram.com/summermel",
+      "status": 200,
+      "destination": "https://www.instagram.com/summermel"
+    },
+    {
+      "url": "https://instagram.com/avomusic_",
+      "status": 200,
+      "destination": "https://www.instagram.com/avomusic_"
+    },
+    {
+      "url": "https://soundcloud.com/avomusic",
+      "status": 200,
+      "destination": "https://soundcloud.com/avomusic"
+    },
+    {
+      "url": "https://instagram.com/amari.music",
+      "status": 200,
+      "destination": "https://www.instagram.com/amari.music"
+    },
+    {
+      "url": "https://instagram.com/sarat_music",
+      "status": 200,
+      "destination": "https://www.instagram.com/sarat_music"
+    },
+    {
+      "url": "https://soundcloud.com/sarat_music",
+      "status": 200,
+      "destination": "https://soundcloud.com/sarat_music"
+    }
+  ]
+}

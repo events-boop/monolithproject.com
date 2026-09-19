@@ -134,7 +134,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
         <div className="flex items-end justify-between mb-8 pb-6 border-b border-untold-violet-20">
           <div>
             <span className="font-mono text-xs tracking-[0.3em] uppercase block mb-2 text-untold-cyan">
-              {event?.subtitle || "Season III"}
+              {event?.subtitle || "Untold Story"}
             </span>
             <h2 className="font-display text-4xl md:text-5xl text-white">
               {event?.headline || event?.episode || "The Featured Event"}
@@ -304,37 +304,21 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
               <span className="font-mono text-[10px] tracking-widest uppercase block mb-3 text-untold-cyan">
                 Tables & Bottle Service
               </span>
-              <p className="text-white/70 mb-4">
-                All tables include bottle service and priority treatment
-                throughout the night.
+              <p className="text-white/80 mb-4">
+                Table availability, pricing and inclusions will be confirmed for
+                each event and venue.
               </p>
-              <div className="space-y-3 text-white/80">
-                <p>
-                  Standard Table (up to 5 guests): $300 — Includes 1 standard
-                  bottle
+              {event?.tablePackages?.map(detail => (
+                <p key={detail} className="text-white/80 mb-3">
+                  {detail}
                 </p>
-                <p>
-                  Gold Table (up to 5 guests): $500 — Includes 1 premium bottle
-                  + elevated placement
-                </p>
-                <p>
-                  Platinum Table (up to 5 guests): $750 — Includes 1 premium
-                  bottle, closest DJ proximity, priority service
-                </p>
-                <p className="text-white/60">
-                  Additional Bottles: Standard: $150 | Premium: $200 | Top
-                  Shelf: $250
-                </p>
-                <p className="text-white/70">
-                  Table Reservations:{" "}
-                  <a
-                    className="underline"
-                    href="mailto:events@monolithproject.com"
-                  >
-                    events@monolithproject.com
-                  </a>
-                </p>
-              </div>
+              ))}
+              <a
+                className="text-white underline"
+                href={`mailto:${event?.tableReservationEmail || "events@monolithproject.com"}`}
+              >
+                Ask about tables and groups
+              </a>
             </div>
 
             {/* FAQ Toggle */}

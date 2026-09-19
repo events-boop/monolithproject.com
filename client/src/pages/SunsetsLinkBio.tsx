@@ -51,8 +51,8 @@ const SEASON_III_LIVE_SETS = [
   },
   {
     artist: "Massuma (UK)",
-    label: "Live @ KOKO London · 2026",
-    url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
+    label: "Live @ Playa Padre, Marbella 🇪🇸",
+    url: "https://www.youtube.com/watch?v=Hynx0-uXk5M",
   },
 ] as const;
 // Live channel row at the bottom of the page. untold.vip serves its own
@@ -150,15 +150,10 @@ const SEASON_EVENTS_SCHEMA = [
     ...SHARED_EVENT_SCHEMA,
     name: "SUN(SETS) II — Chasing Sun(Sets) 2026",
     description:
-      "SUN(SETS) II — the summer return. Chapter Two of Chasing Sun(Sets) 2026 at Castaways Beach Club, Chicago. Tickets on sale now, powered by Posh.",
+      "SUN(SETS) II — Chapter Two of Chasing Sun(Sets) 2026 at Castaways Beach Club, Chicago, headlined by Chicago's own Gene Farris: Legend on the Lake, a House of Friends preview.",
     startDate: "2026-08-22T12:00:00-05:00",
     endDate: "2026-08-22T22:00:00-05:00",
-    offers: {
-      "@type": "Offer" as const,
-      url: "https://sunsets.vip",
-      availability: "https://schema.org/InStock",
-      priceCurrency: "USD",
-    },
+    performer: [{ "@type": "MusicGroup" as const, name: "Gene Farris" }],
   },
   {
     ...SHARED_EVENT_SCHEMA,
@@ -173,7 +168,7 @@ const SEASON_EVENTS_SCHEMA = [
     })),
     offers: {
       "@type": "Offer" as const,
-      url: "https://sunsets.vip",
+      url: "https://allevents.in/chicago/chasing-sunsets-iii-joezi-x-massuma-tickets/80003431876974",
       availability: "https://schema.org/InStock",
       priceCurrency: "USD",
     },
@@ -395,7 +390,7 @@ export default function SunsetsLinkBio() {
     <div className="min-h-screen overflow-x-hidden bg-[#0a0a0a] text-stone-100 selection:bg-[#E8B86D] selection:text-black">
       <SEO
         title="SUN(SETS) 2026 | Chasing Sun(Sets) — Castaways Chicago"
-        description="SUN(SETS) II returns to Castaways Beach Club August 22 — tickets on sale now, powered by Posh. SUN(SETS) III closes the season September 19 with Joezi x Massuma (UK)."
+        description="The Monolith Project presents Chasing Sun(Sets) III Season Finale with Joezi × Massuma (UK). Saturday, September 19, 2026 at Castaways Beach Club, Chicago. Full-day open-air Afro House experience on Lake Michigan. Official tickets on AllEvents."
         image={OG_IMAGE}
         canonicalPath={PAGE_PATH}
         canonicalUrl={CANONICAL_SUNSETS_URL}
@@ -442,39 +437,41 @@ export default function SunsetsLinkBio() {
           </div>
         </header>
 
-        {/* Lola Pop-Up Weekend flyer — directly under the hero */}
-        <LolaPopupFrame accent="gold" layout="stacked" className="mt-4" />
-
-        {/* 2. SUN(SETS) II Header */}
+                {/* 2. SUN(SETS) III Header */}
         <section
           className="sunsets-vip-frame sunsets-vip-frame-signal relative mt-2 border border-[#E8B86D]/20 bg-[#15110a]/60 p-5 text-center shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-md"
-          aria-label="SUN(SETS) II Event Details"
+          aria-label="SUN(SETS) III Event Details"
         >
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#E8B86D]/5 to-transparent" />
           <div className="sunsets-signal-registry" aria-hidden="true">
             <span>Current Signal</span>
-            <span>02 / Active</span>
+            <span>03 / Season Finale</span>
           </div>
           <p className="mt-4 text-[12px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
-            SUN(SETS) II — AUG 22
+            SUN(SETS) III — SEP 19
           </p>
           <h2 className="mx-1 mt-3 text-[clamp(1.25rem,5.8vw,1.45rem)] font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-md">
-            THE SUMMER RETURN
+            JOEZI × MASSUMA <span className="text-[#E8B86D]">(UK)</span>
           </h2>
+          <p className="mt-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#E8B86D]">
+            The 2026 Season Finale · Afro House & Melodic Grooves
+          </p>
           <p className="mt-3 text-[13px] font-semibold leading-relaxed text-stone-300">
-            Chapter Two at Castaways Beach Club. Tickets are live now.
+            A full-day open-air house music experience on Lake Michigan. Food & craft cocktails on-site at Castaways, professional multi-camera video, and skyline views.
           </p>
         </section>
 
         {/* 3. Primary CTA */}
         <section className="mt-4" aria-label="Buy tickets">
           <a
-            href={aug22TicketHref}
+            href="https://allevents.in/chicago/chasing-sunsets-iii-joezi-x-massuma-tickets/80003431876974"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleTicketPrimaryClick}
             className="group relative flex h-[52px] min-h-[52px] items-center justify-center gap-2 overflow-hidden bg-[#E8B86D] px-4 text-[11px] font-black uppercase tracking-[0.12em] text-black shadow-[0_14px_34px_rgba(232,184,109,0.24)] transition-all duration-300 hover:bg-[#d4a574] hover:shadow-[0_0_20px_rgba(232,184,109,0.5)] active:scale-[0.98] motion-reduce:transition-none min-[380px]:text-[12px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              BUY TICKETS — AUG 22{" "}
+              BUY TICKETS ON ALLEVENTS — SEP 19{" "}
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
@@ -488,8 +485,7 @@ export default function SunsetsLinkBio() {
             />
           </a>
           <p className="mt-3 text-center text-[10px] font-semibold leading-relaxed tracking-[0.06em] text-stone-400">
-            Official tickets powered by Posh — straight to checkout, no
-            waitlist. Live updates on{" "}
+            Official tickets powered by AllEvents — instant barcode delivery & guaranteed entry. Live updates on{" "}
             <a
               href="https://instagram.com/chasingsunsets.music"
               target="_blank"
@@ -683,8 +679,45 @@ export default function SunsetsLinkBio() {
           </div>
         </section>
 
-        {/* 6. Chapter One archive — clearly historical, below future dates. */}
-        <section className="mt-5" aria-label="SUN(SETS) I Chapter One archive">
+        {/* 6. Completed Season Archives (Chapter One & Chapter Two) */}
+        <section className="mt-5 space-y-4" aria-label="Season Archives">
+          {/* Chapter Two Archive */}
+          <div className="sunsets-vip-frame overflow-hidden border border-[#E8B86D]/25 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+            <div className="flex items-center justify-between gap-4 border-b border-[#E8B86D]/20 px-4 py-3">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E8B86D]">
+                  Chapter Two / Archive
+                </p>
+                <p className="mt-1 text-[11px] text-stone-400">
+                  August 22 · Gene Farris: Legend on the Lake is complete.
+                </p>
+              </div>
+              <span className="shrink-0 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/58">
+                Complete
+              </span>
+            </div>
+            <div className="relative">
+              <img
+                src="/images/artists/gene-farris/gene-farris-portrait.jpg"
+                alt="SUN(SETS) II Chapter Two archive — Gene Farris: Legend on the Lake"
+                className="h-auto w-full object-cover opacity-86"
+                loading="lazy"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 to-transparent"
+              />
+              <a
+                href="/archive/chasing-sunsets-sunsets-ii-2026"
+                onClick={() => handleArchiveClick("Chapter Two archive card")}
+                className="group absolute inset-x-4 bottom-4 flex h-11 items-center justify-center gap-2 border border-[#E8B86D]/60 bg-black/55 px-3 text-[10px] font-black uppercase tracking-[0.12em] text-[#E8B86D] backdrop-blur-md transition hover:border-[#E8B86D] hover:bg-[#E8B86D] hover:text-black"
+              >
+                View Chapter Two Archive <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Chapter One Archive */}
           <div className="sunsets-vip-frame overflow-hidden border border-[#E8B86D]/25 bg-[#15110a]/60 shadow-[0_18px_48px_rgba(0,0,0,0.4)] backdrop-blur-xl">
             <div className="flex items-center justify-between gap-4 border-b border-[#E8B86D]/20 px-4 py-3">
               <div>

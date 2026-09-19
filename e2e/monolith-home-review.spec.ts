@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures/event-notice-dismissed";
 
 for (const width of [360, 390, 430, 768, 1363]) {
   test(`Monolith homepage carries approved event details at ${width}px`, async ({
@@ -11,17 +11,17 @@ for (const width of [360, 390, 430, 768, 1363]) {
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("#current-event-title")).toContainText("MASSUMA");
     await expect(page.locator(".home-event-essentials")).toContainText(
-      "12:00 PM–10:00 PM Chicago time"
+      "New date to be announced"
     );
     await expect(page.locator(".home-event-lineup")).toContainText(
       "MVRCO × AVO · Erik · Sher · Jerome × Flare"
     );
     await expect(page.locator(".home-event-strip .home-status")).toHaveText(
-      "Scheduled"
+      "Postponed"
     );
     await expect(
       page.locator(".home-event-strip .home-primary")
-    ).toHaveAttribute("href", /allevents\.in.*80003431876974/);
+    ).toHaveAttribute("href", "/sunsets#event-status");
     await expect(
       page.getByRole("link", { name: "Buy Tickets — August 22", exact: true })
     ).toHaveCount(0);
@@ -56,16 +56,6 @@ test("homepage checkout keeps campaign taxonomy and excludes personal fields", a
   );
   const link = page.locator(".home-event-strip .home-primary");
   await expect(link).toBeVisible();
-  await expect
-    .poll(async () =>
-      new URL((await link.getAttribute("href"))!).searchParams.get("utm_source")
-    )
-    .toBe("instagram");
-  const url = new URL((await link.getAttribute("href"))!);
-  expect(url.hostname).toBe("allevents.in");
-  expect([...url.searchParams.keys()].sort()).toEqual([
-    "utm_campaign",
-    "utm_medium",
-    "utm_source",
-  ]);
+  await expect(link).toHaveAttribute("href", "/sunsets#event-status");
+  await expect(page.locator('a[href*="allevents.in"]')).toHaveCount(0);
 });

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, afterEach, vi, describe, expect, it } from "vitest";
 import type { ScheduledEvent } from "@/data/events";
 import { SUNSETS_PRELAUNCH_LOCKED } from "@shared/events/sunsets-ticketing";
 import { ROUTES } from "@shared/routes";
@@ -41,6 +41,11 @@ const untoldUpcomingEvent: ScheduledEvent = {
 };
 
 describe("cta", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-01T12:00:00Z"));
+  });
+  afterEach(() => vi.useRealTimers());
   it("routes monolith-project live event details to the tickets page", () => {
     expect(getEventDetailsHref(monolithLiveEvent)).toBe(
       "/events/mp-autograf-mar21"

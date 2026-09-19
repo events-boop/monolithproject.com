@@ -10,11 +10,11 @@
   "venueHeading": "Castaways.<br>Chicago.<br><em>Of course.</em>",
   "venueDescription": "North Avenue Beach. Lake Michigan out front. The city behind you. Our home for one final afternoon into night.",
   "directionsUrl": "https://www.google.com/maps/search/?api=1&query=Castaways+Beach+Club+Chicago",
-  "status": "EventScheduled",
-  "statusHeading": "Check here before you travel.",
-  "statusMessage": "Published event details are listed below. This notice does not announce a date or venue change. Confirmed updates and ticket-holder instructions will appear here.",
-  "updatedAt": "2026-09-17T22:41:34-05:00",
-  "salesEnabled": true,
+  "status": "EventPostponed",
+  "statusHeading": "Sun(Sets) III — postponed due to weather.",
+  "statusMessage": "Due to weather conditions, Sun(Sets) III with JOEZI × MASSUMA is postponed. The safety of our guests, artists and crew comes first. A new date is not yet confirmed.",
+  "updatedAt": "2026-09-19T17:37:36+00:00",
+  "salesEnabled": false,
   "ticketUrl": "https://allevents.in/chicago/chasing-sunsets-iii-joezi-x-massuma-tickets/80003431876974",
   "headliners": [
     "JOEZI",
@@ -27,12 +27,20 @@
     "Jerome × Flare"
   ],
   "schedule": [],
-  "scheduleMessage": "Performance times will be published here once the running order is confirmed. Artists below are not listed in performance order.",
+  "scheduleMessage": "The September 19 show is postponed. A new date, lineup confirmation and running order will be announced when approved.",
   "artworkApprovedFor": {
     "start": "2026-09-19T12:00:00-05:00",
     "venueName": "Castaways Beach Club"
   },
   "heroArtwork": "<figure class=\"hero-event-art\">\n          <picture><source type=\"image/avif\" srcset=\"/sunsets/assets/hero-480.avif 480w, /sunsets/assets/hero-960.avif 960w\" sizes=\"(min-width: 800px) 470px, 100vw\"><source type=\"image/webp\" srcset=\"/sunsets/assets/hero-480.webp 480w, /sunsets/assets/hero-960.webp 960w\" sizes=\"(min-width: 800px) 470px, 100vw\"><img src=\"/sunsets/assets/hero-960.webp\" alt=\"Chasing Sun(Sets) III, 2026 season finale. JOEZI × MASSUMA, Saturday September 19, Castaways Beach Club, Chicago. Sunset DJ artwork.\" width=\"1920\" height=\"1920\" fetchpriority=\"high\" decoding=\"async\"></picture>\n        </figure>",
   "socialImage": "https://monolithproject.com/sunsets/assets/hero-social.jpg",
-  "statusApproval": null
+  "statusApproval": "Erik — approved weather postponement and ticket-holder admission/Untold Story options in conversation on September 19, 2026. Replacement date remains unconfirmed.",
+  "ticketHolderMessage": "Ticket holders will be offered admission to the rescheduled show and/or access to one of our Untold Story events as the indoor season opens. The new date and instructions will be shared as soon as they are confirmed.",
+  "statusParagraphs": [
+    "Due to weather conditions, Sun(Sets) III with JOEZI × MASSUMA is postponed. The safety of our guests, artists and crew comes first. A new date is not yet confirmed.",
+    "We know you were looking forward to this show, and we share your disappointment. Thank you for your patience and understanding as we work through the next steps.",
+    "Ticket holders will be offered admission to the rescheduled show and/or access to one of our Untold Story events as the indoor season opens. The new date and instructions will be shared as soon as they are confirmed.",
+    "The artists are working together to make the rescheduled show possible. The date and artist participation will be confirmed in a future update.",
+    "Please visit SUNSETS.VIP or follow our social channels for updates. Thank you for being part of this community. We look forward to being back on the dance floor with you."
+  ]
 }

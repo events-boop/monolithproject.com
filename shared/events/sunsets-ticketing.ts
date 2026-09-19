@@ -41,9 +41,9 @@ export const SUNSETS_TICKET_CTA_EVENT = "TicketCTA_Click";
 // July 4 sold and executed (2026-07-04). SUN(SETS) II checkout is live, so
 // the primary CTA goes straight to the Aug 22 ticket rail — no Lake List
 // middleman in the buying path.
-export const SUNSETS_TICKET_CTA_LABEL = "BUY TICKETS — AUGUST 22";
+export const SUNSETS_TICKET_CTA_LABEL = "GET TICKETS";
 export const SUNSETS_TICKET_CTA_SUPPORT =
-  "SUN(SETS) II — August 22 at Castaways. Tickets powered by Posh.";
+  "See the current event for availability and official checkout.";
 export const SUNSETS_2026_SEASON_PASS_CTA_LABEL = "CLAIM SEASON PASS";
 
 export const SUNSETS_2026_SEASON_CHAPTERS = [
@@ -65,7 +65,7 @@ export const SUNSETS_2026_SEASON_CHAPTERS = [
     eventDate: SUNSETS_AUG22_EVENT_DATE,
     eventSlug: SUNSETS_AUG22_EVENT_SLUG,
     venue: "Castaways Chicago",
-    lineup: "Lineup TBA",
+    lineup: "Gene Farris · Legend on the Lake",
     ticketPath: SUNSETS_AUG22_TICKET_PATH,
   },
   {

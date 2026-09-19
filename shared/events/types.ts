@@ -98,6 +98,12 @@ export interface ScheduledEvent {
   subtitle?: string;
   date: string;
   time: string;
+  confirmationStatus?: "pending" | "confirmed";
+  eventStatus?:
+    | "EventScheduled"
+    | "EventCancelled"
+    | "EventPostponed"
+    | "EventRescheduled";
   startsAt?: string;
   endsAt?: string;
   doors?: string;

@@ -52,11 +52,15 @@ function getStatusLabel(status: ScheduledEvent["status"]) {
   return "PAST";
 }
 
-export default function ScheduleSection() {
+export default function ScheduleSection({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
   const upcomingEvents = getScheduledEvents();
   const { preconnectGateway } = useIntentPrefetch();
   const [expandedId, setExpandedId] = useState<string | null>(
-    upcomingEvents[0]?.id || null
+    compact ? null : upcomingEvents[0]?.id || null
   );
   const [activeMonth, setActiveMonth] = useState<string>("ALL");
 
@@ -89,7 +93,7 @@ export default function ScheduleSection() {
     <section
       ref={sectionRef}
       id="schedule"
-      className="relative overflow-hidden border-t border-white/10 bg-[#050505] py-20 md:py-40"
+      className={`relative overflow-hidden border-t border-white/10 bg-[#050505] py-20 md:py-40 ${compact ? "home-calendar" : ""}`}
     >
       {/* 🏛️ ARCHITECTURAL GRID LAYER (PARALLAX ENABLED) */}
       <motion.div
@@ -122,26 +126,31 @@ export default function ScheduleSection() {
 
       <div className="container relative z-10 mx-auto max-w-[90rem] px-4 sm:px-6">
         {/* Header Block */}
-        <div className="mb-12 flex flex-col justify-between gap-8 border-b border-white/15 pb-8 md:mb-24 md:pb-12 lg:flex-row lg:items-end">
+        <div className="schedule-section-heading mb-12 flex flex-col justify-between gap-8 border-b border-white/15 pb-8 md:mb-24 md:pb-12 lg:flex-row lg:items-end">
           <div className="relative">
             <span
               className="absolute -top-6 left-1 font-mono text-[11px] font-black uppercase tracking-[0.38em] md:-top-10 md:left-2"
               style={{ color: `${MONOLITH_ORANGE}b3` }}
             >
-              Season Schedule
+              {compact ? "01 / The calendar" : "Season Schedule"}
             </span>
             <h2
               className="hero-wordmark text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.85] tracking-tight uppercase drop-shadow-sm"
               style={{ color: MONOLITH_ORANGE }}
             >
-              <KineticDecryption text="THE 2026 SEASON" />
+              {compact ? (
+                "What’s next."
+              ) : (
+                <KineticDecryption text="THE 2026 SEASON" />
+              )}
             </h2>
             <p
               className="mt-4 max-w-[18rem] border-l pl-3 font-mono text-[11px] font-bold uppercase leading-6 tracking-[0.24em] text-white/70 md:mt-6 md:max-w-md md:pl-6"
               style={{ borderColor: `${MONOLITH_ORANGE}4D` }}
             >
-              Open-air days, late rooms, and tightly capped releases across one
-              Chicago season.
+              {compact
+                ? "Upcoming shows, all in one place."
+                : "Open-air days, late rooms, and tightly capped releases across one Chicago season."}
             </p>
           </div>
 
@@ -229,7 +238,7 @@ export default function ScheduleSection() {
         </div>
 
         {/* Schedule Wrapper */}
-        <div className="mb-12 flex flex-col overflow-hidden rounded-3xl border border-white/15 bg-black/[0.02] shadow-[0_24px_70px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:rounded-[2rem]">
+        <div className="schedule-section-list mb-12 flex flex-col overflow-hidden rounded-3xl border border-white/15 bg-black/[0.02] shadow-[0_24px_70px_rgba(0,0,0,0.4)] backdrop-blur-2xl md:rounded-[2rem]">
           {filteredEvents.length === 0 ? (
             <div className="text-center py-20 md:py-32">
               <span className="mb-2 block hero-wordmark text-2xl uppercase tracking-tight text-white/70 md:mb-4 md:text-3xl">
@@ -391,7 +400,9 @@ export default function ScheduleSection() {
                               </span>
                             ) : (
                               <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
-                                {getStatusLabel(event.status)}
+                                {event.confirmationStatus === "pending"
+                                  ? "DETAILS PENDING"
+                                  : getStatusLabel(event.status)}
                               </span>
                             )}
                           </div>
@@ -479,7 +490,7 @@ export default function ScheduleSection() {
                             <div className="flex items-center gap-3 mb-6">
                               <div className="h-px w-8 bg-black/30 md:w-16" />
                               <span className="font-mono text-[11px] font-black uppercase tracking-[0.28em] text-white/70">
-                                Event Dossier
+                                Event details
                               </span>
                             </div>
 
@@ -526,7 +537,7 @@ export default function ScheduleSection() {
                               {/* Stat Card: Logistics */}
                               <div className="rounded-3xl border border-white/10 bg-black/[0.02] p-6 shadow-[0_14px_36px_rgba(0,0,0,0.07)] md:p-8">
                                 <span className="mb-4 block font-mono text-[10px] font-black uppercase tracking-[0.4em] text-white/62">
-                                  Location Frame
+                                  Venue
                                 </span>
                                 <p className="hero-wordmark text-xl uppercase leading-tight tracking-tight text-white md:text-2xl">
                                   {event.venue}

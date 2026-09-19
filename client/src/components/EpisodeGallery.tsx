@@ -12,6 +12,7 @@ interface EpisodeGalleryProps {
   description?: string;
   images: { src: string; alt: string; label?: string }[];
   accentColor: string;
+  galleryHref?: string;
 }
 
 export default function EpisodeGallery({
@@ -23,9 +24,11 @@ export default function EpisodeGallery({
   description,
   images,
   accentColor,
+  galleryHref,
 }: EpisodeGalleryProps) {
   const isChasing = series === "chasing-sunsets";
-  const seasonHref = `/${series}/${season.replace(/\s+/g, "-").toLowerCase()}`;
+  const seasonHref =
+    galleryHref || `/${series}/${season.replace(/\s+/g, "-").toLowerCase()}`;
 
   if (isChasing) {
     return (

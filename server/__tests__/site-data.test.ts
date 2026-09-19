@@ -4,9 +4,9 @@ import { buildPublicSiteData } from "../data/public-site-data";
 
 // The public finale uses the same approved publication as /sunsets.
 const expectedSunsetsCta = {
-  label: "Get Tickets",
-  href: currentSunsets.ticketUrl,
-  tool: "allevents",
+  label: "Event update",
+  href: "/sunsets#event-status",
+  tool: "posh",
 };
 
 describe("buildPublicSiteData", () => {
@@ -32,7 +32,7 @@ describe("buildPublicSiteData", () => {
     );
     // Pricing stays at checkout; only the approved ticket destination is exposed.
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBe(currentSunsets.ticketUrl);
+    expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredUntold?.ticketTiers).toBeUndefined();
     expect(featuredUntold?.whatToExpect).toBeUndefined();
     expect(featuredUntold?.tablePackages).toBeUndefined();
@@ -55,8 +55,8 @@ describe("buildPublicSiteData", () => {
     expect(data.events.some(event => event.id === "us-s3e3")).toBe(true);
     expect(data.events.some(event => event.id === "css-sep19")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
-      label: "Get Alerts First",
-      href: "/story#untold-funnel",
+      label: "View archive",
+      href: "/archive",
       tool: "laylo",
     });
     expect(untoldEvent?.ticketUrl).toBeUndefined();
@@ -73,8 +73,8 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.sound).toBeDefined();
     expect(scheduleUntold?.lineup).toBeDefined();
     expect(scheduleUntold?.primaryCta).toMatchObject({
-      label: "Get Alerts First",
-      href: "/story#untold-funnel",
+      label: "View archive",
+      href: "/archive",
       tool: "laylo",
     });
     expect(scheduleUntold?.ticketUrl).toBeUndefined();
@@ -142,7 +142,7 @@ describe("buildPublicSiteData", () => {
       "events@monolithproject.com"
     );
     expect(featuredSunsets?.startingPrice).toBeUndefined();
-    expect(featuredSunsets?.ticketUrl).toBe(currentSunsets.ticketUrl);
+    expect(featuredSunsets?.ticketUrl).toBeUndefined();
     expect(featuredSunsets?.ticketTiers).toBeUndefined();
     expect(data.featuredEvents.ticket?.ticketTiers).toBeUndefined();
   });
@@ -187,7 +187,7 @@ describe("buildPublicSiteData", () => {
     );
   });
 
-  it("automatically sweeps expired events to past and transitions CTA to waitlist/alerts", () => {
+  it("keeps the postponed event update featured after its original date", () => {
     // Fast-forward past September 19, 2026 to verify automated date sweep engine
     vi.setSystemTime(new Date("2026-09-20T12:00:00Z"));
     const data = buildPublicSiteData("/");
@@ -195,9 +195,9 @@ describe("buildPublicSiteData", () => {
 
     expect(featuredSunsets?.id).toBe("css-sep19");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Get Alerts First",
-      href: "/go/waitlist/chasing-sunsets",
-      tool: "laylo",
+      label: "Event update",
+      href: "/sunsets#event-status",
+      tool: "posh",
     });
   });
   it("keeps stale database content from replacing the approved public finale", () => {
@@ -211,8 +211,9 @@ describe("buildPublicSiteData", () => {
     const event = buildPublicSiteData("/", [stale]).featuredEvents.hero;
     expect(event).toMatchObject({
       venue: currentSunsets.venueName,
-      status: "on-sale",
-      ticketUrl: currentSunsets.ticketUrl,
+      status: "coming-soon",
+      eventStatus: "EventPostponed",
+      ticketUrl: undefined,
       startsAt: currentSunsets.start,
       endsAt: currentSunsets.end,
     });

@@ -4,6 +4,8 @@ import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
+import EventStatusFloat from "./components/EventStatusFloat";
+import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import Home from "./pages/Home";
 import { UIProvider, useUI } from "./contexts/UIContext";
 import { InquiryProvider } from "./contexts/InquiryContext";
@@ -478,6 +480,7 @@ function MainContentWrapper() {
   return (
     <>
       <GlobalSpotlightSync />
+      {!isStandaloneLanding && <EventStatusFloat />}
       <SiteDataSync />
       <MetaPixelGate />
 
@@ -495,7 +498,7 @@ function MainContentWrapper() {
         aria-hidden="true"
       />
 
-      {!shouldHideGlobalConversion && (
+      {!shouldHideGlobalConversion && !sunsetsNeedsUpdate && (
         <Suspense fallback={null}>
           <GlobalTicketButton />
         </Suspense>

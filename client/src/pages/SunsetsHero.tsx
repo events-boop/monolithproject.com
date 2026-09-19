@@ -11,8 +11,7 @@ export default function SunsetsHero() {
     <>
       <Helmet>
         <title>
-          Chasing Sun(Sets) 2026 — SUN(SETS) II August 22 Tickets On Sale | The
-          Monolith Project
+          Chasing Sun(Sets) 2026 — Chapter Two Archive | The Monolith Project
         </title>
       </Helmet>
 
@@ -50,15 +49,12 @@ export default function SunsetsHero() {
               EVENTS
             </Link>
             <a
-              href="/go/tickets/css-aug22"
+              href="/schedule"
               className="hover:text-pink-400 transition-colors"
             >
               TICKETS
             </a>
-            <Link
-              href="/vip"
-              className="hover:text-pink-400 transition-colors"
-            >
+            <Link href="/vip" className="hover:text-pink-400 transition-colors">
               EXPERIENCE
             </Link>
             <Link
@@ -76,7 +72,7 @@ export default function SunsetsHero() {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="/go/tickets/css-aug22"
+              href="/schedule"
               className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full transition-transform hover:scale-105 shadow-lg shadow-pink-500/30 text-sm tracking-widest"
             >
               GET TICKETS
@@ -126,23 +122,23 @@ export default function SunsetsHero() {
             </div>
 
             <p className="text-lg md:text-xl font-medium leading-relaxed max-w-lg mb-10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-              Chapter Two lands August 22 at Castaways. Golden hour on the
-              Chicago lakefront — open-air house, skyline views, and good
-              people. Tickets are live now.
+              Chapter Two took place August 22 at Castaways. Revisit the Chicago
+              lakefront show in the archive, or explore the schedule for
+              upcoming events.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 mb-16">
               <a
-                href="/go/tickets/css-aug22"
+                href="/archive/chasing-sunsets-sunsets-ii-2026"
                 className="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-white font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(236,72,153,0.5)] transition-all hover:scale-105 flex items-center justify-center gap-2"
               >
-                GET TICKETS — AUG 22 <span className="text-2xl">🎟️</span>
+                VIEW CHAPTER TWO ARCHIVE <span className="text-2xl">🎟️</span>
               </a>
               <a
-                href="/go/tickets/css-sep19"
+                href="/sunsets"
                 className="bg-black/80 border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(250,204,21,0.2)] transition-all hover:scale-105 flex items-center justify-center gap-2"
               >
-                SEPT 19 — JOEZI X MASSUMA <span className="text-2xl">🌊</span>
+                SUN(SETS) EVENT GUIDE <span className="text-2xl">🌊</span>
               </a>
             </div>
 
@@ -251,7 +247,7 @@ export default function SunsetsHero() {
               >
                 <span>THREE DATES • ONE LAKE • ONE HOME</span>
                 <span className="text-pink-500">★</span>
-                <span>AUG 22 + SEPT 19 • TICKETS ON SALE NOW</span>
+                <span>CHAPTER TWO ARCHIVE • EXPLORE UPCOMING SHOWS</span>
                 <span className="text-pink-500">★</span>
                 <span className="text-white">SUNSETS.VIP</span>
                 <span className="text-pink-500">★</span>

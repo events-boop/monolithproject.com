@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
 
 export type InquiryType =
   | "sponsor"
@@ -21,14 +27,14 @@ export function InquiryProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<InquiryType>("general");
 
-  const openInquiry = (newType: InquiryType) => {
+  const openInquiry = useCallback((newType: InquiryType) => {
     setType(newType);
     setIsOpen(true);
-  };
+  }, []);
 
-  const closeInquiry = () => {
+  const closeInquiry = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   return (
     <InquiryContext.Provider

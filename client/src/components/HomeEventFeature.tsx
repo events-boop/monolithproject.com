@@ -6,14 +6,18 @@ import {
   sunsetsTimeLabel,
   sunsetsUpdatedLabel,
   sunsetsStatusLabel,
+  sunsetsShowVisible,
+  sunsetsNeedsUpdate,
   sunsetsTicketsEnabled,
 } from "@shared/events/sunsets-current";
 
 export default function HomeEventFeature() {
+  if (!sunsetsShowVisible()) return null;
   return (
     <section
       id="current-event"
       className="home-event-feature"
+      data-event-status={event.status}
       aria-labelledby="current-event-title"
     >
       <div className="container layout-wide home-event-grid">
@@ -22,6 +26,11 @@ export default function HomeEventFeature() {
           className="home-event-art"
           aria-label="Open the Chasing Sun(Sets) event guide"
         >
+          {sunsetsNeedsUpdate && (
+            <span className="home-postponed-art-label">
+              POSTPONED · ORIGINAL BILLING
+            </span>
+          )}
           <picture>
             <source
               type="image/avif"
@@ -61,15 +70,21 @@ export default function HomeEventFeature() {
           </h2>
           <dl className="home-event-essentials">
             <div>
-              <dt>When</dt>
+              <dt>
+                {sunsetsNeedsUpdate ? "Original date · postponed" : "When"}
+              </dt>
               <dd>
                 {sunsetsDateLabel}
                 <br />
-                <span>{sunsetsTimeLabel}</span>
+                <span>
+                  {sunsetsNeedsUpdate
+                    ? "New date to be announced"
+                    : sunsetsTimeLabel}
+                </span>
               </dd>
             </div>
             <div>
-              <dt>Where</dt>
+              <dt>{sunsetsNeedsUpdate ? "Original venue" : "Where"}</dt>
               <dd>
                 {event.venueName}
                 <br />
@@ -122,8 +137,8 @@ export default function HomeEventFeature() {
             <h3>{event.statusHeading}</h3>
             <p>{event.statusMessage}</p>
             <p>
-              Rain or shine. Check the event guide for weather updates and
-              ticket-holder instructions.
+              Check the event guide for confirmed updates and ticket-holder
+              instructions.
             </p>
             <a className="home-text-link" href="/sunsets#weather">
               Weather & event information{" "}

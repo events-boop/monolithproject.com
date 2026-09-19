@@ -1,3 +1,4 @@
+import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
 import {
   lazy,
   Suspense,
@@ -149,6 +150,26 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const bannerPayload = hasEventBanner ? getEventBannerPayload() : null;
   const mobileMenuId = "nav-mobile-menu";
 
+  // Older pages lack the shared skip-link target. Point keyboard users to the
+  // page's existing content landmark without introducing nested <main> nodes.
+  useEffect(() => {
+    if (document.getElementById("main-content")) return;
+    const target = document.querySelector<HTMLElement>(
+      "#app-shell main, #app-shell section"
+    );
+    if (!target) return;
+    // Preserve section anchors; use a focusable target immediately before them.
+    const marker = document.createElement("span");
+    marker.id = "main-content";
+    marker.tabIndex = -1;
+    marker.setAttribute("role", "group");
+    marker.setAttribute("aria-label", "Main content");
+    target.before(marker);
+    return () => {
+      marker.remove();
+    };
+  }, [location]);
+
   const [currentChapter, setCurrentChapter] = useState<{
     number: string;
     label: string;
@@ -164,7 +185,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       { id: "campaigns", number: "01", label: "NEXT SHOW" },
       { id: "season", number: "02", label: "UPCOMING" },
       { id: "series", number: "03", label: "SERIES" },
-      { id: "showcase", number: "04", label: "RADIO" },
+      { id: "showcase", number: "04", label: "ARTISTS" },
       { id: "community", number: "05", label: "PARTNERS" },
     ];
 
@@ -482,7 +503,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       }`}
                     >
                       {resolvedBrand === "chasing-sunsets" ? (
-                        "SUN(SETS)"
+                        <ChasingSunsetsLogo
+                          className="w-[94px] sm:w-[136px]"
+                          decorative
+                          priority
+                        />
                       ) : resolvedBrand === "untold-story" ? (
                         <>
                           <UntoldButterflyLogo
@@ -789,7 +814,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         if (cta.isExternal) preconnectGateway(cta.href);
                       }}
                       onClick={() => signalChirp.click()}
-                      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 ${
+                      className={`inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
                         cta.tool === "posh" || cta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
                           : cta.tool === "laylo"
@@ -797,6 +822,9 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             : "border-white/20 bg-white/[0.08] text-white"
                       }`}
                     >
+                      <span className="text-xs font-semibold">
+                        {ticketHref ? "Tickets" : "Events"}
+                      </span>
                       {cta.tool === "posh" || cta.tool === "allevents" ? (
                         <Ticket className="h-4 w-4" />
                       ) : cta.tool === "laylo" ? (

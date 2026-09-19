@@ -167,7 +167,8 @@ function outboundClickMeta(group: string, key: string) {
 // buying path — the vanity now lands on the live Aug 22 checkout rail.
 const VANITY_ALIASES: Record<string, string> = {
   [SUNSETS_JULY4_VANITY_TICKET_PATH]: SUNSETS_JULY4_TICKET_PATH,
-  [SUNSETS_LAKELIST_PATH]: SUNSETS_AUG22_TICKET_PATH,
+  [SUNSETS_LAKELIST_PATH]: "/sunsets#updates",
+  "/go/waitlist/chasing-sunsets": "/sunsets#updates",
 };
 
 for (const [from, to] of Object.entries(VANITY_ALIASES)) {
@@ -175,7 +176,11 @@ for (const [from, to] of Object.entries(VANITY_ALIASES)) {
     const query = req.originalUrl.split("?")[1];
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("X-Robots-Tag", "noindex, noarchive, nosnippet");
-    return res.redirect(302, query ? `${to}?${query}` : to);
+    const [path, hash] = to.split("#");
+    return res.redirect(
+      302,
+      `${path}${query ? `?${query}` : ""}${hash ? `#${hash}` : ""}`
+    );
   });
 }
 

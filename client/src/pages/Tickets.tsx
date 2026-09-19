@@ -1,3 +1,7 @@
+import {
+  currentSunsets,
+  sunsetsNeedsUpdate,
+} from "@shared/events/sunsets-current";
 import { motion } from "framer-motion";
 import type { SyntheticEvent } from "react";
 import {
@@ -55,10 +59,10 @@ export default function Tickets() {
   const cta = featuredEvent
     ? getEventCta(featuredEvent)
     : {
-        label: "Buy Tickets — August 22",
-        href: SUNSETS_AUG22_TICKET_PATH,
+        label: "View events",
+        href: "/schedule",
         tool: "posh" as const,
-        isExternal: true,
+        isExternal: false,
       };
   const ctaToneClass = getEventCtaToneClass(featuredEvent);
 
@@ -67,9 +71,7 @@ export default function Tickets() {
       ? buildScheduledEventSchema(featuredEvent, "/tickets")
       : null;
   const featuredHeadline =
-    featuredEvent?.headline ||
-    featuredEvent?.title ||
-    "SUN(SETS) II — Chapter Two";
+    featuredEvent?.headline || featuredEvent?.title || "Monolith events";
   const featuredEyebrow =
     featuredEvent?.subtitle ||
     (featuredEvent
@@ -81,7 +83,8 @@ export default function Tickets() {
   const featuredPoster =
     featuredEvent?.image || "/images/chasing-sunsets-premium.webp";
   const showTicketFunnel = Boolean(
-    featuredEvent?.activeFunnels?.length && cta.tool !== "posh"
+    featuredEvent?.activeFunnels?.length &&
+    !["posh", "allevents"].includes(cta.tool)
   );
   const isFirstAccess = featuredEvent?.status !== "on-sale";
   const accessHeading = isFirstAccess ? "NEXT SIGNAL" : "TICKETS LIVE";
@@ -91,8 +94,8 @@ export default function Tickets() {
   const accessCopy = featuredEvent
     ? isFirstAccess
       ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
-      : `${featuredHeadline} — tickets are live now at Castaways, powered by Posh. Straight to checkout.`
-    : "Tickets for the next Chasing Sun(Sets) chapter — powered by Posh.";
+      : `${featuredHeadline} — tickets are available through ${cta.tool === "allevents" ? "AllEvents" : "the event checkout"}.`
+    : "Explore confirmed shows and event announcements from The Monolith Project.";
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -130,6 +133,52 @@ export default function Tickets() {
     }
   };
 
+  if (
+    featuredEvent?.id === "css-sep19" &&
+    sunsetsNeedsUpdate &&
+    !comingSoonKey
+  ) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <SEO
+          title="Sun(Sets) III postponed — ticket-holder update"
+          description={currentSunsets.statusMessage}
+        />
+        {featuredEventSchema && <JsonLd data={featuredEventSchema} />}
+        <Navigation />
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="page-shell-start-loose px-6 pb-24"
+        >
+          <section className="mx-auto max-w-2xl rounded-xl border border-amber-300/60 bg-[#1d1f18] p-7 md:p-12">
+            <p className="text-sm text-amber-200 mb-5">
+              OFFICIAL EVENT UPDATE · JOEZI × MASSUMA
+            </p>
+            <h1 className="text-4xl md:text-5xl leading-tight mb-6">
+              Postponed due to weather.
+            </h1>
+            <p className="text-base leading-relaxed mb-5">
+              {currentSunsets.statusMessage}
+            </p>
+            <p className="text-base leading-relaxed mb-5">
+              {currentSunsets.ticketHolderMessage}
+            </p>
+            <p className="text-base leading-relaxed mb-8">
+              Keep your booking confirmation. A new date is not yet confirmed.
+            </p>
+            <a
+              className="inline-flex min-h-12 items-center rounded bg-amber-200 px-6 py-3 font-semibold text-black"
+              href="/sunsets#event-update"
+            >
+              Read the full update ↗
+            </a>
+          </section>
+        </main>
+      </div>
+    );
+  }
+
   // Fallback view for drops whose checkout isn't live yet (e.g. Season
   // Pass). The current chapters sell direct via the Aug 22 rail.
   if (comingSoonKey) {
@@ -137,7 +186,7 @@ export default function Tickets() {
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <SEO
           title="SUN(SETS) Tickets | Chasing Sun(Sets)"
-          description="SUN(SETS) II + III tickets are live now at Castaways — official checkout powered by Posh. August 22 and September 19, 2026."
+          description="Find current event availability and official ticket destinations."
         />
         <Navigation />
         <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
@@ -145,21 +194,21 @@ export default function Tickets() {
             SUN(SETS) 2026 — CASTAWAYS
           </p>
           <h1 className="text-3xl font-black tracking-tight text-white">
-            TICKETS ARE LIVE
+            CHECK EVENT AVAILABILITY
           </h1>
           <p className="text-sm leading-relaxed text-stone-400">
-            Chapter Two (August 22) and Chapter Three (September 19) are on
-            sale now — straight to checkout, no waitlist.
+            This ticket release is not available yet. Explore the current
+            schedule for confirmed shows and available tickets.
           </p>
           <a
-            href={SUNSETS_AUG22_TICKET_PATH}
+            href="/schedule"
             className="inline-flex items-center justify-center gap-2 h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] transition-colors"
           >
             <Ticket className="size-4" />
-            Buy Tickets — August 22
+            View current events
           </a>
           <p className="text-[11px] text-stone-500 uppercase tracking-[0.14em]">
-            Official ticket source powered by Posh.
+            Availability is listed for each event.
           </p>
         </div>
       </div>

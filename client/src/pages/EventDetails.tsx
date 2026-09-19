@@ -1,3 +1,4 @@
+import { capturePostHogEvent } from "@/lib/posthog";
 import { useEffect } from "react";
 import { Link, useLocation, useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -72,6 +73,8 @@ function buildEventSeoDescription(
 function getTicketPathCopy(
   event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
 ) {
+  if (event.eventStatus === "EventPostponed")
+    return "Postponed — read the event update";
   if (event.status === "on-sale")
     return event.inventoryState === "low"
       ? "Final inventory moving"
@@ -153,6 +156,14 @@ export default function EventDetails() {
         : "monolith";
 
   useEffect(() => {
+    if (event?.id)
+      capturePostHogEvent("event_view", {
+        event_id: event.id,
+        source: "event_details",
+      });
+  }, [event?.id]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
@@ -165,7 +176,7 @@ export default function EventDetails() {
   if (!event) {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
-        <h1 className="font-display text-4xl mb-4">Event Cipher Null</h1>
+        <h1 className="font-display text-4xl mb-4">Event not found</h1>
         <p className="font-mono text-white/70 mb-8">
           The requested event data could not be located.
         </p>
@@ -182,8 +193,13 @@ export default function EventDetails() {
   }
 
   const bgImage = event.image || "/images/hero-monolith.webp";
-  const pageTitle = buildEventSeoTitle(event);
-  const pageDescription = buildEventSeoDescription(event);
+  const postponed = event.eventStatus === "EventPostponed";
+  const pageTitle = postponed
+    ? `${event.headline || event.title} — Postponed`
+    : buildEventSeoTitle(event);
+  const pageDescription = postponed
+    ? event.eventNotice || "Postponed. A new date is not yet confirmed."
+    : buildEventSeoDescription(event);
   const schemaData = [
     buildScheduledEventSchema(event, canonicalEventPath),
     buildBreadcrumbSchema([
@@ -302,7 +318,11 @@ export default function EventDetails() {
                 {getSeriesLabel(event.series)}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.28em] px-3 py-1 border border-white/20 text-white/75">
-                {getStatusLabel(event.status)}
+                {postponed
+                  ? "POSTPONED"
+                  : event.confirmationStatus === "pending"
+                    ? "DETAILS PENDING"
+                    : getStatusLabel(event.status)}
               </span>
             </div>
 
@@ -316,8 +336,9 @@ export default function EventDetails() {
                 {event.location}
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-white/70" /> {event.date} //{" "}
-                {event.time}
+                <Clock className="w-4 h-4 text-white/70" />{" "}
+                {postponed ? "Original booking: " : ""}
+                {event.date} // {event.time}
               </div>
               {event.lineup && (
                 <div className="flex items-center gap-2">
@@ -394,7 +415,7 @@ export default function EventDetails() {
             {event.description && (
               <section>
                 <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
-                  Transmission
+                  Event details
                 </h3>
                 <div className="prose prose-invert prose-p:text-white/70 prose-p:leading-relaxed prose-p:font-light text-lg">
                   <p>{event.description}</p>

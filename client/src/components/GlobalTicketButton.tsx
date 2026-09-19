@@ -1,3 +1,5 @@
+import { useInquiry } from "@/contexts/InquiryContext";
+import { getEventWindowStatus } from "@/lib/siteExperience";
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import {
@@ -35,6 +37,7 @@ function shouldDelayFloatingCta(pathname: string) {
 
 export default function GlobalTicketButton() {
   usePublicSiteDataVersion();
+  const { isOpen: inquiryOpen } = useInquiry();
   const [location] = useLocation();
   const [consentState, setConsentState] = useState(getCookieConsentState);
   const [showAfterHero, setShowAfterHero] = useState(
@@ -66,8 +69,8 @@ export default function GlobalTicketButton() {
   // Posh ticket CTAs route to the on-site /tickets page rather than the
   // /go/tickets Posh redirect (which falls back to the Lake List until the
   // Posh ticket URL is configured). Waitlist/presale CTAs are unchanged.
-  const ctaHref = cta.tool === "posh" ? ROUTES.tickets : cta.href;
-  const ctaIsExternal = cta.tool === "posh" ? false : cta.isExternal;
+  const ctaHref = appendAttributionQueryParams(cta.href);
+  const ctaIsExternal = cta.isExternal;
   const isHome = location === "/";
   const sunsetsVipHref = appendAttributionQueryParams("https://sunsets.vip");
   const untoldVipHref = appendAttributionQueryParams("https://untold.vip");
@@ -180,6 +183,9 @@ export default function GlobalTicketButton() {
 
   // Keep the hero and consent flows focused before adding another conversion layer.
   if (
+    inquiryOpen ||
+    !featuredEvent ||
+    getEventWindowStatus(featuredEvent) === "past" ||
     location.startsWith("/chasing-sunsets") ||
     location === "/tickets" ||
     location.startsWith("/vip") ||
@@ -302,36 +308,6 @@ export default function GlobalTicketButton() {
 
       {/* Mobile Sticky Bar */}
       <div className="safe-bottom w-full border-t border-white/10 bg-[#050506] px-4 py-4 shadow-[0_-16px_40px_rgba(0,0,0,0.42)] md:hidden">
-        {isHome && (
-          <div className="mb-2 grid grid-cols-2 gap-2">
-            <a
-              href={sunsetsVipHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={trackSunsetsVipClick}
-              aria-label="Open Sunsets VIP in a new tab"
-              className="btn-pill-outline btn-pill-outline-sunsets btn-pill-compact group min-w-0 justify-center gap-2 px-3"
-            >
-              <Waves aria-hidden="true" className="h-4 w-4 shrink-0" />
-              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.14em] min-[380px]:text-[10px]">
-                SUNSETS.VIP
-              </span>
-            </a>
-            <a
-              href={untoldVipHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={trackUntoldVipClick}
-              aria-label="Open Untold VIP in a new tab"
-              className="btn-pill-outline btn-pill-outline-untold btn-pill-compact group min-w-0 justify-center gap-2 px-3"
-            >
-              <MoonStar aria-hidden="true" className="h-4 w-4 shrink-0" />
-              <span className="truncate text-[9px] font-semibold uppercase tracking-[0.14em] min-[380px]:text-[10px]">
-                UNTOLD.VIP
-              </span>
-            </a>
-          </div>
-        )}
         <a
           href={ctaHref}
           target={ctaIsExternal ? "_blank" : undefined}

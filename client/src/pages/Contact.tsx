@@ -76,11 +76,11 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="max-w-3xl"
             >
-              <span className="section-kicker text-charcoal/55 block mb-5">
+              <span className="section-kicker text-foreground/80 block mb-5">
                 Get In Touch
               </span>
-              <h1 className="section-display-title text-charcoal">CONTACT</h1>
-              <p className="mt-5 text-charcoal/70 leading-relaxed max-w-2xl">
+              <h1 className="section-display-title text-foreground">CONTACT</h1>
+              <p className="mt-5 text-foreground/80 leading-relaxed max-w-2xl">
                 Use the form for general inquiries, or jump directly to booking,
                 partners, or legal.
               </p>
@@ -88,7 +88,7 @@ export default function Contact() {
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href="mailto:events@monolithproject.com"
-                  className="btn-pill-outline-dark"
+                  className="btn-pill-outline"
                 >
                   <Mail className="w-3.5 h-3.5" />
                   Email
@@ -121,35 +121,35 @@ export default function Contact() {
                   {tile.external ? (
                     <a
                       href={tile.href}
-                      className="ui-card h-full block border border-charcoal/15 bg-white/70 hover:bg-white/85 transition-colors p-6"
+                      className="ui-card h-full block border border-border bg-card hover:bg-muted transition-colors p-6"
                     >
-                      <div className="w-11 h-11 rounded-2xl border border-charcoal/10 bg-white/80 flex items-center justify-center text-charcoal/60 mb-5">
+                      <div className="w-11 h-11 rounded-2xl border border-border bg-muted flex items-center justify-center text-foreground/80 mb-5">
                         <tile.icon className="w-5 h-5" />
                       </div>
                       <h3 className="font-display text-2xl uppercase leading-none">
                         {tile.title}
                       </h3>
-                      <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">
+                      <p className="mt-3 text-sm text-foreground/80 leading-relaxed">
                         {tile.description}
                       </p>
-                      <div className="btn-text-action btn-text-action-dark mt-6">
+                      <div className="btn-text-action  mt-6">
                         {tile.label}
                         <ArrowUpRight />
                       </div>
                     </a>
                   ) : (
                     <Link href={tile.href} asChild>
-                      <a className="ui-card h-full block border border-charcoal/15 bg-white/70 hover:bg-white/85 transition-colors p-6">
-                        <div className="w-11 h-11 rounded-2xl border border-charcoal/10 bg-white/80 flex items-center justify-center text-charcoal/60 mb-5">
+                      <a className="ui-card h-full block border border-border bg-card hover:bg-muted transition-colors p-6">
+                        <div className="w-11 h-11 rounded-2xl border border-border bg-muted flex items-center justify-center text-foreground/80 mb-5">
                           <tile.icon className="w-5 h-5" />
                         </div>
                         <h3 className="font-display text-2xl uppercase leading-none">
                           {tile.title}
                         </h3>
-                        <p className="mt-3 text-sm text-charcoal/60 leading-relaxed">
+                        <p className="mt-3 text-sm text-foreground/80 leading-relaxed">
                           {tile.description}
                         </p>
-                        <div className="btn-text-action btn-text-action-dark mt-6">
+                        <div className="btn-text-action  mt-6">
                           {tile.label}
                           <ArrowUpRight />
                         </div>
@@ -167,18 +167,18 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="border border-charcoal/15 bg-white/70 rounded-2xl p-7"
+                  className="border border-border bg-card rounded-2xl p-7"
                 >
-                  <p className="section-kicker text-charcoal/55 mb-4">
+                  <p className="section-kicker text-foreground/80 mb-4">
                     What To Include
                   </p>
-                  <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
+                  <ul className="space-y-3 text-sm text-foreground/80 leading-relaxed">
                     <li>Dates + venue (if relevant)</li>
                     <li>Links: mixes, socials, decks, references</li>
                     <li>Budget range (if you have one)</li>
                   </ul>
-                  <div className="mt-6 h-px bg-charcoal/15" />
-                  <p className="mt-6 text-sm text-charcoal/60 leading-relaxed">
+                  <div className="mt-6 h-px bg-border" />
+                  <p className="mt-6 text-sm text-foreground/80 leading-relaxed">
                     If you're sending music: include a private SoundCloud link
                     and a short note about the vibe you play.
                   </p>
@@ -193,7 +193,7 @@ export default function Contact() {
         </section>
       </main>
 
-      <EntityBoostStrip tone="light" className="pb-20" />
+      <EntityBoostStrip tone="dark" className="pb-20" />
     </div>
   );
 }

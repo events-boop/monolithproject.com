@@ -72,8 +72,8 @@ export default function Schedule() {
   const scheduleEvents = getScheduledEvents();
   const nextSignal = scheduleEvents[0];
   const nextSignalTitle =
-    nextSignal?.headline || nextSignal?.title || "SUN(SETS) II — Chapter Two";
-  const nextSignalDate = nextSignal?.date || "August 22, 2026";
+    nextSignal?.headline || nextSignal?.title || "More shows coming soon";
+  const nextSignalDate = nextSignal?.date || "Date to be announced";
   const nextSignalVenue = nextSignal
     ? `${nextSignal.venue}, ${nextSignal.location}`
     : "Castaways, Chicago";
@@ -438,7 +438,7 @@ export default function Schedule() {
                                 : dateMonth}
                             </span>
                             <span className="font-mono text-[11px] text-muted-foreground/40 md:mt-2 tracking-[0.1em] group-hover:text-primary/60 transition-colors duration-500 uppercase">
-                              {event.time.split("—")[0]} CST
+                              {event.time}
                             </span>
                           </div>
 
@@ -502,7 +502,9 @@ export default function Schedule() {
                                   {seriesLabels[event.series]}
                                 </span>
                                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full text-white/80">
-                                  {getStatusLabel(event.status)}
+                                  {event.confirmationStatus === "pending"
+                                    ? "DETAILS PENDING"
+                                    : getStatusLabel(event.status)}
                                 </span>
                                 {isTicketOnSale(event) && (
                                   <motion.span
@@ -713,7 +715,7 @@ export default function Schedule() {
                                     href={getEventDetailsHref(event)}
                                     onClick={() =>
                                       trackAccessEvent("event_card_click", {
-                                        buttonName: "Open Full Dossier",
+                                        buttonName: "Event details",
                                         destinationUrl:
                                           getEventDetailsHref(event),
                                         pagePath: "/schedule",

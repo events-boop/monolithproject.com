@@ -483,6 +483,45 @@ export const autografSpecial: MediaItem[] = [
 ];
 
 export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
+  // August 22, 2026 — Chapter Two at Castaways Beach Club headlined by
+  // Chicago house legend Gene Farris: Legend on the Lake. Seeded with the
+  // official portrait and lakefront series art; comingSoon keeps the community
+  // upload panel active while the full recap film and photo edit are in progress.
+  "chasing-sunsets-sunsets-ii-2026": {
+    slug: "chasing-sunsets-sunsets-ii-2026",
+    title: "Chasing Sun(Sets)",
+    subtitle: "SUN(SETS) II — Gene Farris: Legend on the Lake",
+    description:
+      "August 22, 2026 at Castaways Beach Club on North Avenue Beach. Chicago house pioneer Gene Farris headlining Chapter Two with a House of Friends preview. The full gallery and recap film are in the edit now.",
+    accentColor: "#E8B86D",
+    coverImage: "/images/artists/gene-farris/gene-farris-portrait.jpg",
+    date: "August 22, 2026",
+    comingSoon: true,
+    media: [
+      image({
+        id: "sunsets-ii-portrait",
+        kind: "image",
+        src: "/images/artists/gene-farris/gene-farris-portrait.jpg",
+        width: 1024,
+        height: 1024,
+        alt: "Gene Farris — Legend on the Lake official portrait",
+        caption: "Gene Farris",
+        description:
+          "Chicago house music pioneer headlining Chapter Two at Castaways.",
+      }),
+      image({
+        id: "sunsets-ii-golden-hour",
+        kind: "image",
+        src: "/images/sunsets-hero-beach.jpg",
+        width: 1024,
+        height: 614,
+        alt: "Chasing Sun(Sets) crowd and stage at Castaways Beach Club",
+        caption: "Castaways Beach Club",
+        description:
+          "North Avenue Beach on the Chicago lakefront — the Chapter Two setting.",
+      }),
+    ],
+  },
   // July 31, 2026 — the Lola pop-up weekend opener. Seeded with the billing
   // art so the record is browsable now; comingSoon keeps the community
   // upload call-to-action alive under the gallery until the photo/video edit

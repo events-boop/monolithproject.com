@@ -1,4 +1,8 @@
 import {
+  currentSunsets,
+  sunsetsTicketsEnabled,
+} from "../../shared/events/sunsets-current";
+import {
   SUNSETS_AUG22_TICKET_KEY,
   SUNSETS_JULY4_EVENT_SLUG,
   SUNSETS_JULY4_TICKET_KEY,
@@ -240,6 +244,15 @@ export function resolveOutboundDestination(group: string, key: string) {
 
   if (FORBIDDEN_KEYS.has(normalizedKey)) {
     return null;
+  }
+
+  if (
+    normalizedGroup === "tickets" &&
+    normalizedKey === SUNSETS_SEP19_TICKET_KEY
+  ) {
+    return sunsetsTicketsEnabled()
+      ? currentSunsets.ticketUrl
+      : "https://monolithproject.com/sunsets#event-update";
   }
 
   if (normalizedGroup === "tickets") {

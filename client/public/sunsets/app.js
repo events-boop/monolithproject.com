@@ -7,11 +7,23 @@
 
   // Keep tickets available while the main booking button is outside the viewport.
   function updateDock() {
+    const editing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
+    const dialogOpen = Boolean(document.getElementById('privacy-dialog')?.open);
+    const notice = document.querySelector('.event-status-float');
+    if (notice) {
+      const updates = document.getElementById('updates')?.getBoundingClientRect();
+      const updatesVisible = updates && updates.top < innerHeight && updates.bottom > 0;
+      notice.hidden = editing || dialogOpen || Boolean(updatesVisible);
+      notice.inert = notice.hidden;
+    }
+    if (!heroButton || !dock || document.body.dataset.eventStatus === 'EventPostponed') {
+      if (dock) { dock.classList.remove('is-visible'); dock.inert = true; }
+      return;
+    }
     const heroRect = heroButton.getBoundingClientRect();
     const heroOutside = heroRect.bottom < 0 || heroRect.top >= window.innerHeight;
     const rect = closing.getBoundingClientRect();
     const closingVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    const editing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
     const visible = heroOutside && !closingVisible && !editing && !document.getElementById('privacy-dialog')?.open;
     dock.classList.toggle('is-visible', visible);
     dock.inert = !visible;
@@ -58,8 +70,8 @@
   const forms = [...document.querySelectorAll('.signup-form')];
   fetch('/api/sunsets/subscriptions', {headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)})
     .then(response => {if(!response.ok)throw new Error();return response.json();})
-    .then(data => {for(const form of forms){if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('.form-feedback').textContent='Choose this email list above. New subscribers will be asked to confirm by email.';}}})
-    .catch(()=>{}); // The initial markup already explains unavailability.
+    .then(data => {for(const form of forms){if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('fieldset').hidden=false;form.parentElement.querySelector('.signup-fallback').hidden=true;form.querySelector('.form-feedback').textContent='Choose this email list above. New subscribers will be asked to confirm by email.';}}})
+    .catch(()=>{}); // The initial markup includes a working email-request alternative.
   for (const form of forms) form.addEventListener('submit', async event => {
     event.preventDefault();
     if(!form.reportValidity())return;
@@ -73,8 +85,9 @@
       const result=await response.json();
       if(!response.ok || result.ok!==true)throw new Error(result.message || result.error?.message || 'We couldn’t confirm your signup. Please try again.');
       feedback.textContent=result.message;
+      window.sunsetsTracking?.subscriptionResult(form.dataset.audience,result.state);
       form.reset();
-    } catch(error){feedback.textContent=error.name==='TimeoutError'?'We couldn’t confirm your signup. Please try again.':error.message || 'Signup is unavailable. Please try again.';}
+    } catch(error){form.parentElement.querySelector('.signup-fallback').hidden=false;feedback.textContent=error.name==='TimeoutError'?'We couldn’t confirm your signup. Please try again.':error.message || 'Signup is unavailable. Please try again.';}
     finally{fieldset.disabled=false;form.removeAttribute('aria-busy');}
   });
 })();

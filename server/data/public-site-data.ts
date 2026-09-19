@@ -1,3 +1,7 @@
+import {
+  getEventWindowStatus,
+  isUpcomingEvent,
+} from "../../shared/events/lifecycle";
 import { withApprovedSunsets } from "../../shared/events/sunsets-current";
 import {
   SUNSETS_AUG22_TICKET_PATH,
@@ -36,7 +40,7 @@ export const INSTAGRAM_SUNSETS = "https://instagram.com/chasingsunsets.music";
  * SUN(SETS) II tickets are live — every "tickets" surface goes straight to
  * the Aug 22 Posh checkout rail. No Lake List middleman in the buying path.
  */
-export const POSH_TICKET_URL = SUNSETS_AUG22_TICKET_PATH;
+export const POSH_TICKET_URL = "/tickets";
 
 const CASTAWAYS_VIP_EMAIL = "vip@chasingsunsets.music";
 
@@ -458,7 +462,7 @@ function eventStartValue(event: ScheduledEvent) {
 // sitemap). Same-day events stay grouped: intra-day order comes from startsAt,
 // so the July 4 after-party card sits directly after SUN(SETS) I.
 export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG]
-  .map(withApprovedSunsets)
+  .map(event => withApprovedSunsets(event))
   .sort((a, b) => eventStartValue(a) - eventStartValue(b));
 
 const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
@@ -544,6 +548,8 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     headline: event.headline,
     date: event.date,
     time: event.time,
+    confirmationStatus: event.confirmationStatus,
+    eventStatus: event.eventStatus,
     startsAt: event.startsAt,
     endsAt: event.endsAt,
     doors: event.doors,
@@ -578,6 +584,8 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
     headline: event.headline,
     date: event.date,
     time: event.time,
+    confirmationStatus: event.confirmationStatus,
+    eventStatus: event.eventStatus,
     startsAt: event.startsAt,
     endsAt: event.endsAt,
     doors: event.doors,
@@ -605,7 +613,11 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
 }
 
 function shapeEvent(event: ScheduledEvent, profile: EventPayloadProfile) {
-  const publicEvent = withApprovedSunsets(lockSunsetsPrelaunchEvent(event));
+  const approvedEvent = withApprovedSunsets(lockSunsetsPrelaunchEvent(event));
+  const publicEvent =
+    getEventWindowStatus(approvedEvent) === "past"
+      ? { ...approvedEvent, status: "past" as const, ticketUrl: undefined }
+      : approvedEvent;
 
   if (profile === "home") return toHomeEvent(publicEvent);
   if (profile === "summary") return toSummaryEvent(publicEvent);
@@ -622,7 +634,23 @@ function resolveFeaturedEvents(
   return Object.fromEntries(
     Object.entries(FEATURED_EVENT_IDS)
       .map(([slot, eventId]) => {
-        const event = getEventById(events, eventId);
+        const configured =
+          events.find(
+            event =>
+              event.id === "css-sep19" && event.eventStatus === "EventPostponed"
+          ) || getEventById(events, eventId);
+        const event =
+          configured &&
+          (isUpcomingEvent(configured) ||
+            configured.eventStatus === "EventPostponed")
+            ? configured
+            : [...events]
+                .filter(event => isUpcomingEvent(event))
+                .sort(
+                  (a, b) =>
+                    Date.parse(a.startsAt || a.date) -
+                    Date.parse(b.startsAt || b.date)
+                )[0];
         return [slot, event ? shapeEvent(event, profile) : undefined];
       })
       .filter((entry): entry is [SiteExperienceSlot, ScheduledEvent] =>
@@ -723,9 +751,28 @@ export function buildPublicSiteData(
   const profile = getPayloadProfileForPath(normalizedPath);
   // Publish OS: drafts never enter a public payload; hidden events only
   // resolve on direct event pages and stay out of every list surface.
-  const publishedEvents = eventsSource.filter(
-    event => event.status !== "draft"
-  );
+  const publishedEvents = eventsSource
+    .map(event => {
+      const pendingVenue = /(?:TBA|reveal soon|to be announced)/i.test(
+        event.venue
+      );
+      const reviewed = pendingVenue
+        ? {
+            ...event,
+            confirmationStatus: "pending" as const,
+            startingPrice: undefined,
+            ticketTiers: undefined,
+            tablePackages: undefined,
+            vipPackages: undefined,
+          }
+        : event;
+      const approved = withApprovedSunsets(reviewed);
+      return !["draft", "hidden"].includes(approved.status) &&
+        getEventWindowStatus(approved) === "past"
+        ? { ...approved, status: "past" as const, ticketUrl: undefined }
+        : approved;
+    })
+    .filter(event => event.status !== "draft");
   const visibleEvents = normalizedPath.startsWith("/events/")
     ? publishedEvents
     : publishedEvents.filter(event => event.status !== "hidden");

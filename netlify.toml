@@ -335,7 +335,7 @@
 
 [[redirects]]
   from = "/go/lakelist"
-  to = "/go/tickets/css-aug22"
+  to = "/sunsets#updates"
   status = 302
   force = true
 
@@ -384,6 +384,12 @@
   from = "/go/sunsets-2026-09-19/tickets/"
   to = "/go/tickets/css-sep19"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "/go/waitlist/chasing-sunsets"
+  to = "/sunsets#updates"
+  status = 302
   force = true
 
 [[redirects]]

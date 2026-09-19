@@ -4,14 +4,15 @@ import { getEventById } from "@/lib/siteExperience";
 import HomeTicketLink from "./HomeTicketLink";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
-import { getResponsiveImage } from "@/lib/responsiveImages";
+import CinematicHeroMedia from "./CinematicHeroMedia";
 import {
   currentSunsets,
   sunsetsShortDate,
   sunsetsStatusLabel,
+  sunsetsShowVisible,
+  sunsetsNeedsUpdate,
+  sunsetsTimeLabel,
 } from "@shared/events/sunsets-current";
-
-const photograph = getResponsiveImage("videoPoster1");
 
 export default function HeroSection() {
   const event = getEventById("css-sep19");
@@ -26,72 +27,68 @@ export default function HeroSection() {
           }}
         />
       )}
-      <div className="monolith-hero-photo" aria-hidden="true">
-        <picture>
-          {photograph.sources?.map((source, index) => (
-            <source key={index} {...source} />
-          ))}
-          <img
-            src={photograph.src}
-            sizes="100vw"
-            width="1920"
-            height="1080"
-            alt=""
-            fetchPriority="high"
-          />
-        </picture>
-      </div>
-      <div className="container layout-wide monolith-hero-inner">
-        <div className="monolith-hero-copy" data-home-hero-heading="true">
-          <p className="home-eyebrow" data-home-hero-eyebrow="true">
-            Chicago house music
-          </p>
-          <h1 id="home-title">MONOLITH</h1>
-          <p className="monolith-hero-tagline">
-            Lakefront days.
-            <br />
-            Late-night dance floors.
-          </p>
-          <p className="monolith-hero-summary" data-home-hero-summary="true">
-            We bring people together through Chasing Sun(Sets), Untold Story,
-            and artist-led radio.
-          </p>
-          <Link href="/schedule" className="home-text-link">
-            Explore the shows <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="home-event-strip" data-home-hero-card="true">
-          <div>
-            <div className="home-sunsets-brand-row">
-              <a href="/sunsets" aria-label="Chasing Sun(Sets) event guide">
-                <img
-                  className="home-sunsets-logo home-sunsets-logo-compact"
-                  src="/sunsets/assets/logo-640.webp"
-                  width="640"
-                  height="238"
-                  alt="Chasing Sun(Sets)"
-                  decoding="async"
-                />
-              </a>
-              <span className="home-eyebrow">Season finale</span>
+      <div className="monolith-hero-stage">
+        <CinematicHeroMedia />
+        <div className="monolith-hero-inner">
+          <div className="monolith-hero-copy" data-home-hero-heading="true">
+            <div>
+              <p className="home-eyebrow" data-home-hero-eyebrow="true">
+                Chicago / House music / Together
+              </p>
+              <h1 id="home-title">MONOLITH</h1>
+              <p
+                className="monolith-hero-tagline"
+                data-home-hero-summary="true"
+              >
+                Lakefront days. Late-night dance floors.
+              </p>
             </div>
-            <p>{currentSunsets.headliners.join(" × ")}</p>
+            <Link href="/schedule" className="home-text-link home-hero-explore">
+              Explore the shows <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
           </div>
-          <div className="home-strip-details">
-            <span>
-              {sunsetsShortDate} · {currentSunsets.venueName}
-            </span>
-            <a
-              href="/sunsets#event-status"
-              className="home-status"
-              data-status={currentSunsets.status}
-            >
-              <span aria-hidden="true" />
-              {sunsetsStatusLabel()}
-            </a>
-          </div>
-          <HomeTicketLink placement="hero" />
         </div>
+      </div>
+      <div className="container layout-wide monolith-hero-event-rail">
+        {sunsetsShowVisible() && (
+          <div className="home-event-strip" data-home-hero-card="true">
+            <div>
+              <div className="home-sunsets-brand-row">
+                <a href="/sunsets" aria-label="Chasing Sun(Sets) event guide">
+                  <img
+                    className="home-sunsets-logo home-sunsets-logo-compact"
+                    src="/sunsets/assets/logo-640.webp"
+                    width="640"
+                    height="238"
+                    alt="Chasing Sun(Sets)"
+                    decoding="async"
+                  />
+                </a>
+                <span className="home-eyebrow">Season finale</span>
+              </div>
+              <p>{currentSunsets.headliners.join(" × ")}</p>
+            </div>
+            <div className="home-strip-details">
+              <span>
+                {sunsetsShortDate} · {currentSunsets.venueName}
+              </span>
+              <span>
+                {sunsetsNeedsUpdate
+                  ? "Postponed · New date to be announced"
+                  : `${sunsetsTimeLabel} · 21+`}
+              </span>
+              <a
+                href="/sunsets#event-status"
+                className="home-status"
+                data-status={currentSunsets.status}
+              >
+                <span aria-hidden="true" />
+                {sunsetsStatusLabel()}
+              </a>
+            </div>
+            <HomeTicketLink placement="hero" />
+          </div>
+        )}
       </div>
     </section>
   );

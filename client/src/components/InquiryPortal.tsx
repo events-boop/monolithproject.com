@@ -1,3 +1,4 @@
+import { capturePostHogEvent } from "@/lib/posthog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { honeypotFieldName } from "@shared/generated/hardening";
 import { AnimatePresence, motion } from "framer-motion";
@@ -20,7 +21,10 @@ import {
 } from "lucide-react";
 import {
   CSSProperties,
-  type ReactNode,
+  type ReactElement,
+  cloneElement,
+  useId,
+  useRef,
   useEffect,
   useMemo,
   useState,
@@ -29,7 +33,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import HoneypotField from "@/components/HoneypotField";
 import MagneticButton from "@/components/MagneticButton";
-import RevealText from "@/components/RevealText";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useInquiry, type InquiryType } from "@/contexts/InquiryContext";
@@ -466,6 +469,7 @@ async function submitInquiry(
 
 export default function InquiryPortal() {
   const { isOpen, type, closeInquiry } = useInquiry();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [submission, setSubmission] = useState<InquirySubmissionResult | null>(
     null
   );
@@ -484,26 +488,24 @@ export default function InquiryPortal() {
   });
 
   useEffect(() => {
-    if (!isOpen) {
-      document.body.style.overflow = "";
-      return;
-    }
-
+    if (!isOpen) return;
+    const dialog = dialogRef.current;
+    const trigger = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     setSubmission(null);
     setSubmitError("");
     reset(defaults);
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeInquiry();
-      }
-    };
-
-    window.addEventListener("keydown", handleEscape);
+    dialog?.showModal();
+    dialog
+      ?.querySelector<HTMLButtonElement>(
+        'button[aria-label="Close inquiry portal"]'
+      )
+      ?.focus();
     return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEscape);
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+      trigger?.focus({ preventScroll: true });
     };
   }, [closeInquiry, defaults, isOpen, reset, type]);
 
@@ -512,6 +514,10 @@ export default function InquiryPortal() {
     try {
       const response = await submitInquiry(type, values);
       setSubmission(response);
+      capturePostHogEvent("inquiry_success", {
+        inquiry_type: type,
+        delivery_state: response.deliveryState || "accepted",
+      });
     } catch (error) {
       setSubmitError(
         error instanceof Error
@@ -593,21 +599,44 @@ export default function InquiryPortal() {
   return (
     <AnimatePresence>
       {isOpen ? (
-        <div className="fixed inset-0 z-[100] overflow-hidden px-0 py-0 md:px-6 md:py-6 lg:px-10 lg:py-8">
-          <motion.button
-            type="button"
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="inquiry-portal-title"
+          onKeyDown={event => {
+            if (event.key !== "Tab") return;
+            const items = Array.from(
+              event.currentTarget.querySelectorAll<HTMLElement>(
+                'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex="0"]'
+              )
+            ).filter(
+              el => el.getClientRects().length && !el.closest("[inert]")
+            );
+            const first = items[0],
+              last = items.at(-1);
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first?.focus();
+            }
+          }}
+          onCancel={event => {
+            event.preventDefault();
+            closeInquiry();
+          }}
+          className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden border-0 bg-transparent p-0 text-white md:p-6"
+        >
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeInquiry}
-            aria-label="Close inquiry portal"
+            aria-hidden="true"
             className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_35%),linear-gradient(135deg,rgba(5,5,5,0.82),rgba(2,2,2,0.96))] backdrop-blur-2xl"
           />
 
           <motion.aside
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="inquiry-portal-title"
             initial={{ opacity: 0, y: 28, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.99 }}
@@ -626,8 +655,8 @@ export default function InquiryPortal() {
             />
             <div className="pointer-events-none absolute inset-y-0 left-[44%] hidden w-px bg-gradient-to-b from-transparent via-white/10 to-transparent lg:block" />
 
-            <div className="relative grid h-full w-full lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
-              <section className="relative flex min-h-[17rem] flex-col justify-between overflow-hidden border-b border-white/10 p-6 sm:p-8 lg:border-b-0 lg:p-10 xl:p-12">
+            <div className="relative grid h-full w-full overflow-y-auto lg:overflow-hidden lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
+              <section className="relative flex min-h-0 flex-col justify-between overflow-hidden border-b border-white/10 p-6 sm:p-8 lg:border-b-0 lg:p-10 xl:p-12">
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),transparent_52%)]" />
                 <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent sm:inset-x-8 lg:inset-x-10 xl:inset-x-12" />
 
@@ -656,7 +685,8 @@ export default function InquiryPortal() {
                     <button
                       type="button"
                       onClick={closeInquiry}
-                      className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/60 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                      autoFocus
+                      className="fixed right-4 top-4 z-20 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#151515] text-white transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
                       aria-label="Close inquiry portal"
                     >
                       <X className="h-5 w-5" />
@@ -664,37 +694,31 @@ export default function InquiryPortal() {
                   </MagneticButton>
                 </div>
 
-                <div className="relative mt-10 max-w-xl">
+                <div className="relative mt-5 max-w-xl lg:mt-10">
                   <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.4em] text-white/70">
                     Direct Route To The Office
                   </p>
                   <h2
                     id="inquiry-portal-title"
-                    className="font-display text-[clamp(2.8rem,8vw,5.8rem)] uppercase leading-[0.88] tracking-[-0.04em] text-white"
+                    className="font-display text-[clamp(2rem,6vw,4.5rem)] uppercase leading-[0.88] tracking-[-0.04em] text-white"
                   >
                     {config.desktopTitle || config.title}
                   </h2>
-                  <RevealText
-                    as="p"
-                    className="mt-5 max-w-lg text-[1.02rem] leading-relaxed text-white/60 md:text-[1.08rem]"
-                  >
+                  <p className="mt-5 max-w-lg text-[1.02rem] leading-relaxed text-white/60 md:text-[1.08rem]">
                     {config.description}
-                  </RevealText>
+                  </p>
 
-                  <div className="mt-7 flex flex-wrap gap-3">
+                  <div className="mt-7 hidden flex-wrap gap-3 lg:flex">
                     <SignalChip icon={ShieldCheck} label="Protected route" />
                     <SignalChip icon={Clock3} label={config.replyWindow} />
                     <SignalChip icon={Sparkles} label="Human review" />
                   </div>
                 </div>
 
-                <div className="relative mt-10 grid gap-3 sm:grid-cols-3">
+                <div className="relative mt-10 hidden gap-3 lg:grid lg:grid-cols-3">
                   {config.highlights.map(highlight => (
-                    <motion.div
+                    <div
                       key={highlight}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35 }}
                       className="rounded-[1.25rem] border border-white/10 bg-black/20 px-4 py-4 backdrop-blur-sm"
                     >
                       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
@@ -703,7 +727,7 @@ export default function InquiryPortal() {
                       <p className="mt-2 text-sm leading-relaxed text-white/80">
                         {highlight}
                       </p>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </section>
@@ -732,7 +756,7 @@ export default function InquiryPortal() {
                   </div>
                 </div>
 
-                <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-8 pt-6 sm:px-8 lg:px-10 xl:px-12">
+                <div className="min-h-0 flex-1 lg:overflow-y-auto px-6 pb-8 pt-6 sm:px-8 lg:px-10 xl:px-12">
                   {submission ? (
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -895,7 +919,10 @@ export default function InquiryPortal() {
                       </PortalField>
 
                       {submitError ? (
-                        <div className="rounded-3xl border border-red-500/30 bg-red-500/8 px-4 py-3 text-sm text-red-100 shadow-[0_12px_40px_rgba(120,0,0,0.16)]">
+                        <div
+                          role="alert"
+                          className="rounded-3xl border border-red-500/30 bg-red-500/8 px-4 py-3 text-sm text-red-100 shadow-[0_12px_40px_rgba(120,0,0,0.16)]"
+                        >
                           <p className="flex items-start gap-2.5">
                             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                             <span>{submitError}</span>
@@ -918,7 +945,7 @@ export default function InquiryPortal() {
                             {isSubmitting ? (
                               <>
                                 <span className="h-2 w-2 animate-pulse rounded-full bg-black/70" />
-                                Transmitting
+                                Sending
                               </>
                             ) : (
                               <>
@@ -936,7 +963,7 @@ export default function InquiryPortal() {
               </section>
             </div>
           </motion.aside>
-        </div>
+        </dialog>
       ) : null}
     </AnimatePresence>
   );
@@ -995,23 +1022,41 @@ function PortalField({
   error,
   required = false,
 }: {
-  children: ReactNode;
+  children: ReactElement<{
+    id?: string;
+    "aria-describedby"?: string;
+    "aria-required"?: boolean;
+  }>;
   label: string;
   hint: string;
   error?: string;
   required?: boolean;
 }) {
+  const id = useId();
   return (
     <div className="space-y-2.5">
       <div className="flex items-center justify-between gap-4">
-        <label className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
+        <label
+          htmlFor={id}
+          className="font-mono text-xs uppercase tracking-[0.15em] text-white/80"
+        >
           {label}
           {required ? <span className="ml-1 text-white/90">*</span> : null}
         </label>
-        <span className="text-[11px] text-white/70">{hint}</span>
+        <span id={`${id}-hint`} className="text-xs text-white/70">
+          {hint}
+        </span>
       </div>
-      {children}
-      {error ? <p className="text-xs text-red-300">{error}</p> : null}
+      {cloneElement(children, {
+        id,
+        "aria-describedby": `${id}-hint${error ? ` ${id}-error` : ""}`,
+        "aria-required": required,
+      })}
+      {error ? (
+        <p id={`${id}-error`} role="alert" className="text-xs text-red-300">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
