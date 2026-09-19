@@ -1,3 +1,4 @@
+import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
 import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import {
@@ -41,13 +42,10 @@ export default function EventNotice() {
         >
           ×
         </button>
+        <ChasingSunsetsLogo className="notice-logo" priority />
         <p className="notice-kicker">The Monolith Project · Official update</p>
-        <h2 id="event-notice-title">
-          Sun(Sets) III
-          <br />
-          Postponed due to weather.
-        </h2>
-        <p className="notice-artists">JOEZI × MASSUMA</p>
+        <h2 id="event-notice-title">Postponed due to weather.</h2>
+        <p className="notice-artists">Sun(Sets) III · JOEZI × MASSUMA</p>
         {currentSunsets.statusParagraphs
           .filter((_, index) => [0, 2, 3].includes(index))
           .map((paragraph, index) => (

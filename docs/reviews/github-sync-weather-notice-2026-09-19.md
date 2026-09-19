@@ -26,3 +26,13 @@ Both front doors present a compact accessible dialog on the first visit in a bro
 - External checkout completion/campaign conversion reporting was not tested during this release.
 
 The larger Radio/Journal/access-program ideas remain future editorial work, not part of this synchronization pass.
+
+## Follow-up: supplied campaign artwork and popup logo
+
+Added the approved gold Chasing Sun(Sets) logo at the top of both dialogs. The supplied wide JOEZI × MASSUMA image replaces the previous square homepage/series event artwork, with a prominent original-date/postponement label and link to the update. The supplied evergreen social artwork sits in the existing closing section of the series page and links to Sunsets; a separate Instagram action makes following explicit. Artwork is served uncropped in responsive AVIF/WebP sizes.
+
+Build and TypeScript passed. Twelve homepage/series checks and eleven final popup checks passed. The images loaded and linked correctly at 390/1363 px with no horizontal overflow. Screenshots: `/tmp/campaign-art-event-1363.png`, `/tmp/campaign-art-social-1363.png`, `/tmp/weather-popup-monolith-390.png`.
+
+Live verification of the preceding GitHub deployment confirmed both weather dialogs, persistent dismissal, reopening, full-update navigation and no browser exceptions. Subscription availability correctly reports both audiences inactive.
+
+A supplied third-party audit contained stale redirect descriptions. Fresh live checks confirmed: `/go/tickets/css-sep19` → `https://monolithproject.com/sunsets#event-update` (302), `/go/lakelist` and `/go/waitlist/chasing-sunsets` → `/sunsets#updates` (302). `/sunsets/` serves the event hub directly (200); it is not a 301 slash-normalization redirect. The historical 84-page crawl should not be described as a fresh production verification of every route.

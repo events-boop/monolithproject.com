@@ -1259,3 +1259,30 @@
     transform: none;
   }
 }
+
+.home-event-art-wide {
+  align-self: center;
+  background: #141610;
+}
+.home-event-art-wide .home-postponed-art-label {
+  position: static;
+  display: block;
+  padding: 12px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.home-artwork-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  min-height: 56px;
+  color: #f3dfbc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.home-event-art-wide:focus-visible {
+  outline: 2px solid #f0b653;
+  outline-offset: 5px;
+}

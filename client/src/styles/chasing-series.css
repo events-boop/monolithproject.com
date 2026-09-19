@@ -441,3 +441,36 @@ footer[data-brand="chasing-sunsets"] li a {
     width: 100%;
   }
 }
+
+.chasing-closing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+  max-width: 1080px;
+}
+.chasing-social-art {
+  display: block;
+  border: 1px solid #efbc6840;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.chasing-social-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.chasing-social-art:focus-visible {
+  outline: 2px solid #f0b653;
+  outline-offset: 5px;
+}
+@media (max-width: 767px) {
+  .chasing-closing-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .chasing-social-art {
+    width: min(100%, 340px);
+    margin-inline: auto;
+  }
+}

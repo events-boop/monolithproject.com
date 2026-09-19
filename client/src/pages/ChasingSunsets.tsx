@@ -1,3 +1,4 @@
+import SunsetsCampaignArtwork from "@/components/SunsetsCampaignArtwork";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -409,8 +410,9 @@ export default function ChasingSunsets() {
               <details>
                 <summary>Where do I find tickets and set times?</summary>
                 <p>
-                  Use the official AllEvents listing linked in the event guide.
-                  Select your ticket option at checkout.{" "}
+                  {sunsetsNeedsUpdate
+                    ? "Ticket sales are paused. Read the official update for ticket-holder options. "
+                    : "Use the official AllEvents listing linked in the event guide. Select your ticket option at checkout. "}
                   {event.scheduleMessage.replace("Artists below", "Artists")}
                 </p>
                 <a href="/sunsets#set-times">
@@ -451,21 +453,37 @@ export default function ChasingSunsets() {
           className="home-editorial-section chasing-closing"
           aria-labelledby="chasing-closing-title"
         >
-          <div className="container layout-wide home-section-container">
-            <ChasingSunsetsLogo className="chasing-closing-logo" />
-            <h2 id="chasing-closing-title">See you by the lake.</h2>
-            <p>Check the event guide for the latest published information.</p>
-            <div className="home-actions">
-              <HomeTicketLink placement="chasing_series_close" />
-              <a className="home-secondary" href="/sunsets#updates">
-                Show updates
-              </a>
-            </div>
-            <div className="chasing-contact-links">
-              <a href="mailto:events@monolithproject.com">Event questions ↗</a>
-              <a href="mailto:music@monolithproject.com?subject=Chasing%20Sunsets%20Submission">
-                Submit a mix ↗
-              </a>
+          <div className="container layout-wide home-section-container chasing-closing-grid">
+            <a
+              href="/sunsets"
+              className="chasing-social-art"
+              aria-label="Visit Sunsets.vip for the current event update"
+            >
+              <SunsetsCampaignArtwork variant="social" />
+            </a>
+            <div>
+              <ChasingSunsetsLogo className="chasing-closing-logo" />
+              <h2 id="chasing-closing-title">Stay close to Sun(Sets).</h2>
+              <p>Check the event guide for the latest published information.</p>
+              <div className="home-actions">
+                <HomeTicketLink placement="chasing_series_close" />
+                <a
+                  className="home-secondary"
+                  href="https://instagram.com/chasingsunsets.music"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Follow on Instagram ↗
+                </a>
+              </div>
+              <div className="chasing-contact-links">
+                <a href="mailto:events@monolithproject.com">
+                  Event questions ↗
+                </a>
+                <a href="mailto:music@monolithproject.com?subject=Chasing%20Sunsets%20Submission">
+                  Submit a mix ↗
+                </a>
+              </div>
             </div>
           </div>
         </section>

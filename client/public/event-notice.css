@@ -20,3 +20,7 @@
 .event-notice :is(a,button):focus-visible {outline:2px solid white; outline-offset:4px;}
 .event-notice-open .event-status-float {visibility:hidden;}
 @media(max-width:480px) { .event-notice {max-height:calc(100dvh - 24px);padding:26px 22px;} .event-notice p {font-size:14px;line-height:1.6;} .event-notice .notice-actions a {flex:1;} }
+
+.event-notice .notice-logo {display:block;width:210px;max-width:calc(100% - 48px);height:auto;margin:0 0 18px;object-fit:contain;}
+.event-notice .notice-artists {font-size:16px;line-height:1.5;}
+@media(max-width:480px) { .event-notice .notice-logo {width:175px;margin-bottom:14px;} .event-notice .notice-kicker {font-size:10px;margin-bottom:16px;margin-right:0;letter-spacing:.08em;} }

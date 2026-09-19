@@ -338,7 +338,7 @@ export function renderSunsetsPage(event, template) {
       "</body>",
       '<dialog class="event-notice" aria-labelledby="event-notice-title" data-standalone-notice data-auto-open="true" data-revision="' +
         escape(event.updatedAt) +
-        '"><button type="button" class="notice-close" data-notice-close aria-label="Close event update">×</button><p class="notice-kicker">The Monolith Project · Official update</p><h2 id="event-notice-title">Sun(Sets) III<br>Postponed due to weather.</h2><p class="notice-artists">JOEZI × MASSUMA</p>' +
+        '"><button type="button" class="notice-close" data-notice-close aria-label="Close event update">×</button><img class="notice-logo" src="/sunsets/assets/logo-640.webp" width="640" height="238" alt="Chasing Sun(Sets)" decoding="async"><p class="notice-kicker">The Monolith Project · Official update</p><h2 id="event-notice-title">Postponed due to weather.</h2><p class="notice-artists">Sun(Sets) III · JOEZI × MASSUMA</p>' +
         popupParagraphs +
         '<p class="notice-signature">— The Monolith Project</p><time datetime="' +
         escape(event.updatedAt) +

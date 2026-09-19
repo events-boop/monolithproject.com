@@ -1,3 +1,4 @@
+import SunsetsCampaignArtwork from "./SunsetsCampaignArtwork";
 import HomeTicketLink from "./HomeTicketLink";
 import { ArrowUpRight } from "lucide-react";
 import {
@@ -22,29 +23,20 @@ export default function HomeEventFeature() {
     >
       <div className="container layout-wide home-event-grid">
         <a
-          href="/sunsets"
-          className="home-event-art"
+          href="/sunsets#event-update"
+          className="home-event-art home-event-art-wide"
           aria-label="Open the Chasing Sun(Sets) event guide"
         >
           {sunsetsNeedsUpdate && (
             <span className="home-postponed-art-label">
-              POSTPONED · ORIGINAL BILLING
+              POSTPONED · ORIGINAL SEPTEMBER 19 ARTWORK
             </span>
           )}
-          <picture>
-            <source
-              type="image/avif"
-              srcSet="/sunsets/assets/hero-480.avif 480w, /sunsets/assets/hero-960.avif 960w"
-              sizes="(min-width: 900px) 440px, 90vw"
-            />
-            <img
-              src="/sunsets/assets/hero-960.webp"
-              width="1920"
-              height="1920"
-              alt={`${event.name}. ${sunsetsDateLabel}. ${event.venueName}, Chicago.`}
-              loading="lazy"
-            />
-          </picture>
+          <SunsetsCampaignArtwork variant="wide" />
+          <span className="home-artwork-action">
+            Read the current event update{" "}
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </span>
         </a>
         <div className="home-event-copy">
           <a
