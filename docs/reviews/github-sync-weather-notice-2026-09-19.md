@@ -36,3 +36,9 @@ Build and TypeScript passed. Twelve homepage/series checks and eleven final popu
 Live verification of the preceding GitHub deployment confirmed both weather dialogs, persistent dismissal, reopening, full-update navigation and no browser exceptions. Subscription availability correctly reports both audiences inactive.
 
 A supplied third-party audit contained stale redirect descriptions. Fresh live checks confirmed: `/go/tickets/css-sep19` → `https://monolithproject.com/sunsets#event-update` (302), `/go/lakelist` and `/go/waitlist/chasing-sunsets` → `/sunsets#updates` (302). `/sunsets/` serves the event hub directly (200); it is not a 301 slash-normalization redirect. The historical 84-page crawl should not be described as a fresh production verification of every route.
+
+## Returning-visitor cache correction
+
+After the owner reported an older Monolith page while Sunsets was current, fresh production checks confirmed the logo on apex, www and Sunsets. The existing PWA served homepage navigation from a precached HTML shell, which could retain an older publication for returning visitors. Removed build-time HTML precaching/default navigation fallback; ordinary page navigation now uses NetworkFirst with cached pages only as the network-failure fallback. API, outbound and standalone event paths are excluded. `/sw.js` explicitly disables HTTP caching.
+
+The browser regression uses one active worker and the same page URL, changes the server's HTML publication, verifies the next reload receives the updated version, and verifies offline fallback retains that latest page. Passed, along with TypeScript, production build and pixel guard.

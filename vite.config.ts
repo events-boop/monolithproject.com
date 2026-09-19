@@ -66,7 +66,9 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
-          globPatterns: ["**/*.{js,css,html,ico,svg,woff2,xml,webmanifest}"],
+          globPatterns: ["**/*.{js,css,ico,svg,woff2,xml,webmanifest}"],
+          // Event notices must not be served from a build-time HTML snapshot.
+          navigateFallback: null,
           maximumFileSizeToCacheInBytes: 700000,
           navigateFallbackDenylist: [
             /^\/api\//,
@@ -75,6 +77,17 @@ export default defineConfig(({ mode }) => {
             /^\/sunsets(?:\/|$)/,
           ],
           runtimeCaching: [
+            {
+              urlPattern: ({ request, url }) =>
+                request.mode === "navigate" &&
+                !/^\/(?:api|go|\.netlify|sunsets)(?:\/|$)/.test(url.pathname),
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "monolith-pages",
+                expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
             {
               urlPattern: /\.(?:png|jpg|jpeg|webp|avif|gif)$/i,
               handler: "CacheFirst",
