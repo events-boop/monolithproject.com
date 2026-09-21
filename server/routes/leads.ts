@@ -1,3 +1,7 @@
+import {
+  databaseSignupCaptureEnabled,
+  saveSignupRequest,
+} from "../services/signup-capture";
 import { Router } from "express";
 import { createHash, randomUUID } from "crypto";
 import { leadSchema } from "../lib/schemas";
@@ -81,6 +85,36 @@ router.post(
           retryable: false,
         },
       });
+    }
+
+    if (databaseSignupCaptureEnabled()) {
+      try {
+        await saveSignupRequest({
+          email: parsed.data.email,
+          audience: "newsletter",
+          consent: parsed.data.consent,
+          source: parsed.data.source || "website",
+          firstName: parsed.data.firstName,
+          lastName: parsed.data.lastName,
+          details: parsed.data,
+        });
+        return res.status(200).json({
+          ok: true,
+          requestId,
+          state: "saved",
+          message: "Your signup is saved.",
+        });
+      } catch {
+        return res.status(503).json({
+          ok: false,
+          requestId,
+          error: {
+            code: "STORAGE_UNAVAILABLE",
+            retryable: true,
+            message: "We couldn’t save your signup. Please try again shortly.",
+          },
+        });
+      }
     }
 
     const provider = readProvider();

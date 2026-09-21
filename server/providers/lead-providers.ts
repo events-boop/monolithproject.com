@@ -1,3 +1,8 @@
+import {
+  brevoListId,
+  subscribeBrevoList,
+  BrevoSubscriptionError,
+} from "./brevo";
 import { createHash } from "crypto";
 import { z } from "zod";
 import { leadSchema, type LeadProvider } from "../lib/schemas";
@@ -191,49 +196,15 @@ export async function subscribeEmailOctopus(lead: z.infer<typeof leadSchema>) {
 }
 
 export async function subscribeBrevo(lead: z.infer<typeof leadSchema>) {
-  const bypassReason = getBrevoBypassReason();
-  if (bypassReason) {
-    logEvent("provider.brevo_bypassed", {
-      reason: bypassReason,
-      source: lead.source || "website",
-      emailHash: createHash("sha256")
-        .update(scrubEmail(lead.email))
-        .digest("hex")
-        .slice(0, 12),
-    });
-    return;
-  }
-
-  const apiKey = process.env.BREVO_API_KEY?.trim() || "";
-  const endpoint = "https://api.brevo.com/v3/contacts";
-  const attributionSource = getAttributionSource(lead);
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "api-key": apiKey,
-    },
-    body: JSON.stringify({
-      email: scrubEmail(lead.email),
-      updateEnabled: true,
-      attributes: {
-        FIRSTNAME: lead.firstName || "",
-        LASTNAME: lead.lastName || "",
-        SOURCE: attributionSource,
-      },
-    }),
+  const listId = brevoListId(process.env.BREVO_LIST_ID);
+  if (getBrevoBypassReason() || listId === null)
+    throw new BrevoSubscriptionError("UNAVAILABLE");
+  await subscribeBrevoList({
+    email: scrubEmail(lead.email),
+    listId,
+    firstName: lead.firstName,
+    lastName: lead.lastName,
   });
-
-  if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
-    // Ignore if contact already exists (error code duplicate_parameter usually)
-    if (data.code === "duplicate_parameter") return;
-    logEvent("provider.brevo_error", {
-      status: response.status,
-      detail: data.message,
-    });
-    throw new Error("Brevo subscription failed");
-  }
 }
 
 export async function subscribeLaylo(lead: z.infer<typeof leadSchema>) {

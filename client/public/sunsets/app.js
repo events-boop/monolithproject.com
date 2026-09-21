@@ -70,7 +70,7 @@
   const forms = [...document.querySelectorAll('.signup-form')];
   fetch('/api/sunsets/subscriptions', {headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)})
     .then(response => {if(!response.ok)throw new Error();return response.json();})
-    .then(data => {for(const form of forms){if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('fieldset').hidden=false;form.parentElement.querySelector('.signup-fallback').hidden=true;form.querySelector('.form-feedback').textContent='Choose this email list above. New subscribers will be asked to confirm by email.';}}})
+    .then(data => {for(const form of forms){if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('fieldset').hidden=false;form.parentElement.querySelector('.signup-fallback').hidden=true;form.querySelector('.form-feedback').textContent='Enter your email and choose this list above. We’ll confirm here when your signup is saved.';}}})
     .catch(()=>{}); // The initial markup includes a working email-request alternative.
   for (const form of forms) form.addEventListener('submit', async event => {
     event.preventDefault();

@@ -103,7 +103,6 @@ export default function NewsletterSection({
             offerId: "inner_circle",
             interestTags: ["newsletter", "always-on"],
           }),
-          utmContent: phone ? "sms_interest" : undefined,
           [honeypotFieldName]: botCheck || undefined,
         },
         buildLeadIdempotencyKey(source, email)
@@ -147,14 +146,14 @@ export default function NewsletterSection({
                 </div>
 
                 <span className="font-mono text-[11px] text-primary tracking-[0.5em] uppercase mb-4">
-                  Membership Secured
+                  Signup Saved
                 </span>
                 <h3 className="hero-wordmark text-4xl md:text-6xl uppercase tracking-tighter text-white mb-8">
-                  Welcome To The Circle
+                  Thanks For Joining
                 </h3>
                 <p className="max-w-xl text-center text-base text-white/60 mb-10 leading-relaxed">
-                  We&apos;ll send new dates, ticket windows, lineup news, and
-                  radio drops when they matter.
+                  Your signup is saved for new dates, ticket windows, lineup news,
+                  and radio drops.
                 </p>
 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
@@ -357,8 +356,16 @@ export default function NewsletterSection({
                       autoComplete="tel"
                       onChange={e => setPhone(e.target.value)}
                       placeholder="+1 (000) 000-0000"
+                      aria-describedby="newsletter-phone-help"
                       className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
                     />
+                    <p
+                      id="newsletter-phone-help"
+                      className="mt-3 text-xs text-white/60 leading-relaxed"
+                    >
+                      Optional contact number. This does not sign you up for
+                      text messages.
+                    </p>
                   </div>
                 </div>
 
@@ -390,7 +397,8 @@ export default function NewsletterSection({
                       <span
                         className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors leading-relaxed ${touched.agreed && errors.agreed ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
                       >
-                        I agree to receive updates and event announcements.
+                        I agree to receive email updates and event
+                        announcements.
                       </span>
                     </div>
                   </label>

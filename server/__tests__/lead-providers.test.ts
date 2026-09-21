@@ -13,7 +13,7 @@ describe("lead providers", () => {
     vi.unstubAllGlobals();
   });
 
-  it("bypasses Brevo without making an outbound request when BREVO_API_KEY is missing", async () => {
+  it("rejects Brevo without making an outbound request when BREVO_API_KEY is missing", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
     delete process.env.BREVO_API_KEY;
@@ -25,12 +25,12 @@ describe("lead providers", () => {
         consent: true,
         source: "newsletter_section",
       })
-    ).resolves.toBeUndefined();
+    ).rejects.toThrow("Brevo subscription unavailable");
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("bypasses Brevo without making an outbound request when BREVO_BYPASS is true", async () => {
+  it("rejects Brevo without making an outbound request when BREVO_BYPASS is true", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
     process.env.BREVO_API_KEY = "test-key";
@@ -42,7 +42,7 @@ describe("lead providers", () => {
         consent: true,
         source: "newsletter_section",
       })
-    ).resolves.toBeUndefined();
+    ).rejects.toThrow("Brevo subscription unavailable");
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -50,10 +50,12 @@ describe("lead providers", () => {
   it("uses Brevo when the API key is present and bypass is off", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
+      json: async () => ({ emailBlacklisted: false, listIds: [3] }),
     });
     vi.stubGlobal("fetch", fetchMock);
     process.env.BREVO_API_KEY = "test-key";
     process.env.BREVO_BYPASS = "false";
+    process.env.BREVO_LIST_ID = "3";
 
     await expect(
       subscribeBrevo({

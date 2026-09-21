@@ -77,6 +77,7 @@ export const leadSchema = z.object({
   city: z.string().trim().max(100).optional(),
   state: z.string().trim().max(80).optional(),
   consent: z.literal(true),
+  smsConsent: z.boolean().optional(),
   source: z.string().trim().max(120).optional(),
   formType: z.string().trim().max(80).optional(),
   funnelId: z.string().trim().max(120).optional(),

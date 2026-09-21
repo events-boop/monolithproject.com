@@ -59,7 +59,7 @@ test("newsletter flow shows user-visible error then success", async ({
 
   await newsletter.locator("#email").fill("test@example.com");
   const consentCheckbox = newsletter.getByRole("checkbox", {
-    name: /i agree to receive updates and event announcements/i,
+    name: /i agree to receive email updates and event announcements/i,
   });
   const adultCheckbox = newsletter.getByRole("checkbox", {
     name: /i confirm that i am 18 years of age or older/i,
@@ -89,7 +89,7 @@ test("newsletter flow shows user-visible error then success", async ({
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ ok: true }),
+      body: JSON.stringify({ ok: true, state: "saved" }),
     });
   });
 
@@ -97,7 +97,7 @@ test("newsletter flow shows user-visible error then success", async ({
     (form as HTMLFormElement).requestSubmit();
   });
   await expect(
-    page.getByRole("heading", { name: /Welcome To The Circle/i })
+    page.getByRole("heading", { name: /Thanks For Joining/i })
   ).toBeVisible();
 });
 
