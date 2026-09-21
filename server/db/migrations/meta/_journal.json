@@ -50,6 +50,13 @@
       "when": 1783932614911,
       "tag": "0006_chilly_tarot",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789966519262,
+      "tag": "0007_glossy_impossible_man",
+      "breakpoints": true
     }
   ]
 }

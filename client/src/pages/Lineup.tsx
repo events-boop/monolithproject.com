@@ -355,6 +355,7 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
                 <ResponsiveImage
                   src={portraitSrc}
                   alt={artist.name}
+              style={{ objectPosition: artist.imagePosition }}
                   sizes="80px"
                   onError={handlePortraitError}
                   className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
@@ -436,6 +437,7 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
             <ResponsiveImage
               src={portraitSrc}
               alt={artist.name}
+              style={{ objectPosition: artist.imagePosition }}
               sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
               onError={handlePortraitError}
               className="h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"

@@ -31,6 +31,7 @@ const premiumArtistBaseNamePrefixes = [
   "artists-eliana-",
   "artists-kenbo-slice-",
   "artists-terranova-",
+  "artists-erik-the-dj-",
   "events-sunsets-2026-09-19-",
   "untold-story-header-jpq-",
 ];
@@ -55,6 +56,7 @@ const desktopWidthsByBaseName = new Map([
   ["artists-eliana-eliana-live", [309]],
   ["artists-kenbo-slice-kenbo-slice-portrait", [640, 1280, 1863]],
   ["artists-terranova-terranova-live", [640, 1280, 1667]],
+  ["artists-erik-the-dj-erik-the-dj-live", [640, 1280, 1632]],
   ["events-sunsets-2026-09-19-massuma-official-artwork", [640, 1122]],
   ["events-ape-drums-july31-hero", [480, 864]],
   ["events-ape-drums-july31-square", [160, 320]],

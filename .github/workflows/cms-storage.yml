@@ -1,0 +1,40 @@
+name: CMS storage integrity
+
+on:
+  pull_request:
+    paths:
+      - 'server/db/**'
+      - 'server/lib/schemas.ts'
+      - 'shared/cms/**'
+      - 'scripts/cms_seed.mts'
+      - 'package*.json'
+      - '.github/workflows/cms-storage.yml'
+  workflow_dispatch:
+
+jobs:
+  cms-storage:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cms_test
+          POSTGRES_PASSWORD: local_test_only
+          POSTGRES_DB: cms_atomic_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cms_test -d cms_atomic_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      CMS_TEST_DATABASE_URL: postgresql://cms_test:local_test_only@127.0.0.1:5432/cms_atomic_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run server/db/__tests__/cmsAtomic.integration.test.ts server/db/__tests__/cmsRepo.test.ts server/db/__tests__/cmsPayloadSchemas.test.ts
