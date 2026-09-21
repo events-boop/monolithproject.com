@@ -96,3 +96,20 @@ this release. Saved requests still require a reviewed provider-sync workflow
 that rechecks consent and suppression. Enabling this mode in production requires
 verifying the production database; publishing source alone does not activate it.
 Hosted Brevo connectivity and sender readiness remain unverified at recovery.
+
+
+### Hosted signup release — September 21, 2026
+
+The public newsletter and Sunsets event/radio CTAs now use three separate Brevo
+hosted forms, recorded in `shared/signup-forms.json`. Each form uses the default
+double opt-in email and only its named list: Monolith Website Newsletter,
+Sun(Sets) III — JOEZI × MASSUMA Updates, or SUNSETS.FM Releases. Form success copy
+asks the visitor to confirm from their inbox. No existing contact lists are imported
+or subscribed by this release, and no campaigns are sent.
+
+Hosted form links do not count as completed leads. The Sunsets availability route
+returns hosted form URLs without making a Brevo API readiness request when both
+hosted audiences are configured. The prior server signup/capture code remains
+available as a fallback; Brevo IP restrictions are unchanged. Hosted forms bypass
+the Netlify-to-Brevo API restriction for new signups, but do not fix API delivery
+or drain pending database-captured signup requests.

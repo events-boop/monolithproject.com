@@ -70,7 +70,18 @@
   const forms = [...document.querySelectorAll('.signup-form')];
   fetch('/api/sunsets/subscriptions', {headers:{Accept:'application/json'},signal:AbortSignal.timeout(8000)})
     .then(response => {if(!response.ok)throw new Error();return response.json();})
-    .then(data => {for(const form of forms){if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('fieldset').hidden=false;form.parentElement.querySelector('.signup-fallback').hidden=true;form.querySelector('.form-feedback').textContent='Enter your email and choose this list above. We’ll confirm here when your signup is saved.';}}})
+    .then(data => {for(const form of forms){
+      const hostedUrl = data.hostedForms?.[form.dataset.audience];
+      if (typeof hostedUrl === 'string' && /^https:\/\/50586c7f\.sibforms\.com\/serve\/[A-Za-z0-9_=-]+$/.test(hostedUrl)) {
+        const fallback = form.parentElement.querySelector('.signup-fallback');
+        const link = fallback.querySelector('a');
+        link.href = hostedUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.textContent = form.dataset.audience === 'event' ? 'Sign up for show updates ↗' : 'Sign up for music releases ↗';
+        fallback.querySelector('.fine-print').textContent = 'Opens our email signup page in a new tab. Confirm your email from your inbox to join this list. Unsubscribe anytime.';
+        form.hidden = true; fallback.hidden = false;
+        continue;
+      }
+      if(data.audiences?.[form.dataset.audience]===true){form.querySelector('fieldset').disabled=false;form.querySelector('fieldset').hidden=false;form.parentElement.querySelector('.signup-fallback').hidden=true;form.querySelector('.form-feedback').textContent='Enter your email and choose this list above. We’ll confirm here when your signup is saved.';}}})
     .catch(()=>{}); // The initial markup includes a working email-request alternative.
   for (const form of forms) form.addEventListener('submit', async event => {
     event.preventDefault();

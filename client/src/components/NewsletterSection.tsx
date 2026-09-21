@@ -15,6 +15,7 @@ import {
   buildFunnelLeadFields,
   buildLeadIdempotencyKey,
 } from "@/lib/leadCapture";
+import hostedSignupForms from "@shared/signup-forms.json";
 import { honeypotFieldName } from "@shared/generated/hardening";
 
 interface NewsletterSectionProps {
@@ -152,8 +153,8 @@ export default function NewsletterSection({
                   Thanks For Joining
                 </h3>
                 <p className="max-w-xl text-center text-base text-white/60 mb-10 leading-relaxed">
-                  Your signup is saved for new dates, ticket windows, lineup news,
-                  and radio drops.
+                  Your signup is saved for new dates, ticket windows, lineup
+                  news, and radio drops.
                 </p>
 
                 <div className="w-full border-y border-white/10 py-10 mb-10 grid md:grid-cols-2 gap-12 text-left">
@@ -248,215 +249,247 @@ export default function NewsletterSection({
                 </div>
               </div>
 
-              {/* Right — Brutalist Form */}
-              <form
-                onSubmit={handleSubmit}
-                className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16"
-                noValidate
-                aria-describedby={
-                  submitError ? "newsletter-submit-error" : undefined
-                }
-              >
-                <div className="mb-4">
-                  <h3 className="hero-wordmark text-4xl uppercase tracking-tighter text-white mb-2">
+              {/* Hosted signup keeps confirmation in the email provider. */}
+              {hostedSignupForms.newsletter ? (
+                <div className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16">
+                  <h3 className="hero-wordmark text-4xl uppercase tracking-tighter text-white">
                     Join The Newsletter
                   </h3>
-                  <p className="font-sans text-sm text-white/60 font-light">
-                    Email is required. Phone is optional if you want text-first
-                    drops.
+                  <p className="text-base leading-relaxed text-white/70">
+                    Get Monolith show announcements, ticket windows, and news by
+                    email. Enter your email on the signup page, then confirm it
+                    from your inbox.
                   </p>
+                  <a
+                    href={hostedSignupForms.newsletter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-pill-monolith btn-pill-wide"
+                  >
+                    <span>Continue to email signup</span>
+                    <ArrowUpRight className="ml-3 h-5 w-5" />
+                  </a>
+                  <p className="text-sm leading-relaxed text-white/60">
+                    Opens our email signup page in a new tab. Unsubscribe
+                    anytime. Email only; no SMS signup.
+                  </p>
+                  <a
+                    href="/privacy"
+                    className="text-sm underline text-white/70"
+                  >
+                    Privacy policy
+                  </a>
                 </div>
-
-                {/* Honeypot: Bot Trap */}
-                <HoneypotField
-                  value={botCheck}
-                  onChange={e => setBotCheck(e.target.value)}
-                />
-
-                {/* Inputs */}
-                <div className="flex flex-col gap-8">
-                  <div className="relative group">
-                    <label
-                      htmlFor="firstName"
-                      className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors"
-                    >
-                      First Name (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      value={firstName}
-                      onChange={e => setFirstName(e.target.value)}
-                      placeholder="Enter name"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
-                    />
+              ) : (
+                <form
+                  onSubmit={handleSubmit}
+                  className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16"
+                  noValidate
+                  aria-describedby={
+                    submitError ? "newsletter-submit-error" : undefined
+                  }
+                >
+                  <div className="mb-4">
+                    <h3 className="hero-wordmark text-4xl uppercase tracking-tighter text-white mb-2">
+                      Join The Newsletter
+                    </h3>
+                    <p className="font-sans text-sm text-white/60 font-light">
+                      Email is required. Phone is optional if you want
+                      text-first drops.
+                    </p>
                   </div>
 
-                  <div className="relative group">
-                    <label
-                      htmlFor="email"
-                      className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
-                    >
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      value={email}
-                      autoComplete="email"
-                      aria-describedby={
-                        touched.email && errors.email
-                          ? "newsletter-email-error"
-                          : undefined
-                      }
-                      onChange={e => {
-                        setEmail(e.target.value);
-                        if (touched.email) {
-                          const err = validateEmail(e.target.value);
+                  {/* Honeypot: Bot Trap */}
+                  <HoneypotField
+                    value={botCheck}
+                    onChange={e => setBotCheck(e.target.value)}
+                  />
+
+                  {/* Inputs */}
+                  <div className="flex flex-col gap-8">
+                    <div className="relative group">
+                      <label
+                        htmlFor="firstName"
+                        className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors"
+                      >
+                        First Name (Optional)
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        value={firstName}
+                        onChange={e => setFirstName(e.target.value)}
+                        placeholder="Enter name"
+                        className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      />
+                    </div>
+
+                    <div className="relative group">
+                      <label
+                        htmlFor="email"
+                        className={`font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] block mb-3 transition-colors ${touched.email && errors.email ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
+                      >
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        autoComplete="email"
+                        aria-describedby={
+                          touched.email && errors.email
+                            ? "newsletter-email-error"
+                            : undefined
+                        }
+                        onChange={e => {
+                          setEmail(e.target.value);
+                          if (touched.email) {
+                            const err = validateEmail(e.target.value);
+                            setErrors(prev =>
+                              err
+                                ? { ...prev, email: err }
+                                : (({ email: _, ...rest }) => rest)(prev)
+                            );
+                          }
+                        }}
+                        onBlur={() => {
+                          setTouched(prev => ({ ...prev, email: true }));
+                          const err = validateEmail(email);
                           setErrors(prev =>
                             err
                               ? { ...prev, email: err }
                               : (({ email: _, ...rest }) => rest)(prev)
                           );
-                        }
-                      }}
-                      onBlur={() => {
-                        setTouched(prev => ({ ...prev, email: true }));
-                        const err = validateEmail(email);
-                        setErrors(prev =>
-                          err
-                            ? { ...prev, email: err }
-                            : (({ email: _, ...rest }) => rest)(prev)
-                        );
-                      }}
-                      placeholder="you@email.com"
-                      className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
-                    />
-                    {touched.email && errors.email && (
+                        }}
+                        placeholder="you@email.com"
+                        className={`w-full bg-transparent border-0 border-b px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 transition-colors rounded-none ${touched.email && errors.email ? "border-primary" : "border-white/10 focus:border-white"}`}
+                      />
+                      {touched.email && errors.email && (
+                        <p
+                          id="newsletter-email-error"
+                          className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.1em]"
+                        >
+                          <AlertCircle className="w-3 h-3" /> {errors.email}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="relative group">
+                      <label
+                        htmlFor="phone"
+                        className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors"
+                      >
+                        Phone Number (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        value={phone}
+                        autoComplete="tel"
+                        onChange={e => setPhone(e.target.value)}
+                        placeholder="+1 (000) 000-0000"
+                        aria-describedby="newsletter-phone-help"
+                        className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
+                      />
                       <p
-                        id="newsletter-email-error"
-                        className="flex items-center gap-2 mt-3 text-primary text-[11px] font-mono uppercase tracking-[0.1em]"
+                        id="newsletter-phone-help"
+                        className="mt-3 text-xs text-white/60 leading-relaxed"
                       >
-                        <AlertCircle className="w-3 h-3" /> {errors.email}
+                        Optional contact number. This does not sign you up for
+                        text messages.
                       </p>
-                    )}
+                    </div>
                   </div>
 
-                  <div className="relative group">
-                    <label
-                      htmlFor="phone"
-                      className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 block mb-3 group-hover:text-white/80 transition-colors"
-                    >
-                      Phone Number (Optional)
+                  {/* Checkboxes */}
+                  <div className="flex flex-col gap-6 mt-4">
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                      <div className="relative mt-1 shrink-0">
+                        <input
+                          type="checkbox"
+                          checked={agreed}
+                          onChange={e => {
+                            setAgreed(e.target.checked);
+                            setTouched(prev => ({ ...prev, agreed: true }));
+                            if (e.target.checked)
+                              setErrors(prev => {
+                                const { agreed: _, ...rest } = prev;
+                                return rest;
+                              });
+                          }}
+                          className="peer sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${agreed ? "bg-white border-white text-black" : touched.agreed && errors.agreed ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}
+                        >
+                          {agreed && <Check className="w-4 h-4" />}
+                        </div>
+                      </div>
+                      <div className="flex flex-col">
+                        <span
+                          className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors leading-relaxed ${touched.agreed && errors.agreed ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
+                        >
+                          I agree to receive email updates and event
+                          announcements.
+                        </span>
+                      </div>
                     </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={phone}
-                      autoComplete="tel"
-                      onChange={e => setPhone(e.target.value)}
-                      placeholder="+1 (000) 000-0000"
-                      aria-describedby="newsletter-phone-help"
-                      className="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-white text-xl md:text-2xl font-light placeholder:text-white/70 focus:outline-none focus:ring-0 focus:border-white transition-colors rounded-none"
-                    />
-                    <p
-                      id="newsletter-phone-help"
-                      className="mt-3 text-xs text-white/60 leading-relaxed"
-                    >
-                      Optional contact number. This does not sign you up for
-                      text messages.
-                    </p>
+
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                      <div className="relative mt-1 shrink-0">
+                        <input
+                          type="checkbox"
+                          checked={isAdult}
+                          onChange={e => {
+                            setIsAdult(e.target.checked);
+                            setTouched(prev => ({ ...prev, isAdult: true }));
+                            if (e.target.checked)
+                              setErrors(prev => {
+                                const { isAdult: _, ...rest } = prev;
+                                return rest;
+                              });
+                          }}
+                          className="peer sr-only"
+                        />
+                        <div
+                          className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${isAdult ? "bg-white border-white text-black" : touched.isAdult && errors.isAdult ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}
+                        >
+                          {isAdult && <Check className="w-4 h-4" />}
+                        </div>
+                      </div>
+                      <div className="flex flex-col">
+                        <span
+                          className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors leading-relaxed ${touched.isAdult && errors.isAdult ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
+                        >
+                          I confirm that I am 18 years of age or older.
+                        </span>
+                      </div>
+                    </label>
                   </div>
-                </div>
 
-                {/* Checkboxes */}
-                <div className="flex flex-col gap-6 mt-4">
-                  <label className="flex items-start gap-4 cursor-pointer group">
-                    <div className="relative mt-1 shrink-0">
-                      <input
-                        type="checkbox"
-                        checked={agreed}
-                        onChange={e => {
-                          setAgreed(e.target.checked);
-                          setTouched(prev => ({ ...prev, agreed: true }));
-                          if (e.target.checked)
-                            setErrors(prev => {
-                              const { agreed: _, ...rest } = prev;
-                              return rest;
-                            });
-                        }}
-                        className="peer sr-only"
-                      />
-                      <div
-                        className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${agreed ? "bg-white border-white text-black" : touched.agreed && errors.agreed ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}
-                      >
-                        {agreed && <Check className="w-4 h-4" />}
-                      </div>
-                    </div>
-                    <div className="flex flex-col">
-                      <span
-                        className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors leading-relaxed ${touched.agreed && errors.agreed ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
-                      >
-                        I agree to receive email updates and event
-                        announcements.
-                      </span>
-                    </div>
-                  </label>
-
-                  <label className="flex items-start gap-4 cursor-pointer group">
-                    <div className="relative mt-1 shrink-0">
-                      <input
-                        type="checkbox"
-                        checked={isAdult}
-                        onChange={e => {
-                          setIsAdult(e.target.checked);
-                          setTouched(prev => ({ ...prev, isAdult: true }));
-                          if (e.target.checked)
-                            setErrors(prev => {
-                              const { isAdult: _, ...rest } = prev;
-                              return rest;
-                            });
-                        }}
-                        className="peer sr-only"
-                      />
-                      <div
-                        className={`w-5 h-5 border transition-all flex items-center justify-center rounded-none ${isAdult ? "bg-white border-white text-black" : touched.isAdult && errors.isAdult ? "border-primary text-primary" : "border-white/20 group-hover:border-white/40"}`}
-                      >
-                        {isAdult && <Check className="w-4 h-4" />}
-                      </div>
-                    </div>
-                    <div className="flex flex-col">
-                      <span
-                        className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors leading-relaxed ${touched.isAdult && errors.isAdult ? "text-primary" : "text-white/60 group-hover:text-white/80"}`}
-                      >
-                        I confirm that I am 18 years of age or older.
-                      </span>
-                    </div>
-                  </label>
-                </div>
-
-                {submitError && (
-                  <p
-                    id="newsletter-submit-error"
-                    className="flex items-center gap-2 mt-2 text-primary text-[10px] font-mono uppercase tracking-[0.1em]"
-                  >
-                    <AlertCircle className="w-4 h-4 shrink-0" /> {submitError}
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-6 w-full py-6 md:py-8 bg-white border border-white text-black hero-wordmark text-2xl md:text-3xl uppercase tracking-tighter disabled:opacity-50 transition-all duration-500 hover:bg-black hover:text-white flex items-center justify-between px-8 md:px-10 group"
-                >
-                  <span>
-                    {isSubmitting ? "TRANSMITTING..." : "SECURE MEMBERSHIP"}
-                  </span>
-                  {!isSubmitting && (
-                    <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />
+                  {submitError && (
+                    <p
+                      id="newsletter-submit-error"
+                      className="flex items-center gap-2 mt-2 text-primary text-[10px] font-mono uppercase tracking-[0.1em]"
+                    >
+                      <AlertCircle className="w-4 h-4 shrink-0" /> {submitError}
+                    </p>
                   )}
-                </button>
-              </form>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="mt-6 w-full py-6 md:py-8 bg-white border border-white text-black hero-wordmark text-2xl md:text-3xl uppercase tracking-tighter disabled:opacity-50 transition-all duration-500 hover:bg-black hover:text-white flex items-center justify-between px-8 md:px-10 group"
+                  >
+                    <span>
+                      {isSubmitting ? "TRANSMITTING..." : "SECURE MEMBERSHIP"}
+                    </span>
+                    {!isSubmitting && (
+                      <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 transition-transform group-hover:translate-x-2 group-hover:-translate-y-2" />
+                    )}
+                  </button>
+                </form>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

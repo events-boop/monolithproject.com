@@ -5,6 +5,7 @@ import {
   subscribeSunsets,
   checkedSunsetsSubscriptionAvailability,
 } from "../services/sunsets-subscriptions";
+import hostedForms from "../../shared/signup-forms.json";
 const router = Router();
 router.get(
   "/api/sunsets/subscriptions",
@@ -12,7 +13,11 @@ router.get(
     res.setHeader("Cache-Control", "no-store");
     res.json({
       ok: true,
-      audiences: await checkedSunsetsSubscriptionAvailability(),
+      audiences:
+        hostedForms.event && hostedForms.radio
+          ? { event: false, radio: false }
+          : await checkedSunsetsSubscriptionAvailability(),
+      hostedForms,
     });
   })
 );

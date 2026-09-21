@@ -10,7 +10,7 @@
  *      poshLinked) and a ticketUrl present. Money states must be proven.
  *   2. draft               → no ticketUrl (no accidental checkout paths).
  *   3. event window ended  → status must be "past" within 24h of endsAt.
- *      (This is the rule that catches a stale July 4 still "on-sale".)
+ *      Postponed/cancelled events retain their update after the original date.
  *   4. past                → warn when no archiveSlug/recapUrl; the recap
  *      is the sponsor receipt.
  *
@@ -66,13 +66,16 @@ for (const event of upcomingEvents) {
     errors.push(`${tag} draft event carries a ticketUrl — remove it or change status`);
   }
 
-  // Rule 3: finished events must be archived.
+  // Rule 3: completed events must be archived; an original postponed or
+  // cancelled date is not evidence that a performance took place.
   const end = eventEndTimestamp(event);
   if (
     end !== null &&
     now > end + PAST_GRACE_MS &&
     event.status !== "past" &&
-    event.status !== "draft"
+    event.status !== "draft" &&
+    event.eventStatus !== "EventPostponed" &&
+    event.eventStatus !== "EventCancelled"
   ) {
     errors.push(
       `${tag} ended ${new Date(end).toISOString().slice(0, 10)} but status is still "${event.status}" — flip it to "past"`

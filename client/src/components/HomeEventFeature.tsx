@@ -29,7 +29,7 @@ export default function HomeEventFeature() {
         >
           {sunsetsNeedsUpdate && (
             <span className="home-postponed-art-label">
-              POSTPONED · ORIGINAL SEPTEMBER 19 ARTWORK
+              POSTPONED
             </span>
           )}
           <SunsetsCampaignArtwork variant="wide" />

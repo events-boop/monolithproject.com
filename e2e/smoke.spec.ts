@@ -40,65 +40,32 @@ async function ensureNewsletterVisible(page: import("@playwright/test").Page) {
   await page.waitForTimeout(300);
 }
 
-test("newsletter flow shows user-visible error then success", async ({
+test("newsletter opens hosted signup without claiming a subscription", async ({
   page,
 }) => {
-  await page.route("**/api/leads", async route => {
-    await route.fulfill({
-      status: 502,
-      contentType: "application/json",
-      body: JSON.stringify({
-        ok: false,
-        error: { message: "Provider unavailable. Please retry." },
-      }),
-    });
+  let postedLead = false;
+  page.on("request", request => {
+    if (request.url().endsWith("/api/leads") && request.method() === "POST")
+      postedLead = true;
   });
-
   await ensureNewsletterVisible(page);
   const newsletter = page.locator("#newsletter");
-
-  await newsletter.locator("#email").fill("test@example.com");
-  const consentCheckbox = newsletter.getByRole("checkbox", {
-    name: /i agree to receive email updates and event announcements/i,
+  const signup = newsletter.getByRole("link", {
+    name: /continue to email signup/i,
   });
-  const adultCheckbox = newsletter.getByRole("checkbox", {
-    name: /i confirm that i am 18 years of age or older/i,
-  });
-
-  await consentCheckbox.evaluate(node => {
-    (node as HTMLInputElement).click();
-  });
-  await adultCheckbox.evaluate(node => {
-    (node as HTMLInputElement).click();
-  });
-  await expect(consentCheckbox).toBeChecked();
-  await expect(adultCheckbox).toBeChecked();
+  await expect(signup).toBeVisible();
+  await expect(signup).toHaveAttribute(
+    "href",
+    /^https:\/\/50586c7f\.sibforms\.com\/serve\//
+  );
+  await expect(signup).toHaveAttribute("target", "_blank");
   await expect(
-    newsletter.getByRole("button", { name: /SECURE MEMBERSHIP/i })
+    newsletter.getByText(/confirm it from your inbox/i)
   ).toBeVisible();
-  await newsletter.locator("form").evaluate(form => {
-    (form as HTMLFormElement).requestSubmit();
-  });
-
   await expect(
-    page.getByText("Provider unavailable. Please retry.")
-  ).toBeVisible();
-
-  await page.unroute("**/api/leads");
-  await page.route("**/api/leads", async route => {
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ ok: true, state: "saved" }),
-    });
-  });
-
-  await newsletter.locator("form").evaluate(form => {
-    (form as HTMLFormElement).requestSubmit();
-  });
-  await expect(
-    page.getByRole("heading", { name: /Thanks For Joining/i })
-  ).toBeVisible();
+    newsletter.getByRole("heading", { name: /Thanks For Joining/i })
+  ).toHaveCount(0);
+  expect(postedLead).toBe(false);
 });
 
 test("ticket flow emits intent tracking and preserves outbound ticket link", async ({
