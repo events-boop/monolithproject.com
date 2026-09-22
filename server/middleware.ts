@@ -72,14 +72,16 @@ export function configureMiddleware(app: Express) {
     const isWebhook = req.path.startsWith("/webhooks/");
     const limit = isWebhook
       ? "128kb"
-      : req.path === "/leads" ||
-          req.path === "/contact" ||
-          req.path === "/booking-inquiry" ||
-          req.path === "/ticket-intent"
-        ? "24kb"
-        : req.path === "/sponsor-access"
-          ? "8kb"
-          : "16kb";
+      : req.path.startsWith("/cms/")
+        ? "256kb"
+        : req.path === "/leads" ||
+            req.path === "/contact" ||
+            req.path === "/booking-inquiry" ||
+            req.path === "/ticket-intent"
+          ? "24kb"
+          : req.path === "/sponsor-access"
+            ? "8kb"
+            : "16kb";
 
     const options: any = { limit };
     if (isWebhook) {

@@ -465,7 +465,7 @@ export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG]
   .map(event => withApprovedSunsets(event))
   .sort((a, b) => eventStartValue(a) - eventStartValue(b));
 
-const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
+export const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
   hero: "css-sep19",
   banner: "css-sep19",
   funnel: "css-sep19",

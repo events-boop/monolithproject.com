@@ -19,6 +19,7 @@ import socialEchoRouter from "./routes/social-echo";
 import sponsorRouter from "./routes/sponsor";
 import siteDataRouter from "./routes/site-data";
 import opsRouter from "./routes/ops";
+import cmsAdminRouter from "./routes/cms-admin";
 import outboundRouter from "./routes/outbound";
 import trackingRouter from "./routes/tracking";
 import houseOfFriendsRouter from "./routes/house-of-friends";
@@ -61,6 +62,11 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },
   { path: "/api/ops/sunsets-analytics", methods: ["GET"] },
+  { path: "/api/cms/documents", methods: ["GET"] },
+  { path: "/api/cms/documents/:key", methods: ["GET"] },
+  { path: "/api/cms/documents/:key/draft", methods: ["PUT"] },
+  { path: "/api/cms/documents/:key/publish", methods: ["POST"] },
+  { path: "/api/cms/documents/:key/restore", methods: ["POST"] },
   { path: "/api/webhooks/laylo", methods: ["POST"] },
   { path: "/api/webhooks/posh", methods: ["POST"] },
 ];
@@ -115,6 +121,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(sponsorRouter);
   app.use(siteDataRouter);
   app.use(opsRouter);
+  app.use(cmsAdminRouter);
   app.use(outboundRouter);
   app.use(trackingRouter);
   app.use(houseOfFriendsRouter);
