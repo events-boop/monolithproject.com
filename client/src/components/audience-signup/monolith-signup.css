@@ -1,0 +1,307 @@
+/* Source-matched Monolith parent palette. Scoped: does not restyle Audience OS or the host website. */
+.monolith-signup {
+  --ms-canvas: #050505;
+  --ms-paper: #f5f1e8;
+  --ms-muted: #b5aa9f;
+  --ms-coral: #e05a3a;
+  color: var(--ms-paper);
+  background: var(--ms-canvas);
+  border: 1px solid #2a241e;
+  padding: 42px 48px 56px;
+  font-family: var(--font-sans, Inter), "Helvetica Neue", Arial, sans-serif;
+}
+.monolith-signup * {
+  box-sizing: border-box;
+}
+.monolith-signup .ms-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--ms-muted);
+  border-bottom: 1px solid #2a241e;
+  padding-bottom: 24px;
+  font-family: var(--font-mono, "JetBrains Mono"), monospace;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+}
+.monolith-signup .ms-topline > span:first-child {
+  color: var(--ms-paper);
+}
+.monolith-signup .ms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 65px;
+  margin-top: 48px;
+}
+.monolith-signup .ms-kicker {
+  font-family: var(--font-mono, "JetBrains Mono"), monospace;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--ms-coral);
+  margin: 0 0 24px;
+}
+.monolith-signup h2 {
+  font-family:
+    var(--font-hero, "General Sans"), Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(44px, 5vw, 80px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  max-width: 8ch;
+  margin: 0 0 28px;
+  color: var(--ms-paper);
+}
+.monolith-signup .ms-intro {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #d4cabe;
+  max-width: 35ch;
+  margin: 0 0 32px;
+}
+.monolith-signup .ms-benefits {
+  display: grid;
+  border-top: 1px solid #2a241e;
+  margin-top: 30px;
+}
+.monolith-signup .ms-benefits > span {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 17px 0;
+  border-bottom: 1px solid #2a241e;
+  font-size: 17px;
+}
+.monolith-signup .ms-benefits small {
+  color: var(--ms-coral);
+  font-family: monospace;
+  font-size: 11px;
+}
+.monolith-signup .ms-signature {
+  display: block;
+  color: var(--ms-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 28px;
+}
+.monolith-signup .ms-form-side {
+  min-width: 0;
+}
+.monolith-signup form {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+.monolith-signup fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: block;
+}
+.monolith-signup label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 9px;
+  color: var(--ms-paper);
+  font-size: 14px;
+  font-weight: 400;
+}
+.monolith-signup label > span {
+  color: var(--ms-muted);
+  font-size: 11px;
+}
+.monolith-signup input:not([type="checkbox"]) {
+  display: block;
+  width: 100%;
+  height: 54px;
+  background: #111;
+  color: var(--ms-paper);
+  border: 1px solid #4b3c31;
+  border-radius: 0;
+  padding: 14px;
+  font: inherit;
+  font-size: 16px;
+  box-shadow: none;
+  outline-offset: 3px;
+}
+.monolith-signup input:not([type="checkbox"]):focus-visible,
+.monolith-signup button:focus-visible,
+.monolith-signup a:focus-visible {
+  outline: 2px solid var(--ms-coral);
+  outline-offset: 4px;
+}
+.monolith-signup input::placeholder {
+  color: #8d8175;
+  opacity: 1;
+}
+.monolith-signup input[aria-invalid="true"] {
+  border-color: #ed947e;
+}
+.monolith-signup .ms-optional-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 23px;
+}
+.monolith-signup .ms-choices {
+  display: grid;
+  gap: 15px;
+  margin: 26px 0 28px;
+}
+.monolith-signup .ms-choice {
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0;
+  cursor: pointer;
+}
+.monolith-signup .ms-choice input {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  flex: 0 0 18px;
+  margin: 2px 0 0;
+  accent-color: var(--ms-coral);
+}
+.monolith-signup .ms-choice > span {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #c6bbaf;
+}
+.monolith-signup .ms-field-error {
+  display: block;
+  color: #ffac96;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+.monolith-signup .ms-submit-error {
+  padding: 14px;
+  border: 1px solid #884330;
+  background: #291610;
+  color: #ffb8a4;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+.monolith-signup .ms-submit {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--ms-paper);
+  border: 1px solid #f5f1e8;
+  border-radius: 999px;
+  padding: 19px 24px;
+  cursor: pointer;
+  box-shadow: none;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.monolith-signup .ms-submit > span {
+  font-size: 22px;
+}
+.monolith-signup .ms-submit:hover:not(:disabled) {
+  color: var(--ms-paper);
+  background: #221510;
+  border-color: var(--ms-coral);
+}
+.monolith-signup fieldset:disabled .ms-submit {
+  opacity: 0.55;
+  cursor: wait;
+}
+.monolith-signup .ms-privacy {
+  margin: 20px 0 0;
+  color: #a99e92;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.monolith-signup .ms-privacy a {
+  color: #f5f1e8;
+  text-underline-offset: 4px;
+}
+.monolith-signup .ms-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.monolith-signup .ms-success {
+  padding: 34px;
+  border: 1px solid #4b3c31;
+  background: #111;
+}
+.monolith-signup .ms-success h3 {
+  font-family: var(--font-hero, "General Sans"), Inter, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 500;
+  margin: 20px 0;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+.monolith-signup .ms-success > p {
+  color: #d4cabe;
+  line-height: 1.7;
+  margin: 0 0 30px;
+}
+@media (max-width: 1000px) {
+  .monolith-signup {
+    padding: 30px;
+  }
+  .monolith-signup .ms-grid {
+    gap: 35px;
+  }
+  .monolith-signup .ms-optional-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .monolith-signup {
+    padding: 25px 20px 32px;
+  }
+  .monolith-signup .ms-topline {
+    font-size: 9px;
+    letter-spacing: 1px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .monolith-signup .ms-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 30px;
+  }
+  .monolith-signup h2 {
+    font-size: 44px;
+    letter-spacing: -1px;
+    max-width: none;
+  }
+  .monolith-signup .ms-intro {
+    font-size: 16px;
+  }
+  .monolith-signup .ms-signature {
+    display: none;
+  }
+  .monolith-signup .ms-benefits {
+    display: none;
+  }
+  .monolith-signup .ms-success {
+    padding: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .monolith-signup .ms-submit {
+    transition: none;
+  }
+}

@@ -24,6 +24,10 @@ import outboundRouter from "./routes/outbound";
 import trackingRouter from "./routes/tracking";
 import houseOfFriendsRouter from "./routes/house-of-friends";
 import spaRouter from "./routes/spa";
+import {
+  audienceSignupParseError,
+  createAudienceSignupRouter,
+} from "./routes/audience-signup";
 
 type CreateAppOptions = {
   includeSpa?: boolean;
@@ -42,6 +46,7 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/site-data", methods: ["GET"] },
   { path: "/api/sponsor-deck", methods: ["GET"] },
   { path: "/api/leads", methods: ["POST"] },
+  { path: "/api/audience-signup", methods: ["POST"] },
   { path: "/api/sunsets/subscriptions", methods: ["GET", "POST"] },
   { path: "/api/contact", methods: ["POST"] },
   { path: "/api/booking-inquiry", methods: ["POST"] },
@@ -108,6 +113,9 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   });
 
   configureMiddleware(app);
+
+  app.use("/api/audience-signup", audienceSignupParseError);
+  app.use(createAudienceSignupRouter());
 
   app.use(healthRouter);
   app.use(seoRouter);

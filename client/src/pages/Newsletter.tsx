@@ -4,8 +4,15 @@ import Navigation from "@/components/Navigation";
 import NewsletterSection from "@/components/NewsletterSection";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
+import MonolithSignupPreview from "@/components/audience-signup/MonolithSignupPreview";
 
 export default function Newsletter() {
+  if (
+    import.meta.env.DEV &&
+    new URLSearchParams(window.location.search).get("audience_preview") === "1"
+  ) {
+    return <MonolithSignupPreview />;
+  }
   const benefits = [
     "Early Access Tickets",
     "Lineup Announcements",
