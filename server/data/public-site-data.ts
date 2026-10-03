@@ -445,8 +445,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Venue Reveal Soon",
     location: "Chicago, IL",
     status: "coming-soon",
-    description: "The season ends in September. Then the Monolith stands.",
-    eventNotice: "The season ends in September. Then the Monolith stands.",
+    description: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
+    eventNotice: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
     activeFunnels: ["waitlist"],
   },
 ];

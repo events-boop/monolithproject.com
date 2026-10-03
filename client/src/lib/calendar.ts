@@ -1,3 +1,4 @@
+import { canAddEventToCalendar } from "./schedulePresentation";
 import type { ScheduledEvent } from "@shared/events/types";
 import { getEventWindow } from "@/lib/siteExperience";
 
@@ -84,6 +85,7 @@ export function buildEventCalendarFile(
   event: ScheduledEvent,
   generatedAt = new Date()
 ) {
+  if (!canAddEventToCalendar(event)) return null;
   const dateLines = (() => {
     if (event.startsAt) {
       const { start, end } = getEventWindow(event);

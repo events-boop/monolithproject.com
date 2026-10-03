@@ -1,3 +1,4 @@
+import AudioPlayer from "@/components/AudioPlayer";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -428,14 +429,9 @@ export default function Radio() {
               </div>
 
               <div className="overflow-hidden border border-white/10 bg-black">
-                <iframe
+                <AudioPlayer
                   key={activeEpisode.slug}
-                  title={`${activeEpisode.title} embedded player`}
-                  width="100%"
-                  height="166"
-                  scrolling="no"
-                  frameBorder="no"
-                  allow="autoplay"
+                  title={activeEpisode.title}
                   src={activeEpisode.embedUrl}
                 />
               </div>

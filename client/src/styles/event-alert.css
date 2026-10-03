@@ -116,4 +116,96 @@ body:has(.event-status-float) {
   }
 }
 
-.event-status-float[hidden] { display: none; }
+.event-status-float[hidden] {
+  display: none;
+}
+
+/* A single stationary notice in the header replaces the bottom overlay. */
+.nav-event-update {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid #ffd482;
+  border-radius: 10px;
+  background: #f3bc5c;
+  color: #211809;
+  box-shadow: 0 4px 20px #0003;
+  font: 600 13px/1.4 var(--font-sans, sans-serif);
+}
+.nav-event-update-summary,
+.nav-event-update-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-event-update-summary {
+  min-width: 0;
+}
+.nav-event-update-summary strong {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #211809;
+  color: #ffd482;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+.nav-event-update-action {
+  flex-shrink: 0;
+  color: #211809;
+  font-weight: 700;
+}
+.nav-event-update:hover {
+  background: #ffce78;
+}
+.nav-event-update:focus-visible {
+  outline: 2px solid #f7f2e9;
+  outline-offset: 3px;
+}
+.nav-calendar-action,
+.nav-calendar-action > div {
+  background: #ffffff08 !important;
+  color: #eee !important;
+  border: 1px solid #ffffff30 !important;
+  box-shadow: none !important;
+}
+@media (max-width: 639px) {
+  .nav-event-update-series {
+    display: none;
+  }
+  .nav-event-update {
+    padding-inline: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    gap: 8px;
+  }
+  .nav-event-update-summary strong {
+    padding-inline: 6px;
+    font-size: 12px;
+    letter-spacing: 0.035em;
+  }
+  .nav-event-update-summary,
+  .nav-event-update-action {
+    gap: 6px;
+  }
+}
+
+/* A block button inside an inline link creates two extra line boxes. */
+.nav-calendar-action[data-nav-primary-cta] {
+  display: inline-flex;
+  vertical-align: middle;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+@media (max-width: 374px) {
+  .nav-event-update-label {
+    display: none;
+  }
+}

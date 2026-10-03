@@ -1,0 +1,778 @@
+/* Monolith: an architectural masthead, real photography and editorial rhythm. */
+#app-shell .monolith-home {
+  --home-paper: #f4ecd9;
+  --home-ink: #151410;
+  --home-accent: #e05a3a;
+  background: #080807;
+}
+#app-shell .monolith-home .monolith-hero {
+  background: #080807;
+}
+#app-shell .monolith-home .monolith-hero-stage {
+  min-height: min(960px, 100svh);
+}
+#app-shell .monolith-home .monolith-hero-photo img {
+  object-position: center 60%;
+}
+#app-shell .monolith-home .monolith-hero-photo::after {
+  background: linear-gradient(
+    180deg,
+    #05050550 0%,
+    #0505050d 25%,
+    #05050544 49%,
+    #050505d9 83%,
+    #080807 100%
+  );
+}
+#app-shell .monolith-home .monolith-hero-inner {
+  min-height: inherit;
+  display: flex;
+  align-items: end;
+  padding: 160px 4.5% 38px;
+}
+#app-shell .monolith-home .monolith-hero-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: 0;
+  width: 100%;
+}
+#app-shell .home-hero-masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-block: 16px;
+  border-top: 1px solid #f4ecd955;
+}
+#app-shell .monolith-home .home-hero-masthead .home-eyebrow {
+  color: #f4ecd9;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+#app-shell .home-hero-edition {
+  color: #f4ecd9;
+  font: 500 11px/1.5 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+#app-shell .monolith-home .monolith-hero-copy h1 {
+  width: 100%;
+  margin: 26px 0 34px;
+  font-size: 240px;
+  font-weight: 500;
+  line-height: 0.79;
+  letter-spacing: -0.065em;
+  color: #f4ecd9;
+}
+#app-shell .home-hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 32px;
+  padding-top: 26px;
+  border-top: 1px solid #f4ecd955;
+}
+#app-shell .monolith-home .monolith-hero-tagline {
+  font-size: 38px;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: #f4ecd9;
+}
+#app-shell .monolith-hero-tagline span {
+  display: block;
+}
+#app-shell .monolith-home .home-hero-explore {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  text-decoration: none;
+  color: #f4ecd9;
+  font-size: 14px;
+  font-weight: 500;
+}
+#app-shell .home-hero-arrow {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #f4ecd9;
+  color: #151410;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+#app-shell .home-hero-explore:hover .home-hero-arrow {
+  transform: rotate(45deg);
+  background: #e05a3a;
+}
+#app-shell .monolith-hero-event-rail:empty {
+  display: none;
+}
+#app-shell .monolith-home .home-editorial-section {
+  padding-block: 80px;
+}
+#app-shell .monolith-home .home-section-heading {
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 36px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid #f4ecd92e;
+}
+#app-shell .monolith-home .home-section-heading h2 {
+  font: 500 64px/0.96 var(--font-hero);
+  letter-spacing: -0.055em;
+  max-width: 16ch;
+  color: #f4ecd9;
+}
+#app-shell .monolith-home .home-section-heading .home-eyebrow {
+  font-size: 11px;
+  margin-bottom: 18px;
+  color: #c0ab94;
+}
+#app-shell .monolith-home .home-text-link {
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  font-weight: 500;
+}
+#app-shell .monolith-home .home-upcoming {
+  background: #0e0e0c;
+}
+#app-shell .home-show-grid {
+  grid-template-columns: minmax(0, 2.5fr) minmax(0, 1fr);
+  gap: 18px;
+}
+#app-shell .monolith-home .home-show-card {
+  background: #161510;
+  border-color: #f4ecd926;
+  border-radius: 8px;
+  padding: 26px;
+}
+#app-shell .monolith-home .home-show-card::before {
+  opacity: 0.5;
+}
+#app-shell .monolith-home .home-show-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+  gap: 26px;
+}
+#app-shell .home-show-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+#app-shell .home-show-art {
+  min-width: 0;
+  margin: 0;
+  align-self: start;
+}
+#app-shell .home-show-art > a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #080807;
+}
+#app-shell .home-show-art picture {
+  display: block;
+}
+#app-shell .home-show-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s;
+}
+#app-shell .home-show-art > a:hover img {
+  transform: scale(1.025);
+}
+#app-shell .home-show-art-status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 8px 12px;
+  background: #f4ecd9;
+  color: #241b10;
+  font: 600 11px/1.4 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+#app-shell .home-show-art figcaption {
+  color: #bcb2a4;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+#app-shell .monolith-home .home-show-top {
+  align-items: start;
+  gap: 12px;
+}
+#app-shell .monolith-home .home-show-top .home-eyebrow {
+  color: #c6ae91;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+#app-shell .monolith-home .home-show-status {
+  color: #f3ca88;
+  border-color: #d6a15966;
+  background: #a3671420;
+  border-radius: 3px;
+  font-size: 11px;
+  padding: 5px 8px;
+}
+#app-shell .monolith-home .home-show-card h3 {
+  font: 500 40px/1 var(--font-hero);
+  letter-spacing: -0.04em;
+  margin: 18px 0;
+  color: #f4ecd9;
+}
+#app-shell .monolith-home .home-show-date {
+  font-size: 12px;
+  color: #c1b29d;
+  margin-top: 22px;
+}
+#app-shell .monolith-home .home-show-lineup {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #c2bdb3;
+}
+#app-shell .monolith-home .home-show-details {
+  gap: 18px;
+  border-color: #ffffff20;
+  padding-top: 20px;
+  margin-top: 22px;
+}
+#app-shell .monolith-home .home-show-details dt {
+  color: #ad9e8a;
+  font-size: 11px;
+}
+#app-shell .monolith-home .home-show-details dd {
+  font-size: 14px;
+  color: #f4ecd9;
+}
+#app-shell .monolith-home .home-show-details dd span {
+  color: #b7afa2;
+  font-size: 12px;
+}
+#app-shell .monolith-home .home-show-support.home-event-notice {
+  background: transparent;
+  border-inline: 0;
+  border-radius: 0;
+  border-block-color: #f4ecd926;
+  margin-top: 22px;
+  padding: 0;
+}
+#app-shell .monolith-home .home-show-support summary {
+  color: #f3ca88;
+  min-height: 50px;
+  font-size: 13px;
+}
+#app-shell .monolith-home .home-show-support > div {
+  padding: 0 0 18px;
+}
+#app-shell .monolith-home .home-show-support p {
+  font-size: 14px;
+}
+#app-shell .monolith-home .home-show-action {
+  margin-top: auto;
+  padding-top: 24px;
+}
+#app-shell .monolith-home .home-secondary {
+  border-radius: 999px;
+  padding: 12px 18px;
+  border-color: #f4ecd95c;
+  background: #f4ecd9;
+  color: #151410;
+  font-size: 12px;
+  min-height: 46px;
+}
+#app-shell .monolith-home .home-secondary:hover {
+  background: #e2d4b7;
+}
+#app-shell .monolith-home .home-show-next h3 {
+  font-size: 44px;
+}
+#app-shell .monolith-home .home-show-next .home-show-details {
+  grid-template-columns: 1fr;
+}
+#app-shell .monolith-home .home-show-next .home-show-status {
+  color: #c1baad;
+  border-color: #f4ecd944;
+  background: transparent;
+}
+#app-shell .monolith-home .home-series-grid {
+  gap: 20px;
+}
+#app-shell .monolith-home .home-series-card {
+  min-height: 590px;
+  border-radius: 8px;
+  border-color: #f4ecd933;
+}
+#app-shell .monolith-home .home-series-day {
+  margin-bottom: 55px;
+}
+#app-shell .monolith-home .home-series-night {
+  margin-top: 55px;
+}
+#app-shell .monolith-home .home-series-card::before {
+  display: none;
+}
+#app-shell .monolith-home .home-series-caption {
+  padding: 32px;
+}
+#app-shell .monolith-home .home-series-caption h3 {
+  font-size: 76px;
+  line-height: 0.87;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+}
+#app-shell .monolith-home .home-series-logo {
+  width: 310px;
+}
+#app-shell .monolith-home .home-series-action {
+  min-height: 48px;
+  font-size: 13px;
+  border-color: #ffffff66;
+}
+#app-shell .monolith-home .home-artist-discovery {
+  background: #f4ecd9;
+  color: #151410;
+}
+#app-shell .monolith-home .home-artist-discovery .home-section-heading {
+  border-color: #15141040;
+}
+#app-shell .monolith-home .home-artist-discovery .home-section-heading h2 {
+  color: #151410;
+}
+#app-shell .monolith-home .home-artist-discovery .home-eyebrow {
+  color: #675a46;
+}
+#app-shell .monolith-home .home-artist-discovery .home-text-link {
+  color: #151410;
+}
+#app-shell .monolith-home .home-discovery-intro {
+  color: #5e584e;
+  font-size: 16px;
+  max-width: 45ch;
+}
+#app-shell .monolith-home .home-discovery-grid {
+  gap: 26px;
+}
+#app-shell .monolith-home .home-discovery-portrait {
+  border-radius: 4px;
+}
+#app-shell .monolith-home .home-discovery-body {
+  padding-top: 22px;
+}
+#app-shell .monolith-home .home-discovery-body h3 {
+  font-size: 42px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  color: #151410;
+}
+#app-shell .monolith-home .home-discovery-sound {
+  color: #675a46;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+#app-shell .monolith-home .home-discovery-copy {
+  color: #5e584e;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+#app-shell .monolith-home .home-discovery-listen {
+  border-color: #15141045;
+  border-radius: 0;
+  padding: 16px 0;
+  background: transparent;
+  color: #151410;
+}
+#app-shell .monolith-home .home-discovery-listen:hover {
+  border-color: #151410;
+  background: transparent;
+}
+#app-shell .monolith-home .home-discovery-play {
+  background: #151410;
+  color: #f4ecd9;
+  border: 0;
+}
+#app-shell .monolith-home .home-discovery-listen strong {
+  color: #151410;
+}
+#app-shell .monolith-home .home-discovery-listen > span > span {
+  color: #5e584e;
+}
+#app-shell .monolith-home .home-discovery-appearance {
+  border-color: #15141040;
+  color: #151410;
+}
+#app-shell .monolith-home .home-discovery-appearance strong {
+  color: #302d25;
+  font-size: 12px;
+}
+#app-shell .monolith-home .home-discovery-status {
+  color: #5e584e;
+}
+#app-shell .monolith-home .home-discovery-status[data-update="true"] {
+  color: #874224;
+}
+#app-shell .monolith-home .home-artist-discovery a:focus-visible {
+  outline-color: #874224;
+}
+#app-shell .monolith-home .home-recap-section {
+  background: #080807;
+}
+#app-shell .monolith-home .home-recap-film {
+  border-radius: 4px;
+}
+#app-shell .monolith-home .home-recap-copy h3 {
+  font-size: 72px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+#app-shell .monolith-home .home-community-section {
+  background: #191713;
+  border-block: 1px solid #f4ecd926;
+}
+#app-shell .monolith-home .home-community-section h2 {
+  font: 500 76px/0.92 var(--font-hero);
+  letter-spacing: -0.045em;
+  color: #f4ecd9;
+}
+#app-shell .monolith-home .home-primary {
+  border-radius: 999px;
+  font-size: 13px;
+}
+#app-shell .monolith-home .home-venue-credits {
+  border-color: #ffffff26;
+}
+#app-shell .monolith-home .home-venue-credits li {
+  font-size: 13px;
+  color: #bfb5a5;
+}
+/* The shared pages inherit the same typography and calm, warm framing. */
+#app-shell .schedule-editorial-header {
+  border-top: 1px solid #f4ecd940;
+  padding-top: 26px;
+}
+#app-shell .schedule-page-title {
+  font-size: 104px;
+  font-weight: 500;
+  line-height: 0.91;
+  letter-spacing: -0.055em;
+}
+#app-shell .schedule-editorial-header .section-kicker {
+  color: #c6ae91;
+  font-size: 11px;
+}
+#app-shell .schedule-editorial-card {
+  border-radius: 8px;
+  background: #161510;
+  padding: 32px;
+  border-color: #f4ecd92e;
+}
+#app-shell .schedule-editorial-date strong {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+#app-shell .schedule-editorial-copy h3 {
+  font-size: 34px;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+#app-shell .schedule-filters button {
+  font-weight: 500;
+  border-color: #f4ecd93d;
+}
+#app-shell .artist-index-masthead > div {
+  border-top: 1px solid #f4ecd940;
+  padding-top: 26px;
+}
+#app-shell .artist-index-masthead .section-display-title {
+  font-size: 128px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  max-width: none;
+}
+#app-shell .artist-index-masthead .section-kicker {
+  color: #c6ae91;
+  font-size: 11px;
+}
+#app-shell .artist-index .artist-index-search {
+  border-radius: 0;
+  border-inline: 0;
+  border-top: 0;
+  padding-inline: 0;
+}
+#app-shell .artist-index article {
+  border-radius: 5px;
+  border-color: #f4ecd92e;
+}
+#app-shell .artist-index article h2 {
+  letter-spacing: -0.04em;
+}
+#app-shell .signal-invitation {
+  background: #191713;
+}
+#app-shell .signal-invitation-inner h2 {
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+#app-shell .site-footer-refined {
+  background: #080807;
+  border-top: 1px solid #f4ecd92e;
+}
+#app-shell .footer-refined-signature {
+  color: #a79b87;
+  letter-spacing: -0.065em;
+  padding-top: 48px;
+}
+@media (min-width: 1800px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 320px;
+  }
+}
+@media (max-width: 1279px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 180px;
+  }
+  #app-shell .home-show-grid {
+    grid-template-columns: 1fr;
+  }
+  #app-shell .monolith-home .home-show-featured {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 36px;
+  }
+  #app-shell .monolith-home .home-show-next .home-show-details {
+    grid-template-columns: 1fr 1fr;
+  }
+  #app-shell .monolith-home .home-show-next h3 {
+    max-width: 22ch;
+  }
+  #app-shell .monolith-home .home-show-next .home-show-action {
+    align-self: start;
+  }
+}
+@media (max-width: 1023px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 136px;
+  }
+  #app-shell .monolith-home .home-section-heading h2 {
+    font-size: 54px;
+  }
+  #app-shell .monolith-home .home-series-card {
+    min-height: 480px;
+  }
+  #app-shell .monolith-home .home-series-caption h3 {
+    font-size: 60px;
+  }
+  #app-shell .schedule-page-title {
+    font-size: 86px;
+  }
+  #app-shell .artist-index-masthead .section-display-title {
+    font-size: 104px;
+  }
+}
+@media (max-width: 767px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 104px;
+  }
+  #app-shell .monolith-home .monolith-hero-stage {
+    min-height: calc(100svh - 18px);
+  }
+  #app-shell .monolith-home .monolith-hero-inner {
+    padding: 130px 24px 28px;
+  }
+  #app-shell .monolith-home .monolith-hero-tagline {
+    font-size: 28px;
+  }
+  #app-shell .home-hero-edition {
+    display: none;
+  }
+  #app-shell .monolith-home .home-hero-explore {
+    gap: 14px;
+    font-size: 12px;
+  }
+  #app-shell .home-hero-arrow {
+    width: 48px;
+    height: 48px;
+  }
+  #app-shell .monolith-home .home-editorial-section {
+    padding-block: 56px;
+  }
+  #app-shell .monolith-home .home-section-heading {
+    gap: 22px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+  }
+  #app-shell .monolith-home .home-section-heading h2 {
+    font-size: 44px;
+  }
+  #app-shell .monolith-home .home-show-featured {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 22px;
+  }
+  #app-shell .home-show-art {
+    max-width: 420px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  #app-shell .home-show-art figcaption {
+    font-size: 11px;
+  }
+  #app-shell .monolith-home .home-show-card h3 {
+    font-size: 40px;
+  }
+  #app-shell .monolith-home .home-show-next .home-show-details {
+    grid-template-columns: 1fr 1fr;
+  }
+  #app-shell .monolith-home .home-series-day,
+  #app-shell .monolith-home .home-series-night {
+    margin: 0;
+  }
+  #app-shell .monolith-home .home-series-card {
+    min-height: 460px;
+  }
+  #app-shell .monolith-home .home-series-caption {
+    padding: 24px;
+  }
+  #app-shell .monolith-home .home-series-caption h3 {
+    font-size: 64px;
+  }
+  #app-shell .monolith-home .home-recap-copy h3 {
+    font-size: 56px;
+  }
+  #app-shell .monolith-home .home-community-section h2 {
+    font-size: 50px;
+  }
+  #app-shell .schedule-page-title {
+    font-size: 68px;
+  }
+  #app-shell .schedule-editorial-card {
+    padding: 24px;
+  }
+  #app-shell .schedule-editorial-copy h3 {
+    font-size: 29px;
+  }
+  #app-shell .artist-index-masthead .section-display-title {
+    font-size: 82px;
+  }
+  #app-shell .footer-refined-signature {
+    padding-top: 32px;
+  }
+}
+@media (max-width: 639px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 94px;
+    margin: 22px 0 28px;
+  }
+  #app-shell .monolith-home .home-hero-bottom {
+    align-items: start;
+    flex-direction: column;
+    gap: 22px;
+    padding-top: 22px;
+  }
+  #app-shell .monolith-home .home-hero-explore {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  #app-shell .monolith-home .monolith-hero-tagline {
+    font-size: 26px;
+  }
+  #app-shell .monolith-home .home-hero-masthead .home-eyebrow {
+    font-size: 10px;
+  }
+  #app-shell .monolith-home .home-show-next h3 {
+    font-size: 38px;
+  }
+  #app-shell .monolith-home .home-discovery-body h3 {
+    font-size: 38px;
+  }
+  #app-shell .monolith-home .home-discovery-grid {
+    gap: 36px;
+  }
+  #app-shell .monolith-home .home-community-section h2 {
+    font-size: 46px;
+  }
+}
+@media (max-width: 479px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 74px;
+  }
+}
+@media (max-width: 374px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 64px;
+  }
+}
+@media (max-width: 339px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 58px;
+  }
+  #app-shell .monolith-home .monolith-hero-inner {
+    padding-inline: 20px;
+  }
+  #app-shell .monolith-home .home-section-heading h2 {
+    font-size: 38px;
+  }
+  #app-shell .monolith-home .home-show-card h3 {
+    font-size: 34px;
+  }
+  #app-shell .monolith-home .home-show-next .home-show-details {
+    grid-template-columns: 1fr;
+  }
+  #app-shell .schedule-page-title {
+    font-size: 60px;
+  }
+  #app-shell .artist-index-masthead .section-display-title {
+    font-size: 70px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .monolith-home .home-hero-arrow,
+  #app-shell .monolith-home .home-show-art img {
+    transition: none;
+  }
+  #app-shell .monolith-home .home-hero-explore:hover .home-hero-arrow {
+    transform: none;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 399px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 66px;
+  }
+}
+@media (min-width: 400px) and (max-width: 419px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 70px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1399px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 232px;
+  }
+}
+@media (min-width: 1400px) and (max-width: 1599px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 260px;
+  }
+}
+@media (min-width: 1600px) and (max-width: 1799px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 290px;
+  }
+}
+@media (max-width: 339px) {
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: 57px;
+  }
+}

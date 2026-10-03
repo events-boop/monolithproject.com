@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -21,9 +21,20 @@ export default function RevealText({
   stagger = 0.03, // Slightly faster default
   style,
 }: RevealTextProps) {
+  const reduceMotion = useReducedMotion();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
   const words = children.split(" ");
+  if (reduceMotion)
+    return (
+      <Tag
+        ref={ref}
+        className={cn("inline-block leading-tight", className)}
+        style={style}
+      >
+        {children}
+      </Tag>
+    );
 
   // Auto-tune stagger for longer text
   const safeStagger = children.length > 50 ? 0.01 : stagger;

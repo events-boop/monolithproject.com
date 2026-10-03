@@ -7,6 +7,7 @@ import {
   MapPin,
   Music,
   Sun,
+  Search,
 } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -355,6 +356,7 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
                 <ResponsiveImage
                   src={portraitSrc}
                   alt={artist.name}
+                  style={{ objectPosition: artist.imagePosition }}
                   sizes="80px"
                   onError={handlePortraitError}
                   className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
@@ -436,6 +438,7 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
             <ResponsiveImage
               src={portraitSrc}
               alt={artist.name}
+              style={{ objectPosition: artist.imagePosition }}
               sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
               onError={handlePortraitError}
               className="h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
@@ -476,17 +479,23 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
 
 export default function Lineup() {
   const [activeFilter, setActiveFilter] = useState<Series>("all");
+  const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   const filteredArtists = useMemo(() => {
-    if (activeFilter === "all") return ARTIST_ENTRIES;
-    return ARTIST_ENTRIES.filter(artist =>
-      artist.series.includes(activeFilter)
+    const search = query.trim().toLocaleLowerCase();
+    return ARTIST_ENTRIES.filter(
+      artist =>
+        (activeFilter === "all" || artist.series.includes(activeFilter)) &&
+        (!search ||
+          `${artist.name} ${artist.genre} ${artist.origin}`
+            .toLocaleLowerCase()
+            .includes(search))
     );
-  }, [activeFilter]);
+  }, [activeFilter, query]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="artist-index min-h-screen bg-background text-foreground">
       <SEO
         title="Artists"
         description="Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio."
@@ -494,24 +503,33 @@ export default function Lineup() {
       />
       <Navigation />
 
-      <section className="page-shell-start-loose px-6 pb-8">
+      <section className="page-shell-start-loose px-6 pb-8 artist-index-masthead">
         <div className="container layout-default">
           <span className="section-kicker block text-white/42">
-            Monolith Project Index
+            The Monolith Project / Artist index
           </span>
           <RevealText as="h1" className={sectionTitleClass}>
             ARTISTS
           </RevealText>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-            A roster view modeled as identity on the left and work on the right.
-            Radio guests show episode covers. Event artists show flyers, series
-            frames, and live visuals.
+            Find the artists behind the nights. Explore their sound, revisit a
+            set, or follow the people shaping our dance floors.
           </p>
         </div>
       </section>
 
       <section className="sticky sticky-shell-top z-30 border-y border-white/10 bg-black/75 px-6 py-4 backdrop-blur-xl">
         <div className="container layout-default">
+          <label className="artist-index-search">
+            <Search size={18} aria-hidden="true" />
+            <span className="sr-only">Search artists</span>
+            <input
+              type="search"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder="Find an artist, sound or city"
+            />
+          </label>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-wrap gap-2">
               {filters.map(filter => {
@@ -520,6 +538,7 @@ export default function Lineup() {
                   <button
                     key={filter.value}
                     type="button"
+                    aria-pressed={isActive}
                     onClick={() => setActiveFilter(filter.value)}
                     className={cn(
                       "inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors",
@@ -545,6 +564,7 @@ export default function Lineup() {
               <span>View</span>
               <button
                 type="button"
+                aria-pressed={viewMode === "list"}
                 onClick={() => setViewMode("list")}
                 className={cn(
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2 transition-colors",
@@ -558,6 +578,7 @@ export default function Lineup() {
               </button>
               <button
                 type="button"
+                aria-pressed={viewMode === "grid"}
                 onClick={() => setViewMode("grid")}
                 className={cn(
                   "inline-flex items-center gap-2 rounded-full border px-4 py-2 transition-colors",
@@ -577,15 +598,38 @@ export default function Lineup() {
       <section className="px-6 pb-20 pt-8 md:pb-24">
         <div className="container layout-default">
           <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/44">
+            <span
+              aria-live="polite"
+              className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/44"
+            >
               {filteredArtists.length} Artist
               {filteredArtists.length === 1 ? "" : "s"}
             </span>
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/34">
-              {viewMode === "list" ? "Identity + Work Preview" : "Poster Grid"}
+              {viewMode === "list"
+                ? "Artists + selected work"
+                : "Artist portraits"}
             </span>
           </div>
 
+          {!filteredArtists.length && (
+            <div className="artist-index-empty">
+              <h2>No artists found.</h2>
+              <p>
+                Try another name, sound or city, or choose a different series.
+              </p>
+              <button
+                type="button"
+                className="home-text-link"
+                onClick={() => {
+                  setQuery("");
+                  setActiveFilter("all");
+                }}
+              >
+                Show all artists
+              </button>
+            </div>
+          )}
           {viewMode === "list" ? (
             <div>
               {filteredArtists.map(artist => (

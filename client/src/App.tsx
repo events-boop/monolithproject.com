@@ -4,7 +4,6 @@ import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-import EventStatusFloat from "./components/EventStatusFloat";
 import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import Home from "./pages/Home";
 import { UIProvider, useUI } from "./contexts/UIContext";
@@ -480,7 +479,6 @@ function MainContentWrapper() {
   return (
     <>
       <GlobalSpotlightSync />
-      {!isStandaloneLanding && <EventStatusFloat />}
       <SiteDataSync />
       <MetaPixelGate />
 
@@ -535,7 +533,7 @@ function MainContentWrapper() {
         )}
         {!isStandaloneLanding && !isApeDrumsRoute && (
           <>
-            {!shouldHideGlobalConversion && (
+            {landingPath === ROUTES.home && !shouldHideGlobalConversion && (
               <ViewportLazy
                 minHeightClassName="min-h-[24rem]"
                 rootMargin="360px 0px"
@@ -546,7 +544,7 @@ function MainContentWrapper() {
               </ViewportLazy>
             )}
             <ViewportLazy
-              minHeightClassName="min-h-[40rem]"
+              minHeightClassName="min-h-[22rem]"
               rootMargin="420px 0px"
             >
               <Suspense fallback={null}>
