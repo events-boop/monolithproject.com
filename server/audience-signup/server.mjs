@@ -28,7 +28,9 @@ function configured(input) {
       u.password ||
       u.search ||
       u.hash ||
-      !/^\/api\/website-capture\/[0-9a-f-]{36}$/.test(u.pathname) ||
+      !/^(?:\/\.netlify\/functions\/audience-intake)?\/api\/website-capture\/[0-9a-f-]{36}$/.test(
+        u.pathname,
+      ) ||
       !uuid.test(u.pathname.split("/").at(-1)) ||
       !uuid.test(releaseId) ||
       typeof token !== "string" ||

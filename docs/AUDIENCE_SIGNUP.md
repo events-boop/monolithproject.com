@@ -29,3 +29,14 @@ node --import tsx/esm scripts/review_audience_signup.mts
 The browser script stops its temporary servers and keeps screenshots only in ignored `test-results/audience-signup-local/`. Local dev proxy origin checks may reject before the disabled bridge; those checks are preserved, not bypassed.
 
 All website edits are in this canonical checkout. Existing dirty work is preserved; the integration's commit includes only its new files and its narrow page/app changes. No provider, pixel, deployment, environment or legacy capture-mode settings were changed.
+# October 3 Neon receiver checkpoint
+
+Fan360 now builds the canonical raw-only receipt service into `server/audience-signup/receiver/`, with SHA-256 source/artifact provenance. `netlify/functions/audience-intake.ts` mounts it separately from the legacy API. Its database adapter reads only `AUDIENCE_DATABASE_URL`; it never falls back to the website's `DATABASE_URL`. `pg` is a runtime dependency. The server bridge accepts the native intake URL below without changing existing catch-all routing:
+
+```text
+https://monolithproject.com/.netlify/functions/audience-intake/api/website-capture/<website_uuid>
+```
+
+Production function packaging and TypeScript pass. Fan360 has 174 backend tests and a successful compiled receiver → actual Neon synthetic receipt/retry/conflict test with removed fixtures and unchanged canonical stores. The separate Neon `audience_os` database is a verified prepared copy of 47 tables/migrations 001–016. All running Audience OS services still use local Postgres: coordinate a fresh backup and all writers before cutover. This is not a public endpoint or real signup proof.
+
+No production `AUDIENCE_*` settings or enable flag were installed; the native receiver and signup route fail closed. The DEV-only preview and normal/production newsletter behavior described below remain intact. Exact policy/release/private surface, token configuration, coordinated cutover, deployment and real controlled signup remain pending. Do not expose the one-address test as the ordinary newsletter or treat a receipt as a subscription. Preserve all unrelated work in this shared checkout and use explicit path-only commits.
