@@ -37,4 +37,5 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: node scripts/sync_hardening_constants.mjs
       - run: npx vitest run server/db/__tests__/cmsAtomic.integration.test.ts server/db/__tests__/cmsRepo.test.ts server/db/__tests__/cmsPayloadSchemas.test.ts
