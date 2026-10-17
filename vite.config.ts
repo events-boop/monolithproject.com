@@ -134,6 +134,9 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       // Keep this explicit so we never accidentally ship sourcemaps.
       sourcemap: false,
+      // Read by scripts/prerender_public_routes.mts to link prerendered pages'
+      // CSS and JS chunks; the prerender step deletes it afterwards.
+      manifest: true,
       minify: "esbuild",
       rollupOptions: {
         output: {

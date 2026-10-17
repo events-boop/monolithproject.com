@@ -13,7 +13,9 @@
   --scene-glow: rgba(224, 90, 58, 0.35);
   --shell-banner-height: 0px;
   --shell-nav-gap: clamp(0.75rem, 1.8vw, 1rem);
-  --shell-nav-height: 4.75rem;
+  /* Defaults match the rendered header (Navigation re-measures at runtime) so
+     prerendered pages are laid out correctly before JS runs. */
+  --shell-nav-height: 62px;
   --shell-nav-offset: calc(
     env(safe-area-inset-top, 0px) + var(--shell-banner-height) +
       var(--shell-nav-gap)
@@ -75,6 +77,24 @@
   --atmo-blue: rgba(59, 130, 246, 0.18);
   --atmo-coral: rgba(224, 90, 58, 0.2);
   --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 640px) {
+  :root {
+    --shell-nav-height: 94px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --shell-nav-height: 99px;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --shell-nav-height: 100px;
+  }
 }
 
 @media (max-width: 767px) {
