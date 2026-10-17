@@ -1317,13 +1317,13 @@ const beasties = new Beasties({
 function deferStylesheets(html: string) {
   const deferred: string[] = [];
   const out = html.replace(
-    /<link rel="stylesheet"((?:(?!>)[^])*?) href="([^"]+\.css)"([^>]*)>/g,
-    (match, before: string, href: string, after: string) => {
+    /<link rel="stylesheet"(?:(?!>)[^])*? href="([^"]+\.css)"[^>]*>\n?/g,
+    (match, href: string) => {
       // fonts.css is tiny and declares the faces the first paint uses;
       // deferring it makes text re-render (and re-measure) after a swap.
       if (href === "/fonts/fonts.css") return match;
       deferred.push(href);
-      return `<link rel="preload" as="style" data-async-css${before} href="${href}"${after}>`;
+      return "";
     }
   );
   if (!deferred.length) return html;
@@ -1332,7 +1332,7 @@ function deferStylesheets(html: string) {
     .join("");
   return out.replace(
     "</head>",
-    `<noscript>${fallback}</noscript>\n<script src="/async-css.js" defer></script>\n</head>`
+    `<noscript>${fallback}</noscript>\n<script src="/async-css.js" data-css="${deferred.join(",")}" defer></script>\n</head>`
   );
 }
 
@@ -1340,15 +1340,22 @@ function deferStylesheets(html: string) {
 function deferAppEntry(html: string) {
   const entry = html.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/);
   if (!entry) return html;
+  const preloads: string[] = [];
   return html
     .replace(
-      entry[0],
-      `<script type="text/plain" data-app-entry="${entry[1]}"></script>\n<script src="/app-boot.js" defer></script>`
+      /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
+      (_match, href: string) => {
+        preloads.push(href);
+        return "";
+      }
     )
     .replace(
-      /<link rel="modulepreload" crossorigin href="([^"]+)">/g,
-      '<link rel="prefetch" data-app-modulepreload crossorigin href="$1">'
-    );
+      entry[0],
+      () =>
+        `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
+    )
+    // Home-only image hint; on other routes it is just a blocking request.
+    .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "");
 }
 
 async function inlineCriticalCss(html: string) {

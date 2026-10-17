@@ -8,9 +8,15 @@
   function start() {
     if (started) return;
     started = true;
-    var preloads = document.querySelectorAll("link[data-app-modulepreload]");
+    var preloads = (entry.getAttribute("data-app-preloads") || "")
+      .split(",")
+      .filter(Boolean);
     for (var i = 0; i < preloads.length; i++) {
-      preloads[i].rel = "modulepreload";
+      var hint = document.createElement("link");
+      hint.rel = "modulepreload";
+      hint.crossOrigin = "anonymous";
+      hint.href = preloads[i];
+      document.head.appendChild(hint);
     }
     var s = document.createElement("script");
     s.type = "module";
