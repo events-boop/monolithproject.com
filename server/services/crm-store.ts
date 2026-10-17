@@ -223,7 +223,7 @@ export async function persistLeadCapture({
         utmTerm: lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
         lastSeenAt: now,
         consentEmail: true,
-        consentSms: Boolean(lead.phone),
+        consentSms: lead.smsConsent === true && Boolean(lead.phone),
         tags: lead.interestTags || [],
         metadata: {
           requestId,
@@ -260,7 +260,9 @@ export async function persistLeadCapture({
             lead.utmTerm || lead.lastUtmTerm || lead.firstUtmTerm || null,
           lastSeenAt: now,
           consentEmail: true,
-          consentSms: Boolean(lead.phone),
+          ...(lead.smsConsent !== undefined
+            ? { consentSms: lead.smsConsent && Boolean(lead.phone) }
+            : {}),
           tags: lead.interestTags || [],
           metadata: sql`${contacts.metadata} || ${JSON.stringify({
             lastRequestId: requestId,

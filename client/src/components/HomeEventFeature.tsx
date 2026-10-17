@@ -17,7 +17,8 @@ export default function HomeEventFeature() {
   return (
     <section
       id="current-event"
-      className="home-event-feature"
+      className="home-event-feature home-etched-band"
+      data-home-etch-tone="sunsets"
       data-event-status={event.status}
       aria-labelledby="current-event-title"
     >
@@ -28,9 +29,7 @@ export default function HomeEventFeature() {
           aria-label="Open the Chasing Sun(Sets) event guide"
         >
           {sunsetsNeedsUpdate && (
-            <span className="home-postponed-art-label">
-              POSTPONED · ORIGINAL SEPTEMBER 19 ARTWORK
-            </span>
+            <span className="home-postponed-art-label">POSTPONED</span>
           )}
           <SunsetsCampaignArtwork variant="wide" />
           <span className="home-artwork-action">
@@ -128,12 +127,19 @@ export default function HomeEventFeature() {
           <div>
             <h3>{event.statusHeading}</h3>
             <p>{event.statusMessage}</p>
-            <p>
-              Check the event guide for confirmed updates and ticket-holder
-              instructions.
-            </p>
-            <a className="home-text-link" href="/sunsets#weather">
-              Weather & event information{" "}
+            {sunsetsNeedsUpdate ? (
+              <>
+                <p>{event.ticketHolderMessage}</p>
+                <p>{event.statusParagraphs[3]}</p>
+              </>
+            ) : (
+              <p>
+                Check the event guide for confirmed updates and ticket-holder
+                instructions.
+              </p>
+            )}
+            <a className="home-text-link" href="/sunsets#event-update">
+              Ticket-holder information{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>

@@ -11,6 +11,7 @@
  *   2. draft               → no ticketUrl (no accidental checkout paths).
  *   3. event window ended  → status must be "past" within 24h of endsAt.
  *      (This is the rule that catches a stale July 4 still "on-sale".)
+ *      EventPostponed / EventCancelled records are exempt.
  *   4. past                → warn when no archiveSlug/recapUrl; the recap
  *      is the sponsor receipt.
  *
@@ -24,6 +25,7 @@ import type { ScheduledEvent } from "../shared/events/types";
 
 const MONEY_STATUSES = new Set(["on-sale", "sold-out"]);
 const PAST_GRACE_MS = 24 * 60 * 60 * 1000;
+const ARCHIVE_EXEMPT_EVENT_STATUSES = new Set(["EventPostponed", "EventCancelled"]);
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -66,13 +68,16 @@ for (const event of upcomingEvents) {
     errors.push(`${tag} draft event carries a ticketUrl — remove it or change status`);
   }
 
-  // Rule 3: finished events must be archived.
+  // Rule 3: finished events must be archived. Postponed and cancelled events
+  // never happened on their original date, so they stay live (with their
+  // notice) instead of being forced into the archive.
   const end = eventEndTimestamp(event);
   if (
     end !== null &&
     now > end + PAST_GRACE_MS &&
     event.status !== "past" &&
-    event.status !== "draft"
+    event.status !== "draft" &&
+    !ARCHIVE_EXEMPT_EVENT_STATUSES.has(event.eventStatus ?? "")
   ) {
     errors.push(
       `${tag} ended ${new Date(end).toISOString().slice(0, 10)} but status is still "${event.status}" — flip it to "past"`

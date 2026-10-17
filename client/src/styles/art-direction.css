@@ -309,11 +309,9 @@
   border-radius: 8px;
   border-color: #f4ecd933;
 }
-#app-shell .monolith-home .home-series-day {
-  margin-bottom: 55px;
-}
+#app-shell .monolith-home .home-series-day,
 #app-shell .monolith-home .home-series-night {
-  margin-top: 55px;
+  margin: 0;
 }
 #app-shell .monolith-home .home-series-card::before {
   display: none;

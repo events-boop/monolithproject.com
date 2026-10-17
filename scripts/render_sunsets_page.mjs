@@ -1,5 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+const ticketPolicy = JSON.parse(
+  readFileSync(
+    new URL("../shared/events/ticket-policy.json", import.meta.url),
+    "utf8"
+  )
+);
 export function renderSunsetsPage(event, template) {
   const escape = value =>
     String(value).replace(
@@ -156,6 +162,17 @@ export function renderSunsetsPage(event, template) {
   const values = {
     ...event,
     ...statusDisplay,
+    ticketSalesPolicy:
+      ticketPolicy.salesFinal + " " + ticketPolicy.sunsetsRefund,
+    refundRequestPolicy: ticketPolicy.sunsetsRefund,
+    refundProcessing: ticketPolicy.refundProcessing,
+    refundRequestUrl:
+      "mailto:events@monolithproject.com?subject=" +
+      encodeURIComponent("JOEZI × MASSUMA — refund request") +
+      "&body=" +
+      encodeURIComponent(
+        "Hello Monolith team,\n\nI would like to request a refund for the postponed September 19 JOEZI × MASSUMA show.\n\nBooking name:\nOrder number:\nEmail used for booking:\n\nThank you."
+      ),
     monthDay,
     monthDayUpper: monthDay.toUpperCase(),
     shortDate: fmt(event.start, {
@@ -199,7 +216,7 @@ export function renderSunsetsPage(event, template) {
     if (!(key in values)) throw new Error("Unknown event field: " + key);
     return escape(values[key]);
   });
-  // Keep an approved urgent update first in both visual and screen-reader order.
+  // Keep the update on the event card, without interrupting the page with a modal.
   if (event.status !== "EventScheduled") {
     const notice = html.match(
       /<!-- status-panel:start -->[\s\S]*?<!-- status-panel:end -->/
@@ -207,7 +224,10 @@ export function renderSunsetsPage(event, template) {
     if (!notice) throw new Error("Missing event status panel");
     html = html
       .replace(notice[0], "")
-      .replace('<main id="main">', '<main id="main">\n' + notice[0]);
+      .replace(
+        '<div class="event-facts">',
+        notice[0] + '\n<div class="event-facts">'
+      );
   }
   if (!event.salesEnabled) {
     html = html.replace(
@@ -278,13 +298,11 @@ export function renderSunsetsPage(event, template) {
       "We finish<br><em>together.</em>",
       "Stay close.<br><em>Updates here.</em>"
     );
+  }
+  if (event.status === "EventPostponed") {
     html = html.replace(
-      '<aside class="booking-dock"',
-      '<aside class="event-status-float" aria-label="Important event update"><div><strong>POSTPONED · JOEZI × MASSUMA</strong><span>September 19 show · New date to be announced</span><time datetime="' +
-        escape(event.updatedAt) +
-        '">Updated ' +
-        escape(values.updatedLabel) +
-        '</time></div><a href="#event-update">Read update ↗</a></aside><aside class="booking-dock"'
+      /<section class="section" id="tickets"[\s\S]*?<\/section>/,
+      `<section class="section ticket-support" id="tickets" aria-labelledby="tickets-title"><div class="section-label">04 / TICKET-HOLDER SUPPORT</div><h2 id="tickets-title">Your booking.<br>Your next steps.</h2><p>${escape(event.ticketHolderMessage)}</p><p>${escape(ticketPolicy.sunsetsRefund)}</p><a class="button button-primary" href="${escape(values.refundRequestUrl)}" data-track="refund_request_click">REQUEST A REFUND ↗</a><p class="section-note">This opens a draft in your email app. Send it with your booking details for team review. ${escape(ticketPolicy.refundProcessing)}</p></section>`
     );
   }
   if (event.status === "EventPostponed" && event.statusParagraphs) {
@@ -318,37 +336,6 @@ export function renderSunsetsPage(event, template) {
       "If a date change is confirmed, check the official notice for ticket-holder instructions and review the terms attached to your booking. A change of date alone does not establish refund or transfer rights. Contact events@monolithproject.com with a booking question.",
       escape(event.ticketHolderMessage) +
         " Keep your booking confirmation. Contact events@monolithproject.com with a booking question."
-    );
-    const popupParagraphs = event.statusParagraphs
-      .filter((_, index) => [0, 2, 3].includes(index))
-      .map(
-        (text, index) =>
-          "<p" +
-          (index === 1 ? ' class="notice-ticket"' : "") +
-          ">" +
-          escape(text) +
-          "</p>"
-      )
-      .join("");
-    html = html.replace(
-      "</head>",
-      '<link rel="stylesheet" href="/event-notice.css"></head>'
-    );
-    html = html.replace(
-      "</body>",
-      '<dialog class="event-notice" aria-labelledby="event-notice-title" data-standalone-notice data-auto-open="true" data-revision="' +
-        escape(event.updatedAt) +
-        '"><button type="button" class="notice-close" data-notice-close aria-label="Close event update">×</button><img class="notice-logo" src="/sunsets/assets/logo-640.webp" width="640" height="238" alt="Chasing Sun(Sets)" decoding="async"><p class="notice-kicker">The Monolith Project · Official update</p><h2 id="event-notice-title">Postponed due to weather.</h2><p class="notice-artists">Sun(Sets) III · JOEZI × MASSUMA</p>' +
-        popupParagraphs +
-        '<p class="notice-signature">— The Monolith Project</p><time datetime="' +
-        escape(event.updatedAt) +
-        '">Updated ' +
-        escape(values.updatedLabel) +
-        '</time><div class="notice-actions"><a href="#event-update" data-notice-link>Full event update ↗</a><a href="mailto:events@monolithproject.com">Contact the team</a></div></dialog><script type="module" src="/event-notice.js"></script></body>'
-    );
-    html = html.replace(
-      '<a href="#event-update">Read update ↗</a>',
-      '<a href="#event-update" data-open-event-notice>Read update ↗</a>'
     );
   }
   return html.replace(/[ \t]+$/gm, "");

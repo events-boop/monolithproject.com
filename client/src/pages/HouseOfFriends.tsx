@@ -40,7 +40,7 @@ const launchMoments = [
     number: "03",
     label: "Founding Class preview",
     title: "The class enters the house",
-    copy: "The wider Monolith community meets the Founding Class at Castaways Beach Club on August 22.",
+    copy: "The August 22 founding chapter connects the program to the wider Monolith community at Castaways Beach Club.",
     icon: Sparkles,
   },
 ];
@@ -165,7 +165,7 @@ export default function HouseOfFriends() {
     <div className="hof-page min-h-screen overflow-x-clip bg-black text-white">
       <SEO
         title="House of Friends | Artist Development by The Monolith Project"
-        description="House of Friends is The Monolith Project's emerging-artist platform — the July 31 Kashmir pop-up opened the series, and the Founding Class preview lands August 22 at Castaways."
+        description="House of Friends is The Monolith Project's emerging-artist platform — explore the founding program, the July 31 pop-up and the August 22 chapter, and opportunities for artists and partners."
         absoluteTitle
         canonicalUrl="https://houseoffriends.vip/"
         image="/og-image.jpg"
@@ -188,7 +188,7 @@ export default function HouseOfFriends() {
           <div className="container layout-wide relative z-10 px-6">
             <div className="hof-launch-chip">
               <span aria-hidden="true" />
-              Next signal / August 22, 2026
+              Artist development / The next chapter is taking shape
             </div>
 
             <div className="hof-hero-grid">
@@ -222,7 +222,7 @@ export default function HouseOfFriends() {
                     href="/events/house-of-friends-kashmir-july-31-2026"
                     className="btn-pill-neutral"
                   >
-                    View the July 31 pop-up
+                    Revisit the July 31 pop-up
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                   <Link href={applicationHref} className="btn-pill-outline">
@@ -318,11 +318,11 @@ export default function HouseOfFriends() {
               <p className="hof-kicker">01 / The idea</p>
               <h2>A house drawn around opportunity.</h2>
               <p>
-                House of Friends begins through live signals: a July 31
-                give-back pop-up at Kashmir, followed by the Founding Class
-                preview on August 22. Together they turn performance into an
-                artist-development system with a real stage, professional
-                output, partner investment, and a community built to continue.
+                House of Friends began with the July 31 give-back pop-up at
+                Kashmir, followed by the Founding Class preview on August 22,
+                2026. These founding chapters frame an artist-development system
+                with a real stage, professional output, partner investment, and
+                a community built to continue.
               </p>
             </motion.div>
 
@@ -427,13 +427,13 @@ export default function HouseOfFriends() {
             >
               <div>
                 <p className="hof-kicker">03 / August 22</p>
-                <h2 id="hof-day-title">The Founding Class opens August 22.</h2>
+                <h2 id="hof-day-title">The August 22 chapter.</h2>
               </div>
               <p>
-                After the July 31 Kashmir pop-up, House of Friends brings its
-                Founding Class preview inside Chasing Sun(Sets) II—uniting
-                selected artists, professional capture, and the wider Monolith
-                community.
+                The August 22 chapter followed the July 31 Kashmir pop-up,
+                bringing the Founding Class preview inside Chasing Sun(Sets)
+                II—uniting selected artists, professional capture, and the wider
+                Monolith community.
               </p>
             </motion.div>
 
@@ -452,7 +452,7 @@ export default function HouseOfFriends() {
               </div>
               <div>
                 <UsersRound className="h-4 w-4" aria-hidden="true" />
-                <span>Lineup / TBA</span>
+                <span>Founding chapter / 2026</span>
               </div>
             </div>
 
@@ -478,8 +478,11 @@ export default function HouseOfFriends() {
             </div>
 
             <motion.div className="hof-launch-actions" {...reveal}>
-              <a href="/go/tickets/css-aug22" className="btn-pill-neutral">
-                Get August 22 tickets
+              <a
+                href="/chasing-sunsets/sunsets-ii-2026"
+                className="btn-pill-neutral"
+              >
+                Revisit the August 22 chapter
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <Link href="/events/css-aug22" className="btn-text-action">
@@ -487,8 +490,8 @@ export default function HouseOfFriends() {
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <p className="hof-launch-note">
-                Artist selections and performance timing will be announced
-                through official Monolith channels.
+                This is the original August 22 chapter. Future program dates and
+                opportunities will be posted when confirmed.
               </p>
             </motion.div>
           </div>
@@ -651,8 +654,8 @@ export default function HouseOfFriends() {
                 Help build the first House of Friends.
               </h2>
               <p>
-                Launching August 22, 2026, inside Chasing Sun(Sets) II at
-                Castaways Beach Club.
+                An artist-development platform rooted in Chicago. Future dates
+                and program opportunities will be shared when confirmed.
               </p>
               <div>
                 <button

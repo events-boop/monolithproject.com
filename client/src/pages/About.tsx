@@ -265,7 +265,7 @@ export default function About() {
                 <span className="section-kicker block text-[#d4a853] mb-4">
                   The Standard
                 </span>
-                <h2 className="section-display-title-compact mb-6 text-white drop-shadow-md">
+                <h2 className="section-display-title-compact mb-6 text-white drop-shadow-md lg:text-[clamp(2.3rem,4vw,4rem)]!">
                   Manifesto
                 </h2>
                 <div className="w-16 h-[2px] bg-[#d4a853]/40 shadow-[0_0_15px_rgba(212,168,83,0.3)]" />

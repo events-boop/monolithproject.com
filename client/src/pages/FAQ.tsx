@@ -1,3 +1,7 @@
+import {
+  TICKET_POLICY,
+  SUNSETS_TICKET_HOLDER_UPDATE,
+} from "@shared/events/ticket-policy";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -15,133 +19,27 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import JsonLd from "@/components/JsonLd";
 import { buildFaqSchema } from "@/lib/schema";
-import EntityBoostStrip from "@/components/EntityBoostStrip";
 import { signalChirp } from "@/lib/SignalChirpEngine";
+import { FAQ_SITE } from "@shared/faqs";
 
-const categories = [
-  {
-    icon: MapPin,
-    label: "Venue & Location",
-    color: "#E05A3A",
-    faqs: [
-      {
-        q: "Where is Alhambra Palace?",
-        a: "Alhambra Palace is located at 1240 W Randolph St, Chicago, IL 60607 — in the West Loop neighborhood. It's easily accessible by CTA (Pink/Green Line, Morgan stop) and rideshare.",
-      },
-      {
-        q: "Is there parking nearby?",
-        a: "Street parking is available in the West Loop, though it fills up fast on event nights. We recommend rideshare (Uber/Lyft) or the CTA. Several paid lots are within a 5-minute walk.",
-      },
-      {
-        q: "Is the venue accessible?",
-        a: "Yes. Alhambra Palace is ADA accessible with ground-level entry and accessible restrooms. If you have specific accessibility needs, email us at events@monolithproject.com before the event.",
-      },
-    ],
-  },
-  {
-    icon: CreditCard,
-    label: "Tickets & Entry",
-    color: "#E8B86D",
-    faqs: [
-      {
-        q: "Where do I buy tickets?",
-        a: "All tickets are sold exclusively through Posh. Links are available on our Tickets page and in our Instagram bio. We do not sell tickets at the door — all events are presale only.",
-      },
-      {
-        q: "What is the refund policy?",
-        a: "All sales are final. Tickets are non-refundable and non-transferable unless the event is cancelled or rescheduled by us. In that case, full refunds will be issued automatically.",
-      },
-      {
-        q: "Can I transfer my ticket to someone else?",
-        a: "Ticket transfers are handled through Posh. Log into your Posh account and use the transfer feature. We cannot process transfers manually.",
-      },
-      {
-        q: "What's the age requirement?",
-        a: "All Monolith Project events are 21+ unless otherwise stated. Valid government-issued photo ID is required at the door. No exceptions.",
-      },
-      {
-        q: "What happens if the event sells out?",
-        a: "Once tickets are gone, they're gone. We do not maintain a waitlist or release additional tickets at the door. Follow our Instagram for any last-minute announcements.",
-      },
-    ],
-  },
-  {
-    icon: Clock,
-    label: "Night Of",
-    color: "#8B5CF6",
-    faqs: [
-      {
-        q: "What time do doors open?",
-        a: "Doors typically open at 9:00 PM. Music runs until 2:00 AM. Specific times are always listed on the event page and your ticket confirmation.",
-      },
-      {
-        q: "Is there a dress code?",
-        a: "We don't enforce a strict dress code, but we ask that you dress with intention. This is a curated experience — come as yourself, but come correct. Athletic wear and sportswear are discouraged.",
-      },
-      {
-        q: "Can I re-enter if I leave?",
-        a: "Re-entry policy varies by venue. For Alhambra Palace events, re-entry is generally not permitted after midnight. Check with door staff on the night.",
-      },
-      {
-        q: "Is there coat check?",
-        a: "Yes, coat check is available at Alhambra Palace for a small fee. We recommend traveling light.",
-      },
-    ],
-  },
-  {
-    icon: Music,
-    label: "Artists & Bookings",
-    color: "#E05A3A",
-    faqs: [
-      {
-        q: "How do I submit a mix or booking inquiry?",
-        a: "Head to our Booking page and fill out the form. Include a SoundCloud or mix link, your genre, and availability. We review every submission — it just takes time.",
-      },
-      {
-        q: "How long does it take to hear back on a booking?",
-        a: "We aim to respond within 2–3 weeks. If you haven't heard back after a month, feel free to follow up at events@monolithproject.com.",
-      },
-      {
-        q: "Do you work with international artists?",
-        a: "Yes. We've hosted artists from across the US and internationally. If you're traveling and want to play Chicago, reach out — we love connecting with artists on tour.",
-      },
-    ],
-  },
-  {
-    icon: Shield,
-    label: "Safety & Community",
-    color: "#1DB954",
-    faqs: [
-      {
-        q: "What is your policy on harassment?",
-        a: "Zero tolerance. Anyone engaging in harassment, discrimination, or making others feel unsafe will be removed immediately with no refund. Our events are a space for everyone.",
-      },
-      {
-        q: "Who do I contact if I feel unsafe at an event?",
-        a: "Find any staff member or security immediately. You can also text us at the number posted at the venue entrance. Your safety is the priority.",
-      },
-      {
-        q: "Are your events sober-friendly?",
-        a: "Our events are 21+ and alcohol is served, but we fully respect and support sober attendees. Non-alcoholic options are always available at the bar.",
-      },
-    ],
-  },
-  {
-    icon: Accessibility,
-    label: "Accessibility",
-    color: "#8B5CF6",
-    faqs: [
-      {
-        q: "Do you offer accommodations for disabilities?",
-        a: "Yes. Email us at events@monolithproject.com at least 48 hours before the event and we'll do everything we can to accommodate your needs.",
-      },
-      {
-        q: "Is there seating available?",
-        a: "Limited seating is available at most venues. If you require seating due to a medical condition, please contact us in advance.",
-      },
-    ],
-  },
-];
+const CATEGORY_PRESENTATION: Record<
+  string,
+  { icon: typeof MapPin; color: string }
+> = {
+  "venue-location": { icon: MapPin, color: "#E05A3A" },
+  "tickets-entry": { icon: CreditCard, color: "#E8B86D" },
+  "night-of": { icon: Clock, color: "#8B5CF6" },
+  "artists-bookings": { icon: Music, color: "#E05A3A" },
+  "safety-community": { icon: Shield, color: "#1DB954" },
+  accessibility: { icon: Accessibility, color: "#8B5CF6" },
+};
+
+const categories = FAQ_SITE.categories.map(category => ({
+  icon: (CATEGORY_PRESENTATION[category.id] ?? { icon: HelpCircle }).icon,
+  color: (CATEGORY_PRESENTATION[category.id] ?? { color: "#E05A3A" }).color,
+  label: category.label,
+  faqs: category.items.map(item => ({ q: item.question, a: item.answer })),
+}));
 
 function FAQItem({
   q,
@@ -158,6 +56,7 @@ function FAQItem({
     <div className="border-b border-white/10 last:border-0">
       <button
         onClick={onToggle}
+        aria-expanded={isOpen}
         className="w-full flex items-start justify-between gap-4 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 group"
       >
         <span className="text-sm md:text-base text-white/80 group-hover:text-white transition-colors leading-relaxed pr-4">
@@ -254,11 +153,39 @@ export default function FAQ() {
               Everything you need to know before, during, and after an event.
             </p>
           </motion.div>
-          <EntityBoostStrip
-            tone="nocturne"
-            className="px-0 mb-10"
-            contextLabel="FAQ + Official Identity Links"
-          />
+          <aside
+            id="ticket-policy"
+            className="mb-10 rounded-2xl border border-amber-300/40 bg-amber-300/10 p-6 md:p-8"
+            aria-labelledby="ticket-policy-title"
+          >
+            <p className="font-mono text-xs uppercase tracking-widest text-amber-200 mb-3">
+              Tickets & show updates
+            </p>
+            <h2
+              id="ticket-policy-title"
+              className="font-display text-2xl md:text-3xl text-white mb-3"
+            >
+              {TICKET_POLICY.salesFinal}
+            </h2>
+            <p className="text-white/80 leading-relaxed max-w-3xl">
+              <strong>Sun(Sets) III — JOEZI × MASSUMA is postponed.</strong>{" "}
+              {SUNSETS_TICKET_HOLDER_UPDATE}
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 mt-5 text-sm text-amber-200">
+              <a
+                className="underline underline-offset-4"
+                href="/sunsets#event-status"
+              >
+                Latest ticket-holder update ↗
+              </a>
+              <a
+                className="underline underline-offset-4"
+                href="/sunsets#weather"
+              >
+                Full weather & ticket policy ↗
+              </a>
+            </div>
+          </aside>
 
           <div className="layout-narrow space-y-4">
             {categories.map((cat, idx) => {
@@ -274,6 +201,7 @@ export default function FAQ() {
                       signalChirp.click();
                       setActiveCategory(isCatOpen ? -1 : idx);
                     }}
+                    aria-expanded={isCatOpen}
                     onMouseEnter={() => signalChirp.hover()}
                     className="w-full text-left py-8 md:py-10 px-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors focus-visible:outline-none focus-visible:bg-white/[0.03]"
                   >

@@ -32,7 +32,7 @@ export default function EventNotice() {
         className="event-notice"
         aria-labelledby="event-notice-title"
         data-revision={currentSunsets.updatedAt}
-        data-auto-open={location === "/" ? "true" : "false"}
+        data-auto-open="false"
       >
         <button
           type="button"

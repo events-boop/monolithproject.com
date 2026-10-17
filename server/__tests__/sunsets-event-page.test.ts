@@ -120,13 +120,13 @@ describe("published Sunsets event hub", () => {
 
 describe("Sunsets review preview integrity", () => {
   it("puts essentials before the poster and subscriptions after event information", () => {
-    expect(
-      doc.querySelector("#main")?.firstElementChild?.id === "event-status"
-    ).toBe(true);
+    expect(doc.querySelector(".event-pass #event-status") !== null).toBe(true);
     expect(doc.querySelector(".hero-status-badge")?.getAttribute("href")).toBe(
       "#event-status"
     );
     expect(doc.querySelector(".hero-event-art")).toBeNull();
+    expect(doc.querySelector("dialog.event-notice")).toBeNull();
+    expect(html).not.toContain("data-open-event-notice");
     expect(html.indexOf('id="set-times"')).toBeLessThan(
       html.indexOf('id="venue"')
     );
@@ -207,9 +207,7 @@ describe("approved event changes remain consistent", () => {
         template
       )
     ).window.document;
-    expect(revised.querySelector("#main")?.firstElementChild?.id).toBe(
-      "event-status"
-    );
+    expect(revised.querySelector(".event-pass #event-status")).not.toBeNull();
     expect(revised.querySelector(".hero-status-badge")?.textContent).toContain(
       "Cancelled"
     );

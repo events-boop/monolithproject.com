@@ -1,16 +1,3 @@
-/* Monolith typography follows the restored home; each series retains its own identity. */
-html[data-scene="monolith"] #app-shell,
-html[data-scene="paper"] #app-shell {
-  --font-hero: "Kanit", "General Sans", sans-serif;
-  --font-monolith: "Kanit", "General Sans", sans-serif;
-}
-html[data-scene="monolith"] #app-shell .section-display-title,
-html[data-scene="monolith"] #app-shell .section-display-title-compact,
-html[data-scene="paper"] #app-shell .section-display-title,
-html[data-scene="paper"] #app-shell .section-display-title-compact {
-  font-family: var(--font-hero);
-  font-weight: 500;
-}
 /* Keep the immersive home scene and oversized footer. */
 #app-shell .monolith-home .monolith-hero-stage {
   min-height: max(760px, 100svh);

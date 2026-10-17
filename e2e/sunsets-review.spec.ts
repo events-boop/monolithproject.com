@@ -135,3 +135,41 @@ test("on-page form validates, handles failure/retry and pending double opt-in wi
     page.locator('.signup-form[data-audience="radio"] .form-feedback')
   ).not.toContainText("Check your inbox");
 });
+
+test("saved signup stays distinct from a confirmed subscription", async ({
+  page,
+}) => {
+  await page.route("**/api/sunsets/subscriptions", route =>
+    route.fulfill({
+      json:
+        route.request().method() === "GET"
+          ? { ok: true, audiences: { event: true, radio: true } }
+          : {
+              ok: true,
+              state: "saved",
+              message: "Your request for show updates is saved.",
+            },
+    })
+  );
+  await page.goto(route + "#updates");
+  await page.evaluate(() => {
+    (window as any).__signupResults = [];
+    (window as any).sunsetsTracking.subscriptionResult = (
+      audience: string,
+      state: string
+    ) => {
+      (window as any).__signupResults.push({ audience, state });
+    };
+  });
+  const form = page.locator('.signup-form[data-audience="event"]');
+  await expect(form.locator("input[type=email]")).toBeEnabled();
+  await form.locator("input[type=email]").fill("review@example.com");
+  await form.locator("input[type=checkbox]").check();
+  await form.locator("button").click();
+  await expect(form.locator(".form-feedback")).toHaveText(
+    "Your request for show updates is saved."
+  );
+  expect(await page.evaluate(() => (window as any).__signupResults)).toEqual([
+    { audience: "event", state: "saved" },
+  ]);
+});

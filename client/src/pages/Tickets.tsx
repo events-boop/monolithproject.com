@@ -1,4 +1,8 @@
 import {
+  TICKET_POLICY,
+  SUNSETS_REFUND_REQUEST_URL,
+} from "@shared/events/ticket-policy";
+import {
   currentSunsets,
   sunsetsNeedsUpdate,
 } from "@shared/events/sunsets-current";
@@ -165,7 +169,17 @@ export default function Tickets() {
               {currentSunsets.ticketHolderMessage}
             </p>
             <p className="text-base leading-relaxed mb-8">
-              Keep your booking confirmation. A new date is not yet confirmed.
+              {TICKET_POLICY.sunsetsRefund}
+            </p>
+            <a
+              href={SUNSETS_REFUND_REQUEST_URL}
+              className="btn-pill-monolith mb-5"
+            >
+              Request a refund ↗
+            </a>
+            <p className="text-sm leading-relaxed mb-6">
+              This opens a draft in your email app. Send it with your booking
+              details for team review. {TICKET_POLICY.refundProcessing}
             </p>
             <a
               className="inline-flex min-h-12 items-center rounded bg-amber-200 px-6 py-3 font-semibold text-black"

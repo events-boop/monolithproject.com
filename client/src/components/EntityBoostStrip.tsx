@@ -19,60 +19,13 @@ interface EntityBoostStripProps {
   hideMeta?: boolean;
 }
 
-const toneClasses: Record<
-  Tone,
-  {
-    shell: string;
-    title: string;
-    body: string;
-    line: string;
-    link: string;
-    cta: string;
-  }
-> = {
-  dark: {
-    shell: "luxe-surface-dark",
-    title: "text-white",
-    body: "text-white/60",
-    line: "border-white/10",
-    link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
-    cta: "btn-pill-monolith",
-  },
-  light: {
-    shell: "luxe-surface-dark",
-    title: "text-black",
-    body: "text-black/70",
-    line: "border-black/12",
-    link: "border-black/20 text-black bg-white/50 hover:bg-white hover:border-clay hover:text-clay",
-    cta: "btn-pill-monolith",
-  },
-  warm: {
-    shell: "luxe-surface-dark",
-    title: "text-[#2C1810]",
-    body: "text-[#2C1810]/70",
-    line: "border-[#C2703E]/18",
-    link: "border-[#C2703E]/30 text-[#C2703E] bg-[#C2703E]/5 hover:bg-[#C2703E]/10 hover:border-[#2C1810] hover:text-[#2C1810]",
-    cta: "btn-pill-monolith",
-  },
-  nocturne: {
-    shell: "luxe-surface-dark",
-    title: "text-white",
-    body: "text-white/60",
-    line: "border-white/10",
-    link: "border-primary/40 text-primary bg-primary/5 hover:bg-primary/15 hover:border-primary hover:text-white",
-    cta: "btn-pill-monolith",
-  },
-};
-
 export default function EntityBoostStrip({
   tone = "dark",
   className = "",
-  contextLabel = "Official Entity Links",
+  contextLabel = "Explore Monolith",
   intent = "default",
   episodeHref,
-  hideMeta = true,
 }: EntityBoostStripProps) {
-  const ui = toneClasses[tone];
   const intentPrimary: Record<Intent, SmartAction> = {
     default: { label: CTA_LABELS.radioHub, href: "/radio" },
     "watch-recap": {
@@ -83,11 +36,11 @@ export default function EntityBoostStrip({
       label: CTA_LABELS.listenNow,
       href: episodeHref || "/radio",
     },
-    tickets: { label: CTA_LABELS.tickets, href: "/tickets" },
+    tickets: { label: "Events & tickets", href: "/schedule" },
   };
   const intentSecondary: Record<Intent, SmartAction> = {
-    default: { label: CTA_LABELS.tickets, href: "/tickets" },
-    "watch-recap": { label: CTA_LABELS.tickets, href: "/tickets" },
+    default: { label: "Events & tickets", href: "/schedule" },
+    "watch-recap": { label: "Events & tickets", href: "/schedule" },
     "listen-episode": { label: CTA_LABELS.radioHub, href: "/radio" },
     tickets: {
       label: "Watch Recap",
@@ -102,10 +55,6 @@ export default function EntityBoostStrip({
     secondaryAction.href === primaryAction.href
       ? []
       : [secondaryAction];
-  const factLinkClass =
-    tone === "light" || tone === "warm"
-      ? "btn-inline-pill btn-inline-pill-dark"
-      : "btn-inline-pill btn-inline-pill-sunsets";
 
   const renderAction = (
     action: SmartAction,
@@ -147,52 +96,28 @@ export default function EntityBoostStrip({
   };
 
   return (
-    <section className={`px-4 sm:px-6 ${className}`}>
-      <div
-        className={`container layout-default rounded-2xl p-5 sm:p-6 md:p-8 lift-hover ${ui.shell}`}
-      >
-        {!hideMeta && (
-          <>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
-              {contextLabel}
-            </p>
-            <h2
-              className={`font-display text-2xl md:text-3xl uppercase mb-3 ${ui.title}`}
-            >
-              Brand Defense Stack
-            </h2>
-            <p className={`text-sm md:text-base mb-5 read-width ${ui.body}`}>
-              Keep the entity graph explicit across pages with consistent
-              identity links and next actions.
-            </p>
-          </>
-        )}
-
-        <div
-          className={`flex flex-wrap gap-2.5 text-sm ${hideMeta ? "pb-4 mb-4" : "pb-5 mb-5"} border-b ${ui.line}`}
-        >
-          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
-            Chasing Sun(Sets) Facts
-          </Link>
-          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
-            Official Identity
-          </Link>
-          <Link href="/chasing-sunsets-facts" className={factLinkClass}>
-            Not the fragrance — official music series
-          </Link>
-        </div>
-
-        <div className="cta-stack">
-          {renderAction(
-            primaryAction,
-            "btn-pill-monolith w-full sm:w-auto",
-            true
-          )}
+    <nav
+      className={`entity-links ${className}`}
+      data-tone={tone}
+      aria-label={contextLabel}
+    >
+      <div className="container layout-default entity-links-inner">
+        <span className="section-kicker">{contextLabel}</span>
+        <div className="entity-links-actions">
+          {renderAction(primaryAction, "home-text-link", true)}
           {secondaryActions.map(action =>
-            renderAction(action, `${ui.cta} w-full sm:w-auto`)
+            renderAction(action, "home-text-link", true)
           )}
+          <details>
+            <summary>More from Monolith</summary>
+            <div>
+              <Link href="/chasing-sunsets">Chasing Sun(Sets)</Link>
+              <Link href="/untold-story">Untold Story</Link>
+              <Link href="/faq">Event FAQs</Link>
+            </div>
+          </details>
         </div>
       </div>
-    </section>
+    </nav>
   );
 }

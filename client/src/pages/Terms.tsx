@@ -1,10 +1,11 @@
+import { TICKET_POLICY } from "@shared/events/ticket-policy";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Terms() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="legal-document min-h-screen bg-background text-foreground">
       <SEO
         title="Terms of Service"
         description="Terms of Service for The Monolith Project website and events."
@@ -20,7 +21,7 @@ export default function Terms() {
             Terms of Service
           </h1>
           <p className="text-muted-foreground mb-10">
-            Last updated: February 11, 2026.
+            Last updated: October 3, 2026.
           </p>
 
           <div className="space-y-8 text-muted-foreground leading-relaxed">
@@ -39,9 +40,27 @@ export default function Terms() {
                 Tickets and Events
               </h2>
               <p>
-                Ticket purchases are fulfilled by third-party providers. Event
-                details, schedules, and availability may change. All ticketing
-                terms are subject to the provider and venue policies.
+                <strong className="text-foreground">
+                  {TICKET_POLICY.salesFinal}
+                </strong>
+              </p>
+              <p className="mt-3">
+                Ticket purchases are fulfilled by third-party providers. Check
+                the event guide and checkout for the applicable booking and
+                entry terms. Event details, schedules and availability may
+                change.
+              </p>
+              <p className="mt-3">{TICKET_POLICY.changes}</p>
+              <p className="mt-3">
+                For the postponed JOEZI × MASSUMA show, read the{" "}
+                <a className="underline" href="/sunsets#event-status">
+                  Sun(Sets) III ticket-holder update
+                </a>{" "}
+                and the{" "}
+                <a className="underline" href="/sunsets#weather">
+                  full weather and ticket policy
+                </a>
+                .
               </p>
             </section>
             <section>

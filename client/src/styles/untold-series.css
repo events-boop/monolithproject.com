@@ -1,0 +1,184 @@
+/* Shared Sunsets layout; Untold keeps its own after-dark palette and identity. */
+.monolith-home.untold-series-page {
+  --home-accent: #9cdde3;
+  color: #f2f4f5;
+  background: #0c1016;
+}
+.monolith-home.untold-series-page section[id] {
+  scroll-margin-top: calc(var(--shell-nav-height, 140px) + 40px);
+}
+.monolith-home.untold-series-page .chasing-series-hero {
+  background: #0c1016;
+}
+.monolith-home.untold-series-page .chasing-series-hero::after {
+  background:
+    linear-gradient(180deg, #080d1470, #080d1420 30%, #080d14ed),
+    linear-gradient(90deg, #080d148f, transparent 85%);
+}
+.monolith-home.untold-series-page .chasing-series-backdrop {
+  object-position: 50% 58%;
+}
+.untold-wordmark {
+  margin: 24px 0;
+}
+.untold-wordmark > span {
+  display: block;
+  color: #a4dde4;
+  margin-bottom: 12px;
+}
+.untold-wordmark svg {
+  width: 76px;
+  height: 58px;
+}
+.monolith-home.untold-series-page .untold-wordmark h1 {
+  width: auto;
+  margin: 0;
+  color: #fff;
+  font: 500 clamp(72px, 9vw, 138px)/0.9 var(--font-hero);
+  letter-spacing: -0.045em;
+}
+.monolith-home.untold-series-page .chasing-section-nav,
+.monolith-home.untold-series-page .home-event-feature,
+.monolith-home.untold-series-page .chasing-archive-section,
+.monolith-home.untold-series-page .chasing-faq-section {
+  background: #131a23;
+}
+.monolith-home.untold-series-page .chasing-archive-card {
+  background: #0d131b;
+}
+.monolith-home.untold-series-page .home-primary:hover {
+  background: #bcecf0;
+}
+.monolith-home.untold-series-page .chasing-venue-grid h2 em,
+.monolith-home.untold-series-page .chasing-faq-list summary::after,
+.monolith-home.untold-series-page .chasing-archive-card span,
+.monolith-home.untold-series-page .chasing-section-nav a:hover {
+  color: #a7dce6;
+}
+.monolith-home.untold-series-page .chasing-faq-list summary:focus-visible {
+  outline-color: #a7dce6;
+}
+.untold-event-media {
+  position: relative;
+  align-self: start;
+}
+.untold-event-media img {
+  width: 100%;
+  height: auto;
+  max-height: 640px;
+  object-fit: cover;
+  border: 1px solid #ffffff26;
+  border-radius: 5px;
+}
+.untold-event-media > span {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #bcc8d4;
+}
+.monolith-home.untold-series-page .home-event-copy h2 {
+  font: 400 clamp(36px, 4.3vw, 60px)/1.08 var(--font-hero);
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+.untold-event-intro,
+.untold-section-intro {
+  max-width: 56ch;
+  color: #c8d0d9;
+  font: 400 16px/1.75 var(--font-sans);
+  margin: 0 0 24px;
+}
+.untold-event-status {
+  width: fit-content;
+  margin: 20px 0;
+  padding: 8px 12px;
+  border: 1px solid #9cdde34d;
+  border-radius: 4px;
+  color: #b8e7eb;
+  font-size: 13px;
+  font-weight: 600;
+}
+.untold-event-cta > a,
+.untold-event-cta > button {
+  min-height: 50px;
+  border-radius: 5px;
+  padding: 14px 24px;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.monolith-home.untold-series-page .home-event-essentials dt {
+  color: #b8c4d1;
+}
+.monolith-home.untold-series-page .home-event-essentials dd {
+  overflow-wrap: anywhere;
+}
+.untold-anchor-alias {
+  display: block;
+  scroll-margin-top: calc(var(--shell-nav-height, 140px) + 40px);
+}
+.untold-closing-mark {
+  display: block;
+  color: #a4dde4;
+}
+.untold-closing-mark svg {
+  width: 96px;
+  height: 80px;
+  margin-inline: auto;
+}
+.monolith-home.untold-series-page .untold-closing-art {
+  border-color: #9cdde340;
+}
+.untold-closing-art img {
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+footer[data-brand="untold-story"] {
+  background: #0c1016;
+  color: #f2f4f5;
+}
+footer[data-brand="untold-story"] > .pointer-events-none,
+footer[data-brand="untold-story"] .footer-mega-wordmark {
+  display: none;
+}
+footer[data-brand="untold-story"] .container {
+  min-height: 0;
+}
+footer[data-brand="untold-story"] h2 {
+  color: #bcc8d4;
+  font-size: 12px;
+}
+footer[data-brand="untold-story"] li a {
+  color: #f2f4f5;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  min-height: 32px;
+  max-width: 100%;
+}
+@media (max-width: 639px) {
+  .monolith-home.untold-series-page .chasing-series-hero {
+    min-height: max(640px, 84svh);
+  }
+  .monolith-home.untold-series-page .chasing-hero-copy {
+    padding-top: calc(var(--shell-nav-height, 110px) + 48px);
+  }
+  .monolith-home.untold-series-page .untold-wordmark h1 {
+    font-size: clamp(66px, 18vw, 100px);
+  }
+  .untold-wordmark svg {
+    width: 64px;
+    height: 48px;
+  }
+  .monolith-home.untold-series-page .home-event-grid {
+    gap: 30px;
+  }
+  .monolith-home.untold-series-page .home-event-essentials {
+    grid-template-columns: 1fr;
+  }
+  .monolith-home.untold-series-page .chasing-video-card > div:last-child {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

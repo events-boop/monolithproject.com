@@ -10,10 +10,15 @@ test("postponement is consistent on both front doors, even after the old show da
     await page.clock.setFixedTime(new Date("2026-09-21T12:00:00Z"));
     for (const path of ["/", "/sunsets/", "/chasing-sunsets"]) {
       await page.goto(path);
-      await expect(page.locator(".event-status-float")).toBeVisible();
-      await expect(page.locator(".event-status-float")).toContainText(
-        /postponed/i
+      const notice = page.locator(
+        path === "/sunsets/"
+          ? ".event-pass #event-status"
+          : path === "/"
+            ? "#current-event .home-event-notice"
+            : '[data-event-status="EventPostponed"]'
       );
+      await expect(notice).toBeVisible();
+      await expect(notice).toContainText(/postponed/i);
       await expect(page.locator('a[href*="allevents.in"]')).toHaveCount(0);
       if (await page.locator("[data-nav-event-banner]").count())
         await expect(page.locator("[data-nav-event-banner]")).not.toContainText(
