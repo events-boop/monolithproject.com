@@ -247,8 +247,8 @@ export default function Tickets() {
         <section className="page-shell-start-loose pb-16 px-6 relative">
           <div className="container layout-default">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 30 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.8 }}
             >
               <span className="font-serif italic text-lg text-primary block mb-6">

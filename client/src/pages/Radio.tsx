@@ -47,6 +47,13 @@ const sectionReveal = {
   transition: sectionTransition,
 };
 
+// Above the fold: slide only, so the hero text paints before the animation runs.
+const heroReveal = {
+  initial: { y: 28 },
+  animate: { y: 0 },
+  transition: sectionTransition,
+};
+
 const radioFaqs = [
   [
     "How often are new mixes released?",
@@ -207,7 +214,7 @@ export default function Radio() {
         className="relative flex min-h-[82vh] flex-col justify-center overflow-hidden bg-[#050505] px-6 pb-24 page-shell-start-loose"
       >
         <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeEpisode.slug}
               initial={{ opacity: 0, scale: 1.04 }}
@@ -231,7 +238,7 @@ export default function Radio() {
 
         <div className="container layout-wide relative z-10 w-full">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-end">
-            <motion.div {...sectionReveal}>
+            <motion.div {...heroReveal}>
               <SignalBarsMark className="mb-6 h-10 w-14 sm:h-12 sm:w-16" />
               <span className="mb-5 block font-mono text-[10px] uppercase tracking-[0.38em] text-[#E8B86D]">
                 Chasing Sun(Sets) Radio Show
