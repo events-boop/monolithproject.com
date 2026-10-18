@@ -1358,9 +1358,32 @@ function deferAppEntry(html: string) {
     .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "");
 }
 
+// Fonts the prerendered heroes paint with (body: Inter, display: Archivo
+// Black). Preloading them lets the first paint use the real faces; otherwise
+// a slower device paints fallback text, then swaps it in later and Lighthouse
+// records the re-rendered (larger) text as a late LCP.
+const HERO_FONT_PRELOADS = [
+  "/fonts/inter-latin.woff2",
+  "/fonts/archivo-black-400.woff2",
+];
+
+function preloadHeroFonts(html: string) {
+  const tags = HERO_FONT_PRELOADS.filter(
+    href => !html.includes(`rel="preload" href="${href}"`)
+  )
+    .map(
+      href =>
+        `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`
+    )
+    .join("\n");
+  return tags ? html.replace("</head>", `${tags}\n</head>`) : html;
+}
+
 async function inlineCriticalCss(html: string) {
   try {
-    return deferAppEntry(deferStylesheets(await beasties.process(html)));
+    return preloadHeroFonts(
+      deferAppEntry(deferStylesheets(await beasties.process(html)))
+    );
   } catch (error) {
     console.warn("[prerender] critical CSS inlining failed", error);
     return html;
