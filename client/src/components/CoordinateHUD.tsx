@@ -38,8 +38,9 @@ export default function CoordinateHUD() {
     setSector(currentSector);
   }, [location]);
 
-  // Keep the homepage event details clear of decorative fixed text.
-  if (location === "/") return null;
+  // Keep the homepage event details clear of decorative fixed text; the Higher Connection
+  // preview prints its own coordinates in the side rail.
+  if (location === "/" || location === "/sandbox/higher-connection") return null;
 
   return (
     <div className="fixed bottom-8 left-8 z-[100] hidden lg:flex flex-col gap-1 pointer-events-none mix-blend-difference">

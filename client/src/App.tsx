@@ -65,6 +65,10 @@ const isApeDrumsBuildEnabled =
   import.meta.env.DEV ||
   (import.meta.env.VITE_APE_DRUMS_RELEASED === "true" &&
     import.meta.env.VITE_APE_DRUMS_CONTRACT_COUNTERSIGNED === "true");
+// Erik's 2026-10-17 "A Higher Connection" homepage design, local preview only.
+const HigherConnection = import.meta.env.DEV
+  ? lazy(() => import("./pages/HigherConnection"))
+  : null;
 const ApeDrumsLanding = isApeDrumsBuildEnabled
   ? lazy(() => import("./pages/ApeDrumsLanding"))
   : null;
@@ -154,6 +158,9 @@ const VIPTransition = withTransition(VIP);
 const AlertsTransition = withTransition(Alerts);
 const ArchiveGalleryPageTransition = withTransition(ArchiveGalleryPage);
 const SunsetsHeroTransition = withTransition(SunsetsHero);
+const HigherConnectionTransition = HigherConnection
+  ? withTransition(HigherConnection)
+  : null;
 const ApeDrumsLandingTransition = ApeDrumsLanding
   ? withTransition(ApeDrumsLanding)
   : null;
@@ -186,6 +193,14 @@ function ApeDrumsPublicRoute() {
   }
 
   return <ApeDrumsLandingTransition />;
+}
+
+function HigherConnectionPreviewRoute() {
+  if (!HigherConnectionTransition) {
+    return <Redirect to={ROUTES.notFound} />;
+  }
+
+  return <HigherConnectionTransition />;
 }
 
 function ApeDrumsPreviewRoute() {
@@ -338,6 +353,7 @@ function Router() {
       <Route path={ROUTES.notFound} component={NotFoundTransition} />
       <Route path={ROUTES.sandboxHero} component={SandboxHeroRoute} />
       <Route path={ROUTES.apeDrumsPreview} component={ApeDrumsPreviewRoute} />
+      <Route path={ROUTES.higherConnectionPreview} component={HigherConnectionPreviewRoute} />
 
       <Route component={NotFoundTransition} />
     </Switch>

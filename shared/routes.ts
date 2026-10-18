@@ -65,6 +65,7 @@ export const ROUTES = {
   monolithOps: "/monolith-ops",
   sandboxHero: "/sandbox/hero",
   apeDrumsPreview: "/sandbox/ape-drums",
+  higherConnectionPreview: "/sandbox/higher-connection",
 } as const;
 
 /* ------------------------------------------------------------------ */
