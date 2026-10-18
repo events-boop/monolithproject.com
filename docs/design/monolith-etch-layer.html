@@ -1,0 +1,796 @@
+<title>Monolith Etch Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: a single carved surface — fixed left glyph rail, full-bleed hero monolith, then stone panels separated by incisions. Single dark world by design. */
+:root {
+  color-scheme: dark;
+  --basalt: #0b0a09;
+  --slab: #13110f;
+  --slab-2: #1a1714;
+  --seam: #2a2520;
+  --bone: #ebe4d8;
+  --ash: #9a9184;
+  --dust: #6c655b;
+  --etch: #d9c6a8;
+  --amber: #ffb35c;
+  --amber-deep: #e0863a;
+  --font-display: "Syncopate", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --rail: 132px;
+  --gutter: clamp(16px, 3vw, 40px);
+}
+* { box-sizing: border-box; }
+html, body { background: var(--basalt); color: var(--bone); }
+body { font-family: var(--font-body); font-size: 15px; line-height: 1.6; margin: 0; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--amber); outline-offset: 3px; }
+.mono { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--ash); }
+.label { font-family: var(--font-display); font-size: 11px; letter-spacing: .38em; text-transform: uppercase; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; margin: 0; letter-spacing: .32em; text-transform: uppercase; }
+
+/* ---------- Etch layer ---------- */
+.etch-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; color: var(--etch); mix-blend-mode: screen; transition: opacity 900ms ease; z-index: 0; }
+.etch-layer svg { position: absolute; display: block; }
+.etch-layer svg * { vector-effect: non-scaling-stroke; }
+.etch-layer[data-position="right"] svg { width: 150%; height: 150%; left: 30%; top: -25%; }
+.etch-layer[data-position="left"] svg { width: 150%; height: 150%; left: -80%; top: -25%; }
+.etch-layer[data-position="center"] svg { width: 130%; height: 130%; left: -15%; top: -15%; }
+.etch-layer[data-position="cover"] svg { width: 100%; height: 100%; left: 0; top: 0; }
+.etch-layer[data-position="edge-left"] svg { width: 260px; height: 100%; left: -150px; top: 0; }
+.etch-layer[data-position="edge-right"] svg { width: 260px; height: 100%; right: -150px; top: 0; }
+.etch-layer[data-state="dormant"] { opacity: .05; }
+.etch-layer[data-state="etched"] { opacity: .09; }
+.etch-layer[data-state="revealed"] { opacity: .26; }
+.etch-layer[data-state="signal"] { opacity: .26; }
+.etch-layer .sig { stroke: currentColor; transition: stroke 600ms ease, opacity 600ms ease; }
+.etch-layer[data-state="signal"] .sig { stroke: var(--amber); stroke-width: 1.6; stroke-dasharray: 90 900; animation: travel 1.6s linear infinite; filter: drop-shadow(0 0 6px rgba(255,179,92,.8)); opacity: 1; }
+.etch-layer .word { fill: var(--etch); font-family: var(--font-mono); font-size: 13px; letter-spacing: 6px; opacity: 0; transition: opacity 900ms ease; stroke: none; }
+.etch-layer[data-state="revealed"] .word, .etch-layer[data-state="signal"] .word { opacity: .9; }
+@keyframes travel { from { stroke-dashoffset: 990; } to { stroke-dashoffset: 0; } }
+
+/* ---------- Frame ---------- */
+.rail { position: fixed; inset: 0 auto 0 0; width: var(--rail); border-right: 1px solid var(--seam); background: linear-gradient(180deg, #0e0c0b, #0a0908); z-index: 20; display: flex; flex-direction: column; align-items: center; padding-block: 28px; gap: 22px; overflow: hidden; }
+.rail .coords { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; color: var(--ash); text-align: center; line-height: 1.9; position: relative; z-index: 1; }
+.rail .glyphs { display: flex; flex-direction: column; gap: 18px; align-items: center; position: relative; z-index: 1; }
+.rail .glyph { width: 26px; height: 26px; color: #b58a5a; opacity: .75; }
+.rail .vline { width: 1px; flex: 1; min-height: 40px; background: linear-gradient(var(--seam), #3a3129, var(--seam)); position: relative; z-index: 1; }
+.rail .words { font-family: var(--font-display); font-size: 9px; letter-spacing: .4em; color: var(--ash); text-align: center; line-height: 2.4; position: relative; z-index: 1; }
+.page { margin-left: var(--rail); }
+
+header.top { position: absolute; top: 0; left: var(--rail); right: 0; z-index: 10; display: flex; align-items: center; gap: 28px; padding: 26px var(--gutter); }
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand-mark { width: 34px; height: 46px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.brand-mark span { background: linear-gradient(180deg, #e9d3b4, #9c7a55); }
+.brand-word { font-family: var(--font-display); font-size: 12px; letter-spacing: .5em; line-height: 1.5; }
+.brand-word small { display: block; font-size: 8px; letter-spacing: .5em; color: var(--ash); }
+nav.main { display: flex; gap: 30px; margin-left: 36px; flex-wrap: wrap; }
+nav.main a { font-family: var(--font-display); font-size: 9.5px; letter-spacing: .32em; color: #d8cfc1; padding-block: 4px; border-bottom: 1px solid transparent; transition: border-color .4s, color .4s; }
+nav.main a:hover { color: var(--amber); border-color: rgba(255,179,92,.5); }
+.connect { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.connect .globe { width: 40px; height: 40px; color: var(--ash); }
+.connect .label { font-size: 9px; letter-spacing: .3em; }
+.connect small { display: block; font-family: var(--font-mono); font-size: 8.5px; color: var(--dust); letter-spacing: .25em; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; height: clamp(600px, 92vh, 860px); overflow: hidden; border-bottom: 1px solid var(--seam); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.surface-etch { position: absolute; inset: 0; clip-path: polygon(40% 0, 66% 0, 74% 86%, 36% 88%); pointer-events: none; mix-blend-mode: screen; z-index: 1; }
+.surface-etch svg { position: absolute; left: 36%; top: 0; width: 38%; height: 88%; transform: perspective(900px) rotateY(-8deg); transform-origin: 50% 100%; color: var(--etch); }
+.surface-etch svg * { vector-effect: non-scaling-stroke; }
+.surface-etch .carve { opacity: .2; }
+.surface-etch .carve-hi { opacity: .5; stroke: #f4cf9c; }
+.hero-copy { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-46%); z-index: 3; max-width: 470px; display: grid; gap: 26px; }
+.hero-copy .kicker { font-family: var(--font-display); font-size: 9.5px; letter-spacing: .5em; color: var(--ash); line-height: 2.2; }
+.hero-copy h1 { font-size: clamp(30px, 4vw, 52px); letter-spacing: .42em; line-height: 1.35; color: #f3ece0; }
+.hero-copy .rule { width: 34px; height: 1px; background: var(--ash); }
+.hero-copy .sub { font-family: var(--font-display); font-size: 12px; letter-spacing: .5em; }
+.btn { display: inline-flex; align-items: center; gap: 22px; padding: 15px 22px; border: 1px solid #b89a74; font-family: var(--font-display); font-size: 9.5px; letter-spacing: .36em; background: rgba(10,9,8,.35); cursor: pointer; justify-self: start; transition: border-color .4s, color .4s, box-shadow .4s; }
+.btn:hover { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 24px rgba(255,179,92,.18); }
+.index { position: absolute; right: var(--gutter); top: 18%; z-index: 3; display: grid; gap: 22px; justify-items: end; font-family: var(--font-mono); font-size: 10px; color: var(--ash); }
+.index .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--dust); }
+.index .dot.on { background: var(--bone); box-shadow: 0 0 8px rgba(255,255,255,.6); }
+.index .num { display: flex; align-items: center; gap: 10px; }
+.index .num::before { content: ""; width: 26px; height: 1px; background: var(--ash); }
+.hero .annot { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .2em; color: rgba(235,228,216,.55); }
+
+/* ---------- Incision divider ---------- */
+.incision { position: relative; height: 54px; background: var(--basalt); }
+.incision svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.incision .cut { stroke: #4a4037; stroke-width: 1; fill: none; }
+.incision .cut-shadow { stroke: #000; stroke-width: 1; fill: none; transform: translateY(1px); opacity: .9; }
+.incision .light { stroke: var(--amber); stroke-width: 1.6; fill: none; stroke-dasharray: 70 3000; stroke-dashoffset: 70; opacity: 0; filter: drop-shadow(0 0 5px rgba(255,179,92,.9)); }
+.incision.lit .light { animation: incise 2.4s cubic-bezier(.45,.05,.3,1) forwards; }
+.incision .tag { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .25em; color: var(--dust); background: var(--basalt); padding-left: 12px; }
+@keyframes incise { 0% { stroke-dashoffset: 70; opacity: 1; } 85% { opacity: 1; } 100% { stroke-dashoffset: -2400; opacity: 0; } }
+
+/* ---------- Sections ---------- */
+section.panel { position: relative; overflow: hidden; background: var(--slab); padding: clamp(48px, 7vw, 88px) var(--gutter); }
+section.panel > .inner { position: relative; z-index: 1; }
+.sec-head { display: grid; gap: 10px; margin-bottom: 40px; max-width: 64ch; }
+.sec-head h2 { font-size: clamp(15px, 1.6vw, 20px); letter-spacing: .42em; }
+.sec-head p { color: var(--ash); margin: 0; }
+
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--seam); border-bottom: 1px solid var(--seam); }
+.pillar { position: relative; overflow: hidden; padding: 44px 24px 40px; text-align: center; display: grid; gap: 14px; justify-items: center; border-left: 1px solid var(--seam); cursor: default; }
+.pillar:first-child { border-left: 0; }
+.pillar .glyph { width: 44px; height: 44px; color: #d9a46c; position: relative; z-index: 1; transition: color .6s, filter .6s; }
+.pillar:hover .glyph, .pillar:focus-within .glyph { color: var(--amber); filter: drop-shadow(0 0 8px rgba(255,179,92,.5)); }
+.pillar h3 { font-size: 11px; letter-spacing: .42em; position: relative; z-index: 1; }
+.pillar p { margin: 0; font-family: var(--font-display); font-size: 8.5px; letter-spacing: .3em; color: var(--ash); line-height: 2.1; text-transform: uppercase; position: relative; z-index: 1; }
+
+.cards { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 1px; background: var(--seam); border: 1px solid var(--seam); }
+.card { position: relative; overflow: hidden; background: var(--slab-2); min-height: 380px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-width: 0; }
+.card h3 { font-size: 11px; letter-spacing: .42em; line-height: 2; position: relative; z-index: 2; }
+.card .meta { position: relative; z-index: 2; display: grid; gap: 6px; }
+.card .big { font-family: var(--font-display); font-size: 17px; letter-spacing: .3em; text-transform: uppercase; }
+.corridor { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 18% 70% at 50% 46%, rgba(255,200,140,.55), transparent 70%),
+  linear-gradient(90deg, #0d0c0b 0 34%, #1f1b17 34% 46%, #f6d8ad 49.6% 50.4%, #1f1b17 54% 66%, #0d0c0b 66%);
+  opacity: .9; }
+.corridor::after { content: ""; position: absolute; left: 50%; bottom: 22%; width: 10px; height: 34px; transform: translateX(-50%); background: #050404; border-radius: 5px 5px 2px 2px; box-shadow: 0 -12px 0 -2px #050404; }
+.corridor-fade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(19,17,15,.75), transparent 35%, transparent 60%, rgba(19,17,15,.95)); }
+.play { display: flex; align-items: center; gap: 16px; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.play .ring { width: 46px; height: 46px; border-radius: 50%; border: 1px solid #e4c79f; display: grid; place-items: center; transition: box-shadow .5s, border-color .5s; flex: none; }
+.play[aria-pressed="true"] .ring { border-color: var(--amber); box-shadow: 0 0 22px rgba(255,179,92,.4); }
+.play svg { width: 14px; height: 14px; fill: #f1e2cb; }
+.progress { height: 1px; background: #3a3129; position: relative; z-index: 2; }
+.progress span { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+.places-map { position: absolute; inset: 0; }
+.places-map svg { width: 100%; height: 100%; display: block; }
+.places-list { position: relative; z-index: 2; display: grid; gap: 10px; }
+.place { display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 9px; letter-spacing: .3em; color: var(--ash); }
+.place .pip { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--dust); }
+.place.on { color: var(--bone); }
+.place.on .pip { background: var(--bone); border-color: var(--bone); box-shadow: 0 0 10px rgba(255,255,255,.5); }
+.place .mono { font-size: 9px; letter-spacing: .12em; }
+
+.wall { position: absolute; inset: 0; background:
+  repeating-linear-gradient(0deg, transparent 0 86px, rgba(0,0,0,.55) 86px 88px),
+  repeating-linear-gradient(90deg, transparent 0 170px, rgba(0,0,0,.45) 170px 172px),
+  radial-gradient(ellipse at 70% 30%, #34302b, #1c1916 70%);
+  transform: perspective(700px) rotateY(-16deg) scale(1.25); transform-origin: 100% 50%; }
+.wall-etch { position: absolute; inset: 0; transform: perspective(700px) rotateY(-16deg) scale(1.25); transform-origin: 100% 50%; mix-blend-mode: screen; }
+.wall-etch svg { position: absolute; left: 12%; top: 22%; width: 86%; height: 40%; }
+.wall-etch .fbar { stroke: #c9b08c; opacity: .38; transform-box: fill-box; transform-origin: 50% 50%; transition: transform 90ms linear; }
+.wall-etch .fbar.hot { stroke: var(--amber); opacity: .95; filter: drop-shadow(0 0 4px rgba(255,179,92,.9)); }
+.live-pill { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .2em; color: var(--amber); }
+.live-pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+.arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #8d7b64; display: grid; place-items: center; align-self: flex-end; position: relative; z-index: 2; }
+
+/* ---------- Lab ---------- */
+.lab { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 28px; align-items: start; }
+.controls { display: grid; gap: 22px; }
+.field { display: grid; gap: 10px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { background: transparent; border: 1px solid #3b332b; padding: 8px 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; color: var(--ash); cursor: pointer; transition: border-color .3s, color .3s; }
+.seg button[aria-pressed="true"] { border-color: var(--amber); color: var(--bone); }
+.seg button:hover { color: var(--bone); }
+.stage { position: relative; min-height: 380px; background: var(--basalt); border: 1px solid var(--seam); overflow: hidden; }
+.stage .stage-copy { position: absolute; left: 24px; bottom: 22px; z-index: 2; display: grid; gap: 6px; }
+.code { background: #0a0908; border: 1px solid var(--seam); padding: 16px 18px; overflow-x: auto; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7; color: #cdbfa9; white-space: pre; }
+.code .k { color: var(--amber); }
+.code .s { color: #e9d9be; }
+.machine { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--seam); border: 1px solid var(--seam); margin-top: 18px; }
+.machine div { background: var(--slab); padding: 12px 10px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .16em; color: var(--dust); text-align: center; transition: color .4s, background .4s; }
+.machine div.on { color: var(--bone); background: #211b15; }
+.machine div[data-s="signal"].on { color: var(--amber); }
+.trigger { margin-top: 14px; }
+
+.library { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--seam); border: 1px solid var(--seam); margin-top: 44px; }
+.swatch { position: relative; background: var(--basalt); aspect-ratio: 1; overflow: hidden; cursor: pointer; border: 0; padding: 0; text-align: left; }
+.swatch .etch-layer { opacity: .32 !important; }
+.swatch:hover .etch-layer, .swatch:focus-visible .etch-layer { opacity: .6 !important; }
+.swatch span { position: absolute; left: 10px; bottom: 9px; z-index: 2; font-family: var(--font-mono); font-size: 9px; letter-spacing: .08em; color: var(--ash); }
+
+.sequences { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--seam); border: 1px solid var(--seam); }
+.seq { position: relative; overflow: hidden; background: var(--slab-2); min-height: 300px; padding: 26px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
+.seq h3 { font-size: 12px; position: relative; z-index: 2; }
+.seq p { margin: 0; color: var(--ash); max-width: 46ch; position: relative; z-index: 2; }
+.seq .mono { position: relative; z-index: 2; }
+
+.rules { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.ratio { display: grid; gap: 14px; }
+.ratio .bar { height: 10px; display: flex; gap: 2px; }
+.ratio .bar i { display: block; height: 100%; }
+.ratio .bar .e { background: repeating-linear-gradient(90deg, #6f6253 0 1px, transparent 1px 4px); border: 1px solid #4a4037; }
+.ratio .bar .g { background: var(--amber); }
+.ratio .nums { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--ash); font-variant-numeric: tabular-nums; }
+ol.uses { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; counter-reset: u; }
+ol.uses li { counter-increment: u; display: grid; grid-template-columns: 34px 1fr; gap: 10px; color: var(--ash); }
+ol.uses li::before { content: counter(u, decimal-leading-zero); font-family: var(--font-mono); font-size: 10px; color: #b58a5a; padding-top: 3px; }
+ol.uses b { color: var(--bone); font-weight: 500; }
+footer { padding: 34px var(--gutter); border-top: 1px solid var(--seam); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 1100px) {
+  nav.main { display: none; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .cards .card:first-child { grid-column: 1 / -1; }
+  .library { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  :root { --rail: 0px; }
+  .rail { display: none; }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .pillar:nth-child(3) { border-left: 0; }
+  .pillar:nth-child(n+3) { border-top: 1px solid var(--seam); }
+  .lab, .rules { grid-template-columns: 1fr; }
+  .sequences { grid-template-columns: 1fr; }
+  .index { display: none; }
+  .connect > div { display: none; }
+  .hero-copy { top: auto; bottom: 48px; transform: none; right: var(--gutter); }
+  .hero::after { content: ""; position: absolute; inset: 40% 0 0 0; background: linear-gradient(transparent, rgba(11,10,9,.92)); z-index: 2; }
+}
+@media (max-width: 560px) {
+  .cards { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: 1fr; }
+  .pillar { border-left: 0; border-top: 1px solid var(--seam); }
+  .pillar:first-child { border-top: 0; }
+  .machine { grid-template-columns: 1fr 1fr; }
+  .library { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-copy h1 { letter-spacing: .3em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+
+<aside class="rail" aria-label="Monolith index">
+  <div class="etch-layer" data-pattern="fracture" data-position="cover" data-density="sparse" data-state="dormant" data-seed="11"></div>
+  <div class="coords">41.8781° N<br>87.6298° W</div>
+  <div class="glyphs" aria-hidden="true">
+    <svg class="glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor"><path d="M13 3v20M6 13h14M9 9h8"/></svg>
+    <svg class="glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor"><circle cx="13" cy="13" r="8"/><path d="M3 13h20M13 3v20"/></svg>
+    <svg class="glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor"><path d="M5 6h16L13 21z"/><path d="M13 21V10"/></svg>
+  </div>
+  <div class="vline"></div>
+  <div class="words">PEOPLE<br>PLACES<br>SOUND<br>A HIGHER<br>CONNECTION</div>
+  <div class="vline"></div>
+  <div class="glyphs" aria-hidden="true">
+    <svg class="glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor"><path d="M8 4v18M18 4v18M8 13h10"/></svg>
+  </div>
+</aside>
+
+<div class="page">
+  <header class="top">
+    <a class="brand" href="#hero" data-activate="hero">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+      <span class="brand-word"><small>The</small>Monolith<small>Project</small></span>
+    </a>
+    <nav class="main" aria-label="Primary">
+      <a href="#pillars" data-activate="pillars">People</a>
+      <a href="#transmissions" data-activate="transmissions">Places</a>
+      <a href="#transmissions" data-activate="transmissions">Sound</a>
+      <a href="#transmissions" data-activate="transmissions">Events</a>
+      <a href="#sequences" data-activate="sequences">Sunsets.fm</a>
+      <a href="#lab" data-activate="lab">Etch Lab</a>
+    </nav>
+    <div class="connect">
+      <svg class="globe" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><path d="M3 20h34M6 11h28M6 29h28"/></svg>
+      <div><span class="label">Connect</span><small>A higher connection</small></div>
+    </div>
+  </header>
+
+  <!-- 1 + 2 + 4: hero with oversized cropped geometry, parallax, and etching mapped onto the monolith surface -->
+  <section class="hero" id="hero" data-section>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="etch-layer" id="heroEtch" data-pattern="radial" data-position="right" data-density="medium" data-state="dormant" data-depth="0.12" data-seed="4"></div>
+    <div class="surface-etch" aria-hidden="true"><svg id="surfaceSvg" viewBox="0 0 400 900" preserveAspectRatio="none" fill="none" stroke="currentColor"></svg></div>
+    <div class="hero-copy">
+      <div class="kicker">A global community<br>for a brighter tomorrow</div>
+      <h1>People<br>Places<br>Sound</h1>
+      <div class="rule"></div>
+      <div class="sub">A higher connection</div>
+      <a class="btn" href="#pillars" data-activate="pillars">Explore <span aria-hidden="true">›</span></a>
+    </div>
+    <div class="index" aria-hidden="true">
+      <div class="num">01</div><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+    <div class="annot" style="left:62%;top:9%">ETCH-002 · RADIAL · DORMANT</div>
+    <div class="annot" style="left:44%;bottom:7%">SURFACE ETCH · INHERITS SLAB PERSPECTIVE</div>
+  </section>
+
+  <div class="incision" data-incision><svg preserveAspectRatio="none"></svg><span class="tag">INCISION · 02</span></div>
+
+  <!-- architectural diagram etch behind the pillars; hover activates one portion -->
+  <section class="panel" id="pillars" data-section>
+    <div class="etch-layer" data-pattern="navigation" data-position="center" data-density="sparse" data-state="dormant" data-depth="0.08" data-seed="21"></div>
+    <div class="etch-layer" data-pattern="ruin" data-position="edge-left" data-density="medium" data-state="etched" data-seed="8"></div>
+    <div class="inner">
+      <div class="sec-head">
+        <span class="mono">Section 02 · hover a pillar to wake its etching</span>
+        <h2>The system</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="radial" data-position="center" data-density="sparse" data-state="dormant" data-seed="31"></div>
+          <svg class="glyph" viewBox="0 0 44 44" fill="none" stroke="currentColor"><circle cx="22" cy="22" r="14"/><path d="M8 22h28"/></svg>
+          <h3>Global</h3><p>A 24 hour sun relay<br>music without borders</p>
+        </div>
+        <div class="pillar" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="frequency" data-position="center" data-density="sparse" data-state="dormant" data-seed="32"></div>
+          <svg class="glyph" viewBox="0 0 44 44" fill="none" stroke="currentColor"><path d="M10 18v8M16 12v20M22 8v28M28 14v16M34 19v6"/></svg>
+          <h3>Sunsets.fm</h3><p>Live sets. New cities.<br>A higher frequency.</p>
+        </div>
+        <div class="pillar" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="navigation" data-position="center" data-density="sparse" data-state="dormant" data-seed="33"></div>
+          <svg class="glyph" viewBox="0 0 44 44" fill="none" stroke="currentColor"><path d="M22 8l15 26H7z"/><path d="M19 26h6M22 23v6"/></svg>
+          <h3>Passport</h3><p>Collect experiences.<br>Not things.</p>
+        </div>
+        <div class="pillar" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="grid" data-position="center" data-density="sparse" data-state="dormant" data-seed="34"></div>
+          <svg class="glyph" viewBox="0 0 44 44" fill="none" stroke="currentColor"><rect x="13" y="8" width="7" height="28"/><rect x="24" y="8" width="7" height="28"/></svg>
+          <h3>The Monolith</h3><p>Intelligence<br>observation<br>guidance</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="incision" data-incision><svg preserveAspectRatio="none"></svg><span class="tag">INCISION · 03</span></div>
+
+  <!-- 4 + 5: audio playback drives the etching carved into the wall -->
+  <section class="panel" id="transmissions" data-section>
+    <div class="etch-layer" data-pattern="grid" data-position="left" data-density="sparse" data-state="dormant" data-depth="0.1" data-seed="40"></div>
+    <div class="inner">
+      <div class="sec-head">
+        <span class="mono">Section 03 · press play — the carved waveform on the wall listens</span>
+        <h2>Transmissions</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="corridor" aria-hidden="true"></div><div class="corridor-fade" aria-hidden="true"></div>
+          <h3>Featured<br>transmission</h3>
+          <div class="meta">
+            <button class="play" id="playBtn" aria-pressed="false" aria-label="Play sample transmission">
+              <span class="ring"><svg viewBox="0 0 14 14" id="playIcon"><path d="M3 1.5v11l9.5-5.5z"/></svg></span>
+              <span><span class="big">Sunsets.fm</span><br><span class="mono" id="playState">Sample tone · tap to play</span></span>
+            </button>
+          </div>
+          <div class="progress"><span id="prog"></span></div>
+        </article>
+        <article class="card">
+          <div class="places-map"><svg id="mapSvg" viewBox="0 0 400 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div>
+          <h3>Places<br><span class="mono">Find your frequency</span></h3>
+          <div class="places-list">
+            <div class="place on"><span class="pip"></span><span>Chicago</span><span class="mono">41.8781° N 87.6298° W</span></div>
+            <div class="place"><span class="pip"></span><span>North Avenue Beach</span><span class="mono">Lakefront</span></div>
+            <div class="place"><span class="pip"></span><span>Next city</span><span class="mono">TBA</span></div>
+          </div>
+        </article>
+        <article class="card" id="eventCard">
+          <div class="wall" aria-hidden="true"></div>
+          <div class="wall-etch" aria-hidden="true"><svg id="wallSvg" viewBox="0 0 600 160" preserveAspectRatio="none" fill="none"></svg></div>
+          <h3>Upcoming<br>events</h3>
+          <div class="meta">
+            <span class="live-pill"><i></i>LIVE STATUS · WAITLIST OPEN</span>
+            <span class="mono">New date TBA</span>
+            <span class="big">Sun(sets) III</span>
+            <span class="mono">Chicago</span>
+          </div>
+          <span class="arrow" aria-hidden="true">›</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="incision" data-incision><svg preserveAspectRatio="none"></svg><span class="tag">INCISION · 04</span></div>
+
+  <!-- 6: hidden semantic sequences -->
+  <section class="panel" id="sequences" data-section>
+    <div class="inner">
+      <div class="sec-head">
+        <span class="mono">Section 04 · hover to read what the surface carries</span>
+        <h2>Semantic sequences</h2>
+        <p>Each page family gets its own etch composition. The words are carved into the geometry at near-zero opacity and only surface when the etching is revealed.</p>
+      </div>
+      <div class="sequences">
+        <div class="seq" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="frequency" data-position="right" data-density="medium" data-state="dormant" data-seed="51" data-words="SOUND,FREQUENCY,TRANSMISSION"></div>
+          <span class="mono">Sunsets.fm</span>
+          <h3>Sound · Frequency · Transmission</h3>
+          <p>Frequency family: carved bar rows and carrier waves. Audio playback can drive individual bars.</p>
+        </div>
+        <div class="seq" tabindex="0" data-hover-activate>
+          <div class="etch-layer" data-pattern="navigation" data-position="right" data-density="medium" data-state="dormant" data-seed="52" data-words="PLACE,PEOPLE,LIVE"></div>
+          <span class="mono">Event pages</span>
+          <h3>Place · People · Live</h3>
+          <p>Navigation family: bearings, routes and nodes. A live status pulse sends a signal along the route.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="incision" data-incision><svg preserveAspectRatio="none"></svg><span class="tag">INCISION · 05</span></div>
+
+  <!-- component spec -->
+  <section class="panel" id="lab" data-section>
+    <div class="inner">
+      <div class="sec-head">
+        <span class="mono">Section 05 · one component, every page</span>
+        <h2>Etch Lab</h2>
+        <p>Set the props and watch the layer. The snippet below the preview is the component call a page would use.</p>
+      </div>
+      <div class="lab">
+        <div class="controls">
+          <div class="field"><span class="mono">Pattern</span><div class="seg" data-prop="pattern"></div></div>
+          <div class="field"><span class="mono">Position</span><div class="seg" data-prop="position"></div></div>
+          <div class="field"><span class="mono">Density</span><div class="seg" data-prop="density"></div></div>
+          <div class="field"><span class="mono">State</span><div class="seg" data-prop="state"></div></div>
+          <div>
+            <div class="machine" id="machine"><div data-s="etched">Etched</div><div data-s="revealed">Revealed</div><div data-s="signal">Amber signal</div><div data-s="dormant">Dormant</div></div>
+            <button class="btn trigger" id="trigger">Run activation <span aria-hidden="true">›</span></button>
+          </div>
+        </div>
+        <div style="display:grid;gap:14px;min-width:0">
+          <div class="stage" id="stage">
+            <div class="etch-layer" id="labEtch" data-pattern="frequency" data-position="right" data-density="medium" data-state="revealed" data-seed="7"></div>
+            <div class="stage-copy"><span class="mono">Preview</span><span class="label" id="stageName">etch-004-frequency.svg</span></div>
+          </div>
+          <div class="code" id="code"></div>
+        </div>
+      </div>
+      <div class="library" id="library"></div>
+    </div>
+  </section>
+
+  <div class="incision" data-incision><svg preserveAspectRatio="none"></svg><span class="tag">INCISION · 06</span></div>
+
+  <section class="panel" id="rules" data-section>
+    <div class="etch-layer" data-pattern="fracture" data-position="edge-right" data-density="medium" data-state="etched" data-seed="61"></div>
+    <div class="inner rules">
+      <div>
+        <div class="sec-head">
+          <span class="mono">The visual rule</span>
+          <h2>More etch than glyph</h2>
+          <p>Etch is atmosphere and can cover large parts of the surface. Glyphs carry meaning, so they stay rare. This meter counts what is actually drawn on this page right now.</p>
+        </div>
+        <div class="ratio">
+          <div class="bar" id="ratioBar"><i class="e"></i><i class="g"></i></div>
+          <div class="nums"><span id="etchCount">— etch paths</span><span id="glyphCount">— glyphs</span></div>
+        </div>
+      </div>
+      <ol class="uses">
+        <li><span><b>Edge etching.</b> Faint vertical carving along section edges, mostly offscreen (left rail, this section's right edge).</span></li>
+        <li><span><b>Oversized geometry.</b> One huge composition, about a fifth visible, drifting slower than the content (hero).</span></li>
+        <li><span><b>Incisions.</b> Broken carved dividers; a short amber light travels through as you cross into the next section.</span></li>
+        <li><span><b>Surface etching.</b> Carving mapped onto the slab and the wall, inheriting their perspective.</span></li>
+        <li><span><b>Activation.</b> Hover, playback, navigation and live status run Etched → Revealed → Amber signal → Dormant.</span></li>
+        <li><span><b>Semantic sequences.</b> Page families carry their own hidden words.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer><span class="mono">The Monolith Project · Etch Layer concept mockup</span><span class="mono">Etch fragments are procedural stand-ins for the extracted SVG library</span></footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- seeded random ---------- */
+  function rng(seed) { var a = seed >>> 0; return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function f(n) { return Math.round(n * 10) / 10; }
+  function arc(cx, cy, r, a0, a1) {
+    var x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0), x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+    return "M" + f(x0) + " " + f(y0) + " A" + f(r) + " " + f(r) + " 0 " + (a1 - a0 > Math.PI ? 1 : 0) + " 1 " + f(x1) + " " + f(y1);
+  }
+
+  /* ---------- etch families (procedural stand-ins for etch-001…006.svg) ---------- */
+  var FAMILIES = {
+    grid: { file: "etch-001-grid.svg", make: function (r) {
+      var p = [], vx = 500, vy = 380;
+      for (var i = -12; i <= 12; i++) p.push({ d: "M" + vx + " " + vy + " L" + f(500 + i * 95) + " 1000" });
+      for (var j = 1; j < 12; j++) { var y = vy + Math.pow(j / 11, 2.2) * 620; p.push({ d: "M0 " + f(y) + " H1000", sig: j === 6 }); }
+      for (var k = 0; k < 5; k++) { var w = 120 + r() * 260, x = r() * 800, yy = r() * 300; p.push({ d: "M" + f(x) + " " + f(yy) + " h" + f(w) + " v" + f(w * .6) + " h" + f(-w) + "z" }); }
+      p.push({ d: arc(500, 380, 300, Math.PI, 2 * Math.PI), sig: true });
+      return p; } },
+    radial: { file: "etch-002-radial.svg", make: function (r) {
+      var p = [], cx = 500, cy = 500;
+      [70, 130, 210, 260, 330, 420, 480].forEach(function (rad, i) { p.push({ d: arc(cx, cy, rad, 0, Math.PI * 1.999), dash: i % 3 === 1 }); });
+      for (var a = 0; a < 24; a++) { var t = a / 24 * Math.PI * 2, r1 = 130 + r() * 80, r2 = 330 + r() * 150; p.push({ d: "M" + f(cx + r1 * Math.cos(t)) + " " + f(cy + r1 * Math.sin(t)) + " L" + f(cx + r2 * Math.cos(t)) + " " + f(cy + r2 * Math.sin(t)) }); }
+      var ticks = ""; for (var b = 0; b < 144; b++) { var u = b / 144 * Math.PI * 2, l = b % 12 === 0 ? 22 : 9; ticks += "M" + f(cx + 420 * Math.cos(u)) + " " + f(cy + 420 * Math.sin(u)) + " L" + f(cx + (420 - l) * Math.cos(u)) + " " + f(cy + (420 - l) * Math.sin(u)) + " "; }
+      p.push({ d: ticks });
+      for (var s = 0; s < 4; s++) { var a0 = r() * 6.28; p.push({ d: arc(cx, cy, 160 + s * 75, a0, a0 + 0.9 + r()), sig: true }); }
+      p.push({ d: "M" + (cx - 480) + " " + cy + " H" + (cx + 480) + " M" + cx + " " + (cy - 480) + " V" + (cy + 480) });
+      return p; } },
+    navigation: { file: "etch-003-navigation.svg", make: function (r) {
+      var p = [], nodes = [];
+      for (var i = 0; i < 13; i++) nodes.push([80 + r() * 840, 80 + r() * 840]);
+      nodes.forEach(function (n, i) {
+        p.push({ d: arc(n[0], n[1], 7 + r() * 10, 0, 6.28) });
+        p.push({ d: "M" + f(n[0] - 16) + " " + f(n[1]) + " h32 M" + f(n[0]) + " " + f(n[1] - 16) + " v32" });
+        var m = nodes[(i + 1 + Math.floor(r() * 3)) % nodes.length];
+        p.push({ d: "M" + f(n[0]) + " " + f(n[1]) + " Q" + f((n[0] + m[0]) / 2 + (r() - .5) * 220) + " " + f((n[1] + m[1]) / 2 + (r() - .5) * 220) + " " + f(m[0]) + " " + f(m[1]), dash: r() > .6, sig: i < 3 });
+      });
+      for (var k = 0; k < 3; k++) { var n0 = nodes[k]; p.push({ d: arc(n0[0], n0[1], 90 + r() * 120, r() * 6, r() * 6 + 1.6) }); }
+      p.push({ d: "M0 500 H1000", dash: true });
+      return p; } },
+    frequency: { file: "etch-004-frequency.svg", make: function (r) {
+      var p = [];
+      [260, 500, 740].forEach(function (cy, row) {
+        for (var x = 40; x < 960; x += 14) { var h = 6 + Math.abs(Math.sin(x / 47 + row) * Math.cos(x / 131) * 90) + r() * 18; p.push({ d: "M" + x + " " + f(cy - h) + " V" + f(cy + h), bar: true }); }
+      });
+      for (var w = 0; w < 4; w++) { var d = "M0 " + (380 + w * 60); for (var x2 = 0; x2 <= 1000; x2 += 20) d += " L" + x2 + " " + f(380 + w * 60 + Math.sin(x2 / (60 + w * 25) + w) * (30 + w * 8)); p.push({ d: d, sig: w === 1 || w === 3 }); }
+      return p; } },
+    ruin: { file: "etch-005-ruin.svg", make: function (r) {
+      var p = [];
+      function wall(x1, y1, x2, y2) { var gap = .35 + r() * .3, g2 = gap + .08 + r() * .1; var xa = x1 + (x2 - x1) * gap, ya = y1 + (y2 - y1) * gap, xb = x1 + (x2 - x1) * g2, yb = y1 + (y2 - y1) * g2; return "M" + x1 + " " + y1 + " L" + f(xa) + " " + f(ya) + " M" + f(xb) + " " + f(yb) + " L" + x2 + " " + y2; }
+      p.push({ d: wall(100, 120, 900, 120), sig: true }); p.push({ d: wall(900, 120, 900, 880) }); p.push({ d: wall(900, 880, 100, 880) }); p.push({ d: wall(100, 880, 100, 120) });
+      p.push({ d: wall(100, 420, 560, 420) }); p.push({ d: wall(560, 120, 560, 700), sig: true }); p.push({ d: wall(560, 700, 900, 700) });
+      var cols = ""; for (var x = 180; x < 520; x += 70) for (var y = 520; y < 840; y += 70) cols += arc(x, y, 6, 0, 6.28) + " "; p.push({ d: cols });
+      var st = ""; for (var s = 0; s < 12; s++) st += "M620 " + (160 + s * 16) + " H840 "; p.push({ d: st });
+      p.push({ d: arc(730, 790, 80, Math.PI, 2 * Math.PI) });
+      p.push({ d: "M100 60 H900 M100 50 v20 M900 50 v20", dash: true });
+      return p; } },
+    fracture: { file: "etch-006-fracture.svg", make: function (r) {
+      var p = [];
+      function crack(x, y, ang, len, depth, sig) {
+        var d = "M" + f(x) + " " + f(y), steps = 6 + Math.floor(r() * 6);
+        for (var i = 0; i < steps; i++) { ang += (r() - .5) * .7; x += Math.cos(ang) * len / steps; y += Math.sin(ang) * len / steps; d += " L" + f(x) + " " + f(y);
+          if (depth > 0 && r() > .72) crack(x, y, ang + (r() > .5 ? .9 : -.9), len * .45, depth - 1, false); }
+        p.push({ d: d, sig: sig });
+      }
+      crack(500, 0, Math.PI / 2, 1000, 3, true); crack(0, 300, .2, 700, 2, false); crack(1000, 700, Math.PI + .3, 650, 2, false); crack(200, 1000, -1.2, 500, 1, false);
+      return p; } }
+  };
+  var FAMILY_KEYS = Object.keys(FAMILIES);
+  var DENSITY = { sparse: .5, medium: .78, dense: 1 };
+
+  function renderEtch(el) {
+    var fam = FAMILIES[el.dataset.pattern] || FAMILIES.radial;
+    var r = rng(+(el.dataset.seed || 1) * 977 + FAMILY_KEYS.indexOf(el.dataset.pattern) * 31);
+    var keep = DENSITY[el.dataset.density] || .78;
+    var paths = fam.make(r), out = "", n = 0;
+    paths.forEach(function (pth, i) {
+      if (!pth.sig && keep < 1 && r() > keep) return;
+      out += '<path d="' + pth.d + '"' + (pth.sig ? ' class="sig"' : pth.bar ? ' class="fbar" data-i="' + i + '"' : '') + (pth.dash ? ' stroke-dasharray="4 7"' : '') + '/>';
+      n++;
+    });
+    var words = (el.dataset.words || "").split(",").filter(Boolean);
+    if (words.length) {
+      out += '<defs><path id="wp' + el.dataset.seed + '" d="' + arc(500, 500, 300, -2.6, 2.2) + '"/></defs>';
+      out += '<text class="word"><textPath href="#wp' + el.dataset.seed + '">' + words.join("  ·  ") + "  ·  " + words.join("  ·  ") + '</textPath></text>';
+    }
+    el.innerHTML = '<svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">' + out + "</svg>";
+    el.dataset.paths = n;
+    return el;
+  }
+  document.querySelectorAll(".etch-layer").forEach(renderEtch);
+
+  /* ---------- activation state machine: ETCHED → REVEALED → AMBER SIGNAL → DORMANT ---------- */
+  var SEQ = [["etched", 350], ["revealed", 700], ["signal", 1900], ["dormant", 0]];
+  function activate(el, onStep) {
+    if (!el || el._running) return;
+    el._running = true;
+    var home = el.dataset.rest || el.dataset.state;
+    el.dataset.rest = home;
+    var i = 0;
+    (function step() {
+      var s = SEQ[i];
+      el.dataset.state = s[0] === "dormant" ? home : s[0];
+      if (onStep) onStep(s[0]);
+      if (++i < SEQ.length) setTimeout(step, reduceMotion ? 250 : s[1]); else el._running = false;
+    })();
+  }
+  document.querySelectorAll("[data-hover-activate]").forEach(function (card) {
+    var layer = card.querySelector(".etch-layer");
+    card.addEventListener("pointerenter", function () { activate(layer); });
+    card.addEventListener("focus", function () { activate(layer); });
+  });
+  document.querySelectorAll("[data-activate]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var sec = document.getElementById(a.dataset.activate);
+      activate(document.querySelector(".rail .etch-layer"));
+      setTimeout(function () { activate(sec && sec.querySelector(":scope > .etch-layer")); }, 500);
+    });
+  });
+
+  /* ---------- incisions ---------- */
+  function buildIncision(svg) {
+    var w = svg.clientWidth || 1200, r = rng(w + svg.getBoundingClientRect().top | 0), y = 27, x = 0, segs = "", light = "M0 " + y;
+    svg.setAttribute("viewBox", "0 0 " + w + " 54");
+    while (x < w) {
+      var len = 80 + r() * 260, nx = Math.min(w, x + len), ny = y + (r() - .5) * 5;
+      segs += "M" + f(x) + " " + f(y) + " L" + f(nx) + " " + f(ny) + " ";
+      light += " L" + f(nx) + " " + f(ny);
+      x = nx + 6 + r() * 22; y = ny;
+      if (r() > .8) { segs += "M" + f(nx - 30) + " " + f(ny) + " l" + f(14) + " " + f(-9) + " "; }
+    }
+    svg.innerHTML = '<path class="cut-shadow" d="' + segs + '"/><path class="cut" d="' + segs + '"/><path class="light" d="' + light + '"/>';
+  }
+  var incisions = document.querySelectorAll("[data-incision]");
+  incisions.forEach(function (inc) { buildIncision(inc.querySelector("svg")); });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var inc = e.target; inc.classList.remove("lit"); void inc.offsetWidth; inc.classList.add("lit");
+        var next = inc.nextElementSibling; if (next) setTimeout(function () { activate(next.querySelector(":scope > .etch-layer")); }, 600);
+      });
+    }, { rootMargin: "0px 0px -35% 0px" });
+    incisions.forEach(function (i) { io.observe(i); });
+  }
+
+  /* ---------- parallax: etch drifts 10–20px slower than content ---------- */
+  var depthLayers = [].slice.call(document.querySelectorAll(".etch-layer[data-depth]"));
+  var ticking = false;
+  function parallax() {
+    ticking = false;
+    var vh = window.innerHeight;
+    depthLayers.forEach(function (el) {
+      var host = el.parentElement.getBoundingClientRect();
+      var progress = (host.top + host.height / 2 - vh / 2) / vh;
+      var shift = Math.max(-20, Math.min(20, progress * 140 * +el.dataset.depth));
+      var svg = el.firstElementChild; if (svg) svg.style.transform = "translate3d(0," + f(shift) + "px,0)";
+    });
+  }
+  if (!reduceMotion) { window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(parallax); } }, { passive: true }); parallax(); }
+
+  /* ---------- hero scene ---------- */
+  var canvas = document.getElementById("scene"), ctx = canvas.getContext("2d");
+  var SLAB = [[.40, 0], [.66, 0], [.74, .86], [.36, .88]];
+  function drawScene() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), W = canvas.clientWidth, H = canvas.clientHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var r = rng(7);
+    var sky = ctx.createLinearGradient(0, 0, 0, H * .7);
+    sky.addColorStop(0, "#050404"); sky.addColorStop(.45, "#17110c"); sky.addColorStop(.78, "#5a3218"); sky.addColorStop(1, "#a35a22");
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+    var sun = ctx.createRadialGradient(W * .86, H * .62, 4, W * .86, H * .62, W * .45);
+    sun.addColorStop(0, "rgba(255,214,150,.95)"); sun.addColorStop(.06, "rgba(255,170,80,.55)"); sun.addColorStop(.35, "rgba(160,80,30,.18)"); sun.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = sun; ctx.fillRect(0, 0, W, H);
+    for (var c = 0; c < 14; c++) { ctx.fillStyle = "rgba(" + (120 + r() * 80 | 0) + "," + (70 + r() * 40 | 0) + ",40," + (.05 + r() * .08) + ")"; ctx.beginPath(); ctx.ellipse(W * (.55 + r() * .45), H * (.25 + r() * .3), W * (.08 + r() * .14), H * (.012 + r() * .02), -.08, 0, 6.28); ctx.fill(); }
+    function ridge(y0, amp, col) { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (var x = 0; x <= W; x += W / 40) ctx.lineTo(x, H * y0 - Math.abs(Math.sin(x / W * 7 + amp)) * H * .06 - r() * H * .01); ctx.lineTo(W, H); ctx.fill(); }
+    ridge(.63, 1, "#1d140e"); ridge(.67, 3, "#110c09");
+    var water = ctx.createLinearGradient(0, H * .66, 0, H * .74); water.addColorStop(0, "rgba(255,170,90,.35)"); water.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = water; ctx.fillRect(W * .6, H * .66, W * .4, H * .08);
+    ctx.fillStyle = "#0a0807"; ctx.fillRect(0, H * .7, W, H * .3);
+    for (var k = 0; k < 46; k++) {
+      var rx = r() * W, ry = H * (.7 + r() * .32), rs = W * (.015 + r() * .05);
+      ctx.beginPath(); ctx.moveTo(rx - rs, ry); for (var v = 0; v < 6; v++) ctx.lineTo(rx - rs + v * rs * .4, ry - rs * (.3 + r() * .5)); ctx.lineTo(rx + rs * 1.2, ry); ctx.closePath();
+      ctx.fillStyle = "#0f0c0a"; ctx.fill(); ctx.strokeStyle = "rgba(220,140,70," + (.08 + r() * .2) + ")"; ctx.lineWidth = 1; ctx.stroke();
+    }
+    ctx.save(); ctx.beginPath(); SLAB.forEach(function (pt, i) { ctx[i ? "lineTo" : "moveTo"](pt[0] * W, pt[1] * H); }); ctx.closePath(); ctx.clip();
+    var slab = ctx.createLinearGradient(W * .36, 0, W * .74, 0); slab.addColorStop(0, "#151310"); slab.addColorStop(.5, "#22201c"); slab.addColorStop(.85, "#2e2822"); slab.addColorStop(1, "#4a3523");
+    ctx.fillStyle = slab; ctx.fillRect(0, 0, W, H);
+    for (var g = 0; g < 9000; g++) { ctx.fillStyle = r() > .5 ? "rgba(255,240,220,.035)" : "rgba(0,0,0,.18)"; ctx.fillRect(W * (.34 + r() * .42), r() * H * .9, 1 + r() * 2, 1 + r() * 2); }
+    ctx.strokeStyle = "rgba(0,0,0,.35)"; for (var cr = 0; cr < 8; cr++) { ctx.beginPath(); var cx0 = W * (.4 + r() * .3), cy0 = r() * H * .8; ctx.moveTo(cx0, cy0); for (var q = 0; q < 6; q++) ctx.lineTo(cx0 += (r() - .5) * 40, cy0 += 20 + r() * 30); ctx.stroke(); }
+    ctx.restore();
+    ctx.strokeStyle = "rgba(255,190,120,.4)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(SLAB[1][0] * W, 0); ctx.lineTo(SLAB[2][0] * W, SLAB[2][1] * H); ctx.stroke();
+    var sx = W * .555;
+    var glow = ctx.createLinearGradient(sx - W * .05, 0, sx + W * .05, 0); glow.addColorStop(0, "rgba(255,170,80,0)"); glow.addColorStop(.5, "rgba(255,190,110,.35)"); glow.addColorStop(1, "rgba(255,170,80,0)");
+    ctx.fillStyle = glow; ctx.fillRect(sx - W * .05, 0, W * .1, H * .87);
+    ctx.save(); ctx.shadowColor = "rgba(255,190,110,1)"; ctx.shadowBlur = 24; ctx.fillStyle = "#fff1d6"; ctx.fillRect(sx - 1.5, 0, 3, H * .87); ctx.restore();
+    var spill = ctx.createRadialGradient(sx, H * .87, 2, sx, H * .87, W * .18); spill.addColorStop(0, "rgba(255,200,130,.55)"); spill.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = spill; ctx.beginPath(); ctx.ellipse(sx, H * .88, W * .18, H * .05, 0, 0, 6.28); ctx.fill();
+    var fx = sx + W * .012, fy = H * .875, fh = H * .075;
+    ctx.fillStyle = "#050403"; ctx.beginPath(); ctx.arc(fx, fy - fh * .9, fh * .07, 0, 6.28); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(fx - fh * .12, fy - fh * .8); ctx.lineTo(fx + fh * .12, fy - fh * .8); ctx.lineTo(fx + fh * .1, fy - fh * .32); ctx.lineTo(fx + fh * .06, fy); ctx.lineTo(fx - fh * .06, fy); ctx.lineTo(fx - fh * .1, fy - fh * .32); ctx.closePath(); ctx.fill();
+  }
+  drawScene();
+  var rsz; window.addEventListener("resize", function () { clearTimeout(rsz); rsz = setTimeout(function () { drawScene(); incisions.forEach(function (inc) { buildIncision(inc.querySelector("svg")); }); }, 150); });
+
+  /* surface etch carved into the slab (image-surface etching) */
+  (function () {
+    var s = "", r = rng(99);
+    for (var y = 60; y < 880; y += 120 + r() * 60) s += '<path class="carve" d="M' + f(r() * 120) + " " + f(y) + " L" + f(280 + r() * 120) + " " + f(y + (r() - .5) * 40) + '"/>';
+    s += '<path class="carve" d="' + arc(260, 380, 70, 0, 6.28) + '"/><path class="carve-hi" d="M190 380 H330 M260 310 V450"/>';
+    s += '<path class="carve" d="M260 520 l45 80 h-90z"/><path class="carve" d="M240 640 v80 M260 640 v80 M280 640 v80"/>';
+    s += '<path class="carve" d="' + arc(260, 380, 170, -1.2, 1.4) + '"/><path class="carve" d="M40 900 L380 40" stroke-dasharray="3 9"/>';
+    document.getElementById("surfaceSvg").innerHTML = s;
+  })();
+
+  /* places map: carved bearings around Chicago */
+  (function () {
+    var s = "", r = rng(5), cx = 210, cy = 170;
+    for (var i = 1; i < 6; i++) s += '<path d="' + arc(cx, cy, i * 46, 0, 6.28) + '" stroke="rgba(217,198,168,.12)"/>';
+    for (var a = 0; a < 12; a++) { var t = a / 12 * 6.28; s += '<path d="M' + cx + " " + cy + " L" + f(cx + 260 * Math.cos(t)) + " " + f(cy + 260 * Math.sin(t)) + '" stroke="rgba(217,198,168,.08)"/>'; }
+    s += '<path d="M330 0 C300 90 320 170 290 250 S300 360 320 380" stroke="rgba(217,198,168,.25)" stroke-dasharray="3 6"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="3.5" fill="#ffe3bd"/><circle cx="' + cx + '" cy="' + cy + '" r="12" stroke="rgba(255,179,92,.7)"/>';
+    s += '<circle cx="268" cy="112" r="2.5" fill="#d9c6a8"/><path d="M' + cx + " " + cy + ' Q250 120 268 112" stroke="rgba(255,179,92,.55)"/>';
+    s += '<text x="300" y="250" fill="rgba(217,198,168,.4)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2">LAKE MICHIGAN</text>';
+    document.getElementById("mapSvg").innerHTML = s;
+  })();
+
+  /* wall waveform carved into the event wall */
+  var wallSvg = document.getElementById("wallSvg"), bars = [];
+  (function () {
+    var s = "";
+    for (var i = 0; i < 64; i++) { var x = 6 + i * 9.3, h = 8 + Math.abs(Math.sin(i / 5) * Math.cos(i / 13)) * 60; s += '<line class="fbar" x1="' + f(x) + '" x2="' + f(x) + '" y1="' + f(80 - h) + '" y2="' + f(80 + h) + '" stroke-width="2"/>'; }
+    wallSvg.innerHTML = s; bars = [].slice.call(wallSvg.querySelectorAll(".fbar"));
+  })();
+
+  /* ---------- audio: sample tone drives the wall etching ---------- */
+  var playBtn = document.getElementById("playBtn"), playState = document.getElementById("playState"), prog = document.getElementById("prog"), icon = document.getElementById("playIcon");
+  var ac = null, master = null, analyser = null, nodes = [], beat = null, raf = null, started = 0;
+  function startAudio() {
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) { playState.textContent = "Audio not supported here"; return; }
+    ac = ac || new AC(); if (ac.state === "suspended") ac.resume();
+    master = ac.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.16, ac.currentTime + 1.2);
+    analyser = ac.createAnalyser(); analyser.fftSize = 128; master.connect(analyser); analyser.connect(ac.destination);
+    var lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900; lp.connect(master);
+    var lfo = ac.createOscillator(), lfoG = ac.createGain(); lfo.frequency.value = .12; lfoG.gain.value = 500; lfo.connect(lfoG); lfoG.connect(lp.frequency); lfo.start(); nodes.push(lfo);
+    [110, 164.8, 220.5, 261.6, 329.6].forEach(function (hz, i) { var o = ac.createOscillator(); o.type = i % 2 ? "sawtooth" : "triangle"; o.frequency.value = hz; o.detune.value = (i - 2) * 6; var g = ac.createGain(); g.gain.value = .07; o.connect(g); g.connect(lp); o.start(); nodes.push(o); });
+    beat = setInterval(function () {
+      var o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(42, t + .25);
+      g.gain.setValueAtTime(.5, t); g.gain.exponentialRampToValueAtTime(.001, t + .35); o.connect(g); g.connect(master); o.start(t); o.stop(t + .4);
+    }, 500);
+    started = performance.now(); loop();
+    playBtn.setAttribute("aria-pressed", "true"); playBtn.setAttribute("aria-label", "Stop sample transmission");
+    playState.textContent = "Playing · etching listening"; icon.innerHTML = '<path d="M2.5 1.5h3v11h-3zM8.5 1.5h3v11h-3z"/>';
+    activate(document.querySelector("#transmissions > .etch-layer"));
+  }
+  function stopAudio() {
+    if (master) { var m = master; m.gain.cancelScheduledValues(ac.currentTime); m.gain.setValueAtTime(m.gain.value, ac.currentTime); m.gain.linearRampToValueAtTime(0, ac.currentTime + .4); }
+    var old = nodes; nodes = []; setTimeout(function () { old.forEach(function (o) { try { o.stop(); } catch (e) {} }); }, 450);
+    clearInterval(beat); cancelAnimationFrame(raf);
+    bars.forEach(function (b) { b.style.transform = ""; b.classList.remove("hot"); });
+    playBtn.setAttribute("aria-pressed", "false"); playBtn.setAttribute("aria-label", "Play sample transmission");
+    playState.textContent = "Sample tone · tap to play"; icon.innerHTML = '<path d="M3 1.5v11l9.5-5.5z"/>';
+  }
+  var buf = new Uint8Array(64);
+  function loop() {
+    analyser.getByteFrequencyData(buf);
+    bars.forEach(function (b, i) { var v = buf[(i % 32) + 1] / 255; b.style.transform = "scaleY(" + f(.35 + v * 1.1) + ")"; b.classList.toggle("hot", v > .62 && i % 3 === 0); });
+    prog.style.width = Math.min(100, (performance.now() - started) / 600) + "%";
+    raf = requestAnimationFrame(loop);
+  }
+  playBtn.addEventListener("click", function () { playBtn.getAttribute("aria-pressed") === "true" ? stopAudio() : startAudio(); });
+
+  /* live status pulses a signal through the event wall every few seconds */
+  setInterval(function () {
+    if (playBtn.getAttribute("aria-pressed") === "true") return;
+    var pick = bars.filter(function (_, i) { return i % 5 === 0; });
+    pick.forEach(function (b, i) { setTimeout(function () { b.classList.add("hot"); setTimeout(function () { b.classList.remove("hot"); }, 420); }, i * 70); });
+  }, 6500);
+
+  /* ---------- Etch Lab ---------- */
+  var lab = document.getElementById("labEtch"), code = document.getElementById("code"), stageName = document.getElementById("stageName");
+  var OPTIONS = { pattern: FAMILY_KEYS, position: ["right", "left", "center", "edge-left", "edge-right"], density: ["sparse", "medium", "dense"], state: ["dormant", "etched", "revealed", "signal"] };
+  var props = { pattern: "frequency", position: "right", density: "medium", state: "revealed" };
+  function syncLab() {
+    Object.keys(props).forEach(function (k) { lab.dataset[k] = props[k]; });
+    lab.dataset.rest = props.state; renderEtch(lab);
+    stageName.textContent = FAMILIES[props.pattern].file;
+    code.innerHTML = '&lt;<span class="k">EtchLayer</span>\n  pattern=<span class="s">"' + props.pattern + '"</span>\n  position=<span class="s">"' + props.position + '"</span>\n  density=<span class="s">"' + props.density + '"</span>\n  state=<span class="s">"' + props.state + '"</span>\n/&gt;';
+    document.querySelectorAll(".seg button").forEach(function (b) { b.setAttribute("aria-pressed", String(props[b.parentElement.dataset.prop] === b.dataset.v)); });
+    markMachine(props.state);
+    countRatio();
+  }
+  document.querySelectorAll(".seg").forEach(function (seg) {
+    OPTIONS[seg.dataset.prop].forEach(function (v) {
+      var b = document.createElement("button"); b.type = "button"; b.dataset.v = v; b.textContent = v;
+      b.addEventListener("click", function () { props[seg.dataset.prop] = v; syncLab(); });
+      seg.appendChild(b);
+    });
+  });
+  function markMachine(s) { document.querySelectorAll("#machine div").forEach(function (d) { d.classList.toggle("on", d.dataset.s === s); }); }
+  document.getElementById("trigger").addEventListener("click", function () { activate(lab, markMachine); setTimeout(function () { markMachine(props.state); }, 3400); });
+  var libEl = document.getElementById("library");
+  FAMILY_KEYS.forEach(function (k, i) {
+    var b = document.createElement("button"); b.className = "swatch"; b.type = "button"; b.setAttribute("aria-label", "Use " + FAMILIES[k].file);
+    b.innerHTML = '<div class="etch-layer" data-pattern="' + k + '" data-position="cover" data-density="medium" data-state="revealed" data-seed="' + (70 + i) + '"></div><span>' + FAMILIES[k].file + "</span>";
+    renderEtch(b.firstElementChild);
+    b.addEventListener("click", function () { props.pattern = k; syncLab(); document.getElementById("stage").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); });
+    libEl.appendChild(b);
+  });
+
+  /* ---------- etch : glyph ratio, counted from the live page ---------- */
+  function countRatio() {
+    var etch = 0; document.querySelectorAll(".etch-layer svg path, .surface-etch path, .wall-etch line, .incision .cut").forEach(function () { etch++; });
+    var glyph = document.querySelectorAll(".glyph").length;
+    var total = etch + glyph;
+    var bar = document.getElementById("ratioBar");
+    bar.children[0].style.flex = String(etch / total); bar.children[1].style.flex = String(Math.max(glyph / total, .006));
+    document.getElementById("etchCount").textContent = etch + " etch paths";
+    document.getElementById("glyphCount").textContent = glyph + " glyphs";
+  }
+  syncLab();
+})();
+</script>
