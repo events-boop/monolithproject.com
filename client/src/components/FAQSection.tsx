@@ -1,26 +1,11 @@
 import { ChevronDown, ArrowUpRight } from "lucide-react";
 import EditorialHeader from "./EditorialHeader";
-import { POSH_TICKET_URL } from "@/data/events";
-import { CTA_LABELS } from "@/lib/cta";
+import { FAQ_SITE } from "@shared/faqs";
 
-const faqs = [
-  {
-    q: "What kind of music do you play?",
-    a: "We focus on afro house, melodic house, and deeper club-forward sounds depending on the series and venue.",
-  },
-  {
-    q: "What is the difference between Chasing Sun(Sets) and Untold Story?",
-    a: "Chasing Sun(Sets) is the open-air series. Untold Story is the late-night series with deeper sound and a tighter room.",
-  },
-  {
-    q: "What should I wear?",
-    a: "Elevated nightlife attire is recommended. We curate a strong room and ask guests to match the energy.",
-  },
-  {
-    q: "Are tickets available at the door?",
-    a: "Some events may have limited door availability, but we recommend buying early to lock your spot and tier pricing.",
-  },
-];
+const faqs = FAQ_SITE.home.map(item => ({
+  q: item.question,
+  a: item.answer,
+}));
 
 export default function FAQSection() {
   return (
@@ -62,10 +47,10 @@ export default function FAQSection() {
             Still have questions? Reach out and we’ll help before the event.
           </p>
           <a
-            href={POSH_TICKET_URL}
+            href="mailto:events@monolithproject.com"
             className="btn-pill-monolith inline-flex items-center gap-2"
           >
-            First Access
+            Contact Us
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>

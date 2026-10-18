@@ -44,13 +44,16 @@ export default function HeroSection() {
               </p>
             </div>
             <Link href="/schedule" className="home-text-link home-hero-explore">
-              Explore the shows <ArrowUpRight size={18} aria-hidden="true" />
+              <span>Explore the shows</span>
+              <span className="home-hero-arrow">
+                <ArrowUpRight size={22} aria-hidden="true" />
+              </span>
             </Link>
           </div>
         </div>
       </div>
       <div className="container layout-wide monolith-hero-event-rail">
-        {sunsetsShowVisible() && (
+        {sunsetsShowVisible() && !sunsetsNeedsUpdate && (
           <div className="home-event-strip" data-home-hero-card="true">
             <div>
               <div className="home-sunsets-brand-row">
@@ -70,11 +73,12 @@ export default function HeroSection() {
             </div>
             <div className="home-strip-details">
               <span>
+                {sunsetsNeedsUpdate ? "Original date: " : ""}
                 {sunsetsShortDate} · {currentSunsets.venueName}
               </span>
               <span>
                 {sunsetsNeedsUpdate
-                  ? "Postponed · New date to be announced"
+                  ? "New date to be announced"
                   : `${sunsetsTimeLabel} · 21+`}
               </span>
               <a

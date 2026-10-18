@@ -445,8 +445,9 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Venue Reveal Soon",
     location: "Chicago, IL",
     status: "coming-soon",
-    description: "The season ends in September. Then the Monolith stands.",
-    eventNotice: "The season ends in September. Then the Monolith stands.",
+    eventStatus: "EventPostponed",
+    description: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
+    eventNotice: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
     activeFunnels: ["waitlist"],
   },
 ];
@@ -465,7 +466,7 @@ export const upcomingEvents: ScheduledEvent[] = [...EVENT_CATALOG]
   .map(event => withApprovedSunsets(event))
   .sort((a, b) => eventStartValue(a) - eventStartValue(b));
 
-const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
+export const FEATURED_EVENT_IDS: Record<SiteExperienceSlot, string> = {
   hero: "css-sep19",
   banner: "css-sep19",
   funnel: "css-sep19",

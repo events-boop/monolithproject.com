@@ -35,6 +35,8 @@
  */
 
 import {
+  bigint,
+  bigserial,
   boolean,
   index,
   integer,
@@ -1058,5 +1060,57 @@ export const scheduledEvents = pgTable(
     statusIdx: index("scheduled_events_status_idx").on(table.status),
     startsAtIdx: index("scheduled_events_starts_at_idx").on(table.startsAt),
     slugIdx: uniqueIndex("scheduled_events_slug_idx").on(table.slug),
+  })
+);
+
+/**
+ * cms_documents — Content-managed site documents (event catalogue, sunsets
+ * publication record, FAQ set, home featured slots). Each document is a
+ * stable key with two pointers into `cms_revisions`: the current draft and
+ * the current published revision. Public reads only ever follow
+ * `publishedRevisionId`; editors work against `draftRevisionId`. Payloads
+ * live exclusively on revisions so every change is versioned.
+ */
+export const cmsDocuments = pgTable("cms_documents", {
+  key: text("key").primaryKey(), // e.g. 'events.catalogue' | 'sunsets.publication' | 'faqs.site' | 'home.featured'
+  kind: text("kind").notNull(),
+  draftRevisionId: bigint("draft_revision_id", { mode: "number" }),
+  publishedRevisionId: bigint("published_revision_id", { mode: "number" }),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * cms_revisions — Immutable, versioned payloads for `cms_documents`.
+ * `revision` is monotonic per document; `state` is 'draft' | 'published' |
+ * 'superseded'. A revision is never edited in place: saves insert a new
+ * draft, publishing flips one draft row to 'published' and supersedes the
+ * revision it replaces. Indexed by (documentKey, revision) for history
+ * lookups and next-revision computation.
+ */
+export const cmsRevisions = pgTable(
+  "cms_revisions",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    documentKey: text("document_key")
+      .notNull()
+      .references(() => cmsDocuments.key),
+    revision: integer("revision").notNull(),
+    state: text("state").notNull(), // 'draft' | 'published' | 'superseded'
+    payload: jsonb("payload").notNull(),
+    note: text("note"),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+      .notNull()
+      .defaultNow(),
+  },
+  table => ({
+    documentRevisionIdx: uniqueIndex("cms_revisions_document_revision_idx").on(
+      table.documentKey,
+      table.revision
+    ),
   })
 );

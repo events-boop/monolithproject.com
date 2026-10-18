@@ -59,8 +59,8 @@
     window.dispatchEvent(new CustomEvent('monolith:cookie-consent-resolved', { detail: choice }));
   }
   window.sunsetsTracking = { setConsent, subscriptionResult(audience, state) {
-    if (!allowed() || !['event','radio'].includes(audience) || !['subscribed','confirmation_required'].includes(state)) return;
-    window.gtag?.('event', state === 'subscribed' ? 'subscription_confirmed' : 'subscription_confirmation_requested', {audience, event_id:'css-sep19'});
+    if (!allowed() || !['event','radio'].includes(audience) || !['saved','subscribed','confirmation_required'].includes(state)) return;
+    window.gtag?.('event', state === 'saved' ? 'signup_saved' : state === 'subscribed' ? 'subscription_confirmed' : 'subscription_confirmation_requested', {audience, event_id:'css-sep19'});
   } };
   window.addEventListener('storage', (event) => {
     if (event.key === CONSENT_KEY && ['accepted', 'declined'].includes(event.newValue)) setConsent(event.newValue);

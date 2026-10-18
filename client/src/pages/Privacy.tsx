@@ -4,7 +4,7 @@ import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Privacy() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="legal-document min-h-screen bg-background text-foreground">
       <SEO
         title="Privacy Policy"
         description="Privacy policy for The Monolith Project website and event communications."

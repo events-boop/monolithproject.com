@@ -1,3 +1,4 @@
+import AudioPlayer from "@/components/AudioPlayer";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "wouter";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -191,13 +192,9 @@ export default function RadioEpisode() {
         >
           <h2 className="font-display text-3xl uppercase mb-4">Listen</h2>
           <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
-            <iframe
-              title={`${episode.title} embedded player`}
-              width="100%"
-              height="166"
-              scrolling="no"
-              frameBorder="no"
-              allow="autoplay"
+            <AudioPlayer
+              key={episode.slug}
+              title={episode.title}
               src={episode.embedUrl}
             />
           </div>

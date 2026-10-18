@@ -7,7 +7,9 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
-import { Ticket, ArrowUpRight, Lock, Zap } from "lucide-react";
+import { Ticket, ArrowUpRight, Lock, Zap, CalendarDays } from "lucide-react";
+import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
+import "@/styles/event-alert.css";
 import { useLocation } from "wouter";
 import { cn } from "../lib/utils";
 import { signalChirp } from "../lib/SignalChirpEngine";
@@ -52,26 +54,14 @@ const MenuCyclingText = ({
           : "text-primary";
 
   return (
-    <div className="hidden sm:flex xl:hidden relative h-4 overflow-hidden flex-col font-mono text-[11px] font-bold tracking-[0.25em] uppercase transition-colors">
-      <span
-        className="h-full flex items-center justify-center"
-        style={{
-          transform: `translateY(${isOpen ? "-100%" : "0%"})`,
-          transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
-        MENU
-      </span>
-      <span
-        className={cn("h-full flex items-center justify-center", accentClass)}
-        style={{
-          transform: `translateY(${isOpen ? "-100%" : "0%"})`,
-          transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
-        CLOSE
-      </span>
-    </div>
+    <span
+      className={cn(
+        "hidden sm:inline font-mono text-[11px] font-bold tracking-[0.18em] uppercase",
+        isOpen && accentClass
+      )}
+    >
+      {isOpen ? "Close" : "Menu"}
+    </span>
   );
 };
 
@@ -145,8 +135,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
   const cta = getEventCta(contextEvent);
   const ctaToneClass = getEventCtaToneClass(contextEvent);
+  const isUpdateContext = ["EventPostponed", "EventCancelled"].includes(
+    contextEvent?.eventStatus || ""
+  );
+  const navCta = isUpdateContext
+    ? { ...cta, href: ROUTES.schedule, label: "Calendar", isExternal: false }
+    : cta;
   const ticketHref = getPrimaryTicketUrl(contextEvent);
-  const hasEventBanner = isEventBannerVisible(location);
+  const hasEventBanner = !sunsetsNeedsUpdate && isEventBannerVisible(location);
   const bannerPayload = hasEventBanner ? getEventBannerPayload() : null;
   const mobileMenuId = "nav-mobile-menu";
 
@@ -590,7 +586,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         icon: "arrow",
                       },
                       {
-                        label: ticketHref ? "GET TICKETS" : "FIRST ACCESS",
+                        label: ticketHref ? "GET TICKETS" : "EVENT INFORMATION",
                         href: ticketHref || ROUTES.tickets,
                         icon: "ticket",
                       },
@@ -617,12 +613,16 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           href:
                             ticketHref ||
                             `/events/${ticketEvent.slug || ticketEvent.id}`,
-                          ctaText: ticketHref ? "On Sale" : "First Access",
+                          ctaText: ticketHref ? "On Sale" : "Event Details",
                           icon: ticketHref ? "ticket" : "arrow",
                           badge:
-                            ticketEvent.status === "on-sale"
-                              ? "ON SALE"
-                              : "COMING SOON",
+                            ticketEvent.eventStatus === "EventPostponed"
+                              ? "POSTPONED"
+                              : ticketEvent.eventStatus === "EventCancelled"
+                                ? "CANCELLED"
+                                : ticketEvent.status === "on-sale"
+                                  ? "ON SALE"
+                                  : "COMING SOON",
                           external: !!ticketHref,
                         }
                       : {
@@ -717,11 +717,16 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         ? "ticket"
                         : "arrow",
                       badge:
-                        featuredChasingEvent?.status === "on-sale"
-                          ? "ON SALE"
-                          : featuredChasingEvent?.status === "coming-soon"
-                            ? "FIRST ACCESS"
-                            : undefined,
+                        featuredChasingEvent?.eventStatus === "EventPostponed"
+                          ? "POSTPONED"
+                          : featuredChasingEvent?.eventStatus ===
+                              "EventCancelled"
+                            ? "CANCELLED"
+                            : featuredChasingEvent?.status === "on-sale"
+                              ? "ON SALE"
+                              : featuredChasingEvent?.status === "coming-soon"
+                                ? "FIRST ACCESS"
+                                : undefined,
                       external: !!getPrimaryTicketUrl(featuredChasingEvent),
                     },
                   }}
@@ -797,37 +802,53 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <div className="hidden min-[370px]:flex sm:hidden">
                   <MagneticButton strength={0.16}>
                     <a
-                      href={cta.href}
-                      target={cta.isExternal ? "_blank" : undefined}
-                      rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                      href={navCta.href}
+                      target={navCta.isExternal ? "_blank" : undefined}
+                      rel={
+                        navCta.isExternal ? "noopener noreferrer" : undefined
+                      }
                       data-mobile-quick-cta="true"
-                      aria-label={`${cta.label} — ${ticketEvent?.headline || ticketEvent?.title || "Next Night"}`}
+                      aria-label={
+                        isUpdateContext
+                          ? "View calendar"
+                          : `${navCta.label} — ${ticketEvent?.headline || ticketEvent?.title || "Next Night"}`
+                      }
                       data-cursor-text={
-                        cta.tool === "posh" || cta.tool === "allevents"
-                          ? "GET IN"
-                          : cta.tool === "laylo"
-                            ? "TICKETS"
-                            : "RSVP"
+                        isUpdateContext
+                          ? "CALENDAR"
+                          : navCta.tool === "posh" ||
+                              navCta.tool === "allevents"
+                            ? "GET IN"
+                            : navCta.tool === "laylo"
+                              ? "TICKETS"
+                              : "RSVP"
                       }
                       onMouseEnter={() => {
                         signalChirp.hover();
-                        if (cta.isExternal) preconnectGateway(cta.href);
+                        if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
                       onClick={() => signalChirp.click()}
-                      className={`inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
-                        cta.tool === "posh" || cta.tool === "allevents"
+                      className={`${isUpdateContext ? "nav-calendar-action" : ""} inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
+                        navCta.tool === "posh" || navCta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
-                          : cta.tool === "laylo"
+                          : navCta.tool === "laylo"
                             ? "border-white/10 bg-[#e4e4e7] text-[#18181b]"
                             : "border-white/20 bg-white/[0.08] text-white"
                       }`}
                     >
                       <span className="text-xs font-semibold">
-                        {ticketHref ? "Tickets" : "Events"}
+                        {isUpdateContext
+                          ? "Events"
+                          : ticketHref
+                            ? "Tickets"
+                            : "Events"}
                       </span>
-                      {cta.tool === "posh" || cta.tool === "allevents" ? (
+                      {isUpdateContext ? (
+                        <CalendarDays className="h-4 w-4" aria-hidden="true" />
+                      ) : navCta.tool === "posh" ||
+                        navCta.tool === "allevents" ? (
                         <Ticket className="h-4 w-4" />
-                      ) : cta.tool === "laylo" ? (
+                      ) : navCta.tool === "laylo" ? (
                         <Lock className="h-4 w-4 text-black" />
                       ) : (
                         <Zap className="h-4 w-4" />
@@ -840,19 +861,28 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <div className="hidden sm:block">
                   <MagneticButton strength={0.2}>
                     <a
-                      href={cta.href}
-                      target={cta.isExternal ? "_blank" : undefined}
-                      rel={cta.isExternal ? "noopener noreferrer" : undefined}
+                      className={
+                        isUpdateContext ? "nav-calendar-action" : undefined
+                      }
+                      data-nav-primary-cta="true"
+                      href={navCta.href}
+                      target={navCta.isExternal ? "_blank" : undefined}
+                      rel={
+                        navCta.isExternal ? "noopener noreferrer" : undefined
+                      }
                       data-cursor-text={
-                        cta.tool === "posh" || cta.tool === "allevents"
-                          ? "GET IN"
-                          : cta.tool === "laylo"
-                            ? "TICKETS"
-                            : "RSVP"
+                        isUpdateContext
+                          ? "CALENDAR"
+                          : navCta.tool === "posh" ||
+                              navCta.tool === "allevents"
+                            ? "GET IN"
+                            : navCta.tool === "laylo"
+                              ? "TICKETS"
+                              : "RSVP"
                       }
                       onMouseEnter={() => {
                         signalChirp.hover();
-                        if (cta.isExternal) preconnectGateway(cta.href);
+                        if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
                       onClick={() => signalChirp.click()}
                     >
@@ -860,20 +890,26 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         className={`
                       btn-pill-neutral items-center gap-2.5 px-5 min-[1150px]:px-6 xl:px-7 py-2.5
                       flex border uppercase
-                      ${cta.tool === "posh" || cta.tool === "allevents" ? "cta-posh border-transparent" : cta.tool === "laylo" ? "cta-laylo" : "cta-fillout"}
+                      ${navCta.tool === "posh" || navCta.tool === "allevents" ? "cta-posh border-transparent" : navCta.tool === "laylo" ? "cta-laylo" : "cta-fillout"}
                       ${ctaToneClass}
-                      ${isLight && (cta.tool === "posh" || cta.tool === "allevents") ? "opacity-90 hover:opacity-100 !shadow-none" : ""}
+                      ${isLight && (navCta.tool === "posh" || navCta.tool === "allevents") ? "opacity-90 hover:opacity-100 !shadow-none" : ""}
                     `}
                       >
-                        {cta.tool === "posh" || cta.tool === "allevents" ? (
+                        {isUpdateContext ? (
+                          <CalendarDays
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        ) : navCta.tool === "posh" ||
+                          navCta.tool === "allevents" ? (
                           <Ticket className="h-4 w-4" />
-                        ) : cta.tool === "laylo" ? (
+                        ) : navCta.tool === "laylo" ? (
                           <Lock className="h-4 w-4" />
                         ) : (
                           <Zap className="h-4 w-4" />
                         )}
                         <span className="text-[12px] min-[1150px]:text-[13px] xl:text-[14px] tracking-[0.2em]">
-                          {cta.label}
+                          {navCta.label}
                         </span>
                         <ArrowUpRight className="h-3.5 w-3.5 opacity-60" />
                       </div>

@@ -1,0 +1,171 @@
+/* Keep the immersive home scene and oversized footer. */
+#app-shell .monolith-home .monolith-hero-stage {
+  min-height: max(760px, 100svh);
+}
+#app-shell .monolith-home .monolith-hero-photo img {
+  object-position: center 48%;
+  filter: none;
+}
+#app-shell .monolith-home .monolith-hero-photo::after {
+  background: linear-gradient(
+    180deg,
+    #05050545 0%,
+    transparent 32%,
+    #05050508 48%,
+    #050505b3 76%,
+    #080807f5 100%
+  );
+}
+#app-shell .monolith-home .monolith-hero-inner {
+  display: block;
+  min-height: 0;
+  padding: calc(var(--shell-page-top-hero, 150px) + 180px)
+    clamp(24px, 4vw, 80px) 64px;
+}
+#app-shell .monolith-home .monolith-hero-copy {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+#app-shell .monolith-home .monolith-hero-copy h1 {
+  font-family: "Kanit", var(--font-hero);
+  font-weight: 500;
+  font-size: clamp(76px, 10.5vw, 164px);
+  letter-spacing: 0.035em;
+  line-height: 1;
+  color: #fff;
+  margin: 15px 0 18px;
+  text-shadow: none;
+}
+#app-shell .monolith-home .monolith-hero-tagline {
+  font-family: "Kanit", var(--font-hero);
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: #eee;
+}
+#app-shell .monolith-home .home-text-link.home-hero-explore {
+  flex-shrink: 0;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 8px 10px 8px 22px;
+  min-height: 60px;
+  min-width: 250px;
+  width: auto;
+  border: 1px solid #f0886770;
+  border-radius: 999px;
+  background: #e05a3a;
+  color: #151410;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+#app-shell .monolith-home .home-hero-explore .home-hero-arrow {
+  width: 42px;
+  height: 42px;
+  background: #151410;
+  color: #f4ecd9;
+}
+#app-shell .monolith-home .home-hero-explore:hover {
+  background: #f07855;
+}
+#app-shell .monolith-home .home-hero-explore:focus-visible {
+  outline: 2px solid #f4ecd9;
+  outline-offset: 5px;
+}
+#app-shell .site-footer-refined {
+  padding-bottom: 0;
+}
+#app-shell .footer-mega-wordmark {
+  position: relative;
+  margin-inline: -24px;
+  padding: 96px 0 48px;
+  overflow: hidden;
+  user-select: none;
+}
+#app-shell .footer-mega-wordmark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    #e05a3a26,
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#app-shell .footer-mega-wordmark:hover::before {
+  opacity: 1;
+}
+#app-shell .footer-mega-text {
+  position: relative;
+  text-align: center;
+  font:
+    500 18vw/0.95 "Kanit",
+    var(--font-hero);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+#app-shell .footer-mega-fill {
+  display: block;
+  color: transparent;
+  background: linear-gradient(to bottom, #fff, #ffffff1a);
+  background-clip: text;
+}
+#app-shell .footer-mega-outline {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 2px #ffffff4d;
+  opacity: 0.2;
+}
+#app-shell footer[data-brand="chasing-sunsets"] .footer-mega-text {
+  font-size: 11vw;
+}
+#app-shell footer[data-brand="untold-story"] .footer-mega-text {
+  font-size: 13vw;
+}
+#app-shell footer[data-brand="radio"] .footer-mega-text {
+  font-size: 11vw;
+}
+@media (max-width: 639px) {
+  #app-shell .monolith-home .monolith-hero-stage {
+    min-height: max(600px, 100svh);
+  }
+  #app-shell .monolith-home .monolith-hero-photo img {
+    object-position: 58% center;
+  }
+  #app-shell .monolith-home .monolith-hero-inner {
+    padding: calc(var(--shell-page-top-hero, 125px) + 80px) 22px 36px;
+  }
+  #app-shell .monolith-home .monolith-hero-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  #app-shell .monolith-home .monolith-hero-copy h1 {
+    font-size: clamp(42px, 12vw, 76px);
+    margin: 15px 0;
+  }
+  #app-shell .monolith-home .monolith-hero-tagline {
+    max-width: 23ch;
+    font-size: 24px;
+    line-height: 1.3;
+  }
+  #app-shell .monolith-home .home-text-link.home-hero-explore {
+    width: 100%;
+    min-width: 0;
+  }
+  #app-shell .footer-mega-wordmark {
+    padding: 64px 0 32px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .monolith-home .home-hero-explore,
+  #app-shell .footer-mega-wordmark::before {
+    transition: none;
+  }
+}

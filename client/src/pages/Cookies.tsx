@@ -4,7 +4,7 @@ import EntityBoostStrip from "@/components/EntityBoostStrip";
 
 export default function Cookies() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="legal-document min-h-screen bg-background text-foreground">
       <SEO
         title="Cookie Policy"
         description="Cookie policy for The Monolith Project website."
@@ -20,7 +20,7 @@ export default function Cookies() {
             Cookie Policy
           </h1>
           <p className="text-muted-foreground mb-10">
-            Last updated: February 11, 2026.
+            Last updated: September 21, 2026.
           </p>
 
           <div className="space-y-8 text-muted-foreground leading-relaxed">
@@ -39,8 +39,9 @@ export default function Cookies() {
               </h2>
               <p>
                 Analytics tools may be enabled to measure page performance and
-                usage trends. These settings can change over time as we improve
-                the site.
+                usage trends. With your tracking consent, ManyChat also loads to
+                measure visits from messaging campaigns. ManyChat uses browser
+                storage to maintain its measurement session.
               </p>
             </section>
             <section>

@@ -33,8 +33,8 @@ export default function Archive() {
         <div className="container layout-wide px-6">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 24 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-16"
           >
@@ -52,8 +52,8 @@ export default function Archive() {
             {archiveEntries.map((entry, idx) => (
               <motion.div
                 key={entry.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ y: 20 }}
+                animate={{ y: 0 }}
                 transition={{
                   duration: 0.5,
                   delay: idx * 0.08,

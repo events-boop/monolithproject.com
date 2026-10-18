@@ -1,5 +1,4 @@
 import { Ticket, ArrowUpRight } from "lucide-react";
-import { POSH_TICKET_URL } from "@/data/events";
 import { CTA_LABELS } from "@/lib/cta";
 
 interface TicketTickerProps {
@@ -7,10 +6,10 @@ interface TicketTickerProps {
 }
 
 export default function TicketTicker({ className = "" }: TicketTickerProps) {
-  const primaryLabel = CTA_LABELS.tickets;
-  const hoverLabel = CTA_LABELS.getTicketsNow;
-  const href = POSH_TICKET_URL;
-  const external = true;
+  const primaryLabel = "Explore the shows";
+  const hoverLabel = "View event calendar";
+  const href = "/schedule";
+  const external = false;
 
   // Repeating pattern for the marquee
   const items = Array.from({ length: 12 }).map((_, i) => (
@@ -34,7 +33,7 @@ export default function TicketTicker({ className = "" }: TicketTickerProps) {
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={`block bg-primary text-white overflow-hidden h-12 relative group hover:bg-white hover:text-black transition-colors duration-500 cursor-pointer ${className}`}
+      className={`block bg-primary text-black overflow-hidden h-12 relative group hover:bg-white hover:text-black transition-colors duration-500 cursor-pointer ${className}`}
       aria-label={`${primaryLabel} - ${CTA_LABELS.moveTogether}`}
     >
       <div className="flex h-full items-center animate-marquee group-hover:[animation-play-state:paused] w-fit">

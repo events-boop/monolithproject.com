@@ -2,6 +2,7 @@
 import { createRoot } from "react-dom/client";
 import { initAttributionTracking } from "./lib/attribution";
 import { ensurePublicSiteData } from "./lib/siteData";
+import { preloadRouteChunk } from "./lib/routePreload";
 import "./styles/index.css";
 
 import { registerSW } from "virtual:pwa-register";
@@ -46,7 +47,12 @@ async function startApp() {
     }
   });
 
-  const { default: App } = await import("./App");
+  // Load the landing page chunk with the App bundle so the prerendered HTML
+  // stays on screen instead of flashing the route loader.
+  const [{ default: App }] = await Promise.all([
+    import("./App"),
+    preloadRouteChunk(window.location.pathname),
+  ]);
 
   createRoot(rootElement).render(<App />);
 

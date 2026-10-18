@@ -128,7 +128,7 @@ export function validateEnvironment(options: ValidateEnvironmentOptions = {}) {
       const bypassReason = getBrevoBypassReason();
       if (bypassReason) {
         console.warn(
-          `⚠️  Brevo lead provider is bypassed (${bypassReason}). Lead submissions will skip Brevo but still complete locally.`
+          `⚠️  Brevo lead provider is bypassed (${bypassReason}). Brevo subscription requests will fail until it is configured.`
         );
         return;
       }

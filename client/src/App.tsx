@@ -4,7 +4,6 @@ import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-import EventStatusFloat from "./components/EventStatusFloat";
 import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import Home from "./pages/Home";
 import { UIProvider, useUI } from "./contexts/UIContext";
@@ -15,50 +14,51 @@ import { resolveCampaignHostPath } from "./lib/campaignHosts";
 import { syncAttributionForNavigation } from "./lib/attribution";
 import { rememberVisitedPath } from "./lib/visitorContext";
 import { ensurePublicSiteData } from "./lib/siteData";
+import { lazyRoute } from "./lib/routePreload";
 import MetaPixelGate from "./components/MetaPixelGate";
 import { ROUTES, ANCHORS } from "@shared/routes";
 
 // Lazy Pages
 const InquiryPortal = lazy(() => import("./components/InquiryPortal"));
-const Tickets = lazy(() => import("./pages/Tickets"));
-const About = lazy(() => import("./pages/About"));
-const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
+const Tickets = lazyRoute("Tickets");
+const About = lazyRoute("About");
+const ArtistProfile = lazyRoute("ArtistProfile");
 const SponsorAccess = lazy(() => import("./pages/SponsorAccess"));
-const ChasingSunsets = lazy(() => import("./pages/ChasingSunsets"));
+const ChasingSunsets = lazyRoute("ChasingSunsets");
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
 const SunsetsLinkBio = lazy(() => import("./pages/SunsetsEventRedirect"));
 const LakeLanding = lazy(() => import("./pages/LakeLanding"));
-const Radio = lazy(() => import("./pages/Radio"));
-const RadioEpisode = lazy(() => import("./pages/RadioEpisode"));
-const UntoldStory = lazy(() => import("./pages/UntoldStory"));
-const UntoldVipLanding = lazy(() => import("./pages/UntoldVipLanding"));
-const Booking = lazy(() => import("./pages/Booking"));
-const Partners = lazy(() => import("./pages/Partners"));
-const Lineup = lazy(() => import("./pages/Lineup"));
-const Schedule = lazy(() => import("./pages/Schedule"));
-const EventDetails = lazy(() => import("./pages/EventDetails"));
-const Newsletter = lazy(() => import("./pages/Newsletter"));
-const Contact = lazy(() => import("./pages/Contact"));
-const FAQ = lazy(() => import("./pages/FAQ"));
-const Press = lazy(() => import("./pages/Press"));
-const Archive = lazy(() => import("./pages/Archive"));
-const Submit = lazy(() => import("./pages/Submit"));
+const Radio = lazyRoute("Radio");
+const RadioEpisode = lazyRoute("RadioEpisode");
+const UntoldStory = lazyRoute("UntoldStory");
+const UntoldVipLanding = lazyRoute("UntoldVipLanding");
+const Booking = lazyRoute("Booking");
+const Partners = lazyRoute("Partners");
+const Lineup = lazyRoute("Lineup");
+const Schedule = lazyRoute("Schedule");
+const EventDetails = lazyRoute("EventDetails");
+const Newsletter = lazyRoute("Newsletter");
+const Contact = lazyRoute("Contact");
+const FAQ = lazyRoute("FAQ");
+const Press = lazyRoute("Press");
+const Archive = lazyRoute("Archive");
+const Submit = lazyRoute("Submit");
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFoundLazy = lazy(() => import("./pages/NotFound"));
-const Monolith = lazy(() => import("./pages/Monolith"));
-const HouseOfFriends = lazy(() => import("./pages/HouseOfFriends"));
+const Monolith = lazyRoute("Monolith");
+const HouseOfFriends = lazyRoute("HouseOfFriends");
 const HouseOfFriendsApply = lazy(() => import("./pages/HouseOfFriendsApply"));
-const Shop = lazy(() => import("./pages/Shop"));
+const Shop = lazyRoute("Shop");
 const Ambassadors = lazy(() => import("./pages/Ambassadors"));
 const Travel = lazy(() => import("./pages/Travel"));
 const Guide = lazy(() => import("./pages/Guide"));
-const VIP = lazy(() => import("./pages/VIP"));
+const VIP = lazyRoute("VIP");
 const Alerts = lazy(() => import("./pages/Alerts"));
-const Insights = lazy(() => import("./pages/Insights"));
-const InsightArticle = lazy(() => import("./pages/InsightArticle"));
-const ArchiveGalleryPage = lazy(() => import("./pages/ArchiveGalleryPage"));
+const Insights = lazyRoute("Insights");
+const InsightArticle = lazyRoute("InsightArticle");
+const ArchiveGalleryPage = lazyRoute("ArchiveGalleryPage");
 const SunsetsHero = lazy(() => import("./pages/SunsetsHero"));
 
 const isApeDrumsBuildEnabled =
@@ -480,7 +480,6 @@ function MainContentWrapper() {
   return (
     <>
       <GlobalSpotlightSync />
-      {!isStandaloneLanding && <EventStatusFloat />}
       <SiteDataSync />
       <MetaPixelGate />
 
@@ -535,7 +534,7 @@ function MainContentWrapper() {
         )}
         {!isStandaloneLanding && !isApeDrumsRoute && (
           <>
-            {!shouldHideGlobalConversion && (
+            {landingPath === ROUTES.home && !shouldHideGlobalConversion && (
               <ViewportLazy
                 minHeightClassName="min-h-[24rem]"
                 rootMargin="360px 0px"
@@ -546,7 +545,7 @@ function MainContentWrapper() {
               </ViewportLazy>
             )}
             <ViewportLazy
-              minHeightClassName="min-h-[40rem]"
+              minHeightClassName="min-h-[22rem]"
               rootMargin="420px 0px"
             >
               <Suspense fallback={null}>

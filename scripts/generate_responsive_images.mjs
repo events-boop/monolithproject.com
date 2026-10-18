@@ -31,11 +31,16 @@ const premiumArtistBaseNamePrefixes = [
   "artists-eliana-",
   "artists-kenbo-slice-",
   "artists-terranova-",
+  "artists-erik-the-dj-",
   "events-sunsets-2026-09-19-",
   "untold-story-header-jpq-",
 ];
 const desktopWidthsByBaseName = new Map([
   ["hero-monolith", [480, 1024, 1920]],
+  ["hero-monolith-mobile", [480, 780]],
+  ["home-sunsets-mobile", [480, 780]],
+  ["home-story-mobile", [480, 780]],
+  ["monolith-crowd-hero-mobile-v2", [480, 720]],
   ["hero-video-1-poster", [480, 1024, 1920]],
   ["artist-ewerseen-2026-v2", [447]],
   ["artists-collective", [480, 1024, 1600]],
@@ -55,6 +60,7 @@ const desktopWidthsByBaseName = new Map([
   ["artists-eliana-eliana-live", [309]],
   ["artists-kenbo-slice-kenbo-slice-portrait", [640, 1280, 1863]],
   ["artists-terranova-terranova-live", [640, 1280, 1667]],
+  ["artists-erik-the-dj-erik-the-dj-live", [640, 1280, 1632]],
   ["events-sunsets-2026-09-19-massuma-official-artwork", [640, 1122]],
   ["events-ape-drums-july31-hero", [480, 864]],
   ["events-ape-drums-july31-square", [160, 320]],
@@ -165,6 +171,10 @@ function getWidthsForImage(baseName) {
 }
 
 function getFormatsForImage(baseName) {
+  if (baseName === "monolith-crowd-hero-mobile-v2") return [
+    { ext: "avif", options: { quality: 45, effort: 8, chromaSubsampling: "4:2:0" } },
+    { ext: "webp", options: { quality: 82, effort: 6 } },
+  ];
   return premiumArtistBaseNamePrefixes.some(prefix =>
     baseName.startsWith(prefix)
   )

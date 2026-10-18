@@ -1,3 +1,5 @@
+import { TICKET_POLICY_FAQS } from "@shared/events/ticket-policy";
+
 // Untold Story palette — synced with CSS custom properties in index.css
 // (--color-untold-violet, --color-untold-cyan, --color-untold-deep, --color-untold-card)
 // Raw hex kept here for inline style alpha concatenation (e.g. `${violet}25`)
@@ -30,35 +32,29 @@ export const lineupVisuals = [
 ];
 
 export const untoldFaqs: Array<[string, string]> = [
-  ["Are tickets refundable?", "All sales are final. No refunds or exchanges."],
+  ...TICKET_POLICY_FAQS,
   [
-    "What time should I arrive?",
-    "Doors open at 7:00 PM. Peak experience begins around 9:00 PM. Early arrival is recommended for the full journey.",
-  ],
-  ["Is there re-entry?", "No re-entry permitted once you leave the venue."],
-  [
-    "What's the age requirement?",
-    "21+ only. Valid government-issued ID required for entry.",
+    "What is Untold Story?",
+    "Untold Story is The Monolith Project’s after-dark house music series in Chicago, with intimate rooms and a focus on Afro and melodic house.",
   ],
   [
-    "Is parking available?",
-    "Street parking and nearby garage parking available in the West Loop. Rideshare recommended.",
+    "When and where is the next chapter?",
+    "Check the event panel on this page for the latest published date, venue and lineup. If details are still to be announced, follow Untold Story for the next update before making travel plans.",
   ],
   [
-    "Do I need printed tickets?",
-    "No. Mobile QR codes are accepted at the door.",
+    "Where can I find tickets?",
+    "When tickets are available, the event panel links to the official ticket destination. An updates or first-access link is for announcements and does not reserve admission.",
   ],
   [
-    "What's the dress code?",
-    "Elevated nightlife attire encouraged. Dress to move comfortably — this is a dancefloor experience.",
-  ],
-  ["Is food available?", "Yes. Food is available inside the venue."],
-  [
-    "Can I bring a camera?",
-    "Personal photos welcome. Professional cameras require prior approval. This event will be photographed for Monolith Project and partner marketing channels.",
+    "What should I know before arriving?",
+    "Check your event announcement and ticket confirmation for door times, age requirements, ID, dress and re-entry policies. These details are specific to each event and venue.",
   ],
   [
-    "What if the event is sold out?",
-    "Limited door tickets may be available on the night of the event, but advance purchase is strongly recommended.",
+    "Who can help with tables, groups or accessibility?",
+    "Email events@monolithproject.com with the event name and your question. For tables or groups, include your party size; confirm availability, pricing and inclusions with the team before booking.",
+  ],
+  [
+    "Where can I find photos from past nights?",
+    "The Previous shows and Gallery sections link to the published Untold Story collections. Each chapter has its own photo archive.",
   ],
 ];

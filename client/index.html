@@ -14,11 +14,11 @@
     <meta data-rh="true" name="description"
       content="The Monolith Project produces Chicago house music events, Chasing Sun(Sets), Untold Story nights, and artist-led radio."
     />
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-DE8Z8VS263"
-    ></script>
+    <script src="/home-hero-preload-v2.js"></script>
+    <!-- ManyChat uses the existing tracking-consent preference. -->
+    <script src="/manychat.js" defer></script>
+    <!-- Google tag (gtag.js): calls queue in dataLayer immediately; the
+         library itself loads after the page so it never delays first paint. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -27,6 +27,31 @@
       gtag("js", new Date());
 
       gtag("config", "G-DE8Z8VS263");
+
+      (function () {
+        var loaded = false;
+        var triggers = ["pointerdown", "keydown", "touchstart", "scroll"];
+        function loadGtag() {
+          if (loaded) return;
+          loaded = true;
+          triggers.forEach(function (type) {
+            window.removeEventListener(type, loadGtag);
+          });
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=G-DE8Z8VS263";
+          document.head.appendChild(s);
+        }
+        // First interaction, or 3s after load, whichever comes first.
+        triggers.forEach(function (type) {
+          window.addEventListener(type, loadGtag, { once: true, passive: true });
+        });
+        function afterLoad() {
+          setTimeout(loadGtag, 3000);
+        }
+        if (document.readyState === "complete") afterLoad();
+        else window.addEventListener("load", afterLoad, { once: true });
+      })();
     </script>
     <link
       rel="preload"

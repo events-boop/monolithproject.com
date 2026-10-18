@@ -12,20 +12,12 @@
   "directionsUrl": "https://www.google.com/maps/search/?api=1&query=Castaways+Beach+Club+Chicago",
   "status": "EventPostponed",
   "statusHeading": "Sun(Sets) III — postponed due to weather.",
-  "statusMessage": "Due to weather conditions, Sun(Sets) III with JOEZI × MASSUMA is postponed. The safety of our guests, artists and crew comes first. A new date is not yet confirmed.",
-  "updatedAt": "2026-09-19T17:37:36+00:00",
+  "statusMessage": "The September 19 JOEZI × MASSUMA show was postponed due to weather. A replacement date and venue are being finalized and will be announced once confirmed.",
+  "updatedAt": "2026-10-03T05:44:10Z",
   "salesEnabled": false,
   "ticketUrl": "https://allevents.in/chicago/chasing-sunsets-iii-joezi-x-massuma-tickets/80003431876974",
-  "headliners": [
-    "JOEZI",
-    "MASSUMA"
-  ],
-  "support": [
-    "MVRCO × AVO",
-    "Erik",
-    "Sher",
-    "Jerome × Flare"
-  ],
+  "headliners": ["JOEZI", "MASSUMA"],
+  "support": ["MVRCO × AVO", "Erik", "Sher", "Jerome × Flare"],
   "schedule": [],
   "scheduleMessage": "The September 19 show is postponed. A new date, lineup confirmation and running order will be announced when approved.",
   "artworkApprovedFor": {
@@ -34,13 +26,13 @@
   },
   "heroArtwork": "<figure class=\"hero-event-art\">\n          <picture><source type=\"image/avif\" srcset=\"/sunsets/assets/hero-480.avif 480w, /sunsets/assets/hero-960.avif 960w\" sizes=\"(min-width: 800px) 470px, 100vw\"><source type=\"image/webp\" srcset=\"/sunsets/assets/hero-480.webp 480w, /sunsets/assets/hero-960.webp 960w\" sizes=\"(min-width: 800px) 470px, 100vw\"><img src=\"/sunsets/assets/hero-960.webp\" alt=\"Chasing Sun(Sets) III, 2026 season finale. JOEZI × MASSUMA, Saturday September 19, Castaways Beach Club, Chicago. Sunset DJ artwork.\" width=\"1920\" height=\"1920\" fetchpriority=\"high\" decoding=\"async\"></picture>\n        </figure>",
   "socialImage": "https://monolithproject.com/sunsets/assets/hero-social.jpg",
-  "statusApproval": "Erik — approved weather postponement and ticket-holder admission/Untold Story options in conversation on September 19, 2026. Replacement date remains unconfirmed.",
-  "ticketHolderMessage": "Ticket holders will be offered admission to the rescheduled show and/or access to one of our Untold Story events as the indoor season opens. The new date and instructions will be shared as soon as they are confirmed.",
+  "statusApproval": "Erik — approved weather postponement and ticket-holder admission/Untold Story options in conversation on September 19, 2026. Replacement date remains unconfirmed. Organizer-confirmed ticket validity and 30-day refund-request window recorded in the local event README on September 28, 2026.",
+  "ticketHolderMessage": "Ticket purchases from the September 19 event will be honored for the rescheduled show. Keep your booking confirmation. The replacement date and venue remain unconfirmed.",
   "statusParagraphs": [
-    "Due to weather conditions, Sun(Sets) III with JOEZI × MASSUMA is postponed. The safety of our guests, artists and crew comes first. A new date is not yet confirmed.",
-    "We know you were looking forward to this show, and we share your disappointment. Thank you for your patience and understanding as we work through the next steps.",
-    "Ticket holders will be offered admission to the rescheduled show and/or access to one of our Untold Story events as the indoor season opens. The new date and instructions will be shared as soon as they are confirmed.",
-    "The artists are working together to make the rescheduled show possible. The date and artist participation will be confirmed in a future update.",
-    "Please visit SUNSETS.VIP or follow our social channels for updates. Thank you for being part of this community. We look forward to being back on the dance floor with you."
+    "The September 19 JOEZI × MASSUMA show was postponed due to weather. A replacement date and venue are being finalized and will be announced once confirmed.",
+    "We’re sorry for the disruption to your plans, and grateful for your patience.",
+    "Ticket purchases from the September 19 event will be honored for the rescheduled show. Keep your booking confirmation. The replacement date and venue remain unconfirmed.",
+    "For the postponed September 19 JOEZI × MASSUMA show, ticket purchases will be honored for the rescheduled show. If you cannot attend, you may request a refund within 30 days after both the confirmed replacement date and venue are announced. That window has not started. Requests are also accepted now.",
+    "Artist participation, entry instructions and the new running order will be shared with the confirmed announcement."
   ]
 }

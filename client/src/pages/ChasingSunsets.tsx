@@ -1,3 +1,7 @@
+import {
+  TICKET_POLICY,
+  SUNSETS_TICKET_HOLDER_UPDATE,
+} from "@shared/events/ticket-policy";
 import SunsetsCampaignArtwork from "@/components/SunsetsCampaignArtwork";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Link } from "wouter";
@@ -420,12 +424,23 @@ export default function ChasingSunsets() {
                 </a>
               </details>
               <details>
+                <summary>What is the ticket refund policy?</summary>
+                <p>{TICKET_POLICY.salesFinal}</p>
+                <a href="/sunsets#weather">Read the full ticket policy ↗</a>
+              </details>
+              <details>
+                <summary>
+                  I have a Sun(Sets) III ticket. What happens now?
+                </summary>
+                <p>{SUNSETS_TICKET_HOLDER_UPDATE}</p>
+                <a href="/sunsets#event-status">
+                  Read the latest ticket-holder update ↗
+                </a>
+              </details>
+              <details>
                 <summary>What happens if it rains or plans change?</summary>
                 <p>
-                  The event is rain or shine. Safety conditions may require
-                  changes. A postponement, venue change and full cancellation
-                  are different; check the official notice for your
-                  ticket-holder instructions.
+                  {TICKET_POLICY.weather} {TICKET_POLICY.changes}
                 </p>
                 <a href="/sunsets#weather">
                   Weather updates &amp; ticket policy ↗

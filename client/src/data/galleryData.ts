@@ -665,7 +665,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     title: "Untold Story",
     subtitle: "Season III — Deron B2B Juany Bravo",
     description:
-      "Optimized editorial selects from the Deron B2B Juany Bravo chapter.",
+      "Photos from the Deron B2B Juany Bravo night.",
     accentColor: "#8B5CF6",
     coverImage: "/images/untold-story-juany-deron-v2.webp",
     date: "March 6, 2026",

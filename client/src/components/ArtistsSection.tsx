@@ -16,6 +16,7 @@ interface Artist {
   origin: string;
   genre: string;
   image: string;
+  imagePosition?: string;
 }
 
 // Rosters render straight from each artist's primary series tag (series[0]),
@@ -110,6 +111,7 @@ function ArtistCard({
           <ResponsiveImage
             src={artist.image}
             alt={artist.name}
+            style={{ objectPosition: artist.imagePosition }}
             loading="lazy"
             decoding="async"
             sizes="(min-width: 1024px) 25vw, 100vw"

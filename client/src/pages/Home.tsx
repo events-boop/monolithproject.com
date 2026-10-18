@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import HomeEventFeature from "@/components/HomeEventFeature";
 import {
   HomeSeries,
   HomeRecap,
-  HomeArtists,
   HomeCommunity,
 } from "@/components/HomeDiscovery";
+import ViewportLazy from "@/components/ViewportLazy";
+const HomeArtists = lazy(() => import("@/components/HomeArtists"));
 import HomeUpcomingShows from "@/components/HomeUpcomingShows";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import SEO from "@/components/SEO";
@@ -31,13 +31,21 @@ export default function Home() {
       <Navigation />
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
-        <HomeEventFeature />
         <div id="season">
           <HomeUpcomingShows />
         </div>
         <HomeSeries />
+        <div id="showcase">
+          <ViewportLazy
+            minHeightClassName="min-h-[700px]"
+            rootMargin="400px 0px"
+          >
+            <Suspense fallback={<div className="min-h-[700px]" />}>
+              <HomeArtists />
+            </Suspense>
+          </ViewportLazy>
+        </div>
         <HomeRecap />
-        <HomeArtists />
         <HomeCommunity />
       </main>
     </div>

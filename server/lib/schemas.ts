@@ -77,6 +77,7 @@ export const leadSchema = z.object({
   city: z.string().trim().max(100).optional(),
   state: z.string().trim().max(80).optional(),
   consent: z.literal(true),
+  smsConsent: z.boolean().optional(),
   source: z.string().trim().max(120).optional(),
   formType: z.string().trim().max(80).optional(),
   funnelId: z.string().trim().max(120).optional(),
@@ -192,3 +193,28 @@ export const houseOfFriendsCompleteSchema = z.object({
 
 export const poshWebhookPayloadSchema = z.record(z.string(), z.unknown());
 export const layloWebhookPayloadSchema = z.record(z.string(), z.unknown());
+
+/**
+ * CMS admin request bodies. The `payload` itself stays unknown here —
+ * server/db/cmsRepo.ts re-validates it against shared/cms/schemas.ts,
+ * which is the actual publish gate.
+ */
+export const cmsSaveDraftBodySchema = z.object({
+  payload: z
+    .unknown()
+    .refine(value => value !== undefined, { message: "payload is required" }),
+  baseRevision: z.number().int().nonnegative().nullable(),
+  note: z.string().trim().max(200).optional(),
+});
+
+export const cmsPublishBodySchema = z.object({
+  revisionId: z.number().int().positive(),
+  expectedPublishedRevisionId: z.number().int().positive().nullable(),
+});
+
+export const cmsRestoreBodySchema = z.object({
+  revisionId: z.number().int().positive(),
+  // The editor's expected base revision (null for an initially empty
+  // document); cmsRepo rejects restores that omit or mismatch it.
+  baseRevision: z.number().int().nonnegative().nullable(),
+});

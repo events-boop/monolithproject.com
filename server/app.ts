@@ -19,10 +19,15 @@ import socialEchoRouter from "./routes/social-echo";
 import sponsorRouter from "./routes/sponsor";
 import siteDataRouter from "./routes/site-data";
 import opsRouter from "./routes/ops";
+import cmsAdminRouter from "./routes/cms-admin";
 import outboundRouter from "./routes/outbound";
 import trackingRouter from "./routes/tracking";
 import houseOfFriendsRouter from "./routes/house-of-friends";
 import spaRouter from "./routes/spa";
+import {
+  audienceSignupParseError,
+  createAudienceSignupRouter,
+} from "./routes/audience-signup";
 
 type CreateAppOptions = {
   includeSpa?: boolean;
@@ -41,6 +46,7 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/site-data", methods: ["GET"] },
   { path: "/api/sponsor-deck", methods: ["GET"] },
   { path: "/api/leads", methods: ["POST"] },
+  { path: "/api/audience-signup", methods: ["POST"] },
   { path: "/api/sunsets/subscriptions", methods: ["GET", "POST"] },
   { path: "/api/contact", methods: ["POST"] },
   { path: "/api/booking-inquiry", methods: ["POST"] },
@@ -61,6 +67,11 @@ const METHOD_GUARDS: MethodGuard[] = [
   { path: "/api/ops/cache/invalidate", methods: ["POST"] },
   { path: "/api/ops/baseline", methods: ["GET"] },
   { path: "/api/ops/sunsets-analytics", methods: ["GET"] },
+  { path: "/api/cms/documents", methods: ["GET"] },
+  { path: "/api/cms/documents/:key", methods: ["GET"] },
+  { path: "/api/cms/documents/:key/draft", methods: ["PUT"] },
+  { path: "/api/cms/documents/:key/publish", methods: ["POST"] },
+  { path: "/api/cms/documents/:key/restore", methods: ["POST"] },
   { path: "/api/webhooks/laylo", methods: ["POST"] },
   { path: "/api/webhooks/posh", methods: ["POST"] },
 ];
@@ -103,6 +114,9 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
 
   configureMiddleware(app);
 
+  app.use("/api/audience-signup", audienceSignupParseError);
+  app.use(createAudienceSignupRouter());
+
   app.use(healthRouter);
   app.use(seoRouter);
   app.use(leadsRouter);
@@ -115,6 +129,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(sponsorRouter);
   app.use(siteDataRouter);
   app.use(opsRouter);
+  app.use(cmsAdminRouter);
   app.use(outboundRouter);
   app.use(trackingRouter);
   app.use(houseOfFriendsRouter);

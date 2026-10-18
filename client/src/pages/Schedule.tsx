@@ -1,790 +1,377 @@
-import { Fragment, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
-  ArrowRight,
+  ArrowUpRight,
   Bookmark,
-  CalendarPlus,
   Check,
-  Clock,
-  Mail,
-  Music,
-  MapPin,
+  CalendarPlus,
+  Plus,
 } from "lucide-react";
-import Navigation from "@/components/Navigation";
-import ResponsiveImage from "@/components/ResponsiveImage";
-import EventArtistStack from "@/components/EventArtistStack";
-import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
-import SocialGrid from "@/components/SocialGrid";
-import SEO from "@/components/SEO";
-import { buildScheduleSchema } from "@/lib/schema";
-
-import EntityBoostStrip from "@/components/EntityBoostStrip";
-import JoinSignalSection from "@/components/JoinSignalSection";
 import { Link } from "wouter";
-import { getScheduledEvents, isTicketOnSale } from "@/lib/siteExperience";
+import Navigation from "@/components/Navigation";
+import SEO from "@/components/SEO";
+import ConversionCTA from "@/components/ConversionCTA";
+import JoinSignalSection from "@/components/JoinSignalSection";
+import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
+import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
+import { usePublicSiteDataVersion } from "@/lib/siteData";
+import {
+  getScheduleDate,
+  getScheduleVenue,
+  compareScheduleEvents,
+  canAddEventToCalendar,
+} from "@/lib/schedulePresentation";
 import { downloadEventCalendar } from "@/lib/calendar";
 import { getEventDetailsHref } from "@/lib/cta";
-import ConversionCTA from "@/components/ConversionCTA";
-import { usePublicSiteDataVersion } from "@/lib/siteData";
-import { trackAccessEvent } from "@/lib/api";
+import { buildScheduleSchema } from "@/lib/schema";
+import { TICKET_POLICY } from "@shared/events/ticket-policy";
 import type { ScheduledEvent } from "@shared/events/types";
+import "@/styles/schedule.css";
 
-const seriesAccent: Record<string, string> = {
-  "chasing-sunsets": "bg-clay",
-  "untold-story": "bg-primary",
-  "monolith-project": "bg-transparent",
-};
-
-const seriesTextAccent: Record<string, string> = {
-  "chasing-sunsets": "text-clay",
-  "untold-story": "text-primary",
-  "monolith-project": "text-foreground",
-};
-
-const seriesLabels: Record<string, string> = {
-  "chasing-sunsets": "SUN(SETS)",
-  "untold-story": "UNTOLD",
-  "monolith-project": "MONOLITH",
-};
-
-const seriesDefaultImage: Record<string, string> = {
-  "chasing-sunsets": "/images/chasing-sunsets-premium.webp",
-  "untold-story": "/images/untold-story-juany-deron-v2.webp",
-  "monolith-project": "/images/monolith-three-worlds-banner.jpg",
-};
-
-function getStatusLabel(status: ScheduledEvent["status"]) {
-  if (status === "on-sale") return "ON SALE";
-  if (status === "coming-soon") return "COMING SOON";
-  if (status === "sold-out") return "SOLD OUT";
-  return "ARCHIVE";
+function statusLabel(event: ScheduledEvent) {
+  if (event.eventStatus === "EventPostponed") return "Postponed";
+  if (event.eventStatus === "EventCancelled") return "Cancelled";
+  if (event.confirmationStatus === "pending") return "Details pending";
+  return event.status === "on-sale"
+    ? "Tickets available"
+    : event.status === "sold-out"
+      ? "Sold out"
+      : "Announcement to follow";
 }
-
-function getEventSummary(event: ScheduledEvent) {
-  if (event.description) return event.description;
-  if (event.experienceIntro) return event.experienceIntro;
-  if (event.lineup) return `Lineup: ${event.lineup}.`;
-  return `${seriesLabels[event.series]} at ${event.venue}, ${event.location}.`;
+function eventTime(event: ScheduledEvent) {
+  if (event.eventStatus === "EventPostponed") return "New date to be announced";
+  if (event.confirmationStatus === "pending" || !getScheduleDate(event).hasDay)
+    return "Date / time to be confirmed";
+  return event.time;
 }
-
 export default function Schedule() {
   usePublicSiteDataVersion();
-  const scheduleEvents = getScheduledEvents();
-  const nextSignal = scheduleEvents[0];
-  const nextSignalTitle =
-    nextSignal?.headline || nextSignal?.title || "More shows coming soon";
-  const nextSignalDate = nextSignal?.date || "Date to be announced";
-  const nextSignalVenue = nextSignal
-    ? `${nextSignal.venue}, ${nextSignal.location}`
-    : "Castaways, Chicago";
-  const nextSignalStatus = getStatusLabel(nextSignal?.status || "coming-soon");
-  const [expandedId, setExpandedId] = useState<string | null>(
-    scheduleEvents[0]?.id || null
-  );
-  const [activeMonth, setActiveMonth] = useState<string>("ALL");
-  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
-  const [starredIds, setStarredIds] = useState<string[]>([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("monolith-starred-rites");
-    if (saved) setStarredIds(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("monolith-starred-rites", JSON.stringify(starredIds));
-  }, [starredIds]);
-
-  const toggleStar = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setStarredIds(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
-  };
-
-  const trackScheduleUpdates = () => {
-    trackAccessEvent("event_card_click", {
-      buttonName: "Schedule Season Updates",
-      destinationUrl: "/newsletter",
-      pagePath: "/schedule",
-      channel: "site",
-      source: "schedule_header",
-    });
-  };
-
-  const handleCalendarClick = (event: ScheduledEvent, e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    downloadEventCalendar(event);
-    trackAccessEvent("event_card_click", {
-      buttonName: "Add To Calendar",
-      destinationUrl: "calendar-download",
-      pagePath: "/schedule",
-      eventSlug: event.slug || event.id,
-      eventDate: event.date,
-      channel: "site",
-      source: "schedule_event_row",
-    });
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const toggle = (event: ScheduledEvent) => {
-    if (expandedId !== event.id) {
-      trackAccessEvent("event_card_click", {
-        buttonName: "Schedule Event Card",
-        destinationUrl: "/schedule",
-        pagePath: "/schedule",
-        eventSlug: event.slug || event.id,
-        eventDate: event.date,
-        channel: "site",
-        source: "schedule_event_row",
-      });
+  const events = [...getScheduledEvents()].sort(compareScheduleEvents);
+  const [filter, setFilter] = useState("ALL");
+  const [query, setQuery] = useState("");
+  const [series, setSeries] = useState("all");
+  const [saved, setSaved] = useState<string[]>(() => {
+    try {
+      const values = JSON.parse(
+        localStorage.getItem("monolith-starred-rites") || "[]"
+      );
+      return Array.isArray(values)
+        ? values.filter((id): id is string => typeof id === "string")
+        : [];
+    } catch {
+      return [];
     }
-
-    setExpandedId(prev => (prev === event.id ? null : event.id));
-  };
-
-  // Group events by month for the filter
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem("monolith-starred-rites", JSON.stringify(saved));
+    } catch {
+      /* Browsing remains available without device storage. */
+    }
+  }, [saved]);
   const months = [
     "ALL",
-    ...Array.from(
-      new Set(
-        scheduleEvents.map(e => {
-          return e.date.split(" ")[0].toUpperCase();
-        })
-      )
-    ),
+    ...Array.from(new Set(events.map(event => getScheduleDate(event).month))),
   ];
-
-  const filteredEvents = (() => {
-    let events = scheduleEvents;
-    if (activeMonth === "MY_LINEUP") {
-      events = events.filter(e => starredIds.includes(e.id));
-    } else if (activeMonth !== "ALL") {
-      events = events.filter(e => e.date.toUpperCase().startsWith(activeMonth));
-    }
-    return events;
-  })();
-
+  const visible = events.filter(event => {
+    const matchesDate =
+      filter === "ALL" ||
+      (filter === "MY_LINEUP"
+        ? saved.includes(event.id)
+        : getScheduleDate(event).month === filter);
+    const searchable = [
+      event.title,
+      event.headline,
+      event.lineup,
+      getScheduleVenue(event),
+      event.location,
+      getSeriesLabel(event.series),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase();
+    return (
+      matchesDate &&
+      (series === "all" || event.series === series) &&
+      searchable.includes(query.trim().toLocaleLowerCase())
+    );
+  });
+  const groups = Array.from(
+    new Set(visible.map(event => getScheduleDate(event).key))
+  );
+  const toggleSaved = (id: string) =>
+    setSaved(items =>
+      items.includes(id) ? items.filter(value => value !== id) : [...items, id]
+    );
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="monolith-schedule min-h-screen bg-background text-foreground">
       <SEO
         title="Upcoming Shows | The Monolith Project"
-        description="The current Monolith Project calendar: Chasing Sun(Sets) chapters, Untold Story archive signals, and forthcoming platform moments."
         absoluteTitle
+        description="Confirmed dates, forthcoming chapters and ticket-holder updates from The Monolith Project."
         canonicalPath="/schedule"
-        schemaData={buildScheduleSchema(scheduleEvents)}
+        schemaData={buildScheduleSchema(events)}
       />
-
       <Navigation />
-
-      {/* Background Atmosphere */}
-      <div className="fixed inset-0 bg-[#020202] z-0" />
-
-      {/* Cinematic Background Image Projection */}
-      <AnimatePresence>
-        {hoveredImage && (
-          <motion.div
-            key={hoveredImage}
-            initial={{ opacity: 0, scale: 1.1, filter: "blur(40px)" }}
-            animate={{ opacity: 0.45, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, scale: 1.05, filter: "blur(40px)" }}
-            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-0 pointer-events-none"
-          >
-            <ResponsiveImage
-              src={hoveredImage}
-              alt="Background Projection"
-              sizes="100vw"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover opacity-60 grayscale-[60%] mix-blend-screen"
-            />
-            {/* Architectural Vignette Masks */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-[#020202]/90 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#020202] via-[#020202]/40 to-transparent" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(224,90,58,0.18),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.12),transparent_50%)] z-0 pointer-events-none" />
-      <div className="fixed inset-0 bg-noise opacity-[0.05] mix-blend-overlay z-0 pointer-events-none" />
-
       <main
         id="main-content"
         tabIndex={-1}
-        className="relative page-shell-start pb-24 z-10"
+        className="page-shell-start schedule-editorial-main"
       >
-        <div className="container mx-auto px-4 md:px-8 max-w-[96%]">
-          {/* Header & Filters */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-10">
-            <div className="relative">
-              <span className="section-kicker absolute -top-12 left-2 text-primary/60">
-                The Monolith Project / Season 2026
-              </span>
-              <h1 className="section-display-title max-w-[11ch] text-balance text-foreground">
-                The Current Calendar
+        <div className="container layout-wide">
+          <header className="schedule-editorial-header">
+            <div>
+              <p className="section-kicker">The Monolith Project / Calendar</p>
+              <h1 className="schedule-page-title">
+                Find your
+                <br />
+                next night.
               </h1>
-              <p className="font-mono text-xs md:text-sm tracking-[0.2em] text-muted-foreground mt-8 uppercase max-w-sm leading-relaxed ml-2 border-l border-primary/20 pl-6">
-                The next lakefront chapter, the after-dark record, and the
-                platform moments still taking shape.
+              <p className="schedule-page-intro">
+                Confirmed dates, forthcoming chapters and the latest
+                ticket-holder updates. All times are Chicago time.
               </p>
             </div>
-
-            {/* Current signal + month filters */}
-            <div className="flex w-full max-w-full flex-col items-start gap-4 md:w-auto md:items-end">
-              <div
-                className="signal-etched-frame w-full border border-white/12 bg-white/[0.04] p-5 shadow-[0_18px_48px_rgba(0,0,0,0.26)] backdrop-blur-xl md:min-w-[24rem] md:p-6"
-                data-signal-tone={nextSignal?.series || "chasing-sunsets"}
+            <Link href="/newsletter" className="home-text-link">
+              Get show announcements{" "}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </header>
+          <div className="schedule-discovery-search">
+            <label className="schedule-search-field">
+              <span>Find a show</span>
+              <input
+                type="search"
+                aria-label="Search shows"
+                placeholder="Artist, show or venue"
+                value={query}
+                onChange={event => setQuery(event.target.value)}
+              />
+            </label>
+            <label className="schedule-series-field">
+              <span>Series</span>
+              <select
+                aria-label="Filter shows by series"
+                value={series}
+                onChange={event => setSeries(event.target.value)}
               >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-                    Next signal
-                  </span>
-                  <span className="border border-white/14 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-white/70">
-                    {nextSignalStatus}
-                  </span>
-                </div>
-                <h2 className="mt-4 max-w-[18ch] font-display text-3xl uppercase leading-[0.9] text-white md:text-4xl">
-                  {nextSignalTitle}
-                </h2>
-                <div className="mt-5 grid grid-cols-2 gap-4 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-white/68">
-                  <div>
-                    <span className="block text-white/38">Date</span>
-                    <span className="mt-1 block text-white">
-                      {nextSignalDate}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-white/38">Location</span>
-                    <span className="mt-1 block text-white">
-                      {nextSignalVenue}
-                    </span>
-                  </div>
-                </div>
-                {nextSignal ? (
-                  <ConversionCTA
-                    event={nextSignal}
-                    size="sm"
-                    showUrgency={false}
-                    className="mt-5 w-full"
-                  />
-                ) : (
-                  <Link
-                    href="/newsletter"
-                    className="btn-pill-monolith mt-5 w-full justify-center"
-                  >
-                    Season Updates
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                )}
-              </div>
-
-              <Link
-                href="/newsletter"
-                onClick={trackScheduleUpdates}
-                className="inline-flex min-h-[var(--tap-target-min)] items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/75 transition-all duration-300 hover:border-primary/30 hover:bg-primary/10 hover:text-foreground"
-              >
-                <Mail className="h-4 w-4 text-primary" />
-                Season Updates
-              </Link>
-
-              <div className="flex max-w-full overflow-x-auto no-scrollbar gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-[2rem] md:rounded-full backdrop-blur-xl">
-                {months.map(month => (
-                  <button
-                    key={month}
-                    onClick={() => setActiveMonth(month)}
-                    data-schedule-filter={month}
-                    className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
-                      activeMonth === month
-                        ? "text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {activeMonth === month && (
-                      <motion.div
-                        layoutId="schedule-active-tab-page"
-                        className="absolute inset-0 bg-primary/95 rounded-full shadow-[0_4px_20px_rgba(224,90,58,0.3)]"
-                        transition={{
-                          type: "spring",
-                          bounce: 0.1,
-                          duration: 0.6,
-                        }}
-                      />
-                    )}
-                    <span className="relative z-10">{month}</span>
-                  </button>
-                ))}
-
+                <option value="all">All series</option>
+                <option value="chasing-sunsets">Chasing Sun(Sets)</option>
+                <option value="untold-story">Untold Story</option>
+                <option value="monolith-project">Monolith Project</option>
+              </select>
+            </label>
+          </div>
+          <div className="schedule-editorial-toolbar">
+            <div
+              className="schedule-filters"
+              role="group"
+              aria-label="Filter events"
+            >
+              {[...months, "MY_LINEUP"].map(month => (
                 <button
-                  onClick={() => setActiveMonth("MY_LINEUP")}
-                  data-schedule-filter="MY_LINEUP"
-                  className={`relative shrink-0 min-h-[var(--tap-target-min)] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-[11px] md:text-xs font-bold tracking-[0.16em] uppercase transition-all duration-500 ${
-                    activeMonth === "MY_LINEUP"
-                      ? "text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  type="button"
+                  key={month}
+                  data-schedule-filter={month}
+                  aria-pressed={filter === month}
+                  onClick={() => setFilter(month)}
                 >
-                  {activeMonth === "MY_LINEUP" && (
-                    <motion.div
-                      layoutId="schedule-active-tab-page"
-                      className="absolute inset-0 bg-primary/95 rounded-full shadow-[0_4px_20px_rgba(224,90,58,0.3)]"
-                      transition={{
-                        type: "spring",
-                        bounce: 0.1,
-                        duration: 0.6,
-                      }}
-                    />
-                  )}
-                  <span className="relative z-10">Saved</span>
+                  {month === "MY_LINEUP"
+                    ? "Saved"
+                    : month === "TO BE ANNOUNCED"
+                      ? "Dates pending"
+                      : month === "ALL"
+                        ? "All shows"
+                        : month}
                 </button>
-              </div>
+              ))}
             </div>
+            <ScheduleSeriesKey />
           </div>
-
-          <ScheduleSeriesKey className="mb-10 md:mb-12" />
-
-          <EntityBoostStrip
-            tone="light"
-            className="mb-16 px-0 opacity-80"
-            contextLabel="Upcoming Events"
-          />
-
-          {/* List Header - HUD Style */}
-          <div className="hidden md:grid grid-cols-12 gap-4 pb-6 border-b border-white/5 text-[10px] uppercase tracking-[0.25em] font-mono text-muted-foreground/50">
-            <div className="col-span-2 pl-4">Date / Time</div>
-            <div className="col-span-1 text-center">Status</div>
-            <div className="col-span-4">Event / Series</div>
-            <div className="col-span-3">Venue</div>
-            <div className="col-span-2 text-right pr-12">Action</div>
-          </div>
-
-          {/* Event List */}
-          <div className="flex flex-col mb-24 rounded-3xl overflow-hidden border border-white/[0.08] bg-white/[0.01] backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.4)]">
-            {filteredEvents.length === 0 ? (
-              <div className="text-center py-32 border-b border-white/5">
-                <span className="block font-display text-4xl text-muted-foreground mb-4 opacity-30">
-                  No Events Found
-                </span>
-                <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
-                  No matching events found for {activeMonth}
-                </p>
-              </div>
-            ) : (
-              filteredEvents.map((event, index) => {
-                const isExpanded = expandedId === event.id;
-                const [dateMonth, dateDay] = event.date.split(" ");
-                const dayNumber = parseInt(dateDay) || "";
-                const monthLabel = dateMonth.toUpperCase();
-                const previousMonth = filteredEvents[index - 1]?.date
-                  .split(" ")[0]
-                  ?.toUpperCase();
-                const showMonthHeader =
-                  (activeMonth === "ALL" || activeMonth === "MY_LINEUP") &&
-                  (index === 0 || previousMonth !== monthLabel);
-
-                return (
-                  <Fragment key={event.id}>
-                    {showMonthHeader && (
-                      <div className="px-6 md:px-10 py-4 border-b border-white/[0.05] bg-black/20">
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] text-primary">
-                          {monthLabel}
-                        </span>
-                      </div>
-                    )}
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      transition={{
-                        delay: index * 0.08,
-                        duration: 0.8,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      className="schedule-etched-row group relative border-b border-white/[0.05]"
-                      data-schedule-tone={event.series}
-                    >
-                      {/* Main Row - Premium Interaction Surface */}
-                      <div
-                        className="w-full relative z-10 hover:bg-white/[0.03] transition-all duration-700 group px-6 md:px-4"
-                        role="button"
-                        tabIndex={0}
-                        data-cursor-image={
-                          event.image || seriesDefaultImage[event.series]
-                        }
-                        onMouseEnter={() =>
-                          setHoveredImage(
-                            event.image ||
-                              seriesDefaultImage[event.series] ||
-                              null
-                          )
-                        }
-                        onMouseLeave={() => setHoveredImage(null)}
-                        onClick={() => toggle(event)}
-                        onKeyDown={e => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            toggle(event);
-                          }
-                        }}
-                      >
-                        <div className="py-8 md:py-14 grid grid-cols-1 md:grid-cols-12 gap-6 md:items-center w-full text-left">
-                          {/* Date Col - Architectural Presentation */}
-                          <div className="md:col-span-2 flex flex-col items-start gap-1 md:items-start md:gap-0 pl-0 md:pl-4">
-                            <span className="font-display text-2xl md:text-4xl text-foreground/90 group-hover:text-foreground transition-colors duration-500 whitespace-nowrap tracking-tighter">
-                              {dayNumber
-                                ? `${dateMonth.substring(0, 3)} ${dayNumber}`
-                                : dateMonth}
-                            </span>
-                            <span className="font-mono text-[11px] text-muted-foreground/40 md:mt-2 tracking-[0.1em] group-hover:text-primary/60 transition-colors duration-500 uppercase">
-                              {event.time}
-                            </span>
-                          </div>
-
-                          {/* Thumbnail/Indicator Col - Active Radar + Save */}
-                          <div className="md:col-span-1 hidden md:flex flex-col items-center gap-4">
-                            <button
-                              type="button"
-                              onClick={e => toggleStar(event.id, e)}
-                              aria-pressed={starredIds.includes(event.id)}
-                              aria-label={`${starredIds.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
-                              className={`h-9 w-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                                starredIds.includes(event.id)
-                                  ? "border-primary/50 bg-primary text-black shadow-[0_0_18px_rgba(224,90,58,0.25)]"
-                                  : "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/25 hover:text-white"
-                              }`}
-                            >
-                              {starredIds.includes(event.id) ? (
-                                <Check className="h-4 w-4" />
-                              ) : (
-                                <Bookmark className="h-4 w-4" />
-                              )}
-                            </button>
-
-                            <div
-                              className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center bg-black/40 overflow-hidden relative group-hover:border-primary/30 transition-colors duration-500`}
-                            >
-                              <motion.div
-                                className={`absolute inset-0 opacity-20 ${seriesAccent[event.series]}`}
-                                animate={{ opacity: [0.1, 0.3, 0.1] }}
-                                transition={{
-                                  duration: 3,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                              />
-                              <div className="relative flex h-2 w-2">
-                                <span
-                                  className={`absolute inline-flex h-full w-full animate-[ping_2.5s_cubic-bezier(0,0,0.2,1)_infinite] rounded-full opacity-75 ${seriesTextAccent[event.series] === "text-foreground" ? "bg-primary" : seriesTextAccent[event.series].replace("text-", "bg-")}`}
-                                />
-                                <span
-                                  className={`relative inline-flex rounded-full h-2 w-2 ${seriesTextAccent[event.series] === "text-foreground" ? "bg-primary" : seriesTextAccent[event.series].replace("text-", "bg-")}`}
-                                />
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Title Col - Impact Focus */}
-                          <div className="md:col-span-4 flex items-start gap-3 md:gap-4">
-                            <EventArtistStack
-                              artistImages={event.artistImages}
-                              className="pt-0.5"
-                            />
-                            <div className="min-w-0 flex flex-1 flex-col gap-2">
-                              <h3 className="font-display text-[clamp(1.8rem,5vw,3.6rem)] uppercase leading-[0.88] text-foreground/80 group-hover:text-foreground transition-all duration-500 tracking-tight-display">
-                                {event.title}
-                              </h3>
-                              <div className="flex flex-wrap gap-2 md:mt-1">
-                                <span
-                                  className={`text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full ${seriesTextAccent[event.series]}`}
-                                >
-                                  {seriesLabels[event.series]}
-                                </span>
-                                <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 bg-white/[0.03] border border-white/10 rounded-full text-white/80">
-                                  {event.confirmationStatus === "pending"
-                                    ? "DETAILS PENDING"
-                                    : getStatusLabel(event.status)}
-                                </span>
-                                {isTicketOnSale(event) && (
-                                  <motion.span
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="text-[10px] font-black tracking-[0.2em] uppercase px-3 py-1 bg-primary text-white rounded-full shadow-[0_8px_20px_rgba(224,90,58,0.25)]"
-                                  >
-                                    TICKETS ACTIVE
-                                  </motion.span>
-                                )}
-                                {event.startingPrice &&
-                                  event.status !== "sold-out" && (
-                                    <span className="text-[10px] font-mono tracking-[0.2em] uppercase px-3 py-1 bg-transparent border border-white/10 text-muted-foreground rounded-full">
-                                      From ${event.startingPrice}
-                                    </span>
-                                  )}
-                              </div>
-                              <p className="mt-2 max-w-2xl text-sm md:text-base leading-relaxed text-foreground/65 line-clamp-2">
-                                {getEventSummary(event)}
-                              </p>
-                              <p className="md:hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground/60">
-                                {event.time} · {event.venue} · {event.location}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Location Col - Minimal Detail */}
-                          <div className="md:col-span-2 hidden md:flex flex-col">
-                            <span className="font-display text-xl leading-tight text-foreground/60 transition-colors duration-500 group-hover:text-foreground/90 uppercase tracking-wide">
-                              {event.venue}
-                            </span>
-                            <span className="text-[10px] text-muted-foreground/30 font-mono mt-2 tracking-widest uppercase">
-                              {event.location}
-                            </span>
-                          </div>
-
-                          {/* Action Col - Exposed CTA & Details */}
-                          <div className="md:col-span-3 flex flex-col md:flex-row justify-end items-start md:items-center gap-4 md:pr-4 w-full mt-4 md:mt-0">
-                            <div
-                              onClick={e => e.stopPropagation()}
-                              className="w-full md:w-auto z-20"
-                            >
-                              <ConversionCTA
-                                event={event}
-                                size="sm"
-                                showUrgency={false}
-                                className="w-full md:w-auto"
-                              />
-                            </div>
-                            <div
-                              onClick={e => e.stopPropagation()}
-                              className="z-20 flex items-center gap-2"
-                            >
-                              <button
-                                type="button"
-                                onClick={e => toggleStar(event.id, e)}
-                                aria-pressed={starredIds.includes(event.id)}
-                                aria-label={`${starredIds.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
-                                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 md:hidden ${
-                                  starredIds.includes(event.id)
-                                    ? "border-primary/50 bg-primary text-black shadow-[0_0_18px_rgba(224,90,58,0.25)]"
-                                    : "border-white/10 bg-white/[0.04] text-white/70 hover:border-white/25 hover:text-white"
-                                }`}
-                              >
-                                {starredIds.includes(event.id) ? (
-                                  <Check className="h-4 w-4" />
-                                ) : (
-                                  <Bookmark className="h-4 w-4" />
-                                )}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={e => handleCalendarClick(event, e)}
-                                aria-label={`Add ${event.title} to calendar`}
-                                className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white/75 transition-all duration-300 hover:border-primary/30 hover:bg-primary/10 hover:text-white sm:px-4"
-                              >
-                                <CalendarPlus className="h-4 w-4" />
-                                <span className="hidden xl:inline">
-                                  Calendar
-                                </span>
-                              </button>
-                            </div>
-                            <div
-                              className={`hidden md:flex flex-col items-center justify-center transition-all duration-300 ${isExpanded ? "text-primary" : "text-muted-foreground/50 group-hover:text-foreground"}`}
-                            >
-                              <span className="text-[10px] font-mono tracking-[0.2em] uppercase mb-1">
-                                Details
-                              </span>
-                              <div
-                                className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) ${isExpanded ? "bg-primary text-black border-primary rotate-90" : "border-white/10 group-hover:border-primary/40 group-hover:bg-primary/10"}`}
-                              >
-                                <ArrowRight className="w-4 h-4" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Dossier Details - Cinematic Reveal */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{
-                              duration: 0.7,
-                              ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="overflow-hidden bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02),transparent_70%)]"
-                          >
-                            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 px-6 md:px-12 py-12 md:py-20 border-t border-white/[0.05]">
-                              {/* Visual Asset / Map Mock / Graphic */}
-                              <div className="md:col-span-3 hidden md:block">
-                                <div className="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 relative group-inner">
-                                  <ResponsiveImage
-                                    src={
-                                      event.image ||
-                                      seriesDefaultImage[event.series]
-                                    }
-                                    alt={event.title}
-                                    sizes="25vw"
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000"
-                                  />
-                                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                  <span className="absolute bottom-4 left-4 font-mono text-[10px] tracking-widest text-white/70 uppercase">
-                                    Event Photo
-                                  </span>
-                                </div>
-                              </div>
-
-                              {/* Content Brief Area */}
-                              <div className="md:col-span-9 pr-0 md:pr-12">
-                                <div className="flex items-center gap-3 mb-8">
-                                  <div className="h-px w-12 bg-primary/40" />
-                                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary font-bold">
-                                    Event Details
-                                  </span>
-                                </div>
-
-                                <p className="text-2xl md:text-3xl font-display italic text-foreground/90 mb-12 max-w-3xl leading-[1.3] tracking-tight">
-                                  {event.description ||
-                                    event.experienceIntro ||
-                                    "Event details are being finalized. Check back soon for the full lineup, timing, and ticket information."}
-                                </p>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                                  {/* Lineup Dossier Card */}
-                                  <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
-                                    <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
-                                      <Music className="w-4 h-4" />
-                                      <span className="text-[10px] uppercase tracking-[0.3em] font-bold">
-                                        Lineup
-                                      </span>
-                                    </div>
-                                    <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">
-                                      {event.lineup || "To Be Announced"}
-                                    </p>
-                                    <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
-                                  </div>
-
-                                  {/* Venue Dossier Card */}
-                                  <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
-                                    <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
-                                      <MapPin className="w-4 h-4" />
-                                      <span className="text-[10px] uppercase tracking-[0.3em] font-bold">
-                                        Venue
-                                      </span>
-                                    </div>
-                                    <p className="font-display text-2xl leading-[1.1] text-foreground uppercase">
-                                      {event.venue}
-                                    </p>
-                                    <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">
-                                      {event.location}
-                                    </p>
-                                    <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
-                                  </div>
-
-                                  {/* Details Dossier Card */}
-                                  <div className="p-8 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md relative overflow-hidden group/card hover:border-white/10 transition-colors duration-500">
-                                    <div className="flex items-center gap-3 mb-5 text-muted-foreground/30">
-                                      <Clock className="w-4 h-4" />
-                                      <span className="text-[10px] uppercase tracking-[0.3em] font-bold">
-                                        Details
-                                      </span>
-                                    </div>
-                                    <p className="font-mono text-sm font-bold text-foreground/90 uppercase tracking-widest">
-                                      {event.time}
-                                    </p>
-                                    <p className="text-[10px] text-muted-foreground/40 mt-3 font-mono tracking-widest uppercase">
-                                      {[event.age, event.dress]
-                                        .filter(Boolean)
-                                        .join(" · ")}
-                                    </p>
-                                    <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary group-hover/card:w-full transition-all duration-700" />
-                                  </div>
-                                </div>
-
-                                <div className="flex flex-wrap gap-6 items-center">
-                                  <ConversionCTA
-                                    event={event}
-                                    size="lg"
-                                    showUrgency={true}
-                                  />
-                                  <Link
-                                    href={getEventDetailsHref(event)}
-                                    onClick={() =>
-                                      trackAccessEvent("event_card_click", {
-                                        buttonName: "Event details",
-                                        destinationUrl:
-                                          getEventDetailsHref(event),
-                                        pagePath: "/schedule",
-                                        eventSlug: event.slug || event.id,
-                                        eventDate: event.date,
-                                        channel: "site",
-                                        source: "schedule_quick_view",
-                                      })
-                                    }
-                                    className="btn-text-action group"
-                                  >
-                                    FULL DOSSIER
-                                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                                  </Link>
-                                  <button
-                                    type="button"
-                                    onClick={e => handleCalendarClick(event, e)}
-                                    className="btn-text-action group"
-                                  >
-                                    ADD TO CALENDAR
-                                    <CalendarPlus className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                                  </button>
-                                  {event.tableReservationEmail && (
-                                    <a
-                                      href={`mailto:${event.tableReservationEmail}`}
-                                      className="btn-text-action group"
-                                    >
-                                      TABLE ENQUIRIES
-                                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                                    </a>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  </Fragment>
-                );
-              })
+          <div className="schedule-result-summary" role="status">
+            <p>
+              {visible.length} {visible.length === 1 ? "show" : "shows"}
+              {query.trim() ? ` matching “${query.trim()}”` : " in view"}
+            </p>
+            {(query || series !== "all") && (
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setSeries("all");
+                  setFilter("ALL");
+                }}
+              >
+                Clear filters
+              </button>
             )}
           </div>
-
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 border-t border-white/5 pt-16">
-            <div className="flex flex-col gap-2">
-              <p className="text-muted-foreground/40 text-[10px] font-mono tracking-[0.2em] uppercase">
-                More dates are on the way. Join the newsletter to hear about
-                them first.
-              </p>
-              <p className="text-muted-foreground/20 text-[10px] font-mono tracking-widest italic uppercase">
-                Updated for {new Date().getFullYear()}
-              </p>
-            </div>
-            <div className="flex items-center gap-8">
-              <Link href="/newsletter" className="btn-text-action">
-                Get Updates
-              </Link>
-              <Link href="/vip" className="btn-text-action">
-                VIP Tables
-              </Link>
-            </div>
+          <div className="schedule-editorial-groups" aria-live="polite">
+            {!visible.length && (
+              <div className="schedule-editorial-empty">
+                <h2>
+                  {query.trim() || series !== "all"
+                    ? "No shows match this search."
+                    : filter === "MY_LINEUP"
+                      ? "Your next nights, saved."
+                      : "More nights ahead."}
+                </h2>
+                <p>
+                  {query.trim() || series !== "all"
+                    ? "Try another artist, show or venue, or clear the filters."
+                    : filter === "MY_LINEUP"
+                      ? "Use the bookmark on a show to keep it here on this device."
+                      : "New dates will appear here once confirmed."}
+                </p>
+                <Link className="home-text-link" href="/archive">
+                  Explore previous shows{" "}
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
+              </div>
+            )}
+            {groups.map(key => {
+              const groupEvents = visible.filter(
+                event => getScheduleDate(event).key === key
+              );
+              return (
+                <section
+                  key={key}
+                  className="schedule-editorial-group"
+                  aria-label={getScheduleDate(groupEvents[0]).heading}
+                >
+                  <h2 data-calendar-month>
+                    {getScheduleDate(groupEvents[0]).heading}
+                  </h2>
+                  {groupEvents.map(event => {
+                    const postponed = event.eventStatus === "EventPostponed";
+                    const date = getScheduleDate(event);
+                    const detailsHref =
+                      event.id === "css-sep19"
+                        ? "/sunsets#event-update"
+                        : getEventDetailsHref(event);
+                    return (
+                      <article
+                        key={event.id}
+                        data-event-id={event.id}
+                        data-event-status={event.eventStatus}
+                        className="schedule-editorial-card signal-etched-frame"
+                        data-signal-tone={event.series}
+                      >
+                        <div className="schedule-editorial-date">
+                          <span>
+                            {postponed
+                              ? "Original date"
+                              : date.hasDay
+                                ? "Confirmed date"
+                                : "Date pending"}
+                          </span>
+                          <strong>{date.label}</strong>
+                          <span>{eventTime(event)}</span>
+                        </div>
+                        <div className="schedule-editorial-copy">
+                          <div className="schedule-editorial-tags">
+                            <span>{getSeriesLabel(event.series)}</span>
+                            <span data-event-state={event.eventStatus}>
+                              {statusLabel(event)}
+                            </span>
+                          </div>
+                          <h3>
+                            <Link href={detailsHref}>
+                              {event.headline || event.title}
+                            </Link>
+                          </h3>
+                          <p>
+                            {postponed
+                              ? event.eventNotice
+                              : event.description ||
+                                event.experienceIntro ||
+                                "The next announcement will include the confirmed details."}
+                          </p>
+                          <p className="schedule-editorial-venue">
+                            {postponed ? "Original venue: " : ""}
+                            {getScheduleVenue(event)} · {event.location}
+                          </p>
+                        </div>
+                        <div className="schedule-editorial-actions">
+                          <ConversionCTA
+                            event={event}
+                            size="sm"
+                            showUrgency={false}
+                          />
+                          <div className="schedule-editorial-tools">
+                            <button
+                              type="button"
+                              aria-pressed={saved.includes(event.id)}
+                              aria-label={`${saved.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
+                              onClick={() => toggleSaved(event.id)}
+                            >
+                              {saved.includes(event.id) ? (
+                                <Check size={18} aria-hidden="true" />
+                              ) : (
+                                <Bookmark size={18} aria-hidden="true" />
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              disabled={!canAddEventToCalendar(event)}
+                              aria-label={
+                                canAddEventToCalendar(event)
+                                  ? `Add ${event.title} to calendar`
+                                  : "Calendar unavailable"
+                              }
+                              title={
+                                canAddEventToCalendar(event)
+                                  ? "Add to calendar"
+                                  : "Calendar available once the date is confirmed"
+                              }
+                              onClick={() =>
+                                canAddEventToCalendar(event) &&
+                                downloadEventCalendar(event)
+                              }
+                            >
+                              <CalendarPlus size={18} aria-hidden="true" />
+                            </button>
+                          </div>
+                        </div>
+                        <details className="schedule-editorial-details">
+                          <summary>
+                            More information{" "}
+                            <Plus size={16} aria-hidden="true" />
+                          </summary>
+                          <div>
+                            <dl>
+                              <div>
+                                <dt>
+                                  {postponed ? "Original lineup" : "Lineup"}
+                                </dt>
+                                <dd>{event.lineup || "To be announced"}</dd>
+                              </div>
+                              <div>
+                                <dt>Admission</dt>
+                                <dd>
+                                  {event.age ||
+                                    "Entry information to be announced"}
+                                </dd>
+                              </div>
+                            </dl>
+                            {postponed && <p>{TICKET_POLICY.sunsetsRefund}</p>}
+                            <Link className="home-text-link" href={detailsHref}>
+                              {postponed
+                                ? "Ticket-holder information"
+                                : "Full event details"}{" "}
+                              <ArrowUpRight size={16} aria-hidden="true" />
+                            </Link>
+                          </div>
+                        </details>
+                      </article>
+                    );
+                  })}
+                </section>
+              );
+            })}
           </div>
         </div>
       </main>
-
       <JoinSignalSection />
-
-      <SocialGrid />
     </div>
   );
 }

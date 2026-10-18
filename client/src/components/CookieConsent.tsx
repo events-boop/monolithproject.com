@@ -69,10 +69,10 @@ export default function CookieConsent() {
             <div className="flex flex-col gap-2.5 p-3 pr-8">
               <div className="min-w-0">
                 <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary">
-                  Analytics Consent
+                  Tracking preferences
                 </p>
                 <p className="mt-1 text-[11px] leading-relaxed text-white/60">
-                  We use lightweight analytics.{" "}
+                  We use analytics and ManyChat campaign measurement.{" "}
                   <Link
                     href="/cookies"
                     className="text-white/75 underline underline-offset-2"

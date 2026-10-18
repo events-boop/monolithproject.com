@@ -370,14 +370,14 @@
 }
 @media (max-width: 639px) {
   .monolith-hero-stage {
-    min-height: max(620px, 92svh);
+    min-height: clamp(480px, 64svh, 600px);
   }
   .monolith-hero-photo img,
   .monolith-hero-photo video {
     object-position: 58% center;
   }
   .monolith-hero-inner {
-    padding: calc(var(--shell-page-top-hero, 125px) + 220px) 22px 38px;
+    padding: calc(var(--shell-page-top-hero, 125px) + 80px) 22px 28px;
   }
   .monolith-hero-copy {
     flex-direction: column;
@@ -560,7 +560,7 @@
 }
 .home-series-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 .home-series-card {
@@ -568,7 +568,8 @@
   display: flex;
   align-items: flex-end;
   min-height: 510px;
-  aspect-ratio: 1.13;
+  min-width: 0;
+  aspect-ratio: auto;
   isolation: isolate;
   overflow: hidden;
   border: 1px solid #ffffff25;
@@ -1285,4 +1286,134 @@
 .home-event-art-wide:focus-visible {
   outline: 2px solid #f0b653;
   outline-offset: 5px;
+}
+
+/* Carry the calendar's etched framing into the homepage's existing sections. */
+.monolith-home .home-etched-band {
+  position: relative;
+}
+.monolith-home .home-show-card.signal-etched-frame {
+  overflow: visible;
+  isolation: isolate;
+}
+.monolith-home .home-show-card.signal-etched-frame::after {
+  right: 18px;
+  bottom: 18px;
+  width: 76px;
+  height: 76px;
+  opacity: 0.16;
+}
+.monolith-home .home-show-card.signal-etched-frame::before {
+  inset: 8px;
+  filter: none;
+}
+.monolith-home .home-series-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  z-index: 2;
+  pointer-events: none;
+  border-top: 1px solid #e8b86d66;
+  border-right: 1px solid #e8b86d33;
+  border-radius: 2px;
+  mask-image: linear-gradient(135deg, #000, transparent 42%);
+}
+.monolith-home .home-series-night::before {
+  border-color: #8bc2cb66;
+}
+@media (max-width: 639px) {
+  .monolith-home .home-show-card.signal-etched-frame::after {
+    width: 52px;
+    height: 52px;
+    opacity: 0.12;
+  }
+}
+
+/* Inline event notices must also fit the smallest phone layouts. */
+.home-event-notice > div {
+  min-width: 0;
+}
+.home-event-notice time {
+  white-space: normal;
+}
+
+.home-event-grid > * {
+  min-width: 0;
+}
+@media (max-width: 479px) {
+  .home-event-copy h2 {
+    font-size: clamp(42px, 13vw, 62px);
+  }
+}
+
+/* One concise show card supports the wider homepage discovery. */
+.home-upcoming {
+  padding-block: 46px;
+}
+.home-show-card {
+  min-width: 0;
+  padding: 24px;
+}
+.home-show-date {
+  color: #c2b9ab;
+}
+.home-show-support.home-event-notice {
+  display: block;
+  margin-block: 20px 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid #ffffff24;
+  border-radius: 0;
+}
+.home-show-support summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 52px;
+  font-size: 14px;
+  color: #e9bd82;
+  cursor: pointer;
+  list-style: none;
+}
+.home-show-support summary::-webkit-details-marker {
+  display: none;
+}
+.home-show-support summary span {
+  font-size: 22px;
+}
+.home-show-support[open] summary span {
+  transform: rotate(45deg);
+}
+.home-show-support > div {
+  padding-bottom: 18px;
+}
+.home-show-support p {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  color: #d1cec7;
+}
+.home-show-support .home-text-link {
+  display: inline-flex;
+  min-height: 44px;
+  font-size: 14px;
+}
+.home-show-support .home-muted {
+  font-size: 13px;
+  color: #bbb9b2;
+}
+.home-artists-grid {
+  align-items: start;
+}
+@media (max-width: 767px) {
+  .home-upcoming {
+    padding-block: 32px;
+  }
+  .home-show-card {
+    padding: 20px;
+  }
+  .home-editorial-section {
+    padding-block: 38px;
+  }
 }

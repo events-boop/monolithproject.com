@@ -1,3 +1,4 @@
+import AudioPlayer from "@/components/AudioPlayer";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -43,6 +44,13 @@ const sectionReveal = {
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-90px" },
+  transition: sectionTransition,
+};
+
+// Above the fold: slide only, so the hero text paints before the animation runs.
+const heroReveal = {
+  initial: { y: 28 },
+  animate: { y: 0 },
   transition: sectionTransition,
 };
 
@@ -206,7 +214,7 @@ export default function Radio() {
         className="relative flex min-h-[82vh] flex-col justify-center overflow-hidden bg-[#050505] px-6 pb-24 page-shell-start-loose"
       >
         <div className="absolute inset-0 z-0">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeEpisode.slug}
               initial={{ opacity: 0, scale: 1.04 }}
@@ -230,7 +238,7 @@ export default function Radio() {
 
         <div className="container layout-wide relative z-10 w-full">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-end">
-            <motion.div {...sectionReveal}>
+            <motion.div {...heroReveal}>
               <SignalBarsMark className="mb-6 h-10 w-14 sm:h-12 sm:w-16" />
               <span className="mb-5 block font-mono text-[10px] uppercase tracking-[0.38em] text-[#E8B86D]">
                 Chasing Sun(Sets) Radio Show
@@ -428,14 +436,9 @@ export default function Radio() {
               </div>
 
               <div className="overflow-hidden border border-white/10 bg-black">
-                <iframe
+                <AudioPlayer
                   key={activeEpisode.slug}
-                  title={`${activeEpisode.title} embedded player`}
-                  width="100%"
-                  height="166"
-                  scrolling="no"
-                  frameBorder="no"
-                  allow="autoplay"
+                  title={activeEpisode.title}
                   src={activeEpisode.embedUrl}
                 />
               </div>

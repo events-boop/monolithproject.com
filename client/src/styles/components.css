@@ -1164,12 +1164,14 @@
     overflow: hidden;
   }
 
-  .signal-etched-frame[data-signal-tone="sunsets"] {
+  .signal-etched-frame[data-signal-tone="sunsets"],
+  .signal-etched-frame[data-signal-tone="chasing-sunsets"] {
     --signal-etch: 201, 134, 91;
     --signal-etch-soft: 232, 184, 109;
   }
 
-  .signal-etched-frame[data-signal-tone="untold"] {
+  .signal-etched-frame[data-signal-tone="untold"],
+  .signal-etched-frame[data-signal-tone="untold-story"] {
     --signal-etch: 34, 211, 238;
     --signal-etch-soft: 139, 92, 246;
   }
@@ -1328,7 +1330,8 @@
     }
   }
 
-  .signal-etched-frame[data-signal-tone="untold"]::after {
+  .signal-etched-frame[data-signal-tone="untold"]::after,
+  .signal-etched-frame[data-signal-tone="untold-story"]::after {
     right: -2.25rem;
     bottom: -2.8rem;
     border-radius: 0;
@@ -1337,7 +1340,8 @@
     transform: rotate(45deg);
   }
 
-  .signal-etched-frame[data-signal-tone="monolith"]::after {
+  .signal-etched-frame[data-signal-tone="monolith"]::after,
+  .signal-etched-frame[data-signal-tone="monolith-project"]::after {
     right: 1rem;
     bottom: -2.5rem;
     width: 4.5rem;

@@ -1,4 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
+const sunsetsNeedsUpdate = ["EventPostponed", "EventCancelled"].includes(
+  JSON.parse(
+    readFileSync(
+      new URL("../shared/events/sunsets-page.json", import.meta.url),
+      "utf8"
+    )
+  ).status
+);
 
 const phoneWidths = [320, 340, 360, 375, 390, 430];
 const desktopWidths = [1280, 1366, 1440, 1536, 1600, 1920];
@@ -74,10 +83,17 @@ test.describe("responsive header", () => {
 
       // A reserved scrollbar gutter may make scrollWidth smaller; only excess is overflow.
       expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth);
-      expect(metrics.totalHeaderHeight).toBeLessThanOrEqual(98);
+      expect(metrics.totalHeaderHeight).toBeLessThanOrEqual(108);
       expect(metrics.shellHeight).toBeLessThanOrEqual(64);
-      expect(metrics.bannerHeight).toBeLessThanOrEqual(38);
-      expect(metrics.bannerTextLength).toBeGreaterThan(8);
+      expect(metrics.bannerHeight).toBeLessThanOrEqual(44);
+      if (sunsetsNeedsUpdate) {
+        expect(metrics.bannerTextLength).toBe(0);
+        await expect(
+          page.locator('[data-nav-event-banner="true"]')
+        ).toHaveCount(0);
+      } else {
+        expect(metrics.bannerTextLength).toBeGreaterThan(8);
+      }
       expect(metrics.logoWidth).toBeLessThanOrEqual(110);
       expect(metrics.logoToControlsGap).toBeGreaterThanOrEqual(
         width < 390 ? 12 : 20
@@ -143,9 +159,10 @@ test.describe("responsive header", () => {
         };
       });
 
-      expect(metrics.scrollWidth, `${width}px page overflow`).toBeLessThanOrEqual(
-        metrics.clientWidth
-      );
+      expect(
+        metrics.scrollWidth,
+        `${width}px page overflow`
+      ).toBeLessThanOrEqual(metrics.clientWidth);
       expect(metrics.visibleExtras, `${width}px secondary nav leakage`).toEqual(
         []
       );

@@ -375,6 +375,11 @@ export function buildScheduledEventSchema(
   event: ScheduledEvent,
   pagePath: string
 ) {
+  if (
+    event.confirmationStatus === "pending" &&
+    event.eventStatus !== "EventPostponed"
+  )
+    return {};
   const startDate =
     event.startsAt ||
     (() => {
@@ -466,6 +471,7 @@ export function buildScheduleSchema(events: ScheduledEvent[]) {
     "@context": "https://schema.org",
     "@graph": events
       .filter(event => getEventWindowStatus(event) !== "past")
-      .map(event => buildScheduledEventSchema(event, "/schedule")),
+      .map(event => buildScheduledEventSchema(event, "/schedule"))
+      .filter(schema => Object.keys(schema).length > 0),
   };
 }

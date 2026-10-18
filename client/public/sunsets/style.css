@@ -2370,3 +2370,24 @@ body[data-event-status="EventPostponed"] .hero-line::after { content:" · POSTPO
   .signup-block { grid-row: span 4; }
   .signup-fallback { grid-row: 4; }
 }
+
+/* Event updates belong to the card; the guide opens without a status popup. */
+.hero-frame .status-notice {
+  margin: 22px 0;
+  padding: 18px;
+  background: #352d1e;
+  color: #f2efe6;
+  border: 1px solid #b98538;
+  border-left: 3px solid #f0b653;
+  border-radius: 4px;
+}
+.hero-frame .status-notice .status-kicker { color: #f0c577; }
+.hero-frame .status-notice .status-badge { color: #f2efe6; }
+.hero-frame .status-notice .postponement-heading { margin: 14px 0 10px; color: #f2efe6; font-size: 26px; }
+.hero-frame .status-notice .postponement-copy { color: #e9e0d1; font-size: 16px; line-height: 1.65; }
+.hero-frame .status-notice .status-summary { display: none; }
+.hero-frame .status-notice .status-bottom { display: block; margin-top: 12px; }
+.hero-frame .status-notice .status-details { color: #f0c577; }
+.hero-frame .status-notice time { color: #d8c9ae; }
+
+.ticket-support > p:not(.section-note){max-width:65ch;line-height:1.65;color:var(--ink);margin:20px 0}.ticket-support .button{margin:8px 0;min-height:48px}

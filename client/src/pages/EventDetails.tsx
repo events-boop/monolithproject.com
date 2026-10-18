@@ -1,3 +1,8 @@
+import { getScheduleVenue } from "@/lib/schedulePresentation";
+import {
+  getEventArtists,
+  getArtistRecording,
+} from "@/lib/artistEventDiscovery";
 import { capturePostHogEvent } from "@/lib/posthog";
 import { useEffect } from "react";
 import { Link, useLocation, useRoute } from "wouter";
@@ -11,6 +16,7 @@ import {
   Clock,
   Headphones,
   MapPin,
+  Play,
   Ticket,
   Star,
 } from "lucide-react";
@@ -36,6 +42,8 @@ function getShortDateLabel(dateLabel: string) {
 function buildEventSeoTitle(
   event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
 ) {
+  if (event.confirmationStatus === "pending")
+    return `${event.headline || event.title} | Details to be announced`;
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -53,6 +61,8 @@ function buildEventSeoTitle(
 function buildEventSeoDescription(
   event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
 ) {
+  if (event.confirmationStatus === "pending")
+    return `The next announcement for ${event.title} will include the confirmed date, venue and lineup. Get official updates from The Monolith Project.`;
   const shortDate = getShortDateLabel(event.date);
 
   if (event.id === "us-s3e3") {
@@ -92,6 +102,8 @@ function getTicketPathCopy(
 function getArrivalCopy(
   event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
 ) {
+  if (event.confirmationStatus === "pending")
+    return "Arrival information to be announced";
   if (event.doors) return `Doors ${event.doors}`;
   if (event.series === "chasing-sunsets") return "Arrive for golden hour";
   if (event.series === "untold-story") return "Arrive before peak room";
@@ -193,6 +205,7 @@ export default function EventDetails() {
   }
 
   const bgImage = event.image || "/images/hero-monolith.webp";
+  const eventArtists = getEventArtists(event);
   const postponed = event.eventStatus === "EventPostponed";
   const pageTitle = postponed
     ? `${event.headline || event.title} — Postponed`
@@ -280,7 +293,7 @@ export default function EventDetails() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden font-sans">
+    <div className="event-guide-page min-h-screen bg-black text-white relative overflow-hidden font-sans">
       <SEO
         title={pageTitle}
         description={pageDescription}
@@ -292,15 +305,15 @@ export default function EventDetails() {
       <Navigation brand={navigationBrand} />
 
       <main id="main-content" tabIndex={-1}>
-        <div className="relative pt-[20vh] pb-[10vh] min-h-[70vh] flex flex-col justify-end px-6 xl:px-12 border-b border-white/10">
+        <div className="event-guide-hero relative flex flex-col justify-end px-6 xl:px-12 border-b border-white/10">
           <ResponsiveImage
             src={bgImage}
             alt={event.title}
             priority
             sizes="100vw"
-            className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 blur-sm brightness-50 transition-opacity duration-1000"
+            className="event-guide-photo absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-1000"
           />
-          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+          <div className="event-guide-shade absolute inset-0 z-0" />
 
           <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
             <button
@@ -332,13 +345,25 @@ export default function EventDetails() {
 
             <div className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-white/70 text-xs md:text-sm tracking-[0.2em] uppercase mb-12">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-white/70" /> {event.venue},{" "}
-                {event.location}
+                <MapPin className="w-4 h-4 text-white/70" />{" "}
+                {event.eventStatus === "EventPostponed"
+                  ? "Original venue: "
+                  : ""}
+                {getScheduleVenue(event)}, {event.location}
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-white/70" />{" "}
                 {postponed ? "Original booking: " : ""}
-                {event.date} // {event.time}
+                {event.eventStatus === "EventPostponed"
+                  ? "Original date: "
+                  : ""}
+                {event.confirmationStatus === "pending"
+                  ? "Date to be announced"
+                  : event.date}{" "}
+                //{" "}
+                {event.confirmationStatus === "pending"
+                  ? "Time to be announced"
+                  : event.time}
               </div>
               {event.lineup && (
                 <div className="flex items-center gap-2">
@@ -384,6 +409,77 @@ export default function EventDetails() {
 
         <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7 flex flex-col gap-16">
+            {eventArtists.length > 0 && (
+              <section
+                className="event-artist-discovery"
+                aria-labelledby="event-artists-title"
+              >
+                <p className="section-kicker">Behind the sound</p>
+                <h2 id="event-artists-title">
+                  {postponed
+                    ? "The original lineup."
+                    : event.status === "past"
+                      ? "Artists from this chapter."
+                      : "Meet the artists."}
+                </h2>
+                {postponed && (
+                  <p className="event-artist-context">
+                    Recorded sets and artist profiles from the original booking.
+                    Participation in the replacement show awaits confirmation.
+                  </p>
+                )}
+                <div className="event-artist-grid">
+                  {eventArtists.map(artist => {
+                    const recording = getArtistRecording(artist);
+                    return (
+                      <article className="event-artist-card" key={artist.id}>
+                        <Link
+                          href={`/artists/${artist.id}`}
+                          aria-label={`Explore ${artist.name}’s artist profile`}
+                          className="event-artist-portrait"
+                        >
+                          <ResponsiveImage
+                            src={artist.image}
+                            alt={`${artist.name} portrait`}
+                            width={600}
+                            height={750}
+                            sizes="(min-width: 1024px) 220px, (min-width: 640px) 40vw, 80vw"
+                            style={{
+                              objectPosition:
+                                artist.imagePosition || "center 25%",
+                            }}
+                          />
+                        </Link>
+                        <p>{artist.genre}</p>
+                        <h3>
+                          <Link href={`/artists/${artist.id}`}>
+                            {artist.name}
+                          </Link>
+                        </h3>
+                        <Link
+                          className="event-artist-link"
+                          href={`/artists/${artist.id}`}
+                        >
+                          Artist profile{" "}
+                          <ArrowUpRight size={16} aria-hidden="true" />
+                        </Link>
+                        {recording && (
+                          <a
+                            className="event-artist-link"
+                            href={recording.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {recording.label}
+                            <Play size={16} aria-hidden="true" />
+                          </a>
+                        )}
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
             <section>
               <h3 className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4">
                 Why This Event
@@ -524,7 +620,7 @@ export default function EventDetails() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-white/70">
                     Read The Room
                   </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/24">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/65">
                     Context
                   </span>
                 </div>

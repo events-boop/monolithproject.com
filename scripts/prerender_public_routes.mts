@@ -1,5 +1,7 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import Beasties from "beasties";
+import { createServer as createViteServer } from "vite";
 import { ARTIST_ENTRIES } from "../client/src/data/artists.ts";
 import { insightEntries } from "../client/src/data/insights.ts";
 import { radioEpisodes } from "../client/src/data/radioEpisodes.ts";
@@ -1257,6 +1259,137 @@ for (const sitemapEntry of mergeSitemapEntries([
   }
 }
 
+// Real page markup for routes the client renderer supports at build time.
+// Loaded through Vite so aliases and CSS imports resolve as in the app.
+const viteSsr = await createViteServer({
+  configFile: path.resolve("vite.config.ts"),
+  server: { middlewareMode: true, hmr: false },
+  appType: "custom",
+  logLevel: "error",
+});
+const pageRenderer = (await viteSsr.ssrLoadModule(
+  "/src/ssr/renderPage.tsx"
+)) as typeof import("../client/src/ssr/renderPage.tsx");
+
+type ManifestChunk = { file: string; css?: string[]; imports?: string[] };
+const manifestPath = path.join(distPublicDir, ".vite", "manifest.json");
+const buildManifest: Record<string, ManifestChunk> = existsSync(manifestPath)
+  ? JSON.parse(readFileSync(manifestPath, "utf8"))
+  : {};
+
+/** Stylesheets for a page chunk and its static imports. */
+function pageAssetTags(moduleId: string) {
+  const css = new Set<string>();
+  const js = new Set<string>();
+  const visit = (id: string) => {
+    const chunk = buildManifest[id];
+    if (!chunk || js.has(chunk.file)) return;
+    js.add(chunk.file);
+    chunk.css?.forEach(file => css.add(file));
+    chunk.imports?.forEach(visit);
+  };
+  // App.tsx is imported dynamically by main.tsx, so its CSS (and its static
+  // imports' CSS) is not in the HTML template either.
+  visit("src/App.tsx");
+  visit(moduleId);
+  const existing = template;
+  // JS chunks are left to main.tsx's route preload: preloading them here
+  // competes with the stylesheet and fonts the first paint needs.
+  return [...css]
+    .filter(file => !existing.includes(`/${file}`))
+    .map(file => `<link rel="stylesheet" crossorigin href="/${file}">`)
+    .join("\n");
+}
+
+// Inline the above-the-fold CSS of fully rendered pages, then load the full
+// stylesheets without blocking first paint: preload them and let the external
+// /async-css.js apply them (no inline handlers, so CSP stays strict-ready).
+const beasties = new Beasties({
+  path: distPublicDir,
+  publicPath: "/",
+  preload: false,
+  pruneSource: false,
+  inlineFonts: false,
+  reduceInlineStyles: false,
+  logLevel: "warn",
+});
+
+function deferStylesheets(html: string) {
+  const deferred: string[] = [];
+  const out = html.replace(
+    /<link rel="stylesheet"(?:(?!>)[^])*? href="([^"]+\.css)"[^>]*>\n?/g,
+    (match, href: string) => {
+      // fonts.css is tiny and declares the faces the first paint uses;
+      // deferring it makes text re-render (and re-measure) after a swap.
+      if (href === "/fonts/fonts.css") return match;
+      deferred.push(href);
+      return "";
+    }
+  );
+  if (!deferred.length) return html;
+  const fallback = deferred
+    .map(href => `<link rel="stylesheet" href="${href}">`)
+    .join("");
+  return out.replace(
+    "</head>",
+    `<noscript>${fallback}</noscript>\n<script src="/async-css.js" data-css="${deferred.join(",")}" defer></script>\n</head>`
+  );
+}
+
+/** Start the app bundle after first paint (see client/public/app-boot.js). */
+function deferAppEntry(html: string) {
+  const entry = html.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/);
+  if (!entry) return html;
+  const preloads: string[] = [];
+  return html
+    .replace(
+      /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
+      (_match, href: string) => {
+        preloads.push(href);
+        return "";
+      }
+    )
+    .replace(
+      entry[0],
+      () =>
+        `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
+    )
+    // Home-only image hint; on other routes it is just a blocking request.
+    .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "");
+}
+
+// Fonts the prerendered heroes paint with (body: Inter, display: Archivo
+// Black). Preloading them lets the first paint use the real faces; otherwise
+// a slower device paints fallback text, then swaps it in later and Lighthouse
+// records the re-rendered (larger) text as a late LCP.
+const HERO_FONT_PRELOADS = [
+  "/fonts/inter-latin.woff2",
+  "/fonts/archivo-black-400.woff2",
+];
+
+function preloadHeroFonts(html: string) {
+  const tags = HERO_FONT_PRELOADS.filter(
+    href => !html.includes(`rel="preload" href="${href}"`)
+  )
+    .map(
+      href =>
+        `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`
+    )
+    .join("\n");
+  return tags ? html.replace("</head>", `${tags}\n</head>`) : html;
+}
+
+async function inlineCriticalCss(html: string) {
+  try {
+    return preloadHeroFonts(
+      deferAppEntry(deferStylesheets(await beasties.process(html)))
+    );
+  } catch (error) {
+    console.warn("[prerender] critical CSS inlining failed", error);
+    return html;
+  }
+}
+
 for (const route of routeDefinitions) {
   // The approved event hub is copied intact from client/public by Vite.
   // Do not replace it with the older React page’s generated shell.
@@ -1322,9 +1455,27 @@ for (const route of routeDefinitions) {
         '<header><a href="/chasing-sunsets" style="display:block;width:min(100%,320px);margin-bottom:24px"><img src="/sunsets/assets/logo-640.webp" width="640" height="238" alt="Chasing Sun(Sets)" style="display:block;width:100%;height:auto" decoding="async"></a>'
       )
     : route.bodyHtml;
+  const pageKey = pageRenderer.PRERENDER_PAGE_ROUTES[route.path];
+  let rootHtml = bodyHtml;
+  if (pageKey) {
+    try {
+      rootHtml = await pageRenderer.renderPage(
+        route.path,
+        pageKey,
+        buildPublicSiteData(route.path, upcomingEvents)
+      );
+      html = html.replace(
+        "</head>",
+        `${pageAssetTags(pageRenderer.pageModuleId(pageKey))}\n</head>`
+      );
+    } catch (error) {
+      // Fall back to the text shell rather than failing the deploy.
+      console.warn(`[prerender] ${route.path}: page render failed`, error);
+    }
+  }
   html = html.replace(
     /<div id="root"><\/div>/i,
-    `<div id="root">${bodyHtml}</div>`
+    `<div id="root">${rootHtml}</div>`
   );
   html = html.replace(
     /<script[^>]+type="module"[^>]*>/i,
@@ -1336,6 +1487,7 @@ for (const route of routeDefinitions) {
     '<meta data-rh="true" $1>'
   );
   html = injectHeroPreloads(html, route.path);
+  if (pageKey) html = await inlineCriticalCss(html);
 
   const outputPath =
     route.path === "/"
@@ -1345,3 +1497,7 @@ for (const route of routeDefinitions) {
   mkdirSync(path.dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, html, "utf8");
 }
+
+await viteSsr.close();
+// The manifest is a build input only; don't publish it.
+rmSync(path.join(distPublicDir, ".vite"), { recursive: true, force: true });

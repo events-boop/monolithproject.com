@@ -42,7 +42,7 @@ export default function Shop() {
             delay={0.4}
             stagger={0.02}
           >
-            Coming Soon · Spring 2026
+            In development · Launch date to be announced
           </RevealText>
 
           <motion.div
@@ -53,7 +53,8 @@ export default function Shop() {
           >
             <p className="text-white/70 text-sm mb-6 leading-relaxed">
               Limited run garments and accessories for the underground. Be the
-              first to know when the shop opens.
+              first to hear when the collection is ready. A launch date has not
+              been announced.
             </p>
           </motion.div>
         </div>
