@@ -24,7 +24,8 @@ import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { getSeriesLabel, getSeriesColor } from "@/lib/siteExperience";
+import { getSeriesLabel, getSeriesColor, getEventStartTimestamp } from "@/lib/siteExperience";
+import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import { buildBreadcrumbSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { trackAccessEvent } from "@/lib/api";
 
@@ -156,6 +157,15 @@ export default function EventDetails() {
   const slug = params?.slug;
 
   const event = getPublicEvents().find(e => e.slug === slug || e.id === slug);
+
+  // Countdown renders only against a published, future event window — never a TBD
+  // date. getEventStartTimestamp returns null while the window is unpublished, so
+  // the honest standby copy (getArrivalCopy) stays in place until then.
+  const doorsTarget = event ? getEventStartTimestamp(event) : null;
+  const doorsCountdown = useCountdown(doorsTarget);
+  const showDoorsCountdown = Boolean(
+    event && doorsTarget && !doorsCountdown.isExpired && doorsTarget > Date.now()
+  );
   const canonicalEventSlug = event?.slug || event?.id;
   const canonicalEventPath = canonicalEventSlug
     ? `/events/${canonicalEventSlug}`
@@ -595,7 +605,18 @@ export default function EventDetails() {
                 )}
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-white/70">Arrival</span>
-                  <span>{getArrivalCopy(event)}</span>
+                  {showDoorsCountdown ? (
+                    <span
+                      className="font-mono tabular-nums text-primary"
+                      aria-label={`Doors in ${doorsCountdown.days} days ${doorsCountdown.hours} hours`}
+                    >
+                      {doorsCountdown.days > 0
+                        ? `${doorsCountdown.days}d ${padCountdown(doorsCountdown.hours)}:${padCountdown(doorsCountdown.minutes)}:${padCountdown(doorsCountdown.seconds)}`
+                        : `${padCountdown(doorsCountdown.hours)}:${padCountdown(doorsCountdown.minutes)}:${padCountdown(doorsCountdown.seconds)}`}
+                    </span>
+                  ) : (
+                    <span>{getArrivalCopy(event)}</span>
+                  )}
                 </div>
                 <div className="flex justify-between border-b border-white/5 pb-2">
                   <span className="text-white/70">

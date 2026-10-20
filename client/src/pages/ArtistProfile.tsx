@@ -86,6 +86,7 @@ export default function ArtistProfile() {
         <SEO
           title="Artist Not Found"
           description="We couldn't find that artist profile."
+          noIndex
         />
         <Navigation />
         <section className="h-[70vh] flex flex-col items-center justify-center px-6 text-center">

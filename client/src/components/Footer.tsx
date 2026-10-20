@@ -92,7 +92,7 @@ const links: FooterLinkGroup[] = [
       { name: "FAQ", href: ROUTES.faq },
       {
         name: "Tickets",
-        href: ROUTES.schedule,
+        href: ROUTES.tickets,
       },
       { name: "Terms of Service", href: ROUTES.terms },
       { name: "Privacy Policy", href: ROUTES.privacy },
