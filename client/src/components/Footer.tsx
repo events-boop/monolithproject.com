@@ -72,6 +72,7 @@ const links: FooterLinkGroup[] = [
       { name: "Sun(Sets) Link In Bio", href: ROUTES.sunsets },
       { name: "Untold Story", href: ROUTES.story },
       { name: "Radio Show", href: ROUTES.radio },
+      { name: "SUNSETS.FM", href: ROUTES.sunsetsFM },
     ],
   },
   {

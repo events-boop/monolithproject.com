@@ -1,3 +1,7 @@
+import {
+  SUNSETS_CANONICALS_LIVE,
+  SUNSETS_EPISODE_URLS,
+} from "@shared/seo/sunsets-radio";
 import AudioPlayer from "@/components/AudioPlayer";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "wouter";
@@ -125,6 +129,11 @@ export default function RadioEpisode() {
         description={`Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`}
         absoluteTitle
         canonicalPath={`/radio/${episode.slug}`}
+        canonicalUrl={
+          SUNSETS_CANONICALS_LIVE
+            ? SUNSETS_EPISODE_URLS[episode.slug]
+            : undefined
+        }
       />
       <Navigation />
 
@@ -142,6 +151,12 @@ export default function RadioEpisode() {
               {episode.title}
             </h1>
             <p className="text-lg text-white/80">Guest: {episode.guest}</p>
+            <a
+              href={SUNSETS_EPISODE_URLS[episode.slug]}
+              className="btn-pill-sunsets mt-6 inline-flex max-w-full items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              Listen on SUNSETS.FM →
+            </a>
             <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event
               series and radio show by The Monolith Project. For disambiguation

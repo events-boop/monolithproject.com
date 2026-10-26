@@ -1,0 +1,56 @@
+MONOLITH / SUNSETS.FM SEO — 2026-10-26
+
+Status: implemented and verified on a Netlify preview. NOT LIVE on production.
+Only Monolith files were edited. No SUNSETS.FM edits or deployment. No Search Console action.
+
+Preview:
+https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/sunsets-fm/
+Deploy ID: 6adf7d634080c57958aeedbd
+Site ID: 33d2ce42-1a25-4b67-a318-bdce495f5f47
+
+Implemented:
+- Premium, self-canonical /sunsets-fm page; six outbound cards, four Explore links,
+  Monolith family/event links, no player or duplicate long descriptions.
+- SUNSETS.FM footer link plus crawlable homepage link and sitemap entry.
+- CH-02 audio/embed/guest recording link and cover corrected to the distinct No Sleep set.
+- Listening links on six episode pages and /radio; ticket page gets Radio & Releases link.
+- Shared exact episode mapping; canonical/og:url switch prepared but disabled.
+- Canonical retained after client mount; local social image origin independent of canonical.
+
+RELEASE GATE 1 — SUNSETS.FM must ship its SEO release first.
+shared/seo/sunsets-radio.ts: SUNSETS_CANONICALS_LIVE=false.
+Latest check: production still reports 05f3dbd6e5ef45aab08ab058f3980733e48ba3a6,
+built 2026-10-23T23:56:07.631Z. Served show HTML lacks RadioSeries.
+Do not enable until the destination pages and SEO release are verified live.
+
+RELEASE GATE 2 — prepare a bounded Monolith production artifact.
+Canonical repo: /Users/starkindustries/Downloads/monolith-project website.
+Starting HEAD: 573da84 on fix/upgrade-review-20261017.
+ASTRA read-only release review: HOLD current build from production. The purported
+production source c19a283 to starting HEAD differs in 180 files / 34,894 insertions,
+including unrelated backend, dependency and page changes. Production deploy
+6ab18065c7ef3b035f3a4e90 has commit_ref=null; c19a283 is only in its title.
+Establish the exact production source before a narrow release backport. Do not splice
+new shared assets into old deploy artifacts. Respect AGENTS.md: builds/writes must
+use the canonical checkout; preserve all state before any temporary branch switch.
+The preview includes the current branch and must not be blindly promoted.
+
+Validation:
+- Build and TypeScript pass. Four radio tests pass, including CH-02 vs EP-04.
+- Browser 320/390/1440px: no overflow or page errors; keyboard reaches CTA;
+  one canonical remains after mount; axe reports no main-content violations.
+- Preview curl: all 10 requested/home routes pass in HELD canonical mode.
+- Deployed preview CH-02 loads the corrected SoundCloud iframe after player activation.
+- All built HTML: 19 SUNSETS.FM anchors, zero nofollow.
+- Production curl baseline has 33 outstanding assertions, expected because not shipped.
+Evidence: docs/seo/monolith-sunsets-fm-verification.json.
+
+Final production acceptance after BOTH gates are satisfied:
+python3 scripts/verify_sunsets_fm_seo.py --live-canonicals --out /private/tmp/monolith-production-seo.json
+Default verifier mode checks held Monolith canonicals; use --base for a preview.
+Vite preview clean URLs use SPA fallback; test Netlify or explicit static directory URLs.
+/sunsets remains a 200 ticket page with https://monolithproject.com/sunsets canonical.
+
+Preserved preexisting change:
+client/public/sitemap.xml had lastmod dates 2026-10-20 -> 2026-10-23 before work.
+Only the new doorway sitemap entry belongs to this task; existing date edits remain unstaged.

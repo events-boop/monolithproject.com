@@ -1,0 +1,653 @@
+{
+  "checked_at": "2026-10-26",
+  "state": "preview_verified_production_held",
+  "preview_deploy": {
+    "site_id": "33d2ce42-1a25-4b67-a318-bdce495f5f47",
+    "site_name": "monolithproject",
+    "deploy_id": "6adf7d634080c57958aeedbd",
+    "deploy_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app",
+    "logs": "https://app.netlify.com/projects/monolithproject/deploys/6adf7d634080c57958aeedbd",
+    "function_logs": "https://app.netlify.com/projects/monolithproject/logs/functions?scope=deploy:6adf7d634080c57958aeedbd",
+    "edge_function_logs": "https://app.netlify.com/projects/monolithproject/logs/edge-functions?scope=deployid:6adf7d634080c57958aeedbd"
+  },
+  "preview_curl": {
+    "base": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app",
+    "cross_domain_canonicals": false,
+    "pages": [
+      {
+        "path": "/sunsets-fm",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/sunsets-fm/",
+        "canonical": [
+          "https://monolithproject.com/sunsets-fm"
+        ],
+        "og_url": [
+          "https://monolithproject.com/sunsets-fm"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm",
+            "text": "Listen on SUNSETS.FM",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+            "text": "BENCHEKLive Set from Marbella Part II",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+            "text": "RADIANChapter II \u2014 No Sleep (Berlin)",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+            "text": "BENCHEKChapter III: Special NYE",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+            "text": "EWERSEENMix Vol. 3",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-terranova",
+            "text": "TERRANOVATerranova x Chasing Sun(Sets)",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+            "text": "RADIANRadian x Untold Story Crossover",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/radio",
+            "text": "Radio",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/radio-shows/chasing-sunsets",
+            "text": "Chasing Sun(Sets) Radio",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/sets",
+            "text": "DJ sets",
+            "rel": ""
+          },
+          {
+            "href": "https://sunsets.fm/festivals",
+            "text": "Festivals",
+            "rel": ""
+          }
+        ]
+      },
+      {
+        "path": "/sunsets",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/sunsets",
+        "canonical": [
+          "https://monolithproject.com/sunsets"
+        ],
+        "og_url": [
+          "https://monolithproject.com/sunsets"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm",
+            "text": "SUNSETS.FM Radio & Releases",
+            "rel": ""
+          }
+        ]
+      },
+      {
+        "path": "/",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/",
+        "canonical": [
+          "https://monolithproject.com/"
+        ],
+        "og_url": [
+          "https://monolithproject.com/"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/",
+        "canonical": [
+          "https://monolithproject.com/radio"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/radio-shows/chasing-sunsets",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": ""
+          }
+        ]
+      },
+      {
+        "path": "/radio/ep-01-benchek",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ep-01-benchek/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-01-benchek"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-01-benchek"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      },
+      {
+        "path": "/radio/ep-02-ewerseen",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ep-02-ewerseen/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-02-ewerseen"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-02-ewerseen"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      },
+      {
+        "path": "/radio/ep-03-terranova",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ep-03-terranova/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-03-terranova"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-03-terranova"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-terranova",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      },
+      {
+        "path": "/radio/ep-04-radian",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ep-04-radian/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-04-radian"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-04-radian"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      },
+      {
+        "path": "/radio/ep-004-benchek-part-2",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ep-004-benchek-part-2/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-004-benchek-part-2"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-004-benchek-part-2"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      },
+      {
+        "path": "/radio/ch-02-radian-no-sleep",
+        "status": 200,
+        "effective_url": "https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/radio/ch-02-radian-no-sleep/",
+        "canonical": [
+          "https://monolithproject.com/radio/ch-02-radian-no-sleep"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ch-02-radian-no-sleep"
+        ],
+        "sunsets_links": [
+          {
+            "href": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+            "text": "Listen on SUNSETS.FM \u2192",
+            "rel": "noopener noreferrer"
+          }
+        ]
+      }
+    ],
+    "failures": []
+  },
+  "production_baseline_curl": {
+    "base": "https://monolithproject.com",
+    "cross_domain_canonicals": true,
+    "pages": [
+      {
+        "path": "/sunsets-fm",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/sunsets-fm",
+        "canonical": [
+          "https://monolithproject.com/"
+        ],
+        "og_url": [
+          "https://monolithproject.com/"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/sunsets",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/sunsets",
+        "canonical": [
+          "https://monolithproject.com/sunsets"
+        ],
+        "og_url": [
+          "https://monolithproject.com/sunsets"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/",
+        "canonical": [
+          "https://monolithproject.com/"
+        ],
+        "og_url": [
+          "https://monolithproject.com/"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/",
+        "canonical": [
+          "https://monolithproject.com/radio"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ep-01-benchek",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ep-01-benchek/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-01-benchek"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-01-benchek"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ep-02-ewerseen",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ep-02-ewerseen/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-02-ewerseen"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-02-ewerseen"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ep-03-terranova",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ep-03-terranova/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-03-terranova"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-03-terranova"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ep-04-radian",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ep-04-radian/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-04-radian"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-04-radian"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ep-004-benchek-part-2",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ep-004-benchek-part-2/",
+        "canonical": [
+          "https://monolithproject.com/radio/ep-004-benchek-part-2"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ep-004-benchek-part-2"
+        ],
+        "sunsets_links": []
+      },
+      {
+        "path": "/radio/ch-02-radian-no-sleep",
+        "status": 200,
+        "effective_url": "https://monolithproject.com/radio/ch-02-radian-no-sleep/",
+        "canonical": [
+          "https://monolithproject.com/radio/ch-02-radian-no-sleep"
+        ],
+        "og_url": [
+          "https://monolithproject.com/radio/ch-02-radian-no-sleep"
+        ],
+        "sunsets_links": []
+      }
+    ],
+    "failures": [
+      "/sunsets-fm: canonical ['https://monolithproject.com/'] != https://monolithproject.com/sunsets-fm",
+      "/sunsets-fm: og:url ['https://monolithproject.com/'] != https://monolithproject.com/sunsets-fm",
+      "/sunsets-fm: wrong title",
+      "/sunsets-fm: missing episode link real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+      "/sunsets-fm: missing episode link real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+      "/sunsets-fm: missing episode link real-chasing-terranova",
+      "/sunsets-fm: missing episode link real-chasing-radianofc-set",
+      "/sunsets-fm: missing episode link real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+      "/sunsets-fm: missing episode link real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+      "/sunsets: missing Radio & Releases link",
+      "/: missing crawlable doorway link",
+      "/radio: canonical ['https://monolithproject.com/radio'] != https://sunsets.fm/radio-shows/chasing-sunsets",
+      "/radio: og:url ['https://monolithproject.com/radio'] != https://sunsets.fm/radio-shows/chasing-sunsets",
+      "/radio: missing visible listening link",
+      "/radio/ep-01-benchek: canonical ['https://monolithproject.com/radio/ep-01-benchek'] != https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+      "/radio/ep-01-benchek: og:url ['https://monolithproject.com/radio/ep-01-benchek'] != https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+      "/radio/ep-01-benchek: missing visible listening link",
+      "/radio/ep-02-ewerseen: canonical ['https://monolithproject.com/radio/ep-02-ewerseen'] != https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+      "/radio/ep-02-ewerseen: og:url ['https://monolithproject.com/radio/ep-02-ewerseen'] != https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+      "/radio/ep-02-ewerseen: missing visible listening link",
+      "/radio/ep-03-terranova: canonical ['https://monolithproject.com/radio/ep-03-terranova'] != https://sunsets.fm/sets/real-chasing-terranova",
+      "/radio/ep-03-terranova: og:url ['https://monolithproject.com/radio/ep-03-terranova'] != https://sunsets.fm/sets/real-chasing-terranova",
+      "/radio/ep-03-terranova: missing visible listening link",
+      "/radio/ep-04-radian: canonical ['https://monolithproject.com/radio/ep-04-radian'] != https://sunsets.fm/sets/real-chasing-radianofc-set",
+      "/radio/ep-04-radian: og:url ['https://monolithproject.com/radio/ep-04-radian'] != https://sunsets.fm/sets/real-chasing-radianofc-set",
+      "/radio/ep-04-radian: missing visible listening link",
+      "/radio/ep-004-benchek-part-2: canonical ['https://monolithproject.com/radio/ep-004-benchek-part-2'] != https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+      "/radio/ep-004-benchek-part-2: og:url ['https://monolithproject.com/radio/ep-004-benchek-part-2'] != https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+      "/radio/ep-004-benchek-part-2: missing visible listening link",
+      "/radio/ch-02-radian-no-sleep: canonical ['https://monolithproject.com/radio/ch-02-radian-no-sleep'] != https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+      "/radio/ch-02-radian-no-sleep: og:url ['https://monolithproject.com/radio/ch-02-radian-no-sleep'] != https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+      "/radio/ch-02-radian-no-sleep: missing visible listening link",
+      "/radio/ch-02-radian-no-sleep: missing corrected No Sleep recording"
+    ]
+  },
+  "browser": {
+    "base": "http://127.0.0.1:4182",
+    "pages": [
+      {
+        "width": 320,
+        "metrics": {
+          "width": 320,
+          "scrollWidth": 320,
+          "canonical": [
+            "https://monolithproject.com/sunsets-fm"
+          ],
+          "sunsetsLinks": [
+            {
+              "href": "https://sunsets.fm/",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-terranova",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio-shows/chasing-sunsets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/festivals",
+              "rel": ""
+            }
+          ],
+          "iframes": 0,
+          "h1": {
+            "x": 36,
+            "y": 183,
+            "width": 248,
+            "height": 30.40625,
+            "top": 183,
+            "right": 284,
+            "bottom": 213.40625,
+            "left": 36
+          }
+        },
+        "keyboardReached": true,
+        "focus": "solid",
+        "errors": [],
+        "violations": []
+      },
+      {
+        "width": 390,
+        "metrics": {
+          "width": 390,
+          "scrollWidth": 390,
+          "canonical": [
+            "https://monolithproject.com/sunsets-fm"
+          ],
+          "sunsetsLinks": [
+            {
+              "href": "https://sunsets.fm/",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-terranova",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio-shows/chasing-sunsets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/festivals",
+              "rel": ""
+            }
+          ],
+          "iframes": 0,
+          "h1": {
+            "x": 36,
+            "y": 184.59375,
+            "width": 318,
+            "height": 35.875,
+            "top": 184.59375,
+            "right": 354,
+            "bottom": 220.46875,
+            "left": 36
+          }
+        },
+        "keyboardReached": true,
+        "focus": "solid",
+        "errors": [],
+        "violations": []
+      },
+      {
+        "width": 1440,
+        "metrics": {
+          "width": 1440,
+          "scrollWidth": 1440,
+          "canonical": [
+            "https://monolithproject.com/sunsets-fm"
+          ],
+          "sunsetsLinks": [
+            {
+              "href": "https://sunsets.fm/",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-terranova",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/radio-shows/chasing-sunsets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/sets",
+              "rel": ""
+            },
+            {
+              "href": "https://sunsets.fm/festivals",
+              "rel": ""
+            }
+          ],
+          "iframes": 0,
+          "h1": {
+            "x": 112,
+            "y": 254.15625,
+            "width": 1216,
+            "height": 128,
+            "top": 254.15625,
+            "right": 1328,
+            "bottom": 382.15625,
+            "left": 112
+          }
+        },
+        "keyboardReached": true,
+        "focus": "solid",
+        "errors": [],
+        "violations": []
+      }
+    ],
+    "chapter": {
+      "canonical": [
+        "https://monolithproject.com/radio/ch-02-radian-no-sleep"
+      ],
+      "iframes": []
+    }
+  },
+  "source_checks": {
+    "typescript": "passed",
+    "radio_tests": "4 passed",
+    "build": "passed; nonfatal sandbox websocket warning",
+    "built_sunsets_fm_anchors": 19,
+    "nofollow_anchors": 0
+  },
+  "sunsets_release": {
+    "commit": "05f3dbd6e5ef45aab08ab058f3980733e48ba3a6",
+    "clean": true,
+    "built_at": "2026-10-23T23:56:07.631Z",
+    "flags": {
+      "neon": true,
+      "push": true,
+      "listens": true,
+      "presence": false,
+      "plans": false,
+      "community": false,
+      "artist_signup": false,
+      "artist_demo": true,
+      "atlas_global": true
+    }
+  },
+  "sunsets_show_has_RadioSeries": false
+}

@@ -83,14 +83,14 @@ export const radioEpisodes: RadioEpisode[] = [
       "Recorded during a late-night session in Berlin, RADIAN's Chapter II titled 'No Sleep' dives into the heavier, more hypnotic side of The Monolith Project's sound. The transitions are incredibly patient, letting the driving basslines dictate the mood. It's a masterclass in tension and release, perfect for the darkest hours of the dancefloor.",
     image: "/images/radio-show-gear.webp",
     coverImage:
-      "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
+      "https://i1.sndcdn.com/artworks-87BBhfbyYi6JiBmL-TWj4pw-t500x500.jpg",
     embedUrl:
-      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-    audioUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+      "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
+    audioUrl: "https://soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
     guestLinks: [
       {
         label: "RADIAN Feature",
-        url: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
+        url: "https://soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
       },
     ],
     tracklist: [

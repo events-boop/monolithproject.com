@@ -16,6 +16,7 @@ const PAGE_LOADERS = {
   Tickets: () => import("../pages/Tickets"),
   About: () => import("../pages/About"),
   ArtistProfile: () => import("../pages/ArtistProfile"),
+  SunsetsFM: () => import("../pages/SunsetsFM"),
   Radio: () => import("../pages/Radio"),
   RadioEpisode: () => import("../pages/RadioEpisode"),
   UntoldStory: () => import("../pages/UntoldStory"),
@@ -46,6 +47,7 @@ type PageKey = keyof typeof PAGE_LOADERS;
 const EXACT_ROUTES: Record<string, PageKey> = {
   "/tickets": "Tickets",
   "/about": "About",
+  "/sunsets-fm": "SunsetsFM",
   "/radio": "Radio",
   "/booking": "Booking",
   "/partners": "Partners",

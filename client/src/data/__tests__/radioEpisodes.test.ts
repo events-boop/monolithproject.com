@@ -16,4 +16,15 @@ describe("radio episode routing", () => {
   it("ignores unknown legacy slugs", () => {
     expect(getLegacyRadioRedirect("unknown-guest")).toBeUndefined();
   });
+
+  it("plays the No Sleep recording on CH-02 rather than repeating EP-04", () => {
+    const chapter = getRadioEpisode("ch-02-radian-no-sleep")!;
+    const episode = getRadioEpisode("ep-04-radian")!;
+    expect(chapter.audioUrl).toBe(
+      "https://soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep"
+    );
+    expect(new URL(chapter.embedUrl).searchParams.get("url")).toBe(chapter.audioUrl);
+    expect(chapter.audioUrl).not.toBe(episode.audioUrl);
+    expect(chapter.coverImage).not.toBe(episode.coverImage);
+  });
 });

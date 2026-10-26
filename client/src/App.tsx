@@ -28,6 +28,7 @@ const ChasingSunsets = lazyRoute("ChasingSunsets");
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
 const SunsetsLinkBio = lazy(() => import("./pages/SunsetsEventRedirect"));
 const LakeLanding = lazy(() => import("./pages/LakeLanding"));
+const SunsetsFM = lazyRoute("SunsetsFM");
 const Radio = lazyRoute("Radio");
 const RadioEpisode = lazyRoute("RadioEpisode");
 const UntoldStory = lazyRoute("UntoldStory");
@@ -122,6 +123,7 @@ const ChasingSunsetsTransition = withTransition(ChasingSunsets);
 const ChasingSunsetsFactsTransition = withTransition(ChasingSunsetsFacts);
 const SunsetsLinkBioTransition = withTransition(SunsetsLinkBio);
 const LakeLandingTransition = withTransition(LakeLanding);
+const SunsetsFMTransition = withTransition(SunsetsFM);
 const RadioTransition = withTransition(Radio);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
@@ -265,6 +267,7 @@ function Router() {
         path="/chasing-sunsets/:season"
         component={ArchiveGalleryPageTransition}
       />
+      <Route path={ROUTES.sunsetsFM} component={SunsetsFMTransition} />
       <Route path={ROUTES.radio} component={RadioTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />

@@ -1,9 +1,20 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import Beasties from "beasties";
 import { createServer as createViteServer } from "vite";
 import { ARTIST_ENTRIES } from "../client/src/data/artists.ts";
 import { insightEntries } from "../client/src/data/insights.ts";
+import {
+  SUNSETS_CANONICALS_LIVE,
+  SUNSETS_EPISODE_URLS,
+  SUNSETS_SHOW_URL,
+} from "../shared/seo/sunsets-radio.ts";
 import { radioEpisodes } from "../client/src/data/radioEpisodes.ts";
 import { untoldFaqs } from "../client/src/components/untold-story/constants.ts";
 import {
@@ -105,6 +116,7 @@ const sharedLinks = [
   { href: "/chasing-sunsets", label: "Chasing Sun(Sets)" },
   { href: "/story", label: "Untold Story" },
   { href: "/radio", label: "Radio Show" },
+  { href: "/sunsets-fm", label: "SUNSETS.FM" },
   { href: "/about", label: "About Monolith" },
   { href: "/monolith", label: "The Monolith" },
 ];
@@ -375,6 +387,7 @@ function renderHomeCriticalLayout() {
           { href: "/chasing-sunsets", label: "Explore Chasing Sun(Sets)" },
           { href: "/story", label: "Explore Untold Story" },
           { href: "/radio", label: "Listen to the radio archive" },
+          { href: "/sunsets-fm", label: "SUNSETS.FM" },
           { href: INSTAGRAM_MONOLITH, label: "Instagram", external: true },
           { href: SOUNDCLOUD_URL, label: "SoundCloud archive", external: true },
         ])}
@@ -763,8 +776,32 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     },
   ],
   [
+    "/sunsets-fm",
+    {
+      title: "SUNSETS.FM | The Monolith Project",
+      absoluteTitle: true,
+      description:
+        "SUNSETS.FM is a DJ-set discovery platform and the home of Chasing Sun(Sets) Radio. Part of The Monolith Project family.",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / Music",
+        "SUNSETS.FM",
+        [
+          "A DJ-set discovery platform and the home of Chasing Sun(Sets) Radio.",
+        ],
+        [
+          {
+            href: "https://sunsets.fm",
+            label: "Listen on SUNSETS.FM",
+            external: true,
+          },
+        ]
+      ),
+    },
+  ],
+  [
     "/radio",
     {
+      canonicalUrl: SUNSETS_CANONICALS_LIVE ? SUNSETS_SHOW_URL : undefined,
       title: "Radio | The Monolith Project",
       description:
         "Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community.",
@@ -1100,6 +1137,9 @@ function buildArtistRoutes(): RouteDefinition[] {
 function buildRadioEpisodeRoutes(): RouteDefinition[] {
   return radioEpisodes.map(episode => ({
     path: `/radio/${episode.slug}`,
+    canonicalUrl: SUNSETS_CANONICALS_LIVE
+      ? SUNSETS_EPISODE_URLS[episode.slug]
+      : undefined,
     title: buildRadioEpisodeSeoTitle(episode),
     description: buildRadioEpisodeSeoDescription(episode),
     absoluteTitle: true,
@@ -1114,8 +1154,8 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
       ],
       [
         {
-          href: episode.audioUrl,
-          label: "Listen on SoundCloud",
+          href: SUNSETS_EPISODE_URLS[episode.slug],
+          label: "Listen on SUNSETS.FM →",
           external: true,
         },
         { href: "/radio", label: "Back to the radio archive" },
