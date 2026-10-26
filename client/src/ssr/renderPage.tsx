@@ -18,6 +18,7 @@ import { primePublicSiteData } from "../lib/siteData";
 
 const PAGES: Record<string, () => Promise<{ default: ComponentType }>> = {
   Tickets: () => import("../pages/Tickets"),
+  SunsetsFM: () => import("../pages/SunsetsFM"),
   Radio: () => import("../pages/Radio"),
   Booking: () => import("../pages/Booking"),
   Partners: () => import("../pages/Partners"),
@@ -28,6 +29,7 @@ export type PrerenderPageKey = keyof typeof PAGES;
 
 export const PRERENDER_PAGE_ROUTES: Record<string, PrerenderPageKey> = {
   "/tickets": "Tickets",
+  "/sunsets-fm": "SunsetsFM",
   "/radio": "Radio",
   "/booking": "Booking",
   "/partners": "Partners",
