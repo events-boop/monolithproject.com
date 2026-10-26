@@ -1,6 +1,6 @@
 MONOLITH / SUNSETS.FM SEO — 2026-10-26
 
-Status: implemented and verified on a Netlify preview. NOT LIVE on production.
+Status: implemented; canonical gate cleared. NOT LIVE on Monolith production.
 Only Monolith files were edited. No SUNSETS.FM edits or deployment. No Search Console action.
 
 Preview:
@@ -17,11 +17,13 @@ Implemented:
 - Shared exact episode mapping; canonical/og:url switch prepared but disabled.
 - Canonical retained after client mount; local social image origin independent of canonical.
 
-RELEASE GATE 1 — SUNSETS.FM must ship its SEO release first.
-shared/seo/sunsets-radio.ts: SUNSETS_CANONICALS_LIVE=false.
-Latest check: production still reports 05f3dbd6e5ef45aab08ab058f3980733e48ba3a6,
-built 2026-10-23T23:56:07.631Z. Served show HTML lacks RadioSeries.
-Do not enable until the destination pages and SEO release are verified live.
+RELEASE GATE 1 — CLEARED on 2026-10-26.
+SUNSETS.FM production reports 4dac9b3e6e3d1e9f5ff611cf6435387f39c79a35,
+built 2026-10-26T16:56:43.911Z. All seven exact destinations return 200,
+serve real headings and self-canonicals; the show declares RadioSeries.
+shared/seo/sunsets-radio.ts: SUNSETS_CANONICALS_LIVE=true.
+All six episode canonicals/og:url and /radio now target SUNSETS.FM in this source.
+The earlier preview above was tested before activation; see subsequent PR checks.
 
 RELEASE GATE 2 — prepare a bounded Monolith production artifact.
 Canonical repo: /Users/starkindustries/Downloads/monolith-project website.
@@ -45,7 +47,7 @@ Validation:
 - Production curl baseline has 33 outstanding assertions, expected because not shipped.
 Evidence: docs/seo/monolith-sunsets-fm-verification.json.
 
-Final production acceptance after BOTH gates are satisfied:
+Final production acceptance after the Monolith release gate is satisfied:
 python3 scripts/verify_sunsets_fm_seo.py --live-canonicals --out /private/tmp/monolith-production-seo.json
 Default verifier mode checks held Monolith canonicals; use --base for a preview.
 Vite preview clean URLs use SPA fallback; test Netlify or explicit static directory URLs.
@@ -54,3 +56,8 @@ Vite preview clean URLs use SPA fallback; test Netlify or explicit static direct
 Preserved preexisting change:
 client/public/sitemap.xml had lastmod dates 2026-10-20 -> 2026-10-23 before work.
 Only the new doorway sitemap entry belongs to this task; existing date edits remain unstaged.
+
+SUBMISSION FOLLOW-UP
+The SEO-only draft is based on fix/upgrade-review-20261017 at fee9d3b (PR #3),
+excluding unrelated local commits 3333cb6 and 573da84. It depends on PR #3
+and is not a directly deployable patch against production/main.

@@ -649,5 +649,124 @@
       "atlas_global": true
     }
   },
-  "sunsets_show_has_RadioSeries": false
+  "sunsets_show_has_RadioSeries": false,
+  "subsequent_destination_release_check": {
+    "commit": "4dac9b3e6e3d1e9f5ff611cf6435387f39c79a35",
+    "built_at": "2026-10-26T16:56:43.911Z",
+    "gate": "cleared",
+    "pages": [
+      {
+        "url": "https://sunsets.fm/radio-shows/chasing-sunsets",
+        "curl_code": 0,
+        "bytes": 10183,
+        "title": [
+          "Chasing Sun(sets) Radio: Episodes &amp; DJ Sets | SUNSETS.FM"
+        ],
+        "h1": [
+          "Chasing Sun(sets) Radio"
+        ],
+        "RadioSeries": true,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/radio-shows/chasing-sunsets"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+        "curl_code": 0,
+        "bytes": 10289,
+        "title": [
+          "Benchek \u2014 Sp\u00e9cial NYE \u00b7 Episode 010 | SUNSETS.FM"
+        ],
+        "h1": [
+          "Sp\u00e9cial NYE \u00b7 Episode 010"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+        "curl_code": 0,
+        "bytes": 9919,
+        "title": [
+          "Ewerseen \u2014 Chasing Sunsets \u00b7 Episode 008 | SUNSETS.FM"
+        ],
+        "h1": [
+          "Chasing Sunsets \u00b7 Episode 008"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-terranova",
+        "curl_code": 0,
+        "bytes": 10563,
+        "title": [
+          "Terranova \u2014 Chapter I \u00b7 Episode 009 | SUNSETS.FM"
+        ],
+        "h1": [
+          "Chapter I \u00b7 Episode 009"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-terranova"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-radianofc-set",
+        "curl_code": 0,
+        "bytes": 10399,
+        "title": [
+          "Radian \u2014 Chasing Sunsets \u00d7 Untold Story | SUNSETS.FM"
+        ],
+        "h1": [
+          "Chasing Sunsets \u00d7 Untold Story"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-radianofc-set"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+        "curl_code": 0,
+        "bytes": 10651,
+        "title": [
+          "Benchek \u2014 Live from Marbella \u00b7 Episode 02 | SUNSETS.FM"
+        ],
+        "h1": [
+          "Live from Marbella \u00b7 Episode 02"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella"
+        ]
+      },
+      {
+        "url": "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+        "curl_code": 0,
+        "bytes": 10557,
+        "title": [
+          "Radian \u2014 No Sleep \u00b7 Chapter II | SUNSETS.FM"
+        ],
+        "h1": [
+          "No Sleep \u00b7 Chapter II"
+        ],
+        "RadioSeries": false,
+        "main": false,
+        "canonical": [
+          "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep"
+        ]
+      }
+    ]
+  }
 }
