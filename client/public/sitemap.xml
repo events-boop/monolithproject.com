@@ -31,6 +31,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://monolithproject.com/sunsets-fm</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://monolithproject.com/story</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>

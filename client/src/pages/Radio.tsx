@@ -1,3 +1,7 @@
+import {
+  SUNSETS_CANONICALS_LIVE,
+  SUNSETS_SHOW_URL,
+} from "@shared/seo/sunsets-radio";
 import AudioPlayer from "@/components/AudioPlayer";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -206,6 +210,7 @@ export default function Radio() {
         description="Listen to artist-led mixes, archive episodes, and crossover sessions from The Monolith Project's Chicago music community."
         absoluteTitle
         canonicalPath="/radio"
+        canonicalUrl={SUNSETS_CANONICALS_LIVE ? SUNSETS_SHOW_URL : undefined}
       />
       <Navigation brand="chasing-sunsets" />
 
@@ -252,6 +257,12 @@ export default function Radio() {
                 darker rooms.
               </p>
 
+              <a
+                href={SUNSETS_SHOW_URL}
+                className="btn-pill-sunsets mt-8 inline-flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+              >
+                Listen on SUNSETS.FM →
+              </a>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <MagneticButton strength={0.28}>
                   <Link href={`/radio/${activeEpisode.slug}`} asChild>

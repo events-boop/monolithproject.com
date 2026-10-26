@@ -71,9 +71,8 @@ export default function SEO({
       url: `${fallbackCanonicalOrigin}${canonicalTarget}`,
     };
   })();
-  const canonicalOrigin = resolvedCanonical.origin;
   const canonicalUrl = resolvedCanonical.url;
-  const resolvedImage = resolveAbsoluteUrl(image, canonicalOrigin);
+  const resolvedImage = resolveAbsoluteUrl(image, fallbackCanonicalOrigin);
   const serializedSchema =
     schemaData !== undefined
       ? JSON.stringify(schemaData).replace(/</g, "\\u003c")
@@ -102,6 +101,7 @@ export default function SEO({
   return (
     <Helmet prioritizeSeoTags>
       <title>{fullTitle}</title>
+      <link rel="canonical" href={canonicalUrl} />
       <meta name="description" content={resolvedDescription} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={resolvedDescription} />

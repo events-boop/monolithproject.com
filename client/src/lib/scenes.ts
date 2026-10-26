@@ -76,6 +76,8 @@ function normalizePathname(pathname?: string) {
 export function getSceneForPath(pathname?: string): SceneConfig {
   const normalized = normalizePathname(pathname);
 
+  if (normalized === ROUTES.sunsetsFM) return scenes.monolith;
+
   if (
     normalized.startsWith(ROUTES.story) ||
     normalized.startsWith(ROUTES.untoldVip) ||
