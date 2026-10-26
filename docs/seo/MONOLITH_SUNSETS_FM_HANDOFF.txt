@@ -3,6 +3,20 @@ MONOLITH / SUNSETS.FM SEO — 2026-10-26
 Status: implemented; canonical gate cleared. NOT LIVE on Monolith production.
 Only Monolith files were edited. No SUNSETS.FM edits or deployment. No Search Console action.
 
+OWNER-CONFIRMED PROJECT LINEAGE
+Chasing Sun(Sets) Radio is the starting point. SUNSETS.FM is the fork into a
+broader DJ-set discovery platform, within The Monolith Project. Monolith is
+the parent brand. Present the ownership and lineage clearly in page and PR copy.
+
+SUBMITTED FOR REVIEW
+Draft PR #5: https://github.com/events-boop/monolithproject.com/pull/5
+Title: Connect Monolith to its SUNSETS.FM platform.
+The PR wording reflects the owner-confirmed lineage above.
+The isolated branch preview below passed all 10 curl checks with cross-domain
+canonicals enabled after the SUNSETS.FM release gate cleared:
+https://6adf88389e1fdc3631097640--monolithproject.netlify.app/sunsets-fm/
+Monolith production release and Search Console submission remain pending.
+
 Preview:
 https://6adf7d634080c57958aeedbd--monolithproject.netlify.app/sunsets-fm/
 Deploy ID: 6adf7d634080c57958aeedbd
