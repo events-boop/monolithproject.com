@@ -1,6 +1,6 @@
-// Enable only after the SUNSETS.FM SEO release is verified in production.
-// The doorway and listening links can ship while this remains false.
-export const SUNSETS_CANONICALS_LIVE = false;
+// SUNSETS.FM SEO release 4dac9b3e verified live on 2026-10-26.
+// All seven destinations serve real content and self-canonical URLs.
+export const SUNSETS_CANONICALS_LIVE = true;
 export const SUNSETS_SHOW_URL =
   "https://sunsets.fm/radio-shows/chasing-sunsets";
 
