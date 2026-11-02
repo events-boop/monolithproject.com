@@ -26,6 +26,7 @@ export const ROUTES = {
   radio: "/radio",
   sunsets: "/sunsets",
   sunsetsFM: "/sunsets-fm",
+  openNetwork: "/open-network/",
   lake: "/lake",
   chasingSunsets: "/chasing-sunsets",
   chasingSunsetsFacts: "/chasing-sunsets-facts",
