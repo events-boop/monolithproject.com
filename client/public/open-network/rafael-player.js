@@ -13,7 +13,7 @@
   let pendingStart = 0;
   let timer;
   let loading = false;
-  let providerRestricted = true; // Error 150 reproduced in both previews on 2026-11-02.
+  let providerRestricted = false; // Availability follows the current provider response.
   function youtubeAPI() {
     if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
     if (apiPromise) return apiPromise;
