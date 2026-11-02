@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState, useRef } from "react";
 import { Link } from "wouter";
+import { ROUTES } from "@shared/routes";
 import { ChevronDown, ArrowUpRight, Play, Ticket } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
@@ -114,6 +115,7 @@ export default function NavigationMegamenu({
   if (type === "chasing-radio") {
     leftColumnTitle = "SUN(SETS) Radio";
     leftColumnItems = [
+      { label: "Open Network", href: ROUTES.openNetwork, icon: "arrow" },
       { label: "S1E1: Benchek", href: "/radio/ep-01-benchek", icon: "play" },
       {
         label: "S1E2: Terranova",
