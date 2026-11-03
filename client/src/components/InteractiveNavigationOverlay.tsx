@@ -33,6 +33,7 @@ import { INSTAGRAM_MONOLITH, LAYLO_URL, SOUNDCLOUD_URL } from "@/data/events";
 import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import MagneticButton from "./MagneticButton";
+import { ROUTES } from "@shared/routes";
 import ResponsiveImage from "./ResponsiveImage";
 
 interface InteractiveNavigationOverlayProps {
@@ -54,6 +55,7 @@ interface ChapterView extends NavigationChapter {
 }
 
 const utilityLinks = [
+  { label: "Open Network", href: ROUTES.openNetwork },
   { label: "Tickets", href: "/tickets" },
   { label: "Plan Visit", href: "/guide" },
   { label: "Monolith", href: "/monolith" },
@@ -411,6 +413,7 @@ export default function InteractiveNavigationOverlay({
             { label: "Sun(Sets)", href: "/sunsets" },
             { label: "Untold Story", href: "/story" },
             { label: "Radio", href: "/radio" },
+            { label: "Open Network", href: ROUTES.openNetwork },
             { label: "About", href: "/about" },
           ].map(link => (
             <a

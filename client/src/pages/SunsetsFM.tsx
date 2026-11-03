@@ -10,6 +10,7 @@ import {
 } from "@shared/seo/sunsets-radio";
 
 const exploreLinks = [
+  { label: "The Open Network", href: ROUTES.openNetwork },
   { label: "Radio", href: "https://sunsets.fm/radio" },
   { label: "Chasing Sun(Sets) Radio", href: SUNSETS_SHOW_URL },
   { label: "DJ sets", href: "https://sunsets.fm/sets" },

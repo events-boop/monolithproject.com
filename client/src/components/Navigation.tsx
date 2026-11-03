@@ -286,7 +286,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       return;
     }
 
-    if (href.startsWith("/go/")) {
+    if (href.startsWith("/go/") || href.startsWith(ROUTES.openNetwork)) {
       window.location.href = href;
       return;
     }
