@@ -1,0 +1,30 @@
+{
+  "importedAt": "2026-11-02T23:49:22.952Z",
+  "sourceComponent": "sunsets.fm/src/components/HomeFrequencyCover.tsx",
+  "recording": "https://www.youtube.com/watch?v=QtKGMfeyPUE",
+  "embedCheck": {
+    "result": "error",
+    "code": 150,
+    "meaning": "Publisher does not allow embedded playback in this check"
+  },
+  "assets": [
+    {
+      "source": "/Users/starkindustries/Downloads/sunsets.fm/public/media/diplo-antarctica-cover-20261007-640.webp",
+      "image": "/media/home-network/diplo-antarctica-cover-20261007-640.webp",
+      "bytes": 35502,
+      "sha256": "aa828a02c5035947d42c6199a9520206be0e0922680e320495652e82a3ea2964"
+    },
+    {
+      "source": "/Users/starkindustries/Downloads/sunsets.fm/public/media/diplo-antarctica-cover-20261007-1280.webp",
+      "image": "/media/home-network/diplo-antarctica-cover-20261007-1280.webp",
+      "bytes": 91612,
+      "sha256": "62b6016388499471341cc76b6babdc74987fb352c4eb635297ef8ed0fb65cbeb"
+    },
+    {
+      "source": "/Users/starkindustries/Downloads/sunsets.fm/public/media/frequency-globe-20261007-1280.webp",
+      "image": "/media/home-network/frequency-globe-20261007-1280.webp",
+      "bytes": 277092,
+      "sha256": "6afd311da052600fedbac8c4d4145150025aa545f5aeb0122e19cb46830426b0"
+    }
+  ]
+}

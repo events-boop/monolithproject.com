@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-11-02T23:32:41.882317+00:00",
+  "route": "/radio",
+  "reference": "https://6ae8e69985ac4c2fe46f1f2d--monolithproject.netlify.app/open-network/#vision",
+  "nativeMonolithHeaderAndFooter": true,
+  "localRecordingCovers": 121,
+  "featuredSet": "Rafael B2B Brunello \u2014 Santa Monica Pier | RAW CUTS",
+  "featuredProvider": "SoundCloud",
+  "livePlaybackEvidence": {
+    "errors": [],
+    "first": 0,
+    "second": 1747.2149999523162,
+    "playing": true,
+    "seek": 291968.5859999642,
+    "seekWorked": true,
+    "afterStop": {
+      "url": "http://127.0.0.1:3001/radio",
+      "main": 1,
+      "iframes": 0
+    },
+    "mobileOverflow": false
+  },
+  "checks": {
+    "typescript": "pass",
+    "viteBuild": "pass",
+    "prerender": "pass",
+    "sceneTests": "45 passed",
+    "browserTests": "4 passed",
+    "responsiveWidths": [
+      1440,
+      768,
+      390,
+      320
+    ],
+    "assetBudget": "Site-wide budget remains over limit; not a release-ready budget result."
+  },
+  "publication": {
+    "localCommit": "See git history for the completion commit",
+    "pushed": false,
+    "deployed": false
+  },
+  "priorWorkBackup": "/private/tmp/monolith-network-20261102T223808Z",
+  "artworkUpdate": {
+    "checkedAt": "2026-11-02T23:44:38.374Z",
+    "chasingCovers": 13,
+    "source": "client/src/data/chasingRadioEpisodes.ts",
+    "provenance": "cover-presentation-overrides.json",
+    "surfaces": [
+      "hero",
+      "player",
+      "library",
+      "journey"
+    ],
+    "checks": {
+      "typescript": "pass",
+      "browserTests": "4 passed",
+      "responsiveWidths": [
+        1440,
+        768,
+        390,
+        320
+      ],
+      "allLocalImages": "pass"
+    },
+    "deployed": false
+  },
+  "finalVerification": {
+    "typescript": "pass",
+    "viteBuild": "pass",
+    "publicPrerender": "pass",
+    "unitTests": 50,
+    "browserChecks": 15,
+    "publicRoutesReviewed": 75
+  }
+}

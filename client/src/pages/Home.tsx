@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import Navigation from "@/components/Navigation";
-import HeroSection from "@/components/HeroSection";
+import HomeHeroCarousel from "@/components/HomeHeroCarousel";
+import SunsetsLaunchSignup from "@/components/SunsetsLaunchSignup";
 import {
   HomeSeries,
   HomeRecap,
@@ -17,7 +18,17 @@ import "@/styles/home.css";
 export default function Home() {
   usePublicSiteDataVersion();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const target = window.location.hash.slice(1);
+    if (!target) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const frame = window.requestAnimationFrame(() => {
+      document
+        .getElementById(target)
+        ?.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
   return (
     <div className="monolith-home min-h-screen bg-background text-foreground relative overflow-x-hidden">
@@ -30,11 +41,12 @@ export default function Home() {
       />
       <Navigation />
       <main id="main-content" tabIndex={-1}>
-        <HeroSection />
+        <HomeHeroCarousel />
         <div id="season">
           <HomeUpcomingShows />
         </div>
         <HomeSeries />
+        <SunsetsLaunchSignup />
         <div id="showcase">
           <ViewportLazy
             minHeightClassName="min-h-[700px]"

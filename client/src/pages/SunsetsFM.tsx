@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import { radioEpisodes } from "@/data/radioEpisodes";
 import { ROUTES } from "@shared/routes";
+import hostedForms from "@shared/signup-forms.json";
 import {
   SUNSETS_EPISODE_URLS,
   SUNSETS_SHOW_URL,
@@ -26,7 +27,7 @@ export default function SunsetsFM() {
         title="SUNSETS.FM | The Monolith Project"
         absoluteTitle
         canonicalPath={ROUTES.sunsetsFM}
-        description="SUNSETS.FM is a DJ-set discovery platform and the home of Chasing Sun(Sets) Radio. Part of The Monolith Project family."
+        description="Coming soon: SUNSETS.FM, a music discovery network from The Monolith Project. Explore Chasing SUN(SETS) Radio and sign up for the next chapter."
       />
       <Navigation brand="monolith" />
       <main
@@ -44,7 +45,7 @@ export default function SunsetsFM() {
               className="pointer-events-none absolute -right-16 top-0 -z-10 h-72 w-72 rounded-full bg-[#C2703E]/15 blur-3xl"
             />
             <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.25em] text-[#E8B86D]">
-              The Monolith Project / Music
+              The Monolith Project / Coming soon
             </p>
             <h1
               id="sunsets-fm-title"
@@ -53,16 +54,29 @@ export default function SunsetsFM() {
               SUNSETS.FM
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
-              A DJ-set discovery platform and the home of Chasing Sun(Sets)
-              Radio.
+              A new music discovery network from Monolith. Built from the spirit
+              of Chasing Sun(Sets) Radio, connecting the sets, places, and
+              people behind the music.
             </p>
             <a
-              href="https://sunsets.fm"
+              href={ROUTES.openNetwork}
               className={`btn-pill-sunsets mt-8 inline-flex max-w-full items-center justify-center gap-3 !px-5 !text-xs !tracking-[0.06em] ${linkFocus}`}
             >
-              Listen on SUNSETS.FM{" "}
+              Explore the Open Network{" "}
               <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
             </a>
+            <a
+              href={hostedForms.radio}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-5 flex min-h-11 w-fit items-center gap-3 text-sm text-[#E8B86D] underline underline-offset-4 ${linkFocus}`}
+            >
+              Get SUNSETS.FM launch updates
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <p className="mt-2 text-xs leading-relaxed text-white/60">
+              Opens our email signup form. Confirm your email from your inbox.
+            </p>
           </section>
           <section aria-labelledby="episodes-title" className="py-12 md:py-16">
             <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[#E8B86D]">

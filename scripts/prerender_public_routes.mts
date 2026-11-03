@@ -13,7 +13,6 @@ import { insightEntries } from "../client/src/data/insights.ts";
 import {
   SUNSETS_CANONICALS_LIVE,
   SUNSETS_EPISODE_URLS,
-  SUNSETS_SHOW_URL,
 } from "../shared/seo/sunsets-radio.ts";
 import { radioEpisodes } from "../client/src/data/radioEpisodes.ts";
 import { untoldFaqs } from "../client/src/components/untold-story/constants.ts";
@@ -22,7 +21,6 @@ import {
   buildFactsPageSchema,
   buildFaqSchema,
   buildPodcastEpisodeSchema,
-  buildPodcastSeriesSchema,
   buildScheduleSchema,
   buildScheduledEventSchema,
   buildSitewideIdentitySchema,
@@ -781,18 +779,21 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       title: "SUNSETS.FM | The Monolith Project",
       absoluteTitle: true,
       description:
-        "SUNSETS.FM is a DJ-set discovery platform and the home of Chasing Sun(Sets) Radio. Part of The Monolith Project family.",
+        "Coming soon: SUNSETS.FM, a music discovery network from The Monolith Project. Explore Chasing SUN(SETS) Radio and sign up for the next chapter.",
       bodyHtml: renderBaseLayout(
-        "The Monolith Project / Music",
+        "The Monolith Project / Coming soon",
         "SUNSETS.FM",
         [
-          "A DJ-set discovery platform and the home of Chasing Sun(Sets) Radio.",
+          "A new music discovery network from Monolith. Built from the spirit of Chasing Sun(Sets) Radio, connecting the sets, places, and people behind the music.",
         ],
         [
           {
-            href: "https://sunsets.fm",
-            label: "Listen on SUNSETS.FM",
-            external: true,
+            href: "/radio#vision",
+            label: "Explore the Open Network",
+          },
+          {
+            href: "/#sunsets-fm-signup",
+            label: "Get SUNSETS.FM launch updates",
           },
         ]
       ),
@@ -801,18 +802,28 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/radio",
     {
-      canonicalUrl: SUNSETS_CANONICALS_LIVE ? SUNSETS_SHOW_URL : undefined,
-      title: "Radio | The Monolith Project",
+      title: "Monolith × SUNSETS.FM — The Open Network",
       description:
-        "Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community.",
+        "From Monolith gatherings to Chasing SUN(SETS) Radio and the wider SUNSETS.FM discovery network. Listen, meet the artists, and explore the connection.",
       absoluteTitle: true,
-      schemaData: buildPodcastSeriesSchema(radioEpisodes),
+      schemaData: {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Monolith × SUNSETS.FM — The Open Network",
+        url: "https://monolithproject.com/radio",
+        isPartOf: {
+          "@type": "WebSite",
+          name: "The Monolith Project",
+          url: "https://monolithproject.com/",
+        },
+      },
       bodyHtml: renderBaseLayout(
-        "Artist-Led Radio",
-        "Radio",
+        "The Monolith Connection",
+        "Monolith × SUNSETS.FM",
         [
-          "The radio archive extends the Chasing Sun(Sets) brand beyond live events through mixes, guest sessions, and episode pages.",
-          "Each episode page includes the guest, date, tracklist, and a direct listening link.",
+          "Monolith brings people together through music. Chasing SUN(SETS) Radio carries that feeling beyond the night.",
+          "SUNSETS.FM is the next chapter: a Monolith project connecting the music to the people and places around it.",
+          "Explore the Open Network vision, listen to Chasing SUN(SETS), Karma Karma and Drumcode Radio, and go inside Rafael B2B Brunello's RAW CUTS set from Santa Monica Pier.",
         ],
         radioEpisodes.map(episode => ({
           href: `/radio/${episode.slug}`,
@@ -1378,24 +1389,28 @@ function deferStylesheets(html: string) {
 
 /** Start the app bundle after first paint (see client/public/app-boot.js). */
 function deferAppEntry(html: string) {
-  const entry = html.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/);
+  const entry = html.match(
+    /<script type="module" crossorigin src="([^"]+)"><\/script>/
+  );
   if (!entry) return html;
   const preloads: string[] = [];
-  return html
-    .replace(
-      /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
-      (_match, href: string) => {
-        preloads.push(href);
-        return "";
-      }
-    )
-    .replace(
-      entry[0],
-      () =>
-        `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
-    )
-    // Home-only image hint; on other routes it is just a blocking request.
-    .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "");
+  return (
+    html
+      .replace(
+        /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
+        (_match, href: string) => {
+          preloads.push(href);
+          return "";
+        }
+      )
+      .replace(
+        entry[0],
+        () =>
+          `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
+      )
+      // Home-only image hint; on other routes it is just a blocking request.
+      .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "")
+  );
 }
 
 // Fonts the prerendered heroes paint with (body: Inter, display: Archivo

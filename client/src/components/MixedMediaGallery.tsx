@@ -25,6 +25,7 @@ type GalleryPhoto = {
 interface MixedMediaGalleryProps {
   media?: MediaItem[];
   title?: string;
+  headingLevel?: "h1" | "h2";
   subtitle?: string;
   description?: string;
   className?: string;
@@ -37,6 +38,7 @@ interface MixedMediaGalleryProps {
 export default function MixedMediaGallery({
   media = homeGallery,
   title = "Event Archive",
+  headingLevel: Heading = "h2",
   subtitle = "Gallery",
   description = "Photos, videos, and recaps from past Monolith nights.",
   className = "bg-background border-t border-white/5 relative",
@@ -94,9 +96,9 @@ export default function MixedMediaGallery({
                 {subtitle}
               </span>
             )}
-            <h2 className="font-display text-4xl md:text-6xl leading-[0.85] tracking-tight text-white uppercase mb-4">
+            <Heading className="font-display text-4xl md:text-6xl leading-[0.85] tracking-tight text-white uppercase mb-4">
               {title}
-            </h2>
+            </Heading>
             {description && (
               <p className="font-sans text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
                 {description}

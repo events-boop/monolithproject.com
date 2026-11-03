@@ -1,0 +1,24 @@
+{
+  "sourceRepository": "/Users/starkindustries/Downloads/sunsets.fm",
+  "assets": [
+    {
+      "source": "public/media/collections/chasing-sunsets-season.jpg",
+      "file": "chasing-season.webp",
+      "credit": "Chasing SUN(SETS) series artwork",
+      "sha256": "a28f85e0dd8de9e590d79b1e8c5d41c9a3d0b555fffa2b3f0e2a23d3f21a40b9"
+    },
+    {
+      "source": "public/media/arodes-santa-monica-cover-20261021.webp",
+      "file": "arodes.webp",
+      "credit": "ARODES / Santa Monica recording artwork",
+      "sha256": "19212474897d1bd9b205314f45f567b1e2d97062f8d904c813f81b837a8b4e03"
+    },
+    {
+      "source": "src/data/youtubeArtwork.json",
+      "url": "https://i.ytimg.com/vi/wz8wGOVTkhM/maxresdefault.jpg",
+      "file": "rafael-norish.webp",
+      "credit": "NORISH FM / RAFAEL recording artwork",
+      "sha256": "4d3c52ac07e24ee4d24479d8d10d38e93ebf6d875bf7b4e5de50fc94ece40b2c"
+    }
+  ]
+}

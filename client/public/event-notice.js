@@ -1,8 +1,8 @@
-/* One acknowledgement per published update, per browser session. No analytics. */
+/* Event details open only when a visitor explicitly requests them. No auto popup. */
 export function mountEventNotice(dialog) {
   if (!dialog) return () => {};
   const key = 'monolith:event-notice:' + dialog.dataset.revision;
-  let previousFocus, previousOverflow, timer;
+  let previousFocus, previousOverflow;
   const remember = () => { try { sessionStorage.setItem(key, 'seen'); } catch {} };
   const open = () => {
     if (dialog.open || document.querySelector('dialog[open]')) return;
@@ -34,11 +34,7 @@ export function mountEventNotice(dialog) {
   dialog.addEventListener('close', closed);
   dialog.addEventListener('cancel', remember);
   dialog.addEventListener('keydown', keydown);
-  let seen = false;
-  try { seen = sessionStorage.getItem(key) === 'seen'; } catch {}
-  if (!seen && dialog.dataset.autoOpen === 'true' && !['#event-update','#event-status'].includes(location.hash)) timer = setTimeout(open, 250);
   return () => {
-    clearTimeout(timer);
     document.removeEventListener('click', click);
     dialog.removeEventListener('keydown', keydown);
     if (dialog.open) { dialog.close(); closed(); }
