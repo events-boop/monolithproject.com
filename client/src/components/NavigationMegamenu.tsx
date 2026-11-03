@@ -113,7 +113,7 @@ export default function NavigationMegamenu({
   let leftColumnItems = megamenu.items;
 
   if (type === "chasing-radio") {
-    leftColumnTitle = "SUN(SETS) Radio";
+    leftColumnTitle = "Chasing Sunsets Radio";
     leftColumnItems = [
       { label: "Open Network", href: ROUTES.openNetwork, icon: "arrow" },
       { label: "S1E1: Benchek", href: "/radio/ep-01-benchek", icon: "play" },

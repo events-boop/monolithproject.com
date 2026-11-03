@@ -412,7 +412,7 @@ export default function InteractiveNavigationOverlay({
             { label: "Events / Tickets", href: "/schedule" },
             { label: "Sun(Sets)", href: "/sunsets" },
             { label: "Untold Story", href: "/story" },
-            { label: "Radio", href: "/radio" },
+            { label: "Chasing Sunsets Radio", href: "/radio" },
             { label: "Open Network", href: ROUTES.openNetwork },
             { label: "About", href: "/about" },
           ].map(link => (

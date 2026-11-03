@@ -48,3 +48,7 @@ Site implementation committed as `d5392ee`.
 - **Consistent listening path:** The six legacy SUNSETS.FM doorway tiles still use the older outbound episode flow. Bring their covers and actions into line with the newly approved radio page in a separate, focused pass.
 
 The remaining working-tree changes after the site commit are pre-existing sitemap timestamps and the unused `client/src/pages/chasing-radio.css`; neither was discarded. The mobile About screenshot was captured during its cinematic entrance and is not evidence of a permanent blank/contrast defect; verify after settling before proposing a change.
+
+## Radio naming correction
+
+Owner confirmed: on Monolith, the radio experience is **Chasing Sunsets Radio — powered by sunsets.fm**. Lead with that name in the radio hub, homepage radio slide, and navigation. SUNSETS.FM keeps its separate page and launch slide. This wording describes the radio platform credit while preserving Monolith as the parent project.

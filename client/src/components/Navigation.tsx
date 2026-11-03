@@ -31,7 +31,7 @@ import { getEventCta } from "../lib/cta";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { ROUTES, ANCHORS, routeRadioEpisode } from "@shared/routes";
+import { ROUTES, ANCHORS } from "@shared/routes";
 
 const InteractiveNavigationOverlay = lazy(
   () => import("./InteractiveNavigationOverlay")
@@ -785,13 +785,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   megamenu={{
                     items: [], // Dynamic roster generated inside NavigationMegamenu
                     feature: {
-                      title: "Chasing Sun(Sets) Radio Show",
-                      subtitle: "Latest YouTube Broadcast",
-                      image: "/images/radio-show-gear.webp",
-                      href: routeRadioEpisode("ep-004-benchek-part-2"),
+                      title: "Chasing Sunsets Radio",
+                      subtitle: "powered by sunsets.fm",
+                      image:
+                        "/media/chasing-radio/sommers-uk-episode-011-640.webp",
+                      href: `${ROUTES.radio}#radio`,
                       ctaText: "Listen Now",
                       icon: "play",
-                      badge: "YOUTUBE BROADCAST",
+                      badge: "A MONOLITH ORIGINAL",
                     },
                   }}
                 />

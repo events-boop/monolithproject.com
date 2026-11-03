@@ -802,14 +802,14 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/radio",
     {
-      title: "Monolith × SUNSETS.FM — The Open Network",
+      title: "Chasing Sunsets Radio — powered by sunsets.fm | Monolith",
       description:
-        "From Monolith gatherings to Chasing SUN(SETS) Radio and the wider SUNSETS.FM discovery network. Listen, meet the artists, and explore the connection.",
+        "Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Listen to the sets, meet the artists, and explore the wider music discovery network.",
       absoluteTitle: true,
       schemaData: {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        name: "Monolith × SUNSETS.FM — The Open Network",
+        name: "Chasing Sunsets Radio — powered by sunsets.fm",
         url: "https://monolithproject.com/radio",
         isPartOf: {
           "@type": "WebSite",
@@ -818,8 +818,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         },
       },
       bodyHtml: renderBaseLayout(
-        "The Monolith Connection",
-        "Monolith × SUNSETS.FM",
+        "The Monolith Project / powered by sunsets.fm",
+        "Chasing Sunsets Radio",
         [
           "Monolith brings people together through music. Chasing SUN(SETS) Radio carries that feeling beyond the night.",
           "SUNSETS.FM is the next chapter: a Monolith project connecting the music to the people and places around it.",

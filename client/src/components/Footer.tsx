@@ -72,7 +72,7 @@ const links: FooterLinkGroup[] = [
       { name: "Chasing Sun(Sets)", href: ROUTES.chasingSunsets },
       { name: "Sun(Sets) Link In Bio", href: ROUTES.sunsets },
       { name: "Untold Story", href: ROUTES.story },
-      { name: "Radio Show", href: ROUTES.radio },
+      { name: "Chasing Sunsets Radio", href: ROUTES.radio },
       { name: "SUNSETS.FM", href: ROUTES.sunsetsFM },
       { name: "Open Network", href: ROUTES.openNetwork, fullPage: true },
     ],
@@ -171,13 +171,17 @@ export default function Footer() {
                 <span aria-hidden="true">+</span>
               </summary>
               <nav aria-label={group.title}>
-                {group.items.map(item => item.fullPage ? (
-                  <a key={item.name} href={item.href}>{item.name}</a>
-                ) : (
-                  <Link key={item.name} href={item.href}>
-                    {item.name}
-                  </Link>
-                ))}
+                {group.items.map(item =>
+                  item.fullPage ? (
+                    <a key={item.name} href={item.href}>
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link key={item.name} href={item.href}>
+                      {item.name}
+                    </Link>
+                  )
+                )}
               </nav>
             </details>
           ))}

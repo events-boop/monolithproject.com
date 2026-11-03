@@ -149,7 +149,7 @@ export default function RadioLibrary({
       <div className="section-kicker">
         <span className="eyebrow">
           <span className="status-dot" />
-          OPEN RADIO / INDEPENDENT FREQUENCIES
+          CHASING SUNSETS RADIO
         </span>
         <span>02 / 05</span>
       </div>
@@ -159,8 +159,8 @@ export default function RadioLibrary({
             Stay on the <em>frequency.</em>
           </h2>
           <p>
-            Our Chasing SUN(SETS) collection. A wider world of independent
-            voices.
+            A Monolith original, powered by sunsets.fm. Our collection and a
+            wider world of independent voices.
           </p>
         </div>
         <div className="station-horizon">

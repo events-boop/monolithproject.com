@@ -177,7 +177,10 @@ export default function HomeHeroCarousel() {
                 <p className="home-eyebrow">
                   The sound of Monolith <span>/</span> Listen now
                 </p>
-                <p className="home-network-wordmark">CHASING SUN(SETS) RADIO</p>
+                <p className="home-network-wordmark">CHASING SUNSETS RADIO</p>
+                <p className="home-radio-powered-by">
+                  powered by <Link href={ROUTES.sunsetsFM}>sunsets.fm</Link>
+                </p>
                 <h1>
                   Stay on the
                   <br />

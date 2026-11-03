@@ -15,7 +15,10 @@ export function NetworkHero({ onListen }: { onListen: () => void }) {
           <span className="small-sun" aria-hidden="true">
             ✳
           </span>{" "}
-          THE MONOLITH PROJECT × SUNSETS.FM
+          CHASING SUNSETS RADIO
+        </p>
+        <p className="network-powered-by">
+          powered by <a href="/sunsets-fm">sunsets.fm</a>
         </p>
         <h1 id="hero-title">
           Find your frequency.

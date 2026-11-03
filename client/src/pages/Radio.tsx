@@ -56,10 +56,10 @@ export default function Radio() {
   return (
     <>
       <SEO
-        title="Monolith × SUNSETS.FM — The Open Network"
+        title="Chasing Sunsets Radio — powered by sunsets.fm | Monolith"
         absoluteTitle
         canonicalPath={ROUTES.radio}
-        description="From Monolith gatherings to Chasing SUN(SETS) Radio and the wider SUNSETS.FM discovery network. Listen, meet the artists, and explore the connection."
+        description="Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Listen to the sets, meet the artists, and explore the wider music discovery network."
         image="/media/chasing-radio/series-main.webp"
       />
       <Navigation brand="monolith" />
@@ -71,7 +71,7 @@ export default function Radio() {
         <div className="network-breadcrumb">
           <Link href={ROUTES.home}>THE MONOLITH PROJECT</Link>
           <span aria-hidden="true">/</span>
-          <span>SUNSETS.FM</span>
+          <span>CHASING SUNSETS RADIO</span>
           <nav aria-label="On this page">
             <a href="#monolith-connection">The connection</a>
             <a href="#radio">Listen</a>

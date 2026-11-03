@@ -471,3 +471,15 @@
     min-height: calc(100svh - 134px);
   }
 }
+
+.home-radio-powered-by {
+  margin: -8px 0 24px;
+  color: #d8c9a7;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.home-radio-powered-by a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
