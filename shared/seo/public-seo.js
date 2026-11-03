@@ -9,6 +9,7 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/sunsets-fm", priority: "0.8", changefreq: "weekly" },
   { path: "/story", priority: "0.8", changefreq: "daily" },
   { path: "/radio", priority: "0.8", changefreq: "daily" },
+  { path: "/open-network", priority: "0.7", changefreq: "weekly" },
   { path: "/chasing-sunsets-facts", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-01-benchek", priority: "0.8", changefreq: "weekly" },
   { path: "/radio/ep-02-ewerseen", priority: "0.8", changefreq: "weekly" },

@@ -516,7 +516,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         </>
                       ) : resolvedBrand === "radio" ? (
                         <span className="font-radio text-rose-500">
-                          SUN(SETS) RADIO
+                          CHASING SUNSETS RADIO
                         </span>
                       ) : (
                         <div className="flex flex-row items-baseline gap-2">
@@ -789,7 +789,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                       subtitle: "powered by sunsets.fm",
                       image:
                         "/media/chasing-radio/sommers-uk-episode-011-640.webp",
-                      href: `${ROUTES.radio}#radio`,
+                      href: `${ROUTES.radio}#radio-featured`,
                       ctaText: "Listen Now",
                       icon: "play",
                       badge: "A MONOLITH ORIGINAL",

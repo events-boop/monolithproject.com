@@ -61,9 +61,9 @@ for (const width of [320, 390, 768, 1440]) {
       .getByRole("button", { name: "Show Radio slide", exact: true })
       .click();
     await page.getByRole("link", { name: "Enter the listening room" }).click();
-    await expect(page).toHaveURL(/\/radio#radio$/);
-    await expect(page.locator(".radio-feature")).toBeVisible();
-    await expect(page.locator(".feature-sleeve img")).toHaveAttribute(
+    await expect(page).toHaveURL(/\/radio#radio-featured$/);
+    await expect(page.locator("#radio-featured")).toBeVisible();
+    await expect(page.locator(".radio-cover-feature img")).toHaveAttribute(
       "src",
       /\/media\/chasing-radio\//
     );
@@ -128,7 +128,7 @@ test("SUNSETS doorway uses launch signup and archive galleries have a page headi
   ).toHaveAttribute("href", hostedForms.radio);
   await expect(
     page.getByRole("link", { name: "Explore the Open Network", exact: true })
-  ).toHaveAttribute("href", "/radio#vision");
+  ).toHaveAttribute("href", "/open-network");
   await page.goto("/archive/autograf-march-21-2026");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Autograf");
   await page.goto("/#sunsets-fm-signup");

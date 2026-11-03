@@ -125,8 +125,8 @@ export default function RadioEpisode() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title={`Chasing Sun(Sets) Radio | ${episode.shortCode} ${episode.guest}`}
-        description={`Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`}
+        title={`Chasing Sunsets Radio | ${episode.shortCode} ${episode.guest}`}
+        description={`Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`}
         absoluteTitle
         canonicalPath={`/radio/${episode.slug}`}
         canonicalUrl={
@@ -151,6 +151,12 @@ export default function RadioEpisode() {
               {episode.title}
             </h1>
             <p className="text-lg text-white/80">Guest: {episode.guest}</p>
+            <p className="mt-3 text-sm text-[#E8B86D]">
+              Chasing Sunsets Radio · powered by{" "}
+              <Link href="/sunsets-fm" className="underline underline-offset-4">
+                sunsets.fm
+              </Link>
+            </p>
             <a
               href={SUNSETS_EPISODE_URLS[episode.slug]}
               className="btn-pill-sunsets mt-6 inline-flex max-w-full items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"

@@ -438,58 +438,46 @@
   to = "/404.html"
   status = 404
 
-# The Open Network now lives inside the native Monolith Radio page.
-[[redirects]]
-  from = "/open-network"
-  to = "/radio"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/open-network/"
-  to = "/radio"
-  status = 301
-  force = true
-
+# Native Open Network lives separately from the Chasing Sunsets Radio archive.
 [[redirects]]
   from = "/open-network/index.html"
-  to = "/radio"
+  to = "/open-network/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/karma-karma"
-  to = "/radio?series=karma-karma#radio"
+  to = "/open-network/?series=karma-karma#radio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/karma-karma/"
-  to = "/radio?series=karma-karma#radio"
+  to = "/open-network/?series=karma-karma#radio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/karma-karma/index.html"
-  to = "/radio?series=karma-karma#radio"
+  to = "/open-network/?series=karma-karma#radio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/drumcode"
-  to = "/radio?series=drumcode#radio"
+  to = "/open-network/?series=drumcode#radio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/drumcode/"
-  to = "/radio?series=drumcode#radio"
+  to = "/open-network/?series=drumcode#radio"
   status = 301
   force = true
 
 [[redirects]]
   from = "/open-network/drumcode/index.html"
-  to = "/radio?series=drumcode#radio"
+  to = "/open-network/?series=drumcode#radio"
   status = 301
   force = true
 

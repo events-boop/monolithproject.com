@@ -788,7 +788,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         ],
         [
           {
-            href: "/radio#vision",
+            href: "/open-network",
             label: "Explore the Open Network",
           },
           {
@@ -804,13 +804,33 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Chasing Sunsets Radio — powered by sunsets.fm | Monolith",
       description:
+        "Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Explore the archive, meet the artists, and play the featured recordings.",
+      absoluteTitle: true,
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / powered by sunsets.fm",
+        "Chasing Sunsets Radio",
+        [
+          "Guest-led mixes, crossover cuts, and long-form episodes from the Monolith archive.",
+        ],
+        radioEpisodes.map(episode => ({
+          href: `/radio/${episode.slug}`,
+          label: `${episode.shortCode}: ${episode.title}`,
+        }))
+      ),
+    },
+  ],
+  [
+    "/open-network",
+    {
+      title: "Monolith × SUNSETS.FM — The Open Network",
+      description:
         "Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Listen to the sets, meet the artists, and explore the wider music discovery network.",
       absoluteTitle: true,
       schemaData: {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        name: "Chasing Sunsets Radio — powered by sunsets.fm",
-        url: "https://monolithproject.com/radio",
+        name: "Monolith × SUNSETS.FM — The Open Network",
+        url: "https://monolithproject.com/open-network",
         isPartOf: {
           "@type": "WebSite",
           name: "The Monolith Project",
@@ -818,8 +838,8 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
         },
       },
       bodyHtml: renderBaseLayout(
-        "The Monolith Project / powered by sunsets.fm",
-        "Chasing Sunsets Radio",
+        "The Monolith Connection",
+        "The Open Network",
         [
           "Monolith brings people together through music. Chasing SUN(SETS) Radio carries that feeling beyond the night.",
           "SUNSETS.FM is the next chapter: a Monolith project connecting the music to the people and places around it.",

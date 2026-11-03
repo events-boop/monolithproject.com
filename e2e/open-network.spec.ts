@@ -30,7 +30,7 @@ test("Monolith shell, connection story and responsive cover layouts", async ({
   page.on("pageerror", error => errors.push(error.message));
   for (const width of [1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 960 });
-    await page.goto("/radio");
+    await page.goto("/open-network");
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
       "Find your frequency"
     );
@@ -42,7 +42,7 @@ test("Monolith shell, connection story and responsive cover layouts", async ({
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
-      "https://monolithproject.com/radio"
+      "https://monolithproject.com/open-network"
     );
     expect(
       await page.evaluate(
@@ -83,7 +83,7 @@ test("Monolith shell, connection story and responsive cover layouts", async ({
 test("search, artist tabs, all three series and one active player", async ({
   page,
 }) => {
-  await page.goto("/radio");
+  await page.goto("/open-network");
   await page.getByRole("button", { name: /Play SOMMERS.*Episode 011/ }).click();
   await expect(page.locator(".embed-slot iframe")).toHaveAttribute(
     "src",
@@ -136,7 +136,7 @@ test("series deep links and every recording cover resolve locally", async ({
   page,
   request,
 }) => {
-  await page.goto("/radio?series=karma-karma#radio");
+  await page.goto("/open-network?series=karma-karma#radio");
   await expect(page.locator(".radio-profile h3")).toHaveText("Shimza");
   await expect(page.locator(".radio-sleeve")).toHaveCount(41);
   for (const episode of episodes) {
@@ -164,7 +164,7 @@ test("temporary provider errors preserve the original recording and stop control
       body: `window.SC={Widget:Object.assign(function(){return {bind(name,fn){if(name==='error')setTimeout(fn,0)},unbind(){},play(){},pause(){},seekTo(){}}},{Events:{READY:'ready',PLAY:'play',PAUSE:'pause',FINISH:'finish',ERROR:'error'}})};`,
     })
   );
-  await page.goto("/radio");
+  await page.goto("/open-network");
   await page.getByRole("button", { name: /Science Fiction at 4:50/ }).click();
   await expect(page.getByRole("alert")).toContainText("could not play");
   await expect(

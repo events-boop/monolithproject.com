@@ -192,7 +192,7 @@ export default function HomeHeroCarousel() {
                 </p>
                 <div className="home-network-actions">
                   <Link
-                    href={`${ROUTES.radio}#radio`}
+                    href={`${ROUTES.radio}#radio-featured`}
                     className="home-network-primary"
                   >
                     Enter the listening room{" "}
@@ -205,7 +205,7 @@ export default function HomeHeroCarousel() {
                 </div>
               </div>
               <Link
-                href={`${ROUTES.radio}#radio`}
+                href={`${ROUTES.radio}#radio-archive`}
                 className="home-radio-covers"
                 aria-label="Explore the Chasing SUN(SETS) Radio collection"
               >
@@ -227,7 +227,7 @@ export default function HomeHeroCarousel() {
                   width={640}
                   height={640}
                 />
-                <span>13 original transmissions. One shared frequency.</span>
+                <span>Original transmissions. One shared frequency.</span>
               </Link>
             </div>
           )}

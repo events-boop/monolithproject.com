@@ -1,0 +1,137 @@
+.chasing-radio-page {
+  --radio-paper: #f5ecd9;
+  --radio-gold: #d8b77e;
+  background: #07110e;
+}
+.chasing-radio-page .radio-powered-by {
+  margin-top: 18px;
+  color: #d8b77e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.chasing-radio-page .radio-powered-by a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.chasing-radio-page .radio-cover-feature {
+  border-color: #d8b77e50;
+  background: #10231c;
+  border-radius: 5px;
+}
+.chasing-radio-page .radio-cover-art {
+  width: 100%;
+}
+.chasing-radio-page .radio-cover-art img {
+  display: block;
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.chasing-radio-page .radio-cover-shade {
+  display: none;
+}
+.chasing-radio-page .radio-cover-meta {
+  padding: 14px 16px 0;
+  gap: 8px;
+}
+.chasing-radio-page .radio-cover-meta > span {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.chasing-radio-page .radio-cover-caption {
+  padding: 14px 18px 20px;
+}
+.chasing-radio-page .radio-cover-caption h2 {
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+.chasing-radio-page .radio-cover-caption > p:last-child {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d0d5ca;
+}
+.chasing-radio-page .luxe-surface-dark {
+  border-color: #d8b77e24;
+  background: linear-gradient(145deg, #14241cc9, #0b1210);
+}
+.chasing-radio-page #radio-archive article {
+  border-radius: 4px;
+}
+.chasing-radio-page #radio-archive article button:has(img) {
+  border-color: #d8b77e40;
+}
+.chasing-radio-page #radio-archive article button:has(img) > div {
+  display: none;
+}
+.chasing-radio-page #radio-archive article h3 {
+  line-height: 1.08;
+}
+.chasing-radio-page :is(a, button):focus-visible {
+  outline: 2px solid var(--radio-gold);
+  outline-offset: 4px;
+}
+.chasing-radio-page .audio-player-prompt {
+  min-height: 150px;
+}
+.chasing-radio-page .radio-current-signal .font-display {
+  font-size: 20px;
+  line-height: 1.15;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.chasing-radio-page .radio-queue-item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 12px;
+  gap: 8px;
+  padding: 10px 8px;
+}
+.chasing-radio-page .radio-queue-item > div:first-child {
+  width: 40px;
+  height: 40px;
+}
+.chasing-radio-page .radio-queue-item p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.04em;
+}
+.chasing-radio-page .radio-queue-item .font-display {
+  font-size: 14px;
+}
+.chasing-radio-page .radio-queue-item svg {
+  width: 12px;
+}
+@media (min-width: 1200px) {
+  .chasing-radio-page .radio-cover-and-queue {
+    grid-template-columns: minmax(0, 1fr) 180px;
+    align-items: start;
+  }
+}
+@media (max-width: 639px) {
+  .chasing-radio-page .radio-cover-meta {
+    padding: 12px 14px 0;
+  }
+  .chasing-radio-page .radio-cover-caption {
+    padding: 12px 16px 18px;
+  }
+  .chasing-radio-page #radio-archive article > div {
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  .chasing-radio-page #radio-archive article > div > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .chasing-radio-page #radio-archive article h3 {
+    font-size: 22px;
+  }
+  .chasing-radio-page #radio-archive article p {
+    font-size: 13px;
+  }
+  .chasing-radio-page #radio-archive article button:has(img) {
+    width: 100px;
+  }
+}

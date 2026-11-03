@@ -133,7 +133,7 @@ export default function Footer() {
       : brand === "untold-story"
         ? "UNTOLD STORY"
         : brand === "radio"
-          ? "SUN(SETS) RADIO"
+          ? "CHASING SUNSETS RADIO"
           : "MONOLITH";
   return (
     <footer className="site-footer-refined" data-brand={brand}>

@@ -28,7 +28,7 @@ export interface RadioEpisode {
   tracklist: EpisodeTrack[];
 }
 
-export const RADIO_SERIES_NAME = "Chasing Sun(Sets) Radio Show";
+export const RADIO_SERIES_NAME = "Chasing Sunsets Radio";
 
 export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
   autograf: "/artists/autograf",
@@ -51,8 +51,7 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "This is BENCHEK's highly anticipated Part II. Recorded live during a golden-hour set in Marbella, the mix perfectly captures the essence of Chasing Sun(Sets). The selection moves seamlessly through percussive afro house into peak-time melodic anthems. The energy shift is palpable, reflecting the exact moment the sun dips below the horizon.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
+    coverImage: "/media/chasing-radio/benchek-marbella-episode-02.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/benchek-chasing-sunsets-collab-ep02-live-from-marbella&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
     audioUrl:
@@ -82,11 +81,11 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "Recorded during a late-night session in Berlin, RADIAN's Chapter II titled 'No Sleep' dives into the heavier, more hypnotic side of The Monolith Project's sound. The transitions are incredibly patient, letting the driving basslines dictate the mood. It's a masterclass in tension and release, perfect for the darkest hours of the dancefloor.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-87BBhfbyYi6JiBmL-TWj4pw-t500x500.jpg",
+    coverImage: "/media/chasing-radio/radian-no-sleep-chapter-ii-012.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
-    audioUrl: "https://soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+    audioUrl:
+      "https://soundcloud.com/chasing-sun-sets/radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
     guestLinks: [
       {
         label: "RADIAN Feature",
@@ -112,8 +111,7 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "Episode 01 sets the frame for what Chasing Sun(Sets) Radio Show is supposed to be: a bridge between the rooftop chapter and the headphones chapter. BENCHEK starts with warm percussion and low-end patience, then gradually pushes into rolling melodic house without ever losing the sunset feel. The progression is intentional. Nothing rushes. Every transition sounds like a continuation of the same story instead of a hard cut for attention. That is exactly the energy we build at Chasing Sun(Sets) events in Chicago, and this first episode translates that identity into a clean, repeatable listen.\n\nThe middle section leans deeper with organic textures and vocal accents, then resolves with a final stretch designed for late-evening momentum. If you were at one of our golden-hour sessions, you will recognize the emotional pacing immediately. If this is your first time hearing Monolith, this is the right place to start: melodic, precise, and built for repeat listening.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-WN7kMdVH3nFy71kQ-s2YUBw-t500x500.jpg",
+    coverImage: "/media/chasing-radio/benchek-special-nye-episode-010.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
     audioUrl:
@@ -158,8 +156,7 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "Episode 02 captures the dancefloor pressure point where Chasing Sun(Sets) usually shifts from social to fully locked in. EWERSEEN opens with tight drums and negative space, then layers melodic elements in measured steps so the groove keeps climbing without becoming noisy. That control is the signature here. Each blend leaves room for the previous idea to breathe before introducing the next one, which keeps the full hour fluid and focused.\n\nThe center of the mix is heavy on Afro House movement with organic textures that still feel open-air. That balance matters for this series because the Chasing Sun(Sets) identity is never about one-dimensional intensity; it is about building emotion while keeping rhythm in front. The final third leans slightly darker, then resolves with a cleaner melodic finish that feels like the last light disappearing over the skyline. For listeners finding us through search, this episode makes the case quickly: Chasing Sun(Sets) is a Chicago-rooted house music series with global range and mixes worth replaying.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-FMot44uoQiVdP1Uj-bYxapA-t500x500.jpg",
+    coverImage: "/media/chasing-radio/ewerseen-episode-008.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/ewerseen-chasing-sunsets-mix-vol3&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
     audioUrl:
@@ -196,8 +193,7 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "Episode 03 extends the radio format into a slower-burning arc. TERRANOVA approaches this mix like a full room journey: understated opening, mid-set tension, and a final run that lifts without breaking the emotional thread. The arrangement is minimal in the best way. Percussion and bass are always doing the work, while melodic motifs are introduced sparingly so each one has impact.\n\nThis episode is useful for understanding the overlap between our event series and radio identity. On the event side, Chasing Sun(Sets) is about golden-hour gatherings in Chicago with Afro House, Organic House, and Melodic House at the center. On the radio side, the same palette becomes a long-form listening environment where details are easier to hear. TERRANOVA keeps that DNA intact from start to finish. The transitions are deliberate, EQ work is clean, and the pacing never chases shortcuts. If you are curating a weekend sunset stack, this is one of the most replayable entries in the archive.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-yrdlfcJnVQdyx9ZE-uV4tLw-t500x500.jpg",
+    coverImage: "/media/chasing-radio/terranova-episode-009.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/terranova&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
     audioUrl: "https://soundcloud.com/chasing-sun-sets/terranova",
@@ -232,8 +228,7 @@ export const radioEpisodes: RadioEpisode[] = [
     narrative:
       "Episode 04 is a crossover by design. RADIAN starts in the Chasing Sun(Sets) lane with open, melodic phrasing, then threads in darker textures associated with Untold Story while keeping the groove consistent. That duality is why this set matters in the archive. It demonstrates how the two Monolith chapters speak to each other without losing their own identities.\n\nFrom an arrangement standpoint, the mix uses long blends and gradual harmonic movement, which makes the 71-minute runtime feel shorter than it is. The percussive layer stays active through the entire session, but the emotional tone shifts in stages: warm entry, focused middle, and a more immersive final act. For returning listeners, it plays like a bridge set you can use before a night event. For new listeners, it makes the relationship clear: Chasing Sun(Sets) opens the evening, Untold Story takes it deeper, and both belong to the same Chicago music world. This episode is one of the strongest examples of that overlap on radio.",
     image: "/images/radio-show-gear.webp",
-    coverImage:
-      "https://i1.sndcdn.com/artworks-ej63xmhBtCg8zlTu-8jyiyw-t500x500.jpg",
+    coverImage: "/media/chasing-radio/radian-untold-story.webp",
     embedUrl:
       "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/chasing-sun-sets/radianofc-set&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false",
     audioUrl: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
