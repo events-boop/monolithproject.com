@@ -62,8 +62,9 @@ Owner confirmed: on Monolith, the radio experience is **Chasing Sunsets Radio â€
 - Preserved the old standalone network HTML under `private/archive/open-network/`; public media stays in place. The native app now owns `/open-network`.
 - TypeScript and 50 focused unit checks passed. Seventeen browser checks passed for routing, responsive layouts, archive filtering, player selection, homepage/signup, and manual-only event notice. Final queue layout received an additional responsive check.
 - Earlier hosted preview `https://6ae9332d87eb0ed44a7d8133--monolithproject.netlify.app` is superseded: it still has the network at `/radio`. Do not publish it.
-- Updated draft preview build log: `/private/tmp/monolith-radio-refresh-preview.log`; canonical Netlify site ID `33d2ce42-1a25-4b67-a318-bdce495f5f47`. Read its final deploy URL after successful completion. Production remains unchanged unless a later verification explicitly records publication.
-- Prebuild sitemap backup: `/private/tmp/monolith-radio-refresh-before-build-20261102/sitemap.xml`. Restore pre-existing timestamps after the build while retaining the new `/open-network` entry. Do not include unrelated sitemap timestamp changes or unused `client/src/pages/chasing-radio.css` in the commit.
+- Updated draft preview: https://6ae93cea280e053e5c846da9--monolithproject.netlify.app (deploy `6ae93cea280e053e5c846da9`). Full Netlify build/upload succeeded. Source commit: `11a55a4`. Canonical Netlify site ID: `33d2ce42-1a25-4b67-a318-bdce495f5f47`. Production remains unchanged.
+- Hosted verification passed for `/`, `/radio`, `/open-network`, and `/sunsets-fm` at 1440px and 390px: HTTP 200, correct page identity/canonical, no automatic notices, unlocked body, no horizontal overflow, and no JS page errors. Receipt: `hosted-preview-check.json`.
+- Prebuild sitemap backup: `/private/tmp/monolith-radio-refresh-before-build-20261102/sitemap.xml`. Pre-existing timestamps were restored after the build while retaining the new `/open-network` entry. Do not include unrelated sitemap timestamp changes or unused `client/src/pages/chasing-radio.css` in the commit.
 
 ## Still pending
 
