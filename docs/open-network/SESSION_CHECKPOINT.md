@@ -38,3 +38,13 @@ Local preview: `http://localhost:3001/`; native network page: `/radio`.
 4. Confirm Brevo launch messaging/list ownership with the owner. The current audience is music releases; adding launch-specific segmentation would need an intentional form/list update.
 5. Reduce the existing public asset footprint before publishing. Audit file references first; do not delete media or unrelated artwork blindly.
 6. Add a focused mobile accessibility/performance pass for the gallery, signup handoff, and main navigation, followed by preview-deploy verification when publication is requested.
+
+## Post-commit visual pass
+
+Site implementation committed as `d5392ee`.
+
+- **Mobile calendar:** At 390px, the introduction plus stacked search/filter controls occupy nearly the full first screen. Tighten that spacing or collapse secondary filters so the first show is visible sooner. Keep the date/status facts unchanged.
+- **Homepage priority:** Preserve the ticket-holder information, but consider a compact update treatment for the postponed show and give discovery/new confirmed shows more space.
+- **Consistent listening path:** The six legacy SUNSETS.FM doorway tiles still use the older outbound episode flow. Bring their covers and actions into line with the newly approved radio page in a separate, focused pass.
+
+The remaining working-tree changes after the site commit are pre-existing sitemap timestamps and the unused `client/src/pages/chasing-radio.css`; neither was discarded. The mobile About screenshot was captured during its cinematic entrance and is not evidence of a permanent blank/contrast defect; verify after settling before proposing a change.
