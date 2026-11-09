@@ -49,6 +49,12 @@ let cachedIndexHtml: string | null = null;
 
 router.use(express.static(staticPath, { index: false }));
 
+// Missing static assets must 404 rather than falling through to SPA HTML,
+// which returns HTML with immutable cache headers and poisons browser chunk caches.
+router.use("/assets", (_req, res) => {
+  res.status(404).type("text/plain").send("Asset not found");
+});
+
 function resolvePrerenderedRoutePath(requestPath: string) {
   const cleanPath = requestPath.split("?")[0]?.split("#")[0] || "/";
   if (cleanPath === "/") return indexHtmlPath;
