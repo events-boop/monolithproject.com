@@ -347,6 +347,17 @@ export default function Navigation({ variant, brand }: NavigationProps) {
     }
   };
 
+  // The header action is a plain anchor because it is usually an outbound ticket link. When it
+  // points inside the site (the calendar), route in-app: a full page load would stop the
+  // persistent player mid-set.
+  const handleNavCtaClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (navCta.isExternal || !navCta.href.startsWith("/")) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (event.button !== 0) return;
+    event.preventDefault();
+    setLocation(navCta.href);
+  };
+
   const handleLogoClick = () => {
     signalChirp.click();
     const logoHref = ROUTES.home;
@@ -838,7 +849,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                       className={`${isUpdateContext ? "nav-calendar-action" : ""} inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
                         navCta.tool === "posh" || navCta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
@@ -895,7 +909,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                     >
                       <div
                         className={`
