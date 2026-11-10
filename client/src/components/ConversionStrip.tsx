@@ -125,7 +125,7 @@ export default function ConversionStrip({
                   : "NEXT EVENT"}
                 <br />
                 <span style={{ color: themeColor }}>
-                  {event.headline || "EVENT DETAILS COMING SOON"}
+                  {event.headline || "DETAILS PENDING — GET FIRST ACCESS"}
                 </span>
               </h2>
               <p

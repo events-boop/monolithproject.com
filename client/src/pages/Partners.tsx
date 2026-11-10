@@ -86,7 +86,7 @@ const partnerTypes = [
   {
     icon: Building2,
     title: "Venue Partners",
-    subtitle: "Canvas Selection",
+    subtitle: "VENUE PARTNERS",
     inquiryType: "venue",
     description:
       "Rooftops, warehouses, outdoor spaces, clubs — if your space fits the vibe, we'll bring the crowd, sound, and creative direction. We handle production; you provide the setting.",
@@ -163,7 +163,9 @@ export default function Partners() {
               </h2>
               <p className="text-base leading-relaxed text-white/55 md:text-lg">
                 The pitch is direct: strong audience energy, clear creative fit,
-                and production that protects the room.
+                and production that protects the room — proven on the Chicago
+                lakefront on July 4 at Castaways Beach Club (10-hour gathering ·
+                2,800 attendees).
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8">
@@ -188,7 +190,7 @@ export default function Partners() {
                       {partner.title}
                     </h3>
                     <p className="font-mono text-[10px] text-primary tracking-[0.3em] uppercase mb-10">
-                      [ {partner.subtitle} ]
+                      {partner.subtitle}
                     </p>
                     <p className="text-white/70 leading-relaxed mb-12 font-light text-lg md:text-xl">
                       {partner.description}
@@ -228,7 +230,7 @@ export default function Partners() {
             >
               <div className="md:w-[65%]">
                 <span className="section-kicker text-white/70 mb-4 block">
-                  Resource_Network
+                  PRODUCTION CREW
                 </span>
                 <h2 className="section-display-title-compact text-white">
                   PRODUCTION{" "}

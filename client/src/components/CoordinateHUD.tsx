@@ -9,6 +9,7 @@ const COORDINATES: Record<string, string> = {
   "/archive": "41.8757° N, 87.6189° W",
   "/radio": "41.8919° N, 87.6051° W",
   "/story": "41.8800° N, 87.6400° W",
+  "/untold-story": "41.8800° N, 87.6400° W",
   "/chasing-sunsets": "41.8842° N, 87.6214° W",
   fallback: "41.8781° N, 87.6298° W",
 };
@@ -20,6 +21,7 @@ const SECTOR_IDS: Record<string, string> = {
   "/archive": "COLLECTIVE_MEM",
   "/radio": "SIGNAL_RELAY",
   "/story": "GHOST_CIRCUIT",
+  "/untold-story": "GHOST_CIRCUIT",
   "/chasing-sunsets": "SOLAR_STATION",
   fallback: "MONOLITH_OPS",
 };

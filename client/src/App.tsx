@@ -8,6 +8,7 @@ import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import Home from "./pages/Home";
 import { UIProvider, useUI } from "./contexts/UIContext";
 import { InquiryProvider } from "./contexts/InquiryContext";
+import { GlobalAudioProvider, useGlobalAudio } from "./contexts/AudioContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { resolveCampaignHostPath } from "./lib/campaignHosts";
@@ -274,7 +275,13 @@ function Router() {
       <Route path={ROUTES.openNetwork} component={OpenNetworkTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />
-      <Route path={ROUTES.story} component={UntoldStoryTransition} />
+      <Route path="/story/">
+        <Redirect to={ROUTES.untoldStory} />
+      </Route>
+      <Route path={ROUTES.story}>
+        <Redirect to={ROUTES.untoldStory} />
+      </Route>
+      <Route path="/untold-story/" component={UntoldStoryTransition} />
       <Route path={ROUTES.untoldStory} component={UntoldStoryTransition} />
       <Route
         path="/untold-story/:season"
@@ -419,6 +426,7 @@ const DeferredShellChrome = lazy(
 );
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const SoundCloudShelf = lazy(() => import("./components/SoundCloudShelf"));
+const StickyPlayer = lazy(() => import("./components/StickyPlayer"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(
   () => import("./components/GlobalTicketButton")
@@ -465,14 +473,20 @@ function MainContentWrapper() {
   const isStandaloneLanding =
     landingPath === ROUTES.sunsets ||
     landingPath === ROUTES.lake ||
-    landingPath === ROUTES.story ||
     landingPath === ROUTES.untoldVip ||
     isUntoldRootLanding;
   const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
   const isApeDrumsRoute =
     landingPath === ROUTES.apeDrums || landingPath === ROUTES.apeDrumsPreview;
+  const isUntoldStoryRoute =
+    landingPath === ROUTES.story ||
+    landingPath === ROUTES.untoldStory ||
+    landingPath.startsWith(`${ROUTES.untoldStory}/`);
   const shouldHideGlobalConversion =
-    isStandaloneLanding || isHouseOfFriendsRoute || isApeDrumsRoute;
+    isStandaloneLanding ||
+    isUntoldStoryRoute ||
+    isHouseOfFriendsRoute ||
+    isApeDrumsRoute;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -530,8 +544,6 @@ function MainContentWrapper() {
             <LakeLandingTransition />
           ) : landingPath === ROUTES.untoldVip ? (
             <UntoldVipLandingTransition />
-          ) : landingPath === ROUTES.story ? (
-            <UntoldStoryTransition />
           ) : (
             <SunsetsLinkBioTransition />
           )
@@ -565,6 +577,22 @@ function MainContentWrapper() {
   );
 }
 
+function PersistentAudioBar() {
+  const { activeTrack } = useGlobalAudio();
+  const [location] = useLocation();
+  const pathname = location.split(/[?#]/)[0] || "/";
+  const isRadioRoute =
+    pathname === ROUTES.radio || pathname.startsWith(`${ROUTES.radio}/`);
+
+  if (!activeTrack || isRadioRoute) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <StickyPlayer />
+    </Suspense>
+  );
+}
+
 function App() {
   const [showOfferPopup, setShowOfferPopup] = useState(false);
 
@@ -581,16 +609,19 @@ function App() {
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
             <InquiryProvider>
-              <div className="film-grain" />
-              <MainContentWrapper />
+              <GlobalAudioProvider>
+                <div className="film-grain" />
+                <MainContentWrapper />
+                <PersistentAudioBar />
 
-              <DeferredGlobalModules />
-              {/* Seedance popup temporarily disabled 
-              {showOfferPopup && (
-                <Suspense fallback={null}>
-                  <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
-                </Suspense>
-              )} */}
+                <DeferredGlobalModules />
+                {/* Seedance popup temporarily disabled 
+                {showOfferPopup && (
+                  <Suspense fallback={null}>
+                    <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
+                  </Suspense>
+                )} */}
+              </GlobalAudioProvider>
             </InquiryProvider>
           </UIProvider>
         </ThemeProvider>

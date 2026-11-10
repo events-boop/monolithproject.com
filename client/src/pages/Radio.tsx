@@ -1,6 +1,7 @@
 import { ROUTES } from "@shared/routes";
 import "./radio-refresh.css";
 import AudioPlayer from "@/components/AudioPlayer";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -141,10 +142,16 @@ function scrollToFeaturedDeck() {
 }
 
 export default function Radio() {
+  const audio = useOptionalGlobalAudio();
+  const initialSlug = useMemo(() => {
+    const activeSlug = audio?.activeTrack?.slug;
+    if (activeSlug && radioEpisodes.some(episode => episode.slug === activeSlug)) {
+      return activeSlug;
+    }
+    return featuredEpisodePool[0]?.slug ?? radioEpisodes[0]?.slug ?? "";
+  }, []);
   const [filter, setFilter] = useState<EpisodeFilter>("all");
-  const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(
-    featuredEpisodePool[0]?.slug ?? radioEpisodes[0]?.slug ?? ""
-  );
+  const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(initialSlug);
 
   const activeEpisode = useMemo(
     () =>
@@ -176,11 +183,17 @@ export default function Radio() {
   }
 
   const activeScene = getEpisodeScene(activeEpisode);
+  const isActiveEpisodePlaying = Boolean(
+    audio?.isPlaying && audio?.activeTrack?.src === activeEpisode.embedUrl
+  );
   const heroQueue = featuredEpisodePool
     .filter(episode => episode.slug !== activeEpisode.slug)
     .slice(0, 3);
 
   const selectEpisode = (slug: string, bringToDeck = false) => {
+    if (slug !== activeEpisodeSlug && audio?.activeTrack) {
+      audio.unloadTrack();
+    }
     setActiveEpisodeSlug(slug);
     if (bringToDeck) scrollToFeaturedDeck();
   };
@@ -419,7 +432,9 @@ export default function Radio() {
                       Playback Deck
                     </span>
                     <h2 className="section-display-title-compact mt-3 max-w-[9ch] text-white">
-                      FEATURED EPISODE
+                      {isActiveEpisodePlaying
+                        ? "NOW SPINNING"
+                        : "FEATURED EPISODE"}
                     </h2>
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/42">
@@ -430,7 +445,9 @@ export default function Radio() {
                 <div className="radio-playback overflow-hidden border border-white/10 bg-black">
                   <AudioPlayer
                     key={activeEpisode.slug}
+                    slug={activeEpisode.slug}
                     title={activeEpisode.title}
+                    artist={activeEpisode.guest}
                     src={activeEpisode.embedUrl}
                   />
                 </div>

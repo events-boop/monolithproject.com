@@ -75,26 +75,13 @@ const brandAssets = [
   },
 ];
 
-const pressHighlights = [
-  {
-    outlet: "Chicago Scene",
-    headline:
-      "Monolith Project is redefining Chicago's underground house music experience",
-    year: "2025",
-  },
-  {
-    outlet: "Resident Advisor",
-    headline:
-      "The collectives bringing immersive dance culture back to the Midwest",
-    year: "2025",
-  },
-  {
-    outlet: "Chicago Reader",
-    headline:
-      "Untold Story: The late-night series that Chicago's house heads have been waiting for",
-    year: "2024",
-  },
-];
+// Add only verified editorial placements carrying a canonical live article URL.
+const pressHighlights: Array<{
+  outlet: string;
+  headline: string;
+  year: string;
+  url: string;
+}> = [];
 
 const fastFacts = [
   { label: "Founded", value: "2024" },
@@ -374,46 +361,49 @@ export default function Press() {
             </div>
           </div>
 
-          {/* Press Coverage */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-20"
-          >
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
-              As Seen In
-            </p>
-            <div className="space-y-3">
-              {pressHighlights.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.07, duration: 0.4 }}
-                  className="flex items-center gap-5 p-5"
-                  style={{ border: "1px solid rgba(255,255,255,0.06)" }}
-                >
-                  <div className="flex-shrink-0 w-24">
-                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary">
-                      {item.outlet}
+          {/* Press Coverage — only renders verified linked placements */}
+          {pressHighlights.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-20"
+            >
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
+                As Seen In
+              </p>
+              <div className="space-y-3">
+                {pressHighlights.map((item, idx) => (
+                  <motion.a
+                    key={item.url || idx}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.07, duration: 0.4 }}
+                    className="flex items-center gap-5 p-5 hover:bg-white/[0.03] transition-colors"
+                    style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+                  >
+                    <div className="flex-shrink-0 w-24">
+                      <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary">
+                        {item.outlet}
+                      </p>
+                      <p className="font-mono text-[10px] text-white/70 mt-0.5">
+                        {item.year}
+                      </p>
+                    </div>
+                    <p className="flex-1 text-sm text-white/70 leading-relaxed italic">
+                      "{item.headline}"
                     </p>
-                    <p className="font-mono text-[10px] text-white/70 mt-0.5">
-                      {item.year}
-                    </p>
-                  </div>
-                  <p className="flex-1 text-sm text-white/70 leading-relaxed italic">
-                    "{item.headline}"
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-white/70 font-mono italic">
-              * Coverage examples — update with real placements as they come in.
-            </p>
-          </motion.div>
+                    <ArrowUpRight className="w-4 h-4 text-white/50 shrink-0" />
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {/* Bottom press CTA */}
           <motion.div

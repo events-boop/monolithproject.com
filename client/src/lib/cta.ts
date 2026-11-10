@@ -56,7 +56,7 @@ function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
     case "chasing-sunsets":
       return ROUTES.chasingSunsets;
     case "untold-story":
-      return ROUTES.story;
+      return ROUTES.untoldStory;
     default:
       return ROUTES.tickets;
   }

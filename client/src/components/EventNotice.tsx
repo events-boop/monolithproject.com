@@ -7,7 +7,11 @@ import {
   sunsetsUpdatedLabel,
 } from "@shared/events/sunsets-current";
 
-export default function EventNotice() {
+export default function EventNotice({
+  updateId = `css-sep19:${currentSunsets.updatedAt}`,
+}: {
+  updateId?: string;
+} = {}) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [location] = useLocation();
   useEffect(() => {
@@ -22,7 +26,7 @@ export default function EventNotice() {
       disposed = true;
       cleanup?.();
     };
-  }, [location]);
+  }, [location, updateId]);
   if (!sunsetsNeedsUpdate) return null;
   return (
     <>
@@ -31,6 +35,7 @@ export default function EventNotice() {
         ref={dialog}
         className="event-notice"
         aria-labelledby="event-notice-title"
+        data-update-id={updateId}
         data-revision={currentSunsets.updatedAt}
         data-auto-open="false"
       >

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Link } from "wouter";
+import {
+  COOKIE_CONSENT_RESOLVED_EVENT,
+  getCookieConsentState,
+} from "@/lib/cookieConsent";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 
 type ChipTone = "warm" | "nocturne";
 
@@ -21,6 +26,8 @@ export default function FloatingFactsChip({
 }: FloatingFactsChipProps) {
   const [isDismissed, setIsDismissed] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [consentState, setConsentState] = useState(getCookieConsentState);
+  const audio = useOptionalGlobalAudio();
 
   useEffect(() => {
     try {
@@ -33,6 +40,16 @@ export default function FloatingFactsChip({
     }
   }, [storageKey]);
 
+  useEffect(() => {
+    const syncConsent = () => setConsentState(getCookieConsentState());
+    window.addEventListener(COOKIE_CONSENT_RESOLVED_EVENT, syncConsent);
+    window.addEventListener("storage", syncConsent);
+    return () => {
+      window.removeEventListener(COOKIE_CONSENT_RESOLVED_EVENT, syncConsent);
+      window.removeEventListener("storage", syncConsent);
+    };
+  }, []);
+
   const dismiss = () => {
     setIsDismissed(true);
     try {
@@ -42,10 +59,14 @@ export default function FloatingFactsChip({
     }
   };
 
-  if (!isReady || isDismissed) return null;
+  if (!isReady || isDismissed || consentState === null) return null;
 
   return (
-    <div className="fixed left-4 md:left-6 bottom-5 md:bottom-7 z-50">
+    <div
+      className={`fixed left-4 md:left-6 z-50 ${
+        audio?.activeTrack ? "bottom-20 md:bottom-20" : "bottom-5 md:bottom-7"
+      }`}
+    >
       <div
         className={`max-w-[280px] rounded-full border shadow-[0_14px_36px_rgba(0,0,0,0.26)] backdrop-blur-xl ${toneClasses[tone]}`}
       >

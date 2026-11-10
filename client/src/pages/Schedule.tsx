@@ -24,18 +24,19 @@ import { downloadEventCalendar } from "@/lib/calendar";
 import { getEventDetailsHref } from "@/lib/cta";
 import { buildScheduleSchema } from "@/lib/schema";
 import { TICKET_POLICY } from "@shared/events/ticket-policy";
+import { getPublishedEventState } from "@shared/events/publishedState";
 import type { ScheduledEvent } from "@shared/events/types";
 import "@/styles/schedule.css";
 
 function statusLabel(event: ScheduledEvent) {
-  if (event.eventStatus === "EventPostponed") return "Postponed";
-  if (event.eventStatus === "EventCancelled") return "Cancelled";
+  const state = getPublishedEventState(event);
+  if (state.kind === "postponed")
+    return "POSTPONED — NEW DATE TO BE CONFIRMED";
+  if (state.kind === "cancelled") return "Cancelled";
+  if (state.kind === "on-sale") return "Tickets available";
+  if (state.kind === "sold-out") return "Sold out";
   if (event.confirmationStatus === "pending") return "Details pending";
-  return event.status === "on-sale"
-    ? "Tickets available"
-    : event.status === "sold-out"
-      ? "Sold out"
-      : "Announcement to follow";
+  return "Details pending";
 }
 function eventTime(event: ScheduledEvent) {
   if (event.eventStatus === "EventPostponed") return "New date to be announced";
@@ -46,6 +47,9 @@ function eventTime(event: ScheduledEvent) {
 export default function Schedule() {
   usePublicSiteDataVersion();
   const events = [...getScheduledEvents()].sort(compareScheduleEvents);
+  const hasOnSale = events.some(
+    event => getPublishedEventState(event).kind === "on-sale"
+  );
   const [filter, setFilter] = useState("ALL");
   const [query, setQuery] = useState("");
   const [series, setSeries] = useState("all");
@@ -246,7 +250,7 @@ export default function Schedule() {
                     const date = getScheduleDate(event);
                     const detailsHref =
                       event.id === "css-sep19"
-                        ? "/sunsets#event-update"
+                        ? "/tickets"
                         : getEventDetailsHref(event);
                     return (
                       <article
@@ -369,6 +373,37 @@ export default function Schedule() {
               );
             })}
           </div>
+          {!hasOnSale && (
+            <section
+              className="schedule-editorial-empty mt-10"
+              aria-label="Between shows updates and archive"
+            >
+              <h2>Between shows. No tickets currently on sale.</h2>
+              <p>
+                New dates are announced here once confirmed. Until the next
+                on-sale window opens, revisit our July 4 Castaways gathering
+                (10-hour gathering · 2,800 attendees), listen to Chasing Sunsets
+                Radio, or join First Access.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-6">
+                <Link className="home-text-link" href="/newsletter">
+                  Get First Access{" "}
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
+                <Link
+                  className="home-text-link"
+                  href="/chasing-sunsets/sunsets-i-2026"
+                >
+                  July 4 recap proof{" "}
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
+                <Link className="home-text-link" href="/radio">
+                  Radio archive{" "}
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
+              </div>
+            </section>
+          )}
         </div>
       </main>
       <JoinSignalSection />

@@ -148,6 +148,18 @@ export interface ScheduledEvent {
   faqs?: Array<{ q: string; a: string }>;
   photoNotice?: string;
   eventNotice?: string;
+  /**
+   * Standalone page that owns this event's public presentation (e.g. "/sunsets").
+   * When set, listings link here instead of the generic /events/:slug page.
+   */
+  landingUrl?: string;
+  /** Where a postponement or cancellation update lives. Defaults to the event page. */
+  statusUrl?: string;
+  /**
+   * Approved message for people who already hold tickets. Its presence is what
+   * marks a postponed or cancelled show as owing ticket holders an update.
+   */
+  ticketHolderNotice?: string;
   activeFunnels?: ActiveFunnel[];
   primaryCta?: EventCta;
   recentlyDropped?: boolean;

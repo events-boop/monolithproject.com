@@ -4,7 +4,7 @@ import { buildPublicSiteData } from "../data/public-site-data";
 
 // The public finale uses the same approved publication as /sunsets.
 const expectedSunsetsCta = {
-  label: "Event update",
+  label: "Ticket-Holder Update",
   href: "/sunsets#event-status",
   tool: "posh",
 };
@@ -195,7 +195,7 @@ describe("buildPublicSiteData", () => {
 
     expect(featuredSunsets?.id).toBe("css-sep19");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Event update",
+      label: "Ticket-Holder Update",
       href: "/sunsets#event-status",
       tool: "posh",
     });

@@ -112,7 +112,7 @@ const sharedLinks = [
   { href: "/tickets", label: "Tickets" },
   { href: "/schedule", label: "Schedule" },
   { href: "/chasing-sunsets", label: "Chasing Sun(Sets)" },
-  { href: "/story", label: "Untold Story" },
+  { href: "/untold-story", label: "Untold Story" },
   { href: "/radio", label: "Radio Show" },
   { href: "/sunsets-fm", label: "SUNSETS.FM" },
   { href: "/about", label: "About Monolith" },
@@ -383,7 +383,7 @@ function renderHomeCriticalLayout() {
           { href: "/tickets", label: "See current tickets" },
           { href: "/schedule", label: "View the Chicago schedule" },
           { href: "/chasing-sunsets", label: "Explore Chasing Sun(Sets)" },
-          { href: "/story", label: "Explore Untold Story" },
+          { href: "/untold-story", label: "Explore Untold Story" },
           { href: "/radio", label: "Listen to the radio archive" },
           { href: "/sunsets-fm", label: "SUNSETS.FM" },
           { href: INSTAGRAM_MONOLITH, label: "Instagram", external: true },
@@ -740,7 +740,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     },
   ],
   [
-    "/story",
+    "/untold-story",
     {
       title: "Untold Story | Chicago House Music Nights",
       description:
@@ -750,7 +750,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       schemaData: [
         buildFaqSchema(untoldFaqs),
         ...(featuredUntoldEvent
-          ? [buildScheduledEventSchema(featuredUntoldEvent, "/story")]
+          ? [buildScheduledEventSchema(featuredUntoldEvent, "/untold-story")]
           : []),
       ],
       bodyHtml: renderBaseLayout(

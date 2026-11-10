@@ -289,10 +289,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     startsAt: "2026-07-04T22:30:00-05:00",
     endsAt: "2026-07-05T04:00:00-05:00",
     doors: "10:30 PM",
-    venue: "Venue Reveal Soon",
+    venue: "Chicago",
     location: "Chicago, IL",
     lineup: "Secret Guest B2B",
     status: "past",
+    recapUrl: "/chasing-sunsets/sunsets-i-2026",
     format: "Dark Room · Intimate",
     description:
       "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
@@ -431,9 +432,8 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
   {
-    // Parent-brand launch moment — NOT a SUN(SETS) season date. The
-    // "Three dates. One lake. One home." framing stays exclusive to the
-    // three CSS dates (Jul 4, Aug 22, Sep 19).
+    // Retired October launch window — archived cleanly so it never renders
+    // as an upcoming show with placeholder "Reveal Soon" fields.
     id: "css-oct10",
     series: "monolith-project",
     episode: "LAUNCH",
@@ -441,13 +441,18 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     headline: "THE MONOLITH PROJECT — LAUNCH",
     slug: "monolith-launch",
     date: "October 10, 2026",
-    time: "Reveal Soon",
-    venue: "Venue Reveal Soon",
+    startsAt: "2026-10-10T21:00:00-05:00",
+    endsAt: "2026-10-11T03:00:00-05:00",
+    time: "Chapter closed",
+    venue: "Chicago",
     location: "Chicago, IL",
-    status: "coming-soon",
-    eventStatus: "EventPostponed",
-    description: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
-    eventNotice: "The next Monolith chapter is taking shape. Date, venue and lineup will be announced once confirmed.",
+    lineup: "The Monolith Project",
+    status: "past",
+    description:
+      "Initial October launch window (retired). Explore previous chapters in the archive or join First Access for upcoming dates.",
+    eventNotice:
+      "This date has passed. Confirmed upcoming nights appear on the schedule.",
+    recapUrl: "/archive",
     activeFunnels: ["waitlist"],
   },
 ];
@@ -563,6 +568,9 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     description: event.description,
     age: event.age,
     eventNotice: event.eventNotice,
+    landingUrl: event.landingUrl,
+    statusUrl: event.statusUrl,
+    ticketHolderNotice: event.ticketHolderNotice,
     ticketUrl: event.ticketUrl,
     startingPrice: deriveStartingPrice(event),
     experienceIntro: event.experienceIntro,
@@ -604,6 +612,9 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
     description: event.description,
     age: event.age,
     eventNotice: event.eventNotice,
+    landingUrl: event.landingUrl,
+    statusUrl: event.statusUrl,
+    ticketHolderNotice: event.ticketHolderNotice,
     ticketUrl: event.ticketUrl,
     startingPrice: deriveStartingPrice(event),
     experienceIntro: event.experienceIntro,

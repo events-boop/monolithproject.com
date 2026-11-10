@@ -28,10 +28,15 @@ import { getSeriesLabel, getSeriesColor, getEventStartTimestamp } from "@/lib/si
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import { buildBreadcrumbSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { trackAccessEvent } from "@/lib/api";
+import { ROUTES } from "@shared/routes";
+import {
+  TICKET_POLICY,
+  SUNSETS_REFUND_REQUEST_URL,
+} from "@shared/events/ticket-policy";
 
 function getStatusLabel(status: string) {
   if (status === "on-sale") return "ON SALE";
-  if (status === "coming-soon") return "COMING SOON";
+  if (status === "coming-soon") return "DETAILS PENDING";
   if (status === "sold-out") return "SOLD OUT";
   return "PAST";
 }
@@ -137,8 +142,8 @@ function getEventFitCopy(
 function getSeriesHref(
   series: NonNullable<ReturnType<typeof getPublicEvents>[number]>["series"]
 ) {
-  if (series === "chasing-sunsets") return "/chasing-sunsets";
-  if (series === "untold-story") return "/story";
+  if (series === "chasing-sunsets") return ROUTES.chasingSunsets;
+  if (series === "untold-story") return ROUTES.untoldStory;
   return "/about";
 }
 
@@ -342,10 +347,12 @@ export default function EventDetails() {
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.28em] px-3 py-1 border border-white/20 text-white/75">
                 {postponed
-                  ? "POSTPONED"
-                  : event.confirmationStatus === "pending"
-                    ? "DETAILS PENDING"
-                    : getStatusLabel(event.status)}
+                  ? "POSTPONED — NEW DATE TO BE CONFIRMED"
+                  : event.eventStatus === "EventCancelled"
+                    ? "CANCELLED — OFFICIAL UPDATE"
+                    : event.confirmationStatus === "pending"
+                      ? "DETAILS PENDING"
+                      : getStatusLabel(event.status)}
               </span>
             </div>
 
@@ -415,6 +422,48 @@ export default function EventDetails() {
               </div>
             ))}
           </div>
+          {(postponed || event.eventStatus === "EventCancelled") && (
+            <div
+              id="ticket-holder-support"
+              className="mx-auto mt-6 w-full max-w-7xl border border-amber-300/50 bg-[#1d1f18] p-6 md:p-8"
+            >
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-amber-200 mb-3">
+                {postponed
+                  ? "POSTPONED — NEW DATE TO BE CONFIRMED"
+                  : "EVENT CANCELLED — TICKET-HOLDER UPDATE"}
+              </p>
+              <p className="text-base leading-relaxed text-white/90 mb-3">
+                {event.eventNotice ||
+                  "Official update published for ticket holders."}
+              </p>
+              {event.ticketHolderNotice && (
+                <p className="text-sm leading-relaxed text-amber-100/90 mb-3">
+                  {event.ticketHolderNotice}
+                </p>
+              )}
+              {event.id === "css-sep19" && (
+                <p className="text-sm leading-relaxed text-white/75 mb-5">
+                  {TICKET_POLICY.sunsetsRefund}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/tickets"
+                  className="inline-flex min-h-11 items-center rounded bg-amber-200 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black"
+                >
+                  TICKET-HOLDER UPDATE
+                </Link>
+                {event.id === "css-sep19" && (
+                  <a
+                    href={SUNSETS_REFUND_REQUEST_URL}
+                    className="inline-flex min-h-11 items-center rounded border border-white/25 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-white/90 hover:border-white/50"
+                  >
+                    Request a refund ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
         </section>
 
         <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16">

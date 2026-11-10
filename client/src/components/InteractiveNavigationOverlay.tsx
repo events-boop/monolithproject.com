@@ -103,7 +103,7 @@ function getStatusLabel(status?: string) {
     case "on-sale":
       return "On Sale";
     case "coming-soon":
-      return "Coming Soon";
+      return "First Access";
     case "sold-out":
       return "Sold Out";
     case "past":
@@ -411,7 +411,7 @@ export default function InteractiveNavigationOverlay({
           {[
             { label: "Events / Tickets", href: "/schedule" },
             { label: "Sun(Sets)", href: "/sunsets" },
-            { label: "Untold Story", href: "/story" },
+            { label: "Untold Story", href: "/untold-story" },
             { label: "Chasing Sunsets Radio", href: "/radio" },
             { label: "Open Network", href: ROUTES.openNetwork },
             { label: "About", href: "/about" },

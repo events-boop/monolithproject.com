@@ -141,10 +141,10 @@ export default function NavigationMegamenu({
   } else if (type === "untold") {
     leftColumnTitle = "The Lore";
     leftColumnItems = [
-      { label: "The Vision", href: "/story#vision", icon: "arrow" },
-      { label: "What to Expect", href: "/story#expect", icon: "arrow" },
-      { label: "Dress Code", href: "/story#dresscode", icon: "arrow" },
-      { label: "Private Tables", href: "/story#tables", icon: "arrow" },
+      { label: "The Vision", href: "/untold-story#vision", icon: "arrow" },
+      { label: "What to Expect", href: "/untold-story#expect", icon: "arrow" },
+      { label: "Dress Code", href: "/untold-story#dresscode", icon: "arrow" },
+      { label: "Private Tables", href: "/untold-story#tables", icon: "arrow" },
       { label: "Story Archive", href: "/archive", icon: "arrow" },
     ];
   } else if (type === "monolith") {

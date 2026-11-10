@@ -54,7 +54,7 @@ export default function UntoldStory() {
   const schemaData = [
     buildFaqSchema(untoldFaqs),
     ...(event && dateConfirmed
-      ? [buildScheduledEventSchema(event, "/story")]
+      ? [buildScheduledEventSchema(event, "/untold-story")]
       : []),
   ];
 
@@ -64,7 +64,7 @@ export default function UntoldStory() {
         absoluteTitle
         title="Untold Story — Chicago after-dark house music"
         description="Explore Untold Story: Monolith's after-dark house music series. Event information, artists, previous chapters and the photo archive."
-        canonicalPath="/story"
+        canonicalPath="/untold-story"
         image={hero.src}
         schemaData={schemaData}
       />

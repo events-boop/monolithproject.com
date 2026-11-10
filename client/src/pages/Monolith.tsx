@@ -217,7 +217,7 @@ export default function Monolith() {
                     {
                       title: "Untold Story",
                       desc: "The after-dark expression. Four chapters deep, with a tighter room and deeper late-night focus.",
-                      href: "/story",
+                      href: "/untold-story",
                       label: "After Dark",
                     },
                   ].map(branch => (

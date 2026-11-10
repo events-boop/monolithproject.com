@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { X } from "lucide-react";
+import { ROUTES } from "@shared/routes";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import {
   COOKIE_CONSENT_RESOLVED_EVENT,
   COOKIE_CONSENT_STORAGE_KEY,
@@ -9,6 +11,12 @@ import {
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const [location] = useLocation();
+  const audio = useOptionalGlobalAudio();
+  const pathname = location.split(/[?#]/)[0] || "/";
+  const isRadioRoute =
+    pathname === ROUTES.radio || pathname.startsWith(`${ROUTES.radio}/`);
+  const hasStickyAudioBar = Boolean(audio?.activeTrack) && !isRadioRoute;
 
   const resolveConsent = (value: "accepted" | "declined") => {
     localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
@@ -44,7 +52,9 @@ export default function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 24, opacity: 0 }}
           transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-4 right-4 z-[9999] w-auto max-w-[20rem] pointer-events-auto"
+          className={`fixed ${
+            hasStickyAudioBar ? "bottom-20" : "bottom-4"
+          } left-4 right-4 sm:left-auto sm:right-4 z-[9999] sm:w-auto sm:max-w-[20rem] pointer-events-auto`}
           style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
           role="region"
           aria-label="Cookie consent"

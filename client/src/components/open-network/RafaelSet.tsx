@@ -1,51 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import cues from "@/data/openNetworkCues.json";
+import {
+  loadSoundCloudWidgetApi,
+  type SoundCloudWidget,
+} from "@/lib/soundcloudWidget";
 
 const RECORDING =
   "https://soundcloud.com/rawcutstv/brunello-b2b-rafael-february";
 const COVER = "/media/open-network/rafael-brunello-rawcuts.webp";
 const SET_NAME = "Rafael B2B Brunello — Santa Monica Pier | RAW CUTS";
-type SoundWidget = {
-  bind: (event: string, callback: () => void) => void;
-  unbind: (event: string) => void;
-  play: () => void;
-  pause: () => void;
-  seekTo: (milliseconds: number) => void;
-};
-type SoundCloudAPI = {
-  Widget: ((frame: HTMLIFrameElement) => SoundWidget) & {
-    Events: Record<string, string>;
-  };
-};
-type SoundCloudWindow = Window & { SC?: SoundCloudAPI };
-let apiPromise: Promise<SoundCloudAPI> | undefined;
-function loadSoundCloud() {
-  const target = window as SoundCloudWindow;
-  if (target.SC?.Widget) return Promise.resolve(target.SC);
-  if (apiPromise) return apiPromise;
-  apiPromise = new Promise<SoundCloudAPI>((resolve, reject) => {
-    const script = document.createElement("script");
-    const timer = window.setTimeout(fail, 12000);
-    function fail() {
-      window.clearTimeout(timer);
-      script.remove();
-      apiPromise = undefined;
-      reject(new Error("The audio player could not connect. Please retry."));
-    }
-    script.src = "https://w.soundcloud.com/player/api.js";
-    script.onload = () => {
-      if (!target.SC?.Widget) {
-        fail();
-        return;
-      }
-      window.clearTimeout(timer);
-      resolve(target.SC);
-    };
-    script.onerror = fail;
-    document.head.append(script);
-  });
-  return apiPromise;
-}
 
 function SetPlayer({
   seconds,
@@ -59,7 +22,7 @@ function SetPlayer({
   onError: (message: string) => void;
 }) {
   const mount = useRef<HTMLDivElement>(null);
-  const widgetRef = useRef<SoundWidget | null>(null);
+  const widgetRef = useRef<SoundCloudWidget | null>(null);
   const ready = useRef(false);
   const pendingSeconds = useRef(seconds);
   useEffect(() => {
@@ -73,7 +36,7 @@ function SetPlayer({
   // cleanup runs before React removes the iframe, including on route changes.
   useLayoutEffect(() => {
     let disposed = false;
-    let widget: SoundWidget | undefined;
+    let widget: SoundCloudWidget | undefined;
     let eventNames: string[] = [];
     let timer: number | undefined;
     onStatus("Connecting to the RAW CUTS recording…");
@@ -82,7 +45,7 @@ function SetPlayer({
       window.clearTimeout(timer);
       onError(message);
     }
-    loadSoundCloud()
+    loadSoundCloudWidgetApi()
       .then(api => {
         if (disposed || !mount.current) return;
         const frame = document.createElement("iframe");

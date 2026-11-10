@@ -62,7 +62,11 @@ export function getHeroPreloadSpecs(pathname: string): HeroPreloadSpec[] {
     ];
   }
 
-  if (route === "/story" || route === "/untold-story-deron-juany-bravo") {
+  if (
+    route === "/untold-story" ||
+    route === "/story" ||
+    route === "/untold-story-deron-juany-bravo"
+  ) {
     return [
       {
         href: "/images/generated/untold-story-juany-deron-v2-1024.avif",

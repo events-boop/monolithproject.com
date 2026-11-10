@@ -481,6 +481,25 @@
   status = 301
   force = true
 
+# Canonical Untold Story route: keep /story redirecting to /untold-story.
+[[redirects]]
+  from = "/story"
+  to = "/untold-story"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/story/"
+  to = "/untold-story"
+  status = 301
+  force = true
+
+# Never let missing hashed /assets/* requests fall through to /index.html (200 HTML).
+[[redirects]]
+  from = "/assets/*"
+  to = "/404.html"
+  status = 404
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

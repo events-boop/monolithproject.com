@@ -88,7 +88,7 @@ export function HomeSeries() {
             </div>
           </Link>
           <Link
-            href="/story"
+            href="/untold-story"
             className="home-series-card home-series-night"
             aria-label="Explore Untold Story"
           >

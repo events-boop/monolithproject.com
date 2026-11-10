@@ -214,7 +214,7 @@ export default function UntoldContent({ event }: { event?: ScheduledEvent }) {
                   </span>
                 </div>
                 <p className="text-white text-sm font-medium">
-                  {event?.venue || "Venue Reveal Soon"}
+                  {event?.venue || "Venue to be announced"}
                 </p>
                 <p className="text-white/70 text-xs">
                   {event?.location || "Chicago, IL"}

@@ -82,7 +82,7 @@ export const navigationChapters: NavigationChapter[] = [
     id: "untold-story",
     label: "Untold Story",
     eyebrow: "Indoor Series",
-    href: ROUTES.story,
+    href: ROUTES.untoldStory,
     tagline: "After-dark rooms built for deeper sound and real dancefloors.",
     description:
       "Indoor nights focused on immersive dancefloors, tighter rooms, and artist-led sets.",

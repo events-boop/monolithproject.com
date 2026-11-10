@@ -33,7 +33,7 @@ export const RADIO_SERIES_NAME = "Chasing Sunsets Radio";
 export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
   autograf: "/artists/autograf",
   lazare: "/artists/lazare",
-  "eran-hersh": "/story",
+  "eran-hersh": "/untold-story",
 };
 
 export const radioEpisodes: RadioEpisode[] = [
@@ -237,7 +237,7 @@ export const radioEpisodes: RadioEpisode[] = [
         label: "RADIAN Feature",
         url: "https://soundcloud.com/chasing-sun-sets/radianofc-set",
       },
-      { label: "Untold Story Event Series", url: "/story" },
+      { label: "Untold Story Event Series", url: "/untold-story" },
     ],
     tracklist: [
       { timecode: "00:00", artist: "RADIAN", title: "Crossover Intro" },

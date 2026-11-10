@@ -586,7 +586,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         icon: "arrow",
                       },
                       {
-                        label: ticketHref ? "GET TICKETS" : "EVENT INFORMATION",
+                        label: ticketHref
+                          ? "GET TICKETS"
+                          : isUpdateContext
+                            ? "TICKET-HOLDER UPDATE"
+                            : "GET FIRST ACCESS",
                         href: ticketHref || ROUTES.tickets,
                         icon: "ticket",
                       },
@@ -594,7 +598,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         label: "CHASING SUN(SETS)",
                         href: ROUTES.chasingSunsets,
                       },
-                      { label: "UNTOLD STORY", href: ROUTES.story },
+                      { label: "UNTOLD STORY", href: ROUTES.untoldStory },
                       {
                         label: "ENTRY GUIDE",
                         href: ROUTES.guide + ANCHORS.entry,
@@ -612,8 +616,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             "/images/chasing-sunsets-premium.webp",
                           href:
                             ticketHref ||
-                            `/events/${ticketEvent.slug || ticketEvent.id}`,
-                          ctaText: ticketHref ? "On Sale" : "Event Details",
+                            (isUpdateContext
+                              ? ROUTES.tickets
+                              : `/events/${ticketEvent.slug || ticketEvent.id}`),
+                          ctaText: ticketHref
+                            ? "Get Tickets"
+                            : isUpdateContext
+                              ? "Ticket-Holder Update"
+                              : "Get First Access",
                           icon: ticketHref ? "ticket" : "arrow",
                           badge:
                             ticketEvent.eventStatus === "EventPostponed"
@@ -622,7 +632,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                 ? "CANCELLED"
                                 : ticketEvent.status === "on-sale"
                                   ? "ON SALE"
-                                  : "COMING SOON",
+                                  : "FIRST ACCESS",
                           external: !!ticketHref,
                         }
                       : {
@@ -734,7 +744,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="UNTOLD STORY"
-                  href={ROUTES.story}
+                  href={ROUTES.untoldStory}
                   isActive={
                     location.includes(ROUTES.story) ||
                     location.includes(ROUTES.untoldStory)
@@ -756,10 +766,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
                         getPrimaryTicketUrl(featuredUntoldEvent) ||
-                        ROUTES.story,
+                        ROUTES.untoldStory,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
-                        : "View Story",
+                        : "Get First Access",
                       icon: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "ticket"
                         : "arrow",

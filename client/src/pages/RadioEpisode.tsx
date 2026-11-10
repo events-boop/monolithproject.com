@@ -215,7 +215,9 @@ export default function RadioEpisode() {
           <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
             <AudioPlayer
               key={episode.slug}
+              slug={episode.slug}
               title={episode.title}
+              artist={episode.guest}
               src={episode.embedUrl}
             />
           </div>
