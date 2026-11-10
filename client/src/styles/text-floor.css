@@ -1,0 +1,46 @@
+/*
+ * Legibility floor (2026-11-10): no 9px or 10px text.
+ *
+ * The site set about 480 labels at 9–10px through Tailwind's arbitrary sizes. They read as
+ * texture, not text, on a phone and on a large display. This raises them to 11px in one place
+ * instead of editing every component. Unlayered CSS wins over Tailwind's utilities layer.
+ *
+ * An element that also carries a responsive size (sm:text-xs, md:text-[11px] …) keeps that larger
+ * size from its breakpoint up; only its small base is raised below it.
+ * 7–8px labels inside the VIP venue model, ticket badges and admin tables are left alone: they sit
+ * in fixed-size diagrams and need their own layout pass.
+ */
+:is(.text-\[9px\], .text-\[10px\]):not([class*="sm:text-["], [class*="sm:text-xs"], [class*="md:text-["], [class*="md:text-xs"], [class*="lg:text-["]) {
+  font-size: 11px;
+}
+@media (width < 40rem) {
+  :is(.text-\[9px\], .text-\[10px\]) {
+    font-size: 11px;
+  }
+}
+@media (width >= 40rem) and (width < 48rem) {
+  :is(.text-\[9px\], .text-\[10px\]):not([class*="sm:text-["], [class*="sm:text-xs"]) {
+    font-size: 11px;
+  }
+}
+@media (width >= 48rem) and (width < 64rem) {
+  :is(.text-\[9px\], .text-\[10px\]):not([class*="sm:text-["], [class*="sm:text-xs"], [class*="md:text-["], [class*="md:text-xs"]) {
+    font-size: 11px;
+  }
+}
+/* Responsive utilities that themselves set 10px. */
+@media (width >= 40rem) {
+  .sm\:text-\[10px\] {
+    font-size: 11px;
+  }
+}
+@media (width >= 48rem) {
+  .md\:text-\[10px\] {
+    font-size: 11px;
+  }
+}
+@media (width >= 64rem) {
+  .lg\:text-\[10px\] {
+    font-size: 11px;
+  }
+}

@@ -119,7 +119,7 @@
 .monolith-network .brand > span {
   border-left: 1px solid var(--line);
   padding-left: 26px;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.16em;
 }
 .monolith-network .header nav {
@@ -155,7 +155,7 @@
   z-index: 2;
 }
 .monolith-network .eyebrow {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   font-weight: 500;
   line-height: 1.6;
@@ -294,7 +294,7 @@
   text-align: left;
 }
 .monolith-network .phone-status {
-  font-size: 9px;
+  font-size: 11px;
   display: flex;
   justify-content: space-between;
   padding: 0 4px;
@@ -503,7 +503,7 @@
   object-fit: cover;
 }
 .monolith-network .map-place strong {
-  font-size: 9px;
+  font-size: 11px;
 }
 .monolith-network .map-place p {
   font-size: 6px;
@@ -511,7 +511,7 @@
 }
 .monolith-network .scene-caption {
   position: absolute;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   line-height: 1.8;
   color: var(--muted);
@@ -542,7 +542,7 @@
   margin: 0 4.4%;
   border-top: 1px solid var(--line);
   padding: 25px 0;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--muted);
   gap: 20px;
@@ -568,7 +568,7 @@
   margin-bottom: 55px;
 }
 .monolith-network .section-kicker > span:last-child {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.13em;
 }
 .monolith-network .section-title {
@@ -627,7 +627,7 @@
 }
 .monolith-network .vision-bottom .eyebrow {
   margin-left: auto;
-  font-size: 8px;
+  font-size: 11px;
 }
 .monolith-network .vision-bottom img {
   background: var(--green);
@@ -684,7 +684,7 @@
 .monolith-network .pillar .eyebrow {
   border-top: 1px solid #18372e44;
   padding-top: 20px;
-  font-size: 9px;
+  font-size: 11px;
 }
 .monolith-network .pillar h3 {
   font-family: var(--serif);
@@ -819,14 +819,14 @@
   display: block;
 }
 .monolith-network .show-meta small {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   display: block;
   margin-top: 8px;
   line-height: 1.6;
 }
 .monolith-network .show-number {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--gold);
   padding-top: 3px;
 }
@@ -862,11 +862,11 @@
   margin: 7px 0;
 }
 .monolith-network .room-intro .eyebrow {
-  font-size: 7px;
+  font-size: 11px;
   color: var(--gold);
 }
 .monolith-network .room-intro p:last-child {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   line-height: 1.5;
 }
@@ -879,7 +879,7 @@
   gap: 12px;
 }
 .monolith-network .embed-slot > span {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
 }
 .monolith-network .embed-slot iframe {
@@ -899,14 +899,14 @@
   height: 34px;
 }
 .monolith-network .radio-note {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.7;
   color: var(--muted);
   text-align: right;
   margin-top: 18px;
 }
 .monolith-network .credits {
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.7;
   color: #819285;
   margin-top: 25px;
@@ -927,7 +927,7 @@
 }
 .monolith-network .art-caption {
   display: block;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   border-top: 1px solid #18372e33;
   padding-top: 17px;
@@ -963,7 +963,7 @@
   background: #18372e09;
 }
 .monolith-network .journey-steps button > span:first-child {
-  font-size: 8px;
+  font-size: 11px;
   opacity: 0.6;
 }
 .monolith-network .journey-steps button > span:last-child {
@@ -983,7 +983,7 @@
   min-height: 45px;
 }
 .monolith-network .journey-route {
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.9;
   margin-top: 15px;
   color: #66755b;
@@ -1032,7 +1032,7 @@
   color: #526151;
 }
 .monolith-network .development-note {
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 40px;
   line-height: 1.7;
   color: #526151;
@@ -1066,7 +1066,7 @@
   cursor: pointer;
 }
 .monolith-network .trust-list summary > span:first-child {
-  font-size: 10px;
+  font-size: 11px;
   color: #6a765e;
 }
 .monolith-network .trust-list summary h3 {
@@ -1102,7 +1102,7 @@
 }
 .monolith-network .closing > .eyebrow {
   color: var(--gold);
-  font-size: 9px;
+  font-size: 11px;
 }
 .monolith-network .closing h2 {
   font-family: var(--serif);
@@ -1129,11 +1129,11 @@
   align-items: center;
   gap: 25px;
   border-top: 1px solid var(--line);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
 }
 .monolith-network footer a:last-child {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0;
 }
 .monolith-network footer img {
@@ -1190,10 +1190,10 @@
     font-size: 54px;
   }
   .monolith-network .show-meta strong {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .show-meta small {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .room-intro {
     flex-basis: 42%;
@@ -1233,7 +1233,7 @@
     display: none;
   }
   .monolith-network .header-cta {
-    font-size: 10px;
+    font-size: 11px;
     gap: 14px;
   }
   .monolith-network .brand img {
@@ -1249,7 +1249,7 @@
     line-height: 1.08;
   }
   .monolith-network .hero .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 0.1em;
   }
   .monolith-network .small-sun {
@@ -1302,11 +1302,11 @@
   }
   .monolith-network .hero-foot {
     padding: 18px 0;
-    font-size: 7px;
+    font-size: 11px;
     margin: 0 6%;
   }
   .monolith-network .hero-foot > span:nth-child(2) {
-    font-size: 7px;
+    font-size: 11px;
     max-width: 140px;
     text-align: center;
   }
@@ -1318,10 +1318,10 @@
     gap: 20px;
   }
   .monolith-network .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .section-kicker > span:last-child {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .vision-layout {
     grid-template-columns: 1fr;
@@ -1398,7 +1398,7 @@
     grid-column: 2;
   }
   .monolith-network .pillar .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
     padding-top: 19px;
   }
   .monolith-network .pillar h3 {
@@ -1416,7 +1416,7 @@
     font-size: 11px;
   }
   .monolith-network .pillar summary {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .radio-heading {
     display: block;
@@ -1440,7 +1440,7 @@
     font-size: 11px;
   }
   .monolith-network .show-meta small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .show-meta {
     padding: 13px 0;
@@ -1477,14 +1477,14 @@
     height: 166px;
   }
   .monolith-network .embed-slot > span {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .radio-note {
     text-align: left;
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .credits {
-    font-size: 8px;
+    font-size: 11px;
     margin-top: 15px;
   }
   .monolith-network .journey-layout {
@@ -1584,7 +1584,7 @@
     gap: 25px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network footer > span:nth-child(2),
   .monolith-network footer > a:last-child {
@@ -1594,16 +1594,16 @@
     width: 132px;
   }
   .monolith-network footer > span:nth-child(3) {
-    font-size: 6px;
+    font-size: 11px;
     line-height: 1.7;
   }
   .monolith-network footer > a:last-child {
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (max-width: 390px) {
   .monolith-network .header-cta {
-    font-size: 9px;
+    font-size: 11px;
     gap: 9px;
   }
   .monolith-network .brand img {
@@ -1619,20 +1619,20 @@
     margin-right: 5px;
   }
   .monolith-network .hero .eyebrow {
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .hero-description {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .hero-sub {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .actions {
     gap: 18px;
   }
   .monolith-network .button,
   .monolith-network .text-link {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .button {
     gap: 17px;
@@ -1657,10 +1657,10 @@
   }
   .monolith-network .hero-foot > span:nth-child(2) {
     max-width: 108px;
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .hero-foot {
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .section-pad {
     padding: 48px 6%;
@@ -1697,10 +1697,10 @@
     font-size: 28px;
   }
   .monolith-network .show-meta strong {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .show-meta small {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .vision-bottom p {
     font-size: 16px;
@@ -1710,10 +1710,10 @@
     height: 39px;
   }
   .monolith-network .section-kicker > span:last-child {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .radio .section-kicker .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .closing .actions {
     gap: 15px;
@@ -1884,7 +1884,7 @@
   display: flex;
   justify-content: space-between;
   background: #08140fd9;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.13em;
 }
 .monolith-network .rafael-mount {
@@ -1919,7 +1919,7 @@
   gap: 20px;
 }
 .monolith-network .rafael-meta .eyebrow {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--gold);
 }
 .monolith-network .rafael-meta h3 {
@@ -1936,7 +1936,7 @@
   line-height: 1.5;
 }
 .monolith-network .rafael-meta > a {
-  font-size: 10px;
+  font-size: 11px;
   white-space: nowrap;
   border-bottom: 1px solid var(--line);
   padding: 5px 0;
@@ -1947,7 +1947,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 10px 26px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.7;
   color: var(--muted);
 }
@@ -1955,12 +1955,12 @@
   border: 0;
   border-bottom: 1px solid var(--line);
   background: none;
-  font-size: 10px;
+  font-size: 11px;
   padding: 0;
   color: var(--paper);
 }
 .monolith-network .rafael-credit {
-  font-size: 8px;
+  font-size: 11px;
   color: #8c9c8f;
   padding: 12px 26px 22px;
   margin-top: auto;
@@ -1988,7 +1988,7 @@
   letter-spacing: -0.025em;
 }
 .monolith-network .rafael-tracklist-heading > span {
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--gold);
   white-space: nowrap;
@@ -2024,7 +2024,7 @@
   color: var(--gold);
 }
 .monolith-network .rafael-cue .cue-time {
-  font-size: 10px;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
   color: #b6c4b9;
   min-width: 42px;
@@ -2041,7 +2041,7 @@
   line-height: 1.5;
 }
 .monolith-network .rafael-cue .cue-track > span {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.5;
   color: #a6b7ab;
 }
@@ -2053,7 +2053,7 @@
 .monolith-network .rafael-tracklist-credit {
   padding: 15px 22px;
   border-top: 1px solid var(--line);
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.8;
   display: flex;
   flex-direction: column;
@@ -2071,7 +2071,7 @@
   padding: 25px 0;
 }
 .monolith-network .set-to-network > span {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.09em;
 }
 .monolith-network .set-to-network i {
@@ -2086,7 +2086,7 @@
   color: #63705a;
 }
 .monolith-network .set-to-network a {
-  font-size: 10px;
+  font-size: 11px;
 }
 @media (max-width: 1050px) {
   .monolith-network .rafael-desk {
@@ -2177,17 +2177,17 @@
     font-size: 31px;
   }
   .monolith-network .rafael-meta > a {
-    font-size: 8px;
+    font-size: 11px;
     margin-top: 0;
     white-space: normal;
     max-width: 75px;
     line-height: 1.7;
   }
   .monolith-network .rafael-meta p:last-child {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .rafael-meta .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .rafael-play-circle {
     width: 51px;
@@ -2195,7 +2195,7 @@
     font-size: 16px;
   }
   .monolith-network .rafael-poster-label {
-    font-size: 8px;
+    font-size: 11px;
     padding: 12px 17px;
   }
   .monolith-network .set-to-network {
@@ -2205,7 +2205,7 @@
   }
   .monolith-network .set-to-network > span {
     flex-basis: 100%;
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .set-to-network i {
     margin: 0 6px;
@@ -2215,7 +2215,7 @@
     margin-left: 0;
   }
   .monolith-network .set-to-network a {
-    font-size: 9px;
+    font-size: 11px;
     margin-left: 0;
   }
 }
@@ -2299,7 +2299,7 @@
   color: var(--gold);
 }
 .monolith-network .station-horizon > span:last-child {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   line-height: 1.9;
   color: var(--muted);
@@ -2307,7 +2307,7 @@
 .monolith-network .station-horizon strong {
   display: block;
   letter-spacing: 0.03em;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--paper);
 }
@@ -2345,13 +2345,13 @@
   color: var(--gold);
 }
 .monolith-network .profile-topline .eyebrow {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.15em;
 }
 .monolith-network .edition-stamp {
   border: 1px solid #d8b77e55;
   padding: 5px 8px;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
@@ -2365,7 +2365,7 @@
   overflow-wrap: anywhere;
 }
 .monolith-network .profile-location {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.7;
   color: var(--muted);
 }
@@ -2405,7 +2405,7 @@
   gap: 17px;
   flex-wrap: wrap;
   margin-top: 13px;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--gold);
   line-height: 1.6;
@@ -2418,14 +2418,14 @@
   line-height: 1.5;
 }
 .monolith-network .artist-connections a {
-  font-size: 10px;
+  font-size: 11px;
   border-bottom: 1px solid #d8b77e66;
   padding: 2px 0;
   color: var(--gold);
 }
 .monolith-network .artist-connections #bio-source-link {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
 }
 .monolith-network .player-deck {
   border-top: 1px solid var(--line);
@@ -2441,7 +2441,7 @@
   margin-bottom: 11px;
 }
 .monolith-network .deck-label > span {
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--gold);
 }
@@ -2464,7 +2464,7 @@
   opacity: 0.65;
 }
 .monolith-network #stop-player {
-  font-size: 9px;
+  font-size: 11px;
   padding: 4px 0 4px 9px;
   background: none;
   color: var(--paper);
@@ -2514,12 +2514,12 @@
 }
 .monolith-network .episode-play small {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 2px;
 }
 .monolith-network #player-status {
-  font-size: 8px;
+  font-size: 11px;
   line-height: 1.6;
   color: var(--muted);
   margin-top: 9px;
@@ -2532,7 +2532,7 @@
   border-top: 1px solid var(--line);
   padding-top: 12px;
   margin-top: 15px;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   line-height: 1.6;
   color: var(--muted);
@@ -2541,7 +2541,7 @@
   white-space: nowrap;
   color: var(--gold);
   letter-spacing: 0;
-  font-size: 8px;
+  font-size: 11px;
 }
 .monolith-network .collection-bar {
   display: flex;
@@ -2568,7 +2568,7 @@
   color: var(--paper);
 }
 .monolith-network .collection-tabs button span {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--gold);
   margin-left: 7px;
   border: 1px solid #d8b77e44;
@@ -2613,7 +2613,7 @@
   background: none;
   min-width: 0;
   width: 100%;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--paper);
   padding: 3px 0;
 }
@@ -2642,7 +2642,8 @@
 .monolith-network .radio-shelf {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 54px) / 4);
+  /* Three covers across (was four) so the album art reads at a glance. */
+  grid-auto-columns: calc((100% - 36px) / 3);
   gap: 18px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -2709,7 +2710,7 @@
 }
 .monolith-network .sleeve-meta small {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 5px;
   line-height: 1.7;
@@ -2719,13 +2720,13 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 14px;
   line-height: 1.7;
 }
 .monolith-network .library-foot > span {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--gold);
 }
@@ -2736,7 +2737,7 @@
 }
 .monolith-network .radio-refresh .credits {
   margin-top: 25px;
-  font-size: 8px;
+  font-size: 11px;
   color: #97aa9d;
 }
 @media (min-width: 1600px) {
@@ -2842,14 +2843,14 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 7px;
+    font-size: 11px;
     flex-wrap: wrap;
   }
   .monolith-network .station-horizon br {
     display: none;
   }
   .monolith-network .station-horizon strong {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .radio-feature {
     grid-template-columns: minmax(0, 1fr);
@@ -2864,10 +2865,10 @@
     margin: 18px 0 8px;
   }
   .monolith-network .profile-topline .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .profile-location {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .profile-panel {
     min-height: 0;
@@ -2880,10 +2881,10 @@
     margin-top: 18px;
   }
   .monolith-network .profile-credit {
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .profile-credit a {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .collection-bar {
     flex-direction: column;
@@ -2917,14 +2918,14 @@
     height: 34px;
   }
   .monolith-network .radio-shelf {
-    grid-auto-columns: calc((100% - 14px) / 2.15);
+    grid-auto-columns: calc((100% - 14px) / 1.45);
     gap: 14px;
   }
   .monolith-network .sleeve-meta strong {
     font-size: 12px;
   }
   .monolith-network .sleeve-meta small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .sleeve-arrow {
     bottom: 8px;
@@ -2937,7 +2938,7 @@
     align-items: start;
     flex-direction: column;
     gap: 6px;
-    font-size: 9px;
+    font-size: 11px;
     margin-top: 10px;
   }
   .monolith-network .radio-refresh .credits {
@@ -2958,32 +2959,32 @@
     font-size: 33px;
   }
   .monolith-network .profile-topline .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .edition-stamp {
-    font-size: 7px;
+    font-size: 11px;
     padding: 4px 6px;
   }
   .monolith-network .collection-tabs {
     gap: 14px;
   }
   .monolith-network .collection-tabs button {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .collection-tabs button span {
     width: 20px;
     height: 20px;
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .radio-shelf {
-    grid-auto-columns: 72%;
+    grid-auto-columns: 84%;
     gap: 14px;
   }
   .monolith-network .sleeve-meta strong {
     font-size: 12px;
   }
   .monolith-network .sleeve-meta small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .profile-credit {
     flex-wrap: wrap;
@@ -2993,7 +2994,7 @@
     gap: 12px;
   }
   .monolith-network .radio-refresh .section-kicker .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
 }
 /* The audio dock spans the feature, so playback never adds padding around a sleeve. */
@@ -3143,7 +3144,7 @@
 }
 .monolith-network .collection-title > span {
   display: block;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   color: var(--gold);
   margin-top: 8px;
@@ -3162,7 +3163,7 @@
   margin-bottom: 27px;
 }
 .monolith-network .more-series-heading .eyebrow {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--gold);
 }
 .monolith-network .more-series-heading h3 {
@@ -3211,7 +3212,7 @@
   min-width: 0;
 }
 .monolith-network .series-card .eyebrow {
-  font-size: 7px;
+  font-size: 11px;
   color: var(--gold);
   letter-spacing: 0.11em;
 }
@@ -3224,7 +3225,7 @@
   margin: 15px 0 13px;
 }
 .monolith-network .series-card p {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   line-height: 1.8;
 }
@@ -3234,7 +3235,7 @@
   justify-content: space-between;
   gap: 22px;
   width: 100%;
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 24px;
 }
 .monolith-network .series-open b {
@@ -3302,7 +3303,7 @@
 }
 .monolith-network .series-page .credits {
   max-width: 780px;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.8;
 }
 .monolith-network .series-return {
@@ -3314,7 +3315,7 @@
   font-size: 12px;
 }
 .monolith-network .series-return span {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
 }
 .monolith-network .series-karma-karma {
@@ -3340,13 +3341,13 @@
   padding: 8px 0;
   background: none;
   border-bottom: 1px solid var(--line);
-  font-size: 10px;
+  font-size: 11px;
   white-space: nowrap;
 }
 .monolith-network .radio-shelf.archive-expanded {
   grid-auto-flow: row;
   grid-auto-columns: auto;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   overflow: visible;
   row-gap: 28px;
 }
@@ -3358,14 +3359,14 @@
     font-size: 25px;
   }
   .monolith-network .series-card .eyebrow {
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .series-card p {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .series-open {
     margin-top: 17px;
-    font-size: 9px;
+    font-size: 11px;
     gap: 15px;
   }
 }
@@ -3374,7 +3375,7 @@
     font-size: 15px;
   }
   .monolith-network .collection-title > span {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .more-series {
     margin-top: 35px;
@@ -3403,16 +3404,16 @@
     font-size: 29px;
   }
   .monolith-network .series-card .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .monolith-network .series-card > div {
     padding: 18px;
   }
   .monolith-network .series-card p {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .series-open {
-    font-size: 10px;
+    font-size: 11px;
   }
   .monolith-network .series-hero {
     padding-top: 42px;
@@ -3423,7 +3424,7 @@
     gap: 27px;
   }
   .monolith-network .series-hero > .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
     margin-bottom: 20px;
   }
   .monolith-network .series-hero h1 {
@@ -3472,13 +3473,13 @@
     padding: 14px;
   }
   .monolith-network .series-card .eyebrow {
-    font-size: 6px;
+    font-size: 11px;
   }
   .monolith-network .series-card p {
-    font-size: 8px;
+    font-size: 11px;
   }
   .monolith-network .series-open {
-    font-size: 9px;
+    font-size: 11px;
     margin-top: 14px;
   }
   .monolith-network .series-open b {
@@ -3491,7 +3492,7 @@
     gap: 10px;
   }
   .monolith-network .archive-toggle {
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .series-page .shelf-controls {
     gap: 5px;
@@ -3583,12 +3584,12 @@
   background: #102f2b;
 }
 .monolith-network footer .parent-link {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.12em;
 }
 @media (max-width: 760px) {
   .monolith-network footer .parent-link {
-    font-size: 7px;
+    font-size: 11px;
     text-align: right;
   }
   .monolith-network .header-cta {
@@ -3866,7 +3867,7 @@
   .monolith-network .network-breadcrumb {
     gap: 10px;
     padding: 18px 6%;
-    font-size: 9px;
+    font-size: 11px;
   }
   .monolith-network .network-breadcrumb nav {
     width: 100%;
@@ -3936,7 +3937,7 @@
     font-size: 11px;
   }
   .monolith-network .hero-foot > span {
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.8;
   }
 }
@@ -3994,7 +3995,7 @@
 }
 
 .monolith-network .network-powered-by {
-  margin: -12px 0 25px;
+  margin: 0 0 25px;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.6;

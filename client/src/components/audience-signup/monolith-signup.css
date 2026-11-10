@@ -21,7 +21,7 @@
   border-bottom: 1px solid #2a241e;
   padding-bottom: 24px;
   font-family: var(--font-mono, "JetBrains Mono"), monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 1.8px;
 }
 .monolith-signup .ms-topline > span:first-child {
@@ -272,7 +272,7 @@
     padding: 25px 20px 32px;
   }
   .monolith-signup .ms-topline {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 1px;
     flex-wrap: wrap;
     gap: 10px;

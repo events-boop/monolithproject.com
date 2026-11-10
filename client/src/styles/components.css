@@ -248,7 +248,7 @@
 
   .ui-chip {
     font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: var(--label-tracking-chip);
     text-transform: uppercase;
   }
@@ -2260,7 +2260,7 @@
   .community-contribution-channel {
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     font-weight: 800;
     line-height: 1;
     letter-spacing: 0.24em;
@@ -2389,7 +2389,7 @@
     border: 1px solid rgba(var(--contribution-rgb), 0.52);
     background: rgba(var(--contribution-rgb), 0.065);
     color: var(--contribution-accent);
-    font-size: 0.66rem;
+    font-size: 0.6875rem;
     font-weight: 900;
     line-height: 1;
     letter-spacing: 0.13em;

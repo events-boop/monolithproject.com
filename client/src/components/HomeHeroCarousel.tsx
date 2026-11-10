@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import HeroSection from "./HeroSection";
+import YouTubeEmbed from "./ui/YouTubeEmbed";
 import { ROUTES } from "@shared/routes";
 import "@/styles/home-carousel.css";
 
@@ -20,6 +21,8 @@ export default function HomeHeroCarousel() {
   const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(true);
   const [inView, setInView] = useState(true);
+  // The Diplo film plays in place on its slide; the slide must not rotate away while it does.
+  const [diploPlaying, setDiploPlaying] = useState(false);
   const root = useRef<HTMLElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -45,13 +48,17 @@ export default function HomeHeroCarousel() {
   }, []);
 
   useEffect(() => {
-    if (!rotating || hovering || !visible || !inView) return;
+    if (!rotating || hovering || !visible || !inView || diploPlaying) return;
     const timer = window.setTimeout(
       () => setCurrent(value => (value + 1) % slides.length),
       9000
     );
     return () => window.clearTimeout(timer);
-  }, [current, rotating, hovering, visible, inView]);
+  }, [current, rotating, hovering, visible, inView, diploPlaying]);
+
+  useEffect(() => {
+    if (current !== 1) setDiploPlaying(false);
+  }, [current]);
 
   function choose(index: number) {
     setRotating(false);
@@ -136,27 +143,40 @@ export default function HomeHeroCarousel() {
                 </div>
               </div>
               <figure className="home-diplo-feature">
-                <a
-                  href={diploVideo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="home-diplo-cover"
-                  aria-label="Watch Diplo live in Antarctica on YouTube (opens in a new tab)"
-                >
-                  <img
-                    src="/media/home-network/diplo-antarctica-cover-20261007-1280.webp"
-                    srcSet="/media/home-network/diplo-antarctica-cover-20261007-640.webp 640w, /media/home-network/diplo-antarctica-cover-20261007-1280.webp 1280w"
-                    sizes="(min-width: 1000px) 55vw, 90vw"
-                    width={1280}
-                    height={720}
-                    alt="Diplo — Live in Antarctica"
-                  />
-                  <span className="home-cover-play">
-                    <Play size={20} fill="currentColor" aria-hidden="true" />{" "}
-                    Watch on YouTube{" "}
-                    <ArrowUpRight size={16} aria-hidden="true" />
-                  </span>
-                </a>
+                {diploPlaying ? (
+                  <div className="home-diplo-cover is-playing">
+                    <YouTubeEmbed
+                      url={diploVideo}
+                      title="Diplo — Live in Antarctica"
+                      className="home-diplo-player"
+                      loading="eager"
+                      autoplay
+                    />
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="home-diplo-cover"
+                    aria-label="Play Diplo live in Antarctica here on the page"
+                    onClick={() => {
+                      setRotating(false);
+                      setDiploPlaying(true);
+                    }}
+                  >
+                    <img
+                      src="/media/home-network/diplo-antarctica-cover-20261007-1280.webp"
+                      srcSet="/media/home-network/diplo-antarctica-cover-20261007-640.webp 640w, /media/home-network/diplo-antarctica-cover-20261007-1280.webp 1280w"
+                      sizes="(min-width: 1000px) 55vw, 90vw"
+                      width={1280}
+                      height={720}
+                      alt="Diplo — Live in Antarctica"
+                    />
+                    <span className="home-cover-play">
+                      <Play size={20} fill="currentColor" aria-hidden="true" />{" "}
+                      Play the set
+                    </span>
+                  </button>
+                )}
                 <figcaption>
                   <div>
                     <strong>Diplo</strong>
@@ -165,7 +185,16 @@ export default function HomeHeroCarousel() {
                   <span>
                     Selected from SUNSETS.FM
                     <br />
-                    Original recording by Diplo
+                    Original recording by Diplo ·{" "}
+                    <a
+                      href={diploVideo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="home-diplo-source"
+                    >
+                      Watch on YouTube{" "}
+                      <ArrowUpRight size={12} aria-hidden="true" />
+                    </a>
                   </span>
                 </figcaption>
               </figure>
