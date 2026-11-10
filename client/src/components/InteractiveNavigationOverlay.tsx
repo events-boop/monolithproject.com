@@ -138,7 +138,7 @@ function resolveChapterView(
       eyebrow: "Dates + updates",
       tagline: "New show updates incoming.",
       description:
-        "2027 is taking shape. New dates and the replacement for our September show will be announced here first.",
+        "September 19 was rained out. Its new date, and what is coming in 2027, will be announced here first.",
       proof: "Ticket-holders: see the update.",
       image: ticketEvent.image || chapter.image,
       meta: compactMeta([
@@ -149,7 +149,7 @@ function resolveChapterView(
       primaryHref: getEventDetailsHref(ticketEvent),
       primaryLabel: "Ticket-holder update",
       previewTitle: ticketEvent.headline || ticketEvent.title || chapter.label,
-      status: "Updates incoming",
+      status: "Postponed",
     };
   }
 

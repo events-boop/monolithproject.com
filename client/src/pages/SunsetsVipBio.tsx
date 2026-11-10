@@ -52,8 +52,9 @@ export default function SunsetsVipBio() {
             href: ROUTES.schedule,
           },
           {
-            label: "September 19 ticket-holder update",
-            detail: "JOEZI × MASSUMA: official status and ticket info",
+            label: "September 19 · JOEZI × MASSUMA",
+            badge: "Postponed",
+            detail: "Rained out. Ticket-holder update and new-date news",
             href: SUNSETS_STATUS_PATH,
           },
           {

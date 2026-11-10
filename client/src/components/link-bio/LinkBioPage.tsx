@@ -13,6 +13,8 @@ export interface LinkBioLink {
   href: string;
   /** The one link we most want tapped right now. */
   primary?: boolean;
+  /** A short status chip on the link itself, e.g. "Postponed". */
+  badge?: string;
 }
 
 export interface LinkBioProps {
@@ -42,7 +44,10 @@ function BioLink({ link }: { link: LinkBioLink }) {
   const body = (
     <>
       <span className="link-bio-link-text">
-        <strong>{link.label}</strong>
+        <strong>
+          {link.label}
+          {link.badge && <em className="link-bio-link-badge">{link.badge}</em>}
+        </strong>
         {link.detail && <small>{link.detail}</small>}
       </span>
       <ArrowUpRight size={18} aria-hidden="true" />
