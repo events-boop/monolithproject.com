@@ -431,30 +431,6 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     // validation requires all gates true + ticketUrl for on-sale records.
     gates: { creativeReady: true, trackingQA: true, poshLinked: true },
   },
-  {
-    // Retired October launch window — archived cleanly so it never renders
-    // as an upcoming show with placeholder "Reveal Soon" fields.
-    id: "css-oct10",
-    series: "monolith-project",
-    episode: "LAUNCH",
-    title: "THE MONOLITH PROJECT",
-    headline: "THE MONOLITH PROJECT — LAUNCH",
-    slug: "monolith-launch",
-    date: "October 10, 2026",
-    startsAt: "2026-10-10T21:00:00-05:00",
-    endsAt: "2026-10-11T03:00:00-05:00",
-    time: "Chapter closed",
-    venue: "Chicago",
-    location: "Chicago, IL",
-    lineup: "The Monolith Project",
-    status: "past",
-    description:
-      "Initial October launch window (retired). Explore previous chapters in the archive or join First Access for upcoming dates.",
-    eventNotice:
-      "This date has passed. Confirmed upcoming nights appear on the schedule.",
-    recapUrl: "/archive",
-    activeFunnels: ["waitlist"],
-  },
 ];
 
 function eventStartValue(event: ScheduledEvent) {

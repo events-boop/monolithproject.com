@@ -107,6 +107,19 @@
   status = 200
   force = true
 
+# The October 10 launch date never happened and was removed on 2026-11-10.
+[[redirects]]
+  from = "/events/css-oct10"
+  to = "/schedule"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/events/monolith-launch"
+  to = "/schedule"
+  status = 301
+  force = true
+
 # sunsets.vip is the campaign front door. The root opens the link in bio at
 # /sunsets-links (2026-11-10); the /SUNSETS aliases still redirect to
 # the canonical /sunsets page while non-root paths such as /go/* remain

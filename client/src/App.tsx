@@ -308,10 +308,13 @@ function Router() {
       </Route>
       <Route path={ROUTES.schedule} component={ScheduleTransition} />
       <Route path={ROUTES.events} component={ScheduleTransition} />
-      {/* DECISION B: October 10 was rebranded from a Sun(Sets) finale to the
-          parent-brand launch event; keep the old id-based path working. */}
+      {/* The October 10 launch date never happened and is removed (Erik, 2026-11-10).
+          Its two old addresses go to the calendar instead of a placeholder page. */}
       <Route path="/events/css-oct10">
-        <Redirect to="/events/monolith-launch" />
+        <Redirect to={ROUTES.schedule} />
+      </Route>
+      <Route path="/events/monolith-launch">
+        <Redirect to={ROUTES.schedule} />
       </Route>
       <Route path="/events/:slug" component={EventDetailsTransition} />
       <Route path={ROUTES.newsletter} component={NewsletterTransition} />
