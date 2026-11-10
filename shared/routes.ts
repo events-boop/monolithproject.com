@@ -32,6 +32,8 @@ export const ROUTES = {
   chasingSunsetsFacts: "/chasing-sunsets-facts",
   story: "/story", // → /untold-story
   untoldVip: "/untold",
+  /** sunsets.vip link in bio. The full event page stays at /sunsets. */
+  sunsetsBio: "/sunsets-links",
   untoldStory: "/untold-story",
   untoldStoryDeronJuanyBravo: "/untold-story-deron-juany-bravo",
   newsletter: "/newsletter",
@@ -179,6 +181,7 @@ export const STANDALONE_LANDING_PATHS = new Set([
   ROUTES.sunsets,
   ROUTES.lake,
   ROUTES.untoldVip,
+  ROUTES.sunsetsBio,
 ]);
 
 /* ------------------------------------------------------------------ */

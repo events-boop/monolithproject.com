@@ -35,6 +35,7 @@ const OpenNetwork = lazyRoute("OpenNetwork");
 const RadioEpisode = lazyRoute("RadioEpisode");
 const UntoldStory = lazyRoute("UntoldStory");
 const UntoldVipLanding = lazyRoute("UntoldVipLanding");
+const SunsetsVipBio = lazyRoute("SunsetsVipBio");
 const Booking = lazyRoute("Booking");
 const Partners = lazyRoute("Partners");
 const Lineup = lazyRoute("Lineup");
@@ -131,6 +132,7 @@ const OpenNetworkTransition = withTransition(OpenNetwork);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
 const UntoldVipLandingTransition = withTransition(UntoldVipLanding);
+const SunsetsVipBioTransition = withTransition(SunsetsVipBio);
 const BookingTransition = withTransition(Booking);
 const SubmitTransition = withTransition(Submit);
 const LineupTransition = withTransition(Lineup);
@@ -275,6 +277,7 @@ function Router() {
       <Route path={ROUTES.openNetwork} component={OpenNetworkTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />
+      <Route path={ROUTES.sunsetsBio} component={SunsetsVipBioTransition} />
       <Route path="/story/">
         <Redirect to={ROUTES.untoldStory} />
       </Route>
@@ -474,6 +477,7 @@ function MainContentWrapper() {
     landingPath === ROUTES.sunsets ||
     landingPath === ROUTES.lake ||
     landingPath === ROUTES.untoldVip ||
+    landingPath === ROUTES.sunsetsBio ||
     isUntoldRootLanding;
   const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
   const isApeDrumsRoute =
@@ -544,6 +548,8 @@ function MainContentWrapper() {
             <LakeLandingTransition />
           ) : landingPath === ROUTES.untoldVip ? (
             <UntoldVipLandingTransition />
+          ) : landingPath === ROUTES.sunsetsBio ? (
+            <SunsetsVipBioTransition />
           ) : (
             <SunsetsLinkBioTransition />
           )

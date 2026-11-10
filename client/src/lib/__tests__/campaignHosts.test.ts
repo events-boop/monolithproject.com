@@ -23,7 +23,7 @@ describe("campaign host routing", () => {
   });
 
   it("preserves the existing Sunsets and Untold campaign roots", () => {
-    expect(resolveCampaignHostPath("sunsets.vip", "/")).toBe("/sunsets");
+    expect(resolveCampaignHostPath("sunsets.vip", "/")).toBe("/sunsets-links");
     expect(resolveCampaignHostPath("untold.vip", "/")).toBe("/untold");
   });
 });
