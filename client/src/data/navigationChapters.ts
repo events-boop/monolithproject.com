@@ -5,7 +5,8 @@ export type NavigationChapterId =
   | "artists"
   | "chasing-sunsets"
   | "untold-story"
-  | "radio";
+  | "radio"
+  | "sunsets-fm";
 
 export interface NavigationChapterLink {
   label: string;
@@ -30,7 +31,7 @@ export const navigationChapters: NavigationChapter[] = [
   {
     id: "schedule",
     label: "Shows",
-    eyebrow: "Tickets + Dates",
+    eyebrow: "Dates + updates",
     href: ROUTES.schedule,
     tagline: "Start with the next Monolith show.",
     description:
@@ -97,8 +98,8 @@ export const navigationChapters: NavigationChapter[] = [
   },
   {
     id: "radio",
-    label: "Radio",
-    eyebrow: "Artist Content",
+    label: "Chasing Sunsets Radio",
+    eyebrow: "Powered by sunsets.fm",
     href: ROUTES.radio,
     tagline: "Mixes, guests, and radio episodes between shows.",
     description:
@@ -106,10 +107,27 @@ export const navigationChapters: NavigationChapter[] = [
     proof: "A direct way to hear the artists before you are in the room.",
     image: "/images/radio-show-gear.webp",
     accent: "#FB7185",
-    ctaLabel: "Play Radio",
+    ctaLabel: "Play the radio",
     secondaryLinks: [
       { label: "Latest Episode", href: routeRadioEpisode("ep-01-benchek") },
       { label: "Browse Episodes", href: ROUTES.radio },
+    ],
+  },
+  {
+    id: "sunsets-fm",
+    label: "SUNSETS.FM",
+    eyebrow: "The Open Network",
+    href: ROUTES.sunsetsFM,
+    tagline: "From our dance floors to a world of sound.",
+    description:
+      "A Monolith project connecting DJ sets, places, and the people who bring them together.",
+    proof: "Coming soon. The Open Network is where it starts.",
+    image: "/media/home-network/diplo-antarctica-cover-20261007-1280.webp",
+    accent: "#D8B77E",
+    ctaLabel: "Discover SUNSETS.FM",
+    secondaryLinks: [
+      { label: "The Open Network", href: ROUTES.openNetwork },
+      { label: "Chasing Sunsets Radio", href: ROUTES.radio },
     ],
   },
 ];

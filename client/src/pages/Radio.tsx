@@ -152,6 +152,27 @@ export default function Radio() {
   }, []);
   const [filter, setFilter] = useState<EpisodeFilter>("all");
   const [activeEpisodeSlug, setActiveEpisodeSlug] = useState(initialSlug);
+  // The featured cover rotates through the pool until the listener chooses or plays something.
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [heroHovered, setHeroHovered] = useState(false);
+  const hasActiveTrack = Boolean(audio?.activeTrack);
+
+  useEffect(() => {
+    if (!autoRotate || heroHovered || hasActiveTrack) return;
+    if (featuredEpisodePool.length < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => {
+      if (document.hidden) return;
+      setActiveEpisodeSlug(current => {
+        const index = featuredEpisodePool.findIndex(
+          episode => episode.slug === current
+        );
+        return featuredEpisodePool[(index + 1) % featuredEpisodePool.length]
+          .slug;
+      });
+    }, 7000);
+    return () => window.clearTimeout(timer);
+  }, [activeEpisodeSlug, autoRotate, heroHovered, hasActiveTrack]);
 
   const activeEpisode = useMemo(
     () =>
@@ -191,6 +212,7 @@ export default function Radio() {
     .slice(0, 3);
 
   const selectEpisode = (slug: string, bringToDeck = false) => {
+    setAutoRotate(false);
     if (slug !== activeEpisodeSlug && audio?.activeTrack) {
       audio.unloadTrack();
     }
@@ -310,7 +332,13 @@ export default function Radio() {
                 transition={{ ...sectionTransition, delay: 0.1 }}
                 className="luxe-surface-dark p-4 md:p-5"
               >
-                <div className="radio-cover-and-queue grid gap-4">
+                <div
+                  className="radio-cover-and-queue grid gap-4"
+                  onMouseEnter={() => setHeroHovered(true)}
+                  onMouseLeave={() => setHeroHovered(false)}
+                  onFocusCapture={() => setHeroHovered(true)}
+                  onBlurCapture={() => setHeroHovered(false)}
+                >
                   <button
                     type="button"
                     onClick={() => selectEpisode(activeEpisode.slug, true)}

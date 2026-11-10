@@ -9,6 +9,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
+  Globe2,
   Radio,
   Sparkles,
   Sun,
@@ -74,6 +75,7 @@ const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
   "chasing-sunsets": Sun,
   "untold-story": Sparkles,
   radio: Radio,
+  "sunsets-fm": Globe2,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
@@ -84,6 +86,8 @@ function getChapterIdForPath(path: string): NavigationChapterId {
     path === "/tickets"
   )
     return "schedule";
+  if (path.startsWith("/sunsets-fm") || path.startsWith("/open-network"))
+    return "sunsets-fm";
   if (path.startsWith("/chasing-sunsets") || path.startsWith("/sunsets"))
     return "chasing-sunsets";
   if (path === "/story" || path.startsWith("/untold-story"))
@@ -122,6 +126,32 @@ function resolveChapterView(
   ticketHref?: string | null
 ): ChapterView {
   const ticketEvent = getExperienceEvent("ticket");
+
+  // While a show is postponed the menu teases what is next instead of selling tickets, and keeps
+  // the ticket-holder update one tap away (Erik, 2026-11-10: badge, not a postponed pop-up).
+  if (
+    chapter.id === "schedule" &&
+    ticketEvent?.eventStatus === "EventPostponed"
+  ) {
+    return {
+      ...chapter,
+      eyebrow: "Dates + updates",
+      tagline: "New show updates incoming.",
+      description:
+        "2027 is taking shape. New dates and the replacement for our September show will be announced here first.",
+      proof: "Ticket-holders: see the update.",
+      image: ticketEvent.image || chapter.image,
+      meta: compactMeta([
+        ticketEvent.date ? `Original date: ${ticketEvent.date}` : null,
+        getEventVenueLabel(ticketEvent),
+        ticketEvent.lineup,
+      ]),
+      primaryHref: getEventDetailsHref(ticketEvent),
+      primaryLabel: "Ticket-holder update",
+      previewTitle: ticketEvent.headline || ticketEvent.title || chapter.label,
+      status: "Updates incoming",
+    };
+  }
 
   if (chapter.id === "schedule") {
     const primaryHref =
@@ -413,6 +443,7 @@ export default function InteractiveNavigationOverlay({
             { label: "Sun(Sets)", href: "/sunsets" },
             { label: "Untold Story", href: "/untold-story" },
             { label: "Chasing Sunsets Radio", href: "/radio" },
+            { label: "SUNSETS.FM", href: ROUTES.sunsetsFM },
             { label: "Open Network", href: ROUTES.openNetwork },
             { label: "About", href: "/about" },
           ].map(link => (
@@ -432,7 +463,7 @@ export default function InteractiveNavigationOverlay({
               Explore Monolith
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
-              Events & More
+              Shows, radio & the network
             </h1>
           </div>
         </header>
