@@ -95,8 +95,11 @@ describe("UX audit surgical fixes", () => {
       screen.getByRole("heading", { name: /featured episode/i })
     ).toBeInTheDocument();
 
+    // The deck's own play button replaced the "Load the player" prompt.
     fireEvent.click(
-      screen.getByRole("button", { name: /load the player/i })
+      screen.getByRole("button", {
+        name: /^play live set from marbella part ii$/i,
+      })
     );
 
     expect(

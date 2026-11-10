@@ -1,6 +1,6 @@
 import { ROUTES } from "@shared/routes";
 import "./radio-refresh.css";
-import AudioPlayer from "@/components/AudioPlayer";
+import RadioDeckPlayer from "@/components/RadioDeckPlayer";
 import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -470,13 +470,15 @@ export default function Radio() {
                   </div>
                 </div>
 
-                <div className="radio-playback overflow-hidden border border-white/10 bg-black">
-                  <AudioPlayer
+                <div className="radio-playback">
+                  <RadioDeckPlayer
                     key={activeEpisode.slug}
                     slug={activeEpisode.slug}
                     title={activeEpisode.title}
                     artist={activeEpisode.guest}
                     src={activeEpisode.embedUrl}
+                    sourceUrl={activeEpisode.audioUrl}
+                    duration={activeEpisode.duration}
                   />
                 </div>
 

@@ -1,3 +1,5 @@
+import { chasingRadioEpisodes } from "./chasingRadioEpisodes";
+
 export interface EpisodeTrack {
   timecode: string;
   artist: string;
@@ -26,6 +28,8 @@ export interface RadioEpisode {
   audioUrl: string;
   guestLinks: EpisodeLink[];
   tracklist: EpisodeTrack[];
+  /** This recording's page on sunsets.fm, when it is not in the shared SEO map. */
+  sunsetsUrl?: string;
 }
 
 export const RADIO_SERIES_NAME = "Chasing Sunsets Radio";
@@ -36,7 +40,7 @@ export const LEGACY_RADIO_SLUG_REDIRECTS: Record<string, string> = {
   "eran-hersh": "/untold-story",
 };
 
-export const radioEpisodes: RadioEpisode[] = [
+const curatedEpisodes: RadioEpisode[] = [
   {
     slug: "ep-004-benchek-part-2",
     episodeNumber: 5,
@@ -247,6 +251,88 @@ export const radioEpisodes: RadioEpisode[] = [
       { timecode: "63:15", artist: "RADIAN", title: "Untold Closing Theme" },
     ],
   },
+];
+
+/*
+ * Every Chasing Sunsets Radio art pack gets an episode page. The six episodes above are written
+ * by hand (story, tracklist). The rest of the approved collection is brought in from the Open
+ * Network library with only what its record states: no tracklist or story is invented for them.
+ */
+interface LibraryEpisode {
+  id: string;
+  artist: string;
+  title: string;
+  image: string;
+  source: string;
+  duration: string;
+  publishedAt: string;
+  description: string;
+  episode?: string;
+  profile?: { name: string; bio?: string; url?: string };
+}
+
+const SOUNDCLOUD_EMBED_OPTIONS =
+  "&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false";
+
+const displayDateFormat = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+function fromLibrary(entry: LibraryEpisode): RadioEpisode {
+  const number = Number.parseInt(entry.episode ?? "", 10);
+  const hasNumber = Number.isFinite(number);
+  return {
+    slug: entry.id.replace(/^real-(chasing-)?/, ""),
+    episodeNumber: hasNumber ? number : 0,
+    shortCode: hasNumber ? `EP${String(number).padStart(3, "0")}` : "SESSION",
+    title: entry.title,
+    guest: entry.artist.toUpperCase(),
+    datePublished: entry.publishedAt,
+    displayDate: displayDateFormat.format(
+      new Date(`${entry.publishedAt}T12:00:00Z`)
+    ),
+    duration: entry.duration,
+    summary: entry.description,
+    narrative: entry.profile?.bio
+      ? `${entry.description}\n\n${entry.profile.bio}`
+      : entry.description,
+    image: "/images/radio-show-gear.webp",
+    coverImage: entry.image,
+    embedUrl: `https://w.soundcloud.com/player/?url=${encodeURIComponent(entry.source).replace(/%3A%2F%2F/, "%3A//").replace(/%2F/g, "/")}${SOUNDCLOUD_EMBED_OPTIONS}`,
+    audioUrl: entry.source,
+    guestLinks: [
+      ...(entry.profile?.url
+        ? [
+            {
+              label: `${entry.profile.name} on SoundCloud`,
+              url: entry.profile.url,
+            },
+          ]
+        : []),
+      {
+        label: "Chasing Sun(Sets) Instagram",
+        url: "https://instagram.com/chasingsunsets.music",
+      },
+    ],
+    tracklist: [],
+    sunsetsUrl: `https://sunsets.fm/sets/${entry.id}`,
+  };
+}
+
+const curatedCovers = new Set(curatedEpisodes.map(episode => episode.coverImage));
+
+const libraryEpisodes = (chasingRadioEpisodes as readonly LibraryEpisode[])
+  .filter(entry => !curatedCovers.has(entry.image))
+  .map(fromLibrary)
+  .sort((a, b) => b.datePublished.localeCompare(a.datePublished));
+
+/** Hand-written episodes first (they feed the featured rotation), then the rest, newest first. */
+export const radioEpisodes: RadioEpisode[] = [
+  ...curatedEpisodes,
+  ...libraryEpisodes,
 ];
 
 export function getRadioEpisode(slug: string) {

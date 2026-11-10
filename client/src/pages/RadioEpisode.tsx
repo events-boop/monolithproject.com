@@ -2,7 +2,8 @@ import {
   SUNSETS_CANONICALS_LIVE,
   SUNSETS_EPISODE_URLS,
 } from "@shared/seo/sunsets-radio";
-import AudioPlayer from "@/components/AudioPlayer";
+import RadioDeckPlayer from "@/components/RadioDeckPlayer";
+import "./radio-episode.css";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "wouter";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -43,6 +44,10 @@ export default function RadioEpisode() {
     episodeIndex >= 0 && episodeIndex < radioEpisodes.length - 1
       ? radioEpisodes[episodeIndex + 1]
       : undefined;
+  const sunsetsUrl = episode
+    ? (SUNSETS_EPISODE_URLS[episode.slug] ?? episode.sunsetsUrl)
+    : undefined;
+  const cover = episode ? episode.coverImage || episode.image : "";
   const episodeJumpLinks = [
     { href: "#listen", label: "Listen" },
     { href: "#tracklist", label: "Tracklist" },
@@ -123,7 +128,7 @@ export default function RadioEpisode() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="radio-episode-page min-h-screen bg-background text-foreground">
       <SEO
         title={`Chasing Sunsets Radio | ${episode.shortCode} ${episode.guest}`}
         description={`Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`}
@@ -134,6 +139,7 @@ export default function RadioEpisode() {
             ? SUNSETS_EPISODE_URLS[episode.slug]
             : undefined
         }
+        image={cover}
       />
       <Navigation />
 
@@ -143,45 +149,68 @@ export default function RadioEpisode() {
         className="page-shell-start pb-24 px-6"
       >
         <motion.section className="container layout-default" {...sectionReveal}>
-          <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
-            <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4">
-              {episode.shortCode} · {episode.displayDate}
-            </p>
-            <h1 className="font-display text-[clamp(2.4rem,7vw,5.1rem)] leading-[0.9] uppercase mb-4">
-              {episode.title}
-            </h1>
-            <p className="text-lg text-white/80">Guest: {episode.guest}</p>
-            <p className="mt-3 text-sm text-[#E8B86D]">
-              Chasing Sunsets Radio · powered by{" "}
-              <Link href="/sunsets-fm" className="underline underline-offset-4">
-                sunsets.fm
-              </Link>
-            </p>
-            <a
-              href={SUNSETS_EPISODE_URLS[episode.slug]}
-              className="btn-pill-sunsets mt-6 inline-flex max-w-full items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
-            >
-              Listen on SUNSETS.FM →
-            </a>
-            <p className="text-sm text-muted-foreground mt-3 max-w-3xl">
-              Chasing Sun(Sets) is a Chicago-based sunset house music event
-              series and radio show by The Monolith Project. For disambiguation
-              details, review{" "}
-              <Link
-                href="/chasing-sunsets-facts"
-                className="btn-inline-pill btn-inline-pill-radio"
-              >
-                Official Chasing Sun(Sets) Identity
-              </Link>
-              .
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.15em] uppercase text-white/80">
-                Duration · {episode.duration}
-              </span>
-              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] tracking-[0.15em] uppercase text-white/80">
-                {episode.tracklist.length} Tracks Listed
-              </span>
+          <Link href="/radio" className="episode-back">
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            Chasing Sunsets Radio
+          </Link>
+          <div className="episode-hero">
+            <figure className="episode-cover">
+              <img
+                src={cover}
+                alt={`${episode.guest} — ${episode.title} cover art`}
+                width={1000}
+                height={1000}
+              />
+            </figure>
+            <div className="episode-hero-copy">
+              <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary">
+                {episode.shortCode} · {episode.displayDate}
+              </p>
+              <h1 className="episode-title font-display uppercase">
+                {episode.title}
+              </h1>
+              <p className="episode-guest">Guest: {episode.guest}</p>
+              <p className="mt-2 text-sm text-[#E8B86D]">
+                Chasing Sunsets Radio · powered by{" "}
+                <Link
+                  href="/sunsets-fm"
+                  className="underline underline-offset-4"
+                >
+                  sunsets.fm
+                </Link>
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                <span className="episode-chip">
+                  Duration · {episode.duration}
+                </span>
+                <span className="episode-chip">
+                  {episode.tracklist.length > 0
+                    ? `${episode.tracklist.length} Tracks Listed`
+                    : "Tracklist to come"}
+                </span>
+              </div>
+
+              <div id="listen" className="episode-deck scroll-shell-target">
+                <h2 className="sr-only">Listen</h2>
+                <RadioDeckPlayer
+                  key={episode.slug}
+                  slug={episode.slug}
+                  title={episode.title}
+                  artist={episode.guest}
+                  src={episode.embedUrl}
+                  sourceUrl={episode.audioUrl}
+                  duration={episode.duration}
+                />
+              </div>
+
+              {sunsetsUrl && (
+                <a
+                  href={sunsetsUrl}
+                  className="btn-pill-sunsets mt-5 inline-flex max-w-full items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+                >
+                  Listen on SUNSETS.FM →
+                </a>
+              )}
             </div>
           </div>
         </motion.section>
@@ -206,102 +235,104 @@ export default function RadioEpisode() {
           </nav>
         </motion.section>
 
-        <motion.section
-          id="listen"
-          className="container layout-default mt-10 scroll-shell-target"
-          {...sectionReveal}
-        >
-          <h2 className="font-display text-3xl uppercase mb-4">Listen</h2>
-          <div className="border border-border/70 rounded-xl p-4 bg-card/40 luxe-surface-dark">
-            <AudioPlayer
-              key={episode.slug}
-              slug={episode.slug}
-              title={episode.title}
-              artist={episode.guest}
-              src={episode.embedUrl}
-            />
-          </div>
-        </motion.section>
-
-        <motion.section
-          id="tracklist"
-          className="container layout-default mt-10 scroll-shell-target"
-          {...sectionReveal}
-        >
-          <h2 className="font-display text-3xl uppercase mb-4">Tracklist</h2>
-          <div className="border border-border/70 rounded-xl bg-card/40 luxe-surface-dark">
-            {episode.tracklist.map((track, index) => (
-              <div
-                key={`${track.timecode}-${track.artist}-${track.title}`}
-                className={`px-5 py-4 border-b border-border/40 last:border-b-0 flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-white/[0.03] transition-colors ${
-                  index % 2 === 0 ? "bg-white/[0.015]" : ""
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70">
+        <div className="container layout-default episode-columns">
+          <motion.section
+            id="tracklist"
+            className="scroll-shell-target"
+            {...sectionReveal}
+          >
+            <h2 className="font-display text-3xl uppercase mb-4">Tracklist</h2>
+            <div className="border border-border/70 rounded-xl bg-card/40 luxe-surface-dark">
+              {episode.tracklist.length === 0 && (
+                <p className="px-5 py-5 text-sm text-white/70">
+                  The tracklist for this episode has not been published yet.
+                </p>
+              )}
+              {episode.tracklist.map((track, index) => (
+                <div
+                  key={`${track.timecode}-${track.artist}-${track.title}`}
+                  className={`episode-track ${index % 2 === 0 ? "bg-white/[0.015]" : ""}`}
+                >
+                  <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/60">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <p className="font-mono text-xs tracking-[0.2em] uppercase text-primary">
                     {track.timecode}
                   </p>
+                  <p className="text-sm text-white/90">
+                    <span className="font-semibold">{track.artist}</span> -{" "}
+                    {track.title}
+                  </p>
                 </div>
-                <p className="text-sm text-white/90">
-                  <span className="font-semibold">{track.artist}</span> -{" "}
-                  {track.title}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.section>
+              ))}
+            </div>
+          </motion.section>
 
-        <motion.section
-          id="story"
-          className="container layout-default mt-10 scroll-shell-target"
-          {...sectionReveal}
-        >
-          <h2 className="font-display text-3xl uppercase mb-4">
-            Episode Story
-          </h2>
-          <article className="border border-border/70 rounded-xl p-6 bg-card/40 space-y-4 text-muted-foreground leading-relaxed luxe-surface-dark">
-            {episode.narrative.split("\n\n").map(paragraph => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </article>
-        </motion.section>
+          <div>
+            <motion.section
+              id="story"
+              className="scroll-shell-target"
+              {...sectionReveal}
+            >
+              <h2 className="font-display text-3xl uppercase mb-4">
+                Episode Story
+              </h2>
+              <article className="border border-border/70 rounded-xl p-6 bg-card/40 space-y-4 text-muted-foreground leading-relaxed luxe-surface-dark">
+                {episode.narrative.split("\n\n").map(paragraph => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </article>
+            </motion.section>
 
-        <motion.section
-          id="guest-links"
-          className="container layout-default mt-10 scroll-shell-target"
-          {...sectionReveal}
-        >
-          <h2 className="font-display text-3xl uppercase mb-4">Guest Links</h2>
-          <div className="flex flex-wrap gap-3">
-            {episode.guestLinks.map(link =>
-              isExternalLink(link.url) ? (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-pill-monolith"
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={link.url}
-                  className="btn-pill-monolith"
-                >
-                  {link.label}
+            <motion.section
+              id="guest-links"
+              className="mt-10 scroll-shell-target"
+              {...sectionReveal}
+            >
+              <h2 className="font-display text-3xl uppercase mb-4">
+                Guest Links
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {episode.guestLinks.map(link =>
+                  isExternalLink(link.url) ? (
+                    <a
+                      key={link.label}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-pill-monolith"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.label}
+                      href={link.url}
+                      className="btn-pill-monolith"
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                )}
+                <Link href="/tickets" className="btn-pill-radio">
+                  {CTA_LABELS.tickets}
                 </Link>
-              )
-            )}
-            <Link href="/tickets" className="btn-pill-radio">
-              {CTA_LABELS.tickets}
-            </Link>
+              </div>
+              <p className="text-sm text-muted-foreground mt-6 max-w-3xl">
+                Chasing Sun(Sets) is a Chicago-based sunset house music event
+                series and radio show by The Monolith Project. For
+                disambiguation details, review{" "}
+                <Link
+                  href="/chasing-sunsets-facts"
+                  className="btn-inline-pill btn-inline-pill-radio"
+                >
+                  Official Chasing Sun(Sets) Identity
+                </Link>
+                .
+              </p>
+            </motion.section>
           </div>
-        </motion.section>
+        </div>
 
         <motion.section
           className="container layout-default mt-12"
@@ -311,64 +342,63 @@ export default function RadioEpisode() {
             Continue Listening
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
-            {previousEpisode ? (
-              <Link
-                href={`/radio/${previousEpisode.slug}`}
-                className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
-              >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
-                  Previous Episode
-                </p>
-                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
-                  {previousEpisode.title}
-                </p>
-                <p className="text-sm text-white/60 mb-3">
-                  {previousEpisode.displayDate}
-                </p>
-                <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
-                  <ArrowLeft className="w-4 h-4" />
-                  Open Episode
-                </p>
-              </Link>
-            ) : (
-              <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
-                  Previous Episode
-                </p>
-                <p className="text-sm text-white/70">
-                  This is the first available episode in the archive.
-                </p>
-              </div>
-            )}
-
-            {nextEpisode ? (
-              <Link
-                href={`/radio/${nextEpisode.slug}`}
-                className="luxe-surface-dark rounded-xl p-5 border border-white/10 hover:border-primary/45 transition-colors lift-hover"
-              >
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
-                  Next Episode
-                </p>
-                <p className="font-display text-2xl text-white leading-tight mb-2 uppercase">
-                  {nextEpisode.title}
-                </p>
-                <p className="text-sm text-white/60 mb-3">
-                  {nextEpisode.displayDate}
-                </p>
-                <p className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
-                  Open Episode
-                  <ArrowRight className="w-4 h-4" />
-                </p>
-              </Link>
-            ) : (
-              <div className="luxe-surface-dark rounded-xl p-5 border border-white/10 opacity-65">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/70 mb-2">
-                  Next Episode
-                </p>
-                <p className="text-sm text-white/70">
-                  You are on the latest published episode.
-                </p>
-              </div>
+            {[
+              {
+                entry: previousEpisode,
+                label: "Previous Episode",
+                empty: "This is the first available episode in the archive.",
+                back: true,
+              },
+              {
+                entry: nextEpisode,
+                label: "Next Episode",
+                empty: "You are on the latest published episode.",
+                back: false,
+              },
+            ].map(({ entry, label, empty, back }) =>
+              entry ? (
+                <Link
+                  key={label}
+                  href={`/radio/${entry.slug}`}
+                  className="episode-next luxe-surface-dark lift-hover"
+                >
+                  <img
+                    src={entry.coverImage || entry.image}
+                    alt=""
+                    width={160}
+                    height={160}
+                    loading="lazy"
+                  />
+                  <span>
+                    <span className="block font-mono text-[11px] tracking-[0.2em] uppercase text-white/70 mb-2">
+                      {label}
+                    </span>
+                    <span className="block font-display text-xl text-white leading-tight mb-1 uppercase">
+                      {entry.title}
+                    </span>
+                    <span className="block text-sm text-white/60 mb-3">
+                      {entry.guest} · {entry.displayDate}
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-primary text-sm font-semibold">
+                      {back && <ArrowLeft className="w-4 h-4" />}
+                      Open Episode
+                      {!back && <ArrowRight className="w-4 h-4" />}
+                    </span>
+                  </span>
+                </Link>
+              ) : (
+                <div
+                  key={label}
+                  className="episode-next luxe-surface-dark opacity-65"
+                >
+                  <span>
+                    <span className="block font-mono text-[11px] tracking-[0.2em] uppercase text-white/70 mb-2">
+                      {label}
+                    </span>
+                    <span className="block text-sm text-white/70">{empty}</span>
+                  </span>
+                </div>
+              )
             )}
           </div>
         </motion.section>
