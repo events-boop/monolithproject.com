@@ -17,7 +17,7 @@ export default function HomeNextChapter({
       aria-labelledby="next-chapter-title"
     >
       <div className="next-chapter-masthead">
-        <p>The Monolith Project / The next chapter</p>
+        <p>{chapter.brand}</p>
         <span>
           Chicago & beyond <span aria-hidden="true">↗</span>
         </span>

@@ -304,7 +304,7 @@ function renderNextChapterSection() {
   }
   return `
     <section id="next-chapter" class="critical-home-content" aria-labelledby="critical-next-chapter-title">
-      <p>The Monolith Project / The next chapter / ${HOME_NEXT_CHAPTER.year}</p>
+      <p>${escapeHtml(HOME_NEXT_CHAPTER.brand)} / ${HOME_NEXT_CHAPTER.year}</p>
       <h2 id="critical-next-chapter-title">${escapeHtml(HOME_NEXT_CHAPTER.title)}</h2>
       <p>${escapeHtml(HOME_NEXT_CHAPTER.description)}</p>
       ${renderLinkList(

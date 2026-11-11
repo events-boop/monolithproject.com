@@ -56,8 +56,8 @@ export default function SeasonInvitation({
           </p>
           <p className="season-invitation-description">
             {untold
-              ? "New nights. Closer rooms. Be the first to hear what’s next for Untold Story."
-              : "More music by the water. Be the first to hear what’s next for Chasing Sunsets."}
+              ? "New nights. Closer rooms. Be the first to hear what’s next for UNTOLD STORY."
+              : "More music by the water. Be the first to hear what’s next for CHASING SUN(SETS)."}
           </p>
           <Link
             href={HOME_NEXT_CHAPTER.signupHref}

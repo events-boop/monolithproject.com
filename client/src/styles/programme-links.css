@@ -111,7 +111,7 @@
     margin-block: 16px 20px;
   }
   .programme-link-name {
-    font-size: clamp(20px, 5.2vw, 26px);
+    font-size: clamp(14px, 4.3vw, 24px);
   }
   .programme-link-footer {
     font-size: 11px;
