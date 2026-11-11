@@ -172,7 +172,8 @@ export default function LakeLanding() {
         title: chapter.title,
         date: chapter.date,
         place: chapter.venue,
-        status: index === 0
+        status:
+          index === 0
             ? "Chapter complete"
             : index === 1
               ? "August tickets"
@@ -316,7 +317,7 @@ export default function LakeLanding() {
               <span className="border border-white/10 bg-white/[.06] px-3 py-1 text-xs font-semibold text-stone-200">
                 Castaways
               </span>
-              <span className="border border-[#E8B86D]/25 bg-[#E8B86D]/10 px-3 py-1 text-xs font-semibold text-[#E8B86D]">
+              <span className="border border-[#E8B86D]/25 bg-[#E8B86D]/10 px-3 py-1 text-xs font-bold text-[#E8B86D]">
                 First Access
               </span>
             </div>
@@ -344,11 +345,11 @@ export default function LakeLanding() {
                   </p>
                 </div>
                 <div className="text-right">
-                  {(
+                  {
                     <p className="text-4xl font-black leading-none text-white">
                       {SUNSETS_2026_SEASON_PASS.priceLabel}
                     </p>
-                  )}
+                  }
                   <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-[#E8B86D]">
                     {SUNSETS_2026_SEASON_PASS.quantityLabel}
                   </p>
@@ -475,7 +476,7 @@ export default function LakeLanding() {
                   Upcoming Chapters
                 </h3>
                 <span className="text-right text-[11px] font-semibold text-[#E8B86D]">
-                    "Prices move by release"
+                  "Prices move by release"
                 </span>
               </div>
 
