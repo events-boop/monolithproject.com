@@ -12,32 +12,30 @@ export default function SunsetsLaunchSignup() {
     >
       <div>
         <p className="home-eyebrow">
-          SUNSETS.FM <span>/</span> Coming soon
+          SUNSETS.FM <span>/</span> The music continues
         </p>
         <h2 id="sunsets-launch-title">
-          Be part of
+          One signal.
           <br />
-          <em>what comes next.</em>
+          <em>Infinite connections.</em>
         </h2>
       </div>
       <div className="home-launch-detail">
         <p>
-          A new chapter from The Monolith Project. Join the SUNSETS music list
-          for launch news, new recordings, and a closer connection to the
-          artists.
+          Keep the music close. Discover artist-led sets and get the latest from
+          SUNSETS.FM.
         </p>
         <a
-          className="home-network-primary"
+          className="home-network-primary editorial-action"
           href={hostedForms.radio}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Sign up for SUNSETS.FM <ArrowUpRight size={18} aria-hidden="true" />
+          Get music updates <ArrowUpRight size={18} aria-hidden="true" />
         </a>
-        <p className="home-launch-note">
-          Opens our email signup form. Confirm your email from your inbox.
-          Unsubscribe anytime.
-        </p>
+        <Link href={ROUTES.sunsetsFM} className="home-network-link">
+          Explore SUNSETS.FM <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
         <Link href={ROUTES.privacy} className="home-network-link">
           Privacy policy
         </Link>

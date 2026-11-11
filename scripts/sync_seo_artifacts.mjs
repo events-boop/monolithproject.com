@@ -7,7 +7,7 @@ import {
   mergeSitemapEntries,
 } from "../shared/seo/public-seo.js";
 import { upcomingEvents } from "../server/data/public-site-data.ts";
-import { insightEntries } from "../client/src/data/insights.ts";
+import { PUBLIC_HISTORY_SITEMAP_ENTRIES } from "../shared/seo/history.ts";
 
 const sitemapPath = resolve("client/public/sitemap.xml");
 const robotsPath = resolve("client/public/robots.txt");
@@ -16,11 +16,7 @@ mkdirSync(dirname(sitemapPath), { recursive: true });
 
 const sitemapEntries = mergeSitemapEntries([
   ...buildEventSitemapEntries(upcomingEvents),
-  ...insightEntries.map(entry => ({
-    path: `/insights/${entry.slug}`,
-    priority: "0.55",
-    changefreq: "monthly",
-  })),
+  ...PUBLIC_HISTORY_SITEMAP_ENTRIES,
 ]);
 
 writeFileSync(sitemapPath, buildSitemapXml(sitemapEntries), "utf8");

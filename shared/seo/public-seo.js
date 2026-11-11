@@ -91,7 +91,10 @@ function normalizeSitemapPath(path = "") {
 export function buildEventSitemapEntries(events = []) {
   return events
     .filter(
-      event => event && event.status !== "past" && (event.slug || event.id)
+      event =>
+        event &&
+        !["draft", "hidden"].includes(event.status) &&
+        (event.slug || event.id)
     )
     .map(event => ({
       path: `/events/${event.slug || event.id}`,

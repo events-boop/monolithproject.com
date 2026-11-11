@@ -31,6 +31,8 @@ export interface LinkBioProps {
   socials: { label: string; href: string }[];
   footnote: string;
   logo?: { src: string; alt: string; width: number; height: number };
+  showDestinations?: boolean;
+  motif?: "rings";
 }
 
 const isExternal = (href: string) =>
@@ -39,7 +41,13 @@ const isExternal = (href: string) =>
 const isDocument = (href: string) =>
   href.includes("#") || href.endsWith(".html");
 
-function BioLink({ link }: { link: LinkBioLink }) {
+function BioLink({
+  link,
+  showDestination,
+}: {
+  link: LinkBioLink;
+  showDestination?: boolean;
+}) {
   const className = `link-bio-link${link.primary ? " is-primary" : ""}`;
   const body = (
     <>
@@ -49,6 +57,13 @@ function BioLink({ link }: { link: LinkBioLink }) {
           {link.badge && <em className="link-bio-link-badge">{link.badge}</em>}
         </strong>
         {link.detail && <small>{link.detail}</small>}
+        {showDestination && (
+          <span className="link-bio-destination">
+            {link.href.startsWith("/")
+              ? `monolithproject.com${link.href}`
+              : link.href.replace(/^https?:\/\//, "")}
+          </span>
+        )}
       </span>
       <ArrowUpRight size={18} aria-hidden="true" />
     </>
@@ -89,12 +104,20 @@ export default function LinkBioPage({
   socials,
   footnote,
   logo,
+  showDestinations = false,
+  motif,
 }: LinkBioProps) {
   return (
     <div className={`link-bio link-bio--${theme}`}>
       <main className="link-bio-card">
         <header className="link-bio-head">
           <p className="link-bio-kicker">{kicker}</p>
+          {motif && (
+            <div
+              className={`link-bio-motif link-bio-motif--${motif}`}
+              aria-hidden="true"
+            />
+          )}
           {logo ? (
             <h1 className="link-bio-logo">
               <img
@@ -125,7 +148,11 @@ export default function LinkBioPage({
 
         <nav className="link-bio-links" aria-label={`${title} links`}>
           {links.map(link => (
-            <BioLink key={`${link.label}-${link.href}`} link={link} />
+            <BioLink
+              key={`${link.label}-${link.href}`}
+              link={link}
+              showDestination={showDestinations}
+            />
           ))}
         </nav>
 

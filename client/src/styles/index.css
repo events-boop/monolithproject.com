@@ -14,6 +14,8 @@
 @import "./discovery.css";
 @import "./home-restoration.css";
 @import "./text-floor.css";
+@import "./first-access.css";
+@import "./editorial-system.css";
 
 @source not "../components/ui/HeroSpotlight.tsx";
 @source not "../components/ui/MagneticButton.tsx";

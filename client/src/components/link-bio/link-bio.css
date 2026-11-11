@@ -16,11 +16,21 @@
   font-family: Inter, system-ui, sans-serif;
 }
 .link-bio--sunsets {
-  --bio-bg: radial-gradient(120% 60% at 50% 0%, #3a2410 0%, #14110d 55%, #0b0d0c 100%);
+  --bio-bg: radial-gradient(
+    120% 60% at 50% 0%,
+    #3a2410 0%,
+    #14110d 55%,
+    #0b0d0c 100%
+  );
   --bio-accent: #e8b86d;
 }
 .link-bio--untold {
-  --bio-bg: radial-gradient(120% 60% at 50% 0%, #0d2a33 0%, #070b12 55%, #03040a 100%);
+  --bio-bg: radial-gradient(
+    120% 60% at 50% 0%,
+    #0d2a33 0%,
+    #070b12 55%,
+    #03040a 100%
+  );
   --bio-card: #0b1018;
   --bio-accent: #22d3ee;
   --bio-accent-ink: #031016;
@@ -170,6 +180,27 @@
   font-size: 13px;
   line-height: 1.4;
   opacity: 0.78;
+}
+.link-bio-destination {
+  font: 400 11px/1.5 var(--font-mono, ui-monospace, monospace);
+  opacity: 0.72;
+  overflow-wrap: anywhere;
+}
+.link-bio-motif {
+  width: 150px;
+  height: 66px;
+  margin: 8px auto 22px;
+  color: var(--bio-accent);
+  opacity: 0.65;
+}
+.link-bio-motif--rings {
+  background-image: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent 0 10px,
+    currentColor 11px 11.7px,
+    transparent 12.5px 22px
+  );
+  mask-image: linear-gradient(to bottom, #000, #0009 65%, transparent);
 }
 .link-bio-link svg {
   flex: none;

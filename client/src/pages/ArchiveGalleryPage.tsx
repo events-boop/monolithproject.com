@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { buildGallerySchema } from "@shared/seo/gallery";
 import { useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
@@ -92,6 +93,12 @@ export default function ArchiveGalleryPage() {
       <SEO
         title={`${gallery.title} — ${gallery.subtitle}`}
         description={gallery.description}
+        canonicalPath={`/${params.series}/${params.season}`}
+        image={gallery.coverImage}
+        schemaData={buildGallerySchema(
+          gallery,
+          `/${params.series}/${params.season}`
+        )}
       />
       <Navigation variant="dark" brand={navBrand} />
 

@@ -52,12 +52,31 @@ describe("cta", () => {
     );
   });
 
-  it("routes upcoming untold-story events to the onsite untold waitlist funnel", () => {
+  it("maps legacy presale overrides to the real signup page", () => {
     expect(getEventCta(untoldUpcomingEvent)).toMatchObject({
-      label: "Unlock Presale",
-      href: "/story#untold-funnel",
+      label: "Get First Access",
+      href: ROUTES.newsletter,
       isExternal: false,
       tool: "laylo",
+    });
+  });
+
+  it("maps first-access overrides away from checkout and into signup", () => {
+    expect(
+      getEventCta({
+        ...untoldUpcomingEvent,
+        primaryCta: {
+          label: "GET FIRST ACCESS",
+          href: "https://posh.vip/e/example",
+          tool: "posh",
+          isExternal: true,
+        },
+      })
+    ).toMatchObject({
+      label: "Get First Access",
+      href: ROUTES.newsletter,
+      tool: "laylo",
+      isExternal: false,
     });
   });
 

@@ -41,6 +41,7 @@ const Partners = lazyRoute("Partners");
 const Lineup = lazyRoute("Lineup");
 const Schedule = lazyRoute("Schedule");
 const EventDetails = lazyRoute("EventDetails");
+const HistoricalEventNotice = lazyRoute("HistoricalEventNotice");
 const Newsletter = lazyRoute("Newsletter");
 const Contact = lazyRoute("Contact");
 const FAQ = lazyRoute("FAQ");
@@ -308,13 +309,12 @@ function Router() {
       </Route>
       <Route path={ROUTES.schedule} component={ScheduleTransition} />
       <Route path={ROUTES.events} component={ScheduleTransition} />
-      {/* The October 10 launch date never happened and is removed (Erik, 2026-11-10).
-          Its two old addresses go to the calendar instead of a placeholder page. */}
+      {/* Preserve the never-held launch notice; unify its duplicate address. */}
       <Route path="/events/css-oct10">
-        <Redirect to={ROUTES.schedule} />
+        <HistoricalEventNotice />
       </Route>
       <Route path="/events/monolith-launch">
-        <Redirect to={ROUTES.schedule} />
+        <Redirect to="/events/css-oct10" />
       </Route>
       <Route path="/events/:slug" component={EventDetailsTransition} />
       <Route path={ROUTES.newsletter} component={NewsletterTransition} />

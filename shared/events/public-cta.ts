@@ -3,7 +3,8 @@ import {
   SUNSETS_JULY4_TICKET_PATH,
   SUNSETS_TICKET_CTA_LABEL,
 } from "./sunsets-ticketing";
-import type { EventCta, EventSeries, ScheduledEvent } from "./types";
+import type { EventCta, ScheduledEvent } from "./types";
+import { ROUTES } from "../routes";
 
 const CTA_LABELS = {
   schedule: "See The Schedule",
@@ -12,17 +13,6 @@ const CTA_LABELS = {
 
 function isExternalHref(href: string) {
   return /^https?:\/\//i.test(href) || href.startsWith("/go/");
-}
-
-function getSeriesFunnelHref(series: EventSeries) {
-  switch (series) {
-    case "chasing-sunsets":
-      return "/sunsets#updates";
-    case "untold-story":
-      return "/untold-story#untold-funnel";
-    default:
-      return "/tickets#tickets-funnel";
-  }
 }
 
 function isEventLowInventory(event?: ScheduledEvent | null) {
@@ -76,7 +66,7 @@ export function resolveEventPrimaryCta(
     case "first-access":
       return {
         label: PUBLISHED_CTA_LABELS[state.cta],
-        href: getSeriesFunnelHref(event.series),
+        href: ROUTES.newsletter,
         tool: "laylo",
         isExternal: false,
       };

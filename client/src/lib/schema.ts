@@ -3,6 +3,7 @@ import type { RadioEpisode } from "@/data/radioEpisodes";
 import type { ArtistData } from "@/data/artists";
 
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
+import { SUNSETS_JULY4_EVENT_SLUG } from "@shared/events/sunsets-ticketing";
 
 export const SITE_ORIGIN = "https://monolithproject.com";
 export const FACTS_PAGE_PATH = "/chasing-sunsets-facts";
@@ -52,14 +53,17 @@ export function buildSitewideIdentitySchema() {
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
       },
       {
-        "@type": ["Organization", "MusicGroup"],
+        "@type": "Organization",
         "@id": `${SITE_ORIGIN}/#organization`,
         name: "The Monolith Project",
         url: SITE_ORIGIN,
         description:
           "The Monolith Project produces Chicago house music events, open-air Chasing Sun(Sets), Untold Story nights, and artist-led radio.",
         sameAs: organizationSameAs,
-        brand: { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+        brand: [
+          { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+          { "@id": `${SITE_ORIGIN}/#brand-untold-story` },
+        ],
       },
       {
         "@type": "Brand",
@@ -70,6 +74,19 @@ export function buildSitewideIdentitySchema() {
           "Chicago-based sunset house music event series and radio show by The Monolith Project.",
         url: toAbsoluteUrl(CHASING_SUNSETS_PATH),
         sameAs: brandSameAs,
+        isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+      {
+        "@type": "Brand",
+        "@id": `${SITE_ORIGIN}/#brand-untold-story`,
+        name: "Untold Story",
+        description:
+          "The after-dark house music series presented by The Monolith Project in Chicago.",
+        url: toAbsoluteUrl("/untold-story"),
+        sameAs: [
+          "https://instagram.com/untoldstory.music",
+          "https://untold.vip",
+        ],
         isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
       },
     ],
@@ -273,10 +290,10 @@ const SUNSETS_JULY4_SUPER_EVENT = {
   "@type": "MusicEvent",
   name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
   description:
-    "SUN(SETS) I opens the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, and friends.",
+    "SUN(SETS) I opened the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, and friends.",
   startDate: "2026-07-04T12:00:00-05:00",
   endDate: "2026-07-04T22:00:00-05:00",
-  url: `${SITE_ORIGIN}/sunsets`,
+  url: `${SITE_ORIGIN}/events/${SUNSETS_JULY4_EVENT_SLUG}`,
   image: `${SITE_ORIGIN}/images/chasing-sunsets-premium.webp`,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -297,13 +314,6 @@ const SUNSETS_JULY4_SUPER_EVENT = {
     "@id": `${SITE_ORIGIN}/#organization`,
     name: "The Monolith Project",
     url: SITE_ORIGIN,
-  },
-  offers: {
-    "@type": "Offer",
-    url: "https://sunsets.vip",
-    availability: "https://schema.org/InStock",
-    priceCurrency: "USD",
-    price: "20",
   },
 };
 
@@ -404,7 +414,7 @@ export function buildScheduledEventSchema(
       : undefined;
   const price = event.startingPrice ?? minimumAvailablePrice;
   const ticketUrl =
-    getEventWindowStatus(event) !== "past" &&
+    ["upcoming", "live"].includes(getEventWindowStatus(event)) &&
     (event.status === "on-sale" || event.status === "sold-out")
       ? event.ticketUrl
       : undefined;

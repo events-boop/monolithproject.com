@@ -1,4 +1,7 @@
-import { ROUTES, routeRadioEpisode } from "@shared/routes";
+import { CAMPAIGN_HOSTS, ROUTES, routeRadioEpisode } from "@shared/routes";
+
+export const SUNSETS_FM_SITE = "https://sunsets.fm/";
+export const HOUSE_OF_FRIENDS_SITE = `https://${CAMPAIGN_HOSTS.houseOfFriendsVip}/`;
 
 export type NavigationChapterId =
   | "schedule"
@@ -6,7 +9,8 @@ export type NavigationChapterId =
   | "chasing-sunsets"
   | "untold-story"
   | "radio"
-  | "sunsets-fm";
+  | "sunsets-fm"
+  | "house-of-friends";
 
 export interface NavigationChapterLink {
   label: string;
@@ -121,13 +125,27 @@ export const navigationChapters: NavigationChapter[] = [
     tagline: "From our dance floors to a world of sound.",
     description:
       "A Monolith project connecting DJ sets, places, and the people who bring them together.",
-    proof: "Coming soon. The Open Network is where it starts.",
+    proof: "Explore sets, festivals, and radio on SUNSETS.FM.",
     image: "/media/home-network/diplo-antarctica-cover-20261007-1280.webp",
     accent: "#D8B77E",
     ctaLabel: "Discover SUNSETS.FM",
     secondaryLinks: [
+      { label: "Visit sunsets.fm", href: SUNSETS_FM_SITE },
       { label: "The Open Network", href: ROUTES.openNetwork },
-      { label: "Chasing Sunsets Radio", href: ROUTES.radio },
     ],
+  },
+  {
+    id: "house-of-friends",
+    label: "House of Friends",
+    eyebrow: "Artist community",
+    href: HOUSE_OF_FRIENDS_SITE,
+    tagline: "More together.",
+    description:
+      "A home for emerging artists to collaborate, share the stage, and build lasting connections.",
+    proof: "Meet the community at houseoffriends.vip.",
+    image: "/images/artists-collective.webp",
+    accent: "#E1A59B",
+    ctaLabel: "Visit houseoffriends.vip",
+    secondaryLinks: [],
   },
 ];

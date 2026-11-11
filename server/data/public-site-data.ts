@@ -3,6 +3,7 @@ import {
   isUpcomingEvent,
 } from "../../shared/events/lifecycle";
 import { withApprovedSunsets } from "../../shared/events/sunsets-current";
+import { isHistoricalLaunchRecord } from "../../shared/events/historical-notices";
 import {
   SUNSETS_AUG22_TICKET_PATH,
   SUNSETS_SEP19_TICKET_PATH,
@@ -209,10 +210,10 @@ const EVENT_CATALOG: ScheduledEvent[] = [
         artist: "Massuma",
       },
     ],
-    status: "on-sale",
-    ticketUrl: SUNSETS_SEP19_TICKET_PATH,
+    status: "coming-soon",
+    eventStatus: "EventPostponed",
     description:
-      "Chapter Three. The season closer at Castaways with Joezi and Massuma (UK). Tickets are live — powered by Posh.",
+      "The September 19, 2026 show with Joezi and Massuma (UK) at Castaways is postponed. A new date is not yet confirmed. Read the official ticket-holder update.",
     // Official chapter art: drives the event page hero + og:image.
     image: "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
@@ -740,6 +741,7 @@ export function buildPublicSiteData(
   // Publish OS: drafts never enter a public payload; hidden events only
   // resolve on direct event pages and stay out of every list surface.
   const publishedEvents = eventsSource
+    .filter(event => !isHistoricalLaunchRecord(event))
     .map(event => {
       const pendingVenue = /(?:TBA|reveal soon|to be announced)/i.test(
         event.venue

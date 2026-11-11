@@ -232,6 +232,11 @@ export default function NavigationMegamenu({
                       {isGoRoute ? (
                         <a
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setIsOpen(false)}
@@ -251,6 +256,11 @@ export default function NavigationMegamenu({
                       ) : (
                         <Link
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           onClick={e => {
                             e.preventDefault();
                             setIsOpen(false);
@@ -336,6 +346,11 @@ export default function NavigationMegamenu({
                   {megamenu.feature.external ? (
                     <a
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
@@ -350,6 +365,11 @@ export default function NavigationMegamenu({
                   ) : (
                     <Link
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       onClick={e => {
                         e.preventDefault();
                         setIsOpen(false);

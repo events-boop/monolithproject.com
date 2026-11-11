@@ -82,9 +82,7 @@ export default function StickyPlayer() {
     }
   };
 
-  const trackHref = activeTrack?.slug
-    ? `/radio/${activeTrack.slug}`
-    : "/radio";
+  const trackHref = activeTrack?.slug ? `/radio/${activeTrack.slug}` : "/radio";
 
   return (
     <AnimatePresence>
@@ -129,18 +127,18 @@ export default function StickyPlayer() {
               </Link>
             </div>
 
-            {/* SoundCloud mini embed (keeps audio active on mobile without overflow) */}
-            <div className="w-0 h-0 overflow-hidden opacity-0 pointer-events-none sm:w-full sm:h-[60px] sm:flex-1 sm:min-w-0 sm:opacity-80 sm:pointer-events-auto">
+            {/* Keep a measurable embed on mobile: SoundCloud draws its own canvas. */}
+            <div className="absolute h-px w-px overflow-hidden opacity-0 pointer-events-none sm:static sm:w-full sm:h-[60px] sm:flex-1 sm:min-w-0 sm:opacity-80 sm:pointer-events-auto">
               <iframe
                 ref={iframeRef}
-                width="100%"
+                width="320"
                 height="60"
                 scrolling="no"
                 frameBorder="no"
                 allow="autoplay"
                 src={embedSrc}
                 title={activeTrack.title}
-                className="w-full"
+                className="w-[320px] sm:w-full"
               />
             </div>
 

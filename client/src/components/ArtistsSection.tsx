@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { ArrowRight, MapPin, Music, Radio, Sun } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { POSH_TICKET_URL } from "@/data/events";
+import { ROUTES } from "@shared/routes";
 import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 import EditorialHeader from "./EditorialHeader";
 import KineticDecryption from "./KineticDecryption";
@@ -264,7 +264,7 @@ export default function ArtistsSection() {
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>
-            <a href={POSH_TICKET_URL}>
+            <a href={ROUTES.newsletter} data-first-access="true">
               <div className="btn-pill-untold group">
                 <span>First Access</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />

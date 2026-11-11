@@ -1,0 +1,15 @@
+/* A single visible weight for signup CTAs across light and dark surfaces. */
+a[href^="/newsletter"],
+a[href^="/sunsets#updates"],
+a[href*="laylo.com"],
+[data-first-access="true"],
+a[href^="/newsletter"] span,
+[data-first-access="true"] span {
+  font-weight: 700;
+}
+.home-entry-access .home-entry-label {
+  font-weight: 700;
+}
+#newsletter-signup {
+  scroll-margin-top: 110px;
+}

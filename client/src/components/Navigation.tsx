@@ -352,7 +352,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   // persistent player mid-set.
   const handleNavCtaClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (navCta.isExternal || !navCta.href.startsWith("/")) return;
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      return;
     if (event.button !== 0) return;
     event.preventDefault();
     setLocation(navCta.href);
@@ -527,7 +528,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         </>
                       ) : resolvedBrand === "radio" ? (
                         <span className="font-radio text-rose-500">
-                          CHASING SUNSETS RADIO
+                          <span className="block text-[8px] leading-tight tracking-[0.1em] sm:hidden">
+                            CHASING SUNSETS
+                          </span>
+                          <span className="block text-sm leading-tight tracking-[0.16em] sm:hidden">
+                            RADIO
+                          </span>
+                          <span className="hidden sm:inline">
+                            CHASING SUNSETS RADIO
+                          </span>
                         </span>
                       ) : (
                         <div className="flex flex-row items-baseline gap-2">
@@ -602,7 +611,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                           : isUpdateContext
                             ? "TICKET-HOLDER UPDATE"
                             : "GET FIRST ACCESS",
-                        href: ticketHref || ROUTES.tickets,
+                        href:
+                          ticketHref ||
+                          (isUpdateContext
+                            ? ROUTES.tickets
+                            : ROUTES.newsletter),
                         icon: "ticket",
                       },
                       {
@@ -629,7 +642,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             ticketHref ||
                             (isUpdateContext
                               ? ROUTES.tickets
-                              : `/events/${ticketEvent.slug || ticketEvent.id}`),
+                              : ROUTES.newsletter),
                           ctaText: ticketHref
                             ? "Get Tickets"
                             : isUpdateContext
@@ -777,7 +790,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
                         getPrimaryTicketUrl(featuredUntoldEvent) ||
-                        ROUTES.untoldStory,
+                        ROUTES.newsletter,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
                         : "Get First Access",

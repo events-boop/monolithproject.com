@@ -107,16 +107,16 @@
   status = 200
   force = true
 
-# The October 10 launch date never happened and was removed on 2026-11-10.
+# Preserve the October 10 never-held notice and unify only its duplicate URL.
 [[redirects]]
-  from = "/events/css-oct10"
-  to = "/schedule"
+  from = "/events/monolith-launch"
+  to = "/events/css-oct10"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/events/monolith-launch"
-  to = "/schedule"
+  from = "/events/monolith-launch/"
+  to = "/events/css-oct10"
   status = 301
   force = true
 

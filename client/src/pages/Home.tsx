@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import HomeHeroCarousel from "@/components/HomeHeroCarousel";
+import HomeEntryPoints from "@/components/HomeEntryPoints";
 import SunsetsLaunchSignup from "@/components/SunsetsLaunchSignup";
 import {
   HomeSeries,
@@ -42,6 +43,7 @@ export default function Home() {
       <Navigation />
       <main id="main-content" tabIndex={-1}>
         <HomeHeroCarousel />
+        <HomeEntryPoints />
         <div id="season">
           <HomeUpcomingShows />
         </div>

@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import ConversionCTA from "./ConversionCTA";
+import HomeNextChapter from "./HomeNextChapter";
+import { ROUTES } from "@shared/routes";
 import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 import { getScheduleDate, getScheduleVenue } from "@/lib/schedulePresentation";
@@ -197,7 +199,11 @@ export default function HomeUpcomingShows() {
                           <ArrowUpRight size={18} aria-hidden="true" />
                         </Link>
                       ) : (
-                        <Link className="home-secondary" href={details}>
+                        <Link
+                          className="home-secondary"
+                          href={ROUTES.newsletter}
+                          data-first-access="true"
+                        >
                           GET FIRST ACCESS
                           <ArrowUpRight size={18} aria-hidden="true" />
                         </Link>
@@ -215,60 +221,8 @@ export default function HomeUpcomingShows() {
               );
             })}
           </div>
-        ) : (
-          <div className="home-show-empty">
-            <h3>Between shows. No tickets currently on sale.</h3>
-            <p>
-              Revisit our July 4 Castaways gathering (10-hour gathering · 2,800
-              attendees), listen to the Chasing Sunsets Radio archive, or join
-              First Access for the next announcement.
-            </p>
-            <div className="home-actions">
-              <Link className="home-primary" href="/newsletter">
-                Get First Access
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-              <Link
-                className="home-secondary"
-                href="/chasing-sunsets/sunsets-i-2026"
-              >
-                July 4 recap proof
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-              <Link className="home-secondary" href="/radio">
-                Radio archive
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        )}
-        {events.length > 0 && !hasOnSale && (
-          <div className="home-show-empty mt-6">
-            <h3>Between shows. No tickets currently on sale.</h3>
-            <p>
-              While the September 19 replacement date is finalized, revisit our
-              July 4 Castaways chapter (10-hour gathering · 2,800 attendees),
-              explore Chasing Sunsets Radio, or join First Access.
-            </p>
-            <div className="home-actions">
-              <Link className="home-primary" href="/newsletter">
-                Get First Access
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-              <Link
-                className="home-secondary"
-                href="/chasing-sunsets/sunsets-i-2026"
-              >
-                July 4 recap proof
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-              <Link className="home-secondary" href="/radio">
-                Radio archive
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        )}
+        ) : null}
+        {!hasOnSale && <HomeNextChapter />}
       </div>
     </section>
   );

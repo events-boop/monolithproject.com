@@ -120,14 +120,17 @@ export default function UntoldVipLanding() {
         kicker="The Monolith Project presents"
         title="Untold"
         titleAccent="Story"
+        showDestinations
+        motif="rings"
         tagline="After-dark house music in Chicago rooms. Music first. Good crowd. Late finish."
-        badge="New show updates incoming"
-        tease="2027 is taking shape. Be first to hear the next chapter."
+        badge="2027 / Season III"
+        tease="The next chapter is taking shape. Sign up to be the first to know."
         links={[
           {
-            label: "Join the night list",
-            detail: "Untold drops and first access",
-            href: "https://laylo.com/monolithproject",
+            label: "Get First Access · 2027",
+            detail:
+              "Untold Story Season III · Dates and artists to be announced",
+            href: `${MONOLITH_URL}${ROUTES.newsletter}`,
             primary: true,
           },
           {

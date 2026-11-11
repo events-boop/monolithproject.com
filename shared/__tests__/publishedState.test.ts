@@ -810,13 +810,33 @@ describe("resolveEventPrimaryCta — driven by the published state", () => {
       BEFORE
     );
     expect(cta.label).toBe("Get First Access");
-    expect(cta.href).toBe("/untold-story#untold-funnel");
+    expect(cta.href).toBe("/newsletter");
   });
 
-  it("sends sold-out events to the series waitlist and past events to the archive", () => {
+  it.each(["untold-story", "chasing-sunsets", "monolith-project"] as const)(
+    "maps %s first access to the signup page rather than an event or missing anchor",
+    series => {
+      expect(
+        resolveEventPrimaryCta(
+          makeEvent({ series, status: "coming-soon", ticketUrl: undefined }),
+          BEFORE
+        )
+      ).toMatchObject({
+        href: "/newsletter",
+        label: "Get First Access",
+        isExternal: false,
+        tool: "laylo",
+      });
+    }
+  );
+
+  it("sends sold-out events to signup and past events to the archive", () => {
     expect(
       resolveEventPrimaryCta(makeEvent({ status: "sold-out" }), BEFORE).label
     ).toBe("Join The Waitlist");
+    expect(
+      resolveEventPrimaryCta(makeEvent({ status: "sold-out" }), BEFORE).href
+    ).toBe("/newsletter");
     expect(
       resolveEventPrimaryCta(makeEvent({ archiveSlug: "test-2026" }), AFTER)
     ).toMatchObject({ label: "View archive", href: "/archive/test-2026" });

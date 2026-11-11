@@ -1,4 +1,4 @@
-import { SUNSETS_JULY4_COMPLETE_LABEL } from "@/lib/sunsetsTicketing";
+import { SUNSETS_JULY4_COMPLETE_LABEL } from "../../../shared/events/sunsets-ticketing";
 
 export type GalleryImageItem = {
   id: string;
@@ -664,8 +664,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     slug: "untold-story-season-iii",
     title: "Untold Story",
     subtitle: "Season III — Deron B2B Juany Bravo",
-    description:
-      "Photos from the Deron B2B Juany Bravo night.",
+    description: "Photos from the Deron B2B Juany Bravo night.",
     accentColor: "#8B5CF6",
     coverImage: "/images/untold-story-juany-deron-v2.webp",
     date: "March 6, 2026",

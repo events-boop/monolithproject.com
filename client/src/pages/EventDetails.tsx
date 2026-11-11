@@ -1,3 +1,7 @@
+import {
+  buildEventSeoTitle,
+  buildEventSeoDescription,
+} from "@shared/seo/event-copy";
 import { getScheduleVenue } from "@/lib/schedulePresentation";
 import {
   getEventArtists,
@@ -24,7 +28,11 @@ import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { getSeriesLabel, getSeriesColor, getEventStartTimestamp } from "@/lib/siteExperience";
+import {
+  getSeriesLabel,
+  getSeriesColor,
+  getEventStartTimestamp,
+} from "@/lib/siteExperience";
 import { useCountdown, padCountdown } from "@/hooks/useCountdown";
 import { buildBreadcrumbSchema, buildScheduledEventSchema } from "@/lib/schema";
 import { trackAccessEvent } from "@/lib/api";
@@ -39,51 +47,6 @@ function getStatusLabel(status: string) {
   if (status === "coming-soon") return "DETAILS PENDING";
   if (status === "sold-out") return "SOLD OUT";
   return "PAST";
-}
-
-function getShortDateLabel(dateLabel: string) {
-  return dateLabel.replace(/,\s*\d{4}$/, "");
-}
-
-function buildEventSeoTitle(
-  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
-) {
-  if (event.confirmationStatus === "pending")
-    return `${event.headline || event.title} | Details to be announced`;
-  const shortDate = getShortDateLabel(event.date);
-
-  if (event.id === "us-s3e3") {
-    return `Eran Hersh at Hideaway Chicago | ${shortDate}`;
-  }
-
-  const headline = event.headline || event.title;
-  if (/venue reveal soon/i.test(event.venue)) {
-    return `${headline} | ${shortDate}`;
-  }
-
-  return `${headline} at ${event.venue} | ${shortDate}`;
-}
-
-function buildEventSeoDescription(
-  event: NonNullable<ReturnType<typeof getPublicEvents>[number]>
-) {
-  if (event.confirmationStatus === "pending")
-    return `The next announcement for ${event.title} will include the confirmed date, venue and lineup. Get official updates from The Monolith Project.`;
-  const shortDate = getShortDateLabel(event.date);
-
-  if (event.id === "us-s3e3") {
-    return `Archive details for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
-  }
-
-  if (event.series === "chasing-sunsets") {
-    return `${event.title} brings open-air Chicago house music to ${event.venue} on ${shortDate}. Get lineup, timing, and ticket updates.`;
-  }
-
-  if (event.series === "untold-story") {
-    return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
-  }
-
-  return `Get details and updates for ${event.title} at ${event.venue} in Chicago on ${shortDate} from The Monolith Project.`;
 }
 
 function getTicketPathCopy(
@@ -169,7 +132,10 @@ export default function EventDetails() {
   const doorsTarget = event ? getEventStartTimestamp(event) : null;
   const doorsCountdown = useCountdown(doorsTarget);
   const showDoorsCountdown = Boolean(
-    event && doorsTarget && !doorsCountdown.isExpired && doorsTarget > Date.now()
+    event &&
+    doorsTarget &&
+    !doorsCountdown.isExpired &&
+    doorsTarget > Date.now()
   );
   const canonicalEventSlug = event?.slug || event?.id;
   const canonicalEventPath = canonicalEventSlug

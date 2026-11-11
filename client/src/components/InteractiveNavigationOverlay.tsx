@@ -7,6 +7,7 @@ import {
   type RefObject,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Link } from "wouter";
 import {
   ArrowUpRight,
   Globe2,
@@ -18,6 +19,8 @@ import {
   X,
 } from "lucide-react";
 import {
+  HOUSE_OF_FRIENDS_SITE,
+  SUNSETS_FM_SITE,
   navigationChapters,
   type NavigationChapter,
   type NavigationChapterId,
@@ -35,6 +38,7 @@ import { cn } from "@/lib/utils";
 import { signalChirp } from "@/lib/SignalChirpEngine";
 import MagneticButton from "./MagneticButton";
 import { ROUTES } from "@shared/routes";
+import { HOME_NEXT_CHAPTER } from "@shared/home-next-chapter";
 import ResponsiveImage from "./ResponsiveImage";
 
 interface InteractiveNavigationOverlayProps {
@@ -76,6 +80,7 @@ const chapterIconMap: Record<NavigationChapterId, typeof Sparkles> = {
   "untold-story": Sparkles,
   radio: Radio,
   "sunsets-fm": Globe2,
+  "house-of-friends": UsersRound,
 };
 
 function getChapterIdForPath(path: string): NavigationChapterId {
@@ -94,6 +99,7 @@ function getChapterIdForPath(path: string): NavigationChapterId {
     return "untold-story";
   if (path === "/artists" || path === "/lineup" || path.startsWith("/artists/"))
     return "artists";
+  if (path.startsWith(ROUTES.houseOfFriends)) return "house-of-friends";
   if (path.startsWith("/radio")) return "radio";
   return "schedule";
 }
@@ -359,9 +365,22 @@ export default function InteractiveNavigationOverlay({
             )}
 
             <div className="mt-7 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
-                {view.proof}
-              </p>
+              {view.id === "sunsets-fm" ? (
+                <a
+                  href={SUNSETS_FM_SITE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleLinkClick(SUNSETS_FM_SITE)}
+                  className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold text-[#e8b86d] underline underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2"
+                >
+                  Visit sunsets.fm
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                  {view.proof}
+                </p>
+              )}
               <a
                 href={view.primaryHref}
                 target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
@@ -434,6 +453,32 @@ export default function InteractiveNavigationOverlay({
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100svh-var(--shell-nav-height)-3rem)] w-full max-w-[1800px] flex-col px-4 py-6 sm:px-6 lg:px-10">
+        <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
+              Explore Monolith
+            </p>
+            <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
+              Shows, radio & the network
+            </h1>
+          </div>
+          <Link
+            href={HOME_NEXT_CHAPTER.signupHref}
+            onClick={onClose}
+            data-first-access="true"
+            className="group flex min-h-14 shrink-0 items-center justify-between gap-5 rounded-2xl bg-[#e8b86d] px-5 py-3 text-[#17110a] transition-colors hover:bg-[#f8d8a0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e8b86d]"
+          >
+            <span>
+              <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.16em]">
+                {HOME_NEXT_CHAPTER.year} / {HOME_NEXT_CHAPTER.signupLabel}
+              </span>
+              <span className="block text-base leading-tight">
+                Get First Access
+              </span>
+            </span>
+            <ArrowUpRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+          </Link>
+        </header>
         <nav
           aria-label="Main pages"
           className="mb-6 flex flex-wrap gap-2 lg:hidden"
@@ -444,12 +489,17 @@ export default function InteractiveNavigationOverlay({
             { label: "Untold Story", href: "/untold-story" },
             { label: "Chasing Sunsets Radio", href: "/radio" },
             { label: "SUNSETS.FM", href: ROUTES.sunsetsFM },
+            { label: "House of Friends", href: HOUSE_OF_FRIENDS_SITE },
             { label: "Open Network", href: ROUTES.openNetwork },
             { label: "About", href: "/about" },
           ].map(link => (
             <a
               key={link.href}
               href={link.href}
+              target={isExternalHref(link.href) ? "_blank" : undefined}
+              rel={
+                isExternalHref(link.href) ? "noopener noreferrer" : undefined
+              }
               onClick={handleLinkClick(link.href)}
               className="btn-pill-outline btn-pill-compact"
             >
@@ -457,17 +507,6 @@ export default function InteractiveNavigationOverlay({
             </a>
           ))}
         </nav>
-        <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
-              Explore Monolith
-            </p>
-            <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
-              Shows, radio & the network
-            </h1>
-          </div>
-        </header>
-
         <div className="hidden min-h-[30rem] flex-1 grid-cols-[minmax(18rem,0.68fr)_minmax(0,1.32fr)] gap-6 lg:grid 2xl:gap-8">
           <nav
             aria-label="Primary worlds"
@@ -482,6 +521,14 @@ export default function InteractiveNavigationOverlay({
                 <motion.a
                   key={chapter.id}
                   href={view.primaryHref}
+                  target={
+                    isExternalHref(view.primaryHref) ? "_blank" : undefined
+                  }
+                  rel={
+                    isExternalHref(view.primaryHref)
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   initial={reduceMotion ? false : { opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
@@ -649,6 +696,16 @@ export default function InteractiveNavigationOverlay({
                                   <a
                                     key={link.href}
                                     href={link.href}
+                                    target={
+                                      isExternalHref(link.href)
+                                        ? "_blank"
+                                        : undefined
+                                    }
+                                    rel={
+                                      isExternalHref(link.href)
+                                        ? "noopener noreferrer"
+                                        : undefined
+                                    }
                                     onClick={handleLinkClick(link.href)}
                                     className="btn-pill-outline btn-pill-compact text-center"
                                   >

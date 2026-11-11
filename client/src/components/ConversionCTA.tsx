@@ -116,6 +116,9 @@ export default function ConversionCTA({
       <CtaElement
         type={isInquiry ? "button" : undefined}
         href={isInquiry ? undefined : cta.href}
+        data-first-access={
+          /first\s+access/i.test(cta.label) ? "true" : undefined
+        }
         target={cta.isExternal ? "_blank" : undefined}
         rel={cta.isExternal ? "noopener noreferrer" : undefined}
         onClick={e => {

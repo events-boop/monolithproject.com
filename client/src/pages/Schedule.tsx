@@ -11,6 +11,7 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
+import HomeNextChapter from "@/components/HomeNextChapter";
 import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
 import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
@@ -30,8 +31,7 @@ import "@/styles/schedule.css";
 
 function statusLabel(event: ScheduledEvent) {
   const state = getPublishedEventState(event);
-  if (state.kind === "postponed")
-    return "POSTPONED — NEW DATE TO BE CONFIRMED";
+  if (state.kind === "postponed") return "POSTPONED — NEW DATE TO BE CONFIRMED";
   if (state.kind === "cancelled") return "Cancelled";
   if (state.kind === "on-sale") return "Tickets available";
   if (state.kind === "sold-out") return "Sold out";
@@ -374,39 +374,34 @@ export default function Schedule() {
             })}
           </div>
           {!hasOnSale && (
-            <section
-              className="schedule-editorial-empty mt-10"
-              aria-label="Between shows updates and archive"
-            >
-              <h2>Between shows. No tickets currently on sale.</h2>
-              <p>
-                New dates are announced here once confirmed. Until the next
-                on-sale window opens, revisit our July 4 Castaways gathering
-                (10-hour gathering · 2,800 attendees), listen to Chasing Sunsets
-                Radio, or join First Access.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-6">
-                <Link className="home-text-link" href="/newsletter">
-                  Get First Access{" "}
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </Link>
-                <Link
-                  className="home-text-link"
-                  href="/chasing-sunsets/sunsets-i-2026"
-                >
-                  July 4 recap proof{" "}
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </Link>
-                <Link className="home-text-link" href="/radio">
-                  Radio archive{" "}
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </Link>
-              </div>
-            </section>
+            <>
+              <HomeNextChapter headingLevel="h2" />
+              <section
+                className="schedule-editorial-empty mt-10"
+                aria-label="From the archive"
+              >
+                <h2>Until we meet again.</h2>
+                <p>
+                  Revisit July 4 at Castaways: a 10-hour gathering with 2,800
+                  attendees. Or find your next set in Chasing Sunsets Radio.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-6">
+                  <Link
+                    className="home-text-link"
+                    href="/chasing-sunsets/sunsets-i-2026"
+                  >
+                    Revisit July 4 <ArrowUpRight size={18} aria-hidden="true" />
+                  </Link>
+                  <Link className="home-text-link" href="/radio">
+                    Radio archive <ArrowUpRight size={18} aria-hidden="true" />
+                  </Link>
+                </div>
+              </section>
+            </>
           )}
         </div>
       </main>
-      <JoinSignalSection />
+      {hasOnSale && <JoinSignalSection />}
     </div>
   );
 }

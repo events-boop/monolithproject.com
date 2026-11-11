@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { ScheduledEvent } from "@shared/events/types";
-import { buildScheduledEventSchema, buildScheduleSchema } from "../schema";
+import {
+  buildScheduledEventSchema,
+  buildScheduleSchema,
+  buildSitewideIdentitySchema,
+} from "../schema";
 
 describe("buildScheduledEventSchema", () => {
   it("does not publish placeholder guests as performers", () => {
@@ -46,4 +50,43 @@ it("preserves the original date and postponement status in structured data", () 
   const schema = buildScheduledEventSchema(postponed, "/events/pending");
   expect(schema.eventStatus).toBe("https://schema.org/EventPostponed");
   expect(schema.startDate).toBe("2026-10-10");
+});
+
+it("never exposes checkout offers for a postponed record carrying a stale on-sale state", () => {
+  const event = {
+    ...pending,
+    confirmationStatus: "confirmed" as const,
+    status: "on-sale" as const,
+    eventStatus: "EventPostponed" as const,
+    ticketUrl: "https://example.com/old-checkout",
+  };
+  expect(
+    buildScheduledEventSchema(event, "/events/postponed")
+  ).not.toHaveProperty("offers");
+});
+
+it("connects both event series to the Monolith parent organization", () => {
+  const graph = buildSitewideIdentitySchema()["@graph"];
+  const parent = graph.find(node => node["@id"].endsWith("/#organization"));
+  expect(parent?.["@type"]).toBe("Organization");
+  expect(parent).toHaveProperty("brand", [
+    { "@id": "https://monolithproject.com/#brand-chasing-sunsets" },
+    { "@id": "https://monolithproject.com/#brand-untold-story" },
+  ]);
+});
+
+it("keeps the July 4 parent event historical without stale ticket offers or a September guide URL", () => {
+  const event: ScheduledEvent = {
+    ...pending,
+    id: "us-jul04",
+    confirmationStatus: "confirmed",
+    date: "July 4, 2026",
+    status: "past",
+  };
+  const schema = buildScheduledEventSchema(event, "/events/us-jul04");
+  expect(JSON.stringify(schema)).not.toContain('"offers"');
+  expect(schema).toHaveProperty(
+    "superEvent.url",
+    "https://monolithproject.com/events/chasing-sunsets-july-4-2026"
+  );
 });

@@ -1,4 +1,12 @@
 :root {
+  /* Shared editorial surfaces; series accents stay local to their pages. */
+  --editorial-ink: #f1eee7;
+  --editorial-muted: #b5b8b3;
+  --editorial-surface: #121616;
+  --editorial-line: #ffffff26;
+  --editorial-gold: #d8b47d;
+  --editorial-radius: 12px;
+  --editorial-section-space: clamp(48px, 6vw, 88px);
   --radius: 0.5rem;
   --label-tracking-kicker: 0.26em;
   --label-tracking-meta: 0.22em;
