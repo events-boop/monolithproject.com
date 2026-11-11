@@ -311,6 +311,16 @@ function renderNextChapterSection() {
     </section>`;
 }
 
+function renderSeriesInvitation(programmeIndex: 0 | 1) {
+  const chapter = HOME_NEXT_CHAPTER.programmes[programmeIndex];
+  return `<section>
+    <p>The next chapter / ${HOME_NEXT_CHAPTER.year}</p>
+    <h2>${escapeHtml(chapter.name)} · ${escapeHtml(chapter.edition)}</h2>
+    <p>Be the first to hear what’s next. Dates and artists to be announced.</p>
+    <a href="${HOME_NEXT_CHAPTER.signupHref}" data-first-access="true"><strong>Get First Access</strong></a>
+  </section>`;
+}
+
 function renderBaseLayout(
   eyebrow: string,
   h1: string,
@@ -736,18 +746,19 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             label: "Summer photo gallery",
           },
           { href: INSTAGRAM_SUNSETS, label: "Instagram", external: true },
-        ]
+        ],
+        renderSeriesInvitation(1)
       ),
     },
   ],
   [
     "/untold-story",
     {
-      title: "Untold Story | Chicago House Music Nights",
+      title: "Untold Story — Chicago after-dark house music",
       description:
-        "Untold Story is The Monolith Project's after-dark house music series built for immersive Chicago dancefloors.",
+        "Explore Untold Story: Monolith's after-dark house music series. Event information, artists, previous chapters and the photo archive.",
       absoluteTitle: true,
-      image: featuredUntoldEvent?.image || "/images/eran-hersh-live-5.webp",
+      image: "/images/untold-story/header-jpq-9379.jpg",
       schemaData: [
         buildFaqSchema(untoldFaqs),
         ...(featuredUntoldEvent
@@ -769,8 +780,9 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             label: "Open the featured date",
           },
           { href: "/tickets", label: "View tickets" },
-          { href: "/newsletter", label: "Get updates" },
-        ]
+          { href: "/newsletter", label: "Get First Access" },
+        ],
+        featuredUntoldEvent ? "" : renderSeriesInvitation(0)
       ),
     },
   ],
@@ -1078,6 +1090,30 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           { href: "/schedule", label: "View schedule" },
           { href: "/vip", label: "VIP information" },
           { href: "/privacy", label: "Privacy policy" },
+        ]
+      ),
+    },
+  ],
+  [
+    "/shop",
+    {
+      title: "Shop",
+      description:
+        "Official Monolith Project merchandise coming soon. Sign up for early access to the collection.",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / Objects & editions",
+        "Collection 01.",
+        [
+          "In development. For the nights that stay with you. Limited-run garments and accessories from The Monolith Project.",
+          "Be the first to hear when it’s ready.",
+        ],
+        [
+          { href: HOME_NEXT_CHAPTER.signupHref, label: "Get First Access" },
+          ...HOME_NEXT_CHAPTER.programmes.map(programme => ({
+            href: programme.href,
+            label: `${programme.name} · ${programme.edition}`,
+          })),
+          { href: "/schedule", label: "Explore the calendar" },
         ]
       ),
     },
