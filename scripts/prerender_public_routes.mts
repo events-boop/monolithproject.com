@@ -80,6 +80,13 @@ type RouteDefinition = {
 const distPublicDir = path.resolve("dist/public");
 const templatePath = path.join(distPublicDir, "index.html");
 const template = readFileSync(templatePath, "utf8");
+// A completed prerender contains the home page in this root. Reusing it would
+// silently copy that content into every historical route instead of each dossier.
+if (!/<div id="root">\s*<\/div>/i.test(template)) {
+  throw new Error(
+    "Prerender requires a fresh Vite build with an empty root. Run npm run build; no routes were written."
+  );
+}
 
 const futureEvents = upcomingEvents.filter(
   event =>
@@ -944,16 +951,24 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "The Monolith | Manifesto & Concept",
       description:
-        "Explore the core concept, story, and manifesto behind The Monolith Project's house music movement in Chicago.",
+        "The Monolith Project is the Chicago music company connecting Chasing Sun(Sets), Untold Story, House of Friends, and SUNSETS.FM. Explore our world and manifesto.",
       absoluteTitle: true,
+      schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderBaseLayout(
         "Core Philosophy",
         "The Monolith",
         [
-          "The Monolith is the central frequency of our movement, connecting Chasing Sun(Sets) and Untold Story.",
+          "The Monolith Project connects Chasing Sunsets, Untold Story, House of Friends, and SUNSETS.FM. From the lakefront to the late-night room, the music and the people carry through.",
           "Our manifesto is built around music-first curation, intentional room construction, and community return.",
         ],
-        sharedLinks
+        [
+          ...HOME_NEXT_CHAPTER.programmes.map(programme => ({
+            href: programme.href,
+            label: programme.name,
+          })),
+          { href: HOME_NEXT_CHAPTER.signupHref, label: "Get First Access" },
+          ...sharedLinks,
+        ]
       ),
     },
   ],
@@ -1090,6 +1105,41 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
           { href: "/schedule", label: "View schedule" },
           { href: "/vip", label: "VIP information" },
           { href: "/privacy", label: "Privacy policy" },
+        ]
+      ),
+    },
+  ],
+  [
+    "/lake",
+    {
+      title: "Sun(Sets) Lake List & First Access",
+      description:
+        "Join First Access for Chasing Sunsets IV in 2027. Revisit previous chapters, listen to the radio archive, and find the September 19 ticket-holder update.",
+      image: "/images/chasing-sunsets-castaways-hero.png",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / The Lake List",
+        "Chasing Sunsets 2027",
+        [
+          "The Lake List / Chasing Sunsets IV. The next chapter is taking shape. Dates and artists to be announced.",
+          "The September 19, 2026 show is postponed. A new date is not yet confirmed. Read the official ticket-holder update.",
+        ],
+        [
+          {
+            href: HOME_NEXT_CHAPTER.signupHref,
+            label: "Get First Access · 2027",
+          },
+          {
+            href: "/sunsets#event-status",
+            label: "September 19 ticket-holder update",
+          },
+          { href: "/chasing-sunsets/sunsets-i-2026", label: "Revisit July 4" },
+          {
+            href: "/events/css-aug22",
+            label: "Sunsets II · August 22 · Previous chapter",
+          },
+          { href: "/radio", label: "Chasing Sunsets Radio" },
+          { href: "/schedule", label: "Full calendar" },
+          { href: "https://sunsets.fm", label: "SUNSETS.FM", external: true },
         ]
       ),
     },

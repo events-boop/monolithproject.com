@@ -1,13 +1,14 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import MagneticButton from "@/components/MagneticButton";
+import ProgrammeLinks from "@/components/ProgrammeLinks";
+import JoinSignalSection from "@/components/JoinSignalSection";
 import BrandTranslatorLabel from "@/components/BrandTranslatorLabel";
 import WordScrubReveal from "@/components/ui/WordScrubReveal";
+import { buildSitewideIdentitySchema } from "@/lib/schema";
+import "@/styles/monolith-manifesto.css";
 
 const manifestoLines = [
   "We belong to the dusk and the deep.",
@@ -33,13 +34,14 @@ export default function Monolith() {
   return (
     <div
       ref={containerRef}
-      className="bg-black text-white selection:bg-white/20 relative min-h-screen overflow-x-hidden"
+      className="monolith-manifesto bg-black text-white selection:bg-white/20 relative min-h-screen overflow-x-hidden"
     >
       <SEO
         title="The Monolith | Manifesto & Concept"
-        description="The Monolith Project is the Chicago-rooted platform connecting Chasing Sun(Sets), Untold Story, and the spaces still taking form around them."
+        description="The Monolith Project is the Chicago music company connecting Chasing Sun(Sets), Untold Story, House of Friends, and SUNSETS.FM. Explore our world and manifesto."
         absoluteTitle
         canonicalPath="/monolith"
+        schemaData={buildSitewideIdentitySchema()}
       />
 
       {/* Film grain / ambient overlay */}
@@ -92,7 +94,7 @@ export default function Monolith() {
                 tone="neutral"
                 className="px-4 py-2 border border-white/10 rounded-full backdrop-blur-md"
               >
-                Launch Signal / Forthcoming
+                The Monolith Project / Chicago
               </BrandTranslatorLabel>
             </motion.div>
 
@@ -123,10 +125,10 @@ export default function Monolith() {
 
         {/* Section 1: The Concept */}
         <section
-          className="relative py-36 px-6 z-30 border-b border-white/5"
+          className="manifesto-editorial-section relative px-6 z-30 border-b border-white/5"
           id="story"
         >
-          <div className="layout-default">
+          <div className="container layout-wide">
             <div className="grid gap-16 lg:grid-cols-12 items-start">
               <div className="lg:col-span-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary block mb-4">
@@ -152,10 +154,10 @@ export default function Monolith() {
 
         {/* Section 2: The Manifesto */}
         <section
-          className="relative py-36 px-6 z-30 bg-neutral-950 border-b border-white/5"
+          className="manifesto-editorial-section relative px-6 z-30 bg-neutral-950 border-b border-white/5"
           id="manifesto"
         >
-          <div className="layout-default">
+          <div className="container layout-wide">
             <div className="grid gap-16 lg:grid-cols-12 items-start">
               <div className="lg:col-span-4 sticky top-36">
                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary block mb-4">
@@ -180,101 +182,31 @@ export default function Monolith() {
           </div>
         </section>
 
-        {/* Section 3: The active world */}
         <section
-          className="relative py-36 px-6 z-30 border-b border-white/5"
+          className="manifesto-editorial-section manifesto-world relative px-6 z-30 border-b border-white/5"
           id="vision"
+          aria-labelledby="manifesto-world-title"
         >
-          <div className="layout-default">
-            <div className="grid gap-16 lg:grid-cols-12 items-start">
-              <div className="lg:col-span-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary block mb-4">
-                  03 / Core Expression
-                </span>
-                <h2 className="font-monolith text-4xl lg:text-5xl uppercase tracking-wider text-white leading-tight">
-                  The Platform
+          <div className="container layout-wide">
+            <header className="manifesto-world-heading">
+              <div>
+                <p className="manifesto-kicker">03 / One shared world</p>
+                <h2 id="manifesto-world-title">
+                  Music brings
+                  <br />
+                  <em>us together.</em>
                 </h2>
               </div>
-              <div className="lg:col-span-8 space-y-12">
-                <p className="text-xl md:text-2xl font-light leading-relaxed text-white/70">
-                  The Monolith Project is not another event series. It is the
-                  platform that gives two active expressions a shared world:
-                </p>
-                <div className="grid gap-8 sm:grid-cols-3">
-                  {[
-                    {
-                      title: "Monolith Project",
-                      desc: "The parent signal. A platform taking shape around rooms, people, and cultural memory.",
-                      href: "/monolith#manifesto",
-                      label: "Launch Signal",
-                    },
-                    {
-                      title: "Chasing Sun(Sets)",
-                      desc: "The open-air expression. Lakefront daylight, golden hour, and a season moving from Chapter I into II and III.",
-                      href: "/chasing-sunsets",
-                      label: "Daylight",
-                    },
-                    {
-                      title: "Untold Story",
-                      desc: "The after-dark expression. Four chapters deep, with a tighter room and deeper late-night focus.",
-                      href: "/untold-story",
-                      label: "After Dark",
-                    },
-                  ].map(branch => (
-                    <div
-                      key={branch.title}
-                      className="border border-white/5 bg-white/[0.01] p-8 hover:bg-white/[0.02] transition-colors flex flex-col justify-between min-h-[220px]"
-                    >
-                      <div>
-                        <h3 className="font-display text-xl uppercase tracking-wider text-white mb-4">
-                          {branch.title}
-                        </h3>
-                        <p className="text-xs text-white/60 leading-relaxed font-light mb-6">
-                          {branch.desc}
-                        </p>
-                      </div>
-                      <Link href={branch.href} asChild>
-                        <a className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-widest text-primary hover:text-white transition-colors">
-                          {branch.label}{" "}
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </a>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+              <p>
+                The Monolith Project connects Chasing Sunsets, Untold Story,
+                House of Friends, and SUNSETS.FM. From the lakefront to the
+                late-night room, the music and the people carry through.
+              </p>
+            </header>
+            <ProgrammeLinks />
           </div>
         </section>
-
-        {/* Section 4: Return */}
-        <section className="relative py-44 px-6 z-30 text-center flex flex-col items-center justify-center">
-          <div className="layout-default max-w-3xl flex flex-col items-center gap-12">
-            <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-[#d4a853]">
-              Join The Frequency
-            </span>
-
-            <h2 className="font-serif text-[clamp(2.5rem,7vw,6.5rem)] font-light leading-[0.9] uppercase text-white/90">
-              The Room <br /> Is Waiting
-            </h2>
-
-            <p className="text-sm md:text-base text-white/60 leading-relaxed font-light max-w-md">
-              SUN(SETS) II lands August 22 at Castaways — tickets are live
-              now, straight to checkout.
-            </p>
-
-            <div className="mt-6">
-              <MagneticButton strength={0.3}>
-                <a
-                  href="/go/tickets/css-aug22"
-                  className="btn-pill-monolith flex items-center justify-center gap-2 px-12 py-5 text-[11px] font-black uppercase tracking-[0.25em]"
-                >
-                  Buy Tickets — August 22 <ArrowUpRight className="w-4 h-4" />
-                </a>
-              </MagneticButton>
-            </div>
-          </div>
-        </section>
+        <JoinSignalSection />
       </main>
     </div>
   );

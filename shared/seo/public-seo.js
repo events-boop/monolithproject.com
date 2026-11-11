@@ -34,6 +34,7 @@ export const BASE_PUBLIC_SITEMAP_ENTRIES = [
   { path: "/booking", priority: "0.6", changefreq: "monthly" },
   { path: "/newsletter", priority: "0.7", changefreq: "weekly" },
   { path: "/shop", priority: "0.4", changefreq: "monthly" },
+  { path: "/lake", priority: "0.5", changefreq: "monthly" },
   { path: "/terms", priority: "0.3", changefreq: "yearly" },
   { path: "/privacy", priority: "0.3", changefreq: "yearly" },
   { path: "/cookies", priority: "0.3", changefreq: "yearly" },
