@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { HOME_NEXT_CHAPTER as chapter } from "@shared/home-next-chapter";
 import ProgrammeLinks from "./ProgrammeLinks";
+import EventStatusBadge from "./EventStatusBadge";
 import "@/styles/home-next-chapter.css";
 
 export default function HomeNextChapter({
@@ -37,10 +38,7 @@ export default function HomeNextChapter({
       <div className="next-chapter-signup">
         <div>
           <p>Get First Access</p>
-          <span>
-            Sign up for the first announcements. Dates and artists to be
-            announced.
-          </span>
+          <EventStatusBadge status="first-access" />
         </div>
         <Link
           href={chapter.signupHref}

@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import EventStatusBadge from "./EventStatusBadge";
 import { HOME_NEXT_CHAPTER } from "@shared/home-next-chapter";
 import "@/styles/season-invitation.css";
 
@@ -66,9 +67,9 @@ export default function SeasonInvitation({
           >
             Get First Access <ArrowUpRight size={20} aria-hidden="true" />
           </Link>
-          <p className="season-invitation-note">
-            Dates and artists to be announced.
-          </p>
+          <div className="season-invitation-note">
+            <EventStatusBadge status="first-access" />
+          </div>
         </div>
       </div>
     </section>

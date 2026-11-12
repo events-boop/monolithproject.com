@@ -65,13 +65,8 @@
   font-size: 20px;
   font-weight: 700;
 }
-.next-chapter-signup div > span {
-  display: block;
-  margin-top: 6px;
-  max-width: 48ch;
-  color: var(--editorial-muted);
-  font-size: 13px;
-  line-height: 1.6;
+.next-chapter-signup div > .event-status-badge {
+  margin-top: 10px;
 }
 @media (max-width: 600px) {
   .next-chapter-masthead {

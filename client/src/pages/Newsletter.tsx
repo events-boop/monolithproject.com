@@ -8,8 +8,15 @@ import ProgrammeLinks from "@/components/ProgrammeLinks";
 import hostedForms from "@shared/signup-forms.json";
 import "@/styles/newsletter-signal.css";
 import MonolithSignupPreview from "@/components/audience-signup/MonolithSignupPreview";
+import FirstAccessIntake from "@/components/FirstAccessIntake";
 
 export default function Newsletter() {
+  if (
+    import.meta.env.DEV &&
+    new URLSearchParams(window.location.search).get("intake_preview") === "1"
+  ) {
+    return <FirstAccessIntake designPreview />;
+  }
   if (
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("audience_preview") === "1"

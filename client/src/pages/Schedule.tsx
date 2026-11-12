@@ -13,6 +13,7 @@ import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import HomeNextChapter from "@/components/HomeNextChapter";
 import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
+import EventStatusBadge from "@/components/EventStatusBadge";
 import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import {
@@ -274,22 +275,30 @@ export default function Schedule() {
                         <div className="schedule-editorial-copy">
                           <div className="schedule-editorial-tags">
                             <span>{getSeriesLabel(event.series)}</span>
-                            <span data-event-state={event.eventStatus}>
-                              {statusLabel(event)}
-                            </span>
+                            <EventStatusBadge
+                              status={getPublishedEventState(event).kind}
+                              label={
+                                getPublishedEventState(event).kind ===
+                                "first-access"
+                                  ? undefined
+                                  : statusLabel(event)
+                              }
+                            />
                           </div>
                           <h3>
                             <Link href={detailsHref}>
                               {event.headline || event.title}
                             </Link>
                           </h3>
-                          <p>
-                            {postponed
-                              ? event.eventNotice
-                              : event.description ||
-                                event.experienceIntro ||
-                                "The next announcement will include the confirmed details."}
-                          </p>
+                          {(postponed ||
+                            event.description ||
+                            event.experienceIntro) && (
+                            <p>
+                              {postponed
+                                ? event.eventNotice
+                                : event.description || event.experienceIntro}
+                            </p>
+                          )}
                           <p className="schedule-editorial-venue">
                             {postponed ? "Original venue: " : ""}
                             {getScheduleVenue(event)} · {event.location}

@@ -15,6 +15,7 @@ import {
   isCurrentSunsetsEvent,
 } from "@shared/events/sunsets-current";
 import { getPublishedEventState } from "@shared/events/publishedState";
+import EventStatusBadge from "./EventStatusBadge";
 
 /** A concise homepage view of the same live catalogue as the full calendar. */
 export default function HomeUpcomingShows() {
@@ -105,9 +106,12 @@ export default function HomeUpcomingShows() {
                       <p className="home-eyebrow">
                         {getSeriesLabel(event.series)}
                       </p>
-                      <span className="home-show-status" data-on-sale={onSale}>
-                        {status}
-                      </span>
+                      <EventStatusBadge
+                        status={state.kind}
+                        label={
+                          state.kind === "first-access" ? undefined : status
+                        }
+                      />
                     </div>
                     <p className="home-show-date">
                       {postponed
