@@ -15,6 +15,7 @@ import { Link } from "wouter";
 import Navigation from "./Navigation";
 import SEO from "./SEO";
 import hostedForms from "@shared/signup-forms.json";
+import { honeypotFieldName } from "@shared/generated/hardening";
 import { trackMetaPixelLead } from "@/lib/metaPixel";
 import { hasAnalyticsConsent } from "@/lib/cookieConsent";
 import "@/styles/first-access-intake.css";
@@ -59,7 +60,7 @@ export default function FirstAccessIntake({
   const [city, setCity] = useState("");
   const [consent, setConsent] = useState(false);
   const [adult, setAdult] = useState(false);
-  const [website, setWebsite] = useState("");
+  const [trap, setTrap] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -172,7 +173,7 @@ export default function FirstAccessIntake({
       interests,
       consent: true,
       adult: true,
-      website,
+      [honeypotFieldName]: trap,
     };
     submitting.current = true;
     setBusy(true);
@@ -646,11 +647,11 @@ export default function FirstAccessIntake({
                   )}
                   <div className="access-trap" aria-hidden="true">
                     <label>
-                      Website
+                      Leave this field empty
                       <input
-                        name="website"
-                        value={website}
-                        onChange={event => setWebsite(event.target.value)}
+                        name={honeypotFieldName}
+                        value={trap}
+                        onChange={event => setTrap(event.target.value)}
                         tabIndex={-1}
                         autoComplete="off"
                       />

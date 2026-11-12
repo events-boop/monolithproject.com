@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { getDatabase } from "../db/client";
 import { leads } from "../db/schema";
 import { readProvider } from "../lib/env";
+import { honeypotFields } from "../lib/schemas";
 import {
   brevoListId,
   brevoConfigured,
@@ -27,7 +28,7 @@ const schema = z.object({
     .max(3),
   consent: z.literal(true),
   adult: z.literal(true),
-  website: z.string().max(200).optional(),
+  ...honeypotFields,
 });
 
 // This uses the existing public newsletter list, never the controlled Audience OS
@@ -57,7 +58,7 @@ async function markDelivery(id: string, providerStatus: string) {
 
 export async function submitFirstAccess(input: unknown) {
   const parsed = schema.safeParse(input);
-  if (!parsed.success || parsed.data.website)
+  if (!parsed.success)
     return {
       status: 400,
       body: {

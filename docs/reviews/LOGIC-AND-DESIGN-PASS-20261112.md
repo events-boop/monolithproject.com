@@ -221,3 +221,42 @@ Two trade-offs worth recording:
 
 Not done here, by design: the logic pass. `L-01` (no Meta Lead on signup) remains the highest-value
 open item in this document.
+
+---
+
+## 7. TRAP HARDENING — 2026-11-12
+
+Applied the two items from `L-08` that were genuinely missing, after finding that most of the
+proposed stack already exists in this repo.
+
+**What already existed (so nothing was added):**
+- Origin / `Sec-Fetch-Site` / JSON-only enforcement is already global on `/api`
+  (`client` ← `server/middleware.ts:55` → `createBrowserApiGuard`, `request-hardening.ts:49-117`).
+  Proven, not assumed: `POST /api/first-access` with `Origin: https://evil.example` returns
+  **403 `FORBIDDEN_ORIGIN`**.
+- A generated, autofill-proof decoy field name: `honeypotFieldName = "hp_4391b57e8e48"`
+  (`shared/generated/hardening.ts`), read by `readHoneypotValue` (`server/lib/honeypot.ts`), with a
+  house reply of **202 + `ok: true`** plus a `bot.honeypot_triggered` log event
+  (`server/routes/booking.ts:31-43`).
+
+**What was actually wrong, and is now fixed:**
+The intake shipped its own `website` field — a URL autofill target — and rejected it with a 400
+carrying the same copy a human sees for a typo. It now uses the house decoy name, the house reader
+and the house reply.
+
+| Check | Result |
+|---|---|
+| Decoy field rendered | `name="hp_4391b57e8e48"`, `autocomplete="off"`, `tabindex="-1"`, container at `-10000px`, `aria-hidden` |
+| Decoy filled → `POST /api/first-access` | **202** `{ok:true, state:"subscribed"}` — no save, no provider call, logged |
+| Normal POST (no DB locally) | **503**, unchanged |
+| Cross-origin POST | **403 `FORBIDDEN_ORIGIN`** |
+| Gates | `tsc --noEmit` exit 0 · **578 passed / 11 skipped** (63 files) |
+
+**Deliberately not added:**
+- `.strict()` on the schema — no other schema in `server/lib/schemas.ts` uses it, and zod already
+  strips unknown keys, so it would only reject clients during a version skew.
+- A signed form token — the only genuinely new mechanism in the list. With the origin guard,
+  JSON-only enforcement and the decoy already in place, it buys little against a form that is not
+  yet in production and has no measured spam. Revisit if `bot.honeypot_triggered` or lead volume
+  shows real abuse; the design (HMAC over a timestamp, no storage, no extra round trip) is noted
+  in `L-08`.

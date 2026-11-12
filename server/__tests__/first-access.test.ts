@@ -80,9 +80,8 @@ describe("First Access intake", () => {
     { interests: [] },
     { interests: ["radio"] },
     { email: "invalid" },
-    { website: "bot" },
   ])(
-    "rejects missing consent, invalid interests, or bots before capture: %j",
+    "rejects missing consent, invalid interests before capture: %j",
     async patch => {
       expect((await submitFirstAccess({ ...payload(), ...patch })).status).toBe(
         400
