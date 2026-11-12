@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { eq } from "drizzle-orm";
-import { getDatabase } from "../db/client";
-import { leads } from "../db/schema";
 import { readProvider } from "../lib/env";
 import { honeypotFields } from "../lib/schemas";
+import { readHoneypotValue } from "../lib/honeypot";
+import { FIRST_ACCESS_CONSENT_VERSION } from "@shared/first-access";
 import {
   brevoListId,
   brevoConfigured,
@@ -11,7 +10,15 @@ import {
   subscribeBrevoList,
   BrevoSubscriptionError,
 } from "../providers/brevo";
-import { saveSignupRequest, signupCaptureAvailable } from "./signup-capture";
+import { signupCaptureAvailable } from "./signup-capture";
+import {
+  claimFirstAccessReceipt,
+  createFirstAccessReceipt,
+  findFirstAccessReceipt,
+  finishFirstAccessReceipt,
+  firstAccessFingerprint,
+  type FirstAccessResult,
+} from "./first-access-store";
 
 const schema = z.object({
   email: z
@@ -28,6 +35,7 @@ const schema = z.object({
     .max(3),
   consent: z.literal(true),
   adult: z.literal(true),
+  consentVersion: z.literal(FIRST_ACCESS_CONSENT_VERSION),
   ...honeypotFields,
 });
 
@@ -43,29 +51,60 @@ export async function firstAccessAvailable() {
   );
 }
 
-async function markDelivery(id: string, providerStatus: string) {
-  try {
-    await getDatabase()
-      ?.update(leads)
-      .set({ providerStatus })
-      .where(eq(leads.id, id));
-  } catch {
-    // A status-write failure must not turn a confirmed provider subscription into
-    // a claimed failure. The durable receipt remains available for reconciliation.
-    console.warn("First Access delivery status needs reconciliation.");
-  }
-}
+const storageUnavailable = (): FirstAccessResult => ({
+  status: 503,
+  body: {
+    ok: false,
+    message: "We couldn’t save your request. Please try again.",
+  },
+});
+const inProgress = (): FirstAccessResult => ({
+  status: 409,
+  body: {
+    ok: false,
+    requestSaved: true,
+    retryAfterSec: 2,
+    message:
+      "Your signup is being processed. Your details are saved; please try again shortly to check the result.",
+  },
+});
+const changedRequest = (): FirstAccessResult => ({
+  status: 409,
+  body: {
+    ok: false,
+    message:
+      "This signup reference belongs to different details. Refresh the form and try again.",
+  },
+});
 
-export async function submitFirstAccess(input: unknown) {
+export async function submitFirstAccess(
+  input: unknown,
+  idempotencyKey: string
+): Promise<FirstAccessResult> {
   const parsed = schema.safeParse(input);
-  if (!parsed.success)
+  if (
+    !parsed.success ||
+    readHoneypotValue(input) ||
+    !/^[A-Za-z0-9_-]{16,128}$/.test(idempotencyKey)
+  )
     return {
       status: 400,
       body: {
         ok: false,
-        message: "Check your details and email consent, then try again.",
+        message:
+          "Refresh the form, check your details and email consent, then try again.",
       },
     };
+  const data = parsed.data;
+  const fingerprint = firstAccessFingerprint(data);
+  let receipt: Awaited<ReturnType<typeof findFirstAccessReceipt>>;
+  try {
+    receipt = await findFirstAccessReceipt(idempotencyKey);
+  } catch {
+    return storageUnavailable();
+  }
+  if (receipt && receipt.fingerprint !== fingerprint) return changedRequest();
+  if (receipt?.response) return { ...receipt.response, replayed: true };
   if (!(await firstAccessAvailable()))
     return {
       status: 503,
@@ -75,40 +114,55 @@ export async function submitFirstAccess(input: unknown) {
           "Please use the secure signup link below to join First Access.",
       },
     };
-  const data = parsed.data;
-  let receipt: Awaited<ReturnType<typeof saveSignupRequest>>;
-  try {
-    receipt = await saveSignupRequest({
-      email: data.email,
-      firstName: data.firstName,
-      audience: "newsletter",
-      consent: true,
-      source: "first_access_intake",
-      details: {
-        city: data.city || undefined,
-        interestTags: Array.from(new Set(data.interests)),
-        adultConfirmed: true,
-        pagePath: "/newsletter",
-        formVersion: "first-access-2027-v1",
-      },
-    });
-  } catch {
+  const listId = brevoListId(process.env.BREVO_LIST_ID)!;
+  // Never silently replay a saved operation into a newly configured audience.
+  if (receipt && receipt.listId !== listId)
     return {
       status: 503,
       body: {
         ok: false,
-        message: "We couldn’t save your request. Please try again.",
+        requestSaved: true,
+        message:
+          "Your request needs a connection check. Please contact events@monolithproject.com for help.",
       },
     };
+  let leaseId: string | null;
+  try {
+    receipt ??= await createFirstAccessReceipt(idempotencyKey, data, listId);
+    // A concurrent insert may have won with another payload or completed already.
+    if (receipt.fingerprint !== fingerprint) return changedRequest();
+    if (receipt.response) return { ...receipt.response, replayed: true };
+    if (receipt.listId !== listId)
+      return {
+        status: 503,
+        body: {
+          ok: false,
+          requestSaved: true,
+          message:
+            "Your request needs a connection check. Please contact events@monolithproject.com for help.",
+        },
+      };
+    leaseId = await claimFirstAccessReceipt(receipt.id);
+    if (!leaseId) {
+      const latest = await findFirstAccessReceipt(idempotencyKey);
+      return latest?.response
+        ? { ...latest.response, replayed: true }
+        : inProgress();
+    }
+  } catch {
+    return storageUnavailable();
   }
+  let result: FirstAccessResult;
+  let providerStatus: "success" | "suppressed" | "pending";
   try {
     await subscribeBrevoList({
       email: data.email,
       firstName: data.firstName,
-      listId: brevoListId(process.env.BREVO_LIST_ID)!,
+      listId,
+      skipExistingSubscription: true,
     });
-    await markDelivery(receipt.id, "success");
-    return {
+    providerStatus = "success";
+    result = {
       status: 200,
       body: {
         ok: true,
@@ -119,8 +173,8 @@ export async function submitFirstAccess(input: unknown) {
   } catch (error) {
     const suppressed =
       error instanceof BrevoSubscriptionError && error.code === "SUPPRESSED";
-    await markDelivery(receipt.id, suppressed ? "suppressed" : "pending");
-    return {
+    providerStatus = suppressed ? "suppressed" : "pending";
+    result = {
       status: suppressed ? 409 : 502,
       body: {
         ok: false,
@@ -131,4 +185,12 @@ export async function submitFirstAccess(input: unknown) {
       },
     };
   }
+  try {
+    await finishFirstAccessReceipt(receipt.id, leaseId, providerStatus, result);
+  } catch {
+    // Receipt/consent already exists. A failed status write must not turn a
+    // verified subscription into a claimed failure; the lease can recover.
+    console.warn("First Access delivery status needs reconciliation.");
+  }
+  return result;
 }

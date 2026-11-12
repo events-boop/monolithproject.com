@@ -16,6 +16,7 @@ interface ConsumeRateLimitOptions {
   limit: number;
   scope: string;
   windowMs: number;
+  storageRequired?: boolean;
 }
 
 interface CreateRateLimitMiddlewareOptions {
@@ -25,6 +26,8 @@ interface CreateRateLimitMiddlewareOptions {
   skip?: (req: Request) => boolean;
   windowMs: number;
   preferMemory?: boolean; // New option for high-performance read routes
+  storageRequired?: boolean;
+  identifier?: (req: Request) => string;
 }
 
 interface RateLimitResult {
@@ -114,9 +117,11 @@ async function consumeDatabaseRateLimit({
   limit,
   scope,
   windowMs,
+  storageRequired,
 }: ConsumeRateLimitOptions): Promise<RateLimitResult> {
   const db = getDatabase();
   if (!db) {
+    if (storageRequired) throw new Error("Rate limit storage unavailable");
     return consumeInMemoryRateLimit({ identifier, limit, scope, windowMs });
   }
 
@@ -183,12 +188,12 @@ export function createRateLimitMiddleware(
     }
 
     void (async () => {
-      const identifier = getClientIdentifier(req);
+      const identifier = options.identifier?.(req) ?? getClientIdentifier(req);
 
       let result: RateLimitResult;
 
       // OPTIMIZATION: High-performance bypass for read routes
-      if (options.preferMemory) {
+      if (options.preferMemory && !options.storageRequired) {
         result = consumeInMemoryRateLimit({
           identifier,
           limit: options.limit,
@@ -202,8 +207,22 @@ export function createRateLimitMiddleware(
             limit: options.limit,
             scope: options.scope,
             windowMs: options.windowMs,
+            storageRequired: options.storageRequired,
           });
         } catch (error) {
+          if (options.storageRequired) {
+            res.setHeader("Retry-After", "30");
+            res.status(503).json({
+              ok: false,
+              error: {
+                code: "RATE_LIMIT_UNAVAILABLE",
+                message:
+                  "Signup is temporarily unavailable. Please try again shortly or use secure signup.",
+                retryable: true,
+              },
+            });
+            return;
+          }
           if (Date.now() - lastStorageFailureLogAt > 60_000) {
             lastStorageFailureLogAt = Date.now();
             logEvent("rate_limit.storage_failed", {

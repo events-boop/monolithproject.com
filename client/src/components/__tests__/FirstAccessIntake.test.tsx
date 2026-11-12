@@ -11,6 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import FirstAccessIntake from "../FirstAccessIntake";
 import { trackMetaPixelLead } from "@/lib/metaPixel";
 import { COOKIE_CONSENT_STORAGE_KEY } from "@/lib/cookieConsent";
+import { FIRST_ACCESS_CONSENT_VERSION } from "@shared/first-access";
 
 vi.mock("../Navigation", () => ({ default: () => null }));
 vi.mock("../SEO", () => ({ default: () => null }));
@@ -103,6 +104,9 @@ describe("First Access signup outcomes", () => {
     await act(async () =>
       complete(response({ ok: true, state: "subscribed" }))
     );
+    expect(JSON.parse(fetch.mock.calls[1][1].body).consentVersion).toBe(
+      FIRST_ACCESS_CONSENT_VERSION
+    );
     expect(await screen.findByText("FIRST ACCESS, CONFIRMED")).toBeVisible();
     expect(screen.getByText("alex@example.com")).toBeVisible();
     expect(trackMetaPixelLead).toHaveBeenCalledTimes(1);
@@ -166,6 +170,52 @@ describe("First Access signup outcomes", () => {
         .fn()
         .mockResolvedValueOnce(response({ available: true }))
         .mockResolvedValueOnce(response({ ok: true, state: "saved" }))
+    );
+    await reachFinalStep();
+    giveConsent();
+    fireEvent.click(screen.getByRole("button", { name: "Count me in" }));
+    await screen.findByRole("alert");
+    expect(
+      screen.queryByText("FIRST ACCESS, CONFIRMED")
+    ).not.toBeInTheDocument();
+    expect(trackMetaPixelLead).not.toHaveBeenCalled();
+  });
+
+  it("uses the server's retry interval instead of promising a fixed fifteen-minute wait", async () => {
+    const limited = response({ ok: false }, 429);
+    limited.headers.set("Retry-After", "61");
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(response({ available: true }))
+        .mockResolvedValueOnce(limited)
+    );
+    await reachFinalStep();
+    giveConsent();
+    fireEvent.click(screen.getByRole("button", { name: "Count me in" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Please wait 2 minutes"
+    );
+    expect(trackMetaPixelLead).not.toHaveBeenCalled();
+  });
+
+  it("does not count a decoy acknowledgement as a conversion", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(response({ available: true }))
+        .mockResolvedValueOnce(
+          response(
+            {
+              ok: true,
+              state: "accepted",
+              message: "Your request was received.",
+            },
+            202
+          )
+        )
     );
     await reachFinalStep();
     giveConsent();

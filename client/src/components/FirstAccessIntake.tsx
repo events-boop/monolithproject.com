@@ -18,6 +18,11 @@ import hostedForms from "@shared/signup-forms.json";
 import { honeypotFieldName } from "@shared/generated/hardening";
 import { trackMetaPixelLead } from "@/lib/metaPixel";
 import { hasAnalyticsConsent } from "@/lib/cookieConsent";
+import {
+  FIRST_ACCESS_ADULT_CONFIRMATION,
+  FIRST_ACCESS_CONSENT_VERSION,
+  FIRST_ACCESS_EMAIL_CONSENT,
+} from "@shared/first-access";
 import "@/styles/first-access-intake.css";
 
 const worlds = [
@@ -173,6 +178,7 @@ export default function FirstAccessIntake({
       interests,
       consent: true,
       adult: true,
+      consentVersion: FIRST_ACCESS_CONSENT_VERSION,
       [honeypotFieldName]: trap,
     };
     submitting.current = true;
@@ -196,10 +202,18 @@ export default function FirstAccessIntake({
       });
       const body = await response.json().catch(() => null);
       if (!response.ok || body?.ok !== true || body.state !== "subscribed") {
+        const retryAfter = Number(response.headers.get("Retry-After"));
+        const wait =
+          Number.isFinite(retryAfter) && retryAfter > 0
+            ? Math.ceil(retryAfter / 60)
+            : null;
         throw new Error(
           response.status === 429
-            ? "A few too many attempts. Please wait 15 minutes, then try again."
+            ? wait
+              ? `Please wait ${wait} ${wait === 1 ? "minute" : "minutes"}, then try again.`
+              : "A few too many attempts. Please wait a little before trying again."
             : body?.message ||
+                body?.error?.message ||
                 "We couldn’t confirm your signup. Please try again."
         );
       }
@@ -606,10 +620,7 @@ export default function FirstAccessIntake({
                           }
                           required
                         />
-                        <span>
-                          I’d like email updates from THE MONOLITH PROJECT. I
-                          can unsubscribe at any time.
-                        </span>
+                        <span>{FIRST_ACCESS_EMAIL_CONSENT}</span>
                       </label>
                       {errors.consent && (
                         <p
@@ -632,7 +643,7 @@ export default function FirstAccessIntake({
                           }
                           required
                         />
-                        <span>I’m 18 or older.</span>
+                        <span>{FIRST_ACCESS_ADULT_CONFIRMATION}</span>
                       </label>
                       {errors.adult && (
                         <p

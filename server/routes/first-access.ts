@@ -29,9 +29,22 @@ router.post(
   createRateLimitMiddleware({
     scope: "first_access:submit",
     windowMs: 15 * 60_000,
-    limit: 8,
-    preferMemory: true,
+    limit: 60,
+    storageRequired: true,
     message: "Please wait 15 minutes before trying again.",
+  }),
+  createRateLimitMiddleware({
+    scope: "first_access:email",
+    windowMs: 15 * 60_000,
+    limit: 8,
+    storageRequired: true,
+    identifier: req =>
+      String(req.body?.email || "")
+        .trim()
+        .toLowerCase()
+        .slice(0, 254),
+    skip: req => typeof req.body?.email !== "string" || !req.body.email.trim(),
+    message: "Please wait before trying this address again.",
   }),
   asyncHandler(async (req, res) => {
     const requestId = randomUUID();
@@ -50,13 +63,17 @@ router.post(
       res.status(202).json({
         ok: true,
         requestId,
-        state: "subscribed",
-        message: "You’re on the First Access list.",
+        state: "accepted",
+        message: "Your request was received.",
       });
       return;
     }
-    const result = await submitFirstAccess(req.body);
+    const idempotencyKey = req.get("Idempotency-Key") || "";
+    const result = await submitFirstAccess(req.body, idempotencyKey);
     res.setHeader("Cache-Control", "no-store");
+    if (result.replayed) res.setHeader("X-Idempotent-Replay", "true");
+    if (result.body.retryAfterSec)
+      res.setHeader("Retry-After", String(result.body.retryAfterSec));
     res.status(result.status).json(result.body);
   })
 );
