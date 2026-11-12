@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { X } from "lucide-react";
@@ -11,6 +12,7 @@ import {
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const [inlineTarget, setInlineTarget] = useState<HTMLElement | null>(null);
   const [location] = useLocation();
   const audio = useOptionalGlobalAudio();
   const pathname = location.split(/[?#]/)[0] || "/";
@@ -36,6 +38,19 @@ export default function CookieConsent() {
     return () => clearTimeout(timer);
   }, []);
 
+  // The intake supplies an in-flow slot. Observe lazy route mounts so the
+  // notice also moves correctly when arriving or leaving through navigation.
+  useEffect(() => {
+    if (!visible) return;
+    const update = () => {
+      setInlineTarget(document.getElementById("first-access-cookie-notice"));
+    };
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [visible, location]);
+
   const accept = () => {
     resolveConsent("accepted");
   };
@@ -44,7 +59,7 @@ export default function CookieConsent() {
     resolveConsent("declined");
   };
 
-  return (
+  const notice = (
     <AnimatePresence>
       {visible && (
         <motion.div
@@ -52,9 +67,11 @@ export default function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 24, opacity: 0 }}
           transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-          className={`fixed ${
-            hasStickyAudioBar ? "bottom-20" : "bottom-4"
-          } left-4 right-4 sm:left-auto sm:right-4 z-[9999] sm:w-auto sm:max-w-[20rem] pointer-events-auto`}
+          className={
+            inlineTarget
+              ? "access-cookie-notice"
+              : `fixed ${hasStickyAudioBar ? "bottom-20" : "bottom-4"} left-4 right-4 sm:left-auto sm:right-4 z-[9999] sm:w-auto sm:max-w-[20rem] pointer-events-auto`
+          }
           style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
           role="region"
           aria-label="Cookie consent"
@@ -78,7 +95,7 @@ export default function CookieConsent() {
 
             <div className="flex flex-col gap-2.5 p-3 pr-8">
               <div className="min-w-0">
-                <p className="font-mono text-[9px] font-black uppercase tracking-[0.24em] text-primary">
+                <p className="font-mono text-[11px] font-black uppercase tracking-[0.24em] text-primary">
                   Tracking preferences
                 </p>
                 <p className="mt-1 text-[11px] leading-relaxed text-white/60">
@@ -113,4 +130,5 @@ export default function CookieConsent() {
       )}
     </AnimatePresence>
   );
+  return inlineTarget ? createPortal(notice, inlineTarget) : notice;
 }

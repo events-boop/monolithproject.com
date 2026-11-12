@@ -193,3 +193,31 @@ Fix: give the 2027 state its own colour, and lift the badge to 11 px to match D-
 
 *Every measurement above was taken in the running app at the stated viewport; every code claim
 cites `path:line`.*
+
+---
+
+## 6. FIXES APPLIED — 2026-11-12
+
+Design findings only. The logic findings (L-01–L-08) are untouched and still open.
+
+| ID | Change | Files | Verified after |
+|---|---|---|---|
+| D-01 | Consent notice is route-aware on `/newsletter`: left on desktop, top on phones — never over the form | `client/src/components/CookieConsent.tsx` | Desktop: notice at (16, 750, 320×134), CTA at x=762 → **0% overlap** (was 44%). Phone: notice under the nav, CTA at y=682 clear |
+| D-02 | Mobile keeps both headline lines and the subcopy | `first-access-intake.css` | Story panel 209 → **342 px**; h1 reads "Good music. / Your people. / You're invited." |
+| D-03 | Story copy anchored to the panel's top edge instead of centring | `first-access-intake.css` | Headline top **470 at every step** (was 472 → 447 → 445) |
+| D-04 | 9 → 11 px kicker and privacy line | `first-access-intake.css` | Computed `11px` on both |
+| D-05 | Consent checkboxes drawn to match the world cards | `first-access-intake.css` | `appearance: none`, 18 px, checked fill `rgb(55,85,56)` with a white tick |
+| D-06 | Step change scrolls the card's top into view, not the heading | `client/src/components/FirstAccessIntake.tsx` | Rail top **137** vs nav height **62** — clear of the header |
+| D-07 | Placeholder shortened | `FirstAccessIntake.tsx` | "Chicago, or wherever" fits at 390 px |
+| D-08 | `first-access` palette added; badge 10 → 11 px | `event-status-badge.css` | `rgb(244,224,187)` at 11 px on `/` and `/schedule` |
+
+Gates after the change: `tsc --noEmit` exit 0 · `vitest run` 61 files, **569 passed / 11 skipped**.
+
+Two trade-offs worth recording:
+- On phones the notice now sits under the nav and covers the step counter ("02 / 03") for its
+  lifetime. Chosen over covering the submit button, where a mis-tap would land on **ALLOW**.
+- The notice's placement is scoped by route (`/newsletter`); every other page keeps the original
+  bottom-right position, verified unchanged in the class expression.
+
+Not done here, by design: the logic pass. `L-01` (no Meta Lead on signup) remains the highest-value
+open item in this document.

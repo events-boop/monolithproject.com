@@ -40,7 +40,7 @@
   background: linear-gradient(180deg, #10141366, #10141344 30%, #101413f2 90%);
 }
 .access-wordmark {
-  font: 500 10px/1.7 var(--font-mono, monospace);
+  font: 500 11px/1.7 var(--font-mono, monospace);
   letter-spacing: 0.14em;
   color: #ead7b4;
   max-width: 30ch;
@@ -55,7 +55,7 @@
   border: 1px solid #d8b47d66;
   border-radius: 40px;
   color: #e9cb9b;
-  font: 500 10px/1.4 var(--font-mono, monospace);
+  font: 500 11px/1.4 var(--font-mono, monospace);
   letter-spacing: 0.08em;
 }
 .access-story h1 {
@@ -63,8 +63,20 @@
   font: 500 clamp(44px, 4.4vw, 64px)/1.02 var(--font-hero);
   letter-spacing: -0.055em;
 }
-.access-desktop-line { display: block; }
-.access-form h2 { scroll-margin-top: 128px; }
+.access-desktop-line {
+  display: block;
+}
+.access-form h2 {
+  scroll-margin-top: 128px;
+}
+@media (min-width: 721px) {
+  /* Anchor the story copy to the panel's top edge: the card grows as the form
+     advances, and centring it made the headline drift between steps. */
+  .access-story-copy {
+    margin-block: 0;
+    padding-block: 110px 48px;
+  }
+}
 .access-story h1 em {
   color: #e8c797;
   font-style: italic;
@@ -89,7 +101,7 @@
   align-items: center;
   gap: 16px;
   color: #d5c9b4;
-  font: 500 9px/1.6 var(--font-mono, monospace);
+  font: 500 11px/1.6 var(--font-mono, monospace);
   letter-spacing: 0.1em;
 }
 .access-form-shell {
@@ -105,7 +117,7 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font: 600 9px/1.5 var(--font-mono, monospace);
+  font: 600 11px/1.5 var(--font-mono, monospace);
   letter-spacing: 0.08em;
   color: #526052;
   padding-bottom: 20px;
@@ -120,7 +132,7 @@
   margin: 0;
 }
 .access-progress li {
-  font-size: 10px;
+  font-size: 11px;
   color: #5b675c;
 }
 .access-progress li > span {
@@ -160,7 +172,7 @@
   color: #526c48;
 }
 .access-form-kicker {
-  font: 600 9px/1.5 var(--font-mono, monospace);
+  font: 600 11px/1.5 var(--font-mono, monospace);
   letter-spacing: 0.08em;
   color: #5b6754;
 }
@@ -236,7 +248,7 @@
   gap: 4px;
 }
 .access-world-label > span {
-  font: 600 8px/1.3 var(--font-mono, monospace);
+  font: 600 11px/1.3 var(--font-mono, monospace);
   color: var(--world-accent);
   letter-spacing: 0.06em;
 }
@@ -245,7 +257,7 @@
   letter-spacing: -0.015em;
 }
 .access-world-label small {
-  font-size: 10px;
+  font-size: 11px;
   color: #606858;
 }
 .access-choice-check {
@@ -294,7 +306,7 @@
 .access-fields label > span {
   float: right;
   color: #5e6a59;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
 }
 .access-fields input {
@@ -362,7 +374,7 @@
 .access-privacy {
   margin-top: 13px;
   color: #626c5c;
-  font-size: 9px;
+  font-size: 11px;
   text-align: center;
   line-height: 1.7;
 }
@@ -414,7 +426,7 @@
   color: #405d39;
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 10px;
+  font-size: 11px;
 }
 .access-receipt-tags {
   display: flex;
@@ -427,7 +439,7 @@
   border: 1px solid #929f87;
   border-radius: 4px;
   color: #405036;
-  font: 600 9px/1.5 var(--font-mono, monospace);
+  font: 600 11px/1.5 var(--font-mono, monospace);
 }
 .access-consent {
   display: flex;
@@ -440,11 +452,41 @@
   cursor: pointer;
 }
 .access-consent input {
-  accent-color: #375538;
-  margin-top: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  place-content: center;
+  margin-top: 2px;
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  border: 1px solid #9eab94;
+  border-radius: 5px;
+  background: #fffdf7;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.access-consent input::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid #fff7e7;
+  border-bottom: 2px solid #fff7e7;
+  transform: rotate(-45deg) translate(1px, -1px) scale(0);
+  transition: transform 0.12s ease-out;
+}
+.access-consent input:checked {
+  background: #375538;
+  border-color: #375538;
+}
+.access-consent input:checked::after {
+  transform: rotate(-45deg) translate(1px, -1px) scale(1);
+}
+.access-consent input[aria-invalid="true"] {
+  border-color: #992e1b;
+  box-shadow: 0 0 0 1px #992e1b;
 }
 .access-trap {
   position: absolute;
@@ -500,7 +542,7 @@
   margin-top: 30px;
 }
 .access-provider-entry > .access-provider-note {
-  font-size: 10px !important;
+  font-size: 11px !important;
   text-align: center;
 }
 .access-connecting {
@@ -527,7 +569,7 @@
   padding: 0 14px;
 }
 .access-bottom-line > span {
-  font: 500 9px/1.6 var(--font-mono, monospace);
+  font: 500 11px/1.6 var(--font-mono, monospace);
   letter-spacing: 0.1em;
   color: #b3b9aa;
 }
@@ -542,13 +584,13 @@
 .access-bottom-line small {
   display: block;
   color: #9da993;
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 3px;
 }
 .access-owner-preview {
   max-width: 1280px;
   margin: 0 auto 16px;
-  font: 500 10px/1.7 var(--font-mono, monospace);
+  font: 500 11px/1.7 var(--font-mono, monospace);
   color: #c7d0b8;
 }
 .access-spinner {
@@ -585,15 +627,19 @@
   .access-story-copy {
     padding-block: 20px 0;
   }
-  .access-desktop-line { display: none; }
+  .access-desktop-line {
+    display: block;
+  }
   .access-story h1 {
-    font-size: clamp(42px, 10vw, 64px);
+    font-size: clamp(36px, 9.2vw, 52px);
   }
   .access-story-foot {
     display: none;
   }
   .access-story-copy > p {
-    display: none;
+    margin-top: 18px;
+    max-width: 34ch;
+    font-size: 14px;
   }
   .access-form-shell {
     border-radius: 0 0 16px 16px;
@@ -638,7 +684,7 @@
     font-size: 34px;
   }
   .access-progress li {
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -647,5 +693,37 @@
   }
   .access-world-option {
     transition: none;
+  }
+}
+
+/* The consent notice flows with the card rather than covering its controls. */
+#first-access-cookie-notice:empty {
+  display: none;
+}
+.access-cookie-notice {
+  margin-bottom: 24px;
+}
+.access-success .access-privacy {
+  text-align: left;
+  font-size: 11px;
+}
+.access-summary button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.access-consent:has(input:disabled) {
+  opacity: 0.7;
+  cursor: wait;
+}
+.access-story-foot {
+  margin-top: auto;
+  padding-top: 24px;
+}
+@media (forced-colors: active) {
+  .access-consent input {
+    appearance: auto;
+  }
+  .access-consent input::after {
+    display: none;
   }
 }

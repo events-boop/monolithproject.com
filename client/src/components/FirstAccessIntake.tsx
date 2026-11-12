@@ -15,6 +15,8 @@ import { Link } from "wouter";
 import Navigation from "./Navigation";
 import SEO from "./SEO";
 import hostedForms from "@shared/signup-forms.json";
+import { trackMetaPixelLead } from "@/lib/metaPixel";
+import { hasAnalyticsConsent } from "@/lib/cookieConsent";
 import "@/styles/first-access-intake.css";
 
 const worlds = [
@@ -42,6 +44,7 @@ const worlds = [
 ] as const;
 type World = (typeof worlds)[number]["id"];
 type Availability = "checking" | "ready" | "hosted";
+type SignupReceipt = { firstName: string; email: string; interests: World[] };
 
 export default function FirstAccessIntake({
   designPreview = false,
@@ -60,27 +63,54 @@ export default function FirstAccessIntake({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [receipt, setReceipt] = useState<SignupReceipt | null>(null);
+  const success = receipt !== null;
   const heading = useRef<HTMLHeadingElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const signature = useRef({ value: "", key: "" });
+  const submitting = useRef(false);
+  const submission = useRef<AbortController | null>(null);
+  const previousStep = useRef(0);
 
   useEffect(() => {
     const controller = new AbortController();
+    const timeout = window.setTimeout(() => {
+      setAvailability("hosted");
+      controller.abort();
+    }, 4000);
     fetch("/api/first-access", { signal: controller.signal })
       .then(async response => (response.ok ? response.json() : null))
-      .then(body => setAvailability(body?.available ? "ready" : "hosted"))
+      .then(body => {
+        if (!controller.signal.aborted)
+          setAvailability(body?.available ? "ready" : "hosted");
+      })
       .catch(() => {
         if (!controller.signal.aborted) setAvailability("hosted");
-      });
-    return () => controller.abort();
+      })
+      .finally(() => window.clearTimeout(timeout));
+    return () => {
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
   }, []);
 
+  useEffect(() => () => submission.current?.abort(), []);
+
   useEffect(() => {
-    if (step > 0 || success) {
+    if (step !== previousStep.current || success) {
       heading.current?.focus({ preventScroll: true });
-      if (window.innerWidth <= 720) heading.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      if (window.innerWidth <= 720 && panel.current) {
+        const nav = document.querySelector("nav");
+        const navHeight = nav instanceof HTMLElement ? nav.offsetHeight : 64;
+        const top =
+          panel.current.getBoundingClientRect().top +
+          window.scrollY -
+          navHeight -
+          12;
+        window.scrollTo({ top, behavior: "auto" });
+      }
     }
+    previousStep.current = step;
   }, [step, success]);
 
   function toggle(id: World) {
@@ -90,6 +120,11 @@ export default function FirstAccessIntake({
         : [...previous, id]
     );
     setErrors({});
+  }
+  function focusInvalidControl() {
+    requestAnimationFrame(() =>
+      panel.current?.querySelector<HTMLElement>("[aria-invalid=true]")?.focus()
+    );
   }
   function next() {
     const nextErrors: Record<string, string> = {};
@@ -102,11 +137,7 @@ export default function FirstAccessIntake({
     }
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      requestAnimationFrame(() =>
-        panel.current
-          ?.querySelector<HTMLElement>("[aria-invalid=true]")
-          ?.focus()
-      );
+      focusInvalidControl();
       return;
     }
     setStep(value => value + 1);
@@ -114,6 +145,7 @@ export default function FirstAccessIntake({
   }
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (submitting.current) return;
     if (step < 2) {
       next();
       return;
@@ -123,7 +155,10 @@ export default function FirstAccessIntake({
       nextErrors.consent = "Choose email updates to join First Access.";
     if (!adult) nextErrors.adult = "Please confirm you are 18 or older.";
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
+    if (Object.keys(nextErrors).length) {
+      focusInvalidControl();
+      return;
+    }
     if (availability !== "ready") {
       setSubmitError(
         "This design preview hasn’t sent your details. Use the secure signup link to join the live list."
@@ -139,14 +174,19 @@ export default function FirstAccessIntake({
       adult: true,
       website,
     };
-    const value = JSON.stringify(payload);
-    if (signature.current.value !== value)
-      signature.current = { value, key: crypto.randomUUID() };
+    submitting.current = true;
     setBusy(true);
     setSubmitError("");
+    const controller = new AbortController();
+    submission.current = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 30000);
     try {
+      const value = JSON.stringify(payload);
+      if (signature.current.value !== value)
+        signature.current = { value, key: crypto.randomUUID() };
       const response = await fetch("/api/first-access", {
         method: "POST",
+        signal: controller.signal,
         headers: {
           "Content-Type": "application/json",
           "Idempotency-Key": signature.current.key,
@@ -162,19 +202,43 @@ export default function FirstAccessIntake({
                 "We couldn’t confirm your signup. Please try again."
         );
       }
-      setSuccess(true);
+      setReceipt({
+        firstName: payload.firstName,
+        email: payload.email,
+        interests: [...payload.interests],
+      });
+      // Only a confirmed subscription is a conversion, never an intermediate
+      // Continue click. Do not send personal details to the pixel.
+      if (hasAnalyticsConsent()) {
+        try {
+          trackMetaPixelLead({
+            source: "monolith_first_access_intake",
+            content_name: "Monolith First Access 2027",
+            content_ids: ["monolith-first-access-2027"],
+          });
+        } catch {
+          // Measurement failure must not turn a confirmed signup into an error.
+        }
+      }
     } catch (error) {
       setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "You appear to be offline. Your details haven’t been sent. Please try again."
+        controller.signal.aborted
+          ? "This is taking longer than expected. We couldn’t confirm whether your signup completed. Your details are still here; try again or use secure signup."
+          : error instanceof Error
+            ? error.message
+            : "We couldn’t confirm your signup. Your details are still here; please try again."
       );
     } finally {
+      window.clearTimeout(timeout);
+      submission.current = null;
+      submitting.current = false;
       setBusy(false);
     }
   }
   const showFlow = designPreview || availability === "ready";
-  const selected = worlds.filter(world => interests.includes(world.id));
+  const selected = worlds.filter(world =>
+    (receipt?.interests ?? interests).includes(world.id)
+  );
 
   return (
     <div className="access-intake-page">
@@ -249,6 +313,7 @@ export default function FirstAccessIntake({
               </ol>
             )}
 
+            <div id="first-access-cookie-notice" />
             {success ? (
               <div className="access-success">
                 <span className="access-success-mark">
@@ -258,11 +323,11 @@ export default function FirstAccessIntake({
                 <h2 ref={heading} tabIndex={-1}>
                   You’re in,
                   <br />
-                  <em>{firstName.trim()}.</em>
+                  <em>{receipt?.firstName}.</em>
                 </h2>
                 <p>
                   New announcements will find you at{" "}
-                  <strong>{email.trim()}</strong>.
+                  <strong>{receipt?.email}</strong>.
                 </p>
                 <div className="access-receipt-tags">
                   {selected.map(world => (
@@ -279,6 +344,10 @@ export default function FirstAccessIntake({
                   Explore the calendar{" "}
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
+                <p className="access-privacy">
+                  Email updates from MONOLITH. Unsubscribe whenever.{" "}
+                  <Link href="/privacy">Privacy policy</Link>
+                </p>
               </div>
             ) : !showFlow ? (
               <div className="access-provider-entry">
@@ -297,12 +366,10 @@ export default function FirstAccessIntake({
                     <LoaderCircle size={18} aria-hidden="true" /> Getting your
                     invitation ready…
                   </p>
-                ) : (
-                  <a className="access-submit" href={hostedForms.newsletter}>
-                    Get First Access{" "}
-                    <ArrowUpRight size={19} aria-hidden="true" />
-                  </a>
-                )}
+                ) : null}
+                <a className="access-submit" href={hostedForms.newsletter}>
+                  Get First Access <ArrowUpRight size={19} aria-hidden="true" />
+                </a>
                 <p className="access-provider-note">
                   Email updates from MONOLITH. Unsubscribe whenever.
                 </p>
@@ -497,7 +564,7 @@ export default function FirstAccessIntake({
                           value={city}
                           onChange={event => setCity(event.target.value)}
                           maxLength={100}
-                          placeholder="Chicago, or wherever you call home"
+                          placeholder="Chicago, or wherever"
                         />
                       </label>
                     </div>
@@ -510,7 +577,11 @@ export default function FirstAccessIntake({
                           <span>{email.trim()}</span>
                           {city.trim() && <small>{city.trim()}</small>}
                         </div>
-                        <button type="button" onClick={() => setStep(1)}>
+                        <button
+                          type="button"
+                          onClick={() => setStep(1)}
+                          disabled={busy}
+                        >
                           Edit details{" "}
                           <ArrowUpRight size={13} aria-hidden="true" />
                         </button>
@@ -525,6 +596,7 @@ export default function FirstAccessIntake({
                       <label className="access-consent">
                         <input
                           type="checkbox"
+                          disabled={busy}
                           checked={consent}
                           onChange={event => setConsent(event.target.checked)}
                           aria-invalid={!!errors.consent}
@@ -550,6 +622,7 @@ export default function FirstAccessIntake({
                       <label className="access-consent">
                         <input
                           type="checkbox"
+                          disabled={busy}
                           checked={adult}
                           onChange={event => setAdult(event.target.checked)}
                           aria-invalid={!!errors.adult}
