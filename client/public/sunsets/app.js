@@ -93,7 +93,16 @@
         form.parentElement.querySelector('.signup-fallback').hidden = false;
       }
     }})
-    .catch(()=>{}); // Keep inline form ready; submit errors reveal email fallback cleanly.
+    .catch(()=>{ // Fail closed: if availability cannot be confirmed, disable the inline form and offer the hosted link.
+      for (const form of forms) {
+        const fieldset = form.querySelector('fieldset');
+        if (fieldset) fieldset.disabled = true;
+        const feedback = form.querySelector('.form-feedback');
+        if (feedback) feedback.textContent = 'Signups are temporarily unavailable. Use the link below to join this list.';
+        const fallback = form.parentElement?.querySelector('.signup-fallback');
+        if (fallback) fallback.hidden = false;
+      }
+    });
   for (const form of forms) form.addEventListener('submit', async event => {
     event.preventDefault();
     if(!form.reportValidity())return;
