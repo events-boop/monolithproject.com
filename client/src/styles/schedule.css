@@ -138,14 +138,43 @@
   display: flex;
   gap: 8px;
 }
-.schedule-editorial-tools button {
+.schedule-editorial-tools button,
+.schedule-editorial-tools a.schedule-editorial-tool-link {
   width: 44px;
   height: 44px;
+  min-height: 44px;
   display: grid;
   place-items: center;
   border: 1px solid #ffffff32;
   border-radius: 50%;
   color: #d8d3c9;
+  transition: border-color 0.2s, color 0.2s;
+}
+.schedule-editorial-tools a.schedule-editorial-tool-link:hover {
+  border-color: #ffffff80;
+  color: #ffffff;
+}
+.schedule-editorial-avatars {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+.schedule-editorial-avatars img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1.5px solid #121110;
+  background: #1a1816;
+}
+.schedule-editorial-avatars img + img {
+  margin-left: -10px;
+}
+.schedule-archive-section {
+  border-top: 1px solid #ffffff1a;
+  margin-top: 28px;
+  padding-top: 34px;
 }
 .schedule-editorial-tools button[aria-pressed="true"] {
   background: #e05a3a;

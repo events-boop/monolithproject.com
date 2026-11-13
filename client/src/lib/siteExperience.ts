@@ -63,6 +63,18 @@ export function getScheduledEvents(now: Date = new Date()) {
     .sort(compareEvents);
 }
 
+export function getPastEvents(now: Date = new Date()) {
+  return [...getPublicEvents()]
+    .filter(
+      event =>
+        !["draft", "hidden"].includes(event.status) &&
+        event.eventStatus !== "EventCancelled" &&
+        event.eventStatus !== "EventPostponed" &&
+        (event.status === "past" || getEventWindowStatus(event, now) === "past")
+    )
+    .sort((a, b) => compareEvents(b, a));
+}
+
 export function getSeriesEvents(
   series: ScheduledEvent["series"],
   now: Date = new Date()

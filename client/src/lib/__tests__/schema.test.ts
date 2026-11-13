@@ -24,7 +24,57 @@ describe("buildScheduledEventSchema", () => {
     const schema = buildScheduledEventSchema(event, "/events/hof-test");
 
     expect(schema.performer).toEqual([
-      { "@type": "MusicGroup", name: "ERIK THE DJ" },
+      {
+        "@type": "MusicGroup",
+        "@id": "https://monolithproject.com/artists/erikthedj#artist",
+        name: "ERIK THE DJ",
+        url: "https://monolithproject.com/artists/erikthedj",
+      },
+    ]);
+    expect(schema.location).toMatchObject({
+      "@type": "Place",
+      name: "Kashmir",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "1436 W Randolph St",
+        postalCode: "60607",
+      },
+    });
+  });
+
+  it("links paired headliners to canonical artist entities while keeping uncataloged artists plain", () => {
+    const event: ScheduledEvent = {
+      id: "paired-test",
+      series: "chasing-sunsets",
+      episode: "TEST",
+      title: "SUN(SETS) TEST",
+      date: "September 19, 2026",
+      time: "Golden Hour",
+      venue: "Castaways",
+      location: "Chicago, IL",
+      lineup: "Joezi x Massuma (UK) · Resident Guest",
+      status: "coming-soon",
+    };
+
+    const schema = buildScheduledEventSchema(event, "/events/paired-test");
+
+    expect(schema.performer).toEqual([
+      {
+        "@type": "MusicGroup",
+        "@id": "https://monolithproject.com/artists/joezi#artist",
+        name: "Joezi",
+        url: "https://monolithproject.com/artists/joezi",
+      },
+      {
+        "@type": "MusicGroup",
+        "@id": "https://monolithproject.com/artists/massuma#artist",
+        name: "Massuma (UK)",
+        url: "https://monolithproject.com/artists/massuma",
+      },
+      {
+        "@type": "MusicGroup",
+        name: "Resident Guest",
+      },
     ]);
   });
 });

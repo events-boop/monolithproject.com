@@ -81,30 +81,35 @@ export function escapeIcsText(value?: string | null) {
     .replace(/;/g, "\\;");
 }
 
-export function buildEventCalendarFile(
-  event: ScheduledEvent,
-  generatedAt = new Date()
-) {
+interface CalendarEventPayload {
+  title: string;
+  description: string;
+  location: string;
+  eventUrl: string;
+  start?: Date;
+  end?: Date;
+  dateParts?: { year: number; month: number; day: number };
+}
+
+function resolveCalendarEventPayload(
+  event: ScheduledEvent
+): CalendarEventPayload | null {
   if (!canAddEventToCalendar(event)) return null;
-  const dateLines = (() => {
-    if (event.startsAt) {
-      const { start, end } = getEventWindow(event);
-      if (!start || !end) return null;
-      return [
-        `DTSTART;TZID=America/Chicago:${formatIcsChicago(start)}`,
-        `DTEND;TZID=America/Chicago:${formatIcsChicago(end)}`,
-      ];
-    }
 
-    const dateParts = parseDateLabel(event.date);
-    if (!dateParts) return null;
-    return [
-      `DTSTART;VALUE=DATE:${formatIcsDate(dateParts)}`,
-      `DTEND;VALUE=DATE:${formatIcsDate(getNextDate(dateParts))}`,
-    ];
-  })();
+  let start: Date | undefined;
+  let end: Date | undefined;
+  let dateParts: { year: number; month: number; day: number } | undefined;
 
-  if (!dateLines) return null;
+  if (event.startsAt) {
+    const window = getEventWindow(event);
+    if (!window.start || !window.end) return null;
+    start = window.start;
+    end = window.end;
+  } else {
+    const parsed = parseDateLabel(event.date);
+    if (!parsed) return null;
+    dateParts = parsed;
+  }
 
   const description = [
     event.description || event.experienceIntro || "The Monolith Project Event",
@@ -114,6 +119,42 @@ export function buildEventCalendarFile(
     .filter(Boolean)
     .join("\n");
   const eventPath = `/events/${event.slug || event.id}`;
+  const location = event.venueAddress?.streetAddress
+    ? `${event.venue}, ${event.venueAddress.streetAddress} — ${event.location}`
+    : `${event.venue} — ${event.location}`;
+
+  return {
+    title: event.headline || event.title,
+    description,
+    location,
+    eventUrl: `https://monolithproject.com${eventPath}`,
+    start,
+    end,
+    dateParts,
+  };
+}
+
+export function buildEventCalendarFile(
+  event: ScheduledEvent,
+  generatedAt = new Date()
+) {
+  const payload = resolveCalendarEventPayload(event);
+  if (!payload) return null;
+
+  const dateLines =
+    payload.start && payload.end
+      ? [
+          `DTSTART;TZID=America/Chicago:${formatIcsChicago(payload.start)}`,
+          `DTEND;TZID=America/Chicago:${formatIcsChicago(payload.end)}`,
+        ]
+      : payload.dateParts
+        ? [
+            `DTSTART;VALUE=DATE:${formatIcsDate(payload.dateParts)}`,
+            `DTEND;VALUE=DATE:${formatIcsDate(getNextDate(payload.dateParts))}`,
+          ]
+        : null;
+
+  if (!dateLines) return null;
 
   return [
     "BEGIN:VCALENDAR",
@@ -124,14 +165,42 @@ export function buildEventCalendarFile(
     `UID:${escapeIcsText(event.id)}@monolithproject.com`,
     `DTSTAMP:${formatIcsUtc(generatedAt)}`,
     ...dateLines,
-    `SUMMARY:${escapeIcsText(event.headline || event.title)}`,
-    `DESCRIPTION:${escapeIcsText(description)}`,
+    `SUMMARY:${escapeIcsText(payload.title)}`,
+    `DESCRIPTION:${escapeIcsText(payload.description)}`,
     `LOCATION:${escapeIcsText(`${event.venue} — ${event.location}`)}`,
-    `URL:https://monolithproject.com${eventPath}`,
+    `URL:${payload.eventUrl}`,
     "END:VEVENT",
     "END:VCALENDAR",
     "",
   ].join("\r\n");
+}
+
+export function buildGoogleCalendarUrl(event: ScheduledEvent): string | null {
+  const payload = resolveCalendarEventPayload(event);
+  if (!payload) return null;
+
+  const dates =
+    payload.start && payload.end
+      ? `${formatIcsChicago(payload.start)}/${formatIcsChicago(payload.end)}`
+      : payload.dateParts
+        ? `${formatIcsDate(payload.dateParts)}/${formatIcsDate(getNextDate(payload.dateParts))}`
+        : null;
+
+  if (!dates) return null;
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: payload.title,
+    dates,
+    details: `${payload.description}\n\nEvent details: ${payload.eventUrl}`,
+    location: payload.location,
+  });
+
+  if (payload.start && payload.end) {
+    params.set("ctz", "America/Chicago");
+  }
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
 export function downloadEventCalendar(event: ScheduledEvent) {

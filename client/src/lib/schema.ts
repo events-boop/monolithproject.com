@@ -1,6 +1,6 @@
 import { ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
-import type { ArtistData } from "@/data/artists";
+import { ARTIST_ENTRIES, type ArtistData } from "@/data/artists";
 
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
 import { SUNSETS_JULY4_EVENT_SLUG } from "@shared/events/sunsets-ticketing";
@@ -193,6 +193,37 @@ interface EventSchemaInput {
   addressCountry: string;
 }
 
+function normalizeArtistLookupName(value: string) {
+  return value
+    .replace(/\([^)]*\)/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+const ARTIST_BY_NORMALIZED_NAME = new Map<string, ArtistData>(
+  ARTIST_ENTRIES.map(artist => [normalizeArtistLookupName(artist.name), artist])
+);
+
+function buildPerformerEntity(name: string) {
+  const matchedArtist = ARTIST_BY_NORMALIZED_NAME.get(
+    normalizeArtistLookupName(name)
+  );
+  if (!matchedArtist) {
+    return {
+      "@type": "MusicGroup",
+      name,
+    };
+  }
+  const artistUrl = toAbsoluteUrl(`/artists/${matchedArtist.id}`);
+  return {
+    "@type": "MusicGroup",
+    "@id": `${artistUrl}#artist`,
+    name,
+    url: artistUrl,
+  };
+}
+
 export function buildEventSchema(input: EventSchemaInput) {
   const offers = input.ticketUrl
     ? {
@@ -209,10 +240,7 @@ export function buildEventSchema(input: EventSchemaInput) {
 
   const performer =
     input.performer && input.performer.length > 0
-      ? input.performer.map(name => ({
-          "@type": "MusicGroup",
-          name,
-        }))
+      ? input.performer.map(buildPerformerEntity)
       : undefined;
 
   return {
@@ -361,6 +389,24 @@ export function buildFaqSchema(faqEntries: Array<[string, string]>) {
 }
 
 function getVenueAddress(event: ScheduledEvent) {
+  if (event.venueAddress?.streetAddress && event.venueAddress?.postalCode) {
+    return {
+      streetAddress: event.venueAddress.streetAddress,
+      postalCode: event.venueAddress.postalCode,
+    };
+  }
+
+  if (event.venueMap?.address) {
+    const zipMatch = event.venueMap.address.match(/\b(\d{5})\b/);
+    const streetPart = event.venueMap.address.split(",")[0]?.trim();
+    if (streetPart) {
+      return {
+        streetAddress: streetPart,
+        postalCode: zipMatch?.[1] || "60611",
+      };
+    }
+  }
+
   if (event.venue === "Alhambra Palace") {
     return {
       streetAddress: "1240 W Randolph St",
@@ -372,6 +418,20 @@ function getVenueAddress(event: ScheduledEvent) {
     return {
       streetAddress: "1603 N Lake Shore Dr",
       postalCode: "60611",
+    };
+  }
+
+  if (event.venue === "Kashmir") {
+    return {
+      streetAddress: "1436 W Randolph St",
+      postalCode: "60607",
+    };
+  }
+
+  if (event.venue === "Hideaway") {
+    return {
+      streetAddress: "730 W Couch Pl",
+      postalCode: "60661",
     };
   }
 
@@ -427,7 +487,7 @@ export function buildScheduledEventSchema(
 
   const performer =
     event.lineup
-      ?.split("·")
+      ?.split(/\s*(?:·|\s+[x×]\s+|\s+b2b\s+)\s*/i)
       .map(segment => segment.trim())
       .map(segment =>
         segment

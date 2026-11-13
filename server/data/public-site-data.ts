@@ -17,6 +17,7 @@ import {
   SUNSETS_JULY4_TABLE_RAIL,
   SUNSETS_JULY4_TOTAL_CAPACITY,
   SUNSETS_PRELAUNCH_LOCKED,
+  getSunsetsJuly4ScheduledTicketTiers,
 } from "../../shared/events/sunsets-ticketing";
 import type {
   EventSeries,
@@ -108,8 +109,20 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     time: "Doors Closed",
     venue: "Alhambra Palace",
     location: "Chicago, IL",
+    lineup: "Autograf",
     status: "past",
     image: "/images/untold-story-moody.webp",
+    format: "Late Night · Live Instrumentation & Club Room",
+    sound: "Melodic House · Afro House · Live Electronic",
+    description:
+      "Season III of Untold Story opened March 21, 2026 at Alhambra Palace in the West Loop with Autograf leading the room.",
+    archiveSlug: "autograf-march-21-2026",
+    recapUrl: "/archive/autograf-march-21-2026",
+    venueAddress: {
+      streetAddress: "1240 W Randolph St",
+      postalCode: "60607",
+      neighborhood: "West Loop · Chicago",
+    },
   },
   {
     id: "us-s3e3",
@@ -145,6 +158,17 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       "Chicago crowd with a tighter, music-first room dynamic",
       "Support lineup reveal to follow",
     ],
+    setTimes: [
+      { time: "9:00 PM", label: "Doors Open" },
+      { time: "10:30 PM — Late", label: "Untold Story IV · Eran Hersh" },
+    ],
+    archiveSlug: "eran-hersh-international",
+    recapUrl: "/archive/eran-hersh-international",
+    venueAddress: {
+      streetAddress: "730 W Couch Pl",
+      postalCode: "60661",
+      neighborhood: "West Loop · Chicago",
+    },
     age: "21+",
     activeFunnels: [],
     ticketTiers: [
@@ -217,6 +241,11 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     // Official chapter art: drives the event page hero + og:image.
     image: "/images/events/sunsets-2026-09-19/massuma-official-artwork.png",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
+    venueAddress: {
+      streetAddress: "1603 N Lake Shore Dr",
+      postalCode: "60611",
+      neighborhood: "North Avenue Beach · Chicago",
+    },
     venueMap: {
       id: "castaways-sunsets-iii-2026",
       venueId: "castaways-chicago",
@@ -266,6 +295,16 @@ const EVENT_CATALOG: ScheduledEvent[] = [
       "A limited $20 Before 2PM Arrival Pass capped at 100 tickets",
       "Tables and 6 premium cabanas starting at a $2,000 minimum",
     ],
+    setTimes: SUNSETS_JULY4_SET_TIMES,
+    ticketTiers: getSunsetsJuly4ScheduledTicketTiers().map(tier => ({
+      ...tier,
+      available: false,
+    })),
+    venueAddress: {
+      streetAddress: "1603 N Lake Shore Dr",
+      postalCode: "60611",
+      neighborhood: "North Avenue Beach · Chicago",
+    },
     eventNotice: "Watch the sun. Stay for the sets.",
     photoNotice: "Togetherness is the frequency. Music is the guide.",
     layloDropId: "IQ5HaR",
@@ -278,6 +317,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     // Chapter One archived — sold and executed July 4, 2026.
     gates: { creativeReady: true, trackingQA: true, poshLinked: true },
     archiveSlug: "chasing-sunsets-sunsets-i-2026",
+    recapUrl: "/chasing-sunsets/sunsets-i-2026",
   },
   {
     id: "us-jul04",
@@ -294,6 +334,7 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     location: "Chicago, IL",
     lineup: "Secret Guest B2B",
     status: "past",
+    archiveSlug: "chasing-sunsets-sunsets-i-2026",
     recapUrl: "/chasing-sunsets/sunsets-i-2026",
     format: "Dark Room · Intimate",
     description:
@@ -329,6 +370,12 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     description:
       "The Monolith Project Residency Series at Kashmir with ERIK THE DJ, AMAR, and FRANK BONO.",
     eventNotice: "MONOLITH PROJECT RESIDENCY SERIES AT KASHMIR",
+    recapUrl: "/archive",
+    venueAddress: {
+      streetAddress: "1436 W Randolph St",
+      postalCode: "60607",
+      neighborhood: "West Loop · Chicago",
+    },
     activeFunnels: ["waitlist"],
   },
   {
@@ -356,6 +403,12 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     description:
       "House of Friends takes over the Monolith Project Residency Series at Kashmir for a give-back party with ERIK THE DJ and a special guest.",
     eventNotice: "HOUSE OF FRIENDS / KASHMIR / GIVE-BACK PARTY",
+    recapUrl: "/house-of-friends",
+    venueAddress: {
+      streetAddress: "1436 W Randolph St",
+      postalCode: "60607",
+      neighborhood: "West Loop · Chicago",
+    },
     activeFunnels: ["waitlist"],
   },
   {
@@ -387,6 +440,12 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     description:
       "The Monolith Project Residency Series returns to Kashmir with ERIK THE DJ B2B AMARI.",
     eventNotice: "MONOLITH PROJECT RESIDENCY SERIES AT KASHMIR",
+    recapUrl: "/archive",
+    venueAddress: {
+      streetAddress: "1436 W Randolph St",
+      postalCode: "60607",
+      neighborhood: "West Loop · Chicago",
+    },
     activeFunnels: ["waitlist"],
   },
   {
@@ -415,6 +474,13 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     // Date-neutral series art: drives event-page og:image until chapter art exists.
     image: "/images/sunsets-hero-beach.jpg",
     tableReservationEmail: CASTAWAYS_VIP_EMAIL,
+    archiveSlug: "chasing-sunsets-sunsets-ii-2026",
+    recapUrl: "/chasing-sunsets/sunsets-ii-2026",
+    venueAddress: {
+      streetAddress: "1603 N Lake Shore Dr",
+      postalCode: "60611",
+      neighborhood: "North Avenue Beach · Chicago",
+    },
     venueMap: {
       id: "castaways-sunsets-ii-2026",
       venueId: "castaways-chicago",
@@ -527,6 +593,7 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     series: event.series,
     episode: event.episode,
     title: event.title,
+    slug: event.slug,
     subtitle: event.subtitle,
     headline: event.headline,
     date: event.date,
@@ -542,6 +609,7 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     artistImages: event.artistImages,
     status: event.status,
     inventoryState: event.inventoryState,
+    capacity: event.capacity,
     description: event.description,
     age: event.age,
     eventNotice: event.eventNotice,
@@ -554,6 +622,10 @@ function toHomeEvent(event: ScheduledEvent): ScheduledEvent {
     dress: event.dress,
     tableReservationEmail: event.tableReservationEmail,
     image: event.image,
+    archiveSlug: event.archiveSlug,
+    recapUrl: event.recapUrl,
+    setTimes: event.setTimes,
+    venueAddress: event.venueAddress,
     recentlyDropped: event.recentlyDropped,
     primaryCta: resolveEventPrimaryCta(event),
   };
@@ -583,6 +655,7 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
     image: event.image,
     status: event.status,
     inventoryState: event.inventoryState,
+    capacity: event.capacity,
     format: event.format,
     dress: event.dress,
     sound: event.sound,
@@ -596,6 +669,10 @@ function toSummaryEvent(event: ScheduledEvent): ScheduledEvent {
     startingPrice: deriveStartingPrice(event),
     experienceIntro: event.experienceIntro,
     tableReservationEmail: event.tableReservationEmail,
+    archiveSlug: event.archiveSlug,
+    recapUrl: event.recapUrl,
+    setTimes: event.setTimes,
+    venueAddress: event.venueAddress,
     recentlyDropped: event.recentlyDropped,
     primaryCta: resolveEventPrimaryCta(event),
   };

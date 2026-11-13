@@ -201,4 +201,43 @@ describe("persistPoshWebhookPurchase", () => {
       },
     });
   });
+
+  it("prioritizes order_number over tracking_link so webhook updates deduplicate onto the same order", async () => {
+    await persistPoshWebhookPurchase(
+      {
+        type: "new_order",
+        email: "fan@example.com",
+        event_name: "Chasing Sunsets",
+        event_start: "2026-08-22T18:00:00Z",
+        order_number: "order_dedup",
+        tracking_link: "https://posh.vip/e/track-123",
+        total: "50",
+        items: [{ name: "General Admission", quantity: 1 }],
+      },
+      "req_dedup_1"
+    );
+    const firstInsertId = getInsertFor(ticketOrders).values?.id;
+    mockState.operations.length = 0;
+
+    await persistPoshWebhookPurchase(
+      {
+        type: "order_status_update",
+        email: "fan@example.com",
+        event_name: "Chasing Sunsets",
+        event_start: "2026-08-22T18:00:00Z",
+        order_number: "order_dedup",
+        total: "50",
+        items: [{ name: "General Admission", quantity: 1 }],
+      },
+      "req_dedup_2"
+    );
+    const secondInsert = getInsertFor(ticketOrders);
+
+    expect(secondInsert.values?.id).toBe(firstInsertId);
+    expect(secondInsert.values?.rawPayload).toMatchObject({
+      normalized: {
+        orderKey: "order_dedup",
+      },
+    });
+  });
 });

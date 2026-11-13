@@ -88,6 +88,19 @@ export interface EventArtistImage {
   artist: string;
 }
 
+export interface EventSetTimeSlot {
+  time: string;
+  label: string;
+  stage?: string;
+}
+
+export interface EventVenueAddress {
+  streetAddress: string;
+  postalCode: string;
+  neighborhood?: string;
+  mapsUrl?: string;
+}
+
 /** A scheduled live event with its venue, ticketing, creative, and funnel configuration. */
 export interface ScheduledEvent {
   id: string;
@@ -170,6 +183,10 @@ export interface ScheduledEvent {
   archiveSlug?: string;
   /** Recap page/video URL for past events */
   recapUrl?: string;
+  /** Published set times / run of show slots when confirmed */
+  setTimes?: ReadonlyArray<EventSetTimeSlot>;
+  /** Explicit street address & neighborhood metadata for structured data and directions */
+  venueAddress?: EventVenueAddress;
 }
 
 export type PublicSiteData = {
