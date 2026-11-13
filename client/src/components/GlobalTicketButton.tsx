@@ -15,6 +15,8 @@ import MagneticButton from "./MagneticButton";
 import { getExperienceEvent, getSeriesEvents } from "@/lib/siteExperience";
 import { getEventCta } from "@/lib/cta";
 import { getEventPillToneClass } from "@/lib/ctaTone";
+import { getPublishedEventState } from "@shared/events/publishedState";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import { ROUTES } from "@shared/routes";
 import { appendAttributionQueryParams } from "@/lib/attribution";
 import { trackAccessEvent } from "@/lib/api";
@@ -28,6 +30,7 @@ function shouldDelayFloatingCta(pathname: string) {
   return (
     pathname === "/" ||
     pathname === "/story" ||
+    pathname === "/untold-story" ||
     pathname === "/untold-story-deron-juany-bravo" ||
     pathname.startsWith("/untold-story/") ||
     pathname.startsWith("/chasing-sunsets") ||
@@ -38,6 +41,7 @@ function shouldDelayFloatingCta(pathname: string) {
 export default function GlobalTicketButton() {
   usePublicSiteDataVersion();
   const { isOpen: inquiryOpen } = useInquiry();
+  const audio = useOptionalGlobalAudio();
   const [location] = useLocation();
   const [consentState, setConsentState] = useState(getCookieConsentState);
   const [showAfterHero, setShowAfterHero] = useState(
@@ -46,7 +50,9 @@ export default function GlobalTicketButton() {
   const sunsetsPath =
     location === "/chasing-sunsets" || location.startsWith("/chasing-sunsets");
   const untoldPath =
-    location === "/story" || location.startsWith("/untold-story");
+    location === "/story" ||
+    location === "/untold-story" ||
+    location.startsWith("/untold-story");
   const eventDetailsSlug = location.startsWith("/events/")
     ? location.slice("/events/".length).split(/[?#]/)[0]
     : null;
@@ -181,15 +187,23 @@ export default function GlobalTicketButton() {
     });
   };
 
-  // Keep the hero and consent flows focused before adding another conversion layer.
+  const publishedState = featuredEvent
+    ? getPublishedEventState(featuredEvent)
+    : null;
+
+  // Keep the hero and consent flows focused before adding another conversion layer,
+  // and avoid colliding with bottom audio playback on mobile.
   if (
     inquiryOpen ||
     !featuredEvent ||
+    !publishedState ||
+    !publishedState.listed ||
     getEventWindowStatus(featuredEvent) === "past" ||
     location.startsWith("/chasing-sunsets") ||
     location === "/tickets" ||
     location.startsWith("/vip") ||
     consentState === null ||
+    Boolean(audio?.activeTrack) ||
     !showAfterHero
   )
     return null;

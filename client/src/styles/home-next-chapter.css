@@ -1,0 +1,96 @@
+.home-next-chapter {
+  scroll-margin-top: 110px;
+  margin-top: 32px;
+  padding: clamp(22px, 3.5vw, 48px);
+  color: var(--editorial-ink);
+  border: 1px solid #d8b47d55;
+  border-radius: var(--editorial-radius);
+  background:
+    radial-gradient(ellipse at 0% 0%, #d8b47d12, transparent 65%), #0e1212;
+}
+.next-chapter-masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f0e92b;
+  color: var(--editorial-gold);
+  font: 500 10px/1.6 var(--font-mono, monospace);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.next-chapter-masthead > span {
+  white-space: nowrap;
+}
+.next-chapter-intro {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  padding-block: clamp(30px, 5vw, 64px);
+}
+.next-chapter-year {
+  font-family: var(--font-hero);
+  font-size: clamp(100px, 17vw, 244px);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: -0.075em;
+  color: var(--editorial-gold);
+  font-variant-numeric: lining-nums;
+}
+.next-chapter-copy .next-chapter-title {
+  font-family: var(--font-hero);
+  font-size: clamp(30px, 3.8vw, 56px);
+  line-height: 1.02;
+  font-weight: 400;
+}
+.next-chapter-copy em {
+  color: var(--editorial-gold);
+}
+.next-chapter-copy > p {
+  margin-top: 18px;
+  max-width: 31ch;
+  color: var(--editorial-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.next-chapter-signup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 28px;
+}
+.next-chapter-signup p {
+  font-size: 20px;
+  font-weight: 700;
+}
+.next-chapter-signup div > .event-status-badge {
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .next-chapter-masthead {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .next-chapter-intro {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .next-chapter-year {
+    font-size: clamp(90px, 27vw, 160px);
+  }
+  .next-chapter-copy .next-chapter-title {
+    font-size: 40px;
+  }
+  .next-chapter-copy > p {
+    max-width: 35ch;
+  }
+  .next-chapter-signup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .next-chapter-button {
+    width: 100%;
+  }
+}

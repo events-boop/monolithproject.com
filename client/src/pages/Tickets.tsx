@@ -2,6 +2,7 @@ import {
   TICKET_POLICY,
   SUNSETS_REFUND_REQUEST_URL,
 } from "@shared/events/ticket-policy";
+import { getPublishedEventState } from "@shared/events/publishedState";
 import {
   currentSunsets,
   sunsetsNeedsUpdate,
@@ -90,16 +91,33 @@ export default function Tickets() {
     featuredEvent?.activeFunnels?.length &&
     !["posh", "allevents"].includes(cta.tool)
   );
-  const isFirstAccess = featuredEvent?.status !== "on-sale";
-  const accessHeading = isFirstAccess ? "NEXT SIGNAL" : "TICKETS LIVE";
-  const accessStatus = isFirstAccess
-    ? `${featuredEvent?.episode || "NEXT CHAPTER"} / FIRST ACCESS OPEN`
-    : `${featuredEvent?.episode || "CURRENT RELEASE"} / TICKETS LIVE`;
-  const accessCopy = featuredEvent
-    ? isFirstAccess
-      ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
-      : `${featuredHeadline} — tickets are available through ${cta.tool === "allevents" ? "AllEvents" : "the event checkout"}.`
-    : "Explore confirmed shows and event announcements from The Monolith Project.";
+  const publishedState = featuredEvent
+    ? getPublishedEventState(featuredEvent)
+    : null;
+  const isOnSale = publishedState?.kind === "on-sale";
+  const isPostponed = publishedState?.kind === "postponed";
+  const isFirstAccess = !isOnSale;
+  const accessHeading = isPostponed
+    ? "EVENT UPDATE"
+    : !featuredEvent
+      ? "BETWEEN SHOWS"
+      : isOnSale
+        ? "TICKETS LIVE"
+        : "FIRST ACCESS";
+  const accessStatus = isPostponed
+    ? "POSTPONED — NEW DATE TO BE CONFIRMED"
+    : !featuredEvent
+      ? "BETWEEN SHOWS — NO TICKETS CURRENTLY ON SALE"
+      : isOnSale
+        ? `${featuredEvent.episode || "CURRENT RELEASE"} / TICKETS LIVE`
+        : `${featuredEvent.episode || "DETAILS PENDING"} / FIRST ACCESS OPEN`;
+  const accessCopy = isPostponed
+    ? `${featuredHeadline} is postponed. Read the official ticket-holder instructions below.`
+    : featuredEvent
+      ? isFirstAccess
+        ? `${featuredHeadline} is between release windows. Join First Access for the artist reveal, initial ticket window, and updates before public sale — or revisit our July 4 Castaways recap and radio archive.`
+        : `${featuredHeadline} — tickets are available through ${cta.tool === "allevents" ? "AllEvents" : "the event checkout"}.`
+      : "No shows are currently on sale between seasons. Explore the July 4 Castaways recap proof, listen to Chasing Sunsets Radio, or join First Access for upcoming dates.";
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -156,6 +174,9 @@ export default function Tickets() {
           className="page-shell-start-loose px-6 pb-24"
         >
           <section className="mx-auto max-w-2xl rounded-xl border border-amber-300/60 bg-[#1d1f18] p-7 md:p-12">
+            <p className="text-sm font-mono uppercase tracking-[0.18em] text-amber-200 mb-3">
+              POSTPONED — NEW DATE TO BE CONFIRMED
+            </p>
             <p className="text-sm text-amber-200 mb-5">
               OFFICIAL EVENT UPDATE · JOEZI × MASSUMA
             </p>
@@ -181,12 +202,54 @@ export default function Tickets() {
               This opens a draft in your email app. Send it with your booking
               details for team review. {TICKET_POLICY.refundProcessing}
             </p>
-            <a
-              className="inline-flex min-h-12 items-center rounded bg-amber-200 px-6 py-3 font-semibold text-black"
-              href="/sunsets#event-update"
-            >
-              Read the full update ↗
-            </a>
+            <div className="flex flex-wrap gap-3">
+              <a
+                className="inline-flex min-h-12 items-center rounded bg-amber-200 px-6 py-3 font-semibold text-black"
+                href="/sunsets#event-update"
+              >
+                TICKET-HOLDER UPDATE ↗
+              </a>
+              <Link
+                href="/events/css-sep19"
+                className="inline-flex min-h-12 items-center rounded border border-white/25 px-6 py-3 font-semibold text-white/90 hover:border-white/50"
+              >
+                Event status page ↗
+              </Link>
+            </div>
+          </section>
+
+          <section
+            aria-label="Between shows — archive, radio and first access"
+            className="mx-auto mt-10 max-w-2xl rounded-xl border border-white/10 bg-white/[0.025] p-7 md:p-10"
+          >
+            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-primary mb-3">
+              Between Shows · No Tickets Currently On Sale
+            </p>
+            <h2 className="font-display text-2xl md:text-3xl uppercase text-white mb-4">
+              While the next date is finalized.
+            </h2>
+            <p className="text-sm leading-relaxed text-white/75 mb-6">
+              Zero events are currently on sale. Revisit our July 4 lakefront
+              chapter at Castaways (10-hour gathering · 2,800 attendees), tune
+              into Chasing Sunsets Radio, or register for First Access.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/newsletter" className="btn-pill-monolith btn-pill-compact">
+                Get First Access
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/chasing-sunsets/sunsets-i-2026"
+                className="btn-pill-outline btn-pill-compact"
+              >
+                July 4 recap proof
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link href="/radio" className="btn-pill-outline btn-pill-compact">
+                Radio archive
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </section>
         </main>
       </div>
@@ -366,7 +429,7 @@ export default function Tickets() {
                     {
                       icon: <Users className="w-4 h-4" />,
                       label: "Headliner",
-                      value: featuredEvent?.lineup || "GENE FARRIS",
+                      value: featuredEvent?.lineup || "Artists to be confirmed",
                     },
                   ].map(item => (
                     <div key={item.label} className="flex flex-col gap-3">
@@ -508,7 +571,7 @@ export default function Tickets() {
                       </>
                     ) : (
                       <span className="text-[10px] font-black uppercase tracking-[0.4em]">
-                        Coming Soon
+                        First Access Open
                       </span>
                     )}
                   </button>
@@ -604,6 +667,55 @@ export default function Tickets() {
                 </div>
               </div>
             </div>
+            {!isOnSale && (
+              <div className="mt-8 grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/40 p-6 md:grid-cols-3">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    July 4 Recap Proof
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Castaways Beach Club · 10-hour gathering · 2,800 attendees.
+                  </p>
+                  <Link
+                    href="/chasing-sunsets/sunsets-i-2026"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Relive Chapter One
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    Chasing Sunsets Radio
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Between-shows mixes and resident episodes powered by sunsets.fm.
+                  </p>
+                  <Link
+                    href="/radio"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Open Radio Archive
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    First Access Signup
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Get the first release window when the next date is confirmed.
+                  </p>
+                  <Link
+                    href="/newsletter"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Get First Access
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>

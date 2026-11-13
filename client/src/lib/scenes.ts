@@ -77,6 +77,13 @@ export function getSceneForPath(pathname?: string): SceneConfig {
   const normalized = normalizePathname(pathname);
 
   if (
+    normalized === ROUTES.sunsetsFM ||
+    normalized === ROUTES.radio ||
+    normalized === ROUTES.openNetwork
+  )
+    return scenes.monolith;
+
+  if (
     normalized.startsWith(ROUTES.story) ||
     normalized.startsWith(ROUTES.untoldVip) ||
     normalized.startsWith(ROUTES.untoldStory)

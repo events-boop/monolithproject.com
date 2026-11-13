@@ -1,8 +1,9 @@
 import { ScheduledEvent } from "@/data/events";
 import type { RadioEpisode } from "@/data/radioEpisodes";
-import type { ArtistData } from "@/data/artists";
+import { ARTIST_ENTRIES, type ArtistData } from "@/data/artists";
 
 import { getEventById, getEventWindowStatus } from "@/lib/siteExperience";
+import { SUNSETS_JULY4_EVENT_SLUG } from "@shared/events/sunsets-ticketing";
 
 export const SITE_ORIGIN = "https://monolithproject.com";
 export const FACTS_PAGE_PATH = "/chasing-sunsets-facts";
@@ -52,14 +53,17 @@ export function buildSitewideIdentitySchema() {
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
       },
       {
-        "@type": ["Organization", "MusicGroup"],
+        "@type": "Organization",
         "@id": `${SITE_ORIGIN}/#organization`,
         name: "The Monolith Project",
         url: SITE_ORIGIN,
         description:
           "The Monolith Project produces Chicago house music events, open-air Chasing Sun(Sets), Untold Story nights, and artist-led radio.",
         sameAs: organizationSameAs,
-        brand: { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+        brand: [
+          { "@id": `${SITE_ORIGIN}/#brand-chasing-sunsets` },
+          { "@id": `${SITE_ORIGIN}/#brand-untold-story` },
+        ],
       },
       {
         "@type": "Brand",
@@ -70,6 +74,19 @@ export function buildSitewideIdentitySchema() {
           "Chicago-based sunset house music event series and radio show by The Monolith Project.",
         url: toAbsoluteUrl(CHASING_SUNSETS_PATH),
         sameAs: brandSameAs,
+        isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+      {
+        "@type": "Brand",
+        "@id": `${SITE_ORIGIN}/#brand-untold-story`,
+        name: "Untold Story",
+        description:
+          "The after-dark house music series presented by The Monolith Project in Chicago.",
+        url: toAbsoluteUrl("/untold-story"),
+        sameAs: [
+          "https://instagram.com/untoldstory.music",
+          "https://untold.vip",
+        ],
         isPartOf: { "@id": `${SITE_ORIGIN}/#organization` },
       },
     ],
@@ -176,6 +193,37 @@ interface EventSchemaInput {
   addressCountry: string;
 }
 
+function normalizeArtistLookupName(value: string) {
+  return value
+    .replace(/\([^)]*\)/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .toLowerCase();
+}
+
+const ARTIST_BY_NORMALIZED_NAME = new Map<string, ArtistData>(
+  ARTIST_ENTRIES.map(artist => [normalizeArtistLookupName(artist.name), artist])
+);
+
+function buildPerformerEntity(name: string) {
+  const matchedArtist = ARTIST_BY_NORMALIZED_NAME.get(
+    normalizeArtistLookupName(name)
+  );
+  if (!matchedArtist) {
+    return {
+      "@type": "MusicGroup",
+      name,
+    };
+  }
+  const artistUrl = toAbsoluteUrl(`/artists/${matchedArtist.id}`);
+  return {
+    "@type": "MusicGroup",
+    "@id": `${artistUrl}#artist`,
+    name,
+    url: artistUrl,
+  };
+}
+
 export function buildEventSchema(input: EventSchemaInput) {
   const offers = input.ticketUrl
     ? {
@@ -192,10 +240,7 @@ export function buildEventSchema(input: EventSchemaInput) {
 
   const performer =
     input.performer && input.performer.length > 0
-      ? input.performer.map(name => ({
-          "@type": "MusicGroup",
-          name,
-        }))
+      ? input.performer.map(buildPerformerEntity)
       : undefined;
 
   return {
@@ -273,10 +318,10 @@ const SUNSETS_JULY4_SUPER_EVENT = {
   "@type": "MusicEvent",
   name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
   description:
-    "SUN(SETS) I opens the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, and friends.",
+    "SUN(SETS) I opened the Chasing Sun(Sets) 2026 season on July 4 at Castaways Beach Club — open-air house music on Lake Michigan from noon to 10 PM with Autograf, Kiko Franco, and friends.",
   startDate: "2026-07-04T12:00:00-05:00",
   endDate: "2026-07-04T22:00:00-05:00",
-  url: `${SITE_ORIGIN}/sunsets`,
+  url: `${SITE_ORIGIN}/events/${SUNSETS_JULY4_EVENT_SLUG}`,
   image: `${SITE_ORIGIN}/images/chasing-sunsets-premium.webp`,
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -297,13 +342,6 @@ const SUNSETS_JULY4_SUPER_EVENT = {
     "@id": `${SITE_ORIGIN}/#organization`,
     name: "The Monolith Project",
     url: SITE_ORIGIN,
-  },
-  offers: {
-    "@type": "Offer",
-    url: "https://sunsets.vip",
-    availability: "https://schema.org/InStock",
-    priceCurrency: "USD",
-    price: "20",
   },
 };
 
@@ -351,6 +389,24 @@ export function buildFaqSchema(faqEntries: Array<[string, string]>) {
 }
 
 function getVenueAddress(event: ScheduledEvent) {
+  if (event.venueAddress?.streetAddress && event.venueAddress?.postalCode) {
+    return {
+      streetAddress: event.venueAddress.streetAddress,
+      postalCode: event.venueAddress.postalCode,
+    };
+  }
+
+  if (event.venueMap?.address) {
+    const zipMatch = event.venueMap.address.match(/\b(\d{5})\b/);
+    const streetPart = event.venueMap.address.split(",")[0]?.trim();
+    if (streetPart) {
+      return {
+        streetAddress: streetPart,
+        postalCode: zipMatch?.[1] || "60611",
+      };
+    }
+  }
+
   if (event.venue === "Alhambra Palace") {
     return {
       streetAddress: "1240 W Randolph St",
@@ -362,6 +418,20 @@ function getVenueAddress(event: ScheduledEvent) {
     return {
       streetAddress: "1603 N Lake Shore Dr",
       postalCode: "60611",
+    };
+  }
+
+  if (event.venue === "Kashmir") {
+    return {
+      streetAddress: "1436 W Randolph St",
+      postalCode: "60607",
+    };
+  }
+
+  if (event.venue === "Hideaway") {
+    return {
+      streetAddress: "730 W Couch Pl",
+      postalCode: "60661",
     };
   }
 
@@ -404,7 +474,7 @@ export function buildScheduledEventSchema(
       : undefined;
   const price = event.startingPrice ?? minimumAvailablePrice;
   const ticketUrl =
-    getEventWindowStatus(event) !== "past" &&
+    ["upcoming", "live"].includes(getEventWindowStatus(event)) &&
     (event.status === "on-sale" || event.status === "sold-out")
       ? event.ticketUrl
       : undefined;
@@ -417,7 +487,7 @@ export function buildScheduledEventSchema(
 
   const performer =
     event.lineup
-      ?.split("·")
+      ?.split(/\s*(?:·|\s+[x×]\s+|\s+b2b\s+)\s*/i)
       .map(segment => segment.trim())
       .map(segment =>
         segment

@@ -1,9 +1,23 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  buildEventSeoTitle,
+  buildEventSeoDescription,
+} from "../shared/seo/event-copy.ts";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import path from "node:path";
 import Beasties from "beasties";
 import { createServer as createViteServer } from "vite";
 import { ARTIST_ENTRIES } from "../client/src/data/artists.ts";
 import { insightEntries } from "../client/src/data/insights.ts";
+import {
+  SUNSETS_CANONICALS_LIVE,
+  SUNSETS_EPISODE_URLS,
+} from "../shared/seo/sunsets-radio.ts";
 import { radioEpisodes } from "../client/src/data/radioEpisodes.ts";
 import { untoldFaqs } from "../client/src/components/untold-story/constants.ts";
 import {
@@ -11,7 +25,6 @@ import {
   buildFactsPageSchema,
   buildFaqSchema,
   buildPodcastEpisodeSchema,
-  buildPodcastSeriesSchema,
   buildScheduleSchema,
   buildScheduledEventSchema,
   buildSitewideIdentitySchema,
@@ -31,6 +44,18 @@ import {
   mergeSitemapEntries,
 } from "../shared/seo/public-seo.js";
 import { SUNSETS_PRELAUNCH_LOCKED } from "../shared/events/sunsets-ticketing.ts";
+import { HOME_NEXT_CHAPTER } from "../shared/home-next-chapter.ts";
+import { getPublishedEventState } from "../shared/events/publishedState.ts";
+import hostedSignupForms from "../shared/signup-forms.json";
+import {
+  PUBLIC_HISTORY_SITEMAP_ENTRIES,
+  publicGalleryRoutes,
+} from "../shared/seo/history.ts";
+import { buildGallerySchema } from "../shared/seo/gallery.ts";
+import {
+  MONOLITH_LAUNCH_NOTICE,
+  buildLaunchNoticeSchema,
+} from "../shared/events/historical-notices.ts";
 
 import { getEventWindowStatus } from "../shared/events/lifecycle.ts";
 import {
@@ -55,6 +80,13 @@ type RouteDefinition = {
 const distPublicDir = path.resolve("dist/public");
 const templatePath = path.join(distPublicDir, "index.html");
 const template = readFileSync(templatePath, "utf8");
+// A completed prerender contains the home page in this root. Reusing it would
+// silently copy that content into every historical route instead of each dossier.
+if (!/<div id="root">\s*<\/div>/i.test(template)) {
+  throw new Error(
+    "Prerender requires a fresh Vite build with an empty root. Run npm run build; no routes were written."
+  );
+}
 
 const futureEvents = upcomingEvents.filter(
   event =>
@@ -103,8 +135,9 @@ const sharedLinks = [
   { href: "/tickets", label: "Tickets" },
   { href: "/schedule", label: "Schedule" },
   { href: "/chasing-sunsets", label: "Chasing Sun(Sets)" },
-  { href: "/story", label: "Untold Story" },
+  { href: "/untold-story", label: "Untold Story" },
   { href: "/radio", label: "Radio Show" },
+  { href: "/sunsets-fm", label: "SUNSETS.FM" },
   { href: "/about", label: "About Monolith" },
   { href: "/monolith", label: "The Monolith" },
 ];
@@ -163,47 +196,6 @@ function fullTitle(title: string) {
     : `${title} | The Monolith Project`;
 }
 
-function getShortDateLabel(dateLabel: string) {
-  return dateLabel.replace(/,\s*\d{4}$/, "");
-}
-
-function buildEventSeoTitle(event: (typeof futureEvents)[number]) {
-  if (event.eventStatus === "EventPostponed")
-    return `${event.headline || event.title} — Postponed`;
-  const shortDate = getShortDateLabel(event.date);
-
-  if (event.id === "us-s3e3") {
-    return `Eran Hersh at Hideaway Chicago | ${shortDate}`;
-  }
-
-  const headline = event.headline || event.title;
-  if (/venue reveal soon/i.test(event.venue)) {
-    return `${headline} | ${shortDate}`;
-  }
-
-  return `${headline} at ${event.venue} | ${shortDate}`;
-}
-
-function buildEventSeoDescription(event: (typeof futureEvents)[number]) {
-  if (event.eventStatus === "EventPostponed")
-    return event.eventNotice || "Postponed. A new date is not yet confirmed.";
-  const shortDate = getShortDateLabel(event.date);
-
-  if (event.id === "us-s3e3") {
-    return `Get tickets for Eran Hersh at Hideaway Chicago on ${shortDate}, part of Untold Story from The Monolith Project.`;
-  }
-
-  if (event.series === "chasing-sunsets") {
-    return `${event.title} brings open-air Chicago house music to ${event.venue} on ${shortDate}. Get lineup, timing, and ticket updates.`;
-  }
-
-  if (event.series === "untold-story") {
-    return `${event.title} brings after-dark Chicago house music to ${event.venue} on ${shortDate}. Get tickets, timing, and event details.`;
-  }
-
-  return `Get details and updates for ${event.title} at ${event.venue} in Chicago on ${shortDate} from The Monolith Project.`;
-}
-
 function getEventSeriesEyebrow(event: (typeof futureEvents)[number]) {
   if (event.series === "untold-story") return "Untold Story Event";
   if (event.series === "chasing-sunsets") return "Chasing Sun(Sets) Event";
@@ -212,13 +204,13 @@ function getEventSeriesEyebrow(event: (typeof futureEvents)[number]) {
 }
 
 function buildRadioEpisodeSeoTitle(episode: (typeof radioEpisodes)[number]) {
-  return `Chasing Sun(Sets) Radio | ${episode.shortCode} ${episode.guest}`;
+  return `Chasing Sunsets Radio | ${episode.shortCode} ${episode.guest}`;
 }
 
 function buildRadioEpisodeSeoDescription(
   episode: (typeof radioEpisodes)[number]
 ) {
-  return `Listen to ${episode.guest}'s Chasing Sun(Sets) Radio mix with tracklist, story, and direct listening links from The Monolith Project.`;
+  return `Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`;
 }
 
 function renderParagraphs(paragraphs: string[]) {
@@ -302,6 +294,40 @@ function renderUpcomingEventsSection() {
   `;
 }
 
+function renderNextChapterSection() {
+  if (
+    upcomingEvents.some(
+      event => getPublishedEventState(event).kind === "on-sale"
+    )
+  ) {
+    return "";
+  }
+  return `
+    <section id="next-chapter" class="critical-home-content" aria-labelledby="critical-next-chapter-title">
+      <p>${escapeHtml(HOME_NEXT_CHAPTER.brand)} / ${HOME_NEXT_CHAPTER.year}</p>
+      <h2 id="critical-next-chapter-title">${escapeHtml(HOME_NEXT_CHAPTER.title)}</h2>
+      <p>${escapeHtml(HOME_NEXT_CHAPTER.description)}</p>
+      ${renderLinkList(
+        HOME_NEXT_CHAPTER.programmes.map(programme => ({
+          href: programme.href,
+          label: `${programme.name} · ${programme.edition}`,
+        }))
+      )}
+      <p>Sign up for the first announcements. Dates and artists to be announced.</p>
+      <a href="${HOME_NEXT_CHAPTER.signupHref}" data-first-access="true"><strong>${HOME_NEXT_CHAPTER.signupLabel}</strong></a>
+    </section>`;
+}
+
+function renderSeriesInvitation(programmeIndex: 0 | 1) {
+  const chapter = HOME_NEXT_CHAPTER.programmes[programmeIndex];
+  return `<section>
+    <p>The next chapter / ${HOME_NEXT_CHAPTER.year}</p>
+    <h2>${escapeHtml(chapter.name)} · ${escapeHtml(chapter.edition)}</h2>
+    <p>Be the first to hear what’s next. Dates and artists to be announced.</p>
+    <a href="${HOME_NEXT_CHAPTER.signupHref}" data-first-access="true"><strong>Get First Access</strong></a>
+  </section>`;
+}
+
 function renderBaseLayout(
   eyebrow: string,
   h1: string,
@@ -367,14 +393,17 @@ function renderHomeCriticalLayout() {
         ])}
       </section>
       ${renderUpcomingEventsSection()}
+      ${renderNextChapterSection()}
       <nav class="critical-home-content" aria-label="Primary">
         <h2>Explore</h2>
         ${renderLinkList([
-          { href: "/tickets", label: "See current tickets" },
+          { href: "/tickets", label: "Tickets and event updates" },
           { href: "/schedule", label: "View the Chicago schedule" },
+          { href: HOME_NEXT_CHAPTER.signupHref, label: "Get First Access" },
           { href: "/chasing-sunsets", label: "Explore Chasing Sun(Sets)" },
-          { href: "/story", label: "Explore Untold Story" },
+          { href: "/untold-story", label: "Explore Untold Story" },
           { href: "/radio", label: "Listen to the radio archive" },
+          { href: "/sunsets-fm", label: "SUNSETS.FM" },
           { href: INSTAGRAM_MONOLITH, label: "Instagram", external: true },
           { href: SOUNDCLOUD_URL, label: "SoundCloud archive", external: true },
         ])}
@@ -667,18 +696,18 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "Upcoming Shows | The Monolith Project",
       description:
-        "Browse upcoming Chicago house music events from The Monolith Project, including Chasing Sun(Sets), Untold Story, and artist-led radio.",
+        "Confirmed dates, forthcoming chapters and ticket-holder updates from The Monolith Project.",
       absoluteTitle: true,
       schemaData: buildScheduleSchema(upcomingEvents),
       bodyHtml: renderBaseLayout(
         "Official Schedule",
-        "Upcoming Shows",
+        "Find your next night.",
         [
           "Browse upcoming Monolith, Chasing Sun(Sets), and Untold Story dates in Chicago.",
           "Each event page includes date, venue, lineup context, and ticket or RSVP access when available.",
         ],
         sharedLinks,
-        renderUpcomingEventsSection()
+        renderUpcomingEventsSection() + renderNextChapterSection()
       ),
     },
   ],
@@ -724,22 +753,23 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             label: "Summer photo gallery",
           },
           { href: INSTAGRAM_SUNSETS, label: "Instagram", external: true },
-        ]
+        ],
+        renderSeriesInvitation(1)
       ),
     },
   ],
   [
-    "/story",
+    "/untold-story",
     {
-      title: "Untold Story | Chicago House Music Nights",
+      title: "Untold Story — Chicago after-dark house music",
       description:
-        "Untold Story is The Monolith Project's after-dark house music series built for immersive Chicago dancefloors.",
+        "Explore Untold Story: Monolith's after-dark house music series. Event information, artists, previous chapters and the photo archive.",
       absoluteTitle: true,
-      image: featuredUntoldEvent?.image || "/images/eran-hersh-live-5.webp",
+      image: "/images/untold-story/header-jpq-9379.jpg",
       schemaData: [
         buildFaqSchema(untoldFaqs),
         ...(featuredUntoldEvent
-          ? [buildScheduledEventSchema(featuredUntoldEvent, "/story")]
+          ? [buildScheduledEventSchema(featuredUntoldEvent, "/untold-story")]
           : []),
       ],
       bodyHtml: renderBaseLayout(
@@ -757,7 +787,34 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
             label: "Open the featured date",
           },
           { href: "/tickets", label: "View tickets" },
-          { href: "/newsletter", label: "Get updates" },
+          { href: "/newsletter", label: "Get First Access" },
+        ],
+        featuredUntoldEvent ? "" : renderSeriesInvitation(0)
+      ),
+    },
+  ],
+  [
+    "/sunsets-fm",
+    {
+      title: "SUNSETS.FM | The Monolith Project",
+      absoluteTitle: true,
+      description:
+        "Coming soon: SUNSETS.FM, a music discovery network from The Monolith Project. Explore Chasing SUN(SETS) Radio and sign up for the next chapter.",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / Coming soon",
+        "SUNSETS.FM",
+        [
+          "A new music discovery network from Monolith. Built from the spirit of Chasing Sun(Sets) Radio, connecting the sets, places, and people behind the music.",
+        ],
+        [
+          {
+            href: "/open-network",
+            label: "Explore the Open Network",
+          },
+          {
+            href: "/#sunsets-fm-signup",
+            label: "Get SUNSETS.FM launch updates",
+          },
         ]
       ),
     },
@@ -765,17 +822,48 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   [
     "/radio",
     {
-      title: "Radio | The Monolith Project",
+      title: "Chasing Sunsets Radio — powered by sunsets.fm | Monolith",
       description:
-        "Listen to artist-led mixes, conversations, and radio episodes from The Monolith Project's Chicago music community.",
+        "Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Explore the archive, meet the artists, and play the featured recordings.",
       absoluteTitle: true,
-      schemaData: buildPodcastSeriesSchema(radioEpisodes),
       bodyHtml: renderBaseLayout(
-        "Artist-Led Radio",
-        "Radio",
+        "The Monolith Project / powered by sunsets.fm",
+        "Chasing Sunsets Radio",
         [
-          "The radio archive extends the Chasing Sun(Sets) brand beyond live events through mixes, guest sessions, and episode pages.",
-          "Each episode page includes the guest, date, tracklist, and a direct listening link.",
+          "Guest-led mixes, crossover cuts, and long-form episodes from the Monolith archive.",
+        ],
+        radioEpisodes.map(episode => ({
+          href: `/radio/${episode.slug}`,
+          label: `${episode.shortCode}: ${episode.title}`,
+        }))
+      ),
+    },
+  ],
+  [
+    "/open-network",
+    {
+      title: "Monolith × SUNSETS.FM — The Open Network",
+      description:
+        "Chasing Sunsets Radio, a Monolith original powered by sunsets.fm. Listen to the sets, meet the artists, and explore the wider music discovery network.",
+      absoluteTitle: true,
+      schemaData: {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Monolith × SUNSETS.FM — The Open Network",
+        url: "https://monolithproject.com/open-network",
+        isPartOf: {
+          "@type": "WebSite",
+          name: "The Monolith Project",
+          url: "https://monolithproject.com/",
+        },
+      },
+      bodyHtml: renderBaseLayout(
+        "The Monolith Connection",
+        "The Open Network",
+        [
+          "Monolith brings people together through music. Chasing SUN(SETS) Radio carries that feeling beyond the night.",
+          "SUNSETS.FM is the next chapter: a Monolith project connecting the music to the people and places around it.",
+          "Explore the Open Network vision, listen to Chasing SUN(SETS), Karma Karma and Drumcode Radio, and go inside Rafael B2B Brunello's RAW CUTS set from Santa Monica Pier.",
         ],
         radioEpisodes.map(episode => ({
           href: `/radio/${episode.slug}`,
@@ -863,16 +951,24 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
     {
       title: "The Monolith | Manifesto & Concept",
       description:
-        "Explore the core concept, story, and manifesto behind The Monolith Project's house music movement in Chicago.",
+        "The Monolith Project is the Chicago music company connecting Chasing Sun(Sets), Untold Story, House of Friends, and SUNSETS.FM. Explore our world and manifesto.",
       absoluteTitle: true,
+      schemaData: buildSitewideIdentitySchema(),
       bodyHtml: renderBaseLayout(
         "Core Philosophy",
         "The Monolith",
         [
-          "The Monolith is the central frequency of our movement, connecting Chasing Sun(Sets) and Untold Story.",
+          "The Monolith Project connects Chasing Sunsets, Untold Story, House of Friends, and SUNSETS.FM. From the lakefront to the late-night room, the music and the people carry through.",
           "Our manifesto is built around music-first curation, intentional room construction, and community return.",
         ],
-        sharedLinks
+        [
+          ...HOME_NEXT_CHAPTER.programmes.map(programme => ({
+            href: programme.href,
+            label: programme.name,
+          })),
+          { href: HOME_NEXT_CHAPTER.signupHref, label: "Get First Access" },
+          ...sharedLinks,
+        ]
       ),
     },
   ],
@@ -982,14 +1078,92 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       description:
         "Join the Monolith list for priority ticket windows, lineup drops, and fresh radio mixes.",
       bodyHtml: renderBaseLayout(
-        "Direct Updates",
-        "Get Monolith Updates",
+        "First Access / 2027 & beyond",
+        "Be the first to know.",
         [
-          "Join the Monolith newsletter for early ticket access, lineup drops, and new radio episodes before the public push.",
+          "Untold Story Season III. Chasing Sunsets IV. More House of Friends. SUNSETS.FM.",
         ],
         [
+          ...(hostedSignupForms.newsletter
+            ? [
+                {
+                  href: hostedSignupForms.newsletter,
+                  label: "Get First Access",
+                  external: true,
+                },
+              ]
+            : []),
+          ...(hostedSignupForms.radio
+            ? [
+                {
+                  href: hostedSignupForms.radio,
+                  label: "Get music updates from SUNSETS.FM",
+                  external: true,
+                },
+              ]
+            : []),
           { href: "/schedule", label: "View schedule" },
           { href: "/vip", label: "VIP information" },
+          { href: "/privacy", label: "Privacy policy" },
+        ]
+      ),
+    },
+  ],
+  [
+    "/lake",
+    {
+      title: "Sun(Sets) Lake List & First Access",
+      description:
+        "Join First Access for Chasing Sunsets IV in 2027. Revisit previous chapters, listen to the radio archive, and find the September 19 ticket-holder update.",
+      image: "/images/chasing-sunsets-castaways-hero.png",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / The Lake List",
+        "Chasing Sunsets 2027",
+        [
+          "The Lake List / Chasing Sunsets IV. The next chapter is taking shape. Dates and artists to be announced.",
+          "The September 19, 2026 show is postponed. A new date is not yet confirmed. Read the official ticket-holder update.",
+        ],
+        [
+          {
+            href: HOME_NEXT_CHAPTER.signupHref,
+            label: "Get First Access · 2027",
+          },
+          {
+            href: "/sunsets#event-status",
+            label: "September 19 ticket-holder update",
+          },
+          { href: "/chasing-sunsets/sunsets-i-2026", label: "Revisit July 4" },
+          {
+            href: "/events/css-aug22",
+            label: "Sunsets II · August 22 · Previous chapter",
+          },
+          { href: "/radio", label: "Chasing Sunsets Radio" },
+          { href: "/schedule", label: "Full calendar" },
+          { href: "https://sunsets.fm", label: "SUNSETS.FM", external: true },
+        ]
+      ),
+    },
+  ],
+  [
+    "/shop",
+    {
+      title: "Shop",
+      description:
+        "Official Monolith Project merchandise coming soon. Sign up for early access to the collection.",
+      bodyHtml: renderBaseLayout(
+        "The Monolith Project / Objects & editions",
+        "Collection 01.",
+        [
+          "In development. For the nights that stay with you. Limited-run garments and accessories from The Monolith Project.",
+          "Be the first to hear when it’s ready.",
+        ],
+        [
+          { href: HOME_NEXT_CHAPTER.signupHref, label: "Get First Access" },
+          ...HOME_NEXT_CHAPTER.programmes.map(programme => ({
+            href: programme.href,
+            label: `${programme.name} · ${programme.edition}`,
+          })),
+          { href: "/schedule", label: "Explore the calendar" },
         ]
       ),
     },
@@ -1100,10 +1274,13 @@ function buildArtistRoutes(): RouteDefinition[] {
 function buildRadioEpisodeRoutes(): RouteDefinition[] {
   return radioEpisodes.map(episode => ({
     path: `/radio/${episode.slug}`,
+    canonicalUrl: SUNSETS_CANONICALS_LIVE
+      ? SUNSETS_EPISODE_URLS[episode.slug]
+      : undefined,
     title: buildRadioEpisodeSeoTitle(episode),
     description: buildRadioEpisodeSeoDescription(episode),
     absoluteTitle: true,
-    image: episode.image,
+    image: episode.coverImage || episode.image,
     schemaData: buildPodcastEpisodeSchema(episode),
     bodyHtml: renderBaseLayout(
       "Radio Episode",
@@ -1114,8 +1291,14 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
       ],
       [
         {
-          href: episode.audioUrl,
-          label: "Listen on SoundCloud",
+          href:
+            SUNSETS_EPISODE_URLS[episode.slug] ??
+            episode.sunsetsUrl ??
+            episode.audioUrl,
+          label:
+            SUNSETS_EPISODE_URLS[episode.slug] || episode.sunsetsUrl
+              ? "Listen on SUNSETS.FM →"
+              : "Listen to the recording →",
           external: true,
         },
         { href: "/radio", label: "Back to the radio archive" },
@@ -1138,36 +1321,128 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
 }
 
 function buildEventRoutes(): RouteDefinition[] {
-  return futureEvents.map(event => {
-    const routePath = `/events/${event.slug || event.id}`;
-    const publicEvent = getPrerenderPublicEvent(event);
-    const actionLinks = publicEvent.ticketUrl
-      ? [
-          { href: publicEvent.ticketUrl, label: "Tickets and RSVP" },
-          { href: "/schedule", label: "Back to schedule" },
-        ]
-      : [{ href: "/schedule", label: "Back to schedule" }];
+  return upcomingEvents
+    .filter(event => !["draft", "hidden"].includes(event.status))
+    .flatMap(event => {
+      const routePath = `/events/${event.slug || event.id}`;
+      const publicEvent = getPrerenderPublicEvent(event);
+      const state = getPublishedEventState(publicEvent);
+      const actionLinks: Array<{ href: string; label: string }> = [];
+      if (state.kind === "postponed" || state.kind === "cancelled") {
+        actionLinks.push({
+          href: publicEvent.statusUrl || "/tickets",
+          label: "Ticket-holder update",
+        });
+      } else if (state.kind === "on-sale" && publicEvent.ticketUrl) {
+        actionLinks.push({ href: publicEvent.ticketUrl, label: "Get tickets" });
+      } else if (state.kind === "past") {
+        if (publicEvent.recapUrl)
+          actionLinks.push({
+            href: publicEvent.recapUrl,
+            label: "Read the recap",
+          });
+        if (publicEvent.archiveSlug)
+          actionLinks.push({
+            href: `/archive/${publicEvent.archiveSlug}`,
+            label: "View the archive",
+          });
+      }
+      actionLinks.push(
+        { href: "/newsletter", label: "Get First Access" },
+        { href: "/schedule", label: "View calendar" }
+      );
 
-    return {
-      path: routePath,
-      title: buildEventSeoTitle(event),
-      description: buildEventSeoDescription(event),
-      absoluteTitle: true,
-      image: publicEvent.image || "/images/hero-monolith.webp",
-      schemaData: buildScheduledEventSchema(publicEvent, routePath),
-      bodyHtml: renderBaseLayout(
-        getEventSeriesEyebrow(publicEvent),
-        publicEvent.headline || publicEvent.title,
-        [
-          `${publicEvent.date} · ${publicEvent.time} · ${publicEvent.venue}`,
-          publicEvent.description ||
-            `Official event details for ${publicEvent.title} in Chicago.`,
-        ],
-        actionLinks,
-        renderEventFacts(routePath)
-      ),
-    };
-  });
+      const definition: RouteDefinition = {
+        path: routePath,
+        title: buildEventSeoTitle(event),
+        description: buildEventSeoDescription(event),
+        absoluteTitle: true,
+        image: publicEvent.image || "/images/hero-monolith.webp",
+        schemaData: buildScheduledEventSchema(publicEvent, routePath),
+        bodyHtml: renderBaseLayout(
+          getEventSeriesEyebrow(publicEvent),
+          publicEvent.headline || publicEvent.title,
+          [
+            ...(state.kind === "postponed"
+              ? [
+                  "POSTPONED — NEW DATE TO BE CONFIRMED",
+                  publicEvent.ticketHolderNotice ||
+                    publicEvent.eventNotice ||
+                    "The original date has been postponed.",
+                ]
+              : []),
+            ...(state.kind === "past" ? ["Past event"] : []),
+            `${publicEvent.date} · ${publicEvent.time} · ${publicEvent.venue}`,
+            (state.kind === "past"
+              ? buildEventSeoDescription(publicEvent)
+              : publicEvent.description) ||
+              `Official event details for ${publicEvent.title} in Chicago.`,
+          ],
+          actionLinks,
+          renderEventFacts(routePath)
+        ),
+      };
+      // Keep historical ID addresses readable, with the same canonical as the client.
+      return [
+        definition,
+        ...(event.slug && event.slug !== event.id
+          ? [
+              {
+                ...definition,
+                path: `/events/${event.id}`,
+                canonicalUrl: toAbsoluteUrl(routePath),
+              },
+            ]
+          : []),
+      ];
+    });
+}
+
+function buildGalleryRoutes(): RouteDefinition[] {
+  return publicGalleryRoutes.map(({ path: routePath, gallery }) => ({
+    path: routePath,
+    title: `${gallery.title} — ${gallery.subtitle}`,
+    description: gallery.description,
+    image: gallery.coverImage,
+    schemaData: buildGallerySchema(gallery, routePath),
+    bodyHtml: renderBaseLayout(
+      "The Monolith Project / Archive",
+      gallery.title,
+      [
+        gallery.subtitle,
+        gallery.date,
+        gallery.description,
+        ...(gallery.comingSoon
+          ? [
+              "The full gallery is being prepared. Available artwork and media are shown below.",
+            ]
+          : []),
+      ],
+      [
+        ...(gallery.journalHref
+          ? [{ href: gallery.journalHref, label: "Read the recap" }]
+          : []),
+        ...(gallery.externalGallery
+          ? [
+              {
+                href: gallery.externalGallery.href,
+                label: gallery.externalGallery.label,
+                external: true,
+              },
+            ]
+          : []),
+        { href: "/archive", label: "Explore the archive" },
+        { href: "/newsletter", label: "Get First Access" },
+      ],
+      `<section aria-label="Available media">${gallery.media
+        .map(item =>
+          item.kind === "image"
+            ? `<figure><img src="${escapeHtml(item.src)}" width="${item.width}" height="${item.height}" alt="${escapeHtml(item.alt)}" loading="lazy">${item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : ""}</figure>`
+            : `<p><a href="${escapeHtml(item.src)}">${escapeHtml(item.caption || item.alt)}</a></p>`
+        )
+        .join("\n")}</section>`
+    ),
+  }));
 }
 
 function buildInsightRoutes(): RouteDefinition[] {
@@ -1233,12 +1508,29 @@ const routeDefinitions = [
   ...buildArtistRoutes(),
   ...buildRadioEpisodeRoutes(),
   ...buildEventRoutes(),
+  ...buildGalleryRoutes(),
+  {
+    path: MONOLITH_LAUNCH_NOTICE.path,
+    title: MONOLITH_LAUNCH_NOTICE.title,
+    description: MONOLITH_LAUNCH_NOTICE.description,
+    schemaData: buildLaunchNoticeSchema(),
+    bodyHtml: renderBaseLayout(
+      "The Monolith Project / Event update",
+      MONOLITH_LAUNCH_NOTICE.title,
+      [MONOLITH_LAUNCH_NOTICE.status, MONOLITH_LAUNCH_NOTICE.description],
+      [
+        { href: "/newsletter", label: "Get First Access" },
+        { href: "/schedule", label: "View calendar" },
+      ]
+    ),
+  },
   ...buildInsightRoutes(),
 ];
 
 for (const sitemapEntry of mergeSitemapEntries([
   ...buildEventSitemapEntries(upcomingEvents),
   ...insightSitemapEntries,
+  ...PUBLIC_HISTORY_SITEMAP_ENTRIES,
 ])) {
   const sitemapPath = sitemapEntry.path || "/";
   if (!routeDefinitions.some(route => route.path === sitemapPath)) {
@@ -1338,24 +1630,28 @@ function deferStylesheets(html: string) {
 
 /** Start the app bundle after first paint (see client/public/app-boot.js). */
 function deferAppEntry(html: string) {
-  const entry = html.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/);
+  const entry = html.match(
+    /<script type="module" crossorigin src="([^"]+)"><\/script>/
+  );
   if (!entry) return html;
   const preloads: string[] = [];
-  return html
-    .replace(
-      /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
-      (_match, href: string) => {
-        preloads.push(href);
-        return "";
-      }
-    )
-    .replace(
-      entry[0],
-      () =>
-        `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
-    )
-    // Home-only image hint; on other routes it is just a blocking request.
-    .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "");
+  return (
+    html
+      .replace(
+        /<link rel="modulepreload" crossorigin href="([^"]+)">\n?/g,
+        (_match, href: string) => {
+          preloads.push(href);
+          return "";
+        }
+      )
+      .replace(
+        entry[0],
+        () =>
+          `<script type="text/plain" data-app-entry="${entry[1]}" data-app-preloads="${preloads.join(",")}"></script>\n<script src="/app-boot.js" defer></script>`
+      )
+      // Home-only image hint; on other routes it is just a blocking request.
+      .replace(/<script src="\/home-hero-preload-v2\.js"><\/script>\n?/, "")
+  );
 }
 
 // Fonts the prerendered heroes paint with (body: Inter, display: Archivo

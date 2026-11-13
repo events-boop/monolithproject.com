@@ -1,0 +1,38 @@
+[
+  {
+    "file": "client/public/brand/sunsets-fm/sunsets-fm-warm-signal-master.svg",
+    "sha256": "a34bf2b33c2859e03a6062dcc21a6aab9a897c90a7fff1752462ef0dedae73b5",
+    "source": "Owner supplied November 10, 2026",
+    "usage": "Artwork"
+  },
+  {
+    "file": "client/public/brand/sunsets-fm/sunsets-header-frequency-dark.svg",
+    "sha256": "8da1034e99001976f8cad4974f4142472a3cd79b3a443b26110f74d037988e4a",
+    "source": "Existing approved header asset",
+    "usage": "Artwork"
+  },
+  {
+    "file": "docs/design/owner-reference-20261110/brand-placement-reference.png",
+    "sha256": "13a24d81349db27888f6aad53a07dd428bb5f4a9084bdc206d2f667cc29a71f0",
+    "source": "Owner supplied November 10, 2026",
+    "usage": "Design reference only; not used as campaign artwork"
+  },
+  {
+    "file": "docs/design/owner-reference-20261110/geometric-bio-reference.jpg",
+    "sha256": "fa049b96e0c1395c2f849ac8f85c3999cb7897325a0f5ff67705375ed68d5337",
+    "source": "Owner supplied November 10, 2026",
+    "usage": "Design reference only; not used as campaign artwork"
+  },
+  {
+    "file": "docs/design/owner-reference-20261110/monolith-signal-reference.jpg",
+    "sha256": "a00a924996817f30ff9afb7feec73d6835adc6452d83fdbe46182b23efbc1519",
+    "source": "Owner supplied November 10, 2026",
+    "usage": "Design reference only; not used as campaign artwork"
+  },
+  {
+    "file": "docs/design/owner-reference-20261110/three-states-of-light-reference.png",
+    "sha256": "9cac15b55a7524ae69e442019e6c2cb33a1e45787981a159899581289021ea31",
+    "source": "Owner supplied November 10, 2026",
+    "usage": "Design reference only; not used as campaign artwork"
+  }
+]

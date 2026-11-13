@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState, useRef } from "react";
 import { Link } from "wouter";
+import { ROUTES } from "@shared/routes";
 import { ChevronDown, ArrowUpRight, Play, Ticket } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
@@ -112,8 +113,9 @@ export default function NavigationMegamenu({
   let leftColumnItems = megamenu.items;
 
   if (type === "chasing-radio") {
-    leftColumnTitle = "SUN(SETS) Radio";
+    leftColumnTitle = "Chasing Sunsets Radio";
     leftColumnItems = [
+      { label: "Open Network", href: ROUTES.openNetwork, icon: "arrow" },
       { label: "S1E1: Benchek", href: "/radio/ep-01-benchek", icon: "play" },
       {
         label: "S1E2: Terranova",
@@ -139,10 +141,10 @@ export default function NavigationMegamenu({
   } else if (type === "untold") {
     leftColumnTitle = "The Lore";
     leftColumnItems = [
-      { label: "The Vision", href: "/story#vision", icon: "arrow" },
-      { label: "What to Expect", href: "/story#expect", icon: "arrow" },
-      { label: "Dress Code", href: "/story#dresscode", icon: "arrow" },
-      { label: "Private Tables", href: "/story#tables", icon: "arrow" },
+      { label: "The Vision", href: "/untold-story#vision", icon: "arrow" },
+      { label: "What to Expect", href: "/untold-story#expect", icon: "arrow" },
+      { label: "Dress Code", href: "/untold-story#dresscode", icon: "arrow" },
+      { label: "Private Tables", href: "/untold-story#tables", icon: "arrow" },
       { label: "Story Archive", href: "/archive", icon: "arrow" },
     ];
   } else if (type === "monolith") {
@@ -230,6 +232,11 @@ export default function NavigationMegamenu({
                       {isGoRoute ? (
                         <a
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setIsOpen(false)}
@@ -249,6 +256,11 @@ export default function NavigationMegamenu({
                       ) : (
                         <Link
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           onClick={e => {
                             e.preventDefault();
                             setIsOpen(false);
@@ -334,6 +346,11 @@ export default function NavigationMegamenu({
                   {megamenu.feature.external ? (
                     <a
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
@@ -348,6 +365,11 @@ export default function NavigationMegamenu({
                   ) : (
                     <Link
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       onClick={e => {
                         e.preventDefault();
                         setIsOpen(false);

@@ -1,22 +1,28 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import ConversionCTA from "./ConversionCTA";
-import {
-  getScheduledEvents,
-  getSeriesLabel,
-  isTicketOnSale,
-} from "@/lib/siteExperience";
+import HomeNextChapter from "./HomeNextChapter";
+import { ROUTES } from "@shared/routes";
+import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
 import { getEventDetailsHref } from "@/lib/cta";
 import { getScheduleDate, getScheduleVenue } from "@/lib/schedulePresentation";
 import {
   TICKET_POLICY,
   SUNSETS_REFUND_REQUEST_URL,
 } from "@shared/events/ticket-policy";
-import { currentSunsets } from "@shared/events/sunsets-current";
+import {
+  currentSunsets,
+  isCurrentSunsetsEvent,
+} from "@shared/events/sunsets-current";
+import { getPublishedEventState } from "@shared/events/publishedState";
+import EventStatusBadge from "./EventStatusBadge";
 
 /** A concise homepage view of the same live catalogue as the full calendar. */
 export default function HomeUpcomingShows() {
   const events = getScheduledEvents().slice(0, 4);
+  const hasOnSale = events.some(
+    event => getPublishedEventState(event).kind === "on-sale"
+  );
   return (
     <section
       id="schedule"
@@ -37,19 +43,20 @@ export default function HomeUpcomingShows() {
         {events.length ? (
           <div className="home-show-grid">
             {events.map(event => {
-              const onSale = isTicketOnSale(event);
-              const finale = event.id === "css-sep19";
+              const state = getPublishedEventState(event);
+              const onSale = state.kind === "on-sale";
+              const finale = isCurrentSunsetsEvent(event);
               const title = finale
                 ? currentSunsets.headliners.join(" × ")
                 : event.headline || event.title;
-              const details = finale ? "/sunsets" : getEventDetailsHref(event);
-              const postponed = event.eventStatus === "EventPostponed";
+              const details = event.landingUrl || getEventDetailsHref(event);
+              const postponed = state.kind === "postponed";
               const status = postponed
-                ? "POSTPONED"
+                ? "POSTPONED — NEW DATE TO BE CONFIRMED"
                 : onSale
                   ? "Tickets available"
-                  : event.status === "sold-out"
-                    ? "Sold out"
+                  : state.kind === "sold-out"
+                    ? state.badge
                     : "Details to be announced";
               return (
                 <article
@@ -99,9 +106,12 @@ export default function HomeUpcomingShows() {
                       <p className="home-eyebrow">
                         {getSeriesLabel(event.series)}
                       </p>
-                      <span className="home-show-status" data-on-sale={onSale}>
-                        {status}
-                      </span>
+                      <EventStatusBadge
+                        status={state.kind}
+                        label={
+                          state.kind === "first-access" ? undefined : status
+                        }
+                      />
                     </div>
                     <p className="home-show-date">
                       {postponed
@@ -123,7 +133,7 @@ export default function HomeUpcomingShows() {
                       <p className="home-show-lineup">{event.lineup}</p>
                     ) : (
                       <p className="home-show-lineup">
-                        Lineup to be announced.
+                        Artists to be confirmed.
                       </p>
                     )}
                     {postponed && finale && (
@@ -135,7 +145,7 @@ export default function HomeUpcomingShows() {
                       <div>
                         <dt>{postponed ? "Original venue" : "Venue"}</dt>
                         <dd>
-                          {getScheduleVenue(event)}
+                          {getScheduleVenue(event)}{" "}
                           <span>{event.location}</span>
                         </dd>
                       </div>
@@ -187,11 +197,18 @@ export default function HomeUpcomingShows() {
                           showUrgency={false}
                           className="home-show-purchase"
                         />
+                      ) : postponed ? (
+                        <Link className="home-secondary" href="/tickets">
+                          TICKET-HOLDER UPDATE
+                          <ArrowUpRight size={18} aria-hidden="true" />
+                        </Link>
                       ) : (
-                        <Link className="home-secondary" href={details}>
-                          {postponed
-                            ? "Read postponement update"
-                            : "View event details"}
+                        <Link
+                          className="home-secondary"
+                          href={ROUTES.newsletter}
+                          data-first-access="true"
+                        >
+                          GET FIRST ACCESS
                           <ArrowUpRight size={18} aria-hidden="true" />
                         </Link>
                       )}
@@ -208,16 +225,8 @@ export default function HomeUpcomingShows() {
               );
             })}
           </div>
-        ) : (
-          <div className="home-show-empty">
-            <h3>More nights ahead.</h3>
-            <p>New dates will appear here when announced.</p>
-            <Link className="home-secondary" href="/archive">
-              Explore previous shows
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-        )}
+        ) : null}
+        {!hasOnSale && <HomeNextChapter />}
       </div>
     </section>
   );

@@ -1,0 +1,55 @@
+.event-status-badge {
+  --status-ink: #b3dff5;
+  --status-line: #527f9755;
+  --status-fill: #23435855;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--status-line);
+  border-radius: 999px;
+  background: var(--status-fill);
+  color: var(--status-ink);
+  font: 600 11px/1.45 var(--font-mono, monospace);
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+.event-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.event-status-badge[data-status="on-sale"] {
+  --status-ink: #c3efb5;
+  --status-line: #6a986955;
+  --status-fill: #28442c77;
+}
+.event-status-badge[data-status="first-access"] {
+  --status-ink: #f4e0bb;
+  --status-line: #c9b18355;
+  --status-fill: #473a2466;
+}
+.event-status-badge[data-status="postponed"] {
+  --status-ink: #ffd397;
+  --status-line: #b58b5055;
+  --status-fill: #59402066;
+}
+.event-status-badge[data-status="sold-out"] {
+  --status-ink: #d8c9ff;
+  --status-line: #9074c255;
+  --status-fill: #41345866;
+}
+.event-status-badge[data-status="cancelled"] {
+  --status-ink: #ffbdb7;
+  --status-line: #b77b7455;
+  --status-fill: #592f2b66;
+}
+.event-status-badge[data-status="past"],
+.event-status-badge[data-status="unpublished"] {
+  --status-ink: #c6cec9;
+  --status-line: #8d999255;
+  --status-fill: #37413a66;
+}

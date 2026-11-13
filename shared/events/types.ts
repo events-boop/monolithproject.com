@@ -88,6 +88,19 @@ export interface EventArtistImage {
   artist: string;
 }
 
+export interface EventSetTimeSlot {
+  time: string;
+  label: string;
+  stage?: string;
+}
+
+export interface EventVenueAddress {
+  streetAddress: string;
+  postalCode: string;
+  neighborhood?: string;
+  mapsUrl?: string;
+}
+
 /** A scheduled live event with its venue, ticketing, creative, and funnel configuration. */
 export interface ScheduledEvent {
   id: string;
@@ -148,6 +161,18 @@ export interface ScheduledEvent {
   faqs?: Array<{ q: string; a: string }>;
   photoNotice?: string;
   eventNotice?: string;
+  /**
+   * Standalone page that owns this event's public presentation (e.g. "/sunsets").
+   * When set, listings link here instead of the generic /events/:slug page.
+   */
+  landingUrl?: string;
+  /** Where a postponement or cancellation update lives. Defaults to the event page. */
+  statusUrl?: string;
+  /**
+   * Approved message for people who already hold tickets. Its presence is what
+   * marks a postponed or cancelled show as owing ticket holders an update.
+   */
+  ticketHolderNotice?: string;
   activeFunnels?: ActiveFunnel[];
   primaryCta?: EventCta;
   recentlyDropped?: boolean;
@@ -158,6 +183,10 @@ export interface ScheduledEvent {
   archiveSlug?: string;
   /** Recap page/video URL for past events */
   recapUrl?: string;
+  /** Published set times / run of show slots when confirmed */
+  setTimes?: ReadonlyArray<EventSetTimeSlot>;
+  /** Explicit street address & neighborhood metadata for structured data and directions */
+  venueAddress?: EventVenueAddress;
 }
 
 export type PublicSiteData = {

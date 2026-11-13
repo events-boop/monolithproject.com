@@ -32,7 +32,7 @@ const expressions = [
     tagline: "When the light drops, the room changes shape.",
     color: UNTOLD_CYAN,
     image: "/images/untold-story-moody.webp",
-    href: "/story",
+    href: "/untold-story",
     icon: UntoldButterflyLogo,
   },
   {

@@ -49,6 +49,24 @@ let cachedIndexHtml: string | null = null;
 
 router.use(express.static(staticPath, { index: false }));
 
+// Canonical Untold Story route: /story redirects cleanly to /untold-story.
+router.get(["/story", "/story/"], (_req, res) => {
+  res.redirect(301, "/untold-story");
+});
+
+router.get(
+  ["/events/monolith-launch", "/events/monolith-launch/"],
+  (_req, res) => {
+    res.redirect(301, "/events/css-oct10");
+  }
+);
+
+// Missing static assets must 404 rather than falling through to SPA HTML,
+// which returns HTML with immutable cache headers and poisons browser chunk caches.
+router.use("/assets", (_req, res) => {
+  res.status(404).type("text/plain").send("Asset not found");
+});
+
 function resolvePrerenderedRoutePath(requestPath: string) {
   const cleanPath = requestPath.split("?")[0]?.split("#")[0] || "/";
   if (cleanPath === "/") return indexHtmlPath;

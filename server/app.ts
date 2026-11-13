@@ -10,6 +10,7 @@ import { configureMiddleware, configureErrorMiddleware } from "./middleware";
 import healthRouter from "./routes/health";
 import seoRouter from "./routes/seo";
 import leadsRouter from "./routes/leads";
+import firstAccessRouter from "./routes/first-access";
 import sunsetsSubscriptionsRouter from "./routes/sunsets-subscriptions";
 import ticketsRouter from "./routes/tickets";
 import bookingRouter from "./routes/booking";
@@ -120,6 +121,7 @@ export function createApp({ includeSpa = true }: CreateAppOptions = {}) {
   app.use(healthRouter);
   app.use(seoRouter);
   app.use(leadsRouter);
+  app.use(firstAccessRouter);
   app.use(sunsetsSubscriptionsRouter);
   app.use(ticketsRouter);
   app.use(bookingRouter);

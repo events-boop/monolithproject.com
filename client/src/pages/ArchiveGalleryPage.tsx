@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { buildGallerySchema } from "@shared/seo/gallery";
 import { useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
@@ -28,8 +29,8 @@ function CommunityUploadPanel({ gallery }: { gallery: ArchiveCollection }) {
         {gallery.media.length === 0 ? "Photos Coming Soon" : "More Coming"}
       </p>
       <p className="text-sm text-white/60 leading-relaxed mb-6">
-        The gallery and recap film are in the edit. Were you there? Send us
-        your photos, videos, or DJ sets — the best make the official recap.
+        The gallery and recap film are in the edit. Were you there? Send us your
+        photos, videos, or DJ sets — the best make the official recap.
       </p>
       <a
         href={COMMUNITY_UPLOAD_URL}
@@ -92,6 +93,12 @@ export default function ArchiveGalleryPage() {
       <SEO
         title={`${gallery.title} — ${gallery.subtitle}`}
         description={gallery.description}
+        canonicalPath={`/${params.series}/${params.season}`}
+        image={gallery.coverImage}
+        schemaData={buildGallerySchema(
+          gallery,
+          `/${params.series}/${params.season}`
+        )}
       />
       <Navigation variant="dark" brand={navBrand} />
 
@@ -142,6 +149,7 @@ export default function ArchiveGalleryPage() {
               )}
               <MixedMediaGallery
                 title={gallery.title}
+                headingLevel="h1"
                 subtitle={gallery.subtitle}
                 description={gallery.description}
                 media={gallery.media}

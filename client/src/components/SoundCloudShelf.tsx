@@ -8,7 +8,7 @@ export default function SoundCloudShelf() {
       <div className="container layout-wide">
         <header>
           <div>
-            <p className="section-kicker">Sun(Sets) Radio</p>
+            <p className="section-kicker">Chasing Sunsets Radio · powered by sunsets.fm</p>
             <h2 id="listening-rail-title">The music keeps moving.</h2>
           </div>
           <Link className="home-text-link" href="/radio">

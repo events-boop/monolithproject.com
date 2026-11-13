@@ -271,6 +271,9 @@ export default function EventCountdown({
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <a
                   href={cta.href}
+                  data-first-access={
+                    /first\s+access/i.test(cta.label) ? "true" : undefined
+                  }
                   target={ctaIsExternal ? "_blank" : undefined}
                   rel={ctaIsExternal ? "noopener noreferrer" : undefined}
                   className={`${cta.tool === "posh" ? getEventPillToneClass(resolvedEvent) : getEventOutlinePillToneClass(resolvedEvent)} group self-start`}

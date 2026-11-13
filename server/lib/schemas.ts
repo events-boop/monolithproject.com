@@ -67,6 +67,7 @@ const honeypotFields = {
   [honeypotFieldName]: z.string().max(10).optional(),
   metadata_correlation_id: z.string().max(10).optional(),
 } as const;
+export { honeypotFields };
 
 export const leadSchema = z.object({
   email: z.string().email(),

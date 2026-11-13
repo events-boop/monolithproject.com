@@ -8,6 +8,7 @@ import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import Home from "./pages/Home";
 import { UIProvider, useUI } from "./contexts/UIContext";
 import { InquiryProvider } from "./contexts/InquiryContext";
+import { GlobalAudioProvider, useGlobalAudio } from "./contexts/AudioContext";
 import ViewportLazy from "./components/ViewportLazy";
 import { getSceneForPath } from "./lib/scenes";
 import { resolveCampaignHostPath } from "./lib/campaignHosts";
@@ -28,15 +29,19 @@ const ChasingSunsets = lazyRoute("ChasingSunsets");
 const ChasingSunsetsFacts = lazy(() => import("./pages/ChasingSunsetsFacts"));
 const SunsetsLinkBio = lazy(() => import("./pages/SunsetsEventRedirect"));
 const LakeLanding = lazy(() => import("./pages/LakeLanding"));
+const SunsetsFM = lazyRoute("SunsetsFM");
 const Radio = lazyRoute("Radio");
+const OpenNetwork = lazyRoute("OpenNetwork");
 const RadioEpisode = lazyRoute("RadioEpisode");
 const UntoldStory = lazyRoute("UntoldStory");
 const UntoldVipLanding = lazyRoute("UntoldVipLanding");
+const SunsetsVipBio = lazyRoute("SunsetsVipBio");
 const Booking = lazyRoute("Booking");
 const Partners = lazyRoute("Partners");
 const Lineup = lazyRoute("Lineup");
 const Schedule = lazyRoute("Schedule");
 const EventDetails = lazyRoute("EventDetails");
+const HistoricalEventNotice = lazyRoute("HistoricalEventNotice");
 const Newsletter = lazyRoute("Newsletter");
 const Contact = lazyRoute("Contact");
 const FAQ = lazyRoute("FAQ");
@@ -122,10 +127,13 @@ const ChasingSunsetsTransition = withTransition(ChasingSunsets);
 const ChasingSunsetsFactsTransition = withTransition(ChasingSunsetsFacts);
 const SunsetsLinkBioTransition = withTransition(SunsetsLinkBio);
 const LakeLandingTransition = withTransition(LakeLanding);
+const SunsetsFMTransition = withTransition(SunsetsFM);
 const RadioTransition = withTransition(Radio);
+const OpenNetworkTransition = withTransition(OpenNetwork);
 const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
 const UntoldVipLandingTransition = withTransition(UntoldVipLanding);
+const SunsetsVipBioTransition = withTransition(SunsetsVipBio);
 const BookingTransition = withTransition(Booking);
 const SubmitTransition = withTransition(Submit);
 const LineupTransition = withTransition(Lineup);
@@ -265,10 +273,19 @@ function Router() {
         path="/chasing-sunsets/:season"
         component={ArchiveGalleryPageTransition}
       />
+      <Route path={ROUTES.sunsetsFM} component={SunsetsFMTransition} />
       <Route path={ROUTES.radio} component={RadioTransition} />
+      <Route path={ROUTES.openNetwork} component={OpenNetworkTransition} />
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />
-      <Route path={ROUTES.story} component={UntoldStoryTransition} />
+      <Route path={ROUTES.sunsetsBio} component={SunsetsVipBioTransition} />
+      <Route path="/story/">
+        <Redirect to={ROUTES.untoldStory} />
+      </Route>
+      <Route path={ROUTES.story}>
+        <Redirect to={ROUTES.untoldStory} />
+      </Route>
+      <Route path="/untold-story/" component={UntoldStoryTransition} />
       <Route path={ROUTES.untoldStory} component={UntoldStoryTransition} />
       <Route
         path="/untold-story/:season"
@@ -292,10 +309,12 @@ function Router() {
       </Route>
       <Route path={ROUTES.schedule} component={ScheduleTransition} />
       <Route path={ROUTES.events} component={ScheduleTransition} />
-      {/* DECISION B: October 10 was rebranded from a Sun(Sets) finale to the
-          parent-brand launch event; keep the old id-based path working. */}
+      {/* Preserve the never-held launch notice; unify its duplicate address. */}
       <Route path="/events/css-oct10">
-        <Redirect to="/events/monolith-launch" />
+        <HistoricalEventNotice />
+      </Route>
+      <Route path="/events/monolith-launch">
+        <Redirect to="/events/css-oct10" />
       </Route>
       <Route path="/events/:slug" component={EventDetailsTransition} />
       <Route path={ROUTES.newsletter} component={NewsletterTransition} />
@@ -413,6 +432,7 @@ const DeferredShellChrome = lazy(
 );
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const SoundCloudShelf = lazy(() => import("./components/SoundCloudShelf"));
+const StickyPlayer = lazy(() => import("./components/StickyPlayer"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(
   () => import("./components/GlobalTicketButton")
@@ -459,14 +479,21 @@ function MainContentWrapper() {
   const isStandaloneLanding =
     landingPath === ROUTES.sunsets ||
     landingPath === ROUTES.lake ||
-    landingPath === ROUTES.story ||
     landingPath === ROUTES.untoldVip ||
+    landingPath === ROUTES.sunsetsBio ||
     isUntoldRootLanding;
   const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
   const isApeDrumsRoute =
     landingPath === ROUTES.apeDrums || landingPath === ROUTES.apeDrumsPreview;
+  const isUntoldStoryRoute =
+    landingPath === ROUTES.story ||
+    landingPath === ROUTES.untoldStory ||
+    landingPath.startsWith(`${ROUTES.untoldStory}/`);
   const shouldHideGlobalConversion =
-    isStandaloneLanding || isHouseOfFriendsRoute || isApeDrumsRoute;
+    isStandaloneLanding ||
+    isUntoldStoryRoute ||
+    isHouseOfFriendsRoute ||
+    isApeDrumsRoute;
 
   // GPU-accelerated effects only for the shell body to preserve frame rate
   const shellTransform = isSensoryOverloadActive ? "scale(0.97)" : "none";
@@ -524,8 +551,8 @@ function MainContentWrapper() {
             <LakeLandingTransition />
           ) : landingPath === ROUTES.untoldVip ? (
             <UntoldVipLandingTransition />
-          ) : landingPath === ROUTES.story ? (
-            <UntoldStoryTransition />
+          ) : landingPath === ROUTES.sunsetsBio ? (
+            <SunsetsVipBioTransition />
           ) : (
             <SunsetsLinkBioTransition />
           )
@@ -559,6 +586,22 @@ function MainContentWrapper() {
   );
 }
 
+function PersistentAudioBar() {
+  const { activeTrack } = useGlobalAudio();
+  const [location] = useLocation();
+  const pathname = location.split(/[?#]/)[0] || "/";
+  const isRadioRoute =
+    pathname === ROUTES.radio || pathname.startsWith(`${ROUTES.radio}/`);
+
+  if (!activeTrack || isRadioRoute) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <StickyPlayer />
+    </Suspense>
+  );
+}
+
 function App() {
   const [showOfferPopup, setShowOfferPopup] = useState(false);
 
@@ -575,16 +618,19 @@ function App() {
         <ThemeProvider defaultTheme="dark">
           <UIProvider>
             <InquiryProvider>
-              <div className="film-grain" />
-              <MainContentWrapper />
+              <GlobalAudioProvider>
+                <div className="film-grain" />
+                <MainContentWrapper />
+                <PersistentAudioBar />
 
-              <DeferredGlobalModules />
-              {/* Seedance popup temporarily disabled 
-              {showOfferPopup && (
-                <Suspense fallback={null}>
-                  <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
-                </Suspense>
-              )} */}
+                <DeferredGlobalModules />
+                {/* Seedance popup temporarily disabled 
+                {showOfferPopup && (
+                  <Suspense fallback={null}>
+                    <TicketOfferPopup onClose={() => setShowOfferPopup(false)} />
+                  </Suspense>
+                )} */}
+              </GlobalAudioProvider>
             </InquiryProvider>
           </UIProvider>
         </ThemeProvider>

@@ -146,7 +146,7 @@ export const APE_DRUMS_SHOW_CONFIG: ArtistShowLandingConfig = {
     guide: "Music is the guide.",
     familyLabel: "Part of The Monolith Project family",
     familyLinks: [
-      { label: "Untold Story", href: ROUTES.story },
+      { label: "Untold Story", href: ROUTES.untoldStory },
       { label: "Chasing Sun(Sets)", href: ROUTES.chasingSunsets },
       { label: "House of Friends", href: ROUTES.houseOfFriends },
     ],

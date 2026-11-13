@@ -31,7 +31,7 @@ import { getEventCta } from "../lib/cta";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { ROUTES, ANCHORS, routeRadioEpisode } from "@shared/routes";
+import { ROUTES, ANCHORS } from "@shared/routes";
 
 const InteractiveNavigationOverlay = lazy(
   () => import("./InteractiveNavigationOverlay")
@@ -286,7 +286,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       return;
     }
 
-    if (href.startsWith("/go/")) {
+    if (href.startsWith("/go/") || href.startsWith(ROUTES.openNetwork)) {
       window.location.href = href;
       return;
     }
@@ -345,6 +345,18 @@ export default function Navigation({ variant, brand }: NavigationProps) {
     } else {
       setLocation(href);
     }
+  };
+
+  // The header action is a plain anchor because it is usually an outbound ticket link. When it
+  // points inside the site (the calendar), route in-app: a full page load would stop the
+  // persistent player mid-set.
+  const handleNavCtaClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (navCta.isExternal || !navCta.href.startsWith("/")) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      return;
+    if (event.button !== 0) return;
+    event.preventDefault();
+    setLocation(navCta.href);
   };
 
   const handleLogoClick = () => {
@@ -516,7 +528,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         </>
                       ) : resolvedBrand === "radio" ? (
                         <span className="font-radio text-rose-500">
-                          SUN(SETS) RADIO
+                          <span className="block text-[8px] leading-tight tracking-[0.1em] sm:hidden">
+                            CHASING SUNSETS
+                          </span>
+                          <span className="block text-sm leading-tight tracking-[0.16em] sm:hidden">
+                            RADIO
+                          </span>
+                          <span className="hidden sm:inline">
+                            CHASING SUNSETS RADIO
+                          </span>
                         </span>
                       ) : (
                         <div className="flex flex-row items-baseline gap-2">
@@ -586,15 +606,23 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         icon: "arrow",
                       },
                       {
-                        label: ticketHref ? "GET TICKETS" : "EVENT INFORMATION",
-                        href: ticketHref || ROUTES.tickets,
+                        label: ticketHref
+                          ? "GET TICKETS"
+                          : isUpdateContext
+                            ? "TICKET-HOLDER UPDATE"
+                            : "GET FIRST ACCESS",
+                        href:
+                          ticketHref ||
+                          (isUpdateContext
+                            ? ROUTES.tickets
+                            : ROUTES.newsletter),
                         icon: "ticket",
                       },
                       {
                         label: "CHASING SUN(SETS)",
                         href: ROUTES.chasingSunsets,
                       },
-                      { label: "UNTOLD STORY", href: ROUTES.story },
+                      { label: "UNTOLD STORY", href: ROUTES.untoldStory },
                       {
                         label: "ENTRY GUIDE",
                         href: ROUTES.guide + ANCHORS.entry,
@@ -612,8 +640,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             "/images/chasing-sunsets-premium.webp",
                           href:
                             ticketHref ||
-                            `/events/${ticketEvent.slug || ticketEvent.id}`,
-                          ctaText: ticketHref ? "On Sale" : "Event Details",
+                            (isUpdateContext
+                              ? ROUTES.tickets
+                              : ROUTES.newsletter),
+                          ctaText: ticketHref
+                            ? "Get Tickets"
+                            : isUpdateContext
+                              ? "Ticket-Holder Update"
+                              : "Get First Access",
                           icon: ticketHref ? "ticket" : "arrow",
                           badge:
                             ticketEvent.eventStatus === "EventPostponed"
@@ -622,7 +656,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                 ? "CANCELLED"
                                 : ticketEvent.status === "on-sale"
                                   ? "ON SALE"
-                                  : "COMING SOON",
+                                  : "FIRST ACCESS",
                           external: !!ticketHref,
                         }
                       : {
@@ -734,7 +768,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="UNTOLD STORY"
-                  href={ROUTES.story}
+                  href={ROUTES.untoldStory}
                   isActive={
                     location.includes(ROUTES.story) ||
                     location.includes(ROUTES.untoldStory)
@@ -756,10 +790,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
                         getPrimaryTicketUrl(featuredUntoldEvent) ||
-                        ROUTES.story,
+                        ROUTES.newsletter,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
-                        : "View Story",
+                        : "Get First Access",
                       icon: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "ticket"
                         : "arrow",
@@ -785,13 +819,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   megamenu={{
                     items: [], // Dynamic roster generated inside NavigationMegamenu
                     feature: {
-                      title: "Chasing Sun(Sets) Radio Show",
-                      subtitle: "Latest YouTube Broadcast",
-                      image: "/images/radio-show-gear.webp",
-                      href: routeRadioEpisode("ep-004-benchek-part-2"),
+                      title: "Chasing Sunsets Radio",
+                      subtitle: "powered by sunsets.fm",
+                      image:
+                        "/media/chasing-radio/sommers-uk-episode-011-640.webp",
+                      href: `${ROUTES.radio}#radio-featured`,
                       ctaText: "Listen Now",
                       icon: "play",
-                      badge: "YOUTUBE BROADCAST",
+                      badge: "A MONOLITH ORIGINAL",
                     },
                   }}
                 />
@@ -827,7 +862,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                       className={`${isUpdateContext ? "nav-calendar-action" : ""} inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
                         navCta.tool === "posh" || navCta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
@@ -884,7 +922,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                     >
                       <div
                         className={`

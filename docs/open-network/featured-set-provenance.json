@@ -1,0 +1,31 @@
+{
+  "artist": "Rafael B2B Brunello",
+  "title": "Santa Monica Pier | RAW CUTS",
+  "publisher": "RAW CUTS",
+  "source": "https://soundcloud.com/rawcutstv/brunello-b2b-rafael-february",
+  "sourceImage": "https://i1.sndcdn.com/artworks-ZvAj2DL69tAxwNa1-hlUuiQ-t500x500.png",
+  "artworkPath": "/media/open-network/rafael-brunello-rawcuts.webp",
+  "artworkSha256": "52ad4011d8ca8f95d4376db9866528e2c3da9846accd329906a402713ae52f50",
+  "durationSeconds": 7157,
+  "playbackVerifiedAt": "2026-11-02T23:14:50.974Z",
+  "playbackEvidence": {
+    "result": "playing",
+    "position": 2010.685,
+    "meta": {
+      "title": "Brunello b2b Rafael | February 15,  2026 | RAW CUTS",
+      "duration": 7157196,
+      "artwork_url": "https://i1.sndcdn.com/artworks-ZvAj2DL69tAxwNa1-hlUuiQ-large.png",
+      "permalink_url": "https://soundcloud.com/rawcutstv/brunello-b2b-rafael-february",
+      "publisher": "RAW CUTS"
+    },
+    "events": [
+      "ready",
+      "play",
+      "play"
+    ]
+  },
+  "tracklist": {
+    "url": "https://www.mixid.fm/mixes/rafael-b2b-brunello-on-the-santa-monica-pier-raw-cuts",
+    "coverage": "11 third-party identified moments; partial tracklist, not a complete or artist-confirmed tracklist"
+  }
+}

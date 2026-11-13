@@ -213,20 +213,19 @@ function FullNewsletterSection({
               <div className="flex flex-col">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary font-bold">
-                    INVENTORY IS CAPPED TO PROTECT THE ROOM.
+                    YOUR NEXT CHAPTER STARTS HERE.
                   </span>
                   <div className="h-[1px] w-24 bg-white/10" />
                 </div>
 
-                <h2 className="hero-wordmark text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col">
-                  <span className="text-white/70">NEXT</span>
-                  <span>DROP.</span>
+                <h2 className="hero-wordmark text-[clamp(4.5rem,8vw,9rem)] leading-[0.85] tracking-tighter uppercase text-white mb-10 flex flex-col font-bold">
+                  <span className="text-white/70">FIRST</span>
+                  <span>ACCESS.</span>
                 </h2>
 
                 <p className="font-sans text-xl md:text-2xl text-white/80 leading-relaxed font-light mb-12 max-w-xl">
-                  Get ticket windows and limited drops before the general
-                  public. No generic blasts. Just world-class electronic music
-                  in spaces designed for it.
+                  Be the first to hear about new seasons, artist announcements,
+                  ticket windows and music releases from The Monolith Project.
                 </p>
 
                 <div className="grid gap-6 border-t border-white/5 pt-12">
@@ -253,7 +252,10 @@ function FullNewsletterSection({
 
               {/* Hosted signup keeps confirmation in the email provider. */}
               {hostedSignupForms.newsletter ? (
-                <div className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16">
+                <div
+                  id="newsletter-signup"
+                  className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16"
+                >
                   <h3 className="hero-wordmark text-4xl uppercase tracking-tighter text-white">
                     Join The Newsletter
                   </h3>
@@ -264,6 +266,7 @@ function FullNewsletterSection({
                   </p>
                   <a
                     href={hostedSignupForms.newsletter}
+                    data-first-access="true"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-pill-monolith btn-pill-wide"
@@ -284,6 +287,7 @@ function FullNewsletterSection({
                 </div>
               ) : (
                 <form
+                  id="newsletter-signup"
                   onSubmit={handleSubmit}
                   className="relative z-20 flex flex-col gap-8 bg-[#050505] border border-white/10 p-8 md:p-12 xl:p-16"
                   noValidate

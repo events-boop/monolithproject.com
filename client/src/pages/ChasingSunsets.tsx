@@ -11,6 +11,7 @@ import ChasingSunsetsLogo from "@/components/ChasingSunsetsLogo";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import HomeEventFeature from "@/components/HomeEventFeature";
 import HomeTicketLink from "@/components/HomeTicketLink";
+import SeasonInvitation from "@/components/SeasonInvitation";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 import {
   currentSunsets as event,
@@ -141,6 +142,7 @@ export default function ChasingSunsets() {
           <a href="#chasing-faq">FAQs</a>
         </nav>
         <HomeEventFeature />
+        <SeasonInvitation programme="sunsets" id="chasing-next-chapter" />
         <section
           id="chasing-venue"
           className="home-editorial-section chasing-venue-section"
@@ -481,6 +483,13 @@ export default function ChasingSunsets() {
               <h2 id="chasing-closing-title">Stay close to Sun(Sets).</h2>
               <p>Check the event guide for the latest published information.</p>
               <div className="home-actions">
+                <Link
+                  href="/newsletter"
+                  className="home-primary"
+                  data-first-access="true"
+                >
+                  Get First Access <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
                 <HomeTicketLink placement="chasing_series_close" />
                 <a
                   className="home-secondary"

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { ScheduledEvent } from "@shared/events/types";
-import { buildEventCalendarFile, escapeIcsText } from "../calendar";
+import {
+  buildEventCalendarFile,
+  buildGoogleCalendarUrl,
+  escapeIcsText,
+} from "../calendar";
 
 const dateOnlyEvent: ScheduledEvent = {
   id: "hof-kashmir-jul31",
@@ -55,5 +59,56 @@ describe("buildEventCalendarFile", () => {
 describe("escapeIcsText", () => {
   it("escapes calendar delimiters and line breaks", () => {
     expect(escapeIcsText("A, B; C\nD\\E")).toBe("A\\, B\\; C\\nD\\\\E");
+  });
+});
+
+describe("buildGoogleCalendarUrl", () => {
+  it("builds a Chicago-timed Google Calendar link for timed events with venue address", () => {
+    const url = buildGoogleCalendarUrl({
+      ...dateOnlyEvent,
+      startsAt: "2026-07-31T21:30:00-05:00",
+      endsAt: "2026-08-01T02:00:00-05:00",
+      time: "9:30 PM — 2:00 AM",
+      venueAddress: {
+        streetAddress: "1240 W Randolph St",
+        postalCode: "60607",
+        neighborhood: "West Loop · Chicago",
+      },
+    });
+
+    expect(url).not.toBeNull();
+    const parsed = new URL(url!);
+    expect(parsed.origin + parsed.pathname).toBe(
+      "https://calendar.google.com/calendar/render"
+    );
+    expect(parsed.searchParams.get("action")).toBe("TEMPLATE");
+    expect(parsed.searchParams.get("dates")).toBe(
+      "20260731T213000/20260801T020000"
+    );
+    expect(parsed.searchParams.get("ctz")).toBe("America/Chicago");
+    expect(parsed.searchParams.get("location")).toContain("1240 W Randolph St");
+  });
+
+  it("builds an all-day Google Calendar link when no startsAt timestamp exists", () => {
+    const url = buildGoogleCalendarUrl(dateOnlyEvent);
+    expect(url).not.toBeNull();
+    const parsed = new URL(url!);
+    expect(parsed.searchParams.get("dates")).toBe("20260731/20260801");
+    expect(parsed.searchParams.has("ctz")).toBe(false);
+  });
+
+  it("returns null for postponed or past events", () => {
+    expect(
+      buildGoogleCalendarUrl({
+        ...dateOnlyEvent,
+        eventStatus: "EventPostponed",
+      })
+    ).toBeNull();
+    expect(
+      buildGoogleCalendarUrl({
+        ...dateOnlyEvent,
+        status: "past",
+      })
+    ).toBeNull();
   });
 });

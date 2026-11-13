@@ -1,5 +1,7 @@
 import { ARTIST_ENTRIES, type ArtistData } from "@/data/artists";
 import { HOME_ARTIST_DISCOVERY } from "@/data/homeArtistDiscovery";
+import { radioEpisodes } from "@/data/radioEpisodes";
+import type { GlobalAudioTrack } from "@/contexts/AudioContext";
 import type { ScheduledEvent } from "@shared/events/types";
 
 function normalize(value: string) {
@@ -45,5 +47,45 @@ export function getArtistRecording(artist: ArtistData) {
     return { href: previous.url, label: "Explore the artist’s set links" };
   if (artist.socials.soundcloud)
     return { href: artist.socials.soundcloud, label: "Listen on SoundCloud" };
+  return null;
+}
+
+function buildSoundCloudPlayerUrl(sourceUrl: string) {
+  return `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+    sourceUrl
+  )}&color=%23d4a574&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
+}
+
+/** Resolve an inline-playable Radio Deck track for an artist when SoundCloud audio exists. */
+export function getArtistAudioTrack(
+  artist: ArtistData
+): GlobalAudioTrack | null {
+  const artistKey = normalize(artist.name.replace(/\s*\([A-Z]{2}\)\s*$/, ""));
+  const episode = radioEpisodes.find(ep => {
+    const guestKey = normalize(ep.guest.replace(/\s*\([A-Z]{2}\)\s*$/, ""));
+    return guestKey === artistKey;
+  });
+
+  if (episode) {
+    return {
+      slug: episode.slug,
+      title: `${episode.shortCode} · ${episode.title}`,
+      artist: artist.name,
+      src: episode.embedUrl,
+    };
+  }
+
+  const recording = getArtistRecording(artist);
+  if (
+    recording &&
+    /^https?:\/\/(?:www\.)?soundcloud\.com\//i.test(recording.href)
+  ) {
+    return {
+      title: `${artist.name} — Recorded Set`,
+      artist: artist.name,
+      src: buildSoundCloudPlayerUrl(recording.href),
+    };
+  }
+
   return null;
 }

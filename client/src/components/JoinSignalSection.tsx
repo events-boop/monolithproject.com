@@ -22,15 +22,19 @@ export default function JoinSignalSection({
     >
       <div className="container layout-wide signal-invitation-inner">
         <div>
-          <p className="section-kicker">Between the shows</p>
-          <h2 id={titleId}>Stay in the loop.</h2>
+          <p className="section-kicker">The Monolith Project / First Access</p>
+          <h2 id={titleId}>Your next chapter starts here.</h2>
           <p>
             Show announcements, ticket windows and new music. One direct
             connection to Monolith.
           </p>
         </div>
-        <Link href={ROUTES.newsletter} className="btn-pill-monolith">
-          Get updates <ArrowUpRight size={18} aria-hidden="true" />
+        <Link
+          href={ROUTES.newsletter}
+          className="editorial-action"
+          data-first-access="true"
+        >
+          Get First Access <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
       </div>
     </section>

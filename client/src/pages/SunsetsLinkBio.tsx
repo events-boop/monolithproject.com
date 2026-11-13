@@ -136,7 +136,7 @@ const SEASON_EVENTS_SCHEMA = [
       },
       location: {
         "@type": "Place" as const,
-        name: "Venue Reveal Soon",
+        name: "Chicago",
         address: {
           "@type": "PostalAddress" as const,
           addressLocality: "Chicago",

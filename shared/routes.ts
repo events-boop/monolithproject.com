@@ -25,11 +25,15 @@ export const ROUTES = {
   insights: "/insights",
   radio: "/radio",
   sunsets: "/sunsets",
+  sunsetsFM: "/sunsets-fm",
+  openNetwork: "/open-network",
   lake: "/lake",
   chasingSunsets: "/chasing-sunsets",
   chasingSunsetsFacts: "/chasing-sunsets-facts",
-  story: "/story",
+  story: "/story", // → /untold-story
   untoldVip: "/untold",
+  /** sunsets.vip link in bio. The full event page stays at /sunsets. */
+  sunsetsBio: "/sunsets-links",
   untoldStory: "/untold-story",
   untoldStoryDeronJuanyBravo: "/untold-story-deron-juany-bravo",
   newsletter: "/newsletter",
@@ -149,6 +153,7 @@ export function goPath(group: string, key: string) {
 /* ------------------------------------------------------------------ */
 
 export const ROUTE_ALIASES: Record<string, string> = {
+  "/story": ROUTES.untoldStory,
   "/togetherness": ROUTES.about + ANCHORS.togetherness,
   "/inner-circle": ROUTES.newsletter,
   "/the-monolith": ROUTES.monolith,
@@ -175,8 +180,8 @@ export const SUNSETS_REDIRECT_SOURCES = [
 export const STANDALONE_LANDING_PATHS = new Set([
   ROUTES.sunsets,
   ROUTES.lake,
-  ROUTES.story,
   ROUTES.untoldVip,
+  ROUTES.sunsetsBio,
 ]);
 
 /* ------------------------------------------------------------------ */
@@ -187,7 +192,7 @@ export const EVENT_BANNER_PATHS = new Set<string>([
   ROUTES.home,
   ROUTES.tickets,
   ROUTES.chasingSunsets,
-  ROUTES.story,
+  ROUTES.untoldStory,
   ROUTES.untoldStoryDeronJuanyBravo,
   ROUTES.lineup,
   ROUTES.schedule,

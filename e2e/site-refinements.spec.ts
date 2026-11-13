@@ -89,11 +89,15 @@ test("phone homepage uses the mobile hero and keeps refund requests distinct fro
   await expect(page.locator("dialog.event-notice")).toHaveCount(0);
 });
 
-test("pending show details do not advertise a provisional date", async ({
+test("the removed October 10 date leads to the calendar, not a placeholder", async ({
   page,
 }) => {
-  await page.goto("/events/css-oct10");
-  await expect(page.locator("body")).not.toContainText("October 10");
-  await expect(page.locator("body")).toContainText("Date to be announced");
-  await expect(page).toHaveTitle(/Details to be announced/);
+  for (const path of ["/events/css-oct10", "/events/monolith-launch"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/schedule\/?$/);
+    await expect(page.locator("body")).not.toContainText("October 10");
+    await expect(page.locator("body")).not.toContainText(
+      "Details to be announced"
+    );
+  }
 });
