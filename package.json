@@ -9,6 +9,7 @@
     "precheck": "node scripts/sync_hardening_constants.mjs && npm run seo:sync",
     "pretest:unit": "node scripts/sync_hardening_constants.mjs && npm run seo:sync",
     "dev": "node scripts/dev.mjs",
+    "email:preview": "node --import tsx/esm scripts/preview-emails.tsx",
     "build": "npm run sunsets:render && npm run validate:events && npm run images:generate && vite build && node --import tsx/esm scripts/prerender_public_routes.mts && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && npm run pixel:guard && npm run validate:history",
     "validate:events": "node --import tsx/esm scripts/validate_events.mts",
     "validate:history": "node --import tsx/esm scripts/validate_public_history.mts",
