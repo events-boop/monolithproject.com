@@ -1,6 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 test("crawl and audit all internal links for 404s", async ({ page }) => {
+  // Schedule archive links and multi-series navigation can queue up to maxPages (75) routes,
+  // which exceeds Playwright's default 30s timeout on slower CI runners.
+  test.setTimeout(90_000);
   const visited = new Set<string>();
   const queue = ["/"];
   const maxPages = 75; // Capping to keep test execution fast
