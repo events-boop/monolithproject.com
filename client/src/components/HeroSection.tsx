@@ -14,12 +14,28 @@ import {
   sunsetsTimeLabel,
 } from "@shared/events/sunsets-current";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  isActive?: boolean;
+  renderMedia?: boolean;
+  showInlineEventRail?: boolean;
+}
+
+export default function HeroSection({
+  isActive = true,
+  renderMedia = true,
+  showInlineEventRail = true,
+}: HeroSectionProps) {
   const event = getEventById("css-sep19");
   const schema = event ? buildScheduledEventSchema(event, "/sunsets") : null;
+  const HeadingTag = isActive ? "h1" : "p";
+
   return (
-    <section id="hero" className="monolith-hero" aria-labelledby="home-title">
-      {schema && (
+    <section
+      id={isActive ? "hero" : undefined}
+      className="monolith-hero"
+      aria-labelledby={isActive ? "home-title" : undefined}
+    >
+      {isActive && schema && (
         <JsonLd
           data={{
             ...schema,
@@ -27,18 +43,29 @@ export default function HeroSection() {
           }}
         />
       )}
-      <div className="monolith-hero-stage">
-        <CinematicHeroMedia />
+      <div className={renderMedia ? "monolith-hero-stage" : "lg-rooms-stage"}>
+        {renderMedia && <CinematicHeroMedia variant="rooms" priority={false} />}
         <div className="monolith-hero-inner">
-          <div className="monolith-hero-copy" data-home-hero-heading="true">
+          <div
+            className="monolith-hero-copy"
+            data-home-hero-heading={isActive ? "true" : undefined}
+          >
             <div>
-              <p className="home-eyebrow" data-home-hero-eyebrow="true">
+              <p
+                className="home-eyebrow"
+                data-home-hero-eyebrow={isActive ? "true" : undefined}
+              >
                 Chicago / House music / Together
               </p>
-              <h1 id="home-title">MONOLITH</h1>
+              <HeadingTag
+                id={isActive ? "home-title" : undefined}
+                className="monolith-hero-display"
+              >
+                MONOLITH
+              </HeadingTag>
               <p
                 className="monolith-hero-tagline"
-                data-home-hero-summary="true"
+                data-home-hero-summary={isActive ? "true" : undefined}
               >
                 Lakefront days. Late-night dance floors.
               </p>
@@ -52,48 +79,50 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="container layout-wide monolith-hero-event-rail">
-        {sunsetsShowVisible() && !sunsetsNeedsUpdate && (
-          <div className="home-event-strip" data-home-hero-card="true">
-            <div>
-              <div className="home-sunsets-brand-row">
-                <a href="/sunsets" aria-label="Chasing Sun(Sets) event guide">
-                  <img
-                    className="home-sunsets-logo home-sunsets-logo-compact"
-                    src="/sunsets/assets/logo-640.webp"
-                    width="640"
-                    height="238"
-                    alt="Chasing Sun(Sets)"
-                    decoding="async"
-                  />
-                </a>
-                <span className="home-eyebrow">Season finale</span>
+      {showInlineEventRail && (
+        <div className="container layout-wide monolith-hero-event-rail">
+          {sunsetsShowVisible() && !sunsetsNeedsUpdate && (
+            <div className="home-event-strip" data-home-hero-card="true">
+              <div>
+                <div className="home-sunsets-brand-row">
+                  <a href="/sunsets" aria-label="Chasing Sun(Sets) event guide">
+                    <img
+                      className="home-sunsets-logo home-sunsets-logo-compact"
+                      src="/sunsets/assets/logo-640.webp"
+                      width="640"
+                      height="238"
+                      alt="Chasing Sun(Sets)"
+                      decoding="async"
+                    />
+                  </a>
+                  <span className="home-eyebrow">Season finale</span>
+                </div>
+                <p>{currentSunsets.headliners.join(" × ")}</p>
               </div>
-              <p>{currentSunsets.headliners.join(" × ")}</p>
+              <div className="home-strip-details">
+                <span>
+                  {sunsetsNeedsUpdate ? "Original date: " : ""}
+                  {sunsetsShortDate} · {currentSunsets.venueName}
+                </span>
+                <span>
+                  {sunsetsNeedsUpdate
+                    ? "New date to be announced"
+                    : `${sunsetsTimeLabel} · 21+`}
+                </span>
+                <a
+                  href="/sunsets#event-status"
+                  className="home-status"
+                  data-status={currentSunsets.status}
+                >
+                  <span aria-hidden="true" />
+                  {sunsetsStatusLabel()}
+                </a>
+              </div>
+              <HomeTicketLink placement="hero" />
             </div>
-            <div className="home-strip-details">
-              <span>
-                {sunsetsNeedsUpdate ? "Original date: " : ""}
-                {sunsetsShortDate} · {currentSunsets.venueName}
-              </span>
-              <span>
-                {sunsetsNeedsUpdate
-                  ? "New date to be announced"
-                  : `${sunsetsTimeLabel} · 21+`}
-              </span>
-              <a
-                href="/sunsets#event-status"
-                className="home-status"
-                data-status={currentSunsets.status}
-              >
-                <span aria-hidden="true" />
-                {sunsetsStatusLabel()}
-              </a>
-            </div>
-            <HomeTicketLink placement="hero" />
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </section>
   );
 }

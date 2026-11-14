@@ -9,7 +9,7 @@
   background: #080807;
 }
 #app-shell .monolith-home .monolith-hero-stage {
-  min-height: min(960px, 100svh);
+  min-height: 100svh;
 }
 #app-shell .monolith-home .monolith-hero-photo img {
   object-position: center 60%;
@@ -588,7 +588,7 @@
     font-size: 104px;
   }
   #app-shell .monolith-home .monolith-hero-stage {
-    min-height: calc(100svh - 18px);
+    min-height: 100svh;
   }
   #app-shell .monolith-home .monolith-hero-inner {
     padding: 130px 24px 28px;

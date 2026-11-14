@@ -18,7 +18,7 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(
       page.getByRole("button", { name: "Start homepage slides" })
     ).toBeVisible();
-    for (const name of ["SUNSETS.FM", "Radio", "Monolith"]) {
+    for (const name of ["Live Rooms", "SUNSETS.FM", "Radio", "Monolith"]) {
       await page
         .getByRole("button", { name: `Show ${name} slide`, exact: true })
         .click();
@@ -54,13 +54,18 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(page.locator(".home-carousel iframe")).toHaveCount(0);
     await page.getByRole("link", { name: "Get launch updates" }).click();
     await expect(page.locator("#sunsets-fm-signup")).toBeInViewport();
-    const signup = page.getByRole("link", { name: "Sign up for SUNSETS.FM" });
+    const signup = page
+      .locator("#sunsets-fm-signup")
+      .getByRole("link", { name: /Get music updates|Sign up for SUNSETS\.FM/i });
     await expect(signup).toHaveAttribute("href", hostedForms.radio);
     await expect(signup).toHaveAttribute("target", "_blank");
     await page
       .getByRole("button", { name: "Show Radio slide", exact: true })
       .click();
-    await page.getByRole("link", { name: "Enter the listening room" }).click();
+    await page
+      .locator(".home-carousel")
+      .getByRole("link", { name: "Enter the listening room" })
+      .click();
     await expect(page).toHaveURL(/\/radio#radio-featured$/);
     await expect(page.locator("#radio-featured")).toBeVisible();
     await expect(page.locator(".radio-cover-feature img")).toHaveAttribute(

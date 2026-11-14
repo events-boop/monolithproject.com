@@ -65,7 +65,7 @@
   isolation: isolate;
   display: flex;
   align-items: flex-end;
-  min-height: max(760px, 100svh);
+  min-height: 100svh;
   overflow: hidden;
 }
 .monolith-hero-photo {
@@ -370,7 +370,7 @@
 }
 @media (max-width: 639px) {
   .monolith-hero-stage {
-    min-height: clamp(480px, 64svh, 600px);
+    min-height: 92svh;
   }
   .monolith-hero-photo img,
   .monolith-hero-photo video {

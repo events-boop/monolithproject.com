@@ -1,5 +1,5 @@
-/* Match HOME_HERO_PHOTOGRAPH in src/data/homeArtDirection.ts.
-   Begin fetching the homepage photograph before the route bundle renders. */
+/* Match HOME_CINEMATIC_OPENING in src/data/homeArtDirection.ts.
+   Begin fetching the opening homepage photograph before the route bundle renders. */
 (() => {
   if (
     location.pathname !== "/" ||
@@ -7,10 +7,8 @@
   )
     return;
   const mobile = matchMedia("(max-width: 639px)").matches;
-  const base = mobile
-    ? "monolith-crowd-hero-mobile-v2"
-    : "untold-story-header-jpq-9379";
-  const widths = mobile ? [480, 720] : [640, 1280, 1920];
+  const base = mobile ? "hero-monolith-mobile" : "hero-video-1-poster";
+  const widths = mobile ? [480, 780] : [480, 1024, 1920];
   const hint = document.createElement("link");
   hint.rel = "preload";
   hint.as = "image";
