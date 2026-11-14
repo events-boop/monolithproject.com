@@ -42,7 +42,7 @@ test("radio archive keeps its layout and readable new covers at mobile and deskt
       );
     await page.waitForTimeout(800);
     const covers = page.locator("#radio-archive article img");
-    await expect(covers).toHaveCount(6);
+    await expect(covers).toHaveCount(13);
     for (const cover of await covers.all()) {
       await cover.scrollIntoViewIfNeeded();
       await expect(cover).toHaveAttribute("src", /\/media\/chasing-radio\//);
@@ -81,13 +81,23 @@ test("radio archive keeps its layout and readable new covers at mobile and deskt
 test("filtering and loading a recording preserves the selection until the listener changes it", async ({
   page,
 }) => {
+  const errors: string[] = [];
+  page.on("pageerror", error => errors.push(error.message));
   await page.route("https://w.soundcloud.com/player/**", route =>
     route.fulfill({
       body: "<button>SoundCloud play</button>",
       contentType: "text/html",
     })
   );
+  await page.route("https://w.soundcloud.com/player/api.js", route =>
+    route.fulfill({
+      contentType: "application/javascript",
+      body: `window.SC={Widget:Object.assign(function(){const callbacks={};return {bind(name,fn){callbacks[name]=fn;if(name==='ready')setTimeout(fn,0)},unbind(name){delete callbacks[name]},play(){callbacks.play?.()},pause(){callbacks.pause?.()},seekTo(){},getPosition(fn){fn(0)}}},{Events:{READY:'ready',PLAY:'play',PAUSE:'pause',FINISH:'finish',ERROR:'error'}})};`,
+    })
+  );
   await page.goto("/radio#radio-archive");
+  const frame = page.locator(".radio-playback iframe");
+  await expect(frame).toHaveCount(0);
   await page
     .getByRole("button", { name: "Late-Night Bridges", exact: true })
     .click();
@@ -97,8 +107,13 @@ test("filtering and loading a recording preserves the selection until the listen
     .first()
     .getByRole("button", { name: "Load In Deck" })
     .click();
-  await page.getByRole("button", { name: /Load the player/ }).click();
-  const frame = page.locator(".radio-playback iframe");
+  await expect(frame).toHaveCount(0);
+  await page
+    .getByRole("button", {
+      name: "Play Chapter II — No Sleep (Berlin)",
+      exact: true,
+    })
+    .click();
   await expect(frame).toHaveAttribute(
     "src",
     /radian-x-chasing-sunsets-chapter-ii-x-no-sleep/
@@ -107,7 +122,7 @@ test("filtering and loading a recording preserves the selection until the listen
   await page.waitForTimeout(7500);
   await expect(frame).toHaveAttribute("src", recording!);
   await page.getByRole("button", { name: "Sunset Cuts", exact: true }).click();
-  await expect(page.locator("#radio-archive article")).toHaveCount(4);
+  await expect(page.locator("#radio-archive article")).toHaveCount(11);
   await page
     .locator("#radio-archive article")
     .first()
@@ -115,7 +130,10 @@ test("filtering and loading a recording preserves the selection until the listen
     .click();
   await expect(frame).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: /Load the player/ })
+    page.getByRole("button", {
+      name: "Play Live Set from Marbella Part II",
+      exact: true,
+    })
   ).toBeVisible();
   await page
     .getByRole("link", { name: "Explore the Open Network →", exact: true })
@@ -124,4 +142,5 @@ test("filtering and loading a recording preserves the selection until the listen
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Find your frequency"
   );
+  expect(errors).toEqual([]);
 });
