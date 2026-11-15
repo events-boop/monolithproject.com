@@ -106,7 +106,8 @@ export default function ChasingSunsetsDetails() {
                   loading="lazy"
                   decoding="async"
                   sizes="(min-width: 1024px) 34vw, 100vw"
-                  className="absolute inset-0 h-full w-full object-cover object-[52%_35%]"
+                  className="absolute inset-0 h-full w-full object-cover object-top origin-top"
+                  style={{ objectPosition: "52% 0%" }}
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(18,13,9,0.24)_58%,rgba(18,13,9,0.64))]" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">

@@ -281,16 +281,17 @@ export default function UntoldStory() {
                   key={artist.id}
                   href={`/artists/${artist.id}`}
                 >
-                  <div className="chasing-video-image">
+                  <div className="chasing-video-image !aspect-[4/5]">
                     <ResponsiveImage
                       src={artist.image}
                       alt={artist.name}
                       width={1000}
-                      height={700}
+                      height={1250}
                       sizes="(min-width: 640px) 50vw, 100vw"
                       style={{
-                        objectPosition: artist.imagePosition || "50% 30%",
+                        objectPosition: artist.imagePosition || "50% 0%",
                       }}
+                      className="h-full w-full object-cover object-top"
                     />
                   </div>
                   <div>

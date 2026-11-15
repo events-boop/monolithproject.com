@@ -33,7 +33,7 @@ describe("artist catalog", () => {
     expect(ARTISTS["chris-idh"]).toMatchObject({
       name: "CHRIS IDH",
       image: "/images/artists/chris-idh/chris-idh-portrait.jpg",
-      imagePosition: "58% 28%",
+      imagePosition: "58% 0%",
     });
 
     const srcSet = buildResponsiveImageSrcSet(
@@ -69,7 +69,7 @@ describe("artist catalog", () => {
       name: "MASSUMA (UK)",
       origin: "UNITED KINGDOM",
       image: "/images/artists/massuma-uk/massuma-uk-portrait.jpg",
-      imagePosition: "50% 26%",
+      imagePosition: "50% 0%",
       featuredVideo: {
         url: "https://www.youtube.com/watch?v=iErA3nUrdQE",
         title: "Massuma - Live @ KOKO London | Afro & Melodic House Set (2026)",

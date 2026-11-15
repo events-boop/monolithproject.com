@@ -64,7 +64,7 @@ export default function HomeArtists() {
                       height={750}
                       sizes="(min-width: 900px) 33vw, (min-width: 640px) 40vw, 100vw"
                       style={{
-                        objectPosition: artist.imagePosition || "center 25%",
+                        objectPosition: artist.imagePosition || "50% 0%",
                       }}
                     />
                     <span className="home-discovery-index" aria-hidden="true">

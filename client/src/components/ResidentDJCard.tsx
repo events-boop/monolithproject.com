@@ -246,8 +246,11 @@ export default function ResidentDJCard({
                 sizes="(min-width: 1024px) 34vw, 100vw"
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover/media:scale-105"
-                style={{ filter: "grayscale(1) contrast(1.08)" }}
+                className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105 group-hover/media:scale-105"
+                style={{
+                  objectPosition: "50% 0%",
+                  filter: "grayscale(1) contrast(1.08)",
+                }}
                 onError={event => {
                   (event.currentTarget as HTMLImageElement).style.display =
                     "none";

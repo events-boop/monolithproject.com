@@ -480,7 +480,8 @@ export default function ScheduleSection({
                                 sizes="(min-width: 1024px) 33vw, 100vw"
                                 loading="lazy"
                                 decoding="async"
-                                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                style={{ objectPosition: "50% 0%" }}
+                                className="w-full h-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-105"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                               <div className="absolute bottom-4 left-4 flex flex-col">

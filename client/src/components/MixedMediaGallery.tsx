@@ -33,6 +33,7 @@ interface MixedMediaGalleryProps {
   dense?: boolean;
   accentColor?: string;
   externalGallery?: ArchiveExternalGallery;
+  hideHeader?: boolean;
 }
 
 export default function MixedMediaGallery({
@@ -46,6 +47,7 @@ export default function MixedMediaGallery({
   dense = false,
   accentColor = "#FFFFFF",
   externalGallery,
+  hideHeader = false,
 }: MixedMediaGalleryProps) {
   const [index, setIndex] = useState(-1);
   const isLightboxOpen = index >= 0;
@@ -89,28 +91,39 @@ export default function MixedMediaGallery({
     <section className={`gallery-shell relative ${className}`} style={style}>
       <div className="container layout-wide px-6 relative z-10">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
-          <div className="max-w-2xl">
-            {subtitle && (
-              <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-white/70 mb-4 block uppercase">
-                {subtitle}
-              </span>
-            )}
-            <Heading className="font-display text-4xl md:text-6xl leading-[0.85] tracking-tight text-white uppercase mb-4">
-              {title}
-            </Heading>
-            {description && (
-              <p className="font-sans text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
-                {description}
+        {!hideHeader ? (
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
+            <div className="max-w-2xl">
+              {subtitle && (
+                <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-white/70 mb-4 block uppercase">
+                  {subtitle}
+                </span>
+              )}
+              <Heading className="font-display text-4xl md:text-6xl leading-[0.85] tracking-tight text-white uppercase mb-4">
+                {title}
+              </Heading>
+              {description && (
+                <p className="font-sans text-base md:text-lg text-white/70 leading-relaxed max-w-xl">
+                  {description}
+                </p>
+              )}
+            </div>
+            {hasMedia && (
+              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/70">
+                {mediaCountLabel}
               </p>
             )}
           </div>
-          {hasMedia && (
-            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/70">
+        ) : hasMedia ? (
+          <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-8">
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.28em] text-[#f3c68f]">
+              Collection Frames
+            </span>
+            <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-white/70">
               {mediaCountLabel}
             </p>
-          )}
-        </div>
+          </div>
+        ) : null}
 
         {externalGallery ? (
           <motion.a
@@ -189,7 +202,8 @@ export default function MixedMediaGallery({
                         ? "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                         : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     }
-                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.04] ${
+                    style={{ objectPosition: "50% 0%" }}
+                    className={`absolute inset-0 h-full w-full object-cover object-top origin-top transition-transform duration-700 ease-[0.22,1,0.36,1] group-hover:scale-[1.04] ${
                       photo.kind === "video" ? "opacity-90" : ""
                     }`}
                   />

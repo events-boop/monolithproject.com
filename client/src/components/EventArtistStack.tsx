@@ -29,7 +29,8 @@ export default function EventArtistStack({
             sizes="56px"
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover object-center saturate-[0.88] transition duration-500 group-hover:saturate-100"
+            style={{ objectPosition: "50% 0%" }}
+            className="h-full w-full object-cover object-top origin-top transition duration-500"
           />
         </span>
       ))}
