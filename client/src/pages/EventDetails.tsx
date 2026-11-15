@@ -25,6 +25,7 @@ import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import {
   ArrowLeft,
   ArrowUpRight,
+  Bookmark,
   CalendarPlus,
   Camera,
   CheckCircle2,
@@ -39,6 +40,8 @@ import MagneticButton from "@/components/MagneticButton";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import RoomConciergeCard from "@/components/RoomConciergeCard";
+import { toggleSavedEvent, useSavedPassport } from "@/lib/savedPassport";
 import {
   getSeriesLabel,
   getSeriesColor,
@@ -133,9 +136,11 @@ export default function EventDetails() {
   usePublicSiteDataVersion();
   const [, params] = useRoute("/events/:slug");
   const [, setLocation] = useLocation();
+  const passport = useSavedPassport();
   const slug = params?.slug;
 
   const event = getPublicEvents().find(e => e.slug === slug || e.id === slug);
+  const isEventSaved = Boolean(event && passport.events.includes(event.id));
 
   // Countdown renders only against a published, future event window — never a TBD
   // date. getEventStartTimestamp returns null while the window is unpublished, so
@@ -342,7 +347,7 @@ export default function EventDetails() {
       <Navigation brand={navigationBrand} />
 
       <main id="main-content" tabIndex={-1}>
-        <div className="event-guide-hero relative flex flex-col justify-end px-6 xl:px-12 border-b border-white/10">
+        <div className="event-guide-hero relative flex flex-col justify-between px-6 xl:px-12 border-b border-white/10 overflow-hidden">
           <ResponsiveImage
             src={bgImage}
             alt={event.title}
@@ -351,23 +356,36 @@ export default function EventDetails() {
             className="event-guide-photo absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-1000"
           />
           <div className="event-guide-shade absolute inset-0 z-0" />
+          <div
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+              background: `radial-gradient(ellipse 56% 40% at 20% 86%, ${getSeriesColor(event.series)}30 0%, rgba(243,166,89,0.12) 45%, transparent 74%)`,
+            }}
+          />
 
-          <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
+          <div className="relative z-10 max-w-7xl mx-auto w-full pt-2">
             <button
               onClick={() => setLocation("/schedule")}
-              className="btn-text-action mb-12"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/85 backdrop-blur-md transition-colors hover:border-[#f3a659]/50 hover:text-white cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" /> Schedule
+              <ArrowLeft className="w-3.5 h-3.5" /> Schedule
             </button>
+          </div>
 
-            <div className="flex flex-wrap items-center gap-3 mb-6">
+          <div className="flex-1 min-h-[18vh]" aria-hidden="true" />
+
+          <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-start">
+            <div className="flex flex-wrap items-center gap-3.5 mb-5">
               <span
-                className="font-mono text-xs uppercase tracking-[0.4em]"
-                style={{ color: getSeriesColor(event.series) }}
+                className="font-mono text-[11px] uppercase tracking-[0.34em] rounded-full border px-4 py-1.5 bg-black/45 backdrop-blur-md"
+                style={{
+                  color: getSeriesColor(event.series),
+                  borderColor: `${getSeriesColor(event.series)}55`,
+                }}
               >
                 {getSeriesLabel(event.series)}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.28em] px-3 py-1 border border-white/20 text-white/75">
+              <span className="font-mono text-[10px] uppercase tracking-[0.26em] px-4 py-1.5 rounded-full border border-white/20 bg-white/[0.06] backdrop-blur-md text-white/85">
                 {postponed
                   ? "POSTPONED — NEW DATE TO BE CONFIRMED"
                   : event.eventStatus === "EventCancelled"
@@ -378,55 +396,57 @@ export default function EventDetails() {
               </span>
             </div>
 
-            <h1 className="font-display text-[clamp(3rem,8vw,8rem)] leading-[0.85] tracking-tighter uppercase mb-6 drop-shadow-2xl max-w-5xl">
+            <h1 className="font-display uppercase mb-6 drop-shadow-2xl max-w-4xl text-[#fbf6ee]">
               {event.headline || event.title}
             </h1>
 
-            <div className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-white/70 text-xs md:text-sm tracking-[0.2em] uppercase mb-12">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-white/70" />{" "}
-                {event.eventStatus === "EventPostponed"
-                  ? "Original venue: "
-                  : ""}
-                {getScheduleVenue(event)}, {event.location}
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-white/70" />{" "}
-                {postponed ? "Original booking: " : ""}
-                {event.eventStatus === "EventPostponed"
-                  ? "Original date: "
-                  : ""}
-                {event.confirmationStatus === "pending"
-                  ? "Date to be announced"
-                  : event.date}{" "}
-                //{" "}
-                {event.confirmationStatus === "pending"
-                  ? "Time to be announced"
-                  : event.time}
-              </div>
-              {event.lineup && (
+            <div className="lg-glass-card w-full rounded-2xl p-5 sm:px-7 sm:py-5 flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+              <div className="flex flex-wrap gap-x-8 gap-y-3 font-mono text-white/85 text-xs tracking-[0.18em] uppercase">
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4 text-white/70" /> {event.lineup}
+                  <MapPin className="w-4 h-4 text-[#f3b572] shrink-0" />{" "}
+                  {event.eventStatus === "EventPostponed"
+                    ? "Original venue: "
+                    : ""}
+                  {getScheduleVenue(event)}, {event.location}
                 </div>
-              )}
-              {!isPastEvent &&
-                !isDisrupted &&
-                event.ticketTiers &&
-                event.ticketTiers.length > 0 && (
-                  <div className="flex items-center gap-2 text-white">
-                    <Ticket className="w-4 h-4" /> From $
-                    {event.ticketTiers[0].price}
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#f3b572] shrink-0" />{" "}
+                  {postponed ? "Original booking: " : ""}
+                  {event.eventStatus === "EventPostponed"
+                    ? "Original date: "
+                    : ""}
+                  {event.confirmationStatus === "pending"
+                    ? "Date to be announced"
+                    : event.date}{" "}
+                  //{" "}
+                  {event.confirmationStatus === "pending"
+                    ? "Time to be announced"
+                    : event.time}
+                </div>
+                {event.lineup && (
+                  <div className="flex items-center gap-2">
+                    <Star className="w-4 h-4 text-[#f3b572] shrink-0" /> {event.lineup}
                   </div>
                 )}
-            </div>
+                {!isPastEvent &&
+                  !isDisrupted &&
+                  event.ticketTiers &&
+                  event.ticketTiers.length > 0 && (
+                    <div className="flex items-center gap-2 text-[#ffd8a6]">
+                      <Ticket className="w-4 h-4" /> From $
+                      {event.ticketTiers[0].price}
+                    </div>
+                  )}
+              </div>
 
-            <div className="w-full sm:w-auto">
-              <ConversionCTA
-                event={event}
-                size="lg"
-                className="w-full sm:w-auto px-12 py-5 text-[15px]"
-                showUrgency={true}
-              />
+              <div className="w-full sm:w-auto shrink-0">
+                <ConversionCTA
+                  event={event}
+                  size="lg"
+                  className="w-full sm:w-auto px-10 py-4 text-[14px]"
+                  showUrgency={true}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -523,8 +543,8 @@ export default function EventDetails() {
               )}
         </section>
 
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-20 grid grid-cols-1 lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-7 flex flex-col gap-16">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-28 md:py-36 grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-24">
+          <div className="lg:col-span-7 flex flex-col gap-20 md:gap-24">
             {eventArtists.length > 0 && (
               <section
                 className="event-artist-discovery"
@@ -568,7 +588,7 @@ export default function EventDetails() {
                             sizes="(min-width: 1024px) 220px, (min-width: 640px) 40vw, 80vw"
                             style={{
                               objectPosition:
-                                artist.imagePosition || "center 25%",
+                                artist.imagePosition || "50% 0%",
                             }}
                           />
                         </Link>
@@ -928,6 +948,23 @@ export default function EventDetails() {
                       <ArrowUpRight size={12} aria-hidden="true" />
                     </a>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => toggleSavedEvent(event.id)}
+                    aria-pressed={isEventSaved}
+                    className={`inline-flex min-h-10 items-center gap-1.5 border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] transition cursor-pointer ${
+                      isEventSaved
+                        ? "border-[#f3a659]/55 bg-[#f3a659]/18 text-[#ffd8a6]"
+                        : "border-white/15 bg-white/[0.03] text-white/85 hover:border-white/35"
+                    }`}
+                  >
+                    <Bookmark
+                      size={13}
+                      fill={isEventSaved ? "currentColor" : "none"}
+                      aria-hidden="true"
+                    />
+                    {isEventSaved ? "Saved Night" : "Save Night"}
+                  </button>
                 </div>
               )}
 
@@ -975,6 +1012,13 @@ export default function EventDetails() {
             </div>
           </div>
         </div>
+
+        {/* Chicago Room & Arrival Concierge */}
+        <section className="relative z-10 px-6 pb-12 xl:px-12">
+          <div className="mx-auto w-full max-w-7xl">
+            <RoomConciergeCard event={event} compact={isPastEvent} />
+          </div>
+        </section>
 
         <section className="relative z-10 border-y border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.055),rgba(255,255,255,0.015))] px-6 py-14 xl:px-12">
           <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 md:flex-row md:items-end md:justify-between">

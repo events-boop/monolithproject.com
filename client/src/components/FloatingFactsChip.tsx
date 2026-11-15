@@ -63,9 +63,12 @@ export default function FloatingFactsChip({
 
   return (
     <div
-      className={`fixed left-4 md:left-6 z-50 ${
-        audio?.activeTrack ? "bottom-20 md:bottom-20" : "bottom-5 md:bottom-7"
-      }`}
+      className="fixed left-4 md:left-6 z-50"
+      style={{
+        bottom: audio?.activeTrack
+          ? "calc(var(--sticky-audio-dock-height, 84px) + 12px)"
+          : "24px",
+      }}
     >
       <div
         className={`max-w-[280px] rounded-full border shadow-[0_14px_36px_rgba(0,0,0,0.26)] backdrop-blur-xl ${toneClasses[tone]}`}

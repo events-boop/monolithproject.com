@@ -12,6 +12,7 @@ const ConnectSection = lazy(() => import("../ConnectSection"));
 const ExperienceGuidePanel = lazy(() => import("../ExperienceGuidePanel"));
 const AboutSection = lazy(() => import("../AboutSection"));
 const ArchiveSection = lazy(() => import("../ArchiveSection"));
+const SavedPassportSection = lazy(() => import("../SavedPassportSection"));
 
 const drawerMeta: Record<
   Exclude<DrawerType, null>,
@@ -70,6 +71,14 @@ const drawerMeta: Record<
     href: "/archive",
     hrefLabel: "View Full Archive",
   },
+  saved: {
+    eyebrow: "Saved Lineup & Sets",
+    title: "Your Monolith List",
+    description:
+      "Bookmarked nights, roster artists, and Chasing Sunsets Radio episodes saved on this device.",
+    href: "/schedule",
+    hrefLabel: "Open Full Calendar",
+  },
 };
 
 function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
@@ -86,6 +95,8 @@ function DrawerContent({ type }: { type: Exclude<DrawerType, null> }) {
       return <AboutSection />;
     case "archive":
       return <ArchiveSection />;
+    case "saved":
+      return <SavedPassportSection />;
     default:
       return null;
   }
@@ -115,8 +126,9 @@ export default function OffCanvasDrawer() {
 
             <Dialog.Content asChild>
               <motion.div
+                data-offcanvas-drawer={activeDrawer}
                 initial={{ x: 48, opacity: 0 }}
-                animate={{ x: 0 }}
+                animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 48, opacity: 0 }}
                 transition={{
                   type: "spring",
@@ -124,10 +136,10 @@ export default function OffCanvasDrawer() {
                   stiffness: 260,
                   mass: 0.8,
                 }}
-                className="fixed inset-x-0 bottom-0 z-[130] flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-[2rem] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.42)] md:bottom-4 md:left-auto md:right-4 md:top-[calc(var(--shell-nav-offset)+0.5rem)] md:max-h-none md:w-[min(42rem,calc(100vw-2rem))] md:rounded-[2rem]"
+                className="fixed inset-x-0 bottom-0 z-[130] flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-[2rem] border border-white/12 shadow-[0_30px_90px_rgba(0,0,0,0.68),0_0_0_1px_rgba(242,163,89,0.14)_inset] md:bottom-4 md:left-auto md:right-4 md:top-[calc(var(--shell-nav-offset)+0.5rem)] md:max-h-none md:w-[min(42rem,calc(100vw-2rem))] md:rounded-[2rem]"
                 style={{
                   background:
-                    "linear-gradient(160deg, rgba(16,16,18,0.96), rgba(8,8,10,0.99))",
+                    "linear-gradient(160deg, rgba(20,16,13,0.96), rgba(10,8,7,0.99))",
                 }}
               >
                 <div className="absolute inset-0 bg-noise opacity-[0.04] pointer-events-none mix-blend-overlay" />

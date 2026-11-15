@@ -72,6 +72,8 @@ export function getArtistAudioTrack(
       title: `${episode.shortCode} · ${episode.title}`,
       artist: artist.name,
       src: episode.embedUrl,
+      coverImage: episode.coverImage || episode.image,
+      duration: episode.duration,
     };
   }
 
@@ -84,6 +86,7 @@ export function getArtistAudioTrack(
       title: `${artist.name} — Recorded Set`,
       artist: artist.name,
       src: buildSoundCloudPlayerUrl(recording.href),
+      coverImage: artist.image,
     };
   }
 

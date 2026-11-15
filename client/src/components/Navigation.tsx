@@ -7,7 +7,15 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
-import { Ticket, ArrowUpRight, Lock, Zap, CalendarDays } from "lucide-react";
+import {
+  Ticket,
+  ArrowUpRight,
+  Lock,
+  Zap,
+  CalendarDays,
+  Search,
+  Bookmark,
+} from "lucide-react";
 import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import "@/styles/event-alert.css";
 import { useLocation } from "wouter";
@@ -31,6 +39,7 @@ import { getEventCta } from "../lib/cta";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
+import { useSavedPassport } from "../lib/savedPassport";
 import { ROUTES, ANCHORS } from "@shared/routes";
 
 const InteractiveNavigationOverlay = lazy(
@@ -105,7 +114,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const setLocation = useLocation()[1];
   const { preconnectGateway } = useIntentPrefetch();
 
-  const { openDrawer } = useUI();
+  const { openDrawer, openCommandPalette } = useUI();
+  const savedPassport = useSavedPassport();
   const isHome = location === ROUTES.home;
   const scene = getSceneForPath(location);
   const resolvedVariant = variant ?? scene.variant;
@@ -393,7 +403,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
         style={{
           top: "var(--shell-nav-offset)",
         }}
-        className="fixed left-0 right-0 z-[10001] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
+        className="fixed left-0 right-0 z-[110] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
       >
         <a
           href="#main-content"
@@ -832,8 +842,64 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 />
               </div>
 
-              {/* RIGHT: CTA & MOBILE TOGGLE */}
-              <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-3 md:gap-4 shrink-0">
+              {/* RIGHT: SEARCH, SAVED, CTA & MOBILE TOGGLE */}
+              <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-2.5 md:gap-3 shrink-0">
+                {/* Search / ⌘K trigger */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    signalChirp.click();
+                    openCommandPalette();
+                  }}
+                  data-nav-search-trigger="true"
+                  aria-label="Search artists, radio sets, and shows"
+                  className={cn(
+                    "hidden min-[420px]:inline-flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center justify-center gap-2 rounded-full border px-2.5 lg:px-3.5 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                    isLight
+                      ? "border-black/10 bg-black/[0.04] text-charcoal hover:bg-black/[0.08]"
+                      : "border-white/12 bg-white/[0.05] text-white/85 hover:border-[#f3a659]/50 hover:text-white"
+                  )}
+                >
+                  <Search className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="hidden 2xl:inline font-mono text-[10.5px] tracking-[0.12em] text-white/65">
+                    ⌘K
+                  </span>
+                </button>
+
+                {/* Saved Nights & Sets trigger */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    signalChirp.click();
+                    openDrawer("saved");
+                  }}
+                  data-nav-saved-trigger="true"
+                  aria-label={
+                    savedPassport.total > 0
+                      ? `Open saved list (${savedPassport.total} saved)`
+                      : "Open saved list"
+                  }
+                  className={cn(
+                    "hidden md:inline-flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center justify-center gap-1.5 rounded-full border px-2.5 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                    savedPassport.total > 0
+                      ? "border-[#f3a659]/45 bg-[#f3a659]/14 text-[#ffd8a6]"
+                      : isLight
+                        ? "border-black/10 bg-black/[0.04] text-charcoal hover:bg-black/[0.08]"
+                        : "border-white/12 bg-white/[0.05] text-white/80 hover:border-[#f3a659]/50 hover:text-white"
+                  )}
+                >
+                  <Bookmark
+                    className="h-4 w-4 shrink-0"
+                    fill={savedPassport.total > 0 ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+                  {savedPassport.total > 0 && (
+                    <span className="font-mono text-[11px] font-semibold tabular-nums">
+                      {savedPassport.total}
+                    </span>
+                  )}
+                </button>
+
                 <div className="hidden min-[370px]:flex sm:hidden">
                   <MagneticButton strength={0.16}>
                     <a

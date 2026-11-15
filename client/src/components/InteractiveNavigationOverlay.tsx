@@ -10,8 +10,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import {
   ArrowUpRight,
+  Bookmark,
   Globe2,
   Radio,
+  Search,
   Sparkles,
   Sun,
   Ticket,
@@ -40,6 +42,8 @@ import MagneticButton from "./MagneticButton";
 import { ROUTES } from "@shared/routes";
 import { HOME_NEXT_CHAPTER } from "@shared/home-next-chapter";
 import ResponsiveImage from "./ResponsiveImage";
+import { useUI } from "@/contexts/UIContext";
+import { useSavedPassport } from "@/lib/savedPassport";
 
 interface InteractiveNavigationOverlayProps {
   activePath: string;
@@ -250,6 +254,8 @@ export default function InteractiveNavigationOverlay({
     navigationChapters.find(chapter => chapter.id === activeChapterId) ??
     navigationChapters[0];
   const activeView = resolveChapterView(activeChapter, ticketHref);
+  const { openCommandPalette, openDrawer } = useUI();
+  const savedPassport = useSavedPassport();
   const accentStyle = {
     "--chapter-accent": activeView.accent,
   } as CSSProperties;
@@ -483,6 +489,28 @@ export default function InteractiveNavigationOverlay({
           aria-label="Main pages"
           className="mb-6 flex flex-wrap gap-2 lg:hidden"
         >
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              openCommandPalette();
+            }}
+            className="lg-pill-glass !min-h-[38px] !px-3.5 !py-1.5"
+          >
+            <Search className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Search</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              openDrawer("saved");
+            }}
+            className="lg-pill-glass !min-h-[38px] !px-3.5 !py-1.5"
+          >
+            <Bookmark className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Saved ({savedPassport.total})</span>
+          </button>
           {[
             { label: "Events / Tickets", href: "/schedule" },
             { label: "Sun(Sets)", href: "/sunsets" },

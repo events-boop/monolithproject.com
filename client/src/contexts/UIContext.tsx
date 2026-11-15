@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  ReactNode,
+} from "react";
 import { ROUTES } from "@shared/routes";
 
 export type DrawerType =
@@ -8,6 +15,7 @@ export type DrawerType =
   | "guide"
   | "about"
   | "archive"
+  | "saved"
   | null;
 
 const drawerRouteMap: Record<string, DrawerType> = {
@@ -27,6 +35,10 @@ interface UIContextProps {
   activeDrawer: DrawerType;
   openDrawer: (drawer: DrawerType) => void;
   closeDrawer: () => void;
+  isCommandPaletteOpen: boolean;
+  openCommandPalette: () => void;
+  closeCommandPalette: () => void;
+  toggleCommandPalette: () => void;
   isSensoryOverloadActive: boolean;
   setSensoryOverloadActive: (active: boolean) => void;
   hoveredExpression: ExpressionId;
@@ -43,29 +55,59 @@ function normalizePathname(pathname: string) {
 
 export function UIProvider({ children }: { children: ReactNode }) {
   const [activeDrawer, setActiveDrawer] = useState<DrawerType>(null);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] =
+    useState<boolean>(false);
   const [isSensoryOverloadActive, setSensoryOverloadActive] =
     useState<boolean>(false);
   const [hoveredExpression, setHoveredExpression] =
     useState<ExpressionId>(null);
 
-  const openDrawer = (drawer: DrawerType) => setActiveDrawer(drawer);
-  const closeDrawer = () => setActiveDrawer(null);
-
-  return (
-    <UIContext.Provider
-      value={{
-        activeDrawer,
-        openDrawer,
-        closeDrawer,
-        isSensoryOverloadActive,
-        setSensoryOverloadActive,
-        hoveredExpression,
-        setHoveredExpression,
-      }}
-    >
-      {children}
-    </UIContext.Provider>
+  const openDrawer = useCallback(
+    (drawer: DrawerType) => setActiveDrawer(drawer),
+    []
   );
+  const closeDrawer = useCallback(() => setActiveDrawer(null), []);
+  const openCommandPalette = useCallback(
+    () => setIsCommandPaletteOpen(true),
+    []
+  );
+  const closeCommandPalette = useCallback(
+    () => setIsCommandPaletteOpen(false),
+    []
+  );
+  const toggleCommandPalette = useCallback(
+    () => setIsCommandPaletteOpen(current => !current),
+    []
+  );
+
+  const value = useMemo(
+    () => ({
+      activeDrawer,
+      openDrawer,
+      closeDrawer,
+      isCommandPaletteOpen,
+      openCommandPalette,
+      closeCommandPalette,
+      toggleCommandPalette,
+      isSensoryOverloadActive,
+      setSensoryOverloadActive,
+      hoveredExpression,
+      setHoveredExpression,
+    }),
+    [
+      activeDrawer,
+      openDrawer,
+      closeDrawer,
+      isCommandPaletteOpen,
+      openCommandPalette,
+      closeCommandPalette,
+      toggleCommandPalette,
+      isSensoryOverloadActive,
+      hoveredExpression,
+    ]
+  );
+
+  return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 }
 
 export function useUI() {

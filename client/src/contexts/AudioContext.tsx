@@ -12,6 +12,8 @@ export interface GlobalAudioTrack {
   title: string;
   artist?: string;
   src: string;
+  coverImage?: string;
+  duration?: string;
 }
 
 interface AudioContextValue {

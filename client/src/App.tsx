@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Route, Switch, useLocation, Redirect } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -381,10 +381,13 @@ function SceneSync() {
 function RouteMemory() {
   const [location] = useLocation();
   const { closeDrawer } = useUI();
+  const closeDrawerRef = useRef(closeDrawer);
+  closeDrawerRef.current = closeDrawer;
+
   useEffect(() => {
     rememberVisitedPath(location);
-    closeDrawer(); // Ensure drawers always close when navigating to a new real page route
-  }, [location, closeDrawer]);
+    closeDrawerRef.current(); // Ensure drawers always close when navigating to a new real page route
+  }, [location]);
   return null;
 }
 
@@ -438,6 +441,9 @@ const GlobalTicketButton = lazy(
   () => import("./components/GlobalTicketButton")
 );
 const OffCanvasDrawer = lazy(() => import("./components/ui/OffCanvasDrawer"));
+const SonicCommandPalette = lazy(
+  () => import("./components/SonicCommandPalette")
+);
 const Toaster = lazy(() =>
   import("./components/ui/sonner").then(module => ({ default: module.Toaster }))
 );
@@ -515,6 +521,7 @@ function MainContentWrapper() {
       <AttributionSync />
       <Suspense fallback={null}>
         {activeDrawer ? <OffCanvasDrawer /> : null}
+        <SonicCommandPalette />
       </Suspense>
 
       {/* Sensory Overload Cinematic Overlay vault effect */}

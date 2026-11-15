@@ -6,7 +6,7 @@ import RadioDeckPlayer from "@/components/RadioDeckPlayer";
 import "./radio-episode.css";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "wouter";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bookmark } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
@@ -17,6 +17,7 @@ import {
   radioEpisodes,
 } from "@/data/radioEpisodes";
 import { CTA_LABELS } from "@/lib/cta";
+import { toggleSavedEpisode, useSavedPassport } from "@/lib/savedPassport";
 
 function isExternalLink(url: string) {
   return /^https?:\/\//i.test(url) || url.startsWith("/go/");
@@ -33,7 +34,9 @@ const sectionReveal = {
 export default function RadioEpisode() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
+  const passport = useSavedPassport();
   const episode = slug ? getRadioEpisode(slug) : undefined;
+  const isEpisodeSaved = Boolean(episode && passport.episodes.includes(episode.slug));
   const legacyRedirect = slug ? getLegacyRadioRedirect(slug) : undefined;
   const episodeIndex = episode
     ? radioEpisodes.findIndex(entry => entry.slug === episode.slug)
@@ -128,7 +131,7 @@ export default function RadioEpisode() {
   }
 
   return (
-    <div className="radio-episode-page min-h-screen bg-background text-foreground">
+    <div className="radio-episode-page min-h-screen bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title={`Chasing Sunsets Radio | ${episode.shortCode} ${episode.guest}`}
         description={`Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`}
@@ -146,7 +149,7 @@ export default function RadioEpisode() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="page-shell-start pb-24 px-6"
+        className="page-shell-start-loose pb-28 pt-8 md:pt-12 px-6"
       >
         <motion.section className="container layout-default" {...sectionReveal}>
           <Link href="/radio" className="episode-back">
@@ -179,7 +182,7 @@ export default function RadioEpisode() {
                   sunsets.fm
                 </Link>
               </p>
-              <div className="mt-4 flex flex-wrap gap-2.5">
+              <div className="mt-4 flex flex-wrap items-center gap-2.5">
                 <span className="episode-chip">
                   Duration · {episode.duration}
                 </span>
@@ -188,6 +191,23 @@ export default function RadioEpisode() {
                     ? `${episode.tracklist.length} Tracks Listed`
                     : "Tracklist to come"}
                 </span>
+                <button
+                  type="button"
+                  onClick={() => toggleSavedEpisode(episode.slug)}
+                  aria-pressed={isEpisodeSaved}
+                  className={`inline-flex min-h-[34px] items-center gap-1.5 rounded-full border px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors cursor-pointer ${
+                    isEpisodeSaved
+                      ? "border-[#f3a659]/55 bg-[#f3a659]/18 text-[#ffd8a6]"
+                      : "border-white/15 bg-white/[0.04] text-white/80 hover:border-[#f3a659]/45 hover:text-white"
+                  }`}
+                >
+                  <Bookmark
+                    className="h-3.5 w-3.5"
+                    fill={isEpisodeSaved ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+                  <span>{isEpisodeSaved ? "Saved Set" : "Save Set"}</span>
+                </button>
               </div>
 
               <div id="listen" className="episode-deck scroll-shell-target">

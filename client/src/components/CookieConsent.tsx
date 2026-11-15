@@ -70,9 +70,17 @@ export default function CookieConsent() {
           className={
             inlineTarget
               ? "access-cookie-notice"
-              : `fixed ${hasStickyAudioBar ? "bottom-20" : "bottom-4"} left-4 right-4 sm:left-auto sm:right-4 z-[9999] sm:w-auto sm:max-w-[20rem] pointer-events-auto`
+              : "fixed left-4 right-4 sm:left-auto sm:right-4 z-[9999] sm:w-auto sm:max-w-[20rem] pointer-events-auto"
           }
-          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+          style={
+            inlineTarget
+              ? undefined
+              : {
+                  bottom: hasStickyAudioBar
+                    ? "calc(var(--sticky-audio-dock-height, 84px) + 12px)"
+                    : "calc(16px + env(safe-area-inset-bottom, 0px))",
+                }
+          }
           role="region"
           aria-label="Cookie consent"
         >
