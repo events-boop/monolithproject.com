@@ -14,6 +14,7 @@ import JoinSignalSection from "@/components/JoinSignalSection";
 import HomeNextChapter from "@/components/HomeNextChapter";
 import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
 import EventStatusBadge from "@/components/EventStatusBadge";
+import { toggleSavedEvent, useSavedPassport } from "@/lib/savedPassport";
 import {
   getScheduledEvents,
   getPastEvents,
@@ -86,25 +87,11 @@ export default function Schedule() {
   const [filter, setFilter] = useState("ALL");
   const [query, setQuery] = useState("");
   const [series, setSeries] = useState("all");
-  const [saved, setSaved] = useState<string[]>(() => {
-    try {
-      const values = JSON.parse(
-        localStorage.getItem("monolith-starred-rites") || "[]"
-      );
-      return Array.isArray(values)
-        ? values.filter((id): id is string => typeof id === "string")
-        : [];
-    } catch {
-      return [];
-    }
-  });
-  useEffect(() => {
-    try {
-      localStorage.setItem("monolith-starred-rites", JSON.stringify(saved));
-    } catch {
-      /* Browsing remains available without device storage. */
-    }
-  }, [saved]);
+  const passport = useSavedPassport();
+  const saved = passport.events;
+  const toggleSaved = (id: string) => {
+    toggleSavedEvent(id);
+  };
   const months = [
     "ALL",
     ...Array.from(new Set(events.map(event => getScheduleDate(event).month))),
@@ -134,10 +121,6 @@ export default function Schedule() {
   const groups = Array.from(
     new Set(visible.map(event => getScheduleDate(event).key))
   );
-  const toggleSaved = (id: string) =>
-    setSaved(items =>
-      items.includes(id) ? items.filter(value => value !== id) : [...items, id]
-    );
   const renderScheduleCard = (
     event: ScheduledEvent,
     { isArchiveCard = false }: { isArchiveCard?: boolean } = {}
@@ -287,7 +270,7 @@ export default function Schedule() {
     );
   };
   return (
-    <div className="monolith-schedule min-h-screen bg-background text-foreground">
+    <div className="monolith-schedule min-h-screen bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title="Upcoming Shows | The Monolith Project"
         absoluteTitle
@@ -299,27 +282,31 @@ export default function Schedule() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="page-shell-start schedule-editorial-main"
+        className="schedule-editorial-main"
       >
+        <section className="lg-cinematic-masthead -mx-6 px-6 mb-10 md:mb-14">
+          <div className="container layout-wide">
+            <header className="schedule-editorial-header !border-t-0 !pb-0">
+              <div>
+                <p className="section-kicker">The Monolith Project / Calendar</p>
+                <h1 className="schedule-page-title">
+                  Find your
+                  <br />
+                  next night.
+                </h1>
+                <p className="schedule-page-intro">
+                  Confirmed dates, forthcoming chapters and the latest
+                  ticket-holder updates. All times are Chicago time.
+                </p>
+              </div>
+              <Link href="/newsletter" className="home-text-link">
+                Get show announcements{" "}
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </Link>
+            </header>
+          </div>
+        </section>
         <div className="container layout-wide">
-          <header className="schedule-editorial-header">
-            <div>
-              <p className="section-kicker">The Monolith Project / Calendar</p>
-              <h1 className="schedule-page-title">
-                Find your
-                <br />
-                next night.
-              </h1>
-              <p className="schedule-page-intro">
-                Confirmed dates, forthcoming chapters and the latest
-                ticket-holder updates. All times are Chicago time.
-              </p>
-            </div>
-            <Link href="/newsletter" className="home-text-link">
-              Get show announcements{" "}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-          </header>
           <div className="schedule-discovery-search">
             <label className="schedule-search-field">
               <span>Find a show</span>

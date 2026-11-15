@@ -230,7 +230,7 @@ export default function Radio() {
       />
       <Navigation brand="monolith" />
       <main id="main-content" tabIndex={-1}>
-        <section className="relative flex min-h-[82vh] flex-col justify-center overflow-hidden bg-[#050505] px-6 pb-24 page-shell-start-loose">
+        <section className="relative flex min-h-[max(880px,100svh)] flex-col justify-center overflow-hidden bg-[#050505] px-6 pb-28 pt-36 lg:py-36 page-shell-start-loose">
           <div className="absolute inset-0 z-0">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
@@ -246,16 +246,16 @@ export default function Radio() {
                   alt={`${activeEpisode.guest} radio portrait`}
                   priority
                   sizes="100vw"
-                  className="h-full w-full object-cover object-center opacity-30"
+                  className="h-full w-full object-cover object-center opacity-42"
                 />
               </motion.div>
             </AnimatePresence>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(232,184,109,0.22),transparent_28%),radial-gradient(circle_at_82%_24%,rgba(194,112,62,0.16),transparent_24%),linear-gradient(180deg,rgba(6,6,6,0.1)_0%,rgba(6,6,6,0.68)_45%,rgba(5,5,5,0.96)_100%)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.94)_0%,rgba(5,5,5,0.68)_45%,rgba(5,5,5,0.88)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(232,184,109,0.24),transparent_34%),radial-gradient(circle_at_82%_24%,rgba(194,112,62,0.18),transparent_28%),linear-gradient(180deg,rgba(6,6,6,0.14)_0%,rgba(6,6,6,0.58)_48%,rgba(5,5,5,0.96)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.9)_0%,rgba(5,5,5,0.58)_48%,rgba(5,5,5,0.82)_100%)]" />
           </div>
 
           <div className="container layout-wide relative z-10 w-full">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-start">
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,0.92fr)] lg:items-center">
               <motion.div {...heroReveal}>
                 <SignalBarsMark className="mb-6 h-10 w-14 sm:h-12 sm:w-16" />
                 <span className="mb-5 block font-mono text-[10px] uppercase tracking-[0.38em] text-[#E8B86D]">

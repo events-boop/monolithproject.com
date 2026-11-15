@@ -125,7 +125,7 @@ export default function Partners() {
 
       <main className="relative z-10">
         {/* Hero */}
-        <section className="pt-40 md:pt-56 pb-20 px-6">
+        <section className="lg-cinematic-masthead px-6">
           <div className="container layout-default">
             <motion.div
               initial={{ y: 30 }}
@@ -133,16 +133,16 @@ export default function Partners() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-4 mb-8">
-                <span className="section-kicker text-primary">
+                <span className="section-kicker text-[#f3b572]">
                   Partner With Monolith
                 </span>
-                <div className="h-px w-20 bg-white/10" />
+                <div className="h-px w-20 bg-white/15" />
               </div>
-              <h1 className="section-display-title mb-4 text-white flex flex-col">
+              <h1 className="section-display-title mb-6 text-white flex flex-col">
                 <span>PARTNERS</span>
-                <span className="text-white/38">&amp; CREW</span>
+                <span className="text-white/42">&amp; CREW</span>
               </h1>
-              <p className="text-white/60 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
+              <p className="text-white/74 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
                 We work with venues, brands, crew, and creative collaborators
                 who want to help produce strong shows and reach a real Chicago
                 audience.
@@ -152,7 +152,7 @@ export default function Partners() {
         </section>
 
         {/* Partnership Types — Large Immerisve Blocks */}
-        <section className="py-20 px-6 border-t border-white/5">
+        <section className="py-28 md:py-36 px-6">
           <div className="container layout-default">
             <div className="mb-12 max-w-3xl">
               <span className="section-kicker mb-4 block text-primary">

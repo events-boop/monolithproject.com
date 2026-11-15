@@ -33,34 +33,34 @@ export default function SunsetsFM() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="page-shell-start px-5 pb-20 sm:px-8"
+        className="pb-28 lg-dusk-atmosphere"
       >
-        <div className="container layout-wide">
-          <section
-            aria-labelledby="sunsets-fm-title"
-            className="relative isolate overflow-hidden border-b border-white/15 pb-14 pt-10 md:pb-20 md:pt-20"
-          >
+        <section
+          aria-labelledby="sunsets-fm-title"
+          className="lg-cinematic-masthead px-5 sm:px-8 mb-14 md:mb-20"
+        >
+          <div className="container layout-wide relative">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-16 top-0 -z-10 h-72 w-72 rounded-full bg-[#C2703E]/15 blur-3xl"
+              className="pointer-events-none absolute -right-16 top-0 -z-10 h-72 w-72 rounded-full bg-[#C2703E]/18 blur-3xl"
             />
-            <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.25em] text-[#E8B86D]">
+            <p className="mb-6 font-mono text-[10.5px] uppercase tracking-[0.28em] text-[#E8B86D]">
               The Monolith Project / Coming soon
             </p>
             <h1
               id="sunsets-fm-title"
-              className="font-display whitespace-nowrap text-[clamp(1.9rem,9.2vw,8rem)] leading-none tracking-[-0.04em]"
+              className="font-display whitespace-nowrap text-[clamp(2.2rem,9.8vw,8.6rem)] leading-none tracking-[-0.04em]"
             >
               SUNSETS.FM
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/76 md:text-2xl">
               A new music discovery network from Monolith. Built from the spirit
               of Chasing Sun(Sets) Radio, connecting the sets, places, and
               people behind the music.
             </p>
             <a
               href={ROUTES.openNetwork}
-              className={`btn-pill-sunsets mt-8 inline-flex max-w-full items-center justify-center gap-3 !px-5 !text-xs !tracking-[0.06em] ${linkFocus}`}
+              className={`btn-pill-sunsets mt-9 inline-flex max-w-full items-center justify-center gap-3 !px-6 !text-xs !tracking-[0.08em] ${linkFocus}`}
             >
               Explore the Open Network{" "}
               <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -77,7 +77,9 @@ export default function SunsetsFM() {
             <p className="mt-2 text-xs leading-relaxed text-white/60">
               Opens our email signup form. Confirm your email from your inbox.
             </p>
-          </section>
+          </div>
+        </section>
+        <div className="container layout-wide px-5 sm:px-8">
           <section aria-labelledby="episodes-title" className="py-12 md:py-16">
             <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-[#E8B86D]">
               Selected transmissions

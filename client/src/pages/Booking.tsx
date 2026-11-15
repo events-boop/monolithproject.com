@@ -52,7 +52,7 @@ export default function Booking() {
       </div>
 
       <main className="relative z-10">
-        <section className="pt-40 md:pt-56 pb-20 px-6">
+        <section className="lg-cinematic-masthead px-6 mb-16 md:mb-24">
           <div className="container layout-default">
             {/* Breadcrumbs */}
             <nav
@@ -72,10 +72,10 @@ export default function Booking() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <h1 className="section-display-title mb-4 text-white">BOOKING</h1>
-              <p className="section-display-title-compact text-white/38">
+              <p className="section-display-title-compact text-white/42 mb-6">
                 &amp; INQUIRY
               </p>
-              <p className="text-white/60 text-lg md:text-2xl max-w-xl font-light italic leading-relaxed">
+              <p className="text-white/74 text-lg md:text-2xl max-w-2xl font-light italic leading-relaxed">
                 Whether you represent an artist, venue, or brand partner, we
                 review every submission for musical fit, room awareness, and
                 alignment with the world we build.

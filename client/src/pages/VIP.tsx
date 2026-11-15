@@ -253,10 +253,11 @@ export default function VIP() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="relative z-10 page-shell-start-loose pb-32"
+        className="relative z-10 pb-36"
       >
-        <div className="container layout-default px-4 sm:px-6">
-          <section className="mb-28 grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+        <section className="lg-cinematic-masthead px-4 sm:px-6 mb-24 md:mb-32">
+          <div className="container layout-default">
+          <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -326,8 +327,11 @@ export default function VIP() {
                 </p>
               </div>
             </motion.div>
-          </section>
+          </div>
+          </div>
+        </section>
 
+        <div className="container layout-default px-4 sm:px-6">
           <section id="vip-dates" className="scroll-mt-28 pb-28">
             <div className="mb-10 flex flex-col gap-5 border-b border-white/10 pb-8 md:flex-row md:items-end md:justify-between">
               <div>

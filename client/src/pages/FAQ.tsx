@@ -123,36 +123,28 @@ export default function FAQ() {
         <div className="absolute inset-0 bg-noise opacity-[0.03]" />
       </div>
 
-      <main className="relative z-10 page-shell-start-loose pb-32">
-        <div className="container layout-default px-6">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-16"
-          >
-            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
-              — Got Questions
-            </span>
-            <h1 className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-6">
-              FAQ
-            </h1>
+      <main className="relative z-10 pb-36 lg-dusk-atmosphere">
+        <section className="lg-cinematic-masthead px-6 mb-16 md:mb-24">
+          <div className="container layout-default">
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.3,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{ originX: 0 }}
-              className="h-[2px] w-32 bg-gradient-to-r from-primary via-primary/60 to-transparent mb-6"
-            />
-            <p className="text-white/70 max-w-xl leading-relaxed">
-              Everything you need to know before, during, and after an event.
-            </p>
-          </motion.div>
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="font-mono text-[10.5px] tracking-[0.3em] uppercase text-[#f3b572] block mb-5">
+                — Got Questions
+              </span>
+              <h1 className="font-display text-[clamp(3.8rem,10.5vw,8.4rem)] leading-[0.85] uppercase tracking-tight-display text-white mb-6">
+                FAQ
+              </h1>
+              <p className="text-white/75 text-base md:text-xl max-w-xl leading-relaxed">
+                Everything you need to know before, during, and after an event.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className="container layout-default px-6">
           <aside
             id="ticket-policy"
             className="mb-10 rounded-2xl border border-amber-300/40 bg-amber-300/10 p-6 md:p-8"

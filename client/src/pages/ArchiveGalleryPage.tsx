@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import { buildGallerySchema } from "@shared/seo/gallery";
 import { useRoute } from "wouter";
 import Navigation from "@/components/Navigation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import { Link } from "wouter";
-import { ArrowLeft, BookOpen, Camera, UploadCloud } from "lucide-react";
+import { ArrowLeft, BookOpen, Camera, Headphones, Pause, Play, UploadCloud } from "lucide-react";
 import {
   archiveCollectionsBySlug,
   type ArchiveCollection,
 } from "@/data/galleryData";
+import { radioEpisodes } from "@/data/radioEpisodes";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 
 // Dropbox file request — community uploads of DJ sets, photos, and videos.
 const COMMUNITY_UPLOAD_URL =
@@ -69,6 +72,22 @@ export default function ArchiveGalleryPage() {
       ? params.season
       : `${params.series}-${params.season}`;
   const gallery = archiveCollectionsBySlug[key];
+  const audio = useOptionalGlobalAudio();
+
+  const soundtrackEpisode =
+    params.series === "untold-story" || key.startsWith("untold-story")
+      ? radioEpisodes.find(ep => ep.slug === "ch-02-radian-no-sleep") ||
+        radioEpisodes[0]
+      : key.includes("sunsets-i")
+        ? radioEpisodes.find(ep => ep.slug === "ep-02-ewerseen") ||
+          radioEpisodes[0]
+        : radioEpisodes.find(ep => ep.slug === "ep-004-benchek-part-2") ||
+          radioEpisodes[0];
+
+  const isSoundtrackActive = Boolean(
+    soundtrackEpisode && audio?.activeTrack?.src === soundtrackEpisode.embedUrl
+  );
+  const isSoundtrackPlaying = Boolean(isSoundtrackActive && audio?.isPlaying);
 
   const navBrand: "chasing-sunsets" | "untold-story" | "monolith" =
     params.series === "chasing-sunsets" || params.series === "untold-story"
@@ -102,59 +121,140 @@ export default function ArchiveGalleryPage() {
       />
       <Navigation variant="dark" brand={navBrand} />
 
-      <main className="page-shell-start pb-32">
-        <div className="container layout-wide px-6">
-          <Link href="/archive" asChild>
-            <a className="btn-text-action mb-12">
-              <ArrowLeft className="w-4 h-4" /> Back to Archive
-            </a>
-          </Link>
+      <main id="main-content" tabIndex={-1} className="pb-32 lg-dusk-atmosphere">
+        {/* Full-Bleed Cinematic Season Cover Hero */}
+        <section className="relative flex min-h-[max(760px,96svh)] flex-col justify-between overflow-hidden border-b border-white/10 px-6 pb-12 pt-[calc(var(--shell-page-top-hero)+12px)] md:pb-16">
+          <div className="absolute inset-0 z-0">
+            <ResponsiveImage
+              src={gallery.coverImage}
+              alt={`${gallery.title} — ${gallery.subtitle}`}
+              priority
+              sizes="100vw"
+              className="h-full w-full object-cover object-center opacity-80"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(5,5,5,0.48) 0%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.34) 60%, rgba(5,5,5,0.92) 90%, #050505 100%), linear-gradient(90deg, rgba(5,5,5,0.74) 0%, rgba(5,5,5,0.22) 56%, rgba(5,5,5,0.08) 90%)",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `radial-gradient(ellipse 56% 42% at 22% 86%, ${gallery.accentColor}30 0%, rgba(243,166,89,0.12) 45%, transparent 74%)`,
+              }}
+            />
+          </div>
 
-          {gallery.comingSoon && gallery.media.length === 0 ? (
-            <section aria-label={`${gallery.subtitle} — photos coming soon`}>
+          <div className="container layout-wide relative z-10 flex flex-wrap items-center justify-between gap-4">
+            <Link href="/archive" asChild>
+              <a className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/45 px-4 py-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-white/85 backdrop-blur-md transition-colors hover:border-[#f3a659]/50 hover:text-white">
+                <ArrowLeft className="w-3.5 h-3.5" /> Back to Archive
+              </a>
+            </Link>
+
+            {soundtrackEpisode && (
+              <div className="lg-glass-card rounded-full px-3.5 py-2 flex items-center gap-3">
+                <Headphones
+                  className="h-4 w-4 text-[#f3b572] shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-white/85">
+                  Gallery Soundtrack · {soundtrackEpisode.guest}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isSoundtrackActive) {
+                      audio?.setPlaying(!isSoundtrackPlaying);
+                    } else {
+                      audio?.loadTrack({
+                        slug: soundtrackEpisode.slug,
+                        title: `${soundtrackEpisode.shortCode} · ${soundtrackEpisode.title}`,
+                        artist: soundtrackEpisode.guest,
+                        src: soundtrackEpisode.embedUrl,
+                        coverImage:
+                          soundtrackEpisode.coverImage || soundtrackEpisode.image,
+                        duration: soundtrackEpisode.duration,
+                      });
+                    }
+                  }}
+                  className="lg-pill-amber !min-h-[34px] !px-3.5 !py-1"
+                >
+                  {isSoundtrackPlaying ? (
+                    <>
+                      <Pause className="h-3 w-3 fill-current" aria-hidden="true" />
+                      <span>Pause</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="h-3 w-3 fill-current" aria-hidden="true" />
+                      <span>Listen while browsing</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 min-h-[18vh]" aria-hidden="true" />
+
+          <div className="container layout-wide relative z-10">
+            <div className="flex flex-wrap items-center gap-3.5 mb-5">
               <span
-                className="font-mono text-[10px] tracking-[0.25em] uppercase block mb-4"
-                style={{ color: gallery.accentColor }}
+                className="font-mono text-[11px] tracking-[0.3em] uppercase rounded-full border px-3.5 py-1.5 bg-black/45 backdrop-blur-md"
+                style={{
+                  color: gallery.accentColor,
+                  borderColor: `${gallery.accentColor}55`,
+                }}
               >
                 {gallery.date}
               </span>
-              <h1 className="font-display text-3xl md:text-5xl uppercase tracking-wider text-white mb-3">
-                {gallery.title}
-              </h1>
-              <p className="font-mono text-xs tracking-[0.2em] uppercase text-white/70 mb-6">
-                {gallery.subtitle}
-              </p>
-              <p className="max-w-xl text-white/70 leading-relaxed mb-6">
+              {gallery.subtitle && (
+                <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-white/80">
+                  {gallery.subtitle}
+                </span>
+              )}
+            </div>
+
+            <h1 className="font-display text-[clamp(3.2rem,8.5vw,7.8rem)] leading-[0.86] uppercase tracking-tight text-[#fbf6ee] drop-shadow-2xl max-w-5xl mb-5">
+              {gallery.title}
+            </h1>
+
+            {gallery.description && (
+              <p className="max-w-2xl text-base md:text-lg text-white/80 leading-relaxed mb-7">
                 {gallery.description}
               </p>
+            )}
 
-              {gallery.journalHref && (
-                <Link href={gallery.journalHref} asChild>
-                  <a className="btn-text-action mb-12">
-                    <BookOpen className="w-4 h-4" /> Read The Recap
-                  </a>
-                </Link>
-              )}
+            {gallery.journalHref && (
+              <Link href={gallery.journalHref} asChild>
+                <a className="lg-pill-glass inline-flex">
+                  <BookOpen className="w-4 h-4" />
+                  <span>Read The Recap</span>
+                </a>
+              </Link>
+            )}
+          </div>
+        </section>
 
+        <div className="container layout-wide px-6 pt-12">
+          {gallery.comingSoon && gallery.media.length === 0 ? (
+            <section aria-label={`${gallery.subtitle} — photos coming soon`}>
               <CommunityUploadPanel gallery={gallery} />
             </section>
           ) : (
             <>
-              {gallery.journalHref && (
-                <Link href={gallery.journalHref} asChild>
-                  <a className="btn-text-action mb-10">
-                    <BookOpen className="w-4 h-4" /> Read The Recap
-                  </a>
-                </Link>
-              )}
               <MixedMediaGallery
                 title={gallery.title}
-                headingLevel="h1"
+                headingLevel="h2"
                 subtitle={gallery.subtitle}
                 description={gallery.description}
                 media={gallery.media}
-                className="bg-transparent"
+                className="bg-transparent !pt-0"
                 dense
+                hideHeader
                 accentColor={gallery.accentColor}
                 externalGallery={gallery.externalGallery}
               />

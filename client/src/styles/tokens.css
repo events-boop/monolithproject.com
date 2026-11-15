@@ -6,7 +6,7 @@
   --editorial-line: #ffffff26;
   --editorial-gold: #d8b47d;
   --editorial-radius: 12px;
-  --editorial-section-space: clamp(48px, 6vw, 88px);
+  --editorial-section-space: clamp(80px, 9.5vw, 136px);
   --radius: 0.5rem;
   --label-tracking-kicker: 0.26em;
   --label-tracking-meta: 0.22em;

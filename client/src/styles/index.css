@@ -16,6 +16,7 @@
 @import "./text-floor.css";
 @import "./first-access.css";
 @import "./editorial-system.css";
+@import "./liquid-glass-system.css";
 
 @source not "../components/ui/HeroSpotlight.tsx";
 @source not "../components/ui/MagneticButton.tsx";

@@ -1,13 +1,14 @@
-/* Compact calendar inside Monolith's existing editorial and etched framework. */
+/* Compact calendar inside Monolith's existing editorial and liquid-glass framework. */
 .monolith-schedule {
-  --schedule-ink: #f3f0e9;
-  --schedule-muted: #b9b6ae;
+  --schedule-ink: #fbf6ee;
+  --schedule-muted: #c4bdae;
   background:
-    radial-gradient(ellipse at top left, #74361e14, transparent 55%), #080808;
+    radial-gradient(ellipse at top right, rgba(243, 162, 84, 0.1), transparent 55%),
+    #080708;
 }
 .schedule-editorial-main {
   padding-inline: 24px;
-  padding-bottom: 48px;
+  padding-bottom: 96px;
 }
 .schedule-editorial-header {
   display: flex;
@@ -55,9 +56,10 @@
   transition: background 0.2s;
 }
 .schedule-filters button[aria-pressed="true"] {
-  background: #e05a3a;
-  color: #130c09;
-  border-color: #e05a3a;
+  background: linear-gradient(180deg, #ffe9ca 0%, #f5b574 55%, #e5944c 100%);
+  color: #181009;
+  border-color: rgba(255, 236, 206, 0.72);
+  font-weight: 600;
 }
 .schedule-series-key-item span span:last-child {
   color: #b8b5ad;
@@ -77,10 +79,17 @@
   grid-template-columns: 160px minmax(0, 1fr) 190px;
   gap: 24px;
   padding: 26px;
-  margin-bottom: 14px;
-  background: #121110;
-  border: 1px solid #ffffff26;
-  border-radius: 5px;
+  margin-bottom: 16px;
+  background: linear-gradient(
+    145deg,
+    rgba(24, 18, 14, 0.76) 0%,
+    rgba(14, 12, 11, 0.88) 100%
+  );
+  border: 1px solid rgba(255, 228, 194, 0.18);
+  border-radius: 14px;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 245, 230, 0.12);
 }
 .schedule-editorial-card > * {
   min-width: 0;
@@ -164,7 +173,7 @@
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: 50% 0%;
   border: 1.5px solid #121110;
   background: #1a1816;
 }
@@ -177,9 +186,9 @@
   padding-top: 34px;
 }
 .schedule-editorial-tools button[aria-pressed="true"] {
-  background: #e05a3a;
-  color: #130c09;
-  border-color: #e05a3a;
+  background: #f3a659;
+  color: #181009;
+  border-color: #ffe6c2;
 }
 .schedule-editorial-tools button:disabled {
   opacity: 0.5;
