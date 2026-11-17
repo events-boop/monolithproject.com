@@ -442,6 +442,7 @@ const DeferredShellChrome = lazy(
 );
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 const SoundCloudShelf = lazy(() => import("./components/SoundCloudShelf"));
+import EdgeSeam from "./components/EdgeSeam";
 const StickyPlayer = lazy(() => import("./components/StickyPlayer"));
 const Footer = lazy(() => import("./components/Footer"));
 const GlobalTicketButton = lazy(
@@ -531,6 +532,7 @@ function MainContentWrapper() {
         {activeDrawer ? <OffCanvasDrawer /> : null}
         <SonicCommandPalette />
       </Suspense>
+      {!isStandaloneLanding && <EdgeSeam />}
 
       {/* Sensory Overload Cinematic Overlay vault effect */}
       <div

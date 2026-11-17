@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import { ARTIST_ENTRIES } from "@/data/artists";
+import GlyphRule, { Glyph } from "@/components/GlyphRule";
 
 const postponedArtists = new Set(["joezi", "massuma"]);
 const artists = [...ARTIST_ENTRIES].sort((a, b) =>
@@ -46,7 +47,9 @@ export default function HomeYearThanks() {
         </header>
         <div className="year-thanks-credits">
           <div className="year-thanks-label">
-            <h3>The artists</h3>
+            <h3>
+              <Glyph name="human" /> The artists
+            </h3>
             <p>
               On the dance floor.
               <br />
@@ -86,7 +89,9 @@ export default function HomeYearThanks() {
         </div>
         <div className="year-thanks-credits year-thanks-rooms">
           <div className="year-thanks-label">
-            <h3>The rooms</h3>
+            <h3>
+              <Glyph name="place" /> The rooms
+            </h3>
             <p>Our Chicago community.</p>
           </div>
           <ul aria-label="Venue community">
@@ -95,6 +100,7 @@ export default function HomeYearThanks() {
             ))}
           </ul>
         </div>
+        <GlyphRule />
         <footer className="year-thanks-footer">
           <p>
             And you.<span>Every dance floor starts with the people on it.</span>

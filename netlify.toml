@@ -440,6 +440,19 @@
   status = 200
   force = true
 
+# Keep the directory alias ahead of the unknown-artist 404 rule below.
+[[redirects]]
+  from = "/artists"
+  to = "/lineup"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/artists/"
+  to = "/lineup"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/artists/summers-uk"
   to = "/artists/sommers-uk"

@@ -19,8 +19,9 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import WordScrubReveal from "@/components/ui/WordScrubReveal";
 import MagneticButton from "@/components/MagneticButton";
-import { ARTISTS } from "@/data/artists";
+import { ARTISTS, ARTIST_PORTRAIT_PLACEHOLDER } from "@/data/artists";
 import { getEventPillToneClass } from "@/lib/ctaTone";
 import { getSeriesLabel } from "@/lib/siteExperience";
 import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
@@ -253,7 +254,11 @@ export default function ArtistProfile() {
             <div className="artist-editorial-portrait">
               <ResponsiveImage
                 src={artist.image}
-                alt={artist.name}
+                alt={
+                  artist.image === ARTIST_PORTRAIT_PLACEHOLDER
+                    ? `Portrait pending for ${artist.name}`
+                    : artist.name
+                }
                 priority
                 sizes="(min-width: 900px) 48vw, 100vw"
                 className="w-full h-full object-contain object-bottom"
@@ -353,11 +358,14 @@ export default function ArtistProfile() {
                   </span>
                   <div className="h-px w-20 bg-current" />
                 </div>
-                <p className="artist-editorial-bio">
-                  {/bio coming soon/i.test(artist.bio)
-                    ? `Explore ${artist.name}'s music and Monolith appearances below.`
-                    : artist.bio}
-                </p>
+                <WordScrubReveal
+                  text={
+                    /bio coming soon/i.test(artist.bio)
+                      ? `Explore ${artist.name}'s music and Monolith appearances below.`
+                      : artist.bio
+                  }
+                  className="artist-editorial-bio"
+                />
                 <div className="flex flex-wrap gap-2 pt-6">
                   {artist.tags.map(tag => (
                     <span

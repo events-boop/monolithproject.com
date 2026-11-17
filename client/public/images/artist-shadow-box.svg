@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" fill="none">
+  <defs>
+    <linearGradient id="surface" x1="400" y1="0" x2="400" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#181819"/>
+      <stop offset=".6" stop-color="#0d0e10"/>
+      <stop offset="1" stop-color="#070809"/>
+    </linearGradient>
+    <radialGradient id="light" cx="0" cy="0" r="1" gradientTransform="translate(580 140) rotate(123) scale(740 510)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#bf6c48" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#bf6c48" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="edge" x1="720" y1="80" x2="80" y2="920" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d99e7d" stop-opacity=".25"/>
+      <stop offset=".45" stop-color="#d99e7d" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#d99e7d" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#surface)" d="M0 0h800v1000H0z"/>
+  <path fill="url(#light)" d="M0 0h800v1000H0z"/>
+  <rect x="44" y="44" width="712" height="912" rx="4" fill="#050607" fill-opacity=".42" stroke="#000" stroke-opacity=".6" stroke-width="12"/>
+  <rect x="44.5" y="44.5" width="711" height="911" rx="4" stroke="url(#edge)"/>
+  <path d="M380 458v84m40-84v84m-40-58h40m-20-26v84" stroke="#d99e7d" stroke-opacity=".22" stroke-width="2"/>
+</svg>

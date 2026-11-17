@@ -16,10 +16,9 @@
  * them to hard checks once resolved.
  */
 
-const BASE_URL = (process.env.BASE_URL || "https://monolithproject.com").replace(
-  /\/$/,
-  ""
-);
+const BASE_URL = (
+  process.env.BASE_URL || "https://monolithproject.com"
+).replace(/\/$/, "");
 
 type Check = {
   name: string;
@@ -35,6 +34,13 @@ type Check = {
 };
 
 const CHECKS: Check[] = [
+  // Directory aliases must precede Netlify's /artists/* 404 catch-all.
+  ...["/artists", "/artists/"].map(route => ({
+    name: `Artist directory alias ${route}`,
+    url: `${BASE_URL}${route}`,
+    status: 301,
+    redirectContains: "/lineup",
+  })),
   // --- Health probes -------------------------------------------------------
   {
     name: "API health probe (liveness JSON)",

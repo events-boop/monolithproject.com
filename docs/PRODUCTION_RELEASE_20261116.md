@@ -1,5 +1,8 @@
 # Production release — November 16, 2026
 
+Historical release record. The subsequent approved release is documented in
+[PRODUCTION_RELEASE_20261117.md](PRODUCTION_RELEASE_20261117.md).
+
 Published the owner-approved Monolith design, Radio, navigation, glyph artwork,
 footer glow, and shared campaign bios at 2026-11-16 22:26:42 UTC.
 Restored SUNSETS.FM navigation at 2026-11-17 01:27:59 UTC (November 16 in Chicago).

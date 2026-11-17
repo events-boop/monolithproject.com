@@ -26,6 +26,7 @@ import { toggleSavedArtist, useSavedPassport } from "@/lib/savedPassport";
 import { cn } from "@/lib/utils";
 import {
   ARTIST_ENTRIES,
+  ARTIST_PORTRAIT_PLACEHOLDER,
   type ArtistData,
   type ArtistSeries,
 } from "@/data/artists";
@@ -362,7 +363,11 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
               >
                 <ResponsiveImage
                   src={portraitSrc}
-                  alt={artist.name}
+                  alt={
+                    portraitSrc === ARTIST_PORTRAIT_PLACEHOLDER
+                      ? `Portrait pending for ${artist.name}`
+                      : artist.name
+                  }
                   style={{ objectPosition: artist.imagePosition || "50% 0%" }}
                   sizes="80px"
                   onError={handlePortraitError}
@@ -451,7 +456,11 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
         <div className="artist-grid-portrait aspect-[4/5] overflow-hidden">
           <ResponsiveImage
             src={portraitSrc}
-            alt={artist.name}
+            alt={
+              portraitSrc === ARTIST_PORTRAIT_PLACEHOLDER
+                ? `Portrait pending for ${artist.name}`
+                : artist.name
+            }
             style={{ objectPosition: artist.imagePosition || "50% 0%" }}
             sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
             onError={handlePortraitError}

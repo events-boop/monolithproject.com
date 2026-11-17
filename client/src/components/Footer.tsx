@@ -206,6 +206,12 @@ export default function Footer() {
             © {new Date().getFullYear()} The Monolith Project{" "}
             <span>Chicago, IL</span>
           </p>
+          <p className="footer-nhc-stamp">
+            <span className="footer-nhc-mark" aria-hidden="true">
+              [NHC]
+            </span>
+            <span>Engineered by Nonhuman Citizens</span>
+          </p>
         </div>
       </div>
       <div

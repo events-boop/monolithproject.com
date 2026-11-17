@@ -47,6 +47,14 @@ const staticPath = resolveStaticPath();
 const indexHtmlPath = path.join(staticPath, "index.html");
 let cachedIndexHtml: string | null = null;
 
+// The roster's canonical URL is /lineup; /artists/<id> remains permanent.
+// Resolve before express.static's automatic directory-slash redirect.
+router.get(["/artists", "/artists/"], (req, res) => {
+  const queryStart = req.originalUrl.indexOf("?");
+  const query = queryStart >= 0 ? req.originalUrl.slice(queryStart) : "";
+  res.redirect(301, `/lineup${query}`);
+});
+
 router.use(express.static(staticPath, { index: false }));
 
 // Canonical Untold Story route: /story redirects cleanly to /untold-story.
